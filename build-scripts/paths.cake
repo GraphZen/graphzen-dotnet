@@ -14,7 +14,8 @@ public class BuildPaths
 
         var rootDir = context.MakeAbsolute(context.Directory("./"));
         var solutionDir = rootDir;
-        var artifactsDir = rootDir.Combine("build-artifacts");
+        var configuredArtifactsDir =  context.EnvironmentVariable("Build.ArtifactStagingDirectory") ?? context.Argument<string>("build_artifacts_dir", null);
+        var artifactsDir = configuredArtifactsDir != null ? context.Directory(configuredArtifactsDir) :rootDir.Combine("build-artifacts");
         var testArtifacts = context.EnvironmentVariable("TEST_RESULTS_DIR") ?? rootDir.Combine("test-artifacts");
 
         // Directories
