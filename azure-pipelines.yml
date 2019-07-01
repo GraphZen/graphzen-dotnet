@@ -9,6 +9,7 @@ steps:
 - task: PowerShell@2
   inputs:
     filePath: 'build.ps1'
+    arguments: '-ScriptArgs "-build_artifacts_dir=$(build.artifactstagingdirectory)/packages"'
 
 - task: PublishCodeCoverageResults@1
   inputs:
@@ -20,3 +21,10 @@ steps:
     testResultsFormat: 'VSTest'
     testResultsFiles: '**/*.trx'
     mergeTestResults: true
+
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
