@@ -1,0 +1,10 @@
+next-version: 0.2.0
+mode: ContinuousDeployment
+continuous-delivery-fallback-tag: pre
+branches:
+  master:
+    tag: pre
+  develop:
+    tag: develop
+ignore:
+  sha: []

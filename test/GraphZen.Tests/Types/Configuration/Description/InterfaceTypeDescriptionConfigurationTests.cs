@@ -1,0 +1,49 @@
+﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System.ComponentModel;
+using GraphZen.Infrastructure;
+using GraphZen.Types.Builders;
+using JetBrains.Annotations;
+
+namespace GraphZen.Types
+{
+    [UsedImplicitly]
+    [NoReorder]
+    public class InterfaceTypeDescriptionConfigurationTests : DescriptionConfigurationTests
+    {
+        public interface IWithoutDescription
+        {
+        }
+
+        [Description("set by data annotation")]
+        public interface IWithDescription
+        {
+        }
+
+        public override void CreateMemberWithoutDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder)
+        {
+            schemaBuilder.Interface<IWithoutDescription>();
+        }
+
+        public override void CreateMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder)
+        {
+            schemaBuilder.Interface<IWithDescription>();
+        }
+
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetInterface<IWithoutDescription>();
+
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetInterface<IWithDescription>();
+
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetInterface<IWithoutDescription>();
+
+        public override Member GetMemberWithDataAnnotation(Schema schema) =>
+            schema.GetInterface<IWithDescription>();
+
+        public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
+            string description) => schemaBuilder.Interface<IWithDescription>().Description(description);
+    }
+}

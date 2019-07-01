@@ -1,0 +1,12 @@
+<footer>
+  <div class="grad-bottom"></div>
+  <div class="footer">
+    <div class="container">
+      <span class="pull-right">
+        <a href="#top">Back to top</a>
+      </span>
+      {{{_appFooter}}}
+      {{^_appFooter}}{{/_appFooter}}
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,2 @@
+https://graphzen-api.netlify.com/*      https://api.graphzen.com/:splat 301!
+/           /api/GraphZen.html 

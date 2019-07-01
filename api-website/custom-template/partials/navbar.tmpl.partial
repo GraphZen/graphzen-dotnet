@@ -1,0 +1,46 @@
+<!-- Nav -->
+
+<nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--no-space">
+    <!-- Logo -->
+    <a class="navbar-brand u-header__navbar-brand u-header__navbar-brand-center" href="/" aria-label="GraphZen">
+    <span class="u-header__navbar-brand-text">GraphZen</span>
+  </a>
+    <!-- End Logo -->
+
+    <!-- Responsive Toggle Button -->
+    <button type="button" class="navbar-toggler btn u-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
+            <span id="hamburgerTrigger" class="u-hamburger__box">
+              <span class="u-hamburger__inner"></span>
+            </span>
+          </button>
+    <!-- End Responsive Toggle Button -->
+
+    <!-- Navigation -->
+    <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
+        <ul class="navbar-nav u-header__navbar-nav">
+            <!-- Home -->
+            <li class="nav-item  u-header__nav-item">
+                <a class="nav-link u-header__nav-link " href="https://graphzen.com">Home</a>
+            </li>
+            <li class="nav-item  u-header__nav-item">
+                <a class="nav-link u-header__nav-link " href="https://docs.graphzen.com">Docs</a>
+            </li>
+            <li class="nav-item  u-header__nav-item">
+                <a class="nav-link u-header__nav-link " href="https://api.graphzen.com">API</a>
+            </li>
+
+
+            <!-- End Home -->
+
+
+            <!-- Button -->
+            <li class="nav-item u-header__nav-last-item">
+                <a class="btn btn-sm btn-primary btn-pill transition-3d-hover" href="https://themes.getbootstrap.com/product/front-multipurpose-responsive-template/" target="_blank">
+                  Get Started
+                </a>
+            </li>
+            <!-- End Button -->
+        </ul>
+    </div>
+    <!-- End Navigation -->
+</nav>

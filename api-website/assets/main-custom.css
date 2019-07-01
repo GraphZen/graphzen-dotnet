@@ -1,0 +1,35 @@
+#wrapper {
+  padding-bottom: 1px;
+}
+header {
+  background: white;
+}
+.navbar .navbar-nav {
+  display: flex;
+}
+
+@media (min-width: 2000px) {
+  .container {
+    max-width: 1900px;
+  }
+}
+
+.sidetoc {
+  top: 188px;
+  width: 300px;
+}
+.sidefilter {
+  top: 130px;
+  width: 300px;
+}
+
+.article.grid-right {
+  margin-left: 320px;
+}
+
+.hide {
+  display: none;
+}
+.toc .level1 > li {
+  width: 100%;
+}

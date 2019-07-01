@@ -1,0 +1,69 @@
+{{!include(search-stopwords.json)}}
+<!DOCTYPE html>
+<html lang="en">
+{{>partials/head}}
+
+<body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+        <!-- ========== HEADER ========== -->
+        <header>
+            <div class="border-bottom">
+                <div class="container">
+                    {{^_disableNavbar}} {{>partials/navbar}} {{/_disableNavbar}}
+                </div>
+            </div>
+            {{^_disableBreadcrumb}}
+            <div class="border-bottom">
+                <div class="container">
+                    {{>partials/breadcrumb}}
+                </div>
+            </div>
+            {{/_disableBreadcrumb}}
+        </header>
+        <!-- ========== END HEADER ========== -->
+
+        <div role="main" class="container body-content hide-when-search">
+            {{^_disableToc}} {{>partials/toc}}
+            <div class="article row grid-right">
+                {{/_disableToc}} {{#_disableToc}}
+                <div class="article row grid">
+                    {{/_disableToc}} {{#_disableAffix}}
+                    <div class="col-md-12">
+                        {{/_disableAffix}} {{^_disableAffix}}
+                        <div class="col-md-10">
+                            {{/_disableAffix}}
+                            <article class="content wrap" id="_content" data-uid="{{uid}}">
+                                {{!body}}
+                            </article>
+                        </div>
+                        {{^_disableAffix}} {{>partials/affix}} {{/_disableAffix}}
+                    </div>
+                </div>
+                {{^_disableFooter}} {{>partials/footer}} {{/_disableFooter}}
+            </div>
+
+            <script src="https://graphzen-assets.netlify.com/vendor/jquery/dist/jquery.min.js"></script>
+            <script src="https://graphzen-assets.netlify.com/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+            <script src="https://graphzen-assets.netlify.com/vendor/popper.js/dist/umd/popper.min.js"></script>
+            <script src="https://graphzen-assets.netlify.com/vendor/bootstrap/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.1/highlight.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.1/languages/cs.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.js"></script>
+
+            <script type="text/javascript" src="{{_rel}}assets/docfx-custom.js"></script>
+            <script type="text/javascript" src="{{_rel}}assets/main-custom.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136112254-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-136112254-1',
+      {
+        'linker': {
+          'domains': ['docs.graphzen.com', 'api.graphzen.com', 'graphzen.com']
+        }
+      });
+  </script>
+</body>
+
+</html>

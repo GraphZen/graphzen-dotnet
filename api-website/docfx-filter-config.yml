@@ -1,0 +1,16 @@
+apiRules:
+  - exclude:
+      uidRegex: Internal
+      type: Type
+  - exclude:
+      uidRegex: Infrastructure
+      type: Type
+  - exclude:
+      uidRegex: Logging
+      type: Type
+  - exclude:
+      uidRegex: ^System\.Object
+      type: Member
+  - exclude:
+      uidRegex: ^System\.Attribute
+      type: Member

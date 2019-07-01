@@ -1,0 +1,22 @@
+trigger:
+- develop
+- master
+
+pool:
+  vmImage: 'windows-2019'
+
+steps:
+- task: PowerShell@2
+  inputs:
+    filePath: 'build.ps1'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: './test-artifacts/coverage.cobertura.xml'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '**/*.trx'
+    mergeTestResults: true

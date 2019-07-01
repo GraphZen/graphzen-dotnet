@@ -1,0 +1,44 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": ["src/**/*.csproj"],
+          "exclude": ["**/bin/**", "**/obj/**", "test/**", "examples/**"],
+          "src": "../"
+        }
+      ],
+      "filter": "docfx-filter-config.yml",
+      "dest": "obj/api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": ["**/*.yml"],
+        "src": "obj/api",
+        "dest": "api"
+      },
+      {
+        "files": ["*.md", "toc.yml"]
+      }
+    ],
+    "resource": [
+      {
+        "files": ["assets/**", "_redirects"]
+      }
+    ],
+    "overwrite": "specs/*.md",
+    "globalMetadata": {
+      "_appTitle": "GraphZen API",
+      "_appFooter": "<span>Copyright © 2017-2019 GraphZen LLC</span>",
+      "_enableSearch": false,
+      "_disableAffix": true,
+      "_disableContribution": true
+    },
+    "markdownEngineName": "markdig",
+    "dest": "../api-website-artifacts/dist",
+    "xrefService": ["https://xref.docs.microsoft.com/query?uid={uid}"],
+    "template": ["default", "custom-template"]
+  }
+}
