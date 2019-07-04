@@ -6,13 +6,12 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Validation;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 
-
-namespace GraphZen.Validation
+namespace GraphZen.QueryEngine.Validation
 {
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
     public class QueryValidationContext : ValidationContext

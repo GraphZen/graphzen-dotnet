@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 
-
-namespace GraphZen.Validation.Rules
+namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class InterfaceExtensionsShouldBeValid : DocumentValidationRuleVisitor
     {

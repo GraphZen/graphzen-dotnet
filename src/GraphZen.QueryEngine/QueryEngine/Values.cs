@@ -9,8 +9,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.LanguageModel;
-using GraphZen.Maybe;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
@@ -57,8 +57,8 @@ namespace GraphZen.QueryEngine
                 else
                 {
                     var maybeValue = inputs.TryGetValue(varName, out var val)
-                        ? Maybe.Maybe.Some(val)
-                        : Maybe.Maybe.None<object>();
+                        ? Maybe.Some(val)
+                        : Maybe.None<object>();
                     if (!maybeValue.HasValue && varDefNode.DefaultValue != null)
                     {
                         // If no value was provided to a variable with a default value,
@@ -117,8 +117,8 @@ namespace GraphZen.QueryEngine
 
 
             return errors.Any()
-                ? Maybe.Maybe.None<IReadOnlyDictionary<string, object>>(errors)
-                : Maybe.Maybe.Some<IReadOnlyDictionary<string, object>>(
+                ? Maybe.None<IReadOnlyDictionary<string, object>>(errors)
+                : Maybe.Some<IReadOnlyDictionary<string, object>>(
                     new ReadOnlyDictionary<string, object>(coercedValues));
         }
 
@@ -146,7 +146,7 @@ namespace GraphZen.QueryEngine
             {
                 if (value == null)
                 {
-                    return Maybe.Maybe.None<object>(CoercianError(
+                    return Maybe.None<object>(CoercianError(
                         $"Expected non-nullable type {type} not to be null",
                         blameNode, path));
                 }
@@ -156,7 +156,7 @@ namespace GraphZen.QueryEngine
 
             if (value == null)
             {
-                return Maybe.Maybe.Some<object>(null);
+                return Maybe.Some<object>(null);
             }
 
 
@@ -184,7 +184,7 @@ namespace GraphZen.QueryEngine
                             }
                         }
 
-                        return errors.Any() ? Maybe.Maybe.None<object>(errors) : Maybe.Maybe.Some<object>(coercedValue);
+                        return errors.Any() ? Maybe.None<object>(errors) : Maybe.Some<object>(coercedValue);
                     }
 
                     // Lists accept a non-list value as a list of one
@@ -194,7 +194,7 @@ namespace GraphZen.QueryEngine
                 {
                     if (!(value is IDictionary<string, object> values))
                     {
-                        return Maybe.Maybe.None<object>(CoercianError($"Expected {type} to be an object", blameNode,
+                        return Maybe.None<object>(CoercianError($"Expected {type} to be an object", blameNode,
                             path));
                     }
 
@@ -250,7 +250,7 @@ namespace GraphZen.QueryEngine
                             suggestions));
                     }
 
-                    return errors.Any() ? Maybe.Maybe.None<object>(errors) : Maybe.Maybe.Some<object>(coercedValue);
+                    return errors.Any() ? Maybe.None<object>(errors) : Maybe.Some<object>(coercedValue);
                 }
                 case ScalarType scalarType:
                     try
@@ -259,7 +259,7 @@ namespace GraphZen.QueryEngine
                     }
                     catch (Exception e)
                     {
-                        return Maybe.Maybe.None<object>(CoercianError($"Expected type {type}", blameNode, path, e.Message,
+                        return Maybe.None<object>(CoercianError($"Expected type {type}", blameNode, path, e.Message,
                             e));
                     }
                 case EnumType enumType:
@@ -268,13 +268,13 @@ namespace GraphZen.QueryEngine
                         var enumValue = enumType.FindValue(strValue);
                         if (enumValue != null)
                         {
-                            return Maybe.Maybe.Some(enumValue.Value);
+                            return Maybe.Some(enumValue.Value);
                         }
                     }
 
                     // TODO: Suggestions
                     var didYouMean = "did you mean some other enum value?";
-                    return Maybe.Maybe.None<object>(CoercianError($"Expected type {type}", blameNode, path, didYouMean));
+                    return Maybe.None<object>(CoercianError($"Expected type {type}", blameNode, path, didYouMean));
                 default:
                     throw new GraphQLException($"Provided type \"{type}\" must be an input type. ");
             }

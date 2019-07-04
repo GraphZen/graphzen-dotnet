@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
+using GraphZen.QueryEngine.Validation.Rules;
 using Xunit;
 
 namespace GraphZen.Validation.Rules

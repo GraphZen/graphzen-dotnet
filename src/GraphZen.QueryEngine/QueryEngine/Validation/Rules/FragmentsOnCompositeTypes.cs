@@ -3,11 +3,9 @@
 
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 
-
-namespace GraphZen.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class FragmentsOnCompositeTypes : QueryValidationRuleVisitor
     {

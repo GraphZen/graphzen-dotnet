@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.Extensions;
 using GraphZen.TypeSystem.Internal;
 
 using Xunit;

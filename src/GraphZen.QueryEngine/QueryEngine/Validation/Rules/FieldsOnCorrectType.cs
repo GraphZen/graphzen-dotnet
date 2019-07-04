@@ -5,14 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 
-
-namespace GraphZen.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class FieldsOnCorrectType : QueryValidationRuleVisitor
     {

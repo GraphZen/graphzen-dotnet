@@ -4,11 +4,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.Extensions;
-using GraphZen.LanguageModel;
 
-
-namespace GraphZen.Validation.Rules
+namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class EnumTypesMustBeWellDefined : DocumentValidationRuleVisitor
     {

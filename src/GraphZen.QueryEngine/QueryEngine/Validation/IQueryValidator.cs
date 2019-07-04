@@ -6,8 +6,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 
-
-namespace GraphZen.Validation
+namespace GraphZen.QueryEngine.Validation
 {
     public interface IQueryValidator
     {

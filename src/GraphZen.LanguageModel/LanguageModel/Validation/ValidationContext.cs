@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 
-
-namespace GraphZen.Validation
+namespace GraphZen.LanguageModel.Validation
 {
     public abstract class ValidationContext
     {

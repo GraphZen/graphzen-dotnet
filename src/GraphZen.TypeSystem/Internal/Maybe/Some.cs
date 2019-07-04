@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
 
-namespace GraphZen.Maybe
+namespace GraphZen.Internal
 {
     internal class Some<T> : Maybe<T>
     {

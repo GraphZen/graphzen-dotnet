@@ -6,11 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.QueryEngine.Validation;
+using GraphZen.LanguageModel.Validation;
 using GraphZen.TypeSystem;
 
-
-namespace GraphZen.Validation
+namespace GraphZen.QueryEngine.Validation
 {
     public class QueryValidator : IQueryValidator
     {

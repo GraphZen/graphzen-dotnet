@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Validation;
 
-
-namespace GraphZen.Validation
+namespace GraphZen
 {
     public class DocumentValidator : IDocumentValidator
     {

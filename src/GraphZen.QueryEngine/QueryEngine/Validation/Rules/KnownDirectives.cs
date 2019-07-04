@@ -6,13 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal.Grammar;
 
-using static GraphZen.LanguageModel.DirectiveLocation;
-
-namespace GraphZen.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class KnownDirectives : QueryValidationRuleVisitor
     {
@@ -66,55 +63,55 @@ namespace GraphZen.Validation.Rules
                     switch (op.OperationType)
                     {
                         case OperationType.Query:
-                            return Query;
+                            return DirectiveLocation.Query;
                         case OperationType.Mutation:
-                            return Mutation;
+                            return DirectiveLocation.Mutation;
                         case OperationType.Subscription:
-                            return Subscription;
+                            return DirectiveLocation.Subscription;
                     }
 
                     break;
                 }
                 case FieldSyntax _:
-                    return Field;
+                    return DirectiveLocation.Field;
                 case FragmentSpreadSyntax _:
-                    return FragmentSpread;
+                    return DirectiveLocation.FragmentSpread;
                 case InlineFragmentSyntax _:
-                    return InlineFragment;
+                    return DirectiveLocation.InlineFragment;
                 case FragmentDefinitionSyntax _:
-                    return FragmentDefinition;
+                    return DirectiveLocation.FragmentDefinition;
 
                 case SchemaDefinitionSyntax _:
                 case SchemaExtensionSyntax _:
-                    return Schema;
+                    return DirectiveLocation.Schema;
                 case ScalarTypeDefinitionSyntax _:
                 case ScalarTypeExtensionSyntax _:
-                    return Scalar;
+                    return DirectiveLocation.Scalar;
                 case ObjectTypeDefinitionSyntax _:
                 case ObjectTypeExtensionSyntax _:
                     return DirectiveLocation.Object;
                 case FieldDefinitionSyntax _:
-                    return FieldDefinition;
+                    return DirectiveLocation.FieldDefinition;
                 case InterfaceTypeDefinitionSyntax _:
                 case InterfaceTypeExtensionSyntax _:
-                    return Interface;
+                    return DirectiveLocation.Interface;
                 case UnionTypeDefinitionSyntax _:
                 case UnionTypeExtensionSyntax _:
-                    return Union;
+                    return DirectiveLocation.Union;
                 case EnumTypeDefinitionSyntax _:
                 case EnumTypeExtensionSyntax _:
                     return DirectiveLocation.Enum;
                 case EnumValueSyntax _:
-                    return EnumValue;
+                    return DirectiveLocation.EnumValue;
                 case InputObjectTypeDefinitionSyntax _:
                 case InputObjectTypeExtensionSyntax _:
-                    return InputObject;
+                    return DirectiveLocation.InputObject;
                 case InputValueDefinitionSyntax _:
                 {
                     var parentNode = ancestors.ElementAt(2);
                     return parentNode is InputObjectTypeDefinitionSyntax
-                        ? InputFieldDefinition
-                        : ArgumentDefinition;
+                        ? DirectiveLocation.InputFieldDefinition
+                        : DirectiveLocation.ArgumentDefinition;
                 }
             }
 

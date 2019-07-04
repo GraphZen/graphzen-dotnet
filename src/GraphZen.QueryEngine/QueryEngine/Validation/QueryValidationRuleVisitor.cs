@@ -2,9 +2,9 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel.Validation;
 
-
-namespace GraphZen.Validation
+namespace GraphZen.QueryEngine.Validation
 {
     public abstract class QueryValidationRuleVisitor : ValidationRuleVisitor
     {

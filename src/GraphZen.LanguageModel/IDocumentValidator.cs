@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
-
-namespace GraphZen.Validation
+namespace GraphZen
 {
     public interface IDocumentValidator
     {

@@ -7,8 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
+using GraphZen.LanguageModel.Validation;
+using GraphZen.QueryEngine.Validation;
 using GraphZen.TypeSystem;
 
 
@@ -124,14 +127,14 @@ namespace GraphZen.Validation.Rules
                     .Argument("opt2", "Int", arg => arg.DefaultValue(0)));
 
             sb.Scalar("Invalid")
-                .Serializer(Maybe.Maybe.Some)
+                .Serializer(Maybe.Some)
                 .LiteralParser(node => throw new Exception("Invalid scalar is always invalid: " + node.GetValue()))
                 .ValueParser(node => throw new Exception("Invalid scalar is always invalid: " + node));
 
             sb.Scalar("Any")
-                .Serializer(Maybe.Maybe.Some)
-                .LiteralParser(Maybe.Maybe.Some<object>)
-                .ValueParser(Maybe.Maybe.Some);
+                .Serializer(Maybe.Some)
+                .LiteralParser(Maybe.Some<object>)
+                .ValueParser(Maybe.Some);
 
             sb.Object("QueryRoot")
                 .Field("human", "Human", _ => _.Argument("id", "ID"))

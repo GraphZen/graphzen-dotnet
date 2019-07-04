@@ -9,9 +9,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.Extensions;
 
-namespace GraphZen.Infrastructure.GraphZen.Internal
+namespace GraphZen.Infrastructure
 {
     public class DictionaryContainerCodeGenerator
     {

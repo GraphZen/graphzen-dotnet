@@ -3,10 +3,8 @@
 
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 
-
-namespace GraphZen.Validation.Rules
+namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class SchemaMustHaveRootObjectTypes : DocumentValidationRuleVisitor
     {

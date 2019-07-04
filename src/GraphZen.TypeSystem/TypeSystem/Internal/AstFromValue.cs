@@ -5,8 +5,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.LanguageModel;
-using GraphZen.Maybe;
 using GraphZen.TypeSystem.Taxonomy;
 using Newtonsoft.Json.Linq;
 
@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.Internal
                     var valueNodes = new List<ValueSyntax>();
                     foreach (var item in collection)
                     {
-                        var itemNode = Get(Maybe.Maybe.Some(item), itemType);
+                        var itemNode = Get(Maybe.Some(item), itemType);
                         if (itemNode != null)
                         {
                             valueNodes.Add(itemNode);
@@ -64,7 +64,7 @@ namespace GraphZen.TypeSystem.Internal
                 {
                     if (valueDictionary.TryGetValue(field.Name, out var fv))
                     {
-                        var fieldValue = Get(Maybe.Maybe.Some(fv), field.InputType);
+                        var fieldValue = Get(Maybe.Some(fv), field.InputType);
                         if (fieldValue != null)
                         {
                             fieldsNodes.Add(SyntaxFactory.ObjectField(SyntaxFactory.Name(field.Name), fieldValue));

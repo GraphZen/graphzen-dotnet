@@ -4,8 +4,7 @@
 using System.Linq;
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Infrastructure.Extensions
+namespace GraphZen.Infrastructure
 {
     internal static class StringExtensions
     {

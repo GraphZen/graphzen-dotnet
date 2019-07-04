@@ -3,8 +3,7 @@
 
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Validation
+namespace GraphZen.LanguageModel.Validation
 {
     public delegate ValidationRuleVisitor ValidationRule(ValidationContext context);
 }

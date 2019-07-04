@@ -5,7 +5,7 @@ using System;
 using GraphZen.Infrastructure;
 using Newtonsoft.Json;
 
-namespace GraphZen.Maybe
+namespace GraphZen.Internal
 {
     public class MaybeJsonConverter : JsonConverter
     {

@@ -3,9 +3,10 @@
 
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using Xunit;
-using static GraphZen.Validation.Rules.FieldsOnCorrectType;
+using static GraphZen.QueryEngine.Validation.Rules.FieldsOnCorrectType;
 
 namespace GraphZen.Validation.Rules
 {

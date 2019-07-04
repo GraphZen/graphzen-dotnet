@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.GraphZen.Internal;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 

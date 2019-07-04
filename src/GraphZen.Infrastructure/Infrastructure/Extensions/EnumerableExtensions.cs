@@ -8,8 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Infrastructure.Extensions
+namespace GraphZen.Infrastructure
 {
     internal static class EnumerableExtensions
     {

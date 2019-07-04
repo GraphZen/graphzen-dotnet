@@ -3,10 +3,8 @@
 
 using System;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 
-
-namespace GraphZen.Validation
+namespace GraphZen.LanguageModel.Validation
 {
     public class DocumentValidationContext : ValidationContext
     {

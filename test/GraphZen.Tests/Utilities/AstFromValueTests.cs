@@ -4,7 +4,7 @@
 using System;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Maybe;
+using GraphZen.Internal;
 using GraphZen.TypeSystem;
 using Xunit;
 using static GraphZen.LanguageModel.SyntaxFactory;
@@ -16,8 +16,8 @@ namespace GraphZen
     [NoReorder]
     public class AstFromValueTests
     {
-        private static Maybe<object> Some(object some) => Maybe.Maybe.Some(some);
-        private static Maybe<object> None() => Maybe.Maybe.None<object>();
+        private static Maybe<object> Some(object some) => Maybe.Some(some);
+        private static Maybe<object> None() => Maybe.None<object>();
 
 
         private static readonly object ComplexValue = new {someArbitrary = "complexValue"};

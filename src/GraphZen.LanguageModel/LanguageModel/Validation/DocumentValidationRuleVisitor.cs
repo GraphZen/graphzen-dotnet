@@ -3,8 +3,7 @@
 
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Validation
+namespace GraphZen.LanguageModel.Validation
 {
     public abstract class DocumentValidationRuleVisitor : ValidationRuleVisitor
     {

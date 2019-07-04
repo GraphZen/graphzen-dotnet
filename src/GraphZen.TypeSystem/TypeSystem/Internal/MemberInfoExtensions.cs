@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.Extensions;
 
 
 namespace GraphZen.TypeSystem.Internal

@@ -4,8 +4,7 @@
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Infrastructure.Extensions
+namespace GraphZen.Infrastructure
 {
     internal static class StackExtensions
     {

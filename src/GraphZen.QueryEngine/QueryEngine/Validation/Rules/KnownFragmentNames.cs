@@ -4,8 +4,7 @@
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
-
-namespace GraphZen.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class KnownFragmentNames : QueryValidationRuleVisitor
     {

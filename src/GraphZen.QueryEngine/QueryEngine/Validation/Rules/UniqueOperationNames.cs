@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
-
-namespace GraphZen.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class UniqueOperationNames : QueryValidationRuleVisitor
     {

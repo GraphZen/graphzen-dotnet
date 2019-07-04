@@ -4,9 +4,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.Extensions;
+using GraphZen.Internal;
 using GraphZen.LanguageModel;
-using GraphZen.Maybe;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
@@ -170,8 +169,8 @@ namespace GraphZen
 
                     Argument = argDef;
                     _defaultValueStack.Push(argDef != null && argDef.HasDefaultValue
-                        ? Maybe.Maybe.Some(argDef.DefaultValue)
-                        : Maybe.Maybe.None<object>());
+                        ? Maybe.Some(argDef.DefaultValue)
+                        : Maybe.None<object>());
                     _inputTypeStack.Push(argType);
                     break;
                 }
@@ -196,8 +195,8 @@ namespace GraphZen
                     }
 
                     _defaultValueStack.Push(inputField != null && inputField.HasDefaultValue
-                        ? Maybe.Maybe.Some(inputField.DefaultValue)
-                        : Maybe.Maybe.None<object>());
+                        ? Maybe.Some(inputField.DefaultValue)
+                        : Maybe.None<object>());
                     _inputTypeStack.Push(inputFieldType);
                     break;
                 }

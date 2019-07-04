@@ -4,7 +4,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.Extensions;
 
 
 namespace GraphZen.TypeSystem.Internal

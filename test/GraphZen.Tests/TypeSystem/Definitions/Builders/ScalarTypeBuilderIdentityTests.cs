@@ -3,6 +3,7 @@
 
 using System;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 
 
 namespace GraphZen.TypeSystem.Builders
@@ -23,13 +24,13 @@ namespace GraphZen.TypeSystem.Builders
 
         public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
         {
-            schemaBuilder.Scalar(name).ValueParser(Maybe.Maybe.Some).LiteralParser(Maybe.Maybe.Some<object>).Serializer(Maybe.Maybe.Some);
+            schemaBuilder.Scalar(name).ValueParser(Maybe.Some).LiteralParser(Maybe.Some<object>).Serializer(Maybe.Some);
         }
 
         public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
         {
-            schemaBuilder.Scalar(clrType).ValueParser(Maybe.Maybe.Some).LiteralParser(Maybe.Maybe.Some<object>)
-                .Serializer(Maybe.Maybe.Some);
+            schemaBuilder.Scalar(clrType).ValueParser(Maybe.Some).LiteralParser(Maybe.Some<object>)
+                .Serializer(Maybe.Some);
         }
 
 

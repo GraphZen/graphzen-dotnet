@@ -5,8 +5,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Infrastructure.Extensions
+namespace GraphZen.Infrastructure
 {
     internal static class ConcurrentBagExtensions
     {

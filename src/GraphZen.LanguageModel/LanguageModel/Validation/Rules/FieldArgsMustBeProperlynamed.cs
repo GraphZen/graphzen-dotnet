@@ -3,8 +3,7 @@
 
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Validation.Rules
+namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class FieldArgsMustBeProperlyNamed : DocumentValidationRuleVisitor
     {

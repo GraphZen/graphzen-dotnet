@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
-
+using GraphZen.LanguageModel.Validation;
 using Xunit;
 using static GraphZen.Validation.Rules.SDLValidationHelpers;
 

@@ -3,8 +3,7 @@
 
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class UniqueDirectivesPerLocation : QueryValidationRuleVisitor
     {

@@ -6,8 +6,7 @@ using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Logging;
-using GraphZen.Validation;
-
+using GraphZen.QueryEngine.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

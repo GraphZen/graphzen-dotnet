@@ -2,9 +2,10 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using Xunit;
-using static GraphZen.Validation.Rules.LoneAnonymousOperation;
+using static GraphZen.QueryEngine.Validation.Rules.LoneAnonymousOperation;
 
 namespace GraphZen.Validation.Rules
 {

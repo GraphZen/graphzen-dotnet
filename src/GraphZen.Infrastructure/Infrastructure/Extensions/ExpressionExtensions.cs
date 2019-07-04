@@ -6,8 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Infrastructure.Extensions
+namespace GraphZen.Infrastructure
 {
     internal static class ExpressionExtensions
     {

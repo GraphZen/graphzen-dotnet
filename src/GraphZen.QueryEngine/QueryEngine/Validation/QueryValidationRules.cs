@@ -7,9 +7,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Validation;
-using GraphZen.Validation.Rules;
-using static GraphZen.Validation.DocumentValidationRules;
+using GraphZen.LanguageModel.Validation;
+using GraphZen.QueryEngine.Validation.Rules;
+using static GraphZen.LanguageModel.Validation.DocumentValidationRules;
 
 
 namespace GraphZen.QueryEngine.Validation
