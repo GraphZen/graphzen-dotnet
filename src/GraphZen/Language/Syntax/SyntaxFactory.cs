@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Types.Internal;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.Language
@@ -184,7 +184,7 @@ namespace GraphZen.Language
 
         [NotNull]
         [DebuggerStepThrough]
-        public static UnionTypeDefinitionSyntax UnionTypeDefiniton(NameSyntax name) =>
+        public static UnionTypeDefinitionSyntax UnionTypeDefinition(NameSyntax name) =>
             new UnionTypeDefinitionSyntax(name);
 
         [NotNull]

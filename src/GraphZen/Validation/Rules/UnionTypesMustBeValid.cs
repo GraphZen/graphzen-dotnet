@@ -23,7 +23,7 @@ namespace GraphZen.Validation.Rules
         {
         }
 
-        public override VisitAction EnterUnionTypeDefiniton(UnionTypeDefinitionSyntax node)
+        public override VisitAction EnterUnionTypeDefinition(UnionTypeDefinitionSyntax node)
         {
             _unionDefs.AddItem(node.Name.Value, node);
             return false;

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using GraphZen.Execution;
 using GraphZen.Infrastructure;
 using GraphZen.Types;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
 namespace GraphZen.StarWars

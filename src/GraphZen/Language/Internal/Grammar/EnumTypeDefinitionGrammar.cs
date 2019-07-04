@@ -12,7 +12,7 @@ namespace GraphZen.Language.Internal
         /// <summary>
         ///     http://facebook.github.io/graphql/June2018/#EnumTypeDefinition
         /// </summary>
-        private static TokenListParser<TokenKind, EnumTypeDefinitionSyntax> EnumTypeDefiniton { get; } =
+        private static TokenListParser<TokenKind, EnumTypeDefinitionSyntax> EnumTypeDefinition { get; } =
             (from desc in Parse.Ref(() => Description).OptionalOrDefault()
              from @enum in Keyword("enum")
              from name in Name

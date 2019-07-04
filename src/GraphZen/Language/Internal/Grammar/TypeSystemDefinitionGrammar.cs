@@ -20,7 +20,7 @@ namespace GraphZen.Language.Internal
                 .Or(Parse.Ref(() => ObjectTypeDefinition).Select(_ => (TypeDefinitionSyntax) _).Try())
                 .Or(Parse.Ref(() => InterfaceTypeDefinition).Select(_ => (TypeDefinitionSyntax) _).Try())
                 .Or(Parse.Ref(() => UnionTypeDefinition).Select(_ => (TypeDefinitionSyntax) _).Try())
-                .Or(Parse.Ref(() => EnumTypeDefiniton).Select(_ => (TypeDefinitionSyntax) _).Try())
+                .Or(Parse.Ref(() => EnumTypeDefinition).Select(_ => (TypeDefinitionSyntax) _).Try())
                 .Or(Parse.Ref(() => InputObjectTypeDefinition).Select(_ => (TypeDefinitionSyntax) _).Try())
                 .Named("type definition");
     }

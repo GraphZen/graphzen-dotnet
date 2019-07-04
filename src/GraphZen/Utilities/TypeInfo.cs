@@ -7,9 +7,9 @@ using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.Internal;
 using GraphZen.Language;
-using GraphZen.Types;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-using static GraphZen.Types.Introspection;
+using static GraphZen.TypeSystem.Introspection;
 
 namespace GraphZen.Utilities
 {

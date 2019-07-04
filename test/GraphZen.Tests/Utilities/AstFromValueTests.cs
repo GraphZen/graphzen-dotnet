@@ -5,12 +5,13 @@ using System;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Types;
+using GraphZen.TypeSystem;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Language.SyntaxFactory;
 using static GraphZen.Utilities.Helpers;
-using ListType = GraphZen.Types.ListType;
+using ListType = GraphZen.TypeSystem.ListType;
 
 namespace GraphZen
 {

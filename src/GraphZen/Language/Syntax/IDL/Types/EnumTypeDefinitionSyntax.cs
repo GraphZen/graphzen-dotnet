@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 namespace GraphZen.Language
 {
     /// <summary>
-    ///     Enum type definiton
+    ///     Enum type Definition
     ///     http://facebook.github.io/graphql/June2018/#EnumTypeDefinition
     /// </summary>
     public partial class EnumTypeDefinitionSyntax : TypeDefinitionSyntax, IDirectivesSyntax

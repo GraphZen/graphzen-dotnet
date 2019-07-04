@@ -31,7 +31,7 @@ namespace GraphZen.Language.Internal
         {
             var result = ParseDocument("union UndefinedUnion");
             var expected =
-                Document(UnionTypeDefiniton(Name("UndefinedUnion")));
+                Document(UnionTypeDefinition(Name("UndefinedUnion")));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
         }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Language;
-using GraphZen.Types;
+using GraphZen.TypeSystem;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 

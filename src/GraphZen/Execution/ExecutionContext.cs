@@ -9,8 +9,8 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.Language;
-using GraphZen.Types;
-using GraphZen.Types.Internal;
+using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 

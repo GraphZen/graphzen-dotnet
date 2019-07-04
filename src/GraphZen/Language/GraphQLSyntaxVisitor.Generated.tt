@@ -58,7 +58,7 @@ var nodeTypes = new [] {
 "SchemaExtension",
 "SelectionSet",
 "StringValue",
-"UnionTypeDefiniton",
+"UnionTypeDefinition",
 "UnionTypeExtension",
 "VariableDefinition",
 "Variable"

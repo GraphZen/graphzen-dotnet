@@ -28,7 +28,7 @@ namespace GraphZen.Validation.Rules
 
         public override VisitAction EnterObjectTypeDefinition(ObjectTypeDefinitionSyntax node) => false;
         public override VisitAction EnterInterfaceTypeDefinition(InterfaceTypeDefinitionSyntax node) => false;
-        public override VisitAction EnterUnionTypeDefiniton(UnionTypeDefinitionSyntax node) => false;
+        public override VisitAction EnterUnionTypeDefinition(UnionTypeDefinitionSyntax node) => false;
         public override VisitAction EnterInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) => false;
 
         public override VisitAction EnterNamedType(NamedTypeSyntax node)

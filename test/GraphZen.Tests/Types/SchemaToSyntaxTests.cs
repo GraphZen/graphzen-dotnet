@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Language;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Language.SyntaxFactory;

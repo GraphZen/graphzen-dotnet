@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.Types;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 

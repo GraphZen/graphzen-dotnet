@@ -11,6 +11,7 @@ using GraphZen.Internal;
 using GraphZen.Language;
 using GraphZen.Language.Internal;
 using GraphZen.Types;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 

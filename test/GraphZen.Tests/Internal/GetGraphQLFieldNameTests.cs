@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
-using GraphZen.Types.Internal;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 

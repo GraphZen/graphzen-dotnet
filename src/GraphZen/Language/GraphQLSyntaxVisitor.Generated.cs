@@ -253,10 +253,10 @@ namespace GraphZen.Language
         public virtual void LeaveStringValue([NotNull] StringValueSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="UnionTypeDefinitionSyntax" /> node.</summary>
-        public virtual void EnterUnionTypeDefiniton([NotNull] UnionTypeDefinitionSyntax node) => OnEnter(node);
+        public virtual void EnterUnionTypeDefinition([NotNull] UnionTypeDefinitionSyntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="UnionTypeDefinitionSyntax" /> node.</summary>
-        public virtual void LeaveUnionTypeDefiniton([NotNull] UnionTypeDefinitionSyntax node) => OnLeave(node);
+        public virtual void LeaveUnionTypeDefinition([NotNull] UnionTypeDefinitionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="UnionTypeExtensionSyntax" /> node.</summary>
         public virtual void EnterUnionTypeExtension([NotNull] UnionTypeExtensionSyntax node) => OnEnter(node);
@@ -530,10 +530,10 @@ namespace GraphZen.Language
         public virtual TResult LeaveStringValue([NotNull] StringValueSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="UnionTypeDefinitionSyntax" /> node.</summary>
-        public virtual TResult EnterUnionTypeDefiniton([NotNull] UnionTypeDefinitionSyntax node) => OnEnter(node);
+        public virtual TResult EnterUnionTypeDefinition([NotNull] UnionTypeDefinitionSyntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="UnionTypeDefinitionSyntax" /> node.</summary>
-        public virtual TResult LeaveUnionTypeDefiniton([NotNull] UnionTypeDefinitionSyntax node) => OnLeave(node);
+        public virtual TResult LeaveUnionTypeDefinition([NotNull] UnionTypeDefinitionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="UnionTypeExtensionSyntax" /> node.</summary>
         public virtual TResult EnterUnionTypeExtension([NotNull] UnionTypeExtensionSyntax node) => OnEnter(node);

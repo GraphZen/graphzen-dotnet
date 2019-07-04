@@ -3,7 +3,7 @@
 
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Types.Internal;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 

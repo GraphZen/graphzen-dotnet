@@ -2,7 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
-using GraphZen.Types;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
 namespace GraphZen.Utilities.Internal

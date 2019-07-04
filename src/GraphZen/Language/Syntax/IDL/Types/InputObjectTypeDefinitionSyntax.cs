@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 namespace GraphZen.Language
 {
     /// <summary>
-    ///     Input object type definiton
+    ///     Input object type Definition
     ///     http://facebook.github.io/graphql/June2018/#InputObjectTypeDefinition
     /// </summary>
     public partial class InputObjectTypeDefinitionSyntax : TypeDefinitionSyntax, IDirectivesSyntax

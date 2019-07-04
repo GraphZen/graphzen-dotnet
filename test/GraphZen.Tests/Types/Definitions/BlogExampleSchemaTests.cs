@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 

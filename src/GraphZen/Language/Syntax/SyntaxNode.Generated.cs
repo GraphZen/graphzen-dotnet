@@ -130,7 +130,7 @@ namespace GraphZen.Language
         StringValue,
 
         /// <summary>Indicates an <see cref="UnionTypeDefinitionSyntax" /> node.</summary>
-        UnionTypeDefiniton,
+        UnionTypeDefinition,
 
         /// <summary>Indicates an <see cref="UnionTypeExtensionSyntax" /> node.</summary>
         UnionTypeExtension,
@@ -1271,29 +1271,29 @@ namespace GraphZen.Language
         public static IReadOnlyList<UnionTypeDefinitionSyntax> EmptyList { get; } =
             new List<UnionTypeDefinitionSyntax>(0).AsReadOnly();
 
-        public override SyntaxKind Kind { get; } = SyntaxKind.UnionTypeDefiniton;
+        public override SyntaxKind Kind { get; } = SyntaxKind.UnionTypeDefinition;
 
         /// <summary>Called when a <see cref="GraphQLSyntaxVisitor" /> enters a <see cref="UnionTypeDefinitionSyntax" /> node.</summary>
         public override void VisitEnter([NotNull] GraphQLSyntaxVisitor visitor) =>
-            visitor.EnterUnionTypeDefiniton(this);
+            visitor.EnterUnionTypeDefinition(this);
 
         /// <summary>Called when a <see cref="GraphQLSyntaxVisitor" /> leaves a <see cref="UnionTypeDefinitionSyntax" /> node.</summary>
         public override void VisitLeave([NotNull] GraphQLSyntaxVisitor visitor) =>
-            visitor.LeaveUnionTypeDefiniton(this);
+            visitor.LeaveUnionTypeDefinition(this);
 
         /// <summary>
         ///     Called when a <see cref="GraphQLSyntaxVisitor{TResult}" /> enters a <see cref="UnionTypeDefinitionSyntax" />
         ///     node.
         /// </summary>
         public override TResult VisitEnter<TResult>([NotNull] GraphQLSyntaxVisitor<TResult> visitor) =>
-            visitor.EnterUnionTypeDefiniton(this);
+            visitor.EnterUnionTypeDefinition(this);
 
         /// <summary>
         ///     Called when a <see cref="GraphQLSyntaxVisitor{TResult}" /> leaves a <see cref="UnionTypeDefinitionSyntax" />
         ///     node.
         /// </summary>
         public override TResult VisitLeave<TResult>([NotNull] GraphQLSyntaxVisitor<TResult> visitor) =>
-            visitor.LeaveUnionTypeDefiniton(this);
+            visitor.LeaveUnionTypeDefinition(this);
     }
 
     public sealed partial class UnionTypeExtensionSyntax

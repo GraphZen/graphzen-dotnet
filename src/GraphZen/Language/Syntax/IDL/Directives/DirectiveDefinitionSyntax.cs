@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 namespace GraphZen.Language
 {
     /// <summary>
-    ///     Directive definiton (type system)
+    ///     Directive Definition (type system)
     ///     http://facebook.github.io/graphql/June2018/#DirectiveDefinition
     /// </summary>
     public partial class DirectiveDefinitionSyntax : TypeSystemDefinitionSyntax, INamedSyntax, IDescribedSyntax

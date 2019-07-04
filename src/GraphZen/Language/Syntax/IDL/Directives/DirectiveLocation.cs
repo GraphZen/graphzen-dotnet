@@ -44,7 +44,7 @@ namespace GraphZen.Language
         [Description("Location adjacent to an object type definition.")] [GraphQLName("OBJECT")]
         Object,
 
-        [Description("Location adjacent to a field definiton.")] [GraphQLName("FIELD_DEFINITION")]
+        [Description("Location adjacent to a field Definition.")] [GraphQLName("FIELD_DEFINITION")]
         FieldDefinition,
 
         [Description("Location adjacent to an argument definition.")] [GraphQLName("ARGUMENT_DEFINITION")]
@@ -53,7 +53,7 @@ namespace GraphZen.Language
         [Description("Location adjacent to an interface definition.")] [GraphQLName("INTERFACE")]
         Interface,
 
-        [Description("Location adjacent to a union definiton.")] [GraphQLName("UNION")]
+        [Description("Location adjacent to a union Definition.")] [GraphQLName("UNION")]
         Union,
 
         [Description("Location adjacent to an enum definition.")] [GraphQLName("ENUM")]
@@ -62,7 +62,7 @@ namespace GraphZen.Language
         [Description("Location adjacent to an enum value definition.")] [GraphQLName("ENUM_VALUE")]
         EnumValue,
 
-        [Description("Location adjacent to an input object type definiton.")] [GraphQLName("INPUT_OBJECT")]
+        [Description("Location adjacent to an input object type Definition.")] [GraphQLName("INPUT_OBJECT")]
         InputObject,
 
         [Description("Location adjacent to an input object field definition.")] [GraphQLName("INPUT_FIELD_DEFINITION")]

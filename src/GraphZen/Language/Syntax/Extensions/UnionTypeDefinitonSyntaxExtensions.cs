@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 namespace GraphZen.Language
 {
     [UsedImplicitly]
-    public static class UnionTypeDefinitonSyntaxExtensions
+    public static class UnionTypeDefinitionSyntaxExtensions
     {
     }
 }

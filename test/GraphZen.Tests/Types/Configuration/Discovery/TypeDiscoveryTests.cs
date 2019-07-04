@@ -5,10 +5,11 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Types.Internal;
+using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.Types.Internal.ConfigurationSource;
+using static GraphZen.TypeSystem.Internal.ConfigurationSource;
 
 // ReSharper disable InconsistentNaming
 
