@@ -65,6 +65,8 @@ namespace GraphZen.QueryEngine
 
         public object RootValue { get; }
 
+
+
         private static Maybe<object> DefaultFieldResovler(object source, [NotNull] dynamic args,
             [NotNull] GraphQLContext context,
             [NotNull] ResolveInfo info)
@@ -292,5 +294,22 @@ namespace GraphZen.QueryEngine
             {
             }
         }
+
+        [NotNull]
+        internal ResolveInfo Build( [NotNull] Field fieldDefinition,
+            [NotNull] [ItemNotNull] IReadOnlyList<FieldSyntax> fieldNodes, IFieldsContainer parentType,
+            ResponsePath path) =>
+            new ResolveInfo(
+                fieldNodes[0].Name.Value,
+                fieldNodes,
+                fieldDefinition.FieldType,
+                parentType,
+                path,
+                this.Schema,
+                this.Fragments,
+                this.Operation,
+                this.VariableValues,
+                this.RootValue
+            );
     }
 }

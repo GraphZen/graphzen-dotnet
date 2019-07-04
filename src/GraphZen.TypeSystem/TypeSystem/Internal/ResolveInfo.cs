@@ -4,14 +4,13 @@
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.QueryEngine;
 
 
 namespace GraphZen.TypeSystem
 {
     public class ResolveInfo
     {
-        private ResolveInfo(string fieldName, IReadOnlyList<FieldSyntax> fieldNodes, IGraphQLType returnType,
+        internal ResolveInfo(string fieldName, IReadOnlyList<FieldSyntax> fieldNodes, IGraphQLType returnType,
             IFieldsContainer parentType, ResponsePath path, Schema schema,
             IReadOnlyDictionary<string, FragmentDefinitionSyntax> fragments, OperationDefinitionSyntax operation,
             IReadOnlyDictionary<string, object> variableValues, object rootValue)
@@ -54,22 +53,6 @@ namespace GraphZen.TypeSystem
         public OperationDefinitionSyntax Operation { get; }
         public IReadOnlyDictionary<string, object> VariableValues { get; }
 
-        [NotNull]
-        internal static ResolveInfo Build(
-            [NotNull] ExecutionContext exeContext, [NotNull] Field fieldDefinition,
-            [NotNull] [ItemNotNull] IReadOnlyList<FieldSyntax> fieldNodes, IFieldsContainer parentType,
-            ResponsePath path) =>
-            new ResolveInfo(
-                fieldNodes[0].Name.Value,
-                fieldNodes,
-                fieldDefinition.FieldType,
-                parentType,
-                path,
-                exeContext.Schema,
-                exeContext.Fragments,
-                exeContext.Operation,
-                exeContext.VariableValues,
-                exeContext.RootValue
-            );
+        
     }
 }

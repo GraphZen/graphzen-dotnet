@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
 
 
@@ -45,7 +46,7 @@ namespace GraphZen.TypeSystem
             _syntax = new Lazy<InputValueDefinitionSyntax>(() =>
                 new InputValueDefinitionSyntax(SyntaxFactory.Name(name), InputType.ToTypeSyntax(),
                     SyntaxHelpers.Description(Description),
-                    Helpers.AstFromValue(hasDefaultValue ? Maybe.Some(defaultValue) : Maybe.None<object>(),
+                    AstFromValue.Get(hasDefaultValue ? Maybe.Some(defaultValue) : Maybe.None<object>(),
                         InputType)));
             DeclaringMember = declaringMember;
         }

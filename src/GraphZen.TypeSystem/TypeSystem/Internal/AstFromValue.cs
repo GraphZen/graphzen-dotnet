@@ -6,19 +6,16 @@ using System.Collections;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem;
+using GraphZen.Utilities;
 using GraphZen.Utilities.Internal;
-
 using Newtonsoft.Json.Linq;
-using static GraphZen.LanguageModel.SyntaxFactory;
-using static GraphZen.Infrastructure.InternalNumerics;
 
-namespace GraphZen.Utilities
+namespace GraphZen.TypeSystem.Internal
 {
-    public static partial class Helpers
+    public static class AstFromValue
     {
         [CanBeNull]
-        public static ValueSyntax AstFromValue(Maybe<object> maybeValue, IGraphQLType type)
+        public static ValueSyntax Get(Maybe<object> maybeValue, IGraphQLType type)
         {
             if (!(maybeValue is Some<object> someValue))
             {
@@ -29,13 +26,13 @@ namespace GraphZen.Utilities
 
             if (type is NonNullType nn)
             {
-                var astValue = AstFromValue(maybeValue, nn.OfType);
+                var astValue = Get(maybeValue, nn.OfType);
                 return astValue is NullValueSyntax ? null : astValue;
             }
 
             if (value == null)
             {
-                return NullValue();
+                return SyntaxFactory.NullValue();
             }
 
             if (type is ListType list)
@@ -46,17 +43,17 @@ namespace GraphZen.Utilities
                     var valueNodes = new List<ValueSyntax>();
                     foreach (var item in collection)
                     {
-                        var itemNode = AstFromValue(Maybe.Some(item), itemType);
+                        var itemNode = Get(Maybe.Some(item), itemType);
                         if (itemNode != null)
                         {
                             valueNodes.Add(itemNode);
                         }
                     }
 
-                    return ListValue(valueNodes);
+                    return SyntaxFactory.ListValue(valueNodes);
                 }
 
-                return AstFromValue(maybeValue, itemType);
+                return Get(maybeValue, itemType);
             }
 
             if (type is InputObjectType inputObject)
@@ -67,15 +64,15 @@ namespace GraphZen.Utilities
                 {
                     if (valueDictionary.TryGetValue(field.Name, out var fv))
                     {
-                        var fieldValue = AstFromValue(Maybe.Some(fv), field.InputType);
+                        var fieldValue = Get(Maybe.Some(fv), field.InputType);
                         if (fieldValue != null)
                         {
-                            fieldsNodes.Add(ObjectField(Name(field.Name), fieldValue));
+                            fieldsNodes.Add(SyntaxFactory.ObjectField(SyntaxFactory.Name(field.Name), fieldValue));
                         }
                     }
                 }
 
-                return ObjectValue(fieldsNodes);
+                return SyntaxFactory.ObjectValue(fieldsNodes);
             }
 
             if (type is ILeafType leafType)
@@ -90,27 +87,27 @@ namespace GraphZen.Utilities
 
                 if (someSerialized.Value is bool boolean)
                 {
-                    return BooleanValue(boolean);
+                    return SyntaxFactory.BooleanValue(boolean);
                 }
 
-                if (IsNumber(someSerialized.Value))
+                if (InternalNumerics.IsNumber(someSerialized.Value))
                 {
-                    if (TryGetWholeDouble(someSerialized.Value, out var wholeResult))
+                    if (InternalNumerics.TryGetWholeDouble(someSerialized.Value, out var wholeResult))
                     {
-                        if (TryConvertToInt32(wholeResult, out var intValue))
+                        if (InternalNumerics.TryConvertToInt32(wholeResult, out var intValue))
                         {
-                            return IntValue(intValue);
+                            return SyntaxFactory.IntValue(intValue);
                         }
                     }
 
-                    return FloatValue(value.ToString().ToLower());
+                    return SyntaxFactory.FloatValue(value.ToString().ToLower());
                 }
 
                 if (someSerialized.Value is string strVal)
                 {
                     if (type is EnumType)
                     {
-                        return EnumValue(Name(strVal));
+                        return SyntaxFactory.EnumValue(SyntaxFactory.Name(strVal));
                     }
 
 
@@ -118,15 +115,15 @@ namespace GraphZen.Utilities
                     {
                         if (!strVal.TrimStart('-', '+').StartsWith("0") && double.TryParse(strVal, out var numeric))
                         {
-                            if (TryGetWholeDouble(numeric, out var whole) &&
-                                TryConvertToInt32(whole, out var intVal))
+                            if (InternalNumerics.TryGetWholeDouble(numeric, out var whole) &&
+                                InternalNumerics.TryConvertToInt32(whole, out var intVal))
                             {
-                                return IntValue(intVal);
+                                return SyntaxFactory.IntValue(intVal);
                             }
                         }
                     }
 
-                    return StringValue(strVal);
+                    return SyntaxFactory.StringValue(strVal);
                 }
 
                 throw new Exception($"Cannot convert value to AST: {serialized.Inspect()}");

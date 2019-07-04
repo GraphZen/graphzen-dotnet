@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
 
 
@@ -96,7 +97,7 @@ namespace GraphZen.TypeSystem
                     {
                         if (input.HasDefaultValue)
                         {
-                            var ast = Helpers.AstFromValue(Maybe.Some(input.DefaultValue), input.InputType);
+                            var ast = AstFromValue.Get(Maybe.Some(input.DefaultValue), input.InputType);
                             return ast.ToSyntaxString();
                         }
 

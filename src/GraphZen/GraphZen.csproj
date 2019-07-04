@@ -23,19 +23,6 @@
     <ProjectReference Include="..\GraphZen.Abstractions\GraphZen.Abstractions.csproj" />
     <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
     <ProjectReference Include="..\GraphZen.LanguageModel\GraphZen.LanguageModel.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Internal\GraphZenDictionaryContainerExtensions.Generated.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GraphZenDictionaryContainerExtensions.Generated.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Internal\GraphZenDictionaryContainerExtensions.Generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GraphZenDictionaryContainerExtensions.Generated.tt</DependentUpon>
-    </Compile>
+    <ProjectReference Include="..\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
   </ItemGroup>
 </Project>

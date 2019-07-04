@@ -4,6 +4,9 @@
     <Description>GraphQL language AST syntax model, parser, printer, and visitor utilities.</Description>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\GraphZen.Infrastructure\Infrastructure\InternalsVisibleToGraphZen.cs" Link="InternalsVisibleToGraphZen.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Superpower" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

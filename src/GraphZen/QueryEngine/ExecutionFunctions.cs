@@ -190,7 +190,7 @@ namespace GraphZen.QueryEngine
             }
 
 
-            var info = ResolveInfo.Build(exeContext, fieldDef, fieldNodes, parentType, path);
+            var info = exeContext.Build(fieldDef, fieldNodes, parentType, path);
 
 
             var maybeResult =
