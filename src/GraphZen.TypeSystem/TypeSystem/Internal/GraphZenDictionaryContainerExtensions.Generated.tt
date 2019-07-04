@@ -1,8 +1,7 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ assembly name="System.Core" #>
-<#@ assembly name="C:\Program Files\dotnet\sdk\2.1.4\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\netstandard.dll" #>
+<#@ assembly name="C:\Program Files\dotnet\sdk\2.2.203\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\netstandard.dll" #>
 <#@ assembly name="$(SolutionDir)\src\GraphZen\bin\$(ConfigurationName)\netstandard2.0\GraphZen.dll" #>
-<#@ import namespace="GraphZen.Language" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -16,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.Infrastructure;
 
 

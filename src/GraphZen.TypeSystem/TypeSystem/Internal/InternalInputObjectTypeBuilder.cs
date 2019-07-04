@@ -4,7 +4,6 @@
 using System;
 using System.Reflection;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 
 
 namespace GraphZen.TypeSystem.Internal
