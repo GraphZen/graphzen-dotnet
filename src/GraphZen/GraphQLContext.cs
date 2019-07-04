@@ -9,8 +9,6 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Logging;
 using GraphZen.Types;
-using GraphZen.Types.Builders;
-using GraphZen.Types.Builders.Internal;
 using GraphZen.Types.Internal;
 using GraphZen.Utilities;
 using JetBrains.Annotations;

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using GraphZen.Infrastructure;
 using GraphZen.Language;
-using GraphZen.Types.Builders;
 using GraphZen.Types.Internal;
 using GraphZen.Utilities;
 using JetBrains.Annotations;

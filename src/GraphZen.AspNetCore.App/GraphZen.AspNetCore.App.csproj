@@ -2,6 +2,7 @@
   <PropertyGroup>
     <RootNamespace>GraphZen</RootNamespace>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <Description>Meta-package for building GraphQL APIs on ASP.NET Core</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />

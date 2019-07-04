@@ -4,7 +4,6 @@
 using System;
 using GraphZen.Infrastructure;
 using GraphZen.Types;
-using GraphZen.Types.Builders;
 using JetBrains.Annotations;
 
 namespace GraphZen.Internal

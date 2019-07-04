@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
-using GraphZen.Types.Builders;
 using GraphZen.Types.Internal;
 using JetBrains.Annotations;
 

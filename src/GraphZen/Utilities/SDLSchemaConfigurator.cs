@@ -9,7 +9,7 @@ using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.Language;
 using GraphZen.Language.Internal;
-using GraphZen.Types.Builders;
+using GraphZen.Types;
 using JetBrains.Annotations;
 
 namespace GraphZen.Utilities
