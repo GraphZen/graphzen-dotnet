@@ -14,7 +14,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen.Abstractions\GraphZen.Abstractions.csproj" />
+    <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
   </ItemGroup>
 
 
