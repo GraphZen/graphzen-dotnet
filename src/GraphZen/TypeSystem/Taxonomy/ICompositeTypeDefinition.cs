@@ -4,7 +4,7 @@
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Types
+namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
     public interface ICompositeTypeDefinition : IGraphQLTypeDefinition

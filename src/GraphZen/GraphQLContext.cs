@@ -8,8 +8,8 @@ using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Logging;
-using GraphZen.Types;
-using GraphZen.Types.Internal;
+using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 

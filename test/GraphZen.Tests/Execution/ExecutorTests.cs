@@ -7,7 +7,6 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Language;
 using GraphZen.Language.Internal;
-using GraphZen.Types;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;

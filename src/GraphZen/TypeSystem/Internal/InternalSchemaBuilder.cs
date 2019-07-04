@@ -12,7 +12,7 @@ using GraphZen.Language.Internal;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 
-namespace GraphZen.Types.Internal
+namespace GraphZen.TypeSystem.Internal
 {
     public class InternalSchemaBuilder : AnnotatableMemberDefinitionBuilder<SchemaDefinition>
     {
@@ -444,6 +444,7 @@ namespace GraphZen.Types.Internal
                     if (member.Length > 0)
                     {
                         var memberInfo = clrType.GetMember(value.ToString())[0] ??
+                                         // ReSharper disable once ConstantNullCoalescingCondition
                                          throw new InvalidOperationException(
                                              $"Unable to get MemberInfo for enum value of type {enumType}");
                         var (name, nameConfigurationSource) = memberInfo.GetGraphQLNameForEnumValue();

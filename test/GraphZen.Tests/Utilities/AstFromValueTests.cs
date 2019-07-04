@@ -4,7 +4,6 @@
 using System;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Types;
 using GraphZen.TypeSystem;
 using GraphZen.Utilities;
 using JetBrains.Annotations;

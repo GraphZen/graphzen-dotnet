@@ -3,8 +3,7 @@
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
-using GraphZen.Types;
-using GraphZen.Types.Builders;
+using GraphZen.TypeSystem;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 using Newtonsoft.Json;

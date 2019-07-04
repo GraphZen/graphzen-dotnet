@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Language.Internal;
-using GraphZen.Types;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
