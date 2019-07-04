@@ -2,7 +2,7 @@
   <PropertyGroup>
     <RootNamespace>GraphZen</RootNamespace>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Description>Lightweight package for annotating C# object models for building GraphQL schemas with GraphZen</Description>
+    <Description>Code attributes for building code-first GraphQL and APIs with GraphZen.</Description>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
