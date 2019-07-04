@@ -3,8 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using GraphZen.Infrastructure;
-using JetBrains.Annotations;
 
 namespace GraphZen
 {

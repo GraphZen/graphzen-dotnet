@@ -5,7 +5,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.Internal;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.TypeSystem
 {

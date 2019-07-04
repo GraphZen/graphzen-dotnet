@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.QueryEngine
 {

@@ -4,17 +4,13 @@
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Description>Lightweight package for annotating C# object models for building GraphQL schemas with GraphZen</Description>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
-  </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
+    <Compile Include="..\GraphZen.Infrastructure\Infrastructure\InternalsVisibleToGraphZen.cs" Link="InternalsVisibleToGraphZen.cs" />
   </ItemGroup>
 </Project>

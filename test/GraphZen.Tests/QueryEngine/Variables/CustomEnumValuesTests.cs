@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
-using JetBrains.Annotations;
+
 using Xunit;
 
 namespace GraphZen.QueryEngine.Variables

@@ -7,7 +7,7 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.QueryEngine;
 using GraphZen.Utilities;
-using JetBrains.Annotations;
+
 using Xunit;
 
 namespace GraphZen.TypeSystem

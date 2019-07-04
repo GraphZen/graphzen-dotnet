@@ -6,7 +6,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.Validation.Rules
 {

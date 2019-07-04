@@ -8,10 +8,10 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using GraphZen.Utilities.Internal;
-using JetBrains.Annotations;
+
 using Newtonsoft.Json.Linq;
 using static GraphZen.LanguageModel.SyntaxFactory;
-using static GraphZen.InternalNumerics;
+using static GraphZen.Infrastructure.InternalNumerics;
 
 namespace GraphZen.Utilities
 {

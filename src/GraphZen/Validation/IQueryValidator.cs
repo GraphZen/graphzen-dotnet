@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.Validation
 {

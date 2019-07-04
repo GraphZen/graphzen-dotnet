@@ -4,7 +4,7 @@
 using System;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.TypeSystem.Internal
 {

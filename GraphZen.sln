@@ -34,7 +34,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.Playground.AspNetCore", "src\GraphZen.Playground.AspNetCore\GraphZen.Playground.AspNetCore.csproj", "{1CF20CAB-3EFE-47AB-AB1E-ECB48C9409BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.LanguageModel", "src\GraphZen.LanguageModel\GraphZen.LanguageModel.csproj", "{CDFA3EAA-6BEB-439D-8D0C-EDB7F8654349}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.LanguageModel", "src\GraphZen.LanguageModel\GraphZen.LanguageModel.csproj", "{CDFA3EAA-6BEB-439D-8D0C-EDB7F8654349}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.TypeSystem", "src\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj", "{3C39E871-D013-4C8C-92EA-24A37AC9D111}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +84,10 @@ Global
 		{CDFA3EAA-6BEB-439D-8D0C-EDB7F8654349}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDFA3EAA-6BEB-439D-8D0C-EDB7F8654349}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDFA3EAA-6BEB-439D-8D0C-EDB7F8654349}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C39E871-D013-4C8C-92EA-24A37AC9D111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C39E871-D013-4C8C-92EA-24A37AC9D111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C39E871-D013-4C8C-92EA-24A37AC9D111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C39E871-D013-4C8C-92EA-24A37AC9D111}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{224B1B5A-EAD8-412C-BA37-D64662BB675A} = {C7EEE575-7E89-4398-8289-A93D008346E1}
 		{1CF20CAB-3EFE-47AB-AB1E-ECB48C9409BF} = {C7EEE575-7E89-4398-8289-A93D008346E1}
 		{CDFA3EAA-6BEB-439D-8D0C-EDB7F8654349} = {C7EEE575-7E89-4398-8289-A93D008346E1}
+		{3C39E871-D013-4C8C-92EA-24A37AC9D111} = {C7EEE575-7E89-4398-8289-A93D008346E1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F2A2408-678E-4184-B769-5C46F0B10F25}

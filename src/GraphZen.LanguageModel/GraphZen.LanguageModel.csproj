@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <RootNamespace>GraphZen.LanguageModel</RootNamespace>
-
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="Superpower" Version="2.2.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
@@ -22,12 +19,12 @@
 
 
   <ItemGroup>
-    <Compile Update="GraphQLSyntaxVisitor.Generated.cs">
+    <Compile Update="LanguageModel\GraphQLSyntaxVisitor.Generated.cs">
       <DependentUpon>GraphQLSyntaxVisitor.Generated.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Syntax\SyntaxNode.Generated.cs">
+    <Compile Update="LanguageModel\Syntax\SyntaxNode.Generated.cs">
       <DependentUpon>SyntaxNode.Generated.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -35,11 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="GraphQLSyntaxVisitor.Generated.tt">
+    <None Update="LanguageModel\GraphQLSyntaxVisitor.Generated.tt">
       <LastGenOutput>GraphQLSyntaxVisitor.Generated.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-    <None Update="Syntax\SyntaxNode.Generated.tt">
+    <None Update="LanguageModel\Syntax\SyntaxNode.Generated.tt">
       <LastGenOutput>SyntaxNode.Generated.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>

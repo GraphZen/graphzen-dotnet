@@ -9,7 +9,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal.Grammar;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.TypeSystem
 {

@@ -4,7 +4,7 @@
 using System;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.TypeSystem
 {

@@ -4,9 +4,9 @@
 using System;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+
 using Xunit;
-using static GraphZen.StringUtils;
+using static GraphZen.Infrastructure.StringUtils;
 
 namespace GraphZen.Infrastructure
 {

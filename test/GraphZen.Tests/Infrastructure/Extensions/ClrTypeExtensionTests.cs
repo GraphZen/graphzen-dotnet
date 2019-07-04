@@ -8,7 +8,7 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
-using JetBrains.Annotations;
+
 using Xunit;
 
 namespace GraphZen.Infrastructure

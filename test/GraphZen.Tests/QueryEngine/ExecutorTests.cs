@@ -9,7 +9,7 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
-using JetBrains.Annotations;
+
 using Newtonsoft.Json;
 using Xunit;
 

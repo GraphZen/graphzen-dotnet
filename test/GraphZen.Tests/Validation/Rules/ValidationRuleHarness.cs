@@ -11,7 +11,7 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
 using GraphZen.Utilities;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.Validation.Rules
 {

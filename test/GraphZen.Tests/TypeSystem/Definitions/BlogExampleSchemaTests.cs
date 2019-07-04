@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
-using JetBrains.Annotations;
+
 using Xunit;
 
 namespace GraphZen.TypeSystem

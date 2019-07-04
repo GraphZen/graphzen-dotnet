@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.Utilities;
-using JetBrains.Annotations;
+
 using Newtonsoft.Json;
 
 namespace GraphZen.QueryEngine.Variables

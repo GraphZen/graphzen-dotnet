@@ -9,7 +9,7 @@ using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal.Grammar;
-using JetBrains.Annotations;
+
 using static GraphZen.LanguageModel.DirectiveLocation;
 
 namespace GraphZen.Validation.Rules

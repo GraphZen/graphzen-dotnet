@@ -8,7 +8,7 @@ using GraphZen.Infrastructure.Extensions;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
-using JetBrains.Annotations;
+
 using static GraphZen.TypeSystem.Introspection;
 
 namespace GraphZen.Utilities

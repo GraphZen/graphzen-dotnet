@@ -11,7 +11,7 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.QueryEngine;
 using GraphZen.TypeSystem;
-using JetBrains.Annotations;
+
 using Xunit;
 
 namespace GraphZen

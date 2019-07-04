@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.TypeSystem
 {

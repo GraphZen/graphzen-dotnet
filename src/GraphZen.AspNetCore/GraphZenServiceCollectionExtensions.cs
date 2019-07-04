@@ -7,7 +7,7 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Logging;
 using GraphZen.Validation;
-using JetBrains.Annotations;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

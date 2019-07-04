@@ -6,7 +6,7 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.Utilities;
-using JetBrains.Annotations;
+
 using Xunit;
 using static GraphZen.LanguageModel.SyntaxFactory;
 using static GraphZen.Utilities.Helpers;

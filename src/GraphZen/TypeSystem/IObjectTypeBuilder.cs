@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.TypeSystem
 {

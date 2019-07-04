@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Reflection;
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+
 
 namespace GraphZen.TypeSystem.Internal
 {

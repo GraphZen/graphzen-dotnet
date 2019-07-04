@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+
 using Xunit;
 
 namespace GraphZen.Validation.Rules
