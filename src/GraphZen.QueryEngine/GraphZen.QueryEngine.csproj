@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Description>Code attributes for building code-first GraphQL and APIs with GraphZen.</Description>
+    <Description>GraphZen query execution engine for GraphQL. Not intended for stand-alone usage, install GraphZen.AspNetCore.App to to build and host GraphQL APIs.</Description>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
@@ -9,4 +9,8 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
+  </ItemGroup>
 </Project>
+

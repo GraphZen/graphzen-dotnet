@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
-using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 

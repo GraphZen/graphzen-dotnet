@@ -4,7 +4,6 @@
 using System.ComponentModel;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
-using GraphZen.Internal;
 
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local

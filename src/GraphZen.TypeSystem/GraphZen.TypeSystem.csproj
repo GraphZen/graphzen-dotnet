@@ -4,10 +4,7 @@
     <Description>Object model for the GraphQL type system for creating, inspecting and manipulating GraphQL schemas.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\GraphZen.Infrastructure\Infrastructure\InternalsVisibleToGraphZen.cs" Link="InternalsVisibleToGraphZen.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Superpower" Version="2.2.0" />
+    <Compile Include="..\Shared\DictionaryContainerCodeGenerator.cs" Link="DictionaryContainerCodeGenerator.cs" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
@@ -23,9 +20,6 @@
       <LastGenOutput>GraphZenDictionaryContainerExtensions.Generated.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="TypeSystem\Internal\GraphZenDictionaryContainerExtensions.Generated.cs">
