@@ -10,7 +10,6 @@ using GraphZen.Infrastructure;
 using GraphZen.Logging;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.Utilities;
 
 
 namespace GraphZen

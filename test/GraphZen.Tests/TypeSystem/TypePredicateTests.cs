@@ -3,8 +3,7 @@
 
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Utilities;
-
+using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 
 namespace GraphZen.TypeSystem
@@ -23,7 +22,7 @@ namespace GraphZen.TypeSystem
             _.Union("Union").OfTypes("Object");
             _.Enum("Enum").Value("foo");
             _.InputObject("InputObject");
-            _.Scalar("Scalar").Serializer(Maybe.Some).LiteralParser(Maybe.Some<object>).ValueParser(Maybe.Some);
+            _.Scalar("Scalar").Serializer(Maybe.Maybe.Some).LiteralParser(Maybe.Maybe.Some<object>).ValueParser(Maybe.Maybe.Some);
         });
 
         public ObjectType ObjectType { get; } = Schema.GetType<ObjectType>("Object");

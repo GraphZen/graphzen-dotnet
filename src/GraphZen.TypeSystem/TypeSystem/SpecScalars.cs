@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.Utilities;
-using GraphZen.Utilities.Internal;
 
 
 // ReSharper disable PossibleNullReferenceException
@@ -30,12 +28,12 @@ namespace GraphZen.TypeSystem
                     {
                         if (value is string str)
                         {
-                            return Maybe.Some<object>(str);
+                            return Maybe.Maybe.Some<object>(str);
                         }
 
                         if (value is int intVal)
                         {
-                            return Maybe.Some<object>(intVal.ToString());
+                            return Maybe.Maybe.Some<object>(intVal.ToString());
                         }
 
                         throw new Exception($"ID cannot represent value: {value.Inspect()}");
@@ -44,12 +42,12 @@ namespace GraphZen.TypeSystem
                     {
                         if (value is string str)
                         {
-                            return Maybe.Some<object>(str);
+                            return Maybe.Maybe.Some<object>(str);
                         }
 
                         if (InternalNumerics.TryGetWholeDouble(value, out var wholeVal))
                         {
-                            return Maybe.Some<object>(wholeVal.ToString(CultureInfo.InvariantCulture));
+                            return Maybe.Maybe.Some<object>(wholeVal.ToString(CultureInfo.InvariantCulture));
                         }
 
                         throw new Exception($"ID cannot represent value: {value.Inspect()}");
@@ -59,11 +57,11 @@ namespace GraphZen.TypeSystem
                         switch (node)
                         {
                             case StringValueSyntax stringValueNode:
-                                return Maybe.Some<object>(stringValueNode.Value);
+                                return Maybe.Maybe.Some<object>(stringValueNode.Value);
                             case IntValueSyntax intValueNode:
-                                return Maybe.Some<object>(intValueNode.Value);
+                                return Maybe.Maybe.Some<object>(intValueNode.Value);
                             default:
-                                return Maybe.None<object>();
+                                return Maybe.Maybe.None<object>();
                         }
                     });
             }
@@ -77,28 +75,28 @@ namespace GraphZen.TypeSystem
                 {
                     if (value is string str)
                     {
-                        return Maybe.Some<object>(str);
+                        return Maybe.Maybe.Some<object>(str);
                     }
 
                     throw new Exception($"String cannot represent a non string value: {value.Inspect()}");
                 })
                 .LiteralParser(node =>
-                    node is StringValueSyntax svn ? Maybe.Some<object>(svn.Value) : Maybe.None<object>())
+                    node is StringValueSyntax svn ? Maybe.Maybe.Some<object>(svn.Value) : Maybe.Maybe.None<object>())
                 .Serializer(value =>
                 {
                     if (value is string str)
                     {
-                        return Maybe.Some<object>(str);
+                        return Maybe.Maybe.Some<object>(str);
                     }
 
                     if (value is bool boolean)
                     {
-                        return Maybe.Some<object>(boolean ? "true" : "false");
+                        return Maybe.Maybe.Some<object>(boolean ? "true" : "false");
                     }
 
                     if (InternalNumerics.IsNumber(value))
                     {
-                        return Maybe.Some<object>(value.ToString());
+                        return Maybe.Maybe.Some<object>(value.ToString());
                     }
 
                     throw new Exception($"String cannot represent a non string value: {value}");
@@ -117,7 +115,7 @@ namespace GraphZen.TypeSystem
                     {
                         if (InternalNumerics.TryConvertToInt32(wholeNumber, out var intValue))
                         {
-                            return Maybe.Some<object>(intValue);
+                            return Maybe.Maybe.Some<object>(intValue);
                         }
 
                         throw new Exception($"Int cannot represent non 32-bit signed integer value: {value}");
@@ -126,26 +124,26 @@ namespace GraphZen.TypeSystem
                     throw new Exception($"Int cannot represent non-integer value: {value}");
                 })
                 .LiteralParser(
-                    node => node is IntValueSyntax ivn ? Maybe.Some<object>(ivn.Value) : Maybe.None<object>())
+                    node => node is IntValueSyntax ivn ? Maybe.Maybe.Some<object>(ivn.Value) : Maybe.Maybe.None<object>())
                 .Serializer(value =>
 
                 {
                     if (value is bool boolean)
                     {
-                        return Maybe.Some<object>(boolean ? 1 : 0);
+                        return Maybe.Maybe.Some<object>(boolean ? 1 : 0);
                     }
 
 
                     if (value is string str && str != "")
                     {
-                        return Maybe.Some<object>(Convert.ToInt32(value));
+                        return Maybe.Maybe.Some<object>(Convert.ToInt32(value));
                     }
 
                     if (InternalNumerics.TryGetWholeDouble(value, out var wholeNumber))
                     {
                         if (InternalNumerics.TryConvertToInt32(wholeNumber, out var intValue))
                         {
-                            return Maybe.Some<object>(intValue);
+                            return Maybe.Maybe.Some<object>(intValue);
                         }
 
                         throw new Exception($"Int cannot represent non 32-bit signed integer value: {value}");
@@ -167,7 +165,7 @@ namespace GraphZen.TypeSystem
                 {
                     try
                     {
-                        return Maybe.Some<object>(Convert.ToDouble(value));
+                        return Maybe.Maybe.Some<object>(Convert.ToDouble(value));
                     }
                     catch (InvalidCastException e)
                     {
@@ -178,7 +176,7 @@ namespace GraphZen.TypeSystem
                 {
                     try
                     {
-                        return Maybe.Some<object>(Convert.ToDouble(value));
+                        return Maybe.Maybe.Some<object>(Convert.ToDouble(value));
                     }
                     catch (InvalidCastException e)
                     {
@@ -190,11 +188,11 @@ namespace GraphZen.TypeSystem
                     switch (node)
                     {
                         case FloatValueSyntax fvn:
-                            return Maybe.Some<object>(Convert.ToDouble(fvn.Value));
+                            return Maybe.Maybe.Some<object>(Convert.ToDouble(fvn.Value));
                         case IntValueSyntax ivn:
-                            return Maybe.Some<object>(Convert.ToDouble(ivn.Value));
+                            return Maybe.Maybe.Some<object>(Convert.ToDouble(ivn.Value));
                         default:
-                            return Maybe.None<object>();
+                            return Maybe.Maybe.None<object>();
                     }
                 });
         });
@@ -204,10 +202,10 @@ namespace GraphZen.TypeSystem
         public static ScalarType Boolean { get; } = ScalarType.Create<bool>(_ =>
         {
             _.Description("boolean value")
-                .ValueParser(val => Maybe.Some<object>(Convert.ToBoolean(val)))
+                .ValueParser(val => Maybe.Maybe.Some<object>(Convert.ToBoolean(val)))
                 .LiteralParser(
-                    node => node is BooleanValueSyntax bvn ? Maybe.Some<object>(bvn.Value) : Maybe.None<object>())
-                .Serializer(value => Maybe.Some<object>(Convert.ToBoolean(value)));
+                    node => node is BooleanValueSyntax bvn ? Maybe.Maybe.Some<object>(bvn.Value) : Maybe.Maybe.None<object>())
+                .Serializer(value => Maybe.Maybe.Some<object>(Convert.ToBoolean(value)));
         });
 
         [NotNull]

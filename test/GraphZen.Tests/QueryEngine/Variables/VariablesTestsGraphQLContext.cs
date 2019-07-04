@@ -4,8 +4,6 @@
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
-using GraphZen.Utilities;
-
 using Newtonsoft.Json;
 
 namespace GraphZen.QueryEngine.Variables
@@ -17,13 +15,13 @@ namespace GraphZen.QueryEngine.Variables
             schemaBuilder.Scalar("TestComplexScalar")
                 .Description("Complex scalar for test purposes")
                 .LiteralParser(node =>
-                    Maybe.Some<object>((string) node.GetValue() == "SerializedValue" ? "DeserializedValue" : null))
+                    Maybe.Maybe.Some<object>((string) node.GetValue() == "SerializedValue" ? "DeserializedValue" : null))
                 .Serializer(value =>
-                    Maybe.Some<object>(value is string str && str == "DeserializedValue"
+                    Maybe.Maybe.Some<object>(value is string str && str == "DeserializedValue"
                         ? "SerializedValue"
                         : null))
                 .ValueParser(value =>
-                    Maybe.Some((string) value == "SerializedValue" ? "DeserializedValue" : null).Cast<object>());
+                    Maybe.Maybe.Some((string) value == "SerializedValue" ? "DeserializedValue" : null).Cast<object>());
 
             schemaBuilder.InputObject("TestInputObject")
                 .Field("a", "String")

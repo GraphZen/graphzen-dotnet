@@ -5,7 +5,6 @@ using System;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.Utilities;
 
 
 namespace GraphZen.TypeSystem

@@ -10,7 +10,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class UnionTypesMustBeValidTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.UnionTypesMustBeValid;
+        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.UnionTypesMustBeValid;
 
         [Fact]
         public void AcceptsUnionTypeWithMemberTypes() => SDLShouldPass(@"

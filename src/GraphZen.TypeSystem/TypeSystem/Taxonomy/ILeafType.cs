@@ -3,10 +3,9 @@
 
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.Utilities;
+using GraphZen.Maybe;
 
-
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface ILeafType : INamedType

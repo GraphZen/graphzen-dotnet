@@ -4,7 +4,7 @@
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
-using GraphZen.Utilities;
+using GraphZen.TypeSystem.Internal;
 
 
 namespace GraphZen.TypeSystem

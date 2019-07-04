@@ -3,8 +3,7 @@
 
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Utilities.Internal
+namespace GraphZen.Infrastructure
 {
     public interface IInspectable
     {

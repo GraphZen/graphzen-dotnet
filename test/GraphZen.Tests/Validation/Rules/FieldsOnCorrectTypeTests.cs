@@ -3,7 +3,7 @@
 
 using FluentAssertions;
 using GraphZen.Infrastructure;
-
+using GraphZen.QueryEngine.Validation;
 using Xunit;
 using static GraphZen.Validation.Rules.FieldsOnCorrectType;
 
@@ -12,7 +12,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class FieldsOnCorrectTypeTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.FieldsOnCorrectType;
+        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.FieldsOnCorrectType;
 
         [Fact]
         public void ObjectFieldSelection() => QueryShouldPass(@"

@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
+using GraphZen.QueryEngine.Validation;
 
 
 namespace GraphZen.Validation.Rules
@@ -9,6 +10,6 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class ScalarLeafsTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.ScalarLeafs;
+        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ScalarLeafs;
     }
 }

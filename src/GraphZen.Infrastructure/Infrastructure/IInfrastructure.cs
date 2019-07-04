@@ -3,8 +3,7 @@
 
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Utilities
+namespace GraphZen.Infrastructure
 {
     public interface IInfrastructure<out T>
     {

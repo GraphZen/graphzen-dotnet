@@ -9,9 +9,10 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
+using GraphZen.Maybe;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.Utilities;
+using GraphZen.TypeSystem.Taxonomy;
 
 
 namespace GraphZen.QueryEngine
@@ -73,7 +74,7 @@ namespace GraphZen.QueryEngine
         {
             if (source == null)
             {
-                return Maybe.None<object>();
+                return Maybe.Maybe.None<object>();
             }
 
             var fieldNameFirstCharUpper = info.FieldName.FirstCharToUpper();
@@ -136,16 +137,16 @@ namespace GraphZen.QueryEngine
                     }
 
                     var result = meth.Invoke(prop.GetValue(source), parameters.ToArray());
-                    return Maybe.Some(result);
+                    return Maybe.Maybe.Some(result);
                 }
 
-                return Maybe.Some(prop.GetValue(source));
+                return Maybe.Maybe.Some(prop.GetValue(source));
             }
 
             var field = type.GetField(fieldNameFirstCharUpper) ?? type.GetField(info.FieldName);
             if (field != null)
             {
-                return Maybe.Some(field.GetValue(source));
+                return Maybe.Maybe.Some(field.GetValue(source));
             }
 
             var method = type.GetMethod(fieldNameFirstCharUpper) ?? type.GetMethod(info.FieldName);
@@ -174,10 +175,10 @@ namespace GraphZen.QueryEngine
 
                 var methodResult = mi.Invoke(source, parameters.ToArray());
 
-                return Maybe.Some(methodResult);
+                return Maybe.Maybe.Some(methodResult);
             }
 
-            return Maybe.None<object>();
+            return Maybe.Maybe.None<object>();
         }
 
         [NotNull]
@@ -272,12 +273,12 @@ namespace GraphZen.QueryEngine
 
             if (!errors.IsEmpty)
             {
-                return Maybe.None<ExecutionContext>(errors);
+                return Maybe.Maybe.None<ExecutionContext>(errors);
             }
 
             var exeContext =
                 new ExecutionContext(schema, rootValue, fragments, context, operation, variableValues, errors, options);
-            return Maybe.Some(exeContext);
+            return Maybe.Maybe.Some(exeContext);
         }
 
         public void AddError(Exception e)

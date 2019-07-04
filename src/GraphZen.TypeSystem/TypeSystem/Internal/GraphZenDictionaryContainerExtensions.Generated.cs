@@ -1,7 +1,8 @@
 ﻿using System;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Taxonomy;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Internal
 {
     public static class MutableFieldsContainerDefinitionFieldAccessorExtensions
     {
@@ -23,11 +24,8 @@ namespace GraphZen.TypeSystem
             out FieldDefinition fieldDefinition)
             => fields.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out fieldDefinition);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class FieldsContainerDefinitionFieldAccessorExtensions
     {
         [CanBeNull]
@@ -51,11 +49,8 @@ namespace GraphZen.TypeSystem
             [NotNull] string name, out FieldDefinition fieldDefinition)
             => fieldsContainerDefinition.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out fieldDefinition);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class InterfaceTypeDefinitionFieldAccessorExtensions
     {
         [CanBeNull]
@@ -79,11 +74,8 @@ namespace GraphZen.TypeSystem
             [NotNull] string name, out FieldDefinition fieldDefinition)
             => interfaceTypeDefinition.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out fieldDefinition);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class ObjectTypeDefinitionFieldAccessorExtensions
     {
         [CanBeNull]
@@ -106,11 +98,8 @@ namespace GraphZen.TypeSystem
             out FieldDefinition fieldDefinition)
             => objectTypeDefinition.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out fieldDefinition);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class FieldsContainerFieldAccessorExtensions
     {
         [CanBeNull]
@@ -128,11 +117,8 @@ namespace GraphZen.TypeSystem
         public static bool TryGetField([NotNull] this IFieldsContainer fields, [NotNull] string name, out Field field)
             => fields.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out field);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class ObjectTypeFieldAccessorExtensions
     {
         [CanBeNull]
@@ -150,11 +136,8 @@ namespace GraphZen.TypeSystem
         public static bool TryGetField([NotNull] this ObjectType objectType, [NotNull] string name, out Field field)
             => objectType.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out field);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class InterfaceTypeFieldAccessorExtensions
     {
         [CanBeNull]
@@ -175,11 +158,8 @@ namespace GraphZen.TypeSystem
             out Field field)
             => interfaceType.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out field);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class EnumTypeDefinitionValueAccessorExtensions
     {
         [CanBeNull]
@@ -202,11 +182,8 @@ namespace GraphZen.TypeSystem
             out EnumValueDefinition enumValueDefinition)
             => enumTypeDefinition.ValuesByName.TryGetValue(Check.NotNull(name, nameof(name)), out enumValueDefinition);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static partial class EnumTypeValueAccessorExtensions
     {
         [CanBeNull]
@@ -226,11 +203,8 @@ namespace GraphZen.TypeSystem
         public static bool TryGetValue([NotNull] this EnumType enumType, [NotNull] string name, out EnumValue enumValue)
             => enumType.ValuesByName.TryGetValue(Check.NotNull(name, nameof(name)), out enumValue);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static partial class EnumTypeValueAccessorExtensions
     {
         [CanBeNull]
@@ -251,11 +225,8 @@ namespace GraphZen.TypeSystem
             out EnumValue enumValue)
             => enumType.ValuesByValue.TryGetValue(Check.NotNull(value, nameof(value)), out enumValue);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class MutableArgumentsContainerDefinitionArgumentAccessorExtensions
     {
         [CanBeNull]
@@ -279,11 +250,8 @@ namespace GraphZen.TypeSystem
             [NotNull] string name, out ArgumentDefinition argumentDefinition)
             => arguments.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class FieldDefinitionArgumentAccessorExtensions
     {
         [CanBeNull]
@@ -306,11 +274,8 @@ namespace GraphZen.TypeSystem
             out ArgumentDefinition argumentDefinition)
             => fieldDefinition.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class DirectiveDefinitionArgumentAccessorExtensions
     {
         [CanBeNull]
@@ -333,11 +298,8 @@ namespace GraphZen.TypeSystem
             out ArgumentDefinition argumentDefinition)
             => directiveDefinition.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class ArgumentsContainerArgumentAccessorExtensions
     {
         [CanBeNull]
@@ -358,11 +320,8 @@ namespace GraphZen.TypeSystem
             out Argument argument)
             => arguments.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argument);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class FieldArgumentAccessorExtensions
     {
         [CanBeNull]
@@ -382,11 +341,8 @@ namespace GraphZen.TypeSystem
         public static bool TryGetArgument([NotNull] this Field field, [NotNull] string name, out Argument argument)
             => field.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argument);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class DirectiveArgumentAccessorExtensions
     {
         [CanBeNull]
@@ -407,11 +363,8 @@ namespace GraphZen.TypeSystem
             out Argument argument)
             => directive.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argument);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class MutableInputObjectTypeDefinitionFieldAccessorExtensions
     {
         [CanBeNull]
@@ -435,11 +388,8 @@ namespace GraphZen.TypeSystem
             [NotNull] string name, out InputFieldDefinition inputFieldDefinition)
             => inputObjectDefinition.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out inputFieldDefinition);
     }
-}
 
 
-namespace GraphZen.TypeSystem
-{
     public static class InputObjectTypeFieldAccessorExtensions
     {
         [CanBeNull]

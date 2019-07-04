@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Taxonomy;
 
 
 namespace GraphZen.TypeSystem

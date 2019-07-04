@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
+using GraphZen.QueryEngine.Validation;
 
 
 namespace GraphZen.Validation.Rules
@@ -10,6 +11,6 @@ namespace GraphZen.Validation.Rules
     public class InputDocumentNonConflictingVariableInferenceTests : ValidationRuleHarness
     {
         public override ValidationRule RuleUnderTest { get; } =
-            ValidationRules.InputDocumentNonConflictingVariableInference;
+            QueryValidationRules.InputDocumentNonConflictingVariableInference;
     }
 }

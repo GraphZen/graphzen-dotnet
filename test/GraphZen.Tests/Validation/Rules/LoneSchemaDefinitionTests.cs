@@ -9,6 +9,6 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class LoneSchemaDefinitionTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.LoneSchemaDefinition;
+        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.LoneSchemaDefinition;
     }
 }

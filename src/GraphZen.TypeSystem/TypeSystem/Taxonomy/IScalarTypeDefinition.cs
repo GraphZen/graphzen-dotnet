@@ -4,8 +4,7 @@
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
-
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IScalarTypeDefinition :

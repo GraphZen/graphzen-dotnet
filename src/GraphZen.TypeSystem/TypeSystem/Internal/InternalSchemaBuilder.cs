@@ -9,7 +9,6 @@ using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
-using GraphZen.Utilities;
 
 
 namespace GraphZen.TypeSystem.Internal

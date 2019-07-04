@@ -13,10 +13,10 @@ using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
+using GraphZen.Maybe;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.Utilities;
-using GraphZen.Utilities.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 
 
 namespace GraphZen.QueryEngine
@@ -185,7 +185,7 @@ namespace GraphZen.QueryEngine
 
             if (fieldDef == null)
             {
-                return Maybe.None<object>();
+                return Maybe.Maybe.None<object>();
             }
 
 
@@ -213,7 +213,7 @@ namespace GraphZen.QueryEngine
                     {
                         await awaitable;
                         var result = awaitable.GetResult();
-                        maybeResult = Maybe.Some(result);
+                        maybeResult = Maybe.Maybe.Some(result);
                     }
                 }
 
@@ -228,7 +228,7 @@ namespace GraphZen.QueryEngine
                 }
 
                 exeContext.Errors.Add(e.GraphQLError.WithLocationInfo(fieldNodes, path));
-                return Maybe.Some<object>(null);
+                return Maybe.Maybe.Some<object>(null);
             }
             catch (Exception e)
             {
@@ -238,7 +238,7 @@ namespace GraphZen.QueryEngine
                     throw;
                 }
 
-                return Maybe.Some<object>(null);
+                return Maybe.Maybe.Some<object>(null);
             }
         }
 
@@ -270,7 +270,7 @@ namespace GraphZen.QueryEngine
 
                 if (result == null)
                 {
-                    return Maybe.Some<object>(null);
+                    return Maybe.Maybe.Some<object>(null);
                 }
 
                 if (returnType is ListType listType)
@@ -394,7 +394,7 @@ namespace GraphZen.QueryEngine
             }
 
 
-            return Maybe.Some<object>(await CollectAndExecuteSubfields(exeContext, returnType, fieldNodes, info, path,
+            return Maybe.Maybe.Some<object>(await CollectAndExecuteSubfields(exeContext, returnType, fieldNodes, info, path,
                 result));
         }
 
@@ -448,7 +448,7 @@ namespace GraphZen.QueryEngine
             foreach (var item in collection)
             {
                 var fieldPath = path.AddPath(index);
-                var itemValue = Maybe.Some(item);
+                var itemValue = Maybe.Maybe.Some(item);
                 var completedItem =
                     await CompleteValueCatchingErrorAsync(exeContext, itemType, fieldNodes, info, fieldPath, itemValue);
                 if (completedItem is Some<object> some)
@@ -464,7 +464,7 @@ namespace GraphZen.QueryEngine
                 index++;
             }
 
-            return Maybe.Some<object>(completedResults);
+            return Maybe.Maybe.Some<object>(completedResults);
         }
 
         private static async Task<Maybe<object>> ResolveFieldValueOrErrorAsync([NotNull] ExecutionContext exeContext,
@@ -491,21 +491,21 @@ namespace GraphZen.QueryEngine
                     }
                     else
                     {
-                        Maybe.None<object>();
+                        Maybe.Maybe.None<object>();
                     }
                 }
 
                 if (result is Task resultTask && result.GetType() != typeof(Task))
                 {
                     await resultTask;
-                    return Maybe.Some<object>(resultTask);
+                    return Maybe.Maybe.Some<object>(resultTask);
                 }
 
-                return Maybe.Some(result);
+                return Maybe.Maybe.Some(result);
             }
             catch (GraphQLException gqlE)
             {
-                return Maybe.None<object>(gqlE.GraphQLError.WithLocationInfo(fieldNodes, info.Path));
+                return Maybe.Maybe.None<object>(gqlE.GraphQLError.WithLocationInfo(fieldNodes, info.Path));
             }
             catch (Exception e)
             {
@@ -514,7 +514,7 @@ namespace GraphZen.QueryEngine
                     throw;
                 }
 
-                return Maybe.None<object>(new GraphQLError(e.Message, fieldNodes, null,
+                return Maybe.Maybe.None<object>(new GraphQLError(e.Message, fieldNodes, null,
                     null, info.Path.AsReadOnlyList(), e));
             }
         }

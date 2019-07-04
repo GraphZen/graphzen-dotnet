@@ -9,6 +9,6 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class FieldArgsMustBeProperlyNamedTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.FieldArgsMustBeProperlyNamed;
+        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.FieldArgsMustBeProperlyNamed;
     }
 }

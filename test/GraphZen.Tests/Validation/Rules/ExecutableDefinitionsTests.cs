@@ -2,7 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
-
+using GraphZen.QueryEngine.Validation;
 using Xunit;
 
 namespace GraphZen.Validation.Rules
@@ -10,7 +10,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class ExecutableDefinitionsTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.ExecutableDefinitions;
+        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ExecutableDefinitions;
 
         private static ExpectedError NonExecutableDefinition(string defName, int line, int column) =>
             Error(ExecutableDefinitions.NonExecutableDefinitionMessage(defName), (line, column));

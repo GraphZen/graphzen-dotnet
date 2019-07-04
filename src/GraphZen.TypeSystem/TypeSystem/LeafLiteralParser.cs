@@ -3,7 +3,7 @@
 
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.Utilities;
+using GraphZen.Maybe;
 
 
 namespace GraphZen.TypeSystem

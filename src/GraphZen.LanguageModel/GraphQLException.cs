@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+namespace GraphZen
 {
     public class GraphQLException : Exception
     {

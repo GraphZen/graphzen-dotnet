@@ -7,10 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
-
 using Newtonsoft.Json.Linq;
 
-namespace GraphZen.Utilities.Internal
+namespace GraphZen.Infrastructure
 {
     internal static class ValueInspector
     {

@@ -9,10 +9,8 @@ using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal.Grammar;
-using GraphZen.TypeSystem;
 
-
-namespace GraphZen.Utilities
+namespace GraphZen.TypeSystem.Internal
 {
     public class SDLSchemaConfigurator
     {

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.TypeSystem.Taxonomy;
 
 
 namespace GraphZen.TypeSystem

@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
-
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IDirectiveDefinition : INamed, IArgumentsContainerDefinition

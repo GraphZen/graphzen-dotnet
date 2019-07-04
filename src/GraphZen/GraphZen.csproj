@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Description>Code-first GraphQL framework for .NET</Description>
+    <Description>Code-first GraphQL framework for .NET. Use the GraphZen.AspNetCore.App package if you intend to host your GraphQL API with ASP.NET Core.</Description>
   </PropertyGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

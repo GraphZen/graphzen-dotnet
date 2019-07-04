@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.Maybe;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.Utilities;
+using GraphZen.TypeSystem.Taxonomy;
 
 
 namespace GraphZen.TypeSystem

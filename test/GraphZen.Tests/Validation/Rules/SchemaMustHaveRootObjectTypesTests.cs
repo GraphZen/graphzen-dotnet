@@ -10,7 +10,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class SchemaMustHaveRootObjectTypesTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.SchemaMustHaveRootObjectTypes;
+        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.SchemaMustHaveRootObjectTypes;
 
         [Fact]
         public void AcceptsASchemaWhoseQueryTypeIsAnObjectType()

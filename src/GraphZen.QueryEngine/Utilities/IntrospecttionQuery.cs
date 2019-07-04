@@ -3,8 +3,7 @@
 
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.Utilities
+namespace GraphZen
 {
     public static partial class Helpers
     {

@@ -5,7 +5,6 @@ using System.Diagnostics;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.Utilities;
 
 
 namespace GraphZen.TypeSystem

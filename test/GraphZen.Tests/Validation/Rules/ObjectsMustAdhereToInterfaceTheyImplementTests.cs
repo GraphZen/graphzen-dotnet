@@ -11,7 +11,7 @@ namespace GraphZen.Validation.Rules
     public class ObjectsMustAdhereToInterfaceTheyImplementTests : ValidationRuleHarness
     {
         public override ValidationRule RuleUnderTest { get; } =
-            ValidationRules.ObjectsMustAdhereToInterfaceTheyImplement;
+            DocumentValidationRules.ObjectsMustAdhereToInterfaceTheyImplement;
 
         [Fact]
         public void AcceptsAnObjectWhichImplementsAnInterface()

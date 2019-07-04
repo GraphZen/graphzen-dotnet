@@ -6,11 +6,12 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
+using GraphZen.Maybe;
 using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 
-using static GraphZen.TypeSystem.Introspection;
-
-namespace GraphZen.Utilities
+namespace GraphZen
 {
     public class TypeInfo
     {
@@ -50,19 +51,19 @@ namespace GraphZen.Utilities
         {
             var name = node.Name.Value;
 
-            if (name == SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
+            if (name == Introspection.SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
             {
-                return SchemaMetaFieldDef;
+                return Introspection.SchemaMetaFieldDef;
             }
 
-            if (name == TypeMetaFieldDef.Name && schema.QueryType.Equals(parentType))
+            if (name == Introspection.TypeMetaFieldDef.Name && schema.QueryType.Equals(parentType))
             {
-                return TypeMetaFieldDef;
+                return Introspection.TypeMetaFieldDef;
             }
 
-            if (name == TypeNameMetaFieldDef.Name && parentType is ICompositeType)
+            if (name == Introspection.TypeNameMetaFieldDef.Name && parentType is ICompositeType)
             {
-                return TypeNameMetaFieldDef;
+                return Introspection.TypeNameMetaFieldDef;
             }
 
             if (parentType is ObjectType objectType)
@@ -169,8 +170,8 @@ namespace GraphZen.Utilities
 
                     Argument = argDef;
                     _defaultValueStack.Push(argDef != null && argDef.HasDefaultValue
-                        ? Maybe.Some(argDef.DefaultValue)
-                        : Maybe.None<object>());
+                        ? Maybe.Maybe.Some(argDef.DefaultValue)
+                        : Maybe.Maybe.None<object>());
                     _inputTypeStack.Push(argType);
                     break;
                 }
@@ -195,8 +196,8 @@ namespace GraphZen.Utilities
                     }
 
                     _defaultValueStack.Push(inputField != null && inputField.HasDefaultValue
-                        ? Maybe.Some(inputField.DefaultValue)
-                        : Maybe.None<object>());
+                        ? Maybe.Maybe.Some(inputField.DefaultValue)
+                        : Maybe.Maybe.None<object>());
                     _inputTypeStack.Push(inputFieldType);
                     break;
                 }

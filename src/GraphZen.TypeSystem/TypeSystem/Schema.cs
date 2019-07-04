@@ -9,8 +9,8 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
-using GraphZen.Utilities;
-using GraphZen.Utilities.Internal;
+using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 
 
 namespace GraphZen.TypeSystem

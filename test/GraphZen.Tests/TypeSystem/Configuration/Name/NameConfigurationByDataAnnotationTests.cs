@@ -4,7 +4,7 @@
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
-
+using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 
 namespace GraphZen.TypeSystem

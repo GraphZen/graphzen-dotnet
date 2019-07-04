@@ -10,7 +10,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class EnumTypesMustBeWellDefinedTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.EnumTypesMustBeWellDefined;
+        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.EnumTypesMustBeWellDefined;
 
         [Fact]
         public void ItRejectsAnEnumTypeWithoutValues()

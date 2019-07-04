@@ -4,9 +4,9 @@
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.TypeSystem.Taxonomy;
 
-
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Internal
 {
     public class ResolveInfo
     {

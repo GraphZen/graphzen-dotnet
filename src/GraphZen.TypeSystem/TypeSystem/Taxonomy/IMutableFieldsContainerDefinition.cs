@@ -4,8 +4,7 @@
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Taxonomy
 {
     public interface IMutableFieldsContainerDefinition : IFieldsContainerDefinition
     {

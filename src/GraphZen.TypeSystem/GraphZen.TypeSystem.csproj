@@ -3,9 +3,6 @@
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Description>Object model for the GraphQL type system for creating, inspecting and manipulating GraphQL schemas.</Description>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\Shared\DictionaryContainerCodeGenerator.cs" Link="DictionaryContainerCodeGenerator.cs" />
-  </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
   </ItemGroup>
@@ -27,5 +24,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>GraphZenDictionaryContainerExtensions.Generated.tt</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Internal\Maybe\Internal\" />
+    <Folder Include="TypeSystem\Validation\" />
   </ItemGroup>
 </Project>

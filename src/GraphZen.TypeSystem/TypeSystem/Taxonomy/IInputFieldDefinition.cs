@@ -4,8 +4,7 @@
 using System.Reflection;
 using GraphZen.Infrastructure;
 
-
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IInputFieldDefinition : IInputValueDefinition

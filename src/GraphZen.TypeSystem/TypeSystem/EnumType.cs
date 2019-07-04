@@ -8,7 +8,9 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.LanguageModel;
-using GraphZen.Utilities;
+using GraphZen.Maybe;
+using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 
 
 namespace GraphZen.TypeSystem
@@ -55,10 +57,10 @@ namespace GraphZen.TypeSystem
         {
             if (ValuesByValue.TryGetValue(value ?? DBNull.Value, out var enumValue))
             {
-                return Maybe.Some<object>(enumValue.Name);
+                return Maybe.Maybe.Some<object>(enumValue.Name);
             }
 
-            return Maybe.None<object>(
+            return Maybe.Maybe.None<object>(
                 $"{Name} Enum: unable to find enum value that matches resolved value \"{value}\"");
         }
 
@@ -75,11 +77,11 @@ namespace GraphZen.TypeSystem
                 var enumValue = this.FindValue(str);
                 if (enumValue != null)
                 {
-                    return Maybe.Some(enumValue.Value);
+                    return Maybe.Maybe.Some(enumValue.Value);
                 }
             }
 
-            return Maybe.None<object>();
+            return Maybe.Maybe.None<object>();
         }
 
         public Maybe<object> ParseLiteral(ValueSyntax value)
@@ -89,11 +91,11 @@ namespace GraphZen.TypeSystem
                 var enumValue = this.FindValue(enumNode.Value);
                 if (enumValue != null)
                 {
-                    return Maybe.Some(enumValue.Value);
+                    return Maybe.Maybe.Some(enumValue.Value);
                 }
             }
 
-            return Maybe.None<object>();
+            return Maybe.Maybe.None<object>();
         }
 
 

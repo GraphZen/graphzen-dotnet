@@ -13,7 +13,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class InputObjectFieldsMustHaveInputTypesTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.InputObjectFieldsMustHaveInputTypes;
+        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.InputObjectFieldsMustHaveInputTypes;
 
         public static IEnumerable<object[]> GetValidInputFieldScenarios() =>
             from inputType in InputTypes

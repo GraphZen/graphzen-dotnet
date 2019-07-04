@@ -10,7 +10,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class InterfaceExtensionsShouldBeValidTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.InterfaceExtensionsShouldBeValid;
+        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.InterfaceExtensionsShouldBeValid;
 
         [Fact]
         public void RejectsAnObjectImplementingTheExtendedInterfaceDueToMissingField()

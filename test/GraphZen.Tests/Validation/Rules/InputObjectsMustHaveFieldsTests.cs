@@ -10,7 +10,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class InputObjectsMustHaveFieldsTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.InputObjectsMustHaveFields;
+        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.InputObjectsMustHaveFields;
 
         [Fact]
         public void ItAcceptsAnInputObjectTypeWithFields() => SDLShouldPass(@"

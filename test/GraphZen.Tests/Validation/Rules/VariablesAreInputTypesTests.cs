@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
+using GraphZen.QueryEngine.Validation;
 
 
 namespace GraphZen.Validation.Rules
@@ -9,6 +10,6 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class VariablesAreInputTypesTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.VariablesAreInputTypes;
+        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.VariablesAreInputTypes;
     }
 }

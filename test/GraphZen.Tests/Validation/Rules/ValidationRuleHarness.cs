@@ -10,7 +10,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
-using GraphZen.Utilities;
 
 
 namespace GraphZen.Validation.Rules
@@ -125,14 +124,14 @@ namespace GraphZen.Validation.Rules
                     .Argument("opt2", "Int", arg => arg.DefaultValue(0)));
 
             sb.Scalar("Invalid")
-                .Serializer(Maybe.Some)
+                .Serializer(Maybe.Maybe.Some)
                 .LiteralParser(node => throw new Exception("Invalid scalar is always invalid: " + node.GetValue()))
                 .ValueParser(node => throw new Exception("Invalid scalar is always invalid: " + node));
 
             sb.Scalar("Any")
-                .Serializer(Maybe.Some)
-                .LiteralParser(Maybe.Some<object>)
-                .ValueParser(Maybe.Some);
+                .Serializer(Maybe.Maybe.Some)
+                .LiteralParser(Maybe.Maybe.Some<object>)
+                .ValueParser(Maybe.Maybe.Some);
 
             sb.Object("QueryRoot")
                 .Field("human", "Human", _ => _.Argument("id", "ID"))
@@ -163,7 +162,7 @@ namespace GraphZen.Validation.Rules
         private void ExpectValidSDL(ValidationRule rule, string sdl)
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
-            var result = new SchemaValidator(new[] {rule}).Validate(sdlSyntax);
+            var result = new DocumentValidator(new[] {rule}).Validate(sdlSyntax);
             result.Should().BeEmpty("it should validate");
         }
 
@@ -200,7 +199,7 @@ namespace GraphZen.Validation.Rules
             IReadOnlyList<ExpectedError> expectedErrors)
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
-            var result = new SchemaValidator(new[] {rule}).Validate(sdlSyntax)
+            var result = new DocumentValidator(new[] {rule}).Validate(sdlSyntax)
                 // Convert for comparison
                 .Select(e => new ExpectedError(e))
                 .ToArray();

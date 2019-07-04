@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
-
+using GraphZen.QueryEngine.Validation;
 using Xunit;
 
 namespace GraphZen.Validation.Rules
@@ -12,7 +12,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class KnownTypeNamesTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.KnownTypeNames;
+        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.KnownTypeNames;
 
         [Fact]
         public void KnownTypeNamesAreValid() => QueryShouldPass(@"

@@ -7,10 +7,11 @@ using System.Diagnostics;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.Maybe;
 using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Taxonomy;
 
-
-namespace GraphZen.Utilities
+namespace GraphZen
 {
     public static partial class Helpers
     {
@@ -23,14 +24,14 @@ namespace GraphZen.Utilities
 
             if (valueSyntax == null)
             {
-                return Maybe.None<object>();
+                return Maybe.Maybe.None<object>();
             }
 
             if (type is NonNullType nonNull)
             {
                 if (valueSyntax is NullValueSyntax)
                 {
-                    return Maybe.None<object>();
+                    return Maybe.Maybe.None<object>();
                 }
 
                 return ValueFromAst(valueSyntax, nonNull.OfType, variables);
@@ -38,15 +39,15 @@ namespace GraphZen.Utilities
 
             if (valueSyntax is NullValueSyntax)
             {
-                return Maybe.Some<object>(null);
+                return Maybe.Maybe.Some<object>(null);
             }
 
             if (valueSyntax is VariableSyntax variableNode)
             {
                 var variableName = variableNode.Name.Value;
                 return variables != null && variables.TryGetValue(variableName, out var variableValue)
-                    ? Maybe.Some(variableValue)
-                    : Maybe.None<object>();
+                    ? Maybe.Maybe.Some(variableValue)
+                    : Maybe.Maybe.None<object>();
             }
 
             if (type is ListType listType)
@@ -61,7 +62,7 @@ namespace GraphZen.Utilities
                         {
                             if (itemType is NonNullType)
                             {
-                                return Maybe.None<object>();
+                                return Maybe.Maybe.None<object>();
                             }
 
                             coercedValues.Add(null);
@@ -80,7 +81,7 @@ namespace GraphZen.Utilities
                         }
                     }
 
-                    return Maybe.Some<object>(coercedValues);
+                    return Maybe.Maybe.Some<object>(coercedValues);
                 }
 
                 var coerecedValue = ValueFromAst(valueSyntax, itemType, variables);
@@ -111,7 +112,7 @@ namespace GraphZen.Utilities
                             }
                             else if (field.InputType is NonNullType)
                             {
-                                return Maybe.None<object>();
+                                return Maybe.Maybe.None<object>();
                             }
 
                             continue;
@@ -124,14 +125,14 @@ namespace GraphZen.Utilities
                         }
                         else
                         {
-                            return Maybe.None<object>();
+                            return Maybe.Maybe.None<object>();
                         }
                     }
 
-                    return Maybe.Some<object>(coercedObject);
+                    return Maybe.Maybe.Some<object>(coercedObject);
                 }
 
-                return Maybe.None<object>();
+                return Maybe.Maybe.None<object>();
             }
 
             if (type is ILeafType leafType)
@@ -142,7 +143,7 @@ namespace GraphZen.Utilities
                 }
                 catch (Exception)
                 {
-                    return Maybe.None<object>();
+                    return Maybe.Maybe.None<object>();
                 }
             }
 

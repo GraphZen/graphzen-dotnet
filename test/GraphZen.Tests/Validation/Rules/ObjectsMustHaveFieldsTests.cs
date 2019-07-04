@@ -10,7 +10,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class ObjectsMustHaveFieldsTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.ObjectsMustHaveFields;
+        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.ObjectsMustHaveFields;
 
         [Fact]
         public void AcceptsAnObjectTypeWithFieldsObject()

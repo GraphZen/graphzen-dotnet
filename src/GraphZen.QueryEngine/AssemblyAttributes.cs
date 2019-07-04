@@ -5,13 +5,4 @@ using System.Runtime.CompilerServices;
 using GraphZen.Infrastructure;
 
 
-[assembly: InternalsVisibleTo("GraphZen.Tests")]
-[assembly: InternalsVisibleTo("GraphZen")]
-[assembly: InternalsVisibleTo("GraphZen.Infrastructure")]
-[assembly: InternalsVisibleTo("GraphZen.AspNetCore")]
-[assembly: InternalsVisibleTo("GraphZen.Abstractions")]
-[assembly: InternalsVisibleTo("GraphZen.Playground.AspNetCore")]
-[assembly: InternalsVisibleTo("GraphZen.LanguageModel")]
-[assembly: InternalsVisibleTo("GraphZen.QueryEngine")]
-[assembly: InternalsVisibleTo("GraphZen.TypeSystem")]
-[assembly: InternalsVisibleTo("GraphZen.Playground")]
+ [assembly: InternalsVisibleTo("GraphZen.Tests")]

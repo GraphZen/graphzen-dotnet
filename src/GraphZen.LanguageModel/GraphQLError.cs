@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using GraphZen.Infrastructure;
-
+using GraphZen.LanguageModel;
 using Newtonsoft.Json;
 
-namespace GraphZen.LanguageModel
+namespace GraphZen
 {
     public class GraphQLError
     {
