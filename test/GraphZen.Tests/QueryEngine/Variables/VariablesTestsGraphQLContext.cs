@@ -8,7 +8,7 @@ using GraphZen.Utilities;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace GraphZen.Execution.Variables
+namespace GraphZen.QueryEngine.Variables
 {
     public class VariablesTestsGraphQLContext : GraphQLContext
     {

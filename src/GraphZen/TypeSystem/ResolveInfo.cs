@@ -2,9 +2,9 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
-using GraphZen.Execution;
 using GraphZen.Infrastructure;
 using GraphZen.Language;
+using GraphZen.QueryEngine;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem

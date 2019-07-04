@@ -7,7 +7,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace GraphZen.Execution
+namespace GraphZen.QueryEngine
 {
     public class ExecutionResult
     {

@@ -14,7 +14,7 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 
-namespace GraphZen.Execution
+namespace GraphZen.QueryEngine
 {
     internal sealed class ExecutionContext
     {

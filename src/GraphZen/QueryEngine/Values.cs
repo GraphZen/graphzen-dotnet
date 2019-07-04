@@ -16,9 +16,8 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
 using GraphZen.Utilities.Internal;
 using JetBrains.Annotations;
-using static GraphZen.Utilities.Helpers;
 
-namespace GraphZen.Execution
+namespace GraphZen.QueryEngine
 {
     internal static class Values
     {
@@ -65,7 +64,7 @@ namespace GraphZen.Execution
                     {
                         // If no value was provided to a variable with a default value,
                         // use the default value.
-                        if (ValueFromAst(varDefNode.DefaultValue, varType) is Some<object> some)
+                        if (Helpers.ValueFromAst(varDefNode.DefaultValue, varType) is Some<object> some)
                         {
                             coercedValues[varName] = some.Value;
                         }
@@ -352,7 +351,7 @@ namespace GraphZen.Execution
                     else
                     {
                         var valueNode = argumentNode.Value;
-                        var maybeCoerced = ValueFromAst(valueNode, argType, variableValues);
+                        var maybeCoerced = Helpers.ValueFromAst(valueNode, argType, variableValues);
                         if (!(maybeCoerced is Some<object> someCoerced))
                         {
                             throw new GraphQLException(

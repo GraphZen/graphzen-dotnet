@@ -19,7 +19,7 @@ using GraphZen.Utilities;
 using GraphZen.Utilities.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.Execution
+namespace GraphZen.QueryEngine
 {
     internal static class ExecutionFunctions
     {

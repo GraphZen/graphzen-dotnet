@@ -8,14 +8,15 @@ using GraphZen.Language;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.Execution
+namespace GraphZen.QueryEngine
 {
-    public interface IExecutor
+    public class Executor : IExecutor
     {
-        [NotNull]
-        Task<ExecutionResult> ExecuteAsync(Schema schema, DocumentSyntax document, object rootValue = null,
-            GraphQLContext context = null,
+        public Task<ExecutionResult> ExecuteAsync(Schema schema, DocumentSyntax document, object rootValue,
+            GraphQLContext context,
             IDictionary<string, object> variableValues = null, string operationName = null,
-            ExecutionOptions options = null);
+            ExecutionOptions options = null) =>
+            ExecutionFunctions.ExecuteAsync(schema, document, rootValue, context, variableValues, operationName,
+                options);
     }
 }

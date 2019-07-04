@@ -8,7 +8,7 @@ using GraphZen.Language.Internal;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.Execution
+namespace GraphZen.QueryEngine
 {
     public abstract class ExecutorHarness
     {

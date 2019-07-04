@@ -8,7 +8,7 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Execution
+namespace GraphZen.QueryEngine
 {
     [NoReorder]
     public class MutationsTests : ExecutorHarness

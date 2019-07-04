@@ -4,7 +4,7 @@
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Execution
+namespace GraphZen.QueryEngine
 {
     internal static class Execute
     {

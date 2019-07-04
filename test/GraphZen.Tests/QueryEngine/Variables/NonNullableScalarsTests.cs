@@ -7,7 +7,7 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Execution.Variables
+namespace GraphZen.QueryEngine.Variables
 {
     public abstract class NonNullableScalarsTests : VariablesTests
     {

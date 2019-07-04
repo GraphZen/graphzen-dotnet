@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace GraphZen.Execution
+namespace GraphZen.QueryEngine
 {
     [NoReorder]
     public class ExecutorTests : ExecutorHarness

@@ -4,8 +4,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using GraphZen.Execution;
 using GraphZen.Infrastructure;
+using GraphZen.QueryEngine;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 using Xunit;

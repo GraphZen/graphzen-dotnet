@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 // ReSharper disable UnusedMember.Local
 // ReSharper disable UnassignedGetOnlyAutoProperty
 
-namespace GraphZen.Execution.Variables
+namespace GraphZen.QueryEngine.Variables
 {
     public abstract class VariablesTests
     {
