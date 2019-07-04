@@ -19,14 +19,14 @@ namespace GraphZen.LanguageModel
         public FieldDefinitionSyntax(
             NameSyntax name,
             TypeSyntax type, StringValueSyntax description = null,
-            IReadOnlyList<LanguageModel.InputValueDefinitionSyntax> arguments = null,
+            IReadOnlyList<InputValueDefinitionSyntax> arguments = null,
             IReadOnlyList<DirectiveSyntax> directives = null, SyntaxLocation location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             FieldType = Check.NotNull(type, nameof(type));
             Description = description;
             Directives = directives ?? DirectiveSyntax.EmptyList;
-            Arguments = arguments ?? LanguageModel.InputValueDefinitionSyntax.EmptyList;
+            Arguments = arguments ?? InputValueDefinitionSyntax.EmptyList;
         }
 
         /// <summary>
@@ -39,11 +39,11 @@ namespace GraphZen.LanguageModel
         ///     Field arguments. (Optional)
         /// </summary>
         [NotNull]
-        public IReadOnlyList<LanguageModel.InputValueDefinitionSyntax> Arguments { get; }
+        public IReadOnlyList<InputValueDefinitionSyntax> Arguments { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Arguments)
-                    .Concat(FieldType), (IEnumerable<SyntaxNode>) Directives);
+            Name.ToEnumerable().Concat(Arguments)
+                .Concat(FieldType).Concat(Directives);
 
         public StringValueSyntax Description { get; }
 
@@ -59,7 +59,7 @@ namespace GraphZen.LanguageModel
 
         public string GetDisplayValue() => Name.Value;
 
-        private bool Equals([NotNull] LanguageModel.FieldDefinitionSyntax other)
+        private bool Equals([NotNull] FieldDefinitionSyntax other)
             => Name.Equals(other.Name) && Equals(Description, other.Description) &&
                FieldType.Equals(other.FieldType) && Arguments.SequenceEqual(other.Arguments) &&
                Directives.SequenceEqual(other.Directives);
@@ -76,7 +76,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.FieldDefinitionSyntax && Equals((LanguageModel.FieldDefinitionSyntax) obj);
+            return obj is FieldDefinitionSyntax && Equals((FieldDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

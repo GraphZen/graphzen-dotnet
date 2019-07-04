@@ -13,7 +13,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class VariableDefinitionSyntax : SyntaxNode
     {
-        public VariableDefinitionSyntax(LanguageModel.VariableSyntax variable, TypeSyntax type,
+        public VariableDefinitionSyntax(VariableSyntax variable, TypeSyntax type,
             ValueSyntax defaultValue = null, SyntaxLocation location = null) : base(location)
         {
             Variable = Check.NotNull(variable, nameof(variable));
@@ -26,7 +26,7 @@ namespace GraphZen.LanguageModel
         ///     The variable being assigned.
         /// </summary>
         [NotNull]
-        public LanguageModel.VariableSyntax Variable { get; }
+        public VariableSyntax Variable { get; }
 
         /// <summary>
         ///     The type of the variable.
@@ -53,7 +53,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals([NotNull] LanguageModel.VariableDefinitionSyntax other) =>
+        private bool Equals([NotNull] VariableDefinitionSyntax other) =>
             Variable.Equals(other.Variable)
             && VariableType.Equals(other.VariableType)
             && Equals(DefaultValue, other.DefaultValue);
@@ -70,7 +70,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.VariableDefinitionSyntax && Equals((LanguageModel.VariableDefinitionSyntax) obj);
+            return obj is VariableDefinitionSyntax && Equals((VariableDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

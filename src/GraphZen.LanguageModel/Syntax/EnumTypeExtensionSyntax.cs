@@ -37,14 +37,14 @@ namespace GraphZen.LanguageModel
         [NotNull]
         public IReadOnlyList<EnumValueDefinitionSyntax> Values { get; }
 
-        public override IEnumerable<SyntaxNode> Children => NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives), (IEnumerable<SyntaxNode>) Values);
+        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Values);
 
         /// <summary>
         ///     Enum extension directives
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] LanguageModel.EnumTypeExtensionSyntax other) => Name.Equals(other.Name) &&
+        private bool Equals([NotNull] EnumTypeExtensionSyntax other) => Name.Equals(other.Name) &&
                                                                         Directives.SequenceEqual(other.Directives) &&
                                                                         Values.SequenceEqual(other.Values);
 
@@ -60,7 +60,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.EnumTypeExtensionSyntax && Equals((LanguageModel.EnumTypeExtensionSyntax) obj);
+            return obj is EnumTypeExtensionSyntax && Equals((EnumTypeExtensionSyntax) obj);
         }
 
         public override int GetHashCode()

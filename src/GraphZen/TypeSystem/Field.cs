@@ -64,7 +64,8 @@ namespace GraphZen.TypeSystem
             _syntax = new Lazy<FieldDefinitionSyntax>(() =>
             {
                 var fieldTypeNode = FieldType.ToTypeSyntax();
-                return new FieldDefinitionSyntax(SyntaxFactory.Name(Name), fieldTypeNode, SyntaxHelpers.Description(Description),
+                return new FieldDefinitionSyntax(SyntaxFactory.Name(Name), fieldTypeNode,
+                    SyntaxHelpers.Description(Description),
                     Arguments.Values.ToSyntaxNodes<InputValueDefinitionSyntax>());
             });
         }

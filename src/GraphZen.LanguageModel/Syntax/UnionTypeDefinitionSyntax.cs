@@ -41,14 +41,14 @@ namespace GraphZen.LanguageModel
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives), (IEnumerable<SyntaxNode>) MemberTypes);
+            Name.ToEnumerable().Concat(Directives).Concat(MemberTypes);
 
         public override StringValueSyntax Description { get; }
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
 
-        private bool Equals([NotNull] LanguageModel.UnionTypeDefinitionSyntax other) =>
+        private bool Equals([NotNull] UnionTypeDefinitionSyntax other) =>
             Name.Equals(other.Name) && Equals(Description, other.Description) &&
             MemberTypes.SequenceEqual(other.MemberTypes) &&
             Directives.SequenceEqual(other.Directives);
@@ -65,7 +65,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.UnionTypeDefinitionSyntax && Equals((LanguageModel.UnionTypeDefinitionSyntax) obj);
+            return obj is UnionTypeDefinitionSyntax && Equals((UnionTypeDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

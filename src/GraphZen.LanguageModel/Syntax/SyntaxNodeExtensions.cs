@@ -33,11 +33,13 @@ namespace GraphZen.LanguageModel
 
         [NotNull]
         [ItemNotNull]
-        private static IReadOnlyList<ScalarTypeDefinitionSyntax> SpecDefinedTypes => throw new NotImplementedException();
+        private static IReadOnlyList<ScalarTypeDefinitionSyntax> SpecDefinedTypes =>
+            throw new NotImplementedException();
 
         [NotNull]
         [ItemNotNull]
-        public static IReadOnlyList<DirectiveDefinitionSyntax> SpecDefinedDirectives => throw new NotImplementedException();
+        public static IReadOnlyList<DirectiveDefinitionSyntax> SpecDefinedDirectives =>
+            throw new NotImplementedException();
 
         public static bool IsIntrospectionType(this DefinitionSyntax node)
             => node is TypeSystemDefinitionSyntax typeDef && IntrospectionTypes.Any(_ => _.Equals(typeDef));
@@ -51,7 +53,7 @@ namespace GraphZen.LanguageModel
         public static bool IsSchemaOfCommonNames(this SchemaDefinitionSyntax schemaDefinitionNode)
         {
             Check.NotNull(schemaDefinitionNode, nameof(schemaDefinitionNode));
-            return Enumerable.All<OperationTypeDefinitionSyntax>(schemaDefinitionNode.RootOperationTypes, ot => ot.Type.Name.Value == ot.OperationType.ToString());
+            return schemaDefinitionNode.RootOperationTypes.All(ot => ot.Type.Name.Value == ot.OperationType.ToString());
         }
     }
 }

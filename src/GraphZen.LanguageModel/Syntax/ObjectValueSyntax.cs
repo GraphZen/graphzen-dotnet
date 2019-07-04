@@ -14,7 +14,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ObjectValueSyntax : ValueSyntax
     {
-        public ObjectValueSyntax(IReadOnlyList<LanguageModel.ObjectFieldSyntax> fields, SyntaxLocation location = null) :
+        public ObjectValueSyntax(IReadOnlyList<ObjectFieldSyntax> fields, SyntaxLocation location = null) :
             base(location)
         {
             Fields = Check.NotNull(fields, nameof(fields));
@@ -25,11 +25,11 @@ namespace GraphZen.LanguageModel
         /// </summary>
         [NotNull]
         [ItemNotNull]
-        public IReadOnlyList<LanguageModel.ObjectFieldSyntax> Fields { get; }
+        public IReadOnlyList<ObjectFieldSyntax> Fields { get; }
 
         public override IEnumerable<SyntaxNode> Children => Fields;
 
-        private bool Equals([NotNull] LanguageModel.ObjectValueSyntax other) => Fields.SequenceEqual(other.Fields);
+        private bool Equals([NotNull] ObjectValueSyntax other) => Fields.SequenceEqual(other.Fields);
 
         public override bool Equals(object obj)
         {
@@ -43,7 +43,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.ObjectValueSyntax && Equals((LanguageModel.ObjectValueSyntax) obj);
+            return obj is ObjectValueSyntax && Equals((ObjectValueSyntax) obj);
         }
 
         public override int GetHashCode() => Fields.GetHashCode();

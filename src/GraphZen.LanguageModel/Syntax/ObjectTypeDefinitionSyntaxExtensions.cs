@@ -14,9 +14,9 @@ namespace GraphZen.LanguageModel
         {
             Check.NotNull(objectNode, nameof(objectNode));
             return new ObjectTypeDefinitionSyntax(objectNode.Name, objectNode.Description,
-                NamedSyntaxExtensions.OrderByName<NamedTypeSyntax>(objectNode.Interfaces).ToReadOnlyList(),
-                NamedSyntaxExtensions.OrderByName<DirectiveSyntax>(objectNode.Directives).ToReadOnlyList(),
-                NamedSyntaxExtensions.OrderByName<FieldDefinitionSyntax>(objectNode.Fields)
+                objectNode.Interfaces.OrderByName().ToReadOnlyList(),
+                objectNode.Directives.OrderByName().ToReadOnlyList(),
+                objectNode.Fields.OrderByName()
                     .ToReadOnlyList(), objectNode.Location);
         }
     }

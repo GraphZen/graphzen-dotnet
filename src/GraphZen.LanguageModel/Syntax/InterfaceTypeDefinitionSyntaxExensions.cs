@@ -13,8 +13,8 @@ namespace GraphZen.LanguageModel
         {
             Check.NotNull(interfaceNode, nameof(interfaceNode));
             return new InterfaceTypeDefinitionSyntax(interfaceNode.Name, interfaceNode.Description,
-                NamedSyntaxExtensions.OrderByName<DirectiveSyntax>(interfaceNode.Directives).ToReadOnlyList(),
-                NamedSyntaxExtensions.OrderByName<FieldDefinitionSyntax>(interfaceNode.Fields).ToReadOnlyList(),
+                interfaceNode.Directives.OrderByName().ToReadOnlyList(),
+                interfaceNode.Fields.OrderByName().ToReadOnlyList(),
                 interfaceNode.Location);
         }
     }

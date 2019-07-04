@@ -19,9 +19,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
 using GraphZen.Utilities.Internal;
 using JetBrains.Annotations;
-using FragmentSpreadSyntax = GraphZen.LanguageModel.FragmentSpreadSyntax;
-using InlineFragmentSyntax = GraphZen.LanguageModel.InlineFragmentSyntax;
-using OperationDefinitionSyntax = GraphZen.LanguageModel.OperationDefinitionSyntax;
 
 namespace GraphZen.QueryEngine
 {

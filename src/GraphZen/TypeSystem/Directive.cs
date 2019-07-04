@@ -10,7 +10,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal.Grammar;
 using JetBrains.Annotations;
-using DirectiveDefinitionSyntax = GraphZen.LanguageModel.DirectiveDefinitionSyntax;
 
 namespace GraphZen.TypeSystem
 {
@@ -39,7 +38,8 @@ namespace GraphZen.TypeSystem
             _syntax = new Lazy<DirectiveDefinitionSyntax>(() =>
             {
                 return new DirectiveDefinitionSyntax(SyntaxFactory.Name(Name),
-                    Locations.Select(DirectiveLocationHelper.ToStringValue).Select(_ => SyntaxFactory.Name(_)).ToArray(),
+                    Locations.Select(DirectiveLocationHelper.ToStringValue).Select(_ => SyntaxFactory.Name(_))
+                        .ToArray(),
                     SyntaxHelpers.Description(Description),
                     Arguments.Values.ToSyntaxNodes<InputValueDefinitionSyntax>().ToList());
             });

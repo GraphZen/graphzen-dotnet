@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class FieldSyntax : SelectionSyntax, IArgumentsContainerNode
     {
-        public FieldSyntax(NameSyntax name, LanguageModel.SelectionSetSyntax selectionSet) : this(name, null, null, null,
+        public FieldSyntax(NameSyntax name, SelectionSetSyntax selectionSet) : this(name, null, null, null,
             selectionSet)
         {
         }
@@ -26,7 +26,7 @@ namespace GraphZen.LanguageModel
             NameSyntax alias = null,
             IReadOnlyList<ArgumentSyntax> arguments = null,
             IReadOnlyList<DirectiveSyntax> directives = null,
-            LanguageModel.SelectionSetSyntax selectionSet = null,
+            SelectionSetSyntax selectionSet = null,
             SyntaxLocation location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
@@ -49,7 +49,7 @@ namespace GraphZen.LanguageModel
         ///     Additional child selections. (Optional)
         /// </summary>
         [CanBeNull]
-        public LanguageModel.SelectionSetSyntax SelectionSet { get; }
+        public SelectionSetSyntax SelectionSet { get; }
 
         /// <summary>
         ///     A user-defined alias for the requested field. (Optional)
@@ -63,7 +63,7 @@ namespace GraphZen.LanguageModel
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat(NodeExtensions.Concat(NodeExtensions.Concat(Alias.ToEnumerable().Concat(Name), (IEnumerable<SyntaxNode>) Arguments), (IEnumerable<SyntaxNode>) Directives), (SyntaxNode) SelectionSet);
+            Alias.ToEnumerable().Concat(Name).Concat(Arguments).Concat(Directives).Concat(SelectionSet);
 
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<ArgumentSyntax> Arguments { get; }
 
-        private bool Equals([NotNull] LanguageModel.FieldSyntax other) =>
+        private bool Equals([NotNull] FieldSyntax other) =>
             Name.Equals(other.Name)
             && Equals(SelectionSet, other.SelectionSet)
             && Equals(Alias, other.Alias)
@@ -90,7 +90,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.FieldSyntax && Equals((LanguageModel.FieldSyntax) obj);
+            return obj is FieldSyntax && Equals((FieldSyntax) obj);
         }
 
         public override int GetHashCode()

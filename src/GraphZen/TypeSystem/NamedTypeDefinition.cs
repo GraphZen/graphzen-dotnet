@@ -74,7 +74,8 @@ namespace GraphZen.TypeSystem
 
         [NotNull]
         public TypeReference GetTypeReference() =>
-            new TypeReference(Identity, ClrType != null ? SyntaxFactory.NamedType(ClrType) : SyntaxFactory.NamedType(SyntaxFactory.Name(Name)));
+            new TypeReference(Identity,
+                ClrType != null ? SyntaxFactory.NamedType(ClrType) : SyntaxFactory.NamedType(SyntaxFactory.Name(Name)));
 
         public override string ToString() => $"{Kind} {Name}";
     }

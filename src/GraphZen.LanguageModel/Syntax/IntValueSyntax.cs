@@ -27,7 +27,7 @@ namespace GraphZen.LanguageModel
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
         public string GetDisplayValue() => Value.ToString();
 
-        private bool Equals([NotNull] LanguageModel.IntValueSyntax other) => Value == other.Value;
+        private bool Equals([NotNull] IntValueSyntax other) => Value == other.Value;
 
         public override bool Equals(object obj)
         {
@@ -41,7 +41,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.IntValueSyntax && Equals((LanguageModel.IntValueSyntax) obj);
+            return obj is IntValueSyntax && Equals((IntValueSyntax) obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();

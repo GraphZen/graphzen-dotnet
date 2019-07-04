@@ -29,7 +29,7 @@ namespace GraphZen.LanguageModel
             get { yield return OfType; }
         }
 
-        private bool Equals([NotNull] LanguageModel.NonNullTypeSyntax other) => OfType.Equals(other.OfType);
+        private bool Equals([NotNull] NonNullTypeSyntax other) => OfType.Equals(other.OfType);
 
         public override bool Equals(object obj)
         {
@@ -43,7 +43,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.NonNullTypeSyntax && Equals((LanguageModel.NonNullTypeSyntax) obj);
+            return obj is NonNullTypeSyntax && Equals((NonNullTypeSyntax) obj);
         }
 
         public override int GetHashCode() => OfType.GetHashCode();

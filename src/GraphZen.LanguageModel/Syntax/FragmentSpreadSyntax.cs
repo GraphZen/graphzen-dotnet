@@ -43,10 +43,10 @@ namespace GraphZen.LanguageModel
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives);
+            Name.ToEnumerable().Concat(Directives);
 
 
-        private bool Equals([NotNull] LanguageModel.FragmentSpreadSyntax other) =>
+        private bool Equals([NotNull] FragmentSpreadSyntax other) =>
             Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
@@ -61,7 +61,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.FragmentSpreadSyntax && Equals((LanguageModel.FragmentSpreadSyntax) obj);
+            return obj is FragmentSpreadSyntax && Equals((FragmentSpreadSyntax) obj);
         }
 
         public override int GetHashCode()

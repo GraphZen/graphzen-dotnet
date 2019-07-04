@@ -20,11 +20,11 @@ namespace GraphZen.LanguageModel
             StringValueSyntax description = null,
             IReadOnlyList<NamedTypeSyntax> interfaces = null,
             IReadOnlyList<DirectiveSyntax> directives = null,
-            IReadOnlyList<LanguageModel.FieldDefinitionSyntax> fields = null,
+            IReadOnlyList<FieldDefinitionSyntax> fields = null,
             SyntaxLocation location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
-            Fields = fields ?? LanguageModel.FieldDefinitionSyntax.EmptyList;
+            Fields = fields ?? FieldDefinitionSyntax.EmptyList;
             Description = description;
             Interfaces = interfaces ?? NamedTypeSyntax.EmptyList;
             Directives = directives ?? DirectiveSyntax.EmptyList;
@@ -38,7 +38,8 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<NamedTypeSyntax> Interfaces { get; }
 
 
-        public override IEnumerable<SyntaxNode> Children => NodeExtensions.Concat(NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Interfaces), (IEnumerable<SyntaxNode>) Directives), (IEnumerable<SyntaxNode>) Fields);
+        public override IEnumerable<SyntaxNode> Children =>
+            Name.ToEnumerable().Concat(Interfaces).Concat(Directives).Concat(Fields);
 
         public override StringValueSyntax Description { get; }
 
@@ -56,10 +57,10 @@ namespace GraphZen.LanguageModel
         public override NameSyntax Name { get; }
 
 
-        public IReadOnlyList<LanguageModel.FieldDefinitionSyntax> Fields { get; }
+        public IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
 
 
-        private bool Equals([NotNull] LanguageModel.ObjectTypeDefinitionSyntax other) => Name.Equals(other.Name) &&
+        private bool Equals([NotNull] ObjectTypeDefinitionSyntax other) => Name.Equals(other.Name) &&
                                                                            Fields.SequenceEqual(other.Fields) &&
                                                                            Equals(Description, other.Description) &&
                                                                            Interfaces.SequenceEqual(other.Interfaces) &&
@@ -77,7 +78,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.ObjectTypeDefinitionSyntax && Equals((LanguageModel.ObjectTypeDefinitionSyntax) obj);
+            return obj is ObjectTypeDefinitionSyntax && Equals((ObjectTypeDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

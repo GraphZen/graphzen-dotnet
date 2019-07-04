@@ -36,7 +36,7 @@ namespace GraphZen.LanguageModel
             get { yield return Type; }
         }
 
-        private bool Equals([NotNull] LanguageModel.OperationTypeDefinitionSyntax other) =>
+        private bool Equals([NotNull] OperationTypeDefinitionSyntax other) =>
             OperationType == other.OperationType && Type.Equals(other.Type);
 
         public override bool Equals(object obj)
@@ -51,7 +51,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.OperationTypeDefinitionSyntax && Equals((LanguageModel.OperationTypeDefinitionSyntax) obj);
+            return obj is OperationTypeDefinitionSyntax && Equals((OperationTypeDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

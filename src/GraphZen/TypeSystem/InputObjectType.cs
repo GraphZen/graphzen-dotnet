@@ -22,7 +22,8 @@ namespace GraphZen.TypeSystem
             Check.NotNull(schema, nameof(schema));
             Fields = fields.ToReadOnlyDictionary(_ => _?.Name, _ => InputField.From(_, schema.ResolveType, this));
             _syntax = new Lazy<InputObjectTypeDefinitionSyntax>(() =>
-                new InputObjectTypeDefinitionSyntax(SyntaxFactory.Name(Name), SyntaxHelpers.Description(Description), null,
+                new InputObjectTypeDefinitionSyntax(SyntaxFactory.Name(Name), SyntaxHelpers.Description(Description),
+                    null,
                     Fields.Values.ToSyntaxNodes<InputValueDefinitionSyntax>()));
         }
 

@@ -14,23 +14,8 @@ namespace GraphZen.LanguageModel
     public static class DocumentSyntaxExtensions
     {
         [NotNull]
-        public static DocumentSyntax WithSpecDefinitions(this DocumentSyntax document)
-        {
-            /*     Check.NotNull(document, nameof(document));
-                 var scalars = document.Definitions.OfType<ScalarTypeDefinitionSyntax>().ToList();
-                 var missingSpecScalars = SpecScalars.All.ToSyntaxNodes<ScalarTypeDefinitionSyntax>().Where(specScalar =>
-                 {
-                     return scalars.All(scalar =>
-                     {
-                         Debug.Assert(scalar != null, nameof(scalar) + " != null");
-                         return scalar.Name.Value != specScalar.Name.Value;
-                     });
-                 });
-
-                 return document.WithDefinitionsAdded(missingSpecScalars);*/
+        public static DocumentSyntax WithSpecDefinitions(this DocumentSyntax document) =>
             throw new NotImplementedException();
-        }
-
 
 
         [NotNull]
@@ -70,7 +55,7 @@ namespace GraphZen.LanguageModel
             var sorted = document.Definitions
                 .OrderBy(_ => _.Kind)
                 .ThenBy(_ => _ is INamedSyntax named ? named.Name.Value : "")
-                .Select<DefinitionSyntax, DefinitionSyntax>(def =>
+                .Select(def =>
                 {
                     switch (def)
                     {

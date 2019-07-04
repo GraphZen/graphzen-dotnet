@@ -11,12 +11,6 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal.Grammar;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-using EnumTypeDefinitionSyntax = GraphZen.LanguageModel.EnumTypeDefinitionSyntax;
-using InputObjectTypeDefinitionSyntax = GraphZen.LanguageModel.InputObjectTypeDefinitionSyntax;
-using InterfaceTypeDefinitionSyntax = GraphZen.LanguageModel.InterfaceTypeDefinitionSyntax;
-using ObjectTypeDefinitionSyntax = GraphZen.LanguageModel.ObjectTypeDefinitionSyntax;
-using ScalarTypeDefinitionSyntax = GraphZen.LanguageModel.ScalarTypeDefinitionSyntax;
-using UnionTypeDefinitionSyntax = GraphZen.LanguageModel.UnionTypeDefinitionSyntax;
 
 namespace GraphZen.Utilities
 {

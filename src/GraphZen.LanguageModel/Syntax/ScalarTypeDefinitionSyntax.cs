@@ -44,11 +44,11 @@ namespace GraphZen.LanguageModel
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives);
+            Name.ToEnumerable().Concat(Directives);
 
         public override StringValueSyntax Description { get; }
 
-        private bool Equals([NotNull] LanguageModel.ScalarTypeDefinitionSyntax other) =>
+        private bool Equals([NotNull] ScalarTypeDefinitionSyntax other) =>
             Name.Equals(other.Name) && Equals(Description, other.Description) &&
             Directives.SequenceEqual(other.Directives);
 
@@ -64,7 +64,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.ScalarTypeDefinitionSyntax && Equals((LanguageModel.ScalarTypeDefinitionSyntax) obj);
+            return obj is ScalarTypeDefinitionSyntax && Equals((ScalarTypeDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

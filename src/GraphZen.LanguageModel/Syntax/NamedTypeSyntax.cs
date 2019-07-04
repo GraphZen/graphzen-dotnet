@@ -30,7 +30,7 @@ namespace GraphZen.LanguageModel
 
         public string GetDisplayValue() => ToSyntaxString();
 
-        private bool Equals([NotNull] LanguageModel.NamedTypeSyntax other) => Equals(Name, other.Name);
+        private bool Equals([NotNull] NamedTypeSyntax other) => Equals(Name, other.Name);
 
         public override bool Equals(object obj)
         {
@@ -44,7 +44,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.NamedTypeSyntax && Equals((LanguageModel.NamedTypeSyntax) obj);
+            return obj is NamedTypeSyntax && Equals((NamedTypeSyntax) obj);
         }
 
         public override int GetHashCode() => Name.GetHashCode();

@@ -42,7 +42,7 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<NameSyntax> Locations { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Arguments)
+            Name.ToEnumerable().Concat(Arguments)
                 .Concat(Locations);
 
         public StringValueSyntax Description { get; }
@@ -52,7 +52,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        private bool Equals([NotNull] LanguageModel.DirectiveDefinitionSyntax other) =>
+        private bool Equals([NotNull] DirectiveDefinitionSyntax other) =>
             Name.Equals(other.Name) &&
             Equals(Description, other.Description) &&
             Arguments.SequenceEqual(other.Arguments) &&
@@ -70,7 +70,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.DirectiveDefinitionSyntax && Equals((LanguageModel.DirectiveDefinitionSyntax) obj);
+            return obj is DirectiveDefinitionSyntax && Equals((DirectiveDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

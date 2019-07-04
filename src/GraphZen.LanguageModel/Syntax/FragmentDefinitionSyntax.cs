@@ -41,7 +41,7 @@ namespace GraphZen.LanguageModel
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat(NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (SyntaxNode) TypeCondition), (IEnumerable<SyntaxNode>) Directives), (SyntaxNode) SelectionSet);
+            Name.ToEnumerable().Concat(TypeCondition).Concat(Directives).Concat(SelectionSet);
 
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace GraphZen.LanguageModel
         [NotNull]
         public NamedTypeSyntax TypeCondition { get; }
 
-        private bool Equals([NotNull] LanguageModel.FragmentDefinitionSyntax other) => Name.Equals(other.Name) &&
+        private bool Equals([NotNull] FragmentDefinitionSyntax other) => Name.Equals(other.Name) &&
                                                                          TypeCondition.Equals(other.TypeCondition) &&
                                                                          SelectionSet.Equals(other.SelectionSet) &&
                                                                          Directives.SequenceEqual(other.Directives);
@@ -72,7 +72,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.FragmentDefinitionSyntax && Equals((LanguageModel.FragmentDefinitionSyntax) obj);
+            return obj is FragmentDefinitionSyntax && Equals((FragmentDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

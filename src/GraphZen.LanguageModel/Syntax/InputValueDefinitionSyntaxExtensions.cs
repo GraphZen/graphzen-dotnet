@@ -10,7 +10,6 @@ namespace GraphZen.LanguageModel
     public static class InputValueDefinitionSyntaxExtensions
     {
         public static bool IsRequiredArgument([NotNull] this InputValueDefinitionSyntax arg) =>
-                    arg.Type is NonNullTypeSyntax && arg.DefaultValue == null;
-
+            arg.Type is NonNullTypeSyntax && arg.DefaultValue == null;
     }
 }

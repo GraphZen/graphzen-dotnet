@@ -11,7 +11,6 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal.Grammar;
 using JetBrains.Annotations;
 using static GraphZen.LanguageModel.DirectiveLocation;
-using OperationDefinitionSyntax = GraphZen.LanguageModel.OperationDefinitionSyntax;
 
 namespace GraphZen.Validation.Rules
 {

@@ -46,7 +46,7 @@ namespace GraphZen.LanguageModel
             ProhibtedValues.All(v => !v.Equals(value));
 
 
-        private bool Equals([NotNull] LanguageModel.EnumValueSyntax other) => string.Equals(Value, (string) other.Value);
+        private bool Equals([NotNull] EnumValueSyntax other) => string.Equals(Value, other.Value);
 
         public override bool Equals(object obj)
         {
@@ -60,7 +60,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.EnumValueSyntax && Equals((LanguageModel.EnumValueSyntax) obj);
+            return obj is EnumValueSyntax && Equals((EnumValueSyntax) obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();

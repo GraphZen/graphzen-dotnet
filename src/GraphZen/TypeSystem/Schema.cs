@@ -13,10 +13,6 @@ using GraphZen.LanguageModel;
 using GraphZen.Utilities;
 using GraphZen.Utilities.Internal;
 using JetBrains.Annotations;
-using DirectiveDefinitionSyntax = GraphZen.LanguageModel.DirectiveDefinitionSyntax;
-using ListTypeSyntax = GraphZen.LanguageModel.ListTypeSyntax;
-using NamedTypeSyntax = GraphZen.LanguageModel.NamedTypeSyntax;
-using NonNullTypeSyntax = GraphZen.LanguageModel.NonNullTypeSyntax;
 
 namespace GraphZen.TypeSystem
 {

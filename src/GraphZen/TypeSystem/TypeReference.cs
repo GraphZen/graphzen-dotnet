@@ -7,9 +7,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
-using ListTypeSyntax = GraphZen.LanguageModel.ListTypeSyntax;
-using NamedTypeSyntax = GraphZen.LanguageModel.NamedTypeSyntax;
-using NonNullTypeSyntax = GraphZen.LanguageModel.NonNullTypeSyntax;
 
 namespace GraphZen.TypeSystem
 {

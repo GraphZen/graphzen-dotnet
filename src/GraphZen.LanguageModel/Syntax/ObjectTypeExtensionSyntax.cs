@@ -35,11 +35,11 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<NamedTypeSyntax> Interfaces { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat(NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Interfaces), (IEnumerable<SyntaxNode>) Directives), (IEnumerable<SyntaxNode>) Fields);
+            Name.ToEnumerable().Concat(Interfaces).Concat(Directives).Concat(Fields);
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] LanguageModel.ObjectTypeExtensionSyntax other) =>
+        private bool Equals([NotNull] ObjectTypeExtensionSyntax other) =>
             Name.Equals(other.Name) && Fields.SequenceEqual(other.Fields) &&
             Directives.SequenceEqual(other.Directives) &&
             Interfaces.SequenceEqual(other.Interfaces);
@@ -56,7 +56,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.ObjectTypeExtensionSyntax && Equals((LanguageModel.ObjectTypeExtensionSyntax) obj);
+            return obj is ObjectTypeExtensionSyntax && Equals((ObjectTypeExtensionSyntax) obj);
         }
 
         public override int GetHashCode()

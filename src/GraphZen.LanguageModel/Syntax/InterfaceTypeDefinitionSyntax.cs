@@ -19,16 +19,16 @@ namespace GraphZen.LanguageModel
         public InterfaceTypeDefinitionSyntax(NameSyntax name,
             StringValueSyntax description = null,
             IReadOnlyList<DirectiveSyntax> directives = null,
-            IReadOnlyList<LanguageModel.FieldDefinitionSyntax> fields = null,
+            IReadOnlyList<FieldDefinitionSyntax> fields = null,
             SyntaxLocation location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
             Directives = directives ?? DirectiveSyntax.EmptyList;
-            Fields = fields ?? LanguageModel.FieldDefinitionSyntax.EmptyList;
+            Fields = fields ?? FieldDefinitionSyntax.EmptyList;
         }
 
-        public override IEnumerable<SyntaxNode> Children => NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives), (IEnumerable<SyntaxNode>) Fields);
+        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Fields);
 
         public override StringValueSyntax Description { get; }
 
@@ -49,9 +49,9 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The fields on an interface. (Optional)
         /// </summary>
-        public IReadOnlyList<LanguageModel.FieldDefinitionSyntax> Fields { get; }
+        public IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
 
-        private bool Equals([NotNull] LanguageModel.InterfaceTypeDefinitionSyntax other) =>
+        private bool Equals([NotNull] InterfaceTypeDefinitionSyntax other) =>
             Name.Equals(other.Name) && Equals(Description, other.Description) && Fields.SequenceEqual(other.Fields) &&
             Directives.SequenceEqual(other.Directives);
 
@@ -67,7 +67,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.InterfaceTypeDefinitionSyntax && Equals((LanguageModel.InterfaceTypeDefinitionSyntax) obj);
+            return obj is InterfaceTypeDefinitionSyntax && Equals((InterfaceTypeDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

@@ -32,7 +32,7 @@ namespace GraphZen.LanguageModel
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) TypeCondition.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives), (SyntaxNode) SelectionSet);
+            TypeCondition.ToEnumerable().Concat(Directives).Concat(SelectionSet);
 
 
         public override IReadOnlyList<DirectiveSyntax> Directives { get; }
@@ -43,7 +43,7 @@ namespace GraphZen.LanguageModel
         [CanBeNull]
         public NamedTypeSyntax TypeCondition { get; }
 
-        private bool Equals([NotNull] LanguageModel.InlineFragmentSyntax other) =>
+        private bool Equals([NotNull] InlineFragmentSyntax other) =>
             SelectionSet.Equals(other.SelectionSet) && Equals(TypeCondition, other.TypeCondition) &&
             Directives.SequenceEqual(other.Directives);
 
@@ -59,7 +59,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.InlineFragmentSyntax && Equals((LanguageModel.InlineFragmentSyntax) obj);
+            return obj is InlineFragmentSyntax && Equals((InlineFragmentSyntax) obj);
         }
 
         public override int GetHashCode()

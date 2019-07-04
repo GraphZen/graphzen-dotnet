@@ -76,12 +76,18 @@ namespace GraphZen.TypeSystem
 
 
         [Theory]
-        [InlineData(typeof(object_ignored_by_data_annotation), TypeKind.Object, null, ConfigurationSource.DataAnnotation)]
-        [InlineData(typeof(input_object_included_via_field_argument), TypeKind.InputObject, ConfigurationSource.Convention, null)]
-        [InlineData(typeof(object_included_by_explicit_configuration), TypeKind.Object, ConfigurationSource.Explicit, ConfigurationSource.DataAnnotation)]
-        [InlineData(typeof(object_included_via_method_return_type_on_class), TypeKind.Object, ConfigurationSource.Convention, null)]
-        [InlineData(typeof(object_included_via_property_type_on_class), TypeKind.Object, ConfigurationSource.Convention, null)]
-        [InlineData(typeof(input_object_ignored_by_data_annotation), TypeKind.InputObject, null, ConfigurationSource.DataAnnotation)]
+        [InlineData(typeof(object_ignored_by_data_annotation), TypeKind.Object, null,
+            ConfigurationSource.DataAnnotation)]
+        [InlineData(typeof(input_object_included_via_field_argument), TypeKind.InputObject,
+            ConfigurationSource.Convention, null)]
+        [InlineData(typeof(object_included_by_explicit_configuration), TypeKind.Object, ConfigurationSource.Explicit,
+            ConfigurationSource.DataAnnotation)]
+        [InlineData(typeof(object_included_via_method_return_type_on_class), TypeKind.Object,
+            ConfigurationSource.Convention, null)]
+        [InlineData(typeof(object_included_via_property_type_on_class), TypeKind.Object, ConfigurationSource.Convention,
+            null)]
+        [InlineData(typeof(input_object_ignored_by_data_annotation), TypeKind.InputObject, null,
+            ConfigurationSource.DataAnnotation)]
         [InlineData(typeof(type_never_included), null, null, null)]
         public void included_by_convention(Type clrType, TypeKind? kind, ConfigurationSource? configurationSource,
             ConfigurationSource? ignoredConfigurationSource)

@@ -30,7 +30,8 @@ namespace GraphZen.TypeSystem
             IsDeprecated = isDeprecated;
             DeprecationReason = deprecatedReason;
             _syntax = new Lazy<EnumValueDefinitionSyntax>(() =>
-                new EnumValueDefinitionSyntax(SyntaxFactory.EnumValue(SyntaxFactory.Name(Name)), SyntaxHelpers.Description(Description))
+                new EnumValueDefinitionSyntax(SyntaxFactory.EnumValue(SyntaxFactory.Name(Name)),
+                    SyntaxHelpers.Description(Description))
             );
         }
 

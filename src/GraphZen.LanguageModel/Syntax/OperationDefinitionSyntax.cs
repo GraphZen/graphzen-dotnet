@@ -56,7 +56,7 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<VariableDefinitionSyntax> VariableDefinitions { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat(NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) VariableDefinitions), (IEnumerable<SyntaxNode>) Directives), (SyntaxNode) SelectionSet);
+            Name.ToEnumerable().Concat(VariableDefinitions).Concat(Directives).Concat(SelectionSet);
 
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] LanguageModel.OperationDefinitionSyntax other) =>
+        private bool Equals([NotNull] OperationDefinitionSyntax other) =>
             SelectionSet.Equals(other.SelectionSet) && OperationType == other.OperationType && Equals(Name, other.Name)
             && VariableDefinitions.SequenceEqual(other.VariableDefinitions)
             && Directives.SequenceEqual(other.Directives);
@@ -81,7 +81,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.OperationDefinitionSyntax && Equals((LanguageModel.OperationDefinitionSyntax) obj);
+            return obj is OperationDefinitionSyntax && Equals((OperationDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

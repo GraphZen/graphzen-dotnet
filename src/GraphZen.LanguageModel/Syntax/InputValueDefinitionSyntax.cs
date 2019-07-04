@@ -51,9 +51,9 @@ namespace GraphZen.LanguageModel
         public ValueSyntax DefaultValue { get; }
 
 
-        public override IEnumerable<SyntaxNode> Children => NodeExtensions.Concat(Name.ToEnumerable()
-                .Concat(Type)
-                .Concat(DefaultValue), (IEnumerable<SyntaxNode>) Directives);
+        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable()
+            .Concat(Type)
+            .Concat(DefaultValue).Concat(Directives);
 
 
         public StringValueSyntax Description { get; }
@@ -64,7 +64,7 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
 
-        private bool Equals([NotNull] LanguageModel.InputValueDefinitionSyntax other) =>
+        private bool Equals([NotNull] InputValueDefinitionSyntax other) =>
             Name.Equals(other.Name) && Equals(Description, other.Description) && Type.Equals(other.Type) &&
             Equals(DefaultValue, other.DefaultValue) && Directives.SequenceEqual(other.Directives);
 
@@ -80,7 +80,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.InputValueDefinitionSyntax && Equals((LanguageModel.InputValueDefinitionSyntax) obj);
+            return obj is InputValueDefinitionSyntax && Equals((InputValueDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

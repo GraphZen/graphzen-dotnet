@@ -10,9 +10,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using static GraphZen.TypeSystem.Introspection;
-using FragmentDefinitionSyntax = GraphZen.LanguageModel.FragmentDefinitionSyntax;
-using InlineFragmentSyntax = GraphZen.LanguageModel.InlineFragmentSyntax;
-using OperationDefinitionSyntax = GraphZen.LanguageModel.OperationDefinitionSyntax;
 
 namespace GraphZen.Utilities
 {

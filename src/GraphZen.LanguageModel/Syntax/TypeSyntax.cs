@@ -18,17 +18,17 @@ namespace GraphZen.LanguageModel
         }
 
         [NotNull]
-        public LanguageModel.NamedTypeSyntax GetNamedType()
+        public NamedTypeSyntax GetNamedType()
         {
             TypeSyntax GetNamedType(TypeSyntax node)
             {
                 switch (node)
                 {
-                    case LanguageModel.NamedTypeSyntax named:
+                    case NamedTypeSyntax named:
                         return named;
-                    case LanguageModel.ListTypeSyntax lt:
+                    case ListTypeSyntax lt:
                         return GetNamedType(lt.OfType);
-                    case LanguageModel.NonNullTypeSyntax nn:
+                    case NonNullTypeSyntax nn:
                         return GetNamedType(nn.OfType);
                 }
 
@@ -36,7 +36,7 @@ namespace GraphZen.LanguageModel
             }
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            return (LanguageModel.NamedTypeSyntax) GetNamedType(this);
+            return (NamedTypeSyntax) GetNamedType(this);
         }
     }
 }

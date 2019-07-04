@@ -34,7 +34,7 @@ namespace GraphZen.LanguageModel
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat((IEnumerable<SyntaxNode>) Value.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives);
+            Value.ToEnumerable().Concat(Directives);
 
         public StringValueSyntax Description { get; }
 
@@ -43,7 +43,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] LanguageModel.EnumValueDefinitionSyntax other) =>
+        private bool Equals([NotNull] EnumValueDefinitionSyntax other) =>
             Value.Equals(other.Value) && Equals(Description, other.Description) &&
             Directives.SequenceEqual(other.Directives);
 
@@ -59,7 +59,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.EnumValueDefinitionSyntax && Equals((LanguageModel.EnumValueDefinitionSyntax) obj);
+            return obj is EnumValueDefinitionSyntax && Equals((EnumValueDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

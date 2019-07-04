@@ -33,7 +33,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.NullValueSyntax;
+            return obj is NullValueSyntax;
         }
 
         public override int GetHashCode() => -1;

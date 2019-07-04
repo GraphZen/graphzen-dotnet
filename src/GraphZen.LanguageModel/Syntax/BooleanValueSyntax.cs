@@ -33,7 +33,7 @@ namespace GraphZen.LanguageModel
 
         public override object GetValue() => Value;
 
-        private bool Equals([NotNull] LanguageModel.BooleanValueSyntax other) => Value == other.Value;
+        private bool Equals([NotNull] BooleanValueSyntax other) => Value == other.Value;
 
         public override bool Equals(object obj)
         {
@@ -47,7 +47,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.BooleanValueSyntax && Equals((LanguageModel.BooleanValueSyntax) obj);
+            return obj is BooleanValueSyntax && Equals((BooleanValueSyntax) obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();

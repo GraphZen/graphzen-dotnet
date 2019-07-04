@@ -53,7 +53,7 @@ namespace GraphZen.LanguageModel
             _objectTypeMap = new Lazy<IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax>>(() =>
                 Definitions.OfType<ObjectTypeDefinitionSyntax>()
                     // ReSharper disable once PossibleNullReferenceException
-                    .ToReadOnlyDictionaryIgnoringDuplicates<string, ObjectTypeDefinitionSyntax>(_ => _.Name.Value));
+                    .ToReadOnlyDictionaryIgnoringDuplicates(_ => _.Name.Value));
 
             _implementations = new Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>>(
                 () =>
@@ -176,8 +176,9 @@ namespace GraphZen.LanguageModel
         {
             if (abstractType is UnionTypeDefinitionSyntax unionType)
             {
-                // ReSharper disable once AssignNullToNotNullAttribute
-                return Enumerable.Select<NamedTypeSyntax, ObjectTypeDefinitionSyntax>(unionType.MemberTypes, _ => GetObjectTypeMap().TryGetValue(_.Name.Value, out var outputType) ? outputType : null)
+                return unionType.MemberTypes.Select(_ =>
+                        // ReSharper disable once PossibleNullReferenceException
+                        GetObjectTypeMap().TryGetValue(_.Name.Value, out var outputType) ? outputType : null)
                     .Where(_ => _ != null).ToReadOnlyList();
             }
 
@@ -192,7 +193,7 @@ namespace GraphZen.LanguageModel
             if (!_possibleTypeMap.ContainsKey(abstractType.Name.Value))
             {
                 _possibleTypeMap[abstractType.Name.Value] =
-                    GetPossibleTypes(abstractType).ToDictionary<ObjectTypeDefinitionSyntax, string, bool>(_ => _.Name.Value, _ => true);
+                    GetPossibleTypes(abstractType).ToDictionary(_ => _.Name.Value, _ => true);
             }
 
             return _possibleTypeMap.TryGetValue(abstractType.Name.Value, out var possibleTypesMap) &&

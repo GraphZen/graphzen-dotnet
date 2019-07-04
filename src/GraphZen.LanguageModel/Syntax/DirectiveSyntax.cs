@@ -25,7 +25,7 @@ namespace GraphZen.LanguageModel
         }
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Arguments);
+            Name.ToEnumerable().Concat(Arguments);
 
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        private bool Equals([NotNull] LanguageModel.DirectiveSyntax other) =>
+        private bool Equals([NotNull] DirectiveSyntax other) =>
             Name.Equals(other.Name) && Arguments.SequenceEqual(other.Arguments);
 
         public override bool Equals(object obj)
@@ -53,7 +53,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.DirectiveSyntax && Equals((LanguageModel.DirectiveSyntax) obj);
+            return obj is DirectiveSyntax && Equals((DirectiveSyntax) obj);
         }
 
         public override int GetHashCode()

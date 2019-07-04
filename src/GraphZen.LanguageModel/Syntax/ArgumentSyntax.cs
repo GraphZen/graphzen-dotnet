@@ -57,7 +57,7 @@ namespace GraphZen.LanguageModel
 
         public StringValueSyntax Description { get; }
 
-        private bool Equals([NotNull] LanguageModel.ArgumentSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
+        private bool Equals([NotNull] ArgumentSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
 
         public override bool Equals(object obj)
         {
@@ -71,7 +71,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.ArgumentSyntax && Equals((LanguageModel.ArgumentSyntax) obj);
+            return obj is ArgumentSyntax && Equals((ArgumentSyntax) obj);
         }
 
         public override int GetHashCode()

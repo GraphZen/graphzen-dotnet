@@ -25,11 +25,11 @@ namespace GraphZen.LanguageModel
 
         public override NameSyntax Name { get; }
 
-        public override IEnumerable<SyntaxNode> Children => NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives);
+        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives);
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] LanguageModel.ScalarTypeExtensionSyntax other) =>
+        private bool Equals([NotNull] ScalarTypeExtensionSyntax other) =>
             Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
@@ -44,7 +44,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.ScalarTypeExtensionSyntax && Equals((LanguageModel.ScalarTypeExtensionSyntax) obj);
+            return obj is ScalarTypeExtensionSyntax && Equals((ScalarTypeExtensionSyntax) obj);
         }
 
         public override int GetHashCode()

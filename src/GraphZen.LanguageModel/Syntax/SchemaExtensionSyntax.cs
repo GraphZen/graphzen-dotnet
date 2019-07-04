@@ -31,14 +31,14 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<OperationTypeDefinitionSyntax> OperationTypes { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat((IEnumerable<SyntaxNode>) Directives, (IEnumerable<SyntaxNode>) OperationTypes);
+            Directives.Concat(OperationTypes);
 
         /// <summary>
         ///     Schema directives.
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] LanguageModel.SchemaExtensionSyntax other) =>
+        private bool Equals([NotNull] SchemaExtensionSyntax other) =>
             OperationTypes.SequenceEqual(other.OperationTypes) && Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
@@ -53,7 +53,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.SchemaExtensionSyntax && Equals((LanguageModel.SchemaExtensionSyntax) obj);
+            return obj is SchemaExtensionSyntax && Equals((SchemaExtensionSyntax) obj);
         }
 
         public override int GetHashCode()

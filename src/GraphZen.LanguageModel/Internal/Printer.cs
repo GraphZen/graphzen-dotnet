@@ -75,11 +75,11 @@ namespace GraphZen.LanguageModel.Internal
                 case FieldSyntax field:
                     if (field.Alias != null)
                     {
-                        Wrap((string)"", (SyntaxNode)field.Alias, ": ");
+                        Wrap("", field.Alias, ": ");
                     }
 
                     PrintNode(field.Name);
-                    PrintArguments((IReadOnlyList<ArgumentSyntax>)field.Arguments);
+                    PrintArguments(field.Arguments);
                     PrintDirectives(field.Directives);
                     PrintNode(field.SelectionSet);
                     break;
@@ -99,14 +99,14 @@ namespace GraphZen.LanguageModel.Internal
 
                     break;
                 case FragmentSpreadSyntax fragmentSpread:
-                    Wrap((string)"... ", (SyntaxNode)fragmentSpread.Name, " ");
+                    Wrap("... ", fragmentSpread.Name, " ");
                     PrintDirectives(fragmentSpread.Directives);
                     break;
                 case InlineFragmentSyntax inlineFragment:
                     Append("... ");
                     if (inlineFragment.TypeCondition != null)
                     {
-                        Wrap((string)"on ", (SyntaxNode)inlineFragment.TypeCondition, " ");
+                        Wrap("on ", inlineFragment.TypeCondition, " ");
                     }
 
                     PrintDirectives(inlineFragment.Directives);
@@ -114,15 +114,15 @@ namespace GraphZen.LanguageModel.Internal
                     break;
                 case FragmentDefinitionSyntax fragmentDefinition:
                     Wrap("fragment ", fragmentDefinition.Name);
-                    Wrap((string)" on ", (SyntaxNode)fragmentDefinition.TypeCondition, " ");
+                    Wrap(" on ", fragmentDefinition.TypeCondition, " ");
                     PrintDirectives(fragmentDefinition.Directives);
                     PrintNode(fragmentDefinition.SelectionSet);
                     break;
                 case IntValueSyntax intValue:
-                    Append((string)intValue.Value.ToString());
+                    Append(intValue.Value.ToString());
                     break;
                 case FloatValueSyntax floatValue:
-                    Append((string)floatValue.Value);
+                    Append(floatValue.Value);
                     break;
                 case StringValueSyntax stringValue:
                     PrintStringValue(stringValue, false);
@@ -134,7 +134,7 @@ namespace GraphZen.LanguageModel.Internal
                     Append("null");
                     break;
                 case EnumValueSyntax enumValue:
-                    Append((string)enumValue.Value);
+                    Append(enumValue.Value);
                     break;
                 case ListValueSyntax listValue:
                     Wrap("[", () => Join(listValue.Values, ", "), "]");
@@ -149,16 +149,16 @@ namespace GraphZen.LanguageModel.Internal
                     break;
                 case DirectiveSyntax directive:
                     Wrap("@", directive.Name);
-                    PrintArguments((IReadOnlyList<ArgumentSyntax>)directive.Arguments);
+                    PrintArguments(directive.Arguments);
                     break;
                 case NamedTypeSyntax namedType:
-                    Append((string)namedType.Name.Value);
+                    Append(namedType.Name.Value);
                     break;
                 case ListTypeSyntax listType:
-                    Wrap((string)"[", (SyntaxNode)listType.OfType, "]");
+                    Wrap("[", listType.OfType, "]");
                     break;
                 case NonNullTypeSyntax nonNull:
-                    Wrap((string)"", (SyntaxNode)nonNull.OfType, "!");
+                    Wrap("", nonNull.OfType, "!");
                     break;
                 case SchemaDefinitionSyntax schemaDef:
                     Append("schema ");
@@ -178,13 +178,13 @@ namespace GraphZen.LanguageModel.Internal
                     PrintDescription(objectDef);
                     Append("type ");
                     PrintNode(objectDef.Name);
-                    if (Enumerable.Any<NamedTypeSyntax>(objectDef.Interfaces))
+                    if (objectDef.Interfaces.Any())
                     {
                         Wrap(" implements ", () => Join(objectDef.Interfaces, " & "));
                     }
 
                     PrintDirectives(objectDef.Directives);
-                    if (Enumerable.Any<FieldDefinitionSyntax>(objectDef.Fields))
+                    if (objectDef.Fields.Any())
                     {
                         Append(" ");
                     }
@@ -194,7 +194,7 @@ namespace GraphZen.LanguageModel.Internal
                 case FieldDefinitionSyntax fieldDef:
                     PrintDescription(fieldDef);
                     PrintNode(fieldDef.Name);
-                    PrintArguments((IReadOnlyList<InputValueDefinitionSyntax>)fieldDef.Arguments);
+                    PrintArguments(fieldDef.Arguments);
                     Wrap(": ", fieldDef.FieldType);
                     PrintDirectives(fieldDef.Directives);
                     break;
@@ -214,7 +214,7 @@ namespace GraphZen.LanguageModel.Internal
                     PrintDescription(interfaceDef);
                     Wrap("interface ", interfaceDef.Name);
                     PrintDirectives(interfaceDef.Directives);
-                    if (Enumerable.Any<FieldDefinitionSyntax>(interfaceDef.Fields))
+                    if (interfaceDef.Fields.Any())
                     {
                         Append(" ");
                     }
@@ -225,7 +225,7 @@ namespace GraphZen.LanguageModel.Internal
                     PrintDescription(unionType);
                     Wrap("union ", unionType.Name);
                     PrintDirectives(unionType.Directives);
-                    if (Enumerable.Any<NamedTypeSyntax>(unionType.MemberTypes))
+                    if (unionType.MemberTypes.Any())
                     {
                         Append(" = ");
                         Join(unionType.MemberTypes, " | ");
@@ -236,7 +236,7 @@ namespace GraphZen.LanguageModel.Internal
                     PrintDescription(enumType);
                     Wrap("enum ", enumType.Name);
                     PrintDirectives(enumType.Directives);
-                    if (Enumerable.Any<EnumValueDefinitionSyntax>(enumType.Values))
+                    if (enumType.Values.Any())
                     {
                         Append(" ");
                     }
@@ -247,7 +247,7 @@ namespace GraphZen.LanguageModel.Internal
                     PrintDescription(inputObjectDef);
                     Wrap("input ", inputObjectDef.Name);
                     PrintDirectives(inputObjectDef.Directives);
-                    if (Enumerable.Any<InputValueDefinitionSyntax>(inputObjectDef.Fields))
+                    if (inputObjectDef.Fields.Any())
                     {
                         Append(" ");
                     }
@@ -262,14 +262,14 @@ namespace GraphZen.LanguageModel.Internal
                 case DirectiveDefinitionSyntax directiveDef:
                     PrintDescription(directiveDef);
                     Wrap("directive @", directiveDef.Name);
-                    PrintArguments((IReadOnlyList<InputValueDefinitionSyntax>)directiveDef.Arguments);
+                    PrintArguments(directiveDef.Arguments);
                     Append(" on ");
                     Join(directiveDef.Locations, " | ");
                     break;
                 case EnumTypeExtensionSyntax enumExtension:
                     Wrap("extend enum ", enumExtension.Name);
                     PrintDirectives(enumExtension.Directives);
-                    if (Enumerable.Any<EnumValueDefinitionSyntax>(enumExtension.Values))
+                    if (enumExtension.Values.Any())
                     {
                         Append(" ");
                     }
@@ -279,7 +279,7 @@ namespace GraphZen.LanguageModel.Internal
                 case InterfaceTypeExtensionSyntax ifaceExt:
                     Wrap("extend interface ", ifaceExt.Name);
                     PrintDirectives(ifaceExt.Directives);
-                    if (Enumerable.Any<FieldDefinitionSyntax>(ifaceExt.Fields))
+                    if (ifaceExt.Fields.Any())
                     {
                         Append(" ");
                     }
@@ -293,13 +293,13 @@ namespace GraphZen.LanguageModel.Internal
 
                 case ObjectTypeExtensionSyntax objectExt:
                     Wrap("extend type ", objectExt.Name);
-                    if (Enumerable.Any<NamedTypeSyntax>(objectExt.Interfaces))
+                    if (objectExt.Interfaces.Any())
                     {
                         Wrap(" implements ", () => Join(objectExt.Interfaces, " & "));
                     }
 
                     PrintDirectives(objectExt.Directives);
-                    if (Enumerable.Any<FieldDefinitionSyntax>(objectExt.Fields))
+                    if (objectExt.Fields.Any())
                     {
                         Append(" ");
                     }
@@ -310,7 +310,7 @@ namespace GraphZen.LanguageModel.Internal
                 case SchemaExtensionSyntax schemaExt:
                     Append("extend schema");
                     PrintDirectives(schemaExt.Directives);
-                    if (Enumerable.Any<OperationTypeDefinitionSyntax>(schemaExt.OperationTypes))
+                    if (schemaExt.OperationTypes.Any())
                     {
                         Append(" ");
                     }
@@ -320,7 +320,7 @@ namespace GraphZen.LanguageModel.Internal
                 case UnionTypeExtensionSyntax unionExt:
                     Wrap("extend union ", unionExt.Name);
                     PrintDirectives(unionExt.Directives);
-                    if (Enumerable.Any<NamedTypeSyntax>(unionExt.Types))
+                    if (unionExt.Types.Any())
                     {
                         Append(" = ");
                         Join(unionExt.Types, " | ");
@@ -330,7 +330,7 @@ namespace GraphZen.LanguageModel.Internal
                 case InputObjectTypeExtensionSyntax inputExt:
                     Wrap("extend input ", inputExt.Name);
                     PrintDirectives(inputExt.Directives);
-                    if (Enumerable.Any<InputValueDefinitionSyntax>(inputExt.Fields))
+                    if (inputExt.Fields.Any())
                     {
                         Append(" ");
                     }
@@ -348,7 +348,7 @@ namespace GraphZen.LanguageModel.Internal
             if (directives.Any())
             {
                 Append(" ");
-                Join((IReadOnlyList<SyntaxNode>)directives, " ");
+                Join(directives, " ");
             }
         }
 
@@ -362,7 +362,7 @@ namespace GraphZen.LanguageModel.Internal
             {
                 var bq = "\"\"\"";
                 var escaped = stringValue.Value;
-                if (char.IsWhiteSpace(escaped[0]) && !LanguageHelpers.HasNewline(stringValue.Value))
+                if (char.IsWhiteSpace(escaped[0]) && !stringValue.Value.HasNewline())
                 {
                     Append($"{bq}{escaped}{bq}");
                 }
@@ -373,7 +373,7 @@ namespace GraphZen.LanguageModel.Internal
                         Append(bq);
                         _outputBuilder.AppendLine();
                         AppendCurrentIndent();
-                        Append((string)escaped);
+                        Append(escaped);
                         _outputBuilder.AppendLine();
                         AppendCurrentIndent();
                         Append(bq);
@@ -411,7 +411,7 @@ namespace GraphZen.LanguageModel.Internal
                 if (arguments.All(_ => _.Description == null))
                 {
                     Append("(");
-                    Join((IReadOnlyList<SyntaxNode>)arguments, ", ");
+                    Join(arguments, ", ");
                     Append(")");
                 }
                 else
@@ -437,7 +437,7 @@ namespace GraphZen.LanguageModel.Internal
         {
             if (arguments.Any())
             {
-                Wrap("(", () => { Join((IReadOnlyList<SyntaxNode>)arguments, ", "); }, ")");
+                Wrap("(", () => { Join(arguments, ", "); }, ")");
             }
         }
 
@@ -515,7 +515,7 @@ namespace GraphZen.LanguageModel.Internal
 
         private void Join([NotNull] IReadOnlyList<SyntaxNode> nodes, string seperator = null)
         {
-            Join(nodes, seperator != null ? () => { Append(seperator); } : (Action)null);
+            Join(nodes, seperator != null ? () => { Append(seperator); } : (Action) null);
         }
 
         #endregion

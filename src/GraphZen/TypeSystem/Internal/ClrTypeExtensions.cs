@@ -117,7 +117,9 @@ namespace GraphZen.TypeSystem.Internal
             if (clrType.TryGetListItemType(out var itemType) &&
                 itemType.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, itemCanBeNull))
             {
-                typeNode = canBeNull ? (TypeSyntax)SyntaxFactory.ListType(typeNode) : SyntaxFactory.NonNull(SyntaxFactory.ListType(typeNode));
+                typeNode = canBeNull
+                    ? (TypeSyntax) SyntaxFactory.ListType(typeNode)
+                    : SyntaxFactory.NonNull(SyntaxFactory.ListType(typeNode));
                 return true;
             }
 
@@ -128,7 +130,9 @@ namespace GraphZen.TypeSystem.Internal
                 return false;
             }
 
-            typeNode = canBeNull ? (TypeSyntax)SyntaxFactory.NamedType(clrType) : SyntaxFactory.NonNull(SyntaxFactory.NamedType(clrType));
+            typeNode = canBeNull
+                ? (TypeSyntax) SyntaxFactory.NamedType(clrType)
+                : SyntaxFactory.NonNull(SyntaxFactory.NamedType(clrType));
             innerClrType = clrType.GetEffectiveClrType();
             return true;
         }
@@ -165,9 +169,6 @@ namespace GraphZen.TypeSystem.Internal
         [NotNull]
         public static Type GetEffectiveClrType([NotNull] this Type clrType) =>
             clrType.GetCustomAttribute<GraphQLTypeAttribute>()?.ClrType ?? clrType;
-
-
-
 
 
         public static bool IsSameOrSubclass([NotNull] this Type potentialSubClass, [NotNull] Type potentialBase) =>
@@ -286,7 +287,7 @@ namespace GraphZen.TypeSystem.Internal
             var referencedAssemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies();
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 // ReSharper disable once PossibleNullReferenceException
-                .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> { clrType.Assembly });
+                .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> {clrType.Assembly});
             foreach (var assembly in assemblies)
             {
                 // ReSharper disable once PossibleNullReferenceException

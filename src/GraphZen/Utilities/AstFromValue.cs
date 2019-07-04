@@ -12,8 +12,6 @@ using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using static GraphZen.LanguageModel.SyntaxFactory;
 using static GraphZen.InternalNumerics;
-using NullValueSyntax = GraphZen.LanguageModel.NullValueSyntax;
-using ObjectFieldSyntax = GraphZen.LanguageModel.ObjectFieldSyntax;
 
 namespace GraphZen.Utilities
 {

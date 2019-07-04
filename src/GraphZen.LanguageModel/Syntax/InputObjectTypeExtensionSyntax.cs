@@ -33,9 +33,9 @@ namespace GraphZen.LanguageModel
         [NotNull]
         public IReadOnlyList<InputValueDefinitionSyntax> Fields { get; }
 
-        public override IEnumerable<SyntaxNode> Children => NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives), (IEnumerable<SyntaxNode>) Fields);
+        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Fields);
 
-        private bool Equals([NotNull] LanguageModel.InputObjectTypeExtensionSyntax other) =>
+        private bool Equals([NotNull] InputObjectTypeExtensionSyntax other) =>
             Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives) && Fields.SequenceEqual(other.Fields);
 
         public override bool Equals(object obj)
@@ -50,7 +50,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.InputObjectTypeExtensionSyntax && Equals((LanguageModel.InputObjectTypeExtensionSyntax) obj);
+            return obj is InputObjectTypeExtensionSyntax && Equals((InputObjectTypeExtensionSyntax) obj);
         }
 
         public override int GetHashCode()

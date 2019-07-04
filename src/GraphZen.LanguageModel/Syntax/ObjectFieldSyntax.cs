@@ -45,7 +45,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals([NotNull] LanguageModel.ObjectFieldSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
+        private bool Equals([NotNull] ObjectFieldSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
 
         public override bool Equals(object obj)
         {
@@ -59,7 +59,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.ObjectFieldSyntax && Equals((LanguageModel.ObjectFieldSyntax) obj);
+            return obj is ObjectFieldSyntax && Equals((ObjectFieldSyntax) obj);
         }
 
         public override int GetHashCode()

@@ -11,7 +11,6 @@ using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
-using EnumValueSyntax = GraphZen.LanguageModel.EnumValueSyntax;
 
 namespace GraphZen.TypeSystem
 {

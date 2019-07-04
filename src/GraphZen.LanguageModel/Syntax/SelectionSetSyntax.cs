@@ -32,7 +32,7 @@ namespace GraphZen.LanguageModel
         public int Count => Selections.Count;
 
         public IEnumerator<SelectionSyntax> GetEnumerator() => Selections.GetEnumerator();
-        private bool Equals([NotNull] LanguageModel.SelectionSetSyntax other) => Selections.SequenceEqual(other.Selections);
+        private bool Equals([NotNull] SelectionSetSyntax other) => Selections.SequenceEqual(other.Selections);
 
         public override bool Equals(object obj)
         {
@@ -46,7 +46,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.SelectionSetSyntax && Equals((LanguageModel.SelectionSetSyntax) obj);
+            return obj is SelectionSetSyntax && Equals((SelectionSetSyntax) obj);
         }
 
         public override int GetHashCode() => Selections.GetHashCode();

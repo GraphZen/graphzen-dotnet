@@ -4,7 +4,6 @@
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.Validation.Rules
@@ -77,7 +76,7 @@ namespace GraphZen.Validation.Rules
                                 {
                                     var interfaceArg =
                                         interfaceField.Arguments.FirstOrDefault(_ => _.Name.Equals(objectArg.Name));
-                                    if (interfaceArg == null && InputValueDefinitionSyntaxExtensions.IsRequiredArgument(objectArg))
+                                    if (interfaceArg == null && objectArg.IsRequiredArgument())
                                     {
                                         ReportError(
                                             $"Object field {objectType}.{objectField} includes required argument {objectArg} that is missing from the Interface field {@interface}.{interfaceField}.",

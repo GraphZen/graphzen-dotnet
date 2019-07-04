@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
+using GraphZen.Infrastructure.Extensions;
 using JetBrains.Annotations;
 
 namespace GraphZen.LanguageModel.Internal
@@ -41,7 +42,7 @@ namespace GraphZen.LanguageModel.Internal
         internal static IEnumerable<SyntaxNode> Concat(
             [NotNull] [ItemNotNull] this IEnumerable<SyntaxNode> nodes,
             SyntaxNode node) =>
-            nodes.Concat(GraphZen.Infrastructure.Extensions.EnumerableExtensions.ToEnumerable(node));
+            nodes.Concat(node.ToEnumerable());
 
 
         internal static bool NodesEqual<T>(

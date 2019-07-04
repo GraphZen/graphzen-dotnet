@@ -20,12 +20,12 @@ namespace GraphZen.LanguageModel
             NameSyntax name,
             StringValueSyntax description = null,
             IReadOnlyList<DirectiveSyntax> directives = null,
-            IReadOnlyList<LanguageModel.EnumValueDefinitionSyntax> values = null,
+            IReadOnlyList<EnumValueDefinitionSyntax> values = null,
             SyntaxLocation location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
-            Values = values ?? LanguageModel.EnumValueDefinitionSyntax.EmptyList;
+            Values = values ?? EnumValueDefinitionSyntax.EmptyList;
             Directives = directives ?? DirectiveSyntax.EmptyList;
         }
 
@@ -42,11 +42,11 @@ namespace GraphZen.LanguageModel
         ///     The values of the enum type.
         /// </summary>
         [NotNull]
-        public IReadOnlyList<LanguageModel.EnumValueDefinitionSyntax> Values { get; }
+        public IReadOnlyList<EnumValueDefinitionSyntax> Values { get; }
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives), (IEnumerable<SyntaxNode>) Values);
+            Name.ToEnumerable().Concat(Directives).Concat(Values);
 
         public override StringValueSyntax Description { get; }
 
@@ -55,7 +55,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] LanguageModel.EnumTypeDefinitionSyntax other) =>
+        private bool Equals([NotNull] EnumTypeDefinitionSyntax other) =>
             Name.Equals(other.Name) && Equals(Description, other.Description) && Values.SequenceEqual(other.Values) &&
             Directives.SequenceEqual(other.Directives);
 
@@ -71,7 +71,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.EnumTypeDefinitionSyntax && Equals((LanguageModel.EnumTypeDefinitionSyntax) obj);
+            return obj is EnumTypeDefinitionSyntax && Equals((EnumTypeDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

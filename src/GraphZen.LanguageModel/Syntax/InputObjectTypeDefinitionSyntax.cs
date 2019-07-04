@@ -20,13 +20,13 @@ namespace GraphZen.LanguageModel
             NameSyntax name,
             StringValueSyntax description = null,
             IReadOnlyList<DirectiveSyntax> directives = null,
-            IReadOnlyList<LanguageModel.InputValueDefinitionSyntax> fields = null,
+            IReadOnlyList<InputValueDefinitionSyntax> fields = null,
             SyntaxLocation location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
             Directives = directives ?? DirectiveSyntax.EmptyList;
-            Fields = fields ?? LanguageModel.InputValueDefinitionSyntax.EmptyList;
+            Fields = fields ?? InputValueDefinitionSyntax.EmptyList;
         }
 
         public override NameSyntax Name { get; }
@@ -34,16 +34,16 @@ namespace GraphZen.LanguageModel
         public override bool IsOutputType { get; } = false;
 
         [NotNull]
-        public IReadOnlyList<LanguageModel.InputValueDefinitionSyntax> Fields { get; }
+        public IReadOnlyList<InputValueDefinitionSyntax> Fields { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat(NodeExtensions.Concat((IEnumerable<SyntaxNode>) Name.ToEnumerable(), (IEnumerable<SyntaxNode>) Directives), (IEnumerable<SyntaxNode>) Fields);
+            Name.ToEnumerable().Concat(Directives).Concat(Fields);
 
         public override StringValueSyntax Description { get; }
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] LanguageModel.InputObjectTypeDefinitionSyntax other) =>
+        private bool Equals([NotNull] InputObjectTypeDefinitionSyntax other) =>
             Equals(Description, other.Description) && Name.Equals(other.Name) && Fields.SequenceEqual(other.Fields) &&
             Directives.SequenceEqual(other.Directives);
 
@@ -59,7 +59,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.InputObjectTypeDefinitionSyntax && Equals((LanguageModel.InputObjectTypeDefinitionSyntax) obj);
+            return obj is InputObjectTypeDefinitionSyntax && Equals((InputObjectTypeDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

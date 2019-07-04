@@ -35,8 +35,8 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
 
-        private bool Equals([NotNull] LanguageModel.StringValueSyntax other) =>
-            IsBlockString == other.IsBlockString && string.Equals(Value, (string) other.Value);
+        private bool Equals([NotNull] StringValueSyntax other) =>
+            IsBlockString == other.IsBlockString && string.Equals(Value, other.Value);
 
         public override bool Equals(object obj)
         {
@@ -50,7 +50,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.StringValueSyntax && Equals((LanguageModel.StringValueSyntax) obj);
+            return obj is StringValueSyntax && Equals((StringValueSyntax) obj);
         }
 
         public override int GetHashCode()

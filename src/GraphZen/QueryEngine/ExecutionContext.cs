@@ -13,7 +13,6 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
-using OperationDefinitionSyntax = GraphZen.LanguageModel.OperationDefinitionSyntax;
 
 namespace GraphZen.QueryEngine
 {

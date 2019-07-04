@@ -29,7 +29,8 @@ namespace GraphZen.TypeSystem
                 // ReSharper disable once AssignNullToNotNullAttribute
                 fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, schema.ResolveType)));
             ResolveType = resolveType;
-            _syntax = new Lazy<InterfaceTypeDefinitionSyntax>(() => new InterfaceTypeDefinitionSyntax(SyntaxFactory.Name(Name),
+            _syntax = new Lazy<InterfaceTypeDefinitionSyntax>(() => new InterfaceTypeDefinitionSyntax(
+                SyntaxFactory.Name(Name),
                 Description != null ? SyntaxFactory.StringValue(Description, true) : null,
                 DirectiveAnnotations.ToDirectiveNodes(),
                 Fields.Values.ToSyntaxNodes<FieldDefinitionSyntax>()));

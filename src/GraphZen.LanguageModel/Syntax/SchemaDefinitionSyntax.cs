@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class SchemaDefinitionSyntax : TypeSystemDefinitionSyntax, IDirectivesSyntax
     {
-        public SchemaDefinitionSyntax(IReadOnlyList<LanguageModel.OperationTypeDefinitionSyntax> operationTypes,
+        public SchemaDefinitionSyntax(IReadOnlyList<OperationTypeDefinitionSyntax> operationTypes,
             IReadOnlyList<DirectiveSyntax> directives = null, SyntaxLocation location = null) : base(location)
         {
             RootOperationTypes = Check.NotNull(operationTypes, nameof(operationTypes));
@@ -29,21 +29,21 @@ namespace GraphZen.LanguageModel
         /// </summary>
         [NotNull]
         [ItemNotNull]
-        public IReadOnlyList<LanguageModel.OperationTypeDefinitionSyntax> RootOperationTypes { get; }
+        public IReadOnlyList<OperationTypeDefinitionSyntax> RootOperationTypes { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
-            NodeExtensions.Concat((IEnumerable<SyntaxNode>) Directives, (IEnumerable<SyntaxNode>) RootOperationTypes);
+            Directives.Concat(RootOperationTypes);
 
         /// <summary>
         ///     Schema directives.
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] LanguageModel.SchemaDefinitionSyntax other) =>
+        private bool Equals([NotNull] SchemaDefinitionSyntax other) =>
             RootOperationTypes.SequenceEqual(other.RootOperationTypes) && Directives.SequenceEqual(other.Directives);
 
-        public LanguageModel.SchemaDefinitionSyntax WithRootOperation(LanguageModel.OperationTypeDefinitionSyntax definition) =>
-            new LanguageModel.SchemaDefinitionSyntax(RootOperationTypes.ToReadOnlyListWithMutations(_ =>
+        public SchemaDefinitionSyntax WithRootOperation(OperationTypeDefinitionSyntax definition) =>
+            new SchemaDefinitionSyntax(RootOperationTypes.ToReadOnlyListWithMutations(_ =>
                 {
                     Debug.Assert(_ != null, nameof(_) + " != null");
                     _.Add(definition);
@@ -62,7 +62,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is LanguageModel.SchemaDefinitionSyntax && Equals((LanguageModel.SchemaDefinitionSyntax) obj);
+            return obj is SchemaDefinitionSyntax && Equals((SchemaDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()
