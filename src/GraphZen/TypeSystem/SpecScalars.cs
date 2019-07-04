@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.Utilities;
 using GraphZen.Utilities.Internal;
 using JetBrains.Annotations;

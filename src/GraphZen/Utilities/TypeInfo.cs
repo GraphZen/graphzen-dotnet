@@ -6,10 +6,13 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.Internal;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using static GraphZen.TypeSystem.Introspection;
+using FragmentDefinitionSyntax = GraphZen.LanguageModel.FragmentDefinitionSyntax;
+using InlineFragmentSyntax = GraphZen.LanguageModel.InlineFragmentSyntax;
+using OperationDefinitionSyntax = GraphZen.LanguageModel.OperationDefinitionSyntax;
 
 namespace GraphZen.Utilities
 {

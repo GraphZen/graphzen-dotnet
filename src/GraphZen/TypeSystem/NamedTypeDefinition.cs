@@ -4,7 +4,8 @@
 using System;
 using System.Diagnostics;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 

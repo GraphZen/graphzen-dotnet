@@ -5,13 +5,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using GraphZen.Utilities.Internal;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
-using static GraphZen.Language.SyntaxFactory;
-using static GraphZen.Infrastructure.InternalNumerics;
+using static GraphZen.LanguageModel.SyntaxFactory;
+using static GraphZen.InternalNumerics;
+using NullValueSyntax = GraphZen.LanguageModel.NullValueSyntax;
+using ObjectFieldSyntax = GraphZen.LanguageModel.ObjectFieldSyntax;
 
 namespace GraphZen.Utilities
 {

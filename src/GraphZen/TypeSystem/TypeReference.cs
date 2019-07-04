@@ -5,8 +5,11 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using JetBrains.Annotations;
+using ListTypeSyntax = GraphZen.LanguageModel.ListTypeSyntax;
+using NamedTypeSyntax = GraphZen.LanguageModel.NamedTypeSyntax;
+using NonNullTypeSyntax = GraphZen.LanguageModel.NonNullTypeSyntax;
 
 namespace GraphZen.TypeSystem
 {

@@ -5,6 +5,7 @@ using System;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
+using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
 using JetBrains.Annotations;

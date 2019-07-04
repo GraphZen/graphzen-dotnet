@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
@@ -99,7 +99,7 @@ namespace GraphZen.QueryEngine
                             {
                                 var coercionErrors = erred.Errors.Select(_ =>
                                 {
-                                    // TODO: need to cleean-up
+                                    // TODO: need to clean-up
                                     _.Message =
                                         $"Variable \"{variable}\" got invalid value `{value.Inspect()}`; {_.Message}";
                                     return _;

@@ -3,7 +3,7 @@
 
 using System;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.Utilities;
 using JetBrains.Annotations;

@@ -3,10 +3,12 @@
 
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel.Internal;
+using GraphZen.LanguageModel.Internal.Grammar;
 using JetBrains.Annotations;
 using Superpower;
 using Xunit;
-using static GraphZen.Language.SyntaxFactory;
+using static GraphZen.LanguageModel.SyntaxFactory;
 
 namespace GraphZen.Language.Internal
 {

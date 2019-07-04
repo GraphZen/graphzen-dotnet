@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
+using ListValueSyntax = GraphZen.LanguageModel.ListValueSyntax;
+using NullValueSyntax = GraphZen.LanguageModel.NullValueSyntax;
+using ObjectValueSyntax = GraphZen.LanguageModel.ObjectValueSyntax;
 
 namespace GraphZen.Utilities
 {

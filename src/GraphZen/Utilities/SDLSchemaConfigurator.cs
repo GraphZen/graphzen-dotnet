@@ -7,10 +7,16 @@ using System.Diagnostics;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
-using GraphZen.Language;
-using GraphZen.Language.Internal;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal.Grammar;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
+using EnumTypeDefinitionSyntax = GraphZen.LanguageModel.EnumTypeDefinitionSyntax;
+using InputObjectTypeDefinitionSyntax = GraphZen.LanguageModel.InputObjectTypeDefinitionSyntax;
+using InterfaceTypeDefinitionSyntax = GraphZen.LanguageModel.InterfaceTypeDefinitionSyntax;
+using ObjectTypeDefinitionSyntax = GraphZen.LanguageModel.ObjectTypeDefinitionSyntax;
+using ScalarTypeDefinitionSyntax = GraphZen.LanguageModel.ScalarTypeDefinitionSyntax;
+using UnionTypeDefinitionSyntax = GraphZen.LanguageModel.UnionTypeDefinitionSyntax;
 
 namespace GraphZen.Utilities
 {

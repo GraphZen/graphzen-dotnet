@@ -7,7 +7,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.Internal;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 

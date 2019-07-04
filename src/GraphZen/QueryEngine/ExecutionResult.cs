@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 

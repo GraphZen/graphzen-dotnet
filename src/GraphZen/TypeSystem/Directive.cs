@@ -7,9 +7,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
-using GraphZen.Language.Internal;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal.Grammar;
 using JetBrains.Annotations;
+using DirectiveDefinitionSyntax = GraphZen.LanguageModel.DirectiveDefinitionSyntax;
 
 namespace GraphZen.TypeSystem
 {

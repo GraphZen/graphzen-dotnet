@@ -6,6 +6,8 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Language;
 using GraphZen.Language.Internal;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Xunit;
 

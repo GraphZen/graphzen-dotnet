@@ -7,10 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
-using GraphZen.Language;
-using GraphZen.Language.Internal;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal.Grammar;
 using JetBrains.Annotations;
-using static GraphZen.Language.DirectiveLocation;
+using static GraphZen.LanguageModel.DirectiveLocation;
+using OperationDefinitionSyntax = GraphZen.LanguageModel.OperationDefinitionSyntax;
 
 namespace GraphZen.Validation.Rules
 {

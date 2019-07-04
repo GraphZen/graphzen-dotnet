@@ -9,8 +9,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
-using GraphZen.Language.Internal;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
 // ReSharper disable UnusedMember.Global
@@ -117,7 +117,7 @@ namespace GraphZen.TypeSystem.Internal
             if (clrType.TryGetListItemType(out var itemType) &&
                 itemType.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, itemCanBeNull))
             {
-                typeNode = canBeNull ? (TypeSyntax) SyntaxFactory.ListType(typeNode) : SyntaxFactory.NonNull(SyntaxFactory.ListType(typeNode));
+                typeNode = canBeNull ? (TypeSyntax)SyntaxFactory.ListType(typeNode) : SyntaxFactory.NonNull(SyntaxFactory.ListType(typeNode));
                 return true;
             }
 
@@ -128,7 +128,7 @@ namespace GraphZen.TypeSystem.Internal
                 return false;
             }
 
-            typeNode = canBeNull ? (TypeSyntax) SyntaxFactory.NamedType(clrType) : SyntaxFactory.NonNull(SyntaxFactory.NamedType(clrType));
+            typeNode = canBeNull ? (TypeSyntax)SyntaxFactory.NamedType(clrType) : SyntaxFactory.NonNull(SyntaxFactory.NamedType(clrType));
             innerClrType = clrType.GetEffectiveClrType();
             return true;
         }
@@ -167,76 +167,8 @@ namespace GraphZen.TypeSystem.Internal
             clrType.GetCustomAttribute<GraphQLTypeAttribute>()?.ClrType ?? clrType;
 
 
-        public static bool TryGetGraphQLName(this Type clrTYpe, out string name, object source = null)
-        {
-            name = default;
-            if (clrTYpe.TryGetGraphQLNameWithoutValidation(out var maybeInvalidName, source) &&
-                maybeInvalidName.IsValidGraphQLName())
-            {
-                name = maybeInvalidName;
-                return true;
-            }
-
-            return false;
-        }
-
-        [NotNull]
-        public static string GetGraphQLName(this Type clrType, object source = null)
-        {
-            if (clrType.TryGetGraphQLNameWithoutValidation(out var maybeInvalidName, source))
-            {
-                if (maybeInvalidName.IsValidGraphQLName())
-                {
-                    return maybeInvalidName;
-                }
-
-                throw new Exception(
-                    $"Failed to get a valid GraphQL name for CLR type '{clrType}' because it was invalid. The invalid name was '{maybeInvalidName}'.");
-            }
-
-            throw new InvalidOperationException($"Failed to get a valid GraphQL name for CLR type '{clrType}'.");
-        }
-
-        public static bool HasValidGraphQLName(this Type clrType, object source = null) =>
-            clrType.TryGetGraphQLName(out _, source);
 
 
-        public static bool TryGetGraphQLNameFromDataAnnotation([NotNull] this Type clrType, out string name)
-        {
-            name = clrType.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
-            return name != null;
-        }
-
-        private static bool TryGetGraphQLNameWithoutValidation(this Type clrType, out string name, object source = null)
-        {
-            Check.NotNull(clrType, nameof(clrType));
-            name = default;
-
-            if (clrType.TryGetGraphQLNameFromDataAnnotation(out name))
-            {
-                return true;
-            }
-
-            if (source != null)
-            {
-                var typenameProperty = clrType.GetProperty("__typename");
-                if (typenameProperty != null && typenameProperty.PropertyType == typeof(string))
-                {
-                    var typename = typenameProperty.GetValue(source);
-
-                    if (typename != null)
-                    {
-                        name = (string) typename;
-                        return true;
-                    }
-
-                    return false;
-                }
-            }
-
-            name = clrType.Name;
-            return true;
-        }
 
         public static bool IsSameOrSubclass([NotNull] this Type potentialSubClass, [NotNull] Type potentialBase) =>
             potentialSubClass.IsSubclassOf(potentialBase) || potentialBase == potentialSubClass;
@@ -354,7 +286,7 @@ namespace GraphZen.TypeSystem.Internal
             var referencedAssemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies();
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 // ReSharper disable once PossibleNullReferenceException
-                .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> {clrType.Assembly});
+                .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> { clrType.Assembly });
             foreach (var assembly in assemblies)
             {
                 // ReSharper disable once PossibleNullReferenceException

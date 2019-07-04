@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.Abstractions\GraphZen.Abstractions.csproj" />
     <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
+    <ProjectReference Include="..\GraphZen.LanguageModel\GraphZen.LanguageModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,30 +38,12 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GraphZenDictionaryContainerExtensions.Generated.cs</LastGenOutput>
     </None>
-    <None Update="Language\GraphQLSyntaxVisitor.Generated.tt">
-      <LastGenOutput>GraphQLSyntaxVisitor.Generated.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Language\Syntax\SyntaxNode.Generated.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SyntaxNode.Generated.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Internal\GraphZenDictionaryContainerExtensions.Generated.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>GraphZenDictionaryContainerExtensions.Generated.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Language\GraphQLSyntaxVisitor.Generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GraphQLSyntaxVisitor.Generated.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Language\Syntax\SyntaxNode.Generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SyntaxNode.Generated.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

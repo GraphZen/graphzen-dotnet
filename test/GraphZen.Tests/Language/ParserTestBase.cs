@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Language.Internal;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Xunit;
 

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.QueryEngine;
 using JetBrains.Annotations;
 

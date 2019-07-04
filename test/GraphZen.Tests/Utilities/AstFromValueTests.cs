@@ -8,7 +8,7 @@ using GraphZen.TypeSystem;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.Language.SyntaxFactory;
+using static GraphZen.LanguageModel.SyntaxFactory;
 using static GraphZen.Utilities.Helpers;
 using ListType = GraphZen.TypeSystem.ListType;
 

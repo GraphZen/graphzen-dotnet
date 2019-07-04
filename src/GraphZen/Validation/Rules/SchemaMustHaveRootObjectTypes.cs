@@ -3,8 +3,9 @@
 
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using JetBrains.Annotations;
+using ObjectTypeDefinitionSyntax = GraphZen.LanguageModel.ObjectTypeDefinitionSyntax;
 
 namespace GraphZen.Validation.Rules
 {

@@ -8,9 +8,10 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Infrastructure.Extensions;
 using GraphZen.Internal;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
+using EnumValueSyntax = GraphZen.LanguageModel.EnumValueSyntax;
 
 namespace GraphZen.TypeSystem
 {

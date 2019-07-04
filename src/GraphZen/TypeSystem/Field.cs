@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem

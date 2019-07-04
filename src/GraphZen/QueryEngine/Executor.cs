@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 

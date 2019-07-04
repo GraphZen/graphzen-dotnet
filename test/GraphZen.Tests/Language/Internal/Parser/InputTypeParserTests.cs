@@ -5,7 +5,7 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.Language.SyntaxFactory;
+using static GraphZen.LanguageModel.SyntaxFactory;
 
 namespace GraphZen.Language.Internal
 {

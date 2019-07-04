@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
