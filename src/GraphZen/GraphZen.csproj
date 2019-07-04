@@ -4,13 +4,11 @@
     <Description>Code-first GraphQL framework for .NET</Description>
   </PropertyGroup>
   
-  
   <ItemGroup>
     <Compile Include="..\Shared\DictionaryContainerCodeGenerator.cs" Link="Internal\DictionaryContainerCodeGenerator.cs" />
     <Compile Include="..\Shared\DictionaryExtensions.cs" Link="DictionaryExtensions.cs" />
     <Compile Include="..\Shared\KeyValuePairExtensions.cs" Link="Internal\KeyValuePairExtensions.cs" />
   </ItemGroup>
-
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
