@@ -4,7 +4,6 @@
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 
-
 namespace GraphZen.TypeSystem
 {
     public delegate TResult Resolver<in TSource, out TResult>(TSource source, [NotNull] dynamic args,

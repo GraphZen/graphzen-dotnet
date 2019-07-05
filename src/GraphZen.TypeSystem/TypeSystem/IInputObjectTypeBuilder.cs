@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.TypeSystem
 {
     public interface IInputObjectTypeBuilder<TInputObject> : IAnnotableBuilder<IInputObjectTypeBuilder<TInputObject>>

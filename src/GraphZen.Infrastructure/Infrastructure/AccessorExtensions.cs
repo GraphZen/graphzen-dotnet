@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 
 namespace GraphZen.Infrastructure
 {
-
     public static class AccessorExtensions
     {
         [DebuggerStepThrough]

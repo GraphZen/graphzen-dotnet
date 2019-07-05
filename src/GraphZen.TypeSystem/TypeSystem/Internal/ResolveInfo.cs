@@ -52,7 +52,5 @@ namespace GraphZen.TypeSystem.Internal
 
         public OperationDefinitionSyntax Operation { get; }
         public IReadOnlyDictionary<string, object> VariableValues { get; }
-
-        
     }
 }

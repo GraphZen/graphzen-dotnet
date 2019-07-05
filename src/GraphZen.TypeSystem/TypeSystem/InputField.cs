@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 
-
 namespace GraphZen.TypeSystem
 {
     public class InputField : InputValue, IInputField

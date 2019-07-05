@@ -14,7 +14,6 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using GraphZen.TypeSystem;
 
-
 namespace GraphZen.Validation.Rules
 {
     [SuppressMessage("ReSharper", "UnusedMember.Local")]

@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 
-
 namespace GraphZen.TypeSystem
 {
     public class InputObjectTypeBuilder<TInputObject> : IInputObjectTypeBuilder<TInputObject>,

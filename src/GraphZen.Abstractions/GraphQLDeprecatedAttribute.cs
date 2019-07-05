@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using GraphZen.Infrastructure;
 
 namespace GraphZen
 {

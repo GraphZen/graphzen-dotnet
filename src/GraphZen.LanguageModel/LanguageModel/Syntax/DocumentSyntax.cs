@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>

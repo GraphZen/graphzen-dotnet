@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
-
 using Newtonsoft.Json.Linq;
 
 // ReSharper disable UnusedMember.Local

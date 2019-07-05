@@ -15,7 +15,6 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 
-
 namespace GraphZen.QueryEngine
 {
     internal static class Values

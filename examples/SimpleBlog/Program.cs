@@ -3,7 +3,6 @@
 
 using System;
 using GraphZen.Infrastructure;
-
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;

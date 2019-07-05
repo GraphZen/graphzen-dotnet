@@ -11,7 +11,6 @@ using GraphZen.Logging;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 
-
 namespace GraphZen
 {
     public class GraphQLContext

@@ -6,7 +6,6 @@ using System.Collections;
 using System.Reflection;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.TypeSystem.Internal
 {
     public static class PropertyInfoExtensions

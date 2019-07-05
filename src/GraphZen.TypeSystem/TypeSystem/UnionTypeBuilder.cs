@@ -5,7 +5,6 @@ using System;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 
-
 namespace GraphZen.TypeSystem
 {
     public class UnionTypeBuilder<TUnion, TContext> : IUnionTypeBuilder<TUnion, TContext>,

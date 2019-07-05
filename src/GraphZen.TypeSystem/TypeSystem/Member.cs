@@ -5,7 +5,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 
-
 namespace GraphZen.TypeSystem
 {
     public abstract class Member : ISyntaxConvertable

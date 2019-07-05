@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.LanguageModel
 {
     public partial class PunctuatorSyntax : SyntaxNode

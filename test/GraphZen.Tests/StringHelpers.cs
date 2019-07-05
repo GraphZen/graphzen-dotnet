@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen
 {
     public static class StringHelpers

@@ -3,7 +3,6 @@
 
 using System;
 using GraphZen.Infrastructure;
-
 using Superpower;
 
 namespace GraphZen.LanguageModel.Internal.Grammar

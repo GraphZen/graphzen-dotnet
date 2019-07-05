@@ -3,7 +3,6 @@
 
 using System.Diagnostics;
 using GraphZen.Infrastructure;
-
 using Superpower;
 
 namespace GraphZen.LanguageModel.Internal

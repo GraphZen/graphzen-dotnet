@@ -5,7 +5,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 
-
 namespace GraphZen.TypeSystem
 {
     public delegate string TypeResolver<in TSource, in TContext>(TSource value, TContext context,

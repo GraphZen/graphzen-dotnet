@@ -13,7 +13,6 @@ using DiffPlex.DiffBuilder;
 using DiffPlex.DiffBuilder.Model;
 using GraphZen.Infrastructure;
 using GraphZen.QueryEngine;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Superpower.Model;

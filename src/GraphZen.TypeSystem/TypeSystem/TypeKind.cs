@@ -4,7 +4,6 @@
 using System.ComponentModel;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.TypeSystem
 {
     [GraphQLName("__TypeKind")]

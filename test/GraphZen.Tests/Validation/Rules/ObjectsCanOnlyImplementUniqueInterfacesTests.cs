@@ -10,7 +10,8 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class ObjectsCanOnlyImplementUniqueInterfacesTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.ObjectsCanOnlyImplementUniqueInterfaces;
+        public override ValidationRule RuleUnderTest { get; } =
+            DocumentValidationRules.ObjectsCanOnlyImplementUniqueInterfaces;
 
         [Fact]
         public void RejectsAnObjectImplementingANonInterfaceType()

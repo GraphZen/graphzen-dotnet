@@ -4,7 +4,6 @@
 using System;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-
 using Xunit;
 using static GraphZen.Infrastructure.StringUtils;
 

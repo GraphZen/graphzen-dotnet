@@ -4,7 +4,6 @@
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
-
 using Xunit;
 
 namespace GraphZen.StarWars

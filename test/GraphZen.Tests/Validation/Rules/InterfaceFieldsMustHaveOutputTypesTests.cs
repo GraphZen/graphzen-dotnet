@@ -13,7 +13,8 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class InterfaceFieldsMustHaveOutputTypesTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.InterfaceFieldsMustHaveOutputTypes;
+        public override ValidationRule RuleUnderTest { get; } =
+            DocumentValidationRules.InterfaceFieldsMustHaveOutputTypes;
 
         public static IEnumerable<object[]> GetValidInterfaceFieldTypeScenarios() =>
             from outputType in OutputTypes

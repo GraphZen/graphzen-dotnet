@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.LanguageModel.Internal
 {
     public static class NameTokenValidator

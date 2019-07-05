@@ -4,7 +4,6 @@
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 
-
 namespace GraphZen.TypeSystem
 {
     public delegate bool IsTypeOf<in TObject, in TContext>(TObject value, TContext context, ResolveInfo info)

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
-
 using Newtonsoft.Json;
 
 namespace GraphZen.LanguageModel.Internal

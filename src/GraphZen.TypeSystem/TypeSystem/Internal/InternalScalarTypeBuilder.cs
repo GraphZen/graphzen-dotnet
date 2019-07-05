@@ -4,7 +4,6 @@
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
-
 namespace GraphZen.TypeSystem.Internal
 {
     public class InternalScalarTypeBuilder : AnnotatableMemberDefinitionBuilder<ScalarTypeDefinition>

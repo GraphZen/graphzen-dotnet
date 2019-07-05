@@ -4,7 +4,6 @@
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 
-
 namespace GraphZen.TypeSystem
 {
     public delegate Maybe<object> LeafSerializer<in TScalar>(TScalar value);

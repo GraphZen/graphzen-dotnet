@@ -5,7 +5,6 @@ using System;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.TypeSystem
 {
     public interface IFieldsContainerDefinitionBuilder<out TBuilder, TSource, TContext> where TContext : GraphQLContext

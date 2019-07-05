@@ -4,5 +4,4 @@
 using System.Runtime.CompilerServices;
 using GraphZen.Infrastructure;
 
-
- [assembly: InternalsVisibleTo("GraphZen.Tests")]
+[assembly: InternalsVisibleTo("GraphZen.Tests")]

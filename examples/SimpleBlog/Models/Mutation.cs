@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using GraphZen.Infrastructure;
 
-
 namespace SimpleBlog.Models
 {
     public class Mutation

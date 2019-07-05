@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Reflection;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.TypeSystem.Internal
 {
     public class InternalInputValueBuilder : AnnotatableMemberDefinitionBuilder<InputValueDefinition>

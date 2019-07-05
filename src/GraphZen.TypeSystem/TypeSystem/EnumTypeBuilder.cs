@@ -5,7 +5,6 @@ using System;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 
-
 namespace GraphZen.TypeSystem
 {
     public class EnumTypeBuilder<TEnum> : IEnumTypeBuilder<TEnum>, IInfrastructure<InternalEnumTypeBuilder>

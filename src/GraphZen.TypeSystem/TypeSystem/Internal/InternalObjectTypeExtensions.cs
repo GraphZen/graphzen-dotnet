@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.TypeSystem.Internal
 {
     public static class InternalObjectTypeExtensions

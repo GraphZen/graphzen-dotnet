@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen
 {
     internal class GraphQLRequest

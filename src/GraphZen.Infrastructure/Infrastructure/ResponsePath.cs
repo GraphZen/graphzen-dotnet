@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.Infrastructure
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]

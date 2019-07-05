@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using GraphZen.Infrastructure;
 
 namespace GraphZen
 {

@@ -6,7 +6,6 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
-
 using Xunit;
 
 namespace GraphZen.Error

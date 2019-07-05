@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 using GraphZen.TypeSystem.Internal;
 using Xunit;
 

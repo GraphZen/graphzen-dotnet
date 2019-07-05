@@ -4,7 +4,6 @@
 using System.Diagnostics;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.TypeSystem.Internal
 {
     public static class ResponsePathHelpers

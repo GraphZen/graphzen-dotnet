@@ -4,7 +4,6 @@
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
-
 using Superpower;
 using Xunit;
 

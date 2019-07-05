@@ -5,7 +5,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 
-
 namespace GraphZen.Validation.Rules
 {
     [NoReorder]

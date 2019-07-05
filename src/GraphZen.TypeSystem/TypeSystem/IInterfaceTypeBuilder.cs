@@ -3,7 +3,6 @@
 
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.TypeSystem
 {
     public interface

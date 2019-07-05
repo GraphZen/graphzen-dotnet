@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 
-
 namespace GraphZen.QueryEngine
 {
     public interface IExecutor

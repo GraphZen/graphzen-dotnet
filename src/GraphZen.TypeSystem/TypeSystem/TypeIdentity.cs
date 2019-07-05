@@ -7,7 +7,6 @@ using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 
-
 namespace GraphZen.TypeSystem
 {
     public class TypeIdentity

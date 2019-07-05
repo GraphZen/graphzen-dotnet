@@ -5,7 +5,6 @@ using System;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 
-
 namespace GraphZen
 {
     public abstract class GraphQLContextOptions : IInfrastructure<GraphQLContextOptionsBuilder>

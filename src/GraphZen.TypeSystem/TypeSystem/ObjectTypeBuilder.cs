@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 
-
 namespace GraphZen.TypeSystem
 {
     public class ObjectTypeBuilder<TObject, TContext> : IObjectTypeBuilder<TObject, TContext>

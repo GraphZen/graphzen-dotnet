@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-
 using Xunit;
 
 namespace GraphZen.TypeSystem

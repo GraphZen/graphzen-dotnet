@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
-
 using Xunit;
 
 namespace GraphZen.LanguageModel

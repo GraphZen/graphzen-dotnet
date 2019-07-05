@@ -7,7 +7,6 @@ using System.IO;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
-
 using Xunit;
 
 namespace GraphZen.LanguageModel

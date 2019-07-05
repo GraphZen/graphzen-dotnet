@@ -3,7 +3,6 @@
 
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.LanguageModel
 {
     public interface INamedSyntax

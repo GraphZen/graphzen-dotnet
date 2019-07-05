@@ -5,7 +5,6 @@ using System;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 
-
 namespace GraphZen.TypeSystem.Internal
 {
     public class

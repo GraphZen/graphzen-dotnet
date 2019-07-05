@@ -5,7 +5,6 @@ using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
 
-
 namespace GraphZen.TypeSystem
 {
     public delegate Maybe<TScalar> LeafLiteralParser<TScalar, in TValueNode>([NotNull] TValueNode valueNode)

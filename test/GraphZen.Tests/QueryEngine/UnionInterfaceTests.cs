@@ -6,7 +6,6 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
-
 using Xunit;
 
 namespace GraphZen.QueryEngine

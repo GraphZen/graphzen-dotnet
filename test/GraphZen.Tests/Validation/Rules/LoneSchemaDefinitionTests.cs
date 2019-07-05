@@ -4,7 +4,6 @@
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 
-
 namespace GraphZen.Validation.Rules
 {
     [NoReorder]

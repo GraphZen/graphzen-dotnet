@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.QueryEngine;

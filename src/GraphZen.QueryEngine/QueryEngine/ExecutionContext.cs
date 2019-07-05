@@ -13,7 +13,6 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 
-
 namespace GraphZen.QueryEngine
 {
     internal sealed class ExecutionContext
@@ -64,7 +63,6 @@ namespace GraphZen.QueryEngine
         public ConcurrentBag<GraphQLError> Errors { get; }
 
         public object RootValue { get; }
-
 
 
         private static Maybe<object> DefaultFieldResovler(object source, [NotNull] dynamic args,
@@ -288,15 +286,8 @@ namespace GraphZen.QueryEngine
             Errors.Add(error);
         }
 
-        private class PreBuiltSchemaContext : GraphQLContext
-        {
-            public PreBuiltSchemaContext(Schema schema) : base(schema)
-            {
-            }
-        }
-
         [NotNull]
-        internal ResolveInfo Build( [NotNull] Field fieldDefinition,
+        internal ResolveInfo Build([NotNull] Field fieldDefinition,
             [NotNull] [ItemNotNull] IReadOnlyList<FieldSyntax> fieldNodes, IFieldsContainer parentType,
             ResponsePath path) =>
             new ResolveInfo(
@@ -305,11 +296,18 @@ namespace GraphZen.QueryEngine
                 fieldDefinition.FieldType,
                 parentType,
                 path,
-                this.Schema,
-                this.Fragments,
-                this.Operation,
-                this.VariableValues,
-                this.RootValue
+                Schema,
+                Fragments,
+                Operation,
+                VariableValues,
+                RootValue
             );
+
+        private class PreBuiltSchemaContext : GraphQLContext
+        {
+            public PreBuiltSchemaContext(Schema schema) : base(schema)
+            {
+            }
+        }
     }
 }

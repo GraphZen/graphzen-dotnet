@@ -4,7 +4,6 @@
 using System;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.TypeSystem.Builders
 {
     [NoReorder]

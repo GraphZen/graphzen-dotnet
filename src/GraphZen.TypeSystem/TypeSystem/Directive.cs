@@ -11,7 +11,6 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal.Grammar;
 using GraphZen.TypeSystem.Taxonomy;
 
-
 namespace GraphZen.TypeSystem
 {
     [GraphQLName("__Directive")]

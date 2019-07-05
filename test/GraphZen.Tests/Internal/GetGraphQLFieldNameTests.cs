@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
-
 using Xunit;
 
 namespace GraphZen.Internal

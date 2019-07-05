@@ -3,10 +3,8 @@
 
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
-
 
 namespace GraphZen.TypeSystem
 {

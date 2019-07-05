@@ -10,7 +10,6 @@ using GraphZen.Infrastructure;
 using GraphZen.QueryEngine;
 using GraphZen.TypeSystem;
 
-
 namespace GraphZen.StarWars
 {
     [NoReorder]

@@ -7,7 +7,6 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
 
-
 namespace GraphZen.QueryEngine
 {
     public abstract class ExecutorHarness

@@ -7,7 +7,6 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
-
 using Xunit;
 
 // ReSharper disable InconsistentNaming

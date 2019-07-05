@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>

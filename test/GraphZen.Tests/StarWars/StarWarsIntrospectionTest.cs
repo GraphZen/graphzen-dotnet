@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
-
 using Xunit;
 
 namespace GraphZen.StarWars

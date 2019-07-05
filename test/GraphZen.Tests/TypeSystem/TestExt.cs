@@ -4,8 +4,6 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
-
 
 namespace GraphZen.TypeSystem
 {

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
-
 namespace GraphZen.TypeSystem
 {
     public static class SpecDirectives

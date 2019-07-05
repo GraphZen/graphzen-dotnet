@@ -5,7 +5,6 @@ using System;
 using System.Reflection;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.LanguageModel.Internal
 {
     public static class LanguageModelClrTypeExtensions

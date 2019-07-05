@@ -5,7 +5,6 @@ using System;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
-
 namespace GraphZen.TypeSystem
 {
     public abstract class SyntaxConverter : ISyntaxConverter

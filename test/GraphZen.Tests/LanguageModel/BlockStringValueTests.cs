@@ -3,7 +3,6 @@
 
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
-
 using Xunit;
 
 namespace GraphZen.LanguageModel

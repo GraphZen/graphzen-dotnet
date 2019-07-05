@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Linq;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>

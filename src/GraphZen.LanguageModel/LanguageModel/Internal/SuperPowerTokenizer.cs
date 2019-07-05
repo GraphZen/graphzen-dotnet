@@ -4,7 +4,6 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-
 using Superpower;
 using Superpower.Model;
 using Superpower.Parsers;

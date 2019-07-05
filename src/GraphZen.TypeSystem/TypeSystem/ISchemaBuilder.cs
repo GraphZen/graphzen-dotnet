@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 
-
 namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity

@@ -9,7 +9,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 
-
 namespace GraphZen.TypeSystem.Internal
 {
     public class InternalSchemaBuilder : AnnotatableMemberDefinitionBuilder<SchemaDefinition>

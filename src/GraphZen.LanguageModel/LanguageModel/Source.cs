@@ -4,7 +4,6 @@
 using System.Text.RegularExpressions;
 using GraphZen.Infrastructure;
 
-
 namespace GraphZen.LanguageModel
 {
     public class Source

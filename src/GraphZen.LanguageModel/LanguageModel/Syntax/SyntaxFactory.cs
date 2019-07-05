@@ -8,7 +8,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 
-
 namespace GraphZen.LanguageModel
 {
     public static class SyntaxFactory
