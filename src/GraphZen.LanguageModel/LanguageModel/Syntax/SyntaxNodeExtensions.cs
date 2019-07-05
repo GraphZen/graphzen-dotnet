@@ -1,8 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
 
@@ -25,29 +23,17 @@ namespace GraphZen.LanguageModel
         //public static IReadOnlyList<DirectiveDefinitionSyntax> SpecDefinedDirectives { get; } =
         //    SpecDirectives.All.ToSyntaxNodes<DirectiveDefinitionSyntax>().ToList().AsReadOnly();
 
-        [NotNull]
-        [ItemNotNull]
-        private static IReadOnlyList<TypeSystemDefinitionSyntax> IntrospectionTypes =>
-            throw new NotImplementedException();
-
-        [NotNull]
-        [ItemNotNull]
-        private static IReadOnlyList<ScalarTypeDefinitionSyntax> SpecDefinedTypes =>
-            throw new NotImplementedException();
-
-        [NotNull]
-        [ItemNotNull]
-        public static IReadOnlyList<DirectiveDefinitionSyntax> SpecDefinedDirectives =>
-            throw new NotImplementedException();
 
         public static bool IsIntrospectionType(this DefinitionSyntax node)
-            => node is TypeSystemDefinitionSyntax typeDef && IntrospectionTypes.Any(_ => _.Equals(typeDef));
+            => node is TypeDefinitionSyntax typeDef &&
+               SpecReservedNames.IntrospectionTypeNames.Contains(typeDef.Name.Value);
 
         public static bool IsSpecDefinedDirective(this DefinitionSyntax node) =>
-            node is DirectiveDefinitionSyntax dirDef && SpecDefinedDirectives.Any(_ => _.Equals(dirDef));
+            node is DirectiveDefinitionSyntax dirDef && SpecReservedNames.DirectiveNames.Contains(dirDef.Name.Value);
 
         public static bool IsSpecDefinedType(this DefinitionSyntax node) =>
-            node is ScalarTypeDefinitionSyntax typeDef && SpecDefinedTypes.Any(_ => _.Equals(typeDef));
+            node is ScalarTypeDefinitionSyntax typeDef &&
+            SpecReservedNames.ScalarTypeNames.Contains(typeDef.Name.Value);
 
         public static bool IsSchemaOfCommonNames(this SchemaDefinitionSyntax schemaDefinitionNode)
         {

@@ -31,7 +31,7 @@ namespace GraphZen.LanguageModel
         [Fact]
         public void ValidatesPathArgument()
         {
-            var kitchenSink = File.ReadAllText("./Language/kitchen-sink.graphql");
+            var kitchenSink = File.ReadAllText("./LanguageModel/kitchen-sink.graphql");
             var ast = Parser.ParseDocument(kitchenSink);
             var visited = new List<(string enterOrLeave, Type type)>();
             var visitor = new KitchenSinkVisitor(visited);

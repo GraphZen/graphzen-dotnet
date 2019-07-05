@@ -19,7 +19,7 @@ namespace GraphZen.LanguageModel
             var tokens = SuperPowerTokenizer.Instance.Tokenize(block);
             Assert.Equal(TokenKind.BlockString, tokens.First().Kind);
 
-            var kitchenSink = File.ReadAllText("./Language/kitchen-sink.graphql");
+            var kitchenSink = File.ReadAllText("./LanguageModel/kitchen-sink.graphql");
             ParseDocument(kitchenSink);
         }
 
@@ -27,7 +27,7 @@ namespace GraphZen.LanguageModel
         [Fact]
         public void ItCanParseSchemaKitchenSink()
         {
-            var kitchenSink = File.ReadAllText("./Language/schema-kitchen-sink.graphql");
+            var kitchenSink = File.ReadAllText("./LanguageModel/schema-kitchen-sink.graphql");
             var result = ParseDocument(kitchenSink);
             var printResult = ParseDocument(result.ToSyntaxString());
             TestHelpers.AssertEquals(result.ToSyntaxString(), printResult.ToSyntaxString());
@@ -37,7 +37,7 @@ namespace GraphZen.LanguageModel
         [Fact]
         public void ItCanPrintKitchenSink()
         {
-            var kitchenSink = File.ReadAllText("./Language/schema-kitchen-sink.graphql");
+            var kitchenSink = File.ReadAllText("./LanguageModel/schema-kitchen-sink.graphql");
             var result = ParseDocument(kitchenSink);
             var printResult = result.ToSyntaxString();
             var expected = @"
