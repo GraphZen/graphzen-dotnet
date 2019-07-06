@@ -174,9 +174,16 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        private static string DuplicateClrOutputTypeErrorMessage(string type, Type clrType,
-            NamedTypeDefinition existingType) =>
-            $"Cannot add {type} using CLR type '{clrType}', existing type {existingType} already exists with that CLR type.";
+
+        private static string InvalidTypeAddition(TypeKind kind, [NotNull] TypeIdentity identity, [NotNull] NamedTypeDefinition existingType)
+        {
+            var clrType = identity.ClrType;
+            return clrType != null
+                ? $"Cannot add {kind.ToDisplayString()} using CLR type '{clrType}', existing {existingType.Kind.ToDisplayString()} already exists with that CLR type."
+                : $"Cannot add {kind.ToDisplayString()} named '{identity.Name}', an existing {existingType.Kind.ToDisplayString()} already exists with that name.";
+        }
+
+
 
 
         public InternalUnionTypeBuilder Union([NotNull] Type clrType, ConfigurationSource configurationSource) =>
@@ -220,8 +227,7 @@ namespace GraphZen.TypeSystem.Internal
             }
             else
             {
-                throw new InvalidOperationException(
-                    DuplicateClrOutputTypeErrorMessage("union", id.ClrType, type));
+                throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Union, id, type));
             }
 
             return unionType?.Builder;
@@ -293,8 +299,7 @@ namespace GraphZen.TypeSystem.Internal
             }
             else
             {
-                throw new InvalidOperationException(
-                    DuplicateClrOutputTypeErrorMessage("scalar", id.ClrType, type));
+                throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Scalar, id, type));
             }
 
             return scalarType?.Builder;
@@ -356,8 +361,8 @@ namespace GraphZen.TypeSystem.Internal
             }
             else
             {
-                throw new InvalidOperationException(
-                    DuplicateClrOutputTypeErrorMessage("Interface", id.ClrType, type));
+                throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Interface, id, type));
+
             }
 
             return interfaceType?.Builder;
@@ -418,8 +423,7 @@ namespace GraphZen.TypeSystem.Internal
             }
             else
             {
-                throw new InvalidOperationException(
-                    DuplicateClrOutputTypeErrorMessage("enum", id.ClrType, type));
+                throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Enum, id, type));
             }
 
             return enumType?.Builder;
@@ -506,8 +510,7 @@ namespace GraphZen.TypeSystem.Internal
             }
             else
             {
-                throw new InvalidOperationException(
-                    DuplicateClrOutputTypeErrorMessage("InputObject", id.ClrType, type));
+                throw new InvalidOperationException(InvalidTypeAddition(TypeKind.InputObject, id, type));
             }
 
             return inputType?.Builder;
@@ -555,17 +558,17 @@ namespace GraphZen.TypeSystem.Internal
                 return null;
             }
 
-            var outputType = id.ClrType == null
+            var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
                 : Definition.FindOutputType(id.ClrType);
 
-            if (outputType is ObjectTypeDefinition objectType)
+            if (type is ObjectTypeDefinition objectType)
             {
                 objectType.UpdateConfigurationSource(configurationSource);
                 return objectType.Builder;
             }
 
-            if (outputType is null)
+            if (type is null)
             {
                 Definition.UnignoreType(id.Name);
                 objectType = id.ClrType != null
@@ -578,8 +581,7 @@ namespace GraphZen.TypeSystem.Internal
             }
             else
             {
-                throw new InvalidOperationException(
-                    DuplicateClrOutputTypeErrorMessage("Object", id.ClrType, outputType));
+                throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Object, id, type));
             }
 
             return objectType?.Builder;
@@ -634,14 +636,14 @@ namespace GraphZen.TypeSystem.Internal
                 switch (fieldMember)
                 {
                     case MethodInfo method:
-                    {
-                        fields.Field(method, ConfigurationSource.Convention);
-                    }
+                        {
+                            fields.Field(method, ConfigurationSource.Convention);
+                        }
                         break;
                     case PropertyInfo property:
-                    {
-                        fields.Field(property, ConfigurationSource.Convention);
-                    }
+                        {
+                            fields.Field(property, ConfigurationSource.Convention);
+                        }
                         break;
                 }
             }
