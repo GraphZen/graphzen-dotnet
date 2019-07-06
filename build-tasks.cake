@@ -63,7 +63,9 @@ Setup<BuildParameters>(context =>
 });
 
 
-
+Task("Get-Version").Does<BuildParameters>(data => {
+  Information("Package Version: " + data.PackageVersion);
+});
 Task("DocFx")
 .Does(() => {
   var exitCode= StartProcess(paths.docFx, new ProcessSettings {
