@@ -1,7 +1,7 @@
-mode: Mainline
 branches:
   develop:
-    mode: ContinuousDeployment
+    tag: develop
+  master:
     tag: pre
 ignore:
   sha: []
