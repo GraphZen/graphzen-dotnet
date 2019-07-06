@@ -4,7 +4,7 @@
     <Description>GraphQL language AST syntax model, parser, printer, and visitor utilities.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Superpower" Version="2.2.0" />
+    <PackageReference Include="Superpower" Version="2.3.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />

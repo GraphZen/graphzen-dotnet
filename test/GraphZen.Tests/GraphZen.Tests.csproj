@@ -24,16 +24,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CompareNETObjects" Version="4.57.0" />
-    <PackageReference Include="coverlet.msbuild" Version="2.5.1">
+    <PackageReference Include="CompareNETObjects" Version="4.61.0" />
+    <PackageReference Include="coverlet.msbuild" Version="2.6.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="DiffPlex" Version="1.4.3" />
-    <PackageReference Include="FluentAssertions" Version="5.6.0" />
+    <PackageReference Include="DiffPlex" Version="1.4.4" />
+    <PackageReference Include="FluentAssertions" Version="5.7.0" />
     <PackageReference Include="JsonDiffPatch" Version="2.0.49" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
