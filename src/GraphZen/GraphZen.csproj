@@ -10,7 +10,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />
     <ProjectReference Include="..\GraphZen.AspNetCore\GraphZen.AspNetCore.csproj" />
     <ProjectReference Include="..\GraphZen.Playground.AspNetCore\GraphZen.Playground.AspNetCore.csproj" />
   </ItemGroup>
