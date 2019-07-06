@@ -5,13 +5,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using GraphZen.Execution;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
-using GraphZen.Language;
-using GraphZen.Language.Internal;
-using GraphZen.Types;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
+using GraphZen.QueryEngine;
+using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 
 namespace GraphZen

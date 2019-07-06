@@ -2,13 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel.Validation;
+using GraphZen.QueryEngine.Validation;
 
 namespace GraphZen.Validation.Rules
 {
     [NoReorder]
     public class UniqueVariableNamesTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.UniqueVariableNames;
+        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.UniqueVariableNames;
     }
 }

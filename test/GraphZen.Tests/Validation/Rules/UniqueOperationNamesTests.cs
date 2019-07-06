@@ -2,7 +2,9 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel.Validation;
+using GraphZen.QueryEngine.Validation;
+using GraphZen.QueryEngine.Validation.Rules;
 using Xunit;
 
 namespace GraphZen.Validation.Rules
@@ -10,7 +12,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class UniqueOperationNamesTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.UniqueOperationNames;
+        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.UniqueOperationNames;
 
         [Fact]
         public void NoOperations() => QueryShouldPass(@"

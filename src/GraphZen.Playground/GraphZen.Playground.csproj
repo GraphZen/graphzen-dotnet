@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <RootNamespace>GraphZen</RootNamespace>
+    <Description>GraphQL playground for testing queries and exploring GraphQL schemas</Description>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

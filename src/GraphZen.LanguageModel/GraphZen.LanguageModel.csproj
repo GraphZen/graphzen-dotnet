@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <Description>GraphQL language AST syntax model, parser, printer, and visitor utilities.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Superpower" Version="2.3.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LanguageModel\GraphQLSyntaxVisitor.Generated.cs">
+      <DependentUpon>GraphQLSyntaxVisitor.Generated.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="LanguageModel\Syntax\SyntaxNode.Generated.cs">
+      <DependentUpon>SyntaxNode.Generated.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LanguageModel\GraphQLSyntaxVisitor.Generated.tt">
+      <LastGenOutput>GraphQLSyntaxVisitor.Generated.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="LanguageModel\Syntax\SyntaxNode.Generated.tt">
+      <LastGenOutput>SyntaxNode.Generated.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+</Project>

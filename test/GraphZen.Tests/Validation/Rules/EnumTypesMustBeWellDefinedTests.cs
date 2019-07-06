@@ -2,7 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel.Validation;
 using Xunit;
 
 namespace GraphZen.Validation.Rules
@@ -10,7 +10,7 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class EnumTypesMustBeWellDefinedTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.EnumTypesMustBeWellDefined;
+        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.EnumTypesMustBeWellDefined;
 
         [Fact]
         public void ItRejectsAnEnumTypeWithoutValues()

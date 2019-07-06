@@ -1,65 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <Description>Code-first GraphQL framework for .NET. Use the GraphZen.AspNetCore.App package if you intend to host your GraphQL API with ASP.NET Core.</Description>
   </PropertyGroup>
-  
-  
-  <ItemGroup>
-    <Compile Include="..\Shared\DictionaryContainerCodeGenerator.cs" Link="Internal\DictionaryContainerCodeGenerator.cs" />
-    <Compile Include="..\Shared\DictionaryExtensions.cs" Link="DictionaryExtensions.cs" />
-    <Compile Include="..\Shared\KeyValuePairExtensions.cs" Link="Internal\KeyValuePairExtensions.cs" />
-  </ItemGroup>
-
-  
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="Superpower" Version="2.2.0" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-  </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-
-
-  
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen.Abstractions\GraphZen.Abstractions.csproj" />
-    <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Internal\GraphZenDictionaryContainerExtensions.Generated.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GraphZenDictionaryContainerExtensions.Generated.cs</LastGenOutput>
-    </None>
-    <None Update="Language\GraphQLSyntaxVisitor.Generated.tt">
-      <LastGenOutput>GraphQLSyntaxVisitor.Generated.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Language\Syntax\SyntaxNode.Generated.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SyntaxNode.Generated.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Internal\GraphZenDictionaryContainerExtensions.Generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GraphZenDictionaryContainerExtensions.Generated.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Language\GraphQLSyntaxVisitor.Generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GraphQLSyntaxVisitor.Generated.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Language\Syntax\SyntaxNode.Generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SyntaxNode.Generated.tt</DependentUpon>
-    </Compile>
+    <ProjectReference Include="..\GraphZen.AspNetCore\GraphZen.AspNetCore.csproj" />
+    <ProjectReference Include="..\GraphZen.Playground.AspNetCore\GraphZen.Playground.AspNetCore.csproj" />
   </ItemGroup>
 </Project>

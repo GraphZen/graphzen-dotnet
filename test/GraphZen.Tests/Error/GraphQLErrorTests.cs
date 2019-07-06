@@ -4,9 +4,8 @@
 using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
-using GraphZen.Language.Internal;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
 using Xunit;
 
 namespace GraphZen.Error

@@ -3,8 +3,6 @@
 
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Infrastructure.Extensions;
-using JetBrains.Annotations;
 using Xunit;
 
 namespace GraphZen.Infrastructure

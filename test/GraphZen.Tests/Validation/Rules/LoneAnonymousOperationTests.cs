@@ -2,16 +2,17 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel.Validation;
+using GraphZen.QueryEngine.Validation;
 using Xunit;
-using static GraphZen.Validation.Rules.LoneAnonymousOperation;
+using static GraphZen.QueryEngine.Validation.Rules.LoneAnonymousOperation;
 
 namespace GraphZen.Validation.Rules
 {
     [NoReorder]
     public class LoneAnonymousOperationTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.LoneAnonymousOperation;
+        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.LoneAnonymousOperation;
 
         [Fact]
         public void NoOperations() => QueryShouldPass(@"

@@ -2,7 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel.Validation;
 using Xunit;
 
 namespace GraphZen.Validation.Rules
@@ -11,7 +11,7 @@ namespace GraphZen.Validation.Rules
     public class ObjectsMustAdhereToInterfaceTheyImplementTests : ValidationRuleHarness
     {
         public override ValidationRule RuleUnderTest { get; } =
-            ValidationRules.ObjectsMustAdhereToInterfaceTheyImplement;
+            DocumentValidationRules.ObjectsMustAdhereToInterfaceTheyImplement;
 
         [Fact]
         public void AcceptsAnObjectWhichImplementsAnInterface()

@@ -3,7 +3,6 @@
 
 using System.ComponentModel;
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
 
 namespace SimpleBlog.Models
 {

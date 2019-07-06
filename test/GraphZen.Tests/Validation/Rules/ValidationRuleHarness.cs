@@ -7,11 +7,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Language;
-using GraphZen.Language.Internal;
-using GraphZen.Types;
-using GraphZen.Utilities;
-using JetBrains.Annotations;
+using GraphZen.Internal;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
+using GraphZen.LanguageModel.Validation;
+using GraphZen.QueryEngine.Validation;
+using GraphZen.TypeSystem;
 
 namespace GraphZen.Validation.Rules
 {
@@ -163,7 +164,7 @@ namespace GraphZen.Validation.Rules
         private void ExpectValidSDL(ValidationRule rule, string sdl)
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
-            var result = new SchemaValidator(new[] {rule}).Validate(sdlSyntax);
+            var result = new DocumentValidator(new[] {rule}).Validate(sdlSyntax);
             result.Should().BeEmpty("it should validate");
         }
 
@@ -200,7 +201,7 @@ namespace GraphZen.Validation.Rules
             IReadOnlyList<ExpectedError> expectedErrors)
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
-            var result = new SchemaValidator(new[] {rule}).Validate(sdlSyntax)
+            var result = new DocumentValidator(new[] {rule}).Validate(sdlSyntax)
                 // Convert for comparison
                 .Select(e => new ExpectedError(e))
                 .ToArray();
