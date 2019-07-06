@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
-    <RootNamespace>GraphZen</RootNamespace>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <Description>Meta-package for building GraphQL APIs on ASP.NET Core.</Description>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
-  </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
   </ItemGroup>

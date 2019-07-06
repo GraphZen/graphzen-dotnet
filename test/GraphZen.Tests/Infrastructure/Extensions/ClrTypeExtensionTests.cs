@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Language.Internal;
-using GraphZen.Types.Internal;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel.Internal;
+using GraphZen.TypeSystem.Internal;
 using Xunit;
 
 namespace GraphZen.Infrastructure

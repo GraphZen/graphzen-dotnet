@@ -4,15 +4,14 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using GraphZen;
 using GraphZen.Infrastructure;
 using GraphZen.Logging;
-using GraphZen.Validation;
-using JetBrains.Annotations;
+using GraphZen.QueryEngine.Validation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.Extensions.DependencyInjection
+namespace GraphZen
 {
     public static class GraphZenServiceCollectionExtensions
     {

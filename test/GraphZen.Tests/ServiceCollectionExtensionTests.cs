@@ -4,7 +4,6 @@
 using System;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 

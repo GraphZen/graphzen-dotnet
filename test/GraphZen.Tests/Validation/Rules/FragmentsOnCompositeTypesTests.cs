@@ -2,16 +2,17 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel.Validation;
+using GraphZen.QueryEngine.Validation;
 using Xunit;
-using static GraphZen.Validation.Rules.FragmentsOnCompositeTypes;
+using static GraphZen.QueryEngine.Validation.Rules.FragmentsOnCompositeTypes;
 
 namespace GraphZen.Validation.Rules
 {
     [NoReorder]
     public class FragmentsOnCompositeTypesTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.FragmentsOnCompositeTypes;
+        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.FragmentsOnCompositeTypes;
 
         [Fact]
         public void ObjectIsValidFragmentType() => QueryShouldPass(@"

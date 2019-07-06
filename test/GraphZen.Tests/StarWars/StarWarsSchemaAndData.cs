@@ -6,10 +6,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using GraphZen.Execution;
 using GraphZen.Infrastructure;
-using GraphZen.Types;
-using JetBrains.Annotations;
+using GraphZen.QueryEngine;
+using GraphZen.TypeSystem;
 
 namespace GraphZen.StarWars
 {

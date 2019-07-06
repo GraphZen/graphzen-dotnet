@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel.Validation;
 using Xunit;
 using static GraphZen.Validation.Rules.SDLValidationHelpers;
 
@@ -13,7 +13,8 @@ namespace GraphZen.Validation.Rules
     [NoReorder]
     public class InterfaceFieldsMustHaveOutputTypesTests : ValidationRuleHarness
     {
-        public override ValidationRule RuleUnderTest { get; } = ValidationRules.InterfaceFieldsMustHaveOutputTypes;
+        public override ValidationRule RuleUnderTest { get; } =
+            DocumentValidationRules.InterfaceFieldsMustHaveOutputTypes;
 
         public static IEnumerable<object[]> GetValidInterfaceFieldTypeScenarios() =>
             from outputType in OutputTypes

@@ -2,9 +2,8 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
-using GraphZen.Language;
-using GraphZen.Types;
-using JetBrains.Annotations;
+using GraphZen.LanguageModel;
+using GraphZen.TypeSystem;
 using Xunit;
 
 namespace GraphZen.StarWars
