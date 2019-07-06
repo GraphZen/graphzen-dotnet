@@ -1,6 +1,7 @@
 mode: Mainline
 branches:
   develop:
+    mode: ContinuousDeployment
     tag: pre
 ignore:
   sha: []
