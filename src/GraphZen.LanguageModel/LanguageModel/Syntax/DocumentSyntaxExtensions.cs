@@ -22,6 +22,7 @@ namespace GraphZen.LanguageModel
                     return scalars.All(scalar =>
                     {
                         Debug.Assert(scalar != null, nameof(scalar) + " != null");
+                        Debug.Assert(specScalar != null, nameof(specScalar) + " != null");
                         return scalar.Name.Value != specScalar.Name.Value;
                     });
                 });

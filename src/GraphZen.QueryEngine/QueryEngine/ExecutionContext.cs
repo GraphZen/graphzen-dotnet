@@ -155,8 +155,8 @@ namespace GraphZen.QueryEngine
 
             Maybe<object> InvokeMethodByArgName(MethodInfo mi)
             {
+                Check.NotNull(mi, nameof(mi));
                 var parameters = new List<object>();
-                Debug.Assert(mi != null, nameof(mi) + " != null");
                 foreach (var parameter in mi.GetParameters())
                 {
                     if (parameter.Name != null)

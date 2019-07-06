@@ -30,6 +30,7 @@ namespace GraphZen.LanguageModel.Internal
         public static ScalarTypeDefinitionSyntax Boolean { get; } =
             ScalarTypeDefinition(Name("Boolean"), StringValue("boolean value"));
 
+        [ItemNotNull]
         public static ImmutableArray<ScalarTypeDefinitionSyntax> All { get; } =
             ImmutableArray.Create(String, ID, Int, Float, Boolean);
     }
