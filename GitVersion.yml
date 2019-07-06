@@ -1,6 +1,7 @@
-mode: Mainline
 branches:
   develop:
+    tag: develop
+  master:
     tag: pre
 ignore:
   sha: []
