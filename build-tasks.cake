@@ -1,7 +1,7 @@
 
 #load "./build-scripts/parameters.cake"
 #tool "nuget:?package=ReportGenerator&version=4.0.12"
-#tool "nuget:?package=GitVersion.CommandLine&version=3.6.5"
+#tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
 #tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2018.3.3"
 #tool "nuget:?package=docfx.console&version=2.40.11"
