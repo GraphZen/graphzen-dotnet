@@ -1,19 +1,33 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel.Internal;
 
 namespace GraphZen.LanguageModel
 {
     public static class DocumentSyntaxExtensions
     {
         [NotNull]
-        public static DocumentSyntax WithSpecDefinitions(this DocumentSyntax document) =>
-            throw new NotImplementedException();
+        public static DocumentSyntax WithSpecDefinitions(this DocumentSyntax document)
+        {
+            Check.NotNull(document, nameof(document));
+            var scalars = document.Definitions.OfType<ScalarTypeDefinitionSyntax>().ToList();
+            var missingSpecScalars = SpecScalarSyntaxNodes.All
+                .Where(specScalar =>
+                {
+                    return scalars.All(scalar =>
+                    {
+                        Debug.Assert(scalar != null, nameof(scalar) + " != null");
+                        return scalar.Name.Value != specScalar.Name.Value;
+                    });
+                });
+
+            return document.WithDefinitionsAdded(missingSpecScalars);
+        }
 
 
         [NotNull]

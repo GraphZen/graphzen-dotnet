@@ -188,8 +188,8 @@ namespace GraphZen.LanguageModel
 
         [NotNull]
         [DebuggerStepThrough]
-        public static ScalarTypeDefinitionSyntax ScalarTypeDefinition(NameSyntax name) =>
-            new ScalarTypeDefinitionSyntax(name);
+        public static ScalarTypeDefinitionSyntax ScalarTypeDefinition(NameSyntax name, StringValueSyntax description = null) =>
+            new ScalarTypeDefinitionSyntax(name, description);
 
 
         [NotNull]
