@@ -28,7 +28,6 @@ namespace GraphZen
                 {
                     Debug.Assert(httpContext != null, nameof(httpContext) + " != null");
                     Debug.Assert(httpContext.Request != null, "httpContext.Request != null");
-
                     if (httpContext.Request.Method == "POST")
                     {
                         // ReSharper disable once AssignNullToNotNullAttribute
@@ -44,10 +43,10 @@ namespace GraphZen
                             {
                                 var ser = Json.Serializer;
                                 var req = ser.Deserialize<GraphQLRequest>(jsonReader);
-                                // ReSharper disable once PossibleNullReferenceException
+                                Debug.Assert(req != null, nameof(req) + " != null");
                                 var document = Parser.ParseDocument(req.Query);
                                 var queryValidator = httpContext.RequestServices.GetRequiredService<IQueryValidator>();
-                                // ReSharper disable once PossibleNullReferenceException
+                                Debug.Assert(queryValidator != null, nameof(queryValidator) + " != null");
                                 var validationErrors = queryValidator.Validate(context.Schema, document);
 
                                 if (validationErrors.Any())
@@ -65,22 +64,13 @@ namespace GraphZen
                                             .FirstOrDefault(_ => _.Name?.Value == req.OperationName)
                                         : operationDefinitions.First();
 
-                                    object rootValue;
-
                                     var rootClrType = operation?.OperationType == OperationType.Query
                                         ? context.Schema.QueryType.ClrType
                                         : operation?.OperationType == OperationType.Mutation
                                             ? context.Schema.MutationType?.ClrType
                                             : null;
 
-                                    if (rootClrType != null)
-                                    {
-                                        rootValue = httpContext.RequestServices.GetService(rootClrType);
-                                    }
-                                    else
-                                    {
-                                        rootValue = new { };
-                                    }
+                                    var rootValue = rootClrType != null ? httpContext.RequestServices.GetService(rootClrType) : new { };
 
                                     result = await new Executor().ExecuteAsync(context.Schema, document,
                                         rootValue,
@@ -92,14 +82,14 @@ namespace GraphZen
                             }
                             catch (GraphQLException gqlException)
                             {
-                                result = new ExecutionResult(null, new[] {gqlException.GraphQLError});
+                                result = new ExecutionResult(null, new[] { gqlException.GraphQLError });
                             }
                             catch (Exception e)
                             {
                                 var error = context.Options.RevealInternalServerErrors
                                     ? new GraphQLError(e.Message, innerException: e)
                                     : new GraphQLError("An unknown error occured.");
-                                result = new ExecutionResult(null, new[] {error});
+                                result = new ExecutionResult(null, new[] { error });
                             }
 
                             var resp = JsonConvert.SerializeObject(result, Json.SerializerSettings);

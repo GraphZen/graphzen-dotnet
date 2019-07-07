@@ -12,6 +12,7 @@ namespace GraphZen.TypeSystem
     public static class TypeKindHelpers
     {
         [NotNull]
+        // ReSharper disable once AssignNullToNotNullAttribute
         private static ImmutableDictionary<Type, TypeKind> KindByType { get; } = new Dictionary<Type, TypeKind>
         {
             {typeof(ScalarTypeDefinition), TypeKind.Scalar},
@@ -63,7 +64,6 @@ namespace GraphZen.TypeSystem
             KindByType.TryGetValue(typeof(TGraphQLType), out kind);
 
 
-        private static bool TryGetTypeKind<T>(out TypeKind kind) => KindByType.TryGetValue(typeof(T), out kind);
 
         public static string ToDisplayString(this TypeKind kind)
         {
