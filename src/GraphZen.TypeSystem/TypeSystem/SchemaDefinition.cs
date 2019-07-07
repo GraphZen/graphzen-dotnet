@@ -29,7 +29,6 @@ namespace GraphZen.TypeSystem
 
         [NotNull] [ItemNotNull] private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
 
-
         // ReSharper disable once NotNullMemberIsNotInitialized
 
 
@@ -653,6 +652,7 @@ namespace GraphZen.TypeSystem
         }
 
         public NamedTypeDefinition FindType([NotNull] string name) => _types.SingleOrDefault(_ => _.Name == name);
+        public NamedTypeDefinition FindType([NotNull] Type clrType) => _types.SingleOrDefault(_ => _.ClrType == clrType);
 
         [NotNull]
         public IEnumerable<NamedTypeDefinition> FindTypes([NotNull] Type clrType) =>

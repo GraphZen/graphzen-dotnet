@@ -178,8 +178,8 @@ namespace GraphZen.TypeSystem.Internal
         private static string InvalidTypeAddition(TypeKind kind, [NotNull] TypeIdentity identity, [NotNull] NamedTypeDefinition existingType)
         {
             var clrType = identity.ClrType;
-            return clrType != null
-                ? $"Cannot add {kind.ToDisplayString()} using CLR type '{clrType}', existing {existingType.Kind.ToDisplayString()} already exists with that CLR type."
+            return clrType != null && clrType == existingType.ClrType
+                ? $"Cannot add {kind.ToDisplayString()} using CLR type '{clrType}', an existing {existingType.Kind.ToDisplayString()} already exists with that CLR type."
                 : $"Cannot add {kind.ToDisplayString()} named '{identity.Name}', an existing {existingType.Kind.ToDisplayString()} already exists with that name.";
         }
 
@@ -206,7 +206,7 @@ namespace GraphZen.TypeSystem.Internal
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
-                : Definition.FindOutputType(id.ClrType);
+                : Definition.FindOutputType(id.ClrType) ?? Definition.FindType(id.Name);
 
             if (type is UnionTypeDefinition unionType)
             {
@@ -278,7 +278,7 @@ namespace GraphZen.TypeSystem.Internal
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
-                : Definition.FindTypes(id.ClrType).FirstOrDefault();
+                : Definition.FindScalar(id.ClrType) ?? Definition.FindType(id.Name);
 
             if (type is ScalarTypeDefinition scalarType)
             {
@@ -340,7 +340,7 @@ namespace GraphZen.TypeSystem.Internal
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
-                : Definition.FindOutputType(id.ClrType);
+                : Definition.FindOutputType(id.ClrType) ?? Definition.FindType(id.Name);
 
             if (type is InterfaceTypeDefinition interfaceType)
             {
@@ -402,7 +402,7 @@ namespace GraphZen.TypeSystem.Internal
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
-                : Definition.FindTypes(id.ClrType).FirstOrDefault();
+                : Definition.FindType(id.ClrType) ?? Definition.FindType(id.Name);
 
             if (type is EnumTypeDefinition enumType)
             {
@@ -489,7 +489,7 @@ namespace GraphZen.TypeSystem.Internal
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
-                : Definition.FindInputType(id.ClrType);
+                : Definition.FindInputType(id.ClrType) ?? Definition.FindType(id.Name);
 
             if (type is InputObjectTypeDefinition inputType)
             {
@@ -560,7 +560,7 @@ namespace GraphZen.TypeSystem.Internal
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
-                : Definition.FindOutputType(id.ClrType);
+                : Definition.FindOutputType(id.ClrType) ?? Definition.FindType(id.Name);
 
             if (type is ObjectTypeDefinition objectType)
             {

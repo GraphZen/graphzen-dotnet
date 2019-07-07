@@ -18,6 +18,7 @@ namespace GraphZen.TypeSystem.Builders
         {
         }
 
+        
         public override Type ClrType { get; } = typeof(FooUnionClr);
         public override Type NewClrType { get; } = typeof(BarUnionClr);
 

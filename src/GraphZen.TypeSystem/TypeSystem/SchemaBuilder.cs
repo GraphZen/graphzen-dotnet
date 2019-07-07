@@ -189,12 +189,12 @@ namespace GraphZen.TypeSystem
             new ObjectTypeBuilder<TObject, TContext>(Builder.Object(typeof(TObject), ConfigurationSource.Explicit));
 
         public new ISchemaBuilder<TContext> IgnoreType<TObject>() =>
-            (ISchemaBuilder<TContext>) base.IgnoreType<TObject>();
+            (ISchemaBuilder<TContext>)base.IgnoreType<TObject>();
 
         public new ISchemaBuilder<TContext> IgnoreType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.IgnoreType(clrType);
+            (ISchemaBuilder<TContext>)base.IgnoreType(clrType);
 
-        public new ISchemaBuilder<TContext> IgnoreType(string name) => (ISchemaBuilder<TContext>) base.IgnoreType(name);
+        public new ISchemaBuilder<TContext> IgnoreType(string name) => (ISchemaBuilder<TContext>)base.IgnoreType(name);
 
         public new IInterfaceTypeBuilder<object, TContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
@@ -227,7 +227,7 @@ namespace GraphZen.TypeSystem
         }
 
         public new ISchemaBuilder<TContext> QueryType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.QueryType(clrType);
+            (ISchemaBuilder<TContext>)base.QueryType(clrType);
 
         public new ISchemaBuilder<TContext> MutationType(string type)
         {
@@ -236,7 +236,7 @@ namespace GraphZen.TypeSystem
         }
 
         public new ISchemaBuilder<TContext> MutationType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.MutationType(clrType);
+            (ISchemaBuilder<TContext>)base.MutationType(clrType);
 
         public new ISchemaBuilder<TContext> SubscriptionType(string type)
         {
