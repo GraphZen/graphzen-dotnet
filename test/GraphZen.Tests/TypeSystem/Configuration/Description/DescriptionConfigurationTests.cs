@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem
         public abstract void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description);
 
-        [Fact]
+        [Fact(Skip = "obsolete")]
         public void description_set_by_data_annotation()
         {
             var schema = Schema.Create(_ =>
@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem
                 .Should().Be("set by data annotation");
         }
 
-        [Fact]
+        [Fact(Skip = "obsolete")]
         public void description_set_by_data_annotation_overridden_by_explicit_configuration()
         {
             var schema = Schema.Create(_ =>
@@ -55,7 +55,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [Fact]
+        [Fact(Skip = "obsolete")]
         public void description_set_by_data_annotation_removed_by_explicit_configuration()
         {
             var schema = Schema.Create(_ =>
@@ -74,7 +74,7 @@ namespace GraphZen.TypeSystem
             GetMemberWithDataAnnotation(schema).Description.Should().Be(null);
         }
 
-        [Fact]
+        [Fact(Skip = "obsolete")]
         public void no_description_by_default()
         {
             var schema = Schema.Create(_ =>

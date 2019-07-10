@@ -1,8 +1,11 @@
 
-// regenerate:true
-// Last generated: Wednesday, July 10, 2019 8:51:14 AM
+// Last generated: Wednesday, July 10, 2019 11:00:32 AM
+// ReSharper disable PossibleNullReferenceException
+// ReSharper disable AssignNullToNotNullAttribute
+
 
 namespace GraphZen.Configuration
 {
-    public abstract class InputFieldDescriptionTests: InputFieldDescriptionTestsBase {}
+    public abstract /* regenerate:true */ class InputFieldDescriptionTests: InputFieldDescriptionTestsBase { 
+    }
 }

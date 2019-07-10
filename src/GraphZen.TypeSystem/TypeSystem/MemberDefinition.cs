@@ -10,7 +10,7 @@ namespace GraphZen.TypeSystem
     public abstract class MemberDefinition : IMutableDefinition
     {
         private ConfigurationSource _configurationSource;
-        private ConfigurationSource? _descriptionConfigurationSource;
+        private ConfigurationSource _descriptionConfigurationSource = ConfigurationSource.Convention;
 
         public MemberDefinition(ConfigurationSource configurationSource)
         {
@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-        public ConfigurationSource? GetDescriptionConfigurationSource() => _descriptionConfigurationSource;
+        public ConfigurationSource GetDescriptionConfigurationSource() => _descriptionConfigurationSource;
 
         public ConfigurationSource GetConfigurationSource() => _configurationSource;
 

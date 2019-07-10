@@ -3,116 +3,36 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.MetaModel;
+using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
+
+// ReSharper disable AssignNullToNotNullAttribute
+// ReSharper disable PossibleNullReferenceException
 
 namespace GraphZen
 {
-    public static class CodeGenHelpers
+    public static class ConfigurationTestCaseGenerator
     {
-        [NotNull]
-        public static DirectoryInfo GetSolutionDirectory(string currentPath = null)
-        {
-            var directory = new DirectoryInfo(
-                currentPath ?? Directory.GetCurrentDirectory() ?? throw new Exception("unable to get directory"));
-            while (directory != null && !directory.GetFiles("*.sln").Any())
-            {
-                directory = directory.Parent;
-            }
+        private static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType>
+            TestCases =>
+            throw new NotImplementedException();
 
-            return directory ?? throw new Exception("Could not find solution directory");
-        }
-    }
-
-    public class ConfigurationTestCodeGenerator
-    {
-        public static void Generate()
-        {
-            GenerateCode(GraphQLMetaModel.Elements);
-        }
-
-
-        public static void GenerateCode([NotNull] IEnumerable<Element> elements)
-        {
-            var solutionDir = CodeGenHelpers.GetSolutionDirectory();
-            var genDir = Path.Combine(solutionDir.ToString(), "src", "GraphZen.TypeSystem.Tests",
-                "Configuration");
-            var generatedFiles =
-                Directory.GetFiles(genDir, "*.Generated.cs", SearchOption.AllDirectories) ??
-                throw new Exception("Unable to get generated files");
-            foreach (var generatedFile in generatedFiles)
-            {
-                File.Delete(generatedFile);
-            }
-
-            foreach (var element in elements)
-            {
-                switch (element)
-                {
-                    case Collection _:
-                        break;
-                    case LeafElement _:
-                        break;
-                    case Vector vector:
-                        foreach (var member in vector.OfType<LeafElement>())
-                        {
-                            var baseName = $"{vector.Name}{member.Name}TestsBase";
-                            var name = $"{vector.Name}{member.Name}Tests";
-
-
-                            var basePath = Path.Combine(genDir, $"{baseName}.Generated.cs");
-                            File.AppendAllText(basePath, $@"using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
-using GraphZen.TypeSystem.Taxonomy;
-
-namespace GraphZen.Configuration
-{{
-    public abstract class {baseName}: LeafElementConfigurationTests<{member.MarkerInterface?.Name}, {member.MutableMarkerInterface?.Name},{vector.Name}Definition,{vector.Name}> {{}}
-}}");
-                            Console.WriteLine($"wrote file {basePath}");
-                            var testPath = Path.Combine(genDir, $"{name}.cs");
-                            var regenerateFlag = "regenerate:true";
-                            // ReSharper disable once PossibleNullReferenceException
-                            if (!File.Exists(testPath) || File.ReadAllText(testPath).Contains(regenerateFlag))
-
-                            {
-                                File.Delete(testPath);
-                                File.AppendAllText(testPath,
-                                    $@"
-// {regenerateFlag}
-// Last generated: {DateTime.Now:F}
-
-namespace GraphZen.Configuration
-{{
-    public abstract class {name}: {baseName} {{}}
-}}
-");
-                            }
-                        }
-
-                        break;
-                }
-            }
-        }
-    }
-
-    public class ConfigurationTestCaseGenerator
-    {
         [NotNull]
         [ItemNotNull]
-        public IEnumerable<string> GenerateTestCasesForElement([NotNull] Element element)
+        public static IEnumerable<string> GetTestCasesForElement([NotNull] Element element)
         {
             switch (element)
             {
                 case Collection collection:
-                    return GenerateTestCasesForCollection(collection);
+                    return GetTestCasesForCollection(collection);
                 case LeafElement leafElement:
-                    return GenerateTestCasesForLeaf(leafElement);
+                    return GetTestCasesForLeaf(leafElement);
                 case Vector vector:
-                    return GenerateTestCasesForVector(vector);
+                    return GetTestCasesForVector(vector);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -120,25 +40,34 @@ namespace GraphZen.Configuration
 
         [NotNull]
         [ItemNotNull]
-        private IEnumerable<string> GenerateTestCasesForLeaf([NotNull] LeafElement element)
+        private static IEnumerable<string> GetTestCasesForLeaf([NotNull] LeafElement element)
         {
-            // ReSharper disable once PossibleNullReferenceException
-            // ReSharper disable once AssignNullToNotNullAttribute
+            if (element.Optional)
+            {
+                yield return nameof(TestCases.optional_not_defined_by_convention);
+            }
+
             if (element.ConfigurationScenarios.Define.Contains(ConfigurationSource.Convention))
             {
-                yield return "";
+                yield return nameof(TestCases.defined_by_convention);
+            }
+
+            if (element.ConfigurationScenarios.Define.Contains(ConfigurationSource.DataAnnotation))
+            {
+                yield return nameof(TestCases.define_by_data_annotation);
             }
         }
 
         [NotNull]
         [ItemNotNull]
         // ReSharper disable once UnusedParameter.Local
-        private IEnumerable<string> GenerateTestCasesForVector([NotNull] Vector element) => Enumerable.Empty<string>();
+        private static IEnumerable<string> GetTestCasesForVector([NotNull] Vector element) =>
+            Enumerable.Empty<string>();
 
         [NotNull]
         [ItemNotNull]
         // ReSharper disable once UnusedParameter.Local
-        private IEnumerable<string> GenerateTestCasesForCollection([NotNull] Collection element) =>
+        private static IEnumerable<string> GetTestCasesForCollection([NotNull] Collection element) =>
             Enumerable.Empty<string>();
     }
 }

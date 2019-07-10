@@ -21,9 +21,13 @@ namespace GraphZen
 
         public virtual object ExplicitValue => throw new NotImplementedException();
 
+        public virtual string NotDefinedByConventionParentName => throw new NotImplementedException();
         public virtual string ConventionalParentName => throw new NotImplementedException();
+        public virtual string DataAnnotationParentName => throw new NotImplementedException();
 
         public virtual void DefineByConvention(SchemaBuilder sb) => throw new NotImplementedException();
+        public virtual void DefineEmptyByConvention(SchemaBuilder sb) => throw new NotImplementedException();
+        public virtual void DefineByDataAnnotation(SchemaBuilder sb) => throw new NotImplementedException();
 
         public abstract ConfigurationSource GetElementConfigurationSource(TMutableMarker definition);
 
@@ -31,7 +35,20 @@ namespace GraphZen
 
         public abstract TMarker GetParent(Schema schema, string parentName);
 
-        public abstract object GetValue(TMarker parent);
+        public abstract bool TryGetValue(TMarker parent, out object value);
+
+        public virtual void optional_not_defined_by_convention()
+        {
+            var schema = Schema.Create(sb =>
+                        {
+                            DefineEmptyByConvention(sb);
+                            var parentDef = GetParentDefinition(sb.GetDefinition(), NotDefinedByConventionParentName);
+                            GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
+                            TryGetValue(parentDef, out _).Should().BeFalse();
+                        });
+            var parent = GetParent(schema, NotDefinedByConventionParentName);
+            TryGetValue(parent, out _).Should().BeFalse();
+        }
 
         public virtual void defined_by_convention()
         {
@@ -40,10 +57,30 @@ namespace GraphZen
                 DefineByConvention(sb);
                 var parentDef = GetParentDefinition(sb.GetDefinition(), ConventionalParentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
-                GetValue(parentDef).Should().Be(ConventionalValue);
+                TryGetValue(parentDef, out var defVal).Should().BeTrue();
+                defVal.Should().Be(ConventionalValue);
             });
             var parent = GetParent(schema, ConventionalParentName);
-            GetValue(parent).Should().Be(ConventionalValue);
+            TryGetValue(parent, out var val).Should().BeTrue();
+            val.Should().Be(ConventionalValue);
+
+        }
+
+        public virtual void define_by_data_annotation()
+        {
+            var schema = Schema.Create(sb =>
+            {
+                DefineByDataAnnotation(sb);
+                var definition = sb.GetDefinition();
+                var parentDef = GetParentDefinition(definition, DataAnnotationParentName);
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
+                TryGetValue(parentDef, out var defVal).Should().BeTrue();
+                defVal.Should().Be(DataAnnotationValue);
+
+            });
+            var parent = GetParent(schema, DataAnnotationParentName);
+            TryGetValue(parent, out var val).Should().BeTrue();
+            val.Should().Be(DataAnnotationValue);
         }
     }
 }
