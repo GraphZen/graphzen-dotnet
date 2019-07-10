@@ -1,6 +1,5 @@
-// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+// ReSharper disable RedundantUsingDirective
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
@@ -8,13 +7,11 @@ using Xunit;
 
 namespace GraphZen.Configuration
 {
-    public abstract class InterfaceTypeNameTestsBase : LeafElementConfigurationTests<INamed, IMutableNamed,
-        InterfaceTypeDefinition, InterfaceType>
-    {
-        [Fact]
-        public override void define_by_data_annotation() => base.define_by_data_annotation();
+    public abstract class InterfaceTypeNameTestsBase: LeafElementConfigurationTests<INamed, IMutableNamed,InterfaceTypeDefinition,InterfaceType> {
 
-        [Fact]
-        public override void defined_by_convention() => base.defined_by_convention();
-    }
+[Fact] public override void defined_by_convention()  => base.defined_by_convention(); 
+[Fact] public override void define_by_data_annotation_overridden_by_explicit_configuration()  => base.define_by_data_annotation_overridden_by_explicit_configuration(); 
+[Fact] public override void define_by_data_annotation()  => base.define_by_data_annotation(); 
+
+}
 }

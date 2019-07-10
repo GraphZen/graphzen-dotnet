@@ -14,10 +14,7 @@ namespace GraphZen
         {
             var cmd = new RootCommand
             {
-                new Command("gen")
-                {
-                    Handler = CommandHandler.Create(() => { ConfigurationTestCodeGenerator.Generate(); })
-                }
+                Handler = CommandHandler.Create(() => { ConfigurationTestCodeGenerator.Generate(); })
             };
 
             var cliBuilder = new CommandLineBuilder(cmd);

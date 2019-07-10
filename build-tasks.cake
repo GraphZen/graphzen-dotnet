@@ -8,6 +8,7 @@
 #addin "nuget:?package=Cake.Coverlet&version=2.2.1"
 #addin "Cake.Powershell&version=0.4.7"
 #addin "nuget:?package=Cake.Git&version=0.19.0"
+#tool dotnet:?package=dotnet-format&version=3.0.4
 using System.Diagnostics;
 
 
@@ -60,6 +61,22 @@ Setup<BuildParameters>(context =>
     var buildParams = BuildParameters.GetParameters(context);
     buildParams.Initialize(context, version);
     return buildParams;
+});
+Task("Format-Check").Does(() => {
+    var dotnetFormatExe = Context.Tools.Resolve("dotnet-format.exe");
+    var exitCode= StartProcess(dotnetFormatExe, new ProcessSettings {
+        Arguments = new ProcessArgumentBuilder()
+            .Append("--dry-run")
+            .Append("--check")
+        });
+        if (exitCode != 0) {
+            throw new Exception("Solution files not formatted correctly");
+        }
+});
+
+Task("Format").Does(() => {
+    var dotnetFormatExe = Context.Tools.Resolve("dotnet-format.exe");
+    StartProcess(dotnetFormatExe);
 });
 
 

@@ -31,6 +31,8 @@ namespace GraphZen
         public virtual void DefineByConvention(SchemaBuilder sb) => throw new NotImplementedException();
         public virtual void DefineEmptyByConvention(SchemaBuilder sb) => throw new NotImplementedException();
         public virtual void DefineByDataAnnotation(SchemaBuilder sb) => throw new NotImplementedException();
+        public virtual void ConfigureExplicitly(SchemaBuilder sb) => throw new NotImplementedException();
+
 
         public abstract ConfigurationSource GetElementConfigurationSource(TMutableMarker definition);
 
@@ -83,5 +85,27 @@ namespace GraphZen
             TryGetValue(parent, out var val).Should().BeTrue();
             val.Should().Be(DataAnnotationValue);
         }
+
+        public virtual void define_by_data_annotation_overridden_by_explicit_configuration()
+        {
+            var schema = Schema.Create(sb =>
+            {
+                DefineByDataAnnotation(sb);
+                var definition = sb.GetDefinition();
+                var parentDef = GetParentDefinition(definition, DataAnnotationParentName);
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
+                TryGetValue(parentDef, out var defVal).Should().BeTrue();
+                defVal.Should().Be(DataAnnotationValue);
+                ConfigureExplicitly(sb);
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
+                TryGetValue(parentDef, out _).Should().BeTrue();
+                defVal.Should().Be(ExplicitValue);
+
+            });
+            var parent = GetParent(schema, DataAnnotationParentName);
+            TryGetValue(parent, out var val).Should().BeTrue();
+            val.Should().Be(ExplicitValue);
+        }
+
     }
 }

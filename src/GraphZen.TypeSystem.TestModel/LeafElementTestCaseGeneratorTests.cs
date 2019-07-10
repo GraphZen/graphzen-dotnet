@@ -10,12 +10,13 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
+// ReSharper disable PossibleMultipleEnumeration
 
 // ReSharper disable PossibleNullReferenceException
 
 namespace GraphZen
 {
-    public class LeafElementConfigurationTestCaseGenerator
+    public class LeafElementTestCaseGeneratorTests
     {
         public static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType>
             TestCases =>
@@ -24,8 +25,13 @@ namespace GraphZen
 
         [Theory]
         [InlineData(new ConfigurationSource[] { }, new string[] { })]
-        [InlineData(new[] {ConfigurationSource.Convention}, new[] {nameof(TestCases.defined_by_convention)})]
-        [InlineData(new[] {ConfigurationSource.DataAnnotation}, new[] {nameof(TestCases.define_by_data_annotation)})]
+        [InlineData(new[] { ConfigurationSource.Convention }, new[] { nameof(TestCases.defined_by_convention) })]
+        [InlineData(new[] { ConfigurationSource.DataAnnotation }, new[] { nameof(TestCases.define_by_data_annotation) })]
+        [InlineData(new[] { ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit }, new[]
+        {
+            nameof(TestCases.define_by_data_annotation),
+            nameof(TestCases.define_by_data_annotation_overridden_by_explicit_configuration)
+        })]
         public void define_scenarios(ConfigurationSource[] defineScenarios, string[] expectedTestCases)
         {
             var element = new LeafElement("foo", new ConfigurationScenarios
@@ -39,7 +45,16 @@ namespace GraphZen
             }
             else
             {
-                testCases.Should().OnlyContain(item => expectedTestCases.Contains(item));
+                foreach (var actualTestCase in testCases)
+                {
+                    expectedTestCases.Should().Contain(actualTestCase, $"the test case '{actualTestCase}' is not required for combination of configuration sources: {string.Join(",", defineScenarios)}");
+                }
+
+                foreach (var expectedTestCase in expectedTestCases)
+                {
+                    testCases.Should().Contain(expectedTestCase, $"the test case '{expectedTestCase}' is required with supported combination of configuration sources: {string.Join(",", defineScenarios)}");
+                }
+
             }
         }
 
