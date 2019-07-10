@@ -1,24 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="xunit" Version="2.4.1" />
-  </ItemGroup>
-
-
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.TestingInfrastructure\GraphZen.TestingInfrastructure.csproj" />
     <ProjectReference Include="..\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="xunit.core">
-      <HintPath>..\..\..\..\..\Users\craig\.nuget\packages\xunit.extensibility.core\2.4.0\lib\netstandard2.0\xunit.core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
