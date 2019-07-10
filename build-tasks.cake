@@ -156,16 +156,20 @@ Task("Restore").Does(() => {
   NuGetRestore(paths.sln);
 });
 
-Task("Gen")
-.IsDependentOn("Compile")
+
+Task("Run-Gen")
 .Does(() => {
    var settings = new DotNetCoreRunSettings
      {
-       NoBuild = true
      };
 
      DotNetCoreRun("./src/GraphZen.DevCli", "gen", settings);
 });
+
+
+Task("Gen")
+.IsDependentOn("Run-Gen")
+.IsDependentOn("Format");
 
 Task("Compile")
 .IsDependentOn("Clean")
