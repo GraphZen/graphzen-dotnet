@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
@@ -40,12 +43,12 @@ namespace GraphZen
         public virtual void optional_not_defined_by_convention()
         {
             var schema = Schema.Create(sb =>
-                        {
-                            DefineEmptyByConvention(sb);
-                            var parentDef = GetParentDefinition(sb.GetDefinition(), NotDefinedByConventionParentName);
-                            GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
-                            TryGetValue(parentDef, out _).Should().BeFalse();
-                        });
+            {
+                DefineEmptyByConvention(sb);
+                var parentDef = GetParentDefinition(sb.GetDefinition(), NotDefinedByConventionParentName);
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
+                TryGetValue(parentDef, out _).Should().BeFalse();
+            });
             var parent = GetParent(schema, NotDefinedByConventionParentName);
             TryGetValue(parent, out _).Should().BeFalse();
         }
@@ -63,7 +66,6 @@ namespace GraphZen
             var parent = GetParent(schema, ConventionalParentName);
             TryGetValue(parent, out var val).Should().BeTrue();
             val.Should().Be(ConventionalValue);
-
         }
 
         public virtual void define_by_data_annotation()
@@ -76,7 +78,6 @@ namespace GraphZen
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
                 TryGetValue(parentDef, out var defVal).Should().BeTrue();
                 defVal.Should().Be(DataAnnotationValue);
-
             });
             var parent = GetParent(schema, DataAnnotationParentName);
             TryGetValue(parent, out var val).Should().BeTrue();

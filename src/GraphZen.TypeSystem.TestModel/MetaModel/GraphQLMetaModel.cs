@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
@@ -20,8 +23,8 @@ namespace GraphZen.MetaModel
         public static LeafElement Description { get; } = LeafElement.Create<IDescription, IMutableDescription>(
             nameof(Description), new ConfigurationScenarios
             {
-                Define = new[] { ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit },
-                Remove = new[] { ConfigurationSource.Explicit }
+                Define = new[] {ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit},
+                Remove = new[] {ConfigurationSource.Explicit}
             }, true);
 
         [NotNull]
@@ -42,7 +45,7 @@ namespace GraphZen.MetaModel
 
         public static Vector ScalarType { get; } = new Vector(nameof(ScalarType))
         {
-            Name, Description, DirectiveAnnotations,
+            Name, Description, DirectiveAnnotations
             // new LeafElement("ValueParser", null),
             // new LeafElement("LiteralParser", null),
             // new LeafElement("ClrType", null)
@@ -51,15 +54,15 @@ namespace GraphZen.MetaModel
         [NotNull]
         public static Vector InterfaceType { get; } = new Vector(nameof(InterfaceType))
         {
-            Name, Description, DirectiveAnnotations, Fields, 
-           //  new LeafElement("ClrType", null)
+            Name, Description, DirectiveAnnotations, Fields
+            //  new LeafElement("ClrType", null)
         };
 
         [NotNull]
         public static Vector ObjectType { get; } = new Vector(nameof(ObjectType))
         {
             Name, Description, DirectiveAnnotations, Fields,
-            new Collection("Interfaces", InterfaceType),
+            new Collection("Interfaces", InterfaceType)
             // new LeafElement("ClrType", null)
         };
 
@@ -80,7 +83,7 @@ namespace GraphZen.MetaModel
         [NotNull]
         public static Vector EnumValue { get; } = new Vector(nameof(EnumValue))
         {
-            Name, Description, DirectiveAnnotations,// new LeafElement("CustomValue", null) { Optional = true }
+            Name, Description, DirectiveAnnotations // new LeafElement("CustomValue", null) { Optional = true }
         };
 
         [NotNull]
@@ -100,7 +103,7 @@ namespace GraphZen.MetaModel
             new Collection("Unions", UnionType),
             new Collection("Scalars", ScalarType),
             new Collection("Enums", EnumType),
-            new Collection("InputObjects", InputObjectType),
+            new Collection("InputObjects", InputObjectType)
             // new LeafElement("QueryType", null),
             // new LeafElement("MutationType", null),
             // new LeafElement("SubscriptionType", null)
@@ -109,7 +112,8 @@ namespace GraphZen.MetaModel
         [NotNull]
         [ItemNotNull]
         public static IReadOnlyList<Element> Elements { get; } =
-            ImmutableArray.Create(Schema, Directive, Argument(), EnumValue, EnumType, ScalarType, UnionType, InputObjectType, ObjectType,
+            ImmutableArray.Create(Schema, Directive, Argument(), EnumValue, EnumType, ScalarType, UnionType,
+                InputObjectType, ObjectType,
                 InterfaceType, Field(), InputField());
 
         [NotNull]
@@ -153,7 +157,7 @@ namespace GraphZen.MetaModel
         [NotNull]
         public static Vector InputValue([NotNull] string name) => new Vector(name)
         {
-            Name, Description, DirectiveAnnotations, 
+            Name, Description, DirectiveAnnotations
             /*new LeafElement("DefaultValue", null)
             {
                 Optional = true

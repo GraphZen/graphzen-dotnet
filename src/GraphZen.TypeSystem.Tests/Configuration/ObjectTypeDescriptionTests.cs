@@ -1,11 +1,11 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-// Last generated: Wednesday, July 10, 2019 11:09:11 AM
-// ReSharper disable PossibleNullReferenceException
-// ReSharper disable AssignNullToNotNullAttribute
-
+using GraphZen.Infrastructure;
 
 namespace GraphZen.Configuration
 {
-    public abstract /* regenerate:true */ class ObjectTypeDescriptionTests: ObjectTypeDescriptionTestsBase { 
+    public abstract /* regenerate:true */ class ObjectTypeDescriptionTests : ObjectTypeDescriptionTestsBase
+    {
     }
 }

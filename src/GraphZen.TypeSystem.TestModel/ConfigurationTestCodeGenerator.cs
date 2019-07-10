@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -42,7 +45,9 @@ namespace GraphZen
                             var baseName = $"{vector.Name}{member.Name}TestsBase";
                             var name = $"{vector.Name}{member.Name}Tests";
 
-                            var testCases = ConfigurationTestCaseGenerator.GetTestCasesForElement(member).Select(testCase => $@"[Fact] public override void {testCase}()  => base.{testCase}(); ");
+                            var testCases = ConfigurationTestCaseGenerator.GetTestCasesForElement(member)
+                                .Select(testCase =>
+                                    $@"[Fact] public override void {testCase}()  => base.{testCase}(); ");
 
 
                             var basePath = Path.Combine(genDir, $"{baseName}.Generated.cs");
@@ -65,13 +70,11 @@ namespace GraphZen.Configuration
                             var testPath = Path.Combine(genDir, $"{name}.cs");
 
                             var regenerateFlag = "regenerate:true";
-                            
+
                             // ReSharper disable once PossibleNullReferenceException
                             if (!File.Exists(testPath) || File.ReadAllText(testPath).Contains(regenerateFlag))
 
                             {
-
-
                                 File.Delete(testPath);
                                 File.AppendAllText(testPath,
                                     $@"

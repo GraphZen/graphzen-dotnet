@@ -24,8 +24,8 @@ namespace GraphZen
 
         [Theory]
         [InlineData(new ConfigurationSource[] { }, new string[] { })]
-        [InlineData(new[] { ConfigurationSource.Convention }, new[] { nameof(TestCases.defined_by_convention) })]
-        [InlineData(new[] { ConfigurationSource.DataAnnotation }, new[] { nameof(TestCases.define_by_data_annotation) })]
+        [InlineData(new[] {ConfigurationSource.Convention}, new[] {nameof(TestCases.defined_by_convention)})]
+        [InlineData(new[] {ConfigurationSource.DataAnnotation}, new[] {nameof(TestCases.define_by_data_annotation)})]
         public void define_scenarios(ConfigurationSource[] defineScenarios, string[] expectedTestCases)
         {
             var element = new LeafElement("foo", new ConfigurationScenarios
@@ -46,7 +46,6 @@ namespace GraphZen
         [Fact]
         public void optional_define_scenarios()
         {
-
             foreach (var element in GraphQLMetaModel.ElementsDeep().Where(_ => _.Optional))
             {
                 ConfigurationTestCaseGenerator.GetTestCasesForElement(element).Should()

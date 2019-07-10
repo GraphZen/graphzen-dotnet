@@ -20,8 +20,7 @@ namespace GraphZen.TypeSystem
         [NotNull] private readonly List<DirectiveDefinition> _directives = new List<DirectiveDefinition>();
 
 
-        [NotNull]
-        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
+        [NotNull] private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
             new Dictionary<string, ConfigurationSource>();
 
 
@@ -652,7 +651,9 @@ namespace GraphZen.TypeSystem
         }
 
         public NamedTypeDefinition FindType([NotNull] string name) => _types.SingleOrDefault(_ => _.Name == name);
-        public NamedTypeDefinition FindType([NotNull] Type clrType) => _types.SingleOrDefault(_ => _.ClrType == clrType);
+
+        public NamedTypeDefinition FindType([NotNull] Type clrType) =>
+            _types.SingleOrDefault(_ => _.ClrType == clrType);
 
         [NotNull]
         public IEnumerable<NamedTypeDefinition> FindTypes([NotNull] Type clrType) =>

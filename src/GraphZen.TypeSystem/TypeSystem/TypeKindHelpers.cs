@@ -64,7 +64,6 @@ namespace GraphZen.TypeSystem
             KindByType.TryGetValue(typeof(TGraphQLType), out kind);
 
 
-
         public static string ToDisplayString(this TypeKind kind)
         {
             switch (kind)

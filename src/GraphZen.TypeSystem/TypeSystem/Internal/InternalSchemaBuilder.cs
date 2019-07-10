@@ -174,16 +174,14 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-
-        private static string InvalidTypeAddition(TypeKind kind, [NotNull] TypeIdentity identity, [NotNull] NamedTypeDefinition existingType)
+        private static string InvalidTypeAddition(TypeKind kind, [NotNull] TypeIdentity identity,
+            [NotNull] NamedTypeDefinition existingType)
         {
             var clrType = identity.ClrType;
             return clrType != null && clrType == existingType.ClrType
                 ? $"Cannot add {kind.ToDisplayString()} using CLR type '{clrType}', an existing {existingType.Kind.ToDisplayString()} already exists with that CLR type."
                 : $"Cannot add {kind.ToDisplayString()} named '{identity.Name}', an existing {existingType.Kind.ToDisplayString()} already exists with that name.";
         }
-
-
 
 
         public InternalUnionTypeBuilder Union([NotNull] Type clrType, ConfigurationSource configurationSource) =>
@@ -362,7 +360,6 @@ namespace GraphZen.TypeSystem.Internal
             else
             {
                 throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Interface, id, type));
-
             }
 
             return interfaceType?.Builder;
@@ -636,14 +633,14 @@ namespace GraphZen.TypeSystem.Internal
                 switch (fieldMember)
                 {
                     case MethodInfo method:
-                        {
-                            fields.Field(method, ConfigurationSource.Convention);
-                        }
+                    {
+                        fields.Field(method, ConfigurationSource.Convention);
+                    }
                         break;
                     case PropertyInfo property:
-                        {
-                            fields.Field(property, ConfigurationSource.Convention);
-                        }
+                    {
+                        fields.Field(property, ConfigurationSource.Convention);
+                    }
                         break;
                 }
             }
