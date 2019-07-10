@@ -1,17 +1,13 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.MetaModel;
-using GraphZen.TypeSystem.Internal;
 
 namespace GraphZen
 {
-
     public class ConfigurationTestCaseGeneratorTests
     {
-        [NotNull] private readonly ConfigurationTestCaseGenerator _sut = new ConfigurationTestCaseGenerator();
+        // [NotNull] private readonly ConfigurationTestCaseGenerator _sut = new ConfigurationTestCaseGenerator();
 
         /*[Fact]
         public void leaf_element_defined_by_convention_should_have_test_case()

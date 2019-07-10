@@ -1,9 +1,8 @@
 
 // regenerate:true
+// Last generated: Wednesday, July 10, 2019 8:51:14 AM
 
-/*
 namespace GraphZen.Configuration
 {
-    public class DirectiveNameTests: DirectiveNameTestsBase {}
+    public abstract class DirectiveNameTests: DirectiveNameTestsBase {}
 }
-*/

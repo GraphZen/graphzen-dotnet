@@ -67,6 +67,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\GraphZen.AspNetCore\GraphZen.AspNetCore.csproj" />
     <ProjectReference Include="..\..\src\GraphZen.TestingInfrastructure\GraphZen.TestingInfrastructure.csproj" />
+    <ProjectReference Include="..\..\src\GraphZen.TypeSystem.TestModel\GraphZen.TypeSystem.TestModel.csproj" />
     <ProjectReference Include="..\..\src\GraphZen\GraphZen.csproj" />
   </ItemGroup>
 

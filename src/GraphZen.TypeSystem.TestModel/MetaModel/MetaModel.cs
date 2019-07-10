@@ -2,29 +2,28 @@
 using System.Collections.Immutable;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.MetaModel
 {
     public static class GraphQLMetaModel
     {
         [NotNull]
-        public static LeafElement Name { get; } = new LeafElement(nameof(Name), new ConfigurationScenarios
-        {
-            Define = new[]
-                {ConfigurationSource.Convention, ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit}
-        });
-
+        public static LeafElement Name { get; } = LeafElement.Create<INamed, IMutableNamed>(nameof(Name),
+            new ConfigurationScenarios
+            {
+                Define = new[]
+                    {ConfigurationSource.Convention, ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit}
+            });
 
         [NotNull]
-        public static LeafElement Description { get; } = new LeafElement(nameof(Description), new ConfigurationScenarios
-        {
-            Define = new[] { ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit },
-            Remove = new[] { ConfigurationSource.Explicit }
-        })
-        {
-            Optional = true
-        };
-
+        public static LeafElement Description { get; } = LeafElement.Create<IDescription, IMutableDescription>(
+            nameof(Description), new ConfigurationScenarios
+            {
+                Define = new[] {ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit},
+                Remove = new[] {ConfigurationSource.Explicit}
+            }, true);
+        
         [NotNull]
         public static Vector Directive { get; } = new Vector(nameof(Directive))
         {
@@ -41,37 +40,39 @@ namespace GraphZen.MetaModel
 
         [NotNull]
 
-        public static Vector Scalar { get; } = new Vector(nameof(Scalar))
+        public static Vector ScalarType { get; } = new Vector(nameof(ScalarType))
         {
             Name, Description, DirectiveAnnotations,
-            new LeafElement("ValueParser", null),
-            new LeafElement("LiteralParser", null),
-            new LeafElement("ClrType", null)
+            // new LeafElement("ValueParser", null),
+            // new LeafElement("LiteralParser", null),
+            // new LeafElement("ClrType", null)
         };
 
         [NotNull]
-        public static Vector Interface { get; } = new Vector(nameof(Interface))
+        public static Vector InterfaceType { get; } = new Vector(nameof(InterfaceType))
         {
-            Name, Description, DirectiveAnnotations, Fields, new LeafElement("ClrType", null)
+            Name, Description, DirectiveAnnotations, Fields, 
+           //  new LeafElement("ClrType", null)
         };
 
         [NotNull]
-        public static Vector Object { get; } = new Vector(nameof(Object))
+        public static Vector ObjectType { get; } = new Vector(nameof(ObjectType))
         {
             Name, Description, DirectiveAnnotations, Fields,
-            new Collection("Interfaces", Interface), new LeafElement("ClrType", null)
+            new Collection("Interfaces", InterfaceType),
+            // new LeafElement("ClrType", null)
         };
 
 
         [NotNull]
-        public static Vector Union { get; } = new Vector(nameof(Union))
+        public static Vector UnionType { get; } = new Vector(nameof(UnionType))
         {
-            Name, Description, DirectiveAnnotations, new LeafElement("ClrType", null),
-            new Collection("MemberTypes", Object)
+            Name, Description, DirectiveAnnotations, // new LeafElement("ClrType", null),
+            new Collection("MemberTypes", ObjectType)
         };
 
         [NotNull]
-        public static Vector InputObject { get; } = new Vector(nameof(InputObject))
+        public static Vector InputObjectType { get; } = new Vector(nameof(InputObjectType))
         {
             Name, Description, DirectiveAnnotations, new Collection("InputFields", InputValue("InputField"))
         };
@@ -79,14 +80,11 @@ namespace GraphZen.MetaModel
         [NotNull]
         public static Vector EnumValue { get; } = new Vector(nameof(EnumValue))
         {
-            Name, Description, DirectiveAnnotations, new LeafElement("CustomValue", null)
-            {
-                Optional = true
-            }
+            Name, Description, DirectiveAnnotations,// new LeafElement("CustomValue", null) { Optional = true }
         };
 
         [NotNull]
-        public static Vector Enum { get; } = new Vector(nameof(Enum))
+        public static Vector EnumType { get; } = new Vector(nameof(EnumType))
         {
             Name, Description, DirectiveAnnotations, new Collection("Values", EnumValue)
         };
@@ -97,22 +95,22 @@ namespace GraphZen.MetaModel
         {
             DirectiveAnnotations,
             new Collection("Directives", Directive),
-            new Collection("Objects", Object),
-            new Collection("Interfaces", Interface),
-            new Collection("Unions", Union),
-            new Collection("Scalars", Scalar),
-            new Collection("Enums", Enum),
-            new Collection("InputObjects", InputObject),
-            new LeafElement("QueryType", null),
-            new LeafElement("MutationType", null),
-            new LeafElement("SubscriptionType", null)
+            new Collection("Objects", ObjectType),
+            new Collection("Interfaces", InterfaceType),
+            new Collection("Unions", UnionType),
+            new Collection("Scalars", ScalarType),
+            new Collection("Enums", EnumType),
+            new Collection("InputObjects", InputObjectType),
+            // new LeafElement("QueryType", null),
+            // new LeafElement("MutationType", null),
+            // new LeafElement("SubscriptionType", null)
         };
 
         [NotNull]
         [ItemNotNull]
         public static IReadOnlyList<Element> Elements { get; } =
-            ImmutableArray.Create(Schema, Directive, Argument(), EnumValue, Enum, Scalar, Union, InputObject, Object,
-                Interface, Field(), InputField());
+            ImmutableArray.Create(Schema, Directive, Argument(), EnumValue, EnumType, ScalarType, UnionType, InputObjectType, ObjectType,
+                InterfaceType, Field(), InputField());
 
 
         [NotNull]
@@ -133,10 +131,11 @@ namespace GraphZen.MetaModel
         [NotNull]
         public static Vector InputValue([NotNull] string name) => new Vector(name)
         {
-            Name, Description, DirectiveAnnotations, new LeafElement("DefaultValue", null)
+            Name, Description, DirectiveAnnotations, 
+            /*new LeafElement("DefaultValue", null)
             {
                 Optional = true
-            }
+            }*/
         };
     }
 }

@@ -17,7 +17,7 @@ namespace GraphZen
         public static DirectoryInfo GetSolutionDirectory(string currentPath = null)
         {
             var directory = new DirectoryInfo(
-                currentPath ?? Directory.GetCurrentDirectory());
+                currentPath ?? Directory.GetCurrentDirectory() ?? throw new Exception("unable to get directory"));
             while (directory != null && !directory.GetFiles("*.sln").Any())
             {
                 directory = directory.Parent;
@@ -41,7 +41,8 @@ namespace GraphZen
             var genDir = Path.Combine(solutionDir.ToString(), "src", "GraphZen.TypeSystem.Tests",
                 "Configuration");
             var generatedFiles =
-                Directory.GetFiles(genDir, "*.Generated.cs", SearchOption.AllDirectories);
+                Directory.GetFiles(genDir, "*.Generated.cs", SearchOption.AllDirectories) ??
+                throw new Exception("Unable to get generated files");
             foreach (var generatedFile in generatedFiles)
             {
                 File.Delete(generatedFile);
@@ -51,13 +52,12 @@ namespace GraphZen
             {
                 switch (element)
                 {
-                    case Collection collection:
+                    case Collection _:
                         break;
-                    case LeafElement leafElement:
+                    case LeafElement _:
                         break;
                     case Vector vector:
-
-                        foreach (var member in vector)
+                        foreach (var member in vector.OfType<LeafElement>())
                         {
                             var baseName = $"{vector.Name}{member.Name}TestsBase";
                             var name = $"{vector.Name}{member.Name}Tests";
@@ -65,14 +65,17 @@ namespace GraphZen
 
                             var basePath = Path.Combine(genDir, $"{baseName}.Generated.cs");
                             File.AppendAllText(basePath, $@"using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.Configuration
 {{
-    public abstract class {baseName}: LeafElementConfigurationTests {{}}
+    public abstract class {baseName}: LeafElementConfigurationTests<{member.MarkerInterface?.Name}, {member.MutableMarkerInterface?.Name},{vector.Name}Definition,{vector.Name}> {{}}
 }}");
                             Console.WriteLine($"wrote file {basePath}");
                             var testPath = Path.Combine(genDir, $"{name}.cs");
                             var regenerateFlag = "regenerate:true";
+                            // ReSharper disable once PossibleNullReferenceException
                             if (!File.Exists(testPath) || File.ReadAllText(testPath).Contains(regenerateFlag))
 
                             {
@@ -80,13 +83,12 @@ namespace GraphZen.Configuration
                                 File.AppendAllText(testPath,
                                     $@"
 // {regenerateFlag}
+// Last generated: {DateTime.Now:F}
 
-/*
 namespace GraphZen.Configuration
 {{
-    public class {name}: {baseName} {{}}
+    public abstract class {name}: {baseName} {{}}
 }}
-*/
 ");
                             }
                         }
@@ -120,6 +122,8 @@ namespace GraphZen.Configuration
         [ItemNotNull]
         private IEnumerable<string> GenerateTestCasesForLeaf([NotNull] LeafElement element)
         {
+            // ReSharper disable once PossibleNullReferenceException
+            // ReSharper disable once AssignNullToNotNullAttribute
             if (element.ConfigurationScenarios.Define.Contains(ConfigurationSource.Convention))
             {
                 yield return "";
@@ -128,10 +132,12 @@ namespace GraphZen.Configuration
 
         [NotNull]
         [ItemNotNull]
+        // ReSharper disable once UnusedParameter.Local
         private IEnumerable<string> GenerateTestCasesForVector([NotNull] Vector element) => Enumerable.Empty<string>();
 
         [NotNull]
         [ItemNotNull]
+        // ReSharper disable once UnusedParameter.Local
         private IEnumerable<string> GenerateTestCasesForCollection([NotNull] Collection element) =>
             Enumerable.Empty<string>();
     }
