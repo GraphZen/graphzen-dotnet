@@ -10,6 +10,7 @@ using GraphZen.Infrastructure;
 [assembly: InternalsVisibleTo("GraphZen.Infrastructure")]
 [assembly: InternalsVisibleTo("GraphZen.AspNetCore")]
 [assembly: InternalsVisibleTo("GraphZen.Abstractions")]
+[assembly: InternalsVisibleTo("GraphZen.DevCli")]
 [assembly: InternalsVisibleTo("GraphZen.Playground.AspNetCore")]
 [assembly: InternalsVisibleTo("GraphZen.LanguageModel")]
 [assembly: InternalsVisibleTo("GraphZen.LanguageModel.Tests")]
@@ -17,4 +18,5 @@ using GraphZen.Infrastructure;
 [assembly: InternalsVisibleTo("GraphZen.QueryEngine.Tests")]
 [assembly: InternalsVisibleTo("GraphZen.TypeSystem")]
 [assembly: InternalsVisibleTo("GraphZen.TypeSystem.Tests")]
+[assembly: InternalsVisibleTo("GraphZen.TypeSystem.TestModel")]
 [assembly: InternalsVisibleTo("GraphZen.Playground")]

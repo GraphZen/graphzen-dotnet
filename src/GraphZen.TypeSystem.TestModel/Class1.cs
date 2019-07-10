@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphZen.TestingInfrastructure
+namespace GraphZen.TypeSystem.TestModel
 {
     public class Class1
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.CommandLine;
+﻿using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Invocation;
 using GraphZen.Infrastructure;
@@ -14,7 +13,7 @@ namespace GraphZen
             {
                 new Command("gen")
                 {
-                    Handler = CommandHandler.Create(() => { Console.WriteLine("hello"); })
+                    Handler = CommandHandler.Create(() => { ConfigurationTestCodeGenerator.Generate(); })
                 }
             };
 
