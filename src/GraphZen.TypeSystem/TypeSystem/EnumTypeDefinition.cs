@@ -13,7 +13,8 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
     {
-        [NotNull] private readonly Dictionary<string, EnumValueDefinition>
+        [NotNull]
+        private readonly Dictionary<string, EnumValueDefinition>
             _values = new Dictionary<string, EnumValueDefinition>();
 
         public EnumTypeDefinition(TypeIdentity identity,

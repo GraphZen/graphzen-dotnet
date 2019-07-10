@@ -6,6 +6,7 @@
 
 namespace GraphZen.Configuration
 {
-    public abstract /* regenerate:true */ class EnumTypeNameTests: EnumTypeNameTestsBase { 
+    public abstract /* regenerate:true */ class EnumTypeNameTests : EnumTypeNameTestsBase
+    {
     }
 }

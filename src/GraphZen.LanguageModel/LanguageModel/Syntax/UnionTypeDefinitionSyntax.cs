@@ -63,7 +63,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is UnionTypeDefinitionSyntax && Equals((UnionTypeDefinitionSyntax) obj);
+            return obj is UnionTypeDefinitionSyntax && Equals((UnionTypeDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

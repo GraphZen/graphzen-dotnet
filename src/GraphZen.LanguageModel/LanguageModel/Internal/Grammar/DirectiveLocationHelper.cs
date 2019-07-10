@@ -11,7 +11,8 @@ namespace GraphZen.LanguageModel.Internal.Grammar
 {
     internal static class DirectiveLocationHelper
     {
-        [NotNull] internal static readonly IReadOnlyDictionary<DirectiveLocation, string> ExecutableDirectiveLocations =
+        [NotNull]
+        internal static readonly IReadOnlyDictionary<DirectiveLocation, string> ExecutableDirectiveLocations =
             new ReadOnlyDictionary<DirectiveLocation, string>(
                 new Dictionary<DirectiveLocation, string>
                 {
@@ -28,7 +29,8 @@ namespace GraphZen.LanguageModel.Internal.Grammar
         internal static readonly IReadOnlyDictionary<string, DirectiveLocation> ExecutableDirectiveLocationsByName =
             ExecutableDirectiveLocations.ToDictionary(_ => _.Value, _ => _.Key);
 
-        [NotNull] internal static readonly IReadOnlyDictionary<DirectiveLocation, string> TypeSystemDirectiveLocations =
+        [NotNull]
+        internal static readonly IReadOnlyDictionary<DirectiveLocation, string> TypeSystemDirectiveLocations =
             new ReadOnlyDictionary<DirectiveLocation, string>(
                 new Dictionary<DirectiveLocation, string>
                 {

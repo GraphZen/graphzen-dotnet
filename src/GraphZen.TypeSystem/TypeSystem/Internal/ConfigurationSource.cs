@@ -61,6 +61,6 @@ namespace GraphZen.TypeSystem.Internal
                 : right.Value;
 
         public static ConfigurationSource Max(this ConfigurationSource left, ConfigurationSource? right)
-            => Max((ConfigurationSource?) left, right).Value;
+            => Max((ConfigurationSource?)left, right).Value;
     }
 }

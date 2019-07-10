@@ -6,6 +6,7 @@
 
 namespace GraphZen.Configuration
 {
-    public abstract /* regenerate:true */ class ArgumentNameTests: ArgumentNameTestsBase { 
+    public abstract /* regenerate:true */ class ArgumentNameTests : ArgumentNameTestsBase
+    {
     }
 }

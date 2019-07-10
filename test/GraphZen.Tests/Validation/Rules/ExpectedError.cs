@@ -57,7 +57,7 @@ namespace GraphZen.Validation.Rules
                 return false;
             }
 
-            return Equals((ExpectedError) obj);
+            return Equals((ExpectedError)obj);
         }
 
         public override int GetHashCode()

@@ -19,7 +19,8 @@ namespace GraphZen.TypeSystem.Internal
     public class DynamicDictionary : DynamicObject, IEquatable<DynamicDictionary>, IEnumerable<string>,
         IDictionary<string, object>
     {
-        [NotNull] private readonly IDictionary<string, dynamic> _dictionary =
+        [NotNull]
+        private readonly IDictionary<string, dynamic> _dictionary =
             new Dictionary<string, dynamic>(StringComparer.OrdinalIgnoreCase);
 
         private string DebuggerDisplay
@@ -343,7 +344,7 @@ namespace GraphZen.TypeSystem.Internal
                 return true;
             }
 
-            return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary) obj);
+            return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary)obj);
         }
 
         /// <summary>

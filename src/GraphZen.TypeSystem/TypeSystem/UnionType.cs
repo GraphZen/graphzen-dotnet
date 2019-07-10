@@ -48,10 +48,10 @@ namespace GraphZen.TypeSystem
                 return types;
             });
             _typeRefs = new Lazy<IReadOnlyDictionary<string, INamedTypeReference>>(() =>
-                MemberTypes.ToReadOnlyDictionary(_ => _.Key, _ => (INamedTypeReference) _.Value));
+                MemberTypes.ToReadOnlyDictionary(_ => _.Key, _ => (INamedTypeReference)_.Value));
             _syntax = new Lazy<UnionTypeDefinitionSyntax>(() =>
                 new UnionTypeDefinitionSyntax(SyntaxFactory.Name(Name), SyntaxHelpers.Description(Description), null,
-                    MemberTypes.Select(_ => (NamedTypeSyntax) _.Value.ToTypeSyntax()).ToArray()));
+                    MemberTypes.Select(_ => (NamedTypeSyntax)_.Value.ToTypeSyntax()).ToArray()));
         }
 
         public TypeResolver<object, GraphQLContext> ResolveType { get; }

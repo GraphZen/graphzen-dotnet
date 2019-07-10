@@ -16,10 +16,12 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
-        [NotNull] private readonly Dictionary<string, ArgumentDefinition> _arguments =
+        [NotNull]
+        private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
-        [NotNull] private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
+        [NotNull]
+        private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
             new Dictionary<string, ConfigurationSource>();
 
         private string _deprecationReason;

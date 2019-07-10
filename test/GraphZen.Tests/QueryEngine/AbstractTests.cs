@@ -281,7 +281,7 @@ namespace GraphZen.QueryEngine
             return ExecuteAsync(schema, "{ foo { bar } }")
                 .ShouldEqual(new
                 {
-                    data = new {foo = (string) null},
+                    data = new { foo = (string)null },
                     errors = new object[]
                     {
                         new

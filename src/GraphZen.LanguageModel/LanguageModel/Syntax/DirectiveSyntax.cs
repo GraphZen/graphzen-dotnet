@@ -51,7 +51,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is DirectiveSyntax && Equals((DirectiveSyntax) obj);
+            return obj is DirectiveSyntax && Equals((DirectiveSyntax)obj);
         }
 
         public override int GetHashCode()

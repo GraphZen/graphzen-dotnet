@@ -6,6 +6,7 @@
 
 namespace GraphZen.Configuration
 {
-    public abstract /* regenerate:true */ class InputFieldNameTests: InputFieldNameTestsBase { 
+    public abstract /* regenerate:true */ class InputFieldNameTests : InputFieldNameTestsBase
+    {
     }
 }

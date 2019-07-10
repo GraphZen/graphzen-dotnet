@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem
             where TSyntaxNode : SyntaxNode
         {
             Check.NotNull(source, nameof(source));
-            return source.Select(_ => (TSyntaxNode) _.ToSyntaxNode()).ToList().AsReadOnly();
+            return source.Select(_ => (TSyntaxNode)_.ToSyntaxNode()).ToList().AsReadOnly();
         }
 
         [NotNull]

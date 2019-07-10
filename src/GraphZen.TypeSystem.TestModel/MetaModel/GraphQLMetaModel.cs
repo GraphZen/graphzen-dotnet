@@ -23,8 +23,8 @@ namespace GraphZen.MetaModel
         public static LeafElement Description { get; } = LeafElement.Create<IDescription, IMutableDescription>(
             nameof(Description), new ConfigurationScenarios
             {
-                Define = new[] {ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit},
-                Remove = new[] {ConfigurationSource.Explicit}
+                Define = new[] { ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit },
+                Remove = new[] { ConfigurationSource.Explicit }
             }, true);
 
         [NotNull]

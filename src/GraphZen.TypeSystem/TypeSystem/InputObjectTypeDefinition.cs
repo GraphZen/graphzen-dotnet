@@ -16,10 +16,12 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjectTypeDefinition
     {
-        [NotNull] private readonly Dictionary<string, InputFieldDefinition> _fields =
+        [NotNull]
+        private readonly Dictionary<string, InputFieldDefinition> _fields =
             new Dictionary<string, InputFieldDefinition>();
 
-        [NotNull] private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
+        [NotNull]
+        private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
         public InputObjectTypeDefinition(TypeIdentity identity, SchemaDefinition schema,

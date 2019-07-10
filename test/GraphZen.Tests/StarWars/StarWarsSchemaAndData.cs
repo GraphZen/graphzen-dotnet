@@ -121,8 +121,8 @@ namespace GraphZen.StarWars
         {
             Id = "1000",
             Name = "Luke Skywalker",
-            FriendIds = new[] {"1002", "1003", "2000", "2001"},
-            AppearsIn = new[] {Episode.NewHope, Episode.Empire, Episode.Jedi},
+            FriendIds = new[] { "1002", "1003", "2000", "2001" },
+            AppearsIn = new[] { Episode.NewHope, Episode.Empire, Episode.Jedi },
             HomePlanet = "Tatooine"
         };
 
@@ -130,8 +130,8 @@ namespace GraphZen.StarWars
         {
             Id = "1001",
             Name = "Darth Vader",
-            FriendIds = new[] {"1004"},
-            AppearsIn = new[] {Episode.NewHope, Episode.Empire, Episode.Jedi},
+            FriendIds = new[] { "1004" },
+            AppearsIn = new[] { Episode.NewHope, Episode.Empire, Episode.Jedi },
             HomePlanet = "Tatooine"
         };
 
@@ -139,16 +139,16 @@ namespace GraphZen.StarWars
         {
             Id = "1002",
             Name = "Han Solo",
-            FriendIds = new[] {"1000", "1003", "2001"},
-            AppearsIn = new[] {Episode.NewHope, Episode.Empire, Episode.Jedi}
+            FriendIds = new[] { "1000", "1003", "2001" },
+            AppearsIn = new[] { Episode.NewHope, Episode.Empire, Episode.Jedi }
         };
 
         private static Human Leia { get; } = new Human
         {
             Id = "1003",
             Name = "Leia Organa",
-            FriendIds = new[] {"1000", "1002", "2000", "2001"},
-            AppearsIn = new[] {Episode.NewHope, Episode.Empire, Episode.Jedi},
+            FriendIds = new[] { "1000", "1002", "2000", "2001" },
+            AppearsIn = new[] { Episode.NewHope, Episode.Empire, Episode.Jedi },
             HomePlanet = "Alderaan"
         };
 
@@ -156,8 +156,8 @@ namespace GraphZen.StarWars
         {
             Id = "1004",
             Name = "Wilhuff Tarkin",
-            FriendIds = new[] {"1001"},
-            AppearsIn = new[] {Episode.Empire}
+            FriendIds = new[] { "1001" },
+            AppearsIn = new[] { Episode.Empire }
         };
 
         private static readonly IReadOnlyDictionary<string, Human> HumanData = new Dictionary<string, Human>
@@ -173,8 +173,8 @@ namespace GraphZen.StarWars
         {
             Id = "2000",
             Name = "C-3P0",
-            FriendIds = new[] {"1000", "1002", "1003", "2001"},
-            AppearsIn = new[] {Episode.NewHope, Episode.Empire, Episode.Jedi},
+            FriendIds = new[] { "1000", "1002", "1003", "2001" },
+            AppearsIn = new[] { Episode.NewHope, Episode.Empire, Episode.Jedi },
             PrimaryFunction = "Protocol"
         };
 
@@ -182,8 +182,8 @@ namespace GraphZen.StarWars
         {
             Id = "2001",
             Name = "R2-D2",
-            FriendIds = new[] {"1000", "1002", "1003"},
-            AppearsIn = new[] {Episode.NewHope, Episode.Empire, Episode.Jedi},
+            FriendIds = new[] { "1000", "1002", "1003" },
+            AppearsIn = new[] { Episode.NewHope, Episode.Empire, Episode.Jedi },
             PrimaryFunction = "Astromech"
         };
 
@@ -194,13 +194,13 @@ namespace GraphZen.StarWars
         };
 
         protected static Task<ICharacter> GetCharacterAsync(string id) =>
-            Task.FromResult(HumanData.TryGetValue(id, out var human) ? (ICharacter) human :
+            Task.FromResult(HumanData.TryGetValue(id, out var human) ? (ICharacter)human :
                 DroidData.TryGetValue(id, out var droid) ? droid : null);
 
         protected static IEnumerable<Task<ICharacter>> GetFriendsAsync(ICharacter character) =>
             character.FriendIds.Select(GetCharacterAsync);
 
-        protected static ICharacter GetHero(Episode? episode) => episode == Episode.Empire ? (ICharacter) Luke : Artoo;
+        protected static ICharacter GetHero(Episode? episode) => episode == Episode.Empire ? (ICharacter)Luke : Artoo;
 
         protected static Human GetHuman(string id) => HumanData.TryGetValue(id, out var human) ? human : null;
         protected static Droid GetDroid(string id) => DroidData.TryGetValue(id, out var droid) ? droid : null;
@@ -238,7 +238,7 @@ namespace GraphZen.StarWars
                 .Field("name", "String", _ => _.Description("The name of the human."))
                 .Field("friends", "[Character]", _ => _
                     .Description("The friends of the human, or an empty list if they have none.")
-                    .Resolve(human => GetFriendsAsync((Human) human)))
+                    .Resolve(human => GetFriendsAsync((Human)human)))
                 .Field("appearsIn", "[Episode]", _ => _
                     .Description("Which movies they appear in."))
                 .Field("homePlanet", "String", _ => _
@@ -255,7 +255,7 @@ namespace GraphZen.StarWars
                 .Field("name", "String", _ => _
                     .Description("The name of the droid."))
                 .Field("friends", "[Character]", _ => _
-                    .Resolve(human => GetFriendsAsync((Droid) human)))
+                    .Resolve(human => GetFriendsAsync((Droid)human)))
                 .Field("appearsIn", "[Episode]", _ => _
                     .Description("Which movies they appear in."))
                 .Field("secretBackstory", "String", _ => _
@@ -284,13 +284,16 @@ namespace GraphZen.StarWars
         [Description("One of the films in the Star Wars Trilogy")]
         public enum Episode
         {
-            [Description("Released in 1977")] [GraphQLName("NEW_HOPE")]
+            [Description("Released in 1977")]
+            [GraphQLName("NEW_HOPE")]
             NewHope = 4,
 
-            [Description("Released in 1980")] [GraphQLName("EMPIRE")]
+            [Description("Released in 1980")]
+            [GraphQLName("EMPIRE")]
             Empire = 5,
 
-            [Description("Released in 1983")] [GraphQLName("JEDI")]
+            [Description("Released in 1983")]
+            [GraphQLName("JEDI")]
             Jedi = 6
         }
 

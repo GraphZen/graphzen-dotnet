@@ -21,7 +21,7 @@ enum AnnotatedEnum @onEnum {
 ");
             var expected = SyntaxFactory.Document(new EnumTypeDefinitionSyntax(SyntaxFactory.Name("AnnotatedEnum"),
                 null,
-                new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onEnum"))}, new[]
+                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onEnum")) }, new[]
                 {
                     new EnumValueDefinitionSyntax(SyntaxFactory.EnumValue(SyntaxFactory.Name("ANNOTATED_VALUE")), null,
                         new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onEnumValue"))}),

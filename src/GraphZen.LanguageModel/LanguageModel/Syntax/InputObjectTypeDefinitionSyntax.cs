@@ -57,7 +57,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is InputObjectTypeDefinitionSyntax && Equals((InputObjectTypeDefinitionSyntax) obj);
+            return obj is InputObjectTypeDefinitionSyntax && Equals((InputObjectTypeDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

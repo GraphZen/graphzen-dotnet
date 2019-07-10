@@ -84,14 +84,14 @@ namespace GraphZen
                             }
                             catch (GraphQLException gqlException)
                             {
-                                result = new ExecutionResult(null, new[] {gqlException.GraphQLError});
+                                result = new ExecutionResult(null, new[] { gqlException.GraphQLError });
                             }
                             catch (Exception e)
                             {
                                 var error = context.Options.RevealInternalServerErrors
                                     ? new GraphQLError(e.Message, innerException: e)
                                     : new GraphQLError("An unknown error occured.");
-                                result = new ExecutionResult(null, new[] {error});
+                                result = new ExecutionResult(null, new[] { error });
                             }
 
                             var resp = JsonConvert.SerializeObject(result, Json.SerializerSettings);

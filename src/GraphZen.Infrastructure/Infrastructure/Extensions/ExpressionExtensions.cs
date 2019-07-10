@@ -41,7 +41,7 @@ namespace GraphZen.Infrastructure
                 throw new ArgumentException();
             }
 
-            return (PropertyInfo) exp.Member;
+            return (PropertyInfo)exp.Member;
         }
     }
 }

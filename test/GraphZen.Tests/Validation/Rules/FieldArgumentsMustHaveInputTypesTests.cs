@@ -21,7 +21,7 @@ namespace GraphZen.Validation.Rules
             from fieldsType in OutputFieldsTypes
             from inputType in InputTypes
             from fieldType in typeName.WithModifiers()
-            select new object[] {fieldsType, inputType, fieldType};
+            select new object[] { fieldsType, inputType, fieldType };
 
         [Theory]
         [MemberData(nameof(GetInputTypeData), "SomeInputType")]
@@ -40,7 +40,7 @@ namespace GraphZen.Validation.Rules
             from fieldsType in OutputFieldsTypes
             from inputType in NonInputTypes
             from fieldType in typeName.WithModifiers()
-            select new object[] {fieldsType, inputType, fieldType};
+            select new object[] { fieldsType, inputType, fieldType };
 
         [Theory]
         [MemberData(nameof(GetNonInputTypeData), "SomeNonInputType")]

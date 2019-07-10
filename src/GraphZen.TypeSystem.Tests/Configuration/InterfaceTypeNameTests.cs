@@ -6,6 +6,7 @@
 
 namespace GraphZen.Configuration
 {
-    public abstract /* regenerate:true */ class InterfaceTypeNameTests: InterfaceTypeNameTestsBase { 
+    public abstract /* regenerate:true */ class InterfaceTypeNameTests : InterfaceTypeNameTestsBase
+    {
     }
 }

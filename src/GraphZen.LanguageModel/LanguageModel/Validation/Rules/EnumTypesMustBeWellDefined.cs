@@ -9,10 +9,12 @@ namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class EnumTypesMustBeWellDefined : DocumentValidationRuleVisitor
     {
-        [NotNull] private readonly Dictionary<string, ICollection<EnumTypeDefinitionSyntax>> _enumDefs =
+        [NotNull]
+        private readonly Dictionary<string, ICollection<EnumTypeDefinitionSyntax>> _enumDefs =
             new Dictionary<string, ICollection<EnumTypeDefinitionSyntax>>();
 
-        [NotNull] private readonly Dictionary<string, ICollection<EnumTypeExtensionSyntax>> _enumExts =
+        [NotNull]
+        private readonly Dictionary<string, ICollection<EnumTypeExtensionSyntax>> _enumExts =
             new Dictionary<string, ICollection<EnumTypeExtensionSyntax>>();
 
 

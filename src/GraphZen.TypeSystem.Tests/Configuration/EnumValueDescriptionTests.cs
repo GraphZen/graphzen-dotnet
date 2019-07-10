@@ -6,6 +6,7 @@
 
 namespace GraphZen.Configuration
 {
-    public abstract /* regenerate:true */ class EnumValueDescriptionTests: EnumValueDescriptionTestsBase { 
+    public abstract /* regenerate:true */ class EnumValueDescriptionTests : EnumValueDescriptionTestsBase
+    {
     }
 }

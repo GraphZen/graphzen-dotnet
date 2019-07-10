@@ -19,7 +19,7 @@ namespace GraphZen.Validation.Rules
         public static IEnumerable<object[]> GetValidInterfaceFieldTypeScenarios() =>
             from outputType in OutputTypes
             from fieldType in "SomeOutputType".WithModifiers()
-            select new object[] {outputType, fieldType};
+            select new object[] { outputType, fieldType };
 
         [Theory]
         [MemberData(nameof(GetValidInterfaceFieldTypeScenarios))]
@@ -37,7 +37,7 @@ namespace GraphZen.Validation.Rules
         public static IEnumerable<object[]> GetInvalidInterfaceFieldTypeScenarios() =>
             from nonOutputType in NonOutputTypes
             from fieldType in "SomeInputType".WithModifiers()
-            select new object[] {nonOutputType, fieldType};
+            select new object[] { nonOutputType, fieldType };
 
         [Theory]
         [MemberData(nameof(GetInvalidInterfaceFieldTypeScenarios))]

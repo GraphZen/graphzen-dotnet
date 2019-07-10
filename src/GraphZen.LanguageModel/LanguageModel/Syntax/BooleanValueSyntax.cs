@@ -46,7 +46,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is BooleanValueSyntax && Equals((BooleanValueSyntax) obj);
+            return obj is BooleanValueSyntax && Equals((BooleanValueSyntax)obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();

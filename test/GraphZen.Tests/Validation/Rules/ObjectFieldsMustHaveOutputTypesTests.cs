@@ -18,7 +18,7 @@ namespace GraphZen.Validation.Rules
         public static IEnumerable<object[]> GetValidFieldScenarios() =>
             from outputType in OutputTypes
             from fieldType in "SomeOutputType".WithModifiers()
-            select new[] {outputType, fieldType};
+            select new[] { outputType, fieldType };
 
         [Theory]
         [MemberData(nameof(GetValidFieldScenarios))]
@@ -36,7 +36,7 @@ namespace GraphZen.Validation.Rules
         public static IEnumerable<object[]> GetInvalidFieldScenarios() =>
             from nonOutputType in NonOutputTypes
             from fieldType in "SomeInputType".WithModifiers()
-            select new[] {nonOutputType, fieldType};
+            select new[] { nonOutputType, fieldType };
 
 
         [Theory]

@@ -14,7 +14,8 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UnionTypeDefinition : NamedTypeDefinition, IMutableUnionTypeDefinition
     {
-        [NotNull] private readonly Dictionary<string, INamedTypeReference> _types =
+        [NotNull]
+        private readonly Dictionary<string, INamedTypeReference> _types =
             new Dictionary<string, INamedTypeReference>();
 
         public UnionTypeDefinition(TypeIdentity identity, SchemaDefinition schema,

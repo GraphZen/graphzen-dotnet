@@ -19,10 +19,12 @@ namespace GraphZen.TypeSystem
                  "query, mutation, and subscription operations.")]
     public class Schema : AnnotatableMember
     {
-        [NotNull] private readonly Dictionary<string, List<ObjectType>> _implementations =
+        [NotNull]
+        private readonly Dictionary<string, List<ObjectType>> _implementations =
             new Dictionary<string, List<ObjectType>>();
 
-        [NotNull] private readonly Dictionary<string, Dictionary<string, bool>> _possibleTypeMap =
+        [NotNull]
+        private readonly Dictionary<string, Dictionary<string, bool>> _possibleTypeMap =
             new Dictionary<string, Dictionary<string, bool>>();
 
         [NotNull] [ItemNotNull] private readonly Lazy<DocumentSyntax> _sdlSyntax;
@@ -258,27 +260,27 @@ namespace GraphZen.TypeSystem
             switch (typeSyntax)
             {
                 case ListTypeSyntax listNode:
-                {
-                    var innerType = GetTypeFromAst(listNode.OfType);
-                    switch (innerType)
                     {
-                        case null:
-                            return null;
-                        case IGraphQLType input:
-                            return ListType.Of(input);
+                        var innerType = GetTypeFromAst(listNode.OfType);
+                        switch (innerType)
+                        {
+                            case null:
+                                return null;
+                            case IGraphQLType input:
+                                return ListType.Of(input);
+                        }
                     }
-                }
                 case NonNullTypeSyntax nnNode:
-                {
-                    var innerType = GetTypeFromAst(nnNode.OfType);
-                    switch (innerType)
                     {
-                        case null:
-                            return null;
-                        case INullableType nullable:
-                            return NonNullType.Of(nullable);
+                        var innerType = GetTypeFromAst(nnNode.OfType);
+                        switch (innerType)
+                        {
+                            case null:
+                                return null;
+                            case INullableType nullable:
+                                return NonNullType.Of(nullable);
+                        }
                     }
-                }
                     break;
                 case NamedTypeSyntax namedTypeNode:
                     return Types.TryGetValue(namedTypeNode.Name.Value, out var result) ? result : null;

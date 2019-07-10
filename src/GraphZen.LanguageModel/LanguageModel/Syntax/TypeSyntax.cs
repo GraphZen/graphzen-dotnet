@@ -35,7 +35,7 @@ namespace GraphZen.LanguageModel
             }
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            return (NamedTypeSyntax) GetNamedType(this);
+            return (NamedTypeSyntax)GetNamedType(this);
         }
     }
 }

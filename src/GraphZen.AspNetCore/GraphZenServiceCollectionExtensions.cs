@@ -35,7 +35,7 @@ namespace GraphZen
             var optionsActionImpl =
                 optionsAction != null
                     ? (p, b) => optionsAction(b)
-                    : (Action<IServiceProvider, GraphQLContextOptionsBuilder>) null;
+                    : (Action<IServiceProvider, GraphQLContextOptionsBuilder>)null;
 
             var contextType = typeof(TContext);
             Logger.Debug($"Adding GraphQL context {contextType}");

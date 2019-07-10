@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem
                 case INamedType namedType:
                     return SyntaxFactory.NamedType(SyntaxFactory.Name(namedType.Name));
                 case NonNullType nonNull:
-                    return SyntaxFactory.NonNull((NullableTypeSyntax) nonNull.OfType.ToTypeSyntax());
+                    return SyntaxFactory.NonNull((NullableTypeSyntax)nonNull.OfType.ToTypeSyntax());
                 case ListType list:
                     return SyntaxFactory.ListType(list.OfType.ToTypeSyntax());
             }
@@ -48,7 +48,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(directives, nameof(directives));
 
             var annotationConverter = new DefaultIDirectiveAnnotationSyntaxConverter();
-            return directives.Select(_ => (DirectiveSyntax) annotationConverter.ToSyntax(_)).ToList().AsReadOnly();
+            return directives.Select(_ => (DirectiveSyntax)annotationConverter.ToSyntax(_)).ToList().AsReadOnly();
         }
     }
 }

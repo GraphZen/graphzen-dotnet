@@ -6,6 +6,7 @@
 
 namespace GraphZen.Configuration
 {
-    public abstract /* regenerate:true */ class ObjectTypeDescriptionTests: ObjectTypeDescriptionTestsBase { 
+    public abstract /* regenerate:true */ class ObjectTypeDescriptionTests : ObjectTypeDescriptionTestsBase
+    {
     }
 }

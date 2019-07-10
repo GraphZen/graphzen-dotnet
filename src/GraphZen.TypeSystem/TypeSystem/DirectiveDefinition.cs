@@ -15,7 +15,8 @@ namespace GraphZen.TypeSystem
     public class DirectiveDefinition : MemberDefinition, IMutableDirectiveDefinition,
         IInfrastructure<InternalDirectiveBuilder>
     {
-        [NotNull] private readonly Dictionary<string, ArgumentDefinition> _arguments =
+        [NotNull]
+        private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
         [NotNull] private DirectiveLocation[] _locations = { };

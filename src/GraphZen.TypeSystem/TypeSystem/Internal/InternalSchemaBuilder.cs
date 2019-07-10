@@ -633,14 +633,14 @@ namespace GraphZen.TypeSystem.Internal
                 switch (fieldMember)
                 {
                     case MethodInfo method:
-                    {
-                        fields.Field(method, ConfigurationSource.Convention);
-                    }
+                        {
+                            fields.Field(method, ConfigurationSource.Convention);
+                        }
                         break;
                     case PropertyInfo property:
-                    {
-                        fields.Field(property, ConfigurationSource.Convention);
-                    }
+                        {
+                            fields.Field(property, ConfigurationSource.Convention);
+                        }
                         break;
                 }
             }

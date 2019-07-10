@@ -6,6 +6,7 @@
 
 namespace GraphZen.Configuration
 {
-    public abstract /* regenerate:true */ class UnionTypeNameTests: UnionTypeNameTestsBase { 
+    public abstract /* regenerate:true */ class UnionTypeNameTests : UnionTypeNameTestsBase
+    {
     }
 }

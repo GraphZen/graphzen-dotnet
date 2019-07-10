@@ -58,7 +58,7 @@ namespace GraphZen.LanguageModel.Internal
 
                     if (typename != null)
                     {
-                        name = (string) typename;
+                        name = (string)typename;
                         return true;
                     }
 

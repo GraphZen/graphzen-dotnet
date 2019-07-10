@@ -14,7 +14,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
             var result = ParseDocument("extend scalar CustomScalar @onScalar");
             var expected =
                 SyntaxFactory.Document(new ScalarTypeExtensionSyntax(SyntaxFactory.Name("CustomScalar"),
-                    new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onScalar"))}));
+                    new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onScalar")) }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
         }

@@ -122,7 +122,7 @@ namespace GraphZen.TypeSystem
             var expected = new UnionTypeDefinitionSyntax(SyntaxFactory.Name("Union"),
                 SyntaxHelpers.Description("union description"),
                 null,
-                new[] {SyntaxFactory.NamedType(SyntaxFactory.Name("Object"))});
+                new[] { SyntaxFactory.NamedType(SyntaxFactory.Name("Object")) });
             union.ToSyntaxNode().Should().Be(expected);
         }
 

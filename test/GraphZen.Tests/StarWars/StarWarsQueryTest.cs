@@ -142,13 +142,13 @@ namespace GraphZen.StarWars
         [InlineData("not a valid id", null)]
         public Task GenericQuery(string id, string name)
         {
-            var human = name != null ? new {name} : null;
+            var human = name != null ? new { name } : null;
             return ExecuteAsync(StarWarsSchema, @" 
                 query FetchSomeIDQuery($someId: String!) {
                   human(id: $someId) {
                     name
                   }
-                }", null, new {someId = id}).ShouldEqual(new
+                }", null, new { someId = id }).ShouldEqual(new
             {
                 data = new
                 {
@@ -167,7 +167,7 @@ namespace GraphZen.StarWars
         {
             data = new
             {
-                luke = new {name = "Luke Skywalker"}
+                luke = new { name = "Luke Skywalker" }
             }
         });
 
@@ -184,8 +184,8 @@ namespace GraphZen.StarWars
         {
             data = new
             {
-                luke = new {name = "Luke Skywalker"},
-                leia = new {name = "Leia Organa"}
+                luke = new { name = "Luke Skywalker" },
+                leia = new { name = "Leia Organa" }
             }
         });
 
@@ -204,8 +204,8 @@ namespace GraphZen.StarWars
         {
             data = new
             {
-                luke = new {name = "Luke Skywalker", homePlanet = "Tatooine"},
-                leia = new {name = "Leia Organa", homePlanet = "Alderaan"}
+                luke = new { name = "Luke Skywalker", homePlanet = "Tatooine" },
+                leia = new { name = "Leia Organa", homePlanet = "Alderaan" }
             }
         });
 
@@ -228,8 +228,8 @@ namespace GraphZen.StarWars
         {
             data = new
             {
-                luke = new {name = "Luke Skywalker", homePlanet = "Tatooine"},
-                leia = new {name = "Leia Organa", homePlanet = "Alderaan"}
+                luke = new { name = "Luke Skywalker", homePlanet = "Tatooine" },
+                leia = new { name = "Leia Organa", homePlanet = "Alderaan" }
             }
         });
 
@@ -289,7 +289,7 @@ namespace GraphZen.StarWars
                     hero = new
                     {
                         name = "R2-D2",
-                        secretBackstory = (string) null
+                        secretBackstory = (string)null
                     }
                 },
                 errors = new object[]
@@ -393,7 +393,7 @@ namespace GraphZen.StarWars
                     mainHero = new
                     {
                         name = "R2-D2",
-                        story = (string) null
+                        story = (string)null
                     }
                 },
                 errors = new object[]

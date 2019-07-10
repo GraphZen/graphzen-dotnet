@@ -47,7 +47,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is VariableSyntax && Equals((VariableSyntax) obj);
+            return obj is VariableSyntax && Equals((VariableSyntax)obj);
         }
 
         public override int GetHashCode() => Name.GetHashCode();

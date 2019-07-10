@@ -14,7 +14,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
             var result = ParseDocument("scalar AnnotatedScalar @onScalar");
             var expected =
                 SyntaxFactory.Document(new ScalarTypeDefinitionSyntax(SyntaxFactory.Name("AnnotatedScalar"), null,
-                    new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onScalar"))}));
+                    new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onScalar")) }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
         }

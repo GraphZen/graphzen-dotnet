@@ -130,7 +130,8 @@ namespace GraphZen.TypeSystem
             "The name of the current Object type at runtime.", null, NonNullType.Of(SpecScalars.String), null,
             (source, args, context, info) => info.ParentType.Name, null);
 
-        [NotNull] public static readonly IReadOnlyList<NamedType> IntrospectionTypes =
+        [NotNull]
+        public static readonly IReadOnlyList<NamedType> IntrospectionTypes =
             Schema.GetTypes()
                 .Where(_ => SpecScalars.All.All(ss => ss.Name != _.Name))
                 .ToList().AsReadOnly();

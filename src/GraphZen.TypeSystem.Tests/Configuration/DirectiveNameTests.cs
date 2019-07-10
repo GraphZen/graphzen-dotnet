@@ -6,6 +6,7 @@
 
 namespace GraphZen.Configuration
 {
-    public abstract /* regenerate:true */ class DirectiveNameTests: DirectiveNameTestsBase { 
+    public abstract /* regenerate:true */ class DirectiveNameTests : DirectiveNameTestsBase
+    {
     }
 }

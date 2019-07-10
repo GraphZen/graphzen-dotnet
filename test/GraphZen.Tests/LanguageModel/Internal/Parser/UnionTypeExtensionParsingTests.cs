@@ -13,7 +13,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         {
             var result = ParseDocument("extend union Feed @onUnion");
             var expected = SyntaxFactory.Document(new UnionTypeExtensionSyntax(SyntaxFactory.Name("Feed"),
-                new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onUnion"))}));
+                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onUnion")) }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
         }

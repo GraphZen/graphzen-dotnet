@@ -15,7 +15,8 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ObjectTypeDefinition : FieldsContainerDefinition, IMutableObjectTypeDefinition
     {
-        [NotNull] private readonly Dictionary<string, ConfigurationSource> _ignoredInterfaces =
+        [NotNull]
+        private readonly Dictionary<string, ConfigurationSource> _ignoredInterfaces =
             new Dictionary<string, ConfigurationSource>();
 
         [NotNull]
@@ -46,7 +47,7 @@ namespace GraphZen.TypeSystem
         public override TypeKind Kind { get; } = TypeKind.Object;
 
         public ConfigurationSource? FindIgnoredInterfaceConfigurationSource([NotNull] string interfaceName) =>
-            _ignoredInterfaces.TryGetValue(interfaceName, out var cs) ? cs : (ConfigurationSource?) null;
+            _ignoredInterfaces.TryGetValue(interfaceName, out var cs) ? cs : (ConfigurationSource?)null;
 
 
         public bool AddInterface([NotNull] INamedTypeReference interfaceRef, ConfigurationSource configurationSource)

@@ -20,7 +20,8 @@ namespace GraphZen.TypeSystem
         [NotNull] private readonly List<DirectiveDefinition> _directives = new List<DirectiveDefinition>();
 
 
-        [NotNull] private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
+        [NotNull]
+        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
             new Dictionary<string, ConfigurationSource>();
 
 

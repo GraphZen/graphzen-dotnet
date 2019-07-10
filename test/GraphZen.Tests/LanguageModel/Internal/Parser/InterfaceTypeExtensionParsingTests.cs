@@ -14,7 +14,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
             var result = ParseDocument("extend interface Bar @onInterface ");
             var expected =
                 SyntaxFactory.Document(new InterfaceTypeExtensionSyntax(SyntaxFactory.Name("Bar"),
-                    new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onInterface"))}));
+                    new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onInterface")) }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
         }

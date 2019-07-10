@@ -10,10 +10,12 @@ namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class UnionTypesMustBeValid : DocumentValidationRuleVisitor
     {
-        [NotNull] private readonly Dictionary<string, ICollection<UnionTypeDefinitionSyntax>> _unionDefs =
+        [NotNull]
+        private readonly Dictionary<string, ICollection<UnionTypeDefinitionSyntax>> _unionDefs =
             new Dictionary<string, ICollection<UnionTypeDefinitionSyntax>>();
 
-        [NotNull] private readonly Dictionary<string, ICollection<UnionTypeExtensionSyntax>> _unionExts =
+        [NotNull]
+        private readonly Dictionary<string, ICollection<UnionTypeExtensionSyntax>> _unionExts =
             new Dictionary<string, ICollection<UnionTypeExtensionSyntax>>();
 
         public UnionTypesMustBeValid(DocumentValidationContext context) : base(context)
@@ -43,7 +45,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
                 Debug.Assert(union != null, nameof(union) + " != null");
                 var unionTypeName = union.Name.Value;
                 var unionExtensions = _unionExts.GetItems(union.Name.Value).ToList();
-                var nodes = new List<SyntaxNode> {union};
+                var nodes = new List<SyntaxNode> { union };
                 nodes.AddRange(unionExtensions);
                 // ReSharper disable once PossibleNullReferenceException
                 var types = union.MemberTypes.Concat(unionExtensions.SelectMany(_ => _.Types)).ToList();

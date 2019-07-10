@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         [NotNull]
-        public new TDefinition Definition => (TDefinition) base.Definition;
+        public new TDefinition Definition => (TDefinition)base.Definition;
     }
 
 

@@ -28,10 +28,10 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String!]) {
                 listNN(input: $input)
               }
-            ", new {input = (object) null}).ShouldEqual(
+            ", new { input = (object)null }).ShouldEqual(
             new
             {
-                data = new {listNN = "null"}
+                data = new { listNN = "null" }
             });
 
         [Fact]
@@ -39,10 +39,10 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String!]) {
                 listNN(input: $input)
               }
-            ", new {input = Array("A")}).ShouldEqual(
+            ", new { input = Array("A") }).ShouldEqual(
             new
             {
-                data = new {listNN = "[\"A\"]"}
+                data = new { listNN = "[\"A\"]" }
             });
 
         [Fact]
@@ -50,7 +50,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String]) {
                 list(input: $input)
               }
-            ", new {input = (object) null}).ShouldEqual(new
+            ", new { input = (object)null }).ShouldEqual(new
         {
             data = new
             {
@@ -63,7 +63,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String]) {
                 list(input: $input)
               }
-            ", new {input = Array("A", null, "B")}).ShouldEqual(new
+            ", new { input = Array("A", null, "B") }).ShouldEqual(new
         {
             data = new
             {
@@ -76,7 +76,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String]) {
                 list(input: $input)
               }
-            ", new {input = Array("A")}).ShouldEqual(new
+            ", new { input = Array("A") }).ShouldEqual(new
         {
             data = new
             {
@@ -89,7 +89,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String!]!) {
                 nnListNN(input: $input)
               }
-            ", new {input = Array("A")}).ShouldEqual(
+            ", new { input = Array("A") }).ShouldEqual(
             new
             {
                 data = new
@@ -103,7 +103,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String]!) {
                 nnList(input: $input)
               }
-            ", new {input = Array("A")}).ShouldEqual(new
+            ", new { input = Array("A") }).ShouldEqual(new
         {
             data = new
             {
@@ -116,7 +116,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: TestType!) {
                 fieldWithObjectInput(input: $input)
               }
-            ", new {input = new {list = Array("A", "B")}}).ShouldEqual(new
+            ", new { input = new { list = Array("A", "B") } }).ShouldEqual(new
         {
             errors = Array(new
             {
@@ -135,7 +135,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String!]) {
                 listNN(input: $input)
               }
-            ", new {input = Array("A", null, "B")}).ShouldEqual(
+            ", new { input = Array("A", null, "B") }).ShouldEqual(
             new
             {
                 errors = Array(new
@@ -155,7 +155,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String!]!) {
                 nnListNN(input: $input)
               }
-            ", new {input = (object) null}).ShouldEqual(
+            ", new { input = (object)null }).ShouldEqual(
             new
             {
                 errors = Array(new
@@ -174,7 +174,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String]!) {
                 nnList(input: $input)
               }
-            ", new {input = (object) null}).ShouldEqual(new
+            ", new { input = (object)null }).ShouldEqual(new
         {
             errors = Array(new
             {
@@ -192,7 +192,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String!]!) {
                 nnListNN(input: $input)
               }
-            ", new {input = Array("A", null, "B")}).ShouldEqual(
+            ", new { input = Array("A", null, "B") }).ShouldEqual(
             new
             {
                 errors = Array(new
@@ -212,7 +212,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: UnknownType!) {
                 fieldWithObjectInput(input: $input)
               }
-            ", new {input = "whoknows"}).ShouldEqual(new
+            ", new { input = "whoknows" }).ShouldEqual(new
         {
             errors = Array(new
             {
@@ -231,7 +231,7 @@ namespace GraphZen.QueryEngine.Variables
               query ($input: [String]!) {
                 nnList(input: $input)
               }
-            ", new {input = Array("A", null, "B")}).ShouldEqual(new
+            ", new { input = Array("A", null, "B") }).ShouldEqual(new
         {
             data = new
             {

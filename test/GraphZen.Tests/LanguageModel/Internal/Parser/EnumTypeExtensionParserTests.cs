@@ -13,7 +13,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         {
             var result = ParseDocument("extend enum Site @onEnum");
             var expected = SyntaxFactory.Document(new EnumTypeExtensionSyntax(SyntaxFactory.Name("Site"),
-                new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onEnum"))}));
+                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onEnum")) }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
         }

@@ -86,15 +86,15 @@ namespace GraphZen.LanguageModel.Internal.Grammar
                 .Named("boolean value");
 
         internal static TokenListParser<TokenKind, ValueSyntax> Value { get; } =
-            Parse.Ref(() => Variable).Select(_ => (ValueSyntax) _)
-                .Or(IntValue.Select(_ => (ValueSyntax) _))
-                .Or(FloatValue.Select(_ => (ValueSyntax) _))
-                .Or(StringValue.Select(_ => (ValueSyntax) _))
-                .Or(BooleanValue.Select(_ => (ValueSyntax) _))
-                .Or(NullValue.Select(_ => (ValueSyntax) _))
-                .Or(EnumValue.Select(_ => (ValueSyntax) _))
-                .Or(ListValue.Select(_ => (ValueSyntax) _))
-                .Or(ObjectValue.Select(_ => (ValueSyntax) _))
+            Parse.Ref(() => Variable).Select(_ => (ValueSyntax)_)
+                .Or(IntValue.Select(_ => (ValueSyntax)_))
+                .Or(FloatValue.Select(_ => (ValueSyntax)_))
+                .Or(StringValue.Select(_ => (ValueSyntax)_))
+                .Or(BooleanValue.Select(_ => (ValueSyntax)_))
+                .Or(NullValue.Select(_ => (ValueSyntax)_))
+                .Or(EnumValue.Select(_ => (ValueSyntax)_))
+                .Or(ListValue.Select(_ => (ValueSyntax)_))
+                .Or(ObjectValue.Select(_ => (ValueSyntax)_))
                 .Named("value");
     }
 }

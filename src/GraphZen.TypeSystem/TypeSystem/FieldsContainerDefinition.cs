@@ -15,10 +15,12 @@ namespace GraphZen.TypeSystem
 {
     public abstract class FieldsContainerDefinition : NamedTypeDefinition, IMutableFieldsContainerDefinition
     {
-        [NotNull] private readonly Dictionary<string, FieldDefinition> _fields =
+        [NotNull]
+        private readonly Dictionary<string, FieldDefinition> _fields =
             new Dictionary<string, FieldDefinition>();
 
-        [NotNull] private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
+        [NotNull]
+        private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
 

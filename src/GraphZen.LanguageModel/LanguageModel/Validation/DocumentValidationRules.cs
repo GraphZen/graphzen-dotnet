@@ -12,51 +12,51 @@ namespace GraphZen.LanguageModel.Validation
     {
         [NotNull]
         public static ValidationRule LoneSchemaDefinition { get; } =
-            _ => new LoneSchemaDefinition((DocumentValidationContext) _);
+            _ => new LoneSchemaDefinition((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule SchemaMustHaveRootObjectTypes { get; } =
-            _ => new SchemaMustHaveRootObjectTypes((DocumentValidationContext) _);
+            _ => new SchemaMustHaveRootObjectTypes((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule FieldArgsMustBeProperlyNamed { get; } =
-            _ => new FieldArgsMustBeProperlyNamed((DocumentValidationContext) _);
+            _ => new FieldArgsMustBeProperlyNamed((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule UnionTypesMustBeValid { get; } =
-            _ => new UnionTypesMustBeValid((DocumentValidationContext) _);
+            _ => new UnionTypesMustBeValid((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule InputObjectsMustHaveFields { get; } =
-            _ => new InputObjectsMustHaveFields((DocumentValidationContext) _);
+            _ => new InputObjectsMustHaveFields((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule EnumTypesMustBeWellDefined { get; } =
-            _ => new EnumTypesMustBeWellDefined((DocumentValidationContext) _);
+            _ => new EnumTypesMustBeWellDefined((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule ObjectFieldsMustHaveOutputTypes { get; } =
-            _ => new ObjectFieldsMustHaveOutputTypes((DocumentValidationContext) _);
+            _ => new ObjectFieldsMustHaveOutputTypes((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule ObjectsCanOnlyImplementUniqueInterfaces { get; } = _ =>
-            new ObjectsCanOnlyImplementUniqueInterfaces((DocumentValidationContext) _);
+            new ObjectsCanOnlyImplementUniqueInterfaces((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule InterfaceExtensionsShouldBeValid { get; } =
-            _ => new InterfaceExtensionsShouldBeValid((DocumentValidationContext) _);
+            _ => new InterfaceExtensionsShouldBeValid((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule InterfaceFieldsMustHaveOutputTypes { get; } = _ =>
-            new InterfaceFieldsMustHaveOutputTypes((DocumentValidationContext) _);
+            new InterfaceFieldsMustHaveOutputTypes((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule FieldArgumentsMustHaveInputTypes { get; } =
-            _ => new FieldArgumentsMustHaveInputTypes((DocumentValidationContext) _);
+            _ => new FieldArgumentsMustHaveInputTypes((DocumentValidationContext)_);
 
         [NotNull]
         public static ValidationRule ObjectsMustAdhereToInterfaceTheyImplement { get; } = _ =>
-            new ObjectsMustAdhereToInterfaceTheyImplement((DocumentValidationContext) _);
+            new ObjectsMustAdhereToInterfaceTheyImplement((DocumentValidationContext)_);
 
 
         [NotNull]

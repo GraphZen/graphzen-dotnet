@@ -46,7 +46,7 @@ namespace GraphZen.TypeSystem
         public new PropertyInfo ClrInfo => base.ClrInfo as PropertyInfo;
         IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
 
-        public new InputObjectTypeDefinition DeclaringMember => (InputObjectTypeDefinition) base.DeclaringMember;
+        public new InputObjectTypeDefinition DeclaringMember => (InputObjectTypeDefinition)base.DeclaringMember;
 
         public override string ToString() => $"input field {Name}";
     }

@@ -54,7 +54,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is ObjectTypeExtensionSyntax && Equals((ObjectTypeExtensionSyntax) obj);
+            return obj is ObjectTypeExtensionSyntax && Equals((ObjectTypeExtensionSyntax)obj);
         }
 
         public override int GetHashCode()

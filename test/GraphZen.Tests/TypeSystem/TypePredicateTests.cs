@@ -404,7 +404,7 @@ namespace GraphZen.TypeSystem
         [Fact]
         public void GetNullableType_ReturnsNullForNoType()
         {
-            ((IGraphQLType) null).GetNullableType().Should().BeNull();
+            ((IGraphQLType)null).GetNullableType().Should().BeNull();
         }
 
         [Fact]
@@ -439,7 +439,7 @@ namespace GraphZen.TypeSystem
         [Fact]
         public void GetNamedType_ReturnsNullForNoType()
         {
-            ((IGraphQLType) null).GetNamedType().Should().BeNull();
+            ((IGraphQLType)null).GetNamedType().Should().BeNull();
         }
 
         [Fact]

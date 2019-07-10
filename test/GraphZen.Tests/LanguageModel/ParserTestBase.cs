@@ -39,7 +39,7 @@ namespace GraphZen.LanguageModel
             TestHelpers.AssertEqualsDynamic(new
             {
                 message = expectedMessage,
-                locations = locations.Select(l => new {l.line, l.column})
+                locations = locations.Select(l => new { l.line, l.column })
             }, ex.GraphQLError);
         }
     }

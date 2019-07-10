@@ -32,7 +32,7 @@ namespace GraphZen.QueryEngine.Variables
         {
             data = new
             {
-                fieldWithDefaultArgumentValue = (object) null
+                fieldWithDefaultArgumentValue = (object)null
             },
             errors = Array(new
             {

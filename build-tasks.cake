@@ -1,5 +1,7 @@
 
 #load "./build-scripts/parameters.cake"
+// Modules
+#module nuget:?package=Cake.DotNetTool.Module&version=0.1.0
 #tool "nuget:?package=ReportGenerator&version=4.0.12"
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
@@ -144,19 +146,25 @@ void ResharperCleanupCode(string profile) {
   }
 }
 
-Task("Cleanup").IsDependentOn("Cleanup-Full");
+Task("Cleanup").IsDependentOn("Cleanup-Full").IsDependentOn("Format");
 
 Task("Cleanup-Full")
 .IsDependentOn("Compile")
 .Does(() => ResharperCleanupCode("GraphZen Full Cleanup"));
 
-Task("Cleanup-Reformat")
-.IsDependentOn("Compile")
-.Does(() => ResharperCleanupCode("GraphZen Reformat"));
-
-
 Task("Restore").Does(() => {
   NuGetRestore(paths.sln);
+});
+
+Task("Gen")
+.IsDependentOn("Compile")
+.Does(() => {
+   var settings = new DotNetCoreRunSettings
+     {
+       NoBuild = true
+     };
+
+     DotNetCoreRun("./src/GraphZen.DevCli", "gen", settings);
 });
 
 Task("Compile")

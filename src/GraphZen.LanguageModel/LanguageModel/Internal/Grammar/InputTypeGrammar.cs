@@ -23,8 +23,8 @@ namespace GraphZen.LanguageModel.Internal.Grammar
 
         internal static TokenListParser<TokenKind, TypeSyntax> Type { get; } =
             (from type in ListType
-                 .Select(n => (NullableTypeSyntax) n)
-                 .Or(NamedType.Select(n => (NullableTypeSyntax) n))
+                 .Select(n => (NullableTypeSyntax)n)
+                 .Or(NamedType.Select(n => (NullableTypeSyntax)n))
              from bang in Bang.OptionalOrDefault()
              select bang == null
                  ? type
