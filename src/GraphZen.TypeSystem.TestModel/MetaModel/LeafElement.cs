@@ -10,7 +10,7 @@ namespace GraphZen.MetaModel
 {
     public class LeafElement : Element
     {
-        private LeafElement([NotNull] string name, [NotNull] ConfigurationScenarios scenarios) : base(name)
+        public LeafElement([NotNull] string name, [NotNull] ConfigurationScenarios scenarios) : base(name)
         {
             ConfigurationScenarios = scenarios;
         }
