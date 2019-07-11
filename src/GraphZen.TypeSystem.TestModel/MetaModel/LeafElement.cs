@@ -10,7 +10,7 @@ namespace GraphZen.MetaModel
 {
     public class LeafElement : Element
     {
-        public LeafElement([NotNull] string name, [NotNull] ConfigurationScenarios scenarios) : base(name)
+        public LeafElement([NotNull] string name, string memberName, [NotNull] ConfigurationScenarios scenarios) : base(name, memberName)
         {
             ConfigurationScenarios = scenarios;
         }
@@ -21,9 +21,9 @@ namespace GraphZen.MetaModel
         public override IEnumerator<Element> GetEnumerator() => Enumerable.Empty<Element>().GetEnumerator();
 
         [NotNull]
-        public static LeafElement Create<TMarker, TMutableMarker>([NotNull] string name,
+        public static LeafElement Create<TMarker, TMutableMarker>([NotNull] string name, string memberName,
             [NotNull] ConfigurationScenarios scenarios, bool optional = false) where TMutableMarker : TMarker =>
-            new LeafElement(name, scenarios)
+            new LeafElement(name, memberName, scenarios)
             {
                 MarkerInterface = typeof(TMarker),
                 MutableMarkerInterface = typeof(TMutableMarker),

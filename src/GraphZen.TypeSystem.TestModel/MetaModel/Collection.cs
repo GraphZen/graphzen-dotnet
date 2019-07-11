@@ -9,7 +9,7 @@ namespace GraphZen.MetaModel
 {
     public class Collection : Element
     {
-        public Collection([NotNull] string name, [NotNull] Vector collectionItem) : base(name)
+        public Collection([NotNull] string name, string memberName, [NotNull] Vector collectionItem) : base(name, memberName)
         {
             CollectionItem = collectionItem;
         }

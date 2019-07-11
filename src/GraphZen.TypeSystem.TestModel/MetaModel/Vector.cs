@@ -10,12 +10,17 @@ namespace GraphZen.MetaModel
     {
         [NotNull] private readonly List<Element> _elements = new List<Element>();
 
-        public Vector([NotNull] string name) : base(name)
+        public Vector([NotNull] string name, string memberName) : base(name, memberName)
         {
         }
 
 
-        public void Add(Element leafElement) => _elements.Add(leafElement);
+        public Vector Add(Element leafElement)
+        {
+            _elements.Add(leafElement);
+            return this;
+        }
+
         public override IEnumerator<Element> GetEnumerator() => _elements.GetEnumerator();
     }
 }

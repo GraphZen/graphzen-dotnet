@@ -34,7 +34,7 @@ namespace GraphZen
         })]
         public void define_scenarios(ConfigurationSource[] defineScenarios, string[] expectedTestCases)
         {
-            var element = new LeafElement("foo", new ConfigurationScenarios
+            var element = new LeafElement("foo", "foo", new ConfigurationScenarios
             {
                 Define = defineScenarios
             });

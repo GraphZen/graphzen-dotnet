@@ -9,11 +9,13 @@ namespace GraphZen.MetaModel
 {
     public abstract class Element : IEnumerable<Element>
     {
-        public Element([NotNull] string name)
+        public Element([NotNull] string name, string memberName)
         {
             Name = name;
+            MemberName = memberName;
         }
 
+        public string MemberName { get; }
         public string Name { get; }
         public bool Optional { get; set; }
         public abstract IEnumerator<Element> GetEnumerator();
