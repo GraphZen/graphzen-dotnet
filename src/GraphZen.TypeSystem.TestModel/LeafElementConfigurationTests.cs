@@ -18,21 +18,40 @@ namespace GraphZen
         where TParentMemberDefinition : MemberDefinition, TMutableMarker
         where TParentMember : Member, TMarker
     {
-        public virtual object ConventionalValue => throw new NotImplementedException();
+        public virtual object ConventionalValue =>
+            throw new NotImplementedException($"implement '{nameof(ConventionalValue)}' in type '{GetType().Name}'");
 
-        public virtual object DataAnnotationValue => throw new NotImplementedException();
+        public virtual object DataAnnotationValue =>
+            throw new NotImplementedException($"implement '{nameof(DataAnnotationValue)}' in type '{GetType().Name}'");
 
-        public virtual object ExplicitValue => throw new NotImplementedException();
+        public virtual object ExplicitValue =>
+            throw new NotImplementedException($"implement '{nameof(ExplicitValue)}' in type '{GetType().Name}'");
 
-        public virtual string NotDefinedByConventionParentName => throw new NotImplementedException();
-        public virtual string ConventionalParentName => throw new NotImplementedException();
-        public virtual string DataAnnotationParentName => throw new NotImplementedException();
+        public virtual string NotDefinedByConventionParentName =>
+            throw new NotImplementedException(
+                $"implement '{nameof(NotDefinedByConventionParentName)}' in type '{GetType().Name}'");
 
-        public virtual void DefineByConvention(SchemaBuilder sb) => throw new NotImplementedException();
-        public virtual void DefineEmptyByConvention(SchemaBuilder sb) => throw new NotImplementedException();
-        public virtual void DefineByDataAnnotation(SchemaBuilder sb) => throw new NotImplementedException();
-        public virtual void ConfigureExplicitly(SchemaBuilder sb) => throw new NotImplementedException();
+        public virtual string ConventionalParentName =>
+            throw new NotImplementedException(
+                $"implement '{nameof(ConventionalParentName)}' in type '{GetType().Name}'");
 
+        public virtual string DataAnnotationParentName =>
+            throw new NotImplementedException(
+                $"implement '{nameof(DataAnnotationParentName)}' in type '{GetType().Name}'");
+
+        public virtual void DefineByConvention(SchemaBuilder sb) =>
+            throw new NotImplementedException($"implement '{nameof(DefineByConvention)}' in type '{GetType().Name}'");
+
+        public virtual void DefineEmptyByConvention(SchemaBuilder sb) =>
+            throw new NotImplementedException(
+                $"implement '{nameof(DefineEmptyByConvention)}' in type '{GetType().Name}'");
+
+        public virtual void DefineByDataAnnotation(SchemaBuilder sb) =>
+            throw new NotImplementedException(
+                $"implement '{nameof(DefineByDataAnnotation)}' in type '{GetType().Name}'");
+
+        public virtual void ConfigureExplicitly(SchemaBuilder sb, string parentName) =>
+            throw new NotImplementedException($"implement '{nameof(ConfigureExplicitly)}' in type '{GetType().Name}'");
 
         public abstract ConfigurationSource GetElementConfigurationSource(TMutableMarker definition);
 
@@ -96,16 +115,14 @@ namespace GraphZen
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
                 TryGetValue(parentDef, out var defVal).Should().BeTrue();
                 defVal.Should().Be(DataAnnotationValue);
-                ConfigureExplicitly(sb);
+                ConfigureExplicitly(sb, DataAnnotationParentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
-                TryGetValue(parentDef, out _).Should().BeTrue();
-                defVal.Should().Be(ExplicitValue);
-
+                TryGetValue(parentDef, out var newVal).Should().BeTrue();
+                newVal.Should().Be(ExplicitValue);
             });
             var parent = GetParent(schema, DataAnnotationParentName);
             TryGetValue(parent, out var val).Should().BeTrue();
             val.Should().Be(ExplicitValue);
         }
-
     }
 }

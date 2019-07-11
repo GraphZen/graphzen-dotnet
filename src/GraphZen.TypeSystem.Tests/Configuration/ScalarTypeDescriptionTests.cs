@@ -7,6 +7,8 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 
+// ReSharper disable PossibleNullReferenceException
+
 namespace GraphZen.Configuration
 {
     public class ScalarTypeDescriptionTests : ScalarTypeDescriptionTestsBase
@@ -15,9 +17,16 @@ namespace GraphZen.Configuration
         public override object DataAnnotationValue => DataAnnotationDescription;
         public override string DataAnnotationParentName => nameof(ScalarDescriptionViaDataAnnotation);
         public override string NotDefinedByConventionParentName => nameof(ScalarNoDescription);
+        public override object ExplicitValue { get; } = "Explicit Description";
 
         public override ConfigurationSource GetElementConfigurationSource(IMutableDescription definition) =>
             definition.GetDescriptionConfigurationSource();
+
+
+        public override void ConfigureExplicitly(SchemaBuilder sb, string parentName)
+        {
+            sb.Scalar(parentName).Description(ExplicitValue as string);
+        }
 
         public override IMutableDescription GetParentDefinition(SchemaDefinition schemaDefinition, string parentName) =>
             schemaDefinition.GetScalar(parentName);
