@@ -81,7 +81,10 @@ namespace GraphZen.MetaModel
         [NotNull]
         public static LeafElement Description() => new LeafElement<IDescription, IMutableDescription>(
             nameof(Description)
-        );
+        )
+        {
+            Optional = true
+        };
 
         [NotNull]
         public static Vector Directive(bool includeDirectives) => new Vector(nameof(Directive))

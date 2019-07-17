@@ -45,7 +45,7 @@ namespace GraphZen
                             var baseName = $"{vector.Name}{member.Name}TestsBase";
                             var name = $"{vector.Name}{member.Name}Tests";
 
-                            var testCases = ConfigurationTestCaseGenerator.GetTestCasesForElement(member)
+                            var testCases = new ConventionTestCaseGenerator().GetTestCasesForElement(member)
                                 .Select(testCase =>
                                     $@"[Fact] public override void {testCase}()  => base.{testCase}(); ");
 

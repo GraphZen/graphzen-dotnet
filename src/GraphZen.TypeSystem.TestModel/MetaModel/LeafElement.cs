@@ -23,5 +23,8 @@ namespace GraphZen.MetaModel
 
         public Type MarkerInterface { get; }
         public Type MutableMarkerInterface { get; }
+        public bool Optional { get; set; }
+        public bool ConfiguredByConvention { get; set; } = true;
+        public bool ConfiguredByDataAnnotation { get; set; } = true;
     }
 }

@@ -26,7 +26,7 @@ namespace GraphZen.MetaModel
     }
 
 
-    public abstract class Element 
+    public abstract class Element
     {
         public Element([NotNull] string name)
         {
@@ -35,7 +35,5 @@ namespace GraphZen.MetaModel
 
         public IReadOnlyList<string> Conventions { get; set; } = new List<string>();
         public string Name { get; }
-        public bool Optional { get; set; }
-        public bool IsConfigurableViaDataAnnotation { get; set; }
     }
 }

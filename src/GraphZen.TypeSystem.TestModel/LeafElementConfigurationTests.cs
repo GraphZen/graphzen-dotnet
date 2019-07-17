@@ -74,7 +74,7 @@ namespace GraphZen
             TryGetValue(parent, out _).Should().BeFalse();
         }
 
-        public virtual void defined_by_convention()
+        public virtual void configure_by_convention()
         {
             var schema = Schema.Create(sb =>
             {

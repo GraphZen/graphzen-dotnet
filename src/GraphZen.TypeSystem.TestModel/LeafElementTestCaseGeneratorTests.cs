@@ -110,9 +110,13 @@ namespace GraphZen
         {
             var path = GetTestPath(parents);
             var collectionTests = new TestClass($"{path}__{collection.Name}");
+            var explicitTestCases = new ExplicitTestCaseGenerator().GetTestCasesForElement(collection);
+            collectionTests.Cases.AddRange(explicitTestCases);
+            var conventionTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(collection);
             foreach (var convention in collection.Conventions)
             {
                 var conventionTests = new TestClass($"{path}__{collection.Name}_{convention}");
+                conventionTests.Cases.AddRange(conventionTestCases);
                 collectionTests.SubClasses.Add(conventionTests);
             }
 
@@ -128,9 +132,13 @@ namespace GraphZen
             var parent = parents[parents.Length - 1] as Vector;
             var path = GetTestPath(parents);
             var leafTests = new TestClass($"{path}__{leaf.Name}");
+            var explicitTestCases = new ExplicitTestCaseGenerator().GetTestCasesForElement(leaf);
+            leafTests.Cases.AddRange(explicitTestCases);
+            var conventionTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(leaf);
             foreach (var parentConvention in parent.Conventions)
             {
                 var conventionTests = new TestClass($"{path}_{parentConvention}__{leaf.Name}");
+                conventionTests.Cases.AddRange(conventionTestCases);
                 leafTests.SubClasses.Add(conventionTests);
             }
 
@@ -171,7 +179,6 @@ namespace GraphZen
             var models =
                 new MetaModelTestCaseGenerator().GetTemplateModels(ImmutableArray<Element>.Empty,
                     GraphQLMetaModel.Schema());
-            //var names = models.Select(_ => _.TestClassName).ToArray();
             var names = models
                 .Concat(models.SelectMany(_ => _.SubClasses))
                 .Select(_ => _.Name)
@@ -192,37 +199,22 @@ namespace GraphZen
             throw new NotImplementedException();
 
 
-        [Theory]
-        [InlineData(new ConfigurationSource[] { }, new string[] { })]
-        [InlineData(new[] {ConfigurationSource.Convention}, new[] {nameof(TestCases.defined_by_convention)})]
-        [InlineData(new[] {ConfigurationSource.DataAnnotation}, new[] {nameof(TestCases.define_by_data_annotation)})]
-        [InlineData(new[] {ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit}, new[]
+        [Fact]
+        public void optional_not_defined_by_convention()
         {
-            nameof(TestCases.define_by_data_annotation),
-            nameof(TestCases.define_by_data_annotation_overridden_by_explicit_configuration)
-        })]
-        public void define_scenarios(ConfigurationSource[] defineScenarios, string[] expectedTestCases)
-        {
-            var element = new LeafElement<INamed, IMutableNamed>("foo");
-            var testCases = ConfigurationTestCaseGenerator.GetTestCasesForElement(element);
-            if (expectedTestCases.Length == 0)
+            var optionalLeaf = new LeafElement<INamed, IMutableNamed>("foo")
             {
-                testCases.Should().BeEmpty();
-            }
-            else
-            {
-                foreach (var actualTestCase in testCases)
-                {
-                    expectedTestCases.Should().Contain(actualTestCase,
-                        $"the test case '{actualTestCase}' is not required for combination of configuration sources: {string.Join(",", defineScenarios)}");
-                }
+                Optional = true
+            };
 
-                foreach (var expectedTestCase in expectedTestCases)
-                {
-                    testCases.Should().Contain(expectedTestCase,
-                        $"the test case '{expectedTestCase}' is required with supported combination of configuration sources: {string.Join(",", defineScenarios)}");
-                }
-            }
+            var optionalLeafTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(optionalLeaf);
+            optionalLeafTestCases.Should().Contain(nameof(TestCases.optional_not_defined_by_convention));
+            var requiredLeaf = new LeafElement<INamed, IMutableNamed>("foo")
+            {
+                Optional = false
+            };
+            var requiredLeafTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(requiredLeaf);
+            requiredLeafTestCases.Should().NotContain(nameof(TestCases.optional_not_defined_by_convention));
         }
 
         [Fact]
