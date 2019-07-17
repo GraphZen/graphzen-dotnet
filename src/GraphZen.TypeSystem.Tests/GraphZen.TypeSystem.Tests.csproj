@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <IsPackable>false</IsPackable>
@@ -15,9 +14,7 @@
   <ItemGroup>
     <Folder Include="Configuration\" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.TypeSystem.TestModel\GraphZen.TypeSystem.TestModel.csproj" />
   </ItemGroup>
-
 </Project>

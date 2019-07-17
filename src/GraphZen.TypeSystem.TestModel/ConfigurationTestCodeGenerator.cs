@@ -14,7 +14,7 @@ namespace GraphZen
     {
         public static void Generate()
         {
-            GenerateCode(GraphQLMetaModel.Elements);
+            //GenerateCode(GraphQLMetaModel.Elements);
         }
 
 

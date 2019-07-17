@@ -1,10 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 
 // ReSharper disable AssignNullToNotNullAttribute
@@ -14,196 +11,145 @@ namespace GraphZen.MetaModel
     public static class GraphQLMetaModel
     {
         [NotNull]
-        public static LeafElement Name { get; } = LeafElement.Create<INamed, IMutableNamed>(nameof(Name),
-            nameof(INamed.Name),
-            new ConfigurationScenarios
+        public static Vector EnumValue() => new Vector(nameof(EnumValue))
+        {
+            Name(), Description(),
+            DirectiveAnnotations()
+            // // new LeafElement("CustomValue", null) { Optional = true }
+        };
+
+        [NotNull]
+        public static Vector EnumType() => new Vector(nameof(EnumType))
+        {
+            Name(), Description(),
+            DirectiveAnnotations(),
+            new Collection("Values", EnumValue())
+        };
+
+
+        public static Vector ScalarType() => new Vector(nameof(ScalarType))
             {
-                Define = new[]
-                    {ConfigurationSource.Convention, ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit}
-            });
+                Name(), Description()
+                // DirectiveAnnotations()
+                //new LeafElement("ValueParser" ),
+                //new LeafElement("LiteralParser", null),
+                // new LeafElement("ClrType", null)
+            }
+            .SetConventions("ViaClrClass", "ViaClrInterface");
+
 
         [NotNull]
-        public static LeafElement Description { get; } = LeafElement.Create<IDescription, IMutableDescription>(
-            nameof(Description),
-            nameof(IDescription.Description),
-            new ConfigurationScenarios
+        public static Vector InterfaceType() =>
+            new Vector(nameof(InterfaceType))
             {
-                Define = new[] { ConfigurationSource.DataAnnotation, ConfigurationSource.Explicit },
-                Remove = new[] { ConfigurationSource.Explicit }
-            }, true);
+                Name(), Description(),
+                // DirectiveAnnotations(), 
+                Fields()
+            }.SetConventions("ViaClrInterface");
 
         [NotNull]
-        public static Vector Directive { get; } = new Vector(nameof(Directive), nameof(TypeSystem.Directive))
+        public static Vector ObjectType(params string[] conventions) => new Vector(nameof(ObjectType))
         {
-            Name, Description, ArgumentsViaClrProperties, ArgumentsViaClrFields, ArgumentsViaClrConstructorParameters
+            Name(),
+            Description(),
+            Fields()
+            // DirectiveAnnotations(), 
+        }.SetConventions(conventions);
+
+
+        [NotNull]
+        public static Vector UnionType() => new Vector(nameof(UnionType))
+        {
+            Name(),
+            Description(),
+            // DirectiveAnnotations(), // new LeafElement("ClrType", null),
+            new Collection("MemberTypes", null)
         };
 
         [NotNull]
-        public static Collection DirectiveAnnotations { get; } =
-            new Collection(nameof(DirectiveAnnotations), nameof(DirectiveAnnotations), Directive);
-
-
-        public static Vector ScalarType { get; } = new Vector(nameof(ScalarType), nameof(TypeSystem.ScalarType))
-        {
-            Name, Description, DirectiveAnnotations
-            // new LeafElement("ValueParser", null),
-            // new LeafElement("LiteralParser", null),
-            // new LeafElement("ClrType", null)
-        };
-
-        public static Vector FieldViaClrProperty => Field(nameof(FieldViaClrProperty));
-
-        public static Vector FieldViaClrMethod =>
-            Field(nameof(FieldViaClrProperty)).Add(ArgumentsViaClrMethodParameters);
-
-        public static Collection FieldsVialClrProperties { get; } =
-            new Collection(nameof(FieldsVialClrProperties), nameof(IFieldsContainer.Fields), FieldViaClrProperty);
-
-        public static Collection FieldsVialClrMethods { get; } =
-            new Collection(nameof(FieldsVialClrMethods), nameof(IFieldsContainer.Fields), FieldViaClrProperty);
-
-        public static Collection ExplicitFields =>
-            new Collection(nameof(ExplicitFields), nameof(IFieldsContainer.Fields), ExplicitField);
-
-        public static Vector ExplicitField => Field(nameof(ExplicitField)).Add(ExplicitArguments);
-
-
-        [NotNull]
-        public static Vector InterfaceType { get; } =
-            new Vector(nameof(InterfaceType), nameof(TypeSystem.InterfaceType))
+        public static Vector InputObjectType() =>
+            new Vector(nameof(InputObjectType))
             {
-                Name, Description, DirectiveAnnotations, FieldsVialClrProperties
-            };
+                Name(), Description(),
+                // DirectiveAnnotations(),
+                new Collection("InputFields", InputField())
+            }.SetConventions("ViaClrClass");
 
         [NotNull]
-        public static Vector ObjectType { get; } = new Vector(nameof(ObjectType), nameof(TypeSystem.ObjectType))
+        public static LeafElement Name() => new LeafElement<INamed, IMutableNamed>(nameof(Name));
+
+        [NotNull]
+        public static LeafElement Description() => new LeafElement<IDescription, IMutableDescription>(
+            nameof(Description)
+        );
+
+        [NotNull]
+        public static Vector Directive(bool includeDirectives) => new Vector(nameof(Directive))
         {
-            Name, Description, DirectiveAnnotations, FieldsVialClrProperties, FieldsVialClrMethods, ExplicitFields
-        };
-
-
-        [NotNull]
-        public static Vector UnionType { get; } = new Vector(nameof(UnionType), nameof(TypeSystem.UnionType))
-        {
-            Name, Description, DirectiveAnnotations, // new LeafElement("ClrType", null),
-            new Collection("MemberTypes", nameof(TypeSystem.UnionType.MemberTypes), ObjectType)
-        };
-
-        [NotNull]
-        public static Vector InputObjectType { get; } =
-            new Vector(nameof(InputObjectType), nameof(TypeSystem.InputObjectType))
-            {
-                Name, Description, DirectiveAnnotations,
-                new Collection("InputFields", nameof(TypeSystem.InputObjectType.Fields), InputField())
-            };
-
-        [NotNull]
-        public static Vector EnumValue { get; } = new Vector(nameof(EnumValue), nameof(TypeSystem.EnumValue))
-        {
-            Name, Description, DirectiveAnnotations // new LeafElement("CustomValue", null) { Optional = true }
+            Name(),
+            Description(),
+            Arguments(false, "ViaClrAttributeProperty", "ViaClrAttributeConstructorParameter")
+                .SetConventions("ViaClrAttributeProperties", "ViaClrAttributeConstructorParameters")
         };
 
         [NotNull]
-        public static Vector EnumType { get; } = new Vector(nameof(EnumType), nameof(TypeSystem.EnumType))
-        {
-            Name, Description, DirectiveAnnotations, new Collection("Values", nameof(IEnumType.Values), EnumValue)
-        };
+        public static Collection DirectiveAnnotations(bool includeDirectives = true) =>
+            new Collection(nameof(DirectiveAnnotations), null).SetConventions("ViaClrAttributes");
+
+
+        public static Collection Fields() =>
+            new Collection(nameof(Fields), Field());
 
 
         [NotNull]
-        public static Vector Schema { get; } = new Vector(nameof(Schema), nameof(TypeSystem.Schema))
+        public static Vector Schema() => new Vector(nameof(Schema))
         {
-            DirectiveAnnotations,
-            new Collection("Directives", nameof(TypeSystem.Schema.Directives), Directive),
-            new Collection("Objects", nameof(TypeSystem.Schema.Types), ObjectType),
-            new Collection("Interfaces", nameof(TypeSystem.Schema.Types), InterfaceType),
-            new Collection("Unions", nameof(TypeSystem.Schema.Types), UnionType),
-            new Collection("Scalars", nameof(TypeSystem.Schema.Types), ScalarType),
-            new Collection("Enums", nameof(TypeSystem.Schema.Types), EnumType),
-            new Collection("InputObjects", nameof(TypeSystem.Schema.Types), InputObjectType)
-            // new LeafElement("QueryType", null),
+            Description(),
+            // DirectiveAnnotations(),
+            new Collection("Directives", Directive(false)),
+            new Collection("Objects", ObjectType()).SetConventions("ViaClrClasses"),
+            new Collection("Interfaces", InterfaceType()),
+            new Collection("Unions", UnionType()),
+            new Collection("Scalars", ScalarType()),
+            new Collection("Enums", EnumType()),
+            new Collection("InputObjects", InputObjectType())
+            // new LeafElement("QueryType", ),
             // new LeafElement("MutationType", null),
             // new LeafElement("SubscriptionType", null)
         };
 
-        [NotNull]
-        [ItemNotNull]
-        public static IReadOnlyList<Element> Elements { get; } =
-            ImmutableArray.Create(Schema, Directive, ExplicitArgument(), EnumValue, EnumType, ScalarType, UnionType,
-                InputObjectType, ObjectType,
-                InterfaceType, InputField());
-
-        private static Collection ExplicitArguments => new Collection(nameof(ExplicitArguments),
-            nameof(TypeSystem.Argument), ExplicitArgument());
-
-        public static Collection ArgumentsViaClrMethodParameters =>
-            new Collection(nameof(ArgumentsViaClrMethodParameters), nameof(IArgumentsContainer.Arguments),
-                ArgumentViaClrMethodParameter);
-
-        public static Vector ArgumentViaClrMethodParameter => Argument(nameof(ArgumentViaClrMethodParameter));
-
-        public static Collection ArgumentsViaClrConstructorParameters =>
-            new Collection(nameof(ArgumentsViaClrConstructorParameters), nameof(IArgumentsContainer.Arguments),
-                ArgumentViaClrConstructorParameter);
-
-        public static Vector ArgumentViaClrConstructorParameter => Argument(nameof(ArgumentViaClrConstructorParameter));
-
-        public static Collection ArgumentsViaClrProperties =>
-            new Collection(nameof(ArgumentsViaClrProperties), nameof(IArgumentsContainer.Arguments),
-                ArgumentViaClrProperty);
-
-        public static Vector ArgumentViaClrProperty => Argument(nameof(ArgumentViaClrProperty));
-
-        public static Collection ArgumentsViaClrFields =>
-            new Collection(nameof(ArgumentsViaClrFields), nameof(IArgumentsContainer.Arguments), ArgumentViaClrField);
-
-        public static Vector ArgumentViaClrField => Argument(nameof(ArgumentViaClrField));
 
         [NotNull]
-        [ItemNotNull]
-        public static IEnumerable<Element> ElementsDeep()
+        public static Vector Field() => new Vector(nameof(Field))
         {
-            var all = new List<Element>();
+            Name(),
+            Description(),
+            Arguments(true, "ViaClrMethodParameter"),
+            DirectiveAnnotations()
+        }.SetConventions("ViaClrMethod", "ViaClrProperty");
 
+        [NotNull]
+        private static Vector Argument(bool includeDirectives) => InputValue(nameof(Argument), includeDirectives);
 
-            void AddElements(IEnumerable<Element> elements)
+        public static Collection Arguments(bool includeDirectives, params string[] argumentConventions) =>
+            new Collection(nameof(Arguments), Argument(includeDirectives).SetConventions(argumentConventions));
+
+        public static Vector InputField() => InputValue(nameof(InputField)).SetConventions("ViaClrProperty");
+
+        [NotNull]
+        public static Vector InputValue([NotNull] string name, bool includeDirectives = true)
+        {
+            var inputValue = new Vector(name)
             {
-                // ReSharper disable once PossibleNullReferenceException
-                foreach (var element in elements)
-                {
-                    all.Add(element);
-                    AddElements(element);
-                }
+                Name(),
+                Description()
+            };
+            if (includeDirectives)
+            {
+                inputValue.Add(DirectiveAnnotations());
             }
 
-            AddElements(Elements);
-
-            return all.ToImmutableArray();
+            return inputValue;
         }
-
-
-        [NotNull]
-        public static Vector Field(string name) => new Vector(name, nameof(TypeSystem.Field))
-        {
-            Name, Description, DirectiveAnnotations
-        };
-
-        [NotNull]
-        private static Vector Argument(string name) => InputValue(name, nameof(TypeSystem.Argument));
-
-        private static Vector ExplicitArgument() => Argument(nameof(ExplicitArgument));
-
-
-        public static Vector InputField() => InputValue(nameof(InputField), nameof(TypeSystem.InputField));
-
-        [NotNull]
-        public static Vector InputValue([NotNull] string name, string member) => new Vector(name, member)
-        {
-            Name, Description, DirectiveAnnotations
-            /*new LeafElement("DefaultValue", null)
-            {
-                Optional = true
-            }*/
-        };
     }
 }

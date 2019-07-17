@@ -3,18 +3,18 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using GraphZen.Infrastructure;
 
 namespace GraphZen.MetaModel
 {
     public class Collection : Element
     {
-        public Collection([NotNull] string name, string memberName, [NotNull] Vector collectionItem) : base(name, memberName)
+        public Collection([NotNull] string name, [CanBeNull] Vector collectionItem) : base(name)
         {
             CollectionItem = collectionItem;
         }
 
         public Vector CollectionItem { get; }
-        public override IEnumerator<Element> GetEnumerator() => Enumerable.Empty<Element>().GetEnumerator();
     }
 }

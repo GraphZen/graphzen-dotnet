@@ -42,27 +42,29 @@ namespace GraphZen
         [ItemNotNull]
         private static IEnumerable<string> GetTestCasesForLeaf([NotNull] LeafElement element)
         {
+            yield break;
+            
 
-            bool DefineIsConfiguredBy(ConfigurationSource source) => element.ConfigurationScenarios.Define.Contains(source);
+            //bool DefineIsConfiguredBy(ConfigurationSource source) => element.ConfigurationScenarios.Define.Contains(source);
 
-            if (element.Optional)
-            {
-                yield return nameof(TestCases.optional_not_defined_by_convention);
-            }
+            //if (element.Optional)
+            //{
+            //    yield return nameof(TestCases.optional_not_defined_by_convention);
+            //}
 
-            if (DefineIsConfiguredBy(ConfigurationSource.Convention))
-            {
-                yield return nameof(TestCases.defined_by_convention);
-            }
+            //if (DefineIsConfiguredBy(ConfigurationSource.Convention))
+            //{
+            //    yield return nameof(TestCases.defined_by_convention);
+            //}
 
-            if (DefineIsConfiguredBy(ConfigurationSource.DataAnnotation))
-            {
-                if (DefineIsConfiguredBy(ConfigurationSource.Explicit))
-                {
-                    yield return nameof(TestCases.define_by_data_annotation_overridden_by_explicit_configuration);
-                }
-                yield return nameof(TestCases.define_by_data_annotation);
-            }
+            //if (DefineIsConfiguredBy(ConfigurationSource.DataAnnotation))
+            //{
+            //    if (DefineIsConfiguredBy(ConfigurationSource.Explicit))
+            //    {
+            //        yield return nameof(TestCases.define_by_data_annotation_overridden_by_explicit_configuration);
+            //    }
+            //    yield return nameof(TestCases.define_by_data_annotation);
+            //}
         }
 
         [NotNull]
