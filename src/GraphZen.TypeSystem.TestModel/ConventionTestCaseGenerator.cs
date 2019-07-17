@@ -56,6 +56,8 @@ namespace GraphZen
 
     }
 
+    public class ExplicitTestCaseGenerator : TestCaseGenerator {}
+
     public class ConventionTestCaseGenerator : TestCaseGenerator
     {
         protected override IEnumerable<string> GetTestCasesForLeaf(LeafElement element)

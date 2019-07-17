@@ -9,7 +9,6 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.MetaModel;
 using GraphZen.TypeSystem;
-using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 
@@ -93,6 +92,7 @@ namespace GraphZen
                         {
                             tests.AddRange(GetTemplateModels(newParents.Add(collection), collection.CollectionItem));
                         }
+
                         break;
                     case LeafElement leaf:
                         tests.Add(GenerateCasesForLeaf(newParents, leaf));
@@ -198,6 +198,16 @@ namespace GraphZen
             TestCases =>
             throw new NotImplementedException();
 
+        [Fact]
+        public void optional_define_scenarios()
+        {
+            //foreach (var element in GraphQLMetaModel.ElementsDeep().Where(_ => _.Optional))
+            //{
+            //    ConfigurationTestCaseGenerator.GetTestCasesForElement(element).Should()
+            //        .Contain(nameof(TestCases.optional_not_defined_by_convention));
+            //}
+        }
+
 
         [Fact]
         public void optional_not_defined_by_convention()
@@ -215,16 +225,6 @@ namespace GraphZen
             };
             var requiredLeafTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(requiredLeaf);
             requiredLeafTestCases.Should().NotContain(nameof(TestCases.optional_not_defined_by_convention));
-        }
-
-        [Fact]
-        public void optional_define_scenarios()
-        {
-            //foreach (var element in GraphQLMetaModel.ElementsDeep().Where(_ => _.Optional))
-            //{
-            //    ConfigurationTestCaseGenerator.GetTestCasesForElement(element).Should()
-            //        .Contain(nameof(TestCases.optional_not_defined_by_convention));
-            //}
         }
     }
 }
