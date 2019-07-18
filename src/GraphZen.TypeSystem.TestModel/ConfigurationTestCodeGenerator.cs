@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -14,7 +15,8 @@ namespace GraphZen
     {
         public static void Generate()
         {
-            //GenerateCode(GraphQLMetaModel.Elements);
+            var g = new MetaModelTestCaseGenerator();
+            var testClasses = g.GetTemplateModels(ImmutableArray<Element>.Empty, GraphQLMetaModel.Schema());
         }
 
 

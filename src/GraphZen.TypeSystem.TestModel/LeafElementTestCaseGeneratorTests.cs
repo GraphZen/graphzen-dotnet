@@ -65,14 +65,6 @@ namespace GraphZen
     }
 
 
-    public class LeafElementTestTemplateModel
-    {
-        public string ElementPath { get; set; }
-        public Element Element { get; set; }
-        public List<string> ConventionalConfigurationTestCases { get; set; }
-        public List<string> ExplicitConfigurationTestCases { get; set; }
-    }
-
     public class MetaModelTestCaseGenerator
     {
         public List<TestClass> TestClasses { get; } = new List<TestClass>();
