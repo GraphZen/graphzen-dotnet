@@ -16,8 +16,8 @@ namespace GraphZen.Configuration
     public class EnumType__Description_Base : LeafElementConfigurationTests<IDescription, IMutableDescription,
         EnumTypeDefinition, EnumType, string>
     {
-        //public override string ValueA { get; } = "A: Enum explicit description";
-        public override string ValueA  => throw new NotImplementedException();
+        public override string ValueA { get; } = "A: Enum explicit description";
+        //public override string ValueA  => throw new NotImplementedException();
         public override string ValueB { get; } = "B: Enum explicit description";
         public override string ValueC { get; } = "C: Enum explicit description";
 
