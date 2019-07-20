@@ -263,7 +263,7 @@ namespace GraphZen
 
     public class LeafElementCodeGeneratorTests
     {
-        [Theory]
+        [Theory(Skip = "wip")]
         [InlineData("")]
         public void ShouldContainTest(string expectedTestClassName)
         {
