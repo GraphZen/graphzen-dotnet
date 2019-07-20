@@ -15,79 +15,86 @@ using GraphZen.TypeSystem.Taxonomy;
 namespace GraphZen
 {
 
-    public abstract class TestCaseGenerator
+    public class TestCaseGenerator
     {
         protected static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType> TestCases =>
                     throw new NotImplementedException();
 
 
-        [NotNull]
-        [ItemNotNull]
-        public IEnumerable<string> GetTestCasesForElement([NotNull] Element element)
-        {
-            switch (element)
-            {
-                case Collection collection:
-                    return GetTestCasesForCollection(collection);
-                case LeafElement leafElement:
-                    return GetTestCasesForLeaf(leafElement);
-                case Vector vector:
-                    return GetTestCasesForVector(vector);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        //[NotNull]
+        //[ItemNotNull]
+        //public IEnumerable<string> GetTestCasesForElement([NotNull] Element element)
+        //{
+        //    switch (element)
+        //    {
+        //        case Collection collection:
+        //            return GetTestCasesForCollection(collection);
+        //        case LeafElement leafElement:
+        //            return GetTestCasesForLeaf(leafElement);
+        //        case Vector vector:
+        //            return GetTestCasesForVector(vector);
+        //        default:
+        //            throw new ArgumentOutOfRangeException();
+        //    }
+        //}
 
         [NotNull]
         [ItemNotNull]
-        protected virtual IEnumerable<string> GetTestCasesForLeaf([NotNull] LeafElement element) =>
-            Enumerable.Empty<string>();
-
-        [NotNull]
-        [ItemNotNull]
-        protected virtual IEnumerable<string> GetTestCasesForVector([NotNull] Vector element) =>
-            Enumerable.Empty<string>();
-
-        [NotNull]
-        [ItemNotNull]
-        protected virtual IEnumerable<string> GetTestCasesForCollection([NotNull] Collection element) =>
-            Enumerable.Empty<string>();
-
-
-    }
-
-    public class ExplicitTestCaseGenerator : TestCaseGenerator { }
-
-    public class ConventionTestCaseGenerator : TestCaseGenerator
-    {
-        protected override IEnumerable<string> GetTestCasesForLeaf(LeafElement element)
+        public static IEnumerable<string> GetTestCasesForLeaf([NotNull] LeafElement element)
         {
             if (element.Optional)
             {
                 yield return nameof(TestCases.optional_not_defined_by_convention);
             }
-
-            //if (DefineIsConfiguredBy(ConfigurationSource.Convention))
-            //{
-            //    yield return nameof(TestCases.defined_by_convention);
-            //}
-
-            //if (DefineIsConfiguredBy(ConfigurationSource.DataAnnotation))
-            //{
-            //    if (DefineIsConfiguredBy(ConfigurationSource.Explicit))
-            //    {
-            //        yield return nameof(TestCases.define_by_data_annotation_overridden_by_explicit_configuration);
-            //    }
-            //    yield return nameof(TestCases.define_by_data_annotation);
-            //}
         }
 
-        // ReSharper disable once UnusedParameter.Local
-        protected override IEnumerable<string> GetTestCasesForVector(Vector element) =>
-            Enumerable.Empty<string>();
+        [NotNull]
+        [ItemNotNull]
+        public IEnumerable<string> GetTestCasesForVector([NotNull] Vector element)
+        {
+            yield break;
+        }
 
-        // ReSharper disable once UnusedParameter.Local
-        protected override IEnumerable<string> GetTestCasesForCollection(Collection element) =>
-            Enumerable.Empty<string>();
+        [NotNull]
+        [ItemNotNull]
+        public IEnumerable<string> GetTestCasesForCollection([NotNull] Collection element)
+        {
+            yield break;
+        }
     }
+
+    //public class ExplicitTestCaseGenerator : TestCaseGenerator { }
+
+    //public class ConventionTestCaseGenerator : TestCaseGenerator
+    //{
+    //    protected override IEnumerable<string> GetTestCasesForLeaf(LeafElement element)
+    //    {
+    //        if (element.Optional)
+    //        {
+    //            yield return nameof(TestCases.optional_not_defined_by_convention);
+    //        }
+
+    //        //if (DefineIsConfiguredBy(ConfigurationSource.Convention))
+    //        //{
+    //        //    yield return nameof(TestCases.defined_by_convention);
+    //        //}
+
+    //        //if (DefineIsConfiguredBy(ConfigurationSource.DataAnnotation))
+    //        //{
+    //        //    if (DefineIsConfiguredBy(ConfigurationSource.Explicit))
+    //        //    {
+    //        //        yield return nameof(TestCases.define_by_data_annotation_overridden_by_explicit_configuration);
+    //        //    }
+    //        //    yield return nameof(TestCases.define_by_data_annotation);
+    //        //}
+    //    }
+
+    //    // ReSharper disable once UnusedParameter.Local
+    //    protected override IEnumerable<string> GetTestCasesForVector(Vector element) =>
+    //        Enumerable.Empty<string>();
+
+    //    // ReSharper disable once UnusedParameter.Local
+    //    protected override IEnumerable<string> GetTestCasesForCollection(Collection element) =>
+    //        Enumerable.Empty<string>();
+    //}
 }

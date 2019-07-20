@@ -82,9 +82,9 @@ namespace GraphZen
         {
             var path = GetTestPath(parents);
             var collectionTests = new TestClass($"{path}__{collection.Name}", collection);
-            var explicitTestCases = new ExplicitTestCaseGenerator().GetTestCasesForElement(collection);
+            var explicitTestCases = Enumerable.Empty<string>();
             collectionTests.Cases.AddRange(explicitTestCases);
-            var conventionTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(collection);
+            var conventionTestCases = Enumerable.Empty<string>();
             foreach (var convention in collection.Conventions)
             {
                 var conventionTests = new TestClass($"{path}__{collection.Name}_{convention}", collection);
@@ -112,6 +112,8 @@ namespace GraphZen
             {
                 return;
             }
+
+
 
             var regenerateFlag = "regenerate:true";
             var filename = generated ? $"{name}.Generated.cs" : $"{name}.cs";
@@ -156,6 +158,16 @@ namespace GraphZen
             content.AppendLine("}");
             content.AppendLine("}");
             File.AppendAllText(filePath, content.ToString());
+            if (generated)
+            {
+                Console.WriteLine($"Generated {filename} with {testCases.Count()} test cases");
+
+            }
+            else
+            {
+                Console.WriteLine($"Scaffolded {filename} with {testCases.Count()} test cases");
+
+            }
         }
 
         public void GenerateClass(string name, string baseTypeName, IEnumerable<string> cases) =>
@@ -175,14 +187,14 @@ namespace GraphZen
             var leafElementExplicitValues = $"{defaultScenario}_Base";
 
             var leafTests = new TestClass($"{path}__{leaf.Name}", leaf);
-            var explicitTestCases = new ExplicitTestCaseGenerator().GetTestCasesForElement(leaf);
+            var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf);
             leafTests.Cases.AddRange(explicitTestCases);
             ScaffoldClass(leafElementExplicitValues, leafElementConfigurationTestsBase);
             var casesBase = defaultScenario + "_Cases";
             GenerateClass(casesBase, leafElementExplicitValues, explicitTestCases);
             ScaffoldClass(defaultScenario, casesBase);
 
-            var conventionTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(leaf);
+            var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf);
             foreach (var parentConvention in parent.Conventions)
             {
                 var conventionContextScenario = $"{path}_{parentConvention}__{leaf.Name}";
@@ -210,12 +222,6 @@ namespace GraphZen
         }
     }
 
-    public enum NodeType
-    {
-        Vector,
-        Collection,
-        Leaf
-    }
 
     public class TestClass
     {
@@ -282,13 +288,13 @@ namespace GraphZen
                 Optional = true
             };
 
-            var optionalLeafTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(optionalLeaf);
+            var optionalLeafTestCases = TestCaseGenerator.GetTestCasesForLeaf(optionalLeaf);
             optionalLeafTestCases.Should().Contain(nameof(TestCases.optional_not_defined_by_convention));
             var requiredLeaf = new LeafElement<INamed, IMutableNamed>("foo")
             {
                 Optional = false
             };
-            var requiredLeafTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(requiredLeaf);
+            var requiredLeafTestCases = TestCaseGenerator.GetTestCasesForLeaf(requiredLeaf);
             requiredLeafTestCases.Should().NotContain(nameof(TestCases.optional_not_defined_by_convention));
         }
     }

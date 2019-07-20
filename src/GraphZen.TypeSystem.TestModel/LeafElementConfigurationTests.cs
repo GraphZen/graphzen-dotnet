@@ -55,11 +55,28 @@ namespace GraphZen
 
         public abstract ConfigurationSource GetElementConfigurationSource(TMutableMarker definition);
 
-        public abstract TMutableMarker GetParentDefinition(SchemaDefinition schemaDefinition, string parentName);
+        public abstract TParentMemberDefinition GetParentDefinition(SchemaDefinition schemaDefinition, string parentName);
 
-        public abstract TMarker GetParent(Schema schema, string parentName);
+        public abstract TParentMember GetParent(Schema schema, string parentName);
 
         public abstract bool TryGetValue(TMarker parent, out object value);
+
+
+
+        public virtual void optional_not_defined_by_default()
+        {
+            var schema = Schema.Create(sb =>
+                        {
+                            DefineEmptyByConvention(sb);
+                            var parentDef = GetParentDefinition(sb.GetDefinition(), NotDefinedByConventionParentName);
+                            GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
+                            TryGetValue(parentDef, out _).Should().BeFalse();
+                        });
+            var parent = GetParent(schema, NotDefinedByConventionParentName);
+            TryGetValue(parent, out _).Should().BeFalse();
+
+        }
+
 
         public virtual void optional_not_defined_by_convention()
         {

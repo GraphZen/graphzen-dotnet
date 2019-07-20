@@ -6,7 +6,9 @@
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
-namespace GraphZen.Configuration {
-public abstract /* regenerate:true */ class Directive__Argument__Description : Directive__Argument__Description_Cases {
-}
+namespace GraphZen.Configuration
+{
+    public class Directive__Argument__Description : Directive__Argument__Description_Cases
+    {
+    }
 }
