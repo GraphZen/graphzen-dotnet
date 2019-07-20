@@ -101,13 +101,13 @@ namespace GraphZen
         public TestClass GenerateCasesCollection(ImmutableArray<Element> parents, Collection collection)
         {
             var path = GetTestPath(parents);
-            var collectionTests = new TestClass($"{path}__{collection.Name}");
+            var collectionTests = new TestClass($"{path}__{collection.Name}", NodeType.Collection);
             var explicitTestCases = new ExplicitTestCaseGenerator().GetTestCasesForElement(collection);
             collectionTests.Cases.AddRange(explicitTestCases);
             var conventionTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(collection);
             foreach (var convention in collection.Conventions)
             {
-                var conventionTests = new TestClass($"{path}__{collection.Name}_{convention}");
+                var conventionTests = new TestClass($"{path}__{collection.Name}_{convention}", NodeType.Collection);
                 conventionTests.Cases.AddRange(conventionTestCases);
                 collectionTests.SubClasses.Add(conventionTests);
             }
@@ -123,13 +123,13 @@ namespace GraphZen
         {
             var parent = parents[parents.Length - 1] as Vector;
             var path = GetTestPath(parents);
-            var leafTests = new TestClass($"{path}__{leaf.Name}");
+            var leafTests = new TestClass($"{path}__{leaf.Name}", NodeType.Leaf);
             var explicitTestCases = new ExplicitTestCaseGenerator().GetTestCasesForElement(leaf);
             leafTests.Cases.AddRange(explicitTestCases);
             var conventionTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(leaf);
             foreach (var parentConvention in parent.Conventions)
             {
-                var conventionTests = new TestClass($"{path}_{parentConvention}__{leaf.Name}");
+                var conventionTests = new TestClass($"{path}_{parentConvention}__{leaf.Name}", NodeType.Leaf);
                 conventionTests.Cases.AddRange(conventionTestCases);
                 leafTests.SubClasses.Add(conventionTests);
             }
@@ -147,19 +147,31 @@ namespace GraphZen
             return string.Join("__", segements);
         }
 
-        public class TestClass
-        {
-            public TestClass(string name)
-            {
-                Name = name;
-            }
 
-            public string Name { get; }
-            public bool Generated { get; set; }
-            public bool Abstract { get; set; }
-            public List<string> Cases { get; } = new List<string>();
-            public List<TestClass> SubClasses { get; } = new List<TestClass>();
+    }
+
+    public enum NodeType
+    {
+        Vector,
+        Collection,
+        Leaf
+    }
+
+    public class TestClass
+    {
+        public TestClass(string name, NodeType type)
+        {
+            Name = name;
+            Type = type;
         }
+
+        public NodeType Type { get; }
+
+        public string Name { get; }
+        public bool Generated { get; set; }
+        public bool Abstract { get; set; }
+        public List<string> Cases { get; } = new List<string>();
+        public List<TestClass> SubClasses { get; } = new List<TestClass>();
     }
 
     public class LeafElementCodeGeneratorTests

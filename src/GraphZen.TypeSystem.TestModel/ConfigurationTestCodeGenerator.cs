@@ -16,22 +16,27 @@ namespace GraphZen
         public static void Generate()
         {
             var g = new MetaModelTestCaseGenerator();
-            var testClasses = g.GetTemplateModels(ImmutableArray<Element>.Empty, GraphQLMetaModel.Schema());
+            var testClasses = g.GetTemplateModels(ImmutableArray<Element>.Empty, GraphQLMetaModel.Schema()).ToList();
+            var genDir = CodeGenHelpers.GetTargetDirectory();
+            CodeGenHelpers.DeleteGeneratedFiles(genDir);
+
+            foreach (var testClass in testClasses.Where(_ => _.Type == NodeType.Leaf))
+            {
+
+            }
+        }
+
+        private static void CreateClass(TestClass testClass)
+        {
+
         }
 
 
         public static void GenerateCode([NotNull] IEnumerable<Element> elements)
         {
-            var solutionDir = CodeGenHelpers.GetSolutionDirectory();
-            var genDir = Path.Combine(solutionDir.ToString(), "src", "GraphZen.TypeSystem.Tests",
-                "Configuration");
-            var generatedFiles =
-                Directory.GetFiles(genDir, "*.Generated.cs", SearchOption.AllDirectories) ??
-                throw new Exception("Unable to get generated files");
-            foreach (var generatedFile in generatedFiles)
-            {
-                File.Delete(generatedFile);
-            }
+            var genDir = CodeGenHelpers.GetTargetDirectory();
+            CodeGenHelpers.DeleteGeneratedFiles(genDir);
+
 
             foreach (var element in elements)
             {
