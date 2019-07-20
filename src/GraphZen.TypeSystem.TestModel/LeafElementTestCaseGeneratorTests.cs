@@ -200,7 +200,7 @@ namespace GraphZen
             var path = GetTestPath(parents);
             var leafElementConfigurationTestsBase = LeafElementConfigurationTests(leaf, parent);
             var defaultScenario = $"{path}__{leaf.Name}";
-            var leafElementExplicitValues = $"{defaultScenario}_ExplicitValues";
+            var leafElementExplicitValues = $"{defaultScenario}_Base";
 
             var leafTests = new TestClass($"{path}__{leaf.Name}", leaf);
             var explicitTestCases = new ExplicitTestCaseGenerator().GetTestCasesForElement(leaf);
