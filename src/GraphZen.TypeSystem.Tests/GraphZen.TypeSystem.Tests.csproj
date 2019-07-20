@@ -12,6 +12,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="**\*.Generated.cs" >
+      <DependentUpon>%(Filename)</DependentUpon>
+      <DesignTime>true</DesignTime>
+    </Compile>
     <Folder Include="Configuration\" />
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ using GraphZen.TypeSystem.Taxonomy;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class SchemaDefinition : AnnotatableMemberDefinition
+    public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
     {
         [NotNull] private readonly List<DirectiveDefinition> _directives = new List<DirectiveDefinition>();
 

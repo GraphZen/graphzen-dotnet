@@ -5,11 +5,6 @@ using GraphZen.Infrastructure;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    public interface IMember : IMemberDefinition
-    {
-    }
-
-
     [GraphQLIgnore]
     public interface IEnumValueDefinition : IAnnotatableDefinition, INamed, IDeprecation, IInputDefinition,
         IOutputDefinition

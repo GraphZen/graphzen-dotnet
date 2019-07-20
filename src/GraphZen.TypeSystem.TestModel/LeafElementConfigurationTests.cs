@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.MetaModel;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 
@@ -18,6 +19,10 @@ namespace GraphZen
         where TParentMemberDefinition : MemberDefinition, TMutableMarker
         where TParentMember : Member, TMarker
     {
+
+
+
+
         public virtual object ConventionalValue =>
             throw new NotImplementedException($"implement '{nameof(ConventionalValue)}' in type '{GetType().Name}'");
 

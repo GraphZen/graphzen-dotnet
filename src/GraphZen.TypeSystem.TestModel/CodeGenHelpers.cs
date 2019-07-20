@@ -10,6 +10,12 @@ namespace GraphZen
 {
     public static class CodeGenHelpers
     {
+
+        public static string GetFilePath(string fileName)
+        {
+            return Path.Combine(GetTargetDirectory(), fileName);
+        }
+
         [NotNull]
         public static DirectoryInfo GetSolutionDirectory(string currentPath = null)
         {
@@ -31,6 +37,8 @@ namespace GraphZen
             return genDir;
         }
 
+        public const string RegenerateFlag = "regenerate:true";
+
         public static void DeleteGeneratedFiles(string genDir)
         {
 
@@ -40,6 +48,16 @@ namespace GraphZen
             foreach (var generatedFile in generatedFiles)
             {
                 File.Delete(generatedFile);
+            }
+
+            var possiblyScaffoldedFiles = Directory.GetFiles(genDir, "*.cs", SearchOption.AllDirectories);
+            foreach (var maybeScaffoldedFile in possiblyScaffoldedFiles)
+            {
+                if (File.ReadAllText(maybeScaffoldedFile).Contains(RegenerateFlag))
+                {
+                    Console.WriteLine($"Deleting scaffolded file: {maybeScaffoldedFile}");
+                    File.Delete(maybeScaffoldedFile);
+                }
             }
         }
     }

@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
+using System.Text;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.MetaModel;
@@ -17,6 +19,7 @@ using Xunit;
 
 namespace GraphZen
 {
+
     public abstract class LeafConfigurationTests
     {
         public abstract object ExplicitValue { get; }
@@ -67,6 +70,12 @@ namespace GraphZen
 
     public class MetaModelTestCaseGenerator
     {
+        public MetaModelTestCaseGenerator(bool writeEnabled)
+        {
+            WriteEnabled = writeEnabled;
+        }
+
+        public bool WriteEnabled { get; }
         public List<TestClass> TestClasses { get; } = new List<TestClass>();
 
         public IEnumerable<TestClass> GetTemplateModels(ImmutableArray<Element> parents, Vector element)
@@ -101,13 +110,13 @@ namespace GraphZen
         public TestClass GenerateCasesCollection(ImmutableArray<Element> parents, Collection collection)
         {
             var path = GetTestPath(parents);
-            var collectionTests = new TestClass($"{path}__{collection.Name}", NodeType.Collection);
+            var collectionTests = new TestClass($"{path}__{collection.Name}", collection);
             var explicitTestCases = new ExplicitTestCaseGenerator().GetTestCasesForElement(collection);
             collectionTests.Cases.AddRange(explicitTestCases);
             var conventionTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(collection);
             foreach (var convention in collection.Conventions)
             {
-                var conventionTests = new TestClass($"{path}__{collection.Name}_{convention}", NodeType.Collection);
+                var conventionTests = new TestClass($"{path}__{collection.Name}_{convention}", collection);
                 conventionTests.Cases.AddRange(conventionTestCases);
                 collectionTests.SubClasses.Add(conventionTests);
             }
@@ -118,18 +127,78 @@ namespace GraphZen
         public IEnumerable<TestClass> GenerateCasesForVector(ImmutableArray<Element> parents, Vector vector) =>
             throw new NotImplementedException();
 
+        public static string LeafElementConfigurationTests(LeafElement leaf, Vector parent)
+        {
+            var typeName = typeof(LeafElementConfigurationTests<,,,>).Name.Split("`")[0];
+
+            return $"{typeName}<{leaf.MarkerInterface.Name}, {leaf.MutableMarkerInterface.Name}, {parent.Name}Definition, {parent.Name}>";
+
+        }
+
+        public void WriteClassFile(string name, string basename, bool generated)
+        {
+            if (!WriteEnabled)
+            {
+                return;
+            }
+            var regenerateFlag = "regenerate:true";
+            var filename = generated ? $"{name}.Generated.cs" : $"{name}.cs";
+            var filePath = CodeGenHelpers.GetFilePath(filename);
+            var scaffold = !generated;
+            if (scaffold && File.Exists(filePath))
+            {
+                return;
+            }
+
+            var content = new StringBuilder();
+            content.AppendLine($"// Last generated: {DateTime.Now:F}");
+            content.AppendLine("// ReSharper disable PossibleNullReferenceException");
+            content.AppendLine("// ReSharper disable AssignNullToNotNullAttribute");
+            content.AppendLine("// ReSharper disable InconsistentNaming");
+
+            content.AppendLine("using GraphZen.TypeSystem;");
+            content.AppendLine("using GraphZen.TypeSystem.Taxonomy;");
+
+            content.AppendLine("namespace GraphZen.Configuration {");
+
+            content.Append("public abstract");
+            if (scaffold)
+            {
+                content.Append($"/* {regenerateFlag} */");
+            }
+            content.AppendLine($"class {name} : {basename} {{ }}");
+            content.AppendLine("}");
+            File.AppendAllText(filePath, content.ToString());
+        }
+
+        public void GenerateClass(string name, string baseTypeName) =>
+            WriteClassFile(name, baseTypeName, false);
+        public void ScaffoldClass(string name, string baseTypeName) =>
+                    WriteClassFile(name, baseTypeName, false);
+
+
+
+
         public TestClass GenerateCasesForLeaf(
             ImmutableArray<Element> parents, LeafElement leaf)
         {
             var parent = parents[parents.Length - 1] as Vector;
             var path = GetTestPath(parents);
-            var leafTests = new TestClass($"{path}__{leaf.Name}", NodeType.Leaf);
+            var leafElementConfigurationTestsBase = LeafElementConfigurationTests(leaf, parent);
+            var defaultCaseName = $"{path}__{leaf.Name}";
+            var leafElementExplicitValues = $"{defaultCaseName}_ExplicitValues";
+
+            var leafTests = new TestClass($"{path}__{leaf.Name}", leaf);
             var explicitTestCases = new ExplicitTestCaseGenerator().GetTestCasesForElement(leaf);
             leafTests.Cases.AddRange(explicitTestCases);
+            ScaffoldClass(leafElementExplicitValues, leafElementConfigurationTestsBase);
+            GenerateClass(defaultCaseName, leafElementExplicitValues);
+            ScaffoldClass(defaultCaseName, leafElementExplicitValues);
+
             var conventionTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(leaf);
             foreach (var parentConvention in parent.Conventions)
             {
-                var conventionTests = new TestClass($"{path}_{parentConvention}__{leaf.Name}", NodeType.Leaf);
+                var conventionTests = new TestClass($"{path}_{parentConvention}__{leaf.Name}", leaf);
                 conventionTests.Cases.AddRange(conventionTestCases);
                 leafTests.SubClasses.Add(conventionTests);
             }
@@ -159,13 +228,13 @@ namespace GraphZen
 
     public class TestClass
     {
-        public TestClass(string name, NodeType type)
+        public TestClass(string name, Element element)
         {
             Name = name;
-            Type = type;
+            Element = element;
         }
 
-        public NodeType Type { get; }
+        public Element Element { get; }
 
         public string Name { get; }
         public bool Generated { get; set; }
@@ -181,11 +250,11 @@ namespace GraphZen
         public void ShouldContainTest(string expectedTestClassName)
         {
             var models =
-                new MetaModelTestCaseGenerator().GetTemplateModels(ImmutableArray<Element>.Empty,
+                new MetaModelTestCaseGenerator(false).GetTemplateModels(ImmutableArray<Element>.Empty,
                     GraphQLMetaModel.Schema());
             var names = models
                 .Concat(models.SelectMany(_ => _.SubClasses))
-                .Select(_ => _.Type + ": "+ _.Name)
+                .Select(_ => _.Name)
                 .ToArray();
             var match = names.Contains(expectedTestClassName);
             if (!names.Contains(expectedTestClassName))

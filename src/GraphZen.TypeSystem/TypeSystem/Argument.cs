@@ -10,7 +10,7 @@ using GraphZen.TypeSystem.Taxonomy;
 namespace GraphZen.TypeSystem
 {
     [GraphQLType(typeof(InputValue))]
-    public class Argument : InputValue, IArgument
+    public class Argument : InputValue, IArgument 
     {
         public Argument(
             [NotNull] string name,

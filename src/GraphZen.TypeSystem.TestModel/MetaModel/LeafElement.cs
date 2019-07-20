@@ -8,7 +8,7 @@ namespace GraphZen.MetaModel
 {
     public class LeafElement<TMarker, TMutableMarker> : LeafElement where TMutableMarker : TMarker
     {
-        public LeafElement([NotNull] string name) : base(name, typeof(TMutableMarker), typeof(TMutableMarker))
+        public LeafElement([NotNull] string name) : base(name, typeof(TMarker), typeof(TMutableMarker))
         {
         }
     }
