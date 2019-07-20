@@ -100,10 +100,10 @@ namespace GraphZen
 
         public static string LeafElementConfigurationTests(LeafElement leaf, Vector parent)
         {
-            var typeName = typeof(LeafElementConfigurationTests<,,,>).Name.Split("`")[0];
+            var typeName = typeof(LeafElementConfigurationTests<,,,,>).Name.Split("`")[0];
 
             return
-                $"{typeName}<{leaf.MarkerInterface.Name}, {leaf.MutableMarkerInterface.Name}, {parent.Name}Definition, {parent.Name}>";
+                $"{typeName}<{leaf.MarkerInterfaceType.Name}, {leaf.MutableMarkerInterfaceType.Name}, {parent.Name}Definition, {parent.Name}, {leaf.ElementType.Name}>";
         }
 
         public void WriteClassFile(string name, string basename, bool @abstract, bool generated, IEnumerable<string> testCases)
@@ -131,6 +131,7 @@ namespace GraphZen
             content.AppendLine("// ReSharper disable InconsistentNaming");
             content.AppendLine("// ReSharper disable RedundantUsingDirective");
 
+            content.AppendLine("using System;");
             content.AppendLine("using GraphZen.TypeSystem;");
             content.AppendLine("using GraphZen.TypeSystem.Taxonomy;");
             content.AppendLine("using Xunit;");
@@ -265,7 +266,7 @@ namespace GraphZen
 
     public class LeafElementTestCaseGeneratorTests
     {
-        public static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType>
+        public static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType, string>
             TestCases =>
             throw new NotImplementedException();
 
@@ -279,23 +280,53 @@ namespace GraphZen
             //}
         }
 
-
-        [Fact]
-        public void optional_not_defined_by_convention()
+        [Theory]
+        [InlineData(nameof(TestCases.configured_explicitly_reconfigured_explicitly))]
+        public void all_leafs(string testCase)
         {
-            var optionalLeaf = new LeafElement<INamed, IMutableNamed>("foo")
+            var leafs = new List<LeafElement>()
+            {
+                new LeafElement<INamed, IMutableNamed, string>("foo")
+                {
+                    Optional = false
+                },
+                new LeafElement<INamed, IMutableNamed, string>("foo")
+                {
+                    Optional = true,
+                    ConfiguredByConvention = true,
+                    ConfiguredByDataAnnotation = true
+                }
+            };
+
+            foreach (var leaf in leafs)
+            {
+
+                var testCases = TestCaseGenerator.GetTestCasesForLeaf(leaf);
+                testCases.Should().Contain(testCase);
+
+            }
+
+        }
+
+
+        [Theory]
+        [InlineData(nameof(TestCases.optional_not_defined_by_convention_when_parent_configured_explicitly))]
+        [InlineData(nameof(TestCases.optional_not_defined_by_convention_then_configured_explicitly))]
+        public void optional_leafs(string testCase)
+        {
+            var optionalLeaf = new LeafElement<INamed, IMutableNamed, string>("foo")
             {
                 Optional = true
             };
 
             var optionalLeafTestCases = TestCaseGenerator.GetTestCasesForLeaf(optionalLeaf);
-            optionalLeafTestCases.Should().Contain(nameof(TestCases.optional_not_defined_by_convention));
-            var requiredLeaf = new LeafElement<INamed, IMutableNamed>("foo")
+            optionalLeafTestCases.Should().Contain(testCase);
+            var requiredLeaf = new LeafElement<INamed, IMutableNamed, string>("foo")
             {
                 Optional = false
             };
             var requiredLeafTestCases = TestCaseGenerator.GetTestCasesForLeaf(requiredLeaf);
-            requiredLeafTestCases.Should().NotContain(nameof(TestCases.optional_not_defined_by_convention));
+            requiredLeafTestCases.Should().NotContain(testCase);
         }
     }
 }

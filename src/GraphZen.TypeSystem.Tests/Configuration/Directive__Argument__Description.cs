@@ -1,14 +1,13 @@
-// Last generated: Saturday, July 20, 2019 11:48:34 AM
+// Last generated: Saturday, July 20, 2019 5:02:34 PM
 // ReSharper disable PossibleNullReferenceException
 // ReSharper disable AssignNullToNotNullAttribute
 // ReSharper disable InconsistentNaming
 // ReSharper disable RedundantUsingDirective
+using System;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
-namespace GraphZen.Configuration
-{
-    public class Directive__Argument__Description : Directive__Argument__Description_Cases
-    {
-    }
+namespace GraphZen.Configuration {
+public abstract /* regenerate:true */ class Directive__Argument__Description : Directive__Argument__Description_Cases {
+}
 }

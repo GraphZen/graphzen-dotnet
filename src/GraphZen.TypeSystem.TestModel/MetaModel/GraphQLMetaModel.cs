@@ -76,10 +76,10 @@ namespace GraphZen.MetaModel
             }.SetConventions("ViaClrClass");
 
         [NotNull]
-        public static LeafElement Name() => new LeafElement<INamed, IMutableNamed>(nameof(Name));
+        public static LeafElement Name() => new LeafElement<INamed, IMutableNamed, string>(nameof(Name));
 
         [NotNull]
-        public static LeafElement Description() => new LeafElement<IDescription, IMutableDescription>(
+        public static LeafElement Description() => new LeafElement<IDescription, IMutableDescription, string>(
             nameof(Description)
         )
         {

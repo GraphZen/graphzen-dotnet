@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IDescription
+    public interface IDescription : IConfigurationElement<string>
     {
         [CanBeNull]
         string Description { get; }

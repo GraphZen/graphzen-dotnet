@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.MetaModel;
 using GraphZen.TypeSystem;
@@ -14,11 +13,11 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen
 {
-
     public class TestCaseGenerator
     {
-        protected static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType> TestCases =>
-                    throw new NotImplementedException();
+        protected static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType,string>
+            TestCases =>
+            throw new NotImplementedException();
 
 
         //[NotNull]
@@ -41,10 +40,13 @@ namespace GraphZen
         [NotNull]
         [ItemNotNull]
         public static IEnumerable<string> GetTestCasesForLeaf([NotNull] LeafElement element)
+
         {
+            yield return nameof(TestCases.configured_explicitly_reconfigured_explicitly);
             if (element.Optional)
             {
-                yield return nameof(TestCases.optional_not_defined_by_convention);
+                yield return nameof(TestCases.optional_not_defined_by_convention_when_parent_configured_explicitly);
+                yield return nameof(TestCases.optional_not_defined_by_convention_then_configured_explicitly);
             }
         }
 

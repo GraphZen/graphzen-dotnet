@@ -3,26 +3,32 @@
 
 using System;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.MetaModel
 {
-    public class LeafElement<TMarker, TMutableMarker> : LeafElement where TMutableMarker : TMarker
+    public class LeafElement<TMarker, TMutableMarker, TElement> : LeafElement where TMutableMarker : TMarker
+        where TMarker : IConfigurationElement<TElement>
     {
-        public LeafElement([NotNull] string name) : base(name, typeof(TMarker), typeof(TMutableMarker))
+        public LeafElement([NotNull] string name) : base(name, typeof(TMarker), typeof(TMutableMarker),
+            typeof(TElement))
         {
         }
     }
 
     public abstract class LeafElement : Element
     {
-        public LeafElement([NotNull] string name, Type markerInterface, Type mutableMarkerInterface) : base(name)
+        public LeafElement([NotNull] string name, Type markerInterfaceType, Type mutableMarkerInterfaceType,
+            Type elementType) : base(name)
         {
-            MarkerInterface = markerInterface;
-            MutableMarkerInterface = mutableMarkerInterface;
+            MarkerInterfaceType = markerInterfaceType;
+            MutableMarkerInterfaceType = mutableMarkerInterfaceType;
+            ElementType = elementType;
         }
 
-        public Type MarkerInterface { get; }
-        public Type MutableMarkerInterface { get; }
+        public Type MarkerInterfaceType { get; }
+        public Type MutableMarkerInterfaceType { get; }
+        public Type ElementType { get; }
         public bool Optional { get; set; }
         public bool ConfiguredByConvention { get; set; } = true;
         public bool ConfiguredByDataAnnotation { get; set; } = true;

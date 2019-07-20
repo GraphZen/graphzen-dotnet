@@ -6,9 +6,12 @@ using GraphZen.Infrastructure;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface INamed
+    public interface INamed : IConfigurationElement<string>
     {
         [NotNull]
         string Name { get; }
     }
+
+
+    // ReSharper disable once UnusedTypeParameter
 }
