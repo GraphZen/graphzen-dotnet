@@ -15,7 +15,7 @@ namespace GraphZen
 {
     public class TestCaseGenerator
     {
-        protected static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType,string>
+        protected static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType, string>
             TestCases =>
             throw new NotImplementedException();
 
@@ -42,7 +42,8 @@ namespace GraphZen
         public static IEnumerable<string> GetTestCasesForLeaf([NotNull] LeafElement element)
 
         {
-            yield return nameof(TestCases.configured_explicitly_reconfigured_explicitly);
+            //yield break;
+             yield return nameof(TestCases.configured_explicitly_reconfigured_explicitly);
             if (element.Optional)
             {
                 yield return nameof(TestCases.optional_not_defined_by_convention_when_parent_configured_explicitly);

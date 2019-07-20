@@ -209,8 +209,9 @@ Task("Test")
         CoverletOutputName = $"coverage"
     };
 
-    var testProject = GetFile("./test/**/*Tests.csproj");
-    DotNetCoreTest(testProject.FullPath, settings, coverletSettings);
+    //var testProject = GetFile("./src/**/*Tests.csproj");
+    //DotNetCoreTest(testProject.FullPath, settings, coverletSettings);
+    DotNetCoreTest(buildParams.Paths.Directories.Solution.FullPath, settings);
 });
 
  Task("Test-Coverage-Report")
