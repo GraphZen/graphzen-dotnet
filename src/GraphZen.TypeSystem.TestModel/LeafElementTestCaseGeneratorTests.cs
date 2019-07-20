@@ -19,35 +19,7 @@ using Xunit;
 
 namespace GraphZen
 {
-    public abstract class LeafConfigurationTests
-    {
-        public abstract object ExplicitValue { get; }
-    }
 
-    public class InterfaceField_Name_ExplicitConfigurationValues : LeafConfigurationTests
-    {
-        public override object ExplicitValue { get; }
-    }
-
-    public class
-        InterfaceFieldViaExplicit_Name_ExplicitConfigurationTests : InterfaceField_Name_ExplicitConfigurationValues
-    {
-        // Code genned, opt in to explicit configuration tests
-    }
-
-    public abstract class
-        InterfaceFieldViaClrProperty_Name_ConventionalConfigurationTestsBase :
-            InterfaceField_Name_ExplicitConfigurationValues
-    {
-        // Code genned, opt in to conventional and perhaps data annotation tests
-    }
-
-    /*   Vector CollectionItem CollectionConventionVariant  LeafItem  */
-    public class
-        InterfaceTypeFieldViaClrProperty_Name_ConventionalConfigurationTests :
-            InterfaceFieldViaClrProperty_Name_ConventionalConfigurationTestsBase
-    {
-    }
 
     /********** Collection *********************/
 
@@ -190,7 +162,7 @@ namespace GraphZen
             WriteClassFile(name, baseTypeName, true, true, cases);
 
         public void ScaffoldClass(string name, string baseTypeName, bool @abstract = true) =>
-            WriteClassFile(name, baseTypeName,  @abstract, false, Enumerable.Empty<string>());
+            WriteClassFile(name, baseTypeName, @abstract, false, Enumerable.Empty<string>());
 
 
         public TestClass GenerateCasesForLeaf(
@@ -228,12 +200,13 @@ namespace GraphZen
 
         private static string GetTestPath(ImmutableArray<Element> parents)
         {
-            var segements = parents
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var segments = parents
                 .Where(_ => !(_ is Collection))
                 .Where(_ => parents.Length < 2 || _.Name != "Schema")
                 // .TakeLast(3)
                 .Select(_ => _.Name);
-            return string.Join("__", segements);
+            return string.Join("__", segments);
         }
     }
 
@@ -270,11 +243,12 @@ namespace GraphZen
             var models =
                 new MetaModelTestCaseGenerator(false).GetTemplateModels(ImmutableArray<Element>.Empty,
                     GraphQLMetaModel.Schema());
+            // ReSharper disable once AssignNullToNotNullAttribute
             var names = models
+                // ReSharper disable once AssignNullToNotNullAttribute
                 .Concat(models.SelectMany(_ => _.SubClasses))
                 .Select(_ => _.Name)
                 .ToArray();
-            var match = names.Contains(expectedTestClassName);
             if (!names.Contains(expectedTestClassName))
             {
                 throw new Exception(

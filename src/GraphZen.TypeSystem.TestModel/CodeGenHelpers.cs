@@ -31,7 +31,7 @@ namespace GraphZen
 
         public static string GetTargetDirectory()
         {
-            var solutionDir = CodeGenHelpers.GetSolutionDirectory();
+            var solutionDir = GetSolutionDirectory();
             var genDir = Path.Combine(solutionDir.ToString(), "src", "GraphZen.TypeSystem.Tests",
                 "Configuration");
             return genDir;
@@ -50,9 +50,10 @@ namespace GraphZen
                 File.Delete(generatedFile);
             }
 
-            var possiblyScaffoldedFiles = Directory.GetFiles(genDir, "*.cs", SearchOption.AllDirectories);
+            var possiblyScaffoldedFiles = Directory.GetFiles(genDir, "*.cs", SearchOption.AllDirectories) ?? throw new Exception();
             foreach (var maybeScaffoldedFile in possiblyScaffoldedFiles)
             {
+                // ReSharper disable once PossibleNullReferenceException
                 if (File.ReadAllText(maybeScaffoldedFile).Contains(RegenerateFlag))
                 {
                     Console.WriteLine($"Deleting scaffolded file: {maybeScaffoldedFile}");

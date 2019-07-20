@@ -56,7 +56,7 @@ namespace GraphZen
 
     }
 
-    public class ExplicitTestCaseGenerator : TestCaseGenerator {}
+    public class ExplicitTestCaseGenerator : TestCaseGenerator { }
 
     public class ConventionTestCaseGenerator : TestCaseGenerator
     {
@@ -82,16 +82,12 @@ namespace GraphZen
             //}
         }
 
-                [NotNull]
-        [ItemNotNull]
         // ReSharper disable once UnusedParameter.Local
-        private static IEnumerable<string> GetTestCasesForVector([NotNull] Vector element) =>
+        protected override IEnumerable<string> GetTestCasesForVector(Vector element) =>
             Enumerable.Empty<string>();
 
-        [NotNull]
-        [ItemNotNull]
         // ReSharper disable once UnusedParameter.Local
-        private static IEnumerable<string> GetTestCasesForCollection([NotNull] Collection element) =>
+        protected override IEnumerable<string> GetTestCasesForCollection(Collection element) =>
             Enumerable.Empty<string>();
     }
 }

@@ -15,7 +15,7 @@ namespace GraphZen.MetaModel
             return element;
         }
 
-        public static T SetConventions<T>(this T element, params string[] conventions) where T : Element
+        public static T SetConventions<T>([NotNull]this T element, params string[] conventions) where T : Element
         {
             element.Conventions = conventions;
             return element;
