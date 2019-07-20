@@ -185,7 +185,7 @@ namespace GraphZen
                     GraphQLMetaModel.Schema());
             var names = models
                 .Concat(models.SelectMany(_ => _.SubClasses))
-                .Select(_ => _.Name)
+                .Select(_ => _.Type + ": "+ _.Name)
                 .ToArray();
             var match = names.Contains(expectedTestClassName);
             if (!names.Contains(expectedTestClassName))

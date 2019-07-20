@@ -22,6 +22,7 @@ namespace GraphZen
 
             foreach (var testClass in testClasses.Where(_ => _.Type == NodeType.Leaf))
             {
+                File.Create(Path.Combine(genDir, testClass.Name + ".Generated.cs"));
 
             }
         }
