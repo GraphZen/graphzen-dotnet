@@ -190,7 +190,7 @@ namespace GraphZen
             WriteClassFile(name, baseTypeName, true, true, cases);
 
         public void ScaffoldClass(string name, string baseTypeName, bool @abstract = true) =>
-            WriteClassFile(name, baseTypeName, false, @abstract, Enumerable.Empty<string>());
+            WriteClassFile(name, baseTypeName,  @abstract, false, Enumerable.Empty<string>());
 
 
         public TestClass GenerateCasesForLeaf(

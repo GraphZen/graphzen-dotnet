@@ -1,4 +1,4 @@
-// Last generated: Saturday, July 20, 2019 11:31:37 AM
+// Last generated: Saturday, July 20, 2019 11:40:38 AM
 // ReSharper disable PossibleNullReferenceException
 // ReSharper disable AssignNullToNotNullAttribute
 // ReSharper disable InconsistentNaming
@@ -7,6 +7,6 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 namespace GraphZen.Configuration {
-public /* regenerate:true */ class InterfaceType__Name_ExplicitValues : LeafElementConfigurationTests<INamed, IMutableNamed, InterfaceTypeDefinition, InterfaceType> {
+public abstract /* regenerate:true */ class InterfaceType__Name_ExplicitValues : LeafElementConfigurationTests<INamed, IMutableNamed, InterfaceTypeDefinition, InterfaceType> {
 }
 }
