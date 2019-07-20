@@ -58,13 +58,17 @@ namespace GraphZen
         public virtual void ConfigureExplicitly(SchemaBuilder sb, string parentName) =>
             throw new NotImplementedException($"implement '{nameof(ConfigureExplicitly)}' in type '{GetType().Name}'");
 
-        public abstract ConfigurationSource GetElementConfigurationSource(TMutableMarker definition);
+        public virtual ConfigurationSource GetElementConfigurationSource(TMutableMarker definition) =>
+            throw new NotImplementedException($"implement '{nameof(GetElementConfigurationSource)}' in type '{GetType().Name}'");
 
-        public abstract TMutableMarker GetParentDefinition(SchemaDefinition schemaDefinition, string parentName);
+        public virtual TMutableMarker GetParentDefinition(SchemaDefinition schemaDefinition, string parentName) =>
+            throw new NotImplementedException($"implement '{nameof(GetParentDefinition)}' in type '{GetType().Name}'");
 
-        public abstract TMarker GetParent(Schema schema, string parentName);
+        public virtual TMarker GetParent(Schema schema, string parentName) =>
+            throw new NotImplementedException($"implement '{nameof(GetParent)}' in type '{GetType().Name}'");
 
-        public abstract bool TryGetValue(TMarker parent, out object value);
+        public virtual bool TryGetValue(TMarker parent, out object value) =>
+            throw new NotImplementedException($"implement '{nameof(TryGetValue)}' in type '{GetType().Name}'");
 
         public virtual void optional_not_defined_by_convention()
         {

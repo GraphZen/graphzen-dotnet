@@ -2,9 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using GraphZen.Infrastructure;
 
 namespace GraphZen.MetaModel
@@ -22,7 +20,6 @@ namespace GraphZen.MetaModel
             element.Conventions = conventions;
             return element;
         }
-
     }
 
 

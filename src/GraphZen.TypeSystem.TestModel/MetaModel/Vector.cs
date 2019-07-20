@@ -8,7 +8,7 @@ using GraphZen.Infrastructure;
 
 namespace GraphZen.MetaModel
 {
-    public class Vector : Element,IEnumerable<Element>
+    public class Vector : Element, IEnumerable<Element>
     {
         [NotNull] private readonly List<Element> _elements = new List<Element>();
 
@@ -16,19 +16,20 @@ namespace GraphZen.MetaModel
         {
         }
 
+        public IEnumerator<Element> GetEnumerator() => _elements.GetEnumerator();
 
-        public Vector Add([NotNull]Element leafElement)
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+
+        public Vector Add([NotNull] Element leafElement)
         {
             if (leafElement == null)
             {
                 throw new Exception($"cannot add null element to vector '{Name}'");
             }
+
             _elements.Add(leafElement);
             return this;
         }
-
-        public IEnumerator<Element> GetEnumerator() => this._elements.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

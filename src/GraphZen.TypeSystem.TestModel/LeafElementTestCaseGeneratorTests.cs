@@ -19,7 +19,6 @@ using Xunit;
 
 namespace GraphZen
 {
-
     public abstract class LeafConfigurationTests
     {
         public abstract object ExplicitValue { get; }
@@ -131,16 +130,17 @@ namespace GraphZen
         {
             var typeName = typeof(LeafElementConfigurationTests<,,,>).Name.Split("`")[0];
 
-            return $"{typeName}<{leaf.MarkerInterface.Name}, {leaf.MutableMarkerInterface.Name}, {parent.Name}Definition, {parent.Name}>";
-
+            return
+                $"{typeName}<{leaf.MarkerInterface.Name}, {leaf.MutableMarkerInterface.Name}, {parent.Name}Definition, {parent.Name}>";
         }
 
-        public void WriteClassFile(string name, string basename, bool generated)
+        public void WriteClassFile(string name, string basename, bool @abstract, bool generated, IEnumerable<string> testCases)
         {
             if (!WriteEnabled)
             {
                 return;
             }
+
             var regenerateFlag = "regenerate:true";
             var filename = generated ? $"{name}.Generated.cs" : $"{name}.cs";
             var filePath = CodeGenHelpers.GetFilePath(filename);
@@ -155,28 +155,42 @@ namespace GraphZen
             content.AppendLine("// ReSharper disable PossibleNullReferenceException");
             content.AppendLine("// ReSharper disable AssignNullToNotNullAttribute");
             content.AppendLine("// ReSharper disable InconsistentNaming");
+            content.AppendLine("// ReSharper disable RedundantUsingDirective");
 
             content.AppendLine("using GraphZen.TypeSystem;");
             content.AppendLine("using GraphZen.TypeSystem.Taxonomy;");
+            content.AppendLine("using Xunit;");
 
             content.AppendLine("namespace GraphZen.Configuration {");
 
-            content.Append("public abstract");
+            content.Append("public ");
+            if (@abstract)
+            {
+                content.Append("abstract ");
+            }
             if (scaffold)
             {
                 content.Append($"/* {regenerateFlag} */");
             }
-            content.AppendLine($"class {name} : {basename} {{ }}");
+
+
+            content.AppendLine($" class {name} : {basename} {{");
+            foreach (var testCase in testCases)
+            {
+                content.AppendLine("[Fact]");
+                content.AppendLine($"public override void {testCase}() => base.{testCase}(); ");
+            }
+
+            content.AppendLine("}");
             content.AppendLine("}");
             File.AppendAllText(filePath, content.ToString());
         }
 
-        public void GenerateClass(string name, string baseTypeName) =>
-            WriteClassFile(name, baseTypeName, false);
-        public void ScaffoldClass(string name, string baseTypeName) =>
-                    WriteClassFile(name, baseTypeName, false);
+        public void GenerateClass(string name, string baseTypeName, IEnumerable<string> cases) =>
+            WriteClassFile(name, baseTypeName, true, true, cases);
 
-
+        public void ScaffoldClass(string name, string baseTypeName, bool @abstract = true) =>
+            WriteClassFile(name, baseTypeName, false, @abstract, Enumerable.Empty<string>());
 
 
         public TestClass GenerateCasesForLeaf(
@@ -185,19 +199,25 @@ namespace GraphZen
             var parent = parents[parents.Length - 1] as Vector;
             var path = GetTestPath(parents);
             var leafElementConfigurationTestsBase = LeafElementConfigurationTests(leaf, parent);
-            var defaultCaseName = $"{path}__{leaf.Name}";
-            var leafElementExplicitValues = $"{defaultCaseName}_ExplicitValues";
+            var defaultScenario = $"{path}__{leaf.Name}";
+            var leafElementExplicitValues = $"{defaultScenario}_ExplicitValues";
 
             var leafTests = new TestClass($"{path}__{leaf.Name}", leaf);
             var explicitTestCases = new ExplicitTestCaseGenerator().GetTestCasesForElement(leaf);
             leafTests.Cases.AddRange(explicitTestCases);
             ScaffoldClass(leafElementExplicitValues, leafElementConfigurationTestsBase);
-            GenerateClass(defaultCaseName, leafElementExplicitValues);
-            ScaffoldClass(defaultCaseName, leafElementExplicitValues);
+            var casesBase = defaultScenario + "_Cases";
+            GenerateClass(casesBase, leafElementExplicitValues, explicitTestCases);
+            ScaffoldClass(defaultScenario, casesBase);
 
             var conventionTestCases = new ConventionTestCaseGenerator().GetTestCasesForElement(leaf);
             foreach (var parentConvention in parent.Conventions)
             {
+                var conventionContextScenario = $"{path}_{parentConvention}__{leaf.Name}";
+                var conventionCasesBase = conventionContextScenario + "_Cases";
+                GenerateClass(conventionCasesBase, leafElementExplicitValues, conventionTestCases);
+                ScaffoldClass(conventionContextScenario, conventionCasesBase);
+
                 var conventionTests = new TestClass($"{path}_{parentConvention}__{leaf.Name}", leaf);
                 conventionTests.Cases.AddRange(conventionTestCases);
                 leafTests.SubClasses.Add(conventionTests);
@@ -215,8 +235,6 @@ namespace GraphZen
                 .Select(_ => _.Name);
             return string.Join("__", segements);
         }
-
-
     }
 
     public enum NodeType
