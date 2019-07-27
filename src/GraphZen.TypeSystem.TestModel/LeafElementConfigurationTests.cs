@@ -66,6 +66,7 @@ namespace GraphZen
         public abstract bool TryGetValue(TMarker parent, out object value);
 
 
+
         public virtual void optional_not_defined_by_convention_when_parent_configured_explicitly()
         {
             var schema = Schema.Create(sb =>

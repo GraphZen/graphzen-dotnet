@@ -11,11 +11,11 @@ namespace GraphZen
     {
         public static void Generate()
         {
-            var g = new MetaModelTestCaseGenerator(true);
+            var g = new MetaModelTestCaseCodeGenerator(true);
             var genDir = CodeGenHelpers.GetTargetDirectory();
             CodeGenHelpers.DeleteGeneratedFiles(genDir);
             // ReSharper disable once AssignNullToNotNullAttribute
-            g.GetTemplateModels(ImmutableArray<Element>.Empty, GraphQLMetaModel.Schema());
+            g.GenerateCode(ImmutableArray<Element>.Empty, GraphQLMetaModel.Schema());
         }
     }
 }

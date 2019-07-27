@@ -21,7 +21,7 @@ namespace GraphZen.Configuration
         public override string ValueB { get; } = "B: Enum explicit description";
         public override string ValueC { get; } = "C: Enum explicit description";
 
-        public override void DefineParentExplicitly(SchemaBuilder sb, string name)
+        public override void ConfigureParentExplicitlyByName(SchemaBuilder sb, string name)
         {
             sb.Enum(name);
         }
@@ -34,10 +34,10 @@ namespace GraphZen.Configuration
         public override ConfigurationSource GetElementConfigurationSource(IMutableDescription definition) =>
             definition.GetDescriptionConfigurationSource();
 
-        public override EnumTypeDefinition GetParentDefinition(SchemaDefinition schemaDefinition, string parentName) =>
+        public override EnumTypeDefinition GetParentDefinitionByName(SchemaDefinition schemaDefinition, string parentName) =>
             schemaDefinition.GetEnum(parentName);
 
-        public override EnumType GetParent(Schema schema, string parentName) => schema.GetEnum(parentName);
+        public override EnumType GetParentByName(Schema schema, string parentName) => schema.GetEnum(parentName);
 
         public override bool TryGetValue(IDescription parent, out object value)
         {

@@ -37,9 +37,9 @@ namespace GraphZen
     }
 
 
-    public class MetaModelTestCaseGenerator
+    public class MetaModelTestCaseCodeGenerator
     {
-        public MetaModelTestCaseGenerator(bool writeEnabled)
+        public MetaModelTestCaseCodeGenerator(bool writeEnabled)
         {
             WriteEnabled = writeEnabled;
         }
@@ -47,7 +47,7 @@ namespace GraphZen
         public bool WriteEnabled { get; }
         public List<TestClass> TestClasses { get; } = new List<TestClass>();
 
-        public IEnumerable<TestClass> GetTemplateModels(ImmutableArray<Element> parents, Vector element)
+        public IEnumerable<TestClass> GenerateCode(ImmutableArray<Element> parents, Vector element)
         {
             var newParents = parents.Add(element);
             var tests = new List<TestClass>();
@@ -60,7 +60,7 @@ namespace GraphZen
                         tests.Add(GenerateCasesCollection(newParents, collection));
                         if (collection.CollectionItem != null)
                         {
-                            tests.AddRange(GetTemplateModels(newParents.Add(collection), collection.CollectionItem));
+                            tests.AddRange(GenerateCode(newParents.Add(collection), collection.CollectionItem));
                         }
 
                         break;
@@ -245,7 +245,7 @@ namespace GraphZen
         public void ShouldContainTest(string expectedTestClassName)
         {
             var models =
-                new MetaModelTestCaseGenerator(false).GetTemplateModels(ImmutableArray<Element>.Empty,
+                new MetaModelTestCaseCodeGenerator(false).GenerateCode(ImmutableArray<Element>.Empty,
                     GraphQLMetaModel.Schema());
             // ReSharper disable once AssignNullToNotNullAttribute
             var names = models
@@ -269,11 +269,9 @@ namespace GraphZen
             throw new NotImplementedException();
 
 
-        private IEnumerable<LeafElement> GetLeafScenarios(
-        )
+        private IEnumerable<LeafElement> GetLeafScenarios()
         {
-            var trueFalse = new[] {true, false};
-
+            var trueFalse = new[] { true, false };
             foreach (var configuredByConventionValue in trueFalse)
             {
                 foreach (var optionalValue in trueFalse)
@@ -293,27 +291,28 @@ namespace GraphZen
 
 
         [Theory]
-        [InlineData("all")]
+        [InlineData(nameof(all_A))]
         public void all_A(string testCase)
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
                 explicitTestCases.Should().Contain(testCase, leaf.ToString());
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 conventionTestCases.Should().Contain(testCase, leaf.ToString());
             }
         }
 
         [Theory]
+        [InlineData(nameof(all_optional_B))]
         [InlineData(nameof(TestCases.optional_not_defined_by_convention_when_parent_configured_explicitly))]
         [InlineData(nameof(TestCases.optional_not_defined_by_convention_then_configured_explicitly))]
         public void all_optional_B(string testCase)
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (leaf.Optional)
                 {
                     explicitTestCases.Should().Contain(testCase, leaf.ToString());
@@ -328,13 +327,13 @@ namespace GraphZen
         }
 
         [Theory]
-        [InlineData("all_required")]
+        [InlineData(nameof(all_required_C))]
         public void all_required_C(string testCase)
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (!leaf.Optional)
                 {
                     explicitTestCases.Should().Contain(testCase, leaf.ToString());
@@ -349,13 +348,14 @@ namespace GraphZen
         }
 
         [Theory]
+        [InlineData(nameof(explicit_only_D))]
         [InlineData(nameof(TestCases.configured_explicitly_reconfigured_explicitly))]
         public void explicit_only_D(string testCase)
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (leaf.ExplicitOnly)
                 {
                     explicitTestCases.Should().Contain(testCase, leaf.ToString());
@@ -375,8 +375,8 @@ namespace GraphZen
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (leaf.ConfiguredByConvention && leaf.ConfiguredByDataAnnotation)
                 {
                     conventionTestCases.Should().Contain(testCase, leaf.ToString());
@@ -396,8 +396,8 @@ namespace GraphZen
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (leaf.Optional && leaf.ConfiguredByConvention && leaf.ConfiguredByDataAnnotation)
                 {
                     conventionTestCases.Should().Contain(testCase, leaf.ToString());
@@ -417,8 +417,8 @@ namespace GraphZen
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (!leaf.Optional && leaf.ConfiguredByConvention && leaf.ConfiguredByDataAnnotation)
                 {
                     conventionTestCases.Should().Contain(testCase, leaf.ToString());
@@ -438,8 +438,8 @@ namespace GraphZen
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (leaf.ConfiguredByConvention && !leaf.ConfiguredByDataAnnotation)
                 {
                     conventionTestCases.Should().Contain(testCase, leaf.ToString());
@@ -459,8 +459,8 @@ namespace GraphZen
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (leaf.Optional && leaf.ConfiguredByConvention && !leaf.ConfiguredByDataAnnotation)
                 {
                     conventionTestCases.Should().Contain(testCase, leaf.ToString());
@@ -480,8 +480,8 @@ namespace GraphZen
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (!leaf.Optional && leaf.ConfiguredByConvention && !leaf.ConfiguredByDataAnnotation)
                 {
                     conventionTestCases.Should().Contain(testCase, leaf.ToString());
@@ -502,8 +502,8 @@ namespace GraphZen
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (!leaf.ConfiguredByConvention && leaf.ConfiguredByDataAnnotation)
                 {
                     conventionTestCases.Should().Contain(testCase, leaf.ToString());
@@ -523,8 +523,8 @@ namespace GraphZen
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (leaf.Optional && !leaf.ConfiguredByConvention && leaf.ConfiguredByDataAnnotation)
                 {
                     conventionTestCases.Should().Contain(testCase, leaf.ToString());
@@ -544,8 +544,8 @@ namespace GraphZen
         {
             foreach (var leaf in GetLeafScenarios())
             {
-                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false);
-                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
                 if (!leaf.Optional && !leaf.ConfiguredByConvention && leaf.ConfiguredByDataAnnotation)
                 {
                     conventionTestCases.Should().Contain(testCase, leaf.ToString());
