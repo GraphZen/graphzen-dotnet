@@ -32,5 +32,9 @@ namespace GraphZen.MetaModel
         public bool Optional { get; set; }
         public bool ConfiguredByConvention { get; set; } = true;
         public bool ConfiguredByDataAnnotation { get; set; } = true;
+        public bool ExplicitOnly => !ConfiguredByDataAnnotation && !ConfiguredByConvention;
+
+        public override string ToString() =>
+            $"LeafElement(Optional: {Optional}, ConfiguredByConvention: {ConfiguredByConvention}, ConfiguredByDataAnnotation: {ConfiguredByDataAnnotation})";
     }
 }
