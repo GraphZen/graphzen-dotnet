@@ -12,11 +12,11 @@ namespace GraphZen.Configuration
 {
     public class EnumType__EnumValue__Description : EnumType__EnumValue__Description_Cases
     {
-        public override void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName,
+        public override void ConfigureParent(SchemaBuilder sb, out string parentName,
             ConfigurationSource scenario)
         {
             parentName = ExplicitParentName;
-            sb.Enum(Grandparent).Value(ExplicitParentName);
+            sb.Enum(GrandparentName).Value(ExplicitParentName);
         }
     }
 }

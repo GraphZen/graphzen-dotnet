@@ -12,7 +12,7 @@ namespace GraphZen.Configuration
 {
     public class InterfaceType__Field__Description : InterfaceType__Field__Description_Cases
     {
-        public override void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
+        public override void ConfigureParent(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
         {
             parentName = "InterfaceField";
             sb.Interface(InterfaceTypeName).Field(parentName, "String");

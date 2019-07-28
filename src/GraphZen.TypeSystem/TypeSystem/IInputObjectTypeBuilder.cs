@@ -18,6 +18,10 @@ namespace GraphZen.TypeSystem
             Action<InputValueBuilder> inputFieldConfigurator = null);
 
         [NotNull]
+        IInputObjectTypeBuilder<TInputObject> Field(string name,
+                    Action<InputValueBuilder> inputFieldConfigurator = null);
+
+        [NotNull]
         IInputObjectTypeBuilder<TInputObject> Field<TField>(string name,
             Action<InputValueBuilder> inputFieldConfigurator = null);
 

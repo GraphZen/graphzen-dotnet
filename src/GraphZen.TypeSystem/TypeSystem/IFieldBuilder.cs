@@ -52,6 +52,11 @@ namespace GraphZen.TypeSystem
             Action<InputValueBuilder> argumentBuilder = null);
 
         [NotNull]
+        IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
+            Action<InputValueBuilder> argumentBuilder = null);
+
+
+        [NotNull]
         IFieldBuilder<TDeclaringType, TField, TContext> Argument<TArg>(string name,
             Action<InputValueBuilder> argumentBuilder = null);
 

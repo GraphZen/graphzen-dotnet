@@ -33,8 +33,8 @@ namespace GraphZen
         public virtual string ExplicitParentName => nameof(ExplicitParentName);
         //throw new NotImplementedException(
         //    $"implement '{nameof(ExplicitParentName)}' in type '{GetType().Name}'");
-        public virtual string Grandparent { get; } = nameof(Grandparent);
-        public virtual string GreatGrandparent { get; } = nameof(GreatGrandparent);
+        public virtual string GrandparentName { get; } = nameof(GrandparentName);
+        public virtual string GreatGrandparentName { get; } = nameof(GreatGrandparentName);
 
         public virtual string ConventionalParentName =>
             throw new NotImplementedException(
@@ -48,9 +48,9 @@ namespace GraphZen
             throw new NotImplementedException($"implement '{nameof(DefineByConvention)}' in type '{GetType().Name}'");
 
         //public abstract void ConfigureParentExplicitlyByName(SchemaBuilder sb, string name);
-        public virtual void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName, ConfigurationSource scenario) =>
+        public virtual void ConfigureParent(SchemaBuilder sb, out string parentName, ConfigurationSource scenario) =>
         throw new NotImplementedException(
-            $"implement '{nameof(ConfigureParentExplicitly)}' in type '{GetType().Name}'");
+            $"implement '{nameof(ConfigureParent)}' in type '{GetType().Name}'");
 
         public virtual void DefineByDataAnnotation(SchemaBuilder sb) =>
             throw new NotImplementedException(
@@ -59,7 +59,9 @@ namespace GraphZen
         public abstract void ConfigureExplicitly(SchemaBuilder sb, string parentName, TElement value);
         // => throw new NotImplementedException($"implement '{nameof(ConfigureExplicitly)}' in type '{GetType().Name}'");
 
-        public abstract void RemoveExplicitly(SchemaBuilder sb, string parentName);
+        public virtual void RemoveExplicitly(SchemaBuilder sb, string parentName) => throw new NotImplementedException(
+                $"implement '{nameof(RemoveExplicitly)}' in type '{GetType().Name}'");
+
 
         public abstract ConfigurationSource GetElementConfigurationSource(TMutableMarker definition);
 
@@ -77,7 +79,7 @@ namespace GraphZen
             string parentName = null;
             var schema = Schema.Create(sb =>
             {
-                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.Convention);
+                ConfigureParent(sb, out parentName, ConfigurationSource.Convention);
                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
                 TryGetValue(parentDef, out _).Should().BeFalse();
@@ -91,7 +93,7 @@ namespace GraphZen
             string parentName = null;
             var schema = Schema.Create(sb =>
             {
-                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.Convention);
+                ConfigureParent(sb, out parentName, ConfigurationSource.Convention);
                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
                 TryGetValue(parentDef, out _).Should().BeFalse();
@@ -111,7 +113,7 @@ namespace GraphZen
             string parentName = null;
             var schema = Schema.Create(sb =>
             {
-                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.Convention);
+                ConfigureParent(sb, out parentName, ConfigurationSource.Convention);
                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
                 TryGetValue(parentDef, out _).Should().BeFalse();
@@ -133,7 +135,7 @@ namespace GraphZen
             string parentName = null;
             var schema = Schema.Create(sb =>
             {
-                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.DataAnnotation);
+                ConfigureParent(sb, out parentName, ConfigurationSource.DataAnnotation);
                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
                 TryGetValue(parentDef, out var dataAnnotationValue).Should().BeTrue();
@@ -150,7 +152,7 @@ namespace GraphZen
             string parentName = null;
             var schema = Schema.Create(sb =>
             {
-                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.DataAnnotation);
+                ConfigureParent(sb, out parentName, ConfigurationSource.DataAnnotation);
                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
                 TryGetValue(parentDef, out _).Should().BeTrue();
@@ -172,7 +174,7 @@ namespace GraphZen
             string parentName = null;
             var schema = Schema.Create(sb =>
             {
-                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.DataAnnotation);
+                ConfigureParent(sb, out parentName, ConfigurationSource.DataAnnotation);
                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
                 TryGetValue(parentDef, out _).Should().BeTrue();

@@ -100,6 +100,14 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, Action<InputValueBuilder> argumentBuilder = null)
+        {
+            Check.NotNull(name, nameof(name));
+            var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit);
+            argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            return this;
+        }
+
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument<TArg>(string name,
             Action<InputValueBuilder> argumentBuilder = null)
         {

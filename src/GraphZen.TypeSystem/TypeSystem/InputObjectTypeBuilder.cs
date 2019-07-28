@@ -38,6 +38,15 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IInputObjectTypeBuilder<TInputObject> Field(string name,
+            Action<InputValueBuilder> inputFieldConfigurator = null)
+        {
+            Check.NotNull(name, nameof(name));
+            var fb = Builder.Field(name, ConfigurationSource.Explicit);
+            inputFieldConfigurator?.Invoke(new InputValueBuilder(fb));
+            return this;
+        }
+
         public IInputObjectTypeBuilder<TInputObject> Field<TField>(string name,
             Action<InputValueBuilder> inputFieldConfigurator = null)
         {

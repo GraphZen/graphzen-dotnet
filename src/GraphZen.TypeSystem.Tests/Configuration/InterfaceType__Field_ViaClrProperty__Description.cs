@@ -25,7 +25,7 @@ namespace GraphZen.Configuration
             string WithDataAnnotation();
         }
 
-        public override void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
+        public override void ConfigureParent(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
         {
             sb.Interface<IInterfaceWithClrProperty>();
             if (scenario == ConfigurationSource.DataAnnotation)

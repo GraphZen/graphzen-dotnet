@@ -17,12 +17,12 @@ namespace GraphZen.Configuration
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
         {
-            sb.Enum(Grandparent).Value(parentName, v => v.Description(value));
+            sb.Enum(GrandparentName).Value(parentName, v => v.Description(value));
         }
 
         public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
         {
-            sb.Enum(Grandparent).Value(parentName, v => v.Description(null));
+            sb.Enum(GrandparentName).Value(parentName, v => v.Description(null));
         }
 
         public override ConfigurationSource GetElementConfigurationSource(IMutableDescription definition) =>
@@ -30,10 +30,10 @@ namespace GraphZen.Configuration
 
         public override EnumValueDefinition
             GetParentDefinitionByName(SchemaDefinition schemaDefinition, string parentName) =>
-            schemaDefinition.GetEnum(Grandparent).GetValue(parentName);
+            schemaDefinition.GetEnum(GrandparentName).GetValue(parentName);
 
         public override EnumValue GetParentByName(Schema schema, string parentName) =>
-            schema.GetEnum(Grandparent).GetValue(parentName);
+            schema.GetEnum(GrandparentName).GetValue(parentName);
 
         public override bool TryGetValue(IDescription parent, out string value)
         {

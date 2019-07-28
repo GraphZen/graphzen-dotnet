@@ -12,7 +12,7 @@ public class EnumType__Description : EnumType__Description_Cases
 {
     public override string ExplicitParentName { get; } = nameof(ExplicitParentName);
 
-    public override void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
+    public override void ConfigureParent(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
     {
         parentName = ExplicitParentName;
         sb.Enum(parentName);

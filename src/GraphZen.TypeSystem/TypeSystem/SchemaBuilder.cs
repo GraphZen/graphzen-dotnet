@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
@@ -20,6 +21,7 @@ namespace GraphZen.TypeSystem
         protected InternalSchemaBuilder Builder { get; }
 
 
+        [DebuggerStepThrough]
         public IDirectiveBuilder Directive(string name) =>
             new DirectiveBuilder(Builder.Directive(Check.NotNull(name, nameof(name)), ConfigurationSource.Explicit));
 

@@ -13,7 +13,7 @@ using Xunit;
 
 namespace GraphZen.Configuration
 {
-    public abstract class EnumType__Description_Base : LeafElementConfigurationTests<IDescription, IMutableDescription,
+    public class EnumType__Description_Base : LeafElementConfigurationTests<IDescription, IMutableDescription,
         EnumTypeDefinition, EnumType, string>
     {
         public override string ValueA { get; } = "A: Enum explicit description";
