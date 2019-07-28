@@ -1,4 +1,3 @@
-// Last generated: Saturday, July 27, 2019 3:49:03 PM
 // ReSharper disable PossibleNullReferenceException
 // ReSharper disable AssignNullToNotNullAttribute
 // ReSharper disable InconsistentNaming

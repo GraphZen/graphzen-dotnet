@@ -19,9 +19,12 @@ namespace GraphZen.Configuration
         public override string ValueB { get; } = nameof(ValueB);
         public override string ValueC { get; } = nameof(ValueC);
 
-        public override void ConfigureParentExplicitlyByName(SchemaBuilder sb, string name)
+        
+
+        public override void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName)
         {
-            sb.InputObject(name);
+            parentName = "InputObjectParent";
+            sb.InputObject(parentName);
         }
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
@@ -38,7 +41,7 @@ namespace GraphZen.Configuration
         public override InputObjectType GetParentByName(Schema schema, string parentName) =>
             schema.GetInputObject(parentName);
 
-        public override bool TryGetValue(IDescription parent, out object value)
+        public override bool TryGetValue(IDescription parent, out string value)
         {
             value = parent.Description;
             return value != null;

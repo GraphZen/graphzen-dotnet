@@ -1,4 +1,3 @@
-// Last generated: Saturday, July 27, 2019 3:49:03 PM
 // ReSharper disable PossibleNullReferenceException
 // ReSharper disable AssignNullToNotNullAttribute
 // ReSharper disable InconsistentNaming
@@ -9,6 +8,8 @@ using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 namespace GraphZen.Configuration {
 public abstract  class ObjectType__Field__Argument__Description_Cases : ObjectType__Field__Argument__Description_Base {
+[Fact]
+public override void configured_explicitly_reconfigured_explicitly() => base.configured_explicitly_reconfigured_explicitly(); 
 [Fact]
 public override void optional_not_defined_by_convention_when_parent_configured_explicitly() => base.optional_not_defined_by_convention_when_parent_configured_explicitly(); 
 [Fact]

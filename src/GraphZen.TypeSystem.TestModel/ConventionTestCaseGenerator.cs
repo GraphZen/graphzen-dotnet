@@ -34,6 +34,7 @@ namespace GraphZen
             {
                 // All leafs (a) 
                 yield return nameof(MetaCases.all_A);
+                yield return nameof(TestCases.configured_explicitly_reconfigured_explicitly);
 
                 // All optional leafs (b)
                 if (element.Optional)
@@ -52,10 +53,12 @@ namespace GraphZen
                 {
                     // Only explicit test cases (d)
                     yield return nameof(MetaCases.explicit_only_D);
-                    yield return nameof(TestCases.configured_explicitly_reconfigured_explicitly);
                 }
                 else if (conventionContext)
                 {
+
+
+
                     if (element.ConfiguredByConvention && element.ConfiguredByDataAnnotation)
                     {
                         // All leafs configured by convention and data annotation (e)
@@ -103,6 +106,44 @@ namespace GraphZen
                         {
                             yield return nameof(MetaCases.required_data_annotation_only_m);
                         }
+                    }
+
+                    if (element.ConfiguredByConvention)
+                    {
+
+                        // All leafs configured by convention
+                        yield return nameof(MetaCases.all_convention);
+                        // Optional leafs configured by convention
+                        if (element.Optional)
+                        {
+                            yield return nameof(MetaCases.optional_convention);
+                        }
+                        // Required leafs configured by convention
+                        else
+                        {
+                            yield return nameof(MetaCases.required_convention);
+                        }
+                    }
+
+                    if (element.ConfiguredByDataAnnotation)
+                    {
+                        // All leafs configured by data annotation 
+                        yield return nameof(MetaCases.all_data_annotation);
+                        yield return nameof(TestCases.configured_by_data_annotation);
+                        yield return nameof(TestCases.configured_by_data_annotation_then_reconfigured_explicitly);
+                        // Optional leafs configured by data annotation 
+                        if (element.Optional)
+                        {
+                            yield return nameof(MetaCases.optional_data_annotation);
+                            yield return nameof(TestCases
+                                .optional_configured_by_data_annotation_then_removed_explicitly);
+                        }
+                        // Required leafs configured by data annotation only 
+                        else
+                        {
+                            yield return nameof(MetaCases.required_data_annotation);
+                        }
+
                     }
                 }
             }

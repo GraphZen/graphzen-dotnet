@@ -123,7 +123,6 @@ namespace GraphZen
             }
 
             var content = new StringBuilder();
-            content.AppendLine($"// Last generated: {DateTime.Now:F}");
             content.AppendLine("// ReSharper disable PossibleNullReferenceException");
             content.AppendLine("// ReSharper disable AssignNullToNotNullAttribute");
             content.AppendLine("// ReSharper disable InconsistentNaming");
@@ -264,34 +263,9 @@ namespace GraphZen
     [NoReorder]
     public class LeafElementTestCaseGeneratorTests
     {
-        public static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType, string>
-            TestCases =>
-            throw new NotImplementedException();
-
-
-        private IEnumerable<LeafElement> GetLeafScenarios()
-        {
-            var trueFalse = new[] { true, false };
-            foreach (var configuredByConventionValue in trueFalse)
-            {
-                foreach (var optionalValue in trueFalse)
-                {
-                    foreach (var configuredByDataAnnotationValue in trueFalse)
-                    {
-                        yield return new LeafElement<INamed, IMutableNamed, string>("foo")
-                        {
-                            Optional = optionalValue,
-                            ConfiguredByConvention = configuredByConventionValue,
-                            ConfiguredByDataAnnotation = configuredByDataAnnotationValue
-                        };
-                    }
-                }
-            }
-        }
-
-
         [Theory]
         [InlineData(nameof(all_A))]
+        [InlineData(nameof(TestCases.configured_explicitly_reconfigured_explicitly))]
         public void all_A(string testCase)
         {
             foreach (var leaf in GetLeafScenarios())
@@ -349,7 +323,6 @@ namespace GraphZen
 
         [Theory]
         [InlineData(nameof(explicit_only_D))]
-        [InlineData(nameof(TestCases.configured_explicitly_reconfigured_explicitly))]
         public void explicit_only_D(string testCase)
         {
             foreach (var leaf in GetLeafScenarios())
@@ -556,6 +529,160 @@ namespace GraphZen
                 }
 
                 explicitTestCases.Should().NotContain(testCase, leaf.ToString());
+            }
+        }
+
+        [Theory]
+        [InlineData(nameof(all_data_annotation))]
+        [InlineData(nameof(TestCases.configured_by_data_annotation))]
+        [InlineData(nameof(TestCases.configured_by_data_annotation_then_reconfigured_explicitly))]
+        public void all_data_annotation(string testCase)
+        {
+            foreach (var leaf in GetLeafScenarios())
+            {
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
+                if (leaf.ConfiguredByDataAnnotation)
+                {
+                    conventionTestCases.Should().Contain(testCase, leaf.ToString());
+                }
+                else
+                {
+                    conventionTestCases.Should().NotContain(testCase, leaf.ToString());
+                }
+
+                explicitTestCases.Should().NotContain(testCase, leaf.ToString());
+            }
+        }
+
+        [Theory]
+        [InlineData(nameof(optional_data_annotation))]
+        [InlineData(nameof(TestCases.optional_configured_by_data_annotation_then_removed_explicitly))]
+        public void optional_data_annotation(string testCase)
+        {
+            foreach (var leaf in GetLeafScenarios())
+            {
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
+                if (leaf.Optional && leaf.ConfiguredByDataAnnotation)
+                {
+                    conventionTestCases.Should().Contain(testCase, leaf.ToString());
+                }
+                else
+                {
+                    conventionTestCases.Should().NotContain(testCase, leaf.ToString());
+                }
+
+                explicitTestCases.Should().NotContain(testCase, leaf.ToString());
+            }
+        }
+
+        [Theory]
+        [InlineData(nameof(required_data_annotation))]
+        public void required_data_annotation(string testCase)
+        {
+            foreach (var leaf in GetLeafScenarios())
+            {
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
+                if (!leaf.Optional && leaf.ConfiguredByDataAnnotation)
+                {
+                    conventionTestCases.Should().Contain(testCase, leaf.ToString());
+                }
+                else
+                {
+                    conventionTestCases.Should().NotContain(testCase, leaf.ToString());
+                }
+
+                explicitTestCases.Should().NotContain(testCase, leaf.ToString());
+            }
+        }
+
+        [Theory]
+        [InlineData(nameof(all_convention))]
+        public void all_convention(string testCase)
+        {
+            foreach (var leaf in GetLeafScenarios())
+            {
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
+                if (leaf.ConfiguredByConvention)
+                {
+                    conventionTestCases.Should().Contain(testCase, leaf.ToString());
+                }
+                else
+                {
+                    conventionTestCases.Should().NotContain(testCase, leaf.ToString());
+                }
+
+                explicitTestCases.Should().NotContain(testCase, leaf.ToString());
+            }
+        }
+
+        [Theory]
+        [InlineData(nameof(optional_convention))]
+        public void optional_convention(string testCase)
+        {
+            foreach (var leaf in GetLeafScenarios())
+            {
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
+                if (leaf.Optional && leaf.ConfiguredByConvention)
+                {
+                    conventionTestCases.Should().Contain(testCase, leaf.ToString());
+                }
+                else
+                {
+                    conventionTestCases.Should().NotContain(testCase, leaf.ToString());
+                }
+
+                explicitTestCases.Should().NotContain(testCase, leaf.ToString());
+            }
+        }
+
+        [Theory]
+        [InlineData(nameof(required_convention))]
+        public void required_convention(string testCase)
+        {
+            foreach (var leaf in GetLeafScenarios())
+            {
+                var explicitTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, false, false);
+                var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true, false);
+                if (!leaf.Optional && leaf.ConfiguredByConvention)
+                {
+                    conventionTestCases.Should().Contain(testCase, leaf.ToString());
+                }
+                else
+                {
+                    conventionTestCases.Should().NotContain(testCase, leaf.ToString());
+                }
+
+                explicitTestCases.Should().NotContain(testCase, leaf.ToString());
+            }
+        }
+
+        public static LeafElementConfigurationTests<INamed, IMutableNamed, ScalarTypeDefinition, ScalarType, string>
+                    TestCases =>
+                    throw new NotImplementedException();
+
+
+        private IEnumerable<LeafElement> GetLeafScenarios()
+        {
+            var trueFalse = new[] { true, false };
+            foreach (var configuredByConventionValue in trueFalse)
+            {
+                foreach (var optionalValue in trueFalse)
+                {
+                    foreach (var configuredByDataAnnotationValue in trueFalse)
+                    {
+                        yield return new LeafElement<INamed, IMutableNamed, string>("foo")
+                        {
+                            Optional = optionalValue,
+                            ConfiguredByConvention = configuredByConventionValue,
+                            ConfiguredByDataAnnotation = configuredByDataAnnotationValue
+                        };
+                    }
+                }
             }
         }
     }

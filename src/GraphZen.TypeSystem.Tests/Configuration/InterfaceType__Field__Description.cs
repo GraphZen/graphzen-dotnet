@@ -7,7 +7,16 @@ using System;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
-namespace GraphZen.Configuration {
-public abstract /* regenerate:true */ class InterfaceType__Field__Description : InterfaceType__Field__Description_Cases {
-}
+namespace GraphZen.Configuration
+{
+    public class InterfaceType__Field__Description : InterfaceType__Field__Description_Cases
+    {
+        public override void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName)
+        {
+            parentName = "InterfaceField";
+            sb.Interface(InterfaceTypeName).Field(parentName, "String");
+        }
+
+        public override string InterfaceTypeName { get; } = nameof(InterfaceTypeName);
+    }
 }
