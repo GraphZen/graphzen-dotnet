@@ -18,6 +18,11 @@ namespace GraphZen.Configuration
             sb.Interface(InterfaceTypeName).Field(parentName, "String");
         }
 
+        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
+        {
+            sb.Interface(InterfaceTypeName).Field(parentName, "String", f => f.Description(null));
+        }
+
         public override string InterfaceTypeName { get; } = nameof(InterfaceTypeName);
     }
 }

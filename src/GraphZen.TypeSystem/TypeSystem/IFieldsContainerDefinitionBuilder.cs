@@ -12,6 +12,10 @@ namespace GraphZen.TypeSystem
         [NotNull]
         TBuilder Field<TField>(string name,
             Action<IFieldBuilder<TSource, TField, TContext>> fieldConfigurator = null);
+        [NotNull]
+        TBuilder Field(string name,
+                    Action<IFieldBuilder<TSource, object, TContext>> fieldConfigurator = null);
+
 
         [NotNull]
         TBuilder Field(string name, string type,

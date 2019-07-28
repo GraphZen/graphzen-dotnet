@@ -42,6 +42,11 @@ namespace GraphZen.Configuration
             }
         }
 
+        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
+        {
+            sb.Interface<IInterfaceWithClrProperty>().Field(parentName, f => f.Description(null));
+        }
+
         public override string InterfaceTypeName => nameof(IInterfaceWithClrProperty);
     }
 }

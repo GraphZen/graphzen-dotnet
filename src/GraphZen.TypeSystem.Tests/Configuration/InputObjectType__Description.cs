@@ -31,6 +31,11 @@ namespace GraphZen.Configuration
             sb.InputObject(parentName).Description(value);
         }
 
+        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
+        {
+            sb.InputObject(parentName).Description(null);
+        }
+
         public override ConfigurationSource GetElementConfigurationSource(IMutableDescription definition) =>
             definition.GetDescriptionConfigurationSource();
 
