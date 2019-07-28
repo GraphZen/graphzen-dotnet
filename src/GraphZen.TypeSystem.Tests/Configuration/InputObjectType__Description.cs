@@ -19,9 +19,8 @@ namespace GraphZen.Configuration
         public override string ValueB { get; } = nameof(ValueB);
         public override string ValueC { get; } = nameof(ValueC);
 
-        
 
-        public override void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName)
+        public override void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
         {
             parentName = "InputObjectParent";
             sb.InputObject(parentName);

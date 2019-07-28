@@ -46,7 +46,7 @@ namespace GraphZen
             throw new NotImplementedException($"implement '{nameof(DefineByConvention)}' in type '{GetType().Name}'");
 
         //public abstract void ConfigureParentExplicitlyByName(SchemaBuilder sb, string name);
-        public abstract void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName);
+        public abstract void ConfigureParentExplicitly(SchemaBuilder sb, out string parentName, ConfigurationSource scenario);
         //throw new NotImplementedException(
         //    $"implement '{nameof(DefineParentExplicitly)}' in type '{GetType().Name}'");
 
@@ -73,7 +73,7 @@ namespace GraphZen
             string parentName = null;
             var schema = Schema.Create(sb =>
             {
-                ConfigureParentExplicitly(sb, out parentName);
+                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.Convention);
                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
                 TryGetValue(parentDef, out _).Should().BeFalse();
@@ -87,7 +87,7 @@ namespace GraphZen
             string parentName = null;
             var schema = Schema.Create(sb =>
             {
-                ConfigureParentExplicitly(sb, out parentName);
+                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.Convention);
                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
                 TryGetValue(parentDef, out _).Should().BeFalse();
@@ -107,7 +107,7 @@ namespace GraphZen
             string parentName = null;
             var schema = Schema.Create(sb =>
             {
-                ConfigureParentExplicitly(sb, out parentName);
+                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.Convention);
                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
                 TryGetValue(parentDef, out _).Should().BeFalse();
@@ -126,11 +126,49 @@ namespace GraphZen
 
         public virtual void configured_by_data_annotation()
         {
+            string parentName = null;
+            var schema = Schema.Create(sb =>
+            {
+                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.DataAnnotation);
+                var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
+                TryGetValue(parentDef, out var dataAnnotationValue).Should().BeTrue();
+                dataAnnotationValue.Should().Be(DataAnnotationValue);
+                ConfigureExplicitly(sb, parentName, ValueA);
+                TryGetValue(parentDef, out var configuredA).Should().BeTrue();
+                configuredA.Should().Be(ValueA);
+                ConfigureExplicitly(sb, parentName, ValueB);
+                TryGetValue(parentDef, out var configuredB).Should().BeTrue();
+                configuredB.Should().Be(ValueB);
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
+            });
+            var parent = GetParentByName(schema, parentName);
+            TryGetValue(parent, out var finalVal).Should().BeTrue();
+            finalVal.Should().Be(ValueB);
 
         }
 
         public virtual void configured_by_data_annotation_then_reconfigured_explicitly()
         {
+string parentName = null;
+            var schema = Schema.Create(sb =>
+            {
+                ConfigureParentExplicitly(sb, out parentName, ConfigurationSource.DataAnnotation);
+                var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
+                TryGetValue(parentDef, out _).Should().BeTrue();
+                ConfigureExplicitly(sb, parentName, ValueA);
+                TryGetValue(parentDef, out var configuredA).Should().BeTrue();
+                configuredA.Should().Be(ValueA);
+                ConfigureExplicitly(sb, parentName, ValueB);
+                TryGetValue(parentDef, out var configuredB).Should().BeTrue();
+                configuredB.Should().Be(ValueB);
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
+            });
+            var parent = GetParentByName(schema, parentName);
+            TryGetValue(parent, out var finalVal).Should().BeTrue();
+            finalVal.Should().Be(ValueB);
+
 
         }
 
