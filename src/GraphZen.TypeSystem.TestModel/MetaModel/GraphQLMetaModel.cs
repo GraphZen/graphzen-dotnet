@@ -16,7 +16,7 @@ namespace GraphZen.MetaModel
             Name(), Description(),
             DirectiveAnnotations()
             // // new LeafElement("CustomValue", null) { Optional = true }
-        };
+        }.SetConventions("ViaClrEnumValue");
 
         [NotNull]
         public static Vector EnumType() => new Vector(nameof(EnumType))
@@ -24,7 +24,7 @@ namespace GraphZen.MetaModel
             Name(), Description(),
             DirectiveAnnotations(),
             new Collection("Values", EnumValue())
-        };
+        }.SetConventions("ViaClrEnum");
 
 
         public static Vector ScalarType() => new Vector(nameof(ScalarType))
