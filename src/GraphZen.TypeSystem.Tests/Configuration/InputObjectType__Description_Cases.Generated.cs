@@ -14,5 +14,7 @@ public override void configured_explicitly_reconfigured_explicitly() => base.con
 public override void optional_not_defined_by_convention_when_parent_configured_explicitly() => base.optional_not_defined_by_convention_when_parent_configured_explicitly(); 
 [Fact]
 public override void optional_not_defined_by_convention_then_configured_explicitly() => base.optional_not_defined_by_convention_then_configured_explicitly(); 
+[Fact]
+public override void optional_not_defined_by_convention_then_configured_explicitly_then_removed() => base.optional_not_defined_by_convention_then_configured_explicitly_then_removed(); 
 }
 }

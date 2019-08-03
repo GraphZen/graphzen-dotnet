@@ -281,6 +281,7 @@ namespace GraphZen
         [InlineData(nameof(all_optional_B))]
         [InlineData(nameof(TestCases.optional_not_defined_by_convention_when_parent_configured_explicitly))]
         [InlineData(nameof(TestCases.optional_not_defined_by_convention_then_configured_explicitly))]
+        [InlineData(nameof(TestCases.optional_not_defined_by_convention_then_configured_explicitly_then_removed))]
         public void all_optional_B(string testCase)
         {
             foreach (var leaf in GetLeafScenarios())

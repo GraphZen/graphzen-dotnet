@@ -42,6 +42,7 @@ namespace GraphZen
                     yield return nameof(MetaCases.all_optional_B);
                     yield return nameof(TestCases.optional_not_defined_by_convention_when_parent_configured_explicitly);
                     yield return nameof(TestCases.optional_not_defined_by_convention_then_configured_explicitly);
+                    yield return nameof(TestCases.optional_not_defined_by_convention_then_configured_explicitly_then_removed);
                 }
                 // All required leafs  (c)
                 else

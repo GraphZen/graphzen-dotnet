@@ -107,6 +107,29 @@ namespace GraphZen
             finalVal.Should().Be(ValueA);
         }
 
+        public virtual void optional_not_defined_by_convention_then_configured_explicitly_then_removed()
+        {
+            string parentName = null;
+            var schema = Schema.Create(sb =>
+            {
+                ConfigureParent(sb, out parentName, ConfigurationSource.Convention);
+                var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
+                TryGetValue(parentDef, out _).Should().BeFalse();
+                ConfigureExplicitly(sb, parentName, ValueA);
+                TryGetValue(parentDef, out var configuredA).Should().BeTrue();
+                configuredA.Should().Be(ValueA);
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
+                RemoveExplicitly(sb, parentName);
+                TryGetValue(parentDef, out var configuredC).Should().BeFalse();
+                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
+                configuredC.Should().BeNull();
+            });
+            var parent = GetParentByName(schema, parentName);
+            TryGetValue(parent, out var finalVal).Should().BeFalse();
+            finalVal.Should().BeNull();
+        }
+
         public virtual void configured_explicitly_reconfigured_explicitly()
         {
             ValueA.Should().NotBe(ValueB);
