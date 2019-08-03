@@ -10,6 +10,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Internal\Maybe\Internal\**" />
+    <EmbeddedResource Remove="Internal\Maybe\Internal\**" />
+    <None Remove="Internal\Maybe\Internal\**" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\GraphZen.LanguageModel\GraphZen.LanguageModel.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -26,7 +31,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Internal\Maybe\Internal\" />
     <Folder Include="TypeSystem\Validation\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 </Project>

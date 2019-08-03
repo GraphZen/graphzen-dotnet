@@ -46,6 +46,7 @@ namespace GraphZen.TypeSystem
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
+        public IEnumerable<Field> GetFields() => Fields.Values;
 
         public IEnumerable<Field> GetFields(bool includeDeprecated = false) =>
             // ReSharper disable once PossibleNullReferenceException
