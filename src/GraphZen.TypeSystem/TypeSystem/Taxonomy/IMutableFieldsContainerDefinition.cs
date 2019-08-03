@@ -10,9 +10,5 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         [NotNull]
         IReadOnlyDictionary<string, FieldDefinition> Fields { get; }
-
-        [NotNull]
-        [ItemNotNull]
-        new IEnumerable<FieldDefinition> GetFields();
     }
 }

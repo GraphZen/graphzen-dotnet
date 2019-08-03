@@ -15,6 +15,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         [NotNull]
         [ItemNotNull]
         [GraphQLCanBeNull]
-        IEnumerable<Field> GetFields(bool includeDeprecated = false);
+        IEnumerable<Field> GetFields();
     }
 }

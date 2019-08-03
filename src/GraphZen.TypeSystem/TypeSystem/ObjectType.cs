@@ -61,9 +61,9 @@ namespace GraphZen.TypeSystem
         public override TypeKind Kind { get; } = TypeKind.Object;
         IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => GetFields();
 
-        public IEnumerable<Field> GetFields(bool includeDeprecated = false) =>
+        public IEnumerable<Field> GetFields() =>
             // ReSharper disable once PossibleNullReferenceException
-            Fields.Values.Where(_ => includeDeprecated || !_.IsDeprecated);
+            Fields.Values;
 
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;

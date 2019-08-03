@@ -13,4 +13,5 @@ namespace GraphZen.TypeSystem.Taxonomy
         [ItemNotNull]
         IEnumerable<IEnumValueDefinition> GetValues();
     }
+
 }

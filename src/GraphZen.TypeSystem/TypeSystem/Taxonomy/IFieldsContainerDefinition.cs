@@ -7,7 +7,7 @@ using GraphZen.Infrastructure;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IFieldsContainerDefinition : IGraphQLTypeDefinition
+    public interface IFieldsContainerDefinition //: IGraphQLTypeDefinition
     {
         [NotNull]
         [ItemNotNull]

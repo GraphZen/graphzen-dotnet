@@ -40,7 +40,8 @@ namespace GraphZen.TypeSystem
                         {
                             if (type is IFieldsContainer fieldsType)
                             {
-                                return fieldsType.GetFields(args.includeDeprecated == true);
+                                var includeDeprecated = args.includeDeprecated == true;
+                                return fieldsType.Fields.Values.Where(field => includeDeprecated || !field.IsDeprecated);
                             }
 
                             return null;

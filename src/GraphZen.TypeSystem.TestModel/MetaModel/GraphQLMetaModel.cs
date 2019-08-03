@@ -11,8 +11,7 @@ namespace GraphZen.MetaModel
     public static class GraphQLMetaModel
     {
         [NotNull]
-        public static Vector EnumValue() => new Vector(nameof(EnumValue))
-        {
+        public static Vector EnumValue() => new Vector(nameof(EnumValue)) {
             Name(), Description(),
             DirectiveAnnotations()
             // // new LeafElement("CustomValue", null) { Optional = true }
