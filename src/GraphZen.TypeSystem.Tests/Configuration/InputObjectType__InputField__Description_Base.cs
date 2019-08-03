@@ -12,7 +12,7 @@ using Xunit;
 
 namespace GraphZen.Configuration
 {
-    public class InputObjectType__InputField__Description_Base : LeafElementConfigurationTests<IDescription,
+    public abstract class InputObjectType__InputField__Description_Base : LeafElementConfigurationTests<IDescription,
         IMutableDescription, InputFieldDefinition, InputField, string>
     {
         public override string ValueA { get; } = nameof(ValueA);
@@ -38,6 +38,11 @@ namespace GraphZen.Configuration
         {
             value = parent.Description;
             return value != null;
+        }
+
+        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
+        {
+            sb.InputObject(GrandparentName).Field(parentName, fb => fb.Description(null));
         }
     }
 }

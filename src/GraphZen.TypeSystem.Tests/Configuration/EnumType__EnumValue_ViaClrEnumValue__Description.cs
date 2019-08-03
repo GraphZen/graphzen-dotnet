@@ -20,24 +20,21 @@ namespace GraphZen.Configuration
         public enum ExampleClrEnum
         {
             [Description(DataAnnotationDescription)]
-            Foo,
-            Bar
+            ConventionallyDefinedWithDataAnnotation,
+            ConventionallyDefined
         }
 
-        public override void ConfigureParent(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
+        public override void DefineParentConventionally(SchemaBuilder sb, out string parentName)
         {
             sb.Enum<ExampleClrEnum>();
-            switch (scenario)
-            {
-                case ConfigurationSource.DataAnnotation:
-                    parentName = nameof(ExampleClrEnum.Foo);
-                    break;
-                case ConfigurationSource.Convention:
-                    parentName = nameof(ExampleClrEnum.Bar);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(scenario), scenario, null);
-            }
+            parentName = nameof(ExampleClrEnum.ConventionallyDefined);
+
+        }
+
+        public override void DefineParentConventionallyWithDataAnnotation(SchemaBuilder sb, out string parentName)
+        {
+            sb.Enum<ExampleClrEnum>();
+            parentName = nameof(ExampleClrEnum.ConventionallyDefinedWithDataAnnotation);
         }
     }
 }

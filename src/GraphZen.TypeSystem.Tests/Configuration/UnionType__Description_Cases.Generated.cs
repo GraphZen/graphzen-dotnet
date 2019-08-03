@@ -8,6 +8,10 @@ using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 namespace GraphZen.Configuration {
 public abstract  class UnionType__Description_Cases : UnionType__Description_Base {
+
+public override bool DefinedByConvention { get; } = false;
+public override bool DefinedByDataAnnotation { get; } = false;
+
 [Fact]
 public override void configured_explicitly_reconfigured_explicitly() => base.configured_explicitly_reconfigured_explicitly(); 
 [Fact]

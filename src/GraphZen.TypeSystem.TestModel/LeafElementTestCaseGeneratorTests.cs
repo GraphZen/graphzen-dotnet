@@ -105,7 +105,7 @@ namespace GraphZen
         }
 
         public void WriteClassFile(string name, string basename, bool @abstract, bool generated,
-            IEnumerable<string> testCases)
+            IEnumerable<string> testCases, LeafElement element, bool conventionContext)
         {
             if (!WriteEnabled)
             {
@@ -148,6 +148,16 @@ namespace GraphZen
 
 
             content.AppendLine($" class {name} : {basename} {{");
+            if (testCases != null && testCases.Any())
+            {
+                content.AppendLine($@"
+public override bool DefinedByConvention {{ get; }} = {(conventionContext && element.ConfiguredByConvention).ToString().ToLower()};
+public override bool DefinedByDataAnnotation {{ get; }} = {(conventionContext && element.ConfiguredByDataAnnotation).ToString().ToLower()};
+");
+
+
+
+            }
             foreach (var testCase in testCases)
             {
                 content.AppendLine("[Fact]");
@@ -167,11 +177,11 @@ namespace GraphZen
             }
         }
 
-        public void GenerateClass(string name, string baseTypeName, IEnumerable<string> cases) =>
-            WriteClassFile(name, baseTypeName, true, true, cases);
+        public void GenerateClass(string name, string baseTypeName, IEnumerable<string> cases, LeafElement element, bool conventionContext) =>
+            WriteClassFile(name, baseTypeName, true, true, cases, element, conventionContext);
 
         public void ScaffoldClass(string name, string baseTypeName, bool @abstract = true) =>
-            WriteClassFile(name, baseTypeName, @abstract, false, Enumerable.Empty<string>());
+            WriteClassFile(name, baseTypeName, @abstract, false, Enumerable.Empty<string>(), null, false);
 
 
         public TestClass GenerateCasesForLeaf(
@@ -188,7 +198,7 @@ namespace GraphZen
             leafTests.Cases.AddRange(explicitTestCases);
             ScaffoldClass(leafElementExplicitValues, leafElementConfigurationTestsBase);
             var casesBase = defaultScenario + "_Cases";
-            GenerateClass(casesBase, leafElementExplicitValues, explicitTestCases);
+            GenerateClass(casesBase, leafElementExplicitValues, explicitTestCases, leaf, false);
             ScaffoldClass(defaultScenario, casesBase);
 
             var conventionTestCases = TestCaseGenerator.GetTestCasesForLeaf(leaf, true);
@@ -196,7 +206,7 @@ namespace GraphZen
             {
                 var conventionContextScenario = $"{path}_{parentConvention}__{leaf.Name}";
                 var conventionCasesBase = conventionContextScenario + "_Cases";
-                GenerateClass(conventionCasesBase, leafElementExplicitValues, conventionTestCases);
+                GenerateClass(conventionCasesBase, leafElementExplicitValues, conventionTestCases, leaf, true);
                 ScaffoldClass(conventionContextScenario, conventionCasesBase);
 
                 var conventionTests = new TestClass($"{path}_{parentConvention}__{leaf.Name}", leaf);

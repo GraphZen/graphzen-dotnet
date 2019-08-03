@@ -26,29 +26,6 @@ namespace GraphZen.Configuration
 
         public const string DataAnnotationDescription = nameof(DataAnnotationDescription);
         public override string DataAnnotationValue => DataAnnotationDescription;
-
-        public override void ConfigureParent(SchemaBuilder sb, out string parentName,
-            ConfigurationSource scenario)
-        {
-            if (scenario == ConfigurationSource.DataAnnotation)
-            {
-                sb.Enum<ExampleEnum>();
-                parentName = nameof(ExampleEnum);
-            }
-            else if (scenario == ConfigurationSource.Convention)
-            {
-                sb.Enum<EnumNoDescription>();
-                parentName = nameof(EnumNoDescription);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
-        {
-            sb.Enum(parentName).Description(null);
-        }
+       
     }
 }

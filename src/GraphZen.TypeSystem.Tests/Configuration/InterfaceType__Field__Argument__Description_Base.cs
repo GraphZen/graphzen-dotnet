@@ -14,6 +14,14 @@ namespace GraphZen.Configuration
         public override string ValueA { get; } = nameof(ValueA);
         public override string ValueB { get; } = nameof(ValueB);
         public override string ValueC { get; } = nameof(ValueC);
+        public override void DefineParentExplicitly(SchemaBuilder sb, out string parentName)
+        {
+            var argName = "ExplicitArgument";
+            parentName = argName;
+            sb.Interface(GreatGrandparentName)
+                .Field(GrandparentName, "String", fb => fb.Argument(argName, "String"));
+        }
+
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
         {
             sb.Interface(GreatGrandparentName)
@@ -23,8 +31,7 @@ namespace GraphZen.Configuration
         public override ConfigurationSource GetElementConfigurationSource(IMutableDescription definition) =>
             definition.GetDescriptionConfigurationSource();
 
-        public override ArgumentDefinition
-            GetParentDefinitionByName(SchemaDefinition schemaDefinition, string parentName) => schemaDefinition
+        public override ArgumentDefinition GetParentDefinitionByName(SchemaDefinition schemaDefinition, string parentName) => schemaDefinition
             .GetInterface(GreatGrandparentName).GetField(GrandparentName).GetArgument(parentName);
 
         public override Argument GetParentByName(Schema schema, string parentName) => schema.GetInterface(GreatGrandparentName)
@@ -34,6 +41,10 @@ namespace GraphZen.Configuration
         {
             value = parent.Description;
             return value != null;
+        }
+
+        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
+        {
         }
     }
 }

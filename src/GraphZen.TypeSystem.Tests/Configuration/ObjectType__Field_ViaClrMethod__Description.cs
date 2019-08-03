@@ -24,26 +24,5 @@ namespace GraphZen.Configuration
             [Description(DataAnnotationDescription)]
             public string HelloWithDescription() => nameof(HelloWithDescription);
         }
-
-        public override void ConfigureParent(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
-        {
-            sb.Object<ObjectGqlType>();
-            switch (scenario)
-            {
-                case ConfigurationSource.DataAnnotation:
-                    parentName = nameof(ObjectGqlType.HelloWithDescription).FirstCharToLower();
-                    break;
-                case ConfigurationSource.Convention:
-                    parentName = nameof(ObjectGqlType.Hello).FirstCharToLower();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(scenario), scenario, null);
-            }
-        }
-
-        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
-        {
-            sb.Object(GrandparentName).Field(parentName, fb => fb.Description(null));
-        }
     }
 }

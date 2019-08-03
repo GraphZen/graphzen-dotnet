@@ -25,27 +25,6 @@ namespace GraphZen.Configuration
                 [Description(DataAnnotationDescription)]
                 string arg2);
         }
-
-        public override void ConfigureParent(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
-        {
-            sb.Interface<TestInterface>();
-            if (scenario == ConfigurationSource.Convention)
-            {
-                parentName = "arg1";
-            }
-            else if (scenario == ConfigurationSource.DataAnnotation)
-            {
-                parentName = "arg2";
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
-        {
-            sb.Interface<TestInterface>().Field(GrandparentName, fb => fb.Argument(parentName, ab => ab.Description(null)));
-        }
+        
     }
 }

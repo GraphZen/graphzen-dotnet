@@ -9,11 +9,17 @@ using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 namespace GraphZen.Configuration
 {
-    public class EnumType__EnumValue__Description_Base : LeafElementConfigurationTests<IDescription, IMutableDescription, EnumValueDefinition, EnumValue, String>
+    public abstract class EnumType__EnumValue__Description_Base : LeafElementConfigurationTests<IDescription, IMutableDescription, EnumValueDefinition, EnumValue, String>
     {
         public override string ValueA { get; } = nameof(ValueA);
         public override string ValueB { get; } = nameof(ValueB);
         public override string ValueC { get; } = nameof(ValueC);
+
+        public override void DefineParentExplicitly(SchemaBuilder sb, out string parentName)
+        {
+            parentName = "ExplicitEnumValue";
+            sb.Enum(GrandparentName).Value(parentName);
+        }
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
         {

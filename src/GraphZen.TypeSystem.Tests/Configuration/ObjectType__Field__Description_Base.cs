@@ -19,6 +19,12 @@ namespace GraphZen.Configuration
         public override string ValueB { get; } = nameof(ValueB);
         public override string ValueC { get; } = nameof(ValueC);
 
+        public override void DefineParentExplicitly(SchemaBuilder sb, out string parentName)
+        {
+            parentName = "ExplicitObjectField";
+            sb.Object(GrandparentName).Field(parentName, "String");
+        }
+
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
         {
             sb.Object(GrandparentName)

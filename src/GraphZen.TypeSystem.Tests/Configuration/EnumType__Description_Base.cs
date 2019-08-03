@@ -13,7 +13,7 @@ using Xunit;
 
 namespace GraphZen.Configuration
 {
-    public class EnumType__Description_Base : LeafElementConfigurationTests<IDescription, IMutableDescription,
+    public abstract class EnumType__Description_Base : LeafElementConfigurationTests<IDescription, IMutableDescription,
         EnumTypeDefinition, EnumType, string>
     {
         public override string ValueA { get; } = "A: Enum explicit description";
@@ -22,9 +22,20 @@ namespace GraphZen.Configuration
         public override string ValueC { get; } = "C: Enum explicit description";
 
 
+        public override void DefineParentExplicitly(SchemaBuilder sb, out string parentName)
+        {
+            parentName = "ExplicitEnum";
+            sb.Enum(parentName);
+        }
+
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
         {
             sb.Enum(parentName).Description(value);
+        }
+
+        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
+        {
+            sb.Enum(parentName).Description(null);
         }
 
         public override ConfigurationSource GetElementConfigurationSource(IMutableDescription definition) =>

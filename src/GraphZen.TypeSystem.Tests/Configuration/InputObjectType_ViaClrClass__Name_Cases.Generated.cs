@@ -8,6 +8,10 @@ using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 namespace GraphZen.Configuration {
 public abstract  class InputObjectType_ViaClrClass__Name_Cases : InputObjectType__Name_Base {
+
+public override bool DefinedByConvention { get; } = true;
+public override bool DefinedByDataAnnotation { get; } = true;
+
 [Fact]
 public override void configured_explicitly_reconfigured_explicitly() => base.configured_explicitly_reconfigured_explicitly(); 
 [Fact]

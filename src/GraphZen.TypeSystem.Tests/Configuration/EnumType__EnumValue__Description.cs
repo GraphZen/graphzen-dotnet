@@ -4,19 +4,9 @@
 // ReSharper disable RedundantUsingDirective
 using System;
 using GraphZen.TypeSystem;
-using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
-
-namespace GraphZen.Configuration
-{
-    public class EnumType__EnumValue__Description : EnumType__EnumValue__Description_Cases
-    {
-        public override void ConfigureParent(SchemaBuilder sb, out string parentName,
-            ConfigurationSource scenario)
-        {
-            parentName = ExplicitParentName;
-            sb.Enum(GrandparentName).Value(ExplicitParentName);
-        }
-    }
+namespace GraphZen.Configuration {
+public abstract /* regenerate:true */ class EnumType__EnumValue__Description : EnumType__EnumValue__Description_Cases {
+}
 }

@@ -8,6 +8,10 @@ using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 namespace GraphZen.Configuration {
 public abstract  class InterfaceType__Field__Argument_ViaClrMethodParameter__Description_Cases : InterfaceType__Field__Argument__Description_Base {
+
+public override bool DefinedByConvention { get; } = true;
+public override bool DefinedByDataAnnotation { get; } = true;
+
 [Fact]
 public override void configured_explicitly_reconfigured_explicitly() => base.configured_explicitly_reconfigured_explicitly(); 
 [Fact]

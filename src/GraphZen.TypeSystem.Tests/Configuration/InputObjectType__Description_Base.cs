@@ -9,7 +9,7 @@ using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 namespace GraphZen.Configuration
 {
-    public class InputObjectType__Description_Base : LeafElementConfigurationTests<IDescription, IMutableDescription,
+    public abstract class InputObjectType__Description_Base : LeafElementConfigurationTests<IDescription, IMutableDescription,
         InputObjectTypeDefinition, InputObjectType, String>
     {
         public override string ValueA { get; } = nameof(ValueA);
@@ -33,6 +33,11 @@ namespace GraphZen.Configuration
         {
             value = parent.Description;
             return value != null;
+        }
+
+        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
+        {
+            sb.InputObject(parentName).Description(null);
         }
     }
 }

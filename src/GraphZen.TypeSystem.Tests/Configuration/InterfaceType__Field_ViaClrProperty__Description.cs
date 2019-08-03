@@ -25,28 +25,5 @@ namespace GraphZen.Configuration
             string WithDataAnnotation();
         }
 
-        public override void ConfigureParent(SchemaBuilder sb, out string parentName, ConfigurationSource scenario)
-        {
-            sb.Interface<IInterfaceWithClrProperty>();
-            if (scenario == ConfigurationSource.DataAnnotation)
-            {
-                parentName = nameof(IInterfaceWithClrProperty.WithDataAnnotation).FirstCharToLower();
-            }
-            else if (scenario == ConfigurationSource.Convention)
-            {
-                parentName = nameof(IInterfaceWithClrProperty.HelloWorld).FirstCharToLower();
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(scenario), scenario, null);
-            }
-        }
-
-        public override void RemoveExplicitly(SchemaBuilder sb, string parentName)
-        {
-            sb.Interface<IInterfaceWithClrProperty>().Field(parentName, f => f.Description(null));
-        }
-
-        public override string InterfaceTypeName => nameof(IInterfaceWithClrProperty);
     }
 }
