@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem.Builders
         public void EnumCreatedWithClrTypeInfersValues()
         {
             var schema = Schema.Create(sb => sb.Enum<FooEnum>());
-            var values = schema.FindType<EnumType>(typeof(FooEnum)).Values;
+            var values = schema.FindType<EnumType>(typeof(FooEnum)).GetValues().ToReadOnlyList();
             values.Count.Should().Be(2);
             values[0].Name.Should().Be(nameof(FooEnum.Bar));
             values[0].Description.Should().Be("bar desc");

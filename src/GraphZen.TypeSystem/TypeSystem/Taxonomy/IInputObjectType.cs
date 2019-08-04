@@ -3,11 +3,24 @@
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Internal;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IInputObjectType : IInputObjectTypeDefinition, INamedType
+    public interface IInputObjectType : IInputObjectTypeDefinition, INamedType, IInputFieldsContainer
+    {
+    }
+
+    public interface IInputFieldsContainerDefinition
+    {
+        [NotNull]
+        [ItemNotNull]
+        IEnumerable<IInputFieldDefinition> GetFields();
+
+    }
+
+    public interface IInputFieldsContainer : IInputFieldsContainerDefinition
     {
         [NotNull]
         IReadOnlyDictionary<string, InputField> Fields { get; }
@@ -16,4 +29,16 @@ namespace GraphZen.TypeSystem.Taxonomy
         [ItemNotNull]
         new IEnumerable<InputField> GetFields();
     }
+    public interface IMutableInputFieldsContainerDefinition : IInputFieldsContainerDefinition
+    {
+        [NotNull]
+        IReadOnlyDictionary<string, InputFieldDefinition> Fields { get; }
+
+        ConfigurationSource? FindIgnoredFieldConfigurationSource([NotNull] string fieldName);
+
+        [NotNull]
+        [ItemNotNull]
+        new IEnumerable<InputFieldDefinition> GetFields();
+    }
+
 }

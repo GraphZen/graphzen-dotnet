@@ -7,11 +7,8 @@ using GraphZen.Infrastructure;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IInputObjectTypeDefinition :
+    public interface IInputObjectTypeDefinition : IInputFieldsContainerDefinition,
         IGraphQLTypeDefinition, IInputDefinition
     {
-        [NotNull]
-        [ItemNotNull]
-        IEnumerable<IInputFieldDefinition> GetFields();
-    }
+            }
 }

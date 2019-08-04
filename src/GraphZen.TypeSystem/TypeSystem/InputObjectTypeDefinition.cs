@@ -48,7 +48,6 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<InputFieldDefinition> GetFields() => _fields.Values;
 
-        IEnumerable<IInputFieldDefinition> IInputObjectTypeDefinition.GetFields() => GetFields();
 
         public bool RenameField([NotNull] InputFieldDefinition field, [NotNull] string name,
             ConfigurationSource configurationSource)
@@ -196,5 +195,7 @@ namespace GraphZen.TypeSystem
             _fields[name] = field;
             return field;
         }
+
+        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields() => GetFields();
     }
 }

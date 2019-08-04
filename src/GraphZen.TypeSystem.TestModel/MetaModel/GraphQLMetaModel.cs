@@ -47,13 +47,13 @@ namespace GraphZen.MetaModel
             }.SetConventions("ViaClrInterface");
 
         [NotNull]
-        public static Vector ObjectType(params string[] conventions) => new Vector(nameof(ObjectType))
+        public static Vector ObjectType() => new Vector(nameof(ObjectType))
         {
             Name(),
             Description(),
             Fields()
             // DirectiveAnnotations(), 
-        }.SetConventions(conventions);
+        };
 
 
         [NotNull]

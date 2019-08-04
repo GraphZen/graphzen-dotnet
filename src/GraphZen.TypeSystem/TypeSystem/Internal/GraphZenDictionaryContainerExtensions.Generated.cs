@@ -168,12 +168,12 @@ namespace GraphZen.TypeSystem.Internal
         [CanBeNull]
         public static EnumValueDefinition FindValue([NotNull] this EnumTypeDefinition enumTypeDefinition,
             [NotNull] string name)
-            => enumTypeDefinition.ValuesByName.TryGetValue(Check.NotNull(name, nameof(name)), out var nameValue)
+            => enumTypeDefinition.Values.TryGetValue(Check.NotNull(name, nameof(name)), out var nameValue)
                 ? nameValue
                 : null;
 
         public static bool HasValue([NotNull] this EnumTypeDefinition enumTypeDefinition, [NotNull] string name)
-            => enumTypeDefinition.ValuesByName.ContainsKey(Check.NotNull(name, nameof(name)));
+            => enumTypeDefinition.Values.ContainsKey(Check.NotNull(name, nameof(name)));
 
         [NotNull]
         public static EnumValueDefinition GetValue([NotNull] this EnumTypeDefinition enumTypeDefinition,
@@ -183,7 +183,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool TryGetValue([NotNull] this EnumTypeDefinition enumTypeDefinition, [NotNull] string name,
             out EnumValueDefinition enumValueDefinition)
-            => enumTypeDefinition.ValuesByName.TryGetValue(Check.NotNull(name, nameof(name)), out enumValueDefinition);
+            => enumTypeDefinition.Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValueDefinition);
     }
 
 
@@ -191,12 +191,12 @@ namespace GraphZen.TypeSystem.Internal
     {
         [CanBeNull]
         public static EnumValue FindValue([NotNull] this EnumType enumType, [NotNull] string name)
-            => enumType.ValuesByName.TryGetValue(Check.NotNull(name, nameof(name)), out var nameValue)
+            => enumType.Values.TryGetValue(Check.NotNull(name, nameof(name)), out var nameValue)
                 ? nameValue
                 : null;
 
         public static bool HasValue([NotNull] this EnumType enumType, [NotNull] string name)
-            => enumType.ValuesByName.ContainsKey(Check.NotNull(name, nameof(name)));
+            => enumType.Values.ContainsKey(Check.NotNull(name, nameof(name)));
 
         [NotNull]
         public static EnumValue GetValue([NotNull] this EnumType enumType, [NotNull] string name)
@@ -204,7 +204,7 @@ namespace GraphZen.TypeSystem.Internal
                throw new Exception($"{enumType} does not contain a value named '{name}'.");
 
         public static bool TryGetValue([NotNull] this EnumType enumType, [NotNull] string name, out EnumValue enumValue)
-            => enumType.ValuesByName.TryGetValue(Check.NotNull(name, nameof(name)), out enumValue);
+            => enumType.Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValue);
     }
 
 

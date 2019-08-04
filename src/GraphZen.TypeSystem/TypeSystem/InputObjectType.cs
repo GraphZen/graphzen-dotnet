@@ -30,7 +30,6 @@ namespace GraphZen.TypeSystem
 
 
         public override TypeKind Kind { get; } = TypeKind.InputObject;
-        IEnumerable<IInputFieldDefinition> IInputObjectTypeDefinition.GetFields() => GetFields();
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
@@ -59,5 +58,7 @@ namespace GraphZen.TypeSystem
             return new InputObjectType(definition.Name, definition.Description, definition.ClrType,
                 definition.GetFields(), definition.DirectiveAnnotations, schema);
         }
+
+        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields() => GetFields();
     }
 }

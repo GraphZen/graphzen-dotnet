@@ -7,13 +7,8 @@ using GraphZen.Infrastructure;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableEnumTypeDefinition : IEnumTypeDefinition, IMutableGraphQLTypeDefinition
+    public interface IMutableEnumTypeDefinition : IEnumTypeDefinition, IMutableGraphQLTypeDefinition, IMutableEnumValuesContainerDefinition
     {
-        [NotNull]
-        IReadOnlyDictionary<string, EnumValueDefinition> ValuesByName { get; }
-
-        [NotNull]
-        [ItemNotNull]
-        new IEnumerable<EnumValueDefinition> GetValues();
+        
     }
 }

@@ -11,7 +11,7 @@ using GraphZen.TypeSystem.Taxonomy;
 using Xunit;
 namespace GraphZen.Configuration
 {
-    public class ObjectType__Field_ViaClrMethod__Description : ObjectType__Field_ViaClrMethod__Description_Cases
+    public abstract class ObjectType__Field_ViaClrMethod__Description : ObjectType__Field_ViaClrMethod__Description_Cases
     {
         public const string DataAnnotationDescription = nameof(DataAnnotationDescription);
         public override string DataAnnotationValue => DataAnnotationDescription;

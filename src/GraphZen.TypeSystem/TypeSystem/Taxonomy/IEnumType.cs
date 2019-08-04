@@ -8,22 +8,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IEnumType : IEnumTypeDefinition,
-        ILeafType
-    {
-        [NotNull]
-        [ItemNotNull]
-        IReadOnlyList<EnumValue> Values { get; }
-
-
-        [NotNull]
-        IReadOnlyDictionary<string, EnumValue> ValuesByName { get; }
-
-        [NotNull]
-        IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
-
-
-        [NotNull]
-        [ItemNotNull]
-        new IEnumerable<EnumValue> GetValues();
+        ILeafType, IEnumValuesContainer
+    { 
     }
 }

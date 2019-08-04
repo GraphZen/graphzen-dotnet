@@ -24,13 +24,13 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name)), description, clrType, Check.NotNull(directives, nameof(directives)))
         {
             Check.NotNull(valueDefinitions, nameof(valueDefinitions));
-            Values = valueDefinitions.Select(v => EnumValue.From(v, this)).ToReadOnlyList();
-            ValuesByName = Values.ToReadOnlyDictionary(v =>
+            var values = valueDefinitions.Select(v => EnumValue.From(v, this)).ToReadOnlyList();
+            Values= values.ToReadOnlyDictionary(v =>
             {
                 Debug.Assert(v != null, nameof(v) + " != null");
                 return v.Name;
             }, v => v);
-            ValuesByValue = Values
+            ValuesByValue = values
                 .Where(v =>
                 {
                     Debug.Assert(v != null, nameof(v) + " != null");
@@ -65,7 +65,7 @@ namespace GraphZen.TypeSystem
         public bool IsValidValue(string value) => ParseValue(value) is Some<object>;
 
         public bool IsValidLiteral(ValueSyntax value) =>
-            value is EnumValueSyntax enumNode && ValuesByName.ContainsKey(enumNode.Value);
+            value is EnumValueSyntax enumNode && Values.ContainsKey(enumNode.Value);
 
 
         public Maybe<object> ParseValue(object value)
@@ -98,17 +98,15 @@ namespace GraphZen.TypeSystem
 
 
         public override TypeKind Kind { get; } = TypeKind.Enum;
-        IEnumerable<IEnumValueDefinition> IEnumTypeDefinition.GetValues() => Values;
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
-        public IReadOnlyList<EnumValue> Values { get; }
-        public IReadOnlyDictionary<string, EnumValue> ValuesByName { get; }
+        public IReadOnlyDictionary<string, EnumValue> Values { get; }
         public IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
 
-        public IEnumerable<EnumValue> GetValues() => Values;
+        public IEnumerable<EnumValue> GetValues() => Values.Values;
 
         [NotNull]
         [GraphQLIgnore]
@@ -118,5 +116,7 @@ namespace GraphZen.TypeSystem
             return new EnumType(definition.Name, definition.Description, definition.ClrType, definition.GetValues(),
                 definition.DirectiveAnnotations);
         }
+
+        IEnumerable<IEnumValueDefinition> IEnumValuesContainerDefinition.GetValues() => GetValues();
     }
 }
