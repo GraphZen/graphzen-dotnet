@@ -25,5 +25,16 @@ namespace GraphZen.TypeSystem
         [NotNull]
         TBuilder Field<TField>(Expression<Func<TSource, TField>> fieldSelector,
             Action<IFieldBuilder<TSource, TField, TContext>> fieldBuilder = null);
+
+        [NotNull]
+        TBuilder IgnoreField<TField>(Expression<Func<TSource, TField>> fieldSelector);
+
+        [NotNull]
+        TBuilder IgnoreField(string fieldName);
+
+        [NotNull]
+        TBuilder UnignoreField(string fieldName);
+
+
     }
 }

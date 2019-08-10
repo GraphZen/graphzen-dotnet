@@ -137,6 +137,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IObjectTypeBuilder<TObject, TContext> UnignoreField(string fieldName)
+        {
+            Check.NotNull(fieldName, nameof(fieldName));
+            Builder.UnignoreField(fieldName, ConfigurationSource.Explicit);
+            return this;
+        }
+
         public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name) =>
             DirectiveAnnotation(name, null);
 

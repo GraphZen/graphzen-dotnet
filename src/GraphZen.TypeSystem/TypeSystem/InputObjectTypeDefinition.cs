@@ -171,7 +171,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public ConfigurationSource? FindIgnoredFieldConfigurationSource([NotNull] string fieldName)
+        public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
         {
             if (_ignoredFields.TryGetValue(fieldName, out var cs))
             {

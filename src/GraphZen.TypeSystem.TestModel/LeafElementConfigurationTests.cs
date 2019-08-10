@@ -14,11 +14,11 @@ using Xunit;
 
 namespace GraphZen
 {
-    public class ObjectType_Fields_CollectionConfigurationTests : CollectionElementConfigurationTests<
-        IFieldsContainerDefinition,
-        IMutableFieldsContainerDefinition,
-        ObjectTypeDefinition, ObjectType, FieldDefinition, Field
-    >
+    public abstract class ObjectType_Fields_CollectionConfigurationTests__Base : CollectionElementConfigurationTests<
+          IFieldsContainerDefinition,
+          IMutableFieldsContainerDefinition,
+          ObjectTypeDefinition, ObjectType, FieldDefinition, Field
+      >
     {
         public override void DefineParentExplicitly(SchemaBuilder sb, out string parentName)
         {
@@ -26,29 +26,27 @@ namespace GraphZen
             sb.Object(parentName);
         }
 
-        public override ObjectTypeDefinition GetParentDefinitionByName(SchemaDefinition schemaDefinition,
-            string parentName) => schemaDefinition.GetObject(parentName);
+        public override ObjectTypeDefinition GetParentDefinitionByName([NotNull]SchemaDefinition schemaDefinition,
+            [NotNull]string parentName) => schemaDefinition.GetObject(parentName);
 
-        public override ObjectType GetParentByName(Schema schema, string parentName) => schema.GetObject(parentName);
+        public override ObjectType GetParentByName([NotNull]Schema schema, [NotNull] string parentName) => schema.GetObject(parentName);
 
         public override IReadOnlyDictionary<string, FieldDefinition> GetDefinitionCollection(
             ObjectTypeDefinition parent) => parent.Fields;
 
         public override IReadOnlyDictionary<string, Field> GetCollection(ObjectType parent) => parent.Fields;
+
+        public override ConfigurationSource? FindItemIgnoredConfigurationSource(ObjectTypeDefinition parent,
+            [NotNull]string name) => parent.FindIgnoredFieldConfigurationSource(name);
+
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Object(parentName).Field(name);
-        }
+            => sb.Object(parentName).Field(name);
 
         public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Object(parentName).IgnoreField(name);
-        }
+            => sb.Object(parentName).IgnoreField(name);
 
-        public override void UnIgnoreItem(SchemaBuilder sb, string parentName, string name)
-        {
-            throw new NotImplementedException();
-        }
+        public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
+            => sb.Object(parentName).UnignoreField(name);
 
         public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
         {
@@ -112,9 +110,18 @@ namespace GraphZen
             return GetCollection(parent);
         }
 
+        public abstract ConfigurationSource? FindItemIgnoredConfigurationSource(TParentMemberDefinition parent, string name);
+
+        public ConfigurationSource? FindItemIgnoredConfigurationSource(SchemaBuilder sb, string parentName, string name)
+        {
+            var parent = GetParentDefinitionByName(sb.GetDefinition(), parentName);
+            return FindItemIgnoredConfigurationSource(parent, name);
+        }
+
+
         public abstract void AddItem(SchemaBuilder sb, string parentName, string name);
         public abstract void IgnoreItem(SchemaBuilder sb, string parentName, string name);
-        public abstract void UnIgnoreItem(SchemaBuilder sb, string parentName, string name);
+        public abstract void UnignoreItem(SchemaBuilder sb, string parentName, string name);
         public abstract void RenameItem(SchemaBuilder sb, string parentName, string name, string newName);
 
 
@@ -153,6 +160,95 @@ namespace GraphZen
             collection.Count.Should().Be(1);
             collection[itemName].Should().NotBeNull();
             collection[itemName].Should().BeOfType<TCollectionItem>();
+        }
+
+        [Fact]
+        public void when_item_added_explicitly_item_name_configurationSource_should_be_explicit()
+        {
+            string parentName = null;
+            var itemName = "addedExplicitly";
+            var schema = Schema.Create(sb =>
+            {
+                DefineParentExplicitly(sb, out parentName);
+                AddItem(sb, parentName, itemName);
+                var defCollection = GetDefinitionCollection(sb, parentName);
+                defCollection[itemName].GetNameConfigurationSource().Should().Be(ConfigurationSource.Explicit);
+                defCollection[itemName].Name.Should().Be(itemName);
+            });
+            var parent = GetParentByName(schema, parentName);
+            var collection = GetCollection(parent);
+            collection[itemName].Name.Should().Be(itemName);
+        }
+
+        [Fact]
+        public void when_item_added_explicitly_then_ignored_explicitly_item_ignored_configuration_source_should_be_explicit()
+        {
+            var itemName = "addedExplicitly";
+            Schema.Create(sb =>
+            {
+                DefineParentExplicitly(sb, out var parentName);
+                AddItem(sb, parentName, itemName);
+                IgnoreItem(sb, parentName, itemName);
+                FindItemIgnoredConfigurationSource(sb, parentName, itemName).Should().Be(ConfigurationSource.Explicit);
+            });
+        }
+        [Fact]
+        public void when_item_added_explicitly_then_ignored_explicitly_item_should_be_removed()
+        {
+            string parentName = null;
+            var itemName = "addedExplicitly";
+            var schema = Schema.Create(sb =>
+            {
+                DefineParentExplicitly(sb, out parentName);
+                AddItem(sb, parentName, itemName);
+                var defCollection = GetDefinitionCollection(sb, parentName);
+                defCollection[itemName].Should().NotBeNull();
+                defCollection[itemName].Should().BeOfType<TCollectionItemDefinition>();
+                defCollection[itemName].GetConfigurationSource().Should().Be(ConfigurationSource.Explicit);
+                defCollection.Count.Should().Be(1);
+                IgnoreItem(sb, parentName, itemName);
+                defCollection.ContainsKey(itemName).Should().BeFalse();
+
+            });
+            var parent = GetParentByName(schema, parentName);
+            var collection = GetCollection(parent);
+            collection.Count.Should().Be(0);
+        }
+        [Fact]
+        public void when_item_added_explicitly_then_ignored_then_unignored_explicitly_ignored_configuration_source_should_be_null()
+        {
+            var itemName = "addedExplicitly";
+            Schema.Create(sb =>
+            {
+                DefineParentExplicitly(sb, out var parentName);
+                AddItem(sb, parentName, itemName);
+                IgnoreItem(sb, parentName, itemName);
+                UnignoreItem(sb, parentName, itemName);
+                FindItemIgnoredConfigurationSource(sb, parentName, itemName).Should().BeNull();
+            });
+        }
+
+        [Fact]
+        public void when_item_added_explicitly_then_ignored_then_unignored_and_re_added_should_exist()
+        {
+            string parentName = null;
+            var itemName = "addedExplicitly";
+            var schema = Schema.Create(sb =>
+            {
+                DefineParentExplicitly(sb, out parentName);
+                AddItem(sb, parentName, itemName);
+                IgnoreItem(sb, parentName, itemName);
+                UnignoreItem(sb, parentName, itemName);
+                AddItem(sb, parentName, itemName);
+                var defCollection = GetDefinitionCollection(sb, parentName);
+                defCollection.Count.Should().Be(1);
+                defCollection[itemName].Should().NotBeNull();
+                defCollection[itemName].Should().BeOfType<TCollectionItemDefinition>();
+                defCollection[itemName].GetConfigurationSource().Should().Be(ConfigurationSource.Explicit);
+            });
+            var parent = GetParentByName(schema, parentName);
+            var collection = GetCollection(parent);
+            collection[itemName].Name.Should().Be(itemName);
         }
     }
 

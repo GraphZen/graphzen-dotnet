@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 
@@ -35,10 +34,5 @@ namespace GraphZen.TypeSystem
         [NotNull]
         IObjectTypeBuilder<TObject, TContext> IgnoreInterface<T>();
 
-        [NotNull]
-        IObjectTypeBuilder<TObject, TContext> IgnoreField<TField>(Expression<Func<TObject, TField>> fieldSelector);
-
-        [NotNull]
-        IObjectTypeBuilder<TObject, TContext> IgnoreField(string fieldName);
-    }
+            }
 }

@@ -85,6 +85,17 @@ namespace GraphZen.TypeSystem.Internal
             return RemoveField(field, configurationSource);
         }
 
+        public bool UnignoreField([NotNull]string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(name);
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
+            Definition.UnignoreField(name);
+            return true;
+        }
+
 
         public bool IsFieldIgnored([NotNull] string member, ConfigurationSource configurationSource)
         {
@@ -97,6 +108,8 @@ namespace GraphZen.TypeSystem.Internal
             return ignoredMemberConfigurationSource.HasValue &&
                    ignoredMemberConfigurationSource.Overrides(configurationSource);
         }
+
+
 
 
         public InternalFieldBuilder Field([NotNull] PropertyInfo property, ConfigurationSource configurationSource)

@@ -30,6 +30,9 @@ namespace GraphZen.TypeSystem
         }
 
 
+
+        [NotNull]
+        [ItemNotNull]
         public IEnumerable<FieldDefinition> GetFields() => _fields.Values;
 
         public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
@@ -201,7 +204,7 @@ namespace GraphZen.TypeSystem
             _fields.Remove(field.Name);
         }
 
-        public ConfigurationSource? FindIgnoredFieldConfigurationSource([NotNull] string fieldName)
+        public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
         {
             if (_ignoredFields.TryGetValue(fieldName, out var cs))
             {

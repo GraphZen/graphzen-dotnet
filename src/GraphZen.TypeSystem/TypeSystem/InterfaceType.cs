@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
@@ -47,10 +46,6 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
         public IEnumerable<Field> GetFields() => Fields.Values;
-
-        public IEnumerable<Field> GetFields(bool includeDeprecated = false) =>
-            // ReSharper disable once PossibleNullReferenceException
-            Fields.Values.Where(_ => includeDeprecated || !_.IsDeprecated);
 
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Interface;
