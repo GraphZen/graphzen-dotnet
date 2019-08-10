@@ -208,9 +208,9 @@ public override bool DefinedByDataAnnotation {{ get; }} = {(conventionContext &&
             }
 
             return leafTests;
-        }
-
-public TestClass GenerateCasesCollection(ImmutableArray<Element> parents, Collection collection)
+        } 
+        
+        public TestClass GenerateCasesCollection(ImmutableArray<Element> parents, Collection collection)
         {
             var parent = parents[parents.Length - 1] as Vector;
             var path = GetTestPath(parents);
