@@ -246,10 +246,9 @@ namespace GraphZen.TypeSystem.Internal
                 foreach (var implementingType in implementingTypes)
                 {
                     var type = OutputType(implementingType, ConfigurationSource.Convention);
-                    if (type is ObjectTypeDefinition)
+                    if (type is ObjectTypeDefinition objectDef)
                     {
-                        var memberRef = Definition.NamedTypeReference(implementingType, TypeKind.Object);
-                        unionType.AddType(memberRef);
+                        unionType.AddType(objectDef);
                     }
                 }
             }

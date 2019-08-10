@@ -18,17 +18,15 @@ namespace GraphZen.MetaModel
 
     public abstract class LeafElement : Element
     {
-        public LeafElement([NotNull] string name, Type markerInterfaceType, Type mutableMarkerInterfaceType,
-            Type elementType) : base(name)
+        public LeafElement([NotNull] string name, 
+            Type markerInterfaceType, Type mutableMarkerInterfaceType,
+            Type elementType ) : base(name, markerInterfaceType, mutableMarkerInterfaceType)
         {
-            MarkerInterfaceType = markerInterfaceType;
-            MutableMarkerInterfaceType = mutableMarkerInterfaceType;
+            
             ElementType = elementType;
         }
 
-        public Type MarkerInterfaceType { get; }
-        public Type MutableMarkerInterfaceType { get; }
-        public Type ElementType { get; }
+                public Type ElementType { get; }
         public bool Optional { get; set; }
         public bool ConfiguredByConvention { get; set; } = true;
         public bool ConfiguredByDataAnnotation { get; set; } = true;

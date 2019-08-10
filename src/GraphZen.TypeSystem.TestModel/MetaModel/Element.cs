@@ -25,10 +25,16 @@ namespace GraphZen.MetaModel
 
     public abstract class Element
     {
-        public Element([NotNull] string name)
+        public Element([NotNull] string name, Type markerInterfaceType, Type mutableMarkerInterfaceType)
         {
             Name = name;
+            MarkerInterfaceType = markerInterfaceType;
+            MutableMarkerInterfaceType = mutableMarkerInterfaceType;
         }
+
+        public Type MarkerInterfaceType { get; }
+        public Type MutableMarkerInterfaceType { get; }
+
 
         public IReadOnlyList<string> Conventions { get; set; } = new List<string>();
         public string Name { get; }

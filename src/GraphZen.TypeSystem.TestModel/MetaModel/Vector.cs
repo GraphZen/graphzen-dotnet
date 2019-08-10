@@ -8,11 +8,22 @@ using GraphZen.Infrastructure;
 
 namespace GraphZen.MetaModel
 {
-    public class Vector : Element, IEnumerable<Element>
+
+    public class Vector<TMarker, TMutableMarker> : Vector where TMutableMarker : TMarker
+    {
+        public Vector([NotNull] string name) : base(name, typeof(TMarker), typeof(TMutableMarker))
+        {
+        }
+    }
+
+    public abstract class Vector : Element, IEnumerable<Element>
     {
         [NotNull] private readonly List<Element> _elements = new List<Element>();
 
-        public Vector([NotNull] string name) : base(name)
+        public Vector([NotNull] string name,
+        Type markerInterfaceType, Type mutableMarkerInterfaceType
+
+        ) : base(name, markerInterfaceType, mutableMarkerInterfaceType)
         {
         }
 

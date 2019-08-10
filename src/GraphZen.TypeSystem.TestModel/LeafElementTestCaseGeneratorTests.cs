@@ -81,12 +81,12 @@ namespace GraphZen
         public IEnumerable<TestClass> GenerateCasesForVector(ImmutableArray<Element> parents, Vector vector) =>
             throw new NotImplementedException();
 
-        public static string GetCollectionTestBaseClassName(Collection collection, Vector parent)
+        public static string GetCollectionTestBaseClassName(Collection leaf, Vector parent)
         {
-            //var typeName = typeof(LeafElementConfigurationTests<,,,,>).Name.Split("`")[0];
-
+            var typeName = typeof(CollectionElementConfigurationTests<,,,,,>).Name.Split("`")[0];
             throw new NotImplementedException();
-            //return $"{typeName}<{leaf.MarkerInterfaceType.Name}, {leaf.MutableMarkerInterfaceType.Name}, {parent.Name}Definition, {parent.Name}, {leaf.ElementType.Name}>";
+
+            // return $"{typeName}<{leaf.MarkerInterfaceType.Name}, {leaf.MutableMarkerInterfaceType.Name}, {parent.Name}Definition, {parent.Name}, {leaf.ElementType.Name}>";
         }
 
         public static string GetLeafTestBaseClassName(LeafElement leaf, Vector parent)

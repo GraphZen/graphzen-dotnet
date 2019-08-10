@@ -24,7 +24,11 @@ namespace GraphZen.TypeSystem.Internal
         public InternalUnionTypeBuilder IncludesType([NotNull] string objectType,
             ConfigurationSource configurationSource)
         {
-            Definition.AddType(Schema.GetOrAddTypeReference(objectType, Definition));
+            var obj = Schema.Builder.Object(objectType, configurationSource)?.Definition;
+            if (obj != null)
+            {
+                Definition.AddType(obj);
+            }
             return this;
         }
 
@@ -32,10 +36,10 @@ namespace GraphZen.TypeSystem.Internal
         public InternalUnionTypeBuilder IncludesType([NotNull] Type clrType,
             ConfigurationSource configurationSource)
         {
-            var objectType = Schema.Builder.Object(clrType, ConfigurationSource.Convention);
+            var objectType = Schema.Builder.Object(clrType, configurationSource)?.Definition;
             if (objectType != null)
             {
-                Definition.AddType(Schema.NamedTypeReference(clrType, TypeKind.Object));
+                Definition.AddType(objectType);
             }
 
             return this;

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -15,8 +16,9 @@ namespace GraphZen.TypeSystem
     public class UnionTypeDefinition : NamedTypeDefinition, IMutableUnionTypeDefinition
     {
         [NotNull]
-        private readonly Dictionary<string, INamedTypeReference> _types =
-            new Dictionary<string, INamedTypeReference>();
+        private readonly Dictionary<string, ObjectTypeDefinition> _types =
+            new Dictionary<string, ObjectTypeDefinition>();
+
 
         public UnionTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource)
@@ -33,7 +35,11 @@ namespace GraphZen.TypeSystem
         public InternalUnionTypeBuilder Builder { get; }
 
 
-        public IReadOnlyDictionary<string, INamedTypeReference> MemberTypes => _types;
+        public IReadOnlyDictionary<string, ObjectTypeDefinition> MemberTypes => _types;
+        public IEnumerable<ObjectTypeDefinition> GetMemberTypes() => MemberTypes.Values;
+
+        public ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name) => throw new NotImplementedException();
+
         public TypeResolver<object, GraphQLContext> ResolveType { get; set; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Union;
@@ -42,7 +48,7 @@ namespace GraphZen.TypeSystem
         public override TypeKind Kind { get; } = TypeKind.Union;
 
 
-        public void AddType(INamedTypeReference type)
+        public void AddType(ObjectTypeDefinition type)
         {
             Check.NotNull(type, nameof(type));
             if (type.Name == null)
@@ -56,5 +62,7 @@ namespace GraphZen.TypeSystem
                 _types[type.Name] = type;
             }
         }
+
+        IEnumerable<IObjectTypeDefinition> IMemberTypesContainerDefinition.GetMemberTypes() => GetMemberTypes();
     }
 }

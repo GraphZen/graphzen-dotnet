@@ -56,7 +56,7 @@ namespace GraphZen.TypeSystem
 
         public TypeResolver<object, GraphQLContext> ResolveType { get; }
 
-        IReadOnlyDictionary<string, INamedTypeReference> IUnionTypeDefinition.MemberTypes => _typeRefs.Value;
+        public IEnumerable<ObjectType> GetMemberTypes() => throw new NotImplementedException();
 
         public IReadOnlyDictionary<string, ObjectType> MemberTypes => _types.Value;
         public override TypeKind Kind { get; } = TypeKind.Union;
@@ -72,7 +72,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(schema, nameof(schema));
             var lazyTypes = new Lazy<IReadOnlyDictionary<string, ObjectType>>(() =>
             {
-                return definition.MemberTypes.ToDictionary(_ => _.Key, _ => schema.GetType<ObjectType>(_.Key));
+                return definition.GetMemberTypes().ToDictionary(_ => _.Name, _ => schema.GetType<ObjectType>(_.Name));
             });
             return new UnionType(definition.Name, definition.Description, definition.ClrType, lazyTypes,
                 definition.ResolveType, definition.DirectiveAnnotations);
@@ -94,5 +94,6 @@ namespace GraphZen.TypeSystem
             var schema = new Schema(schemaDef);
             return From(definition, schema);
         }*/
+        IEnumerable<IObjectTypeDefinition> IMemberTypesContainerDefinition.GetMemberTypes() => GetMemberTypes();
     }
 }

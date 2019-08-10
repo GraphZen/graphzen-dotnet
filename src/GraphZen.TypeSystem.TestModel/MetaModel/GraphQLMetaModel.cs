@@ -11,22 +11,22 @@ namespace GraphZen.MetaModel
     public static class GraphQLMetaModel
     {
         [NotNull]
-        public static Vector EnumValue() => new Vector(nameof(EnumValue)) {
+        public static Vector EnumValue() => new Vector<IEnumValueDefinition, IMutableEnumValueDefinition>(nameof(EnumValue)) {
             Name(), Description(),
-            DirectiveAnnotations()
+            //DirectiveAnnotations()
             // // new LeafElement("CustomValue", null) { Optional = true }
         }.SetConventions("ViaClrEnumValue");
 
         [NotNull]
-        public static Vector EnumType() => new Vector(nameof(EnumType))
+        public static Vector EnumType() => new Vector<IEnumTypeDefinition, IMutableEnumTypeDefinition>(nameof(EnumType))
         {
             Name(), Description(),
-            DirectiveAnnotations(),
-            new Collection("Values", EnumValue())
+            //DirectiveAnnotations(),
+            new Collection<IEnumValuesContainerDefinition, IMutableEnumValuesContainerDefinition>("Values", EnumValue())
         }.SetConventions("ViaClrEnum");
 
 
-        public static Vector ScalarType() => new Vector(nameof(ScalarType))
+        public static Vector ScalarType() => new Vector<IScalarTypeDefinition, IMutableScalarTypeDefinition>(nameof(ScalarType))
             {
                 Name(), Description()
                 // DirectiveAnnotations()
@@ -39,7 +39,7 @@ namespace GraphZen.MetaModel
 
         [NotNull]
         public static Vector InterfaceType() =>
-            new Vector(nameof(InterfaceType))
+            new Vector<IScalarTypeDefinition, IMutableScalarTypeDefinition>(nameof(InterfaceType))
             {
                 Name(), Description(),
                 // DirectiveAnnotations(), 
@@ -47,7 +47,7 @@ namespace GraphZen.MetaModel
             }.SetConventions("ViaClrInterface");
 
         [NotNull]
-        public static Vector ObjectType() => new Vector(nameof(ObjectType))
+        public static Vector ObjectType() => new Vector<IObjectTypeDefinition, IMutableObjectTypeDefinition>(nameof(ObjectType))
         {
             Name(),
             Description(),
@@ -57,21 +57,21 @@ namespace GraphZen.MetaModel
 
 
         [NotNull]
-        public static Vector UnionType() => new Vector(nameof(UnionType))
+        public static Vector UnionType() => new Vector<IUnionTypeDefinition, IMutableUnionTypeDefinition>(nameof(UnionType))
         {
             Name(),
             Description(),
             // DirectiveAnnotations(), // new LeafElement("ClrType", null),
-            new Collection("MemberTypes", null)
+            new Collection<IMemberTypesContainerDefinition, IMutableMemberTypesContainerDefinition>("MemberTypes", null)
         };
 
         [NotNull]
         public static Vector InputObjectType() =>
-            new Vector(nameof(InputObjectType))
+            new Vector<IInputObjectTypeDefinition, IMutableInputObjectTypeDefinition>(nameof(InputObjectType))
             {
                 Name(), Description(),
                 // DirectiveAnnotations(),
-                new Collection("InputFields", InputField())
+                new Collection<IInputFieldsContainerDefinition, IMutableInputFieldsContainerDefinition>("InputFields", InputField())
             }.SetConventions("ViaClrClass");
 
         [NotNull]
@@ -86,7 +86,7 @@ namespace GraphZen.MetaModel
         };
 
         [NotNull]
-        public static Vector Directive(bool includeDirectives) => new Vector(nameof(Directive))
+        public static Vector Directive(bool includeDirectives) => new Vector<IDirectiveDefinition, IMutableDirectiveDefinition>(nameof(Directive))
         {
             Name(),
             Description(),
@@ -94,27 +94,27 @@ namespace GraphZen.MetaModel
                 .SetConventions("ViaClrAttributeProperties", "ViaClrAttributeConstructorParameters")
         };
 
-        [NotNull]
-        public static Collection DirectiveAnnotations(bool includeDirectives = true) =>
-            new Collection(nameof(DirectiveAnnotations), null).SetConventions("ViaClrAttributes");
+        //[NotNull]
+        //public static Collection DirectiveAnnotations(bool includeDirectives = true) =>
+        //    new Collection(nameof(DirectiveAnnotations), null).SetConventions("ViaClrAttributes");
 
 
         public static Collection Fields() =>
-            new Collection(nameof(Fields), Field());
+            new Collection<IFieldsContainerDefinition, IMutableFieldsContainerDefinition>(nameof(Fields), Field());
 
 
         [NotNull]
-        public static Vector Schema() => new Vector(nameof(Schema))
+        public static Vector Schema() => new Vector<ISchemaDefinition, IMutableSchemaDefinition>(nameof(Schema))
         {
             Description(),
             // DirectiveAnnotations(),
-            new Collection("Directives", Directive(false)),
-            new Collection("Objects", ObjectType()).SetConventions("ViaClrClasses"),
-            new Collection("Interfaces", InterfaceType()),
-            new Collection("Unions", UnionType()),
-            new Collection("Scalars", ScalarType()),
-            new Collection("Enums", EnumType()),
-            new Collection("InputObjects", InputObjectType())
+            // new Collection("Directives", Directive(false)),
+            new Collection<IObjectTypesContainerDefinition, IMutableObjectTypesContainerDefinition>("Objects", ObjectType()).SetConventions("ViaClrClasses"),
+            //new Collection("Interfaces", InterfaceType()),
+            //new Collection("Unions", UnionType()),
+            //new Collection("Scalars", ScalarType()),
+            //new Collection("Enums", EnumType()),
+            //new Collection("InputObjects", InputObjectType())
             // new LeafElement("QueryType", ),
             // new LeafElement("MutationType", null),
             // new LeafElement("SubscriptionType", null)
@@ -122,33 +122,33 @@ namespace GraphZen.MetaModel
 
 
         [NotNull]
-        public static Vector Field() => new Vector(nameof(Field))
+        public static Vector Field() => new Vector<IFieldDefinition, IMutableFieldDefinition>(nameof(Field))
         {
             Name(),
             Description(),
             Arguments(true, "ViaClrMethodParameter"),
-            DirectiveAnnotations()
+            //DirectiveAnnotations()
         }.SetConventions("ViaClrMethod", "ViaClrProperty");
 
         [NotNull]
         private static Vector Argument(bool includeDirectives) => InputValue(nameof(Argument), includeDirectives);
 
         public static Collection Arguments(bool includeDirectives, params string[] argumentConventions) =>
-            new Collection(nameof(Arguments), Argument(includeDirectives).SetConventions(argumentConventions));
+            new Collection<IArgumentsContainerDefinition, IMutableArgumentsContainerDefinition>(nameof(Arguments), Argument(includeDirectives).SetConventions(argumentConventions));
 
         public static Vector InputField() => InputValue(nameof(InputField)).SetConventions("ViaClrProperty");
 
         [NotNull]
         public static Vector InputValue([NotNull] string name, bool includeDirectives = true)
         {
-            var inputValue = new Vector(name)
+            var inputValue = new Vector<IInputValueDefinition, IMutableInputValueDefinition>(name)
             {
                 Name(),
                 Description()
             };
             if (includeDirectives)
             {
-                inputValue.Add(DirectiveAnnotations());
+                // inputValue.Add(DirectiveAnnotations());
             }
 
             return inputValue;
