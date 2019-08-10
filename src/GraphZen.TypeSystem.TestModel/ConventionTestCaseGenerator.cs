@@ -28,6 +28,14 @@ namespace GraphZen
 
         [NotNull]
         [ItemNotNull]
+        public static IEnumerable<string> GetTestCasesForCollection(Collection collection, bool conventionContext, bool filterMetaCases = true)
+        {
+            yield break;
+
+        }
+
+        [NotNull]
+        [ItemNotNull]
         public static IEnumerable<string> GetTestCasesForLeaf([NotNull] LeafElement element, bool conventionContext, bool filterMetaCases = true)
         {
             IEnumerable<string> Result()

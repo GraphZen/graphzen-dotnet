@@ -76,25 +76,7 @@ namespace GraphZen
             return tests;
         }
 
-        public TestClass GenerateCasesCollection(ImmutableArray<Element> parents, Collection collection)
-        {
-            var parent = parents[parents.Length - 1] as Vector;
-            var path = GetTestPath(parents);
-
-            var collectionElementConfigurationTestsBase = GetCollectionTestBaseClassName(collection, parent);
-            var collectionTests = new TestClass($"{path}__{collection.Name}", collection);
-            var explicitTestCases = Enumerable.Empty<string>();
-            collectionTests.Cases.AddRange(explicitTestCases);
-            var conventionTestCases = Enumerable.Empty<string>();
-            foreach (var convention in collection.Conventions)
-            {
-                var conventionTests = new TestClass($"{path}__{collection.Name}_{convention}", collection);
-                conventionTests.Cases.AddRange(conventionTestCases);
-                collectionTests.SubClasses.Add(conventionTests);
-            }
-
-            return collectionTests;
-        }
+        
 
         public IEnumerable<TestClass> GenerateCasesForVector(ImmutableArray<Element> parents, Vector vector) =>
             throw new NotImplementedException();
@@ -116,7 +98,7 @@ namespace GraphZen
         }
 
         public void WriteClassFile(string name, string basename, bool @abstract, bool generated,
-            IEnumerable<string> testCases, LeafElement element, bool conventionContext)
+            IEnumerable<string> testCases, Element element, bool conventionContext)
         {
             if (!WriteEnabled)
             {
@@ -159,11 +141,11 @@ namespace GraphZen
 
 
             content.AppendLine($" class {name} : {basename} {{");
-            if (testCases != null && testCases.Any())
+            if (element is LeafElement leaf && testCases != null && testCases.Any())
             {
                 content.AppendLine($@"
-public override bool DefinedByConvention {{ get; }} = {(conventionContext && element.ConfiguredByConvention).ToString().ToLower()};
-public override bool DefinedByDataAnnotation {{ get; }} = {(conventionContext && element.ConfiguredByDataAnnotation).ToString().ToLower()};
+public override bool DefinedByConvention {{ get; }} = {(conventionContext && leaf.ConfiguredByConvention).ToString().ToLower()};
+public override bool DefinedByDataAnnotation {{ get; }} = {(conventionContext && leaf.ConfiguredByDataAnnotation).ToString().ToLower()};
 ");
 
 
@@ -188,7 +170,7 @@ public override bool DefinedByDataAnnotation {{ get; }} = {(conventionContext &&
             }
         }
 
-        public void GenerateClass(string name, string baseTypeName, IEnumerable<string> cases, LeafElement element, bool conventionContext) =>
+        public void GenerateClass(string name, string baseTypeName, IEnumerable<string> cases, Element element, bool conventionContext) =>
             WriteClassFile(name, baseTypeName, true, true, cases, element, conventionContext);
 
         public void ScaffoldClass(string name, string baseTypeName, bool @abstract = true) =>
@@ -226,6 +208,35 @@ public override bool DefinedByDataAnnotation {{ get; }} = {(conventionContext &&
             }
 
             return leafTests;
+        }
+
+public TestClass GenerateCasesCollection(ImmutableArray<Element> parents, Collection collection)
+        {
+            var parent = parents[parents.Length - 1] as Vector;
+            var path = GetTestPath(parents);
+
+            var collectionElementConfigurationTestsBase = GetCollectionTestBaseClassName(collection, parent);
+
+            var defaultScenario = $"{path}__{collection.Name}";
+            var collectionElementBaseClass = $"{defaultScenario}_Base";
+            var collectionTests = new TestClass($"{path}__{collection.Name}", collection);
+            var explicitTestCases = TestCaseGenerator.GetTestCasesForCollection(collection, false);
+            collectionTests.Cases.AddRange(explicitTestCases);
+            ScaffoldClass(collectionElementBaseClass, collectionElementConfigurationTestsBase);
+            var casesBase = defaultScenario + "_Cases";
+            GenerateClass(casesBase, collectionElementBaseClass, explicitTestCases, collection, false);
+            ScaffoldClass(defaultScenario, casesBase);
+
+            collectionTests.Cases.AddRange(explicitTestCases);
+            var conventionTestCases = TestCaseGenerator.GetTestCasesForCollection(collection, true);
+            foreach (var convention in collection.Conventions)
+            {
+                var conventionTests = new TestClass($"{path}__{collection.Name}_{convention}", collection);
+                conventionTests.Cases.AddRange(conventionTestCases);
+                collectionTests.SubClasses.Add(conventionTests);
+            }
+
+            return collectionTests;
         }
 
         private static string GetTestPath(ImmutableArray<Element> parents)
