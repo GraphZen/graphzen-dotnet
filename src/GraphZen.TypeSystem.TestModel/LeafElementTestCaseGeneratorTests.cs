@@ -78,7 +78,10 @@ namespace GraphZen
 
         public TestClass GenerateCasesCollection(ImmutableArray<Element> parents, Collection collection)
         {
+            var parent = parents[parents.Length - 1] as Vector;
             var path = GetTestPath(parents);
+
+            var collectionElementConfigurationTestsBase = GetCollectionTestBaseClassName(collection, parent);
             var collectionTests = new TestClass($"{path}__{collection.Name}", collection);
             var explicitTestCases = Enumerable.Empty<string>();
             collectionTests.Cases.AddRange(explicitTestCases);
@@ -96,7 +99,15 @@ namespace GraphZen
         public IEnumerable<TestClass> GenerateCasesForVector(ImmutableArray<Element> parents, Vector vector) =>
             throw new NotImplementedException();
 
-        public static string LeafElementConfigurationTests(LeafElement leaf, Vector parent)
+        public static string GetCollectionTestBaseClassName(Collection collection, Vector parent)
+        {
+            //var typeName = typeof(LeafElementConfigurationTests<,,,,>).Name.Split("`")[0];
+
+            throw new NotImplementedException();
+            //return $"{typeName}<{leaf.MarkerInterfaceType.Name}, {leaf.MutableMarkerInterfaceType.Name}, {parent.Name}Definition, {parent.Name}, {leaf.ElementType.Name}>";
+        }
+
+        public static string GetLeafTestBaseClassName(LeafElement leaf, Vector parent)
         {
             var typeName = typeof(LeafElementConfigurationTests<,,,,>).Name.Split("`")[0];
 
@@ -189,7 +200,7 @@ public override bool DefinedByDataAnnotation {{ get; }} = {(conventionContext &&
         {
             var parent = parents[parents.Length - 1] as Vector;
             var path = GetTestPath(parents);
-            var leafElementConfigurationTestsBase = LeafElementConfigurationTests(leaf, parent);
+            var leafElementConfigurationTestsBase = GetLeafTestBaseClassName(leaf, parent);
             var defaultScenario = $"{path}__{leaf.Name}";
             var leafElementExplicitValues = $"{defaultScenario}_Base";
 
