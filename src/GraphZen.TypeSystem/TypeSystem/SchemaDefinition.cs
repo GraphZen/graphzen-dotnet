@@ -717,5 +717,30 @@ namespace GraphZen.TypeSystem
         {
             _types.Remove(type);
         }
+
+        public IEnumerable<DirectiveDefinition> GetDirectives() => throw new NotImplementedException();
+
+        public IEnumerable<ObjectTypeDefinition> GetObjects() => throw new NotImplementedException();
+
+        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => throw new NotImplementedException();
+
+        public IEnumerable<UnionTypeDefinition> GetUnions() => throw new NotImplementedException();
+
+        public IEnumerable<ScalarTypeDefinition> GetScalars() => throw new NotImplementedException();
+
+        public IEnumerable<EnumTypeDefinition> GetEnums() => throw new NotImplementedException();
+        IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives() => GetDirectives();
+
+        IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects() => GetObjects();
+
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces() => GetInterfaces();
+
+        IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions() => GetUnions();
+
+        IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars() => GetScalars();
+
+        IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums() => GetEnums();
+        public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => throw new NotImplementedException();
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() => GetInputObjects();
     }
 }

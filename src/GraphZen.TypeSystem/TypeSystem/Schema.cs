@@ -547,5 +547,46 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => "Schema";
+        [GraphQLIgnore]
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() => GetInputObjects();
+
+        [GraphQLIgnore]
+        public IEnumerable<InputObjectType> GetInputObjects() => throw new NotImplementedException();
+
+        [GraphQLIgnore]
+        IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums() => GetEnums();
+        [GraphQLIgnore]
+
+        IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars() => GetScalars();
+
+        [GraphQLIgnore]
+        IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions() => GetUnions();
+
+        [GraphQLIgnore]
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces() => GetInterfaces();
+
+        [GraphQLIgnore]
+        IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects() => GetObjects();
+
+        [GraphQLIgnore]
+        IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives() => GetDirectives();
+
+        [GraphQLIgnore]
+        public IEnumerable<EnumType> GetEnums() => throw new NotImplementedException();
+
+        [GraphQLIgnore]
+        public IEnumerable<ScalarType> GetScalars() => throw new NotImplementedException();
+
+        [GraphQLIgnore]
+        public IEnumerable<UnionType> GetUnions() => throw new NotImplementedException();
+
+        [GraphQLIgnore]
+        public IEnumerable<InterfaceType> GetInterfaces() => throw new NotImplementedException();
+
+        [GraphQLIgnore]
+        public IEnumerable<ObjectType> GetObjects() => throw new NotImplementedException();
+
+        [GraphQLIgnore]
+        public IEnumerable<Directive> GetDirectives() => throw new NotImplementedException();
     }
 }
