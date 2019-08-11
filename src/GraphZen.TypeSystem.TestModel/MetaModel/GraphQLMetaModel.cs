@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 
 // ReSharper disable AssignNullToNotNullAttribute
@@ -11,14 +12,14 @@ namespace GraphZen.MetaModel
     public static class GraphQLMetaModel
     {
         [NotNull]
-        public static Vector EnumValue() => new Vector<IEnumValueDefinition, IMutableEnumValueDefinition>(nameof(EnumValue)) {
+        public static Vector EnumValue() => new Vector<IEnumValueDefinition, IMutableEnumValueDefinition, EnumValue, EnumValueDefinition>(nameof(EnumValue)) {
             Name(), Description(),
             //DirectiveAnnotations()
             // // new LeafElement("CustomValue", null) { Optional = true }
         }.SetConventions("ViaClrEnumValue");
 
         [NotNull]
-        public static Vector EnumType() => new Vector<IEnumTypeDefinition, IMutableEnumTypeDefinition>(nameof(EnumType))
+        public static Vector EnumType() => new Vector<IEnumTypeDefinition, IMutableEnumTypeDefinition, EnumType, EnumTypeDefinition>(nameof(EnumType))
         {
             Name(), Description(),
             //DirectiveAnnotations(),
@@ -26,7 +27,7 @@ namespace GraphZen.MetaModel
         }.SetConventions("ViaClrEnum");
 
 
-        public static Vector ScalarType() => new Vector<IScalarTypeDefinition, IMutableScalarTypeDefinition>(nameof(ScalarType))
+        public static Vector ScalarType() => new Vector<IScalarTypeDefinition, IMutableScalarTypeDefinition, ScalarType, ScalarTypeDefinition>(nameof(ScalarType))
             {
                 Name(), Description()
                 // DirectiveAnnotations()
@@ -39,7 +40,7 @@ namespace GraphZen.MetaModel
 
         [NotNull]
         public static Vector InterfaceType() =>
-            new Vector<IScalarTypeDefinition, IMutableScalarTypeDefinition>(nameof(InterfaceType))
+            new Vector<IInterfaceTypeDefinition, IMutableInterfaceTypeDefinition, InterfaceType, InterfaceTypeDefinition>(nameof(InterfaceType))
             {
                 Name(), Description(),
                 // DirectiveAnnotations(), 
@@ -47,7 +48,7 @@ namespace GraphZen.MetaModel
             }.SetConventions("ViaClrInterface");
 
         [NotNull]
-        public static Vector ObjectType() => new Vector<IObjectTypeDefinition, IMutableObjectTypeDefinition>(nameof(ObjectType))
+        public static Vector ObjectType() => new Vector<IObjectTypeDefinition, IMutableObjectTypeDefinition, ObjectType, ObjectTypeDefinition>(nameof(ObjectType))
         {
             Name(),
             Description(),
@@ -57,7 +58,7 @@ namespace GraphZen.MetaModel
 
 
         [NotNull]
-        public static Vector UnionType() => new Vector<IUnionTypeDefinition, IMutableUnionTypeDefinition>(nameof(UnionType))
+        public static Vector UnionType() => new Vector<IUnionTypeDefinition, IMutableUnionTypeDefinition, UnionType, UnionTypeDefinition>(nameof(UnionType))
         {
             Name(),
             Description(),
@@ -67,7 +68,7 @@ namespace GraphZen.MetaModel
 
         [NotNull]
         public static Vector InputObjectType() =>
-            new Vector<IInputObjectTypeDefinition, IMutableInputObjectTypeDefinition>(nameof(InputObjectType))
+            new Vector<IInputObjectTypeDefinition, IMutableInputObjectTypeDefinition, InputObjectType, InputObjectTypeDefinition>(nameof(InputObjectType))
             {
                 Name(), Description(),
                 // DirectiveAnnotations(),
@@ -86,7 +87,7 @@ namespace GraphZen.MetaModel
         };
 
         [NotNull]
-        public static Vector Directive(bool includeDirectives) => new Vector<IDirectiveDefinition, IMutableDirectiveDefinition>(nameof(Directive))
+        public static Vector Directive(bool includeDirectives) => new Vector<IDirectiveDefinition, IMutableDirectiveDefinition, Directive, DirectiveDefinition>(nameof(Directive))
         {
             Name(),
             Description(),
@@ -104,7 +105,7 @@ namespace GraphZen.MetaModel
 
 
         [NotNull]
-        public static Vector Schema() => new Vector<ISchemaDefinition, IMutableSchemaDefinition>(nameof(Schema))
+        public static Vector Schema() => new Vector<ISchemaDefinition, IMutableSchemaDefinition, Schema, SchemaDefinition>(nameof(Schema))
         {
             Description(),
             // DirectiveAnnotations(),
@@ -122,7 +123,7 @@ namespace GraphZen.MetaModel
 
 
         [NotNull]
-        public static Vector Field() => new Vector<IFieldDefinition, IMutableFieldDefinition>(nameof(Field))
+        public static Vector Field() => new Vector<IFieldDefinition, IMutableFieldDefinition, Field, FieldDefinition>(nameof(Field))
         {
             Name(),
             Description(),
@@ -141,7 +142,7 @@ namespace GraphZen.MetaModel
         [NotNull]
         public static Vector InputValue([NotNull] string name, bool includeDirectives = true)
         {
-            var inputValue = new Vector<IInputValueDefinition, IMutableInputValueDefinition>(name)
+            var inputValue = new Vector<IInputValueDefinition, IMutableInputValueDefinition, InputValue, InputValueDefinition>(name)
             {
                 Name(),
                 Description()

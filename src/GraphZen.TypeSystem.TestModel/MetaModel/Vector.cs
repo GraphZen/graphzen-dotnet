@@ -5,15 +5,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
 
 namespace GraphZen.MetaModel
 {
 
-    public class Vector<TMarker, TMutableMarker> : Vector where TMutableMarker : TMarker
+    public class Vector<TMarker, TMutableMarker, TMember, TMemberDefinition> : Vector
+        where TMutableMarker : TMarker
+        where TMemberDefinition : MemberDefinition, TMutableMarker
+        where TMember : Member, TMarker
     {
-        public Vector([NotNull] string name) : base(name, typeof(TMarker), typeof(TMutableMarker))
+        public Vector([NotNull] string name) : base(name, typeof(TMarker), typeof(TMutableMarker), typeof(TMember), typeof(TMemberDefinition))
         {
         }
+
     }
 
     public abstract class Vector : Element, IEnumerable<Element>
@@ -21,11 +26,14 @@ namespace GraphZen.MetaModel
         [NotNull] private readonly List<Element> _elements = new List<Element>();
 
         public Vector([NotNull] string name,
-        Type markerInterfaceType, Type mutableMarkerInterfaceType
-
-        ) : base(name, markerInterfaceType, mutableMarkerInterfaceType)
+        Type markerInterfaceType, Type mutableMarkerInterfaceType, Type memberType, Type memberDefinitionType) : base(name, markerInterfaceType, mutableMarkerInterfaceType)
         {
+            MemberType = memberType;
+            MemberDefinitionType = memberDefinitionType;
         }
+
+        public Type MemberType { get; }
+        public Type MemberDefinitionType { get; }
 
         public IEnumerator<Element> GetEnumerator() => _elements.GetEnumerator();
 

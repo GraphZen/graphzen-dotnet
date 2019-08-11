@@ -76,17 +76,21 @@ namespace GraphZen
             return tests;
         }
 
-        
+
 
         public IEnumerable<TestClass> GenerateCasesForVector(ImmutableArray<Element> parents, Vector vector) =>
             throw new NotImplementedException();
 
-        public static string GetCollectionTestBaseClassName(Collection leaf, Vector parent)
+        public static string GetCollectionTestBaseClassName(Collection collection, Vector parent)
         {
             var typeName = typeof(CollectionElementConfigurationTests<,,,,,>).Name.Split("`")[0];
-            throw new NotImplementedException();
 
-            // return $"{typeName}<{leaf.MarkerInterfaceType.Name}, {leaf.MutableMarkerInterfaceType.Name}, {parent.Name}Definition, {parent.Name}, {leaf.ElementType.Name}>";
+            return $@"{typeName}<{collection.MarkerInterfaceType.Name}, 
+                                 {collection.MutableMarkerInterfaceType.Name}, 
+                                 {parent.MemberDefinitionType.Name}, 
+                                 {parent.MemberType.Name}, 
+                                 {collection.CollectionItem.MemberDefinitionType.Name},
+                                 {collection.CollectionItem.MemberType.Name}>";
         }
 
         public static string GetLeafTestBaseClassName(LeafElement leaf, Vector parent)
@@ -94,7 +98,7 @@ namespace GraphZen
             var typeName = typeof(LeafElementConfigurationTests<,,,,>).Name.Split("`")[0];
 
             return
-                $"{typeName}<{leaf.MarkerInterfaceType.Name}, {leaf.MutableMarkerInterfaceType.Name}, {parent.Name}Definition, {parent.Name}, {leaf.ElementType.Name}>";
+                $"{typeName}<{leaf.MarkerInterfaceType.Name}, {leaf.MutableMarkerInterfaceType.Name}, {parent.MemberDefinitionType.Name}, {parent.MemberType.Name}, {leaf.ElementType.Name}>";
         }
 
         public void WriteClassFile(string name, string basename, bool @abstract, bool generated,
@@ -208,8 +212,8 @@ public override bool DefinedByDataAnnotation {{ get; }} = {(conventionContext &&
             }
 
             return leafTests;
-        } 
-        
+        }
+
         public TestClass GenerateCasesCollection(ImmutableArray<Element> parents, Collection collection)
         {
             var parent = parents[parents.Length - 1] as Vector;

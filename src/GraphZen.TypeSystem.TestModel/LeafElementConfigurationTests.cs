@@ -82,10 +82,14 @@ namespace GraphZen
     }
 
 
-    public abstract class CollectionElementConfigurationTests<TMarker,
+    public abstract class CollectionElementConfigurationTests<
+        TMarker,
         TMutableMarker,
         TParentMemberDefinition,
-        TParentMember, TCollectionItemDefinition, TCollectionItem> : ElementConfigurationTests<TMarker, TMutableMarker,
+        TParentMember, 
+        TCollectionItemDefinition, 
+        TCollectionItem> : 
+        ElementConfigurationTests<TMarker, TMutableMarker,
         TParentMemberDefinition, TParentMember>
         where TMutableMarker : TMarker
         where TParentMemberDefinition : MemberDefinition, TMutableMarker
