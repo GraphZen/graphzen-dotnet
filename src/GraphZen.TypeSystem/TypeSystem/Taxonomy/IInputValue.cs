@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IInputValue : IInputValueDefinition, ISyntaxConvertable
+    public interface IInputValue : IInputValueDefinition, ISyntaxConvertable 
     {
         [NotNull]
         new IGraphQLType InputType { get; }

@@ -8,6 +8,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IMutableEnumValueDefinition : IEnumValueDefinition, IMutableAnnotatableDefinition,
         IMutableNamed,
+        IMutableDescription,
         IMutableDeprecation
     {
         [CanBeNull]

@@ -8,6 +8,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IMutableFieldDefinition : IFieldDefinition, IMutableAnnotatableDefinition,
         IMutableNamed,
+        IMutableDescription,
         IMutableArgumentsContainerDefinition,
         IMutableDeprecation
     {

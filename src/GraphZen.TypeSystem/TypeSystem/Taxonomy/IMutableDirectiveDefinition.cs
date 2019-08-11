@@ -11,7 +11,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMutableArgumentsContainerDefinition,
         IMutableNamed,
         IMutableDescription
-
     {
     }
 }

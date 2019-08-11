@@ -13,5 +13,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     }
 
 
+
     // ReSharper disable once UnusedTypeParameter
 }

@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.MetaModel;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
@@ -54,6 +56,46 @@ namespace GraphZen
         }
     }
 
+
+
+    public abstract class ElementConfigurationFixture<
+        TMarker,
+        TDefMarker,
+        TMutableDefMarker,
+        TParentMemberDefinition,
+        TParentMember> : IElementConfigurationFixture
+        where TMarker : TDefMarker
+        where TMutableDefMarker : TDefMarker
+        where TParentMemberDefinition : MemberDefinition, TMutableDefMarker
+        where TParentMember : Member, TMarker
+
+    {
+        public abstract void DefineParent(SchemaBuilder sb, string parentName);
+
+        Member IElementConfigurationFixture.GetParent(Schema schema, string parentName) =>
+            GetParent(schema, parentName);
+
+        MemberDefinition IElementConfigurationFixture.GetParent(SchemaBuilder schemaBuilder, string parentName) =>
+            GetParent(schemaBuilder, parentName);
+
+        public virtual void DefineParentConventionally(SchemaBuilder sb, out string parentName) =>
+            throw new NotImplementedException(NotImplementedMessage(nameof(DefineParentConventionally), false));
+
+        public virtual void DefineParentConventionallyWithDataAnnotation(SchemaBuilder sb, out string parentName) =>
+            throw new NotImplementedException(
+                NotImplementedMessage(nameof(DefineParentConventionallyWithDataAnnotation), false));
+
+        protected string NotImplementedMessage(string memberName, bool baseClass = true) =>
+            $"implement '{memberName}' in type '{GetType().Name}{(baseClass ? "__Base" : "")}'";
+
+        public abstract TParentMemberDefinition GetParent(SchemaBuilder schemaBuilder,
+            string parentName);
+
+        public abstract TParentMember GetParent(Schema schema, string parentName);
+    }
+
+
+
     public abstract class ElementConfigurationTests<TMarker,
         TMutableMarker,
         TParentMemberDefinition,
@@ -81,14 +123,101 @@ namespace GraphZen
         public abstract TParentMember GetParentByName(Schema schema, string parentName);
     }
 
+    public abstract class CollectionElementConfigurationFixture<
+        TMarker,
+        TDefMarker,
+        TMutableDefMarker,
+                TCollectionItemDefinition,
+        TCollectionItem,
+    TParentMemberDefinition,
+        TParentMember
+    > :
+        ElementConfigurationFixture<TMarker, TDefMarker, TMutableDefMarker,
+            TParentMemberDefinition, TParentMember>, ICollectionElementConfigurationFixture
+        where TMutableDefMarker : TDefMarker
+        where TParentMemberDefinition : MemberDefinition, TMutableDefMarker
+        where TParentMember : Member, TMarker
+        where TCollectionItemDefinition : MemberDefinition, IMutableNamed
+        where TCollectionItem : Member, INamed
+        where TMarker : TDefMarker
+    {
+        [NotNull]
+        public abstract IReadOnlyDictionary<string, TCollectionItemDefinition> GetCollection(TParentMemberDefinition parent);
+
+        [NotNull]
+        public abstract IReadOnlyDictionary<string, TCollectionItem> GetCollection(TParentMember parent);
+
+        public Type CollectionItemMemberType { get; } = typeof(TCollectionItem);
+        public Type CollectionItemMemberDefinitionType { get; } = typeof(TCollectionItemDefinition);
+
+        public IReadOnlyDictionary<string, IMutableNamed>
+            GetCollection(SchemaBuilder sb, string parentName) => GetCollection(GetParent(sb, parentName))
+            .ToDictionary(_ => _.Key, _ => _.Value as IMutableNamed);
+
+        public IReadOnlyDictionary<string, INamed> GetCollection(Schema schema, string parentName) =>
+            GetCollection(GetParent(schema, parentName)).ToDictionary(_ => _.Key, _ => _.Value as INamed);
+
+        public abstract ConfigurationSource? FindItemIgnoredConfigurationSource(TParentMemberDefinition parent, string name);
+
+        public ConfigurationSource? FindItemIgnoredConfigurationSource(SchemaBuilder sb, string parentName, string name)
+            => FindItemIgnoredConfigurationSource(GetParent(sb, parentName), name);
+
+        public abstract void AddItem(SchemaBuilder sb, string parentName, string name);
+        public abstract void IgnoreItem(SchemaBuilder sb, string parentName, string name);
+        public abstract void UnignoreItem(SchemaBuilder sb, string parentName, string name);
+        public abstract void RenameItem(SchemaBuilder sb, string parentName, string name, string newName);
+        ConfigurationSource? ICollectionElementConfigurationFixture.FindIgnoredItemConfigurationSource(SchemaBuilder sb, string parentName, string itemName) => throw new NotImplementedException();
+    }
+
+
+
+    public class ObjectFields_Explicit : ObjectFields {}
+
+
+    public abstract class ObjectFields : CollectionElementConfigurationFixture<IFieldsContainer,
+        IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field, ObjectTypeDefinition, ObjectType>
+    {
+        public override void DefineParent(SchemaBuilder sb, string parentName) => sb.Object(parentName);
+
+        public override ObjectType GetParent(Schema schema, string parentName) => throw new NotImplementedException();
+
+        public override ObjectTypeDefinition GetParent(SchemaBuilder schemaBuilder, string parentName) => throw new NotImplementedException();
+
+        public override IReadOnlyDictionary<string, FieldDefinition> GetCollection(ObjectTypeDefinition parent) => throw new NotImplementedException();
+
+        public override IReadOnlyDictionary<string, Field> GetCollection(ObjectType parent) => throw new NotImplementedException();
+
+        public override ConfigurationSource? FindItemIgnoredConfigurationSource(ObjectTypeDefinition parent, string name) => throw new NotImplementedException();
+
+        public override void AddItem(SchemaBuilder sb, string parentName, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 
     public abstract class CollectionElementConfigurationTests<
         TMarker,
         TMutableMarker,
         TParentMemberDefinition,
-        TParentMember, 
-        TCollectionItemDefinition, 
-        TCollectionItem> : 
+        TParentMember,
+        TCollectionItemDefinition,
+        TCollectionItem> :
         ElementConfigurationTests<TMarker, TMutableMarker,
         TParentMemberDefinition, TParentMember>
         where TMutableMarker : TMarker

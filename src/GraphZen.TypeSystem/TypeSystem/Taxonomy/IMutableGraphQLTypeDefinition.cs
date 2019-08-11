@@ -8,7 +8,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IMutableGraphQLTypeDefinition : IGraphQLTypeDefinition, IMutableAnnotatableDefinition,
         IMutableClrType,
-        IMutableNamed
+        IMutableNamed, IMutableDescription
     {
     }
 }

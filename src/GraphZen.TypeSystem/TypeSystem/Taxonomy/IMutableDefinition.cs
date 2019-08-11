@@ -7,7 +7,7 @@ using GraphZen.TypeSystem.Internal;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableDefinition : IMemberDefinition, IMutableDescription
+    public interface IMutableDefinition : IMemberDefinition
     {
         ConfigurationSource GetConfigurationSource();
     }
