@@ -83,6 +83,8 @@ namespace GraphZen
 
         public static string GetCollectionTestBaseClassName(Collection collection, Vector parent)
         {
+            Check.NotNull(collection, nameof(collection));
+            Check.NotNull(parent, nameof(parent));
             var typeName = typeof(CollectionElementConfigurationTests<,,,,,>).Name.Split("`")[0];
 
             return $@"{typeName}<{collection.MarkerInterfaceType.Name}, 
