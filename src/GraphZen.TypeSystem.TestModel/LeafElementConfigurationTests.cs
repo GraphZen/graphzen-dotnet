@@ -14,7 +14,7 @@ using Xunit;
 
 namespace GraphZen
 {
-    public abstract class ObjectType_Fields_CollectionConfigurationTests__Base : CollectionElementConfigurationTests<
+    public abstract class ObjectType_Fields_CollectionConfigurationTests_Base : CollectionElementConfigurationTests<
           IFieldsContainerDefinition,
           IMutableFieldsContainerDefinition,
           ObjectTypeDefinition, ObjectType, FieldDefinition, Field

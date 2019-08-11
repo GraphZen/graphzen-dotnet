@@ -58,10 +58,7 @@ namespace GraphZen
                 {
                     case Collection collection:
                         tests.Add(GenerateCasesCollection(newParents, collection));
-                        if (collection.CollectionItem != null)
-                        {
-                            tests.AddRange(GenerateCode(newParents.Add(collection), collection.CollectionItem));
-                        }
+                        tests.AddRange(GenerateCode(newParents.Add(collection), collection.CollectionItem));
 
                         break;
                     case LeafElement leaf:

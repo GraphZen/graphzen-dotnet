@@ -8,19 +8,20 @@ namespace GraphZen.MetaModel
 {
     public class Collection<TMarker, TMutableMarker> : Collection where TMutableMarker : TMarker
     {
-        public Collection([NotNull] string name, [CanBeNull] Vector collectionItem) : base(name, collectionItem, typeof(TMarker), typeof(TMutableMarker))
+        public Collection([NotNull] string name, Vector collectionItem) : base(name, Check.NotNull(collectionItem, nameof(collectionItem)), typeof(TMarker), typeof(TMutableMarker))
         {
         }
     }
     public abstract class Collection : Element
     {
-        public Collection([NotNull] string name, [CanBeNull] Vector collectionItem,
+        public Collection([NotNull] string name,[NotNull] Vector collectionItem,
          Type markerInterfaceType, Type mutableMarkerInterfaceType
         ) : base(name, markerInterfaceType, mutableMarkerInterfaceType)
         {
             CollectionItem = collectionItem;
         }
 
+        [NotNull]
         public Vector CollectionItem { get; }
     }
 }
