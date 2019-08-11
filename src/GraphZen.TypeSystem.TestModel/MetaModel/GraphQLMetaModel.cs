@@ -5,7 +5,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 
-// ReSharper disable AssignNullToNotNullAttribute
 
 namespace GraphZen.MetaModel
 {
@@ -27,6 +26,7 @@ namespace GraphZen.MetaModel
         }.SetConventions("ViaClrEnum");
 
 
+        [NotNull]
         public static Vector ScalarType() => new Vector<IScalarTypeDefinition, IMutableScalarTypeDefinition, ScalarType, ScalarTypeDefinition>(nameof(ScalarType))
             {
                 Name(), Description()
@@ -63,7 +63,7 @@ namespace GraphZen.MetaModel
             Name(),
             Description(),
             // DirectiveAnnotations(), // new LeafElement("ClrType", null),
-            new Collection<IMemberTypesContainerDefinition, IMutableMemberTypesContainerDefinition>("MemberTypes", null)
+            new Collection<IMemberTypesContainerDefinition, IMutableMemberTypesContainerDefinition>("MemberTypes", ObjectType(), false)
         };
 
         [NotNull]
@@ -134,9 +134,11 @@ namespace GraphZen.MetaModel
         [NotNull]
         private static Vector Argument(bool includeDirectives) => InputValue(nameof(Argument), includeDirectives);
 
+        [NotNull]
         public static Collection Arguments(bool includeDirectives, params string[] argumentConventions) =>
             new Collection<IArgumentsContainerDefinition, IMutableArgumentsContainerDefinition>(nameof(Arguments), Argument(includeDirectives).SetConventions(argumentConventions));
 
+        [NotNull]
         public static Vector InputField() => InputValue(nameof(InputField)).SetConventions("ViaClrProperty");
 
         [NotNull]
