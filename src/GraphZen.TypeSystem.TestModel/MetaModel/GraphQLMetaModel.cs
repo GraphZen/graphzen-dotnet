@@ -109,13 +109,13 @@ namespace GraphZen.MetaModel
         {
             Description(),
             // DirectiveAnnotations(),
-            // new Collection("Directives", Directive(false)),
+            new Collection<IDirectivesContainerDefinition, IMutableDirectivesContainerDefinition>("Directives", Directive(false)),
             new Collection<IObjectTypesContainerDefinition, IMutableObjectTypesContainerDefinition>("Objects", ObjectType()).SetConventions("ViaClrClasses"),
-            //new Collection("Interfaces", InterfaceType()),
-            //new Collection("Unions", UnionType()),
-            //new Collection("Scalars", ScalarType()),
-            //new Collection("Enums", EnumType()),
-            //new Collection("InputObjects", InputObjectType())
+            new Collection<IInterfaceTypesContainerDefinition, IMutableInterfaceTypesContainerDefinition>("Interfaces", InterfaceType()),
+            new Collection<IUnionTypesContainerDefinition, IMutableUnionTypesContainerDefinition>("Unions", UnionType()),
+            new Collection<IScalarTypesContainerDefinition, IMutableScalarTypesContainerDefinition>("Scalars", ScalarType()),
+            new Collection<IEnumTypesContainerDefinition, IMutableEnumTypesContainerDefinition>("Enums", EnumType()),
+            new Collection<IInputObjectTypesContainerDefinition, IMutableInputObjectTypesContainerDefinition>("InputObjects", InputObjectType())
             // new LeafElement("QueryType", ),
             // new LeafElement("MutationType", null),
             // new LeafElement("SubscriptionType", null)
