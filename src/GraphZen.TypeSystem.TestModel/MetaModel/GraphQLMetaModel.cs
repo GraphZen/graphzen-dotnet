@@ -132,19 +132,23 @@ namespace GraphZen.MetaModel
         }.SetConventions("ViaClrMethod", "ViaClrProperty");
 
         [NotNull]
-        private static Vector Argument(bool includeDirectives) => InputValue(nameof(Argument), includeDirectives);
+        private static Vector Argument(bool includeDirectives) => InputValue<IArgumentDefinition, IMutableArgumentDefinition, Argument, ArgumentDefinition>(nameof(Argument), includeDirectives);
 
         [NotNull]
         public static Collection Arguments(bool includeDirectives, params string[] argumentConventions) =>
             new Collection<IArgumentsContainerDefinition, IMutableArgumentsContainerDefinition>(nameof(Arguments), Argument(includeDirectives).SetConventions(argumentConventions));
 
         [NotNull]
-        public static Vector InputField() => InputValue(nameof(InputField)).SetConventions("ViaClrProperty");
+        public static Vector InputField() => InputValue<IInputFieldDefinition, IMutableInputFieldDefinition, InputField, InputFieldDefinition>(nameof(InputField)).SetConventions("ViaClrProperty");
 
         [NotNull]
-        public static Vector InputValue([NotNull] string name, bool includeDirectives = true)
+        public static Vector InputValue<TMarker, TMutableMarker, TMember, TMemberDef>([NotNull] string name, bool includeDirectives = true)
+        where TMarker : IInputValueDefinition
+        where TMutableMarker : TMarker, IMutableInputValueDefinition
+        where TMember : InputValue, TMarker
+        where TMemberDef : InputValueDefinition, TMutableMarker
         {
-            var inputValue = new Vector<IInputValueDefinition, IMutableInputValueDefinition, InputValue, InputValueDefinition>(name)
+            var inputValue = new Vector<TMarker, TMutableMarker, TMember, TMemberDef>(name)
             {
                 Name(),
                 Description()
