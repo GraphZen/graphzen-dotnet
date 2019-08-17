@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Objects.Fields;
@@ -22,11 +23,12 @@ namespace GraphZen
             yield return new ObjectFields_Explicit();
         }
 
-        private void ForEachFixture(
-            [NotNull] Action<ICollectionElementConfigurationFixture> test)
+
+        private static void TestFixtures([NotNull] Action<ICollectionElementConfigurationFixture> test,
+            IEnumerable<ICollectionElementConfigurationFixture> fixtures)
         {
             Check.NotNull(test, nameof(test));
-            foreach (var fixture in GetFixtures())
+            foreach (var fixture in fixtures)
             {
                 try
                 {
@@ -45,11 +47,23 @@ Inner exception:
             }
         }
 
+        private void TestFixtures(
+            [NotNull] Action<ICollectionElementConfigurationFixture> test)
+        {
+            TestFixtures(test, GetFixtures());
+        }
+
+        private void TestFixtures<T>([NotNull] Action<ICollectionElementConfigurationFixture> test) where T : ICollectionElementConfigurationFixture
+        {
+            TestFixtures(test, GetFixtures().OfType<T>() as IEnumerable<ICollectionElementConfigurationFixture>);
+            throw new Exception($"{typeof(T).Name} was successful, but remove type parameter to test all fixtures");
+        }
+
 
         [Fact]
         public void when_item_added_explicitly_item_configurationSource_should_be_explicit()
         {
-            ForEachFixture(fixture =>
+            TestFixtures(fixture =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -74,7 +88,7 @@ Inner exception:
         [Fact]
         public void when_item_added_explicitly_item_name_configurationSource_should_be_explicit()
         {
-            ForEachFixture(fixture =>
+            TestFixtures(fixture =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -95,7 +109,7 @@ Inner exception:
         public void
             when_item_added_explicitly_then_ignored_explicitly_item_ignored_configuration_source_should_be_explicit()
         {
-            ForEachFixture(fixture =>
+            TestFixtures(fixture =>
             {
                 var itemName = "addedExplicitly";
                 var parentName = "parent";
@@ -113,7 +127,7 @@ Inner exception:
         [Fact]
         public void when_item_added_explicitly_then_ignored_explicitly_item_should_be_removed()
         {
-            ForEachFixture(fixture =>
+            TestFixtures(fixture =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -138,7 +152,7 @@ Inner exception:
         [Fact]
         public void when_item_added_explicitly_then_ignored_then_unignored_and_re_added_should_exist()
         {
-            ForEachFixture(fixture =>
+            TestFixtures(fixture =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -165,7 +179,7 @@ Inner exception:
         public void
             when_item_added_explicitly_then_ignored_then_unignored_explicitly_ignored_configuration_source_should_be_null()
         {
-            ForEachFixture(fixture =>
+            TestFixtures(fixture =>
             {
                 var itemName = "addedExplicitly";
                 var parentName = "parent";
@@ -182,7 +196,7 @@ Inner exception:
 
         [Fact]
         public void when_parent_defined_explicitly_collection_is_empty() =>
-            ForEachFixture(fixture =>
+            TestFixtures(fixture =>
             {
                 var parentName = "test";
                 var schema = Schema.Create(sb =>

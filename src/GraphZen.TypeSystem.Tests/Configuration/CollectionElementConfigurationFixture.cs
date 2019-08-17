@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -26,32 +27,60 @@ namespace GraphZen
         where TCollectionItem : Member, INamed
         where TMarker : TDefMarker
     {
-        [NotNull]
-        public abstract IReadOnlyDictionary<string, TCollectionItemDefinition> GetCollection([NotNull]TParentMemberDefinition parent);
-
-        [NotNull]
-        public abstract IReadOnlyDictionary<string, TCollectionItem> GetCollection([NotNull]TParentMember parent);
-
         public Type CollectionItemMemberType { get; } = typeof(TCollectionItem);
         public Type CollectionItemMemberDefinitionType { get; } = typeof(TCollectionItemDefinition);
 
-        public IReadOnlyDictionary<string, IMutableNamed>
-            GetCollection([NotNull]SchemaBuilder sb, [NotNull] string parentName) => GetCollection(GetParent(sb, parentName))
-            .ToDictionary(_ => _.Key, _ => _.Value as IMutableNamed);
+        public NamedCollection<IMutableNamed>
+            GetCollection([NotNull] SchemaBuilder sb, [NotNull] string parentName) =>
+            new DictionaryWrapper<TCollectionItemDefinition, IMutableNamed>(GetCollection(GetParent(sb, parentName)));
 
-        public IReadOnlyDictionary<string, INamed> GetCollection([NotNull]Schema schema, [NotNull] string parentName) =>
-            GetCollection(GetParent(schema, parentName)).ToDictionary(_ => _.Key, _ => _.Value as INamed);
+        public NamedCollection<INamed>
+            GetCollection([NotNull] Schema schema, [NotNull] string parentName) =>
+            new DictionaryWrapper<TCollectionItem, INamed>(
+GetCollection(GetParent(schema, parentName))
+                );
 
-        public abstract ConfigurationSource? FindIgnoredItemConfigurationSource([NotNull]TParentMemberDefinition parent, [NotNull]string name);
+
+        public abstract void AddItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name);
+        public abstract void IgnoreItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name);
+
+        public abstract void UnignoreItem([NotNull] SchemaBuilder sb, [NotNull] string parentName,
+            [NotNull] string name);
+
+        public ConfigurationSource? FindIgnoredItemConfigurationSource([NotNull] SchemaBuilder sb,
+            [NotNull] string parentName,
+            [NotNull] string itemName) => FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
+
+        [NotNull]
+        public abstract IReadOnlyDictionary<string, TCollectionItemDefinition> GetCollection(
+            [NotNull] TParentMemberDefinition parent);
+
+        [NotNull]
+        public abstract IReadOnlyDictionary<string, TCollectionItem> GetCollection([NotNull] TParentMember parent);
+
+        public abstract ConfigurationSource? FindIgnoredItemConfigurationSource(
+            [NotNull] TParentMemberDefinition parent, [NotNull] string name);
+
+        public abstract void RenameItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name,
+            [NotNull] string newName);
+
+        //public class CollectionWrapper<T>
+        //{
+        //    public CollectionWrapper([NotNull]IReadOnlyDictionary<string, TInner> innerDictionary)
+        //    {
+        //        InnerDictionary = innerDictionary;
+        //    }
+
+        //    private IReadOnlyDictionary<string, TInner> InnerDictionary { get; }
 
 
-        public abstract void AddItem([NotNull]SchemaBuilder sb, [NotNull] string parentName, [NotNull]string name);
-        public abstract void IgnoreItem([NotNull]SchemaBuilder sb, [NotNull]string parentName, [NotNull]string name);
-        public abstract void UnignoreItem([NotNull]SchemaBuilder sb, [NotNull]string parentName, [NotNull]string name);
 
-        public ConfigurationSource? FindIgnoredItemConfigurationSource([NotNull]SchemaBuilder sb, [NotNull] string parentName,
-           [NotNull] string itemName) => FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
+        //    public int Count => InnerDictionary.Count;
+        //    public bool ContainsKey(string key) => throw new NotImplementedException();
 
-        public abstract void RenameItem([NotNull]SchemaBuilder sb, [NotNull]string parentName, [NotNull]string name, [NotNull]string newName);
+        //    public bool TryGetValue(string key, out T value) => throw new NotImplementedException();
+
+        //    public T this[string key] => throw new NotImplementedException();
+        //}
     }
 }
