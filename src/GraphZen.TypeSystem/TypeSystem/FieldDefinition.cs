@@ -146,9 +146,9 @@ namespace GraphZen.TypeSystem
 
         public bool RemoveDeprecation(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
-        public ConfigurationSource? FindIgnoredArgumentConfigurationSource([NotNull] string fieldName)
+        public ConfigurationSource? FindIgnoredArgumentConfigurationSource([NotNull] string name)
         {
-            if (_ignoredArguments.TryGetValue(fieldName, out var cs))
+            if (_ignoredArguments.TryGetValue(name, out var cs))
             {
                 return cs;
             }
@@ -268,7 +268,7 @@ namespace GraphZen.TypeSystem
         {
             if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))
             {
-                argument = new ArgumentDefinition(name, ConfigurationSource.Convention, Builder.Schema,
+                argument = new ArgumentDefinition(name, configurationSource, Builder.Schema,
                     configurationSource, this, null);
                 _arguments[name] = argument;
             }

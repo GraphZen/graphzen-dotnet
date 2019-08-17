@@ -117,6 +117,20 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IFieldBuilder<TDeclaringType, TField, TContext> IgnoreArgument(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.IgnoreArgument(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IFieldBuilder<TDeclaringType, TField, TContext> UnignoreArgument(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreArgument(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
         public IFieldBuilder<TDeclaringType, TField, TContext> Deprecated(string reason)
         {
             Check.NotNull(reason, nameof(reason));

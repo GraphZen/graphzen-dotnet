@@ -27,15 +27,16 @@ namespace GraphZen
     {
         public DictionaryWrapper(IReadOnlyDictionary<string, TInner> innerDictionary)
         {
-            InnerDictionary = innerDictionary;
+            InnerDictionary = Check.NotNull(innerDictionary, nameof(innerDictionary));
         }
 
+        [NotNull]
         public IReadOnlyDictionary<string, TInner> InnerDictionary { get; }
 
 
         public override int Count => InnerDictionary.Count;
         public override bool ContainsKey(string key) => InnerDictionary.ContainsKey(key);
-        public override bool TryGetValue(string key, out T value)
+        public override bool TryGetValue([NotNull]string key, out T value)
         {
             if (InnerDictionary.TryGetValue(key, out var innerVal))
             {

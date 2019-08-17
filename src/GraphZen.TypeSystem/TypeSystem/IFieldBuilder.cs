@@ -10,7 +10,7 @@ namespace GraphZen.TypeSystem
 {
     public interface
         IFieldBuilder<out TDeclaringType, in TField, TContext> : IAnnotableBuilder<
-            IFieldBuilder<TDeclaringType, TField, TContext>> where TContext : GraphQLContext
+            IFieldBuilder<TDeclaringType, TField, TContext>>, IArgumentsContainerDefinitionBuilder<IFieldBuilder<TDeclaringType, TField, TContext>> where TContext : GraphQLContext
     {
         [NotNull]
         IFieldBuilder<TDeclaringType, object, TContext> FieldType(string type);
@@ -46,19 +46,6 @@ namespace GraphZen.TypeSystem
         [NotNull]
         IFieldBuilder<TDeclaringType, TField, TContext> Resolve(
             Func<TDeclaringType, dynamic, GraphQLContext, ResolveInfo, TField> resolver);
-
-        [NotNull]
-        IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type,
-            Action<InputValueBuilder> argumentBuilder = null);
-
-        [NotNull]
-        IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
-            Action<InputValueBuilder> argumentBuilder = null);
-
-
-        [NotNull]
-        IFieldBuilder<TDeclaringType, TField, TContext> Argument<TArg>(string name,
-            Action<InputValueBuilder> argumentBuilder = null);
 
         [NotNull]
         IFieldBuilder<TDeclaringType, TField, TContext> Deprecated(string reason);

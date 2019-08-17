@@ -9,7 +9,8 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.Objects.Fields
 {
-    public abstract class ObjectFields : CollectionElementConfigurationFixture<IFieldsContainer,
+    public abstract class ObjectFields : 
+        CollectionElementConfigurationFixture<IFieldsContainer,
         IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field, ObjectTypeDefinition,
         ObjectType>
     {
