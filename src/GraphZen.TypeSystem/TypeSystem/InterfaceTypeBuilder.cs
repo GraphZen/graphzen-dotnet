@@ -77,9 +77,19 @@ namespace GraphZen.TypeSystem
 
         public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField<TField>(Expression<Func<TInterface, TField>> fieldSelector) => throw new NotImplementedException();
 
-        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField(string fieldName) => throw new NotImplementedException();
+        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.IgnoreField(name, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public IInterfaceTypeBuilder<TInterface, TContext> UnignoreField(string fieldName) => throw new NotImplementedException();
+        public IInterfaceTypeBuilder<TInterface, TContext> UnignoreField(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreField(name, ConfigurationSource.Explicit);
+            return this;
+        }
 
         public IInterfaceTypeBuilder<TInterface, TContext> ResolveType(
             TypeResolver<TInterface, TContext> resolveTypeFn)

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
@@ -40,8 +38,8 @@ namespace GraphZen
         public NamedCollection<INamed>
             GetCollection([NotNull] Schema schema, [NotNull] string parentName) =>
             new DictionaryWrapper<TCollectionItem, INamed>(
-GetCollection(GetParent(schema, parentName))
-                );
+                GetCollection(GetParent(schema, parentName))
+            );
 
 
         public abstract void AddItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name);
@@ -75,7 +73,6 @@ GetCollection(GetParent(schema, parentName))
         //    }
 
         //    private IReadOnlyDictionary<string, TInner> InnerDictionary { get; }
-
 
 
         //    public int Count => InnerDictionary.Count;

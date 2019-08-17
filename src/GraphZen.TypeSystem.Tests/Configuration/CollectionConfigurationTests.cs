@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.Interfaces.Fields;
 using GraphZen.Objects.Fields;
 using GraphZen.Objects.Fields.Arguments;
 using GraphZen.TypeSystem;
@@ -19,6 +20,13 @@ namespace GraphZen
     [NoReorder]
     public class CollectionConfigurationTests
     {
+        [NotNull]
+        private IEnumerable<ICollectionElementConfigurationFixture> GetFixtures()
+        {
+            yield return new ObjectFields_Explicit();
+            yield return new ObjectField_Arguments_Explicit();
+            yield return new InterfaceFields_Explicit();
+        }
         [Fact]
         public void when_item_added_explicitly_item_configurationSource_should_be_explicit()
         {
@@ -168,12 +176,7 @@ namespace GraphZen
                 collection.Should().BeEmpty();
             });
 
-        [NotNull]
-        private IEnumerable<ICollectionElementConfigurationFixture> GetFixtures()
-        {
-            yield return new ObjectFields_Explicit();
-            yield return new ObjectField_Arguments_Explicit();
-        }
+
 
         private static void TestFixtures([NotNull] Action<ICollectionElementConfigurationFixture> test,
             IEnumerable<ICollectionElementConfigurationFixture> fixtures)
@@ -206,7 +209,7 @@ Inner exception:
 
         [UsedImplicitly]
         private void TestFixtures<T>([NotNull] Action<ICollectionElementConfigurationFixture> test)
-            where T :  ICollectionElementConfigurationFixture, new()
+            where T : ICollectionElementConfigurationFixture, new()
         {
             TestFixtures(test, GetFixtures().OfType<T>() as IEnumerable<ICollectionElementConfigurationFixture>);
             throw new Exception($"{typeof(T).Name} was successful, but remove type parameter to test all fixtures");
