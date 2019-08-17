@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen.TypeSystem.TestModel\GraphZen.TypeSystem.TestModel.csproj" />
     <ProjectReference Include="..\GraphZen\GraphZen.csproj" />
   </ItemGroup>
 

@@ -29,5 +29,9 @@ namespace GraphZen.TypeSystem
             var ast = Parser.ParseDocument(schemaDocument);
             return schemaBuilder.Build(ast);
         }
+
+        [NotNull]
+        internal static SchemaDefinition GetDefinition(this SchemaBuilder schemaBuilder) =>
+            Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<SchemaDefinition>();
     }
 }

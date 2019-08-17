@@ -33,7 +33,7 @@ namespace GraphZen
         {
             var solutionDir = GetSolutionDirectory();
             var genDir = Path.Combine(solutionDir.ToString(), "src", "GraphZen.TypeSystem.Tests",
-                "Configuration");
+                "ConfigurationOld");
             return genDir;
         }
 

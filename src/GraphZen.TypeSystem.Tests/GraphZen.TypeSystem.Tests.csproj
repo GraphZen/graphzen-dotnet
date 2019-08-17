@@ -16,9 +16,15 @@
       <DependentUpon>%(Filename)</DependentUpon>
       <DesignTime>true</DesignTime>
     </Compile>
-    <Folder Include="Configuration\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen.TypeSystem.TestModel\GraphZen.TypeSystem.TestModel.csproj" />
+    <ProjectReference Include="..\GraphZen.TestingInfrastructure\GraphZen.TestingInfrastructure.csproj" />
+    <ProjectReference Include="..\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Configuration\Schema\Objects\Directives\Arguments\" />
+    <Folder Include="Configuration\Schema\Objects\Fields\Arguments\" />
   </ItemGroup>
 </Project>
