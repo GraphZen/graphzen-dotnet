@@ -27,30 +27,31 @@ namespace GraphZen
         where TMarker : TDefMarker
     {
         [NotNull]
-        public abstract IReadOnlyDictionary<string, TCollectionItemDefinition> GetCollection(TParentMemberDefinition parent);
+        public abstract IReadOnlyDictionary<string, TCollectionItemDefinition> GetCollection([NotNull]TParentMemberDefinition parent);
 
         [NotNull]
-        public abstract IReadOnlyDictionary<string, TCollectionItem> GetCollection(TParentMember parent);
+        public abstract IReadOnlyDictionary<string, TCollectionItem> GetCollection([NotNull]TParentMember parent);
 
         public Type CollectionItemMemberType { get; } = typeof(TCollectionItem);
         public Type CollectionItemMemberDefinitionType { get; } = typeof(TCollectionItemDefinition);
 
         public IReadOnlyDictionary<string, IMutableNamed>
-            GetCollection(SchemaBuilder sb, string parentName) => GetCollection(GetParent(sb, parentName))
+            GetCollection([NotNull]SchemaBuilder sb, [NotNull] string parentName) => GetCollection(GetParent(sb, parentName))
             .ToDictionary(_ => _.Key, _ => _.Value as IMutableNamed);
 
-        public IReadOnlyDictionary<string, INamed> GetCollection(Schema schema, string parentName) =>
+        public IReadOnlyDictionary<string, INamed> GetCollection([NotNull]Schema schema, [NotNull] string parentName) =>
             GetCollection(GetParent(schema, parentName)).ToDictionary(_ => _.Key, _ => _.Value as INamed);
 
-        public abstract ConfigurationSource? FindItemIgnoredConfigurationSource(TParentMemberDefinition parent, string name);
+        public abstract ConfigurationSource? FindIgnoredItemConfigurationSource([NotNull]TParentMemberDefinition parent, [NotNull]string name);
 
-        public ConfigurationSource? FindItemIgnoredConfigurationSource(SchemaBuilder sb, string parentName, string name)
-            => FindItemIgnoredConfigurationSource(GetParent(sb, parentName), name);
 
-        public abstract void AddItem(SchemaBuilder sb, string parentName, string name);
-        public abstract void IgnoreItem(SchemaBuilder sb, string parentName, string name);
-        public abstract void UnignoreItem(SchemaBuilder sb, string parentName, string name);
-        public abstract void RenameItem(SchemaBuilder sb, string parentName, string name, string newName);
-        ConfigurationSource? ICollectionElementConfigurationFixture.FindIgnoredItemConfigurationSource(SchemaBuilder sb, string parentName, string itemName) => throw new NotImplementedException();
+        public abstract void AddItem([NotNull]SchemaBuilder sb, [NotNull] string parentName, [NotNull]string name);
+        public abstract void IgnoreItem([NotNull]SchemaBuilder sb, [NotNull]string parentName, [NotNull]string name);
+        public abstract void UnignoreItem([NotNull]SchemaBuilder sb, [NotNull]string parentName, [NotNull]string name);
+
+        public ConfigurationSource? FindIgnoredItemConfigurationSource([NotNull]SchemaBuilder sb, [NotNull] string parentName,
+           [NotNull] string itemName) => FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
+
+        public abstract void RenameItem([NotNull]SchemaBuilder sb, [NotNull]string parentName, [NotNull]string name, [NotNull]string newName);
     }
 }

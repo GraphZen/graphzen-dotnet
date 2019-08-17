@@ -19,7 +19,7 @@ namespace GraphZen
         [NotNull]
         private IEnumerable<ICollectionElementConfigurationFixture> GetFixtures()
         {
-            yield return new ObjectFields_Explicit_CollectionFixture();
+            yield return new ObjectFields_Explicit();
         }
 
         private void ForEachFixture(

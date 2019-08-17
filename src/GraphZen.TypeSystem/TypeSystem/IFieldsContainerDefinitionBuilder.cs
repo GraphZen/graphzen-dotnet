@@ -10,11 +10,9 @@ namespace GraphZen.TypeSystem
     public interface IFieldsContainerDefinitionBuilder<out TBuilder, TSource, TContext> where TContext : GraphQLContext
     {
         [NotNull]
-        TBuilder Field<TField>(string name,
-            Action<IFieldBuilder<TSource, TField, TContext>> fieldConfigurator = null);
+        TBuilder Field<TField>(string name, Action<IFieldBuilder<TSource, TField, TContext>> fieldConfigurator = null);
         [NotNull]
-        TBuilder Field(string name,
-                    Action<IFieldBuilder<TSource, object, TContext>> fieldConfigurator = null);
+        TBuilder Field(string name, Action<IFieldBuilder<TSource, object, TContext>> fieldConfigurator = null);
 
 
         [NotNull]
