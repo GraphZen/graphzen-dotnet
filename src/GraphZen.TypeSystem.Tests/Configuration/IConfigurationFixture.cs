@@ -3,7 +3,7 @@ using GraphZen.TypeSystem;
 
 namespace GraphZen
 {
-    public interface IElementConfigurationFixture
+    public interface IConfigurationFixture
     {
         void DefineParent(SchemaBuilder sb, string parentName);
         Member GetParent(Schema schema, string parentName);

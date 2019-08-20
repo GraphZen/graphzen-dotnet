@@ -128,38 +128,39 @@ namespace GraphZen.TypeSystem.Internal
                    ignoredMemberConfigurationSource.Overrides(configurationSource);
         }
 
-        public bool UnignoreArgument([NotNull]string name, ConfigurationSource configurationSource)
+        public bool UnignoreArgument([NotNull] string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredArgumentConfigurationSource(name);
             if (!configurationSource.Overrides(ignoredConfigurationSource))
             {
                 return false;
             }
+
             Definition.UnignoreArgument(name);
             return true;
         }
 
 
-        public bool IgnoreArgument(string argName, ConfigurationSource configurationSource)
+        public bool IgnoreArgument([NotNull] string name, ConfigurationSource configurationSource)
         {
-            var ignoredConfigurationSource = Definition.FindIgnoredArgumentConfigurationSource(argName);
+            var ignoredConfigurationSource = Definition.FindIgnoredArgumentConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)
             {
                 if (configurationSource.Overrides(ignoredConfigurationSource) &&
                     configurationSource != ignoredConfigurationSource)
                 {
-                    Definition.IgnoreArgument(argName, configurationSource);
+                    Definition.IgnoreArgument(name, configurationSource);
                     return true;
                 }
             }
 
-            var argument = Definition.FindArgument(argName);
+            var argument = Definition.FindArgument(name);
             if (argument != null)
             {
                 return IgnoreArgument(argument, configurationSource);
             }
 
-            Definition.IgnoreArgument(argName, configurationSource);
+            Definition.IgnoreArgument(name, configurationSource);
             return true;
         }
 

@@ -7,7 +7,7 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.Objects.Fields.Arguments
 {
-    public abstract class ObjectField_Arguments : CollectionElementConfigurationFixture<IArgumentsContainer,
+    public abstract class ObjectField_Arguments : CollectionConfigurationFixture<IArgumentsContainer,
         IArgumentsContainerDefinition, IMutableArgumentsContainerDefinition, ArgumentDefinition, Argument,
         FieldDefinition, Field>
     {

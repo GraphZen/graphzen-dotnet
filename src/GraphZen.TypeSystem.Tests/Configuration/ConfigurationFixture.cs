@@ -1,15 +1,14 @@
-﻿using System;
-using GraphZen.Infrastructure;
+﻿using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 
 namespace GraphZen
 {
-    public abstract class ElementConfigurationFixture<
+    public abstract class ConfigurationFixture<
         TMarker,
         TDefMarker,
         TMutableDefMarker,
         TParentMemberDefinition,
-        TParentMember> : IElementConfigurationFixture
+        TParentMember> : IConfigurationFixture
         where TMarker : TDefMarker
         where TMutableDefMarker : TDefMarker
         where TParentMemberDefinition : MemberDefinition, TMutableDefMarker
@@ -18,20 +17,20 @@ namespace GraphZen
     {
         public abstract void DefineParent([NotNull] SchemaBuilder sb, [NotNull] string parentName);
 
-        Member IElementConfigurationFixture.GetParent([NotNull] Schema schema, [NotNull] string parentName) =>
+        Member IConfigurationFixture.GetParent([NotNull] Schema schema, [NotNull] string parentName) =>
             GetParent(schema, parentName);
 
-        MemberDefinition IElementConfigurationFixture.GetParent([NotNull] SchemaBuilder schemaBuilder,
+        MemberDefinition IConfigurationFixture.GetParent([NotNull] SchemaBuilder schemaBuilder,
             [NotNull] string parentName) =>
             GetParent(schemaBuilder, parentName);
 
-        public virtual void DefineParentConventionally([NotNull] SchemaBuilder sb, [NotNull] out string parentName) =>
-            throw new NotImplementedException(NotImplementedMessage(nameof(DefineParentConventionally), false));
+        //public virtual void DefineParentConventionally([NotNull] SchemaBuilder sb, [NotNull] out string parentName) =>
+        //    throw new NotImplementedException(NotImplementedMessage(nameof(DefineParentConventionally), false));
 
-        public virtual void DefineParentConventionallyWithDataAnnotation([NotNull] SchemaBuilder sb,
-            [NotNull] out string parentName) =>
-            throw new NotImplementedException(
-                NotImplementedMessage(nameof(DefineParentConventionallyWithDataAnnotation), false));
+        //public virtual void DefineParentConventionallyWithDataAnnotation([NotNull] SchemaBuilder sb,
+        //    [NotNull] out string parentName) =>
+        //    throw new NotImplementedException(
+        //        NotImplementedMessage(nameof(DefineParentConventionallyWithDataAnnotation), false));
 
         protected string NotImplementedMessage(string memberName, bool baseClass = true) =>
             $"implement '{memberName}' in type '{GetType().Name}{(baseClass ? "__Base" : "")}'";

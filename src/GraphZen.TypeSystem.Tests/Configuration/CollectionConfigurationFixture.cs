@@ -7,7 +7,7 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen
 {
-    public abstract class CollectionElementConfigurationFixture<
+    public abstract class CollectionConfigurationFixture<
         TMarker,
         TDefMarker,
         TMutableDefMarker,
@@ -16,8 +16,8 @@ namespace GraphZen
         TParentMemberDefinition,
         TParentMember
     > :
-        ElementConfigurationFixture<TMarker, TDefMarker, TMutableDefMarker,
-            TParentMemberDefinition, TParentMember>, ICollectionElementConfigurationFixture
+        ConfigurationFixture<TMarker, TDefMarker, TMutableDefMarker,
+            TParentMemberDefinition, TParentMember>, ICollectionConfigurationFixture
         where TMutableDefMarker : TDefMarker
         where TParentMemberDefinition : MemberDefinition, TMutableDefMarker
         where TParentMember : Member, TMarker
@@ -44,10 +44,8 @@ namespace GraphZen
 
         public abstract void AddItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name);
         public abstract void IgnoreItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name);
-
         public abstract void UnignoreItem([NotNull] SchemaBuilder sb, [NotNull] string parentName,
             [NotNull] string name);
-
         public ConfigurationSource? FindIgnoredItemConfigurationSource([NotNull] SchemaBuilder sb,
             [NotNull] string parentName,
             [NotNull] string itemName) => FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);

@@ -36,7 +36,6 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource GetConfigurationSource() => _configurationSource;
 
-
         public void UpdateConfigurationSource(ConfigurationSource configurationSource) =>
             _configurationSource = _configurationSource.Max(configurationSource);
     }

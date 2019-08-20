@@ -1,32 +1,24 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Interfaces.Fields;
-using GraphZen.Objects.Fields;
-using GraphZen.Objects.Fields.Arguments;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using Xunit;
+// ReSharper disable AssignNullToNotNullAttribute
 
 // ReSharper disable PossibleNullReferenceException
 
 namespace GraphZen
 {
     [NoReorder]
-    public class CollectionConfigurationTests
+    public class ExplicitCollectionConfigurationTests : FixtureRunner<IExplicitCollectionConfigurationFixture>
     {
-        [NotNull]
-        private IEnumerable<ICollectionElementConfigurationFixture> GetFixtures()
-        {
-            yield return new ObjectFields_Explicit();
-            yield return new ObjectField_Arguments_Explicit();
-            yield return new InterfaceFields_Explicit();
-        }
+        protected override IEnumerable<IExplicitCollectionConfigurationFixture> GetFixtures() =>
+            ConfigurationFixtures.GetAll<IExplicitCollectionConfigurationFixture>();
+
         [Fact]
         public void when_item_added_explicitly_item_configurationSource_should_be_explicit()
         {
@@ -41,7 +33,7 @@ namespace GraphZen
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection[itemName].Should().NotBeNull();
                     defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
-                    (defCollection[itemName] as MemberDefinition).GetConfigurationSource().Should()
+                    defCollection[itemName].GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
                     defCollection.Count.Should().Be(1);
                 });
@@ -105,7 +97,7 @@ namespace GraphZen
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection[itemName].Should().NotBeNull();
                     defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
-                    (defCollection[itemName] as MemberDefinition).GetConfigurationSource().Should()
+                    defCollection[itemName].GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
                     defCollection.Count.Should().Be(1);
                     fixture.IgnoreItem(sb, parentName, itemName);
@@ -134,7 +126,7 @@ namespace GraphZen
                     defCollection.Count.Should().Be(1);
                     defCollection[itemName].Should().NotBeNull();
                     defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
-                    (defCollection[itemName] as MemberDefinition).GetConfigurationSource().Should()
+                    defCollection[itemName].GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
                 });
                 var collection = fixture.GetCollection(schema, parentName);
@@ -175,44 +167,5 @@ namespace GraphZen
                 var collection = fixture.GetCollection(schema, parentName);
                 collection.Should().BeEmpty();
             });
-
-
-
-        private static void TestFixtures([NotNull] Action<ICollectionElementConfigurationFixture> test,
-            IEnumerable<ICollectionElementConfigurationFixture> fixtures)
-        {
-            Check.NotNull(test, nameof(test));
-            foreach (var fixture in fixtures)
-            {
-                try
-                {
-                    test(fixture);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($@"Failed fixture:
-
-  {fixture.GetType().Name}  
-
-Inner exception: 
-
-{ex.GetType()}: {ex.Message}", ex);
-                }
-            }
-        }
-
-        private void TestFixtures(
-            [NotNull] Action<ICollectionElementConfigurationFixture> test)
-        {
-            TestFixtures(test, GetFixtures());
-        }
-
-        [UsedImplicitly]
-        private void TestFixtures<T>([NotNull] Action<ICollectionElementConfigurationFixture> test)
-            where T : ICollectionElementConfigurationFixture, new()
-        {
-            TestFixtures(test, GetFixtures().OfType<T>() as IEnumerable<ICollectionElementConfigurationFixture>);
-            throw new Exception($"{typeof(T).Name} was successful, but remove type parameter to test all fixtures");
-        }
     }
 }

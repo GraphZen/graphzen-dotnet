@@ -1,4 +1,4 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using GraphZen.TypeSystem.Taxonomy;
 namespace GraphZen.Interfaces.Fields
 {
     public abstract class InterfaceFields : 
-        CollectionElementConfigurationFixture<IFieldsContainer,
+        CollectionConfigurationFixture<IFieldsContainer,
         IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field, InterfaceTypeDefinition,
         InterfaceType>
     {
