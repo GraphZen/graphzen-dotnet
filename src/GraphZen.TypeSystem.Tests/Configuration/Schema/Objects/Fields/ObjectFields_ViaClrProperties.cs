@@ -7,23 +7,32 @@ namespace GraphZen.Objects.Fields
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
+
+        [GraphQLIgnore]
+        public class IgnoredType
+        {
+
+        }
         public class ExampleObject
         {
             public string HelloWorld { get; set; }
             [GraphQLName(DataAnnotationName)]
             public string NamedByDataAnnotation { get; set; }
             [GraphQLIgnore]
-            public string Ignored { get; set; }
+            public string IgnoredByDataAnnotation { get; set; }
+            public IgnoredType IgnoredByConvention { get; set; }
         }
 
         public CollectionConventionContext ConfigureViaConvention(SchemaBuilder sb)
         {
             sb.Object<ExampleObject>();
-            return new CollectionConventionContext()
+            return new CollectionConventionContext
             {
                 ParentName = nameof(ExampleObject),
                 ItemNamedByConvention = nameof(ExampleObject.HelloWorld).FirstCharToLower(),
-                ItemNamedByDataAnnotation = DataAnnotationName
+                ItemNamedByDataAnnotation = DataAnnotationName,
+                ItemIgnoredByConvention = nameof(ExampleObject.IgnoredByConvention),
+                ItemIgnoredByDataAnnotation = nameof(ExampleObject.IgnoredByDataAnnotation).FirstCharToLower()
             };
         }
     }

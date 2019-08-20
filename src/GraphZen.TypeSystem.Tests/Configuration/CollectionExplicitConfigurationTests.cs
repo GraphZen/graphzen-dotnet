@@ -168,5 +168,67 @@ namespace GraphZen
                 var collection = fixture.GetCollection(schema, parentName);
                 collection.Should().BeEmpty();
             });
+
+        [Fact]
+        public void item_added_explicitly()
+        {
+            TestFixtures(fixture =>
+            {
+                var parentName = "test";
+                var itemName = "item";
+                var schema = Schema.Create(sb =>
+                {
+                    fixture.DefineParent(sb, parentName);
+                    fixture.AddItem(sb, parentName, itemName);
+                    var defCollection = fixture.GetCollection(sb, parentName);
+                    defCollection[itemName].Should().NotBeNull();
+                    defCollection[itemName].GetConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                    defCollection[itemName].GetNameConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                });
+                var collection = fixture.GetCollection(schema, parentName);
+                collection[itemName].Should().NotBeNull();
+                collection[itemName].Name.Should().Be(itemName);
+            });
+        }
+
+        [Fact]
+        public void item_added_explicitly_then_renamed_explicitly()
+        {
+            TestFixtures(fixture =>
+            {
+                var parentName = "test";
+                var initialItemName = "item";
+                var changedItemName = "itemFinal";
+                var schema = Schema.Create(sb =>
+                {
+                    fixture.DefineParent(sb, parentName);
+                    fixture.AddItem(sb, parentName, initialItemName);
+                    var defCollection = fixture.GetCollection(sb, parentName);
+                    defCollection.Count.Should().Be(1);
+                    var initialItem = defCollection[initialItemName];
+                    defCollection[initialItemName].Should().NotBeNull();
+                    defCollection[initialItemName].GetConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                    defCollection[initialItemName].GetNameConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                    fixture.RenameItem(sb, parentName, initialItemName, changedItemName);
+                    defCollection.ContainsKey(initialItemName).Should().BeFalse();
+                    defCollection.Count.Should().Be(1);
+                    defCollection[changedItemName].Should().NotBeNull();
+                    defCollection[changedItemName].GetConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                    defCollection[changedItemName].GetNameConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                    var finalItem = defCollection[changedItemName];
+                    finalItem.Should().Be(initialItem);
+                });
+                var collection = fixture.GetCollection(schema, parentName);
+                collection.Count.Should().Be(1);
+                collection[changedItemName].Should().NotBeNull();
+                collection[changedItemName].Name.Should().Be(changedItemName);
+            });
+        }
     }
 }

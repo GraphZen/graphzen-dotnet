@@ -22,11 +22,8 @@ namespace GraphZen
                     {
                         throw new Exception($"{fixture.GetType().Name} needs to implement either {typeof(ICollectionConventionConfigurationFixture).Name} or {typeof(ICollectionExplicitConfigurationFixture).Name}");
                     }
-
                 }
-
             }
-
         }
     }
 }

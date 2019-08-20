@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using GraphZen.Infrastructure;
 
@@ -44,6 +45,7 @@ Inner exception:
         }
 
         [UsedImplicitly]
+        [DebuggerHidden]
         protected void TestFixtures<TFilter>([NotNull] Action<T> test)
             where TFilter : T, new()
         {

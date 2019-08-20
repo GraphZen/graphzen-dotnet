@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.Objects.Fields;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using Xunit;
@@ -81,7 +82,6 @@ namespace GraphZen
             {
                 CollectionConventionContext ctx = default;
 
-
                 var schema = Schema.Create(sb =>
                 {
                     ctx = fixture.ConfigureViaConvention(sb);
@@ -126,6 +126,93 @@ namespace GraphZen
                 var collection = fixture.GetCollection(schema, ctx.ParentName);
                 collection[explicitName].Should().NotBeNull();
                 collection[explicitName].Name.Should().Be(explicitName);
+            });
+        }
+
+        [Fact]
+        public void item_ignored_by_convention()
+        {
+            TestFixtures(fixture =>
+            {
+                CollectionConventionContext ctx = default;
+                var schema = Schema.Create(sb =>
+                {
+                    ctx = fixture.ConfigureViaConvention(sb);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
+                    defCollection.ContainsKey(ctx.ItemIgnoredByConvention).Should().BeFalse();
+
+                    //fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName,
+                    //    ctx.ItemIgnoredByConvention).Should().Be(ConfigurationSource.Convention);
+                });
+                var collection = fixture.GetCollection(schema, ctx.ParentName);
+                collection.ContainsKey(ctx.ItemIgnoredByConvention).Should().BeFalse();
+            });
+        }
+
+        [Fact]
+        public void item_ignored_by_convention_added_by_explicit_configuration()
+        {
+            TestFixtures(fixture =>
+            {
+                CollectionConventionContext ctx = default;
+                var schema = Schema.Create(sb =>
+                {
+                    ctx = fixture.ConfigureViaConvention(sb);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
+                    defCollection.ContainsKey(ctx.ItemIgnoredByConvention).Should().BeFalse();
+                    fixture.AddItem(sb, ctx.ParentName, ctx.ItemIgnoredByConvention);
+                    defCollection[ctx.ItemIgnoredByConvention].Should().NotBeNull();
+                    defCollection[ctx.ItemIgnoredByConvention].GetConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                    defCollection[ctx.ItemIgnoredByConvention].GetConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                });
+                var collection = fixture.GetCollection(schema, ctx.ParentName);
+                collection[ctx.ItemIgnoredByConvention].Should().NotBeNull();
+                collection[ctx.ItemIgnoredByConvention].Name.Should().Be(ctx.ItemIgnoredByConvention);
+            });
+        }
+
+        [Fact]
+        public void item_ignored_by_data_annotation()
+        {
+            TestFixtures(fixture =>
+            {
+                CollectionConventionContext ctx = default;
+                var schema = Schema.Create(sb =>
+                {
+                    ctx = fixture.ConfigureViaConvention(sb);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
+                    defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation).Should().BeFalse();
+                    fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName,
+                        ctx.ItemIgnoredByDataAnnotation).Should().Be(ConfigurationSource.DataAnnotation);
+                });
+                var collection = fixture.GetCollection(schema, ctx.ParentName);
+                collection.ContainsKey(ctx.ItemIgnoredByDataAnnotation).Should().BeFalse();
+            });
+        }
+
+        [Fact]
+        public void item_ignored_by_data_annotation_added_by_explicit_configuration()
+        {
+            TestFixtures(fixture =>
+            {
+                CollectionConventionContext ctx = default;
+                var schema = Schema.Create(sb =>
+                {
+                    ctx = fixture.ConfigureViaConvention(sb);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
+                    defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation).Should().BeFalse();
+                    fixture.AddItem(sb, ctx.ParentName, ctx.ItemIgnoredByDataAnnotation);
+                    defCollection[ctx.ItemIgnoredByDataAnnotation].Should().NotBeNull();
+                    defCollection[ctx.ItemIgnoredByDataAnnotation].GetConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                    defCollection[ctx.ItemIgnoredByDataAnnotation].GetConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                });
+                var collection = fixture.GetCollection(schema, ctx.ParentName);
+                collection[ctx.ItemIgnoredByDataAnnotation].Should().NotBeNull();
+                collection[ctx.ItemIgnoredByDataAnnotation].Name.Should().Be(ctx.ItemIgnoredByDataAnnotation);
             });
         }
     }
