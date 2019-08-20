@@ -5,6 +5,7 @@ namespace GraphZen
 {
     public interface ICollectionConventionConfigurationFixture : ICollectionConfigurationFixture
     {
-        CollectionConventionContext ConfigureViaConvention([NotNull] SchemaBuilder sb);
+        CollectionConventionContext GetContext();
+        void ConfigureParentConventionally([NotNull] SchemaBuilder sb);
     }
 }

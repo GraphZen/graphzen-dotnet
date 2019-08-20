@@ -14,7 +14,7 @@ namespace GraphZen.Objects.Fields
         IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field, ObjectTypeDefinition,
         ObjectType>
     {
-        public override void DefineParent(SchemaBuilder sb, string parentName) => sb.Object(parentName);
+        public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName) => sb.Object(parentName);
 
         public override ObjectType GetParent(Schema schema, string parentName) => schema.GetObject(parentName);
 

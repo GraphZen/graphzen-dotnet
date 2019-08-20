@@ -11,17 +11,16 @@ namespace GraphZen
         {
             foreach (var fixture in ConfigurationFixtures.GetAll<IConfigurationFixture>())
             {
-                if (fixture is ICollectionConfigurationFixture)
+                switch (fixture)
                 {
-                    if (fixture is ICollectionConventionConfigurationFixture ||
-                        fixture is ICollectionExplicitConfigurationFixture)
-                    {
-
-                    }
-                    else
-                    {
-                        throw new Exception($"{fixture.GetType().Name} needs to implement either {typeof(ICollectionConventionConfigurationFixture).Name} or {typeof(ICollectionExplicitConfigurationFixture).Name}");
-                    }
+                    case ICollectionConfigurationFixture _ when !(fixture is ICollectionConventionConfigurationFixture) &&
+                                                                !(fixture is ICollectionExplicitConfigurationFixture):
+                        throw new Exception(
+                            $"{fixture.GetType().Name} needs to implement either {typeof(ICollectionConventionConfigurationFixture).Name} or {typeof(ICollectionExplicitConfigurationFixture).Name}");
+                    case ILeafConfigurationFixture _ when !(fixture is ILeafConventionConfigurationFixture) &&
+                                                          !(fixture is ILeafExplicitConfigurationFixture):
+                        throw new Exception(
+                            $"{fixture.GetType().Name} needs to implement either {typeof(ILeafConventionConfigurationFixture).Name} or {typeof(ILeafExplicitConfigurationFixture).Name}");
                 }
             }
         }

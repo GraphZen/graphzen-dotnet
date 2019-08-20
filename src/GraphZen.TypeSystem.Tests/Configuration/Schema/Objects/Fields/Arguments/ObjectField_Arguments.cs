@@ -11,7 +11,7 @@ namespace GraphZen.Objects.Fields.Arguments
         IArgumentsContainerDefinition, IMutableArgumentsContainerDefinition, ArgumentDefinition, Argument,
         FieldDefinition, Field>
     {
-        public override void DefineParent(SchemaBuilder sb, string parentName)
+        public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
         {
             sb.Object(Grandparent).Field(parentName, "String");
         }

@@ -23,9 +23,9 @@ namespace GraphZen.Objects.Fields
             public IgnoredType IgnoredByConvention { get; set; }
         }
 
-        public CollectionConventionContext ConfigureViaConvention(SchemaBuilder sb)
+
+        public CollectionConventionContext GetContext()
         {
-            sb.Object<ExampleObject>();
             return new CollectionConventionContext
             {
                 ParentName = nameof(ExampleObject),
@@ -34,6 +34,12 @@ namespace GraphZen.Objects.Fields
                 ItemIgnoredByConvention = nameof(ExampleObject.IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(ExampleObject.IgnoredByDataAnnotation).FirstCharToLower()
             };
+        }
+
+
+        public void ConfigureParentConventionally(SchemaBuilder sb)
+        {
+            sb.Object<ExampleObject>();
         }
     }
 }

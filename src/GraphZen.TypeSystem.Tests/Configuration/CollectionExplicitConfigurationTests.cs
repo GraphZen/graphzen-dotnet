@@ -14,6 +14,9 @@ using Xunit;
 
 namespace GraphZen
 {
+
+
+
     [NoReorder]
     public class CollectionExplicitConfigurationTests : FixtureRunner<ICollectionExplicitConfigurationFixture>
     {
@@ -29,7 +32,7 @@ namespace GraphZen
                 var itemName = "addedExplicitly";
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.DefineParent(sb, parentName);
+                    fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection[itemName].Should().NotBeNull();
@@ -54,7 +57,7 @@ namespace GraphZen
                 var itemName = "addedExplicitly";
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.DefineParent(sb, parentName);
+                    fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection[itemName].GetNameConfigurationSource().Should().Be(ConfigurationSource.Explicit);
@@ -75,7 +78,7 @@ namespace GraphZen
                 var parentName = "parent";
                 Schema.Create(sb =>
                 {
-                    fixture.DefineParent(sb, parentName);
+                    fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     fixture.IgnoreItem(sb, parentName, itemName);
                     fixture.FindIgnoredItemConfigurationSource(sb, parentName, itemName).Should()
@@ -93,7 +96,7 @@ namespace GraphZen
                 var itemName = "addedExplicitly";
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.DefineParent(sb, parentName);
+                    fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection[itemName].Should().NotBeNull();
@@ -118,7 +121,7 @@ namespace GraphZen
                 var itemName = "addedExplicitly";
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.DefineParent(sb, parentName);
+                    fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     fixture.IgnoreItem(sb, parentName, itemName);
                     fixture.UnignoreItem(sb, parentName, itemName);
@@ -145,7 +148,7 @@ namespace GraphZen
                 var parentName = "parent";
                 Schema.Create(sb =>
                 {
-                    fixture.DefineParent(sb, parentName);
+                    fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     fixture.IgnoreItem(sb, parentName, itemName);
                     fixture.UnignoreItem(sb, parentName, itemName);
@@ -161,7 +164,7 @@ namespace GraphZen
                 var parentName = "test";
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.DefineParent(sb, parentName);
+                    fixture.ConfigureParentExplicitly(sb, parentName);
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection.Should().BeEmpty();
                 });
@@ -178,7 +181,7 @@ namespace GraphZen
                 var itemName = "item";
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.DefineParent(sb, parentName);
+                    fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection[itemName].Should().NotBeNull();
@@ -203,7 +206,7 @@ namespace GraphZen
                 var changedItemName = "itemFinal";
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.DefineParent(sb, parentName);
+                    fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, initialItemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection.Count.Should().Be(1);

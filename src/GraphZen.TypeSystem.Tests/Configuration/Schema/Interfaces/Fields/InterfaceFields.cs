@@ -14,7 +14,7 @@ namespace GraphZen.Interfaces.Fields
         IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field, InterfaceTypeDefinition,
         InterfaceType>
     {
-        public override void DefineParent(SchemaBuilder sb, string parentName) => sb.Interface(parentName);
+        public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName) => sb.Interface(parentName);
 
         public override InterfaceType GetParent(Schema schema, string parentName) => schema.GetInterface(parentName);
 

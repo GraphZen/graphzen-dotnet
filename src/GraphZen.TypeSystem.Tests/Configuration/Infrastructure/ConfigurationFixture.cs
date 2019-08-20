@@ -15,7 +15,7 @@ namespace GraphZen
         where TParentMember : Member, TMarker
 
     {
-        public abstract void DefineParent([NotNull] SchemaBuilder sb, [NotNull] string parentName);
+        public abstract void ConfigureParentExplicitly([NotNull] SchemaBuilder sb, [NotNull] string parentName);
 
         Member IConfigurationFixture.GetParent([NotNull] Schema schema, [NotNull] string parentName) =>
             GetParent(schema, parentName);

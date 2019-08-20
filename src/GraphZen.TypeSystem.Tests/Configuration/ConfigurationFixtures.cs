@@ -16,13 +16,20 @@ namespace GraphZen
         [ItemNotNull]
         public static IEnumerable<T> GetAll<T>() where T : IConfigurationFixture => new List<IConfigurationFixture>
         {
+            // SCHEMA
+
+            // OBJECT
+            // Object fields collection
             new ObjectFields_Explicit(),
             new ObjectFields_ViaClrProperties(),
+
+            // OBJECT FIELD
+            // Object field arguments
             new ObjectField_Arguments_Explicit(),
             new InterfaceFields_Explicit(),
+            new Object_ViaClrClass_Description(),
+            new Object_Explicit_Description()
+
         }.OfType<T>();
-
-
-
     }
 }

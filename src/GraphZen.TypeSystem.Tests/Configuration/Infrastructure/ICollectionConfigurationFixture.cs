@@ -6,6 +6,16 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen
 {
+
+    public interface ILeafConfigurationFixture : IConfigurationFixture
+    {
+        ConfigurationSource GetElementConfigurationSource(MemberDefinition parent);
+    }
+
+    public interface ILeafExplicitConfigurationFixture : ILeafConfigurationFixture { }
+    public interface ILeafConventionConfigurationFixture : ILeafConfigurationFixture { }
+
+
     public interface ICollectionConfigurationFixture : IConfigurationFixture
     {
         Type CollectionItemMemberType { get; }
