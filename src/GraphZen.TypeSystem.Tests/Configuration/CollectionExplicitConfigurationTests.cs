@@ -7,6 +7,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using Xunit;
+
 // ReSharper disable AssignNullToNotNullAttribute
 
 // ReSharper disable PossibleNullReferenceException
@@ -14,10 +15,10 @@ using Xunit;
 namespace GraphZen
 {
     [NoReorder]
-    public class ExplicitCollectionConfigurationTests : FixtureRunner<IExplicitCollectionConfigurationFixture>
+    public class CollectionExplicitConfigurationTests : FixtureRunner<ICollectionExplicitConfigurationFixture>
     {
-        protected override IEnumerable<IExplicitCollectionConfigurationFixture> GetFixtures() =>
-            ConfigurationFixtures.GetAll<IExplicitCollectionConfigurationFixture>();
+        protected override IEnumerable<ICollectionExplicitConfigurationFixture> GetFixtures() =>
+            ConfigurationFixtures.GetAll<ICollectionExplicitConfigurationFixture>();
 
         [Fact]
         public void when_item_added_explicitly_item_configurationSource_should_be_explicit()

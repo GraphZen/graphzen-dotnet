@@ -6,18 +6,6 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen
 {
-
-    public interface IExplicitCollectionConfigurationFixture : ICollectionConfigurationFixture
-    {
-
-    }
-
-    public interface IConventionalCollectionConfigurationFixture : ICollectionConfigurationFixture
-    {
-        CollectionConventionContext ConfigureViaConvention([NotNull] SchemaBuilder sb);
-    }
-
-
     public interface ICollectionConfigurationFixture : IConfigurationFixture
     {
         Type CollectionItemMemberType { get; }

@@ -5,7 +5,7 @@ using GraphZen.Infrastructure;
 
 namespace GraphZen.Interfaces.Fields
 {
-    public class InterfaceFields_Explicit : InterfaceFields, IExplicitCollectionConfigurationFixture
+    public class InterfaceFields_CollectionExplicit : InterfaceFields, ICollectionExplicitConfigurationFixture
     {
     }
 }

@@ -13,10 +13,10 @@ using Xunit;
 namespace GraphZen
 {
     [NoReorder]
-    public class ConventionalCollectionConfigurationTests : FixtureRunner<IConventionalCollectionConfigurationFixture>
+    public class CollectionConventionConfigurationTests : FixtureRunner<ICollectionConventionConfigurationFixture>
     {
-        protected override IEnumerable<IConventionalCollectionConfigurationFixture> GetFixtures() =>
-            ConfigurationFixtures.GetAll<IConventionalCollectionConfigurationFixture>();
+        protected override IEnumerable<ICollectionConventionConfigurationFixture> GetFixtures() =>
+            ConfigurationFixtures.GetAll<ICollectionConventionConfigurationFixture>();
 
         [Fact]
         public void item_added_by_convention_with_name_configured_by_convention()
