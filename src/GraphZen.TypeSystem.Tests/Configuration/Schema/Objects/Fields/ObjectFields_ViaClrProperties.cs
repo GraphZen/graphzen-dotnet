@@ -16,15 +16,14 @@ namespace GraphZen.Objects.Fields
             public string Ignored { get; set; }
         }
 
-
         public CollectionConventionContext ConfigureViaConvention(SchemaBuilder sb)
         {
             sb.Object<ExampleObject>();
             return new CollectionConventionContext()
             {
                 ParentName = nameof(ExampleObject),
-                ItemNamedByConvention = nameof(ExampleObject.HelloWorld).FirstCharToLower()
-
+                ItemNamedByConvention = nameof(ExampleObject.HelloWorld).FirstCharToLower(),
+                ItemNamedByDataAnnotation = DataAnnotationName
             };
         }
     }

@@ -44,8 +44,12 @@ namespace GraphZen
 
         public abstract void AddItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name);
         public abstract void IgnoreItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name);
+
         public abstract void UnignoreItem([NotNull] SchemaBuilder sb, [NotNull] string parentName,
             [NotNull] string name);
+
+        public abstract void RenameItem(SchemaBuilder sb, string parentName, string itemName, string newName);
+
         public ConfigurationSource? FindIgnoredItemConfigurationSource([NotNull] SchemaBuilder sb,
             [NotNull] string parentName,
             [NotNull] string itemName) => FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
@@ -59,9 +63,6 @@ namespace GraphZen
 
         public abstract ConfigurationSource? FindIgnoredItemConfigurationSource(
             [NotNull] TParentMemberDefinition parent, [NotNull] string name);
-
-        public abstract void RenameItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name,
-            [NotNull] string newName);
 
         //public class CollectionWrapper<T>
         //{

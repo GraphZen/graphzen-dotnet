@@ -3,9 +3,9 @@
 
 using GraphZen.Infrastructure;
 
-namespace GraphZen.Objects.Fields
+namespace GraphZen.Interfaces.Fields
 {
-    public class ObjectFields_CollectionExplicit : ObjectFields, ICollectionExplicitConfigurationFixture
+    public class InterfaceFields_Explicit : InterfaceFields, ICollectionExplicitConfigurationFixture
     {
     }
 }

@@ -9,7 +9,7 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.Interfaces.Fields
 {
-    public abstract class InterfaceFields : 
+    public class InterfaceFields :
         CollectionConfigurationFixture<IFieldsContainer,
         IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field, InterfaceTypeDefinition,
         InterfaceType>
@@ -45,9 +45,9 @@ namespace GraphZen.Interfaces.Fields
             sb.Interface(parentName).UnignoreField(name);
         }
 
-        public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
+        public override void RenameItem(SchemaBuilder sb, string parentName, string itemName, string newName)
         {
-            sb.Interface(parentName).Field(name, field => field?.Name(newName));
+            sb.Interface(parentName).Field(itemName, field => field?.Name(newName));
         }
     }
 }

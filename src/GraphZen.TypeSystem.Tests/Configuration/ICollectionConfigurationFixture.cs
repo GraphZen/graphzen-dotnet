@@ -15,6 +15,7 @@ namespace GraphZen
         void AddItem(SchemaBuilder sb, string parentName, string itemName);
         void IgnoreItem(SchemaBuilder sb, string parentName, string itemName);
         void UnignoreItem(SchemaBuilder sb, string parentName, string itemName);
+        void RenameItem([NotNull]SchemaBuilder sb, string parentName, string itemName, string newName);
         ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaBuilder sb, string parentName, string itemName);
     }
 }
