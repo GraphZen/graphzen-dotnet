@@ -8,7 +8,7 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen
 {
-    public abstract class LeafElementConfigurationFixture<TMarker, TDefMarker, TMutableDefMarker,TElement,
+    public abstract class LeafElementConfigurationFixture<TMarker, TDefMarker, TMutableDefMarker, TElement,
         TParentMemberDefinition, TParentMember
         > :
         ConfigurationFixture<TMarker, TDefMarker, TMutableDefMarker, TParentMemberDefinition, TParentMember>,
@@ -68,9 +68,50 @@ namespace GraphZen
 
 
         //public abstract bool TryGetValue(TMarker parent, out TElement value);
-        public abstract ConfigurationSource GetElementConfigurationSource(TMutableDefMarker parent);
+        public abstract ConfigurationSource GetElementConfigurationSource([NotNull]TMutableDefMarker parent);
 
         public ConfigurationSource GetElementConfigurationSource(MemberDefinition parent) =>
+            // ReSharper disable once AssignNullToNotNullAttribute
             GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition));
+
+        public bool TryGetValue(MemberDefinition parent, out object value)
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var result = TryGetValue(parent as TParentMemberDefinition, out var inner);
+            value = inner;
+            return result;
+        }
+
+        public bool TryGetValue(Member parent, out object value)
+        {
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var result = TryGetValue(parent as TParentMember, out var inner);
+            value = inner;
+            return result;
+        }
+
+        public void ConfigureExplicitly(SchemaBuilder sb, string parentName, object value)
+        {
+            ConfigureExplicitly(sb, parentName, (TElement)value);
+        }
+
+        public abstract void RemoveValue(SchemaBuilder sb, string parentName);
+
+
+        object ILeafConfigurationFixture.ValueA => ValueA;
+
+        object ILeafConfigurationFixture.ValueB => ValueB;
+
+        public abstract void ConfigureExplicitly([NotNull]SchemaBuilder sb, [NotNull]string parentName, TElement value);
+
+
+        public abstract TElement ValueA { get; }
+        public abstract TElement ValueB { get; }
+
+
+
+        public abstract bool TryGetValue([NotNull]TParentMember parent, out TElement value);
+
+        public abstract bool TryGetValue([NotNull]TParentMemberDefinition parent, out TElement value);
     }
 }

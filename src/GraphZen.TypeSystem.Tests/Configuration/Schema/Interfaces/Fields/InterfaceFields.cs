@@ -18,8 +18,8 @@ namespace GraphZen.Interfaces.Fields
 
         public override InterfaceType GetParent(Schema schema, string parentName) => schema.GetInterface(parentName);
 
-        public override InterfaceTypeDefinition GetParent(SchemaBuilder schemaBuilder, string parentName) =>
-            schemaBuilder.GetDefinition().GetInterface(parentName);
+        public override InterfaceTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetInterface(parentName);
 
         public override IReadOnlyDictionary<string, FieldDefinition> GetCollection(InterfaceTypeDefinition parent) =>
             parent.Fields;

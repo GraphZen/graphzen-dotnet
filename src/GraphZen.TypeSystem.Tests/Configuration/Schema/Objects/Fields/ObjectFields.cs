@@ -18,8 +18,8 @@ namespace GraphZen.Objects.Fields
 
         public override ObjectType GetParent(Schema schema, string parentName) => schema.GetObject(parentName);
 
-        public override ObjectTypeDefinition GetParent(SchemaBuilder schemaBuilder, string parentName) =>
-            schemaBuilder.GetDefinition().GetObject(parentName);
+        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetObject(parentName);
 
         public override IReadOnlyDictionary<string, FieldDefinition> GetCollection(ObjectTypeDefinition parent) =>
             parent.Fields;

@@ -19,8 +19,8 @@ namespace GraphZen.Objects.Fields.Arguments
         public override Field GetParent(Schema schema, string parentName) =>
             schema.GetObject(Grandparent).GetField(parentName);
 
-        public override FieldDefinition GetParent(SchemaBuilder schemaBuilder, string parentName) =>
-            schemaBuilder.GetDefinition().GetObject(Grandparent).GetField(parentName);
+        public override FieldDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetObject(Grandparent).GetField(parentName);
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {

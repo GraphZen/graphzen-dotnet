@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Interfaces.Fields;
+using GraphZen.Objects;
 using GraphZen.Objects.Fields;
 using GraphZen.Objects.Fields.Arguments;
 

@@ -32,27 +32,27 @@ namespace GraphZen
         public Type CollectionItemMemberDefinitionType { get; } = typeof(TCollectionItemDefinition);
 
         public NamedCollection<IMutableNamed>
-            GetCollection([NotNull] SchemaBuilder sb, [NotNull] string parentName) =>
+            GetCollection(SchemaBuilder sb, string parentName) =>
             new DictionaryWrapper<TCollectionItemDefinition, IMutableNamed>(GetCollection(GetParent(sb, parentName)));
 
         public NamedCollection<INamed>
-            GetCollection([NotNull] Schema schema, [NotNull] string parentName) =>
+            GetCollection(Schema schema, string parentName) =>
             new DictionaryWrapper<TCollectionItem, INamed>(
                 GetCollection(GetParent(schema, parentName))
             );
 
 
-        public abstract void AddItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name);
-        public abstract void IgnoreItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string name);
+        public abstract void AddItem(SchemaBuilder sb, string parentName, string name);
+        public abstract void IgnoreItem(SchemaBuilder sb, string parentName, string name);
 
-        public abstract void UnignoreItem([NotNull] SchemaBuilder sb, [NotNull] string parentName,
-            [NotNull] string name);
+        public abstract void UnignoreItem(SchemaBuilder sb, string parentName,
+            string name);
 
         public abstract void RenameItem(SchemaBuilder sb, string parentName, string itemName, string newName);
 
-        public ConfigurationSource? FindIgnoredItemConfigurationSource([NotNull] SchemaBuilder sb,
-            [NotNull] string parentName,
-            [NotNull] string itemName) => FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
+        public ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaBuilder sb,
+            string parentName,
+            string itemName) => FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
 
         [NotNull]
         public abstract IReadOnlyDictionary<string, TCollectionItemDefinition> GetCollection(

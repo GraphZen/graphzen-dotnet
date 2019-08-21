@@ -5,8 +5,8 @@ namespace GraphZen
 {
     public interface IConfigurationFixture
     {
-        void ConfigureParentExplicitly(SchemaBuilder sb, string parentName);
-        Member GetParent(Schema schema, string parentName);
-        MemberDefinition GetParent(SchemaBuilder schemBuilder, string parentName);
+        void ConfigureParentExplicitly([NotNull]SchemaBuilder sb,[NotNull] string parentName);
+        Member GetParent([NotNull]Schema schema,[NotNull] string parentName);
+        MemberDefinition GetParent([NotNull]SchemaBuilder sb, [NotNull]string parentName);
     }
 }

@@ -15,14 +15,14 @@ namespace GraphZen
         where TParentMember : Member, TMarker
 
     {
-        public abstract void ConfigureParentExplicitly([NotNull] SchemaBuilder sb, [NotNull] string parentName);
+        public abstract void ConfigureParentExplicitly(SchemaBuilder sb, string parentName);
 
-        Member IConfigurationFixture.GetParent([NotNull] Schema schema, [NotNull] string parentName) =>
+        Member IConfigurationFixture.GetParent(Schema schema, string parentName) =>
             GetParent(schema, parentName);
 
-        MemberDefinition IConfigurationFixture.GetParent([NotNull] SchemaBuilder schemaBuilder,
-            [NotNull] string parentName) =>
-            GetParent(schemaBuilder, parentName);
+        MemberDefinition IConfigurationFixture.GetParent(SchemaBuilder sb,
+            string parentName) =>
+            GetParent(sb, parentName);
 
         //public virtual void DefineParentConventionally([NotNull] SchemaBuilder sb, [NotNull] out string parentName) =>
         //    throw new NotImplementedException(NotImplementedMessage(nameof(DefineParentConventionally), false));
@@ -36,7 +36,7 @@ namespace GraphZen
             $"implement '{memberName}' in type '{GetType().Name}{(baseClass ? "__Base" : "")}'";
 
         [NotNull]
-        public abstract TParentMemberDefinition GetParent([NotNull] SchemaBuilder schemaBuilder,
+        public abstract TParentMemberDefinition GetParent([NotNull] SchemaBuilder sb,
             [NotNull] string parentName);
 
         [NotNull]
