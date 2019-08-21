@@ -113,7 +113,7 @@ namespace GraphZen
         }
 
         [Fact]
-        public void when_item_added_explicitly_then_ignored_then_unignored_and_re_added_should_exist()
+        public void when_item_added_explicitly_then_ignored_then_re_added_explicitly_should_exist()
         {
             TestFixtures(fixture =>
             {
@@ -124,7 +124,7 @@ namespace GraphZen
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     fixture.IgnoreItem(sb, parentName, itemName);
-                    fixture.UnignoreItem(sb, parentName, itemName);
+                    //fixture.UnignoreItem(sb, parentName, itemName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection.Count.Should().Be(1);

@@ -15,6 +15,8 @@ namespace GraphZen
         [ItemNotNull]
         protected abstract IEnumerable<T> GetFixtures();
 
+        [DebuggerStepThrough]
+        [DebuggerHidden]
         private static void TestFixtures([NotNull] Action<T> test,
             [NotNull] [ItemNotNull] IEnumerable<T> fixtures)
         {
@@ -38,6 +40,7 @@ Inner exception:
             }
         }
 
+        [DebuggerHidden]
         protected void TestFixtures(
             [NotNull] Action<T> test)
         {

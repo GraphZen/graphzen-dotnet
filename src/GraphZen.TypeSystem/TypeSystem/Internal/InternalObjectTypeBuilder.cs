@@ -57,6 +57,15 @@ namespace GraphZen.TypeSystem.Internal
 
 
         [NotNull]
+        public InternalObjectTypeBuilder ClrType([NotNull] Type clrType, ConfigurationSource configurationSource)
+        {
+            Definition.SetClrType(clrType, configurationSource);
+
+            return this;
+        }
+
+
+        [NotNull]
         public InternalObjectTypeBuilder Interface([NotNull] string interfaceType,
             ConfigurationSource configurationSource)
         {

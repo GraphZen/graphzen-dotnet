@@ -214,5 +214,30 @@ namespace GraphZen
                 collection[ctx.ItemIgnoredByDataAnnotation].Name.Should().Be(ctx.ItemIgnoredByDataAnnotation);
             });
         }
+
+        [Fact]
+        public void when_parent_configured_explicitly_then_clr_member_set_items_added_by_convention()
+        {
+            TestFixtures(fixture =>
+            {
+                var ctx = fixture.GetContext();
+                var schema = Schema.Create(sb =>
+                {
+                    fixture.ConfigureParentExplicitly(sb, ctx.ParentName);
+                    fixture.SetParentClrMember(sb, ctx.ParentName);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
+                    defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation).Should().BeFalse();
+                    fixture.AddItem(sb, ctx.ParentName, ctx.ItemIgnoredByDataAnnotation);
+                    defCollection[ctx.ItemIgnoredByDataAnnotation].Should().NotBeNull();
+                    defCollection[ctx.ItemIgnoredByDataAnnotation].GetConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                    defCollection[ctx.ItemIgnoredByDataAnnotation].GetConfigurationSource().Should()
+                        .Be(ConfigurationSource.Explicit);
+                });
+                var collection = fixture.GetCollection(schema, ctx.ParentName);
+                collection[ctx.ItemIgnoredByDataAnnotation].Should().NotBeNull();
+                collection[ctx.ItemIgnoredByDataAnnotation].Name.Should().Be(ctx.ItemIgnoredByDataAnnotation);
+            });
+        }
     }
 }

@@ -17,6 +17,15 @@ namespace GraphZen.TypeSystem
         IObjectTypeBuilder<TObject, TContext> Name(string name);
 
         [NotNull]
+        IObjectTypeBuilder<object, TContext> ClrType(Type clrType);
+
+        [NotNull]
+        IObjectTypeBuilder<T, TContext> ClrType<T>();
+
+
+
+
+        [NotNull]
         IObjectTypeBuilder<TObject, TContext> Description([CanBeNull] string description);
 
         [NotNull]
@@ -34,5 +43,5 @@ namespace GraphZen.TypeSystem
         [NotNull]
         IObjectTypeBuilder<TObject, TContext> IgnoreInterface<T>();
 
-            }
+    }
 }

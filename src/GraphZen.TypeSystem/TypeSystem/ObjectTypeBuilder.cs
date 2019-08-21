@@ -30,6 +30,19 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IObjectTypeBuilder<object, TContext> ClrType(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(ClrType));
+            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            return new ObjectTypeBuilder<object, TContext>(Builder);
+        }
+
+        public IObjectTypeBuilder<T, TContext> ClrType<T>()
+        {
+            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            return new ObjectTypeBuilder<T, TContext>(Builder);
+        }
+
         public IObjectTypeBuilder<TObject, TContext> Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);

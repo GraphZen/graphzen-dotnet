@@ -37,7 +37,7 @@ namespace GraphZen.TypeSystem.Internal
                 return true;
             }
 
-            return oldConfigurationSource == ConfigurationSource.DataAnnotation ? false : true;
+            return oldConfigurationSource != ConfigurationSource.DataAnnotation;
         }
 
 

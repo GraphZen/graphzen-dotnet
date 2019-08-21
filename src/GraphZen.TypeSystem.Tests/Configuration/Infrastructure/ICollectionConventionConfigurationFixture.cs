@@ -7,5 +7,7 @@ namespace GraphZen
     {
         CollectionConventionContext GetContext();
         void ConfigureParentConventionally([NotNull] SchemaBuilder sb);
+
+        void SetParentClrMember([NotNull] SchemaBuilder sb, string parentName);
     }
 }

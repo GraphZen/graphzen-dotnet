@@ -218,9 +218,9 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
-            if (ignoredConfigurationSource.HasValue && ignoredConfigurationSource.Overrides(configurationSource))
+            if (ignoredConfigurationSource.HasValue)
             {
-                if (ignoredConfigurationSource.Overrides(configurationSource))
+                if (!nameConfigurationSource.Overrides(ignoredConfigurationSource))
                 {
                     return null;
                 }

@@ -11,8 +11,9 @@ namespace GraphZen.Interfaces.Fields
 {
     public class InterfaceFields :
         CollectionConfigurationFixture<IFieldsContainer,
-        IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field, InterfaceTypeDefinition,
-        InterfaceType>
+            IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field,
+            InterfaceTypeDefinition,
+            InterfaceType>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName) => sb.Interface(parentName);
 

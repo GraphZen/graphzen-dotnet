@@ -13,6 +13,7 @@ namespace GraphZen.Objects.Fields
         {
 
         }
+
         public class ExampleObject
         {
             public string HelloWorld { get; set; }
@@ -24,9 +25,8 @@ namespace GraphZen.Objects.Fields
         }
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ParentName = nameof(ExampleObject),
                 ItemNamedByConvention = nameof(ExampleObject.HelloWorld).FirstCharToLower(),
@@ -34,12 +34,16 @@ namespace GraphZen.Objects.Fields
                 ItemIgnoredByConvention = nameof(ExampleObject.IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(ExampleObject.IgnoredByDataAnnotation).FirstCharToLower()
             };
-        }
 
 
         public void ConfigureParentConventionally(SchemaBuilder sb)
         {
             sb.Object<ExampleObject>();
+        }
+
+        public void SetParentClrMember(SchemaBuilder sb, string parentName)
+        {
+            sb.Object(parentName).ClrType<ExampleObject>();
         }
     }
 }
