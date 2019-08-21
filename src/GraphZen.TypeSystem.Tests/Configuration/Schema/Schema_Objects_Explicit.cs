@@ -6,4 +6,53 @@ namespace GraphZen
     public class Schema_Objects_Explicit : Schema_Objects, ICollectionExplicitConfigurationFixture
     {
     }
+
+    public class Schema_Objects_ViaClrClasses : Schema_Objects, ICollectionConventionConfigurationFixture
+    {
+        public const string DataAnnotationName = nameof(DataAnnotationName);
+        public class Query
+        {
+            public NamedByConvention ConventionallyNamed { get; set; }
+
+            [GraphQLIgnore]
+            public IgnoredByConvention IgnoredByConvention { get; set; }
+
+            public IgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
+
+            public NamedByDataAnnotation NamedByDataAnnoation { get; }
+
+        }
+
+        public class NamedByConvention { }
+
+
+        [GraphQLName(DataAnnotationName)]
+        public class NamedByDataAnnotation { }
+        public class IgnoredByConvention { }
+
+        [GraphQLIgnore]
+        public class IgnoredByDataAnnotation
+        {
+        }
+
+
+
+        public CollectionConventionContext GetContext() => new CollectionConventionContext()
+        {
+            ItemNamedByConvention = nameof(NamedByConvention),
+            ItemNamedByDataAnnotation = DataAnnotationName,
+            ItemIgnoredByConvention = nameof(IgnoredByConvention),
+            ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation),
+        };
+
+        public void ConfigureContextConventionally(SchemaBuilder sb)
+        {
+            sb.Object<Query>();
+        }
+
+        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+        {
+            sb.Object<Query>();
+        }
+    }
 }

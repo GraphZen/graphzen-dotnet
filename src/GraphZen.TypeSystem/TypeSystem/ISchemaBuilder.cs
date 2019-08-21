@@ -57,7 +57,7 @@ namespace GraphZen.TypeSystem
 
 
         [NotNull]
-        ISchemaBuilder<TContext> UninoreType(Type clrType);
+        ISchemaBuilder<TContext> UnignoreType(Type clrType);
 
         [NotNull]
         ISchemaBuilder<TContext> UnignoreType(string name);

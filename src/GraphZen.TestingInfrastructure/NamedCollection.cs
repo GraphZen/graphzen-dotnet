@@ -19,7 +19,6 @@ namespace GraphZen
             ToNamedCollection<T, T>(source);
 
 
-
         [NotNull]
         public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : INamed => new DictionaryWrapper<TInner, TOuter>(source);
 
@@ -48,7 +47,7 @@ namespace GraphZen
                         return value;
                     }
 
-                    throw new InvalidOperationException($"Item named {key} does not exist in this collection");
+                    throw new InvalidOperationException($"Item named '{key}' does not exist in this collection");
                 }
             }
 
@@ -109,6 +108,10 @@ namespace GraphZen
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        public override string ToString()
+        {
+            return string.Join(", ", this.Select(_ => _.Name));
+        }
 
     }
 }

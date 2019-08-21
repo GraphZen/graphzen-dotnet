@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using GraphZen.Infrastructure;
+﻿using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+
 // ReSharper disable PossibleNullReferenceException
 
 namespace GraphZen.Objects.Fields.Arguments

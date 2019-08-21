@@ -86,7 +86,6 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit));

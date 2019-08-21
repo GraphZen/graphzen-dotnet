@@ -90,6 +90,8 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
+            field.UpdateConfigurationSource(configurationSource);
+
             if (this.TryGetField(name, out var existing) && existing != field)
             {
                 throw new InvalidOperationException(
