@@ -19,6 +19,7 @@ namespace GraphZen
         {
             // SCHEMA
             // Objects (Collection)
+            new Schema_Objects_Explicit(),
             // TODO: Schema_Objects_Explicit
             // TODO: Schema_Objects_ViaClrClasses
             // Interfaces (Collection)

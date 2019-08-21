@@ -42,7 +42,6 @@ namespace GraphZen
                     defCollection.Count.Should().Be(1);
                 });
                 var collection = fixture.GetCollection(schema, parentName);
-                collection.Count.Should().Be(1);
                 collection[itemName].Should().NotBeNull();
                 collection[itemName].Should().BeOfType(fixture.CollectionItemMemberType);
             });
@@ -108,7 +107,7 @@ namespace GraphZen
                     defCollection.ContainsKey(itemName).Should().BeFalse();
                 });
                 var collection = fixture.GetCollection(schema, parentName);
-                collection.Count.Should().Be(0);
+                collection.ContainsKey(itemName).Should().BeFalse();
             });
         }
 
@@ -124,7 +123,6 @@ namespace GraphZen
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     fixture.IgnoreItem(sb, parentName, itemName);
-                    //fixture.UnignoreItem(sb, parentName, itemName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection.Count.Should().Be(1);
@@ -156,21 +154,6 @@ namespace GraphZen
                 });
             });
         }
-
-        [Fact]
-        public void when_parent_defined_explicitly_collection_is_empty() =>
-            TestFixtures(fixture =>
-            {
-                var parentName = "test";
-                var schema = Schema.Create(sb =>
-                {
-                    fixture.ConfigureParentExplicitly(sb, parentName);
-                    var defCollection = fixture.GetCollection(sb, parentName);
-                    defCollection.Should().BeEmpty();
-                });
-                var collection = fixture.GetCollection(schema, parentName);
-                collection.Should().BeEmpty();
-            });
 
         [Fact]
         public void item_added_explicitly()
@@ -228,7 +211,6 @@ namespace GraphZen
                     finalItem.Should().Be(initialItem);
                 });
                 var collection = fixture.GetCollection(schema, parentName);
-                collection.Count.Should().Be(1);
                 collection[changedItemName].Should().NotBeNull();
                 collection[changedItemName].Name.Should().Be(changedItemName);
             });

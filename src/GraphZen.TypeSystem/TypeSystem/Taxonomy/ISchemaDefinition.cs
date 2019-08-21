@@ -27,6 +27,11 @@ namespace GraphZen.TypeSystem.Taxonomy
         [NotNull]
         [ItemNotNull]
         new IEnumerable<ObjectType> GetObjects();
+
+        [NotNull]
+        [ItemNotNull]
+        [GraphQLIgnore]
+        IReadOnlyList<ObjectType> Objects { get; }
     }
 
     [GraphQLIgnore]
@@ -55,6 +60,11 @@ namespace GraphZen.TypeSystem.Taxonomy
         [NotNull]
         [ItemNotNull]
         new IEnumerable<InterfaceType> GetInterfaces();
+
+        [GraphQLIgnore]
+        [NotNull]
+        [ItemNotNull]
+        IReadOnlyList<InterfaceType> Interfaces { get; }
     }
 
     [GraphQLIgnore]
@@ -74,6 +84,7 @@ namespace GraphZen.TypeSystem.Taxonomy
         [NotNull]
         [ItemNotNull]
         IEnumerable<IUnionTypeDefinition> GetUnions();
+
     }
 
     [GraphQLIgnore]
@@ -83,6 +94,11 @@ namespace GraphZen.TypeSystem.Taxonomy
         [NotNull]
         [ItemNotNull]
         new IEnumerable<UnionType> GetUnions();
+        [GraphQLIgnore]
+        [NotNull]
+        [ItemNotNull]
+        IReadOnlyList<UnionType> Unions { get; }
+
     }
 
     [GraphQLIgnore]
@@ -111,6 +127,11 @@ namespace GraphZen.TypeSystem.Taxonomy
         [NotNull]
         [ItemNotNull]
         new IEnumerable<ScalarType> GetScalars();
+
+        [GraphQLIgnore]
+        [NotNull]
+        [ItemNotNull]
+        IReadOnlyList<ScalarType> Scalars { get; }
     }
 
     [GraphQLIgnore]
@@ -139,6 +160,11 @@ namespace GraphZen.TypeSystem.Taxonomy
         [NotNull]
         [ItemNotNull]
         new IEnumerable<EnumType> GetEnums();
+
+        [GraphQLIgnore]
+        [NotNull]
+        [ItemNotNull]
+        IReadOnlyList<EnumType> Enums { get; }
     }
 
     [GraphQLIgnore]
@@ -167,6 +193,11 @@ namespace GraphZen.TypeSystem.Taxonomy
         [NotNull]
         [ItemNotNull]
         new IEnumerable<InputObjectType> GetInputObjects();
+
+        [GraphQLIgnore]
+        [NotNull]
+        [ItemNotNull]
+        IReadOnlyList<InputObjectType> InputObjects { get; }
     }
 
     [GraphQLIgnore]
@@ -195,6 +226,12 @@ namespace GraphZen.TypeSystem.Taxonomy
         [NotNull]
         [ItemNotNull]
         new IEnumerable<Directive> GetDirectives();
+
+        [GraphQLIgnore]
+        [NotNull]
+        [ItemNotNull]
+        IReadOnlyList<Directive> Directives { get; }
+
     }
 
     [GraphQLIgnore]

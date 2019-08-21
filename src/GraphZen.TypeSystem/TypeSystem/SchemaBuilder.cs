@@ -81,6 +81,8 @@ namespace GraphZen.TypeSystem
 
         public ISchemaBuilder<GraphQLContext> UnignoreType(string name)
         {
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreType(name, ConfigurationSource.Explicit);
             return this;
         }
 

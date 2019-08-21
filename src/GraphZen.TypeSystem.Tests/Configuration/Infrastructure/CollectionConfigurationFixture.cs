@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO.Pipes;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
@@ -36,10 +34,12 @@ namespace GraphZen
             GetCollection(SchemaBuilder sb, string parentName) =>
             GetCollection(GetParent(sb, parentName)).ToNamedCollection<IMutableNamed, TCollectionItemDefinition>();
 
-        public NamedCollection<INamed>
-            GetCollection(Schema schema, string parentName) =>
-                GetCollection(GetParent(schema, parentName)).ToNamedCollection<INamed, TCollectionItem>();
-
+        public NamedCollection<INamed> GetCollection(Schema schema, string parentName)
+        {
+            var collection = GetCollection(GetParent(schema, parentName));
+            var casted = collection.ToNamedCollection<INamed, TCollectionItem>();
+            return casted;
+        }
 
 
         public abstract void AddItem(SchemaBuilder sb, string parentName, string name);

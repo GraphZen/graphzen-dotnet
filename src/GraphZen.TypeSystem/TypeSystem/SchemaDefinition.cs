@@ -548,6 +548,7 @@ namespace GraphZen.TypeSystem
             }
 
             _ignoredTypes[name] = configurationSource;
+
         }
 
         public void IgnoreType([NotNull] Type clrType, ConfigurationSource configurationSource)
@@ -718,8 +719,9 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public void RemoveType([CanBeNull] NamedTypeDefinition type)
+        public void RemoveType([NotNull] NamedTypeDefinition type)
         {
+            _typeIdentities.Remove(type.Identity);
             _types.Remove(type);
         }
 
