@@ -2,6 +2,8 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Linq;
+using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 
@@ -15,6 +17,7 @@ namespace GraphZen.TypeSystem.Internal
             definition, schemaBuilder)
         {
         }
+
 
         public void IsTypeOf([NotNull] IsTypeOf<object, GraphQLContext> isTypeOfFn) => Definition.IsTypeOf = isTypeOfFn;
 
@@ -59,9 +62,47 @@ namespace GraphZen.TypeSystem.Internal
         [NotNull]
         public InternalObjectTypeBuilder ClrType([NotNull] Type clrType, ConfigurationSource configurationSource)
         {
-            Definition.SetClrType(clrType, configurationSource);
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                ConfigureObjectFromClrType();
+            }
 
             return this;
+        }
+
+        public bool ConfigureObjectFromClrType()
+        {
+            var clrType = Definition.ClrType;
+
+            if (clrType == null)
+            {
+                return false;
+            }
+
+            ConfigureOutputFields();
+
+            if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
+            }
+
+            var interfaces = clrType.GetInterfaces().Where(_ => _.NotIgnored())
+                // ReSharper disable once PossibleNullReferenceException
+                .Where(_ => !_.IsGenericType)
+                .OrderBy(_ => _.MetadataToken);
+            foreach (var @interface in interfaces)
+            {
+                if (@interface.GetCustomAttribute<GraphQLUnionAttribute>() != null)
+                {
+                    Schema.Builder.Union(@interface, ConfigurationSource.DataAnnotation);
+                }
+                else
+                {
+                    Definition.Builder.Interface(@interface, ConfigurationSource.Convention);
+                }
+            }
+
+            return true;
         }
 
 

@@ -28,5 +28,24 @@ namespace GraphZen.TypeSystem.Internal
             Definition.SetName(name, configurationSource);
             return this;
         }
+
+        public bool ConfigureInterfaceFromClrType()
+        {
+            var clrType = Definition.ClrType;
+            if (clrType == null)
+            {
+                return false;
+            }
+
+            ConfigureOutputFields();
+
+            if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
+            }
+
+            return true;
+
+        }
     }
 }

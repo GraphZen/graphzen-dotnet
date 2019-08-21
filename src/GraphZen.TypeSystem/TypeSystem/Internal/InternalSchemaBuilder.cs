@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
@@ -22,11 +21,6 @@ namespace GraphZen.TypeSystem.Internal
         public IParser Parser { get; } = new SuperpowerParser();
 
         public override InternalSchemaBuilder SchemaBuilder => this;
-
-
-        private static IReadOnlyList<string> IgnoredMethodNames { get; } =
-            // ReSharper disable once PossibleNullReferenceException
-            typeof(object).GetMethods().Select(_ => _.Name).ToReadOnlyList();
 
 
         public MemberDefinitionBuilder Type([NotNull] TypeIdentity identity)
@@ -370,11 +364,7 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = interfaceType.ClrType;
             if (clrType != null)
             {
-                ConfigureOutputFields(interfaceType.Builder);
-                if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
-                {
-                    interfaceType.SetDescription(desc, ConfigurationSource.DataAnnotation);
-                }
+                interfaceType.Builder.ConfigureInterfaceFromClrType();
             }
         }
 
@@ -589,59 +579,7 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = objectType.ClrType;
             if (clrType != null)
             {
-                ConfigureOutputFields(objectType.Builder);
-                if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
-                {
-                    objectType.SetDescription(desc, ConfigurationSource.DataAnnotation);
-                }
-
-                var interfaces = clrType.GetInterfaces().Where(_ => _.NotIgnored())
-                    // ReSharper disable once PossibleNullReferenceException
-                    .Where(_ => !_.IsGenericType)
-                    .OrderBy(_ => _.MetadataToken);
-                foreach (var @interface in interfaces)
-                {
-                    if (@interface.GetCustomAttribute<GraphQLUnionAttribute>() != null)
-                    {
-                        Schema.Builder.Union(@interface, ConfigurationSource.DataAnnotation);
-                    }
-                    else
-                    {
-                        objectType.Builder.Interface(@interface, ConfigurationSource.Convention);
-                    }
-                }
-            }
-        }
-
-        private void ConfigureOutputFields<T, TB>([NotNull] InternalFieldsContainerBuilder<T, TB> fields)
-            where T : FieldsContainerDefinition
-            where TB : InternalFieldsContainerBuilder<T, TB>
-        {
-            var def = fields.Definition;
-            Check.NotNull(def, nameof(def));
-            var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
-            // ReSharper disable once PossibleNullReferenceException
-            // ReSharper disable once AssignNullToNotNullAttribute
-            var fieldMembers = def.ClrType.GetMembers(flags)
-                .Where(_ => !(_ is MethodInfo method) || method.DeclaringType != typeof(object) &&
-                            method.ReturnType != typeof(void) &&
-                            !IgnoredMethodNames.Contains(method.Name) && !method.IsSpecialName)
-                .OrderBy(_ => _.MetadataToken);
-            foreach (var fieldMember in fieldMembers)
-            {
-                switch (fieldMember)
-                {
-                    case MethodInfo method:
-                        {
-                            fields.Field(method, ConfigurationSource.Convention);
-                        }
-                        break;
-                    case PropertyInfo property:
-                        {
-                            fields.Field(property, ConfigurationSource.Convention);
-                        }
-                        break;
-                }
+                objectType.Builder.ConfigureObjectFromClrType();
             }
         }
 

@@ -227,16 +227,20 @@ namespace GraphZen
                     fixture.SetParentClrMember(sb, ctx.ParentName);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
                     defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation).Should().BeFalse();
-                    fixture.AddItem(sb, ctx.ParentName, ctx.ItemIgnoredByDataAnnotation);
-                    defCollection[ctx.ItemIgnoredByDataAnnotation].Should().NotBeNull();
-                    defCollection[ctx.ItemIgnoredByDataAnnotation].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
-                    defCollection[ctx.ItemIgnoredByDataAnnotation].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
+                    defCollection.ContainsKey(ctx.ItemIgnoredByConvention).Should().BeFalse();
+                    defCollection[ctx.ItemNamedByConvention].Should().NotBeNull();
+                    defCollection[ctx.ItemNamedByDataAnnotation].Should().NotBeNull();
+                    fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName, ctx.ItemIgnoredByDataAnnotation)
+                        .Should()
+                        .Be(ConfigurationSource.DataAnnotation);
+                    //fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName, ctx.ItemIgnoredByConvention).Should()
+                    //                        .Be(ConfigurationSource.Convention);
                 });
                 var collection = fixture.GetCollection(schema, ctx.ParentName);
-                collection[ctx.ItemIgnoredByDataAnnotation].Should().NotBeNull();
-                collection[ctx.ItemIgnoredByDataAnnotation].Name.Should().Be(ctx.ItemIgnoredByDataAnnotation);
+                collection.ContainsKey(ctx.ItemIgnoredByDataAnnotation).Should().BeFalse();
+                collection.ContainsKey(ctx.ItemIgnoredByConvention).Should().BeFalse();
+                collection[ctx.ItemNamedByConvention].Should().NotBeNull();
+                collection[ctx.ItemNamedByDataAnnotation].Should().NotBeNull();
             });
         }
     }
