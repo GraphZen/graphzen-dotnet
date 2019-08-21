@@ -561,6 +561,11 @@ namespace GraphZen.TypeSystem
             _ignoredTypes.Remove(name);
         }
 
+        public void UnignoreType([NotNull] Type clrType)
+        {
+            UnignoreType(clrType.GetGraphQLName());
+        }
+
 
         public bool HasType<T>(string name) where T : NamedTypeDefinition
         {
@@ -720,7 +725,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<DirectiveDefinition> GetDirectives() => throw new NotImplementedException();
 
-        public IEnumerable<ObjectTypeDefinition> GetObjects() => throw new NotImplementedException();
+        public IEnumerable<ObjectTypeDefinition> GetObjects() => _types.OfType<ObjectTypeDefinition>();
 
         public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => throw new NotImplementedException();
 

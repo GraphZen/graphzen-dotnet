@@ -70,6 +70,20 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public ISchemaBuilder<GraphQLContext> UnignoreType<TObject>() => IgnoreType(typeof(TObject));
+
+        public ISchemaBuilder<GraphQLContext> UnignoreType(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.IgnoreType(clrType, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public ISchemaBuilder<GraphQLContext> UnignoreType(string name)
+        {
+            return this;
+        }
+
 
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
@@ -197,6 +211,11 @@ namespace GraphZen.TypeSystem
             (ISchemaBuilder<TContext>)base.IgnoreType(clrType);
 
         public new ISchemaBuilder<TContext> IgnoreType(string name) => (ISchemaBuilder<TContext>)base.IgnoreType(name);
+        public new ISchemaBuilder<TContext> UnignoreType<TObject>() => (ISchemaBuilder<TContext>)base.UnignoreType(typeof(TObject));
+
+        public new ISchemaBuilder<TContext> UnignoreType(Type clrType) => (ISchemaBuilder<TContext>)base.UnignoreType(clrType);
+
+        public new ISchemaBuilder<TContext> UnignoreType(string name) => (ISchemaBuilder<TContext>)base.UnignoreType(name);
 
         public new IInterfaceTypeBuilder<object, TContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(name, nameof(name)),

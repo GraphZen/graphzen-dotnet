@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
@@ -33,13 +34,12 @@ namespace GraphZen
 
         public NamedCollection<IMutableNamed>
             GetCollection(SchemaBuilder sb, string parentName) =>
-            new DictionaryWrapper<TCollectionItemDefinition, IMutableNamed>(GetCollection(GetParent(sb, parentName)));
+            GetCollection(GetParent(sb, parentName)).ToNamedCollection<IMutableNamed, TCollectionItemDefinition>();
 
         public NamedCollection<INamed>
             GetCollection(Schema schema, string parentName) =>
-            new DictionaryWrapper<TCollectionItem, INamed>(
-                GetCollection(GetParent(schema, parentName))
-            );
+                GetCollection(GetParent(schema, parentName)).ToNamedCollection<INamed, TCollectionItem>();
+
 
 
         public abstract void AddItem(SchemaBuilder sb, string parentName, string name);
@@ -55,11 +55,11 @@ namespace GraphZen
             string itemName) => FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
 
         [NotNull]
-        public abstract IReadOnlyDictionary<string, TCollectionItemDefinition> GetCollection(
+        public abstract NamedCollection<TCollectionItemDefinition> GetCollection(
             [NotNull] TParentMemberDefinition parent);
 
         [NotNull]
-        public abstract IReadOnlyDictionary<string, TCollectionItem> GetCollection([NotNull] TParentMember parent);
+        public abstract NamedCollection<TCollectionItem> GetCollection([NotNull] TParentMember parent);
 
         public abstract ConfigurationSource? FindIgnoredItemConfigurationSource(
             [NotNull] TParentMemberDefinition parent, [NotNull] string name);

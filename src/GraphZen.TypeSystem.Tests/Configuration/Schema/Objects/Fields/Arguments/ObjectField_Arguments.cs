@@ -37,10 +37,10 @@ namespace GraphZen.Objects.Fields.Arguments
             sb.Object(Grandparent).Field(parentName, f => f.UnignoreArgument(name));
         }
 
-        public override IReadOnlyDictionary<string, ArgumentDefinition> GetCollection(FieldDefinition parent) =>
-            parent.Arguments;
+        public override NamedCollection<ArgumentDefinition> GetCollection(FieldDefinition parent) =>
+            parent.Arguments.ToNamedCollection();
 
-        public override IReadOnlyDictionary<string, Argument> GetCollection(Field parent) => parent.Arguments;
+        public override NamedCollection<Argument> GetCollection(Field parent) => parent.Arguments.ToNamedCollection();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(FieldDefinition parent, string name) =>
             parent.FindIgnoredArgumentConfigurationSource(name);

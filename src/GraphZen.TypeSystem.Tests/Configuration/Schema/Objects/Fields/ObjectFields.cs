@@ -21,11 +21,11 @@ namespace GraphZen.Objects.Fields
         public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetObject(parentName);
 
-        public override IReadOnlyDictionary<string, FieldDefinition> GetCollection(ObjectTypeDefinition parent) =>
-            parent.Fields;
+        public override NamedCollection<FieldDefinition> GetCollection(ObjectTypeDefinition parent) =>
+            parent.Fields.ToNamedCollection();
 
-        public override IReadOnlyDictionary<string, Field> GetCollection(ObjectType parent) =>
-            parent.Fields;
+        public override NamedCollection<Field> GetCollection(ObjectType parent) =>
+            parent.Fields.ToNamedCollection();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(ObjectTypeDefinition parent,
             string name) => parent.FindIgnoredFieldConfigurationSource(name);

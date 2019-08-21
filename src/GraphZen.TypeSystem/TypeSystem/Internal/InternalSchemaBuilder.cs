@@ -374,6 +374,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalEnumTypeBuilder Enum([NotNull] string name, ConfigurationSource configurationSource) =>
             Enum(new TypeIdentity(name, Definition), configurationSource);
 
+
         private InternalEnumTypeBuilder Enum([NotNull] in TypeIdentity id, ConfigurationSource configurationSource)
         {
             if (id.ClrType != null && id.ClrType.IsIgnoredByDataAnnotation())
@@ -583,6 +584,28 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
+        public bool UnignoreType([NotNull]string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = Definition.FindIgnoredTypeConfigurationSource(name);
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
+
+            Definition.UnignoreType(name);
+            return true;
+        }
+
+        public bool UnignoreType([NotNull]Type clrType, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = Definition.FindIgnoredTypeConfigurationSource(clrType);
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
+            Definition.UnignoreType(clrType);
+            return true;
+        }
 
         public bool IgnoreType([NotNull] Type clrType, ConfigurationSource configurationSource) =>
             IgnoreType(clrType.GetGraphQLName(), configurationSource);

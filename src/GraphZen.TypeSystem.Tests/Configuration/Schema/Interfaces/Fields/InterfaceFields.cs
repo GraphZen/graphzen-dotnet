@@ -22,11 +22,11 @@ namespace GraphZen.Interfaces.Fields
         public override InterfaceTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetInterface(parentName);
 
-        public override IReadOnlyDictionary<string, FieldDefinition> GetCollection(InterfaceTypeDefinition parent) =>
-            parent.Fields;
+        public override NamedCollection<FieldDefinition> GetCollection(InterfaceTypeDefinition parent) =>
+            parent.Fields.ToNamedCollection();
 
-        public override IReadOnlyDictionary<string, Field> GetCollection(InterfaceType parent) =>
-            parent.Fields;
+        public override NamedCollection<Field> GetCollection(InterfaceType parent) =>
+            parent.Fields.ToNamedCollection();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(InterfaceTypeDefinition parent,
             string name) => parent.FindIgnoredFieldConfigurationSource(name);
