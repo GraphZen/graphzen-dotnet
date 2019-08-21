@@ -30,7 +30,7 @@ namespace GraphZen
 
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.ConfigureParentConventionally(sb);
+                    fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
                     defCollection[ctx.ItemNamedByConvention].Name.Should().Be(ctx.ItemNamedByConvention);
                     defCollection[ctx.ItemNamedByConvention].Should().NotBeNull();
@@ -55,7 +55,7 @@ namespace GraphZen
                 var explicitName = "ExplicitName";
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.ConfigureParentConventionally(sb);
+                    fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
                     defCollection[ctx.ItemNamedByConvention].Name.Should().Be(ctx.ItemNamedByConvention);
                     defCollection[ctx.ItemNamedByConvention].Should().NotBeNull();
@@ -85,7 +85,7 @@ namespace GraphZen
 
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.ConfigureParentConventionally(sb);
+                    fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
                     defCollection[ctx.ItemNamedByDataAnnotation].Name.Should().Be(ctx.ItemNamedByDataAnnotation, $"these are the items in the collection: {defCollection}");
                     defCollection[ctx.ItemNamedByDataAnnotation].Should().NotBeNull();
@@ -109,7 +109,7 @@ namespace GraphZen
                 var explicitName = "ExplicitName";
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.ConfigureParentConventionally(sb);
+                    fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
                     defCollection[ctx.ItemNamedByDataAnnotation].Name.Should().Be(ctx.ItemNamedByDataAnnotation);
                     defCollection[ctx.ItemNamedByDataAnnotation].Should().NotBeNull();
@@ -138,7 +138,7 @@ namespace GraphZen
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.ConfigureParentConventionally(sb);
+                    fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
                     defCollection.ContainsKey(ctx.ItemIgnoredByConvention).Should().BeFalse();
 
@@ -158,7 +158,7 @@ namespace GraphZen
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.ConfigureParentConventionally(sb);
+                    fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
                     defCollection.ContainsKey(ctx.ItemIgnoredByConvention).Should().BeFalse();
                     fixture.AddItem(sb, ctx.ParentName, ctx.ItemIgnoredByConvention);
@@ -182,7 +182,7 @@ namespace GraphZen
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.ConfigureParentConventionally(sb);
+                    fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
                     defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation).Should().BeFalse();
                     fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName,
@@ -201,7 +201,7 @@ namespace GraphZen
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.ConfigureParentConventionally(sb);
+                    fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
                     defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation).Should().BeFalse();
                     fixture.AddItem(sb, ctx.ParentName, ctx.ItemIgnoredByDataAnnotation);

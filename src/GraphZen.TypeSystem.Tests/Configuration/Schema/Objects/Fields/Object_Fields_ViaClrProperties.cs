@@ -36,12 +36,12 @@ namespace GraphZen.Objects.Fields
             };
 
 
-        public void ConfigureParentConventionally(SchemaBuilder sb)
+        public void ConfigureContextConventionally(SchemaBuilder sb)
         {
             sb.Object<ExampleObject>();
         }
 
-        public void SetParentClrMember(SchemaBuilder sb, string parentName)
+        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
         {
             sb.Object(parentName).ClrType<ExampleObject>();
         }
