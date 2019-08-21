@@ -1,12 +1,8 @@
 ﻿using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 
-namespace GraphZen
+namespace GraphZen.Objects
 {
-    public class Schema_Objects_Explicit : Schema_Objects, ICollectionExplicitConfigurationFixture
-    {
-    }
-
     public class Schema_Objects_ViaClrClasses : Schema_Objects, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
@@ -19,7 +15,7 @@ namespace GraphZen
 
             public IgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
 
-            public NamedByDataAnnotation NamedByDataAnnoation { get; }
+            public NamedByDataAnnotation NamedByDataAnnoation { get; set; }
 
         }
 

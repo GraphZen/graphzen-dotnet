@@ -1,4 +1,5 @@
 ﻿using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Internal;
 
 namespace GraphZen
 {
@@ -9,5 +10,7 @@ namespace GraphZen
         public string ItemIgnoredByConvention { get; set; }
         public string ItemNamedByConvention { get; set; }
         public string ItemNamedByDataAnnotation { get; set; }
+
+        public ConfigurationSource? DefaultItemConfigurationSource { get; set; }
     }
 }

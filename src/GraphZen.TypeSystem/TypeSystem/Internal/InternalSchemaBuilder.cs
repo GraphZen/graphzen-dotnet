@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -508,21 +507,7 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = inputType.ClrType;
             if (clrType != null)
             {
-                if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
-                {
-                    inputType.Builder.Description(description, ConfigurationSource.DataAnnotation);
-                }
-
-                var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
-                // ReSharper disable once PossibleNullReferenceException
-                // ReSharper disable once AssignNullToNotNullAttribute
-                var fieldMembers = clrType.GetMembers(flags)
-                    .OfType<PropertyInfo>()
-                    .OrderBy(_ => _.MetadataToken);
-                foreach (var property in fieldMembers)
-                {
-                    inputType.Builder.Field(property, ConfigurationSource.Convention);
-                }
+                inputType.Builder.ConfigureFromClrType();
             }
         }
 
@@ -584,7 +569,7 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        public bool UnignoreType([NotNull]string name, ConfigurationSource configurationSource)
+        public bool UnignoreType([NotNull] string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredTypeConfigurationSource(name);
             if (!configurationSource.Overrides(ignoredConfigurationSource))
@@ -596,13 +581,14 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public bool UnignoreType([NotNull]Type clrType, ConfigurationSource configurationSource)
+        public bool UnignoreType([NotNull] Type clrType, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredTypeConfigurationSource(clrType);
             if (!configurationSource.Overrides(ignoredConfigurationSource))
             {
                 return false;
             }
+
             Definition.UnignoreType(clrType);
             return true;
         }

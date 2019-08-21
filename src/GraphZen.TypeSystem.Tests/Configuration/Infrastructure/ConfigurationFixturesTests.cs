@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GraphZen.Infrastructure;
 using Xunit;
 
@@ -22,6 +23,25 @@ namespace GraphZen
                         throw new Exception(
                             $"{fixture.GetType().Name} needs to implement either {typeof(ILeafConventionConfigurationFixture).Name} or {typeof(ILeafExplicitConfigurationFixture).Name}");
                 }
+            }
+        }
+
+        [Fact]
+        public void ensure_all_known_fixtures_are_included()
+        {
+            var type = typeof(IConfigurationFixture);
+            var configuredTypes = ConfigurationFixtures.GetAll<IConfigurationFixture>().Select(_ => _.GetType()).ToArray();
+            var knownTypes = AppDomain.CurrentDomain.GetAssemblies()
+                // ReSharper disable once PossibleNullReferenceException
+                .SelectMany(_ => _.GetTypes())
+                // ReSharper disable once PossibleNullReferenceException
+                .Where(_ => type.IsAssignableFrom(_) && !_.IsAbstract && _.IsClass);
+
+            var missingTypeNames = knownTypes.Where(_ => !configuredTypes.Contains(_)).Select(_ => $"new {_.Name}(),").ToArray();
+
+            if (missingTypeNames.Any())
+            {
+                throw new Exception($"The following types need to be added to {nameof(ConfigurationFixtures)}.{nameof(ConfigurationFixtures.GetAll)}:\n\n{string.Join(Environment.NewLine, missingTypeNames)} \n\n");
             }
         }
     }

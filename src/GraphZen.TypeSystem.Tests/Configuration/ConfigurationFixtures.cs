@@ -3,11 +3,16 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using GraphZen.Enums;
 using GraphZen.Infrastructure;
+using GraphZen.InputObjects;
+using GraphZen.Interfaces;
 using GraphZen.Interfaces.Fields;
 using GraphZen.Objects;
 using GraphZen.Objects.Fields;
 using GraphZen.Objects.Fields.Arguments;
+using GraphZen.Scalars;
+using GraphZen.Unions;
 
 namespace GraphZen
 {
@@ -22,20 +27,22 @@ namespace GraphZen
             new Schema_Objects_Explicit(),
             new Schema_Objects_ViaClrClasses(),
             // Interfaces (Collection)
-            // TODO: Schema_Interfaces_Explicit
-            // TODO: Schema_Interfaces_ViaClrInterfaces
+            new Schema_Interfaces_Explicit(),
+            new Schema_Interfaces_ViaClrInterfaces(),
             // Unions (Collection)
-            // TODO: Schema_Unions_Explicit
-            // TODO: Schema_Unions_ViaMarkerInterface
-            // TODO: Schema_Unions_ViaBaseClass
+            new Schema_Unions_Explicit(),
+            new Schema_Unions_ViaClrMarkerInterface(),
+            new Schema_Unions_ViaClrBaseClass(),
+            new Schema_Unions_ViaClrChildClass(),
+
             // Enums (Collection)
-            // TODO: Schema_Enums_Explicit
-            // TODO: Schema_Enums_ViaClrEnums
+            new Schema_Enums_Explicit(),
+            new Schema_Enums_ViaClrEnums(),
             // Scalars (Collection)
-            // TODO: Schema_Scalars_Explicit
+            new Schema_Scalars_Explicit(),
             // Input Objects (Collection)
-            // TODO: Schema_InputObjects_Explicit
-            // TODO: Schema_InputObjects_ViaClrClasses
+            new Schema_InputObjects_Explicit(),
+            new Schema_InputObjects_ViaClrClasses(),
             // Directives (Collection)
             // TODO: Schema_Directives_Explicit
             // TODO: Schema_Directives_ViaClrAttributes

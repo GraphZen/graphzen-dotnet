@@ -1,7 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
+using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 
@@ -42,6 +42,31 @@ namespace GraphZen.TypeSystem.Internal
 
 
             Definition.IgnoreField(fieldName, configurationSource);
+            return true;
+        }
+
+        public bool ConfigureFromClrType()
+        {
+            var clrType = Definition.ClrType;
+            if (clrType == null)
+            {
+                return false;
+            }
+            if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
+            {
+                Definition.SetDescription(description, ConfigurationSource.DataAnnotation);
+            }
+
+            var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
+            // ReSharper disable once PossibleNullReferenceException
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var fieldMembers = clrType.GetMembers(flags)
+                .OfType<PropertyInfo>()
+                .OrderBy(_ => _.MetadataToken);
+            foreach (var property in fieldMembers)
+            {
+                Field(property, ConfigurationSource.Convention);
+            }
             return true;
         }
 
@@ -110,7 +135,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (property.TryGetGraphQLTypeInfo(out _, out var innerClrType))
             {
-                var fieldInnerType = Schema.Builder.OutputType(innerClrType, configurationSource);
+                var fieldInnerType = Schema.Builder.InputType(innerClrType, configurationSource);
                 if (fieldInnerType == null)
                 {
                     IgnoreField(property, ConfigurationSource.Convention);
@@ -156,8 +181,6 @@ namespace GraphZen.TypeSystem.Internal
                 }
             }
 
-            throw new NotImplementedException();
-            /*
             var field = Definition.FindField(member);
             if (field != null)
             {
@@ -166,7 +189,6 @@ namespace GraphZen.TypeSystem.Internal
 
             Definition.IgnoreField(fieldName, configurationSource);
             return true;
-            */
         }
 
 

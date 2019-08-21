@@ -3,9 +3,9 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 
-namespace GraphZen
+namespace GraphZen.Objects
 {
-    public class Schema_Objects : CollectionConfigurationFixture<IObjectTypesContainer,
+    public abstract class Schema_Objects : CollectionConfigurationFixture<IObjectTypesContainer,
         IObjectTypesContainerDefinition, IMutableObjectTypesContainerDefinition, ObjectTypeDefinition, ObjectType,
         SchemaDefinition,
         Schema>

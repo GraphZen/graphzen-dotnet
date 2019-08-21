@@ -5,7 +5,7 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.Objects
 {
-    public class Object_Description : LeafElementConfigurationFixture<IDescription, IDescription, IMutableDescription,
+    public abstract class Object_Description : LeafElementConfigurationFixture<IDescription, IDescription, IMutableDescription,
         string, ObjectTypeDefinition, ObjectType>
     {
         public override string ValueA { get; } = "description a";

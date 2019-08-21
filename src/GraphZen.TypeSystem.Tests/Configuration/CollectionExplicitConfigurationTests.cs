@@ -39,7 +39,6 @@ namespace GraphZen
                     defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
                     defCollection[itemName].GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
-                    defCollection.Count.Should().Be(1);
                 });
                 var collection = fixture.GetCollection(schema, parentName);
                 collection[itemName].Should().NotBeNull();
@@ -102,7 +101,6 @@ namespace GraphZen
                     defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
                     defCollection[itemName].GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
-                    defCollection.Count.Should().Be(1);
                     fixture.IgnoreItem(sb, parentName, itemName);
                     defCollection.ContainsKey(itemName).Should().BeFalse();
                 });
@@ -125,7 +123,6 @@ namespace GraphZen
                     fixture.IgnoreItem(sb, parentName, itemName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
-                    defCollection.Count.Should().Be(1);
                     defCollection[itemName].Should().NotBeNull();
                     defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
                     defCollection[itemName].GetConfigurationSource().Should()
@@ -192,7 +189,6 @@ namespace GraphZen
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, initialItemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
-                    defCollection.Count.Should().Be(1);
                     var initialItem = defCollection[initialItemName];
                     defCollection[initialItemName].Should().NotBeNull();
                     defCollection[initialItemName].GetConfigurationSource().Should()
@@ -201,7 +197,6 @@ namespace GraphZen
                         .Be(ConfigurationSource.Explicit);
                     fixture.RenameItem(sb, parentName, initialItemName, changedItemName);
                     defCollection.ContainsKey(initialItemName).Should().BeFalse();
-                    defCollection.Count.Should().Be(1);
                     defCollection[changedItemName].Should().NotBeNull();
                     defCollection[changedItemName].GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);

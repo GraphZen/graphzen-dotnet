@@ -7,7 +7,7 @@ using GraphZen.Infrastructure;
 namespace GraphZen
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Class |
-                    AttributeTargets.Interface | AttributeTargets.Parameter)]
+                    AttributeTargets.Interface | AttributeTargets.Parameter | AttributeTargets.Enum)]
     public class GraphQLIgnoreAttribute : Attribute
     {
     }

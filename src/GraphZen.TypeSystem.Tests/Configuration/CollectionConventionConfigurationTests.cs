@@ -2,10 +2,8 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Objects.Fields;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using Xunit;
@@ -21,8 +19,9 @@ namespace GraphZen
         protected override IEnumerable<ICollectionConventionConfigurationFixture> GetFixtures() =>
             ConfigurationFixtures.GetAll<ICollectionConventionConfigurationFixture>();
 
+
         [Fact]
-        public void item_added_by_convention_with_name_configured_by_convention()
+        public void item_added_by_conventional_name()
         {
             TestFixtures(fixture =>
             {
@@ -35,7 +34,7 @@ namespace GraphZen
                     defCollection[ctx.ItemNamedByConvention].Name.Should().Be(ctx.ItemNamedByConvention);
                     defCollection[ctx.ItemNamedByConvention].Should().NotBeNull();
                     defCollection[ctx.ItemNamedByConvention].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Convention);
+                        .Be(ctx.DefaultItemConfigurationSource ?? ConfigurationSource.Convention);
                     defCollection[ctx.ItemNamedByConvention].GetNameConfigurationSource().Should()
                         .Be(ConfigurationSource.Convention);
                 });
@@ -45,13 +44,13 @@ namespace GraphZen
             });
         }
 
+
         [Fact]
         public void item_added_by_convention_with_name_configured_by_convention_renamed_explicitly()
         {
             TestFixtures(fixture =>
             {
                 var ctx = fixture.GetContext();
-
                 var explicitName = "ExplicitName";
                 var schema = Schema.Create(sb =>
                 {
@@ -60,13 +59,14 @@ namespace GraphZen
                     defCollection[ctx.ItemNamedByConvention].Name.Should().Be(ctx.ItemNamedByConvention);
                     defCollection[ctx.ItemNamedByConvention].Should().NotBeNull();
                     defCollection[ctx.ItemNamedByConvention].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Convention);
+                        .Be(ctx.DefaultItemConfigurationSource ?? ConfigurationSource.Convention);
                     defCollection[ctx.ItemNamedByConvention].GetNameConfigurationSource().Should()
                         .Be(ConfigurationSource.Convention);
                     fixture.RenameItem(sb, ctx.ParentName, ctx.ItemNamedByConvention, explicitName);
                     defCollection.ContainsKey(ctx.ItemNamedByConvention).Should().BeFalse();
                     defCollection[explicitName].Should().NotBeNull();
-                    defCollection[explicitName].GetConfigurationSource().Should().Be(ConfigurationSource.Explicit, $"items explicitly re-named will be considered explicitly configured.");
+                    defCollection[explicitName].GetConfigurationSource().Should().Be(ConfigurationSource.Explicit,
+                        "items explicitly re-named will be considered explicitly configured.");
                     defCollection[explicitName].GetNameConfigurationSource().Should().Be(ConfigurationSource.Explicit);
                     defCollection[explicitName].Name.Should().Be(explicitName);
                 });
@@ -87,10 +87,11 @@ namespace GraphZen
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    defCollection[ctx.ItemNamedByDataAnnotation].Name.Should().Be(ctx.ItemNamedByDataAnnotation, $"these are the items in the collection: {defCollection}");
+                    defCollection[ctx.ItemNamedByDataAnnotation].Name.Should().Be(ctx.ItemNamedByDataAnnotation,
+                        $"these are the items in the collection: {defCollection}");
                     defCollection[ctx.ItemNamedByDataAnnotation].Should().NotBeNull();
                     defCollection[ctx.ItemNamedByDataAnnotation].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Convention);
+                        .Be(ctx.DefaultItemConfigurationSource ?? ConfigurationSource.Convention);
                     defCollection[ctx.ItemNamedByDataAnnotation].GetNameConfigurationSource().Should()
                         .Be(ConfigurationSource.DataAnnotation);
                 });
@@ -114,7 +115,7 @@ namespace GraphZen
                     defCollection[ctx.ItemNamedByDataAnnotation].Name.Should().Be(ctx.ItemNamedByDataAnnotation);
                     defCollection[ctx.ItemNamedByDataAnnotation].Should().NotBeNull();
                     defCollection[ctx.ItemNamedByDataAnnotation].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Convention);
+                        .Be(ctx.DefaultItemConfigurationSource ?? ConfigurationSource.Convention);
                     defCollection[ctx.ItemNamedByDataAnnotation].GetNameConfigurationSource().Should()
                         .Be(ConfigurationSource.DataAnnotation);
                     fixture.RenameItem(sb, ctx.ParentName, ctx.ItemNamedByConvention, explicitName);

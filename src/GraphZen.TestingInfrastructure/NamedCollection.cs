@@ -110,6 +110,7 @@ namespace GraphZen
 
         public override string ToString()
         {
+            // ReSharper disable once PossibleNullReferenceException
             return string.Join(", ", this.Select(_ => _.Name));
         }
 

@@ -20,8 +20,7 @@ namespace GraphZen.TypeSystem
         [NotNull] private readonly List<DirectiveDefinition> _directives = new List<DirectiveDefinition>();
 
 
-        [NotNull]
-        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
+        [NotNull] private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
             new Dictionary<string, ConfigurationSource>();
 
 
@@ -548,7 +547,6 @@ namespace GraphZen.TypeSystem
             }
 
             _ignoredTypes[name] = configurationSource;
-
         }
 
         public void IgnoreType([NotNull] Type clrType, ConfigurationSource configurationSource)
@@ -725,17 +723,18 @@ namespace GraphZen.TypeSystem
             _types.Remove(type);
         }
 
-        public IEnumerable<DirectiveDefinition> GetDirectives() => throw new NotImplementedException();
+        public IEnumerable<DirectiveDefinition> GetDirectives() => _directives;
 
         public IEnumerable<ObjectTypeDefinition> GetObjects() => _types.OfType<ObjectTypeDefinition>();
 
-        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => throw new NotImplementedException();
+        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _types.OfType<InterfaceTypeDefinition>();
 
-        public IEnumerable<UnionTypeDefinition> GetUnions() => throw new NotImplementedException();
+        public IEnumerable<UnionTypeDefinition> GetUnions() => _types.OfType<UnionTypeDefinition>();
 
-        public IEnumerable<ScalarTypeDefinition> GetScalars() => throw new NotImplementedException();
+        public IEnumerable<ScalarTypeDefinition> GetScalars() => _types.OfType<ScalarTypeDefinition>();
 
-        public IEnumerable<EnumTypeDefinition> GetEnums() => throw new NotImplementedException();
+        public IEnumerable<EnumTypeDefinition> GetEnums() => _types.OfType<EnumTypeDefinition>();
+
         IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives() => GetDirectives();
 
         IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects() => GetObjects();
@@ -747,7 +746,9 @@ namespace GraphZen.TypeSystem
         IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars() => GetScalars();
 
         IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums() => GetEnums();
-        public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => throw new NotImplementedException();
-        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() => GetInputObjects();
+        public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => _types.OfType<InputObjectTypeDefinition>();
+
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() =>
+            GetInputObjects();
     }
 }

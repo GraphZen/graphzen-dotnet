@@ -8,7 +8,7 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.Interfaces.Fields
 {
-    public class InterfaceFields :
+    public abstract class Interface_Fields :
         CollectionConfigurationFixture<IFieldsContainer,
             IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field,
             InterfaceTypeDefinition,
