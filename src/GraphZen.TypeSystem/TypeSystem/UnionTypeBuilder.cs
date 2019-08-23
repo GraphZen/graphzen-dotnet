@@ -34,6 +34,15 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IUnionTypeBuilder<object, TContext> ClrType(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            return new UnionTypeBuilder<object, TContext>(Builder);
+        }
+
+        public IUnionTypeBuilder<T, TContext> ClrType<T>() => throw new NotImplementedException();
+
         public IUnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes)
         {
             Check.NotNull(objectTypes, nameof(objectTypes));

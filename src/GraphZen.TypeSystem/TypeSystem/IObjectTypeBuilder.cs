@@ -22,11 +22,6 @@ namespace GraphZen.TypeSystem
         [NotNull]
         IObjectTypeBuilder<T, TContext> ClrType<T>();
 
-
-
-
-
-
         [NotNull]
         IObjectTypeBuilder<TObject, TContext> Description([CanBeNull] string description);
 

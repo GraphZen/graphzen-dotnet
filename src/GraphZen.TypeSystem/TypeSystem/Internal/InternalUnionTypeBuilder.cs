@@ -44,5 +44,14 @@ namespace GraphZen.TypeSystem.Internal
 
             return this;
         }
+
+        public InternalUnionTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
+        {
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                // TODO: Configure union type based on CLR type
+            }
+            return this;
+        }
     }
 }

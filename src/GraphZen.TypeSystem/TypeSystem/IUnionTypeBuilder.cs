@@ -17,6 +17,13 @@ namespace GraphZen.TypeSystem
         IUnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn);
 
         [NotNull]
+        IUnionTypeBuilder<object, TContext> ClrType(Type clrType);
+
+        [NotNull]
+        IUnionTypeBuilder<T, TContext> ClrType<T>();
+
+
+        [NotNull]
         IUnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes);
 
         [NotNull]
@@ -25,6 +32,8 @@ namespace GraphZen.TypeSystem
 
         [NotNull]
         IUnionTypeBuilder<TUnion, TContext> OfTypes<T1>();
+
+
 
 
         [NotNull]

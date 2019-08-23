@@ -202,6 +202,10 @@ namespace GraphZen.TypeSystem.Internal
             if (type is UnionTypeDefinition unionType)
             {
                 unionType.UpdateConfigurationSource(configurationSource);
+                if (id.ClrType != null && id.ClrType != unionType.ClrType)
+                {
+                    unionType.Builder.ClrType(id.ClrType, ConfigurationSource.Explicit);
+                }
                 return unionType.Builder;
             }
 
