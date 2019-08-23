@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.Objects.Fields.Arguments;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using Xunit;
@@ -145,8 +146,6 @@ namespace GraphZen
                     fixture.RenameItem(sb, ctx.ParentName, ctx.ItemNamedByConvention, explicitName);
                     defCollection.ContainsKey(ctx.ItemNamedByConvention).Should().BeFalse();
                     defCollection[explicitName].Should().NotBeNull();
-                    defCollection[explicitName].GetConfigurationSource().Should().Be(ConfigurationSource.Explicit,
-                        "items explicitly re-named will be considered explicitly configured.");
                     defCollection[explicitName].GetNameConfigurationSource().Should().Be(ConfigurationSource.Explicit);
                     defCollection[explicitName].Name.Should().Be(explicitName);
                 });
@@ -201,7 +200,6 @@ namespace GraphZen
                     fixture.RenameItem(sb, ctx.ParentName, ctx.ItemNamedByConvention, explicitName);
                     defCollection.ContainsKey(ctx.ItemNamedByConvention).Should().BeFalse();
                     defCollection[explicitName].Should().NotBeNull();
-                    defCollection[explicitName].GetConfigurationSource().Should().Be(ConfigurationSource.Explicit);
                     defCollection[explicitName].GetNameConfigurationSource().Should().Be(ConfigurationSource.Explicit);
                     defCollection[explicitName].Name.Should().Be(explicitName);
                 });

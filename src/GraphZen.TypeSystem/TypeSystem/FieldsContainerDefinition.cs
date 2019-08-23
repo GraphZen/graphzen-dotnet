@@ -176,15 +176,8 @@ namespace GraphZen.TypeSystem
             var fb = field.Builder;
             fb.FieldType(method);
 
-            if (method.TryGetDescriptionFromDataAnnotation(out var description))
-            {
-                fb.Description(description, ConfigurationSource.DataAnnotation);
-            }
 
-            foreach (var parameter in method.GetParameters())
-            {
-                fb.Argument(parameter, ConfigurationSource.Convention);
-            }
+            
 
             return AddField(field);
         }

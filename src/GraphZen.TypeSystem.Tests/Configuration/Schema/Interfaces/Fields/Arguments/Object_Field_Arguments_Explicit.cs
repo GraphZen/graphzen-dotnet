@@ -5,27 +5,27 @@ using System;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 
-namespace GraphZen.Objects.Fields.Arguments
+namespace GraphZen.Interfaces.Fields.Arguments
 {
-    public class Object_Field_Arguments_Explicit : Object_Field_Arguments, ICollectionExplicitConfigurationFixture
+    public class Interface_Field_Arguments_Explicit : Interface_Field_Arguments, ICollectionExplicitConfigurationFixture
     {
     }
 
-    public class Object_Field_Arguments_ViaClrMethodParameters : Object_Field_Arguments, ICollectionConventionConfigurationFixture
+    public class Interface_Field_Arguments_ViaClrMethodParameters : Interface_Field_Arguments, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
         [GraphQLName(Grandparent)]
-        public class SomeObject
+        public interface ISomeInterface
         {
-            public string SomeField(
+            string SomeField(
                 string arg1,
                 [GraphQLIgnore] string ignoreMe,
-                [GraphQLName(DataAnnotationName)] string arg2) => throw new NotImplementedException();
+                [GraphQLName(DataAnnotationName)] string arg2);
         }
 
         public CollectionConventionContext GetContext() => new CollectionConventionContext()
         {
-            ParentName = nameof(SomeObject.SomeField).FirstCharToLower(),
+            ParentName = nameof(ISomeInterface.SomeField).FirstCharToLower(),
             ItemIgnoredByDataAnnotation = "ignoreMe",
             ItemNamedByConvention = "arg1",
             ItemNamedByDataAnnotation = DataAnnotationName,
@@ -34,12 +34,12 @@ namespace GraphZen.Objects.Fields.Arguments
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {
-            sb.Object<SomeObject>();
+            sb.Interface<ISomeInterface>();
         }
 
         public void ConfigureClrContext(SchemaBuilder sb, string parentName)
         {
-            sb.Object<SomeObject>();
+            sb.Interface<ISomeInterface>();
         }
     }
 }

@@ -21,6 +21,9 @@
     <ProjectReference Include="..\GraphZen.TestingInfrastructure\GraphZen.TestingInfrastructure.csproj" />
     <ProjectReference Include="..\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configuration\Schema\Interfaces\Fields\Arguments\Description\" />
+  </ItemGroup>
 
 
 </Project>

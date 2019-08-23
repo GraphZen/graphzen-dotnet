@@ -5,36 +5,36 @@ using GraphZen.TypeSystem.Taxonomy;
 
 // ReSharper disable PossibleNullReferenceException
 
-namespace GraphZen.Objects.Fields.Arguments
+namespace GraphZen.Interfaces.Fields.Arguments
 {
-    public abstract class ObjectField_Arguments : CollectionConfigurationFixture<IArgumentsContainer,
+    public abstract class Interface_Field_Arguments : CollectionConfigurationFixture<IArgumentsContainer,
         IArgumentsContainerDefinition, IMutableArgumentsContainerDefinition, ArgumentDefinition, Argument,
         FieldDefinition, Field>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
         {
-            sb.Object(Grandparent).Field(parentName, "String");
+            sb.Interface(Grandparent).Field(parentName, "String");
         }
 
         public override Field GetParent(Schema schema, string parentName) =>
-            schema.GetObject(Grandparent).GetField(parentName);
+            schema.GetInterface(Grandparent).GetField(parentName);
 
         public override FieldDefinition GetParent(SchemaBuilder sb, string parentName) =>
-            sb.GetDefinition().GetObject(Grandparent).GetField(parentName);
+            sb.GetDefinition().GetInterface(Grandparent).GetField(parentName);
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
-            sb.Object(Grandparent).Field(parentName, f => f.Argument(name, "String"));
+            sb.Interface(Grandparent).Field(parentName, f => f.Argument(name, "String"));
         }
 
         public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
         {
-            sb.Object(Grandparent).Field(parentName, f => f.IgnoreArgument(name));
+            sb.Interface(Grandparent).Field(parentName, f => f.IgnoreArgument(name));
         }
 
         public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
         {
-            sb.Object(Grandparent).Field(parentName, f => f.UnignoreArgument(name));
+            sb.Interface(Grandparent).Field(parentName, f => f.UnignoreArgument(name));
         }
 
         public override NamedCollection<ArgumentDefinition> GetCollection(FieldDefinition parent) =>
@@ -47,7 +47,7 @@ namespace GraphZen.Objects.Fields.Arguments
 
         public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
         {
-            sb.Object(Grandparent).Field(parentName, f => f.Argument(name, arg => arg.Name(newName)));
+            sb.Interface(Grandparent).Field(parentName, f => f.Argument(name, arg => arg.Name(newName)));
         }
     }
 }

@@ -217,19 +217,7 @@ namespace GraphZen.TypeSystem
         public ArgumentDefinition AddArgument([NotNull] ParameterInfo parameter,
             ConfigurationSource configurationSource)
         {
-            if (ClrInfo == null)
-            {
-                throw new InvalidOperationException(
-                    "Cannot add Argument from property on a type that does not have a CLR type mapped.");
-            }
-
-            // ReSharper disable once AssignNullToNotNullAttribute
-            //if (!ClrType.IsSameOrSubclass(parameter.DeclaringType))
-            //{
-            //    throw new InvalidOperationException(
-            //        $"Cannot add Argument from property with a declaring type ({parameter.DeclaringType}) that does not exist on the parent's {Kind.ToString().ToLower()} type's mapped CLR type ({ClrType}).");
-            //}
-
+            
             var (argName, nameConfigurationSource) = parameter.GetGraphQLArgumentName();
             var argument = new ArgumentDefinition(argName, nameConfigurationSource, Schema, configurationSource, this,
                 parameter);

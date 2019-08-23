@@ -14,10 +14,13 @@ using GraphZen.InputObjects.Fields.Description;
 using GraphZen.Interfaces;
 using GraphZen.Interfaces.Description;
 using GraphZen.Interfaces.Fields;
+using GraphZen.Interfaces.Fields.Arguments;
+using GraphZen.Interfaces.Fields.Arguments.Description;
 using GraphZen.Interfaces.Fields.Description;
 using GraphZen.Objects;
 using GraphZen.Objects.Fields;
 using GraphZen.Objects.Fields.Arguments;
+using GraphZen.Objects.Fields.Arguments.Description;
 using GraphZen.Objects.Fields.Description;
 using GraphZen.Objects.Interfaces;
 using GraphZen.Scalars;
@@ -79,7 +82,7 @@ namespace GraphZen
             new Object_Fields_ViaClrMethods(),
             // Interfaces (Collection)
             new Object_Interfaces_Explicit(),
-            new Object_Interfaces_ViaClrInterfaces(), 
+            new Object_Interfaces_ViaClrInterfaces(),
             // Directive Annotations (Collection)
             // TODO: Object_DirectiveAnnotations_Explicit
             // TODO: Object_DirectiveAnnotations_ViaClrClassAttributes
@@ -96,6 +99,7 @@ namespace GraphZen
             // TODO: Object_Field_Type_ViaClrProperty
             // Arguments (Collection)
             new Object_Field_Arguments_Explicit(),
+            new Object_Field_Arguments_ViaClrMethodParameters(),
             // TODO: Object_Field_Arguments_Explicit
             // TODO: Object_Field_Arguments_ViaClrClassMethodArguments
             // TODO: Object_Field_Arguments_ViaClrInterfaceMethodArguments
@@ -104,12 +108,15 @@ namespace GraphZen
             // TODO: Object_Field_DirectiveAnnotations_ViaClrPropertyAttributes
             // TODO: Object_Field_DirectiveAnnotations_ViaClrMethodAttributes
 
+            // OBJECT FIELD ARGUMENT
+            new Object_Field_Argument_ViaClrMethod_Description(),
+            new Object_Field_Argument_Explicit_Description(),
 
             // INTERFACE
             // Description (Leaf)
-            
+
             new Interface_ViaClrClass_Description(),
-            new Interface_Explicit_Description(), 
+            new Interface_Explicit_Description(),
 
             // Fields (Collection)
             // TODO: Interface_Fields_Explicit
@@ -124,12 +131,15 @@ namespace GraphZen
             // INTERFACE FIELD
             // Description (Leaf)
             new Interface_Field_Explicit_Description(),
-            new Interface_Field_ViaClrProperty_Description(), 
+            new Interface_Field_ViaClrProperty_Description(),
+            // Arguments (Collection)
+            new Interface_Field_Arguments_Explicit(),
+            new Interface_Field_Arguments_ViaClrMethodParameters(),
+
             // Type
             // TODO: Interface_Field_Type_Explicit
             // TODO: Interface_Field_Type_ViaClrMethod
             // TODO: Interface_Field_Type_ViaClrProperty
-            // Arguments (Collection)
             // TODO: Interface_Field_Arguments_Explicit
             // TODO: Interface_Field_Arguments_ViaClrClassMethodArguments
             // TODO: Interface_Field_Arguments_ViaClrInterfaceMethodArguments
@@ -138,11 +148,17 @@ namespace GraphZen
             // TODO: Interface_Field_DirectiveAnnotations_ViaClrPropertyAttributes
             // TODO: Interface_Field_DirectiveAnnotations_ViaClrMethodAttributes
 
+            // INTERFACE FIELD ARGUMENT
+            // Description (Leaf)
+            new Interface_Field_Argument_Explicit_Description(),
+            new Interface_Field_Argument_ViaClrMethod_Description(),
+
+
             // Union
             // Description (Leaf)
             new Union_Explicit_Description(),
             new Union_ViaClrClass_Description(),
-            new Union_ViaClrMarkerInterface_Description(), 
+            new Union_ViaClrMarkerInterface_Description(),
             // MemberTypes (Collection)
             // TODO: Union_MemberTypes_Explicit
             // TODO: Union_MemberTypes_ViaMarkerInterfaces
@@ -154,8 +170,8 @@ namespace GraphZen
 
             // INPUT OBJECT
             // Description (Leaf)
-             new InputObject_Explicit_Description(),
-             new InputObject_ViaClrClass_Description(),
+            new InputObject_Explicit_Description(),
+            new InputObject_ViaClrClass_Description(),
             // Fields (Collection)
             new InputObject_Fields_Explicit(),
             new InputObject_Fields_ViaClrProperties(),
@@ -166,19 +182,19 @@ namespace GraphZen
 
             // INPUT OBJECT FIELD
             new InputObject_Field_Explicit_Description(),
-            new InputObject_Field_ViaClrProperty_Description(), 
+            new InputObject_Field_ViaClrProperty_Description(),
 
 
             // Scalar
             new Scalar_ViaClrClass_Description(),
-            new Scalar_Explicit_Description(), 
+            new Scalar_Explicit_Description(),
 
             // ENUM
             // Description (Leaf)
             new Enum_Explicit_Description(),
-            new Enum_ViaClrEnum_Description(), 
+            new Enum_ViaClrEnum_Description(),
             // Values (Collection)
-            
+
             // Directive Annotations (Collection)
             // TODO: InputObject_DirectiveAnnotations_Explicit
             // TODO: InputObject_DirectiveAnnotations_ViaClrClassAttributes
@@ -186,8 +202,7 @@ namespace GraphZen
 
             // ENUM VALUE
             new EnumValue_Explicit_Description(),
-            new EnumValue_ViaClrEnumValue_Description(),
-
+            new EnumValue_ViaClrEnumValue_Description()
         }.OfType<T>();
     }
 }

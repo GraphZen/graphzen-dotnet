@@ -258,9 +258,14 @@ namespace GraphZen.TypeSystem.Internal
                 field.UpdateConfigurationSource(configurationSource);
             }
 
+
             if (method.TryGetDescriptionFromDataAnnotation(out var desc))
             {
                 field?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+            }
+            foreach (var parameter in method.GetParameters())
+            {
+                field?.Builder.Argument(parameter, ConfigurationSource.Convention);
             }
 
             return field?.Builder;

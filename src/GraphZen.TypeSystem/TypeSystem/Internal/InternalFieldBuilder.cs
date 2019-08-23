@@ -113,6 +113,11 @@ namespace GraphZen.TypeSystem.Internal
                 argument.UpdateConfigurationSource(configurationSource);
             }
 
+            if (parameter.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                argument?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+            }
+
             return argument?.Builder;
         }
 
