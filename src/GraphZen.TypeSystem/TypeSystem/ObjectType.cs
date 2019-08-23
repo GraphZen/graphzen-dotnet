@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem
 
             _interfaceMap = new Lazy<IReadOnlyDictionary<string, InterfaceType>>(() =>
                 {
-                    return interfaces.ToImmutableDictionary(_ => _.Name, _ =>
+                    return interfaces.ToReadOnlyDictionary(_ => _.Name, _ =>
                     {
                         // ReSharper disable once PossibleNullReferenceException
                         return schema.GetType<InterfaceType>(_.Name);
