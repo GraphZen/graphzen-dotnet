@@ -186,6 +186,10 @@ namespace GraphZen.TypeSystem.Internal
                 field.UpdateConfigurationSource(configurationSource);
             }
 
+            if (property.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                field?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+            }
 
             return field?.Builder;
         }

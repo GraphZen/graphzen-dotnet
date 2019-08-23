@@ -50,17 +50,6 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Interface;
 
-        public bool TryGetField(string name, out Field field) =>
-            Fields.TryGetValue(Check.NotNull(name, nameof(name)), out field);
-
-        public Field FindField(string name) =>
-            TryGetField(Check.NotNull(name, nameof(name)), out var field) ? field : null;
-
-        public bool HasField(string name) => Fields.ContainsKey(Check.NotNull(name, nameof(name)));
-
-        public Field GetField(string name) => FindField(Check.NotNull(name, nameof(name))) ??
-                                              throw new Exception($"{this} does not have a field named '{name}'.");
-
 
         [NotNull]
         public static InterfaceType From(IInterfaceTypeDefinition definition, Schema schema)

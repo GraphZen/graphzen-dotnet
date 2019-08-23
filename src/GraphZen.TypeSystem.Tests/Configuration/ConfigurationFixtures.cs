@@ -6,14 +6,15 @@ using System.Linq;
 using GraphZen.Enums;
 using GraphZen.Enums.Description;
 using GraphZen.Enums.EnumValues.Description;
-using GraphZen.Enums.Fields.Description;
 using GraphZen.Infrastructure;
 using GraphZen.InputObjects;
 using GraphZen.InputObjects.Description;
 using GraphZen.InputObjects.Fields;
+using GraphZen.InputObjects.Fields.Description;
 using GraphZen.Interfaces;
 using GraphZen.Interfaces.Description;
 using GraphZen.Interfaces.Fields;
+using GraphZen.Interfaces.Fields.Description;
 using GraphZen.Objects;
 using GraphZen.Objects.Fields;
 using GraphZen.Objects.Fields.Arguments;
@@ -122,9 +123,8 @@ namespace GraphZen
 
             // INTERFACE FIELD
             // Description (Leaf)
-            // TODO: Interface_Field_Explicit_Description
-            // TODO: Interface_Field_ViaClrProperty_Description
-            // TODO: Interface_Field_ViaClrMethod_Description
+            new Interface_Field_Explicit_Description(),
+            new Interface_Field_ViaClrProperty_Description(), 
             // Type
             // TODO: Interface_Field_Type_Explicit
             // TODO: Interface_Field_Type_ViaClrMethod
@@ -163,6 +163,10 @@ namespace GraphZen
             // TODO: InputObject_DirectiveAnnotations_Explicit
             // TODO: InputObject_DirectiveAnnotations_ViaClrClassAttributes
             // TODO: InputObject_DirectiveAnnotations_ViaClrInterfaceAttributes
+
+            // INPUT OBJECT FIELD
+            new InputObject_Field_Explicit_Description(),
+            new InputObject_Field_ViaClrProperty_Description(), 
 
 
             // Scalar

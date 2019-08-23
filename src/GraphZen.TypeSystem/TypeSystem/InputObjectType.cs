@@ -37,17 +37,6 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<InputField> GetFields() => Fields.Values;
 
-        public InputField FindField(string name) =>
-            Fields.TryGetValue(Check.NotNull(name, nameof(name)), out var field) ? field : null;
-
-        public bool HasField(string name) => Fields.ContainsKey(name);
-
-        public InputField GetField(string name) =>
-            FindField(Check.NotNull(name, nameof(name))) ??
-            throw new Exception($"{this} does not have a field named '{name}'.");
-
-        public bool TryGetField(string name, out InputField field) =>
-            Fields.TryGetValue(Check.NotNull(name, nameof(name)), out field);
 
         [NotNull]
         public static InputObjectType From(IInputObjectTypeDefinition definition,
