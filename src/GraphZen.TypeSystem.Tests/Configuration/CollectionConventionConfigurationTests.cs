@@ -4,6 +4,8 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.InputObjects.Fields;
+using GraphZen.Objects.Fields;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using Xunit;

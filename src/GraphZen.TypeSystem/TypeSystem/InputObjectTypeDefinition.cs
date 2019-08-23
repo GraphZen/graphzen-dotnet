@@ -57,6 +57,7 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
+
             if (this.TryGetField(name, out var existing) && existing != field)
             {
                 throw new InvalidOperationException(
@@ -184,13 +185,25 @@ namespace GraphZen.TypeSystem
         [NotNull]
         public InputValueDefinition GetOrAddField(string name, ConfigurationSource configurationSource)
         {
-            Check.NotNull(name, nameof(name));
-            if (this.TryGetField(name, out var existing))
+            var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
+            if (ignoredConfigurationSource.HasValue)
             {
-                return existing;
+                if (!configurationSource.Overrides(ignoredConfigurationSource))
+                {
+                    return null;
+                }
+
+                _ignoredFields.Remove(name);
             }
 
-            var field = new InputFieldDefinition(name, configurationSource, Schema, configurationSource,
+
+            var field = this.FindField(name);
+            if (field != null)
+            {
+                field.UpdateConfigurationSource(configurationSource);
+                return field;
+            }
+            field = new InputFieldDefinition(name, configurationSource, Schema, configurationSource,
                 null, this);
             _fields[name] = field;
             return field;

@@ -34,6 +34,7 @@ namespace GraphZen.TypeSystem
 
             if (Name != name)
             {
+
                 DeclaringMember.RenameField(this, name, configurationSource);
             }
 

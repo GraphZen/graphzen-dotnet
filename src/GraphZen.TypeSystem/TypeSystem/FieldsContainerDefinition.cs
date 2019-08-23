@@ -90,7 +90,7 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
-            field.UpdateConfigurationSource(configurationSource);
+            // field.UpdateConfigurationSource(configurationSource);
 
             if (this.TryGetField(name, out var existing) && existing != field)
             {
@@ -234,6 +234,7 @@ namespace GraphZen.TypeSystem
             var field = this.FindField(name);
             if (field != null)
             {
+                field.UpdateConfigurationSource(configurationSource);
                 return field;
             }
 
