@@ -24,6 +24,7 @@ namespace GraphZen
         public static IEnumerable<T> GetAll<T>() where T : IConfigurationFixture => new List<IConfigurationFixture>
         {
             // SCHEMA
+
             // Objects (Collection)
             new Schema_Objects_Explicit(),
             new Schema_Objects_ViaClrClasses(),
@@ -145,7 +146,8 @@ namespace GraphZen
             // new InputObject_Explicit_Description(),
             // new InputObject_ViaClrClass_Description(),
             // Fields (Collection)
-            new InputObject_Fields_Explicit()
+            new InputObject_Fields_Explicit(),
+            new InputObject_Fields_ViaClrProperties(),
             // new InputObject_Fields_ViaClrProperties(),
             // new InputObject_Fields_ViaClrMethods(),
             // Directive Annotations (Collection)

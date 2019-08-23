@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
@@ -43,6 +44,29 @@ namespace GraphZen.TypeSystem.Internal
 
             Definition.IgnoreField(fieldName, configurationSource);
             return true;
+        }
+
+        public bool UnignoreField([NotNull] string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(name);
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
+
+            Definition.UnignoreField(name);
+            return true;
+        }
+
+        [NotNull]
+        public InternalInputObjectTypeBuilder ClrType([NotNull] Type clrType, ConfigurationSource configurationSource)
+        {
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                ConfigureFromClrType();
+            }
+
+            return this;
         }
 
         public bool ConfigureFromClrType()

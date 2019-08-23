@@ -28,6 +28,19 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IInputObjectTypeBuilder<object> ClrType(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            return new InputObjectTypeBuilder<object>(Builder);
+        }
+
+        public IInputObjectTypeBuilder<T> ClrType<T>()
+        {
+            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            return new InputObjectTypeBuilder<T>(Builder);
+        }
+
         public IInputObjectTypeBuilder<TInputObject> Field(string name, string type,
             Action<InputValueBuilder> inputFieldConfigurator = null)
         {
@@ -67,9 +80,26 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IInputObjectTypeBuilder<TInputObject> IgnoreField<TField>(Expression<Func<TInputObject, TField>> fieldSelector) => throw new NotImplementedException();
+
+        public IInputObjectTypeBuilder<TInputObject> IgnoreField(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.IgnoreField(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IInputObjectTypeBuilder<TInputObject> UnignoreField(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreField(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
 
         public IInputObjectTypeBuilder<TInputObject> Name(string name)
         {
+            Check.NotNull(name, nameof(name));
             Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }

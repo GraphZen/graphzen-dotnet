@@ -20,7 +20,7 @@ namespace GraphZen
         protected override IEnumerable<ICollectionExplicitConfigurationFixture> GetFixtures() =>
             ConfigurationFixtures.GetAll<ICollectionExplicitConfigurationFixture>();
 
-        
+
         [Fact]
         public void parent_should_be_of_expected_type()
         {

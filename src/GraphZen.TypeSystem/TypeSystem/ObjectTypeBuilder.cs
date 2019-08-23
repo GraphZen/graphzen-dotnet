@@ -145,8 +145,6 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(fieldName, nameof(fieldName));
             Builder.IgnoreField(fieldName, ConfigurationSource.Explicit);
-
-
             return this;
         }
 

@@ -1,8 +1,8 @@
-﻿using System;
-using GraphZen.Infrastructure;
+﻿using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+// ReSharper disable PossibleNullReferenceException
 
 namespace GraphZen.InputObjects.Fields
 {
@@ -37,19 +37,17 @@ namespace GraphZen.InputObjects.Fields
 
         public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
         {
-            sb.InputObject(parentName).Field(name);
+            sb.InputObject(parentName).IgnoreField(name);
         }
 
         public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
         {
-            throw new NotImplementedException();
-            //sb.InputObject(parentName).Unig(name);
+            sb.InputObject(parentName).UnignoreField(name);
         }
 
         public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
         {
-            throw new NotImplementedException();
-            //sb.InputObject(parentName).InputField(name, field => field?.Name(newName));
+            sb.InputObject(parentName).Field(name, f => f.Name(newName));
         }
     }
 }

@@ -190,7 +190,7 @@ namespace GraphZen.TypeSystem
                 return existing;
             }
 
-            var field = new InputFieldDefinition(name, ConfigurationSource.Convention, Schema, configurationSource,
+            var field = new InputFieldDefinition(name, configurationSource, Schema, configurationSource,
                 null, this);
             _fields[name] = field;
             return field;

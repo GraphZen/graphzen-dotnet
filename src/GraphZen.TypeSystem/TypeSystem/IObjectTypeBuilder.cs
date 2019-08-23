@@ -25,6 +25,8 @@ namespace GraphZen.TypeSystem
 
 
 
+
+
         [NotNull]
         IObjectTypeBuilder<TObject, TContext> Description([CanBeNull] string description);
 
