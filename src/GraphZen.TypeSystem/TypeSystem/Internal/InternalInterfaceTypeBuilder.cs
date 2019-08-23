@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using GraphZen.Infrastructure;
 
 namespace GraphZen.TypeSystem.Internal
@@ -26,6 +27,17 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInterfaceTypeBuilder Name(string name, ConfigurationSource configurationSource)
         {
             Definition.SetName(name, configurationSource);
+            return this;
+        }
+
+        [NotNull]
+        public InternalInterfaceTypeBuilder ClrType([NotNull] Type clrType, ConfigurationSource configurationSource)
+        {
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                ConfigureInterfaceFromClrType();
+            }
+
             return this;
         }
 

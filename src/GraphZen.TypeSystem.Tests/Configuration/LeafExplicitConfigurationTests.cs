@@ -17,6 +17,21 @@ namespace GraphZen
 
 
         [Fact]
+        public void parent_should_be_of_expected_type()
+        {
+            TestFixtures(fixture =>
+            {
+                var parentName = "parent";
+                var schema = Schema.Create(sb =>
+                {
+                    fixture.ConfigureParentExplicitly(sb, parentName);
+                    fixture.GetParent(sb, parentName).Should().BeOfType(fixture.ParentMemberDefinitionType);
+                });
+                fixture.GetParent(schema, parentName).Should().BeOfType(fixture.ParentMemberType);
+            });
+        }
+
+        [Fact]
         public void initial_value()
         {
             TestFixtures(fixture =>

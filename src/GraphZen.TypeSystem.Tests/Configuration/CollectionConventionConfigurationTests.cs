@@ -19,6 +19,61 @@ namespace GraphZen
         protected override IEnumerable<ICollectionConventionConfigurationFixture> GetFixtures() =>
             ConfigurationFixtures.GetAll<ICollectionConventionConfigurationFixture>();
 
+        [Fact]
+        public void conventional_parent_should_be_of_expected_type()
+        {
+            TestFixtures(fixture =>
+            {
+                var context = fixture.GetContext();
+                var schema = Schema.Create(sb =>
+                {
+                    fixture.ConfigureContextConventionally(sb);
+                    fixture.GetParent(sb, context.ParentName).Should().BeOfType(fixture.ParentMemberDefinitionType);
+                });
+                fixture.GetParent(schema, context.ParentName).Should().BeOfType(fixture.ParentMemberType);
+            });
+        }
+
+        [Fact]
+        public void conventional_item_should_be_of_expected_type()
+        {
+            TestFixtures(fixture =>
+            {
+                var context = fixture.GetContext();
+                var schema = Schema.Create(sb =>
+                {
+                    fixture.ConfigureContextConventionally(sb);
+                    var defCollection = fixture.GetCollection(sb, context.ParentName);
+                    defCollection[context.ItemNamedByConvention].Should()
+                        .BeOfType(fixture.CollectionItemMemberDefinitionType);
+                    defCollection[context.ItemNamedByDataAnnotation].Should()
+                        .BeOfType(fixture.CollectionItemMemberDefinitionType);
+                });
+                fixture.GetParent(schema, context.ParentName).Should().BeOfType(fixture.ParentMemberType);
+                var collection = fixture.GetCollection(schema, context.ParentName);
+                collection[context.ItemNamedByConvention].Should()
+                    .BeOfType(fixture.CollectionItemMemberType);
+                collection[context.ItemNamedByDataAnnotation].Should()
+                    .BeOfType(fixture.CollectionItemMemberType);
+            });
+        }
+
+        
+
+        [Fact]
+        public void parent_should_be_of_expected_type()
+        {
+            TestFixtures(fixture =>
+            {
+                var parentName = "parent";
+                var schema = Schema.Create(sb =>
+                {
+                    fixture.ConfigureParentExplicitly(sb, parentName);
+                    fixture.GetParent(sb, parentName).Should().BeOfType(fixture.ParentMemberDefinitionType);
+                });
+                fixture.GetParent(schema, parentName).Should().BeOfType(fixture.ParentMemberType);
+            });
+        }
 
         [Fact]
         public void item_added_by_conventional_name()
@@ -30,6 +85,7 @@ namespace GraphZen
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
+                    //fixture.GetParent(sb, ctx.ParentName).GetType().Should().Be(fixture.Pa)
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
                     defCollection[ctx.ItemNamedByConvention].Name.Should().Be(ctx.ItemNamedByConvention);
                     defCollection[ctx.ItemNamedByConvention].Should().NotBeNull();

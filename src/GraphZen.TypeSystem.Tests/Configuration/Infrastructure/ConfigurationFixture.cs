@@ -1,4 +1,5 @@
-﻿using GraphZen.Infrastructure;
+﻿using System;
+using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 
 namespace GraphZen
@@ -15,6 +16,8 @@ namespace GraphZen
         where TParentMember : Member, TMarker
 
     {
+        public Type ParentMemberType { get; } = typeof(TParentMember);
+        public Type ParentMemberDefinitionType { get; } = typeof(TParentMemberDefinition);
         public abstract void ConfigureParentExplicitly(SchemaBuilder sb, string parentName);
 
         Member IConfigurationFixture.GetParent(Schema schema, string parentName) =>

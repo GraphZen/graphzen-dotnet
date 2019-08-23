@@ -14,14 +14,27 @@ using Xunit;
 
 namespace GraphZen
 {
-
-
-
     [NoReorder]
     public class CollectionExplicitConfigurationTests : FixtureRunner<ICollectionExplicitConfigurationFixture>
     {
         protected override IEnumerable<ICollectionExplicitConfigurationFixture> GetFixtures() =>
             ConfigurationFixtures.GetAll<ICollectionExplicitConfigurationFixture>();
+
+        
+        [Fact]
+        public void parent_should_be_of_expected_type()
+        {
+            TestFixtures(fixture =>
+            {
+                var parentName = "parent";
+                var schema = Schema.Create(sb =>
+                {
+                    fixture.ConfigureParentExplicitly(sb, parentName);
+                    fixture.GetParent(sb, parentName).Should().BeOfType(fixture.ParentMemberDefinitionType);
+                });
+                fixture.GetParent(schema, parentName).Should().BeOfType(fixture.ParentMemberType);
+            });
+        }
 
         [Fact]
         public void when_item_added_explicitly_item_configurationSource_should_be_explicit()

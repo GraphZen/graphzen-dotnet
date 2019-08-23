@@ -341,6 +341,10 @@ namespace GraphZen.TypeSystem.Internal
             if (type is null)
             {
                 Definition.UnignoreType(id.Name);
+
+                
+
+
                 interfaceType = id.ClrType != null
                     ? Definition.AddInterface(id.ClrType, configurationSource)
                     : Definition.AddInterface(id.Name, configurationSource);

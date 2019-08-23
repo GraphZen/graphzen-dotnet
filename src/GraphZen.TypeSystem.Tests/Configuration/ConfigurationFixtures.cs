@@ -31,9 +31,10 @@ namespace GraphZen
             new Schema_Interfaces_ViaClrInterfaces(),
             // Unions (Collection)
             new Schema_Unions_Explicit(),
-            new Schema_Unions_ViaClrMarkerInterface(),
+            new Schema_Unions_ViaClassWithMarkerInterface(),
             new Schema_Unions_ViaClrBaseClass(),
             new Schema_Unions_ViaClrChildClass(),
+            new Schema_Unions_ViaMarkerInterface(),
 
             // Enums (Collection)
             new Schema_Enums_Explicit(),
@@ -58,8 +59,8 @@ namespace GraphZen
 
             // OBJECT
             // Description (Leaf)
-            // TODO: Object_Explicit_Description
-            // TODO: Object_ViaClrClass_Description
+            new Object_Explicit_Description(),
+            new Object_ViaClrClass_Description(),
             // Fields (Collection)
             new Object_Fields_Explicit(),
             new Object_Fields_ViaClrProperties(),
@@ -82,6 +83,7 @@ namespace GraphZen
             // TODO: Object_Field_Type_ViaClrMethod
             // TODO: Object_Field_Type_ViaClrProperty
             // Arguments (Collection)
+            new Object_Field_Arguments_Explicit(),
             // TODO: Object_Field_Arguments_Explicit
             // TODO: Object_Field_Arguments_ViaClrClassMethodArguments
             // TODO: Object_Field_Arguments_ViaClrInterfaceMethodArguments
@@ -97,7 +99,8 @@ namespace GraphZen
             // TODO: Interface_ViaClrClass_Description
             // Fields (Collection)
             // TODO: Interface_Fields_Explicit
-            // TODO: Interface_Fields_ViaClrProperties
+            new Interface_Fields_Explicit(),
+            new Interface_Fields_ViaClrProperties()
             // TODO: Interface_Fields_ViaClrMethods
             // Directive Annotations (Collection)
             // TODO: Interface_DirectiveAnnotations_Explicit
@@ -135,12 +138,6 @@ namespace GraphZen
             // TODO: Union_DirectiveAnnotations_Explicit
             // TODO: Union_DirectiveAnnotations_ViaClrBaseClassAttributes
             // TODO: Union_DirectiveAnnotations_ViaClrMarkerInterfaceAttributes
-
-            // Object field arguments
-            new ObjectField_Arguments_Explicit(),
-            new InterfaceFields_Explicit(),
-            new Object_ViaClrClass_Description(),
-            new Object_Explicit_Description()
         }.OfType<T>();
     }
 }

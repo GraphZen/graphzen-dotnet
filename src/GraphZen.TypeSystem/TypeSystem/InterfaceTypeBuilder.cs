@@ -29,6 +29,20 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IInterfaceTypeBuilder<object, TContext> ClrType(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            return new InterfaceTypeBuilder<object, TContext>(Builder);
+        }
+
+        public IInterfaceTypeBuilder<TNewInterfaceType, TContext> ClrType<TNewInterfaceType>()
+        {
+            Builder.ClrType(typeof(TNewInterfaceType), ConfigurationSource.Explicit);
+            return new InterfaceTypeBuilder<TNewInterfaceType, TContext>(Builder);
+        }
+
+
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name,
             Action<IFieldBuilder<TInterface, object, TContext>> fieldConfigurator = null)
         {

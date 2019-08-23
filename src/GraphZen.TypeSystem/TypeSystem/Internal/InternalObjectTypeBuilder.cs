@@ -92,9 +92,9 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             var interfaces = clrType.GetInterfaces()
-                // ReSharper disable once PossibleNullReferenceException
                 .Where(_ => !_.IsGenericType)
                 .OrderBy(_ => _.MetadataToken);
+
             foreach (var @interface in interfaces)
             {
                 if (@interface.GetCustomAttribute<GraphQLUnionAttribute>() != null)

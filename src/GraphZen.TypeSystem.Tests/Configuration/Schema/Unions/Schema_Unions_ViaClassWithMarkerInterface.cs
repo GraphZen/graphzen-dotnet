@@ -4,7 +4,7 @@ using GraphZen.TypeSystem.Internal;
 
 namespace GraphZen.Unions
 {
-    public class Schema_Unions_ViaClrMarkerInterface : Schema_Unions, ICollectionConventionConfigurationFixture
+    public class Schema_Unions_ViaClassWithMarkerInterface : Schema_Unions, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
