@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using GraphZen.Infrastructure;
-using GraphZen.InputObjects.InputFields.Description;
 using GraphZen.TypeSystem;
 
 namespace GraphZen.InputObjects.Fields.Description

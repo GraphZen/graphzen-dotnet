@@ -2,9 +2,10 @@
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+
 // ReSharper disable PossibleNullReferenceException
 
-namespace GraphZen.InputObjects.InputFields.Description
+namespace GraphZen.InputObjects.Fields.Description
 {
     public abstract class InputObject_Field_Description : LeafElementConfigurationFixture<IDescription, IDescription, IMutableDescription,
         string, InputFieldDefinition, InputField>

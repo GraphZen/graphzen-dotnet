@@ -1,5 +1,4 @@
 ﻿using GraphZen.Infrastructure;
-using GraphZen.InputObjects.InputFields.Description;
 
 namespace GraphZen.InputObjects.Fields.Description
 {
