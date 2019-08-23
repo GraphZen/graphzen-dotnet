@@ -409,6 +409,10 @@ namespace GraphZen.TypeSystem.Internal
             if (type is EnumTypeDefinition enumType)
             {
                 enumType.UpdateConfigurationSource(configurationSource);
+                if (id.ClrType != null && id.ClrType != type.ClrType)
+                {
+                    enumType.Builder.ClrType(id.ClrType, ConfigurationSource.Explicit);
+                }
                 return enumType.Builder;
             }
 

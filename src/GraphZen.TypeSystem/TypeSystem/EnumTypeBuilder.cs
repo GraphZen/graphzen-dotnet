@@ -46,6 +46,19 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IEnumTypeBuilder<object> ClrType(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            return new EnumTypeBuilder<object>(Builder);
+        }
+
+        public IEnumTypeBuilder<T> ClrType<T>()
+        {
+            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            return new EnumTypeBuilder<T>(Builder);
+        }
+
         public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
 
         public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name, object value)
