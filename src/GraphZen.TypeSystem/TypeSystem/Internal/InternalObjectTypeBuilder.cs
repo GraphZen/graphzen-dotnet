@@ -110,7 +110,6 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-
         [NotNull]
         public InternalObjectTypeBuilder ImplementsInterface([NotNull] string interfaceType,
             ConfigurationSource configurationSource)

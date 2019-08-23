@@ -12,7 +12,7 @@ namespace GraphZen.Interfaces
         {
             ItemNamedByConvention = nameof(INamedByConvention),
             ItemNamedByDataAnnotation = DataAnnotationName,
-            ItemIgnoredByConvention = nameof(IGnoredByConvention),
+            ItemIgnoredByConvention = nameof(IIgnoredByConvention),
             ItemIgnoredByDataAnnotation = nameof(IIgnoredByDataAnnotation)
         };
 
@@ -31,7 +31,7 @@ namespace GraphZen.Interfaces
             public INamedByConvention ConventionallyNamed { get; set; }
 
             [GraphQLIgnore]
-            public IGnoredByConvention IgnoredByConvention { get; set; }
+            public IIgnoredByConvention IgnoredByConvention { get; set; }
 
             public IIgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
 
@@ -48,7 +48,7 @@ namespace GraphZen.Interfaces
         {
         }
 
-        public interface IGnoredByConvention
+        public interface IIgnoredByConvention
         {
         }
 

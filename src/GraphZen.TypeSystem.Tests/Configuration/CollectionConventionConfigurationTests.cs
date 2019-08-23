@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.Objects.Interfaces;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using Xunit;
@@ -34,6 +35,30 @@ namespace GraphZen
             });
         }
 
+
+        [Fact]
+        public void conventional_item_added_explicitly_via_clr_member_should_have_clr_member()
+        {
+            TestFixtures(fixture =>
+            {
+                var context = fixture.GetContext();
+                var schema = Schema.Create(sb =>
+                {
+                    fixture.ConfigureContextConventionally(sb);
+                    var defCollection = fixture.GetCollection(sb, context.ParentName);
+                    defCollection[context.ItemNamedByConvention].Should()
+                        .BeOfType(fixture.CollectionItemMemberDefinitionType);
+                    defCollection[context.ItemNamedByDataAnnotation].Should()
+                        .BeOfType(fixture.CollectionItemMemberDefinitionType);
+                });
+                fixture.GetParent(schema, context.ParentName).Should().BeOfType(fixture.ParentMemberType);
+                var collection = fixture.GetCollection(schema, context.ParentName);
+                collection[context.ItemNamedByConvention].Should()
+                    .BeOfType(fixture.CollectionItemMemberType);
+                collection[context.ItemNamedByDataAnnotation].Should()
+                    .BeOfType(fixture.CollectionItemMemberType);
+            });
+        }
         [Fact]
         public void conventional_item_should_be_of_expected_type()
         {
@@ -58,7 +83,6 @@ namespace GraphZen
             });
         }
 
-        
 
         [Fact]
         public void parent_should_be_of_expected_type()

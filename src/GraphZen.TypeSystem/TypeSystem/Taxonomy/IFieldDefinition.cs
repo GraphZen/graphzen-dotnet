@@ -7,10 +7,7 @@ using GraphZen.Infrastructure;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IFieldDefinition : 
-
-        
-        IAnnotatableDefinition, IArgumentsContainerDefinition, INamed, IDeprecation,
+    public interface IFieldDefinition : IAnnotatableDefinition, IArgumentsContainerDefinition, INamed, IDeprecation,
         IClrInfo,
         IOutputDefinition
     {
@@ -21,7 +18,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         Resolver<object, object> Resolver { get; }
 
         IFieldsContainerDefinition DeclaringType { get; }
-
 
         new MemberInfo ClrInfo { get; }
     }

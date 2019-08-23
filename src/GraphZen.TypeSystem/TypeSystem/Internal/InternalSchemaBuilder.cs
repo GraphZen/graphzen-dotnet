@@ -335,6 +335,10 @@ namespace GraphZen.TypeSystem.Internal
             if (type is InterfaceTypeDefinition interfaceType)
             {
                 interfaceType.UpdateConfigurationSource(configurationSource);
+                if (type.ClrType != id.ClrType && id.ClrType != null)
+                {
+                    interfaceType.Builder.ClrType(id.ClrType, configurationSource);
+                }
                 return interfaceType.Builder;
             }
 
@@ -342,7 +346,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 Definition.UnignoreType(id.Name);
 
-                
+
 
 
                 interfaceType = id.ClrType != null
@@ -484,6 +488,10 @@ namespace GraphZen.TypeSystem.Internal
             if (type is InputObjectTypeDefinition inputType)
             {
                 inputType.UpdateConfigurationSource(configurationSource);
+                if (id.ClrType != null && id.ClrType != type.ClrType)
+                {
+                    inputType.Builder.ClrType(id.ClrType, configurationSource);
+                }
                 return inputType.Builder;
             }
 
@@ -541,6 +549,10 @@ namespace GraphZen.TypeSystem.Internal
             if (type is ObjectTypeDefinition objectType)
             {
                 objectType.UpdateConfigurationSource(configurationSource);
+                if (objectType.ClrType != id.ClrType && id.ClrType != null)
+                {
+                    objectType.Builder.ClrType(id.ClrType, configurationSource);
+                }
                 return objectType.Builder;
             }
 

@@ -12,7 +12,7 @@ using GraphZen.Interfaces.Fields;
 using GraphZen.Objects;
 using GraphZen.Objects.Fields;
 using GraphZen.Objects.Fields.Arguments;
-using GraphZen.Objects.ImplementedInterfaces;
+using GraphZen.Objects.Interfaces;
 using GraphZen.Scalars;
 using GraphZen.Unions;
 
@@ -69,9 +69,8 @@ namespace GraphZen
             new Object_Fields_ViaClrProperties(),
             new Object_Fields_ViaClrMethods(),
             // Interfaces (Collection)
-            new Object_Interfaces_Explicit(), 
-            // TODO: Object_Interfaces_Explicit
-            // TODO: Object_Interfaces_ViaClrInterfaces
+            new Object_Interfaces_Explicit(),
+            new Object_Interfaces_ViaClrInterfaces(), 
             // Directive Annotations (Collection)
             // TODO: Object_DirectiveAnnotations_Explicit
             // TODO: Object_DirectiveAnnotations_ViaClrClassAttributes

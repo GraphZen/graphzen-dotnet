@@ -1,19 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-
-using GraphZen.Infrastructure;
+﻿using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 
-namespace GraphZen.Objects.ImplementedInterfaces
+namespace GraphZen.Objects.Interfaces
 {
-
-    public class Object_Interfaces_Explicit : Object_Interfaces, ICollectionExplicitConfigurationFixture { }
     public abstract class Object_Interfaces :
         CollectionConfigurationFixture<IInterfacesContainer,
-        IInterfacesContainerDefinition, IMutableInterfacesContainerDefinition, InterfaceTypeDefinition, InterfaceType, ObjectTypeDefinition,
-        ObjectType>
+            IInterfacesContainerDefinition, IMutableInterfacesContainerDefinition, InterfaceTypeDefinition, InterfaceType, ObjectTypeDefinition,
+            ObjectType>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName) => sb.Object(parentName);
 
@@ -51,6 +46,4 @@ namespace GraphZen.Objects.ImplementedInterfaces
             sb.Interface(name).Name(newName);
         }
     }
-
-
 }
