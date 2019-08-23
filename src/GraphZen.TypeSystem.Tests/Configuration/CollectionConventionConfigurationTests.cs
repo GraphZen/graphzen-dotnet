@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Objects.Interfaces;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using Xunit;
@@ -59,6 +58,7 @@ namespace GraphZen
                     .BeOfType(fixture.CollectionItemMemberType);
             });
         }
+
         [Fact]
         public void conventional_item_should_be_of_expected_type()
         {

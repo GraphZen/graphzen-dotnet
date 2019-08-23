@@ -273,6 +273,10 @@ namespace GraphZen.TypeSystem.Internal
             if (type is ScalarTypeDefinition scalarType)
             {
                 scalarType.UpdateConfigurationSource(configurationSource);
+                if (id.ClrType != null && id.ClrType != type.ClrType)
+                {
+                    scalarType.Builder.ClrType(id.ClrType, configurationSource);
+                }
                 return scalarType.Builder;
             }
 

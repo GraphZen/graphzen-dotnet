@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
@@ -32,6 +33,16 @@ namespace GraphZen.TypeSystem.Internal
         public InternalScalarTypeBuilder LiteralParser([NotNull] LeafLiteralParser<object, ValueSyntax> literalParser)
         {
             Definition.LiteralParser = literalParser;
+            return this;
+        }
+
+        public InternalScalarTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
+        {
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                // TODO: ConfigureFromClrType
+            }
+
             return this;
         }
     }
