@@ -19,6 +19,7 @@ using GraphZen.Objects.Interfaces;
 using GraphZen.Scalars;
 using GraphZen.Scalars.Description;
 using GraphZen.Unions;
+using GraphZen.Unions.Description;
 
 namespace GraphZen
 {
@@ -136,9 +137,9 @@ namespace GraphZen
 
             // Union
             // Description (Leaf)
-            // TODO: Union_Explicit_Description
-            // TODO: Union_ViaMarkerInterface_Description
-            // TODO: Union_ViaMarkerInterface_Description
+            new Union_Explicit_Description(),
+            new Union_ViaClrClass_Description(),
+            new Union_ViaClrMarkerInterface_Description(), 
             // MemberTypes (Collection)
             // TODO: Union_MemberTypes_Explicit
             // TODO: Union_MemberTypes_ViaMarkerInterfaces

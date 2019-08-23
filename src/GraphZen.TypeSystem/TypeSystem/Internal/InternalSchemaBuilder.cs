@@ -233,21 +233,8 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = unionType.ClrType;
             if (clrType != null)
             {
-                if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
-                {
-                    unionType.Builder.Description(description, ConfigurationSource.DataAnnotation);
-                }
-
-
-                var implementingTypes = clrType.GetImplementingTypes();
-                foreach (var implementingType in implementingTypes)
-                {
-                    var type = OutputType(implementingType, ConfigurationSource.Convention);
-                    if (type is ObjectTypeDefinition objectDef)
-                    {
-                        unionType.AddType(objectDef);
-                    }
-                }
+                unionType.Builder.ConfigureFromClrType();
+                
             }
         }
 

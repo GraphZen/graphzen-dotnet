@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Linq;
 using GraphZen.Infrastructure;
 
 namespace GraphZen.TypeSystem.Internal
@@ -29,6 +30,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 Definition.AddType(obj);
             }
+
             return this;
         }
 
@@ -49,9 +51,36 @@ namespace GraphZen.TypeSystem.Internal
         {
             if (Definition.SetClrType(clrType, configurationSource))
             {
-                // TODO: Configure union type based on CLR type
+                ConfigureFromClrType();
             }
+
             return this;
+        }
+
+        public bool ConfigureFromClrType()
+        {
+            var clrType = Definition.ClrType;
+            if (clrType == null)
+            {
+                return false;
+            }
+
+            if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
+            {
+                this.Description(description, ConfigurationSource.DataAnnotation);
+            }
+
+            var implementingTypes = clrType.GetImplementingTypes().Where(_ => !_.IsAbstract);
+            foreach (var implementingType in implementingTypes)
+            {
+                var memberType = SchemaBuilder.Object(implementingType, ConfigurationSource.Convention)?.Definition;
+                if (memberType != null)
+                {
+                    Definition.AddType(memberType);
+                }
+            }
+
+            return true;
         }
     }
 }
