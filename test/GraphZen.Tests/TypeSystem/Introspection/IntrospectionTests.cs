@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.QueryEngine;
+using GraphZen.TypeSystem.Internal;
 using Xunit;
 
 namespace GraphZen.TypeSystem

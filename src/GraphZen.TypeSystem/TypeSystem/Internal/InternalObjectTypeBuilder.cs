@@ -79,6 +79,11 @@ namespace GraphZen.TypeSystem.Internal
                 return false;
             }
 
+            if (clrType.BaseType != null && clrType.BaseType.IsAbstract)
+            {
+                SchemaBuilder.Union(clrType.BaseType, ConfigurationSource.Convention);
+            }
+
             ConfigureOutputFields();
 
             if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
@@ -86,7 +91,7 @@ namespace GraphZen.TypeSystem.Internal
                 Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
             }
 
-            var interfaces = clrType.GetInterfaces().Where(_ => _.NotIgnored())
+            var interfaces = clrType.GetInterfaces()
                 // ReSharper disable once PossibleNullReferenceException
                 .Where(_ => !_.IsGenericType)
                 .OrderBy(_ => _.MetadataToken);

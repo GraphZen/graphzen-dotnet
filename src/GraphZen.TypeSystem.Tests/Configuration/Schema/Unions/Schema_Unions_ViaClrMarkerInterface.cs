@@ -28,22 +28,23 @@ namespace GraphZen.Unions
             sb.Object<Query>();
         }
 
-        public class Foo { }
-        public class Bar { }
-        public class Baz { }
+        public class Foo : INamedByConvention { }
+        [GraphQLIgnore]
+        public class Bar : IIgnoredByConvention { }
+        public class Baz : IIgnoredByDataAnnotation { }
 
 
+        public class FooBar : INamedByDataAnnotation { }
 
         public class Query
         {
-            public INamedByConvention ConventionallyNamed { get; set; }
+            public Foo ConventionallyNamed { get; set; }
 
-            [GraphQLIgnore]
-            public IIgnoredByConvention IgnoredByConvention { get; set; }
+            public Bar IgnoredByConvention { get; set; }
 
-            public IIgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
+            public Baz IgnoredByDataAnnotation { get; set; }
 
-            public INamedByDataAnnotation NamedByDataAnnoation { get; set; }
+            public FooBar NamedByDataAnnoation { get; set; }
         }
 
         [GraphQLUnion]
