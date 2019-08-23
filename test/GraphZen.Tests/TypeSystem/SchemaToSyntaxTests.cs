@@ -84,7 +84,9 @@ namespace GraphZen.TypeSystem
                         SyntaxFactory.NonNull(SyntaxFactory.ListType(
                             SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("String"))))))
                 });
+            objectType.ToSyntaxNode().ToSyntaxString().Should().Be(expected.ToSyntaxString());
             objectType.ToSyntaxNode().Should().Be(expected);
+
         }
 
         [Fact]

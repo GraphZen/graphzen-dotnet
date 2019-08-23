@@ -25,8 +25,6 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public bool Value { get; }
 
-        private string DebuggerDisplay => $"BooleanValueNode: {Value}";
-
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
         public string GetDisplayValue() => Value.ToString();
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -14,7 +15,8 @@ namespace GraphZen.TypeSystem
     public class ObjectType : NamedType, IObjectType
     {
         [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<InterfaceType>> _lazyInterfaces;
+        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
+        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
         [NotNull] [ItemNotNull] private readonly Lazy<ObjectTypeDefinitionSyntax> _syntax;
 
         private ObjectType(string name, string description, Type clrType, IsTypeOf<object, GraphQLContext> isTypeOf,
@@ -33,17 +35,26 @@ namespace GraphZen.TypeSystem
                 // ReSharper disable once AssignNullToNotNullAttribute
                 fields.ToReadOnlyDictionary(_ => _?.Name, _ => Field.From(_, this, schema.ResolveType)));
             // ReSharper disable once PossibleNullReferenceException
-            _lazyInterfaces = new Lazy<IReadOnlyList<InterfaceType>>(() =>
-            {
-                return interfaces.Select(_ => schema.GetType<InterfaceType>(_.Name)).ToList().AsReadOnly();
-            });
+
+            _interfaceMap = new Lazy<IReadOnlyDictionary<string, InterfaceType>>(() =>
+                {
+                    return interfaces.ToImmutableDictionary(_ => _.Name, _ =>
+                    {
+                        // ReSharper disable once PossibleNullReferenceException
+                        return schema.GetType<InterfaceType>(_.Name);
+                    });
+                }
+            );
+            _interfaces =
+                new Lazy<IReadOnlyList<InterfaceType>>(() => ImplementedInterfacesMap.Values.ToImmutableList());
             _syntax = new Lazy<ObjectTypeDefinitionSyntax>(() =>
             {
                 var fieldNodes = Fields.Values.ToSyntaxNodes<FieldDefinitionSyntax>();
+
                 var syntax = new ObjectTypeDefinitionSyntax(
                     SyntaxFactory.Name(Name),
                     SyntaxHelpers.Description(Description),
-                    Interfaces.Select(_ => SyntaxFactory.NamedType(SyntaxFactory.Name(_.Name))).ToArray(),
+                    ImplementedInterfaces.Select(_ => SyntaxFactory.NamedType(SyntaxFactory.Name(_.Name))).ToArray(),
                     null,
                     // ReSharper disable once PossibleNullReferenceException
                     fieldNodes
@@ -54,9 +65,7 @@ namespace GraphZen.TypeSystem
 
 
         public IsTypeOf<object, GraphQLContext> IsTypeOf { get; }
-        IEnumerable<INamedTypeReference> IObjectTypeDefinition.Interfaces => Interfaces;
 
-        public IReadOnlyList<InterfaceType> Interfaces => _lazyInterfaces.Value;
 
         public override TypeKind Kind { get; } = TypeKind.Object;
         IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => GetFields();
@@ -72,12 +81,6 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;
 
-        public bool Implements(string interfaceType)
-        {
-            Check.NotNull(interfaceType, nameof(interfaceType));
-            return Interfaces.Any(_ => _.Name == interfaceType);
-        }
-
 
         [NotNull]
         public static ObjectType From(IObjectTypeDefinition definition, Schema schema)
@@ -85,10 +88,17 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(schema, nameof(Schema));
             return new ObjectType(definition.Name, definition.Description, definition.ClrType, definition.IsTypeOf,
-                definition.GetFields(), definition.Interfaces,
+                definition.GetFields(), definition.GetImplementedInterfaces(),
                 definition.DirectiveAnnotations,
                 schema
             );
         }
+
+        public IEnumerable<InterfaceType> GetImplementedInterfaces() => ImplementedInterfaces;
+        public IReadOnlyList<InterfaceType> ImplementedInterfaces => _interfaces.Value;
+        public IReadOnlyDictionary<string, InterfaceType> ImplementedInterfacesMap => _interfaceMap.Value;
+
+        IEnumerable<INamedTypeReference> IImplementedInterfacesContainerDefinition.GetImplementedInterfaces() =>
+            GetImplementedInterfaces();
     }
 }

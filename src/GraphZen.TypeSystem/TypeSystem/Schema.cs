@@ -102,7 +102,7 @@ namespace GraphZen.TypeSystem
             {
                 if (type is ObjectType objectType)
                 {
-                    foreach (var iface in objectType.Interfaces)
+                    foreach (var iface in objectType.ImplementedInterfaces)
                     {
                         if (_implementations.TryGetValue(iface.Name, out var impls))
                         {
@@ -123,7 +123,7 @@ namespace GraphZen.TypeSystem
             {
                 if (type is ObjectType objectType)
                 {
-                    foreach (var iface in objectType.Interfaces)
+                    foreach (var iface in objectType.ImplementedInterfaces)
                     {
                         AssertObjectImplementsInterfaces(objectType, iface);
                     }
@@ -456,7 +456,7 @@ namespace GraphZen.TypeSystem
         {
             if (abstractType is UnionType unionType)
             {
-                return unionType.MemberTypes.Values;
+                return unionType.MemberTypes;
             }
 
             return abstractType is InterfaceType interfaceType

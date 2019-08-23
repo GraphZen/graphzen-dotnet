@@ -38,7 +38,6 @@ namespace GraphZen.LanguageModel
         [NotNull]
         public ValueSyntax Value { get; }
 
-        private string DebuggerDisplay => $"{Name.Value}: {Value.GetValue()}";
 
         /// <summary>
         ///     Arguments child nodes

@@ -31,7 +31,6 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private string DebuggerDisplay => $"${Name.Value}";
 
         private bool Equals([NotNull] VariableSyntax other) => Name.Equals(other.Name);
 

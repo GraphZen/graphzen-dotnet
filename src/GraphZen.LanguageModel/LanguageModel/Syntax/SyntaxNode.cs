@@ -13,6 +13,8 @@ namespace GraphZen.LanguageModel
     /// <summary>
     ///     GraphQL AST node
     /// </summary>
+    /// 
+    [DebuggerDisplay("{DebuggerDisplay}")]
     public abstract class SyntaxNode : ISyntaxNodeLocation
     {
         [NotNull] [ItemNotNull] private readonly Lazy<string> _printed;
@@ -45,5 +47,8 @@ namespace GraphZen.LanguageModel
 
         [NotNull]
         public string ToSyntaxString() => _printed.Value;
+
+
+        internal string DebuggerDisplay => ToSyntaxString();
     }
 }

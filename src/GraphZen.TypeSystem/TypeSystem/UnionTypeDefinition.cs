@@ -15,8 +15,7 @@ namespace GraphZen.TypeSystem
     public class UnionTypeDefinition : NamedTypeDefinition, IMutableUnionTypeDefinition
     {
         [NotNull]
-        private readonly Dictionary<string, ObjectTypeDefinition> _types =
-            new Dictionary<string, ObjectTypeDefinition>();
+        private readonly List<ObjectTypeDefinition> _types = new List<ObjectTypeDefinition>();
 
 
         public UnionTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
@@ -34,8 +33,7 @@ namespace GraphZen.TypeSystem
         public InternalUnionTypeBuilder Builder { get; }
 
 
-        public IReadOnlyDictionary<string, ObjectTypeDefinition> MemberTypes => _types;
-        public IEnumerable<ObjectTypeDefinition> GetMemberTypes() => MemberTypes.Values;
+        public IEnumerable<ObjectTypeDefinition> GetMemberTypes() => _types.AsReadOnly();
 
         public ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name) => throw new NotImplementedException();
 
@@ -55,10 +53,9 @@ namespace GraphZen.TypeSystem
                 throw new ArgumentException(
                     $"Cannot include {type} in {Name} union type definition unless a name is defined");
             }
-
-            if (!_types.ContainsKey(type.Name))
+            if (!_types.Contains(type))
             {
-                _types[type.Name] = type;
+                _types.Add(type);
             }
         }
 

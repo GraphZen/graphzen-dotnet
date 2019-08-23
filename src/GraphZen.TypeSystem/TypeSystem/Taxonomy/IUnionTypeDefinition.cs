@@ -25,18 +25,20 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMemberTypesContainer : IMemberTypesContainerDefinition
     {
         [NotNull]
-        IReadOnlyDictionary<string, ObjectType> MemberTypes { get; }
-        [NotNull]
         [ItemNotNull]
         new IEnumerable<ObjectType> GetMemberTypes();
+
+        [NotNull]
+        [ItemNotNull]
+        IReadOnlyList<ObjectType> MemberTypes { get; }
+
+        [NotNull]
+        IReadOnlyDictionary<string, ObjectType> MemberTypesMap { get; }
     }
 
     [GraphQLIgnore]
     public interface IMutableMemberTypesContainerDefinition : IMemberTypesContainerDefinition
     {
-        [NotNull]
-        IReadOnlyDictionary<string, ObjectTypeDefinition> MemberTypes { get; }
-
         [NotNull]
         [ItemNotNull]
         new IEnumerable<ObjectTypeDefinition> GetMemberTypes();

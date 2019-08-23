@@ -13,4 +13,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         [ItemNotNull]
         IEnumerable<IFieldDefinition> GetFields();
     }
+
+
 }

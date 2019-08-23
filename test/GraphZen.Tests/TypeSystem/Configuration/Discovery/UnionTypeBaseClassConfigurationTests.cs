@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
@@ -41,7 +42,7 @@ namespace GraphZen.TypeSystem
                 _.Union<non_abstract_class>();
                 var unionDef = _.GetDefinition().GetUnion<non_abstract_class>();
                 unionDef.GetConfigurationSource().Should().Be(ConfigurationSource.Explicit);
-                unionDef.MemberTypes.Count.Should().Be(2);
+                unionDef.GetMemberTypes().Count().Should().Be(2);
                 _.GetDefinition().GetObject<UnionChildA>().GetConfigurationSource().Should()
                     .Be(ConfigurationSource.Convention);
                 _.GetDefinition().GetObject<UnionChildB>().GetConfigurationSource().Should()
@@ -50,8 +51,8 @@ namespace GraphZen.TypeSystem
             var union = schema.GetUnion<non_abstract_class>();
             var a = schema.GetObject<UnionChildA>();
             var b = schema.GetObject<UnionChildB>();
-            union.MemberTypes[a.Name].Should().Be(a);
-            union.MemberTypes[b.Name].Should().Be(b);
+            union.MemberTypesMap[a.Name].Should().Be(a);
+            union.MemberTypesMap[b.Name].Should().Be(b);
         }
 
         abstract class union_abstract_class
@@ -100,8 +101,8 @@ namespace GraphZen.TypeSystem
                 var childDDef = _.GetDefinition().GetObject<union_gen_2_b>();
                 childDDef.GetConfigurationSource().Should().Be(ConfigurationSource.Convention);
 
-                unionADef.MemberTypes.Count.Should().Be(4);
-                unionBDef.MemberTypes.Count.Should().Be(2);
+                unionADef.GetMemberTypes().Count().Should().Be(4);
+                unionBDef.GetMemberTypes().Count().Should().Be(2);
             });
 
             var unionA = schema.GetUnion<union_abstract_class>();
@@ -111,13 +112,13 @@ namespace GraphZen.TypeSystem
             var childC = schema.GetObject<union_gen_2_a>();
             var childD = schema.GetObject<union_gen_2_b>();
 
-            unionA.MemberTypes[childA.Name].Should().Be(childA);
-            unionA.MemberTypes[childB.Name].Should().Be(childB);
-            unionA.MemberTypes[childC.Name].Should().Be(childC);
-            unionA.MemberTypes[childD.Name].Should().Be(childD);
+            unionA.MemberTypesMap[childA.Name].Should().Be(childA);
+            unionA.MemberTypesMap[childB.Name].Should().Be(childB);
+            unionA.MemberTypesMap[childC.Name].Should().Be(childC);
+            unionA.MemberTypesMap[childD.Name].Should().Be(childD);
 
-            unionB.MemberTypes[childC.Name].Should().Be(childC);
-            unionB.MemberTypes[childD.Name].Should().Be(childD);
+            unionB.MemberTypesMap[childC.Name].Should().Be(childC);
+            unionB.MemberTypesMap[childD.Name].Should().Be(childD);
         }
     }
 }

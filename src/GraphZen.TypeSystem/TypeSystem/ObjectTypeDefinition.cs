@@ -40,7 +40,12 @@ namespace GraphZen.TypeSystem
         public InternalObjectTypeBuilder Builder { get; }
 
         public IsTypeOf<object, GraphQLContext> IsTypeOf { get; set; }
-        public IEnumerable<INamedTypeReference> Interfaces => _interfaces.Values.Select(_ => _.interfaceRef);
+         public IEnumerable<INamedTypeReference> GetImplementedInterfaces() => _interfaces.Values.Select(_ => _.interfaceRef);
+        public ConfigurationSource? FindIgnoredImplementedInterfaceConfigurationSource(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            return _ignoredInterfaces.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?) null;
+        }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;
 
@@ -116,5 +121,7 @@ namespace GraphZen.TypeSystem
             _interfaces.Remove(interfaceName);
             return true;
         }
+
+
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -12,8 +13,15 @@ namespace GraphZen.TypeSystem
 {
     public class UnionType : NamedType, IUnionType
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<UnionTypeDefinitionSyntax> _syntax;
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, ObjectType>> _types;
+        [NotNull]
+        [ItemNotNull]
+        private readonly Lazy<UnionTypeDefinitionSyntax> _syntax;
+        [NotNull]
+        [ItemNotNull]
+        private readonly Lazy<IReadOnlyDictionary<string, ObjectType>> _memberTypeMap;
+        [NotNull] 
+        [ItemNotNull] 
+        private readonly Lazy<IReadOnlyList<ObjectType>> _memberTypes;
 
         public UnionType(string name, string description, Type clrType,
             Lazy<IReadOnlyDictionary<string, ObjectType>> lazyTypes,
@@ -25,7 +33,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(lazyTypes, nameof(lazyTypes));
             ResolveType = resolveType;
 
-            _types = new Lazy<IReadOnlyDictionary<string, ObjectType>>(() =>
+            _memberTypeMap = new Lazy<IReadOnlyDictionary<string, ObjectType>>(() =>
             {
                 var types = lazyTypes.Value;
                 if (types == null || types.Count == 0)
@@ -46,16 +54,18 @@ namespace GraphZen.TypeSystem
 
                 return types;
             });
+            _memberTypes = new Lazy<IReadOnlyList<ObjectType>>(() => MemberTypesMap.Values.ToImmutableList());
             _syntax = new Lazy<UnionTypeDefinitionSyntax>(() =>
                 new UnionTypeDefinitionSyntax(SyntaxFactory.Name(Name), SyntaxHelpers.Description(Description), null,
-                    MemberTypes.Select(_ => (NamedTypeSyntax) _.Value.ToTypeSyntax()).ToArray()));
+                    MemberTypes.Select(_ => (NamedTypeSyntax)_.ToTypeSyntax()).ToArray()));
         }
 
         public TypeResolver<object, GraphQLContext> ResolveType { get; }
 
-        public IEnumerable<ObjectType> GetMemberTypes() => throw new NotImplementedException();
+        public IEnumerable<ObjectType> GetMemberTypes() => MemberTypes;
+        public IReadOnlyList<ObjectType> MemberTypes => _memberTypes.Value;
+        public IReadOnlyDictionary<string, ObjectType> MemberTypesMap => _memberTypeMap.Value;
 
-        public IReadOnlyDictionary<string, ObjectType> MemberTypes => _types.Value;
         public override TypeKind Kind { get; } = TypeKind.Union;
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
