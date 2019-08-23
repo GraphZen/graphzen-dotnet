@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IObjectType : IObjectTypeDefinition, IImplementedInterfacesContainer,
+    public interface IObjectType : IObjectTypeDefinition, IInterfacesContainer,
         ICompositeType,
         IFieldsContainer
     {

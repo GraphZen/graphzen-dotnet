@@ -47,14 +47,14 @@ namespace GraphZen.TypeSystem.Internal
                 switch (fieldMember)
                 {
                     case MethodInfo method:
-                    {
-                        Field(method, ConfigurationSource.Convention);
-                    }
+                        {
+                            Field(method, ConfigurationSource.Convention);
+                        }
                         break;
                     case PropertyInfo property:
-                    {
-                        Field(property, ConfigurationSource.Convention);
-                    }
+                        {
+                            Field(property, ConfigurationSource.Convention);
+                        }
                         break;
                 }
             }
@@ -132,6 +132,8 @@ namespace GraphZen.TypeSystem.Internal
             Definition.UnignoreField(name);
             return true;
         }
+
+        
 
 
         public bool IsFieldIgnored([NotNull] string member, ConfigurationSource configurationSource)

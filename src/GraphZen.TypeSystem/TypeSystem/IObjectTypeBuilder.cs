@@ -40,10 +40,22 @@ namespace GraphZen.TypeSystem
         IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, ResolveInfo, bool> isTypeOfFn);
 
         [NotNull]
-        IObjectTypeBuilder<TObject, TContext> Interfaces(string interfaceType, params string[] interfaceTypes);
+        IObjectTypeBuilder<TObject, TContext> ImplementsInterface(string name);
+        [NotNull]
+        IObjectTypeBuilder<TObject, TContext> ImplementsInterfaces(string name, params string[] names);
+
 
         [NotNull]
         IObjectTypeBuilder<TObject, TContext> IgnoreInterface<T>();
+
+        [NotNull]
+        IObjectTypeBuilder<TObject, TContext> IgnoreInterface(Type clrType);
+
+        [NotNull]
+        IObjectTypeBuilder<TObject, TContext> IgnoreInterface(string name);
+
+        [NotNull]
+        IObjectTypeBuilder<TObject, TContext> UnignoreInterface(string name);
 
     }
 }

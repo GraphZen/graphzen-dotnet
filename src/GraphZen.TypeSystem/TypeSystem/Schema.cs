@@ -102,7 +102,7 @@ namespace GraphZen.TypeSystem
             {
                 if (type is ObjectType objectType)
                 {
-                    foreach (var iface in objectType.ImplementedInterfaces)
+                    foreach (var iface in objectType.Interfaces)
                     {
                         if (_implementations.TryGetValue(iface.Name, out var impls))
                         {
@@ -123,7 +123,7 @@ namespace GraphZen.TypeSystem
             {
                 if (type is ObjectType objectType)
                 {
-                    foreach (var iface in objectType.ImplementedInterfaces)
+                    foreach (var iface in objectType.Interfaces)
                     {
                         AssertObjectImplementsInterfaces(objectType, iface);
                     }

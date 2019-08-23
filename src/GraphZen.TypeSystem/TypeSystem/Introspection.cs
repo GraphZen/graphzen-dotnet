@@ -50,7 +50,7 @@ namespace GraphZen.TypeSystem
                 .Field("interfaces", "[__Type!]", _ =>
                 {
                     _.Resolve(type =>
-                        type is ObjectType obj ? obj.ImplementedInterfaces.Cast<IGraphQLTypeReference>().ToList() : null);
+                        type is ObjectType obj ? obj.Interfaces.Cast<IGraphQLTypeReference>().ToList() : null);
                 })
                 .Field("possibleTypes", "[__Type!]", _ => _.Resolve(
                     (source, args, context, info) => source is IAbstractType abstractType

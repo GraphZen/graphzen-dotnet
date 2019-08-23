@@ -182,8 +182,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        [NotNull]
-        public InputValueDefinition GetOrAddField(string name, ConfigurationSource configurationSource)
+        public InputValueDefinition GetOrAddField([NotNull]string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)

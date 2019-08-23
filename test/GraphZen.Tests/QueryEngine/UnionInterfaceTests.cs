@@ -38,13 +38,13 @@ namespace GraphZen.QueryEngine
                 .Field("name", "String");
 
             _.Object("Dog")
-                .Interfaces("Named")
+                .ImplementsInterface("Named")
                 .Field("name", "String")
                 .Field("barks", "Boolean")
                 .IsTypeOf(obj => obj is Dog);
 
             _.Object("Cat")
-                .Interfaces("Named")
+                .ImplementsInterface("Named")
                 .Field("name", "String")
                 .Field("meows", "Boolean")
                 .IsTypeOf(obj => obj is Cat);
@@ -65,7 +65,7 @@ namespace GraphZen.QueryEngine
                 });
 
             _.Object("Person")
-                .Interfaces("Named")
+                .ImplementsInterface("Named")
                 .Field("name", "String")
                 .Field("pets", "[Pet]")
                 .Field("friends", "[Named]")
@@ -343,7 +343,7 @@ namespace GraphZen.QueryEngine
                         return "Person";
                     });
 
-                _.Object("Person").Interfaces("Named")
+                _.Object("Person").ImplementsInterface("Named")
                     .Field("name", "String")
                     .Field("friends", "[Named]");
 

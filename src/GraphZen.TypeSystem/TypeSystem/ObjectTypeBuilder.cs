@@ -116,25 +116,54 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> Interfaces(string interfaceType, params string[] interfaceTypes)
+        public IObjectTypeBuilder<TObject, TContext> ImplementsInterface(string name)
         {
-            Check.NotNull(interfaceType, nameof(interfaceType));
-            Check.NotNull(interfaceTypes, nameof(interfaceTypes));
-            Builder.Interface(interfaceType, ConfigurationSource.Explicit);
+            Check.NotNull(name, nameof(name));
+            Builder.ImplementsInterface(name, ConfigurationSource.Explicit);
+            return this;
+        }
 
-            foreach (var _ in interfaceTypes)
+        public IObjectTypeBuilder<TObject, TContext> ImplementsInterfaces(string name, params string[] names)
+        {
+            ImplementsInterface(name);
+            if (names != null)
             {
-                Check.NotNull(_, nameof(interfaceTypes));
-                Builder.Interface(_, ConfigurationSource.Explicit);
+                foreach (var n in names)
+                {
+                    ImplementsInterface(n);
+
+                }
             }
 
             return this;
         }
 
+
         public IObjectTypeBuilder<TObject, TContext> IgnoreInterface<T>()
         {
             Builder.IgnoreInterface(typeof(T).GetGraphQLName(), ConfigurationSource.Explicit);
 
+            return this;
+        }
+
+        public IObjectTypeBuilder<TObject, TContext> IgnoreInterface(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.IgnoreInterface(clrType.GetGraphQLName(), ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IObjectTypeBuilder<TObject, TContext> IgnoreInterface(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.IgnoreInterface(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IObjectTypeBuilder<TObject, TContext> UnignoreInterface(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreInterface(name, ConfigurationSource.Explicit);
             return this;
         }
 

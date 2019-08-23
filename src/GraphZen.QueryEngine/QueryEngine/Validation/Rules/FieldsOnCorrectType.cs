@@ -76,7 +76,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
                     }
 
                     suggestedObjectTypes.Add(possibleType.Name);
-                    foreach (var possibleInterface in possibleType.ImplementedInterfaces)
+                    foreach (var possibleInterface in possibleType.Interfaces)
                     {
                         if (possibleInterface.FindField(fieldName) == null)
                         {

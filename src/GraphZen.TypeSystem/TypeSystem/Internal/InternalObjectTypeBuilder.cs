@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.Internal
         public void IsTypeOf([NotNull] IsTypeOf<object, GraphQLContext> isTypeOfFn) => Definition.IsTypeOf = isTypeOfFn;
 
 
-        public bool Interface([NotNull] Type clrType, ConfigurationSource configurationSource)
+        public bool ImplementsInterface([NotNull] Type clrType, ConfigurationSource configurationSource)
         {
             if (clrType.IsIgnoredByDataAnnotation())
             {
@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (existing is InterfaceTypeDefinition interfaceDef)
             {
-                Definition.AddInterface(interfaceDef.GetTypeReference(), configurationSource);
+                Definition.AddInterface(interfaceDef, configurationSource);
                 return true;
             }
 
@@ -48,7 +48,7 @@ namespace GraphZen.TypeSystem.Internal
                 return false;
             }
 
-            var interfaceRef = Schema.NamedTypeReference(clrType, TypeKind.Interface);
+            var interfaceRef = SchemaBuilder.Interface(clrType, configurationSource)?.Definition;
             if (interfaceRef != null)
             {
                 Definition.AddInterface(interfaceRef, configurationSource);
@@ -103,7 +103,7 @@ namespace GraphZen.TypeSystem.Internal
                 }
                 else
                 {
-                    Definition.Builder.Interface(@interface, ConfigurationSource.Convention);
+                    Definition.Builder.ImplementsInterface(@interface, ConfigurationSource.Convention);
                 }
             }
 
@@ -112,10 +112,10 @@ namespace GraphZen.TypeSystem.Internal
 
 
         [NotNull]
-        public InternalObjectTypeBuilder Interface([NotNull] string interfaceType,
+        public InternalObjectTypeBuilder ImplementsInterface([NotNull] string interfaceType,
             ConfigurationSource configurationSource)
         {
-            var interfaceRef = Schema.GetOrAddTypeReference(interfaceType, Definition);
+            var interfaceRef = SchemaBuilder.Interface(interfaceType, configurationSource)?.Definition;
             if (interfaceRef != null)
             {
                 Definition.AddInterface(interfaceRef, configurationSource);
@@ -129,6 +129,18 @@ namespace GraphZen.TypeSystem.Internal
         {
             Definition.IgnoreInterface(interfaceName, configurationSource);
             return this;
+        }
+
+        public bool UnignoreInterface([NotNull] string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = Definition.FindIgnoredInterfaceConfigurationSource(name);
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
+
+            Definition.UnignoreInterface(name);
+            return true;
         }
 
         public bool IsInterfaceIgnored([NotNull] string interfaceName, ConfigurationSource configurationSource)

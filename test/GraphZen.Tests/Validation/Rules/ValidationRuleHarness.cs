@@ -53,7 +53,7 @@ namespace GraphZen.Validation.Rules
                 .Field("isAtLocation", "Boolean", _ => _
                     .Argument("x", "Int")
                     .Argument("y", "Int"))
-                .Interfaces("Being", "Pet", "Canine");
+                .ImplementsInterfaces("Being", "Pet", "Canine");
 
             sb.Object("Cat")
                 .Field("name", "String", _ => _.Argument("surname", "Boolean"))
@@ -61,7 +61,7 @@ namespace GraphZen.Validation.Rules
                 .Field("meowsVolume", "Int")
                 .Field("meows", "Boolean")
                 .Field("furColor", "FurColor")
-                .Interfaces("Being", "Pet");
+                .ImplementsInterfaces("Being", "Pet");
 
             sb.Union("CatOrDog").OfTypes("Cat", "Dog");
 
@@ -69,14 +69,14 @@ namespace GraphZen.Validation.Rules
                 .Field("iq", "Int");
 
             sb.Object("Human")
-                .Interfaces("Being", "Intelligent")
+                .ImplementsInterfaces("Being", "Intelligent")
                 .Field("name", "String", _ => _.Argument("surname", "Boolean"))
                 .Field("pets", "[Pet]")
                 .Field("relatives", "[Human]")
                 .Field("iq", "Int");
 
             sb.Object("Alien")
-                .Interfaces("Being", "Intelligent")
+                .ImplementsInterfaces("Being", "Intelligent")
                 .Field("iq", "Int")
                 .Field("name", "String", _ => _.Argument("surname", "Boolean"))
                 .Field("numEyes", "Int");

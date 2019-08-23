@@ -46,7 +46,7 @@ namespace GraphZen.TypeSystem
                 }
             );
             _interfaces =
-                new Lazy<IReadOnlyList<InterfaceType>>(() => ImplementedInterfacesMap.Values.ToImmutableList());
+                new Lazy<IReadOnlyList<InterfaceType>>(() => InterfacesMap.Values.ToImmutableList());
             _syntax = new Lazy<ObjectTypeDefinitionSyntax>(() =>
             {
                 var fieldNodes = Fields.Values.ToSyntaxNodes<FieldDefinitionSyntax>();
@@ -54,7 +54,7 @@ namespace GraphZen.TypeSystem
                 var syntax = new ObjectTypeDefinitionSyntax(
                     SyntaxFactory.Name(Name),
                     SyntaxHelpers.Description(Description),
-                    ImplementedInterfaces.Select(_ => SyntaxFactory.NamedType(SyntaxFactory.Name(_.Name))).ToArray(),
+                    Interfaces.Select(_ => SyntaxFactory.NamedType(SyntaxFactory.Name(_.Name))).ToArray(),
                     null,
                     // ReSharper disable once PossibleNullReferenceException
                     fieldNodes
@@ -88,17 +88,16 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(schema, nameof(Schema));
             return new ObjectType(definition.Name, definition.Description, definition.ClrType, definition.IsTypeOf,
-                definition.GetFields(), definition.GetImplementedInterfaces(),
+                definition.GetFields(), definition.GetInterfaces(),
                 definition.DirectiveAnnotations,
                 schema
             );
         }
 
-        public IEnumerable<InterfaceType> GetImplementedInterfaces() => ImplementedInterfaces;
-        public IReadOnlyList<InterfaceType> ImplementedInterfaces => _interfaces.Value;
-        public IReadOnlyDictionary<string, InterfaceType> ImplementedInterfacesMap => _interfaceMap.Value;
+        public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
+        public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
+        public IReadOnlyDictionary<string, InterfaceType> InterfacesMap => _interfaceMap.Value;
 
-        IEnumerable<INamedTypeReference> IImplementedInterfacesContainerDefinition.GetImplementedInterfaces() =>
-            GetImplementedInterfaces();
+        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces() => GetInterfaces();
     }
 }

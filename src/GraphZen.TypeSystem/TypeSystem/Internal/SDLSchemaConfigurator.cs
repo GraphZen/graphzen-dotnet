@@ -223,7 +223,7 @@ namespace GraphZen.TypeSystem.Internal
 
                         foreach (var iface in node.Interfaces)
                         {
-                            type.Interfaces(iface.Name.Value);
+                            type.ImplementsInterface(iface.Name.Value);
                         }
 
                         foreach (var fieldNode in node.Fields)

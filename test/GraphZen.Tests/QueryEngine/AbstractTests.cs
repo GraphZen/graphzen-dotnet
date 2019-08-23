@@ -39,12 +39,12 @@ namespace GraphZen.QueryEngine
                     .Field("name", "String");
 
                 sb.Object("Dog")
-                    .Interfaces("Pet")
+                    .ImplementsInterface("Pet")
                     .IsTypeOf(_ => _ is Dog)
                     .Field("name", "String")
                     .Field("woofs", "Boolean");
 
-                sb.Object("Cat").Interfaces("Pet")
+                sb.Object("Cat").ImplementsInterface("Pet")
                     .IsTypeOf(_ => _ is Cat)
                     .Field("name", "String")
                     .Field("meows", "Boolean");
@@ -115,11 +115,11 @@ namespace GraphZen.QueryEngine
                     .Field("name", "String");
 
                 sb.Object("Dog")
-                    .Interfaces("Pet")
+                    .ImplementsInterface("Pet")
                     .Field("name", "String")
                     .Field("woofs", "Boolean");
 
-                sb.Object("Cat").Interfaces("Pet")
+                sb.Object("Cat").ImplementsInterface("Pet")
                     .Field("name", "String")
                     .Field("meows", "Boolean");
 
@@ -271,7 +271,7 @@ namespace GraphZen.QueryEngine
                     .Field("bar", "String");
 
                 sb.Object("FooObject")
-                    .Interfaces("FooInterface")
+                    .ImplementsInterface("FooInterface")
                     .Field("bar", "String");
 
                 sb.Object("Query").Field("foo", "FooInterface", _ => _
@@ -322,11 +322,11 @@ namespace GraphZen.QueryEngine
 
 
                 sb.Object("Dog")
-                    .Interfaces("Pet")
+                    .ImplementsInterface("Pet")
                     .Field("name", "String")
                     .Field("woofs", "Boolean");
 
-                sb.Object("Cat").Interfaces("Pet")
+                sb.Object("Cat").ImplementsInterface("Pet")
                     .Field("name", "String")
                     .Field("meows", "Boolean");
 

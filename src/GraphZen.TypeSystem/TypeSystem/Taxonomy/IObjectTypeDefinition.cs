@@ -10,41 +10,43 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IObjectTypeDefinition :
         IFieldsContainerDefinition,
-        IImplementedInterfacesContainerDefinition,
+        IInterfacesContainerDefinition,
         ICompositeTypeDefinition, IOutputDefinition
     {
         [CanBeNull]
         IsTypeOf<object, GraphQLContext> IsTypeOf { get; }
-
     }
 
 
-    public interface IImplementedInterfacesContainer : IImplementedInterfacesContainerDefinition
+    public interface IInterfacesContainer : IInterfacesContainerDefinition
 
     {
         [NotNull]
         [ItemNotNull]
-        new IEnumerable<InterfaceType> GetImplementedInterfaces();
+        IReadOnlyList<InterfaceType> Interfaces { get; }
+
+        [NotNull]
+        IReadOnlyDictionary<string, InterfaceType> InterfacesMap { get; }
 
         [NotNull]
         [ItemNotNull]
-        IReadOnlyList<InterfaceType> ImplementedInterfaces { get; }
-
-        [NotNull]
-        IReadOnlyDictionary<string, InterfaceType> ImplementedInterfacesMap { get; }
+        new IEnumerable<InterfaceType> GetInterfaces();
     }
 
-    public interface IImplementedInterfacesContainerDefinition
+    public interface IInterfacesContainerDefinition
     {
         [NotNull]
         [ItemNotNull]
-        IEnumerable<INamedTypeReference> GetImplementedInterfaces();
-
+        IEnumerable<IInterfaceTypeDefinition> GetInterfaces();
     }
 
-    public interface IMutableImplementedInterfacesContainerDefinition : IImplementedInterfacesContainerDefinition
+    public interface IMutableInterfacesContainerDefinition : IInterfacesContainerDefinition
     {
 
-        ConfigurationSource? FindIgnoredImplementedInterfaceConfigurationSource(string name);
+        [NotNull]
+        [ItemNotNull]
+        new IEnumerable<InterfaceTypeDefinition> GetInterfaces();
+
+        ConfigurationSource? FindIgnoredInterfaceConfigurationSource(string name);
     }
 }

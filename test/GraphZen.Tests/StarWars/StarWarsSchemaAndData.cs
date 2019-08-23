@@ -233,7 +233,7 @@ namespace GraphZen.StarWars
                     .Description("All secrets about their past."));
 
             sb.Object("Human").Description("A humanoid creature in the Star Wars universe.")
-                .Interfaces("Character")
+                .ImplementsInterface("Character")
                 .Field("id", "String!", _ => _.Description("The id of the human."))
                 .Field("name", "String", _ => _.Description("The name of the human."))
                 .Field("friends", "[Character]", _ => _
@@ -249,7 +249,7 @@ namespace GraphZen.StarWars
 
             sb.Object("Droid")
                 .Description("A mechanical creature in the Star Wars universe.")
-                .Interfaces("Character")
+                .ImplementsInterface("Character")
                 .Field("id", "String!", _ => _
                     .Description("The id of the droid."))
                 .Field("name", "String", _ => _
