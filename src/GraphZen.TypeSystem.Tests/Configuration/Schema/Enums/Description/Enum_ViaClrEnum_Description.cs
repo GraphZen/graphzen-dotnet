@@ -2,33 +2,31 @@
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 
-namespace GraphZen.Objects
+namespace GraphZen.Enums.Description
 {
-
-    public class Object_ViaClrClass_Description : Object_Description, ILeafConventionConfigurationFixture
+    public class Enum_ViaClrEnum_Description : Enum_Description, ILeafConventionConfigurationFixture
     {
+        [Description(DataAnnotationDescriptionValue)]
+        public enum ExampleEnum
+        {
+        }
+
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
         public LeafConventionContext GetContext() => new LeafConventionContext
         {
-            ParentName = nameof(ExampleObject),
+            ParentName = nameof(ExampleEnum),
             DataAnnotationValue = DataAnnotationDescriptionValue
         };
 
-        [Description(DataAnnotationDescriptionValue)]
-        public class ExampleObject
-        {
-
-        }
-
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {
-            sb.Object<ExampleObject>();
+            sb.Enum<ExampleEnum>();
         }
 
         public void ConfigureClrContext(SchemaBuilder sb, string parentName)
         {
-            sb.Object<ExampleObject>();
+            sb.Enum<ExampleEnum>();
         }
     }
 }

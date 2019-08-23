@@ -4,10 +4,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Enums;
+using GraphZen.Enums.Description;
 using GraphZen.Infrastructure;
 using GraphZen.InputObjects;
+using GraphZen.InputObjects.Description;
 using GraphZen.InputObjects.Fields;
 using GraphZen.Interfaces;
+using GraphZen.Interfaces.Description;
 using GraphZen.Interfaces.Fields;
 using GraphZen.Objects;
 using GraphZen.Objects.Fields;
@@ -98,8 +101,10 @@ namespace GraphZen
 
             // INTERFACE
             // Description (Leaf)
-            // TODO: Interface_Explicit_Description
-            // TODO: Interface_ViaClrClass_Description
+            
+            new Interface_ViaClrClass_Description(),
+            new Interface_Explicit_Description(), 
+
             // Fields (Collection)
             // TODO: Interface_Fields_Explicit
             new Interface_Fields_Explicit(),
@@ -144,17 +149,28 @@ namespace GraphZen
 
             // INPUT OBJECT
             // Description (Leaf)
-            // new InputObject_Explicit_Description(),
-            // new InputObject_ViaClrClass_Description(),
+             new InputObject_Explicit_Description(),
+             new InputObject_ViaClrClass_Description(),
             // Fields (Collection)
             new InputObject_Fields_Explicit(),
             new InputObject_Fields_ViaClrProperties(),
-            // new InputObject_Fields_ViaClrProperties(),
-            // new InputObject_Fields_ViaClrMethods(),
             // Directive Annotations (Collection)
             // TODO: InputObject_DirectiveAnnotations_Explicit
             // TODO: InputObject_DirectiveAnnotations_ViaClrClassAttributes
             // TODO: InputObject_DirectiveAnnotations_ViaClrInterfaceAttributes
+
+
+            // ENUM
+            // Description (Leaf)
+            new Enum_Explicit_Description(),
+            new Enum_ViaClrEnum_Description(), 
+            // Values (Collection)
+            
+            // Directive Annotations (Collection)
+            // TODO: InputObject_DirectiveAnnotations_Explicit
+            // TODO: InputObject_DirectiveAnnotations_ViaClrClassAttributes
+            // TODO: InputObject_DirectiveAnnotations_ViaClrInterfaceAttributes
+
         }.OfType<T>();
     }
 }
