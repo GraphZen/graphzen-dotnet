@@ -3,7 +3,7 @@ using GraphZen.TypeSystem;
 
 namespace GraphZen.Objects.Fields
 {
-    public class Object_Fields_ViaClrProperties : ObjectFields, ICollectionConventionConfigurationFixture
+    public class Object_Fields_ViaClrProperties : Object_Fields, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 

@@ -3,9 +3,11 @@
 
 using GraphZen.Infrastructure;
 
-namespace GraphZen.Objects.Fields
+namespace GraphZen.InputObjects.Fields
 {
-    public class Object_Fields_Explicit : Object_Fields, ICollectionExplicitConfigurationFixture
+
+    public class InputObject_Fields_Explicit : InputObject_Fields, ICollectionExplicitConfigurationFixture
     {
+
     }
 }

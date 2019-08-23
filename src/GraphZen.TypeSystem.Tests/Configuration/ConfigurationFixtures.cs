@@ -6,6 +6,7 @@ using System.Linq;
 using GraphZen.Enums;
 using GraphZen.Infrastructure;
 using GraphZen.InputObjects;
+using GraphZen.InputObjects.Fields;
 using GraphZen.Interfaces;
 using GraphZen.Interfaces.Fields;
 using GraphZen.Objects;
@@ -138,6 +139,19 @@ namespace GraphZen
             // TODO: Union_DirectiveAnnotations_Explicit
             // TODO: Union_DirectiveAnnotations_ViaClrBaseClassAttributes
             // TODO: Union_DirectiveAnnotations_ViaClrMarkerInterfaceAttributes
+
+            // INPUT OBJECT
+            // Description (Leaf)
+            // new InputObject_Explicit_Description(),
+            // new InputObject_ViaClrClass_Description(),
+            // Fields (Collection)
+            new InputObject_Fields_Explicit()
+            // new InputObject_Fields_ViaClrProperties(),
+            // new InputObject_Fields_ViaClrMethods(),
+            // Directive Annotations (Collection)
+            // TODO: InputObject_DirectiveAnnotations_Explicit
+            // TODO: InputObject_DirectiveAnnotations_ViaClrClassAttributes
+            // TODO: InputObject_DirectiveAnnotations_ViaClrInterfaceAttributes
         }.OfType<T>();
     }
 }

@@ -4,7 +4,7 @@ using GraphZen.TypeSystem;
 
 namespace GraphZen.Objects.Fields
 {
-    public class Object_Fields_ViaClrMethods : ObjectFields, ICollectionConventionConfigurationFixture
+    public class Object_Fields_ViaClrMethods : Object_Fields, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
