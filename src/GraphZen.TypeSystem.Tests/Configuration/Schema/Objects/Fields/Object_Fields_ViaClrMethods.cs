@@ -1,9 +1,10 @@
-﻿using GraphZen.Infrastructure;
+﻿using System;
+using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 
 namespace GraphZen.Objects.Fields
 {
-    public class Object_Fields_ViaClrProperties : ObjectFields, ICollectionConventionConfigurationFixture
+    public class Object_Fields_ViaClrMethods : ObjectFields, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
@@ -37,15 +38,15 @@ namespace GraphZen.Objects.Fields
 
         public class ExampleObject
         {
-            public string HelloWorld { get; set; }
+            public string HelloWorld() => throw new NotImplementedException();
 
             [GraphQLName(DataAnnotationName)]
-            public string NamedByDataAnnotation { get; set; }
+            public string NamedByDataAnnotation() => throw new NotImplementedException();
 
             [GraphQLIgnore]
-            public string IgnoredByDataAnnotation { get; set; }
+            public string IgnoredByDataAnnotation() => throw new NotImplementedException();
 
-            public IgnoredType IgnoredByConvention { get; set; }
+            public IgnoredType IgnoredByConvention() => throw new NotImplementedException();
         }
     }
 }

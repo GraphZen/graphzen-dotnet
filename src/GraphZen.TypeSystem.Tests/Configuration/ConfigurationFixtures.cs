@@ -64,7 +64,7 @@ namespace GraphZen
             // Fields (Collection)
             new Object_Fields_Explicit(),
             new Object_Fields_ViaClrProperties(),
-            // TODO: Object_Fields_ViaClrMethods
+            new Object_Fields_ViaClrMethods(),
             // Interfaces (Collection)
             // TODO: Object_Interfaces_Explicit
             // TODO: Object_Interfaces_ViaClrInterfaces
@@ -100,8 +100,8 @@ namespace GraphZen
             // Fields (Collection)
             // TODO: Interface_Fields_Explicit
             new Interface_Fields_Explicit(),
-            new Interface_Fields_ViaClrProperties()
-            // TODO: Interface_Fields_ViaClrMethods
+            new Interface_Fields_ViaClrProperties(),
+            new Interface_Fields_ViaClrMethods(),
             // Directive Annotations (Collection)
             // TODO: Interface_DirectiveAnnotations_Explicit
             // TODO: Interface_DirectiveAnnotations_ViaClrClassAttributes
