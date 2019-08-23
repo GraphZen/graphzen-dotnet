@@ -1,7 +1,6 @@
 ﻿using GraphZen.Infrastructure;
-using GraphZen.Objects;
 
-namespace GraphZen.Interfaces.Description
+namespace GraphZen.Objects
 {
     public class Object_Explicit_Description : Object_Description, ILeafExplicitConfigurationFixture
     {

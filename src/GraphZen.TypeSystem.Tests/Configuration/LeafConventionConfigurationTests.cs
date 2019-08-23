@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
-using GraphZen.Enums.Description;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
@@ -40,7 +39,7 @@ namespace GraphZen
         [Fact]
         public void parent_configured_explicitly_then_conventionally_optional_configured_by_data_annotation()
         {
-            TestFixtures<Enum_ViaClrEnum_Description  >(fixture =>
+            TestFixtures(fixture =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>

@@ -17,6 +17,7 @@ using GraphZen.Objects.Fields;
 using GraphZen.Objects.Fields.Arguments;
 using GraphZen.Objects.Interfaces;
 using GraphZen.Scalars;
+using GraphZen.Scalars.Description;
 using GraphZen.Unions;
 
 namespace GraphZen
@@ -170,6 +171,11 @@ namespace GraphZen
             // TODO: InputObject_DirectiveAnnotations_Explicit
             // TODO: InputObject_DirectiveAnnotations_ViaClrClassAttributes
             // TODO: InputObject_DirectiveAnnotations_ViaClrInterfaceAttributes
+
+
+            // Scalar
+            new Scalar_ViaClrClass_Description(),
+            new Scalar_Explicit_Description(), 
 
         }.OfType<T>();
     }

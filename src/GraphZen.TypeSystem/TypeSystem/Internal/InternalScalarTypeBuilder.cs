@@ -40,10 +40,24 @@ namespace GraphZen.TypeSystem.Internal
         {
             if (Definition.SetClrType(clrType, configurationSource))
             {
-                // TODO: ConfigureFromClrType
+                ConfigureFromClrType();
             }
 
             return this;
+        }
+
+        public bool ConfigureFromClrType()
+        {
+            var clrType = Definition.ClrType;
+            if (clrType == null)
+            {
+                return false;
+            }
+            if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
+            {
+                this.Description(description, ConfigurationSource.DataAnnotation);
+            }
+            return true;
         }
     }
 }

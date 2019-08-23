@@ -308,10 +308,8 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = scalarType.ClrType;
             if (clrType != null)
             {
-                if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
-                {
-                    scalarType.Builder.Description(description, ConfigurationSource.DataAnnotation);
-                }
+                scalarType.Builder.ConfigureFromClrType();
+                
             }
         }
 
@@ -440,29 +438,7 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = enumType.ClrType;
             if (clrType != null)
             {
-                if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
-                {
-                    enumType.SetDescription(desc, ConfigurationSource.DataAnnotation);
-                }
-
-                foreach (var value in System.Enum.GetValues(clrType))
-                {
-                    var member = clrType.GetMember(value.ToString());
-                    if (member.Length > 0)
-                    {
-                        var memberInfo = clrType.GetMember(value.ToString())[0] ??
-                                         // ReSharper disable once ConstantNullCoalescingCondition
-                                         throw new InvalidOperationException(
-                                             $"Unable to get MemberInfo for enum value of type {enumType}");
-                        var (name, nameConfigurationSource) = memberInfo.GetGraphQLNameForEnumValue();
-                        var valueBuilder = enumType.Builder
-                            .Value(name, nameConfigurationSource, ConfigurationSource.Convention).CustomValue(value);
-                        if (memberInfo.TryGetDescriptionFromDataAnnotation(out var description))
-                        {
-                            valueBuilder.Description(description, ConfigurationSource.DataAnnotation);
-                        }
-                    }
-                }
+                enumType.Builder.ConfigureEnumFromClrType();
             }
         }
 
