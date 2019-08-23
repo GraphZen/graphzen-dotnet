@@ -27,5 +27,6 @@
     <Folder Include="Configuration\Schema\Directives\" />
     <Folder Include="Configuration\Schema\Interfaces\ClrType\" />
     <Folder Include="Configuration\Schema\Objects\Directives\Arguments\" />
+    <Folder Include="Configuration\Schema\Objects\Fields\Description\" />
   </ItemGroup>
 </Project>

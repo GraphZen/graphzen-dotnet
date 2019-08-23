@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Enums;
 using GraphZen.Enums.Description;
+using GraphZen.Enums.EnumValues.Description;
+using GraphZen.Enums.Fields.Description;
 using GraphZen.Infrastructure;
 using GraphZen.InputObjects;
 using GraphZen.InputObjects.Description;
@@ -15,6 +17,7 @@ using GraphZen.Interfaces.Fields;
 using GraphZen.Objects;
 using GraphZen.Objects.Fields;
 using GraphZen.Objects.Fields.Arguments;
+using GraphZen.Objects.Fields.Description;
 using GraphZen.Objects.Interfaces;
 using GraphZen.Scalars;
 using GraphZen.Scalars.Description;
@@ -83,9 +86,9 @@ namespace GraphZen
 
             // OBJECT FIELD
             // Description (Leaf)
-            // TODO: Object_Field_Explicit_Description
-            // TODO: Object_Field_ViaClrProperty_Description
-            // TODO: Object_Field_ViaClrMethod_Description
+            new Object_Field_Explicit_Description(),
+            new Object_Field_ViaClrMethod_Description(),
+            new Object_Field_ViaClrProperty_Description(),
             // Type
             // TODO: Object_Field_Type_Explicit
             // TODO: Object_Field_Type_ViaClrMethod
@@ -162,6 +165,10 @@ namespace GraphZen
             // TODO: InputObject_DirectiveAnnotations_ViaClrInterfaceAttributes
 
 
+            // Scalar
+            new Scalar_ViaClrClass_Description(),
+            new Scalar_Explicit_Description(), 
+
             // ENUM
             // Description (Leaf)
             new Enum_Explicit_Description(),
@@ -173,10 +180,9 @@ namespace GraphZen
             // TODO: InputObject_DirectiveAnnotations_ViaClrClassAttributes
             // TODO: InputObject_DirectiveAnnotations_ViaClrInterfaceAttributes
 
-
-            // Scalar
-            new Scalar_ViaClrClass_Description(),
-            new Scalar_Explicit_Description(), 
+            // ENUM VALUE
+            new EnumValue_Explicit_Description(),
+            new EnumValue_ViaClrEnumValue_Description(),
 
         }.OfType<T>();
     }

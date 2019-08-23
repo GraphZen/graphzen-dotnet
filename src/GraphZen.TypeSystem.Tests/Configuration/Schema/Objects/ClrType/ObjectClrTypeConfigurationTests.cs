@@ -9,12 +9,16 @@ namespace GraphZen.Objects.ClrType
     [NoReorder]
     public class ObjectClrTypeConfigurationTests
     {
+
+        public const string DataAnnotationName = nameof(DataAnnotationName);
         public class ExampleObject { }
+
         [Fact]
         public void object_added_explicitly_subsequently_referenced_by_matching_clr_type_should_have_clr_type_set()
         {
             var schema = Schema.Create(sb =>
             {
+
                 sb.Object(nameof(ExampleObject));
                 var def = sb.GetDefinition().GetObject(nameof(ExampleObject));
                 sb.Object<ExampleObject>();

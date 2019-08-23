@@ -9,5 +9,7 @@ namespace GraphZen
         void ConfigureContextConventionally([NotNull] SchemaBuilder sb);
 
         void ConfigureClrContext([NotNull] SchemaBuilder sb, string parentName);
+
+        //void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb);
     }
 }

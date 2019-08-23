@@ -26,6 +26,11 @@ namespace GraphZen.Enums
             sb.Object<Query>();
         }
 
+        public void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public class Query
         {
             public NamedByConvention ConventionallyNamed { get; set; }

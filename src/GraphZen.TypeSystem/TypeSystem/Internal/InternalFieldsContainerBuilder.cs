@@ -193,6 +193,11 @@ namespace GraphZen.TypeSystem.Internal
                 field.UpdateConfigurationSource(configurationSource);
             }
 
+            if (property.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                field?.Builder.Description(desc,ConfigurationSource.DataAnnotation );
+            }
+
             return field?.Builder;
         }
 
@@ -207,7 +212,6 @@ namespace GraphZen.TypeSystem.Internal
 
 
             var parameters = method.GetParameters();
-
             var hasOutParam = parameters.Any(_ => _.IsOut);
             if (hasOutParam)
             {
@@ -252,6 +256,11 @@ namespace GraphZen.TypeSystem.Internal
             else
             {
                 field.UpdateConfigurationSource(configurationSource);
+            }
+
+            if (method.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                field?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
             }
 
             return field?.Builder;

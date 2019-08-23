@@ -24,9 +24,7 @@ namespace GraphZen
         where TCollectionItem : Member, INamed
         where TMarker : TDefMarker
     {
-        protected const string Grandparent = nameof(Grandparent);
-        protected const string GreatGrandparent = nameof(GreatGrandparent);
-
+        
         public Type CollectionItemMemberType { get; } = typeof(TCollectionItem);
         public Type CollectionItemMemberDefinitionType { get; } = typeof(TCollectionItemDefinition);
 

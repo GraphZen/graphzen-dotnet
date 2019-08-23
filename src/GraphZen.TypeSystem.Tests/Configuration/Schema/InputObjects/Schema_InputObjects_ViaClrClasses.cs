@@ -26,6 +26,11 @@ namespace GraphZen.InputObjects
             sb.InputObject<ParentInputObject>();
         }
 
+        public void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public class ParentInputObject
         {
             public NamedByConvention ConventionallyNamed { get; set; }

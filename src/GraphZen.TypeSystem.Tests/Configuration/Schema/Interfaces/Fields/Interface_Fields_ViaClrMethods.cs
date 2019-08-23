@@ -29,6 +29,11 @@ namespace GraphZen.Interfaces.Fields
             sb.Interface(parentName).ClrType<IExampleInterface>();
         }
 
+        public void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb)
+        {
+            throw new System.NotImplementedException();
+        }
+
 
         [GraphQLIgnore]
         public class IgnoredType

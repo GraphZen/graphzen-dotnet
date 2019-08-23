@@ -16,6 +16,9 @@ namespace GraphZen
         where TParentMember : Member, TMarker
 
     {
+        protected const string Grandparent = nameof(Grandparent);
+        protected const string GreatGrandparent = nameof(GreatGrandparent);
+
         public Type ParentMemberType { get; } = typeof(TParentMember);
         public Type ParentMemberDefinitionType { get; } = typeof(TParentMemberDefinition);
         public abstract void ConfigureParentExplicitly(SchemaBuilder sb, string parentName);
