@@ -1,3 +1,4 @@
+#nullable disable
 using GraphZen.Infrastructure;
 
 namespace GraphZen.TypeSystem.Taxonomy

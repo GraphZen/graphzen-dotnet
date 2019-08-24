@@ -1,4 +1,5 @@
-﻿using System;
+#nullable disable
+using System;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;

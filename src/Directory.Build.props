@@ -15,6 +15,7 @@
     <WarningsAsErrors />
     <LangVersion>latest</LangVersion>
     <RootNamespace>GraphZen</RootNamespace>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugType>full</DebugType>

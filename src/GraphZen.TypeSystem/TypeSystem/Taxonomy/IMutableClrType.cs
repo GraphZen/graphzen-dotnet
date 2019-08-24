@@ -1,3 +1,4 @@
+#nullable disable
 using System;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;

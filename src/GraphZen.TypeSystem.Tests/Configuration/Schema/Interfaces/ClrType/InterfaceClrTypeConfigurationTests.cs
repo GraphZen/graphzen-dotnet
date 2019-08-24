@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+#nullable disable
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using Xunit;

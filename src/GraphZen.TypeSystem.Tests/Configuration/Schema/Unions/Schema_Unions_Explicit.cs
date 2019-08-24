@@ -1,4 +1,5 @@
-﻿using GraphZen.Infrastructure;
+#nullable disable
+using GraphZen.Infrastructure;
 
 namespace GraphZen.Unions
 {
