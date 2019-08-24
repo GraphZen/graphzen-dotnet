@@ -113,6 +113,11 @@ namespace GraphZen.TypeSystem.Internal
                 argument.UpdateConfigurationSource(configurationSource);
             }
 
+            if (parameter.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                argument?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+            }
+
             return argument?.Builder;
         }
 
@@ -126,6 +131,42 @@ namespace GraphZen.TypeSystem.Internal
             var ignoredMemberConfigurationSource = Definition.FindIgnoredArgumentConfigurationSource(name);
             return ignoredMemberConfigurationSource.HasValue &&
                    ignoredMemberConfigurationSource.Overrides(configurationSource);
+        }
+
+        public bool UnignoreArgument([NotNull] string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = Definition.FindIgnoredArgumentConfigurationSource(name);
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
+
+            Definition.UnignoreArgument(name);
+            return true;
+        }
+
+
+        public bool IgnoreArgument([NotNull] string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = Definition.FindIgnoredArgumentConfigurationSource(name);
+            if (ignoredConfigurationSource.HasValue)
+            {
+                if (configurationSource.Overrides(ignoredConfigurationSource) &&
+                    configurationSource != ignoredConfigurationSource)
+                {
+                    Definition.IgnoreArgument(name, configurationSource);
+                    return true;
+                }
+            }
+
+            var argument = Definition.FindArgument(name);
+            if (argument != null)
+            {
+                return IgnoreArgument(argument, configurationSource);
+            }
+
+            Definition.IgnoreArgument(name, configurationSource);
+            return true;
         }
 
 

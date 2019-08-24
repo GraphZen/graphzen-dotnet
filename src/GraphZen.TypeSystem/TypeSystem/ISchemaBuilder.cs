@@ -52,6 +52,17 @@ namespace GraphZen.TypeSystem
         [NotNull]
         ISchemaBuilder<TContext> IgnoreType(string name);
 
+        [NotNull]
+        ISchemaBuilder<TContext> UnignoreType<TObject>();
+
+
+        [NotNull]
+        ISchemaBuilder<TContext> UnignoreType(Type clrType);
+
+        [NotNull]
+        ISchemaBuilder<TContext> UnignoreType(string name);
+
+
 
         [NotNull]
         IInterfaceTypeBuilder<object, TContext> Interface(string name);

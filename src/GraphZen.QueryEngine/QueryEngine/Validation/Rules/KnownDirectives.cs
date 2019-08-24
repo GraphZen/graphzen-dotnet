@@ -59,19 +59,19 @@ namespace GraphZen.QueryEngine.Validation.Rules
             switch (appliedTo)
             {
                 case OperationDefinitionSyntax op:
-                {
-                    switch (op.OperationType)
                     {
-                        case OperationType.Query:
-                            return DirectiveLocation.Query;
-                        case OperationType.Mutation:
-                            return DirectiveLocation.Mutation;
-                        case OperationType.Subscription:
-                            return DirectiveLocation.Subscription;
-                    }
+                        switch (op.OperationType)
+                        {
+                            case OperationType.Query:
+                                return DirectiveLocation.Query;
+                            case OperationType.Mutation:
+                                return DirectiveLocation.Mutation;
+                            case OperationType.Subscription:
+                                return DirectiveLocation.Subscription;
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case FieldSyntax _:
                     return DirectiveLocation.Field;
                 case FragmentSpreadSyntax _:
@@ -107,12 +107,12 @@ namespace GraphZen.QueryEngine.Validation.Rules
                 case InputObjectTypeExtensionSyntax _:
                     return DirectiveLocation.InputObject;
                 case InputValueDefinitionSyntax _:
-                {
-                    var parentNode = ancestors.ElementAt(2);
-                    return parentNode is InputObjectTypeDefinitionSyntax
-                        ? DirectiveLocation.InputFieldDefinition
-                        : DirectiveLocation.ArgumentDefinition;
-                }
+                    {
+                        var parentNode = ancestors.ElementAt(2);
+                        return parentNode is InputObjectTypeDefinitionSyntax
+                            ? DirectiveLocation.InputFieldDefinition
+                            : DirectiveLocation.ArgumentDefinition;
+                    }
             }
 
             return null;

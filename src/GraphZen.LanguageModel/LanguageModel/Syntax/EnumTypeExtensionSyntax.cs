@@ -58,7 +58,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is EnumTypeExtensionSyntax && Equals((EnumTypeExtensionSyntax) obj);
+            return obj is EnumTypeExtensionSyntax && Equals((EnumTypeExtensionSyntax)obj);
         }
 
         public override int GetHashCode()

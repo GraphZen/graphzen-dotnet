@@ -46,8 +46,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool IsIgnoredByDataAnnotation([NotNull] this Type clrType)
         {
-            var ignoredAttribute = clrType
-                .GetCustomAttribute<GraphQLIgnoreAttribute>();
+            var ignoredAttribute = clrType.GetCustomAttributes(typeof(GraphQLIgnoreAttribute), false).SingleOrDefault();
             return ignoredAttribute != null;
         }
 

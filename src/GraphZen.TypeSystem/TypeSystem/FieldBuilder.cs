@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem
         public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source));
             return this;
         }
 
@@ -70,7 +70,7 @@ namespace GraphZen.TypeSystem
         public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, dynamic, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source, args));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source, args));
             return this;
         }
 
@@ -78,7 +78,7 @@ namespace GraphZen.TypeSystem
             Func<TDeclaringType, dynamic, GraphQLContext, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source, args, context));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source, args, context));
             return this;
         }
 
@@ -86,7 +86,7 @@ namespace GraphZen.TypeSystem
             Func<TDeclaringType, dynamic, GraphQLContext, ResolveInfo, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source, args, context, info));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source, args, context, info));
             return this;
         }
 
@@ -100,12 +100,34 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, Action<InputValueBuilder> argumentBuilder = null)
+        {
+            Check.NotNull(name, nameof(name));
+            var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit);
+            argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            return this;
+        }
+
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument<TArg>(string name,
             Action<InputValueBuilder> argumentBuilder = null)
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArg));
             argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            return this;
+        }
+
+        public IFieldBuilder<TDeclaringType, TField, TContext> IgnoreArgument(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.IgnoreArgument(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IFieldBuilder<TDeclaringType, TField, TContext> UnignoreArgument(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreArgument(name, ConfigurationSource.Explicit);
             return this;
         }
 

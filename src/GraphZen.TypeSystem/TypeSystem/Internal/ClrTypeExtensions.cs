@@ -118,7 +118,7 @@ namespace GraphZen.TypeSystem.Internal
                 itemType.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, itemCanBeNull))
             {
                 typeNode = canBeNull
-                    ? (TypeSyntax) SyntaxFactory.ListType(typeNode)
+                    ? (TypeSyntax)SyntaxFactory.ListType(typeNode)
                     : SyntaxFactory.NonNull(SyntaxFactory.ListType(typeNode));
                 return true;
             }
@@ -131,7 +131,7 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             typeNode = canBeNull
-                ? (TypeSyntax) SyntaxFactory.NamedType(clrType)
+                ? (TypeSyntax)SyntaxFactory.NamedType(clrType)
                 : SyntaxFactory.NonNull(SyntaxFactory.NamedType(clrType));
             innerClrType = clrType.GetEffectiveClrType();
             return true;
@@ -287,7 +287,7 @@ namespace GraphZen.TypeSystem.Internal
             var referencedAssemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies();
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                 // ReSharper disable once PossibleNullReferenceException
-                .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> {clrType.Assembly});
+                .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> { clrType.Assembly });
             foreach (var assembly in assemblies)
             {
                 // ReSharper disable once PossibleNullReferenceException

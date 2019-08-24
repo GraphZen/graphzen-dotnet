@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IArgument : IArgumentDefinition, IInputValue
+    public interface IArgument : IArgumentDefinition, IInputValue 
     {
         [NotNull]
         new IArgumentsContainer DeclaringMember { get; }

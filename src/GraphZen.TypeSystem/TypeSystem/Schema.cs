@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -17,12 +18,14 @@ namespace GraphZen.TypeSystem
     [Description("A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all " +
                  "available types and directives on the server, as well as the entry points for " +
                  "query, mutation, and subscription operations.")]
-    public class Schema : AnnotatableMember
+    public class Schema : AnnotatableMember, ISchema
     {
-        [NotNull] private readonly Dictionary<string, List<ObjectType>> _implementations =
+        [NotNull]
+        private readonly Dictionary<string, List<ObjectType>> _implementations =
             new Dictionary<string, List<ObjectType>>();
 
-        [NotNull] private readonly Dictionary<string, Dictionary<string, bool>> _possibleTypeMap =
+        [NotNull]
+        private readonly Dictionary<string, Dictionary<string, bool>> _possibleTypeMap =
             new Dictionary<string, Dictionary<string, bool>>();
 
         [NotNull] [ItemNotNull] private readonly Lazy<DocumentSyntax> _sdlSyntax;
@@ -166,6 +169,13 @@ namespace GraphZen.TypeSystem
                 definitions.AddRange(Types.Values.ToSyntaxNodes<TypeDefinitionSyntax>());
                 return new DocumentSyntax(definitions);
             });
+
+            _objects = new Lazy<IReadOnlyList<ObjectType>>(() => GetTypes<ObjectType>().ToImmutableList());
+            _interfaces = new Lazy<IReadOnlyList<InterfaceType>>(() => GetTypes<InterfaceType>().ToImmutableList());
+            _unions = new Lazy<IReadOnlyList<UnionType>>(() => GetTypes<UnionType>().ToImmutableList());
+            _enums = new Lazy<IReadOnlyList<EnumType>>(() => GetTypes<EnumType>().ToImmutableList());
+            _inputObjects = new Lazy<IReadOnlyList<InputObjectType>>(() => GetTypes<InputObjectType>().ToImmutableList());
+            _scalars = new Lazy<IReadOnlyList<ScalarType>>(() => GetTypes<ScalarType>().ToImmutableList());
         }
 
 
@@ -176,7 +186,6 @@ namespace GraphZen.TypeSystem
 
         [GraphQLName("directives")]
         [Description("A list of all types supported by this server.")]
-        [NotNull]
         public IReadOnlyList<Directive> Directives { get; }
 
 
@@ -196,6 +205,10 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         [NotNull]
         public IReadOnlyDictionary<string, NamedType> Types { get; }
+
+        [GraphQLIgnore]
+        [NotNull]
+        public IEnumerable<NamedType> GetTypes() => Types.Values;
 
         public override string Description { get; } = "Schema";
 
@@ -258,27 +271,27 @@ namespace GraphZen.TypeSystem
             switch (typeSyntax)
             {
                 case ListTypeSyntax listNode:
-                {
-                    var innerType = GetTypeFromAst(listNode.OfType);
-                    switch (innerType)
                     {
-                        case null:
-                            return null;
-                        case IGraphQLType input:
-                            return ListType.Of(input);
+                        var innerType = GetTypeFromAst(listNode.OfType);
+                        switch (innerType)
+                        {
+                            case null:
+                                return null;
+                            case IGraphQLType input:
+                                return ListType.Of(input);
+                        }
                     }
-                }
                 case NonNullTypeSyntax nnNode:
-                {
-                    var innerType = GetTypeFromAst(nnNode.OfType);
-                    switch (innerType)
                     {
-                        case null:
-                            return null;
-                        case INullableType nullable:
-                            return NonNullType.Of(nullable);
+                        var innerType = GetTypeFromAst(nnNode.OfType);
+                        switch (innerType)
+                        {
+                            case null:
+                                return null;
+                            case INullableType nullable:
+                                return NonNullType.Of(nullable);
+                        }
                     }
-                }
                     break;
                 case NamedTypeSyntax namedTypeNode:
                     return Types.TryGetValue(namedTypeNode.Name.Value, out var result) ? result : null;
@@ -293,10 +306,6 @@ namespace GraphZen.TypeSystem
         [ItemNotNull]
         public IEnumerable<T> GetTypes<T>() where T : INamedType => Types.Values.OfType<T>();
 
-        [NotNull]
-        [ItemNotNull]
-        [GraphQLIgnore]
-        public IEnumerable<NamedType> GetTypes() => GetTypes<NamedType>();
 
         [NotNull]
         [GraphQLIgnore]
@@ -447,7 +456,7 @@ namespace GraphZen.TypeSystem
         {
             if (abstractType is UnionType unionType)
             {
-                return unionType.MemberTypes.Values;
+                return unionType.MemberTypes;
             }
 
             return abstractType is InterfaceType interfaceType
@@ -545,5 +554,96 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => "Schema";
+
+        [GraphQLIgnore]
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() =>
+            GetInputObjects();
+
+
+        [NotNull]
+        [ItemNotNull]
+        private readonly Lazy<IReadOnlyList<InputObjectType>> _inputObjects;
+
+
+        [GraphQLIgnore]
+        public IReadOnlyList<InputObjectType> InputObjects => _inputObjects.Value;
+
+        [GraphQLIgnore]
+        public IEnumerable<InputObjectType> GetInputObjects() => InputObjects;
+
+        [GraphQLIgnore]
+        IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums() => GetEnums();
+
+        [NotNull]
+        [ItemNotNull]
+        private readonly Lazy<IReadOnlyList<EnumType>> _enums;
+
+
+        [GraphQLIgnore]
+        public IReadOnlyList<EnumType> Enums => _enums.Value;
+
+        [GraphQLIgnore]
+        IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars() => GetScalars();
+
+
+        [NotNull]
+        [ItemNotNull]
+        private readonly Lazy<IReadOnlyList<ScalarType>> _scalars;
+
+        [GraphQLIgnore]
+        public IReadOnlyList<ScalarType> Scalars => _scalars.Value;
+
+        [GraphQLIgnore]
+        IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions() => GetUnions();
+
+        [NotNull]
+        [ItemNotNull]
+        private readonly Lazy<IReadOnlyList<UnionType>> _unions;
+
+
+        [GraphQLIgnore]
+        public IReadOnlyList<UnionType> Unions => _unions.Value;
+
+        [GraphQLIgnore]
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces() => GetInterfaces();
+
+        [NotNull]
+        [ItemNotNull]
+        private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
+
+
+        [GraphQLIgnore]
+        public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
+
+        [GraphQLIgnore]
+        IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects() => GetObjects();
+
+
+        [GraphQLIgnore]
+        IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives() => GetDirectives();
+
+        [GraphQLIgnore]
+        public IEnumerable<EnumType> GetEnums() => Enums;
+
+        [GraphQLIgnore]
+        public IEnumerable<ScalarType> GetScalars() => Scalars;
+
+        [GraphQLIgnore]
+        public IEnumerable<UnionType> GetUnions() => Unions;
+
+        [GraphQLIgnore]
+        public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
+
+
+        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<ObjectType>> _objects;
+
+        [GraphQLIgnore]
+        public IReadOnlyList<ObjectType> Objects => _objects.Value;
+
+        [GraphQLIgnore]
+        public IEnumerable<ObjectType> GetObjects() => Objects;
+
+        [GraphQLIgnore]
+        public IEnumerable<Directive> GetDirectives() => Directives;
     }
 }

@@ -9,7 +9,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class UniqueOperationNames : QueryValidationRuleVisitor
     {
-        [NotNull] private readonly Dictionary<string, NameSyntax> _knownOperationNames =
+        [NotNull]
+        private readonly Dictionary<string, NameSyntax> _knownOperationNames =
             new Dictionary<string, NameSyntax>();
 
         public UniqueOperationNames(QueryValidationContext context) : base(context)

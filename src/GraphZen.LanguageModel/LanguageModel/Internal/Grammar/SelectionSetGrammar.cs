@@ -21,8 +21,8 @@ namespace GraphZen.LanguageModel.Internal.Grammar
 
 
         internal static TokenListParser<TokenKind, SelectionSyntax> Selection { get; } =
-            Parse.Ref(() => Field).Select(_ => (SelectionSyntax) _)
-                .Or(Parse.Ref(() => FragmentSpread.Select(_ => (SelectionSyntax) _)))
-                .Or(InlineFragment.Select(_ => (SelectionSyntax) _)).Named("selection");
+            Parse.Ref(() => Field).Select(_ => (SelectionSyntax)_)
+                .Or(Parse.Ref(() => FragmentSpread.Select(_ => (SelectionSyntax)_)))
+                .Or(InlineFragment.Select(_ => (SelectionSyntax)_)).Named("selection");
     }
 }

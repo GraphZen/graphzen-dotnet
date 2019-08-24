@@ -15,21 +15,25 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class DocumentSyntax : SyntaxNode
     {
-        [NotNull] [ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         private readonly Lazy<IReadOnlyDictionary<string, TypeDefinitionSyntax>> _abstractTypeMap;
 
-        [NotNull] [ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>>
             _implementations;
 
         [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<TypeDefinitionSyntax>> _inputTypeDefinitions;
 
-        [NotNull] [ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         private readonly Lazy<IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax>> _objectTypeMap;
 
         [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<TypeDefinitionSyntax>> _outputTypeDefinitions;
 
-        [NotNull] private readonly Dictionary<string, IReadOnlyDictionary<string, bool>> _possibleTypeMap =
+        [NotNull]
+        private readonly Dictionary<string, IReadOnlyDictionary<string, bool>> _possibleTypeMap =
             new Dictionary<string, IReadOnlyDictionary<string, bool>>();
 
 
@@ -65,12 +69,12 @@ namespace GraphZen.LanguageModel
                             if (implementations.TryGetValue(iface.Name.Value, out
                                 var impls))
                             {
-                                ((HashSet<ObjectTypeDefinitionSyntax>) impls).Add(objectType);
+                                ((HashSet<ObjectTypeDefinitionSyntax>)impls).Add(objectType);
                             }
                             else
                             {
                                 implementations[iface.Name.Value] =
-                                    new HashSet<ObjectTypeDefinitionSyntax> {objectType};
+                                    new HashSet<ObjectTypeDefinitionSyntax> { objectType };
                             }
                         }
                     }
@@ -154,9 +158,9 @@ namespace GraphZen.LanguageModel
 
             if (
                 // Is super type abstract type?
-                GetAbstractTypeMap().TryGetValue(((NamedTypeSyntax) superType).Name.Value, out var abstractSuperType)
+                GetAbstractTypeMap().TryGetValue(((NamedTypeSyntax)superType).Name.Value, out var abstractSuperType)
                 // Is possible sub type object type?
-                && GetObjectTypeMap().TryGetValue(((NamedTypeSyntax) maybeSubType).Name.Value,
+                && GetObjectTypeMap().TryGetValue(((NamedTypeSyntax)maybeSubType).Name.Value,
                     out var maybeSubTypeObjectType)
                 && IsPossibleType(abstractSuperType, maybeSubTypeObjectType))
 

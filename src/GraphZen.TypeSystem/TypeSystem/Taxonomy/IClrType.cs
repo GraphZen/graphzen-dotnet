@@ -3,7 +3,6 @@
 
 using System;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Internal;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
@@ -12,17 +11,5 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         [CanBeNull]
         Type ClrType { get; }
-    }
-
-    public interface IMutableClrType : IClrType
-    {
-        bool SetClrType(Type clrType, ConfigurationSource configurationSource);
-    }
-
-    [GraphQLIgnore]
-    public interface IClrInfo
-    {
-        [CanBeNull]
-        object ClrInfo { get; }
     }
 }

@@ -136,149 +136,149 @@ namespace GraphZen.TypeSystem.Internal
             switch (def)
             {
                 case EnumTypeDefinitionSyntax node:
-                {
-                    var type = schemaBuilder.Enum(node.Name.Value);
-                    if (node.Description != null)
                     {
-                        type.Description(node.Description.Value);
-                    }
-
-                    foreach (var valueNode in node.Values)
-                    {
-                        var enumValue = type.Value(valueNode.Value.Value);
-                        if (valueNode.Description != null)
+                        var type = schemaBuilder.Enum(node.Name.Value);
+                        if (node.Description != null)
                         {
-                            enumValue.Description(valueNode.Description.Value);
+                            type.Description(node.Description.Value);
                         }
-                    }
 
-                    break;
-                }
+                        foreach (var valueNode in node.Values)
+                        {
+                            var enumValue = type.Value(valueNode.Value.Value);
+                            if (valueNode.Description != null)
+                            {
+                                enumValue.Description(valueNode.Description.Value);
+                            }
+                        }
+
+                        break;
+                    }
 
                 case InputObjectTypeDefinitionSyntax node:
-                {
-                    var type = schemaBuilder.InputObject(node.Name.Value);
-                    if (node.Description != null)
                     {
-                        type.Description(node.Description.Value);
-                    }
-
-                    foreach (var fieldNode in node.Fields)
-                    {
-                        var field = type.Field(fieldNode.Name.Value, fieldNode.Type.ToSyntaxString());
-                        if (fieldNode.Description != null)
+                        var type = schemaBuilder.InputObject(node.Name.Value);
+                        if (node.Description != null)
                         {
-                            field.Description(fieldNode.Description.Value);
+                            type.Description(node.Description.Value);
                         }
 
-                        if (fieldNode.DefaultValue != null)
+                        foreach (var fieldNode in node.Fields)
                         {
-                        }
-                    }
+                            var field = type.Field(fieldNode.Name.Value, fieldNode.Type.ToSyntaxString());
+                            if (fieldNode.Description != null)
+                            {
+                                field.Description(fieldNode.Description.Value);
+                            }
 
-                    break;
-                }
+                            if (fieldNode.DefaultValue != null)
+                            {
+                            }
+                        }
+
+                        break;
+                    }
 
                 case InterfaceTypeDefinitionSyntax node:
-                {
-                    var type = schemaBuilder.Interface(node.Name.Value);
-                    if (node.Description != null)
                     {
-                        type.Description(node.Description.Value);
-                    }
-
-                    foreach (var fieldNode in node.Fields)
-                    {
-                        type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
+                        var type = schemaBuilder.Interface(node.Name.Value);
+                        if (node.Description != null)
                         {
-                            Debug.Assert(field != null, nameof(field) + " != null");
-                            if (fieldNode.Description != null)
-                            {
-                                field.Description(fieldNode.Description.Value);
-                            }
+                            type.Description(node.Description.Value);
+                        }
 
-
-                            foreach (var argumentNode in fieldNode.Arguments)
+                        foreach (var fieldNode in node.Fields)
+                        {
+                            type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                             {
-                                var argument = field.Argument(argumentNode.Name.Value,
-                                    argumentNode.Type.ToSyntaxString());
-                                if (argumentNode.Description != null)
+                                Debug.Assert(field != null, nameof(field) + " != null");
+                                if (fieldNode.Description != null)
                                 {
-                                    argument.Description(argumentNode.Description.Value);
+                                    field.Description(fieldNode.Description.Value);
                                 }
-                            }
-                        });
-                    }
 
-                    break;
-                }
+
+                                foreach (var argumentNode in fieldNode.Arguments)
+                                {
+                                    var argument = field.Argument(argumentNode.Name.Value,
+                                        argumentNode.Type.ToSyntaxString());
+                                    if (argumentNode.Description != null)
+                                    {
+                                        argument.Description(argumentNode.Description.Value);
+                                    }
+                                }
+                            });
+                        }
+
+                        break;
+                    }
 
                 case ObjectTypeDefinitionSyntax node:
-                {
-                    var type = schemaBuilder.Object(node.Name.Value);
-                    if (node.Description != null)
                     {
-                        type.Description(node.Description.Value);
-                    }
-
-                    foreach (var iface in node.Interfaces)
-                    {
-                        type.Interfaces(iface.Name.Value);
-                    }
-
-                    foreach (var fieldNode in node.Fields)
-                    {
-                        type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
+                        var type = schemaBuilder.Object(node.Name.Value);
+                        if (node.Description != null)
                         {
-                            Debug.Assert(field != null, nameof(field) + " != null");
-                            if (fieldNode.Description != null)
-                            {
-                                field.Description(fieldNode.Description.Value);
-                            }
+                            type.Description(node.Description.Value);
+                        }
 
+                        foreach (var iface in node.Interfaces)
+                        {
+                            type.ImplementsInterface(iface.Name.Value);
+                        }
 
-                            foreach (var argumentNode in fieldNode.Arguments)
+                        foreach (var fieldNode in node.Fields)
+                        {
+                            type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                             {
-                                var argument = field.Argument(argumentNode.Name.Value,
-                                    argumentNode.Type.ToSyntaxString());
-                                if (argumentNode.Description != null)
+                                Debug.Assert(field != null, nameof(field) + " != null");
+                                if (fieldNode.Description != null)
                                 {
-                                    argument.Description(argumentNode.Description.Value);
+                                    field.Description(fieldNode.Description.Value);
                                 }
-                            }
-                        });
-                    }
 
-                    break;
-                }
+
+                                foreach (var argumentNode in fieldNode.Arguments)
+                                {
+                                    var argument = field.Argument(argumentNode.Name.Value,
+                                        argumentNode.Type.ToSyntaxString());
+                                    if (argumentNode.Description != null)
+                                    {
+                                        argument.Description(argumentNode.Description.Value);
+                                    }
+                                }
+                            });
+                        }
+
+                        break;
+                    }
 
                 case ScalarTypeDefinitionSyntax node:
-                {
-                    var type = schemaBuilder.Scalar(node.Name.Value);
-                    if (node.Description != null)
                     {
-                        type.Description(node.Description.Value);
-                    }
+                        var type = schemaBuilder.Scalar(node.Name.Value);
+                        if (node.Description != null)
+                        {
+                            type.Description(node.Description.Value);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
 
                 case UnionTypeDefinitionSyntax node:
-                {
-                    var type = schemaBuilder.Union(node.Name.Value);
-                    if (node.Description != null)
                     {
-                        type.Description(node.Description.Value);
+                        var type = schemaBuilder.Union(node.Name.Value);
+                        if (node.Description != null)
+                        {
+                            type.Description(node.Description.Value);
+                        }
+
+                        type.OfTypes(node.MemberTypes.Select(_ =>
+                        {
+                            Debug.Assert(_ != null, nameof(_) + " != null");
+                            return _.Name.Value;
+                        }).ToArray());
+
+                        break;
                     }
-
-                    type.OfTypes(node.MemberTypes.Select(_ =>
-                    {
-                        Debug.Assert(_ != null, nameof(_) + " != null");
-                        return _.Name.Value;
-                    }).ToArray());
-
-                    break;
-                }
             }
         }
     }

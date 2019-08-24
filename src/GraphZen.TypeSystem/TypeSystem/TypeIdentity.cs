@@ -63,8 +63,24 @@ namespace GraphZen.TypeSystem
         [NotNull]
         public string Name
         {
-            get => (_typeDefinition is NamedType named ? named.Name : _name ?? ClrType?.GetGraphQLName()) ??
-                   throw new InvalidOperationException();
+            get
+            {
+                if (_typeDefinition is NamedType named)
+                {
+                    return named.Name;
+                }
+                if (_name != null)
+                {
+                    return _name;
+                }
+                if (ClrType != null)
+                {
+                    return ClrType.GetGraphQLName();
+                }
+
+
+                throw new InvalidOperationException();
+            }
             set
             {
                 var newName = value;
@@ -134,7 +150,7 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
-            return Equals((TypeIdentity) obj);
+            return Equals((TypeIdentity)obj);
         }
 
         // ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode

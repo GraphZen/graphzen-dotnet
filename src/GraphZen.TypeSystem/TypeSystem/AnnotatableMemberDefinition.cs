@@ -13,7 +13,8 @@ namespace GraphZen.TypeSystem
 {
     public abstract class AnnotatableMemberDefinition : MemberDefinition, IMutableAnnotatableDefinition
     {
-        [ItemNotNull] [NotNull]
+        [ItemNotNull]
+        [NotNull]
         private readonly List<IDirectiveAnnotation> _directives = new List<IDirectiveAnnotation>();
 
         protected AnnotatableMemberDefinition(ConfigurationSource configurationSource) : base(configurationSource)

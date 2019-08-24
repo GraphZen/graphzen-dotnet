@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
@@ -10,6 +11,13 @@ namespace GraphZen.TypeSystem
         IScalarTypeBuilder<TScalar, out TValueNode> : IAnnotableBuilder<IScalarTypeBuilder<TScalar, TValueNode>>
         where TValueNode : ValueSyntax
     {
+
+        [NotNull]
+        IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType);
+
+        [NotNull]
+        IScalarTypeBuilder<T, TValueNode> ClrType<T>();
+
         [NotNull]
         IScalarTypeBuilder<TScalar, TValueNode> Description([CanBeNull] string description);
 

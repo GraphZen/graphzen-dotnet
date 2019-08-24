@@ -226,5 +226,6 @@ $cakeArguments += $ScriptArgs
 
 # Start Cake
 Write-Host "Running build script..."
+&$CAKE_EXE $Script --bootstrap
 &$CAKE_EXE $cakeArguments
 exit $LASTEXITCODE

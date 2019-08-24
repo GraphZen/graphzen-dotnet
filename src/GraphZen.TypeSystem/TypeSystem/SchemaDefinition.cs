@@ -15,7 +15,7 @@ using GraphZen.TypeSystem.Taxonomy;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class SchemaDefinition : AnnotatableMemberDefinition
+    public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
     {
         [NotNull] private readonly List<DirectiveDefinition> _directives = new List<DirectiveDefinition>();
 
@@ -27,7 +27,6 @@ namespace GraphZen.TypeSystem
         [NotNull] [ItemNotNull] private readonly List<TypeIdentity> _typeIdentities;
 
         [NotNull] [ItemNotNull] private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
-
 
         // ReSharper disable once NotNullMemberIsNotInitialized
 
@@ -561,6 +560,11 @@ namespace GraphZen.TypeSystem
             _ignoredTypes.Remove(name);
         }
 
+        public void UnignoreType([NotNull] Type clrType)
+        {
+            UnignoreType(clrType.GetGraphQLName());
+        }
+
 
         public bool HasType<T>(string name) where T : NamedTypeDefinition
         {
@@ -653,6 +657,9 @@ namespace GraphZen.TypeSystem
 
         public NamedTypeDefinition FindType([NotNull] string name) => _types.SingleOrDefault(_ => _.Name == name);
 
+        public NamedTypeDefinition FindType([NotNull] Type clrType) =>
+            _types.SingleOrDefault(_ => _.ClrType == clrType);
+
         [NotNull]
         public IEnumerable<NamedTypeDefinition> FindTypes([NotNull] Type clrType) =>
             _types.Where(_ => _.ClrType == clrType);
@@ -664,15 +671,8 @@ namespace GraphZen.TypeSystem
             _types.Where(_ => _.Kind == kind)
                 .SingleOrDefault(_ => _.ClrType == clrType);
 
-
-        public NamedTypeDefinition FindOutputType([NotNull] string name) =>
-            _types.SingleOrDefault(_ => _.IsOutputType() && _.Name == name);
-
         public NamedTypeDefinition FindInputType([NotNull] Type clrType) =>
             _types.SingleOrDefault(_ => _.IsInputType() && _.ClrType == clrType);
-
-        public NamedTypeDefinition FindInputType([NotNull] string name) =>
-            _types.SingleOrDefault(_ => _.IsInputType() && _.Name == name);
 
         private T GetOrAddType<T>(string name, Func<TypeIdentity, T> typeFactory
         ) where T : NamedTypeDefinition
@@ -717,9 +717,38 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public void RemoveType([CanBeNull] NamedTypeDefinition type)
+        public void RemoveType([NotNull] NamedTypeDefinition type)
         {
+            _typeIdentities.Remove(type.Identity);
             _types.Remove(type);
         }
+
+        public IEnumerable<DirectiveDefinition> GetDirectives() => _directives;
+
+        public IEnumerable<ObjectTypeDefinition> GetObjects() => _types.OfType<ObjectTypeDefinition>();
+
+        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _types.OfType<InterfaceTypeDefinition>();
+
+        public IEnumerable<UnionTypeDefinition> GetUnions() => _types.OfType<UnionTypeDefinition>();
+
+        public IEnumerable<ScalarTypeDefinition> GetScalars() => _types.OfType<ScalarTypeDefinition>();
+
+        public IEnumerable<EnumTypeDefinition> GetEnums() => _types.OfType<EnumTypeDefinition>();
+
+        IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives() => GetDirectives();
+
+        IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects() => GetObjects();
+
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces() => GetInterfaces();
+
+        IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions() => GetUnions();
+
+        IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars() => GetScalars();
+
+        IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums() => GetEnums();
+        public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => _types.OfType<InputObjectTypeDefinition>();
+
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() =>
+            GetInputObjects();
     }
 }

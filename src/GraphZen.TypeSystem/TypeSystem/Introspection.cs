@@ -40,7 +40,8 @@ namespace GraphZen.TypeSystem
                         {
                             if (type is IFieldsContainer fieldsType)
                             {
-                                return fieldsType.GetFields(args.includeDeprecated == true);
+                                var includeDeprecated = args.includeDeprecated == true;
+                                return fieldsType.Fields.Values.Where(field => includeDeprecated || !field.IsDeprecated);
                             }
 
                             return null;
@@ -61,7 +62,7 @@ namespace GraphZen.TypeSystem
                     {
                         if (type is EnumType enumType)
                         {
-                            return enumType.Values
+                            return enumType.GetValues()
                                 .Where(f => args.includeDeprecated || !f.IsDeprecated).ToList();
                         }
 
@@ -130,7 +131,8 @@ namespace GraphZen.TypeSystem
             "The name of the current Object type at runtime.", null, NonNullType.Of(SpecScalars.String), null,
             (source, args, context, info) => info.ParentType.Name, null);
 
-        [NotNull] public static readonly IReadOnlyList<NamedType> IntrospectionTypes =
+        [NotNull]
+        public static readonly IReadOnlyList<NamedType> IntrospectionTypes =
             Schema.GetTypes()
                 .Where(_ => SpecScalars.All.All(ss => ss.Name != _.Name))
                 .ToList().AsReadOnly();

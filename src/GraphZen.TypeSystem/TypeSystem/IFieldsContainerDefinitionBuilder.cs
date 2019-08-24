@@ -10,8 +10,10 @@ namespace GraphZen.TypeSystem
     public interface IFieldsContainerDefinitionBuilder<out TBuilder, TSource, TContext> where TContext : GraphQLContext
     {
         [NotNull]
-        TBuilder Field<TField>(string name,
-            Action<IFieldBuilder<TSource, TField, TContext>> fieldConfigurator = null);
+        TBuilder Field<TField>(string name, Action<IFieldBuilder<TSource, TField, TContext>> fieldConfigurator = null);
+        [NotNull]
+        TBuilder Field(string name, Action<IFieldBuilder<TSource, object, TContext>> fieldConfigurator = null);
+
 
         [NotNull]
         TBuilder Field(string name, string type,
@@ -21,5 +23,14 @@ namespace GraphZen.TypeSystem
         [NotNull]
         TBuilder Field<TField>(Expression<Func<TSource, TField>> fieldSelector,
             Action<IFieldBuilder<TSource, TField, TContext>> fieldBuilder = null);
+
+        [NotNull]
+        TBuilder IgnoreField<TField>(Expression<Func<TSource, TField>> fieldSelector);
+
+        [NotNull]
+        TBuilder IgnoreField(string fieldName);
+
+        [NotNull]
+        TBuilder UnignoreField(string fieldName);
     }
 }

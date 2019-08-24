@@ -45,7 +45,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is SelectionSetSyntax && Equals((SelectionSetSyntax) obj);
+            return obj is SelectionSetSyntax && Equals((SelectionSetSyntax)obj);
         }
 
         public override int GetHashCode() => Selections.GetHashCode();

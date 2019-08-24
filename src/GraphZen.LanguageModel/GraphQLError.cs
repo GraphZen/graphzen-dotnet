@@ -88,7 +88,7 @@ namespace GraphZen
                 return false;
             }
 
-            return Equals((GraphQLError) obj);
+            return Equals((GraphQLError)obj);
         }
 
         public override int GetHashCode()

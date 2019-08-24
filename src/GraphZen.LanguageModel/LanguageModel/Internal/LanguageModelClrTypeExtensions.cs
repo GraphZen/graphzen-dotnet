@@ -2,7 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.Reflection;
+using System.Linq;
 using GraphZen.Infrastructure;
 
 namespace GraphZen.LanguageModel.Internal
@@ -58,7 +58,7 @@ namespace GraphZen.LanguageModel.Internal
 
                     if (typename != null)
                     {
-                        name = (string) typename;
+                        name = (string)typename;
                         return true;
                     }
 
@@ -77,7 +77,7 @@ namespace GraphZen.LanguageModel.Internal
 
         public static bool TryGetGraphQLNameFromDataAnnotation([NotNull] this Type clrType, out string name)
         {
-            name = clrType.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
+            name = clrType.GetCustomAttributes(typeof(GraphQLNameAttribute), false).Cast<GraphQLNameAttribute>().SingleOrDefault()?.Name;
             return name != null;
         }
     }

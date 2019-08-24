@@ -30,9 +30,18 @@ namespace GraphZen.TypeSystem
         public IUnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TUnion) value, (TContext) context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TUnion)value, (TContext)context, info));
             return this;
         }
+
+        public IUnionTypeBuilder<object, TContext> ClrType(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            return new UnionTypeBuilder<object, TContext>(Builder);
+        }
+
+        public IUnionTypeBuilder<T, TContext> ClrType<T>() => throw new NotImplementedException();
 
         public IUnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes)
         {

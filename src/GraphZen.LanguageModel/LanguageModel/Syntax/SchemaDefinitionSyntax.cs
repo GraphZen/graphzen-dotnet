@@ -60,7 +60,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is SchemaDefinitionSyntax && Equals((SchemaDefinitionSyntax) obj);
+            return obj is SchemaDefinitionSyntax && Equals((SchemaDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

@@ -15,6 +15,7 @@ namespace GraphZen.TypeSystem
     public abstract class NamedTypeDefinition : AnnotatableMemberDefinition, IMutableGraphQLTypeDefinition
     {
         private ConfigurationSource _nameConfigurationSource;
+        private ConfigurationSource _clrTypeConfiguraitonSource = ConfigurationSource.Convention;
 
         protected NamedTypeDefinition([NotNull] TypeIdentity identity, [NotNull] SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(configurationSource)
@@ -69,8 +70,19 @@ namespace GraphZen.TypeSystem
 
         public Type ClrType => Identity.ClrType;
 
-        public bool SetClrType(Type clrType, ConfigurationSource configurationSource) =>
-            throw new NotImplementedException();
+        public virtual bool SetClrType(Type clrType, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(_clrTypeConfiguraitonSource))
+            {
+                return false;
+
+            }
+            _clrTypeConfiguraitonSource = configurationSource;
+            Identity.ClrType = clrType;
+            return true;
+        }
+
+        public ConfigurationSource GetClrTypeConfigurationSource() => _clrTypeConfiguraitonSource;
 
         [NotNull]
         public TypeReference GetTypeReference() =>

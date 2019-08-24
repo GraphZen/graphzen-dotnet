@@ -31,7 +31,6 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private string DebuggerDisplay => $"${Name.Value}";
 
         private bool Equals([NotNull] VariableSyntax other) => Name.Equals(other.Name);
 
@@ -47,7 +46,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is VariableSyntax && Equals((VariableSyntax) obj);
+            return obj is VariableSyntax && Equals((VariableSyntax)obj);
         }
 
         public override int GetHashCode() => Name.GetHashCode();

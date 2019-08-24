@@ -29,6 +29,30 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IInterfaceTypeBuilder<object, TContext> ClrType(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            return new InterfaceTypeBuilder<object, TContext>(Builder);
+        }
+
+        public IInterfaceTypeBuilder<TNewInterfaceType, TContext> ClrType<TNewInterfaceType>()
+        {
+            Builder.ClrType(typeof(TNewInterfaceType), ConfigurationSource.Explicit);
+            return new InterfaceTypeBuilder<TNewInterfaceType, TContext>(Builder);
+        }
+
+
+        public IInterfaceTypeBuilder<TInterface, TContext> Field(string name,
+            Action<IFieldBuilder<TInterface, object, TContext>> fieldConfigurator = null)
+        {
+            Check.NotNull(name, nameof(name));
+            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit);
+            // ReSharper disable once AssignNullToNotNullAttribute
+            fieldConfigurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
+            return this;
+        }
+
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name, string type,
             Action<IFieldBuilder<TInterface, object, TContext>> fieldConfigurator = null)
         {
@@ -65,11 +89,27 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField<TField>(Expression<Func<TInterface, TField>> fieldSelector) => throw new NotImplementedException();
+
+        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.IgnoreField(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IInterfaceTypeBuilder<TInterface, TContext> UnignoreField(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreField(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
         public IInterfaceTypeBuilder<TInterface, TContext> ResolveType(
             TypeResolver<TInterface, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface) value, (TContext) context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface)value, (TContext)context, info));
             return this;
         }
 

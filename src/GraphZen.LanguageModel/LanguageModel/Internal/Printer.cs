@@ -514,7 +514,7 @@ namespace GraphZen.LanguageModel.Internal
 
         private void Join([NotNull] IReadOnlyList<SyntaxNode> nodes, string seperator = null)
         {
-            Join(nodes, seperator != null ? () => { Append(seperator); } : (Action) null);
+            Join(nodes, seperator != null ? () => { Append(seperator); } : (Action)null);
         }
 
         #endregion

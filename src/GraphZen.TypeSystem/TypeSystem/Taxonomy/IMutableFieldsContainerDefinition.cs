@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Internal;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
@@ -11,8 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         [NotNull]
         IReadOnlyDictionary<string, FieldDefinition> Fields { get; }
 
-        [NotNull]
-        [ItemNotNull]
-        new IEnumerable<FieldDefinition> GetFields();
+        ConfigurationSource? FindIgnoredFieldConfigurationSource([NotNull] string fieldName);
     }
 }

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
@@ -18,11 +20,45 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
+        [NotNull]
+        [ItemNotNull]
+        private IReadOnlyList<string> IgnoredMethodNames { get; } =
+            // ReSharper disable once AssignNullToNotNullAttribute
+            typeof(object).GetMethods().Select(_ => _.Name).ToImmutableList();
+
+
         public InternalFieldBuilder Field([NotNull] string name,
             ConfigurationSource nameConfigurationSource,
             ConfigurationSource configurationSource) =>
             Definition.GetOrAddField(name, nameConfigurationSource, configurationSource)?.Builder;
 
+        protected void ConfigureOutputFields()
+        {
+            var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
+            // ReSharper disable once PossibleNullReferenceException
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var fieldMembers = Definition.ClrType.GetMembers(flags)
+                .Where(_ => !(_ is MethodInfo method) || method.DeclaringType != typeof(object) &&
+                            method.ReturnType != typeof(void) &&
+                            !IgnoredMethodNames.Contains(method.Name) && !method.IsSpecialName)
+                .OrderBy(_ => _.MetadataToken);
+            foreach (var fieldMember in fieldMembers)
+            {
+                switch (fieldMember)
+                {
+                    case MethodInfo method:
+                        {
+                            Field(method, ConfigurationSource.Convention);
+                        }
+                        break;
+                    case PropertyInfo property:
+                        {
+                            Field(property, ConfigurationSource.Convention);
+                        }
+                        break;
+                }
+            }
+        }
 
         public bool IgnoreField([NotNull] string fieldName, ConfigurationSource configurationSource)
         {
@@ -85,6 +121,20 @@ namespace GraphZen.TypeSystem.Internal
             return RemoveField(field, configurationSource);
         }
 
+        public bool UnignoreField([NotNull] string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(name);
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
+
+            Definition.UnignoreField(name);
+            return true;
+        }
+
+        
+
 
         public bool IsFieldIgnored([NotNull] string member, ConfigurationSource configurationSource)
         {
@@ -143,6 +193,11 @@ namespace GraphZen.TypeSystem.Internal
                 field.UpdateConfigurationSource(configurationSource);
             }
 
+            if (property.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                field?.Builder.Description(desc,ConfigurationSource.DataAnnotation );
+            }
+
             return field?.Builder;
         }
 
@@ -157,7 +212,6 @@ namespace GraphZen.TypeSystem.Internal
 
 
             var parameters = method.GetParameters();
-
             var hasOutParam = parameters.Any(_ => _.IsOut);
             if (hasOutParam)
             {
@@ -202,6 +256,16 @@ namespace GraphZen.TypeSystem.Internal
             else
             {
                 field.UpdateConfigurationSource(configurationSource);
+            }
+
+
+            if (method.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                field?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+            }
+            foreach (var parameter in method.GetParameters())
+            {
+                field?.Builder.Argument(parameter, ConfigurationSource.Convention);
             }
 
             return field?.Builder;

@@ -9,6 +9,7 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.TypeSystem
 {
+    [GraphQLIgnore]
     public abstract class AnnotatableMember : Member, IDirectives
     {
         protected AnnotatableMember([NotNull] IReadOnlyList<IDirectiveAnnotation> directives)

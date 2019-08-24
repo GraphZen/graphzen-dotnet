@@ -16,10 +16,12 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjectTypeDefinition
     {
-        [NotNull] private readonly Dictionary<string, InputFieldDefinition> _fields =
+        [NotNull]
+        private readonly Dictionary<string, InputFieldDefinition> _fields =
             new Dictionary<string, InputFieldDefinition>();
 
-        [NotNull] private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
+        [NotNull]
+        private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
         public InputObjectTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
@@ -46,7 +48,6 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<InputFieldDefinition> GetFields() => _fields.Values;
 
-        IEnumerable<IInputFieldDefinition> IInputObjectTypeDefinition.GetFields() => GetFields();
 
         public bool RenameField([NotNull] InputFieldDefinition field, [NotNull] string name,
             ConfigurationSource configurationSource)
@@ -55,6 +56,7 @@ namespace GraphZen.TypeSystem
             {
                 return false;
             }
+
 
             if (this.TryGetField(name, out var existing) && existing != field)
             {
@@ -170,7 +172,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public ConfigurationSource? FindIgnoredFieldConfigurationSource([NotNull] string fieldName)
+        public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
         {
             if (_ignoredFields.TryGetValue(fieldName, out var cs))
             {
@@ -180,19 +182,32 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        [NotNull]
-        public InputValueDefinition GetOrAddField(string name, ConfigurationSource configurationSource)
+        public InputValueDefinition GetOrAddField([NotNull]string name, ConfigurationSource configurationSource)
         {
-            Check.NotNull(name, nameof(name));
-            if (this.TryGetField(name, out var existing))
+            var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
+            if (ignoredConfigurationSource.HasValue)
             {
-                return existing;
+                if (!configurationSource.Overrides(ignoredConfigurationSource))
+                {
+                    return null;
+                }
+
+                _ignoredFields.Remove(name);
             }
 
-            var field = new InputFieldDefinition(name, ConfigurationSource.Convention, Schema, configurationSource,
+
+            var field = this.FindField(name);
+            if (field != null)
+            {
+                field.UpdateConfigurationSource(configurationSource);
+                return field;
+            }
+            field = new InputFieldDefinition(name, configurationSource, Schema, configurationSource,
                 null, this);
             _fields[name] = field;
             return field;
         }
+
+        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields() => GetFields();
     }
 }

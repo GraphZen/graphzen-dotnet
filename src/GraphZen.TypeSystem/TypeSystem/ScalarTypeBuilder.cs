@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -20,6 +21,19 @@ namespace GraphZen.TypeSystem
         private InternalScalarTypeBuilder Builder { get; }
 
         InternalScalarTypeBuilder IInfrastructure<InternalScalarTypeBuilder>.Instance => Builder;
+
+        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType)
+        {
+
+            return new ScalarTypeBuilder<object, TValueNode>(Builder);
+        }
+
+        public IScalarTypeBuilder<T, TValueNode> ClrType<T>()
+        {
+            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+
+            return new ScalarTypeBuilder<T, TValueNode>(Builder);
+        }
 
         public IScalarTypeBuilder<TScalar, TValueNode> Description(string description)
         {
@@ -41,7 +55,7 @@ namespace GraphZen.TypeSystem
             Builder.LiteralParser(value =>
             {
                 Debug.Assert(value != null, nameof(value) + " != null");
-                var parsed = literalParser((TValueNode) value);
+                var parsed = literalParser((TValueNode)value);
                 Debug.Assert(parsed != null, nameof(parsed) + " != null");
                 return parsed.Cast<object>();
             });

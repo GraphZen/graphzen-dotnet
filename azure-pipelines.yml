@@ -6,6 +6,7 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
+
 - task: PowerShell@2
   inputs:
     filePath: 'build.ps1'

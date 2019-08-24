@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 
@@ -16,9 +17,8 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        [NotNull]
         public InternalInputValueBuilder Field([NotNull] string name, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddField(name, configurationSource).Builder;
+            Definition.GetOrAddField(name, configurationSource)?.Builder;
 
         public bool IgnoreField([NotNull] string fieldName, ConfigurationSource configurationSource)
         {
@@ -42,6 +42,54 @@ namespace GraphZen.TypeSystem.Internal
 
 
             Definition.IgnoreField(fieldName, configurationSource);
+            return true;
+        }
+
+        public bool UnignoreField([NotNull] string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(name);
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
+
+            Definition.UnignoreField(name);
+            return true;
+        }
+
+        [NotNull]
+        public InternalInputObjectTypeBuilder ClrType([NotNull] Type clrType, ConfigurationSource configurationSource)
+        {
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                ConfigureFromClrType();
+            }
+
+            return this;
+        }
+
+        public bool ConfigureFromClrType()
+        {
+            var clrType = Definition.ClrType;
+            if (clrType == null)
+            {
+                return false;
+            }
+            if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
+            {
+                Definition.SetDescription(description, ConfigurationSource.DataAnnotation);
+            }
+
+            var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
+            // ReSharper disable once PossibleNullReferenceException
+            // ReSharper disable once AssignNullToNotNullAttribute
+            var fieldMembers = clrType.GetMembers(flags)
+                .OfType<PropertyInfo>()
+                .OrderBy(_ => _.MetadataToken);
+            foreach (var property in fieldMembers)
+            {
+                Field(property, ConfigurationSource.Convention);
+            }
             return true;
         }
 
@@ -110,7 +158,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (property.TryGetGraphQLTypeInfo(out _, out var innerClrType))
             {
-                var fieldInnerType = Schema.Builder.OutputType(innerClrType, configurationSource);
+                var fieldInnerType = Schema.Builder.InputType(innerClrType, configurationSource);
                 if (fieldInnerType == null)
                 {
                     IgnoreField(property, ConfigurationSource.Convention);
@@ -138,6 +186,10 @@ namespace GraphZen.TypeSystem.Internal
                 field.UpdateConfigurationSource(configurationSource);
             }
 
+            if (property.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                field?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+            }
 
             return field?.Builder;
         }
@@ -156,8 +208,6 @@ namespace GraphZen.TypeSystem.Internal
                 }
             }
 
-            throw new NotImplementedException();
-            /*
             var field = Definition.FindField(member);
             if (field != null)
             {
@@ -166,7 +216,6 @@ namespace GraphZen.TypeSystem.Internal
 
             Definition.IgnoreField(fieldName, configurationSource);
             return true;
-            */
         }
 
 

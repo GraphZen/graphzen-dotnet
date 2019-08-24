@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem
         [NotNull]
         public static Directive Include { get; } = new Directive("include",
             "Directs the executor to include this field or fragment only when the `if` argument is true.",
-            new[] {DirectiveLocation.Field, DirectiveLocation.FragmentSpread, DirectiveLocation.InlineFragment},
+            new[] { DirectiveLocation.Field, DirectiveLocation.FragmentSpread, DirectiveLocation.InlineFragment },
             new[]
             {
                 new Argument("if", "Included when true.", NonNullType.Of(SpecScalars.Boolean),
@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem
         [NotNull]
         public static Directive Skip { get; } = new Directive("skip",
             "'Directs the executor to include this field or fragment only when the `if` argument is true.",
-            new[] {DirectiveLocation.Field, DirectiveLocation.FragmentSpread, DirectiveLocation.InlineFragment},
+            new[] { DirectiveLocation.Field, DirectiveLocation.FragmentSpread, DirectiveLocation.InlineFragment },
             new[]
             {
                 new Argument("if", "Skipped when true.", NonNullType.Of(SpecScalars.Boolean),

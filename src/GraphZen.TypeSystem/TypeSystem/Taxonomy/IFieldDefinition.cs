@@ -19,7 +19,6 @@ namespace GraphZen.TypeSystem.Taxonomy
 
         IFieldsContainerDefinition DeclaringType { get; }
 
-
         new MemberInfo ClrInfo { get; }
     }
 }

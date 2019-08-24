@@ -12,6 +12,7 @@ namespace GraphZen.Infrastructure
 {
     internal static class EnumerableExtensions
     {
+
         [NotNull]
         public static IReadOnlyList<TSource> ToReadOnlyList<TSource>([NotNull] this IEnumerable<TSource> source) =>
             source.ToList().AsReadOnly();

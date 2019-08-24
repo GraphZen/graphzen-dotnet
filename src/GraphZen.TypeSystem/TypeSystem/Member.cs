@@ -7,6 +7,7 @@ using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.TypeSystem
 {
+    [GraphQLIgnore]
     public abstract class Member : ISyntaxConvertable
     {
         [GraphQLCanBeNull]

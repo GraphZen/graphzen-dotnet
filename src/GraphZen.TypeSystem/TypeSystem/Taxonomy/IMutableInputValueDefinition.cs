@@ -7,7 +7,7 @@ using GraphZen.TypeSystem.Internal;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableInputValueDefinition : IInputValueDefinition, IMutableAnnotatableDefinition, IMutableNamed
+    public interface IMutableInputValueDefinition : IInputValueDefinition, IMutableAnnotatableDefinition, IMutableNamed, IMutableDescription
     {
         [CanBeNull]
         new IGraphQLTypeReference InputType { get; set; }

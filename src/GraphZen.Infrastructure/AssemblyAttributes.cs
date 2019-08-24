@@ -13,4 +13,5 @@ using GraphZen.Infrastructure;
 [assembly: InternalsVisibleTo("GraphZen.LanguageModel")]
 [assembly: InternalsVisibleTo("GraphZen.QueryEngine")]
 [assembly: InternalsVisibleTo("GraphZen.TypeSystem")]
+[assembly: InternalsVisibleTo("GraphZen.TypeSystem.Tests")]
 [assembly: InternalsVisibleTo("GraphZen.Playground")]

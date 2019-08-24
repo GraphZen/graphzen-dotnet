@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>GraphZen</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CompareNETObjects" Version="4.62.0" />
+    <PackageReference Include="coverlet.msbuild" Version="2.6.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="DiffPlex" Version="1.4.4" />
+    <PackageReference Include="JsonDiffPatch" Version="2.0.49" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="LanguageModel\kitchen-sink-temp.graphql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="LanguageModel\schema-kitchen-sink.graphql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="LanguageModel\kitchen-sink.graphql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TypeSystem\Introspection\introspection-expected-result.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utilities\BuildFromAst\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphZen.AspNetCore\GraphZen.AspNetCore.csproj" />
+    <ProjectReference Include="..\GraphZen.TestingInfrastructure\GraphZen.TestingInfrastructure.csproj" />
+    <ProjectReference Include="..\GraphZen\GraphZen.csproj" />
+  </ItemGroup>
+</Project>

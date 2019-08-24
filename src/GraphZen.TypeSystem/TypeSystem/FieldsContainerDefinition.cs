@@ -15,10 +15,12 @@ namespace GraphZen.TypeSystem
 {
     public abstract class FieldsContainerDefinition : NamedTypeDefinition, IMutableFieldsContainerDefinition
     {
-        [NotNull] private readonly Dictionary<string, FieldDefinition> _fields =
+        [NotNull]
+        private readonly Dictionary<string, FieldDefinition> _fields =
             new Dictionary<string, FieldDefinition>();
 
-        [NotNull] private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
+        [NotNull]
+        private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
 
@@ -28,6 +30,9 @@ namespace GraphZen.TypeSystem
         }
 
 
+
+        [NotNull]
+        [ItemNotNull]
         public IEnumerable<FieldDefinition> GetFields() => _fields.Values;
 
         public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
@@ -84,6 +89,8 @@ namespace GraphZen.TypeSystem
             {
                 return false;
             }
+
+            // field.UpdateConfigurationSource(configurationSource);
 
             if (this.TryGetField(name, out var existing) && existing != field)
             {
@@ -169,15 +176,8 @@ namespace GraphZen.TypeSystem
             var fb = field.Builder;
             fb.FieldType(method);
 
-            if (method.TryGetDescriptionFromDataAnnotation(out var description))
-            {
-                fb.Description(description, ConfigurationSource.DataAnnotation);
-            }
 
-            foreach (var parameter in method.GetParameters())
-            {
-                fb.Argument(parameter, ConfigurationSource.Convention);
-            }
+            
 
             return AddField(field);
         }
@@ -199,7 +199,7 @@ namespace GraphZen.TypeSystem
             _fields.Remove(field.Name);
         }
 
-        public ConfigurationSource? FindIgnoredFieldConfigurationSource([NotNull] string fieldName)
+        public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
         {
             if (_ignoredFields.TryGetValue(fieldName, out var cs))
             {
@@ -213,9 +213,9 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
-            if (ignoredConfigurationSource.HasValue && ignoredConfigurationSource.Overrides(configurationSource))
+            if (ignoredConfigurationSource.HasValue)
             {
-                if (ignoredConfigurationSource.Overrides(configurationSource))
+                if (!nameConfigurationSource.Overrides(ignoredConfigurationSource))
                 {
                     return null;
                 }
@@ -227,6 +227,7 @@ namespace GraphZen.TypeSystem
             var field = this.FindField(name);
             if (field != null)
             {
+                field.UpdateConfigurationSource(configurationSource);
                 return field;
             }
 

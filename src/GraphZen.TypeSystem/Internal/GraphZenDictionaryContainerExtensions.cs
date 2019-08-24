@@ -26,8 +26,8 @@ namespace GraphZen.Internal
                 generate.ForType<InterfaceType>().ForDictionary(_ => _.Fields, "name", "Field");
 
 
-                generate.ForType<EnumTypeDefinition>().ForDictionary(_ => _.ValuesByName, "name", "Value");
-                generate.ForType<EnumType>().ForDictionary(_ => _.ValuesByName, "name", "Value");
+                generate.ForType<EnumTypeDefinition>().ForDictionary(_ => _.Values, "name", "Value");
+                generate.ForType<EnumType>().ForDictionary(_ => _.Values, "name", "Value");
                 generate.ForType<EnumType>().ForDictionary(_ => _.ValuesByValue, "value", "Value");
 
                 // Output field arguments

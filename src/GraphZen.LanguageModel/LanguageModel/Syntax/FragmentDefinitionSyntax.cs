@@ -70,7 +70,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is FragmentDefinitionSyntax && Equals((FragmentDefinitionSyntax) obj);
+            return obj is FragmentDefinitionSyntax && Equals((FragmentDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

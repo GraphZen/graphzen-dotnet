@@ -16,10 +16,12 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
-        [NotNull] private readonly Dictionary<string, ArgumentDefinition> _arguments =
+        [NotNull]
+        private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
-        [NotNull] private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
+        [NotNull]
+        private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
             new Dictionary<string, ConfigurationSource>();
 
         private string _deprecationReason;
@@ -144,9 +146,9 @@ namespace GraphZen.TypeSystem
 
         public bool RemoveDeprecation(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
-        public ConfigurationSource? FindIgnoredArgumentConfigurationSource([NotNull] string fieldName)
+        public ConfigurationSource? FindIgnoredArgumentConfigurationSource([NotNull] string name)
         {
-            if (_ignoredArguments.TryGetValue(fieldName, out var cs))
+            if (_ignoredArguments.TryGetValue(name, out var cs))
             {
                 return cs;
             }
@@ -215,19 +217,7 @@ namespace GraphZen.TypeSystem
         public ArgumentDefinition AddArgument([NotNull] ParameterInfo parameter,
             ConfigurationSource configurationSource)
         {
-            if (ClrInfo == null)
-            {
-                throw new InvalidOperationException(
-                    "Cannot add Argument from property on a type that does not have a CLR type mapped.");
-            }
-
-            // ReSharper disable once AssignNullToNotNullAttribute
-            //if (!ClrType.IsSameOrSubclass(parameter.DeclaringType))
-            //{
-            //    throw new InvalidOperationException(
-            //        $"Cannot add Argument from property with a declaring type ({parameter.DeclaringType}) that does not exist on the parent's {Kind.ToString().ToLower()} type's mapped CLR type ({ClrType}).");
-            //}
-
+            
             var (argName, nameConfigurationSource) = parameter.GetGraphQLArgumentName();
             var argument = new ArgumentDefinition(argName, nameConfigurationSource, Schema, configurationSource, this,
                 parameter);
@@ -266,7 +256,7 @@ namespace GraphZen.TypeSystem
         {
             if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))
             {
-                argument = new ArgumentDefinition(name, ConfigurationSource.Convention, Builder.Schema,
+                argument = new ArgumentDefinition(name, configurationSource, Builder.Schema,
                     configurationSource, this, null);
                 _arguments[name] = argument;
             }

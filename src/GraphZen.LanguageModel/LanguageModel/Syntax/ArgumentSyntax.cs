@@ -38,7 +38,6 @@ namespace GraphZen.LanguageModel
         [NotNull]
         public ValueSyntax Value { get; }
 
-        private string DebuggerDisplay => $"{Name.Value}: {Value.GetValue()}";
 
         /// <summary>
         ///     Arguments child nodes
@@ -70,7 +69,7 @@ namespace GraphZen.LanguageModel
                 return true;
             }
 
-            return obj is ArgumentSyntax && Equals((ArgumentSyntax) obj);
+            return obj is ArgumentSyntax && Equals((ArgumentSyntax)obj);
         }
 
         public override int GetHashCode()

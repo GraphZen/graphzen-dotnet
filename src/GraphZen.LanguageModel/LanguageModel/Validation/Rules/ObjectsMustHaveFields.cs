@@ -10,10 +10,12 @@ namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class ObjectsMustHaveFields : ValidationRuleVisitor
     {
-        [NotNull] private readonly Dictionary<string, ICollection<ObjectTypeDefinitionSyntax>> _objectDefs =
+        [NotNull]
+        private readonly Dictionary<string, ICollection<ObjectTypeDefinitionSyntax>> _objectDefs =
             new Dictionary<string, ICollection<ObjectTypeDefinitionSyntax>>();
 
-        [NotNull] private readonly Dictionary<string, ICollection<ObjectTypeExtensionSyntax>> _objectExts =
+        [NotNull]
+        private readonly Dictionary<string, ICollection<ObjectTypeExtensionSyntax>> _objectExts =
             new Dictionary<string, ICollection<ObjectTypeExtensionSyntax>>();
 
         public ObjectsMustHaveFields(ValidationContext context) : base(context)

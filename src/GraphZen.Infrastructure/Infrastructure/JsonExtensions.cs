@@ -21,13 +21,13 @@ namespace GraphZen.Infrastructure
             var objectEntries = (from r in result
                                  where r.Value?.GetType() == typeof(JObject)
                                  let objectKey = r.Key
-                                 let objectValue = (JObject) r.Value
+                                 let objectValue = (JObject)r.Value
                                  select (objectKey, objectValue)).ToList();
 
             var arrayEntries = (from r in result
                                 where r.Value?.GetType() == typeof(JArray)
                                 let arrayKey = r.Key
-                                let arrayValue = (JArray) r.Value
+                                let arrayValue = (JArray)r.Value
                                 select (arrayKey, arrayValue)).ToList();
 
 

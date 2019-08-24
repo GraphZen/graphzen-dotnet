@@ -39,7 +39,7 @@ namespace GraphZen.Infrastructure
 
         public static IEnumerable<string> GetSuggestionList(string input, params string[] options) =>
             GetSuggestionList(Check.NotNull(input, nameof(input)),
-                (IEnumerable<string>) Check.NotNull(options, nameof(options)));
+                (IEnumerable<string>)Check.NotNull(options, nameof(options)));
 
         [NotNull]
         public static IReadOnlyList<string> GetSuggestionList([NotNull] string input,

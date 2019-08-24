@@ -2,6 +2,8 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Linq;
+using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 
@@ -16,10 +18,11 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
+
         public void IsTypeOf([NotNull] IsTypeOf<object, GraphQLContext> isTypeOfFn) => Definition.IsTypeOf = isTypeOfFn;
 
 
-        public bool Interface([NotNull] Type clrType, ConfigurationSource configurationSource)
+        public bool ImplementsInterface([NotNull] Type clrType, ConfigurationSource configurationSource)
         {
             if (clrType.IsIgnoredByDataAnnotation())
             {
@@ -35,7 +38,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (existing is InterfaceTypeDefinition interfaceDef)
             {
-                Definition.AddInterface(interfaceDef.GetTypeReference(), configurationSource);
+                Definition.AddInterface(interfaceDef, configurationSource);
                 return true;
             }
 
@@ -45,7 +48,7 @@ namespace GraphZen.TypeSystem.Internal
                 return false;
             }
 
-            var interfaceRef = Schema.NamedTypeReference(clrType, TypeKind.Interface);
+            var interfaceRef = SchemaBuilder.Interface(clrType, configurationSource)?.Definition;
             if (interfaceRef != null)
             {
                 Definition.AddInterface(interfaceRef, configurationSource);
@@ -57,10 +60,61 @@ namespace GraphZen.TypeSystem.Internal
 
 
         [NotNull]
-        public InternalObjectTypeBuilder Interface([NotNull] string interfaceType,
+        public InternalObjectTypeBuilder ClrType([NotNull] Type clrType, ConfigurationSource configurationSource)
+        {
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                ConfigureObjectFromClrType();
+            }
+
+            return this;
+        }
+
+        public bool ConfigureObjectFromClrType()
+        {
+            var clrType = Definition.ClrType;
+
+            if (clrType == null)
+            {
+                return false;
+            }
+
+            if (clrType.BaseType != null && clrType.BaseType.IsAbstract)
+            {
+                SchemaBuilder.Union(clrType.BaseType, ConfigurationSource.Convention);
+            }
+
+            ConfigureOutputFields();
+
+            if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
+                Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
+            }
+
+            var interfaces = clrType.GetInterfaces()
+                .Where(_ => !_.IsGenericType)
+                .OrderBy(_ => _.MetadataToken);
+
+            foreach (var @interface in interfaces)
+            {
+                if (@interface.GetCustomAttribute<GraphQLUnionAttribute>() != null)
+                {
+                    Schema.Builder.Union(@interface, ConfigurationSource.DataAnnotation);
+                }
+                else
+                {
+                    Definition.Builder.ImplementsInterface(@interface, ConfigurationSource.Convention);
+                }
+            }
+
+            return true;
+        }
+
+        [NotNull]
+        public InternalObjectTypeBuilder ImplementsInterface([NotNull] string interfaceType,
             ConfigurationSource configurationSource)
         {
-            var interfaceRef = Schema.GetOrAddTypeReference(interfaceType, Definition);
+            var interfaceRef = SchemaBuilder.Interface(interfaceType, configurationSource)?.Definition;
             if (interfaceRef != null)
             {
                 Definition.AddInterface(interfaceRef, configurationSource);
@@ -74,6 +128,18 @@ namespace GraphZen.TypeSystem.Internal
         {
             Definition.IgnoreInterface(interfaceName, configurationSource);
             return this;
+        }
+
+        public bool UnignoreInterface([NotNull] string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = Definition.FindIgnoredInterfaceConfigurationSource(name);
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
+
+            Definition.UnignoreInterface(name);
+            return true;
         }
 
         public bool IsInterfaceIgnored([NotNull] string interfaceName, ConfigurationSource configurationSource)

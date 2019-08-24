@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem
             bool isDeprecated = false, string deprecatedReason = null,
             IReadOnlyList<IDirectiveAnnotation> directives = null
         ) : this(name, description, declaringType, fieldType, arguments, resolver, isDeprecated, deprecatedReason,
-            directives ?? DirectiveAnnotation.EmptyList, typeRef => (IGraphQLType) typeRef, clrMember)
+            directives ?? DirectiveAnnotation.EmptyList, typeRef => (IGraphQLType)typeRef, clrMember)
         {
         }
 

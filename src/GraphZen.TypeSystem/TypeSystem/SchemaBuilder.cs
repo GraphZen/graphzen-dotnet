@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
@@ -20,6 +21,7 @@ namespace GraphZen.TypeSystem
         protected InternalSchemaBuilder Builder { get; }
 
 
+        [DebuggerStepThrough]
         public IDirectiveBuilder Directive(string name) =>
             new DirectiveBuilder(Builder.Directive(Check.NotNull(name, nameof(name)), ConfigurationSource.Explicit));
 
@@ -68,6 +70,21 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public ISchemaBuilder<GraphQLContext> UnignoreType<TObject>() => IgnoreType(typeof(TObject));
+
+        public ISchemaBuilder<GraphQLContext> UnignoreType(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.IgnoreType(clrType, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public ISchemaBuilder<GraphQLContext> UnignoreType(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreType(name, ConfigurationSource.Explicit);
+            return this;
+        }
 
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
@@ -189,12 +206,17 @@ namespace GraphZen.TypeSystem
             new ObjectTypeBuilder<TObject, TContext>(Builder.Object(typeof(TObject), ConfigurationSource.Explicit));
 
         public new ISchemaBuilder<TContext> IgnoreType<TObject>() =>
-            (ISchemaBuilder<TContext>) base.IgnoreType<TObject>();
+            (ISchemaBuilder<TContext>)base.IgnoreType<TObject>();
 
         public new ISchemaBuilder<TContext> IgnoreType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.IgnoreType(clrType);
+            (ISchemaBuilder<TContext>)base.IgnoreType(clrType);
 
-        public new ISchemaBuilder<TContext> IgnoreType(string name) => (ISchemaBuilder<TContext>) base.IgnoreType(name);
+        public new ISchemaBuilder<TContext> IgnoreType(string name) => (ISchemaBuilder<TContext>)base.IgnoreType(name);
+        public new ISchemaBuilder<TContext> UnignoreType<TObject>() => (ISchemaBuilder<TContext>)base.UnignoreType(typeof(TObject));
+
+        public new ISchemaBuilder<TContext> UnignoreType(Type clrType) => (ISchemaBuilder<TContext>)base.UnignoreType(clrType);
+
+        public new ISchemaBuilder<TContext> UnignoreType(string name) => (ISchemaBuilder<TContext>)base.UnignoreType(name);
 
         public new IInterfaceTypeBuilder<object, TContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
@@ -227,7 +249,7 @@ namespace GraphZen.TypeSystem
         }
 
         public new ISchemaBuilder<TContext> QueryType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.QueryType(clrType);
+            (ISchemaBuilder<TContext>)base.QueryType(clrType);
 
         public new ISchemaBuilder<TContext> MutationType(string type)
         {
@@ -236,7 +258,7 @@ namespace GraphZen.TypeSystem
         }
 
         public new ISchemaBuilder<TContext> MutationType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.MutationType(clrType);
+            (ISchemaBuilder<TContext>)base.MutationType(clrType);
 
         public new ISchemaBuilder<TContext> SubscriptionType(string type)
         {

@@ -10,10 +10,12 @@ namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class InputObjectsMustHaveFields : DocumentValidationRuleVisitor
     {
-        [NotNull] private readonly Dictionary<string, ICollection<InputObjectTypeDefinitionSyntax>>
+        [NotNull]
+        private readonly Dictionary<string, ICollection<InputObjectTypeDefinitionSyntax>>
             _inputDefs = new Dictionary<string, ICollection<InputObjectTypeDefinitionSyntax>>();
 
-        [NotNull] private readonly Dictionary<string, ICollection<InputObjectTypeExtensionSyntax>> _inputExts =
+        [NotNull]
+        private readonly Dictionary<string, ICollection<InputObjectTypeExtensionSyntax>> _inputExts =
             new Dictionary<string, ICollection<InputObjectTypeExtensionSyntax>>();
 
         public InputObjectsMustHaveFields(DocumentValidationContext context) : base(context)

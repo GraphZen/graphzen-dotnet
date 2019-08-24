@@ -13,7 +13,8 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
     {
-        [NotNull] private readonly Dictionary<string, EnumValueDefinition>
+        [NotNull]
+        private readonly Dictionary<string, EnumValueDefinition>
             _values = new Dictionary<string, EnumValueDefinition>();
 
         public EnumTypeDefinition(TypeIdentity identity,
@@ -34,13 +35,14 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
         public override TypeKind Kind { get; } = TypeKind.Enum;
-        IEnumerable<IEnumValueDefinition> IEnumTypeDefinition.GetValues() => GetValues();
 
 
-        public IReadOnlyDictionary<string, EnumValueDefinition> ValuesByName => _values;
-        public IEnumerable<EnumValueDefinition> GetValues() => ValuesByName.Values;
+        public IReadOnlyDictionary<string, EnumValueDefinition> Values => _values;
+        public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) => throw new System.NotImplementedException();
+        public IEnumerable<EnumValueDefinition> GetValues() => Values.Values;
 
         public override string ToString() => $"enum {Name}";
+        IEnumerable<IEnumValueDefinition> IEnumValuesContainerDefinition.GetValues() => GetValues();
 
         [NotNull]
         public EnumValueDefinition GetOrAddValue(string name,
