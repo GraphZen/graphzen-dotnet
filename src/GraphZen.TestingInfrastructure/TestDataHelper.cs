@@ -13,12 +13,12 @@ namespace GraphZen
         [NotNull]
         [ItemNotNull]
         public static IEnumerable<object[]> ToTestData<T>([NotNull] this IEnumerable<T> source) =>
-            source.Select(_ => new object[] {_});
+            source.Select(_ => new object[] { _ });
     }
 
     public abstract class TestDataHelper<T>
     {
-        protected void TestData<TFilter>([NotNull] T data, Action test) where TFilter : T, new()
+        protected void TestData<TFilter>([NotNull] T data, [NotNull] Action test) where TFilter : T, new()
         {
             if (data is TFilter)
             {
@@ -28,7 +28,7 @@ namespace GraphZen
             }
         }
 
-        protected void TestData([NotNull] T data, Action test)
+        protected void TestData([NotNull] T data, [NotNull] Action test)
         {
             try
             {

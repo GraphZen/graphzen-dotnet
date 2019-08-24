@@ -41,8 +41,8 @@
     <Folder Include="Utilities\BuildFromAst\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\GraphZen.AspNetCore\GraphZen.AspNetCore.csproj" />
-    <ProjectReference Include="..\..\src\GraphZen.TestingInfrastructure\GraphZen.TestingInfrastructure.csproj" />
-    <ProjectReference Include="..\..\src\GraphZen\GraphZen.csproj" />
+    <ProjectReference Include="..\GraphZen.AspNetCore\GraphZen.AspNetCore.csproj" />
+    <ProjectReference Include="..\GraphZen.TestingInfrastructure\GraphZen.TestingInfrastructure.csproj" />
+    <ProjectReference Include="..\GraphZen\GraphZen.csproj" />
   </ItemGroup>
 </Project>

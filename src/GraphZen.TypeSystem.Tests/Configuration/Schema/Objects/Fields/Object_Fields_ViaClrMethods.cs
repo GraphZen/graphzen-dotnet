@@ -1,7 +1,6 @@
 ﻿using System;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
-using Xunit.Abstractions;
 
 namespace GraphZen.Objects.Fields
 {

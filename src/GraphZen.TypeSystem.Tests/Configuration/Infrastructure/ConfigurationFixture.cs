@@ -1,7 +1,6 @@
 ﻿using System;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
-using Xunit.Abstractions;
 
 namespace GraphZen
 {
@@ -19,12 +18,8 @@ namespace GraphZen
     {
         protected const string Grandparent = nameof(Grandparent);
         protected const string GreatGrandparent = nameof(GreatGrandparent);
-        private string _type;
 
-        public ConfigurationFixture()
-        {
-            this._type = GetType().ToString();
-        }
+        
 
         public Type ParentMemberType { get; } = typeof(TParentMember);
         public Type ParentMemberDefinitionType { get; } = typeof(TParentMemberDefinition);
