@@ -4,22 +4,24 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using Xunit;
+
 // ReSharper disable PossibleNullReferenceException
 // ReSharper disable AssignNullToNotNullAttribute
 
 namespace GraphZen
 {
     [NoReorder]
-    public class LeafExplicitConfigurationTests : FixtureRunner<ILeafExplicitConfigurationFixture>
+    public class LeafExplicitConfigurationTests : TestDataHelper<ILeafExplicitConfigurationFixture>
     {
-        protected override IEnumerable<ILeafExplicitConfigurationFixture> GetFixtures() =>
-            ConfigurationFixtures.GetAll<ILeafExplicitConfigurationFixture>();
+        public static IEnumerable<object[]> FixtureData { get; } =
+            ConfigurationFixtures.GetAll<ILeafExplicitConfigurationFixture>().ToTestData();
 
 
-        [Fact]
-        public void parent_should_be_of_expected_type()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void parent_should_be_of_expected_type(ILeafExplicitConfigurationFixture fixture)
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -31,10 +33,12 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void initial_value()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void initial_value(ILeafExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -50,10 +54,12 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void initial_value_then_configured_explicitly()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void initial_value_then_configured_explicitly(ILeafExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -72,10 +78,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void initial_value_then_configured_then_reconfigured_explicitly()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void initial_value_then_configured_then_reconfigured_explicitly(
+            ILeafExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -95,10 +104,12 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void initial_value_then_reconfigured_explicitly_then_removed()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void initial_value_then_reconfigured_explicitly_then_removed(ILeafExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -116,7 +127,5 @@ namespace GraphZen
                 fixture.TryGetValue(parent, out _).Should().BeFalse();
             });
         }
-
-        
     }
 }

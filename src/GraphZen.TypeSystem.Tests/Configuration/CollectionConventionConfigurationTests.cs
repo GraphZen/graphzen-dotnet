@@ -1,10 +1,11 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Objects.Fields.Arguments;
+using GraphZen.Objects.Fields;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using Xunit;
@@ -15,15 +16,18 @@ using Xunit;
 namespace GraphZen
 {
     [NoReorder]
-    public class CollectionConventionConfigurationTests : FixtureRunner<ICollectionConventionConfigurationFixture>
+    public class CollectionConventionConfigurationTests : TestDataHelper<ICollectionConventionConfigurationFixture>
     {
-        protected override IEnumerable<ICollectionConventionConfigurationFixture> GetFixtures() =>
-            ConfigurationFixtures.GetAll<ICollectionConventionConfigurationFixture>();
 
-        [Fact]
-        public void conventional_parent_should_be_of_expected_type()
+        public static IEnumerable<object[]> FixtureData =
+            ConfigurationFixtures.GetAll<ICollectionConventionConfigurationFixture>().ToTestData();
+
+
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void conventional_parent_should_be_of_expected_type(ICollectionConventionConfigurationFixture fixture)
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -36,10 +40,13 @@ namespace GraphZen
         }
 
 
-        [Fact]
-        public void conventional_item_added_explicitly_via_clr_member_should_have_clr_member()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void conventional_item_added_explicitly_via_clr_member_should_have_clr_member(
+            ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -60,10 +67,12 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void conventional_item_should_be_of_expected_type()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void conventional_item_should_be_of_expected_type(ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -85,10 +94,12 @@ namespace GraphZen
         }
 
 
-        [Fact]
-        public void parent_should_be_of_expected_type()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void parent_should_be_of_expected_type(ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -100,10 +111,12 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void item_added_by_conventional_name()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void item_added_by_conventional_name(ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
 
@@ -126,10 +139,13 @@ namespace GraphZen
         }
 
 
-        [Fact]
-        public void item_added_by_convention_with_name_configured_by_convention_renamed_explicitly()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void item_added_by_convention_with_name_configured_by_convention_renamed_explicitly(
+            ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var explicitName = "ExplicitName";
@@ -155,10 +171,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void item_added_by_convention_with_name_configured_by_data_annotation()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void item_added_by_convention_with_name_configured_by_data_annotation(
+            ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
 
@@ -180,10 +199,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void item_added_by_convention_with_name_configured_by_data_annotation_renamed_explicitly()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void item_added_by_convention_with_name_configured_by_data_annotation_renamed_explicitly(
+            ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var explicitName = "ExplicitName";
@@ -209,10 +231,12 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void item_ignored_by_convention()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void item_ignored_by_convention(ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -229,10 +253,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void item_ignored_by_convention_added_by_explicit_configuration()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void item_ignored_by_convention_added_by_explicit_configuration(
+            ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -253,10 +280,12 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void item_ignored_by_data_annotation()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void item_ignored_by_data_annotation(ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -272,10 +301,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void item_ignored_by_data_annotation_added_by_explicit_configuration()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void item_ignored_by_data_annotation_added_by_explicit_configuration(
+            ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -296,10 +328,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void when_parent_configured_explicitly_then_clr_member_set_items_added_by_convention()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void when_parent_configured_explicitly_then_clr_member_set_items_added_by_convention(
+            ICollectionConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>

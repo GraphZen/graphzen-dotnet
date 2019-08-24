@@ -1,10 +1,12 @@
 ﻿using System;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using Xunit.Abstractions;
 
 namespace GraphZen
 {
-    public interface IConfigurationFixture
+    public interface IConfigurationFixture 
+
     {
         Type ParentMemberType { get; }
         Type ParentMemberDefinitionType { get; }

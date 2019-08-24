@@ -1,9 +1,11 @@
 ﻿using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using Xunit.Abstractions;
 
 namespace GraphZen.Objects
 {
     public class Schema_Objects_ViaClrClasses : Schema_Objects, ICollectionConventionConfigurationFixture
+
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
         public class Query

@@ -11,15 +11,18 @@ using Xunit;
 namespace GraphZen
 {
     [NoReorder]
-    public class LeafConventionConfigurationTests : FixtureRunner<ILeafConventionConfigurationFixture>
+    public class LeafConventionConfigurationTests : TestDataHelper<ILeafConventionConfigurationFixture>
     {
-        protected override IEnumerable<ILeafConventionConfigurationFixture> GetFixtures() =>
-            ConfigurationFixtures.GetAll<ILeafConventionConfigurationFixture>();
+        public static IEnumerable<object[]> FixtureData { get; } =
+            ConfigurationFixtures.GetAll<ILeafConventionConfigurationFixture>().ToTestData();
 
-        [Fact]
-        public void parent_configured_conventionally_optional_configured_by_data_annotation()
+
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void parent_configured_conventionally_optional_configured_by_data_annotation(
+            ILeafConventionConfigurationFixture fixture)
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -36,10 +39,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void parent_configured_explicitly_then_conventionally_optional_configured_by_data_annotation()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void parent_configured_explicitly_then_conventionally_optional_configured_by_data_annotation(
+            ILeafConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -59,10 +65,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void parent_and_item_configured_explicitly_then_conventionally_optional_configured_by_data_annotation()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void parent_and_item_configured_explicitly_then_conventionally_optional_configured_by_data_annotation(
+            ILeafConventionConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>

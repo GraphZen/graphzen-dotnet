@@ -1,6 +1,7 @@
 ﻿using System;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using Xunit.Abstractions;
 
 namespace GraphZen.Objects.Fields
 {
@@ -48,5 +49,9 @@ namespace GraphZen.Objects.Fields
 
             public IgnoredType IgnoredByConvention() => throw new NotImplementedException();
         }
+
+        public override string ToString() => nameof(Object_Fields_ViaClrMethods);
+
+        
     }
 }

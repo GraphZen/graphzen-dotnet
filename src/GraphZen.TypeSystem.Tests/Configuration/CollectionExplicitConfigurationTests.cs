@@ -15,16 +15,17 @@ using Xunit;
 namespace GraphZen
 {
     [NoReorder]
-    public class CollectionExplicitConfigurationTests : FixtureRunner<ICollectionExplicitConfigurationFixture>
+    public class CollectionExplicitConfigurationTests : TestDataHelper<ICollectionExplicitConfigurationFixture>
     {
-        protected override IEnumerable<ICollectionExplicitConfigurationFixture> GetFixtures() =>
-            ConfigurationFixtures.GetAll<ICollectionExplicitConfigurationFixture>();
+        public static IEnumerable<object[]> FixtureData { get; } =
+            ConfigurationFixtures.GetAll<ICollectionExplicitConfigurationFixture>().ToTestData();
 
 
-        [Fact]
-        public void parent_should_be_of_expected_type()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void parent_should_be_of_expected_type(ICollectionExplicitConfigurationFixture fixture)
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -36,10 +37,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void when_item_added_explicitly_item_configurationSource_should_be_explicit()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void when_item_added_explicitly_item_configurationSource_should_be_explicit(
+            ICollectionExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -59,10 +63,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void when_item_added_explicitly_item_name_configurationSource_should_be_explicit()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void when_item_added_explicitly_item_name_configurationSource_should_be_explicit(
+            ICollectionExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -79,11 +86,14 @@ namespace GraphZen
             });
         }
 
-        [Fact]
+        [Theory]
+        [MemberData(nameof(FixtureData))]
         public void
-            when_item_added_explicitly_then_ignored_explicitly_item_ignored_configuration_source_should_be_explicit()
+            when_item_added_explicitly_then_ignored_explicitly_item_ignored_configuration_source_should_be_explicit(
+                ICollectionExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var itemName = "addedExplicitly";
                 var parentName = "parent";
@@ -98,10 +108,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void when_item_added_explicitly_then_ignored_explicitly_item_should_be_removed()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void when_item_added_explicitly_then_ignored_explicitly_item_should_be_removed(
+            ICollectionExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -122,10 +135,13 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void when_item_added_explicitly_then_ignored_then_re_added_explicitly_should_exist()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void when_item_added_explicitly_then_ignored_then_re_added_explicitly_should_exist(
+            ICollectionExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -146,11 +162,14 @@ namespace GraphZen
             });
         }
 
-        [Fact]
+        [Theory]
+        [MemberData(nameof(FixtureData))]
         public void
-            when_item_added_explicitly_then_ignored_then_unignored_explicitly_ignored_configuration_source_should_be_null()
+            when_item_added_explicitly_then_ignored_then_unignored_explicitly_ignored_configuration_source_should_be_null(
+                ICollectionExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var itemName = "addedExplicitly";
                 var parentName = "parent";
@@ -165,10 +184,12 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void item_added_explicitly()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void item_added_explicitly(ICollectionExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "test";
                 var itemName = "item";
@@ -189,10 +210,12 @@ namespace GraphZen
             });
         }
 
-        [Fact]
-        public void item_added_explicitly_then_renamed_explicitly()
+        [Theory]
+        [MemberData(nameof(FixtureData))]
+        public void item_added_explicitly_then_renamed_explicitly(ICollectionExplicitConfigurationFixture fixture)
+
         {
-            TestFixtures(fixture =>
+            TestData(fixture, () =>
             {
                 var parentName = "test";
                 var initialItemName = "item";
