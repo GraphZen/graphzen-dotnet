@@ -6,6 +6,11 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '2.2'
 - task: PowerShell@2
   inputs:
     filePath: 'build.ps1'
