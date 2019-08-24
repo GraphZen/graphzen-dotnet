@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://github.com/GraphZen/graphzen-dotnet</PackageProjectUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <IsPackable>True</IsPackable>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>

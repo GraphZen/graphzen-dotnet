@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -12,11 +14,11 @@ namespace GraphZen.TypeSystem
 {
     public class InterfaceType : NamedType, IInterfaceType
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
-        [NotNull] [ItemNotNull] private readonly Lazy<InterfaceTypeDefinitionSyntax> _syntax;
+          private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
+          private readonly Lazy<InterfaceTypeDefinitionSyntax> _syntax;
 
         public InterfaceType(string name, string description, Type clrType,
-            [NotNull] [ItemNotNull] IEnumerable<IFieldDefinition> fields,
+              IEnumerable<IFieldDefinition> fields,
             TypeResolver<object, GraphQLContext> resolveType,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(
             Check.NotNull(name, nameof(name)), description, clrType, Check.NotNull(directives, nameof(directives)))
@@ -52,7 +54,7 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Interface;
 
 
-        [NotNull]
+        
         public static InterfaceType From(IInterfaceTypeDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));

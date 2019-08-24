@@ -1,3 +1,7 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using JetBrains.Annotations;
 #nullable disable
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
@@ -7,13 +11,13 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     public interface IMutableInputFieldsContainerDefinition : IInputFieldsContainerDefinition
     {
-        [NotNull]
+        
         IReadOnlyDictionary<string, InputFieldDefinition> Fields { get; }
 
-        ConfigurationSource? FindIgnoredFieldConfigurationSource([NotNull] string fieldName);
+        ConfigurationSource? FindIgnoredFieldConfigurationSource( string fieldName);
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         new IEnumerable<InputFieldDefinition> GetFields();
     }
 }

@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -12,24 +14,24 @@ namespace GraphZen.TypeSystem
 {
     public static class GraphQLTypeExtensions
     {
-        [NotNull]
+        
         public static string Print(this ISyntaxConvertable source) =>
             Check.NotNull(source, nameof(source)).ToSyntaxNode().ToSyntaxString();
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public static IReadOnlyList<TSyntaxNode> ToSyntaxNodes<TSyntaxNode>(
-            [NotNull] [ItemNotNull] this IEnumerable<ISyntaxConvertable> source)
+              this IEnumerable<ISyntaxConvertable> source)
             where TSyntaxNode : SyntaxNode
         {
             Check.NotNull(source, nameof(source));
             return source.Select(_ => (TSyntaxNode)_.ToSyntaxNode()).ToList().AsReadOnly();
         }
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public static IEnumerable<SyntaxNode> ToSyntaxNodes(
-            [NotNull] [ItemNotNull] this IEnumerable<ISyntaxConvertable> source)
+              this IEnumerable<ISyntaxConvertable> source)
         {
             Check.NotNull(source, nameof(source));
             return source.Select(_ => _.ToSyntaxNode());
@@ -65,7 +67,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [CanBeNull]
+        
         public static NamedType GetNamedType(this IGraphQLType type)
         {
             switch (type)
@@ -79,7 +81,7 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        [CanBeNull]
+        
         public static INullableType GetNullableType(this IGraphQLType type) =>
             type is NonNullType nonNull ? nonNull.OfType : type as INullableType;
     }

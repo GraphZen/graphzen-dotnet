@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -28,14 +30,14 @@ namespace GraphZen.LanguageModel
         }
 
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         private static string[] ProhibtedValues { get; } = { "true", "false", "null" };
 
         /// <summary>
         ///     The enum value.
         /// </summary>
-        [NotNull]
+        
         public string Value { get; }
 
 
@@ -46,7 +48,7 @@ namespace GraphZen.LanguageModel
             ProhibtedValues.All(v => !v.Equals(value));
 
 
-        private bool Equals([NotNull] EnumValueSyntax other) => string.Equals(Value, other.Value);
+        private bool Equals( EnumValueSyntax other) => string.Equals(Value, other.Value);
 
         public override bool Equals(object obj)
         {

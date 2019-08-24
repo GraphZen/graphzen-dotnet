@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -31,13 +33,13 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Directive arguments. (Optional)
         /// </summary>
-        [NotNull]
+        
         public IReadOnlyList<InputValueDefinitionSyntax> Arguments { get; }
 
         /// <summary>
         ///     Directive locations.
         /// </summary>
-        [NotNull]
+        
         public IReadOnlyList<NameSyntax> Locations { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
@@ -51,7 +53,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        private bool Equals([NotNull] DirectiveDefinitionSyntax other) =>
+        private bool Equals( DirectiveDefinitionSyntax other) =>
             Name.Equals(other.Name) &&
             Equals(Description, other.Description) &&
             Arguments.SequenceEqual(other.Arguments) &&

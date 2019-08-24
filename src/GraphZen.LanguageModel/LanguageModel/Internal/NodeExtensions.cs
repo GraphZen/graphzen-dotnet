@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ namespace GraphZen.LanguageModel.Internal
 {
     internal static class NodeExtensions
     {
-        [NotNull]
+        
         public static ISyntaxNodeLocation GetLocation(this IEnumerable<SyntaxNode> nodes) => nodes != null
             ? new LocationContainer(
                 SyntaxLocation.FromMany(nodes
@@ -21,32 +23,32 @@ namespace GraphZen.LanguageModel.Internal
             : new LocationContainer(null);
 
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         internal static IEnumerable<SyntaxNode> Concat(
-            [NotNull] [ItemNotNull] this IEnumerable<SyntaxNode> first,
-            [NotNull] [ItemNotNull] IEnumerable<SyntaxNode> second) =>
+              this IEnumerable<SyntaxNode> first,
+              IEnumerable<SyntaxNode> second) =>
             first.Concat<SyntaxNode>(second);
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         internal static IEnumerable<SyntaxNode> Concat(
-            [NotNull] [ItemNotNull] this IEnumerable<SyntaxNode> first,
-            [NotNull] Func<IEnumerable<SyntaxNode>> second) =>
+              this IEnumerable<SyntaxNode> first,
+             Func<IEnumerable<SyntaxNode>> second) =>
             // ReSharper disable once AssignNullToNotNullAttribute
             first.Concat<SyntaxNode>(second());
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         internal static IEnumerable<SyntaxNode> Concat(
-            [NotNull] [ItemNotNull] this IEnumerable<SyntaxNode> nodes,
+              this IEnumerable<SyntaxNode> nodes,
             SyntaxNode node) =>
             nodes.Concat(node.ToEnumerable());
 
 
         internal static bool NodesEqual<T>(
-            [NotNull] this IEnumerable<T> nodes,
-            [NotNull] IEnumerable<T> otherNodes) where T : SyntaxNode
+             this IEnumerable<T> nodes,
+             IEnumerable<T> otherNodes) where T : SyntaxNode
         {
             var sequenceEquals = nodes.SequenceEqual(otherNodes);
             if (sequenceEquals)

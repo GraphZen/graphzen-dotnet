@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,8 +28,8 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Schema operation types.
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public IReadOnlyList<OperationTypeDefinitionSyntax> RootOperationTypes { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
@@ -38,7 +40,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] SchemaDefinitionSyntax other) =>
+        private bool Equals( SchemaDefinitionSyntax other) =>
             RootOperationTypes.SequenceEqual(other.RootOperationTypes) && Directives.SequenceEqual(other.Directives);
 
         public SchemaDefinitionSyntax WithRootOperation(OperationTypeDefinitionSyntax definition) =>

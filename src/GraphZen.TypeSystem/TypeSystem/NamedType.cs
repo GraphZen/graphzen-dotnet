@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -11,8 +13,8 @@ namespace GraphZen.TypeSystem
 {
     public abstract class NamedType : AnnotatableMember, INamedType
     {
-        protected NamedType([NotNull] string name, string description, Type clrType,
-            [NotNull] IReadOnlyList<IDirectiveAnnotation> directives) : base(directives)
+        protected NamedType( string name, string description, Type clrType,
+             IReadOnlyList<IDirectiveAnnotation> directives) : base(directives)
         {
             Name = name;
             Description = description;
@@ -27,7 +29,7 @@ namespace GraphZen.TypeSystem
         public Type ClrType { get; }
 
 
-        [NotNull]
+        
         public static NamedType From(IGraphQLTypeDefinition definition, Schema schema)
         {
             switch (definition)

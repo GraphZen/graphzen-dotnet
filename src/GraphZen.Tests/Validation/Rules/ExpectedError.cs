@@ -1,12 +1,16 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 
 using System.Collections.Generic;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
+
+#nullable disable
+
 
 namespace GraphZen.Validation.Rules
 {
@@ -33,32 +37,28 @@ namespace GraphZen.Validation.Rules
         public IReadOnlyList<object> Path { get; }
 
 
-        protected bool Equals(ExpectedError other) => string.Equals(Message, other.Message) &&
-                                                      (Locations == null && other.Locations == null ||
-                                                       Locations.SequenceEqual(other.Locations))
-                                                      &&
-                                                      (Path == null && other.Path == null ||
-                                                       Path.SequenceEqual(other.Path));
+        protected bool Equals(ExpectedError other)
+        {
+            return string.Equals(Message, other.Message) &&
+                   (Locations == null && other.Locations == null ||
+                    // ReSharper disable once AssignNullToNotNullAttribute
+                    Locations.SequenceEqual(other.Locations))
+                   &&
+                   (Path == null && other.Path == null ||
+                    // ReSharper disable once AssignNullToNotNullAttribute
+                    Path.SequenceEqual(other.Path));
+        }
 
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj.GetType() != GetType())
-            {
-                return false;
-            }
+            if (obj.GetType() != GetType()) return false;
 
-            return Equals((ExpectedError)obj);
+            return Equals((ExpectedError) obj);
         }
 
         public override int GetHashCode()

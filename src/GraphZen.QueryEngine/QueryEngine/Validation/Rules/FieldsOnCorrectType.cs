@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -19,10 +21,10 @@ namespace GraphZen.QueryEngine.Validation.Rules
         }
 
         public static string UndefinedFieldMessage(
-            [NotNull] string fieldName,
-            [NotNull] string type,
-            [NotNull] [ItemNotNull] IEnumerable<string> suggestedTypeNames,
-            [NotNull] [ItemNotNull] IEnumerable<string> suggestedFieldNames)
+             string fieldName,
+             string type,
+              IEnumerable<string> suggestedTypeNames,
+              IEnumerable<string> suggestedFieldNames)
         {
             var typeNames = suggestedTypeNames.ToArray();
             var fieldNames = suggestedFieldNames.ToArray();
@@ -62,8 +64,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
             return VisitAction.Continue;
         }
 
-        [NotNull]
-        private IReadOnlyList<string> GetSuggestedTypeNames(IGraphQLType type, [NotNull] string fieldName)
+        
+        private IReadOnlyList<string> GetSuggestedTypeNames(IGraphQLType type,  string fieldName)
         {
             if (type is IAbstractType abstractType)
             {
@@ -98,8 +100,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
             return Array.Empty<string>();
         }
 
-        [NotNull]
-        private IReadOnlyList<string> GetSuggestedFieldNames(IGraphQLType type, [NotNull] string fieldName)
+        
+        private IReadOnlyList<string> GetSuggestedFieldNames(IGraphQLType type,  string fieldName)
         {
             if (type is IFieldsContainer fields)
             {

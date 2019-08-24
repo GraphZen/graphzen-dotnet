@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -22,13 +24,13 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The values contained within the list. (Optional)
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public IReadOnlyList<ValueSyntax> Values { get; }
 
         public override IEnumerable<SyntaxNode> Children => Values;
 
-        private bool Equals([NotNull] ListValueSyntax other) => Values.SequenceEqual(other.Values);
+        private bool Equals( ListValueSyntax other) => Values.SequenceEqual(other.Values);
 
         public override bool Equals(object obj)
         {

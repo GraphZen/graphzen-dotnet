@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +24,14 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The float value.
         /// </summary>
-        [NotNull]
+        
         public string Value { get; }
 
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
         public string GetDisplayValue() => Value;
 
-        private bool Equals([NotNull] FloatValueSyntax other) => Value.Equals(other.Value);
+        private bool Equals( FloatValueSyntax other) => Value.Equals(other.Value);
 
         public override bool Equals(object obj)
         {

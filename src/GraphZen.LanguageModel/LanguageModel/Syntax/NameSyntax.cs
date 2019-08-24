@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -30,16 +32,16 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Case sensitive name value.
         /// </summary>
-        [NotNull]
+        
         public string Value { get; }
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
         public string GetDisplayValue() => Value;
 
 
-        // public static implicit operator NameSyntax([NotNull] string name) => new NameSyntax(name);
+        // public static implicit operator NameSyntax( string name) => new NameSyntax(name);
 
-        private bool Equals([NotNull] NameSyntax other) => string.Equals(Value, other.Value);
+        private bool Equals( NameSyntax other) => string.Equals(Value, other.Value);
 
         public override bool Equals(object obj)
         {

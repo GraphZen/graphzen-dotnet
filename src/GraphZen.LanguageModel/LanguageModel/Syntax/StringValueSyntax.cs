@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -30,12 +32,12 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The string value.
         /// </summary>
-        [NotNull]
+        
         public string Value { get; }
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
 
-        private bool Equals([NotNull] StringValueSyntax other) =>
+        private bool Equals( StringValueSyntax other) =>
             IsBlockString == other.IsBlockString && string.Equals(Value, other.Value);
 
         public override bool Equals(object obj)

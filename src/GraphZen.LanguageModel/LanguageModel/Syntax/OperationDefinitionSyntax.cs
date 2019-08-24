@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +35,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Data requested by the fetch operation.
         /// </summary>
-        [NotNull]
+        
         public SelectionSetSyntax SelectionSet { get; }
 
         /// <summary>
@@ -44,14 +46,14 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name of the operation. (Optional)
         /// </summary>
-        [CanBeNull]
+        
         public NameSyntax Name { get; }
 
         /// <summary>
         ///     Operation variable definitions. (Optional)
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public IReadOnlyList<VariableDefinitionSyntax> VariableDefinitions { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
@@ -63,7 +65,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] OperationDefinitionSyntax other) =>
+        private bool Equals( OperationDefinitionSyntax other) =>
             SelectionSet.Equals(other.SelectionSet) && OperationType == other.OperationType && Equals(Name, other.Name)
             && VariableDefinitions.SequenceEqual(other.VariableDefinitions)
             && Directives.SequenceEqual(other.Directives);

@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
@@ -67,7 +69,7 @@ namespace GraphZen.LanguageModel.Internal.Grammar
                 .Named($"keyword `{name}`");
 
 
-        private static TokenListParser<TokenKind, NameSyntax> KeywordIn([NotNull] IEnumerable<string> names)
+        private static TokenListParser<TokenKind, NameSyntax> KeywordIn( IEnumerable<string> names)
         {
             return input =>
             {

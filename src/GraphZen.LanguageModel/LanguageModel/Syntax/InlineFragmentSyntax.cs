@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +28,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The fragment selection set.
         /// </summary>
-        [NotNull]
+        
         public SelectionSetSyntax SelectionSet { get; }
 
 
@@ -39,10 +41,10 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The type which this inline fragment applies to. (Optional)
         /// </summary>
-        [CanBeNull]
+        
         public NamedTypeSyntax TypeCondition { get; }
 
-        private bool Equals([NotNull] InlineFragmentSyntax other) =>
+        private bool Equals( InlineFragmentSyntax other) =>
             SelectionSet.Equals(other.SelectionSet) && Equals(TypeCondition, other.TypeCondition) &&
             Directives.SequenceEqual(other.Directives);
 

@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -55,7 +57,7 @@ namespace GraphZen.LanguageModel
 
         public Source Source { get; }
 
-        protected bool Equals([NotNull] SyntaxLocation other) =>
+        protected bool Equals( SyntaxLocation other) =>
             Start == other.Start && End == other.End;
 
         public override bool Equals(object obj)
@@ -86,12 +88,12 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public static SyntaxLocation FromMany([NotNull] [ItemCanBeNull] params ISyntaxNodeLocation[] nodes)
+        public static SyntaxLocation FromMany(  params ISyntaxNodeLocation[] nodes)
             => FromMany(nodes.Select(_ => _?.Location));
 
         public static SyntaxLocation FromMany(params SyntaxLocation[] locations) => FromMany(locations.AsEnumerable());
 
-        private static SyntaxLocation FromMany([ItemCanBeNull] IEnumerable<SyntaxLocation> locations)
+        private static SyntaxLocation FromMany( IEnumerable<SyntaxLocation> locations)
         {
             Check.NotNull(locations, nameof(locations));
 

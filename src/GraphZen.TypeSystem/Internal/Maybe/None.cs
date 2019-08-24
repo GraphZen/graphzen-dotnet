@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +17,8 @@ namespace GraphZen.Internal
         {
         }
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public IReadOnlyList<GraphQLError> Errors => Errs;
 
         public override string ToString()

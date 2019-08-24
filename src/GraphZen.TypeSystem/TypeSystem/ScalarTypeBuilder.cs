@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Diagnostics;
@@ -18,7 +20,7 @@ namespace GraphZen.TypeSystem
             Builder = Check.NotNull(builder, nameof(builder));
         }
 
-        [NotNull]
+        
         private InternalScalarTypeBuilder Builder { get; }
 
         InternalScalarTypeBuilder IInfrastructure<InternalScalarTypeBuilder>.Instance => Builder;

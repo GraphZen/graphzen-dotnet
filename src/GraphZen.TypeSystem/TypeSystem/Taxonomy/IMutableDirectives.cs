@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using GraphZen.Infrastructure;
 
@@ -12,6 +14,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IDirectiveAnnotation GetOrAddDirectiveAnnotation(string name, object value);
         IDirectiveAnnotation AddDirectiveAnnotation(string name, object value);
         IDirectiveAnnotation UpdateDirectiveAnnotation(string name, object value);
-        void RemoveDirectiveAnnotation([NotNull] string name);
+        void RemoveDirectiveAnnotation( string name);
     }
 }

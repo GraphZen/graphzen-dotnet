@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.ComponentModel;
@@ -13,7 +15,7 @@ namespace GraphZen.TypeSystem.Internal
 {
     public static class MemberInfoExtensions
     {
-        public static bool TryGetDescriptionFromDataAnnotation([NotNull] this MemberInfo memberInfo,
+        public static bool TryGetDescriptionFromDataAnnotation( this MemberInfo memberInfo,
             out string description)
         {
             description = memberInfo.GetCustomAttribute<DescriptionAttribute>()?.Description;
@@ -21,7 +23,7 @@ namespace GraphZen.TypeSystem.Internal
             return description != null;
         }
 
-        public static bool TryGetDescriptionFromDataAnnotation([NotNull] this ParameterInfo parameterInfo,
+        public static bool TryGetDescriptionFromDataAnnotation( this ParameterInfo parameterInfo,
             out string description)
         {
             description = parameterInfo.GetCustomAttribute<DescriptionAttribute>()?.Description;
@@ -30,7 +32,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public static bool NotIgnored([NotNull] this ICustomAttributeProvider memberInfo)
+        public static bool NotIgnored( this ICustomAttributeProvider memberInfo)
         {
             Check.NotNull(memberInfo, nameof(memberInfo));
             var ignoredAttribute =
@@ -38,27 +40,27 @@ namespace GraphZen.TypeSystem.Internal
             return ignoredAttribute == null;
         }
 
-        public static bool IsIgnoredByDataAnnotation([NotNull] this PropertyInfo property)
+        public static bool IsIgnoredByDataAnnotation( this PropertyInfo property)
         {
             var ignoredAttribute = property
                 .GetCustomAttribute<GraphQLIgnoreAttribute>();
             return ignoredAttribute != null;
         }
 
-        public static bool IsIgnoredByDataAnnotation([NotNull] this Type clrType)
+        public static bool IsIgnoredByDataAnnotation( this Type clrType)
         {
             var ignoredAttribute = clrType.GetCustomAttributes(typeof(GraphQLIgnoreAttribute), false).SingleOrDefault();
             return ignoredAttribute != null;
         }
 
-        public static bool IsIgnoredByDataAnnotation([NotNull] this MethodInfo method)
+        public static bool IsIgnoredByDataAnnotation( this MethodInfo method)
         {
             var ignoredAttribute = method
                 .GetCustomAttribute<GraphQLIgnoreAttribute>();
             return ignoredAttribute != null;
         }
 
-        public static bool IsIgnoredByDataAnnotation([NotNull] this ParameterInfo parameterInfo)
+        public static bool IsIgnoredByDataAnnotation( this ParameterInfo parameterInfo)
         {
             Check.NotNull(parameterInfo, nameof(parameterInfo));
             var ignoredAttribute = parameterInfo
@@ -68,7 +70,7 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public static (string name, ConfigurationSource nameConfigurationSource) GetGraphQLFieldName(
-            [NotNull] this MemberInfo member)
+             this MemberInfo member)
         {
             switch (member)
             {
@@ -103,7 +105,7 @@ namespace GraphZen.TypeSystem.Internal
 
 
         private static (string name, ConfigurationSource nameConfigurationSource) GetGraphQLFieldName(
-            [NotNull] this MemberInfo member, [NotNull] Type fieldClrType)
+             this MemberInfo member,  Type fieldClrType)
         {
             var customName = member.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
             if (customName != null)

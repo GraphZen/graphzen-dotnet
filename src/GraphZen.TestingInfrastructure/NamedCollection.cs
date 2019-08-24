@@ -1,3 +1,7 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using JetBrains.Annotations;
 #nullable disable
 using System;
 using System.Collections;
@@ -11,19 +15,19 @@ namespace GraphZen
 
     public static class NamedCollection
     {
-        [NotNull]
+        
         public static NamedCollection<T> ToNamedCollection<T>(this IReadOnlyDictionary<string, T> source) where T : INamed =>
             ToNamedCollection<T, T>(source);
 
-        [NotNull]
+        
         public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : INamed =>
             ToNamedCollection<T, T>(source);
 
 
-        [NotNull]
+        
         public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : INamed => new DictionaryWrapper<TInner, TOuter>(source);
 
-        [NotNull]
+        
         public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IEnumerable<TInner> source) where TInner : TOuter where TOuter : INamed => new EnumerableWrapper<TInner, TOuter>(source);
 
         private class EnumerableWrapper<TInner, T> : NamedCollection<T> where T : INamed where TInner : T, INamed
@@ -33,8 +37,8 @@ namespace GraphZen
                 InnerEnumerable = Check.NotNull(innerEnumerable, nameof(innerEnumerable));
             }
 
-            [NotNull]
-            [ItemNotNull]
+            
+            
             public IEnumerable<TInner> InnerEnumerable { get; }
 
             public override int Count => InnerEnumerable.Count();
@@ -70,7 +74,7 @@ namespace GraphZen
                 InnerDictionary = Check.NotNull(innerDictionary, nameof(innerDictionary));
             }
 
-            [NotNull]
+            
             public IReadOnlyDictionary<string, TInner> InnerDictionary { get; }
 
 
@@ -79,7 +83,7 @@ namespace GraphZen
             public override T this[string key] => InnerDictionary[key];
             public override bool ContainsKey(string key) => InnerDictionary.ContainsKey(key);
 
-            public override bool TryGetValue([NotNull] string key, out T value)
+            public override bool TryGetValue( string key, out T value)
             {
                 if (InnerDictionary.TryGetValue(key, out var innerVal))
                 {

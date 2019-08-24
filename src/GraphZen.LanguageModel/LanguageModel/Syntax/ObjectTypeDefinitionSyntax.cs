@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +35,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Interfaces implemented by the object type. (Optional)
         /// </summary>
-        [NotNull]
+        
         public IReadOnlyList<NamedTypeSyntax> Interfaces { get; }
 
 
@@ -59,7 +61,7 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
 
 
-        private bool Equals([NotNull] ObjectTypeDefinitionSyntax other) => Name.Equals(other.Name) &&
+        private bool Equals( ObjectTypeDefinitionSyntax other) => Name.Equals(other.Name) &&
                                                                            Fields.SequenceEqual(other.Fields) &&
                                                                            Equals(Description, other.Description) &&
                                                                            Interfaces.SequenceEqual(other.Interfaces) &&

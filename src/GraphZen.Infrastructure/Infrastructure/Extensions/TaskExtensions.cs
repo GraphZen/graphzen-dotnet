@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable enable
+
 
 using System;
 using System.Threading.Tasks;
@@ -10,8 +12,7 @@ namespace GraphZen.Infrastructure
 {
     internal static class TaskExtensions
     {
-        [NotNull]
-        public static async Task<object> GetResultAsync([CanBeNull] this object value)
+        public static async Task<object?> GetResultAsync( this object value)
         {
             if (value is Task awaitable)
             {
@@ -22,8 +23,8 @@ namespace GraphZen.Infrastructure
             return value;
         }
 
-        [CanBeNull]
-        public static object GetResult(this Task task)
+        
+        public static object? GetResult(this Task task)
         {
             Check.NotNull(task, nameof(task));
             if (!task.IsCompleted)

@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -15,20 +17,20 @@ namespace GraphZen.TypeSystem.Internal
         where TDefinition : FieldsContainerDefinition
         where TBuilder : InternalFieldsContainerBuilder<TDefinition, TBuilder>
     {
-        protected InternalFieldsContainerBuilder([NotNull] TDefinition definition,
-            [NotNull] InternalSchemaBuilder schemaBuilder)
+        protected InternalFieldsContainerBuilder( TDefinition definition,
+             InternalSchemaBuilder schemaBuilder)
             : base(definition, schemaBuilder)
         {
         }
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         private IReadOnlyList<string> IgnoredMethodNames { get; } =
             // ReSharper disable once AssignNullToNotNullAttribute
             typeof(object).GetMethods().Select(_ => _.Name).ToImmutableList();
 
 
-        public InternalFieldBuilder Field([NotNull] string name,
+        public InternalFieldBuilder Field( string name,
             ConfigurationSource nameConfigurationSource,
             ConfigurationSource configurationSource) =>
             Definition.GetOrAddField(name, nameConfigurationSource, configurationSource)?.Builder;
@@ -61,7 +63,7 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        public bool IgnoreField([NotNull] string fieldName, ConfigurationSource configurationSource)
+        public bool IgnoreField( string fieldName, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(fieldName);
             if (ignoredConfigurationSource.HasValue)
@@ -86,7 +88,7 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public bool IgnoreField([NotNull] MemberInfo member, ConfigurationSource configurationSource)
+        public bool IgnoreField( MemberInfo member, ConfigurationSource configurationSource)
         {
             var (fieldName, _) = member.GetGraphQLFieldName();
             var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(fieldName);
@@ -110,7 +112,7 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public bool IgnoreField([NotNull] FieldDefinition field, ConfigurationSource configurationSource)
+        public bool IgnoreField( FieldDefinition field, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetConfigurationSource()))
             {
@@ -122,7 +124,7 @@ namespace GraphZen.TypeSystem.Internal
             return RemoveField(field, configurationSource);
         }
 
-        public bool UnignoreField([NotNull] string name, ConfigurationSource configurationSource)
+        public bool UnignoreField( string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(name);
             if (!configurationSource.Overrides(ignoredConfigurationSource))
@@ -137,7 +139,7 @@ namespace GraphZen.TypeSystem.Internal
         
 
 
-        public bool IsFieldIgnored([NotNull] string member, ConfigurationSource configurationSource)
+        public bool IsFieldIgnored( string member, ConfigurationSource configurationSource)
         {
             if (configurationSource == ConfigurationSource.Explicit)
             {
@@ -150,7 +152,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalFieldBuilder Field([NotNull] PropertyInfo property, ConfigurationSource configurationSource)
+        public InternalFieldBuilder Field( PropertyInfo property, ConfigurationSource configurationSource)
         {
             var (fieldName, _) = property.GetGraphQLFieldName();
             if (property.IsIgnoredByDataAnnotation())
@@ -203,7 +205,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalFieldBuilder Field([NotNull] MethodInfo method, ConfigurationSource configurationSource)
+        public InternalFieldBuilder Field( MethodInfo method, ConfigurationSource configurationSource)
         {
             var (fieldName, _) = method.GetGraphQLFieldName();
             if (method.IsIgnoredByDataAnnotation())
@@ -272,7 +274,7 @@ namespace GraphZen.TypeSystem.Internal
             return field?.Builder;
         }
 
-        private bool Ignore([NotNull] FieldDefinition field, ConfigurationSource configurationSource)
+        private bool Ignore( FieldDefinition field, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetConfigurationSource()))
             {
@@ -282,7 +284,7 @@ namespace GraphZen.TypeSystem.Internal
             return RemoveField(field, configurationSource);
         }
 
-        public bool RemoveField([NotNull] FieldDefinition field, ConfigurationSource configurationSource)
+        public bool RemoveField( FieldDefinition field, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetConfigurationSource()))
             {

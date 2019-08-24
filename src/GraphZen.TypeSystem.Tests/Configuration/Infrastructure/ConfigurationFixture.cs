@@ -1,3 +1,7 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using JetBrains.Annotations;
 #nullable disable
 using System;
 using GraphZen.Infrastructure;
@@ -33,23 +37,23 @@ namespace GraphZen
             string parentName) =>
             GetParent(sb, parentName);
 
-        //public virtual void DefineParentConventionally([NotNull] SchemaBuilder sb, [NotNull] out string parentName) =>
+        //public virtual void DefineParentConventionally( SchemaBuilder sb,  out string parentName) =>
         //    throw new NotImplementedException(NotImplementedMessage(nameof(DefineParentConventionally), false));
 
-        //public virtual void DefineParentConventionallyWithDataAnnotation([NotNull] SchemaBuilder sb,
-        //    [NotNull] out string parentName) =>
+        //public virtual void DefineParentConventionallyWithDataAnnotation( SchemaBuilder sb,
+        //     out string parentName) =>
         //    throw new NotImplementedException(
         //        NotImplementedMessage(nameof(DefineParentConventionallyWithDataAnnotation), false));
 
         protected string NotImplementedMessage(string memberName, bool baseClass = true) =>
             $"implement '{memberName}' in type '{GetType().Name}{(baseClass ? "__Base" : "")}'";
 
-        [NotNull]
-        public abstract TParentMemberDefinition GetParent([NotNull] SchemaBuilder sb,
-            [NotNull] string parentName);
+        
+        public abstract TParentMemberDefinition GetParent( SchemaBuilder sb,
+             string parentName);
 
-        [NotNull]
-        public abstract TParentMember GetParent([NotNull] Schema schema, [NotNull] string parentName);
+        
+        public abstract TParentMember GetParent( Schema schema,  string parentName);
         
     }
 }

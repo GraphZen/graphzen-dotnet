@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>    <Description>Lightweight package containing code attributes for use when building code-first GraphQL APIs in .NET. Use the "GraphZen" package for hosting your API on ASP.NET.</Description>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
+    <Description>Lightweight package containing code attributes for use when building code-first GraphQL APIs in .NET. Use the "GraphZen" package for hosting your API on ASP.NET.</Description>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+  <ItemGroup >
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="Microsoft.CSharp" />
+  <ItemGroup>
+    <Compile Include="..\Shared\JetBrainsAnnotations.cs" Link="JetBrainsAnnotations.cs" />
   </ItemGroup>
 </Project>

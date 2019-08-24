@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -62,7 +64,7 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        [NotNull]
+        
         [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public static Tokenizer<TokenKind> Instance { get; } = new TokenizerBuilder<TokenKind>()

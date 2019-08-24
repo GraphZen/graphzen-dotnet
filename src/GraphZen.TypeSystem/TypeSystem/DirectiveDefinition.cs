@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -16,11 +18,11 @@ namespace GraphZen.TypeSystem
     public class DirectiveDefinition : MemberDefinition, IMutableDirectiveDefinition,
         IInfrastructure<InternalDirectiveBuilder>
     {
-        [NotNull]
+        
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
-        [NotNull] private DirectiveLocation[] _locations = { };
+         private DirectiveLocation[] _locations = { };
 
         public DirectiveDefinition(string name, SchemaDefinition schema, ConfigurationSource configurationSource) :
             base(configurationSource)
@@ -29,7 +31,7 @@ namespace GraphZen.TypeSystem
             Builder = new InternalDirectiveBuilder(this, Check.NotNull(schema, nameof(schema)).Builder);
         }
 
-        [NotNull]
+        
         private InternalDirectiveBuilder Builder { get; }
 
         private string DebuggerDisplay => $"directive {Name}";
@@ -73,7 +75,7 @@ namespace GraphZen.TypeSystem
             _locations = locations;
         }
 
-        [NotNull]
+        
         public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
         {
             if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))

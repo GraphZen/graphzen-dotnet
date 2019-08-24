@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable enable
+
 
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -9,7 +11,7 @@ namespace GraphZen.Infrastructure
 {
     internal static class StringExtensions
     {
-        [NotNull]
+        
         public static string FirstCharToUpper(this string value)
         {
             Check.NotNull(value, nameof(value));
@@ -17,7 +19,7 @@ namespace GraphZen.Infrastructure
             return value.Length > 1 ? char.ToUpper(value[0]) + value.Substring(1) : value.ToUpper();
         }
 
-        [NotNull]
+        
         public static string FirstCharToLower(this string value)
         {
             Check.NotNull(value, nameof(value));
@@ -44,7 +46,7 @@ namespace GraphZen.Infrastructure
 
         private static bool IsSpaceCase(this string value) => value != null && value.Contains(' ');
 
-        [NotNull]
+        
         public static string ToUpperSnakeCase(this string value)
         {
             Check.NotNull(value, nameof(value));

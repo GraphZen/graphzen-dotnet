@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -207,7 +209,7 @@ namespace GraphZen
                         if (jt is JObject jo)
                         {
                             var nameProp = jo.Properties().FirstOrDefault(_ => _.Name == "name");
-                            if (nameProp.Value is JValue jv)
+                            if (nameProp?.Value is JValue jv)
                             {
                                 return jv;
                             }

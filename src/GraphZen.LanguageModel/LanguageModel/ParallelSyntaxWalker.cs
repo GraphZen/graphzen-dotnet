@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
@@ -14,19 +16,19 @@ namespace GraphZen.LanguageModel
             Visitors = Check.NotNull(visitors, nameof(visitors));
         }
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         private IReadOnlyCollection<GraphQLSyntaxVisitor<VisitAction>> Visitors { get; }
 
-        [NotNull]
+        
         private Dictionary<GraphQLSyntaxVisitor<VisitAction>, SyntaxNode> Skips { get; } =
             new Dictionary<GraphQLSyntaxVisitor<VisitAction>, SyntaxNode>();
 
-        [NotNull]
+        
         private HashSet<GraphQLSyntaxVisitor<VisitAction>> IgnoredVisitors { get; } =
             new HashSet<GraphQLSyntaxVisitor<VisitAction>>();
 
-        private bool IsValidVisitor([NotNull] GraphQLSyntaxVisitor<VisitAction> visitor) =>
+        private bool IsValidVisitor( GraphQLSyntaxVisitor<VisitAction> visitor) =>
             !IgnoredVisitors.Contains(visitor) && !Skips.ContainsKey(visitor);
 
         public override void OnEnter(SyntaxNode node)
@@ -62,7 +64,7 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        private void HandleResult(VisitAction result, [NotNull] GraphQLSyntaxVisitor<VisitAction> visitor,
+        private void HandleResult(VisitAction result,  GraphQLSyntaxVisitor<VisitAction> visitor,
             SyntaxNode node)
         {
             switch (result)

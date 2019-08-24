@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,7 @@ namespace GraphZen.TypeSystem
 {
     public static class SyntaxHelpers
     {
-        [CanBeNull]
+        
         public static StringValueSyntax Description(string description)
         {
             if (description != null)
@@ -25,7 +27,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        [NotNull]
+        
         public static TypeSyntax ToTypeSyntax(this IGraphQLType type)
         {
             Check.NotNull(type, nameof(type));
@@ -42,7 +44,7 @@ namespace GraphZen.TypeSystem
             throw new Exception($"Cannot create type syntax for type {type}");
         }
 
-        [NotNull]
+        
         public static IReadOnlyList<DirectiveSyntax> ToDirectiveNodes(
             this IReadOnlyList<IDirectiveAnnotation> directives)
         {

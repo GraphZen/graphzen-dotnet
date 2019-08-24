@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
@@ -69,7 +71,7 @@ namespace GraphZen
 
 
         //public abstract bool TryGetValue(TMarker parent, out TElement value);
-        public abstract ConfigurationSource GetElementConfigurationSource([NotNull]TMutableDefMarker parent);
+        public abstract ConfigurationSource GetElementConfigurationSource(TMutableDefMarker parent);
 
         public ConfigurationSource GetElementConfigurationSource(MemberDefinition parent) =>
             // ReSharper disable once AssignNullToNotNullAttribute
@@ -103,7 +105,7 @@ namespace GraphZen
 
         object ILeafConfigurationFixture.ValueB => ValueB;
 
-        public abstract void ConfigureExplicitly([NotNull]SchemaBuilder sb, [NotNull]string parentName, TElement value);
+        public abstract void ConfigureExplicitly(SchemaBuilder sb, string parentName, TElement value);
 
 
         public abstract TElement ValueA { get; }
@@ -111,8 +113,8 @@ namespace GraphZen
 
 
 
-        public abstract bool TryGetValue([NotNull]TParentMember parent, out TElement value);
+        public abstract bool TryGetValue(TParentMember parent, out TElement value);
 
-        public abstract bool TryGetValue([NotNull]TParentMemberDefinition parent, out TElement value);
+        public abstract bool TryGetValue(TParentMemberDefinition parent, out TElement value);
     }
 }

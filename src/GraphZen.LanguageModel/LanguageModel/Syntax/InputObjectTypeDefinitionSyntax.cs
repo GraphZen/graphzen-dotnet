@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +34,7 @@ namespace GraphZen.LanguageModel
         public override bool IsInputType { get; } = true;
         public override bool IsOutputType { get; } = false;
 
-        [NotNull]
+        
         public IReadOnlyList<InputValueDefinitionSyntax> Fields { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
@@ -42,7 +44,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] InputObjectTypeDefinitionSyntax other) =>
+        private bool Equals( InputObjectTypeDefinitionSyntax other) =>
             Equals(Description, other.Description) && Name.Equals(other.Name) && Fields.SequenceEqual(other.Fields) &&
             Directives.SequenceEqual(other.Directives);
 

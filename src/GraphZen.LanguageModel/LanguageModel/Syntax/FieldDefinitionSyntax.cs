@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -31,13 +33,13 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The type of the field.
         /// </summary>
-        [NotNull]
+        
         public TypeSyntax FieldType { get; }
 
         /// <summary>
         ///     Field arguments. (Optional)
         /// </summary>
-        [NotNull]
+        
         public IReadOnlyList<InputValueDefinitionSyntax> Arguments { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
@@ -58,7 +60,7 @@ namespace GraphZen.LanguageModel
 
         public string GetDisplayValue() => Name.Value;
 
-        private bool Equals([NotNull] FieldDefinitionSyntax other)
+        private bool Equals( FieldDefinitionSyntax other)
             => Name.Equals(other.Name) && Equals(Description, other.Description) &&
                FieldType.Equals(other.FieldType) && Arguments.SequenceEqual(other.Arguments) &&
                Directives.SequenceEqual(other.Directives);

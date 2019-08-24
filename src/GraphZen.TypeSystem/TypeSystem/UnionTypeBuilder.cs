@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using GraphZen.Infrastructure;
@@ -16,7 +18,7 @@ namespace GraphZen.TypeSystem
             Builder = Check.NotNull(builder, nameof(builder));
         }
 
-        [NotNull]
+        
         private InternalUnionTypeBuilder Builder { get; }
 
         InternalUnionTypeBuilder IInfrastructure<InternalUnionTypeBuilder>.Instance => Builder;
@@ -58,7 +60,7 @@ namespace GraphZen.TypeSystem
 
         public IUnionTypeBuilder<TUnion, TContext> OfTypes(params Type[] types)
         {
-            Check.NotEmpty(types, nameof(types));
+            // TODO: Check.NotEmpty(types, nameof(types));
             foreach (var type in types)
             {
                 if (type != null)

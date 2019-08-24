@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +30,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] ScalarTypeExtensionSyntax other) =>
+        private bool Equals( ScalarTypeExtensionSyntax other) =>
             Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)

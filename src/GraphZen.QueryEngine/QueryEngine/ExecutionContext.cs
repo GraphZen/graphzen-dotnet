@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Concurrent;
@@ -36,39 +38,39 @@ namespace GraphZen.QueryEngine
             Options = options ?? new ExecutionOptions();
         }
 
-        //[NotNull]
+        //
         //public SpecifiedDirectives Directives { get; }
 
 
-        [NotNull]
+        
         public Schema Schema { get; }
 
-        [NotNull]
+        
         public ExecutionOptions Options { get; }
 
-        [NotNull]
+        
         public IReadOnlyDictionary<string, FragmentDefinitionSyntax> Fragments { get; }
 
-        [NotNull]
+        
         public GraphQLContext ContextValue { get; }
 
-        [NotNull]
+        
         public OperationDefinitionSyntax Operation { get; }
 
         public IReadOnlyDictionary<string, object> VariableValues { get; }
 
-        [NotNull]
+        
         public Resolver<object, object> FieldResolver { get; } = DefaultFieldResovler;
 
-        [NotNull]
+        
         public ConcurrentBag<GraphQLError> Errors { get; }
 
         public object RootValue { get; }
 
 
-        private static Maybe<object> DefaultFieldResovler(object source, [NotNull] dynamic args,
-            [NotNull] GraphQLContext context,
-            [NotNull] ResolveInfo info)
+        private static Maybe<object> DefaultFieldResovler(object source,  dynamic args,
+             GraphQLContext context,
+             ResolveInfo info)
         {
             if (source == null)
             {
@@ -179,7 +181,7 @@ namespace GraphZen.QueryEngine
             return Maybe.None<object>();
         }
 
-        [NotNull]
+        
         public ObjectType GetOperationRootType(OperationDefinitionSyntax operation)
         {
             Check.NotNull(operation, nameof(operation));
@@ -287,9 +289,9 @@ namespace GraphZen.QueryEngine
             Errors.Add(error);
         }
 
-        [NotNull]
-        internal ResolveInfo Build([NotNull] Field fieldDefinition,
-            [NotNull] [ItemNotNull] IReadOnlyList<FieldSyntax> fieldNodes, IFieldsContainer parentType,
+        
+        internal ResolveInfo Build( Field fieldDefinition,
+              IReadOnlyList<FieldSyntax> fieldNodes, IFieldsContainer parentType,
             ResponsePath path) =>
             new ResolveInfo(
                 fieldNodes[0].Name.Value,

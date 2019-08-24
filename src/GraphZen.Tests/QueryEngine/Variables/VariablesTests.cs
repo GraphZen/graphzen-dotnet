@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -27,12 +29,12 @@ namespace GraphZen.QueryEngine.Variables
 
         public static Schema SchemaBuilderSchema => GraphQLContext.Schema;
 
-        [NotNull]
+        
         public static VariablesTestsGraphQLContext GraphQLContext => new VariablesTestsGraphQLContext();
 
         public static object[] Array(params object[] values) => values;
 
-        [NotNull]
+        
         protected Task<ExecutionResult> ExecuteAsync(string gql, dynamic variableValues = null)
         {
             var varValues = variableValues != null

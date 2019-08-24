@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -16,12 +18,12 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ObjectTypeDefinition : FieldsContainerDefinition, IMutableObjectTypeDefinition
     {
-        [NotNull]
+        
         private readonly Dictionary<string, ConfigurationSource> _ignoredInterfaces =
             new Dictionary<string, ConfigurationSource>();
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         private readonly List<InterfaceTypeDefinition> _interfaces = new List<InterfaceTypeDefinition>();
 
 
@@ -36,7 +38,7 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"type {Name}";
 
-        [NotNull]
+        
         public InternalObjectTypeBuilder Builder { get; }
 
         public IsTypeOf<object, GraphQLContext> IsTypeOf { get; set; }
@@ -53,7 +55,7 @@ namespace GraphZen.TypeSystem
         public override TypeKind Kind { get; } = TypeKind.Object;
 
 
-        public bool AddInterface([NotNull] InterfaceTypeDefinition @interface, ConfigurationSource configurationSource)
+        public bool AddInterface( InterfaceTypeDefinition @interface, ConfigurationSource configurationSource)
         {
             Check.NotNull(@interface, nameof(@interface));
 
@@ -84,7 +86,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public void UnignoreInterface([NotNull]string name)
+        public void UnignoreInterface(string name)
         {
             _ignoredInterfaces.Remove(name);
         }
@@ -112,7 +114,7 @@ namespace GraphZen.TypeSystem
             return RemoveInterface(interfaceName, configurationSource);
         }
 
-        private bool RemoveInterface([NotNull] string interfaceName, ConfigurationSource configurationSource)
+        private bool RemoveInterface( string interfaceName, ConfigurationSource configurationSource)
         {
             var existing = _interfaces.SingleOrDefault(_ => _.Name == interfaceName);
             if (existing != null && !configurationSource.Overrides(existing.GetConfigurationSource()))

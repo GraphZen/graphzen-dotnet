@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Linq;
@@ -23,7 +25,7 @@ namespace GraphZen.LanguageModel.Internal
             return false;
         }
 
-        [NotNull]
+        
         public static string GetGraphQLName(this Type clrType, object source = null)
         {
             if (clrType.TryGetGraphQLNameWithoutValidation(out var maybeInvalidName, source))
@@ -76,7 +78,7 @@ namespace GraphZen.LanguageModel.Internal
             clrType.TryGetGraphQLName(out _, source);
 
 
-        public static bool TryGetGraphQLNameFromDataAnnotation([NotNull] this Type clrType, out string name)
+        public static bool TryGetGraphQLNameFromDataAnnotation( this Type clrType, out string name)
         {
             name = clrType.GetCustomAttributes(typeof(GraphQLNameAttribute), false).Cast<GraphQLNameAttribute>().SingleOrDefault()?.Name;
             return name != null;

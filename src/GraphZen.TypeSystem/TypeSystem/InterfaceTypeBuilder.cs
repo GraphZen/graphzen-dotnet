@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Linq.Expressions;
@@ -17,7 +19,7 @@ namespace GraphZen.TypeSystem
             Builder = Check.NotNull(builder, nameof(builder));
         }
 
-        [NotNull]
+        
         private InternalInterfaceTypeBuilder Builder { get; }
 
 
@@ -82,11 +84,9 @@ namespace GraphZen.TypeSystem
             Action<IFieldBuilder<TInterface, TField, TContext>> fieldBuilder = null)
         {
             Check.NotNull(fieldSelector, nameof(fieldSelector));
-            Check.NotNull(fieldBuilder, nameof(fieldBuilder));
             var fieldProp = fieldSelector.GetPropertyInfoFromExpression();
             var fb = Builder.Field(fieldProp, ConfigurationSource.Explicit);
-            // ReSharper disable once AssignNullToNotNullAttribute
-            fieldBuilder(new FieldBuilder<TInterface, TField, TContext>(fb));
+            fieldBuilder?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
             return this;
         }
 

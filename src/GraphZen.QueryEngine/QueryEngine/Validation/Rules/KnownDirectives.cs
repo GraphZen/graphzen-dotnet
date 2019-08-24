@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class KnownDirectives : QueryValidationRuleVisitor
     {
-        [NotNull]
+        
         private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>>> _lazyLocationsMap;
 
 
@@ -25,7 +27,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
                 Context.Schema.Directives.ToReadOnlyDictionary(_ => _.Name, _ => _.Locations));
         }
 
-        [NotNull]
+        
         // ReSharper disable once AssignNullToNotNullAttribute
         private IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>> LocationsMap => _lazyLocationsMap.Value;
 
@@ -54,7 +56,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
         }
 
         private static DirectiveLocation? GetDirectiveLocationForAstPath(
-            [NotNull] IReadOnlyCollection<SyntaxNode> ancestors)
+             IReadOnlyCollection<SyntaxNode> ancestors)
         {
             var appliedTo = ancestors.ElementAt(0);
             switch (appliedTo)

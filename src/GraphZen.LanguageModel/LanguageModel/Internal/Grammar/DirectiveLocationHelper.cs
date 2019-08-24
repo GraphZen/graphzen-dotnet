@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace GraphZen.LanguageModel.Internal.Grammar
 {
     internal static class DirectiveLocationHelper
     {
-        [NotNull]
+        
         internal static readonly IReadOnlyDictionary<DirectiveLocation, string> ExecutableDirectiveLocations =
             new ReadOnlyDictionary<DirectiveLocation, string>(
                 new Dictionary<DirectiveLocation, string>
@@ -26,11 +28,11 @@ namespace GraphZen.LanguageModel.Internal.Grammar
                     {DirectiveLocation.InlineFragment, "INLINE_FRAGMENT"}
                 });
 
-        [NotNull]
+        
         internal static readonly IReadOnlyDictionary<string, DirectiveLocation> ExecutableDirectiveLocationsByName =
             ExecutableDirectiveLocations.ToDictionary(_ => _.Value, _ => _.Key);
 
-        [NotNull]
+        
         internal static readonly IReadOnlyDictionary<DirectiveLocation, string> TypeSystemDirectiveLocations =
             new ReadOnlyDictionary<DirectiveLocation, string>(
                 new Dictionary<DirectiveLocation, string>
@@ -48,7 +50,7 @@ namespace GraphZen.LanguageModel.Internal.Grammar
                     {DirectiveLocation.InputFieldDefinition, "INPUT_FIELD_DEFINITION"}
                 });
 
-        [NotNull]
+        
         internal static readonly IReadOnlyDictionary<string, DirectiveLocation> TypeSystemDirectiveLocationsByName =
             TypeSystemDirectiveLocations.ToDictionary(_ => _.Value, _ => _.Key);
 

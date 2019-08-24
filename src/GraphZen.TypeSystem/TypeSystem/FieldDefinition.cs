@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -17,11 +19,11 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
-        [NotNull]
+        
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
-        [NotNull]
+        
         private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
             new Dictionary<string, ConfigurationSource>();
 
@@ -30,7 +32,7 @@ namespace GraphZen.TypeSystem
         private ConfigurationSource _nameConfigurationSource;
 
 
-        public FieldDefinition([NotNull] string name, ConfigurationSource nameConfigurationSource,
+        public FieldDefinition( string name, ConfigurationSource nameConfigurationSource,
             SchemaDefinition schema,
             FieldsContainerDefinition declaringType,
             ConfigurationSource configurationSource, MemberInfo clrInfo) : base(configurationSource)
@@ -47,14 +49,14 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"field {Name}";
 
-        [NotNull]
+        
         public SchemaDefinition Schema { get; }
 
 
-        [NotNull]
+        
         public InternalFieldBuilder Builder { get; }
 
-        [NotNull]
+        
         public FieldsContainerDefinition DeclaringType { get; }
 
         public MemberInfo ClrInfo { get; }
@@ -147,7 +149,7 @@ namespace GraphZen.TypeSystem
 
         public bool RemoveDeprecation(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
-        public ConfigurationSource? FindIgnoredArgumentConfigurationSource([NotNull] string name)
+        public ConfigurationSource? FindIgnoredArgumentConfigurationSource( string name)
         {
             if (_ignoredArguments.TryGetValue(name, out var cs))
             {
@@ -157,7 +159,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public bool IgnoreArgument([NotNull] string name, ConfigurationSource configurationSource)
+        public bool IgnoreArgument( string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue && ignoredConfigurationSource.Overrides(configurationSource))
@@ -181,7 +183,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        private bool IgnoreArgument([NotNull] ArgumentDefinition argument, ConfigurationSource configurationSource)
+        private bool IgnoreArgument( ArgumentDefinition argument, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(argument.GetConfigurationSource()))
             {
@@ -192,7 +194,7 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-        public ArgumentDefinition FindArgument([NotNull] ParameterInfo member)
+        public ArgumentDefinition FindArgument( ParameterInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
             var memberMatch = _arguments.Values.SingleOrDefault(_ => _.ClrInfo == member);
@@ -205,17 +207,17 @@ namespace GraphZen.TypeSystem
             return this.FindArgument(argumentName);
         }
 
-        public void RemoveArgument([NotNull] ArgumentDefinition argument)
+        public void RemoveArgument( ArgumentDefinition argument)
         {
             _arguments.Remove(argument.Name);
         }
 
-        public void UnignoreArgument([NotNull] string name)
+        public void UnignoreArgument( string name)
         {
             _ignoredArguments.Remove(name);
         }
 
-        public ArgumentDefinition AddArgument([NotNull] ParameterInfo parameter,
+        public ArgumentDefinition AddArgument( ParameterInfo parameter,
             ConfigurationSource configurationSource)
         {
             
@@ -237,7 +239,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        private ArgumentDefinition AddArgument([NotNull] ArgumentDefinition argument)
+        private ArgumentDefinition AddArgument( ArgumentDefinition argument)
         {
             if (this.HasArgument(argument.Name))
             {
@@ -252,7 +254,7 @@ namespace GraphZen.TypeSystem
         public override string ToString() => $"field {Name}";
 
 
-        [NotNull]
+        
         public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
         {
             if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))

@@ -1,6 +1,7 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+
 
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,11 @@ namespace GraphZen
     public class GraphQLError
     {
         public GraphQLError(string message,
-            IReadOnlyList<SyntaxNode> nodes = null,
-            Source source = null,
-            IReadOnlyList<int> positions = null,
-            IReadOnlyList<object> path = null,
-            Exception innerException = null
+            IReadOnlyList<SyntaxNode>? nodes = null,
+            Source? source = null,
+            IReadOnlyList<int>? positions = null,
+            IReadOnlyList<object>? path = null,
+            Exception? innerException = null
         )
         {
             Message = Check.NotNull(message, nameof(message));
@@ -45,34 +46,34 @@ namespace GraphZen
             }
         }
 
-        [NotNull]
+        
         public string Message { get; internal set; }
 
         [JsonIgnore]
-        [CanBeNull]
-        [ItemNotNull]
-        public IReadOnlyList<SyntaxNode> Nodes { get; }
+        
+        
+        public IReadOnlyList<SyntaxNode>? Nodes { get; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<SourceLocation> Locations { get; }
+        public IReadOnlyList<SourceLocation>? Locations { get; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<object> Path { get; }
+        public IReadOnlyList<object>? Path { get; }
 
         [JsonIgnore]
-        public IReadOnlyList<int> Positions { get; }
+        public IReadOnlyList<int>? Positions { get; }
 
         [JsonIgnore]
-        public Source Source { get; }
+        public Source? Source { get; }
 
         [JsonIgnore]
-        public Exception InnerException { get; }
+        public Exception? InnerException { get; }
 
-        private bool Equals([NotNull] GraphQLError other) => string.Equals(Message, other.Message) &&
+        private bool Equals( GraphQLError other) => string.Equals(Message, other.Message) &&
                                                              Equals(Locations, other.Locations) &&
                                                              Equals(Path, other.Path);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj))
             {

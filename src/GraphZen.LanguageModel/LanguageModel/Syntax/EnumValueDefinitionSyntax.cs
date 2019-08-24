@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +30,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The enum type value.
         /// </summary>
-        [NotNull]
+        
         public EnumValueSyntax Value { get; }
 
 
@@ -42,7 +44,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] EnumValueDefinitionSyntax other) =>
+        private bool Equals( EnumValueDefinitionSyntax other) =>
             Value.Equals(other.Value) && Equals(Description, other.Description) &&
             Directives.SequenceEqual(other.Directives);
 

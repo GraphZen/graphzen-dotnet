@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable enable
+
 
 using System;
 using System.Linq.Expressions;
@@ -11,13 +13,13 @@ namespace GraphZen.Infrastructure
 {
     internal static class ExpressionExtensions
     {
-        [NotNull]
+        
         public static Func<T, TResult> GetFuncFromExpression<T, TResult>(
-            [NotNull] this Expression<Func<T, TResult>> propertySelector) => propertySelector.Compile();
+             this Expression<Func<T, TResult>> propertySelector) => propertySelector.Compile();
 
-        [NotNull]
+        
         public static PropertyInfo GetPropertyInfoFromExpression<T, TResult>(
-            [NotNull] this Expression<Func<T, TResult>> propertySelector)
+             this Expression<Func<T, TResult>> propertySelector)
         {
             MemberExpression exp;
 

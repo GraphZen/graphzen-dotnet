@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,10 @@ namespace GraphZen.TypeSystem
     [GraphQLType(typeof(IGraphQLType))]
     public class ObjectType : NamedType, IObjectType
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
-        [NotNull] [ItemNotNull] private readonly Lazy<ObjectTypeDefinitionSyntax> _syntax;
+          private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
+          private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
+          private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
+          private readonly Lazy<ObjectTypeDefinitionSyntax> _syntax;
 
         private ObjectType(string name, string description, Type clrType, IsTypeOf<object, GraphQLContext> isTypeOf,
             IEnumerable<IFieldDefinition> fields,
@@ -83,7 +85,7 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;
 
 
-        [NotNull]
+        
         public static ObjectType From(IObjectTypeDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));

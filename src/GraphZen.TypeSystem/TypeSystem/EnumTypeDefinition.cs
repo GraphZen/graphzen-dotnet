@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +16,7 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
     {
-        [NotNull]
+        
         private readonly Dictionary<string, EnumValueDefinition>
             _values = new Dictionary<string, EnumValueDefinition>();
 
@@ -30,7 +32,7 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"enum {Name}";
 
-        [NotNull]
+        
         public InternalEnumTypeBuilder Builder { get; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
@@ -45,7 +47,7 @@ namespace GraphZen.TypeSystem
         public override string ToString() => $"enum {Name}";
         IEnumerable<IEnumValueDefinition> IEnumValuesContainerDefinition.GetValues() => GetValues();
 
-        [NotNull]
+        
         public EnumValueDefinition GetOrAddValue(string name,
             ConfigurationSource nameConfigurationSource,
             ConfigurationSource configurationSource) =>

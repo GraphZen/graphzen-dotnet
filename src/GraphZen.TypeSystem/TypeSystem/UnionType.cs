@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -14,14 +16,14 @@ namespace GraphZen.TypeSystem
 {
     public class UnionType : NamedType, IUnionType
     {
-        [NotNull]
-        [ItemNotNull]
+        
+        
         private readonly Lazy<UnionTypeDefinitionSyntax> _syntax;
-        [NotNull]
-        [ItemNotNull]
+        
+        
         private readonly Lazy<IReadOnlyDictionary<string, ObjectType>> _memberTypeMap;
-        [NotNull] 
-        [ItemNotNull] 
+         
+         
         private readonly Lazy<IReadOnlyList<ObjectType>> _memberTypes;
 
         public UnionType(string name, string description, Type clrType,
@@ -91,7 +93,7 @@ namespace GraphZen.TypeSystem
         }*/
         IEnumerable<IObjectTypeDefinition> IMemberTypesContainerDefinition.GetMemberTypes() => GetMemberTypes();
 
-        [NotNull]
+        
         public static UnionType From(IUnionTypeDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));

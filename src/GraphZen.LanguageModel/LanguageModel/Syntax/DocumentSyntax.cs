@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -16,24 +18,24 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class DocumentSyntax : SyntaxNode
     {
-        [NotNull]
-        [ItemNotNull]
+        
+        
         private readonly Lazy<IReadOnlyDictionary<string, TypeDefinitionSyntax>> _abstractTypeMap;
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>>
             _implementations;
 
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<TypeDefinitionSyntax>> _inputTypeDefinitions;
+          private readonly Lazy<IReadOnlyList<TypeDefinitionSyntax>> _inputTypeDefinitions;
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         private readonly Lazy<IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax>> _objectTypeMap;
 
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<TypeDefinitionSyntax>> _outputTypeDefinitions;
+          private readonly Lazy<IReadOnlyList<TypeDefinitionSyntax>> _outputTypeDefinitions;
 
-        [NotNull]
+        
         private readonly Dictionary<string, IReadOnlyDictionary<string, bool>> _possibleTypeMap =
             new Dictionary<string, IReadOnlyDictionary<string, bool>>();
 
@@ -93,27 +95,27 @@ namespace GraphZen.LanguageModel
                 });
         }
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public IReadOnlyList<DefinitionSyntax> Definitions { get; }
 
         public override IEnumerable<SyntaxNode> Children => Definitions;
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public IReadOnlyList<TypeDefinitionSyntax> GetInputTypeDefinitions() => _inputTypeDefinitions.Value;
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public IReadOnlyList<TypeDefinitionSyntax> GetOutputTypeDefinitions() => _outputTypeDefinitions.Value;
 
-        [NotNull]
+        
         private IReadOnlyDictionary<string, TypeDefinitionSyntax> GetAbstractTypeMap() => _abstractTypeMap.Value;
 
-        [NotNull]
+        
         private IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax> GetObjectTypeMap() => _objectTypeMap.Value;
 
-        [NotNull]
+        
         private IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>> GetImplementationMap() =>
             _implementations.Value;
 
@@ -172,10 +174,10 @@ namespace GraphZen.LanguageModel
             return false;
         }
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         private IReadOnlyCollection<ObjectTypeDefinitionSyntax> GetPossibleTypes(
-            [NotNull] TypeDefinitionSyntax abstractType)
+             TypeDefinitionSyntax abstractType)
         {
             if (abstractType is UnionTypeDefinitionSyntax unionType)
             {
@@ -190,8 +192,8 @@ namespace GraphZen.LanguageModel
                 : new List<ObjectTypeDefinitionSyntax>();
         }
 
-        private bool IsPossibleType([NotNull] TypeDefinitionSyntax abstractType,
-            [NotNull] ObjectTypeDefinitionSyntax possibleType)
+        private bool IsPossibleType( TypeDefinitionSyntax abstractType,
+             ObjectTypeDefinitionSyntax possibleType)
         {
             if (!_possibleTypeMap.ContainsKey(abstractType.Name.Value))
             {
@@ -204,7 +206,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        [NotNull]
+        
         public DocumentSyntax WithFilteredDefinitions(Func<DefinitionSyntax, bool> predicate)
         {
             Check.NotNull(predicate, nameof(predicate));
@@ -212,7 +214,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals([NotNull] DocumentSyntax other) => Definitions.SequenceEqual(other.Definitions);
+        private bool Equals( DocumentSyntax other) => Definitions.SequenceEqual(other.Definitions);
 
         public override bool Equals(object obj)
         {

@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Reflection;
@@ -13,13 +15,13 @@ namespace GraphZen.TypeSystem
     public class InputField : InputValue, IInputField
     {
         public InputField(
-            [NotNull] string name,
-            [CanBeNull] string description,
-            [NotNull] IGraphQLTypeReference type,
-            [CanBeNull] object defaultValue,
+             string name,
+             string description,
+             IGraphQLTypeReference type,
+             object defaultValue,
             bool hasDefaultValue,
-            [NotNull] IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver, PropertyInfo clrInfo, [NotNull] InputObjectType inputObject) :
+             IReadOnlyList<IDirectiveAnnotation> directives,
+            TypeResolver typeResolver, PropertyInfo clrInfo,  InputObjectType inputObject) :
             base(name, description, type,
                 defaultValue, hasDefaultValue,
                 Check.NotNull(directives, nameof(directives)),
@@ -34,9 +36,9 @@ namespace GraphZen.TypeSystem
 
         public new InputObjectType DeclaringMember => (InputObjectType)base.DeclaringMember;
 
-        [NotNull]
+        
         public static InputField From(IInputFieldDefinition definition, TypeResolver typeResolver,
-            [NotNull] InputObjectType declaringType)
+             InputObjectType declaringType)
         {
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(typeResolver, nameof(typeResolver));

@@ -1,25 +1,28 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Text;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+#nullable disable
+
 
 namespace GraphZen.Infrastructure
 {
     public class DictionaryContainerCodeGenerator
     {
-        [NotNull] private readonly StringBuilder _csharp = new StringBuilder();
+        private readonly StringBuilder _csharp = new StringBuilder();
 
         private DictionaryContainerCodeGenerator()
         {
         }
 
         public static string GenerateDictionaryAccessorExtensions(
-            [NotNull] Action<DictionaryContainerCodeGenerator> config)
+            Action<DictionaryContainerCodeGenerator> config)
         {
             var generator = new DictionaryContainerCodeGenerator();
             config(generator);
@@ -27,15 +30,17 @@ namespace GraphZen.Infrastructure
         }
 
 
-        [NotNull]
-        public AccessorGenerator<TContainer> ForType<TContainer>() => new AccessorGenerator<TContainer>(_csharp);
+        public AccessorGenerator<TContainer> ForType<TContainer>()
+        {
+            return new AccessorGenerator<TContainer>(_csharp);
+        }
 
 
         public class AccessorGenerator<TContainer>
         {
-            [NotNull] private readonly StringBuilder _csharp;
+            private readonly StringBuilder _csharp;
 
-            public AccessorGenerator([NotNull] StringBuilder csharp)
+            public AccessorGenerator(StringBuilder csharp)
             {
                 _csharp = csharp;
             }
@@ -62,18 +67,18 @@ namespace GraphZen.Infrastructure
 namespace {containerNamespace} {{
  public static partial class {extensionTypeName}{valueName}AccessorExtensions {{
 
-        [CanBeNull]
-        public static {valueType} Find{valueName}([NotNull] this {containerType} {thisRefName},[NotNull] {keyType} {keyName}) 
+        
+        public static {valueType} Find{valueName}( this {containerType} {thisRefName}, {keyType} {keyName}) 
             => {thisRefName}.{property.Name}.TryGetValue(Check.NotNull({keyName},nameof({keyName})), out var {keyName}{valueName}) ? {keyName}{valueName} : null;
 
-        public static bool Has{valueName}([NotNull] this {containerType} {thisRefName}, [NotNull] {keyType} {keyName}) 
+        public static bool Has{valueName}( this {containerType} {thisRefName},  {keyType} {keyName}) 
             => {thisRefName}.{property.Name}.ContainsKey(Check.NotNull({keyName}, nameof({keyName})));
 
-        [NotNull]
-        public static {valueType} Get{valueName}([NotNull] this {containerType} {thisRefName}, [NotNull] {keyType} {keyName}) 
+        
+        public static {valueType} Get{valueName}( this {containerType} {thisRefName},  {keyType} {keyName}) 
             => {thisRefName}.Find{valueName}(Check.NotNull({keyName}, nameof({keyName}))) ?? throw new Exception($""{{{thisRefName}}} does not contain a {valueNameCamelized} named '{{{keyName}}}'."");
 
-        public static bool TryGet{valueName}([NotNull] this {containerType} {thisRefName}, [NotNull] {keyType} {keyName}, out {valueType} {valueRefName})
+        public static bool TryGet{valueName}( this {containerType} {thisRefName},  {keyType} {keyName}, out {valueType} {valueRefName})
              => {thisRefName}.{property.Name}.TryGetValue(Check.NotNull({keyName}, nameof({keyName})), out {valueRefName});
 }}
  

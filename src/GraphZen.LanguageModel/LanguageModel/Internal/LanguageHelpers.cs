@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Diagnostics;
@@ -12,12 +14,12 @@ namespace GraphZen.LanguageModel.Internal
 {
     public static class NameTokenValidator
     {
-        [NotNull] public static readonly Regex NameTokenRegex = new Regex(@"^[_A-Za-z][\w]*$");
+         public static readonly Regex NameTokenRegex = new Regex(@"^[_A-Za-z][\w]*$");
 
-        public static bool IsValidGraphQLName([NotNull] this string name) => NameTokenRegex.IsMatch(name);
+        public static bool IsValidGraphQLName( this string name) => NameTokenRegex.IsMatch(name);
 
-        [NotNull]
-        public static string ThrowIfInvalidGraphQLName([NotNull] this string name)
+        
+        public static string ThrowIfInvalidGraphQLName( this string name)
         {
             Check.NotNull(name, nameof(name));
             if (!name.IsValidGraphQLName())
@@ -33,12 +35,12 @@ namespace GraphZen.LanguageModel.Internal
 
     public static class LanguageHelpers
     {
-        [NotNull] private static readonly Regex NewlineRegex = new Regex("\r\n?|\n");
+         private static readonly Regex NewlineRegex = new Regex("\r\n?|\n");
 
-        internal static bool HasNewline([NotNull] this string value) => NewlineRegex.IsMatch(value);
+        internal static bool HasNewline( this string value) => NewlineRegex.IsMatch(value);
 
-        [NotNull]
-        public static string BlockStringValue([NotNull] string rawString)
+        
+        public static string BlockStringValue( string rawString)
         {
             var lines = rawString.Split(new[] { Environment.NewLine }, int.MaxValue, StringSplitOptions.None).ToList();
             int? commonIndent = null;
@@ -132,7 +134,7 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        private static int GetIndent([NotNull] this string str)
+        private static int GetIndent( this string str)
         {
             var i = 0;
             while (i < str.Length && (str[i] == ' ' || str[i] == '\t'))

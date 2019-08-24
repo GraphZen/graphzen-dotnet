@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -10,7 +12,7 @@ namespace GraphZen.TypeSystem
 {
     public class NonNullType : INonNullType
     {
-        private NonNullType([NotNull] INullableType ofType)
+        private NonNullType( INullableType ofType)
         {
             OfType = ofType;
         }
@@ -22,10 +24,10 @@ namespace GraphZen.TypeSystem
 
         public SyntaxNode ToSyntaxNode() => this.ToTypeSyntax();
 
-        [NotNull]
+        
         public static NonNullType Of(INullableType type) => new NonNullType(Check.NotNull(type, nameof(type)));
 
-        private bool Equals([NotNull] NonNullType other) => Equals(OfType, other.OfType);
+        private bool Equals( NonNullType other) => Equals(OfType, other.OfType);
 
         public override bool Equals(object obj)
         {

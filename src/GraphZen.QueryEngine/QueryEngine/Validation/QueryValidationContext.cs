@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -17,10 +19,10 @@ namespace GraphZen.QueryEngine.Validation
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
     public class QueryValidationContext : ValidationContext
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, FragmentDefinitionSyntax>> _fragments;
+          private readonly Lazy<IReadOnlyDictionary<string, FragmentDefinitionSyntax>> _fragments;
 
 
-        public QueryValidationContext(Schema schema, DocumentSyntax ast, [NotNull] TypeInfo typeInfo,
+        public QueryValidationContext(Schema schema, DocumentSyntax ast,  TypeInfo typeInfo,
             Lazy<GraphQLSyntaxWalker> parentVisitor) : base(
             Check.NotNull(ast, nameof(ast)), Check.NotNull(parentVisitor, nameof(parentVisitor))
         )
@@ -33,14 +35,14 @@ namespace GraphZen.QueryEngine.Validation
                     .ToReadOnlyDictionaryIgnoringDuplicates(_ => _.Name.Value));
         }
 
-        [NotNull]
+        
         public Schema Schema { get; }
 
 
-        [NotNull]
+        
         public IReadOnlyDictionary<string, FragmentDefinitionSyntax> Fragments => _fragments.Value;
 
-        [NotNull]
+        
         public TypeInfo TypeInfo { get; }
 
         public Directive Directive => TypeInfo.Directive;

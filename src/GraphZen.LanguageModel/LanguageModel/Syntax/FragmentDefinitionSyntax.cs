@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -29,13 +31,13 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name of the fragement.
         /// </summary>
-        [NotNull]
+        
         public NameSyntax Name { get; }
 
         /// <summary>
         ///     The fragement selection set.
         /// </summary>
-        [NotNull]
+        
         public SelectionSetSyntax SelectionSet { get; }
 
 
@@ -51,10 +53,10 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The fragment the name applies to.
         /// </summary>
-        [NotNull]
+        
         public NamedTypeSyntax TypeCondition { get; }
 
-        private bool Equals([NotNull] FragmentDefinitionSyntax other) => Name.Equals(other.Name) &&
+        private bool Equals( FragmentDefinitionSyntax other) => Name.Equals(other.Name) &&
                                                                          TypeCondition.Equals(other.TypeCondition) &&
                                                                          SelectionSet.Equals(other.SelectionSet) &&
                                                                          Directives.SequenceEqual(other.Directives);

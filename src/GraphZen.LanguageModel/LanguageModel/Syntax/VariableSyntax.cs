@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,7 +25,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The variable name.
         /// </summary>
-        [NotNull]
+        
         public NameSyntax Name { get; }
 
         public override IEnumerable<SyntaxNode> Children
@@ -33,7 +35,7 @@ namespace GraphZen.LanguageModel
 
 
 
-        private bool Equals([NotNull] VariableSyntax other) => Name.Equals(other.Name);
+        private bool Equals( VariableSyntax other) => Name.Equals(other.Name);
 
         public override bool Equals(object obj)
         {

@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -17,7 +19,7 @@ namespace GraphZen.TypeSystem
                  "returned in a JSON response as a string.")]
     public class EnumValue : AnnotatableMember, IEnumValue
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
+          private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
 
         public EnumValue(string name, string description, object value, bool isDeprecated, string deprecatedReason,
             IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(Check.NotNull(directives,
@@ -54,7 +56,7 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.EnumValue;
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
-        [NotNull]
+        
         [GraphQLIgnore]
         public static EnumValue From(IEnumValueDefinition definition, EnumType declaringTye)
         {

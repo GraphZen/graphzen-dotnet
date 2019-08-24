@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using GraphZen.Infrastructure;
@@ -13,7 +15,7 @@ namespace GraphZen.TypeSystem
     public class TypeIdentity
     {
         private readonly TypeKind? _kind;
-        [NotNull] private readonly SchemaDefinition _schema;
+         private readonly SchemaDefinition _schema;
 
         private bool? _isInputType;
         private bool? _isOutputType;
@@ -61,7 +63,7 @@ namespace GraphZen.TypeSystem
 
         public TypeKind? Kind => _typeDefinition?.Kind ?? _kind;
 
-        [NotNull]
+        
         public string Name
         {
             get
@@ -98,7 +100,7 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        [CanBeNull]
+        
         public Type ClrType { get; set; }
 
         public bool? IsInputType
@@ -131,7 +133,7 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        private bool Equals([NotNull] TypeIdentity other) =>
+        private bool Equals( TypeIdentity other) =>
             Overlaps(other);
 
         public override bool Equals(object obj)

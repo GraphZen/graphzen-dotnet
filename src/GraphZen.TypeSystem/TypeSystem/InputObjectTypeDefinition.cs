@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -17,11 +19,11 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjectTypeDefinition
     {
-        [NotNull]
+        
         private readonly Dictionary<string, InputFieldDefinition> _fields =
             new Dictionary<string, InputFieldDefinition>();
 
-        [NotNull]
+        
         private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
@@ -36,7 +38,7 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"input {Name}";
 
-        [NotNull]
+        
         public InternalInputObjectTypeBuilder Builder { get; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputObject;
@@ -50,7 +52,7 @@ namespace GraphZen.TypeSystem
         public IEnumerable<InputFieldDefinition> GetFields() => _fields.Values;
 
 
-        public bool RenameField([NotNull] InputFieldDefinition field, [NotNull] string name,
+        public bool RenameField( InputFieldDefinition field,  string name,
             ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetNameConfigurationSource()))
@@ -70,7 +72,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public InputFieldDefinition FindField([NotNull] MemberInfo member)
+        public InputFieldDefinition FindField( MemberInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
             var memberMatch = _fields.Values.SingleOrDefault(_ => _.ClrInfo == member);
@@ -83,12 +85,12 @@ namespace GraphZen.TypeSystem
             return this.FindField(fieldName);
         }
 
-        public void UnignoreField([NotNull] string fieldName)
+        public void UnignoreField( string fieldName)
         {
             _ignoredFields.Remove(fieldName);
         }
 
-        private bool IgnoreField([NotNull] InputFieldDefinition field, ConfigurationSource configurationSource)
+        private bool IgnoreField( InputFieldDefinition field, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(field.GetConfigurationSource()))
             {
@@ -99,7 +101,7 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-        private InputFieldDefinition AddField([NotNull] InputFieldDefinition field)
+        private InputFieldDefinition AddField( InputFieldDefinition field)
         {
             if (_fields.ContainsKey(field.Name))
             {
@@ -111,7 +113,7 @@ namespace GraphZen.TypeSystem
             return field;
         }
 
-        public InputFieldDefinition AddField([NotNull] PropertyInfo property,
+        public InputFieldDefinition AddField( PropertyInfo property,
             ConfigurationSource configurationSource)
         {
             if (ClrType == null)
@@ -144,12 +146,12 @@ namespace GraphZen.TypeSystem
             return AddField(field);
         }
 
-        public void RemoveField([NotNull] InputFieldDefinition field)
+        public void RemoveField( InputFieldDefinition field)
         {
             _fields.Remove(field.Name);
         }
 
-        public bool IgnoreField([NotNull] string fieldName, ConfigurationSource configurationSource)
+        public bool IgnoreField( string fieldName, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(fieldName);
             if (ignoredConfigurationSource.HasValue && ignoredConfigurationSource.Overrides(configurationSource))
@@ -183,7 +185,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public InputValueDefinition GetOrAddField([NotNull]string name, ConfigurationSource configurationSource)
+        public InputValueDefinition GetOrAddField(string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)

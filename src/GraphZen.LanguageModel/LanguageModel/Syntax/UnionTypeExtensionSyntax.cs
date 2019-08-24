@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +27,7 @@ namespace GraphZen.LanguageModel
 
         public override NameSyntax Name { get; }
 
-        [NotNull]
+        
         public IReadOnlyList<NamedTypeSyntax> Types { get; }
 
 
@@ -33,7 +35,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] UnionTypeExtensionSyntax other) => Name.Equals(other.Name) &&
+        private bool Equals( UnionTypeExtensionSyntax other) => Name.Equals(other.Name) &&
                                                                          Directives.SequenceEqual(other.Directives) &&
                                                                          Types.SequenceEqual(other.Types);
 

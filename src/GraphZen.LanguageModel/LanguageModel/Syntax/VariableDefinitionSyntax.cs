@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
@@ -25,13 +27,13 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The variable being assigned.
         /// </summary>
-        [NotNull]
+        
         public VariableSyntax Variable { get; }
 
         /// <summary>
         ///     The type of the variable.
         /// </summary>
-        [NotNull]
+        
         public TypeSyntax VariableType { get; }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals([NotNull] VariableDefinitionSyntax other) =>
+        private bool Equals( VariableDefinitionSyntax other) =>
             Variable.Equals(other.Variable)
             && VariableType.Equals(other.VariableType)
             && Equals(DefaultValue, other.DefaultValue);

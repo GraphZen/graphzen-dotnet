@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +40,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Scalar type directives. (Optional)
         /// </summary>
-        [NotNull]
+        
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
 
@@ -47,7 +49,7 @@ namespace GraphZen.LanguageModel
 
         public override StringValueSyntax Description { get; }
 
-        private bool Equals([NotNull] ScalarTypeDefinitionSyntax other) =>
+        private bool Equals( ScalarTypeDefinitionSyntax other) =>
             Name.Equals(other.Name) && Equals(Description, other.Description) &&
             Directives.SequenceEqual(other.Directives);
 

@@ -1,3 +1,7 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using JetBrains.Annotations;
 #nullable disable
 using System;
 using GraphZen.Infrastructure;
@@ -53,19 +57,19 @@ namespace GraphZen
             string parentName,
             string itemName) => FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
 
-        [NotNull]
+        
         public abstract NamedCollection<TCollectionItemDefinition> GetCollection(
-            [NotNull] TParentMemberDefinition parent);
+             TParentMemberDefinition parent);
 
-        [NotNull]
-        public abstract NamedCollection<TCollectionItem> GetCollection([NotNull] TParentMember parent);
+        
+        public abstract NamedCollection<TCollectionItem> GetCollection( TParentMember parent);
 
         public abstract ConfigurationSource? FindIgnoredItemConfigurationSource(
-            [NotNull] TParentMemberDefinition parent, [NotNull] string name);
+             TParentMemberDefinition parent,  string name);
 
         //public class CollectionWrapper<T>
         //{
-        //    public CollectionWrapper([NotNull]IReadOnlyDictionary<string, TInner> innerDictionary)
+        //    public CollectionWrapper(IReadOnlyDictionary<string, TInner> innerDictionary)
         //    {
         //        InnerDictionary = innerDictionary;
         //    }

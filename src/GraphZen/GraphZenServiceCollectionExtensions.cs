@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Linq;
@@ -19,7 +21,7 @@ namespace GraphZen
         private static ILog Logger { get; } = LogProvider.GetCurrentClassLogger();
 
         public static void AddGraphQLContext(
-            [NotNull] this IServiceCollection serviceCollection,
+             this IServiceCollection serviceCollection,
             Action<GraphQLContextOptionsBuilder> optionsAction = null)
         {
             AddGraphQLContext<GraphQLContext>(serviceCollection, optionsAction);
@@ -27,8 +29,8 @@ namespace GraphZen
 
 
         public static void AddGraphQLContext<TContext>(
-            [NotNull] this IServiceCollection serviceCollection,
-            [CanBeNull] Action<GraphQLContextOptionsBuilder> optionsAction = null)
+             this IServiceCollection serviceCollection,
+             Action<GraphQLContextOptionsBuilder> optionsAction = null)
             where TContext : GraphQLContext
         {
             Check.NotNull(serviceCollection, nameof(serviceCollection));
@@ -98,7 +100,7 @@ namespace GraphZen
         }
 
         private static GraphQLContextOptions<TContext> GraphQLContextOptionsFactory<TContext>(
-            [NotNull] IServiceProvider serviceProvider,
+             IServiceProvider serviceProvider,
             Action<IServiceProvider, GraphQLContextOptionsBuilder> optionsAction)
             where TContext : GraphQLContext
         {

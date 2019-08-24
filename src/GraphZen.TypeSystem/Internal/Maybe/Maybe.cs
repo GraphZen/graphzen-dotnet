@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -11,25 +13,25 @@ namespace GraphZen.Internal
 {
     internal static class Maybe
     {
-        [NotNull]
+        
         internal static Maybe<T> Some<T>(T value) => new SomeImpl<T>(new object[] { value }, null);
 
 
-        [NotNull]
+        
         internal static Maybe<T> None<T>(params GraphQLError[] errors)
         {
             errors = Check.NotNull(errors, nameof(errors));
             return new NoneImpl<T>(errors);
         }
 
-        [NotNull]
+        
         internal static Maybe<T> None<T>(IEnumerable<GraphQLError> errors)
         {
             errors = Check.NotNull(errors, nameof(errors));
             return new NoneImpl<T>(errors.ToArray());
         }
 
-        [NotNull]
+        
         internal static Maybe<T> None<T>(string errorMessage) => None<T>(new GraphQLError(errorMessage));
 
 
@@ -52,7 +54,7 @@ namespace GraphZen.Internal
 
     public class Maybe<T>
     {
-        [NotNull] private readonly IReadOnlyList<object> _values;
+         private readonly IReadOnlyList<object> _values;
 
         protected Maybe(IReadOnlyList<object> values, IReadOnlyList<GraphQLError> errors)
         {
@@ -60,13 +62,13 @@ namespace GraphZen.Internal
             Errs = errors ?? Array.AsReadOnly(new GraphQLError[] { });
         }
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         protected IReadOnlyList<GraphQLError> Errs { get; }
 
         public bool HasValue => _values.Any();
 
-        private bool Equals([NotNull] Maybe<T> other)
+        private bool Equals( Maybe<T> other)
         {
             if (this is Some<T> thisSome && other is Some<T> otherSome)
             {
@@ -103,11 +105,11 @@ namespace GraphZen.Internal
 
         public override int GetHashCode() => _values.GetHashCode();
 
-        [NotNull]
+        
         public Maybe<TC> Cast<TC>() => HasValue ? Maybe.Some((TC)_values.Single()) : Maybe.None<TC>();
 
 
-        [NotNull]
+        
         internal Maybe<TP> Select<TP>(Func<T, TP> selector)
         {
             Check.NotNull(selector, nameof(selector));
@@ -120,7 +122,7 @@ namespace GraphZen.Internal
             return Maybe.None<TP>();
         }
 
-        [CanBeNull]
+        
         protected T ValueOrFailure()
         {
             if (HasValue)

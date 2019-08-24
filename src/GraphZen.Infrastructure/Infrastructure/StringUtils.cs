@@ -1,11 +1,15 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable enable
+
 
 namespace GraphZen.Infrastructure
 {
@@ -15,36 +19,40 @@ namespace GraphZen.Infrastructure
 
         public static string QuotedOrList(this IReadOnlyList<string> source)
         {
-            source = Check.NotEmpty(source, nameof(source));
+            // TODO: source = Check.NotEmpty(source, nameof(source));
+            if (source.Count == 0) throw new ArgumentException("Must contain at least one value.", nameof(source));
             return OrList(source.Select(v => $"\"{v}\"").ToArray());
         }
 
-        public static string QuotedOrList(params string[] values) => values.QuotedOrList();
+        public static string QuotedOrList(params string[] values)
+        {
+            return values.QuotedOrList();
+        }
 
-        private static string OrList([NotNull] [ItemNotNull] IEnumerable<string> items)
+        private static string OrList(
+            IEnumerable<string> items)
         {
             var selected = items.Take(OrListMaxLength).ToArray();
             return selected.Select((quoted, index) => (quoted, index)).Aggregate("",
                 (list, value) =>
                 {
                     var (quoted, index) = value;
-                    if (index == 0)
-                    {
-                        return quoted;
-                    }
+                    if (index == 0) return quoted;
 
                     return list + (selected.Length > 2 ? ", " : " ") +
                            (index == selected.Length - 1 ? "or " : "") + quoted;
                 });
         }
 
-        public static IEnumerable<string> GetSuggestionList(string input, params string[] options) =>
-            GetSuggestionList(Check.NotNull(input, nameof(input)),
-                (IEnumerable<string>)Check.NotNull(options, nameof(options)));
+        public static IEnumerable<string> GetSuggestionList(string input, params string[] options)
+        {
+            return GetSuggestionList(Check.NotNull(input, nameof(input)),
+                (IEnumerable<string>) Check.NotNull(options, nameof(options)));
+        }
 
-        [NotNull]
-        public static IReadOnlyList<string> GetSuggestionList([NotNull] string input,
-            [NotNull] [ItemNotNull] IEnumerable<string> options)
+
+        public static IReadOnlyList<string> GetSuggestionList(string input,
+            IEnumerable<string> options)
         {
             var optionsByDistance = new Dictionary<string, int>();
             var inputThreshold = input.Length / 2;
@@ -52,10 +60,7 @@ namespace GraphZen.Infrastructure
             {
                 var distance = GetLexicalDistance(input, option);
                 var threshold = Math.Max(Math.Max(inputThreshold, option.Length / 2), 1);
-                if (distance <= threshold)
-                {
-                    optionsByDistance[option] = distance;
-                }
+                if (distance <= threshold) optionsByDistance[option] = distance;
             }
 
             return optionsByDistance.OrderBy(_ => _.Value).Select(_ => _.Key).ToArray();
@@ -71,15 +76,9 @@ namespace GraphZen.Infrastructure
             var bLength = b.Length;
             var d = new int[aLength + 1, bLength + 1];
 
-            if (aLength == 0)
-            {
-                return bLength;
-            }
+            if (aLength == 0) return bLength;
 
-            if (bLength == 0)
-            {
-                return aLength;
-            }
+            if (bLength == 0) return aLength;
 
             for (var i = 0; i <= aLength; d[i, 0] = i++)
             {
@@ -90,15 +89,13 @@ namespace GraphZen.Infrastructure
             }
 
             for (var i = 1; i <= aLength; i++)
+            for (var j = 1; j <= bLength; j++)
             {
-                for (var j = 1; j <= bLength; j++)
-                {
-                    var cost = b[j - 1] == a[i - 1] ? 0 : 1;
+                var cost = b[j - 1] == a[i - 1] ? 0 : 1;
 
-                    d[i, j] = Math.Min(
-                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
-                        d[i - 1, j - 1] + cost);
-                }
+                d[i, j] = Math.Min(
+                    Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                    d[i - 1, j - 1] + cost);
             }
 
             return d[aLength, bLength];

@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -32,7 +34,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name of the fragment.
         /// </summary>
-        [NotNull]
+        
         public NameSyntax Name { get; }
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace GraphZen.LanguageModel
             Name.ToEnumerable().Concat(Directives);
 
 
-        private bool Equals([NotNull] FragmentSpreadSyntax other) =>
+        private bool Equals( FragmentSpreadSyntax other) =>
             Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)

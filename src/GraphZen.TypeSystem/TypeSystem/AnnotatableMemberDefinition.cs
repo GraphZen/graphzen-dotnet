@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,8 +16,8 @@ namespace GraphZen.TypeSystem
 {
     public abstract class AnnotatableMemberDefinition : MemberDefinition, IMutableAnnotatableDefinition
     {
-        [ItemNotNull]
-        [NotNull]
+        
+        
         private readonly List<IDirectiveAnnotation> _directives = new List<IDirectiveAnnotation>();
 
         protected AnnotatableMemberDefinition(ConfigurationSource configurationSource) : base(configurationSource)
@@ -63,7 +65,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        private DirectiveAnnotation CreateDirective([NotNull] string name, object value) =>
+        private DirectiveAnnotation CreateDirective( string name, object value) =>
             new DirectiveAnnotation(name, value);
     }
 }

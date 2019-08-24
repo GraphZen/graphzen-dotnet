@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections;
@@ -14,12 +16,12 @@ namespace GraphZen.TypeSystem
         IInfrastructure<InternalFieldBuilder>
         where TContext : GraphQLContext
     {
-        public FieldBuilder([NotNull] InternalFieldBuilder builder)
+        public FieldBuilder( InternalFieldBuilder builder)
         {
             Builder = builder;
         }
 
-        [NotNull]
+        
         private InternalFieldBuilder Builder { get; }
 
 

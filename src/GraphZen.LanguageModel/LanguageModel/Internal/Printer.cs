@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,7 @@ namespace GraphZen.LanguageModel.Internal
 {
     public class Printer : IPrinter
     {
-        [NotNull] private readonly StringBuilder _outputBuilder = new StringBuilder();
+         private readonly StringBuilder _outputBuilder = new StringBuilder();
 
         private int _indentLevel;
 
@@ -343,7 +345,7 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        private void PrintDirectives([NotNull] IReadOnlyList<DirectiveSyntax> directives)
+        private void PrintDirectives( IReadOnlyList<DirectiveSyntax> directives)
         {
             if (directives.Any())
             {
@@ -352,7 +354,7 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        private void PrintStringValue([NotNull] StringValueSyntax stringValue, bool isDescription)
+        private void PrintStringValue( StringValueSyntax stringValue, bool isDescription)
         {
             if (!stringValue.IsBlockString)
             {
@@ -394,7 +396,7 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        private void PrintDescription([NotNull] IDescribedSyntax node)
+        private void PrintDescription( IDescribedSyntax node)
         {
             if (node.Description != null)
             {
@@ -404,7 +406,7 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        private void PrintArguments([NotNull] [ItemNotNull] IReadOnlyList<InputValueDefinitionSyntax> arguments)
+        private void PrintArguments(  IReadOnlyList<InputValueDefinitionSyntax> arguments)
         {
             if (arguments.Any())
             {
@@ -433,7 +435,7 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        private void PrintArguments([NotNull] IReadOnlyList<ArgumentSyntax> arguments)
+        private void PrintArguments( IReadOnlyList<ArgumentSyntax> arguments)
         {
             if (arguments.Any())
             {
@@ -464,7 +466,7 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        public void Wrap(string start, [NotNull] Action action, string end = "")
+        public void Wrap(string start,  Action action, string end = "")
         {
             Append(start);
             action();
@@ -495,7 +497,7 @@ namespace GraphZen.LanguageModel.Internal
 
         private string GetCurrentIndent() => string.Concat(Enumerable.Range(0, _indentLevel).Select(_ => "  "));
 
-        public void Join([NotNull] IReadOnlyList<SyntaxNode> nodes, Action seperatorAction = null)
+        public void Join( IReadOnlyList<SyntaxNode> nodes, Action seperatorAction = null)
         {
             var hasSeperator = seperatorAction != null;
 
@@ -513,7 +515,7 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        private void Join([NotNull] IReadOnlyList<SyntaxNode> nodes, string seperator = null)
+        private void Join( IReadOnlyList<SyntaxNode> nodes, string seperator = null)
         {
             Join(nodes, seperator != null ? () => { Append(seperator); } : (Action)null);
         }

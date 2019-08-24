@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -20,18 +22,18 @@ namespace GraphZen.TypeSystem
                  "and optionally a default value.")]
     public abstract class InputValue : AnnotatableMember, IInputValue
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<InputValueDefinitionSyntax> _syntax;
-        [NotNull] [ItemNotNull] private readonly Lazy<IGraphQLType> _type;
+          private readonly Lazy<InputValueDefinitionSyntax> _syntax;
+          private readonly Lazy<IGraphQLType> _type;
 
         /// <inheritdoc />
         protected InputValue(
-            [NotNull] string name,
-            [CanBeNull] string description,
-            [NotNull] IGraphQLTypeReference type,
+             string name,
+             string description,
+             IGraphQLTypeReference type,
             object defaultValue,
             bool hasDefaultValue,
-            [NotNull] IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver, object clrInfo, [NotNull] IMemberDefinition declaringMember) : base(directives)
+             IReadOnlyList<IDirectiveAnnotation> directives,
+            TypeResolver typeResolver, object clrInfo,  IMemberDefinition declaringMember) : base(directives)
         {
             IGraphQLType DefaultTypeResolver(IGraphQLTypeReference typeReference) =>
                 type as IGraphQLType ?? throw new InvalidOperationException(

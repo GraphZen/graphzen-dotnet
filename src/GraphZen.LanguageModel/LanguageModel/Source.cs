@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Text.RegularExpressions;
 using GraphZen.Infrastructure;
@@ -9,17 +11,17 @@ namespace GraphZen.LanguageModel
 {
     public class Source
     {
-        [NotNull] private static readonly Regex LineBreak = new Regex("\r\n?|\n");
+         private static readonly Regex LineBreak = new Regex("\r\n?|\n");
 
         public Source(string body)
         {
             Body = Check.NotNull(body, nameof(body));
         }
 
-        [NotNull]
+        
         public string Body { get; }
 
-        protected bool Equals([NotNull] Source other) => string.Equals(Body, other.Body);
+        protected bool Equals( Source other) => string.Equals(Body, other.Body);
 
         public override bool Equals(object obj)
         {

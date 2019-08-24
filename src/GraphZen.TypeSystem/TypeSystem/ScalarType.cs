@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -15,12 +17,12 @@ namespace GraphZen.TypeSystem
 {
     public class ScalarType : NamedType, IScalarType
     {
-        [CanBeNull] private readonly LeafLiteralParser<object, ValueSyntax> _literalParser;
-        [CanBeNull] private readonly LeafSerializer<object> _serializer;
+         private readonly LeafLiteralParser<object, ValueSyntax> _literalParser;
+         private readonly LeafSerializer<object> _serializer;
 
-        [NotNull] [ItemNotNull] private readonly Lazy<SyntaxNode> _syntax;
+          private readonly Lazy<SyntaxNode> _syntax;
 
-        [CanBeNull] private readonly LeafValueParser<object> _valueParser;
+         private readonly LeafValueParser<object> _valueParser;
 
         public ScalarType(
             string name,
@@ -41,17 +43,17 @@ namespace GraphZen.TypeSystem
                     Description != null ? SyntaxFactory.StringValue(Description, true) : null));
         }
 
-        [NotNull]
+        
         public LeafLiteralParser<object, ValueSyntax> LiteralParser =>
             _literalParser ??
             throw new Exception($"Scalar {Name} does not have a {nameof(LiteralParser)} not defined.");
 
-        [NotNull]
+        
         public LeafSerializer<object> Serializer => _serializer ??
                                                     throw new Exception(
                                                         $"Scalar {Name} does not have a {nameof(Serializer)} not defined.");
 
-        [NotNull]
+        
         public LeafValueParser<object> ValueParser => _valueParser ??
                                                       throw new Exception(
                                                           $"Scalar {Name} does not have a {nameof(ValueParser)} not defined.");
@@ -73,7 +75,7 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Scalar;
 
 
-        [NotNull]
+        
         public static ScalarType From(IScalarTypeDefinition definition)
         {
             Check.NotNull(definition, nameof(definition));
@@ -94,7 +96,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [NotNull]
+        
         public static ScalarType Create(string name,
             Action<ScalarTypeBuilder<object, ValueSyntax>> scalarTypeConfigurator)
         {
@@ -107,7 +109,7 @@ namespace GraphZen.TypeSystem
             return From(definition);
         }
 
-        [NotNull]
+        
         public static ScalarType Create<TScalar>(Action<ScalarTypeBuilder<TScalar, ValueSyntax>> scalarTypeConfigurator)
         {
             Check.NotNull(scalarTypeConfigurator, nameof(scalarTypeConfigurator));

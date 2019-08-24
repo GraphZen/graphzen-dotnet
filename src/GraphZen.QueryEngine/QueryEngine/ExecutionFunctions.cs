@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections;
@@ -22,12 +24,12 @@ namespace GraphZen.QueryEngine
 {
     internal static class ExecutionFunctions
     {
-        [NotNull]
+        
         internal static async Task<ExecutionResult> ExecuteAsync(
             Schema schema,
             DocumentSyntax document,
             object rootValue,
-            [CanBeNull] GraphQLContext context,
+             GraphQLContext context,
             IDictionary<string, object> variableValues, string operationName = null, ExecutionOptions options = null)
         {
             try
@@ -74,10 +76,10 @@ namespace GraphZen.QueryEngine
         }
 
 
-        [NotNull]
+        
         internal static async Task<IDictionary<string, object>> ExecuteOperationAsync(
-            [NotNull] ExecutionContext exeContext,
-            [NotNull] OperationDefinitionSyntax operation, object rootValue)
+             ExecutionContext exeContext,
+             OperationDefinitionSyntax operation, object rootValue)
         {
             var type = exeContext.GetOperationRootType(operation);
             var fields = CollectFields(exeContext, type, operation.SelectionSet,
@@ -105,11 +107,11 @@ namespace GraphZen.QueryEngine
             }
         }
 
-        [NotNull]
+        
         private static async Task<IDictionary<string, object>> ExecuteFieldsAsync(
-            [NotNull] ExecutionContext exeContext, [NotNull] ObjectType parentType, object sourceValue,
-            [CanBeNull] ResponsePath path,
-            [NotNull] Dictionary<string, List<FieldSyntax>> fields)
+             ExecutionContext exeContext,  ObjectType parentType, object sourceValue,
+             ResponsePath path,
+             Dictionary<string, List<FieldSyntax>> fields)
         {
             var asyncResults = new Dictionary<string, Task<Maybe<object>>>();
 
@@ -145,11 +147,11 @@ namespace GraphZen.QueryEngine
         }
 
         [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-        [NotNull]
+        
         private static async Task<IDictionary<string, object>> ExecuteFieldsSeriallyAsync(
-            [NotNull] ExecutionContext exeContext, [NotNull] ObjectType parentType, object sourceValue,
-            [CanBeNull] ResponsePath path,
-            [NotNull] Dictionary<string, List<FieldSyntax>> fields)
+             ExecutionContext exeContext,  ObjectType parentType, object sourceValue,
+             ResponsePath path,
+             Dictionary<string, List<FieldSyntax>> fields)
         {
             var results = new Dictionary<string, object>();
 
@@ -172,11 +174,11 @@ namespace GraphZen.QueryEngine
             return results;
         }
 
-        [NotNull]
+        
         private static async Task<Maybe<object>> ResolveFieldAsync(
-            [NotNull] ExecutionContext exeContext, [NotNull] ObjectType parentType,
+             ExecutionContext exeContext,  ObjectType parentType,
             object sourceValue,
-            [NotNull] [ItemNotNull] List<FieldSyntax> fieldNodes, [NotNull] ResponsePath path)
+              List<FieldSyntax> fieldNodes,  ResponsePath path)
         {
             var fieldNode = fieldNodes[0];
             var fieldName = fieldNode.Name.Value;
@@ -199,10 +201,10 @@ namespace GraphZen.QueryEngine
                 maybeResult);
         }
 
-        private static async Task<Maybe<object>> CompleteValueCatchingErrorAsync([NotNull] ExecutionContext exeContext,
-            IGraphQLType returnType, [NotNull] [ItemNotNull] List<FieldSyntax> fieldNodes,
-            [NotNull] ResolveInfo info,
-            [NotNull] ResponsePath path, [NotNull] Maybe<object> maybeResult)
+        private static async Task<Maybe<object>> CompleteValueCatchingErrorAsync( ExecutionContext exeContext,
+            IGraphQLType returnType,   List<FieldSyntax> fieldNodes,
+             ResolveInfo info,
+             ResponsePath path,  Maybe<object> maybeResult)
         {
             try
             {
@@ -243,9 +245,9 @@ namespace GraphZen.QueryEngine
 
 
         private static async Task<Maybe<object>> CompleteValueAsync(
-            [NotNull] ExecutionContext exeContext, IGraphQLType returnType,
-            [NotNull] [ItemNotNull] List<FieldSyntax> fieldNodes, [NotNull] ResolveInfo info,
-            [NotNull] ResponsePath path,
+             ExecutionContext exeContext, IGraphQLType returnType,
+              List<FieldSyntax> fieldNodes,  ResolveInfo info,
+             ResponsePath path,
             Maybe<object> maybeResult)
         {
             if (maybeResult is None<object> none)
@@ -301,9 +303,9 @@ namespace GraphZen.QueryEngine
 
         public static string DefaultResolveType(
             object value,
-            [NotNull] GraphQLContext context,
-            [NotNull] ResolveInfo info,
-            [NotNull] IAbstractType abstractType)
+             GraphQLContext context,
+             ResolveInfo info,
+             IAbstractType abstractType)
         {
             var typeName = value?.GetType().GetGraphQLName(value);
             return typeName;
@@ -324,13 +326,13 @@ namespace GraphZen.QueryEngine
         }
 
 
-        [NotNull]
+        
         private static async Task<Maybe<object>> CompleteAbstractValueAsync(
-            [NotNull] ExecutionContext exeContext,
-            [NotNull] IAbstractType returnType,
-            [NotNull] List<FieldSyntax> fieldNodes,
-            [NotNull] ResolveInfo info,
-            [NotNull] ResponsePath path, object result)
+             ExecutionContext exeContext,
+             IAbstractType returnType,
+             List<FieldSyntax> fieldNodes,
+             ResolveInfo info,
+             ResponsePath path, object result)
         {
             result = await result.GetResultAsync();
             var runtimeTypeRef = returnType.ResolveType != null
@@ -343,11 +345,11 @@ namespace GraphZen.QueryEngine
             return await CompleteObjectValueAsync(exeContext, runtimeType, fieldNodes, info, path, result);
         }
 
-        [NotNull]
+        
         private static ObjectType EnsureValidRuntimeType(
-            string typeName, [NotNull] ExecutionContext exeContext,
-            [NotNull] IAbstractType returnType, [NotNull] IReadOnlyList<FieldSyntax> fieldNodes,
-            [NotNull] ResolveInfo info, object result)
+            string typeName,  ExecutionContext exeContext,
+             IAbstractType returnType,  IReadOnlyList<FieldSyntax> fieldNodes,
+             ResolveInfo info, object result)
         {
             IGraphQLType runtimeType =
                 typeName != null ? exeContext.Schema.TryGetType(typeName, out var t) ? t : null : null;
@@ -377,9 +379,9 @@ namespace GraphZen.QueryEngine
         }
 
         private static async Task<Maybe<object>> CompleteObjectValueAsync(
-            [NotNull] ExecutionContext exeContext,
-            [NotNull] ObjectType returnType,
-            [NotNull] [ItemNotNull] List<FieldSyntax> fieldNodes, ResolveInfo info, ResponsePath path, object result)
+             ExecutionContext exeContext,
+             ObjectType returnType,
+              List<FieldSyntax> fieldNodes, ResolveInfo info, ResponsePath path, object result)
         {
             if (returnType.IsTypeOf != null)
             {
@@ -397,11 +399,11 @@ namespace GraphZen.QueryEngine
                 result));
         }
 
-        [NotNull]
+        
         private static Task<IDictionary<string, object>> CollectAndExecuteSubfields(
-            [NotNull] ExecutionContext exeContext, [NotNull] ObjectType returnType,
+             ExecutionContext exeContext,  ObjectType returnType,
             // ReSharper disable once UnusedParameter.Local
-            [NotNull] [ItemNotNull] List<FieldSyntax> fieldNodes, ResolveInfo info, ResponsePath path, object result)
+              List<FieldSyntax> fieldNodes, ResolveInfo info, ResponsePath path, object result)
         {
             var subFieldNodes = new Dictionary<string, List<FieldSyntax>>();
             var visitedFargmentNames = new Dictionary<string, bool>();
@@ -417,7 +419,7 @@ namespace GraphZen.QueryEngine
             return ExecuteFieldsAsync(exeContext, returnType, result, path, subFieldNodes);
         }
 
-        private static Maybe<object> CompleteLeafValue([NotNull] ILeafType returnType, object result)
+        private static Maybe<object> CompleteLeafValue( ILeafType returnType, object result)
         {
             var serializedResult = returnType.Serialize(result);
             if (serializedResult is None<object> none)
@@ -429,10 +431,10 @@ namespace GraphZen.QueryEngine
         }
 
         [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-        private static async Task<Maybe<object>> CompleteListValueAsync([NotNull] ExecutionContext exeContext,
-            [NotNull] ListType returnType,
-            [NotNull] List<FieldSyntax> fieldNodes,
-            [NotNull] ResolveInfo info, ResponsePath path, object result)
+        private static async Task<Maybe<object>> CompleteListValueAsync( ExecutionContext exeContext,
+             ListType returnType,
+             List<FieldSyntax> fieldNodes,
+             ResolveInfo info, ResponsePath path, object result)
         {
             if (result is string || !(result is IEnumerable collection))
             {
@@ -466,10 +468,10 @@ namespace GraphZen.QueryEngine
             return Maybe.Some<object>(completedResults);
         }
 
-        private static async Task<Maybe<object>> ResolveFieldValueOrErrorAsync([NotNull] ExecutionContext exeContext,
-            [NotNull] Field field,
-            [NotNull] [ItemNotNull] List<FieldSyntax> fieldNodes,
-            object sourceValue, [NotNull] ResolveInfo info)
+        private static async Task<Maybe<object>> ResolveFieldValueOrErrorAsync( ExecutionContext exeContext,
+             Field field,
+              List<FieldSyntax> fieldNodes,
+            object sourceValue,  ResolveInfo info)
         {
             try
             {
@@ -519,9 +521,9 @@ namespace GraphZen.QueryEngine
         }
 
         // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
-        private static Field GetFieldDef([NotNull] ExecutionContext exeContext, [NotNull] Schema schema,
-            [NotNull] ObjectType parentType,
-            [NotNull] string fieldName)
+        private static Field GetFieldDef( ExecutionContext exeContext,  Schema schema,
+             ObjectType parentType,
+             string fieldName)
         {
             if (fieldName == Introspection.SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
             {
@@ -548,11 +550,11 @@ namespace GraphZen.QueryEngine
         }
 
 
-        [NotNull]
-        internal static Dictionary<string, List<FieldSyntax>> CollectFields([NotNull] ExecutionContext exeContext,
-            [NotNull] ObjectType runtimeType, [NotNull] SelectionSetSyntax selectionSet
-            , [NotNull] Dictionary<string, List<FieldSyntax>> fields,
-            [NotNull] Dictionary<string, bool> visitedFragmentNames)
+        
+        internal static Dictionary<string, List<FieldSyntax>> CollectFields( ExecutionContext exeContext,
+             ObjectType runtimeType,  SelectionSetSyntax selectionSet
+            ,  Dictionary<string, List<FieldSyntax>> fields,
+             Dictionary<string, bool> visitedFragmentNames)
         {
             foreach (var selection in selectionSet.Selections)
             {
@@ -606,8 +608,8 @@ namespace GraphZen.QueryEngine
             return fields;
         }
 
-        internal static bool DoesFragmentConditionMatch([NotNull] ExecutionContext exeContext,
-            [NotNull] IFragmentTypeConditionSyntax fragment, [NotNull] ObjectType type)
+        internal static bool DoesFragmentConditionMatch( ExecutionContext exeContext,
+             IFragmentTypeConditionSyntax fragment,  ObjectType type)
         {
             if (fragment.TypeCondition == null)
             {
@@ -629,7 +631,7 @@ namespace GraphZen.QueryEngine
         }
 
 
-        internal static bool ShouldIncludeNode([NotNull] ExecutionContext exeContext, SyntaxNode node)
+        internal static bool ShouldIncludeNode( ExecutionContext exeContext, SyntaxNode node)
         {
             var skip = Values.GetDirectiveValues(SpecDirectives.Skip, node, exeContext.VariableValues);
             if (skip != null && skip["if"] == true)

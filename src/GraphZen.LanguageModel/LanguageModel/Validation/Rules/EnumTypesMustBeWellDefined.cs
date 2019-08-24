@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +12,11 @@ namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class EnumTypesMustBeWellDefined : DocumentValidationRuleVisitor
     {
-        [NotNull]
+        
         private readonly Dictionary<string, ICollection<EnumTypeDefinitionSyntax>> _enumDefs =
             new Dictionary<string, ICollection<EnumTypeDefinitionSyntax>>();
 
-        [NotNull]
+        
         private readonly Dictionary<string, ICollection<EnumTypeExtensionSyntax>> _enumExts =
             new Dictionary<string, ICollection<EnumTypeExtensionSyntax>>();
 

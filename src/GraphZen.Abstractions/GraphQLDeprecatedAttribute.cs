@@ -1,10 +1,10 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.ComponentModel;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 
 namespace GraphZen
 {
@@ -24,13 +24,12 @@ namespace GraphZen
             [Description("Explains why this element was deprecated, usually also including a " +
                          "suggestion for how to access supported similar data. Formatted " +
                          "in [Markdown](https://daringfireball.net/projects/markdown/).")]
-            string reason = null)
+            string? reason = null)
         {
             Reason = reason;
         }
 
-        [CanBeNull]
-        [GraphQLCanBeNull]
-        public string Reason { get; }
+
+        [GraphQLCanBeNull] public string? Reason { get; }
     }
 }

@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +14,7 @@ namespace GraphZen.LanguageModel
 {
     public static class DocumentSyntaxExtensions
     {
-        [NotNull]
+        
         public static DocumentSyntax WithSpecDefinitions(this DocumentSyntax document)
         {
             Check.NotNull(document, nameof(document));
@@ -32,20 +34,20 @@ namespace GraphZen.LanguageModel
         }
 
 
-        [NotNull]
+        
         public static DocumentSyntax WithoutSpecDefinitions(this DocumentSyntax document) =>
             Check.NotNull(document, nameof(document))
                 .WithFilteredDefinitions(def => !def.IsSpecDefinedType() && !def.IsSpecDefinedDirective());
 
-        [NotNull]
+        
         public static DocumentSyntax WithoutIntrospectionTypes(this DocumentSyntax document) => Check
             .NotNull(document, nameof(document)).WithFilteredDefinitions(_ => !_.IsIntrospectionType());
 
-        [NotNull]
+        
         public static DocumentSyntax WithoutBuiltInDefinitions(this DocumentSyntax document) => Check
             .NotNull(document, nameof(document)).WithoutIntrospectionTypes().WithoutSpecDefinitions();
 
-        [NotNull]
+        
         public static DocumentSyntax WithDefinitionsAdded(this DocumentSyntax document,
             IEnumerable<DefinitionSyntax> definitions)
         {
@@ -62,7 +64,7 @@ namespace GraphZen.LanguageModel
             params DefinitionSyntax[] definitions) =>
             document.WithDefinitionsAdded(definitions.AsEnumerable());
 
-        [NotNull]
+        
         public static DocumentSyntax WithSortedChildren(this DocumentSyntax document)
         {
             Check.NotNull(document, nameof(document));

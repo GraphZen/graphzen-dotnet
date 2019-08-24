@@ -86,18 +86,18 @@ namespace GraphZen.LanguageModel
     public sealed partial class <#= nodeName #>Syntax {
 
 		/// <summary>Empty, read-only list of <see cref="<#= nodeName #>Syntax"/> nodes.</summary>
-		[NotNull]
-		[ItemNotNull]
+		
+		
 		public static IReadOnlyList<<#= nodeName #>Syntax> EmptyList {get;} = new List<<#= nodeName #>Syntax>(0).AsReadOnly();
 
 		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor"/> enters a <see cref="<#= nodeName #>Syntax"/> node.</summary>
-		public override void VisitEnter([NotNull] GraphQLSyntaxVisitor visitor) => visitor.Enter<#= nodeName #>(this);
+		public override void VisitEnter( GraphQLSyntaxVisitor visitor) => visitor.Enter<#= nodeName #>(this);
 		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor"/> leaves a <see cref="<#= nodeName #>Syntax"/> node.</summary>
-		public override void VisitLeave([NotNull] GraphQLSyntaxVisitor visitor) => visitor.Leave<#= nodeName #>(this);
+		public override void VisitLeave( GraphQLSyntaxVisitor visitor) => visitor.Leave<#= nodeName #>(this);
 		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor{TResult}"/> enters a <see cref="<#= nodeName #>Syntax"/> node.</summary>
-		public override TResult VisitEnter<TResult>([NotNull] GraphQLSyntaxVisitor<TResult> visitor) => visitor.Enter<#= nodeName #>(this);
+		public override TResult VisitEnter<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.Enter<#= nodeName #>(this);
 		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor{TResult}"/> leaves a <see cref="<#= nodeName #>Syntax"/> node.</summary>
-		public override TResult VisitLeave<TResult>([NotNull] GraphQLSyntaxVisitor<TResult> visitor) => visitor.Leave<#= nodeName #>(this);
+		public override TResult VisitLeave<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.Leave<#= nodeName #>(this);
 		public override SyntaxKind Kind {get;} = SyntaxKind.<#= nodeName #>;
 		
     }

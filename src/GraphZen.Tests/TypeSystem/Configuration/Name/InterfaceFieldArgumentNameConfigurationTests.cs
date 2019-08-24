@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -56,6 +58,7 @@ namespace GraphZen.TypeSystem
 
         public override INamed GetMemberNamedByConvention(Schema schema)
         {
+            // ReSharper disable once PossibleNullReferenceException
             var parameterInfo = typeof(IFooInterface).GetMethod(nameof(IFooInterface.FieldWithNamedArgs))
                 .GetParameters()
                 .Single(p => p.Name == ConventionalName);
@@ -66,6 +69,7 @@ namespace GraphZen.TypeSystem
 
         public override INamed GetMemberNamedByDataAnnotation(Schema schema)
         {
+            // ReSharper disable once PossibleNullReferenceException
             var parameterInfo = typeof(IFooInterface).GetMethod(nameof(IFooInterface.FieldWithNamedArgs))
                 .GetParameters()
                 .Single(p => p.Name == "nameSetWithDataAnnotation");

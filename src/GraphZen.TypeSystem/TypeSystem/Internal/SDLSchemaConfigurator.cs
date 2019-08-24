@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class SDLSchemaConfigurator
     {
-        [NotNull] private readonly DocumentSyntax _document;
+         private readonly DocumentSyntax _document;
 
         public SDLSchemaConfigurator(DocumentSyntax document)
         {
@@ -102,8 +104,8 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        private static void ConfigureDirective([NotNull] SchemaBuilder schemaBuilder,
-            [NotNull] DirectiveDefinitionSyntax def)
+        private static void ConfigureDirective( SchemaBuilder schemaBuilder,
+             DirectiveDefinitionSyntax def)
         {
             var directive = schemaBuilder.Directive(def.Name.Value);
             if (def.Description != null)
@@ -132,7 +134,7 @@ namespace GraphZen.TypeSystem.Internal
             directive.Locations(locations);
         }
 
-        private static void ConfigureType([NotNull] SchemaBuilder schemaBuilder, [NotNull] TypeDefinitionSyntax def)
+        private static void ConfigureType( SchemaBuilder schemaBuilder,  TypeDefinitionSyntax def)
         {
             switch (def)
             {

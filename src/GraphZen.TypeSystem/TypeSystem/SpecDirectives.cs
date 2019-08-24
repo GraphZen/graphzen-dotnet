@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
@@ -12,7 +14,7 @@ namespace GraphZen.TypeSystem
     {
         private const string DefaultDeprecationReason = "No longer supported";
 
-        [NotNull]
+        
         public static Directive Deprecated { get; } = new Directive("deprecated",
             "Marks an element of a GraphQL schema as no longer supported.",
             new[]
@@ -31,7 +33,7 @@ namespace GraphZen.TypeSystem
             }, null
         );
 
-        [NotNull]
+        
         public static Directive Include { get; } = new Directive("include",
             "Directs the executor to include this field or fragment only when the `if` argument is true.",
             new[] { DirectiveLocation.Field, DirectiveLocation.FragmentSpread, DirectiveLocation.InlineFragment },
@@ -43,7 +45,7 @@ namespace GraphZen.TypeSystem
             }, null
         );
 
-        [NotNull]
+        
         public static Directive Skip { get; } = new Directive("skip",
             "'Directs the executor to include this field or fragment only when the `if` argument is true.",
             new[] { DirectiveLocation.Field, DirectiveLocation.FragmentSpread, DirectiveLocation.InlineFragment },
@@ -54,8 +56,8 @@ namespace GraphZen.TypeSystem
                     null, false, DirectiveAnnotation.EmptyList, null, null, null)
             }, null);
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public static IReadOnlyList<Directive> All { get; } = new List<Directive>
         {
             Deprecated,

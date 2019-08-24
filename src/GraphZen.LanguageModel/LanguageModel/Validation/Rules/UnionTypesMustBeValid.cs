@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,11 +13,11 @@ namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class UnionTypesMustBeValid : DocumentValidationRuleVisitor
     {
-        [NotNull]
+        
         private readonly Dictionary<string, ICollection<UnionTypeDefinitionSyntax>> _unionDefs =
             new Dictionary<string, ICollection<UnionTypeDefinitionSyntax>>();
 
-        [NotNull]
+        
         private readonly Dictionary<string, ICollection<UnionTypeExtensionSyntax>> _unionExts =
             new Dictionary<string, ICollection<UnionTypeExtensionSyntax>>();
 

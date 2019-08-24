@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -33,20 +35,20 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name node of the input value.
         /// </summary>
-        [NotNull]
+        
         public NameSyntax Name { get; }
 
 
         /// <summary>
         ///     The type of the input value.
         /// </summary>
-        [NotNull]
+        
         public TypeSyntax Type { get; }
 
         /// <summary>
         ///     The default input value. (Optional)
         /// </summary>
-        [CanBeNull]
+        
         public ValueSyntax DefaultValue { get; }
 
 
@@ -63,7 +65,7 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
 
-        private bool Equals([NotNull] InputValueDefinitionSyntax other) =>
+        private bool Equals( InputValueDefinitionSyntax other) =>
             Name.Equals(other.Name) && Equals(Description, other.Description) && Type.Equals(other.Type) &&
             Equals(DefaultValue, other.DefaultValue) && Directives.SequenceEqual(other.Directives);
 

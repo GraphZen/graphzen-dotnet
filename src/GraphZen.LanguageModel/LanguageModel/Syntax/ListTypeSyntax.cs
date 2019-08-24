@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
@@ -21,7 +23,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The type of object contained within the colleciton.
         /// </summary>
-        [NotNull]
+        
         public TypeSyntax OfType { get; }
 
         public override IEnumerable<SyntaxNode> Children
@@ -29,7 +31,7 @@ namespace GraphZen.LanguageModel
             get { yield return OfType; }
         }
 
-        private bool Equals([NotNull] ListTypeSyntax other) => OfType.Equals(other.OfType);
+        private bool Equals( ListTypeSyntax other) => OfType.Equals(other.OfType);
 
         public override bool Equals(object obj)
         {

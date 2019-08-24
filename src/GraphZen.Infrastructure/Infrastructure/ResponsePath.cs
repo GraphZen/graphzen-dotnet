@@ -1,19 +1,23 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable enable
+
 
 namespace GraphZen.Infrastructure
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ResponsePath
     {
-        internal ResponsePath(ResponsePath previous, object key)
+        internal ResponsePath(ResponsePath? previous, object key)
         {
             Previous = previous;
             Key = Check.NotNull(key, nameof(key));
@@ -23,21 +27,20 @@ namespace GraphZen.Infrastructure
         {
         }
 
-        [CanBeNull]
-        public ResponsePath Previous { get; }
 
-        [NotNull]
+        public ResponsePath? Previous { get; }
+
+
         public object Key { get; }
 
         private string DebuggerDisplay => ToString();
 
 
-        [NotNull]
         [DebuggerStepThrough]
         public IReadOnlyList<object> AsReadOnlyList()
         {
             var flattened = new List<object>();
-            var curr = this;
+            ResponsePath? curr = this;
             while (curr != null)
             {
                 flattened.Add(curr.Key);
@@ -51,7 +54,7 @@ namespace GraphZen.Infrastructure
         public override string ToString()
         {
             var sb = new StringBuilder();
-            var currentPath = this;
+            ResponsePath? currentPath = this;
             while (currentPath != null)
             {
                 sb.Insert(0, Key is string ? $".{currentPath.Key}" : $"[{currentPath.Key}]");
@@ -59,10 +62,7 @@ namespace GraphZen.Infrastructure
                 currentPath = currentPath.Previous;
             }
 
-            if (sb.Length > 0)
-            {
-                sb.Insert(0, "value");
-            }
+            if (sb.Length > 0) sb.Insert(0, "value");
 
             return sb.ToString();
         }

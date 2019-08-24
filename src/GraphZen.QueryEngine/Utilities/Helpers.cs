@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace GraphZen
 {
     public static partial class Helpers
     {
-        [NotNull]
+        
         internal static Maybe<object> ValueFromAst(ValueSyntax valueSyntax, IGraphQLType type,
             IReadOnlyDictionary<string, object> variables = null)
         {

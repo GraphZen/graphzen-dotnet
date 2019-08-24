@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -11,15 +13,15 @@ namespace GraphZen
 {
     public static class TestDataHelpers
     {
-        [NotNull]
-        [ItemNotNull]
-        public static IEnumerable<object[]> ToTestData<T>([NotNull] this IEnumerable<T> source) =>
+        
+        
+        public static IEnumerable<object[]> ToTestData<T>( this IEnumerable<T> source) =>
             source.Select(_ => new object[] { _ });
     }
 
     public abstract class TestDataHelper<T>
     {
-        protected void TestData<TFilter>([NotNull] T data, [NotNull] Action test) where TFilter : T, new()
+        protected void TestData<TFilter>( T data,  Action test) where TFilter : T, new()
         {
             if (data is TFilter)
             {
@@ -29,7 +31,7 @@ namespace GraphZen
             }
         }
 
-        protected void TestData([NotNull] T data, [NotNull] Action test)
+        protected void TestData( T data,  Action test)
         {
             try
             {

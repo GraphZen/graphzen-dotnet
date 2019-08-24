@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UnionTypeDefinition : NamedTypeDefinition, IMutableUnionTypeDefinition
     {
-        [NotNull]
+        
         private readonly List<ObjectTypeDefinition> _types = new List<ObjectTypeDefinition>();
 
 
@@ -30,7 +32,7 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"union {Name}";
 
-        [NotNull]
+        
         public InternalUnionTypeBuilder Builder { get; }
 
 

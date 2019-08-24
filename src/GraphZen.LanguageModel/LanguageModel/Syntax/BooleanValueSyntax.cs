@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,7 +33,7 @@ namespace GraphZen.LanguageModel
 
         public override object GetValue() => Value;
 
-        private bool Equals([NotNull] BooleanValueSyntax other) => Value == other.Value;
+        private bool Equals( BooleanValueSyntax other) => Value == other.Value;
 
         public override bool Equals(object obj)
         {

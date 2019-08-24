@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Diagnostics;
@@ -13,7 +15,7 @@ namespace GraphZen.TypeSystem
 {
     public class TypeReference : INamedTypeReference
     {
-        public TypeReference([NotNull] TypeIdentity identity, [NotNull] TypeSyntax typeSyntax)
+        public TypeReference( TypeIdentity identity,  TypeSyntax typeSyntax)
         {
             Identity = Check.NotNull(identity, nameof(identity));
             TypeSyntax = Check.NotNull(typeSyntax, nameof(typeSyntax));
@@ -24,15 +26,15 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        [NotNull]
+        
         public TypeIdentity Identity { get; }
 
-        [NotNull]
+        
         public TypeSyntax TypeSyntax { get; }
 
         public string Name => Identity.Name;
 
-        [NotNull]
+        
         public IGraphQLType ToType(Schema schema)
         {
             IGraphQLType GetType(TypeSyntax node)

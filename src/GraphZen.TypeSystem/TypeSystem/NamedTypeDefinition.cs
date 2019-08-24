@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Diagnostics;
@@ -18,7 +20,7 @@ namespace GraphZen.TypeSystem
         private ConfigurationSource _nameConfigurationSource;
         private ConfigurationSource _clrTypeConfiguraitonSource = ConfigurationSource.Convention;
 
-        protected NamedTypeDefinition([NotNull] TypeIdentity identity, [NotNull] SchemaDefinition schema,
+        protected NamedTypeDefinition( TypeIdentity identity,  SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(configurationSource)
         {
             Identity = identity;
@@ -41,10 +43,10 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        [NotNull]
+        
         public TypeIdentity Identity { get; }
 
-        [NotNull]
+        
         public SchemaDefinition Schema { get; }
 
 
@@ -54,7 +56,7 @@ namespace GraphZen.TypeSystem
 
         public string Name => Identity.Name;
 
-        public bool SetName([CanBeNull] string name, ConfigurationSource configurationSource)
+        public bool SetName( string name, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(_nameConfigurationSource))
             {
@@ -85,7 +87,7 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource GetClrTypeConfigurationSource() => _clrTypeConfiguraitonSource;
 
-        [NotNull]
+        
         public TypeReference GetTypeReference() =>
             new TypeReference(Identity,
                 ClrType != null ? SyntaxFactory.NamedType(ClrType) : SyntaxFactory.NamedType(SyntaxFactory.Name(Name)));

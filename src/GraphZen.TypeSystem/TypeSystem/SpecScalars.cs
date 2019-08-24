@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace GraphZen.TypeSystem
     public static class SpecScalars
     {
         // ReSharper disable once InconsistentNaming
-        [NotNull]
+        
         public static ScalarType ID { get; } = ScalarType.Create("ID", _ =>
             {
                 _
@@ -67,7 +69,7 @@ namespace GraphZen.TypeSystem
         );
 
 
-        [NotNull]
+        
         public static ScalarType String { get; } = ScalarType.Create<string>(
             _ => _.Description(SpecScalarSyntaxNodes.String.Description.Value)
                 .ValueParser(value =>
@@ -102,7 +104,7 @@ namespace GraphZen.TypeSystem
                 })
         );
 
-        [NotNull]
+        
         public static ScalarType Int { get; } = ScalarType.Create<int>(_ =>
         {
             _
@@ -152,7 +154,7 @@ namespace GraphZen.TypeSystem
                 });
         });
 
-        [NotNull]
+        
         public static ScalarType Float { get; } = ScalarType.Create<float>(_ =>
         {
             _
@@ -195,7 +197,7 @@ namespace GraphZen.TypeSystem
         });
 
 
-        [NotNull]
+        
         public static ScalarType Boolean { get; } = ScalarType.Create<bool>(_ =>
         {
             _.Description(SpecScalarSyntaxNodes.Boolean.Description.Value)
@@ -205,8 +207,8 @@ namespace GraphZen.TypeSystem
                 .Serializer(value => Maybe.Some<object>(Convert.ToBoolean(value)));
         });
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public static IReadOnlyList<ScalarType> All { get; } = new List<ScalarType>
         {
             ID,

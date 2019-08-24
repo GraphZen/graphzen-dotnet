@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Linq;
@@ -13,17 +15,17 @@ namespace GraphZen.TypeSystem.Internal
     public class
         InternalObjectTypeBuilder : InternalFieldsContainerBuilder<ObjectTypeDefinition, InternalObjectTypeBuilder>
     {
-        public InternalObjectTypeBuilder([NotNull] ObjectTypeDefinition definition,
-            [NotNull] InternalSchemaBuilder schemaBuilder) : base(
+        public InternalObjectTypeBuilder( ObjectTypeDefinition definition,
+             InternalSchemaBuilder schemaBuilder) : base(
             definition, schemaBuilder)
         {
         }
 
 
-        public void IsTypeOf([NotNull] IsTypeOf<object, GraphQLContext> isTypeOfFn) => Definition.IsTypeOf = isTypeOfFn;
+        public void IsTypeOf( IsTypeOf<object, GraphQLContext> isTypeOfFn) => Definition.IsTypeOf = isTypeOfFn;
 
 
-        public bool ImplementsInterface([NotNull] Type clrType, ConfigurationSource configurationSource)
+        public bool ImplementsInterface( Type clrType, ConfigurationSource configurationSource)
         {
             if (clrType.IsIgnoredByDataAnnotation())
             {
@@ -60,8 +62,8 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        [NotNull]
-        public InternalObjectTypeBuilder ClrType([NotNull] Type clrType, ConfigurationSource configurationSource)
+        
+        public InternalObjectTypeBuilder ClrType( Type clrType, ConfigurationSource configurationSource)
         {
             if (Definition.SetClrType(clrType, configurationSource))
             {
@@ -111,8 +113,8 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        [NotNull]
-        public InternalObjectTypeBuilder ImplementsInterface([NotNull] string interfaceType,
+        
+        public InternalObjectTypeBuilder ImplementsInterface( string interfaceType,
             ConfigurationSource configurationSource)
         {
             var interfaceRef = SchemaBuilder.Interface(interfaceType, configurationSource)?.Definition;
@@ -131,7 +133,7 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public bool UnignoreInterface([NotNull] string name, ConfigurationSource configurationSource)
+        public bool UnignoreInterface( string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredInterfaceConfigurationSource(name);
             if (!configurationSource.Overrides(ignoredConfigurationSource))
@@ -143,7 +145,7 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public bool IsInterfaceIgnored([NotNull] string interfaceName, ConfigurationSource configurationSource)
+        public bool IsInterfaceIgnored( string interfaceName, ConfigurationSource configurationSource)
         {
             if (configurationSource == ConfigurationSource.Explicit)
             {

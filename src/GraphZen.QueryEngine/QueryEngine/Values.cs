@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections;
@@ -20,8 +22,8 @@ namespace GraphZen.QueryEngine
 {
     internal static class Values
     {
-        [CanBeNull]
-        internal static DynamicDictionary GetDirectiveValues([NotNull] Directive directive, SyntaxNode node,
+        
+        internal static DynamicDictionary GetDirectiveValues( Directive directive, SyntaxNode node,
             IReadOnlyDictionary<string, object> variableValues)
         {
             if (node is IDirectivesSyntax directivesNode)
@@ -37,9 +39,9 @@ namespace GraphZen.QueryEngine
         }
 
         internal static Maybe<IReadOnlyDictionary<string, object>> GetVariableValues(
-            [NotNull] Schema schema,
-            [NotNull] [ItemNotNull] IReadOnlyList<VariableDefinitionSyntax> variableDefinitions,
-            [NotNull] IReadOnlyDictionary<string, object> inputs)
+             Schema schema,
+              IReadOnlyList<VariableDefinitionSyntax> variableDefinitions,
+             IReadOnlyDictionary<string, object> inputs)
         {
             var coercedValues = new Dictionary<string, object>();
             var errors = new List<GraphQLError>();
@@ -123,7 +125,7 @@ namespace GraphZen.QueryEngine
         }
 
 
-        [NotNull]
+        
         public static Maybe<object> CoerceValue(object value, IGraphQLType type, SyntaxNode blameNode,
             ResponsePath path)
         {
@@ -281,9 +283,9 @@ namespace GraphZen.QueryEngine
         }
 
 
-        [NotNull]
-        public static DynamicDictionary GetArgumentValues<TNode>([NotNull] IArgumentsContainer def,
-            [NotNull] TNode node,
+        
+        public static DynamicDictionary GetArgumentValues<TNode>( IArgumentsContainer def,
+             TNode node,
             IReadOnlyDictionary<string, object> variableValues) where TNode : SyntaxNode, IArgumentsContainerNode
         {
             var coercedValues = new DynamicDictionary();

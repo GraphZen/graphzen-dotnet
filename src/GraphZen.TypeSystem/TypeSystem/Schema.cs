@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -21,16 +23,16 @@ namespace GraphZen.TypeSystem
                  "query, mutation, and subscription operations.")]
     public class Schema : AnnotatableMember, ISchema
     {
-        [NotNull]
+
         private readonly Dictionary<string, List<ObjectType>> _implementations =
             new Dictionary<string, List<ObjectType>>();
 
-        [NotNull]
+
         private readonly Dictionary<string, Dictionary<string, bool>> _possibleTypeMap =
             new Dictionary<string, Dictionary<string, bool>>();
 
-        [NotNull] [ItemNotNull] private readonly Lazy<DocumentSyntax> _sdlSyntax;
-        [NotNull] [ItemNotNull] private readonly Lazy<SchemaDefinitionSyntax> _syntax;
+        private readonly Lazy<DocumentSyntax> _sdlSyntax;
+        private readonly Lazy<SchemaDefinitionSyntax> _syntax;
 
 
         public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType> types = null) : base(Check
@@ -180,7 +182,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [NotNull]
+
         [GraphQLIgnore]
         public SchemaDefinition Definition { get; }
 
@@ -191,7 +193,7 @@ namespace GraphZen.TypeSystem
 
 
         [Description("A list of all types supported by this server.")]
-        [NotNull]
+
         public ObjectType QueryType { get; }
 
 
@@ -204,11 +206,11 @@ namespace GraphZen.TypeSystem
         public ObjectType SubscriptionType { get; }
 
         [GraphQLIgnore]
-        [NotNull]
+
         public IReadOnlyDictionary<string, NamedType> Types { get; }
 
         [GraphQLIgnore]
-        [NotNull]
+
         public IEnumerable<NamedType> GetTypes() => Types.Values;
 
         public override string Description { get; } = "Schema";
@@ -217,12 +219,12 @@ namespace GraphZen.TypeSystem
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
-        [NotNull]
+
         [GraphQLIgnore]
         public DocumentSyntax ToDocumentSyntax() => _sdlSyntax.Value;
 
 
-        [CanBeNull]
+
         [GraphQLIgnore]
         public Directive FindDirective(string name)
         {
@@ -249,12 +251,12 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [NotNull]
+
         public static Schema Create(Action<SchemaBuilder<GraphQLContext>> schemaConfiguration) =>
             Create<GraphQLContext>(schemaConfiguration);
 
 
-        [NotNull]
+
         [GraphQLIgnore]
         public static Schema Create<TContext>(Action<SchemaBuilder<TContext>> schemaConfiguration)
             where TContext : GraphQLContext
@@ -303,12 +305,12 @@ namespace GraphZen.TypeSystem
 
         private NamedType CreateType(IGraphQLTypeDefinition definition) => NamedType.From(definition, this);
 
-        [NotNull]
-        [ItemNotNull]
+
+
         public IEnumerable<T> GetTypes<T>() where T : INamedType => Types.Values.OfType<T>();
 
 
-        [NotNull]
+
         [GraphQLIgnore]
         public IGraphQLType ResolveType(IGraphQLTypeReference typeReference)
         {
@@ -330,7 +332,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [NotNull]
+
         [GraphQLIgnore]
         public INamedType GetType(string name) => GetType<NamedType>(name);
 
@@ -413,7 +415,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [NotNull]
+
         public T GetType<T>(Type clrType) where T : INamedType
         {
             Check.NotNull(clrType, nameof(clrType));
@@ -431,7 +433,7 @@ namespace GraphZen.TypeSystem
             throw new InvalidOperationException($"Type with CLR type \"{clrType.Name}\" is not defined.");
         }
 
-        [NotNull]
+
         public T GetType<T>(string name) where T : INamedType
         {
             Check.NotNull(name, nameof(name));
@@ -450,8 +452,8 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [NotNull]
-        [ItemNotNull]
+
+
         [GraphQLIgnore]
         public IEnumerable<ObjectType> GetPossibleTypes(IAbstractType abstractType)
         {
@@ -470,19 +472,15 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(abstractType, nameof(abstractType));
             Check.NotNull(possibleType, nameof(possibleType));
-            if (abstractType is INamedType named)
-            {
-                if (!_possibleTypeMap.ContainsKey(named.Name))
-                {
-                    var possibleTypes = GetPossibleTypes(abstractType);
-                    _possibleTypeMap[named.Name] = possibleTypes.ToDictionary(_ => _.Name, _ => true);
-                }
 
-                return _possibleTypeMap.TryGetValue(named.Name, out var pTypes) &&
-                       pTypes.ContainsKey(possibleType.Name);
+            if (!_possibleTypeMap.ContainsKey(abstractType.Name))
+            {
+                var possibleTypes = GetPossibleTypes(abstractType);
+                _possibleTypeMap[abstractType.Name] = possibleTypes.ToDictionary(_ => _.Name, _ => true);
             }
 
-            throw new Exception($"Expected abstract type {abstractType} to be a named type.");
+            return _possibleTypeMap.TryGetValue(abstractType.Name, out var pTypes) &&
+                   pTypes.ContainsKey(possibleType.Name);
         }
 
         private void AssertObjectImplementsInterfaces(ObjectType objectType, InterfaceType interfaceType)
@@ -561,8 +559,8 @@ namespace GraphZen.TypeSystem
             GetInputObjects();
 
 
-        [NotNull]
-        [ItemNotNull]
+
+
         private readonly Lazy<IReadOnlyList<InputObjectType>> _inputObjects;
 
 
@@ -575,8 +573,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums() => GetEnums();
 
-        [NotNull]
-        [ItemNotNull]
+
+
         private readonly Lazy<IReadOnlyList<EnumType>> _enums;
 
 
@@ -587,8 +585,8 @@ namespace GraphZen.TypeSystem
         IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars() => GetScalars();
 
 
-        [NotNull]
-        [ItemNotNull]
+
+
         private readonly Lazy<IReadOnlyList<ScalarType>> _scalars;
 
         [GraphQLIgnore]
@@ -597,8 +595,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions() => GetUnions();
 
-        [NotNull]
-        [ItemNotNull]
+
+
         private readonly Lazy<IReadOnlyList<UnionType>> _unions;
 
 
@@ -608,8 +606,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces() => GetInterfaces();
 
-        [NotNull]
-        [ItemNotNull]
+
+
         private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
 
 
@@ -636,7 +634,7 @@ namespace GraphZen.TypeSystem
         public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
 
 
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<ObjectType>> _objects;
+        private readonly Lazy<IReadOnlyList<ObjectType>> _objects;
 
         [GraphQLIgnore]
         public IReadOnlyList<ObjectType> Objects => _objects.Value;

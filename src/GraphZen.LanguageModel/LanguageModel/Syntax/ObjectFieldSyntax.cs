@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using GraphZen.Infrastructure;
@@ -24,14 +26,14 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name of the field.
         /// </summary>
-        [NotNull]
+        
         public NameSyntax Name { get; }
 
 
         /// <summary>
         ///     The value of the field.
         /// </summary>
-        [NotNull]
+        
         public ValueSyntax Value { get; }
 
 
@@ -45,7 +47,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals([NotNull] ObjectFieldSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
+        private bool Equals( ObjectFieldSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
 
         public override bool Equals(object obj)
         {

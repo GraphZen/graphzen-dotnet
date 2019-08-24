@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -19,9 +21,9 @@ namespace GraphZen.TypeSystem
                  "which has a name, potentially a list of arguments, and a return type.")]
     public sealed class Field : AnnotatableMember, IField
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<IGraphQLType> _fieldType;
+          private readonly Lazy<IGraphQLType> _fieldType;
 
-        [NotNull] [ItemNotNull] private readonly Lazy<FieldDefinitionSyntax> _syntax;
+          private readonly Lazy<FieldDefinitionSyntax> _syntax;
 
 
         public Field(string name, string description, IFieldsContainer declaringType, IGraphQLType fieldType,
@@ -116,7 +118,7 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public static Field From([NotNull] IFieldDefinition definition, [NotNull] IFieldsContainer declaringType,
+        public static Field From( IFieldDefinition definition,  IFieldsContainer declaringType,
             TypeResolver typeResolver)
         {
             Check.NotNull(definition, nameof(definition));

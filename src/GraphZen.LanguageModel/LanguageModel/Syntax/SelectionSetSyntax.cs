@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +25,8 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The set of data requested by an operation.
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public IReadOnlyList<SelectionSyntax> Selections { get; }
 
         public override IEnumerable<SyntaxNode> Children => Selections;
@@ -32,7 +34,7 @@ namespace GraphZen.LanguageModel
         public int Count => Selections.Count;
 
         public IEnumerator<SelectionSyntax> GetEnumerator() => Selections.GetEnumerator();
-        private bool Equals([NotNull] SelectionSetSyntax other) => Selections.SequenceEqual(other.Selections);
+        private bool Equals( SelectionSetSyntax other) => Selections.SequenceEqual(other.Selections);
 
         public override bool Equals(object obj)
         {

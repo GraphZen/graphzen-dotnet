@@ -1,3 +1,7 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using JetBrains.Annotations;
 #nullable disable
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
@@ -7,9 +11,9 @@ namespace GraphZen
     public interface ICollectionConventionConfigurationFixture : ICollectionConfigurationFixture
     {
         CollectionConventionContext GetContext();
-        void ConfigureContextConventionally([NotNull] SchemaBuilder sb);
+        void ConfigureContextConventionally( SchemaBuilder sb);
 
-        void ConfigureClrContext([NotNull] SchemaBuilder sb, string parentName);
+        void ConfigureClrContext( SchemaBuilder sb, string parentName);
 
         //void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb);
     }

@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Reflection;
@@ -10,44 +12,44 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class InternalFieldBuilder : AnnotatableMemberDefinitionBuilder<FieldDefinition>
     {
-        public InternalFieldBuilder([NotNull] FieldDefinition definition, [NotNull] InternalSchemaBuilder schemaBuilder)
+        public InternalFieldBuilder( FieldDefinition definition,  InternalSchemaBuilder schemaBuilder)
             : base(definition, schemaBuilder)
         {
         }
 
-        [NotNull]
-        public InternalFieldBuilder FieldType([NotNull] Type clrType)
+        
+        public InternalFieldBuilder FieldType( Type clrType)
         {
             Definition.FieldType = Schema.GetOrAddTypeReference(clrType, false, false, Definition);
             return this;
         }
 
-        [NotNull]
-        public InternalFieldBuilder FieldType([NotNull] PropertyInfo property
+        
+        public InternalFieldBuilder FieldType( PropertyInfo property
         )
         {
             Definition.FieldType = Schema.GetOrAddTypeReference(property, Definition);
             return this;
         }
 
-        [NotNull]
-        public InternalFieldBuilder FieldType([NotNull] MethodInfo method)
+        
+        public InternalFieldBuilder FieldType( MethodInfo method)
         {
             Definition.FieldType = Schema.GetOrAddTypeReference(method, Definition);
             return this;
         }
 
 
-        [NotNull]
-        public InternalFieldBuilder FieldType([NotNull] string type)
+        
+        public InternalFieldBuilder FieldType( string type)
         {
             Definition.FieldType = Schema.GetOrAddTypeReference(type, Definition);
             return this;
         }
 
 
-        [NotNull]
-        public InternalFieldBuilder Resolve([NotNull] Resolver<object, object> resolver)
+        
+        public InternalFieldBuilder Resolve( Resolver<object, object> resolver)
         {
             Definition.Resolver = resolver;
             return this;
@@ -66,11 +68,11 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        [NotNull]
-        public InternalInputValueBuilder Argument([NotNull] string name, ConfigurationSource configurationSource) =>
+        
+        public InternalInputValueBuilder Argument( string name, ConfigurationSource configurationSource) =>
             Definition.GetOrAddArgument(name, configurationSource).Builder;
 
-        public InternalInputValueBuilder Argument([NotNull] ParameterInfo parameter,
+        public InternalInputValueBuilder Argument( ParameterInfo parameter,
             ConfigurationSource configurationSource)
         {
             var (argName, _) = parameter.GetGraphQLArgumentName();
@@ -122,7 +124,7 @@ namespace GraphZen.TypeSystem.Internal
             return argument?.Builder;
         }
 
-        public bool IsArgumentIgnored([NotNull] string name, ConfigurationSource configurationSource)
+        public bool IsArgumentIgnored( string name, ConfigurationSource configurationSource)
         {
             if (configurationSource == ConfigurationSource.Explicit)
             {
@@ -134,7 +136,7 @@ namespace GraphZen.TypeSystem.Internal
                    ignoredMemberConfigurationSource.Overrides(configurationSource);
         }
 
-        public bool UnignoreArgument([NotNull] string name, ConfigurationSource configurationSource)
+        public bool UnignoreArgument( string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredArgumentConfigurationSource(name);
             if (!configurationSource.Overrides(ignoredConfigurationSource))
@@ -147,7 +149,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public bool IgnoreArgument([NotNull] string name, ConfigurationSource configurationSource)
+        public bool IgnoreArgument( string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredArgumentConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)
@@ -171,7 +173,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public bool IgnoreArgument([NotNull] ParameterInfo parameter, ConfigurationSource configurationSource)
+        public bool IgnoreArgument( ParameterInfo parameter, ConfigurationSource configurationSource)
         {
             var (argName, _) = parameter.GetGraphQLArgumentName();
             var ignoredConfigurationSource = Definition.FindIgnoredArgumentConfigurationSource(argName);
@@ -195,7 +197,7 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public bool IgnoreArgument([NotNull] ArgumentDefinition argument, ConfigurationSource configurationSource)
+        public bool IgnoreArgument( ArgumentDefinition argument, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(argument.GetConfigurationSource()))
             {
@@ -207,7 +209,7 @@ namespace GraphZen.TypeSystem.Internal
             return RemoveArgument(argument, configurationSource);
         }
 
-        public bool RemoveArgument([NotNull] ArgumentDefinition argument, ConfigurationSource configurationSource)
+        public bool RemoveArgument( ArgumentDefinition argument, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(argument.GetConfigurationSource()))
             {

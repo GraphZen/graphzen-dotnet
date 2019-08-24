@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace GraphZen.QueryEngine
 {
     public class ExecutionResult
     {
-        [NotNull] private readonly IReadOnlyList<GraphQLError> _errors;
+         private readonly IReadOnlyList<GraphQLError> _errors;
 
         public ExecutionResult(IDictionary<string, object> data, IEnumerable<GraphQLError> errors)
         {
@@ -20,7 +22,7 @@ namespace GraphZen.QueryEngine
         }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        [CanBeNull]
+        
         public IDictionary<string, object> Data { get; }
 
 

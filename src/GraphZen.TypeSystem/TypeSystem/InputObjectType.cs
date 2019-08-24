@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace GraphZen.TypeSystem
 {
     public class InputObjectType : NamedType, IInputObjectType
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<InputObjectTypeDefinitionSyntax> _syntax;
+          private readonly Lazy<InputObjectTypeDefinitionSyntax> _syntax;
 
         public InputObjectType(string name, string description, Type clrType, IEnumerable<IInputFieldDefinition> fields,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(Check.NotNull(name, nameof(name)),
@@ -39,7 +41,7 @@ namespace GraphZen.TypeSystem
         public IEnumerable<InputField> GetFields() => Fields.Values;
 
 
-        [NotNull]
+        
         public static InputObjectType From(IInputObjectTypeDefinition definition,
             Schema schema)
         {

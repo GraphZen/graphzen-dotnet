@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Collections.Generic;
 using System.Linq;
@@ -15,39 +17,39 @@ namespace GraphZen
 {
     public class TypeInfo
     {
-        [NotNull] private readonly Stack<Maybe<object>> _defaultValueStack = new Stack<Maybe<object>>();
+         private readonly Stack<Maybe<object>> _defaultValueStack = new Stack<Maybe<object>>();
 
-        [NotNull] private readonly Stack<Field> _fieldDefStack = new Stack<Field>();
+         private readonly Stack<Field> _fieldDefStack = new Stack<Field>();
 
-        [NotNull] private readonly Stack<IGraphQLType> _inputTypeStack = new Stack<IGraphQLType>();
+         private readonly Stack<IGraphQLType> _inputTypeStack = new Stack<IGraphQLType>();
 
-        [NotNull] private readonly Stack<ICompositeType> _parentTypeStack = new Stack<ICompositeType>();
+         private readonly Stack<ICompositeType> _parentTypeStack = new Stack<ICompositeType>();
 
-        [NotNull] private readonly Stack<IGraphQLType> _typeStack = new Stack<IGraphQLType>();
+         private readonly Stack<IGraphQLType> _typeStack = new Stack<IGraphQLType>();
 
         public TypeInfo(Schema schema)
         {
             Schema = Check.NotNull(schema, nameof(schema));
         }
 
-        [CanBeNull]
+        
         public Argument Argument { get; private set; }
 
-        [CanBeNull]
+        
         public Directive Directive { get; private set; }
 
-        [CanBeNull]
+        
         public EnumValue EnumValue { get; private set; }
 
-        [NotNull]
+        
         protected Schema Schema { get; }
 
-        [CanBeNull]
+        
         public Maybe<object> DefaultValue => _defaultValueStack.PeekOrDefault();
 
-        [CanBeNull]
-        private static Field GetFieldDef([NotNull] Schema schema, [NotNull] IGraphQLType parentType,
-            [NotNull] FieldSyntax node)
+        
+        private static Field GetFieldDef( Schema schema,  IGraphQLType parentType,
+             FieldSyntax node)
         {
             var name = node.Name.Value;
 
@@ -80,19 +82,19 @@ namespace GraphZen
         }
 
 
-        [CanBeNull]
+        
         public IGraphQLType GetOutputType() => _typeStack.PeekOrDefault();
 
-        [CanBeNull]
+        
         public ICompositeType GetParentType() => _parentTypeStack.PeekOrDefault();
 
-        [CanBeNull]
+        
         public IGraphQLType GetInputType() => _inputTypeStack.PeekOrDefault();
 
-        [CanBeNull]
+        
         public IGraphQLType GetParentInputType() => _inputTypeStack.Count > 1 ? _inputTypeStack.ElementAt(1) : default;
 
-        [CanBeNull]
+        
         public Field GetField() => _fieldDefStack.PeekOrDefault();
 
         public void Enter(SyntaxNode syntaxNode)

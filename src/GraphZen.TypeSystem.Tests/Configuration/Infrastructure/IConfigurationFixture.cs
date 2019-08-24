@@ -1,3 +1,7 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using JetBrains.Annotations;
 #nullable disable
 using System;
 using GraphZen.Infrastructure;
@@ -10,8 +14,8 @@ namespace GraphZen
     {
         Type ParentMemberType { get; }
         Type ParentMemberDefinitionType { get; }
-        void ConfigureParentExplicitly([NotNull]SchemaBuilder sb, [NotNull] string parentName);
-        Member GetParent([NotNull]Schema schema, [NotNull] string parentName);
-        MemberDefinition GetParent([NotNull]SchemaBuilder sb, [NotNull]string parentName);
+        void ConfigureParentExplicitly(SchemaBuilder sb,  string parentName);
+        Member GetParent(Schema schema,  string parentName);
+        MemberDefinition GetParent(SchemaBuilder sb, string parentName);
     }
 }

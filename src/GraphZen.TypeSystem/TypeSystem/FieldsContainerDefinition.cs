@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections.Generic;
@@ -16,24 +18,24 @@ namespace GraphZen.TypeSystem
 {
     public abstract class FieldsContainerDefinition : NamedTypeDefinition, IMutableFieldsContainerDefinition
     {
-        [NotNull]
+        
         private readonly Dictionary<string, FieldDefinition> _fields =
             new Dictionary<string, FieldDefinition>();
 
-        [NotNull]
+        
         private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
 
-        public FieldsContainerDefinition([NotNull] TypeIdentity identity, [NotNull] SchemaDefinition schema,
+        public FieldsContainerDefinition( TypeIdentity identity,  SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(identity, schema, configurationSource)
         {
         }
 
 
 
-        [NotNull]
-        [ItemNotNull]
+        
+        
         public IEnumerable<FieldDefinition> GetFields() => _fields.Values;
 
         public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
@@ -41,12 +43,12 @@ namespace GraphZen.TypeSystem
         IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => GetFields();
 
 
-        public void UnignoreField([NotNull] string fieldName)
+        public void UnignoreField( string fieldName)
         {
             _ignoredFields.Remove(fieldName);
         }
 
-        public bool IgnoreField([NotNull] string fieldName, ConfigurationSource configurationSource)
+        public bool IgnoreField( string fieldName, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(fieldName);
             if (ignoredConfigurationSource.HasValue && ignoredConfigurationSource.Overrides(configurationSource))
@@ -70,7 +72,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public FieldDefinition FindField([NotNull] MemberInfo member)
+        public FieldDefinition FindField( MemberInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
             var memberMatch = _fields.Values.SingleOrDefault(_ => _.ClrInfo == member);
@@ -83,7 +85,7 @@ namespace GraphZen.TypeSystem
             return this.FindField(fieldName);
         }
 
-        public bool RenameField([NotNull] FieldDefinition field, [NotNull] string name,
+        public bool RenameField( FieldDefinition field,  string name,
             ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetNameConfigurationSource()))
@@ -105,7 +107,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        private bool IgnoreField([NotNull] FieldDefinition field, ConfigurationSource configurationSource)
+        private bool IgnoreField( FieldDefinition field, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(field.GetConfigurationSource()))
             {
@@ -117,7 +119,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public FieldDefinition AddField([NotNull] PropertyInfo propertyInfo, ConfigurationSource configurationSource)
+        public FieldDefinition AddField( PropertyInfo propertyInfo, ConfigurationSource configurationSource)
         {
             if (ClrType == null)
             {
@@ -167,7 +169,7 @@ namespace GraphZen.TypeSystem
             return AddField(field);
         }
 
-        public FieldDefinition AddField([NotNull] MethodInfo method, ConfigurationSource configurationSource)
+        public FieldDefinition AddField( MethodInfo method, ConfigurationSource configurationSource)
         {
             var (fieldName, nameConfigurationSource) = method.GetGraphQLFieldName();
 
@@ -183,7 +185,7 @@ namespace GraphZen.TypeSystem
             return AddField(field);
         }
 
-        private FieldDefinition AddField([NotNull] FieldDefinition field)
+        private FieldDefinition AddField( FieldDefinition field)
         {
             if (_fields.ContainsKey(field.Name))
             {
@@ -195,7 +197,7 @@ namespace GraphZen.TypeSystem
             return field;
         }
 
-        public void RemoveField([NotNull] FieldDefinition field)
+        public void RemoveField( FieldDefinition field)
         {
             _fields.Remove(field.Name);
         }
@@ -210,7 +212,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public FieldDefinition GetOrAddField([NotNull] string name, ConfigurationSource nameConfigurationSource,
+        public FieldDefinition GetOrAddField( string name, ConfigurationSource nameConfigurationSource,
             ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);

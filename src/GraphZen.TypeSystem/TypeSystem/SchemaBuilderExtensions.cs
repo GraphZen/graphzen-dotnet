@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -11,7 +13,7 @@ namespace GraphZen.TypeSystem
 {
     public static class SchemaBuilderExtensions
     {
-        [NotNull]
+        
         public static SchemaBuilder Build(this SchemaBuilder schemaBuilder,
             DocumentSyntax schemaDocument)
         {
@@ -22,7 +24,7 @@ namespace GraphZen.TypeSystem
             return schemaBuilder;
         }
 
-        [NotNull]
+        
         public static SchemaBuilder Build(this SchemaBuilder schemaBuilder, string schemaDocument)
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
@@ -31,7 +33,7 @@ namespace GraphZen.TypeSystem
             return schemaBuilder.Build(ast);
         }
 
-        [NotNull]
+        
         internal static SchemaDefinition GetDefinition(this SchemaBuilder schemaBuilder) =>
             Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<SchemaDefinition>();
     }

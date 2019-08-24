@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System.Diagnostics;
 using System.Reflection;
@@ -17,7 +19,7 @@ namespace GraphZen.TypeSystem
         public InputFieldDefinition(string name,
             ConfigurationSource nameConfigurationSource,
             SchemaDefinition schema, ConfigurationSource configurationSource, PropertyInfo clrInfo,
-            [NotNull] IInputObjectTypeDefinition declaringMember) :
+             IInputObjectTypeDefinition declaringMember) :
             base(Check.NotNull(name, nameof(name)), nameConfigurationSource,
                 Check.NotNull(schema, nameof(schema)), configurationSource, clrInfo, declaringMember)
         {

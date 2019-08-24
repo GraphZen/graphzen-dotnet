@@ -1,6 +1,8 @@
-#nullable disable
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+using JetBrains.Annotations;
+#nullable disable
+
 
 using System;
 using System.Collections;
@@ -20,7 +22,7 @@ namespace GraphZen.TypeSystem.Internal
     public class DynamicDictionary : DynamicObject, IEquatable<DynamicDictionary>, IEnumerable<string>,
         IDictionary<string, object>
     {
-        [NotNull]
+        
         private readonly IDictionary<string, dynamic> _dictionary =
             new Dictionary<string, dynamic>(StringComparer.OrdinalIgnoreCase);
 
@@ -60,7 +62,6 @@ namespace GraphZen.TypeSystem.Internal
 
                 if (!_dictionary.TryGetValue(name, out var member))
                 {
-                    member = null;
                 }
 
                 return member;
@@ -313,7 +314,6 @@ namespace GraphZen.TypeSystem.Internal
         {
             if (!_dictionary.TryGetValue(binder.Name, out result))
             {
-                result = null;
             }
 
             return true;
