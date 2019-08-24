@@ -4,8 +4,6 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>GraphZen</RootNamespace>
   </PropertyGroup>
-
-
   <ItemGroup>
     <PackageReference Include="CompareNETObjects" Version="4.62.0" />
     <PackageReference Include="coverlet.msbuild" Version="2.6.3">
