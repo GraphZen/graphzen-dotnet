@@ -13,6 +13,7 @@
     <IsPackable>True</IsPackable>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <WarningsAsErrors />
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>latest</LangVersion>
     <RootNamespace>GraphZen</RootNamespace>
     <Nullable>enable</Nullable>
