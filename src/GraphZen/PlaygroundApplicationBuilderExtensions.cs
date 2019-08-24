@@ -24,7 +24,7 @@ namespace GraphZen
             app.UseDefaultFiles(defaultFileOptions);
             var staticFileOptions = new StaticFileOptions(shared)
             {
-                FileProvider = new ManifestEmbeddedFileProvider(typeof(PlaygroundSettings).Assembly, "StaticFiles")
+                FileProvider = new ManifestEmbeddedFileProvider(typeof(PlaygroundApplicationBuilderExtensions).Assembly, "StaticFiles")
             };
             app.UseStaticFiles(staticFileOptions);
         }

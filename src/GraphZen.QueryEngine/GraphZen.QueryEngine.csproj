@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
     <Description>GraphZen query execution engine for GraphQL. Not intended for stand-alone usage, install GraphZen.AspNetCore.App to to build and host GraphQL APIs.</Description>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

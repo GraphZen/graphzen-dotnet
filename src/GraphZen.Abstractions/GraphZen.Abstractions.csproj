@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Description>Lightweight package containng code attributes for building code-first GraphQL schemas and APIs in .NET. Use the "GraphZen" package for configuring and hosting your GraphQL schema and API.</Description>
+    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>    <Description>Lightweight package containing code attributes for use when building code-first GraphQL APIs in .NET. Use the "GraphZen" package for hosting your API on ASP.NET.</Description>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />

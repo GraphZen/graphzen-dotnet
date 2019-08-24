@@ -153,7 +153,7 @@ Task("Cleanup-Full")
 .Does(() => ResharperCleanupCode("GraphZen Full Cleanup"));
 
 Task("Restore").Does(() => {
-  NuGetRestore(paths.sln);
+  DotNetCoreRestore(paths.sln);
 });
 
 

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Description>Code-first GraphQL framework for .NET. Use the GraphZen.AspNetCore.App package if you intend to host your GraphQL API with ASP.NET Core.</Description>
+    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
+    <Description>Code-first GraphQL framework for .NET</Description>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
@@ -9,8 +9,24 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
+<PropertyGroup>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen.AspNetCore\GraphZen.AspNetCore.csproj" />
-    <ProjectReference Include="..\GraphZen.Playground.AspNetCore\GraphZen.Playground.AspNetCore.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.2.0" />
+
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="StaticFiles\playground.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="StaticFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />
   </ItemGroup>
 </Project>

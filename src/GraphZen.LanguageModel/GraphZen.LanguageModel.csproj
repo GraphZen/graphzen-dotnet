@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Description>GraphQL language AST syntax model, parser, printer, and visitor utilities.</Description>
+    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.2;netcoreapp3.0</TargetFrameworks>
+    <Description>GraphQL language AST syntax model, parser, printer, and utilities.</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Superpower" Version="2.3.0" />

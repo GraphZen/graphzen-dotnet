@@ -27,11 +27,12 @@ Check.NotNull($EXPR$, $NAME$);</s:String>
 	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FileMasksToSkip/=_002A_002Anetcoreapp_002A_002A/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FileMasksToSkip/=_002A_002A_002Fobj_002F_002A_002A/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=3C39E871_002DD013_002D4C8C_002D92EA_002D24A37AC9D111_002Fd_003ATypeSystem_002Fd_003AInternal_002Ff_003ADynamicDictionary_002Ecs/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=5B920998_002DEBBE_002D43BC_002D9F03_002D8498DCA603C0_002Fd_003AStaticFiles/@EntryIndexedValue">ExplicitlyExcluded</s:String>
 	
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=5B920998_002DEBBE_002D43BC_002D9F03_002D8498DCA603C0_002Fd_003ATypeSystem_002Fd_003ABuilders_005FOld/@EntryIndexedValue">ExplicitlyExcluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=5B920998_002DEBBE_002D43BC_002D9F03_002D8498DCA603C0_002Fd_003ATypeSystem_002Fd_003AInternal_002Ff_003ADynamicDictionary_002Ecs/@EntryIndexedValue">ExplicitlyExcluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=5B920998_002DEBBE_002D43BC_002D9F03_002D8498DCA603C0_002Fd_003ATypes_002Fd_003AInternal_002Ff_003ADynamicDictionary_002Ecs/@EntryIndexedValue">ExplicitlyExcluded</s:String>
-	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=B50CA472_002D47B0_002D448B_002DBC01_002D363C43812C67_002Fd_003AStaticFiles/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=CFAF10A9_002D0E60_002D43CD_002D8EF9_002DB97E58C1ED5A/@EntryIndexedValue">ExplicitlyExcluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedFileMasks/=_002A_002EGenerated_002Ecs/@EntryIndexedValue"></s:String>
 	<s:Boolean x:Key="/Default/CodeInspection/GeneratedCode/GeneratedFileMasks/=_002A_002EGenerated_002Ecs/@EntryIndexRemoved">True</s:Boolean>
@@ -297,6 +298,7 @@ Licensed under the GraphZen Community License. See the LICENSE file in the proje
 	<s:String x:Key="/Default/Environment/Hierarchy/PsiConfigurationSettingsKey/CustomLocation/@EntryValue">C:\Users\craig\AppData\Local\JetBrains\Transient\ReSharperPlatformVs15\v09_885182f4\SolutionCaches</s:String>
 	 <s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=Utilities/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/ParameterNameHintsOptions/ShowParameterNameHints/@EntryValue">False</s:Boolean>
+	<s:String x:Key="/Default/Environment/PerformanceGuide/SwitchBehaviour/=Antivirus/@EntryIndexedValue">LIVE_MONITOR</s:String>
 	<s:String x:Key="/Default/Environment/PerformanceGuide/SwitchBehaviour/=AutoRecoverer/@EntryIndexedValue">LIVE_MONITOR</s:String>
 	<s:String x:Key="/Default/Environment/PerformanceGuide/SwitchBehaviour/=Format/@EntryIndexedValue">LIVE_MONITOR</s:String>
 	<s:String x:Key="/Default/Environment/PerformanceGuide/SwitchBehaviour/=Roslyn_002Dswea/@EntryIndexedValue">DO_NOTHING</s:String>
