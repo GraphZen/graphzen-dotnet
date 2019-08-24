@@ -21,8 +21,7 @@ namespace GraphZen.TypeSystem.Internal
                 src = awaitable.GetResult();
             }
 
-            Debug.Assert(objectType.IsTypeOf != null, "objectType.IsTypeOf != null");
-            return objectType.IsTypeOf(src, context, info);
+            return src != null && objectType.IsTypeOf(src, context, info);
         }
     }
 }

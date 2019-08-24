@@ -45,11 +45,11 @@ namespace GraphZen.TypeSystem.Internal
             ConfigurationSource configurationSource)
         {
             var defaultValueAttribute = parameter.GetCustomAttribute<DefaultValueAttribute>();
-            if (defaultValueAttribute != null)
+            if (defaultValueAttribute != null && defaultValueAttribute.Value != null)
             {
                 Definition.SetDefaultValue(defaultValueAttribute.Value, ConfigurationSource.DataAnnotation);
             }
-            else if (parameter.HasDefaultValue)
+            else if (parameter.HasDefaultValue && parameter.RawDefaultValue != null)
             {
                 Definition.SetDefaultValue(parameter.RawDefaultValue, configurationSource);
             }
@@ -66,7 +66,7 @@ namespace GraphZen.TypeSystem.Internal
             ConfigurationSource configurationSource)
         {
             var defaultValueAttribute = property.GetCustomAttribute<DefaultValueAttribute>();
-            if (defaultValueAttribute != null)
+            if (defaultValueAttribute?.Value != null)
             {
                 Definition.SetDefaultValue(defaultValueAttribute.Value, ConfigurationSource.DataAnnotation);
             }

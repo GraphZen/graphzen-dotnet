@@ -1,7 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 using JetBrains.Annotations;
-#nullable disable
+
 
 
 using System;
@@ -103,7 +103,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Check.NotNull(scalarTypeConfigurator, nameof(scalarTypeConfigurator));
             var schemaDef = new SchemaDefinition(Array.Empty<ScalarType>());
-            var definition = schemaDef.GetOrAddScalar(name, ConfigurationSource.Explicit);
+            ScalarTypeDefinition definition = schemaDef.GetOrAddScalar(name, ConfigurationSource.Explicit)!;
             var builder = new ScalarTypeBuilder<object, ValueSyntax>(definition?.Builder);
             scalarTypeConfigurator(builder);
             return From(definition);
@@ -114,8 +114,8 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(scalarTypeConfigurator, nameof(scalarTypeConfigurator));
             var schemaDef = new SchemaDefinition(Array.Empty<ScalarType>());
-            var definition = schemaDef.GetOrAddScalar(typeof(TScalar), ConfigurationSource.Explicit);
-            var builder = new ScalarTypeBuilder<TScalar, ValueSyntax>(definition?.Builder);
+            ScalarTypeDefinition definition = schemaDef.GetOrAddScalar(typeof(TScalar), ConfigurationSource.Explicit);
+            var builder = new ScalarTypeBuilder<TScalar, ValueSyntax>(definition.Builder);
             scalarTypeConfigurator(builder);
             return From(definition);
         }

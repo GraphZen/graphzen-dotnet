@@ -14,7 +14,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         
         string Name { get; }
 
-        
-        object Value { get; }
+        object? Value { get; }
     }
 }

@@ -1,7 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 using JetBrains.Annotations;
-#nullable disable
+
 
 
 using System.Collections.Generic;
@@ -21,8 +21,8 @@ namespace GraphZen.TypeSystem
              IGraphQLType type,
              IArgumentsContainer declaringMember,
             object defaultValue, bool hasDefaultValue,
-            IReadOnlyList<IDirectiveAnnotation> directives = null,
-            ParameterInfo clrInfo = null
+            IReadOnlyList<IDirectiveAnnotation>? directives = null,
+            ParameterInfo? clrInfo = null
         ) : this(name, description, type, defaultValue, hasDefaultValue,
             directives ?? DirectiveAnnotation.EmptyList, typeRef => (IGraphQLType)typeRef, declaringMember, clrInfo)
         {
@@ -37,7 +37,7 @@ namespace GraphZen.TypeSystem
             IReadOnlyList<IDirectiveAnnotation> directives,
             TypeResolver typeResolver,
              IArgumentsContainer declaringMember,
-            ParameterInfo clrInfo) :
+            ParameterInfo? clrInfo) :
             base(name, description, type,
                 defaultValue, hasDefaultValue,
                 Check.NotNull(directives, nameof(directives)),
@@ -48,7 +48,7 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.ArgumentDefinition;
 
         public new IArgumentsContainer DeclaringMember => (IArgumentsContainer)base.DeclaringMember;
-        public new ParameterInfo ClrInfo => base.ClrInfo as ParameterInfo;
+        public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsContainerDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 
         

@@ -11,6 +11,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IClrInfo
     {
         
-        object ClrInfo { get; }
+        object? ClrInfo { get; }
     }
 }

@@ -1,7 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 using JetBrains.Annotations;
-#nullable disable
+
 
 
 using System;
@@ -30,32 +30,32 @@ namespace GraphZen.TypeSystem
 
         public IScalarTypeBuilder<object, ValueSyntax> Scalar(string name) =>
             new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
 
         public IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>() =>
-            new ScalarTypeBuilder<TScalar, ValueSyntax>(Builder.Scalar(typeof(TScalar), ConfigurationSource.Explicit));
+            new ScalarTypeBuilder<TScalar, ValueSyntax>(Builder.Scalar(typeof(TScalar), ConfigurationSource.Explicit)!);
 
         public IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType) =>
             new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public IScalarTypeBuilder<TScalar, TValueNode> Scalar<TScalar, TValueNode>()
             where TValueNode : ValueSyntax =>
-            new ScalarTypeBuilder<TScalar, TValueNode>(Builder.Scalar(typeof(TScalar), ConfigurationSource.Explicit));
+            new ScalarTypeBuilder<TScalar, TValueNode>(Builder.Scalar(typeof(TScalar), ConfigurationSource.Explicit)!);
 
         public IObjectTypeBuilder<object, GraphQLContext> Object(Type clrType) =>
             new ObjectTypeBuilder<object, GraphQLContext>(Builder.Object(Check.NotNull(clrType, nameof(clrType)),
                 ConfigurationSource.Explicit
-            ));
+            )!);
 
         public IObjectTypeBuilder<object, GraphQLContext> Object(string name) =>
             new ObjectTypeBuilder<object, GraphQLContext>(Builder.Object(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public IObjectTypeBuilder<TObject, GraphQLContext> Object<TObject>() =>
             new ObjectTypeBuilder<TObject, GraphQLContext>(
-                Builder.Object(typeof(TObject), ConfigurationSource.Explicit));
+                Builder.Object(typeof(TObject), ConfigurationSource.Explicit)!);
 
         public ISchemaBuilder<GraphQLContext> IgnoreType<TClrType>() => IgnoreType(typeof(TClrType));
 
@@ -91,48 +91,48 @@ namespace GraphZen.TypeSystem
 
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(Type clrType) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(clrType, nameof(clrType)),
                 ConfigurationSource.Explicit
-            ));
+            )!);
 
         public IInterfaceTypeBuilder<TInterface, GraphQLContext> Interface<TInterface>() =>
             new InterfaceTypeBuilder<TInterface, GraphQLContext>(Builder.Interface(typeof(TInterface),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public IUnionTypeBuilder<object, GraphQLContext> Union(string name) =>
             new UnionTypeBuilder<object, GraphQLContext>(Builder.Union(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public IUnionTypeBuilder<TUnion, GraphQLContext> Union<TUnion>() =>
-            new UnionTypeBuilder<TUnion, GraphQLContext>(Builder.Union(typeof(TUnion), ConfigurationSource.Explicit));
+            new UnionTypeBuilder<TUnion, GraphQLContext>(Builder.Union(typeof(TUnion), ConfigurationSource.Explicit)!);
 
         public IUnionTypeBuilder<object, GraphQLContext> Union(Type clrType) =>
             new UnionTypeBuilder<object, GraphQLContext>(Builder.Union(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public IEnumTypeBuilder<string> Enum(string name) =>
-            new EnumTypeBuilder<string>(Builder.Enum(Check.NotNull(name, nameof(name)), ConfigurationSource.Explicit));
+            new EnumTypeBuilder<string>(Builder.Enum(Check.NotNull(name, nameof(name)), ConfigurationSource.Explicit)!);
 
         public IEnumTypeBuilder<TEnum> Enum<TEnum>() =>
-            new EnumTypeBuilder<TEnum>(Builder.Enum(typeof(TEnum), ConfigurationSource.Explicit));
+            new EnumTypeBuilder<TEnum>(Builder.Enum(typeof(TEnum), ConfigurationSource.Explicit)!);
 
         public IEnumTypeBuilder<string> Enum(Type clrType) =>
             new EnumTypeBuilder<string>(Builder.Enum(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public IInputObjectTypeBuilder<object> InputObject(string name) =>
             new InputObjectTypeBuilder<object>(Builder.InputObject(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public IInputObjectTypeBuilder<TInput> InputObject<TInput>() =>
-            new InputObjectTypeBuilder<TInput>(Builder.InputObject(typeof(TInput), ConfigurationSource.Explicit));
+            new InputObjectTypeBuilder<TInput>(Builder.InputObject(typeof(TInput), ConfigurationSource.Explicit)!);
 
         public IInputObjectTypeBuilder<object> InputObject(Type clrType) =>
             new InputObjectTypeBuilder<object>(Builder.InputObject(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public ISchemaBuilder<GraphQLContext> QueryType(string type)
         {
@@ -171,7 +171,7 @@ namespace GraphZen.TypeSystem
 
         public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
 
-        public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(string name, object value)
+        public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;
@@ -199,14 +199,14 @@ namespace GraphZen.TypeSystem
 
         public new IObjectTypeBuilder<object, TContext> Object(Type clrType) =>
             new ObjectTypeBuilder<object, TContext>(Builder.Object(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public new IObjectTypeBuilder<object, TContext> Object(string name) =>
             new ObjectTypeBuilder<object, TContext>(Builder.Object(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public new IObjectTypeBuilder<TObject, TContext> Object<TObject>() =>
-            new ObjectTypeBuilder<TObject, TContext>(Builder.Object(typeof(TObject), ConfigurationSource.Explicit));
+            new ObjectTypeBuilder<TObject, TContext>(Builder.Object(typeof(TObject), ConfigurationSource.Explicit)!);
 
         public new ISchemaBuilder<TContext> IgnoreType<TObject>() =>
             (ISchemaBuilder<TContext>)base.IgnoreType<TObject>();
@@ -223,27 +223,27 @@ namespace GraphZen.TypeSystem
 
         public new IInterfaceTypeBuilder<object, TContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public new IInterfaceTypeBuilder<object, TContext> Interface(Type clrType) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(clrType, nameof(clrType)),
                 ConfigurationSource.Explicit
-            ));
+            )!);
 
         public new IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>() =>
             new InterfaceTypeBuilder<TInterface, TContext>(Builder.Interface(typeof(TInterface),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public new IUnionTypeBuilder<object, TContext> Union(string name) =>
             new UnionTypeBuilder<object, TContext>(Builder.Union(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public new IUnionTypeBuilder<TUnion, TContext> Union<TUnion>() =>
-            new UnionTypeBuilder<TUnion, TContext>(Builder.Union(typeof(TUnion), ConfigurationSource.Explicit));
+            new UnionTypeBuilder<TUnion, TContext>(Builder.Union(typeof(TUnion), ConfigurationSource.Explicit)!);
 
         public new IUnionTypeBuilder<object, TContext> Union(Type clrType) =>
             new UnionTypeBuilder<object, TContext>(Builder.Union(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public new ISchemaBuilder<TContext> QueryType(string type)
         {
@@ -271,7 +271,7 @@ namespace GraphZen.TypeSystem
 
         public new ISchemaBuilder<TContext> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
 
-        public new ISchemaBuilder<TContext> DirectiveAnnotation(string name, object value)
+        public new ISchemaBuilder<TContext> DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;

@@ -1,7 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 using JetBrains.Annotations;
-#nullable disable
+
 
 
 using System;
@@ -18,12 +18,12 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ObjectTypeDefinition : FieldsContainerDefinition, IMutableObjectTypeDefinition
     {
-        
+
         private readonly Dictionary<string, ConfigurationSource> _ignoredInterfaces =
             new Dictionary<string, ConfigurationSource>();
 
-        
-        
+
+
         private readonly List<InterfaceTypeDefinition> _interfaces = new List<InterfaceTypeDefinition>();
 
 
@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"type {Name}";
 
-        
+
         public InternalObjectTypeBuilder Builder { get; }
 
         public IsTypeOf<object, GraphQLContext> IsTypeOf { get; set; }
@@ -55,7 +55,7 @@ namespace GraphZen.TypeSystem
         public override TypeKind Kind { get; } = TypeKind.Object;
 
 
-        public bool AddInterface( InterfaceTypeDefinition @interface, ConfigurationSource configurationSource)
+        public bool AddInterface(InterfaceTypeDefinition @interface, ConfigurationSource configurationSource)
         {
             Check.NotNull(@interface, nameof(@interface));
 
@@ -114,16 +114,19 @@ namespace GraphZen.TypeSystem
             return RemoveInterface(interfaceName, configurationSource);
         }
 
-        private bool RemoveInterface( string interfaceName, ConfigurationSource configurationSource)
+        private bool RemoveInterface(string interfaceName, ConfigurationSource configurationSource)
         {
             var existing = _interfaces.SingleOrDefault(_ => _.Name == interfaceName);
-            if (existing != null && !configurationSource.Overrides(existing.GetConfigurationSource()))
+            if (existing != null )
             {
-                return false;
+                if (!configurationSource.Overrides(existing.GetConfigurationSource()))
+                {
+                    return false;
+                }
+                _interfaces.Remove(existing);
+                return true;
             }
-
-            _interfaces.Remove(existing);
-            return true;
+            return false;
         }
 
 

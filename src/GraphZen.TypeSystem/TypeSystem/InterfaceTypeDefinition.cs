@@ -1,7 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 using JetBrains.Annotations;
-#nullable disable
+
 
 
 using System;
@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem
 
         public override bool SetClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (clrType != null && !clrType.IsInterface)
+            if (!clrType.IsInterface)
             {
                 throw new InvalidOperationException($"Cannot set CLR type for GraphQL interface '{Name}'. '{clrType}' is not an interface type.");
             }

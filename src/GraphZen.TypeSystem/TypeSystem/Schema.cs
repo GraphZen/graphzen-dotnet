@@ -1,7 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 using JetBrains.Annotations;
-#nullable disable
+
 
 
 using System;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -35,7 +36,7 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<SchemaDefinitionSyntax> _syntax;
 
 
-        public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType> types = null) : base(Check
+        public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType>? types = null) : base(Check
             .NotNull(schemaDefinition, nameof(schemaDefinition)).DirectiveAnnotations)
         {
             Check.NotNull(schemaDefinition, nameof(schemaDefinition));
@@ -92,7 +93,7 @@ namespace GraphZen.TypeSystem
                 .ToDictionary(t => t.Name, t => t);
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            QueryType = FindType<ObjectType>(Definition.QueryType?.Name ?? "Query");
+            QueryType = FindType<ObjectType>(Definition.QueryType?.Name ?? "Query")!;
             MutationType = Definition.MutationType != null ? FindType<ObjectType>(Definition.MutationType.Name) : null;
             SubscriptionType = Definition.SubscriptionType != null
                 ? FindType<ObjectType>(Definition.SubscriptionType.Name)
@@ -199,11 +200,11 @@ namespace GraphZen.TypeSystem
 
         [Description("If this server support subscription, the type that subscription operations will be rooted at.")]
         [GraphQLCanBeNull]
-        public ObjectType MutationType { get; }
+        public ObjectType? MutationType { get; }
 
         [Description("If this server support subscription, the type that subscription operations will be rooted at.")]
         [GraphQLCanBeNull]
-        public ObjectType SubscriptionType { get; }
+        public ObjectType? SubscriptionType { get; }
 
         [GraphQLIgnore]
 
@@ -269,7 +270,7 @@ namespace GraphZen.TypeSystem
         }
 
         [GraphQLIgnore]
-        public IGraphQLType GetTypeFromAst(TypeSyntax typeSyntax)
+        public IGraphQLType? GetTypeFromAst(TypeSyntax typeSyntax)
         {
             switch (typeSyntax)
             {
@@ -342,33 +343,33 @@ namespace GraphZen.TypeSystem
             return FindType<T>(name) != null;
         }
 
-        public bool TryGetType(string name, out NamedType type)
+        public bool TryGetType(string name,[NotNullWhen(true)] out NamedType? type)
         {
             Check.NotNull(name, nameof(name));
             return Types.TryGetValue(name, out type);
         }
 
         [GraphQLIgnore]
-        public INamedType FindType(string name)
+        public INamedType? FindType(string name)
         {
             Check.NotNull(name, nameof(name));
             return TryGetType(name, out var type) ? type : null;
         }
 
-        public T FindType<T>(Type clrType) where T : class, INamedType
+        public T? FindType<T>(Type clrType) where T : class, INamedType
         {
             Check.NotNull(clrType, nameof(clrType));
             return TryGetType<T>(clrType, out var type) ? type : null;
         }
 
 
-        public T FindType<T>(string name) where T : class, INamedType
+        public T? FindType<T>(string name) where T : class, INamedType
         {
             Check.NotNull(name, nameof(name));
             return TryGetType<T>(name, out var type) ? type : null;
         }
 
-        public bool TryGetType<T>(string name, out T type) where T : IGraphQLType
+        public bool TryGetType<T>(string name,[NotNullWhen(true)] out T? type) where T : class, IGraphQLType 
         {
             Check.NotNull(name, nameof(name));
             if (TryGetType(name, out var t))
@@ -384,13 +385,13 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-        public bool HasType<T>(Type clrType) where T : INamedType
+        public bool HasType<T>(Type clrType) where T : class, INamedType
         {
             Check.NotNull(clrType, nameof(clrType));
             return TryGetType<T>(clrType, out _);
         }
 
-        public bool TryGetType<T>(Type clrType, out T type) where T : INamedType
+        public bool TryGetType<T>(Type clrType,[NotNullWhen(true)] out T? type) where T :class, INamedType
         {
             Check.NotNull(clrType, nameof(clrType));
             if (TryGetType(clrType, out var t))

@@ -1,7 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 using JetBrains.Annotations;
-#nullable disable
+
 
 
 using System;
@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem
             object defaultValue,
             bool hasDefaultValue,
              IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver, object clrInfo,  IMemberDefinition declaringMember) : base(directives)
+            TypeResolver typeResolver, object? clrInfo,  IMemberDefinition declaringMember) : base(directives)
         {
             IGraphQLType DefaultTypeResolver(IGraphQLTypeReference typeReference) =>
                 type as IGraphQLType ?? throw new InvalidOperationException(
@@ -77,6 +77,6 @@ namespace GraphZen.TypeSystem
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         [GraphQLIgnore]
-        public object ClrInfo { get; }
+        public object? ClrInfo { get; }
     }
 }

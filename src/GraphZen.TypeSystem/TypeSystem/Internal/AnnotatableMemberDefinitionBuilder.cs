@@ -16,7 +16,7 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        public void AddOrUpdateDirectiveAnnotation(string name, object value)
+        public void AddOrUpdateDirectiveAnnotation(string name, object? value)
         {
             var existing = Definition.FindDirectiveAnnotation(name);
             if (existing == null)

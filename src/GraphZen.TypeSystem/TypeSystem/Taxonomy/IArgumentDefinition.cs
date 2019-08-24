@@ -15,6 +15,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         
         new IArgumentsContainerDefinition DeclaringMember { get; }
 
-        new ParameterInfo ClrInfo { get; }
+        new ParameterInfo? ClrInfo { get; }
     }
 }
