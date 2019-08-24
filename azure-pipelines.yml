@@ -6,7 +6,10 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
-
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    useGlobalJson: true
 - task: PowerShell@2
   inputs:
     filePath: 'build.ps1'
