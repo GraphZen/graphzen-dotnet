@@ -211,7 +211,7 @@ Task("Test")
 
     //var testProject = GetFile("./src/**/*Tests.csproj");
     //DotNetCoreTest(testProject.FullPath, settings, coverletSettings);
-    DotNetCoreTest(buildParams.Paths.Directories.Solution.FullPath, settings);
+    DotNetCoreTest(buildParams.Paths.Directories.Solution.FullPath, settings, coverletSettings);
 });
 
  Task("Test-Coverage-Report")
