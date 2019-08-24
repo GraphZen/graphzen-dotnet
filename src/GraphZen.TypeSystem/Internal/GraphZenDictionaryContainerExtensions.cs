@@ -1,20 +1,22 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
 
-
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+#nullable disable
+
 
 namespace GraphZen.Internal
 {
     public class GraphZenDictionaryContainerExtensions
     {
         [UsedImplicitly]
-        public static string PrintAccessorExtensions() =>
-            DictionaryContainerCodeGenerator.GenerateDictionaryAccessorExtensions(generate =>
+        public static string PrintAccessorExtensions()
+        {
+            return DictionaryContainerCodeGenerator.GenerateDictionaryAccessorExtensions(generate =>
             {
                 // Output fields
                 // (generating for all implementations as intellisense will be different)
@@ -49,5 +51,6 @@ namespace GraphZen.Internal
                     .ForDictionary(_ => _.Fields, "name", "Field", "inputObjectDefinition");
                 generate.ForType<IInputObjectType>().ForDictionary(_ => _.Fields, "name", "Field", "inputObject");
             });
+        }
     }
 }

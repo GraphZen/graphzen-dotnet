@@ -1,30 +1,29 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
     public static class MemberInfoExtensions
     {
-        public static bool TryGetDescriptionFromDataAnnotation( this MemberInfo memberInfo,
-            out string description)
+        public static bool TryGetDescriptionFromDataAnnotation(this MemberInfo memberInfo,
+            [NotNullWhen(true)] out string? description)
         {
             description = memberInfo.GetCustomAttribute<DescriptionAttribute>()?.Description;
 
             return description != null;
         }
 
-        public static bool TryGetDescriptionFromDataAnnotation( this ParameterInfo parameterInfo,
-            out string description)
+        public static bool TryGetDescriptionFromDataAnnotation(this ParameterInfo parameterInfo,
+            [NotNullWhen(true)] out string? description)
         {
             description = parameterInfo.GetCustomAttribute<DescriptionAttribute>()?.Description;
 
@@ -32,7 +31,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public static bool NotIgnored( this ICustomAttributeProvider memberInfo)
+        public static bool NotIgnored(this ICustomAttributeProvider memberInfo)
         {
             Check.NotNull(memberInfo, nameof(memberInfo));
             var ignoredAttribute =
@@ -40,27 +39,27 @@ namespace GraphZen.TypeSystem.Internal
             return ignoredAttribute == null;
         }
 
-        public static bool IsIgnoredByDataAnnotation( this PropertyInfo property)
+        public static bool IsIgnoredByDataAnnotation(this PropertyInfo property)
         {
             var ignoredAttribute = property
                 .GetCustomAttribute<GraphQLIgnoreAttribute>();
             return ignoredAttribute != null;
         }
 
-        public static bool IsIgnoredByDataAnnotation( this Type clrType)
+        public static bool IsIgnoredByDataAnnotation(this Type clrType)
         {
             var ignoredAttribute = clrType.GetCustomAttributes(typeof(GraphQLIgnoreAttribute), false).SingleOrDefault();
             return ignoredAttribute != null;
         }
 
-        public static bool IsIgnoredByDataAnnotation( this MethodInfo method)
+        public static bool IsIgnoredByDataAnnotation(this MethodInfo method)
         {
             var ignoredAttribute = method
                 .GetCustomAttribute<GraphQLIgnoreAttribute>();
             return ignoredAttribute != null;
         }
 
-        public static bool IsIgnoredByDataAnnotation( this ParameterInfo parameterInfo)
+        public static bool IsIgnoredByDataAnnotation(this ParameterInfo parameterInfo)
         {
             Check.NotNull(parameterInfo, nameof(parameterInfo));
             var ignoredAttribute = parameterInfo
@@ -70,7 +69,7 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public static (string name, ConfigurationSource nameConfigurationSource) GetGraphQLFieldName(
-             this MemberInfo member)
+            this MemberInfo member)
         {
             switch (member)
             {
@@ -85,38 +84,37 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public static (string name, ConfigurationSource nameConfigurationSource) GetGraphQLFieldName(
-            this PropertyInfo property) =>
-            Check.NotNull(property, nameof(property)).GetGraphQLFieldName(property.PropertyType);
+            this PropertyInfo property)
+        {
+            return Check.NotNull(property, nameof(property)).GetGraphQLFieldName(property.PropertyType);
+        }
 
         public static (string name, ConfigurationSource configurationSource)
-            GetGraphQLFieldName(this MethodInfo method) =>
-            Check.NotNull(method, nameof(method)).GetGraphQLFieldName(method.ReturnType);
+            GetGraphQLFieldName(this MethodInfo method)
+        {
+            return Check.NotNull(method, nameof(method)).GetGraphQLFieldName(method.ReturnType);
+        }
 
         public static (string name, ConfigurationSource configurationSource) GetGraphQLArgumentName(
             this ParameterInfo parameter)
         {
             Check.NotNull(parameter, nameof(parameter));
             // ReSharper disable once AssignNullToNotNullAttribute
-            var customName = parameter.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
+            string? customName = parameter.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
             return customName != null
                 ? (customName, ConfigurationSource.DataAnnotation)
-                : (parameter.Name, ConfigurationSource.Convention);
+                : (parameter.Name!, ConfigurationSource.Convention);
         }
 
 
         private static (string name, ConfigurationSource nameConfigurationSource) GetGraphQLFieldName(
-             this MemberInfo member,  Type fieldClrType)
+            this MemberInfo member, Type fieldClrType)
         {
             var customName = member.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
-            if (customName != null)
-            {
-                return (customName, ConfigurationSource.DataAnnotation);
-            }
+            if (customName != null) return (customName, ConfigurationSource.DataAnnotation);
 
             if (fieldClrType.IsGenericType && fieldClrType.GetGenericTypeDefinition() == typeof(Task<>))
-            {
                 return (member.Name.TrimAsyncSuffix().FirstCharToLower(), ConfigurationSource.Convention);
-            }
 
             return (member.Name.FirstCharToLower(), ConfigurationSource.Convention);
         }
@@ -127,10 +125,7 @@ namespace GraphZen.TypeSystem.Internal
             Check.NotNull(member, nameof(member));
 
             var customName = member.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
-            if (customName != null)
-            {
-                return (customName, ConfigurationSource.DataAnnotation);
-            }
+            if (customName != null) return (customName, ConfigurationSource.DataAnnotation);
 
             return (member.Name, ConfigurationSource.Convention);
         }

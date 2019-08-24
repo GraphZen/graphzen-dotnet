@@ -1,7 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 using JetBrains.Annotations;
-#nullable disable
+
 
 
 using System;
@@ -11,14 +11,14 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTypeDefinition>
     {
-        public InternalEnumTypeBuilder( EnumTypeDefinition definition,
+        public InternalEnumTypeBuilder(EnumTypeDefinition definition,
              InternalSchemaBuilder schemaBuilder) : base(
             definition, schemaBuilder)
         {
         }
 
-        
-        public InternalEnumValueBuilder Value( string name,
+
+        public InternalEnumValueBuilder Value(string name,
             ConfigurationSource nameConfigurationSource,
             ConfigurationSource configurationSource) =>
             Definition.GetOrAddValue(name, nameConfigurationSource, configurationSource).Builder;
@@ -48,10 +48,10 @@ namespace GraphZen.TypeSystem.Internal
 
             foreach (var value in Enum.GetValues(clrType))
             {
-                var member = clrType.GetMember(value.ToString());
+                var member = clrType.GetMember(value!.ToString()!);
                 if (member.Length > 0)
                 {
-                    var memberInfo = clrType.GetMember(value.ToString())[0] ??
+                    var memberInfo = clrType.GetMember(value.ToString()!)[0] ??
                                      // ReSharper disable once ConstantNullCoalescingCondition
                                      throw new InvalidOperationException(
                                          $"Unable to get MemberInfo for enum value of type {Definition}");

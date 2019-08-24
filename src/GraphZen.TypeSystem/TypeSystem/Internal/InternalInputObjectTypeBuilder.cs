@@ -1,7 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 using JetBrains.Annotations;
-#nullable disable
+
 
 
 using System;
@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        public InternalInputValueBuilder Field( string name, ConfigurationSource configurationSource) =>
+        public InternalInputValueBuilder? Field( string name, ConfigurationSource configurationSource) =>
             Definition.GetOrAddField(name, configurationSource)?.Builder;
 
         public bool IgnoreField( string fieldName, ConfigurationSource configurationSource)
@@ -145,7 +145,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         
-        public InternalInputValueBuilder Field( PropertyInfo property, ConfigurationSource configurationSource)
+        public InternalInputValueBuilder? Field( PropertyInfo property, ConfigurationSource configurationSource)
         {
             var (fieldName, _) = property.GetGraphQLFieldName();
             if (property.IsIgnoredByDataAnnotation())

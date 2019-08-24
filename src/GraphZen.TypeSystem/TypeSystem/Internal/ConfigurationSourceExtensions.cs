@@ -2,7 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using JetBrains.Annotations;
-#nullable disable
+
 using GraphZen.Infrastructure;
 
 namespace GraphZen.TypeSystem.Internal
@@ -56,6 +56,6 @@ namespace GraphZen.TypeSystem.Internal
                 : right.Value;
 
         public static ConfigurationSource Max(this ConfigurationSource left, ConfigurationSource? right)
-            => Max((ConfigurationSource?)left, right).Value;
+            => Max((ConfigurationSource?)left, right)!.Value;
     }
 }

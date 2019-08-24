@@ -1,7 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 using JetBrains.Annotations;
-#nullable disable
+
 
 
 using System;
@@ -72,7 +72,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInputValueBuilder Argument( string name, ConfigurationSource configurationSource) =>
             Definition.GetOrAddArgument(name, configurationSource).Builder;
 
-        public InternalInputValueBuilder Argument( ParameterInfo parameter,
+        public InternalInputValueBuilder? Argument( ParameterInfo parameter,
             ConfigurationSource configurationSource)
         {
             var (argName, _) = parameter.GetGraphQLArgumentName();
