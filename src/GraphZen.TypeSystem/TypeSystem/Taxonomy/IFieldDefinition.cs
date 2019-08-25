@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem.Taxonomy
         IOutputDefinition
     {
         
-        IGraphQLTypeReference FieldType { get; }
+        IGraphQLTypeReference? FieldType { get; }
 
         
         Resolver<object, object> Resolver { get; }

@@ -8,6 +8,7 @@ using System;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     public interface IInputObjectTypeBuilder<TInputObject> : IAnnotableBuilder<IInputObjectTypeBuilder<TInputObject>>

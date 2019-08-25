@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumTypeBuilder<TEnum> Value(TEnum value, Action<IEnumValueBuilder> valueConfigurator = null)
+        public IEnumTypeBuilder<TEnum> Value(TEnum value, Action<IEnumValueBuilder>? valueConfigurator = null)
         {
             Check.NotNull(value, nameof(value));
             var enumType = typeof(TEnum);
@@ -36,7 +36,7 @@ namespace GraphZen.TypeSystem
                 throw new ArgumentException("Enum types can only be bound to strings or CLR enum types", nameof(value));
             }
 
-            var vb = Builder.Value(value.ToString(), ConfigurationSource.Convention, ConfigurationSource.Explicit);
+            var vb = Builder.Value(value.ToString()!, ConfigurationSource.Convention, ConfigurationSource.Explicit);
             valueConfigurator?.Invoke(new EnumValueBuilder(vb));
             return this;
         }
@@ -64,7 +64,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
 
-        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name, object value)
+        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;

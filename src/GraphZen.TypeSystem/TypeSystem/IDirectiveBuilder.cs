@@ -8,6 +8,7 @@ using System;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     public interface IDirectiveBuilder

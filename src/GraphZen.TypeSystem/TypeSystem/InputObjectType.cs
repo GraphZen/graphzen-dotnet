@@ -1,20 +1,21 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {
     public class InputObjectType : NamedType, IInputObjectType
     {
-          private readonly Lazy<InputObjectTypeDefinitionSyntax> _syntax;
+        private readonly Lazy<InputObjectTypeDefinitionSyntax> _syntax;
 
         public InputObjectType(string name, string description, Type clrType, IEnumerable<IInputFieldDefinition> fields,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(Check.NotNull(name, nameof(name)),
@@ -22,7 +23,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(fields, nameof(fields));
             Check.NotNull(schema, nameof(schema));
-            Fields = fields.ToReadOnlyDictionary(_ => _?.Name, _ => InputField.From(_, schema.ResolveType, this));
+            Fields = fields.ToReadOnlyDictionary(_ => _.Name, _ => InputField.From(_, schema.ResolveType, this));
             _syntax = new Lazy<InputObjectTypeDefinitionSyntax>(() =>
                 new InputObjectTypeDefinitionSyntax(SyntaxFactory.Name(Name), SyntaxHelpers.Description(Description),
                     null,
@@ -34,14 +35,19 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.InputObject;
 
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputObject;
 
-        public IEnumerable<InputField> GetFields() => Fields.Values;
+        public IEnumerable<InputField> GetFields()
+        {
+            return Fields.Values;
+        }
 
 
-        
         public static InputObjectType From(IInputObjectTypeDefinition definition,
             Schema schema)
         {
@@ -51,6 +57,9 @@ namespace GraphZen.TypeSystem
                 definition.GetFields(), definition.DirectiveAnnotations, schema);
         }
 
-        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields() => GetFields();
+        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields()
+        {
+            return GetFields();
+        }
     }
 }

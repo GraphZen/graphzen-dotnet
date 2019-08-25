@@ -9,6 +9,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     public class DirectiveBuilder : IDirectiveBuilder

@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IDescription : IConfigurationElement<string>
     {
         
-        string Description { get; }
+        string? Description { get; }
     }
 }

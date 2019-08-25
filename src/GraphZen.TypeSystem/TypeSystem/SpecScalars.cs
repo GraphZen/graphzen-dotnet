@@ -97,7 +97,7 @@ namespace GraphZen.TypeSystem
 
                     if (InternalNumerics.IsNumber(value))
                     {
-                        return Maybe.Some<object>(value.ToString());
+                        return Maybe.Some<object>(value.ToString()!);
                     }
 
                     throw new Exception($"String cannot represent a non string value: {value}");

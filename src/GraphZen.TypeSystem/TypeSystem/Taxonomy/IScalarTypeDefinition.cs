@@ -14,12 +14,12 @@ namespace GraphZen.TypeSystem.Taxonomy
         ILeafTypeDefinition, IInputDefinition, IOutputDefinition
     {
         
-        LeafSerializer<object> Serializer { get; }
+        LeafSerializer<object>? Serializer { get; }
 
         
-        LeafLiteralParser<object, ValueSyntax> LiteralParser { get; }
+        LeafLiteralParser<object, ValueSyntax>? LiteralParser { get; }
 
         
-        LeafValueParser<object> ValueParser { get; }
+        LeafValueParser<object>? ValueParser { get; }
     }
 }

@@ -1,105 +1,92 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     public abstract class FieldsContainerDefinition : NamedTypeDefinition, IMutableFieldsContainerDefinition
     {
-        
         private readonly Dictionary<string, FieldDefinition> _fields =
             new Dictionary<string, FieldDefinition>();
 
-        
+
         private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
 
-        public FieldsContainerDefinition( TypeIdentity identity,  SchemaDefinition schema,
+        public FieldsContainerDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(identity, schema, configurationSource)
         {
         }
 
 
-
-        
-        
-        public IEnumerable<FieldDefinition> GetFields() => _fields.Values;
+        public IEnumerable<FieldDefinition> GetFields()
+        {
+            return _fields.Values;
+        }
 
         public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
 
-        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => GetFields();
+        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields()
+        {
+            return GetFields();
+        }
 
 
-        public void UnignoreField( string fieldName)
+        public void UnignoreField(string fieldName)
         {
             _ignoredFields.Remove(fieldName);
         }
 
-        public bool IgnoreField( string fieldName, ConfigurationSource configurationSource)
+        public bool IgnoreField(string fieldName, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(fieldName);
-            if (ignoredConfigurationSource.HasValue && ignoredConfigurationSource.Overrides(configurationSource))
-            {
-                return true;
-            }
+            if (ignoredConfigurationSource.HasValue &&
+                ignoredConfigurationSource.Overrides(configurationSource)) return true;
 
             if (ignoredConfigurationSource != null)
-            {
                 configurationSource = configurationSource.Max(ignoredConfigurationSource);
-            }
 
             _ignoredFields[fieldName] = configurationSource;
             var existing = this.FindField(fieldName);
 
-            if (existing != null)
-            {
-                return IgnoreField(existing, configurationSource);
-            }
+            if (existing != null) return IgnoreField(existing, configurationSource);
 
             return true;
         }
 
-        public FieldDefinition FindField( MemberInfo member)
+        public FieldDefinition FindField(MemberInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
             var memberMatch = _fields.Values.SingleOrDefault(_ => _.ClrInfo == member);
-            if (memberMatch != null)
-            {
-                return memberMatch;
-            }
+            if (memberMatch != null) return memberMatch;
 
             var (fieldName, _) = member.GetGraphQLFieldName();
             return this.FindField(fieldName);
         }
 
-        public bool RenameField( FieldDefinition field,  string name,
+        public bool RenameField(FieldDefinition field, string name,
             ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(field.GetNameConfigurationSource()))
-            {
-                return false;
-            }
+            if (!configurationSource.Overrides(field.GetNameConfigurationSource())) return false;
 
             // field.UpdateConfigurationSource(configurationSource);
 
             if (this.TryGetField(name, out var existing) && existing != field)
-            {
                 throw new InvalidOperationException(
                     $"Cannot rename {field} to '{name}'. {this} already contains a field named '{name}'.");
-            }
 
             _fields.Remove(field.Name);
             _fields[name] = field;
@@ -107,7 +94,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        private bool IgnoreField( FieldDefinition field, ConfigurationSource configurationSource)
+        private bool IgnoreField(FieldDefinition field, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(field.GetConfigurationSource()))
             {
@@ -119,20 +106,16 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public FieldDefinition AddField( PropertyInfo propertyInfo, ConfigurationSource configurationSource)
+        public FieldDefinition AddField(PropertyInfo propertyInfo, ConfigurationSource configurationSource)
         {
             if (ClrType == null)
-            {
                 throw new InvalidOperationException(
                     "Cannot add field from property on a type that does not have a CLR type mapped.");
-            }
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            if (!ClrType.IsSameOrSubclass(propertyInfo.DeclaringType))
-            {
+            if (!ClrType.IsSameOrSubclass(propertyInfo.DeclaringType!))
                 throw new InvalidOperationException(
                     $"Cannot add field from property with a declaring type ({propertyInfo.DeclaringType}) that does not exist on the parent's {Kind.ToString().ToLower()} type's mapped CLR type ({ClrType}).");
-            }
 
             var (fieldName, nameConfigurationSource) = propertyInfo.GetGraphQLFieldName();
             var field = new FieldDefinition(fieldName, nameConfigurationSource,
@@ -162,14 +145,12 @@ namespace GraphZen.TypeSystem
 
 
             if (propertyInfo.TryGetDescriptionFromDataAnnotation(out var description))
-            {
                 fb.Description(description, ConfigurationSource.DataAnnotation);
-            }
 
             return AddField(field);
         }
 
-        public FieldDefinition AddField( MethodInfo method, ConfigurationSource configurationSource)
+        public FieldDefinition AddField(MethodInfo method, ConfigurationSource configurationSource)
         {
             var (fieldName, nameConfigurationSource) = method.GetGraphQLFieldName();
 
@@ -180,48 +161,38 @@ namespace GraphZen.TypeSystem
             fb.FieldType(method);
 
 
-            
-
             return AddField(field);
         }
 
-        private FieldDefinition AddField( FieldDefinition field)
+        private FieldDefinition AddField(FieldDefinition field)
         {
             if (_fields.ContainsKey(field.Name))
-            {
                 throw new InvalidOperationException(
                     $"Duplicate field names: Cannot add field '{field.Name}' to {Kind.ToString().ToLower()} '{Name}', a field with that name already exists.");
-            }
 
             _fields.Add(field.Name, field);
             return field;
         }
 
-        public void RemoveField( FieldDefinition field)
+        public void RemoveField(FieldDefinition field)
         {
             _fields.Remove(field.Name);
         }
 
         public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
         {
-            if (_ignoredFields.TryGetValue(fieldName, out var cs))
-            {
-                return cs;
-            }
+            if (_ignoredFields.TryGetValue(fieldName, out var cs)) return cs;
 
             return null;
         }
 
-        public FieldDefinition GetOrAddField( string name, ConfigurationSource nameConfigurationSource,
+        public FieldDefinition GetOrAddField(string name, ConfigurationSource nameConfigurationSource,
             ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)
             {
-                if (!nameConfigurationSource.Overrides(ignoredConfigurationSource))
-                {
-                    return null;
-                }
+                if (!nameConfigurationSource.Overrides(ignoredConfigurationSource)) return null;
 
                 _ignoredFields.Remove(name);
             }

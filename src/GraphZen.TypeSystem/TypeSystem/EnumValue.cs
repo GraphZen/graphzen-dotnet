@@ -11,6 +11,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     [GraphQLName("__EnumValue")]

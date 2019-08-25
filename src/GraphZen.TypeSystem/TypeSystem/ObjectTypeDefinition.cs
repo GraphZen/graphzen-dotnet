@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem
 
         public InternalObjectTypeBuilder Builder { get; }
 
-        public IsTypeOf<object, GraphQLContext> IsTypeOf { get; set; }
+        public IsTypeOf<object, GraphQLContext>? IsTypeOf { get; set; }
         public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _interfaces;
 
         public ConfigurationSource? FindIgnoredInterfaceConfigurationSource(string name)

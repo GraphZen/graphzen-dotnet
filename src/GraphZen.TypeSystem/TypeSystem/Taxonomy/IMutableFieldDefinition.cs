@@ -16,10 +16,10 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMutableDeprecation
     {
         
-        new IGraphQLTypeReference FieldType { get; set; }
+        new IGraphQLTypeReference? FieldType { get; set; }
 
         
-        new Resolver<object, object> Resolver { get; set; }
+        new Resolver<object, object>? Resolver { get; set; }
 
         
         new IMutableFieldsContainerDefinition DeclaringType { get; }

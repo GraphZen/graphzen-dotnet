@@ -39,14 +39,14 @@ namespace GraphZen.TypeSystem
         public InternalScalarTypeBuilder Builder { get; }
 
         
-        public ScalarType Source { get; }
+        public ScalarType? Source { get; }
 
 
-        public LeafSerializer<object> Serializer { get; set; }
+        public LeafSerializer<object>? Serializer { get; set; }
 
-        public LeafLiteralParser<object, ValueSyntax> LiteralParser { get; set; }
+        public LeafLiteralParser<object, ValueSyntax>? LiteralParser { get; set; }
 
-        public LeafValueParser<object> ValueParser { get; set; }
+        public LeafValueParser<object>? ValueParser { get; set; }
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Scalar;
 
         public override TypeKind Kind { get; } = TypeKind.Scalar;

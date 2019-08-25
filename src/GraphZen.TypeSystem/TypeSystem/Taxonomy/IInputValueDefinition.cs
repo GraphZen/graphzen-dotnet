@@ -12,13 +12,13 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IInputValueDefinition : IAnnotatableDefinition, INamed, IInputDefinition, IClrInfo
     {
         
-        IGraphQLTypeReference InputType { get; }
+        IGraphQLTypeReference? InputType { get; }
 
         
         IMemberDefinition DeclaringMember { get; }
 
         
-        object DefaultValue { get; }
+        object? DefaultValue { get; }
 
         bool HasDefaultValue { get; }
     }

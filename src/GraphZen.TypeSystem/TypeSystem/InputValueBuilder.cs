@@ -1,11 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
 
-
-
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -18,10 +19,12 @@ namespace GraphZen.TypeSystem
         }
 
 
-        
         protected InternalInputValueBuilder Builder { get; }
 
-        public InputValueBuilder DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
+        public InputValueBuilder DirectiveAnnotation(string name)
+        {
+            return DirectiveAnnotation(name, null);
+        }
 
         public InputValueBuilder DirectiveAnnotation(string name, object value)
         {
@@ -43,7 +46,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        
+
         public InputValueBuilder Type(string type)
         {
             Check.NotNull(type, nameof(type));
@@ -51,21 +54,21 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        
+
         public InputValueBuilder Type<TInputValue>(bool canBeNull = false)
         {
             Builder.Type(typeof(TInputValue));
             return this;
         }
 
-        
-        public InputValueBuilder DefaultValue( object value)
+
+        public InputValueBuilder DefaultValue(object value)
         {
             Builder.DefaultValue(value, ConfigurationSource.Explicit);
             return this;
         }
 
-        
+
         public InputValueBuilder RemoveDefaultValue()
         {
             Builder.RemoveDefaultValue(ConfigurationSource.Explicit);
@@ -73,8 +76,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        
-        public InputValueBuilder Description( string description)
+        public InputValueBuilder Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;

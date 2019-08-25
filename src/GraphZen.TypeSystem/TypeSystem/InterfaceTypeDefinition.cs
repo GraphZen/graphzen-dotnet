@@ -44,7 +44,7 @@ namespace GraphZen.TypeSystem
         
         public InternalInterfaceTypeBuilder Builder { get; }
 
-        public TypeResolver<object, GraphQLContext> ResolveType { get; set; }
+        public TypeResolver<object, GraphQLContext>? ResolveType { get; set; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Interface;
 

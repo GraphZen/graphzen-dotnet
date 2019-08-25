@@ -68,7 +68,7 @@ namespace GraphZen.TypeSystem
 
 
         
-        public static NamedType GetNamedType(this IGraphQLType type)
+        public static NamedType? GetNamedType(this IGraphQLType type)
         {
             switch (type)
             {
@@ -83,6 +83,6 @@ namespace GraphZen.TypeSystem
 
         
         public static INullableType GetNullableType(this IGraphQLType type) =>
-            type is NonNullType nonNull ? nonNull.OfType : type as INullableType;
+            type is NonNullType nonNull ? nonNull.OfType : (INullableType)type;
     }
 }

@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem
             _configurationSource = configurationSource;
         }
 
-        public string Description { get; private set; }
+        public string? Description { get; private set; }
 
 
         public bool SetDescription(string description, ConfigurationSource configurationSource)

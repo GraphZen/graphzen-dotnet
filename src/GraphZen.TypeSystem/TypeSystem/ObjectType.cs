@@ -12,6 +12,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     [GraphQLType(typeof(IGraphQLType))]
@@ -35,9 +36,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(interfaces, nameof(interfaces));
             Check.NotNull(schema, nameof(schema));
             _fields = new Lazy<IReadOnlyDictionary<string, Field>>(() =>
-                // ReSharper disable once AssignNullToNotNullAttribute
-                fields.ToReadOnlyDictionary(_ => _?.Name, _ => Field.From(_, this, schema.ResolveType)));
-            // ReSharper disable once PossibleNullReferenceException
+                fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, schema.ResolveType)));
 
             _interfaceMap = new Lazy<IReadOnlyDictionary<string, InterfaceType>>(() =>
                 {

@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IAbstractTypeDefinition : IGraphQLTypeDefinition
     {
         
-        TypeResolver<object, GraphQLContext> ResolveType { get; }
+        TypeResolver<object, GraphQLContext>? ResolveType { get; }
     }
 }

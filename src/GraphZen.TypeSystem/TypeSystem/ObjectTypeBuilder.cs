@@ -54,46 +54,43 @@ namespace GraphZen.TypeSystem
 
 
         public IObjectTypeBuilder<TObject, TContext> Field(string name,
-            Action<IFieldBuilder<TObject, object, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, object, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
-            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit);
+            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
             // ReSharper disable once AssignNullToNotNullAttribute
             fieldConfigurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field(string name, string type,
-            Action<IFieldBuilder<TObject, object, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, object, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
-            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit).FieldType(type);
+            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
             fieldConfigurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(string name,
-            Action<IFieldBuilder<TObject, TField, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, TField, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)
-                .FieldType(typeof(TField));
+                ?.FieldType(typeof(TField))!;
             fieldConfigurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(ib));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(Expression<Func<TObject, TField>> fieldSelector,
-            Action<IFieldBuilder<TObject, TField, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, TField, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(fieldSelector, nameof(fieldSelector));
-            // var resolver = fieldSelector.GetFuncFromExpression();
             var property = fieldSelector.GetPropertyInfoFromExpression();
-
-            var fb = Builder.Field(property, ConfigurationSource.Explicit);
-            // ReSharper disable once AssignNullToNotNullAttribute
+            var fb = Builder.Field(property, ConfigurationSource.Explicit)!;
             fieldConfigurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(fb));
             return this;
         }
@@ -190,7 +187,7 @@ namespace GraphZen.TypeSystem
         public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name) =>
             DirectiveAnnotation(name, null);
 
-        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name, object value)
+        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;

@@ -10,6 +10,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {

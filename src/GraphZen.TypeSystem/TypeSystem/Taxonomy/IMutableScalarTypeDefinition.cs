@@ -13,12 +13,12 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableScalarTypeDefinition : IScalarTypeDefinition, IMutableGraphQLTypeDefinition
     {
         
-        new LeafSerializer<object> Serializer { get; set; }
+        new LeafSerializer<object>? Serializer { get; set; }
 
         
-        new LeafLiteralParser<object, ValueSyntax> LiteralParser { get; set; }
+        new LeafLiteralParser<object, ValueSyntax>? LiteralParser { get; set; }
 
         
-        new LeafValueParser<object> ValueParser { get; set; }
+        new LeafValueParser<object>? ValueParser { get; set; }
     }
 }

@@ -1,15 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -18,8 +17,8 @@ namespace GraphZen.TypeSystem
     {
         public InputFieldDefinition(string name,
             ConfigurationSource nameConfigurationSource,
-            SchemaDefinition schema, ConfigurationSource configurationSource, PropertyInfo clrInfo,
-             IInputObjectTypeDefinition declaringMember) :
+            SchemaDefinition schema, ConfigurationSource configurationSource, PropertyInfo? clrInfo,
+            IInputObjectTypeDefinition declaringMember) :
             base(Check.NotNull(name, nameof(name)), nameConfigurationSource,
                 Check.NotNull(schema, nameof(schema)), configurationSource, clrInfo, declaringMember)
         {
@@ -30,16 +29,9 @@ namespace GraphZen.TypeSystem
         public override bool SetName(string name, ConfigurationSource configurationSource)
         {
             Check.NotNull(name, nameof(name));
-            if (!configurationSource.Overrides(GetNameConfigurationSource()))
-            {
-                return false;
-            }
+            if (!configurationSource.Overrides(GetNameConfigurationSource())) return false;
 
-            if (Name != name)
-            {
-
-                DeclaringMember.RenameField(this, name, configurationSource);
-            }
+            if (Name != name) DeclaringMember.RenameField(this, name, configurationSource);
 
             Name = name;
             NameConfigurationSource = configurationSource;
@@ -47,11 +39,14 @@ namespace GraphZen.TypeSystem
         }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputFieldDefinition;
-        public new PropertyInfo ClrInfo => base.ClrInfo as PropertyInfo;
+        public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
         IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
 
-        public new InputObjectTypeDefinition DeclaringMember => (InputObjectTypeDefinition)base.DeclaringMember;
+        public new InputObjectTypeDefinition DeclaringMember => (InputObjectTypeDefinition) base.DeclaringMember;
 
-        public override string ToString() => $"input field {Name}";
+        public override string ToString()
+        {
+            return $"input field {Name}";
+        }
     }
 }

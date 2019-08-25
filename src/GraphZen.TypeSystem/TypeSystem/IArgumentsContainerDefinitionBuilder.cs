@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 
 using System;
 using GraphZen.Infrastructure;
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {

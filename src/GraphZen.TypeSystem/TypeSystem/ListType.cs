@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
         public static ListType Of(IGraphQLType type) => new ListType(type);
         private bool Equals( ListType other) => Equals(OfType, other.OfType);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj))
             {

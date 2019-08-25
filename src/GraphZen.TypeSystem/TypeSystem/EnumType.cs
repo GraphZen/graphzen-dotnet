@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
@@ -12,13 +13,12 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {
     public class EnumType : NamedType, IEnumType
     {
-         
         private readonly Lazy<EnumTypeDefinitionSyntax> _syntax;
 
 
@@ -120,7 +120,7 @@ namespace GraphZen.TypeSystem
             return GetValues();
         }
 
-        
+
         [GraphQLIgnore]
         public static EnumType From(IEnumTypeDefinition definition)
         {

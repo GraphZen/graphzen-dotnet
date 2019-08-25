@@ -47,45 +47,45 @@ namespace GraphZen.TypeSystem
 
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name,
-            Action<IFieldBuilder<TInterface, object, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TInterface, object, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
-            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit);
+            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
             // ReSharper disable once AssignNullToNotNullAttribute
             fieldConfigurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
             return this;
         }
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name, string type,
-            Action<IFieldBuilder<TInterface, object, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TInterface, object, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
-            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit).FieldType(type);
+            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
             fieldConfigurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
             return this;
         }
 
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(string name,
-            Action<IFieldBuilder<TInterface, TField, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TInterface, TField, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
-            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)
-                .FieldType(typeof(TField));
+            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?
+                .FieldType(typeof(TField))!;
             fieldConfigurator?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
             return this;
         }
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(
             Expression<Func<TInterface, TField>> fieldSelector,
-            Action<IFieldBuilder<TInterface, TField, TContext>> fieldBuilder = null)
+            Action<IFieldBuilder<TInterface, TField, TContext>>? fieldBuilder = null)
         {
             Check.NotNull(fieldSelector, nameof(fieldSelector));
             var fieldProp = fieldSelector.GetPropertyInfoFromExpression();
-            var fb = Builder.Field(fieldProp, ConfigurationSource.Explicit);
+            var fb = Builder.Field(fieldProp, ConfigurationSource.Explicit)!;
             fieldBuilder?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
             return this;
         }
@@ -127,7 +127,7 @@ namespace GraphZen.TypeSystem
             DirectiveAnnotation(name, null);
 
 
-        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name, object value)
+        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;

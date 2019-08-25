@@ -15,6 +15,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         ICompositeTypeDefinition, IOutputDefinition
     {
         
-        IsTypeOf<object, GraphQLContext> IsTypeOf { get; }
+        IsTypeOf<object, GraphQLContext>? IsTypeOf { get; }
     }
 }

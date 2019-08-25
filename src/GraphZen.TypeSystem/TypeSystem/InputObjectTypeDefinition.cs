@@ -122,8 +122,7 @@ namespace GraphZen.TypeSystem
                     "Cannot add field from property on a type that does not have a CLR type mapped.");
             }
 
-            // ReSharper disable once AssignNullToNotNullAttribute
-            if (!ClrType.IsSameOrSubclass(property.DeclaringType))
+            if (!ClrType.IsSameOrSubclass(property.DeclaringType!))
             {
                 throw new InvalidOperationException(
                     $"Cannot add field from property with a declaring type ({property.DeclaringType}) that does not exist on the parent's {Kind.ToString().ToLower()} type's mapped CLR type ({ClrType}).");
@@ -185,7 +184,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public InputValueDefinition GetOrAddField(string name, ConfigurationSource configurationSource)
+        public InputValueDefinition? GetOrAddField(string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)

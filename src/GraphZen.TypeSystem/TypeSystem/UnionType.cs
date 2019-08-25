@@ -12,6 +12,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     public class UnionType : NamedType, IUnionType

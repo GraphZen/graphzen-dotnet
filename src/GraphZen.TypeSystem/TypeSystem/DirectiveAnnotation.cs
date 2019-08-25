@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem
 {
     public class DirectiveAnnotation : IDirectiveAnnotation
     {
-        public DirectiveAnnotation(string name, object value)
+        public DirectiveAnnotation(string name, object? value)
         {
             Name = Check.NotNull(name, nameof(name));
             Value = value;

@@ -47,7 +47,7 @@ namespace GraphZen.TypeSystem
             return directive;
         }
 
-        public IDirectiveAnnotation UpdateDirectiveAnnotation(string name, object value)
+        public IDirectiveAnnotation UpdateDirectiveAnnotation(string name, object? value)
         {
             Check.NotNull(name, nameof(name));
             RemoveDirectiveAnnotation(name);

@@ -40,7 +40,7 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name) => throw new NotImplementedException();
 
-        public TypeResolver<object, GraphQLContext> ResolveType { get; set; }
+        public TypeResolver<object, GraphQLContext>? ResolveType { get; set; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Union;
 

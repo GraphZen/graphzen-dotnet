@@ -13,6 +13,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal.Grammar;
 using GraphZen.TypeSystem.Taxonomy;
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {

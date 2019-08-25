@@ -1,20 +1,21 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {
     public abstract class NamedType : AnnotatableMember, INamedType
     {
-        protected NamedType( string name, string description, Type clrType,
-             IReadOnlyList<IDirectiveAnnotation> directives) : base(directives)
+        protected NamedType(string name, string description, Type clrType,
+            IReadOnlyList<IDirectiveAnnotation> directives) : base(directives)
         {
             Name = name;
             Description = description;
@@ -25,11 +26,9 @@ namespace GraphZen.TypeSystem
         public string Name { get; }
         public override string Description { get; }
 
-        [GraphQLIgnore]
-        public Type ClrType { get; }
+        [GraphQLIgnore] public Type ClrType { get; }
 
 
-        
         public static NamedType From(IGraphQLTypeDefinition definition, Schema schema)
         {
             switch (definition)
@@ -48,9 +47,12 @@ namespace GraphZen.TypeSystem
                     return InterfaceType.From(__, schema);
             }
 
-            throw new InvalidOperationException($"Unknown type definition: {definition?.GetType()}");
+            throw new InvalidOperationException($"Unknown type definition: {definition.GetType()}");
         }
 
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

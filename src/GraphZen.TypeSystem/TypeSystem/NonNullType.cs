@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem
 
         private bool Equals( NonNullType other) => Equals(OfType, other.OfType);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj))
             {

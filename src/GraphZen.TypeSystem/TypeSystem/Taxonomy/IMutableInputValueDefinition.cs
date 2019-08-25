@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableInputValueDefinition : IInputValueDefinition, IMutableAnnotatableDefinition, IMutableNamed, IMutableDescription
     {
         
-        new IGraphQLTypeReference InputType { get; set; }
+        new IGraphQLTypeReference? InputType { get; set; }
 
         bool SetDefaultValue(object value, ConfigurationSource configurationSource);
         bool RemoveDefaultValue(ConfigurationSource configurationSource);
