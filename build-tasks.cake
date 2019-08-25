@@ -5,7 +5,7 @@
 #tool "nuget:?package=ReportGenerator&version=4.0.12"
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
-#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2018.3.3"
+#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.1"
 #tool "nuget:?package=docfx.console&version=2.40.11"
 #addin "nuget:?package=Cake.Coverlet&version=2.2.1"
 #addin "Cake.Powershell&version=0.4.7"
@@ -153,7 +153,7 @@ Task("Cleanup-Full")
 .Does(() => ResharperCleanupCode("GraphZen Full Cleanup"));
 
 Task("Restore").Does(() => {
-  NuGetRestore(paths.sln);
+  DotNetCoreRestore(paths.sln);
 });
 
 

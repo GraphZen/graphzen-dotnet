@@ -1,8 +1,11 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+#nullable disable
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using static GraphZen.LanguageModel.SyntaxFactory;
 
 namespace GraphZen.LanguageModel.Internal
@@ -33,7 +36,7 @@ namespace GraphZen.LanguageModel.Internal
         public static ScalarTypeDefinitionSyntax Boolean { get; } =
             ScalarTypeDefinition(Name("Boolean"), StringValue("boolean value"));
 
-        [ItemNotNull]
+
         public static ImmutableArray<ScalarTypeDefinitionSyntax> All { get; } =
             ImmutableArray.Create(String, ID, Int, Float, Boolean);
     }

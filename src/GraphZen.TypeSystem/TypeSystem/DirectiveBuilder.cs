@@ -1,21 +1,24 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     public class DirectiveBuilder : IDirectiveBuilder
     {
-        public DirectiveBuilder([NotNull] InternalDirectiveBuilder builder)
+        public DirectiveBuilder(InternalDirectiveBuilder builder)
         {
             Builder = builder;
         }
 
-        [NotNull]
+
         private InternalDirectiveBuilder Builder { get; }
 
         public IDirectiveBuilder Description(string description)
@@ -39,7 +42,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IDirectiveBuilder Argument<TArg>(string name, Action<InputValueBuilder> argumentBuilder = null) =>
+        public IDirectiveBuilder Argument<TArg>(string name, Action<InputValueBuilder> argumentBuilder = null)
+        {
             throw new NotImplementedException();
+        }
     }
 }

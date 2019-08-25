@@ -1,6 +1,12 @@
-﻿using GraphZen.Infrastructure;
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System.Diagnostics.CodeAnalysis;
+using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.Unions
 {
@@ -9,14 +15,17 @@ namespace GraphZen.Unions
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext() => new CollectionConventionContext
+        public CollectionConventionContext GetContext()
         {
-            ItemNamedByConvention = nameof(INamedByConvention),
-            DefaultItemConfigurationSource = ConfigurationSource.DataAnnotation,
-            ItemNamedByDataAnnotation = DataAnnotationName,
-            ItemIgnoredByConvention = nameof(IIgnoredByConvention),
-            ItemIgnoredByDataAnnotation = nameof(IIgnoredByDataAnnotation)
-        };
+            return new CollectionConventionContext
+            {
+                ItemNamedByConvention = nameof(INamedByConvention),
+                DefaultItemConfigurationSource = ConfigurationSource.DataAnnotation,
+                ItemNamedByDataAnnotation = DataAnnotationName,
+                ItemIgnoredByConvention = nameof(IIgnoredByConvention),
+                ItemIgnoredByDataAnnotation = nameof(IIgnoredByDataAnnotation)
+            };
+        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {
@@ -28,13 +37,23 @@ namespace GraphZen.Unions
             sb.Object<Query>();
         }
 
-        public class Foo : INamedByConvention { }
+        public class Foo : INamedByConvention
+        {
+        }
+
         [GraphQLIgnore]
-        public class Bar : IIgnoredByConvention { }
-        public class Baz : IIgnoredByDataAnnotation { }
+        public class Bar : IIgnoredByConvention
+        {
+        }
+
+        public class Baz : IIgnoredByDataAnnotation
+        {
+        }
 
 
-        public class FooBar : INamedByDataAnnotation { }
+        public class FooBar : INamedByDataAnnotation
+        {
+        }
 
         public class Query
         {

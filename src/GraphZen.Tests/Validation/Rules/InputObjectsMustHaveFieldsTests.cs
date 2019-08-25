@@ -1,9 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.Validation.Rules
 {
@@ -13,7 +17,9 @@ namespace GraphZen.Validation.Rules
         public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.InputObjectsMustHaveFields;
 
         [Fact]
-        public void ItAcceptsAnInputObjectTypeWithFields() => SDLShouldPass(@"
+        public void ItAcceptsAnInputObjectTypeWithFields()
+        {
+            SDLShouldPass(@"
           type Query {
             field(arg: SomeInputObject): String
           }
@@ -22,6 +28,7 @@ namespace GraphZen.Validation.Rules
             field: String
           }
         ");
+        }
 
         [Fact]
         public void RejectsAnInputObjectTypeWithMissingFields()

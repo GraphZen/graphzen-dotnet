@@ -4,18 +4,22 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {
     public class EnumType : NamedType, IEnumType
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<EnumTypeDefinitionSyntax> _syntax;
+        private readonly Lazy<EnumTypeDefinitionSyntax> _syntax;
 
 
         public EnumType(string name, string description, Type clrType,
@@ -25,7 +29,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(valueDefinitions, nameof(valueDefinitions));
             var values = valueDefinitions.Select(v => EnumValue.From(v, this)).ToReadOnlyList();
-            Values= values.ToReadOnlyDictionary(v =>
+            Values = values.ToReadOnlyDictionary(v =>
             {
                 Debug.Assert(v != null, nameof(v) + " != null");
                 return v.Name;
@@ -54,18 +58,21 @@ namespace GraphZen.TypeSystem
         public Maybe<object> Serialize(object value)
         {
             if (ValuesByValue.TryGetValue(value ?? DBNull.Value, out var enumValue))
-            {
                 return Maybe.Some<object>(enumValue.Name);
-            }
 
             return Maybe.None<object>(
                 $"{Name} Enum: unable to find enum value that matches resolved value \"{value}\"");
         }
 
-        public bool IsValidValue(string value) => ParseValue(value) is Some<object>;
+        public bool IsValidValue(string value)
+        {
+            return ParseValue(value) is Some<object>;
+        }
 
-        public bool IsValidLiteral(ValueSyntax value) =>
-            value is EnumValueSyntax enumNode && Values.ContainsKey(enumNode.Value);
+        public bool IsValidLiteral(ValueSyntax value)
+        {
+            return value is EnumValueSyntax enumNode && Values.ContainsKey(enumNode.Value);
+        }
 
 
         public Maybe<object> ParseValue(object value)
@@ -73,10 +80,7 @@ namespace GraphZen.TypeSystem
             if (value is string str)
             {
                 var enumValue = this.FindValue(str);
-                if (enumValue != null)
-                {
-                    return Maybe.Some(enumValue.Value);
-                }
+                if (enumValue != null) return Maybe.Some(enumValue.Value);
             }
 
             return Maybe.None<object>();
@@ -87,10 +91,7 @@ namespace GraphZen.TypeSystem
             if (value is EnumValueSyntax enumNode)
             {
                 var enumValue = this.FindValue(enumNode.Value);
-                if (enumValue != null)
-                {
-                    return Maybe.Some(enumValue.Value);
-                }
+                if (enumValue != null) return Maybe.Some(enumValue.Value);
             }
 
             return Maybe.None<object>();
@@ -99,16 +100,27 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Enum;
 
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
         public IReadOnlyDictionary<string, EnumValue> Values { get; }
         public IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
 
-        public IEnumerable<EnumValue> GetValues() => Values.Values;
+        public IEnumerable<EnumValue> GetValues()
+        {
+            return Values.Values;
+        }
 
-        [NotNull]
+        IEnumerable<IEnumValueDefinition> IEnumValuesContainerDefinition.GetValues()
+        {
+            return GetValues();
+        }
+
+
         [GraphQLIgnore]
         public static EnumType From(IEnumTypeDefinition definition)
         {
@@ -116,7 +128,5 @@ namespace GraphZen.TypeSystem
             return new EnumType(definition.Name, definition.Description, definition.ClrType, definition.GetValues(),
                 definition.DirectiveAnnotations);
         }
-
-        IEnumerable<IEnumValueDefinition> IEnumValuesContainerDefinition.GetValues() => GetValues();
     }
 }

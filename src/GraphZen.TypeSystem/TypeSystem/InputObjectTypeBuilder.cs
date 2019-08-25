@@ -1,10 +1,12 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -17,7 +19,7 @@ namespace GraphZen.TypeSystem
             Builder = builder;
         }
 
-        [NotNull]
+
         private InternalInputObjectTypeBuilder Builder { get; }
 
         InternalInputObjectTypeBuilder IInfrastructure<InternalInputObjectTypeBuilder>.Instance => Builder;
@@ -42,45 +44,49 @@ namespace GraphZen.TypeSystem
         }
 
         public IInputObjectTypeBuilder<TInputObject> Field(string name, string type,
-            Action<InputValueBuilder> inputFieldConfigurator = null)
+            Action<InputValueBuilder>? inputFieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
-            var fb = Builder.Field(name, ConfigurationSource.Explicit)?.Type(type);
+            InternalInputValueBuilder fb = Builder.Field(name, ConfigurationSource.Explicit)?.Type(type)!;
             inputFieldConfigurator?.Invoke(new InputValueBuilder(fb));
             return this;
         }
 
         public IInputObjectTypeBuilder<TInputObject> Field(string name,
-            Action<InputValueBuilder> inputFieldConfigurator = null)
+            Action<InputValueBuilder>? inputFieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
-            var fb = Builder.Field(name, ConfigurationSource.Explicit);
+            var fb = Builder.Field(name, ConfigurationSource.Explicit)!;
             inputFieldConfigurator?.Invoke(new InputValueBuilder(fb));
             return this;
         }
 
         public IInputObjectTypeBuilder<TInputObject> Field<TField>(string name,
-            Action<InputValueBuilder> inputFieldConfigurator = null)
+            Action<InputValueBuilder>? inputFieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
             var fb = Builder.Field(name, ConfigurationSource.Explicit)?
-                .Type(typeof(TField));
+                .Type(typeof(TField))!;
             inputFieldConfigurator?.Invoke(new InputValueBuilder(fb));
             return this;
         }
 
         public IInputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector,
-            Action<InputValueBuilder> fieldBuilder = null)
+            Action<InputValueBuilder>? fieldBuilder = null)
         {
             Check.NotNull(fieldSelector, nameof(fieldSelector));
             var property = fieldSelector.GetPropertyInfoFromExpression();
-            var fb = Builder.Field(property, ConfigurationSource.Explicit);
+            var fb = Builder.Field(property, ConfigurationSource.Explicit)!;
             fieldBuilder?.Invoke(new InputValueBuilder(fb));
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> IgnoreField<TField>(Expression<Func<TInputObject, TField>> fieldSelector) => throw new NotImplementedException();
+        public IInputObjectTypeBuilder<TInputObject> IgnoreField<TField>(
+            Expression<Func<TInputObject, TField>> fieldSelector)
+        {
+            throw new NotImplementedException();
+        }
 
         public IInputObjectTypeBuilder<TInputObject> IgnoreField(string name)
         {
@@ -104,10 +110,12 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
+        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name)
+        {
+            return DirectiveAnnotation(name, null);
+        }
 
-        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name, object value)
+        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;

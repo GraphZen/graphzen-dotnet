@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -27,7 +32,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The enum type value.
         /// </summary>
-        [NotNull]
+
         public EnumValueSyntax Value { get; }
 
 
@@ -41,21 +46,17 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] EnumValueDefinitionSyntax other) =>
-            Value.Equals(other.Value) && Equals(Description, other.Description) &&
-            Directives.SequenceEqual(other.Directives);
+        private bool Equals(EnumValueDefinitionSyntax other)
+        {
+            return Value.Equals(other.Value) && Equals(Description, other.Description) &&
+                   Directives.SequenceEqual(other.Directives);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is EnumValueDefinitionSyntax && Equals((EnumValueDefinitionSyntax)obj);
         }
@@ -71,6 +72,9 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

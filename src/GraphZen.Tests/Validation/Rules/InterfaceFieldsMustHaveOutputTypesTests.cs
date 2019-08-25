@@ -1,10 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+#nullable disable
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
+using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Validation.Rules.SDLValidationHelpers;
 
@@ -16,10 +19,12 @@ namespace GraphZen.Validation.Rules
         public override ValidationRule RuleUnderTest { get; } =
             DocumentValidationRules.InterfaceFieldsMustHaveOutputTypes;
 
-        public static IEnumerable<object[]> GetValidInterfaceFieldTypeScenarios() =>
-            from outputType in OutputTypes
-            from fieldType in "SomeOutputType".WithModifiers()
-            select new object[] { outputType, fieldType };
+        public static IEnumerable<object[]> GetValidInterfaceFieldTypeScenarios()
+        {
+            return from outputType in OutputTypes
+                   from fieldType in "SomeOutputType".WithModifiers()
+                   select new object[] { outputType, fieldType };
+        }
 
         [Theory]
         [MemberData(nameof(GetValidInterfaceFieldTypeScenarios))]
@@ -34,10 +39,12 @@ namespace GraphZen.Validation.Rules
             ");
         }
 
-        public static IEnumerable<object[]> GetInvalidInterfaceFieldTypeScenarios() =>
-            from nonOutputType in NonOutputTypes
-            from fieldType in "SomeInputType".WithModifiers()
-            select new object[] { nonOutputType, fieldType };
+        public static IEnumerable<object[]> GetInvalidInterfaceFieldTypeScenarios()
+        {
+            return from nonOutputType in NonOutputTypes
+                   from fieldType in "SomeInputType".WithModifiers()
+                   select new object[] { nonOutputType, fieldType };
+        }
 
         [Theory]
         [MemberData(nameof(GetInvalidInterfaceFieldTypeScenarios))]

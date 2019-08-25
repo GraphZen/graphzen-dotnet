@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -29,25 +34,21 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The string value.
         /// </summary>
-        [NotNull]
+
         public string Value { get; }
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
 
-        private bool Equals([NotNull] StringValueSyntax other) =>
-            IsBlockString == other.IsBlockString && string.Equals(Value, other.Value);
+        private bool Equals(StringValueSyntax other)
+        {
+            return IsBlockString == other.IsBlockString && string.Equals(Value, other.Value);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is StringValueSyntax && Equals((StringValueSyntax)obj);
         }
@@ -62,8 +63,14 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public override object GetValue() => Value;
+        public override object GetValue()
+        {
+            return Value;
+        }
 
-        public override string ToString() => $"\"{Value}\"";
+        public override string ToString()
+        {
+            return $"\"{Value}\"";
+        }
     }
 }

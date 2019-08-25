@@ -1,11 +1,15 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using GraphZen.QueryEngine.Validation.Rules;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.Validation.Rules
 {
@@ -15,34 +19,45 @@ namespace GraphZen.Validation.Rules
         public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.UniqueOperationNames;
 
         [Fact]
-        public void NoOperations() => QueryShouldPass(@"
+        public void NoOperations()
+        {
+            QueryShouldPass(@"
 
           fragment fragA on Type {
             field
           }
 
         ");
+        }
 
         [Fact]
-        public void OneAnonymousOperation() => QueryShouldPass(@"
+        public void OneAnonymousOperation()
+        {
+            QueryShouldPass(@"
 
           {
             field
           }
 
         ");
+        }
 
         [Fact]
-        public void OneNameOperation() => QueryShouldPass(@"
+        public void OneNameOperation()
+        {
+            QueryShouldPass(@"
         
           query Foo {
             field
           }
 
         ");
+        }
 
         [Fact]
-        public void MultipleOperations() => QueryShouldPass(@" 
+        public void MultipleOperations()
+        {
+            QueryShouldPass(@" 
 
           query Foo {
             field
@@ -52,9 +67,12 @@ namespace GraphZen.Validation.Rules
           }
 
         ");
+        }
 
         [Fact]
-        public void MultipleOperationsOfDifferentTypes() => QueryShouldPass(@" 
+        public void MultipleOperationsOfDifferentTypes()
+        {
+            QueryShouldPass(@" 
 
           query Foo {
             field
@@ -67,9 +85,12 @@ namespace GraphZen.Validation.Rules
           }
 
         ");
+        }
 
         [Fact]
-        public void FragmentAndOperationNamedTheSame() => QueryShouldPass(@" 
+        public void FragmentAndOperationNamedTheSame()
+        {
+            QueryShouldPass(@" 
 
           query Foo {
             ...Foo
@@ -79,13 +100,18 @@ namespace GraphZen.Validation.Rules
           }
 
         ");
+        }
 
         private static ExpectedError
-            DuplicateOp(string operationName, params (int line, int column)[] lineColumnPairs) =>
-            Error(UniqueOperationNames.DuplicateOperationNameMessage(operationName), lineColumnPairs);
+            DuplicateOp(string operationName, params (int line, int column)[] lineColumnPairs)
+        {
+            return Error(UniqueOperationNames.DuplicateOperationNameMessage(operationName), lineColumnPairs);
+        }
 
         [Fact]
-        public void MultipleOperationsOfSameNameMutation() => QueryShouldFail(@" 
+        public void MultipleOperationsOfSameNameMutation()
+        {
+            QueryShouldFail(@" 
 
           query Foo {
             fieldA
@@ -95,10 +121,13 @@ namespace GraphZen.Validation.Rules
           }
 
         ", DuplicateOp("Foo", (3, 17), (6, 17)));
+        }
 
 
         [Fact]
-        public void MultipleOperationsOfSameNameSubscription() => QueryShouldFail(@" 
+        public void MultipleOperationsOfSameNameSubscription()
+        {
+            QueryShouldFail(@" 
       
           query Foo {
             fieldA
@@ -108,5 +137,6 @@ namespace GraphZen.Validation.Rules
           }
 
         ", DuplicateOp("Foo", (3, 17), (6, 24)));
+        }
     }
 }

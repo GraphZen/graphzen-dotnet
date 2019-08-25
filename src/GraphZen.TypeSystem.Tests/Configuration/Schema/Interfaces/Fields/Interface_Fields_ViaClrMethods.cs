@@ -1,5 +1,12 @@
-﻿using GraphZen.Infrastructure;
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.Interfaces.Fields
 {
@@ -8,8 +15,9 @@ namespace GraphZen.Interfaces.Fields
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext() =>
-            new CollectionConventionContext
+        public CollectionConventionContext GetContext()
+        {
+            return new CollectionConventionContext
             {
                 ParentName = nameof(IExampleInterface),
                 ItemNamedByConvention = nameof(IExampleInterface.HelloWorld).FirstCharToLower(),
@@ -17,6 +25,7 @@ namespace GraphZen.Interfaces.Fields
                 ItemIgnoredByConvention = nameof(IExampleInterface.IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(IExampleInterface.IgnoredByDataAnnotation).FirstCharToLower()
             };
+        }
 
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
@@ -31,7 +40,7 @@ namespace GraphZen.Interfaces.Fields
 
         public void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
 

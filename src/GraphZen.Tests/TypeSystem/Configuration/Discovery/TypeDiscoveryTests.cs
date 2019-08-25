@@ -1,13 +1,17 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 // ReSharper disable InconsistentNaming
 
@@ -36,8 +40,7 @@ namespace GraphZen.TypeSystem
 
         public interface IFooInterface
         {
-            [GraphQLIgnore]
-            type_never_included property_from_interface_ignored_by_data_annotation { get; }
+            [GraphQLIgnore] type_never_included property_from_interface_ignored_by_data_annotation { get; }
         }
 
         public class input_object_included_via_field_argument
@@ -57,8 +60,7 @@ namespace GraphZen.TypeSystem
             public object_ignored_by_data_annotation PropertyFieldWithTypeIgnoredByDataAnnotation { get; set; }
             public object_included_via_property_type_on_class PropertyField { get; set; }
 
-            [GraphQLIgnore]
-            public type_never_included PropertyIgnoredByDataAnnotation { get; set; }
+            [GraphQLIgnore] public type_never_included PropertyIgnoredByDataAnnotation { get; set; }
 
             [GraphQLIgnore]
             // ReSharper disable once UnassignedGetOnlyAutoProperty
@@ -67,10 +69,16 @@ namespace GraphZen.TypeSystem
             public object_included_via_method_return_type_on_class MethodField(
                 input_object_ignored_by_data_annotation arg1,
                 input_object_included_via_field_argument arg2,
-                [GraphQLIgnore] type_never_included arg3) => default;
+                [GraphQLIgnore] type_never_included arg3)
+            {
+                return default;
+            }
 
             [GraphQLIgnore]
-            public type_never_included MethodIgnoredByDataAnnotation() => default;
+            public type_never_included MethodIgnoredByDataAnnotation()
+            {
+                return default;
+            }
         }
 
 
@@ -102,30 +110,25 @@ namespace GraphZen.TypeSystem
                 {
                     def.Should().BeNull($"because it is ignored by {ignoredConfigurationSource} configuration.");
                     if (ignoredConfigurationSource.HasValue)
-                    {
                         _.GetDefinition().FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName()).Should()
                             .Be(ignoredConfigurationSource, $"because {clrType.Name} should be ignored.");
-                    }
                 }
                 else
                 {
                     def.Should()
                         .NotBeNull(
                             $"because {clrType.Name} is included as a {kind} by {configurationSource} configuration.");
+                    // ReSharper disable once PossibleNullReferenceException
                     def.GetConfigurationSource().Should().Be(configurationSource);
                 }
             });
 
             var type = schema.GetTypes().Where(t => t.Kind == kind).SingleOrDefault(_ => _.ClrType == clrType);
             if (ignored)
-            {
                 type.Should().BeNull($"because it should be included by {configurationSource} configuration.");
-            }
             else
-            {
                 type.Should()
                     .NotBeNull($"it should be should be ignored by {ignoredConfigurationSource} configuration.");
-            }
         }
     }
 }

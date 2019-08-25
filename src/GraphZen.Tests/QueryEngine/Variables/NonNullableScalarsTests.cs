@@ -1,10 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Variables
 {
@@ -23,76 +27,91 @@ namespace GraphZen.QueryEngine.Variables
         }
 
         [Fact]
-        public Task AllowsNonNullableInputsToBeOmittedGivenADefault() => ExecuteAsync(@"
+        public Task AllowsNonNullableInputsToBeOmittedGivenADefault()
+        {
+            return ExecuteAsync(@"
               query ($value: String = ""default"") {
                 fieldWithNonNullableStringInput(input: $value)
               }
             ").ShouldEqual(new
-        {
-            data = new { fieldWithNonNullableStringInput = "\"default\"" }
-        });
+            {
+                data = new { fieldWithNonNullableStringInput = "\"default\"" }
+            });
+        }
 
         [Fact]
-        public Task AllowsNonNullableInputsToBeSetToAValueDirectly() => ExecuteAsync(@"
+        public Task AllowsNonNullableInputsToBeSetToAValueDirectly()
+        {
+            return ExecuteAsync(@"
               {
                 fieldWithNonNullableStringInput(input: ""a"")
               }
             ").ShouldEqual(new
-        {
-            data = new
             {
-                fieldWithNonNullableStringInput = "\"a\""
-            }
-        });
+                data = new
+                {
+                    fieldWithNonNullableStringInput = "\"a\""
+                }
+            });
+        }
 
         [Fact]
-        public Task AllowsNonNullableInputsToBeSetToAValueInAVariable() => ExecuteAsync(@"
+        public Task AllowsNonNullableInputsToBeSetToAValueInAVariable()
+        {
+            return ExecuteAsync(@"
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
             ", new { value = "a" }).ShouldEqual(new
-        {
-            data = new
             {
-                fieldWithNonNullableStringInput = "\"a\""
-            }
-        });
+                data = new
+                {
+                    fieldWithNonNullableStringInput = "\"a\""
+                }
+            });
+        }
 
         [Fact]
-        public Task DoesNotAllowNonNullableInputsToBeOmittedInAVariable() => ExecuteAsync(@"
+        public Task DoesNotAllowNonNullableInputsToBeOmittedInAVariable()
+        {
+            return ExecuteAsync(@"
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
             ").ShouldEqual(new
-        {
-            errors = Array(new
             {
-                message = "Variable \"$value\" of required type \"String!\" was not provided.",
-                locations = Array(new
+                errors = Array(new
                 {
-                    line = 2,
-                    column = 22
+                    message = "Variable \"$value\" of required type \"String!\" was not provided.",
+                    locations = Array(new
+                    {
+                        line = 2,
+                        column = 22
+                    })
                 })
-            })
-        });
+            });
+        }
 
         [Fact]
-        public Task DoesNotAllowNonNullableInputsToBeSetToNullInAVairable() => ExecuteAsync(@"
+        public Task DoesNotAllowNonNullableInputsToBeSetToNullInAVairable()
+        {
+            return ExecuteAsync(@"
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
             ", new { value = (string)null }).ShouldEqual(new
-        {
-            errors = Array(new
             {
-                message = "Variable \"$value\" of non-null type \"String!\" must not be null.",
-                locations = Array(new
+                errors = Array(new
                 {
-                    line = 2,
-                    column = 22
+                    message = "Variable \"$value\" of non-null type \"String!\" must not be null.",
+                    locations = Array(new
+                    {
+                        line = 2,
+                        column = 22
+                    })
                 })
-            })
-        });
+            });
+        }
 
         [Fact]
         public async Task ReportsErrorForArrayPassedIntoStringInput()
@@ -115,8 +134,9 @@ namespace GraphZen.QueryEngine.Variables
         }
 
         [Fact]
-        public Task ReportsErrorForMissingNonNullabeInputs() =>
-            ExecuteAsync("{ fieldWithNonNullableStringInput }").ShouldEqual(new
+        public Task ReportsErrorForMissingNonNullabeInputs()
+        {
+            return ExecuteAsync("{ fieldWithNonNullableStringInput }").ShouldEqual(new
             {
                 data = new
                 {
@@ -133,29 +153,33 @@ namespace GraphZen.QueryEngine.Variables
                     path = Array("fieldWithNonNullableStringInput")
                 })
             });
+        }
 
         [Fact]
-        public Task ReportsErrorForNonProvidedVariablesForNonNullableInputs() => ExecuteAsync(@"
+        public Task ReportsErrorForNonProvidedVariablesForNonNullableInputs()
+        {
+            return ExecuteAsync(@"
               {
                 fieldWithNonNullableStringInput(input: $foo)
               }
             ").ShouldEqual(new
-        {
-            data = new
             {
-                fieldWithNonNullableStringInput = (object)null
-            },
-            errors = Array(new
-            {
-                message =
-                    "Argument \"input\" of required type \"String!\" was provided the variable \"$foo\" which was not provided a runtime value.",
-                locations = Array(new
+                data = new
                 {
-                    line = 3,
-                    column = 56
-                }),
-                path = Array("fieldWithNonNullableStringInput")
-            })
-        });
+                    fieldWithNonNullableStringInput = (object)null
+                },
+                errors = Array(new
+                {
+                    message =
+                        "Argument \"input\" of required type \"String!\" was provided the variable \"$foo\" which was not provided a runtime value.",
+                    locations = Array(new
+                    {
+                        line = 3,
+                        column = 56
+                    }),
+                    path = Array("fieldWithNonNullableStringInput")
+                })
+            });
+        }
     }
 }

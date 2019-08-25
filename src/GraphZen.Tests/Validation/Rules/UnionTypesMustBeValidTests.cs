@@ -1,9 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.Validation.Rules
 {
@@ -13,7 +17,9 @@ namespace GraphZen.Validation.Rules
         public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.UnionTypesMustBeValid;
 
         [Fact]
-        public void AcceptsUnionTypeWithMemberTypes() => SDLShouldPass(@"
+        public void AcceptsUnionTypeWithMemberTypes()
+        {
+            SDLShouldPass(@"
           type Query {
             test: GoodUnion
           }
@@ -30,9 +36,12 @@ namespace GraphZen.Validation.Rules
             | TypeA
             | TypeB
         ");
+        }
 
         [Fact]
-        public void RejectsUnionTypeWithEmptyTypes() => SDLShouldFail(@"
+        public void RejectsUnionTypeWithEmptyTypes()
+        {
+            SDLShouldFail(@"
           type Query {
             test: BadUnion
           }
@@ -43,6 +52,7 @@ namespace GraphZen.Validation.Rules
 
           extend union BadUnion @test
         ", Error("Union type BadUnion must define one or more member types.", (5, 1), (9, 1)));
+        }
 
         [Fact]
         public void RejectsAUnionTypeWithDuplicatedMemberType()

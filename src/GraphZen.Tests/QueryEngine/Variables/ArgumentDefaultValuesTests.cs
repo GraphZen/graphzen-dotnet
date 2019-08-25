@@ -1,10 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Variables
 {
@@ -24,62 +28,74 @@ namespace GraphZen.QueryEngine.Variables
 
 
         [Fact]
-        public Task NotWhenArugmentCannotBeCoerced() => ExecuteAsync(@"
+        public Task NotWhenArugmentCannotBeCoerced()
+        {
+            return ExecuteAsync(@"
               {
                 fieldWithDefaultArgumentValue(input: WRONG_TYPE)
               }
             ").ShouldEqual(new
-        {
-            data = new
             {
-                fieldWithDefaultArgumentValue = (object)null
-            },
-            errors = Array(new
-            {
-                message = "Argument \"input\" has invalid value \"WRONG_TYPE\".",
-                locations = Array(new
+                data = new
                 {
-                    column = 17,
-                    line = 3
-                }),
-                path = Array("fieldWithDefaultArgumentValue")
-            })
-        });
+                    fieldWithDefaultArgumentValue = (object)null
+                },
+                errors = Array(new
+                {
+                    message = "Argument \"input\" has invalid value \"WRONG_TYPE\".",
+                    locations = Array(new
+                    {
+                        column = 17,
+                        line = 3
+                    }),
+                    path = Array("fieldWithDefaultArgumentValue")
+                })
+            });
+        }
 
         [Fact]
-        public Task WhenNoArgumentProvided() => ExecuteAsync("{fieldWithDefaultArgumentValue}")
-            .ShouldEqual(new
+        public Task WhenNoArgumentProvided()
+        {
+            return ExecuteAsync("{fieldWithDefaultArgumentValue}")
+                .ShouldEqual(new
+                {
+                    data = new
+                    {
+                        fieldWithDefaultArgumentValue = "\"Hello World\""
+                    }
+                });
+        }
+
+        [Fact]
+        public Task WhenNoRuntimeValueIsProvidedToANonNullArgument()
+        {
+            return ExecuteAsync(@"
+              query optionalVariable($optional: String) {
+                fieldWithNonNullableStringInputAndDefaultArgumentValue(input: $optional)
+              }
+            ").ShouldEqual(new
+            {
+                data = new
+                {
+                    fieldWithNonNullableStringInputAndDefaultArgumentValue = "\"Hello World\""
+                }
+            });
+        }
+
+        [Fact]
+        public Task WhenOmittedVariableProvided()
+        {
+            return ExecuteAsync(@"
+              query ($optional: String) {
+                fieldWithDefaultArgumentValue(input: $optional)
+              }
+            ").ShouldEqual(new
             {
                 data = new
                 {
                     fieldWithDefaultArgumentValue = "\"Hello World\""
                 }
             });
-
-        [Fact]
-        public Task WhenNoRuntimeValueIsProvidedToANonNullArgument() => ExecuteAsync(@"
-              query optionalVariable($optional: String) {
-                fieldWithNonNullableStringInputAndDefaultArgumentValue(input: $optional)
-              }
-            ").ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithNonNullableStringInputAndDefaultArgumentValue = "\"Hello World\""
-            }
-        });
-
-        [Fact]
-        public Task WhenOmittedVariableProvided() => ExecuteAsync(@"
-              query ($optional: String) {
-                fieldWithDefaultArgumentValue(input: $optional)
-              }
-            ").ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithDefaultArgumentValue = "\"Hello World\""
-            }
-        });
+        }
     }
 }

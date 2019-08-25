@@ -1,25 +1,27 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Logging;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen
 {
     public class GraphQLContext
     {
         private static readonly ILog Logger = LogProvider.For<GraphQLContext>();
-        [NotNull] private readonly GraphQLContextOptions _options;
+        private readonly GraphQLContextOptions _options;
 
         private bool _optionsInitialized;
-        [CanBeNull] private Schema _schema;
+        private Schema? _schema;
 
         public GraphQLContext() : this(new GraphQLContextOptions<GraphQLContext>())
         {
@@ -37,10 +39,10 @@ namespace GraphZen
             _schema = schema;
         }
 
-        [NotNull]
+
         internal static Dictionary<Type, Schema> SchemaCache { get; } = new Dictionary<Type, Schema>();
 
-        [NotNull]
+
         public GraphQLContextOptions Options
         {
             get
@@ -56,15 +58,12 @@ namespace GraphZen
             }
         }
 
-        [NotNull]
+
         public Schema Schema
         {
             get
             {
-                if (_schema != null)
-                {
-                    return _schema;
-                }
+                if (_schema != null) return _schema;
 
                 var contextType = GetType();
 
@@ -81,20 +80,16 @@ namespace GraphZen
                     }
                     else
                     {
-                        Type queryClrType = default;
+                        Type? queryClrType = default;
                         if (contextType != typeof(GraphQLContext))
-                        {
                             queryClrType = contextType.Assembly.GetExportedTypes()
                                 .SingleOrDefault(_ => _.IsClass && _.Name == "Query");
-                        }
 
                         queryClrType = queryClrType ?? Assembly.GetEntryAssembly()?.GetTypes()
                                            .SingleOrDefault(_ => _.IsClass && _.Name == "Query");
 
                         if (queryClrType != null)
-                        {
                             internalBuilder.QueryType(queryClrType, ConfigurationSource.Convention);
-                        }
                     }
 
                     // Configure mutation type
@@ -104,20 +99,16 @@ namespace GraphZen
                     }
                     else
                     {
-                        Type mutationClrType = default;
+                        Type? mutationClrType = default;
                         if (contextType != typeof(GraphQLContext))
-                        {
                             mutationClrType = contextType.Assembly.GetExportedTypes()
                                 .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
-                        }
 
                         mutationClrType = mutationClrType ?? Assembly.GetEntryAssembly()?.GetTypes()
                                               .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
 
                         if (mutationClrType != null)
-                        {
                             internalBuilder.MutationType(mutationClrType, ConfigurationSource.Convention);
-                        }
                     }
 
 
@@ -133,14 +124,17 @@ namespace GraphZen
             }
         }
 
-        protected internal virtual void OnConfiguring([NotNull] GraphQLContextOptionsBuilder optionsBuilder)
+        protected internal virtual void OnConfiguring(GraphQLContextOptionsBuilder optionsBuilder)
         {
         }
 
-        [NotNull]
-        protected virtual SchemaBuilder CreateSchemaBuilder() => new SchemaBuilder(Options.Schema);
 
-        protected internal virtual void OnSchemaCreating([NotNull] SchemaBuilder schemaBuilder)
+        protected virtual SchemaBuilder CreateSchemaBuilder()
+        {
+            return new SchemaBuilder(Options.Schema);
+        }
+
+        protected internal virtual void OnSchemaCreating(SchemaBuilder schemaBuilder)
         {
         }
     }

@@ -1,10 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.TypeSystem
 {
@@ -15,8 +19,7 @@ namespace GraphZen.TypeSystem
         {
             public string BaseProperty { get; set; }
 
-            [GraphQLCanBeNull]
-            public string NullableBaseProperty { get; set; }
+            [GraphQLCanBeNull] public string NullableBaseProperty { get; set; }
         }
 
 
@@ -24,8 +27,7 @@ namespace GraphZen.TypeSystem
         {
             public string Bar { get; set; }
 
-            [GraphQLCanBeNull]
-            public string NullableBar { get; set; }
+            [GraphQLCanBeNull] public string NullableBar { get; set; }
         }
 
         [Theory]

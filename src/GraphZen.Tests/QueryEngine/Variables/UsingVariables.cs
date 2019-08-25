@@ -1,10 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Variables
 {
@@ -29,8 +33,9 @@ namespace GraphZen.QueryEngine.Variables
 
 
         [Fact]
-        public Task ErrorsOnAdditionOfUnkownInputField() =>
-            ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz", extra = "dog" } })
+        public Task ErrorsOnAdditionOfUnkownInputField()
+        {
+            return ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz", extra = "dog" } })
                 .ShouldEqual(new
                 {
                     errors = Array(new
@@ -44,89 +49,59 @@ namespace GraphZen.QueryEngine.Variables
                         })
                     })
                 });
+        }
 
         [Fact]
-        public Task ErrorsOnDeepNestedErrorsAndWithmanyErrors() => ExecuteAsync(@"
+        public Task ErrorsOnDeepNestedErrorsAndWithmanyErrors()
+        {
+            return ExecuteAsync(@"
             query ($input: TestNestedInputObject) {
               fieldWithNestedObjectInput(input: $input)
             }", new
-        {
-            input = new
             {
-                na = new { a = "foo" }
-            }
-        })
-            .ShouldEqual(new
-            {
-                errors = Array(new
+                input = new
                 {
-                    message =
-                            "Variable \"$input\" got invalid value `{na: {a: \"foo\"}}`; Field value.nb of required type String! was not provided.",
-                    locations = Array(new
-                    {
-                        line = 2,
-                        column = 20
-                    })
-                },
-                    new
+                    na = new { a = "foo" }
+                }
+            })
+                .ShouldEqual(new
+                {
+                    errors = Array(new
                     {
                         message =
-                            "Variable \"$input\" got invalid value `{na: {a: \"foo\"}}`; Field value.na.c of required type String! was not provided.",
+                                "Variable \"$input\" got invalid value `{na: {a: \"foo\"}}`; Field value.nb of required type String! was not provided.",
                         locations = Array(new
                         {
                             line = 2,
                             column = 20
                         })
-                    }
-                )
-            });
+                    },
+                        new
+                        {
+                            message =
+                                "Variable \"$input\" got invalid value `{na: {a: \"foo\"}}`; Field value.na.c of required type String! was not provided.",
+                            locations = Array(new
+                            {
+                                line = 2,
+                                column = 20
+                            })
+                        }
+                    )
+                });
+        }
 
         [Fact]
-        public Task ErrorsOnIncorrectType() => ExecuteAsync(Doc, new
+        public Task ErrorsOnIncorrectType()
         {
-            input = "foo bar"
-        }).ShouldEqual(new
-        {
-            errors = Array(new
+            return ExecuteAsync(Doc, new
             {
-                message =
-                    "Variable \"$input\" got invalid value `\"foo bar\"`; Expected TestInputObject to be an object.",
-                locations = Array(new
-                {
-                    line = 2,
-                    column = 25
-                })
-            })
-        });
-
-        [Fact]
-        public Task ErrorsOnNullForNestedNonNull() => ExecuteAsync(Doc, new
-        {
-            input = new
-            {
-                a = "foo",
-                b = "bar",
-                c = (string)null
-            }
-        }).ShouldEqual(new
-        {
-            errors = Array(
-                new
-                {
-                    message =
-                        "Variable \"$input\" got invalid value `{a: \"foo\", b: \"bar\", c: null}`; Field value.c of required type String! was not provided.",
-                    locations = Array(new { line = 2, column = 25 })
-                })
-        });
-
-        [Fact]
-        public Task ErrorsOnOmissionOfNestedNonNull() => ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar" } })
-            .ShouldEqual(new
+                input = "foo bar"
+            }).ShouldEqual(new
             {
                 errors = Array(new
                 {
                     message =
-                        "Variable \"$input\" got invalid value `{a: \"foo\", b: \"bar\"}`; Field value.c of required type String! was not provided.",
+                        "Variable \"$input\" got invalid value `\"foo bar\"`; Expected TestInputObject to be an object.",
                     locations = Array(new
                     {
                         line = 2,
@@ -134,127 +109,111 @@ namespace GraphZen.QueryEngine.Variables
                     })
                 })
             });
+        }
 
         [Fact]
-        public Task ItDoesNotUseDefaultValueWhenProvided() => ExecuteAsync(@" 
-                        query q($input: String = ""Default value"") {
-                          fieldWithNullableStringInput(input: $input)
-                        }
-                    ", new
+        public Task ErrorsOnNullForNestedNonNull()
         {
-            input = "Variable value"
-        })
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithNullableStringInput = "\"Variable value\""
-                }
-            });
-
-        [Fact]
-        public Task ItExecutesWithComplexInput() => ExecuteAsync(Doc,
-            new
+            return ExecuteAsync(Doc, new
             {
                 input = new
                 {
                     a = "foo",
-                    b = Array("bar"),
-                    c = "baz"
+                    b = "bar",
+                    c = (string)null
                 }
-            }
-        ).ShouldEqual(new
-        {
-            data = new
+            }).ShouldEqual(new
             {
-                fieldWithObjectInput = @"{""a"":""foo"",""b"":[""bar""],""c"":""baz""}"
-            }
-        });
+                errors = Array(
+                    new
+                    {
+                        message =
+                            "Variable \"$input\" got invalid value `{a: \"foo\", b: \"bar\", c: null}`; Field value.c of required type String! was not provided.",
+                        locations = Array(new { line = 2, column = 25 })
+                    })
+            });
+        }
 
         [Fact]
-        public Task ItExecutesWithComplexScalarInput() =>
-            ExecuteAsync(Doc, new { input = new { c = "foo", d = "SerializedValue" } }).ShouldEqual(new
+        public Task ErrorsOnOmissionOfNestedNonNull()
+        {
+            return ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar" } })
+                .ShouldEqual(new
+                {
+                    errors = Array(new
+                    {
+                        message =
+                            "Variable \"$input\" got invalid value `{a: \"foo\", b: \"bar\"}`; Field value.c of required type String! was not provided.",
+                        locations = Array(new
+                        {
+                            line = 2,
+                            column = 25
+                        })
+                    })
+                });
+        }
+
+        [Fact]
+        public Task ItDoesNotUseDefaultValueWhenProvided()
+        {
+            return ExecuteAsync(@" 
+                        query q($input: String = ""Default value"") {
+                          fieldWithNullableStringInput(input: $input)
+                        }
+                    ", new
+            {
+                input = "Variable value"
+            })
+                .ShouldEqual(new
+                {
+                    data = new
+                    {
+                        fieldWithNullableStringInput = "\"Variable value\""
+                    }
+                });
+        }
+
+        [Fact]
+        public Task ItExecutesWithComplexInput()
+        {
+            return ExecuteAsync(Doc,
+                new
+                {
+                    input = new
+                    {
+                        a = "foo",
+                        b = Array("bar"),
+                        c = "baz"
+                    }
+                }
+            ).ShouldEqual(new
+            {
+                data = new
+                {
+                    fieldWithObjectInput = @"{""a"":""foo"",""b"":[""bar""],""c"":""baz""}"
+                }
+            });
+        }
+
+        [Fact]
+        public Task ItExecutesWithComplexScalarInput()
+        {
+            return ExecuteAsync(Doc, new { input = new { c = "foo", d = "SerializedValue" } }).ShouldEqual(new
             {
                 data = new
                 {
                     fieldWithObjectInput = "{\"c\":\"foo\",\"d\":\"DeserializedValue\"}"
                 }
             });
+        }
 
         [Fact]
-        public Task ItUsesDefaultValueWhenNotProvided() => ExecuteAsync(@" 
+        public Task ItUsesDefaultValueWhenNotProvided()
+        {
+            return ExecuteAsync(@" 
                         query ($input: TestInputObject = {a: ""foo"", b: [""bar""], c: ""baz""}) {
                             fieldWithObjectInput(input: $input)
                         }")
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithObjectInput = "{\"a\":\"foo\",\"b\":[\"bar\"],\"c\":\"baz\"}"
-                }
-            });
-
-
-        [Fact]
-        public Task ItUsesExplicitNullValueInsteadOfDefaultValue() => ExecuteAsync(@" 
-                        query q($input: String = ""Default value"") {
-                          fieldWithNullableStringInput(input: $input)
-                        }
-                    ", new
-        {
-            input = (string)null
-        })
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithNullableStringInput = "null"
-                }
-            });
-
-        [Fact]
-        public Task ItUsesNullDefaultValueWhenNotProvided() => ExecuteAsync(@" 
-                        query q($input: String = null) {
-                          fieldWithNullableStringInput(input: $input)
-                        }
-                    ")
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithNullableStringInput = "null"
-                }
-            });
-
-        [Fact]
-        public Task ItUsesNullWhenVariableProvidedExplicitNullValue() => ExecuteAsync(@" 
-                        query q($input: String) {
-                            fieldWithNullableStringInput(input: $input)
-                       }", new { input = (string)null })
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithNullableStringInput = "null"
-                }
-            });
-
-        [Fact]
-        public Task ItUsesUndefinedWhenVariableNotProvided() => ExecuteAsync(@" 
-                        query q($input: String) {
-                            fieldWithNullableStringInput(input: $input)
-                       }", new { })
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithNullableStringInput = (string)null
-                }
-            });
-
-        [Fact]
-        public Task ProperlyParsesSingleValueToList() =>
-            ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz" } })
                 .ShouldEqual(new
                 {
                     data = new
@@ -262,5 +221,89 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithObjectInput = "{\"a\":\"foo\",\"b\":[\"bar\"],\"c\":\"baz\"}"
                     }
                 });
+        }
+
+
+        [Fact]
+        public Task ItUsesExplicitNullValueInsteadOfDefaultValue()
+        {
+            return ExecuteAsync(@" 
+                        query q($input: String = ""Default value"") {
+                          fieldWithNullableStringInput(input: $input)
+                        }
+                    ", new
+            {
+                input = (string)null
+            })
+                .ShouldEqual(new
+                {
+                    data = new
+                    {
+                        fieldWithNullableStringInput = "null"
+                    }
+                });
+        }
+
+        [Fact]
+        public Task ItUsesNullDefaultValueWhenNotProvided()
+        {
+            return ExecuteAsync(@" 
+                        query q($input: String = null) {
+                          fieldWithNullableStringInput(input: $input)
+                        }
+                    ")
+                .ShouldEqual(new
+                {
+                    data = new
+                    {
+                        fieldWithNullableStringInput = "null"
+                    }
+                });
+        }
+
+        [Fact]
+        public Task ItUsesNullWhenVariableProvidedExplicitNullValue()
+        {
+            return ExecuteAsync(@" 
+                        query q($input: String) {
+                            fieldWithNullableStringInput(input: $input)
+                       }", new { input = (string)null })
+                .ShouldEqual(new
+                {
+                    data = new
+                    {
+                        fieldWithNullableStringInput = "null"
+                    }
+                });
+        }
+
+        [Fact]
+        public Task ItUsesUndefinedWhenVariableNotProvided()
+        {
+            return ExecuteAsync(@" 
+                        query q($input: String) {
+                            fieldWithNullableStringInput(input: $input)
+                       }", new { })
+                .ShouldEqual(new
+                {
+                    data = new
+                    {
+                        fieldWithNullableStringInput = (string)null
+                    }
+                });
+        }
+
+        [Fact]
+        public Task ProperlyParsesSingleValueToList()
+        {
+            return ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz" } })
+                .ShouldEqual(new
+                {
+                    data = new
+                    {
+                        fieldWithObjectInput = "{\"a\":\"foo\",\"b\":[\"bar\"],\"c\":\"baz\"}"
+                    }
+                });
+        }
     }
 }

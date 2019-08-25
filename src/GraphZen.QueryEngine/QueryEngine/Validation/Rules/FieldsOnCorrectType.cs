@@ -1,13 +1,18 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Validation.Rules
 {
@@ -18,22 +23,17 @@ namespace GraphZen.QueryEngine.Validation.Rules
         }
 
         public static string UndefinedFieldMessage(
-            [NotNull] string fieldName,
-            [NotNull] string type,
-            [NotNull] [ItemNotNull] IEnumerable<string> suggestedTypeNames,
-            [NotNull] [ItemNotNull] IEnumerable<string> suggestedFieldNames)
+            string fieldName,
+            string type,
+            IEnumerable<string> suggestedTypeNames,
+            IEnumerable<string> suggestedFieldNames)
         {
             var typeNames = suggestedTypeNames.ToArray();
             var fieldNames = suggestedFieldNames.ToArray();
             var message = $"Cannot query field \"{fieldName}\" on type \"{type}\".";
             if (typeNames.Any())
-            {
                 message += $" Did you mean to use an inline fragment on {typeNames.QuotedOrList()}?";
-            }
-            else if (fieldNames.Any())
-            {
-                message += $" Did you mean {fieldNames.QuotedOrList()}?";
-            }
+            else if (fieldNames.Any()) message += $" Did you mean {fieldNames.QuotedOrList()}?";
 
             return message;
         }
@@ -61,8 +61,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
             return VisitAction.Continue;
         }
 
-        [NotNull]
-        private IReadOnlyList<string> GetSuggestedTypeNames(IGraphQLType type, [NotNull] string fieldName)
+
+        private IReadOnlyList<string> GetSuggestedTypeNames(IGraphQLType type, string fieldName)
         {
             if (type is IAbstractType abstractType)
             {
@@ -70,18 +70,12 @@ namespace GraphZen.QueryEngine.Validation.Rules
                 var interfaceUsageCount = new Dictionary<string, int>();
                 foreach (var possibleType in Context.Schema.GetPossibleTypes(abstractType))
                 {
-                    if (possibleType.FindField(fieldName) == null)
-                    {
-                        continue;
-                    }
+                    if (possibleType.FindField(fieldName) == null) continue;
 
                     suggestedObjectTypes.Add(possibleType.Name);
                     foreach (var possibleInterface in possibleType.Interfaces)
                     {
-                        if (possibleInterface.FindField(fieldName) == null)
-                        {
-                            continue;
-                        }
+                        if (possibleInterface.FindField(fieldName) == null) continue;
 
                         interfaceUsageCount.Increment(possibleInterface.Name);
                     }
@@ -97,8 +91,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
             return Array.Empty<string>();
         }
 
-        [NotNull]
-        private IReadOnlyList<string> GetSuggestedFieldNames(IGraphQLType type, [NotNull] string fieldName)
+
+        private IReadOnlyList<string> GetSuggestedFieldNames(IGraphQLType type, string fieldName)
         {
             if (type is IFieldsContainer fields)
             {

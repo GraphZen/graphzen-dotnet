@@ -1,17 +1,21 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
+
+#nullable enable
+
 
 namespace GraphZen.Infrastructure
 {
     public static class JsonExtensions
     {
-        [NotNull]
         public static IDictionary<string, object> ToDictionary(this JObject jobject)
         {
             Check.NotNull(jobject, nameof(jobject));
@@ -32,7 +36,6 @@ namespace GraphZen.Infrastructure
 
 
             foreach (var (arrayKey, arrayValue) in arrayEntries)
-            {
                 result[arrayKey] = arrayValue.Children().Select(v =>
                 {
                     switch (v)
@@ -45,12 +48,8 @@ namespace GraphZen.Infrastructure
 
                     throw new NotImplementedException($"unsupported type {v?.GetType()}");
                 }).ToArray();
-            }
 
-            foreach (var (objectKey, objectValue) in objectEntries)
-            {
-                result[objectKey] = objectValue.ToDictionary();
-            }
+            foreach (var (objectKey, objectValue) in objectEntries) result[objectKey] = objectValue.ToDictionary();
 
             return result;
         }

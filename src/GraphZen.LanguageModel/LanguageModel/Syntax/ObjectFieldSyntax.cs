@@ -2,7 +2,12 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -23,14 +28,14 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name of the field.
         /// </summary>
-        [NotNull]
+
         public NameSyntax Name { get; }
 
 
         /// <summary>
         ///     The value of the field.
         /// </summary>
-        [NotNull]
+
         public ValueSyntax Value { get; }
 
 
@@ -44,19 +49,16 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals([NotNull] ObjectFieldSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
+        private bool Equals(ObjectFieldSyntax other)
+        {
+            return Name.Equals(other.Name) && Value.Equals(other.Value);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is ObjectFieldSyntax && Equals((ObjectFieldSyntax)obj);
         }

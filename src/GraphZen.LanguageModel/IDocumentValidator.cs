@@ -2,15 +2,15 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using JetBrains.Annotations;
 
 namespace GraphZen
 {
     public interface IDocumentValidator
     {
-        [NotNull]
-        [ItemNotNull]
-        IEnumerable<GraphQLError> Validate(DocumentSyntax schemaDocument, DocumentSyntax initialSchemaDocument = null);
+        IEnumerable<GraphQLError> Validate(DocumentSyntax schemaDocument, DocumentSyntax? initialSchemaDocument = null);
     }
 }

@@ -73,10 +73,10 @@ namespace GraphZen.LanguageModel
     {<# foreach(var nodeName in nodeTypes) { #>
 
         /// <summary>Called when the visitor enters a <see cref="<#= nodeName #>Syntax"/> node.</summary>
-        public virtual void Enter<#= nodeName #>([NotNull] <#= nodeName #>Syntax node) => OnEnter(node);
+        public virtual void Enter<#= nodeName #>( <#= nodeName #>Syntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="<#= nodeName #>Syntax"/> node.</summary>
-        public virtual void Leave<#= nodeName #>([NotNull] <#= nodeName #>Syntax node) => OnLeave(node);
+        public virtual void Leave<#= nodeName #>( <#= nodeName #>Syntax node) => OnLeave(node);
 <# } #>
     }
 
@@ -84,10 +84,10 @@ namespace GraphZen.LanguageModel
     {<# foreach(var nodeName in nodeTypes) { #>
 
         /// <summary>Called when the visitor enters a <see cref="<#= nodeName #>Syntax"/> node.</summary>
-        public virtual TResult Enter<#= nodeName #>([NotNull] <#= nodeName #>Syntax node) => OnEnter(node);
+        public virtual TResult Enter<#= nodeName #>( <#= nodeName #>Syntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="<#= nodeName #>Syntax"/> node.</summary>
-        public virtual TResult Leave<#= nodeName #>([NotNull] <#= nodeName #>Syntax node) => OnLeave(node);
+        public virtual TResult Leave<#= nodeName #>( <#= nodeName #>Syntax node) => OnLeave(node);
 <# } #>
     }
 }

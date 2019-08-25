@@ -1,6 +1,12 @@
-﻿using System.ComponentModel;
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.Interfaces.Fields.Arguments.Description
 {
@@ -9,11 +15,14 @@ namespace GraphZen.Interfaces.Fields.Arguments.Description
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext() => new LeafConventionContext
+        public LeafConventionContext GetContext()
         {
-            ParentName = "argName",
-            DataAnnotationValue = DataAnnotationDescriptionValue
-        };
+            return new LeafConventionContext
+            {
+                ParentName = "argName",
+                DataAnnotationValue = DataAnnotationDescriptionValue
+            };
+        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

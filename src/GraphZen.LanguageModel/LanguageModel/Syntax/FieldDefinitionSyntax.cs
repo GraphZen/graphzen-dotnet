@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -30,13 +35,13 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The type of the field.
         /// </summary>
-        [NotNull]
+
         public TypeSyntax FieldType { get; }
 
         /// <summary>
         ///     Field arguments. (Optional)
         /// </summary>
-        [NotNull]
+
         public IReadOnlyList<InputValueDefinitionSyntax> Arguments { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
@@ -55,24 +60,23 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        public string GetDisplayValue() => Name.Value;
+        public string GetDisplayValue()
+        {
+            return Name.Value;
+        }
 
-        private bool Equals([NotNull] FieldDefinitionSyntax other)
-            => Name.Equals(other.Name) && Equals(Description, other.Description) &&
-               FieldType.Equals(other.FieldType) && Arguments.SequenceEqual(other.Arguments) &&
-               Directives.SequenceEqual(other.Directives);
+        private bool Equals(FieldDefinitionSyntax other)
+        {
+            return Name.Equals(other.Name) && Equals(Description, other.Description) &&
+                   FieldType.Equals(other.FieldType) && Arguments.SequenceEqual(other.Arguments) &&
+                   Directives.SequenceEqual(other.Directives);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is FieldDefinitionSyntax && Equals((FieldDefinitionSyntax)obj);
         }
@@ -90,6 +94,9 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public override string ToString() => Name.ToString();
+        public override string ToString()
+        {
+            return Name.ToString();
+        }
     }
 }

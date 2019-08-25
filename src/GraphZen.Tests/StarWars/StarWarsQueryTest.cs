@@ -1,9 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.StarWars
 {
@@ -11,8 +15,9 @@ namespace GraphZen.StarWars
     public class StarWarsQueryTest : StarWarsSchemaAndData
     {
         [Fact]
-        public Task CorrectlyIdentifiesR2D2AsTHeHeroOfTheStarWarsSaga() =>
-            ExecuteAsync(StarWarsSchema, "query HeroNameQuery { hero { name } }").ShouldEqual(new
+        public Task CorrectlyIdentifiesR2D2AsTHeHeroOfTheStarWarsSaga()
+        {
+            return ExecuteAsync(StarWarsSchema, "query HeroNameQuery { hero { name } }").ShouldEqual(new
             {
                 data = new
                 {
@@ -22,13 +27,18 @@ namespace GraphZen.StarWars
                     }
                 }
             });
+        }
 
         [Fact(Skip = "Not applicable to .NET implementation")]
-        public Task AcceptsAnObjectWithNamedPropertiesToGraphQL() => Task.CompletedTask;
+        public Task AcceptsAnObjectWithNamedPropertiesToGraphQL()
+        {
+            return Task.CompletedTask;
+        }
 
         [Fact]
-        public Task AllowsUsToQueryForTheIdAndFriendsOfR2D2() =>
-            ExecuteAsync(StarWarsSchema, @" 
+        public Task AllowsUsToQueryForTheIdAndFriendsOfR2D2()
+        {
+            return ExecuteAsync(StarWarsSchema, @" 
                 query HeroNameAndFriendsQuery {
                   hero {
                     id
@@ -54,10 +64,12 @@ namespace GraphZen.StarWars
                     }
                 }
             });
+        }
 
         [Fact]
-        public Task AllowsUsToQueryForFriendsOfFriendsOfR2D2() =>
-            ExecuteAsync(StarWarsSchema, @" 
+        public Task AllowsUsToQueryForFriendsOfFriendsOfR2D2()
+        {
+            return ExecuteAsync(StarWarsSchema, @" 
                 query NestedQuery {
                   hero {
                     name
@@ -118,23 +130,27 @@ namespace GraphZen.StarWars
                     }
                 }
             });
+        }
 
         [Fact]
-        public Task AllowsUsToQueryFOrLukeSkywalkerDirectlyUsingHisId() => ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsUsToQueryFOrLukeSkywalkerDirectlyUsingHisId()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             query FetchLukeQuery {
               human(id: ""1000"") {
                 name
               }
             }").ShouldEqual(new
-        {
-            data = new
             {
-                human = new
+                data = new
                 {
-                    name = "Luke Skywalker"
+                    human = new
+                    {
+                        name = "Luke Skywalker"
+                    }
                 }
-            }
-        });
+            });
+        }
 
         [Theory]
         [InlineData("1000", "Luke Skywalker")]
@@ -158,21 +174,26 @@ namespace GraphZen.StarWars
         }
 
         [Fact]
-        public Task QueryForLukeWithAlias() => ExecuteAsync(StarWarsSchema, @"
+        public Task QueryForLukeWithAlias()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
               query FetchLukeAliased {
                 luke: human(id: ""1000"") {
                   name
                 }
               }").ShouldEqual(new
-        {
-            data = new
             {
-                luke = new { name = "Luke Skywalker" }
-            }
-        });
+                data = new
+                {
+                    luke = new { name = "Luke Skywalker" }
+                }
+            });
+        }
 
         [Fact]
-        public Task QueryForLukeAndLeiaOnRootWithAliases() => ExecuteAsync(StarWarsSchema, @"
+        public Task QueryForLukeAndLeiaOnRootWithAliases()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
               query FetchLukeAndLeiaAliased {
                 luke: human(id: ""1000"") {
                   name
@@ -181,16 +202,19 @@ namespace GraphZen.StarWars
                   name
                 }
               }").ShouldEqual(new
-        {
-            data = new
             {
-                luke = new { name = "Luke Skywalker" },
-                leia = new { name = "Leia Organa" }
-            }
-        });
+                data = new
+                {
+                    luke = new { name = "Luke Skywalker" },
+                    leia = new { name = "Leia Organa" }
+                }
+            });
+        }
 
         [Fact]
-        public Task QueryUsingDuplicatedContent() => ExecuteAsync(StarWarsSchema, @"
+        public Task QueryUsingDuplicatedContent()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
           query DuplicateFields {
             luke: human(id: ""1000"") {
               name
@@ -201,16 +225,19 @@ namespace GraphZen.StarWars
               homePlanet
             }
           }").ShouldEqual(new
-        {
-            data = new
             {
-                luke = new { name = "Luke Skywalker", homePlanet = "Tatooine" },
-                leia = new { name = "Leia Organa", homePlanet = "Alderaan" }
-            }
-        });
+                data = new
+                {
+                    luke = new { name = "Luke Skywalker", homePlanet = "Tatooine" },
+                    leia = new { name = "Leia Organa", homePlanet = "Alderaan" }
+                }
+            });
+        }
 
         [Fact]
-        public Task QueryUsingFragmentToAvoidDuplicatedContent() => ExecuteAsync(StarWarsSchema, @"
+        public Task QueryUsingFragmentToAvoidDuplicatedContent()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             query UseFragment {
               luke: human(id: ""1000"") {
                 ...HumanFragment
@@ -225,16 +252,19 @@ namespace GraphZen.StarWars
               homePlanet
             }
           ").ShouldEqual(new
-        {
-            data = new
             {
-                luke = new { name = "Luke Skywalker", homePlanet = "Tatooine" },
-                leia = new { name = "Leia Organa", homePlanet = "Alderaan" }
-            }
-        });
+                data = new
+                {
+                    luke = new { name = "Luke Skywalker", homePlanet = "Tatooine" },
+                    leia = new { name = "Leia Organa", homePlanet = "Alderaan" }
+                }
+            });
+        }
 
         [Fact]
-        public Task UsingTypenameToVerifyR2D2IsADroid() => ExecuteAsync(StarWarsSchema, @"
+        public Task UsingTypenameToVerifyR2D2IsADroid()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             query CheckTypeOfR2{
               hero {
                 __typename
@@ -242,19 +272,22 @@ namespace GraphZen.StarWars
               }
             }
             ").ShouldEqual(new
-        {
-            data = new
             {
-                hero = new
+                data = new
                 {
-                    __typename = "Droid",
-                    name = "R2-D2"
+                    hero = new
+                    {
+                        __typename = "Droid",
+                        name = "R2-D2"
+                    }
                 }
-            }
-        });
+            });
+        }
 
         [Fact]
-        public Task UsingTypenameToVerifyLukeIsAHuman() => ExecuteAsync(StarWarsSchema, @"
+        public Task UsingTypenameToVerifyLukeIsAHuman()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             query CheckTypeOfLuke {
               hero(episode: EMPIRE) {
                 __typename
@@ -262,20 +295,22 @@ namespace GraphZen.StarWars
               }
             }
             ").ShouldEqual(new
-        {
-            data = new
             {
-                hero = new
+                data = new
                 {
-                    __typename = "Human",
-                    name = "Luke Skywalker"
+                    hero = new
+                    {
+                        __typename = "Human",
+                        name = "Luke Skywalker"
+                    }
                 }
-            }
-        });
+            });
+        }
 
         [Fact]
         public Task CorrectlyReportsErrorOnAccessingSecretBackstory()
-            => ExecuteAsync(StarWarsSchema, @"
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             query HeroNameQuery {
               hero {
                 name
@@ -305,10 +340,12 @@ namespace GraphZen.StarWars
                     }
                 }
             });
+        }
 
         [Fact]
         public Task CorrectlyReportsErrorOnAccessingSecretBackstoryInAList()
-            => ExecuteAsync(StarWarsSchema, @"
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             query HeroNameQuery {
               hero {
                 name
@@ -376,10 +413,12 @@ namespace GraphZen.StarWars
                     }
                 }
             });
+        }
 
         [Fact]
         public Task CorrectlyReportsErrorOnAccessingSecretBackstoryThroughAnAlias()
-            => ExecuteAsync(StarWarsSchema, @"
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             query HeroNameQuery {
               mainHero: hero {
                 name
@@ -409,5 +448,6 @@ namespace GraphZen.StarWars
                     }
                 }
             });
+        }
     }
 }

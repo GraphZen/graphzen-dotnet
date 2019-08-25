@@ -2,10 +2,15 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Superpower;
 using Superpower.Model;
 using Superpower.Parsers;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Internal.Grammar
 {
@@ -61,12 +66,15 @@ namespace GraphZen.LanguageModel.Internal.Grammar
         private static TokenListParser<TokenKind, Unit> Ampersand { get; } =
             Token.EqualTo(TokenKind.Ampersand).Value(Unit.Value);
 
-        private static TokenListParser<TokenKind, NameSyntax> Keyword(string name) =>
-            Token.EqualToValue(TokenKind.Name, name).Select(t => new NameSyntax(t.ToStringValue(), t.Span.ToLocation()))
+        private static TokenListParser<TokenKind, NameSyntax> Keyword(string name)
+        {
+            return Token.EqualToValue(TokenKind.Name, name)
+                .Select(t => new NameSyntax(t.ToStringValue(), t.Span.ToLocation()))
                 .Named($"keyword `{name}`");
+        }
 
 
-        private static TokenListParser<TokenKind, NameSyntax> KeywordIn([NotNull] IEnumerable<string> names)
+        private static TokenListParser<TokenKind, NameSyntax> KeywordIn(IEnumerable<string> names)
         {
             return input =>
             {
@@ -74,18 +82,18 @@ namespace GraphZen.LanguageModel.Internal.Grammar
                 {
                     // ReSharper disable once PossibleNullReferenceException
                     var result = Keyword(name).Try()(input);
-                    if (result.HasValue)
-                    {
-                        return result;
-                    }
+                    if (result.HasValue) return result;
                 }
 
                 return TokenListParserResult.Empty<TokenKind, NameSyntax>(input);
             };
         }
 
-        private static TokenListParser<TokenKind, PunctuatorSyntax> Punctuator(TokenKind tokenKind) => Token
-            .EqualTo(tokenKind)
-            .Select(t => new PunctuatorSyntax(t.Span.ToLocation()));
+        private static TokenListParser<TokenKind, PunctuatorSyntax> Punctuator(TokenKind tokenKind)
+        {
+            return Token
+                .EqualTo(tokenKind)
+                .Select(t => new PunctuatorSyntax(t.Span.ToLocation()));
+        }
     }
 }

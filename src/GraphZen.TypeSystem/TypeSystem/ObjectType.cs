@@ -4,20 +4,23 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     [GraphQLType(typeof(IGraphQLType))]
     public class ObjectType : NamedType, IObjectType
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
-        [NotNull] [ItemNotNull] private readonly Lazy<ObjectTypeDefinitionSyntax> _syntax;
+        private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
+        private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
+        private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
+        private readonly Lazy<ObjectTypeDefinitionSyntax> _syntax;
 
         private ObjectType(string name, string description, Type clrType, IsTypeOf<object, GraphQLContext> isTypeOf,
             IEnumerable<IFieldDefinition> fields,
@@ -32,9 +35,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(interfaces, nameof(interfaces));
             Check.NotNull(schema, nameof(schema));
             _fields = new Lazy<IReadOnlyDictionary<string, Field>>(() =>
-                // ReSharper disable once AssignNullToNotNullAttribute
-                fields.ToReadOnlyDictionary(_ => _?.Name, _ => Field.From(_, this, schema.ResolveType)));
-            // ReSharper disable once PossibleNullReferenceException
+                fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, schema.ResolveType)));
 
             _interfaceMap = new Lazy<IReadOnlyDictionary<string, InterfaceType>>(() =>
                 {
@@ -68,21 +69,28 @@ namespace GraphZen.TypeSystem
 
 
         public override TypeKind Kind { get; } = TypeKind.Object;
-        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => GetFields();
 
-        public IEnumerable<Field> GetFields() =>
-            // ReSharper disable once PossibleNullReferenceException
-            Fields.Values;
+        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields()
+        {
+            return GetFields();
+        }
+
+        public IEnumerable<Field> GetFields()
+        {
+            return Fields.Values;
+        }
 
 
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
 
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;
 
 
-        [NotNull]
         public static ObjectType From(IObjectTypeDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
@@ -94,10 +102,17 @@ namespace GraphZen.TypeSystem
             );
         }
 
-        public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
+        public IEnumerable<InterfaceType> GetInterfaces()
+        {
+            return Interfaces;
+        }
+
         public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
         public IReadOnlyDictionary<string, InterfaceType> InterfacesMap => _interfaceMap.Value;
 
-        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces() => GetInterfaces();
+        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces()
+        {
+            return GetInterfaces();
+        }
     }
 }

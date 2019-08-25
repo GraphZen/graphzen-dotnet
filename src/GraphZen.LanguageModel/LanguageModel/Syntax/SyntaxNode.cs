@@ -4,20 +4,24 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
     /// <summary>
     ///     GraphQL AST node
     /// </summary>
-    /// 
     [DebuggerDisplay("{DebuggerDisplay}")]
     public abstract class SyntaxNode : ISyntaxNodeLocation
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<string> _printed;
+        private readonly Lazy<string> _printed;
 
         protected SyntaxNode(SyntaxLocation location)
         {
@@ -25,8 +29,7 @@ namespace GraphZen.LanguageModel
             _printed = new Lazy<string>(() => new Printer().Print(this));
         }
 
-        [NotNull]
-        [ItemNotNull]
+
         public abstract IEnumerable<SyntaxNode> Children { get; }
 
         public abstract SyntaxKind Kind { [DebuggerStepThrough] get; }
@@ -34,9 +37,10 @@ namespace GraphZen.LanguageModel
         public SyntaxLocation Location { get; }
 
 
-        [NotNull]
-        [ItemNotNull]
-        public IEnumerable<SyntaxNode> DescendantNodes() => Children.SelectMany(c => c.DescendantNodes());
+        public IEnumerable<SyntaxNode> DescendantNodes()
+        {
+            return Children.SelectMany(c => c.DescendantNodes());
+        }
 
 
         public abstract void VisitLeave(GraphQLSyntaxVisitor visitor);
@@ -45,8 +49,11 @@ namespace GraphZen.LanguageModel
         public abstract TResult VisitEnter<TResult>(GraphQLSyntaxVisitor<TResult> visitor);
         public abstract TResult VisitLeave<TResult>(GraphQLSyntaxVisitor<TResult> visitor);
 
-        [NotNull]
-        public string ToSyntaxString() => _printed.Value;
+
+        public string ToSyntaxString()
+        {
+            return _printed.Value;
+        }
 
 
         internal string DebuggerDisplay => ToSyntaxString();

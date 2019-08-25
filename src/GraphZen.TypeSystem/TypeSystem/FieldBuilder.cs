@@ -1,4 +1,4 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
@@ -6,6 +6,9 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -13,12 +16,12 @@ namespace GraphZen.TypeSystem
         IInfrastructure<InternalFieldBuilder>
         where TContext : GraphQLContext
     {
-        public FieldBuilder([NotNull] InternalFieldBuilder builder)
+        public FieldBuilder(InternalFieldBuilder builder)
         {
             Builder = builder;
         }
 
-        [NotNull]
+
         private InternalFieldBuilder Builder { get; }
 
 
@@ -64,8 +67,10 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver) =>
-            new FieldBuilder<TSource, TField, TContext>(Builder).Resolve(resolver);
+        public IFieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver)
+        {
+            return new FieldBuilder<TSource, TField, TContext>(Builder).Resolve(resolver);
+        }
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, dynamic, TField> resolver)
         {
@@ -100,7 +105,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, Action<InputValueBuilder> argumentBuilder = null)
+        public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
+            Action<InputValueBuilder> argumentBuilder = null)
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit);
@@ -144,8 +150,10 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
+        public IFieldBuilder<TDeclaringType, TField, TContext> DirectiveAnnotation(string name)
+        {
+            return DirectiveAnnotation(name, null);
+        }
 
         public IFieldBuilder<TDeclaringType, TField, TContext> DirectiveAnnotation(string name, object value)
         {

@@ -1,11 +1,15 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.TypeSystem
 {
@@ -86,7 +90,6 @@ namespace GraphZen.TypeSystem
                 });
             objectType.ToSyntaxNode().ToSyntaxString().Should().Be(expected.ToSyntaxString());
             objectType.ToSyntaxNode().Should().Be(expected);
-
         }
 
         [Fact]

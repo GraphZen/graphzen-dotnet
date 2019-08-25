@@ -1,9 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Validation.Rules
 {
@@ -26,10 +31,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
 
         public override VisitAction EnterOperationDefinition(OperationDefinitionSyntax node)
         {
-            if (node.Name == null && _operationCount > 1)
-            {
-                ReportError(AnonymousOperationNotAloneMessage, node);
-            }
+            if (node.Name == null && _operationCount > 1) ReportError(AnonymousOperationNotAloneMessage, node);
 
             return VisitAction.Continue;
         }

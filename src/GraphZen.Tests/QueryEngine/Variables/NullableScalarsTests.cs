@@ -1,10 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Variables
 {
@@ -23,81 +27,99 @@ namespace GraphZen.QueryEngine.Variables
         }
 
         [Fact]
-        public Task AllowsNullableInputsToBeOmitted() => ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeOmitted()
+        {
+            return ExecuteAsync(@"
               {
                 fieldWithNullableStringInput
               }
             ").ShouldEqual(new
-        {
-            data = new
             {
-                fieldWithNullableStringInput = (string)null
-            }
-        });
+                data = new
+                {
+                    fieldWithNullableStringInput = (string)null
+                }
+            });
+        }
 
         [Fact]
-        public Task AllowsNullableInputsToBeOmittedInAnUnlistedVariable() => ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeOmittedInAnUnlistedVariable()
+        {
+            return ExecuteAsync(@"
               query {
                 fieldWithNullableStringInput(input: $value)
               }
             ").ShouldEqual(new
-        {
-            data = new
             {
-                fieldWithNullableStringInput = (string)null
-            }
-        });
+                data = new
+                {
+                    fieldWithNullableStringInput = (string)null
+                }
+            });
+        }
 
         [Fact]
-        public Task AllowsNullableInputsToBeOmittedInAVariable() => ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeOmittedInAVariable()
+        {
+            return ExecuteAsync(@"
               query ($value: String) {
                 fieldWithNullableStringInput(input: $value)
               }
             ").ShouldEqual(new
-        {
-            data = new
             {
-                fieldWithNullableStringInput = (string)null
-            }
-        });
+                data = new
+                {
+                    fieldWithNullableStringInput = (string)null
+                }
+            });
+        }
 
         [Fact]
-        public Task AllowsNullableInputsToBeSetInAVariable() => ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeSetInAVariable()
+        {
+            return ExecuteAsync(@"
               query ($value: String) {
                 fieldWithNullableStringInput(input: $value)
               }
             ", new { value = "a" }).ShouldEqual(new
-        {
-            data = new
             {
-                fieldWithNullableStringInput = "\"a\""
-            }
-        });
+                data = new
+                {
+                    fieldWithNullableStringInput = "\"a\""
+                }
+            });
+        }
 
         [Fact]
-        public Task AllowsNullableInputsToBeSetToNullInAVariable() => ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeSetToNullInAVariable()
+        {
+            return ExecuteAsync(@"
               query ($value: String) {
                 fieldWithNullableStringInput(input: $value)
               }
             ", new { value = (string)null }).ShouldEqual(new
-        {
-            data = new
             {
-                fieldWithNullableStringInput = "null"
-            }
-        });
+                data = new
+                {
+                    fieldWithNullableStringInput = "null"
+                }
+            });
+        }
 
         [Fact]
-        public Task AllowsNullableInputsToBeSetToValueDirectly() => ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeSetToValueDirectly()
+        {
+            return ExecuteAsync(@"
                {
                 fieldWithNullableStringInput(input: ""a"")
               }
             ", new { value = "a" }).ShouldEqual(new
-        {
-            data = new
             {
-                fieldWithNullableStringInput = "\"a\""
-            }
-        });
+                data = new
+                {
+                    fieldWithNullableStringInput = "\"a\""
+                }
+            });
+        }
     }
 }

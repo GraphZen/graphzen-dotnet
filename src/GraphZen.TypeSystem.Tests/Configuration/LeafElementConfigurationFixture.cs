@@ -1,16 +1,20 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+#nullable disable
+
 
 namespace GraphZen
 {
     public abstract class LeafElementConfigurationFixture<TMarker, TDefMarker, TMutableDefMarker, TElement,
         TParentMemberDefinition, TParentMember
-        > :
+    > :
         ConfigurationFixture<TMarker, TDefMarker, TMutableDefMarker, TParentMemberDefinition, TParentMember>,
         ILeafConfigurationFixture
         where TMutableDefMarker : TDefMarker
@@ -68,11 +72,12 @@ namespace GraphZen
 
 
         //public abstract bool TryGetValue(TMarker parent, out TElement value);
-        public abstract ConfigurationSource GetElementConfigurationSource([NotNull]TMutableDefMarker parent);
+        public abstract ConfigurationSource GetElementConfigurationSource(TMutableDefMarker parent);
 
-        public ConfigurationSource GetElementConfigurationSource(MemberDefinition parent) =>
-            // ReSharper disable once AssignNullToNotNullAttribute
-            GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition));
+        public ConfigurationSource GetElementConfigurationSource(MemberDefinition parent)
+        {
+            return GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition));
+        }
 
         public bool TryGetValue(MemberDefinition parent, out object value)
         {
@@ -102,16 +107,15 @@ namespace GraphZen
 
         object ILeafConfigurationFixture.ValueB => ValueB;
 
-        public abstract void ConfigureExplicitly([NotNull]SchemaBuilder sb, [NotNull]string parentName, TElement value);
+        public abstract void ConfigureExplicitly(SchemaBuilder sb, string parentName, TElement value);
 
 
         public abstract TElement ValueA { get; }
         public abstract TElement ValueB { get; }
 
 
+        public abstract bool TryGetValue(TParentMember parent, out TElement value);
 
-        public abstract bool TryGetValue([NotNull]TParentMember parent, out TElement value);
-
-        public abstract bool TryGetValue([NotNull]TParentMemberDefinition parent, out TElement value);
+        public abstract bool TryGetValue(TParentMemberDefinition parent, out TElement value);
     }
 }

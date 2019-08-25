@@ -1,7 +1,14 @@
-﻿using FluentAssertions;
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 // ReSharper disable PossibleNullReferenceException
 
 namespace GraphZen.Unions.ClrType
@@ -9,7 +16,9 @@ namespace GraphZen.Unions.ClrType
     [NoReorder]
     public class UnionClrTypeConfigurationTests
     {
-        public class ExampleUnion { }
+        public class ExampleUnion
+        {
+        }
 
         [Fact]
         public void union_added_explicitly_subsequently_referenced_by_matching_clr_type_should_have_clr_type_set()
@@ -25,7 +34,8 @@ namespace GraphZen.Unions.ClrType
         }
 
         [Fact]
-        public void union_added_explicitly_subsequently_referenced_by_matching_clr_type_via_field_should_have_clr_type_set()
+        public void
+            union_added_explicitly_subsequently_referenced_by_matching_clr_type_via_field_should_have_clr_type_set()
         {
             var schema = Schema.Create(sb =>
             {

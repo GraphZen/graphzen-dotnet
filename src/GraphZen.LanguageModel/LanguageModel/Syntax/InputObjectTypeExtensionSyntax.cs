@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -25,28 +30,25 @@ namespace GraphZen.LanguageModel
 
         public override NameSyntax Name { get; }
 
-        [NotNull]
+
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        [NotNull]
+
         public IReadOnlyList<InputValueDefinitionSyntax> Fields { get; }
 
         public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Fields);
 
-        private bool Equals([NotNull] InputObjectTypeExtensionSyntax other) =>
-            Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives) && Fields.SequenceEqual(other.Fields);
+        private bool Equals(InputObjectTypeExtensionSyntax other)
+        {
+            return Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives) &&
+                   Fields.SequenceEqual(other.Fields);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is InputObjectTypeExtensionSyntax && Equals((InputObjectTypeExtensionSyntax)obj);
         }

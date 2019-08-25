@@ -1,8 +1,9 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -10,10 +11,14 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.QueryEngine;
 using GraphZen.QueryEngine.Validation;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+
+#nullable disable
+
 
 namespace GraphZen
 {
@@ -29,7 +34,6 @@ namespace GraphZen
                     Debug.Assert(httpContext != null, nameof(httpContext) + " != null");
                     Debug.Assert(httpContext.Request != null, "httpContext.Request != null");
                     if (httpContext.Request.Method == "POST")
-                    {
                         // ReSharper disable once AssignNullToNotNullAttribute
                         using (var reader = new StreamReader(httpContext.Request.Body))
                         using (var jsonReader = new JsonTextReader(reader))
@@ -98,7 +102,6 @@ namespace GraphZen
                             // ReSharper disable once PossibleNullReferenceException
                             await httpContext.Response.WriteAsync(resp);
                         }
-                    }
                 });
             });
         }

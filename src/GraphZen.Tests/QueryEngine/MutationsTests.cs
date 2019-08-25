@@ -1,11 +1,15 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.QueryEngine
 {
@@ -45,7 +49,10 @@ namespace GraphZen.QueryEngine
                 return NumberHolder;
             }
 
-            public NumberHolder FailToChangeTheNumber() => throw new Exception("Cannot change the number");
+            public NumberHolder FailToChangeTheNumber()
+            {
+                throw new Exception("Cannot change the number");
+            }
 
             public Task<NumberHolder> PromiseAndFailToChangeTheNumber() => Task.Run(() =>
             {
@@ -77,7 +84,9 @@ namespace GraphZen.QueryEngine
 
 
         [Fact]
-        public Task EvaluatesMutationsSerially() => ExecuteAsync(Schema, @"
+        public Task EvaluatesMutationsSerially()
+        {
+            return ExecuteAsync(Schema, @"
             mutation M {
               first: immediatelyChangeTheNumber(newNumber: 1) {
                 theNumber
@@ -95,20 +104,23 @@ namespace GraphZen.QueryEngine
                 theNumber
               }
             }", new Root(6)).ShouldEqual(new
-        {
-            data = new
             {
-                first = new { theNumber = 1 },
-                second = new { theNumber = 2 },
-                third = new { theNumber = 3 },
-                fourth = new { theNumber = 4 },
-                fifth = new { theNumber = 5 }
-            }
-        });
+                data = new
+                {
+                    first = new { theNumber = 1 },
+                    second = new { theNumber = 2 },
+                    third = new { theNumber = 3 },
+                    fourth = new { theNumber = 4 },
+                    fifth = new { theNumber = 5 }
+                }
+            });
+        }
 
 
         [Fact]
-        public Task evaluates_mutation_correctly_in_presence_of_failed_mutation() => ExecuteAsync(Schema, @"
+        public Task evaluates_mutation_correctly_in_presence_of_failed_mutation()
+        {
+            return ExecuteAsync(Schema, @"
             mutation M {
               first: immediatelyChangeTheNumber(newNumber: 1) {
                 theNumber
@@ -129,37 +141,38 @@ namespace GraphZen.QueryEngine
                 theNumber
               }
             }", new Root(6)).ShouldEqual(new
-        {
-            data = new
             {
-                first = new { theNumber = 1 },
-                second = new { theNumber = 2 },
-                third = (object)null,
-                fourth = new { theNumber = 4 },
-                fifth = new { theNumber = 5 },
-                sixth = (object)null
-            },
-            errors = new object[]
-            {
-                new
+                data = new
                 {
-                    message = "Cannot change the number",
-                    locations = new object[]
-                    {
-                        new {line = 9, column = 15}
-                    },
-                    path = new object[] {"third"}
+                    first = new { theNumber = 1 },
+                    second = new { theNumber = 2 },
+                    third = (object)null,
+                    fourth = new { theNumber = 4 },
+                    fifth = new { theNumber = 5 },
+                    sixth = (object)null
                 },
-                new
+                errors = new object[]
                 {
-                    message = "Cannot change the number",
-                    locations = new object[]
+                    new
                     {
-                        new {line = 18, column = 15}
+                        message = "Cannot change the number",
+                        locations = new object[]
+                        {
+                            new {line = 9, column = 15}
+                        },
+                        path = new object[] {"third"}
                     },
-                    path = new object[] {"sixth"}
+                    new
+                    {
+                        message = "Cannot change the number",
+                        locations = new object[]
+                        {
+                            new {line = 18, column = 15}
+                        },
+                        path = new object[] {"sixth"}
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

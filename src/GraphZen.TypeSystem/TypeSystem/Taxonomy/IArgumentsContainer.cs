@@ -2,18 +2,18 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IArgumentsContainer : IArgumentsContainerDefinition
     {
-        [NotNull]
         IReadOnlyDictionary<string, Argument> Arguments { get; }
 
-        [NotNull]
-        [ItemNotNull]
+
         new IEnumerable<Argument> GetArguments();
     }
 }

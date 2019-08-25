@@ -1,9 +1,33 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+#nullable disable
 using System;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+/* MIT License
+
+Copyright (c) 2016 JetBrains http://www.jetbrains.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. */
 
 // ReSharper disable InheritdocConsiderUsage
 
@@ -15,99 +39,8 @@ using GraphZen.Infrastructure;
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen
+namespace JetBrains.Annotations
 {
-    /// <summary>
-    ///     Indicates that the value of the marked element could be <c>null</c> sometimes,
-    ///     so checking for <c>null</c> is required before its usage.
-    /// </summary>
-    /// <example>
-    ///     <code>
-    /// [CanBeNull] object Test() => null;
-    /// 
-    /// void UseTest() {
-    ///   var p = Test();
-    ///   var s = p.ToString(); // Warning: Possible 'System.NullReferenceException'
-    /// }
-    /// </code>
-    /// </example>
-    [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
-        AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
-    internal sealed class CanBeNullAttribute : Attribute
-    {
-    }
-
-    /// <summary>
-    ///     Indicates that the value of the marked element can never be <c>null</c>.
-    /// </summary>
-    /// <example>
-    ///     <code>
-    /// [NotNull] object Foo() {
-    ///   return null; // Warning: Possible 'null' assignment
-    /// }
-    /// </code>
-    /// </example>
-    [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event |
-        AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.GenericParameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
-    internal sealed class NotNullAttribute : Attribute
-    {
-    }
-
-    /// <summary>
-    ///     Can be applied to symbols of types derived from IEnumerable as well as to symbols of Task
-    ///     and Lazy classes to indicate that the value of a collection item, of the Task.Result property
-    ///     or of the Lazy.Value property can never be null.
-    /// </summary>
-    /// <example>
-    ///     <code>
-    /// public void Foo([ItemNotNull]List&lt;string&gt; books)
-    /// {
-    ///   foreach (var book in books) {
-    ///     if (book != null) // Warning: Expression is always true
-    ///      Console.WriteLine(book.ToUpper());
-    ///   }
-    /// }
-    /// </code>
-    /// </example>
-    [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
-    internal sealed class ItemNotNullAttribute : Attribute
-    {
-    }
-
-    /// <summary>
-    ///     Can be applied to symbols of types derived from IEnumerable as well as to symbols of Task
-    ///     and Lazy classes to indicate that the value of a collection item, of the Task.Result property
-    ///     or of the Lazy.Value property can be null.
-    /// </summary>
-    /// <example>
-    ///     <code>
-    /// public void Foo([ItemCanBeNull]List&lt;string&gt; books)
-    /// {
-    ///   foreach (var book in books)
-    ///   {
-    ///     // Warning: Possible 'System.NullReferenceException'
-    ///     Console.WriteLine(book.ToUpper());
-    ///   }
-    /// }
-    /// </code>
-    /// </example>
-    [AttributeUsage(
-        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-        AttributeTargets.Delegate | AttributeTargets.Field)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
-    internal sealed class ItemCanBeNullAttribute : Attribute
-    {
-    }
-
     /// <summary>
     ///     Indicates that the marked method builds string by the format pattern and (optional) arguments.
     ///     The parameter, which contains the format string, should be given in constructor. The format string
@@ -126,18 +59,16 @@ namespace GraphZen
     [AttributeUsage(
         AttributeTargets.Constructor | AttributeTargets.Method |
         AttributeTargets.Property | AttributeTargets.Delegate)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class StringFormatMethodAttribute : Attribute
     {
         /// <param name="formatParameterName">
         ///     Specifies which parameter of an annotated method should be treated as the format string
         /// </param>
-        public StringFormatMethodAttribute([NotNull] string formatParameterName)
+        public StringFormatMethodAttribute(string formatParameterName)
         {
             FormatParameterName = formatParameterName;
         }
 
-        [NotNull]
         public string FormatParameterName { get; }
     }
 
@@ -173,15 +104,13 @@ namespace GraphZen
     [AttributeUsage(
         AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field,
         AllowMultiple = true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class ValueProviderAttribute : Attribute
     {
-        public ValueProviderAttribute([NotNull] string name)
+        public ValueProviderAttribute(string name)
         {
             Name = name;
         }
 
-        [NotNull]
         public string Name { get; }
     }
 
@@ -199,7 +128,6 @@ namespace GraphZen
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Parameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class InvokerParameterNameAttribute : Attribute
     {
     }
@@ -262,19 +190,17 @@ namespace GraphZen
     ///     </list>
     /// </example>
     [AttributeUsage(AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
     {
         public NotifyPropertyChangedInvocatorAttribute()
         {
         }
 
-        public NotifyPropertyChangedInvocatorAttribute([NotNull] string parameterName)
+        public NotifyPropertyChangedInvocatorAttribute(string parameterName)
         {
             ParameterName = parameterName;
         }
 
-        [CanBeNull]
         public string ParameterName { get; }
     }
 
@@ -335,21 +261,19 @@ namespace GraphZen
     ///     </list>
     /// </examples>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class ContractAnnotationAttribute : Attribute
     {
-        public ContractAnnotationAttribute([NotNull] string contract)
+        public ContractAnnotationAttribute(string contract)
             : this(contract, false)
         {
         }
 
-        public ContractAnnotationAttribute([NotNull] string contract, bool forceFullStates)
+        public ContractAnnotationAttribute(string contract, bool forceFullStates)
         {
             Contract = contract;
             ForceFullStates = forceFullStates;
         }
 
-        [NotNull]
         public string Contract { get; }
 
         public bool ForceFullStates { get; }
@@ -367,7 +291,6 @@ namespace GraphZen
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.All)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class LocalizationRequiredAttribute : Attribute
     {
         public LocalizationRequiredAttribute() : this(true)
@@ -405,7 +328,6 @@ namespace GraphZen
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class CannotApplyEqualityOperatorAttribute : Attribute
     {
     }
@@ -425,15 +347,13 @@ namespace GraphZen
     /// </example>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     [BaseTypeRequired(typeof(Attribute))]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class BaseTypeRequiredAttribute : Attribute
     {
-        public BaseTypeRequiredAttribute([NotNull] Type baseType)
+        public BaseTypeRequiredAttribute(Type baseType)
         {
             BaseType = baseType;
         }
 
-        [NotNull]
         public Type BaseType { get; }
     }
 
@@ -442,7 +362,6 @@ namespace GraphZen
     ///     so this symbol will not be reported as unused (as well as by other usage inspections).
     /// </summary>
     [AttributeUsage(AttributeTargets.All)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class UsedImplicitlyAttribute : Attribute
     {
         public UsedImplicitlyAttribute()
@@ -480,7 +399,6 @@ namespace GraphZen
     ///     is used implicitly.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.GenericParameter | AttributeTargets.Parameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class MeansImplicitUseAttribute : Attribute
     {
         public MeansImplicitUseAttribute()
@@ -504,11 +422,9 @@ namespace GraphZen
             TargetFlags = targetFlags;
         }
 
-        [UsedImplicitly]
-        public ImplicitUseKindFlags UseKindFlags { get; }
+        [UsedImplicitly] public ImplicitUseKindFlags UseKindFlags { get; }
 
-        [UsedImplicitly]
-        public ImplicitUseTargetFlags TargetFlags { get; }
+        [UsedImplicitly] public ImplicitUseTargetFlags TargetFlags { get; }
     }
 
     /// <summary>
@@ -558,19 +474,17 @@ namespace GraphZen
     ///     which should not be removed and so is treated as used.
     /// </summary>
     [MeansImplicitUse(ImplicitUseTargetFlags.WithMembers)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class PublicAPIAttribute : Attribute
     {
         public PublicAPIAttribute()
         {
         }
 
-        public PublicAPIAttribute([NotNull] string comment)
+        public PublicAPIAttribute(string comment)
         {
             Comment = comment;
         }
 
-        [CanBeNull]
         public string Comment { get; }
     }
 
@@ -580,7 +494,6 @@ namespace GraphZen
     ///     If the parameter is an enumerable, indicates that it is enumerated while the method is executed.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class InstantHandleAttribute : Attribute
     {
     }
@@ -599,7 +512,6 @@ namespace GraphZen
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class PureAttribute : Attribute
     {
     }
@@ -616,19 +528,17 @@ namespace GraphZen
     ///     <code>[MustUseReturnValue("Use the return value to...")]</code>.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class MustUseReturnValueAttribute : Attribute
     {
         public MustUseReturnValueAttribute()
         {
         }
 
-        public MustUseReturnValueAttribute([NotNull] string justification)
+        public MustUseReturnValueAttribute(string justification)
         {
             Justification = justification;
         }
 
-        [CanBeNull]
         public string Justification { get; }
     }
 
@@ -653,7 +563,6 @@ namespace GraphZen
         AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Method |
         AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct |
         AttributeTargets.GenericParameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class ProvidesContextAttribute : Attribute
     {
     }
@@ -663,19 +572,17 @@ namespace GraphZen
     ///     Path can be relative or absolute, starting from web root (~).
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class PathReferenceAttribute : Attribute
     {
         public PathReferenceAttribute()
         {
         }
 
-        public PathReferenceAttribute([NotNull] [PathReference] string basePath)
+        public PathReferenceAttribute([PathReference] string basePath)
         {
             BasePath = basePath;
         }
 
-        [CanBeNull]
         public string BasePath { get; }
     }
 
@@ -703,7 +610,6 @@ namespace GraphZen
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class SourceTemplateAttribute : Attribute
     {
     }
@@ -737,14 +643,12 @@ namespace GraphZen
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method, AllowMultiple = true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class MacroAttribute : Attribute
     {
         /// <summary>
         ///     Allows specifying a macro that will be executed for a <see cref="SourceTemplateAttribute">source template</see>
         ///     parameter when the template is expanded.
         /// </summary>
-        [CanBeNull]
         public string Expression { get; set; }
 
         /// <summary>
@@ -761,91 +665,78 @@ namespace GraphZen
         ///     Identifies the target parameter of a <see cref="SourceTemplateAttribute">source template</see> if the
         ///     <see cref="MacroAttribute" /> is applied on a template method.
         /// </summary>
-        [CanBeNull]
         public string Target { get; set; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
     {
-        public AspMvcAreaMasterLocationFormatAttribute([NotNull] string format)
+        public AspMvcAreaMasterLocationFormatAttribute(string format)
         {
             Format = format;
         }
 
-        [NotNull]
         public string Format { get; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
     {
-        public AspMvcAreaPartialViewLocationFormatAttribute([NotNull] string format)
+        public AspMvcAreaPartialViewLocationFormatAttribute(string format)
         {
             Format = format;
         }
 
-        [NotNull]
         public string Format { get; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
     {
-        public AspMvcAreaViewLocationFormatAttribute([NotNull] string format)
+        public AspMvcAreaViewLocationFormatAttribute(string format)
         {
             Format = format;
         }
 
-        [NotNull]
         public string Format { get; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcMasterLocationFormatAttribute : Attribute
     {
-        public AspMvcMasterLocationFormatAttribute([NotNull] string format)
+        public AspMvcMasterLocationFormatAttribute(string format)
         {
             Format = format;
         }
 
-        [NotNull]
         public string Format { get; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
     {
-        public AspMvcPartialViewLocationFormatAttribute([NotNull] string format)
+        public AspMvcPartialViewLocationFormatAttribute(string format)
         {
             Format = format;
         }
 
-        [NotNull]
         public string Format { get; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcViewLocationFormatAttribute : Attribute
     {
-        public AspMvcViewLocationFormatAttribute([NotNull] string format)
+        public AspMvcViewLocationFormatAttribute(string format)
         {
             Format = format;
         }
 
-        [NotNull]
         public string Format { get; }
     }
 
@@ -857,19 +748,17 @@ namespace GraphZen
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method | AttributeTargets.Field |
                     AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcActionAttribute : Attribute
     {
         public AspMvcActionAttribute()
         {
         }
 
-        public AspMvcActionAttribute([NotNull] string anonymousProperty)
+        public AspMvcActionAttribute(string anonymousProperty)
         {
             AnonymousProperty = anonymousProperty;
         }
 
-        [CanBeNull]
         public string AnonymousProperty { get; }
     }
 
@@ -879,19 +768,17 @@ namespace GraphZen
     ///     <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcAreaAttribute : Attribute
     {
         public AspMvcAreaAttribute()
         {
         }
 
-        public AspMvcAreaAttribute([NotNull] string anonymousProperty)
+        public AspMvcAreaAttribute(string anonymousProperty)
         {
             AnonymousProperty = anonymousProperty;
         }
 
-        [CanBeNull]
         public string AnonymousProperty { get; }
     }
 
@@ -903,19 +790,17 @@ namespace GraphZen
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method | AttributeTargets.Field |
                     AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcControllerAttribute : Attribute
     {
         public AspMvcControllerAttribute()
         {
         }
 
-        public AspMvcControllerAttribute([NotNull] string anonymousProperty)
+        public AspMvcControllerAttribute(string anonymousProperty)
         {
             AnonymousProperty = anonymousProperty;
         }
 
-        [CanBeNull]
         public string AnonymousProperty { get; }
     }
 
@@ -924,7 +809,6 @@ namespace GraphZen
     ///     for custom wrappers similar to <c>System.Web.Mvc.Controller.View(String, String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcMasterAttribute : Attribute
     {
     }
@@ -934,7 +818,6 @@ namespace GraphZen
     ///     for custom wrappers similar to <c>System.Web.Mvc.Controller.View(String, Object)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcModelTypeAttribute : Attribute
     {
     }
@@ -947,7 +830,6 @@ namespace GraphZen
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method | AttributeTargets.Field |
                     AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcPartialViewAttribute : Attribute
     {
     }
@@ -956,7 +838,6 @@ namespace GraphZen
     ///     ASP.NET MVC attribute. Allows disabling inspections for MVC views within a class or a method.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcSuppressViewErrorAttribute : Attribute
     {
     }
@@ -967,7 +848,6 @@ namespace GraphZen
     ///     <c>System.Web.Mvc.Html.DisplayExtensions.DisplayForModel(HtmlHelper, String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcDisplayTemplateAttribute : Attribute
     {
     }
@@ -978,7 +858,6 @@ namespace GraphZen
     ///     <c>System.Web.Mvc.Html.EditorExtensions.EditorForModel(HtmlHelper, String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcEditorTemplateAttribute : Attribute
     {
     }
@@ -989,7 +868,6 @@ namespace GraphZen
     ///     <c>System.ComponentModel.DataAnnotations.UIHintAttribute(System.String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcTemplateAttribute : Attribute
     {
     }
@@ -1002,7 +880,6 @@ namespace GraphZen
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method | AttributeTargets.Field |
                     AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcViewAttribute : Attribute
     {
     }
@@ -1012,7 +889,6 @@ namespace GraphZen
     ///     is an MVC view component name.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcViewComponentAttribute : Attribute
     {
     }
@@ -1023,7 +899,6 @@ namespace GraphZen
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method | AttributeTargets.Field |
                     AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcViewComponentViewAttribute : Attribute
     {
     }
@@ -1042,38 +917,33 @@ namespace GraphZen
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMvcActionSelectorAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class HtmlElementAttributesAttribute : Attribute
     {
         public HtmlElementAttributesAttribute()
         {
         }
 
-        public HtmlElementAttributesAttribute([NotNull] string name)
+        public HtmlElementAttributesAttribute(string name)
         {
             Name = name;
         }
 
-        [CanBeNull]
         public string Name { get; }
     }
 
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class HtmlAttributeValueAttribute : Attribute
     {
-        public HtmlAttributeValueAttribute([NotNull] string name)
+        public HtmlAttributeValueAttribute(string name)
         {
             Name = name;
         }
 
-        [NotNull]
         public string Name { get; }
     }
 
@@ -1083,7 +953,6 @@ namespace GraphZen
     ///     <c>System.Web.WebPages.WebPageBase.RenderSection(String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RazorSectionAttribute : Attribute
     {
     }
@@ -1118,7 +987,6 @@ namespace GraphZen
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class CollectionAccessAttribute : Attribute
     {
         public CollectionAccessAttribute(CollectionAccessType collectionAccessType)
@@ -1155,7 +1023,6 @@ namespace GraphZen
     ///     <see cref="AssertionConditionAttribute" /> attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AssertionMethodAttribute : Attribute
     {
     }
@@ -1166,7 +1033,6 @@ namespace GraphZen
     ///     the attribute is the assertion type.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AssertionConditionAttribute : Attribute
     {
         public AssertionConditionAttribute(AssertionConditionType conditionType)
@@ -1202,7 +1068,6 @@ namespace GraphZen
     /// </summary>
     [Obsolete("Use [ContractAnnotation('=> halt')] instead")]
     [AttributeUsage(AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class TerminatesProgramAttribute : Attribute
     {
     }
@@ -1213,7 +1078,6 @@ namespace GraphZen
     ///     of delegate type by analyzing LINQ method chains.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class LinqTunnelAttribute : Attribute
     {
     }
@@ -1237,7 +1101,6 @@ namespace GraphZen
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Parameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class NoEnumerationAttribute : Attribute
     {
     }
@@ -1246,7 +1109,6 @@ namespace GraphZen
     ///     Indicates that the marked parameter is a regular expression pattern.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RegexPatternAttribute : Attribute
     {
     }
@@ -1259,7 +1121,6 @@ namespace GraphZen
     /// </remarks>
     [AttributeUsage(
         AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct | AttributeTargets.Enum)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class NoReorderAttribute : Attribute
     {
     }
@@ -1269,7 +1130,6 @@ namespace GraphZen
     ///     as <c>ItemsControl</c>-derived type, to enable inner items <c>DataContext</c> type resolve.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class XamlItemsControlAttribute : Attribute
     {
     }
@@ -1284,162 +1144,136 @@ namespace GraphZen
     ///     marked with the <see cref="XamlItemsControlAttribute" /> attribute.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class XamlItemBindingOfItemsControlAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspChildControlTypeAttribute : Attribute
     {
-        public AspChildControlTypeAttribute([NotNull] string tagName, [NotNull] Type controlType)
+        public AspChildControlTypeAttribute(string tagName, Type controlType)
         {
             TagName = tagName;
             ControlType = controlType;
         }
 
-        [NotNull]
         public string TagName { get; }
 
-        [NotNull]
         public Type ControlType { get; }
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspDataFieldAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspDataFieldsAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspMethodPropertyAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspRequiredAttributeAttribute : Attribute
     {
-        public AspRequiredAttributeAttribute([NotNull] string attribute)
+        public AspRequiredAttributeAttribute(string attribute)
         {
             Attribute = attribute;
         }
 
-        [NotNull]
         public string Attribute { get; }
     }
 
     [AttributeUsage(AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class AspTypePropertyAttribute : Attribute
     {
-        public bool CreateConstructorReferences { get; }
-
         public AspTypePropertyAttribute(bool createConstructorReferences)
         {
             CreateConstructorReferences = createConstructorReferences;
         }
+
+        public bool CreateConstructorReferences { get; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RazorImportNamespaceAttribute : Attribute
     {
-        public RazorImportNamespaceAttribute([NotNull] string name)
+        public RazorImportNamespaceAttribute(string name)
         {
             Name = name;
         }
 
-        [NotNull]
         public string Name { get; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RazorInjectionAttribute : Attribute
     {
-        public RazorInjectionAttribute([NotNull] string type, [NotNull] string fieldName)
+        public RazorInjectionAttribute(string type, string fieldName)
         {
             Type = type;
             FieldName = fieldName;
         }
 
-        [NotNull]
         public string Type { get; }
 
-        [NotNull]
         public string FieldName { get; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RazorDirectiveAttribute : Attribute
     {
-        public RazorDirectiveAttribute([NotNull] string directive)
+        public RazorDirectiveAttribute(string directive)
         {
             Directive = directive;
         }
 
-        [NotNull]
         public string Directive { get; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RazorPageBaseTypeAttribute : Attribute
     {
-        public RazorPageBaseTypeAttribute([NotNull] string baseType)
+        public RazorPageBaseTypeAttribute(string baseType)
         {
             BaseType = baseType;
         }
 
-        public RazorPageBaseTypeAttribute([NotNull] string baseType, string pageName)
+        public RazorPageBaseTypeAttribute(string baseType, string pageName)
         {
             BaseType = baseType;
             PageName = pageName;
         }
 
-        [NotNull]
         public string BaseType { get; }
-
-        [CanBeNull]
         public string PageName { get; }
     }
 
     [AttributeUsage(AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RazorHelperCommonAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Property)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RazorLayoutAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RazorWriteLiteralMethodAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Method)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RazorWriteMethodAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Parameter)]
-    [Conditional("JETBRAINS_ANNOTATIONS")]
     internal sealed class RazorWriteMethodParameterAttribute : Attribute
     {
     }

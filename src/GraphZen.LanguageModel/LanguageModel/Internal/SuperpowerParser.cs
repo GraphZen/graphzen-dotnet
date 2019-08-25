@@ -2,24 +2,35 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Superpower;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Internal
 {
     public class SuperpowerParser : IParser
     {
-        public DocumentSyntax ParseDocument(string document) =>
-            Parse(Check.NotNull(document, nameof(document)), Grammar.Grammar.Document);
+        public DocumentSyntax ParseDocument(string document)
+        {
+            return Parse(Check.NotNull(document, nameof(document)), Grammar.Grammar.Document);
+        }
 
-        public ValueSyntax ParseValue(string value) =>
-            Parse(Check.NotNull(value, nameof(value)), Grammar.Grammar.Value);
+        public ValueSyntax ParseValue(string value)
+        {
+            return Parse(Check.NotNull(value, nameof(value)), Grammar.Grammar.Value);
+        }
 
-        public TypeSyntax ParseType(string type) =>
-            Parse(Check.NotNull(type, nameof(type)), Grammar.Grammar.Type);
+        public TypeSyntax ParseType(string type)
+        {
+            return Parse(Check.NotNull(type, nameof(type)), Grammar.Grammar.Type);
+        }
 
-        [NotNull]
-        private static T Parse<T>([NotNull] string text, TokenListParser<TokenKind, T> parser)
+
+        private static T Parse<T>(string text, TokenListParser<TokenKind, T> parser)
         {
             var source = new Source(text);
 

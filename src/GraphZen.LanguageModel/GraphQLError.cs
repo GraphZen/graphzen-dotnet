@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace GraphZen
@@ -14,11 +16,11 @@ namespace GraphZen
     public class GraphQLError
     {
         public GraphQLError(string message,
-            IReadOnlyList<SyntaxNode> nodes = null,
-            Source source = null,
-            IReadOnlyList<int> positions = null,
-            IReadOnlyList<object> path = null,
-            Exception innerException = null
+            IReadOnlyList<SyntaxNode>? nodes = null,
+            Source? source = null,
+            IReadOnlyList<int>? positions = null,
+            IReadOnlyList<object>? path = null,
+            Exception? innerException = null
         )
         {
             Message = Check.NotNull(message, nameof(message));
@@ -29,11 +31,8 @@ namespace GraphZen
             Source = source ?? nodes?.FirstOrDefault()?.Location?.Source;
             InnerException = innerException;
             if (Positions != null && Source != null)
-            {
                 Locations = Positions.Select(Source.GetLocation).ToList();
-            }
             else if (Nodes != null && Source != null)
-            {
                 Locations = Nodes
                     .Where(_ => _?.Location != null)
                     .Select(n =>
@@ -41,52 +40,39 @@ namespace GraphZen
                         Debug.Assert(n.Location != null, "n.Location != null");
                         return Source.GetLocation(n.Location.Start);
                     }).ToList();
-            }
         }
 
-        [NotNull]
+
         public string Message { get; internal set; }
 
-        [JsonIgnore]
-        [CanBeNull]
-        [ItemNotNull]
-        public IReadOnlyList<SyntaxNode> Nodes { get; }
+        [JsonIgnore] public IReadOnlyList<SyntaxNode>? Nodes { get; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<SourceLocation> Locations { get; }
+        public IReadOnlyList<SourceLocation>? Locations { get; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<object> Path { get; }
+        public IReadOnlyList<object>? Path { get; }
 
-        [JsonIgnore]
-        public IReadOnlyList<int> Positions { get; }
+        [JsonIgnore] public IReadOnlyList<int>? Positions { get; }
 
-        [JsonIgnore]
-        public Source Source { get; }
+        [JsonIgnore] public Source? Source { get; }
 
-        [JsonIgnore]
-        public Exception InnerException { get; }
+        [JsonIgnore] public Exception? InnerException { get; }
 
-        private bool Equals([NotNull] GraphQLError other) => string.Equals(Message, other.Message) &&
-                                                             Equals(Locations, other.Locations) &&
-                                                             Equals(Path, other.Path);
-
-        public override bool Equals(object obj)
+        private bool Equals(GraphQLError other)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            return string.Equals(Message, other.Message) &&
+                   Equals(Locations, other.Locations) &&
+                   Equals(Path, other.Path);
+        }
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (obj.GetType() != GetType())
-            {
-                return false;
-            }
+            if (ReferenceEquals(this, obj)) return true;
+
+            if (obj.GetType() != GetType()) return false;
 
             return Equals((GraphQLError)obj);
         }
@@ -103,13 +89,22 @@ namespace GraphZen
             }
         }
 
-        public void Throw() => throw new GraphQLException(this);
+        public void Throw()
+        {
+            throw new GraphQLException(this);
+        }
 
-        public override string ToString() => Json.SerializeObject(this) ?? Message;
+        public override string ToString()
+        {
+            return Json.SerializeObject(this) ?? Message;
+        }
 
 
-        public GraphQLError WithLocationInfo(IReadOnlyList<SyntaxNode> nodes, ResponsePath path) =>
-            new GraphQLError(Message, nodes, Source, Positions, Check.NotNull(path, nameof(path)).AsReadOnlyList(),
+        public GraphQLError WithLocationInfo(IReadOnlyList<SyntaxNode> nodes, ResponsePath path)
+        {
+            return new GraphQLError(Message, nodes, Source, Positions,
+                Check.NotNull(path, nameof(path)).AsReadOnlyList(),
                 InnerException);
+        }
     }
 }

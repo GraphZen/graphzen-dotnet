@@ -1,11 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.TypeSystem
 {
@@ -41,7 +44,7 @@ namespace GraphZen.TypeSystem
             schema.QueryType.Should().Be(queryType);
 
             var articleField = queryType.FindField("article");
-            var articleFieldType = articleField.FieldType as ObjectType;
+            var articleFieldType = (ObjectType)articleField.FieldType;
             articleFieldType.Should().Be(articleType);
             articleFieldType.Name.Should().Be("Article");
             articleField.Name.Should().Be("article");

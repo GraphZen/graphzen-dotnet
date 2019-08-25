@@ -4,23 +4,24 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     public class UnionType : NamedType, IUnionType
     {
-        [NotNull]
-        [ItemNotNull]
         private readonly Lazy<UnionTypeDefinitionSyntax> _syntax;
-        [NotNull]
-        [ItemNotNull]
+
+
         private readonly Lazy<IReadOnlyDictionary<string, ObjectType>> _memberTypeMap;
-        [NotNull] 
-        [ItemNotNull] 
+
+
         private readonly Lazy<IReadOnlyList<ObjectType>> _memberTypes;
 
         public UnionType(string name, string description, Type clrType,
@@ -37,17 +38,13 @@ namespace GraphZen.TypeSystem
             {
                 var types = lazyTypes.Value;
                 if (types == null || types.Count == 0)
-                {
                     throw new Exception($"Must provide list of types for Union {name}");
-                }
 
                 var includedTypeNames = new Dictionary<string, bool>();
                 foreach (var objectType in types.Values)
                 {
                     if (includedTypeNames.ContainsKey(objectType.Name))
-                    {
                         throw new Exception($"Union {name} can include {objectType.Name} only once.");
-                    }
 
                     includedTypeNames[objectType.Name] = true;
                 }
@@ -62,13 +59,20 @@ namespace GraphZen.TypeSystem
 
         public TypeResolver<object, GraphQLContext> ResolveType { get; }
 
-        public IEnumerable<ObjectType> GetMemberTypes() => MemberTypes;
+        public IEnumerable<ObjectType> GetMemberTypes()
+        {
+            return MemberTypes;
+        }
+
         public IReadOnlyList<ObjectType> MemberTypes => _memberTypes.Value;
         public IReadOnlyDictionary<string, ObjectType> MemberTypesMap => _memberTypeMap.Value;
 
         public override TypeKind Kind { get; } = TypeKind.Union;
 
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Union;
 
@@ -88,9 +92,12 @@ namespace GraphZen.TypeSystem
             var schema = new Schema(schemaDef);
             return From(definition, schema);
         }*/
-        IEnumerable<IObjectTypeDefinition> IMemberTypesContainerDefinition.GetMemberTypes() => GetMemberTypes();
+        IEnumerable<IObjectTypeDefinition> IMemberTypesContainerDefinition.GetMemberTypes()
+        {
+            return GetMemberTypes();
+        }
 
-        [NotNull]
+
         public static UnionType From(IUnionTypeDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));

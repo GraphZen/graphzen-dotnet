@@ -1,11 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -18,7 +20,7 @@ namespace GraphZen.TypeSystem
             Builder = builder;
         }
 
-        [NotNull]
+
         private InternalObjectTypeBuilder Builder { get; }
 
         InternalObjectTypeBuilder IInfrastructure<InternalObjectTypeBuilder>.Instance => Builder;
@@ -51,46 +53,43 @@ namespace GraphZen.TypeSystem
 
 
         public IObjectTypeBuilder<TObject, TContext> Field(string name,
-            Action<IFieldBuilder<TObject, object, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, object, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
-            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit);
+            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
             // ReSharper disable once AssignNullToNotNullAttribute
             fieldConfigurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field(string name, string type,
-            Action<IFieldBuilder<TObject, object, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, object, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
-            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit).FieldType(type);
+            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
             fieldConfigurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(string name,
-            Action<IFieldBuilder<TObject, TField, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, TField, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)
-                .FieldType(typeof(TField));
+                ?.FieldType(typeof(TField))!;
             fieldConfigurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(ib));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(Expression<Func<TObject, TField>> fieldSelector,
-            Action<IFieldBuilder<TObject, TField, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, TField, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(fieldSelector, nameof(fieldSelector));
-            // var resolver = fieldSelector.GetFuncFromExpression();
             var property = fieldSelector.GetPropertyInfoFromExpression();
-
-            var fb = Builder.Field(property, ConfigurationSource.Explicit);
-            // ReSharper disable once AssignNullToNotNullAttribute
+            var fb = Builder.Field(property, ConfigurationSource.Explicit)!;
             fieldConfigurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(fb));
             return this;
         }
@@ -127,13 +126,8 @@ namespace GraphZen.TypeSystem
         {
             ImplementsInterface(name);
             if (names != null)
-            {
                 foreach (var n in names)
-                {
                     ImplementsInterface(n);
-
-                }
-            }
 
             return this;
         }
@@ -168,7 +162,10 @@ namespace GraphZen.TypeSystem
         }
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreField<TField>(
-            Expression<Func<TObject, TField>> fieldSelector) => throw new NotImplementedException();
+            Expression<Func<TObject, TField>> fieldSelector)
+        {
+            throw new NotImplementedException();
+        }
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreField(string fieldName)
         {
@@ -184,10 +181,12 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
+        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name)
+        {
+            return DirectiveAnnotation(name, null);
+        }
 
-        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name, object value)
+        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;
@@ -199,7 +198,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector) =>
+        public IObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector)
+        {
             throw new NotImplementedException();
+        }
     }
 }

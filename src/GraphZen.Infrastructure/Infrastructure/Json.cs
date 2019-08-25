@@ -1,18 +1,22 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+
+#nullable enable
+
 
 namespace GraphZen.Infrastructure
 {
     public static class Json
     {
-        [NotNull]
         public static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
         {
             Formatting = Formatting.Indented,
@@ -20,11 +24,14 @@ namespace GraphZen.Infrastructure
             NullValueHandling = NullValueHandling.Include
         };
 
-        [NotNull]
+
         // ReSharper disable once AssignNullToNotNullAttribute
         public static JsonSerializer Serializer { get; } = JsonSerializer.Create(SerializerSettings);
 
-        public static JObject CreateJObject(object value) => JObject.FromObject(value, Serializer);
+        public static JObject CreateJObject(object value)
+        {
+            return JObject.FromObject(value, Serializer);
+        }
 
         [DebuggerStepThrough]
         public static string SerializeObject(object value)

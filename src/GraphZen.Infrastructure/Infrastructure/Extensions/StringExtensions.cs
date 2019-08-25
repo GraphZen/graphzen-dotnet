@@ -1,14 +1,18 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable enable
+
 
 namespace GraphZen.Infrastructure
 {
     internal static class StringExtensions
     {
-        [NotNull]
         public static string FirstCharToUpper(this string value)
         {
             Check.NotNull(value, nameof(value));
@@ -16,7 +20,7 @@ namespace GraphZen.Infrastructure
             return value.Length > 1 ? char.ToUpper(value[0]) + value.Substring(1) : value.ToUpper();
         }
 
-        [NotNull]
+
         public static string FirstCharToLower(this string value)
         {
             Check.NotNull(value, nameof(value));
@@ -28,41 +32,42 @@ namespace GraphZen.Infrastructure
         {
             Check.NotNull(value, nameof(value));
             if (value.EndsWith("Async") && value.Length > "Async".Length)
-            {
                 return value.Substring(0, value.Length - "Async".Length);
-            }
 
             return value;
         }
 
-        private static bool IsUpperCaseAtIndex(this string value, int index) =>
-            value != null && value.Length > index && char.IsUpper(value[index]);
+        private static bool IsUpperCaseAtIndex(this string value, int index)
+        {
+            return value != null && value.Length > index && char.IsUpper(value[index]);
+        }
 
-        private static bool IsSnakeCase(this string value) => value != null && value.Contains('_');
-        private static bool IsKebabCase(this string value) => value != null && value.Contains('-');
+        private static bool IsSnakeCase(this string value)
+        {
+            return value != null && value.Contains('_');
+        }
 
-        private static bool IsSpaceCase(this string value) => value != null && value.Contains(' ');
+        private static bool IsKebabCase(this string value)
+        {
+            return value != null && value.Contains('-');
+        }
 
-        [NotNull]
+        private static bool IsSpaceCase(this string value)
+        {
+            return value != null && value.Contains(' ');
+        }
+
+
         public static string ToUpperSnakeCase(this string value)
         {
             Check.NotNull(value, nameof(value));
 
 
-            if (value.IsSnakeCase())
-            {
-                return value.ToUpper();
-            }
+            if (value.IsSnakeCase()) return value.ToUpper();
 
-            if (value.IsKebabCase())
-            {
-                return value.Replace('-', '_').ToUpper();
-            }
+            if (value.IsKebabCase()) return value.Replace('-', '_').ToUpper();
 
-            if (value.IsSpaceCase())
-            {
-                return value.Replace(' ', '_').ToUpper();
-            }
+            if (value.IsSpaceCase()) return value.Replace(' ', '_').ToUpper();
 
             var chars = value.SelectMany((c, i) =>
             {

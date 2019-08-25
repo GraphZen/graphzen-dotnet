@@ -3,11 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Validation
 {
@@ -18,8 +23,7 @@ namespace GraphZen.QueryEngine.Validation
             Rules = rules ?? QueryValidationRules.SpecifiedQueryRules;
         }
 
-        [NotNull]
-        [ItemNotNull]
+
         private IReadOnlyCollection<ValidationRule> Rules { get; }
 
         public IReadOnlyCollection<GraphQLError> Validate(Schema schema, DocumentSyntax query)

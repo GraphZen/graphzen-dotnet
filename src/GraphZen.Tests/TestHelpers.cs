@@ -1,9 +1,10 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,10 +14,13 @@ using DiffPlex.DiffBuilder;
 using DiffPlex.DiffBuilder.Model;
 using GraphZen.Infrastructure;
 using GraphZen.QueryEngine;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Superpower.Model;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen
 {
@@ -49,18 +53,12 @@ namespace GraphZen
             options = options ?? new ResultComparisonOptions();
             if (!expected.Equals(actual))
             {
-                if (TryGetDiff(expected, actual, out var diff, options))
-                {
-                    throw new Exception(diff);
-                }
+                if (TryGetDiff(expected, actual, out var diff, options)) throw new Exception(diff);
 
                 expected = Json.SerializeObject(expected);
                 actual = Json.SerializeObject(actual);
 
-                if (TryGetDiff(expected, actual, out diff, options))
-                {
-                    throw new Exception(diff);
-                }
+                if (TryGetDiff(expected, actual, out diff, options)) throw new Exception(diff);
             }
         }
 
@@ -106,27 +104,20 @@ namespace GraphZen
 
             var errorMessage = hasDiff ? "Differences found " : "No differences found";
             errorMessage += "\n";
-            if (options.ShowActual)
-            {
-                errorMessage += $"=== Actual ===\n{actual}\n";
-            }
+            if (options.ShowActual) errorMessage += $"=== Actual ===\n{actual}\n";
 
-            if (options.ShowExpected)
-            {
-                errorMessage += $"=== Expected ===\n{expected}\n";
-            }
+            if (options.ShowExpected) errorMessage += $"=== Expected ===\n{expected}\n";
 
-            if (options.ShowDiffs)
-            {
-                errorMessage += $"=== Differences ===\n{diffString}\n";
-            }
+            if (options.ShowDiffs) errorMessage += $"=== Differences ===\n{diffString}\n";
 
             differences = errorMessage;
             return hasDiff;
         }
 
-        public static string GetDiff(string expected, string actual, ResultComparisonOptions options) =>
-            TryGetDiff(expected, actual, out var differences, options) ? differences : null;
+        public static string GetDiff(string expected, string actual, ResultComparisonOptions options)
+        {
+            return TryGetDiff(expected, actual, out var differences, options) ? differences : null;
+        }
 
         private static void AssertEquals(JObject expected, JObject actual, ResultComparisonOptions options)
         {
@@ -176,29 +167,19 @@ namespace GraphZen
         private static void Sort(this JObject jObj)
         {
             var props = jObj.Properties().ToList();
-            foreach (var prop in props)
-            {
-                prop.Remove();
-            }
+            foreach (var prop in props) prop.Remove();
 
 
             foreach (var prop in props.OrderByDescending(p => p.Name == "name").ThenBy(p => p.Name))
             {
                 jObj.Add(prop);
-                if (prop.Value is JObject objValue)
-                {
-                    Sort(objValue);
-                }
+                if (prop.Value is JObject objValue) Sort(objValue);
 
                 if (prop.Value is JArray arr)
                 {
                     foreach (var el in arr)
-                    {
                         if (el is JObject elObj)
-                        {
                             Sort(elObj);
-                        }
-                    }
 
 
                     IComparable GetComparable(JToken jt)
@@ -206,16 +187,10 @@ namespace GraphZen
                         if (jt is JObject jo)
                         {
                             var nameProp = jo.Properties().FirstOrDefault(_ => _.Name == "name");
-                            if (nameProp.Value is JValue jv)
-                            {
-                                return jv;
-                            }
+                            if (nameProp?.Value is JValue jv) return jv;
                         }
 
-                        if (jt is JValue jtv)
-                        {
-                            return jtv;
-                        }
+                        if (jt is JValue jtv) return jtv;
 
                         return null;
                     }
@@ -262,13 +237,12 @@ namespace GraphZen
 
         public static void ThrowOnParserError<TKind, T>(this TokenListParserResult<TKind, T> result)
         {
-            if (!result.HasValue)
-            {
-                throw new Exception(result.ToString());
-            }
+            if (!result.HasValue) throw new Exception(result.ToString());
         }
 
-        public static string ToMultiLineString(this IEnumerable<string> values) =>
-            string.Join(Environment.NewLine, values);
+        public static string ToMultiLineString(this IEnumerable<string> values)
+        {
+            return string.Join(Environment.NewLine, values);
+        }
     }
 }

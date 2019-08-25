@@ -1,4 +1,4 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
@@ -13,6 +13,9 @@ using GraphZen.LanguageModel.Internal;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+#nullable disable
+
 
 namespace GraphZen.Validation.Rules
 {
@@ -157,9 +160,11 @@ namespace GraphZen.Validation.Rules
             sb.Directive("onInlineFragment").Locations(DirectiveLocation.InlineFragment);
         });
 
-        protected static ExpectedError Error(string message, params (int line, int column)[] lineColumnPairs) =>
-            new ExpectedError(message,
+        protected static ExpectedError Error(string message, params (int line, int column)[] lineColumnPairs)
+        {
+            return new ExpectedError(message,
                 lineColumnPairs.Select(pair => new SourceLocation(pair.line, pair.column)).ToArray(), null);
+        }
 
         private void ExpectValidSDL(ValidationRule rule, string sdl)
         {
@@ -219,14 +224,24 @@ namespace GraphZen.Validation.Rules
             }
         }
 
-        protected void QueryShouldPass(string query) => ExpectValidQuery(TestSchema, RuleUnderTest, query);
+        protected void QueryShouldPass(string query)
+        {
+            ExpectValidQuery(TestSchema, RuleUnderTest, query);
+        }
 
-        protected void QueryShouldFail(string query, ExpectedError error, params ExpectedError[] errors) =>
+        protected void QueryShouldFail(string query, ExpectedError error, params ExpectedError[] errors)
+        {
             ExpectInvalidQuery(TestSchema, RuleUnderTest, query, new[] { error }.Concat(errors).ToArray());
+        }
 
-        protected void SDLShouldPass(string sdl) => ExpectValidSDL(RuleUnderTest, sdl);
+        protected void SDLShouldPass(string sdl)
+        {
+            ExpectValidSDL(RuleUnderTest, sdl);
+        }
 
-        protected void SDLShouldFail(string sdl, ExpectedError error, params ExpectedError[] errors) =>
+        protected void SDLShouldFail(string sdl, ExpectedError error, params ExpectedError[] errors)
+        {
             ExpectInvalidSDL(RuleUnderTest, sdl.Dedent(), new[] { error }.Concat(errors).ToArray());
+        }
     }
 }

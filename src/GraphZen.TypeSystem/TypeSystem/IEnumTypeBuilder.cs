@@ -1,27 +1,29 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {
     public interface IEnumTypeBuilder<in TEnumValue> : IAnnotableBuilder<IEnumTypeBuilder<TEnumValue>>
     {
-        [NotNull]
-        IEnumTypeBuilder<TEnumValue> Description([CanBeNull] string description);
+        IEnumTypeBuilder<TEnumValue> Description(string description);
 
-        [NotNull]
+
         IEnumTypeBuilder<TEnumValue> Value(TEnumValue value, Action<IEnumValueBuilder> valueConfigurator = null);
 
-        [NotNull]
+
         IEnumTypeBuilder<TEnumValue> Name(string name);
 
-        [NotNull]
+
         IEnumTypeBuilder<object> ClrType(Type clrType);
 
-        [NotNull]
-        IEnumTypeBuilder<T> ClrType<T>();
 
+        IEnumTypeBuilder<T> ClrType<T>();
     }
 }

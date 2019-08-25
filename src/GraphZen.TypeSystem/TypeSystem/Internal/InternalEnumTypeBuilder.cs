@@ -1,31 +1,32 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
     public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTypeDefinition>
     {
-        public InternalEnumTypeBuilder([NotNull] EnumTypeDefinition definition,
-            [NotNull] InternalSchemaBuilder schemaBuilder) : base(
+        public InternalEnumTypeBuilder(EnumTypeDefinition definition,
+            InternalSchemaBuilder schemaBuilder) : base(
             definition, schemaBuilder)
         {
         }
 
-        [NotNull]
-        public InternalEnumValueBuilder Value([NotNull] string name,
+
+        public InternalEnumValueBuilder Value(string name,
             ConfigurationSource nameConfigurationSource,
-            ConfigurationSource configurationSource) =>
-            Definition.GetOrAddValue(name, nameConfigurationSource, configurationSource).Builder;
+            ConfigurationSource configurationSource)
+        {
+            return Definition.GetOrAddValue(name, nameConfigurationSource, configurationSource).Builder;
+        }
 
         public InternalEnumTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, configurationSource))
-            {
-                ConfigureEnumFromClrType();
-            }
+            if (Definition.SetClrType(clrType, configurationSource)) ConfigureEnumFromClrType();
 
             return this;
         }
@@ -33,22 +34,17 @@ namespace GraphZen.TypeSystem.Internal
         public bool ConfigureEnumFromClrType()
         {
             var clrType = Definition.ClrType;
-            if (clrType == null)
-            {
-                return false;
-            }
+            if (clrType == null) return false;
 
             if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
-            {
                 Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
-            }
 
             foreach (var value in Enum.GetValues(clrType))
             {
-                var member = clrType.GetMember(value.ToString());
+                var member = clrType.GetMember(value!.ToString()!);
                 if (member.Length > 0)
                 {
-                    var memberInfo = clrType.GetMember(value.ToString())[0] ??
+                    var memberInfo = clrType.GetMember(value.ToString()!)[0] ??
                                      // ReSharper disable once ConstantNullCoalescingCondition
                                      throw new InvalidOperationException(
                                          $"Unable to get MemberInfo for enum value of type {Definition}");
@@ -56,9 +52,7 @@ namespace GraphZen.TypeSystem.Internal
                     var valueBuilder = Value(name, nameConfigurationSource, ConfigurationSource.Convention)
                         .CustomValue(value);
                     if (memberInfo.TryGetDescriptionFromDataAnnotation(out var description))
-                    {
                         valueBuilder.Description(description, ConfigurationSource.DataAnnotation);
-                    }
                 }
             }
 

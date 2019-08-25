@@ -2,13 +2,18 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation
 {
     public class DocumentValidationContext : ValidationContext
     {
-        public DocumentValidationContext([NotNull] DocumentSyntax schema, DocumentSyntax initialSchema,
+        public DocumentValidationContext(DocumentSyntax schema, DocumentSyntax initialSchema,
             Lazy<GraphQLSyntaxWalker> parentVisitor) : base(schema,
             Check.NotNull(parentVisitor, nameof(parentVisitor))
         )
@@ -16,10 +21,10 @@ namespace GraphZen.LanguageModel.Validation
             InitialSchema = initialSchema;
         }
 
-        [CanBeNull]
+
         public DocumentSyntax InitialSchema { get; }
 
-        [NotNull]
+
         public DocumentSyntax Schema => AST;
     }
 }

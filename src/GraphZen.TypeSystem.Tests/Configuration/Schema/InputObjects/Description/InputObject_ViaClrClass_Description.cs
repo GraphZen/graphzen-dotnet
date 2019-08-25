@@ -1,6 +1,12 @@
-﻿using System.ComponentModel;
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.InputObjects.Description
 {
@@ -9,15 +15,19 @@ namespace GraphZen.InputObjects.Description
         public const string DataAnnotationDescription = nameof(DataAnnotationDescription);
 
         [Description(DataAnnotationDescription)]
-        class ExampleInputObject { }
-
-
-
-        public LeafConventionContext GetContext() => new LeafConventionContext()
+        private class ExampleInputObject
         {
-            ParentName = nameof(ExampleInputObject),
-            DataAnnotationValue = DataAnnotationDescription
-        };
+        }
+
+
+        public LeafConventionContext GetContext()
+        {
+            return new LeafConventionContext
+            {
+                ParentName = nameof(ExampleInputObject),
+                DataAnnotationValue = DataAnnotationDescription
+            };
+        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

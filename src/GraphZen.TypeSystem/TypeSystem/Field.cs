@@ -5,12 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     [GraphQLName("__Field")]
@@ -18,9 +21,9 @@ namespace GraphZen.TypeSystem
                  "which has a name, potentially a list of arguments, and a return type.")]
     public sealed class Field : AnnotatableMember, IField
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<IGraphQLType> _fieldType;
+        private readonly Lazy<IGraphQLType> _fieldType;
 
-        [NotNull] [ItemNotNull] private readonly Lazy<FieldDefinitionSyntax> _syntax;
+        private readonly Lazy<FieldDefinitionSyntax> _syntax;
 
 
         public Field(string name, string description, IFieldsContainer declaringType, IGraphQLType fieldType,
@@ -71,28 +74,23 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [GraphQLIgnore]
-        public IFieldsContainer DeclaringType { get; }
+        [GraphQLIgnore] public IFieldsContainer DeclaringType { get; }
 
 
-        [GraphQLName("type")]
-        public IGraphQLType FieldType => _fieldType.Value;
+        [GraphQLName("type")] public IGraphQLType FieldType => _fieldType.Value;
 
 
         IGraphQLTypeReference IFieldDefinition.FieldType => FieldType;
 
-        [GraphQLIgnore]
-        public Resolver<object, object> Resolver { get; }
+        [GraphQLIgnore] public Resolver<object, object> Resolver { get; }
 
         IFieldsContainerDefinition IFieldDefinition.DeclaringType => DeclaringType;
 
         public bool IsDeprecated { get; }
 
-        [GraphQLCanBeNull]
-        public string DeprecationReason { get; }
+        [GraphQLCanBeNull] public string DeprecationReason { get; }
 
-        [GraphQLIgnore]
-        public IReadOnlyDictionary<string, Argument> Arguments { get; }
+        [GraphQLIgnore] public IReadOnlyDictionary<string, Argument> Arguments { get; }
 
         public override string Description { get; }
 
@@ -100,22 +98,30 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.FieldDefinition;
 
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
 
         [GraphQLIgnore]
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments() => GetArguments();
+        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments()
+        {
+            return GetArguments();
+        }
 
         [GraphQLName("args")]
-        public IEnumerable<Argument> GetArguments() => Arguments.Values;
+        public IEnumerable<Argument> GetArguments()
+        {
+            return Arguments.Values;
+        }
 
-        [GraphQLIgnore]
-        public MemberInfo ClrInfo { get; }
+        [GraphQLIgnore] public MemberInfo ClrInfo { get; }
 
         object IClrInfo.ClrInfo => ClrInfo;
 
 
         [GraphQLIgnore]
-        public static Field From([NotNull] IFieldDefinition definition, [NotNull] IFieldsContainer declaringType,
+        public static Field From(IFieldDefinition definition, IFieldsContainer declaringType,
             TypeResolver typeResolver)
         {
             Check.NotNull(definition, nameof(definition));
@@ -124,6 +130,9 @@ namespace GraphZen.TypeSystem
                 definition.DeprecationReason, definition.DirectiveAnnotations, typeResolver, definition.ClrInfo);
         }
 
-        public override string ToString() => $"{DeclaringType}.{Name}";
+        public override string ToString()
+        {
+            return $"{DeclaringType}.{Name}";
+        }
     }
 }

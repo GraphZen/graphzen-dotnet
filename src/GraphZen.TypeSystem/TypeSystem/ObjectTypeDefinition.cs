@@ -1,26 +1,26 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ObjectTypeDefinition : FieldsContainerDefinition, IMutableObjectTypeDefinition
     {
-        [NotNull]
         private readonly Dictionary<string, ConfigurationSource> _ignoredInterfaces =
             new Dictionary<string, ConfigurationSource>();
 
-        [NotNull]
-        [ItemNotNull]
+
         private readonly List<InterfaceTypeDefinition> _interfaces = new List<InterfaceTypeDefinition>();
 
 
@@ -35,11 +35,15 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"type {Name}";
 
-        [NotNull]
+
         public InternalObjectTypeBuilder Builder { get; }
 
-        public IsTypeOf<object, GraphQLContext> IsTypeOf { get; set; }
-        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _interfaces;
+        public IsTypeOf<object, GraphQLContext>? IsTypeOf { get; set; }
+
+        public IEnumerable<InterfaceTypeDefinition> GetInterfaces()
+        {
+            return _interfaces;
+        }
 
         public ConfigurationSource? FindIgnoredInterfaceConfigurationSource(string name)
         {
@@ -52,38 +56,29 @@ namespace GraphZen.TypeSystem
         public override TypeKind Kind { get; } = TypeKind.Object;
 
 
-        public bool AddInterface([NotNull] InterfaceTypeDefinition @interface, ConfigurationSource configurationSource)
+        public bool AddInterface(InterfaceTypeDefinition @interface, ConfigurationSource configurationSource)
         {
             Check.NotNull(@interface, nameof(@interface));
 
-            if (@interface.Name == null)
-            {
-                throw new ArgumentException("Interface must have a name", nameof(@interface));
-            }
+            if (@interface.Name == null) throw new ArgumentException("Interface must have a name", nameof(@interface));
 
             var interfaceName = @interface.Name;
             var ignoredInterfaceConfigurationSource = FindIgnoredInterfaceConfigurationSource(interfaceName);
             if (ignoredInterfaceConfigurationSource.HasValue)
             {
-                if (!configurationSource.Overrides(ignoredInterfaceConfigurationSource))
-                {
-                    return false;
-                }
+                if (!configurationSource.Overrides(ignoredInterfaceConfigurationSource)) return false;
 
                 UnignoreInterface(interfaceName);
             }
 
 
-            if (_interfaces.Contains(@interface))
-            {
-                return true;
-            }
+            if (_interfaces.Contains(@interface)) return true;
 
             _interfaces.Add(@interface);
             return true;
         }
 
-        public void UnignoreInterface([NotNull]string name)
+        public void UnignoreInterface(string name)
         {
             _ignoredInterfaces.Remove(name);
         }
@@ -93,10 +88,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(interfaceName, nameof(interfaceName));
             var ignoredConfigurationSource = FindIgnoredInterfaceConfigurationSource(interfaceName);
-            if (!configurationSource.Overrides(ignoredConfigurationSource))
-            {
-                return false;
-            }
+            if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
 
             if (_ignoredInterfaces.TryGetValue(interfaceName, out var existingIgnoredConfigurationSource))
             {
@@ -111,19 +103,23 @@ namespace GraphZen.TypeSystem
             return RemoveInterface(interfaceName, configurationSource);
         }
 
-        private bool RemoveInterface([NotNull] string interfaceName, ConfigurationSource configurationSource)
+        private bool RemoveInterface(string interfaceName, ConfigurationSource configurationSource)
         {
             var existing = _interfaces.SingleOrDefault(_ => _.Name == interfaceName);
-            if (existing != null && !configurationSource.Overrides(existing.GetConfigurationSource()))
+            if (existing != null)
             {
-                return false;
+                if (!configurationSource.Overrides(existing.GetConfigurationSource())) return false;
+                _interfaces.Remove(existing);
+                return true;
             }
 
-            _interfaces.Remove(existing);
-            return true;
+            return false;
         }
 
 
-        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces() => GetInterfaces();
+        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces()
+        {
+            return GetInterfaces();
+        }
     }
 }

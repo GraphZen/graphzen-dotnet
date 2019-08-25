@@ -1,8 +1,14 @@
-﻿using System;
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen
 {
@@ -10,16 +16,16 @@ namespace GraphZen
     {
         Type CollectionItemMemberType { get; }
         Type CollectionItemMemberDefinitionType { get; }
-        NamedCollection<IMutableNamed> GetCollection([NotNull] SchemaBuilder sb, [NotNull] string parentName);
-        NamedCollection<INamed> GetCollection([NotNull] Schema schema, [NotNull] string parentName);
-        void AddItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string itemName);
-        void IgnoreItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string itemName);
-        void UnignoreItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string itemName);
+        NamedCollection<IMutableNamed> GetCollection(SchemaBuilder sb, string parentName);
+        NamedCollection<INamed> GetCollection(Schema schema, string parentName);
+        void AddItem(SchemaBuilder sb, string parentName, string itemName);
+        void IgnoreItem(SchemaBuilder sb, string parentName, string itemName);
+        void UnignoreItem(SchemaBuilder sb, string parentName, string itemName);
 
-        void RenameItem([NotNull] SchemaBuilder sb, [NotNull] string parentName, [NotNull] string itemName,
-            [NotNull] string newName);
+        void RenameItem(SchemaBuilder sb, string parentName, string itemName,
+            string newName);
 
-        ConfigurationSource? FindIgnoredItemConfigurationSource([NotNull] SchemaBuilder sb, [NotNull] string parentName,
-            [NotNull] string itemName);
+        ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaBuilder sb, string parentName,
+            string itemName);
     }
 }

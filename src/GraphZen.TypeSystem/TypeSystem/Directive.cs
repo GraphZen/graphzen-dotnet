@@ -5,11 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal.Grammar;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -22,7 +26,7 @@ namespace GraphZen.TypeSystem
                  "describing additional information to the executor.")]
     public class Directive : Member, IDirective
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
+        private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
 
         public Directive(string name, string description, IReadOnlyList<DirectiveLocation> locations,
             IEnumerable<IArgumentDefinition> arguments, TypeResolver typeResolver)
@@ -45,8 +49,7 @@ namespace GraphZen.TypeSystem
             });
         }
 
-        [GraphQLIgnore]
-        public IReadOnlyDictionary<string, Argument> Arguments { get; }
+        [GraphQLIgnore] public IReadOnlyDictionary<string, Argument> Arguments { get; }
 
         public string Name { get; }
 
@@ -54,16 +57,24 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyList<DirectiveLocation> Locations { get; }
 
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
 
         [GraphQLName("args")]
-        public IEnumerable<Argument> GetArguments() => Arguments.Values;
+        public IEnumerable<Argument> GetArguments()
+        {
+            return Arguments.Values;
+        }
 
         [GraphQLIgnore]
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments() => GetArguments();
+        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments()
+        {
+            return GetArguments();
+        }
 
 
-        [NotNull]
         [GraphQLIgnore]
         public static Directive From(IDirectiveDefinition definition, TypeResolver typeResolver)
         {

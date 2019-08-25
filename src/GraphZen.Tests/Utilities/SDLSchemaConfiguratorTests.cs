@@ -1,7 +1,8 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -12,7 +13,10 @@ using GraphZen.QueryEngine;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen
 {
@@ -74,7 +78,9 @@ namespace GraphZen
         }
 
         [Fact]
-        public void SimpleType() => ShouldRoundTrip(@"
+        public void SimpleType()
+        {
+            ShouldRoundTrip(@"
           type Query {
             str: String
             int: Int
@@ -83,18 +89,23 @@ namespace GraphZen
             bool: Boolean
           }
         ");
+        }
 
         [Fact]
-        public void WithDirectives() => ShouldRoundTrip(@"
+        public void WithDirectives()
+        {
+            ShouldRoundTrip(@"
           directive @foo(arg: Int) on FIELD
 
           type Query {
             str: String
           }
         ");
+        }
 
         [Fact]
-        public void SupportsDescriptions() =>
+        public void SupportsDescriptions()
+        {
             ShouldRoundTrip(@"
               directive @foo(
                 """"""
@@ -122,6 +133,7 @@ namespace GraphZen
                 str: String
               }
             ");
+        }
 
         [Fact]
         public void MaintainsSpecDirectives()
@@ -175,7 +187,9 @@ namespace GraphZen
         }
 
         [Fact]
-        public void TypeModifiers() => ShouldRoundTrip(@"
+        public void TypeModifiers()
+        {
+            ShouldRoundTrip(@"
           type Query {
             nonNullStr: String!
             listOfStrs: [String]
@@ -184,17 +198,23 @@ namespace GraphZen
             nonNullListOfNonNullStrs: [String!]!
           }
         ");
+        }
 
         [Fact]
-        public void RecursiveType() => ShouldRoundTrip(@"
+        public void RecursiveType()
+        {
+            ShouldRoundTrip(@"
           type Query {
             str: String
             recurse: Query
           }
         ");
+        }
 
         [Fact]
-        public void TwoTypesCircular() => ShouldRoundTrip(@"
+        public void TwoTypesCircular()
+        {
+            ShouldRoundTrip(@"
           schema {
             query: TypeOne
           }
@@ -209,9 +229,12 @@ namespace GraphZen
             typeOne: TypeOne
           }
         ");
+        }
 
         [Fact]
-        public void SingleArgumentField() => ShouldRoundTrip(@"
+        public void SingleArgumentField()
+        {
+            ShouldRoundTrip(@"
           type Query {
             str(int: Int): String
             floatToStr(float: Float): String
@@ -220,16 +243,22 @@ namespace GraphZen
             strToStr(bool: String): String
           }
         ");
+        }
 
         [Fact]
-        public void SimpleTypeWithMultipleArguments() => ShouldRoundTrip(@"
+        public void SimpleTypeWithMultipleArguments()
+        {
+            ShouldRoundTrip(@"
           type Query {
             str(int: Int, bool: Boolean): String
           }
         ");
+        }
 
         [Fact]
-        public void SimpleTypeWithInterface() => ShouldRoundTrip(@"
+        public void SimpleTypeWithInterface()
+        {
+            ShouldRoundTrip(@"
           type Query implements WorldInterface {
             str: String
           }
@@ -238,9 +267,12 @@ namespace GraphZen
             str: String
           }
         ");
+        }
 
         [Fact]
-        public void SimpleOutputEnum() => ShouldRoundTrip(@"
+        public void SimpleOutputEnum()
+        {
+            ShouldRoundTrip(@"
           enum Hello {
             WORLD
           }
@@ -249,9 +281,12 @@ namespace GraphZen
             hello: Hello
           }
         ");
+        }
 
         [Fact]
-        public void SimpleInputEnum() => ShouldRoundTrip(@"
+        public void SimpleInputEnum()
+        {
+            ShouldRoundTrip(@"
           enum Hello {
             WORLD
           }
@@ -260,9 +295,12 @@ namespace GraphZen
             str(hello: Hello): String
           }
         ");
+        }
 
         [Fact]
-        public void MultipleValueEnum() => ShouldRoundTrip(@"
+        public void MultipleValueEnum()
+        {
+            ShouldRoundTrip(@"
           enum Hello {
             WO
             RLD
@@ -272,9 +310,12 @@ namespace GraphZen
             hello: Hello
           }
         ");
+        }
 
         [Fact]
-        public void SimpleUnion() => ShouldRoundTrip(@"
+        public void SimpleUnion()
+        {
+            ShouldRoundTrip(@"
           union Hello = World
 
           type Query {
@@ -285,9 +326,12 @@ namespace GraphZen
             str: String
           }
       ");
+        }
 
         [Fact]
-        public void MultipleUnion() => ShouldRoundTrip(@"
+        public void MultipleUnion()
+        {
+            ShouldRoundTrip(@"
           union Hello = WorldOne | WorldTwo
 
           type Query {
@@ -302,6 +346,7 @@ namespace GraphZen
             str: String
           }
         ");
+        }
 
         [Fact(Skip = "needs schema validator")]
         public void CanBuildRecursiveUnion()
@@ -451,16 +496,21 @@ namespace GraphZen
         }
 
         [Fact]
-        public void CustomScalar() => ShouldRoundTrip(@"
+        public void CustomScalar()
+        {
+            ShouldRoundTrip(@"
           scalar CustomScalar
 
           type Query {
             customScalar: CustomScalar
           }
         ");
+        }
 
         [Fact]
-        public void InputObject() => ShouldRoundTrip(@"
+        public void InputObject()
+        {
+            ShouldRoundTrip(@"
           input Input {
             int: Int
           }
@@ -469,25 +519,34 @@ namespace GraphZen
             field(in: Input): String
           }
         ");
+        }
 
         [Fact(Skip = "TODO")]
-        public void SimpleArgumentFieldWithDefault() => ShouldRoundTrip(@"
+        public void SimpleArgumentFieldWithDefault()
+        {
+            ShouldRoundTrip(@"
           type Query {
             str(int: Int = 2): String
           }
         ");
+        }
 
         [Fact(Skip = "TODO")]
-        public void CustomScalarArgumentWithDefault() => ShouldRoundTrip(@"
+        public void CustomScalarArgumentWithDefault()
+        {
+            ShouldRoundTrip(@"
           scalar CustomScalar
 
           type Query {
             str(int: CustomScalar = 2): String
           }
         ");
+        }
 
         [Fact]
-        public void SimpleTypeWithMutation() => ShouldRoundTrip(@"
+        public void SimpleTypeWithMutation()
+        {
+            ShouldRoundTrip(@"
           schema {
             query: HelloScalars
             mutation: Mutation
@@ -503,6 +562,7 @@ namespace GraphZen
             addHelloScalars(str: String, int: Int, bool: Boolean): HelloScalars
           }
         ");
+        }
 
         [Fact]
         public void SimpleTypeWithSubscription()
@@ -526,7 +586,9 @@ namespace GraphZen
         }
 
         [Fact]
-        public void UnreferencedTypeImplementingReferencedInterface() => ShouldRoundTrip(@"
+        public void UnreferencedTypeImplementingReferencedInterface()
+        {
+            ShouldRoundTrip(@"
           type Concrete implements Iface {
             key: String
           }
@@ -539,9 +601,12 @@ namespace GraphZen
             iface: Iface
           }
         ");
+        }
 
         [Fact]
-        public void UnreferencedTypeImplementingReferencedUnion() => ShouldRoundTrip(@"
+        public void UnreferencedTypeImplementingReferencedUnion()
+        {
+            ShouldRoundTrip(@"
           type Concrete {
             key: String
           }
@@ -552,6 +617,7 @@ namespace GraphZen
 
           union Union = Concrete
         ");
+        }
 
         [Fact(Skip = "TODO")]
         public void SupportsDeprecated()
@@ -663,6 +729,7 @@ namespace GraphZen
             testEnum.FindValue("TEST_VALUE").Print().Should().Be("TEST_VALUE");
             testInterface.Fields["interfaceField"].Print().Should().Be("interfaceField: String");
             testType.Fields["interfaceField"].Print().Should().Be("interfaceField: String");
+            // ReSharper disable once PossibleNullReferenceException
             testDirective.GetArguments().First().Print().Should().Be("arg: TestScalar");
         }
 

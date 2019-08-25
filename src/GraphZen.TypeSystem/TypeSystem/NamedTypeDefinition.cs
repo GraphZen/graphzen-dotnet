@@ -3,11 +3,13 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -17,7 +19,7 @@ namespace GraphZen.TypeSystem
         private ConfigurationSource _nameConfigurationSource;
         private ConfigurationSource _clrTypeConfiguraitonSource = ConfigurationSource.Convention;
 
-        protected NamedTypeDefinition([NotNull] TypeIdentity identity, [NotNull] SchemaDefinition schema,
+        protected NamedTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(configurationSource)
         {
             Identity = identity;
@@ -26,13 +28,9 @@ namespace GraphZen.TypeSystem
             {
                 if (identity.ClrType.TryGetGraphQLNameFromDataAnnotation(out var customName) &&
                     customName == identity.Name)
-                {
                     _nameConfigurationSource = ConfigurationSource.DataAnnotation;
-                }
                 else
-                {
                     _nameConfigurationSource = ConfigurationSource.Convention;
-                }
             }
             else
             {
@@ -40,10 +38,10 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        [NotNull]
+
         public TypeIdentity Identity { get; }
 
-        [NotNull]
+
         public SchemaDefinition Schema { get; }
 
 
@@ -53,12 +51,9 @@ namespace GraphZen.TypeSystem
 
         public string Name => Identity.Name;
 
-        public bool SetName([CanBeNull] string name, ConfigurationSource configurationSource)
+        public bool SetName(string name, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(_nameConfigurationSource))
-            {
-                return false;
-            }
+            if (!configurationSource.Overrides(_nameConfigurationSource)) return false;
 
             _nameConfigurationSource = configurationSource;
             // ReSharper disable once AssignNullToNotNullAttribute
@@ -66,29 +61,36 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
+        public ConfigurationSource GetNameConfigurationSource()
+        {
+            return _nameConfigurationSource;
+        }
 
         public Type ClrType => Identity.ClrType;
 
         public virtual bool SetClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(_clrTypeConfiguraitonSource))
-            {
-                return false;
-
-            }
+            if (!configurationSource.Overrides(_clrTypeConfiguraitonSource)) return false;
             _clrTypeConfiguraitonSource = configurationSource;
             Identity.ClrType = clrType;
             return true;
         }
 
-        public ConfigurationSource GetClrTypeConfigurationSource() => _clrTypeConfiguraitonSource;
+        public ConfigurationSource GetClrTypeConfigurationSource()
+        {
+            return _clrTypeConfiguraitonSource;
+        }
 
-        [NotNull]
-        public TypeReference GetTypeReference() =>
-            new TypeReference(Identity,
+
+        public TypeReference GetTypeReference()
+        {
+            return new TypeReference(Identity,
                 ClrType != null ? SyntaxFactory.NamedType(ClrType) : SyntaxFactory.NamedType(SyntaxFactory.Name(Name)));
+        }
 
-        public override string ToString() => $"{Kind} {Name}";
+        public override string ToString()
+        {
+            return $"{Kind} {Name}";
+        }
     }
 }

@@ -1,11 +1,15 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Variables
 {
@@ -66,10 +70,7 @@ namespace GraphZen.QueryEngine.Variables
                         {
                             f.Argument("input", field.inputArgType, arg =>
                                 {
-                                    if (field.defaultValue != null)
-                                    {
-                                        arg.DefaultValue(field.defaultValue);
-                                    }
+                                    if (field.defaultValue != null) arg.DefaultValue(field.defaultValue);
                                 })
                                 .Resolve((source, args) =>
                                     args.ContainsKey("input")

@@ -1,9 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.StarWars
 {
@@ -11,8 +15,9 @@ namespace GraphZen.StarWars
     public class StarWarsIntrospectionTest : StarWarsSchemaAndData
     {
         [Fact]
-        public Task AllowsQueryingTheSchemaForTypes() =>
-            ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForTypes()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
 
                 query IntrospectionTypeQuery {
                   __schema {
@@ -55,9 +60,12 @@ namespace GraphZen.StarWars
             {
                 SortBeforeCompare = true
             });
+        }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForTheQueryType() => ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForTheQueryType()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             
             query IntrospectionQueryTypeQuery {
               __schema {
@@ -68,21 +76,24 @@ namespace GraphZen.StarWars
             }
         
         ").ShouldEqual(new
-        {
-            data = new
             {
-                __schema = new
+                data = new
                 {
-                    queryType = new
+                    __schema = new
                     {
-                        name = "Query"
+                        queryType = new
+                        {
+                            name = "Query"
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForASpecificType() => ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForASpecificType()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             
         query IntrospectionDroidTypeQuery {
           __type(name: ""Droid"") {
@@ -91,18 +102,21 @@ namespace GraphZen.StarWars
         }
         
         ").ShouldEqual(new
-        {
-            data = new
             {
-                __type = new
+                data = new
                 {
-                    name = "Droid"
+                    __type = new
+                    {
+                        name = "Droid"
+                    }
                 }
-            }
-        });
+            });
+        }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForAnObjectKind() => ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForAnObjectKind()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             
         query IntrospectionDroidKindQuery {
           __type(name: ""Droid"") {
@@ -112,19 +126,22 @@ namespace GraphZen.StarWars
         }
         
         ").ShouldEqual(new
-        {
-            data = new
             {
-                __type = new
+                data = new
                 {
-                    name = "Droid",
-                    kind = "OBJECT"
+                    __type = new
+                    {
+                        name = "Droid",
+                        kind = "OBJECT"
+                    }
                 }
-            }
-        });
+            });
+        }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForAnInterfaceKind() => ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForAnInterfaceKind()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             
         query IntrospectionCharacterKindQuery {
           __type(name: ""Character"") {
@@ -134,19 +151,22 @@ namespace GraphZen.StarWars
         }
         
         ").ShouldEqual(new
-        {
-            data = new
             {
-                __type = new
+                data = new
                 {
-                    name = "Character",
-                    kind = "INTERFACE"
+                    __type = new
+                    {
+                        name = "Character",
+                        kind = "INTERFACE"
+                    }
                 }
-            }
-        });
+            });
+        }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForObjectFields() => ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForObjectFields()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             
         query IntrospectionDroidFieldsQuery {
           __type(name: ""Droid"") {
@@ -162,76 +182,79 @@ namespace GraphZen.StarWars
         }
         
         ").ShouldEqual(new
-        {
-            data = new
             {
-                __type = new
+                data = new
                 {
-                    name = "Droid",
-                    fields = new object[]
+                    __type = new
                     {
-                        new
+                        name = "Droid",
+                        fields = new object[]
                         {
-                            name = "id",
-                            type = new
+                            new
                             {
-                                name = (string) null,
-                                kind = "NON_NULL"
-                            }
-                        },
-                        new
-                        {
-                            name = "name",
-                            type = new
+                                name = "id",
+                                type = new
+                                {
+                                    name = (string) null,
+                                    kind = "NON_NULL"
+                                }
+                            },
+                            new
                             {
-                                name = "String",
-                                kind = "SCALAR"
-                            }
-                        },
-                        new
-                        {
-                            name = "friends",
-                            type = new
+                                name = "name",
+                                type = new
+                                {
+                                    name = "String",
+                                    kind = "SCALAR"
+                                }
+                            },
+                            new
                             {
-                                name = (string) null,
-                                kind = "LIST"
-                            }
-                        },
-                        new
-                        {
-                            name = "appearsIn",
-                            type = new
+                                name = "friends",
+                                type = new
+                                {
+                                    name = (string) null,
+                                    kind = "LIST"
+                                }
+                            },
+                            new
                             {
-                                name = (string) null,
-                                kind = "LIST"
-                            }
-                        },
+                                name = "appearsIn",
+                                type = new
+                                {
+                                    name = (string) null,
+                                    kind = "LIST"
+                                }
+                            },
 
-                        new
-                        {
-                            name = "secretBackstory",
-                            type = new
+                            new
                             {
-                                name = "String",
-                                kind = "SCALAR"
-                            }
-                        },
-                        new
-                        {
-                            name = "primaryFunction",
-                            type = new
+                                name = "secretBackstory",
+                                type = new
+                                {
+                                    name = "String",
+                                    kind = "SCALAR"
+                                }
+                            },
+                            new
                             {
-                                name = "String",
-                                kind = "SCALAR"
+                                name = "primaryFunction",
+                                type = new
+                                {
+                                    name = "String",
+                                    kind = "SCALAR"
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForNestedObjectFields() => ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForNestedObjectFields()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
             
         query IntrospectionDroidNestedFieldsQuery {
           __type(name: ""Droid"") {
@@ -251,94 +274,97 @@ namespace GraphZen.StarWars
         } 
         
         ").ShouldEqual(new
-        {
-            data = new
             {
-                __type = new
+                data = new
                 {
-                    name = "Droid",
-                    fields = new object[]
+                    __type = new
                     {
-                        new
+                        name = "Droid",
+                        fields = new object[]
                         {
-                            name = "id",
-                            type = new
+                            new
                             {
-                                name = (string) null,
-                                kind = "NON_NULL",
-                                ofType = new
+                                name = "id",
+                                type = new
+                                {
+                                    name = (string) null,
+                                    kind = "NON_NULL",
+                                    ofType = new
+                                    {
+                                        name = "String",
+                                        kind = "SCALAR"
+                                    }
+                                }
+                            },
+                            new
+                            {
+                                name = "name",
+                                type = new
                                 {
                                     name = "String",
-                                    kind = "SCALAR"
+                                    kind = "SCALAR",
+                                    ofType = (object) null
                                 }
-                            }
-                        },
-                        new
-                        {
-                            name = "name",
-                            type = new
+                            },
+                            new
                             {
-                                name = "String",
-                                kind = "SCALAR",
-                                ofType = (object) null
-                            }
-                        },
-                        new
-                        {
-                            name = "friends",
-                            type = new
-                            {
-                                name = (string) null,
-                                kind = "LIST",
-                                ofType = new
+                                name = "friends",
+                                type = new
                                 {
-                                    name = "Character",
-                                    kind = "INTERFACE"
+                                    name = (string) null,
+                                    kind = "LIST",
+                                    ofType = new
+                                    {
+                                        name = "Character",
+                                        kind = "INTERFACE"
+                                    }
                                 }
-                            }
-                        },
-                        new
-                        {
-                            name = "appearsIn",
-                            type = new
+                            },
+                            new
                             {
-                                name = (string) null,
-                                kind = "LIST",
-                                ofType = new
+                                name = "appearsIn",
+                                type = new
                                 {
-                                    name = "Episode",
-                                    kind = "ENUM"
+                                    name = (string) null,
+                                    kind = "LIST",
+                                    ofType = new
+                                    {
+                                        name = "Episode",
+                                        kind = "ENUM"
+                                    }
                                 }
-                            }
-                        },
+                            },
 
-                        new
-                        {
-                            name = "secretBackstory",
-                            type = new
+                            new
                             {
-                                name = "String",
-                                kind = "SCALAR",
-                                ofType = (object) null
-                            }
-                        },
-                        new
-                        {
-                            name = "primaryFunction",
-                            type = new
+                                name = "secretBackstory",
+                                type = new
+                                {
+                                    name = "String",
+                                    kind = "SCALAR",
+                                    ofType = (object) null
+                                }
+                            },
+                            new
                             {
-                                name = "String",
-                                kind = "SCALAR",
-                                ofType = (object) null
+                                name = "primaryFunction",
+                                type = new
+                                {
+                                    name = "String",
+                                    kind = "SCALAR",
+                                    ofType = (object) null
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
 
         [Fact]
-        public Task AllowsQueryingSchemaForFieldArgs() => ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingSchemaForFieldArgs()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
 
         query IntrospectionQueryTypeQuery {
           __schema {
@@ -362,92 +388,95 @@ namespace GraphZen.StarWars
             }
           }
         }", throwOnError: true).ShouldEqual(new
-        {
-            data = new
             {
-                __schema = new
+                data = new
                 {
-                    queryType = new
+                    __schema = new
                     {
-                        fields = new object[]
+                        queryType = new
                         {
-                            new
+                            fields = new object[]
                             {
-                                name = "hero",
-                                args = new object[]
+                                new
                                 {
-                                    new
+                                    name = "hero",
+                                    args = new object[]
                                     {
-                                        description =
-                                            "If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.",
-                                        name = "episode",
-                                        type = new
+                                        new
                                         {
-                                            kind = "ENUM",
-                                            name = "Episode",
-                                            ofType = (object) null
-                                        },
-                                        defaultValue = (object) null
-                                    }
-                                }
-                            },
-                            new
-                            {
-                                name = "human",
-                                args = new object[]
-                                {
-                                    new
-                                    {
-                                        name = "id",
-                                        description = "id of the human",
-                                        type = new
-                                        {
-                                            kind = "NON_NULL",
-                                            name = (string) null,
-                                            ofType = new
+                                            description =
+                                                "If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.",
+                                            name = "episode",
+                                            type = new
                                             {
-                                                kind = "SCALAR",
-                                                name = "String"
-                                            }
-                                        },
-                                        defaultValue = (object) null
+                                                kind = "ENUM",
+                                                name = "Episode",
+                                                ofType = (object) null
+                                            },
+                                            defaultValue = (object) null
+                                        }
                                     }
-                                }
-                            },
-                            new
-                            {
-                                name = "droid",
-                                args = new object[]
+                                },
+                                new
                                 {
-                                    new
+                                    name = "human",
+                                    args = new object[]
                                     {
-                                        name = "id",
-                                        description = "id of the droid",
-                                        type = new
+                                        new
                                         {
-                                            kind = "NON_NULL",
-                                            name = (string) null,
-                                            ofType = new
+                                            name = "id",
+                                            description = "id of the human",
+                                            type = new
                                             {
-                                                kind = "SCALAR",
-                                                name = "String"
-                                            }
-                                        },
-                                        defaultValue = (object) null
+                                                kind = "NON_NULL",
+                                                name = (string) null,
+                                                ofType = new
+                                                {
+                                                    kind = "SCALAR",
+                                                    name = "String"
+                                                }
+                                            },
+                                            defaultValue = (object) null
+                                        }
+                                    }
+                                },
+                                new
+                                {
+                                    name = "droid",
+                                    args = new object[]
+                                    {
+                                        new
+                                        {
+                                            name = "id",
+                                            description = "id of the droid",
+                                            type = new
+                                            {
+                                                kind = "NON_NULL",
+                                                name = (string) null,
+                                                ofType = new
+                                                {
+                                                    kind = "SCALAR",
+                                                    name = "String"
+                                                }
+                                            },
+                                            defaultValue = (object) null
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-        }, new ResultComparisonOptions
-        {
-            SortBeforeCompare = true
-        });
+            }, new ResultComparisonOptions
+            {
+                SortBeforeCompare = true
+            });
+        }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForDocumentation() => ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForDocumentation()
+        {
+            return ExecuteAsync(StarWarsSchema, @"
 
         query IntrospectionDroidDescriptionQuery {
           __type(name: ""Droid"") {
@@ -457,15 +486,16 @@ namespace GraphZen.StarWars
         }
 
 ").ShouldEqual(new
-        {
-            data = new
             {
-                __type = new
+                data = new
                 {
-                    name = "Droid",
-                    description = "A mechanical creature in the Star Wars universe."
+                    __type = new
+                    {
+                        name = "Droid",
+                        description = "A mechanical creature in the Star Wars universe."
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

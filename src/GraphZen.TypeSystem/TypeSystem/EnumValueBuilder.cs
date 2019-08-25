@@ -1,9 +1,12 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
+#nullable disable
 namespace GraphZen.TypeSystem
 {
     public class EnumValueBuilder : IInfrastructure<InternalEnumValueBuilder>, IEnumValueBuilder
@@ -14,7 +17,7 @@ namespace GraphZen.TypeSystem
             Builder = builder;
         }
 
-        [NotNull]
+
         private InternalEnumValueBuilder Builder { get; }
 
         public IEnumValueBuilder CustomValue(object value)
@@ -41,7 +44,10 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumValueBuilder DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
+        public IEnumValueBuilder DirectiveAnnotation(string name)
+        {
+            return DirectiveAnnotation(name, null);
+        }
 
         public IEnumValueBuilder DirectiveAnnotation(string name, object value)
         {

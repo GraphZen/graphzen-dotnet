@@ -3,9 +3,14 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -25,8 +30,8 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Schema operation types.
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
+
+
         public IReadOnlyList<OperationTypeDefinitionSyntax> RootOperationTypes { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
@@ -37,28 +42,27 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] SchemaDefinitionSyntax other) =>
-            RootOperationTypes.SequenceEqual(other.RootOperationTypes) && Directives.SequenceEqual(other.Directives);
+        private bool Equals(SchemaDefinitionSyntax other)
+        {
+            return RootOperationTypes.SequenceEqual(other.RootOperationTypes) &&
+                   Directives.SequenceEqual(other.Directives);
+        }
 
-        public SchemaDefinitionSyntax WithRootOperation(OperationTypeDefinitionSyntax definition) =>
-            new SchemaDefinitionSyntax(RootOperationTypes.ToReadOnlyListWithMutations(_ =>
+        public SchemaDefinitionSyntax WithRootOperation(OperationTypeDefinitionSyntax definition)
+        {
+            return new SchemaDefinitionSyntax(RootOperationTypes.ToReadOnlyListWithMutations(_ =>
                 {
                     Debug.Assert(_ != null, nameof(_) + " != null");
                     _.Add(definition);
                 }),
                 Directives);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is SchemaDefinitionSyntax && Equals((SchemaDefinitionSyntax)obj);
         }

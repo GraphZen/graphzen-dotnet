@@ -1,9 +1,11 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -11,26 +13,24 @@ namespace GraphZen.TypeSystem
         IScalarTypeBuilder<TScalar, out TValueNode> : IAnnotableBuilder<IScalarTypeBuilder<TScalar, TValueNode>>
         where TValueNode : ValueSyntax
     {
-
-        [NotNull]
         IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType);
 
-        [NotNull]
+
         IScalarTypeBuilder<T, TValueNode> ClrType<T>();
 
-        [NotNull]
-        IScalarTypeBuilder<TScalar, TValueNode> Description([CanBeNull] string description);
 
-        [NotNull]
+        IScalarTypeBuilder<TScalar, TValueNode> Description(string description);
+
+
         IScalarTypeBuilder<TScalar, TValueNode> Serializer(LeafSerializer serializer);
 
-        [NotNull]
+
         IScalarTypeBuilder<TScalar, TValueNode> LiteralParser(LeafLiteralParser<object, TValueNode> literalParser);
 
-        [NotNull]
+
         IScalarTypeBuilder<TScalar, TValueNode> ValueParser(LeafValueParser<object> valueParser);
 
-        [NotNull]
+
         IScalarTypeBuilder<TScalar, TValueNode> Name(string name);
     }
 }

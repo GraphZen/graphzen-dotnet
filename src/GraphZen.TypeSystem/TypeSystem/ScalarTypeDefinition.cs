@@ -1,11 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -32,18 +34,17 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"scalar {Name}";
 
 
-        [NotNull]
         public InternalScalarTypeBuilder Builder { get; }
 
-        [CanBeNull]
-        public ScalarType Source { get; }
+
+        public ScalarType? Source { get; }
 
 
-        public LeafSerializer<object> Serializer { get; set; }
+        public LeafSerializer<object>? Serializer { get; set; }
 
-        public LeafLiteralParser<object, ValueSyntax> LiteralParser { get; set; }
+        public LeafLiteralParser<object, ValueSyntax>? LiteralParser { get; set; }
 
-        public LeafValueParser<object> ValueParser { get; set; }
+        public LeafValueParser<object>? ValueParser { get; set; }
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Scalar;
 
         public override TypeKind Kind { get; } = TypeKind.Scalar;

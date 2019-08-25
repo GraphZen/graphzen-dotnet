@@ -2,8 +2,13 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -22,32 +27,36 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The set of data requested by an operation.
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
+
+
         public IReadOnlyList<SelectionSyntax> Selections { get; }
 
         public override IEnumerable<SyntaxNode> Children => Selections;
 
         public int Count => Selections.Count;
 
-        public IEnumerator<SelectionSyntax> GetEnumerator() => Selections.GetEnumerator();
-        private bool Equals([NotNull] SelectionSetSyntax other) => Selections.SequenceEqual(other.Selections);
+        public IEnumerator<SelectionSyntax> GetEnumerator()
+        {
+            return Selections.GetEnumerator();
+        }
+
+        private bool Equals(SelectionSetSyntax other)
+        {
+            return Selections.SequenceEqual(other.Selections);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is SelectionSetSyntax && Equals((SelectionSetSyntax)obj);
         }
 
-        public override int GetHashCode() => Selections.GetHashCode();
+        public override int GetHashCode()
+        {
+            return Selections.GetHashCode();
+        }
     }
 }

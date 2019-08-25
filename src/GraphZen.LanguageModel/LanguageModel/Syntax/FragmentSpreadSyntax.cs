@@ -3,9 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -21,9 +26,7 @@ namespace GraphZen.LanguageModel
         {
             Name = Check.NotNull(name, nameof(name));
             if (Name.Value.Equals("on", StringComparison.CurrentCultureIgnoreCase))
-            {
                 throw new ArgumentException("Fragment spreads cannot use the name 'on'.");
-            }
 
             Directives = directives ?? DirectiveSyntax.EmptyList;
         }
@@ -31,7 +34,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name of the fragment.
         /// </summary>
-        [NotNull]
+
         public NameSyntax Name { get; }
 
         /// <summary>
@@ -44,20 +47,16 @@ namespace GraphZen.LanguageModel
             Name.ToEnumerable().Concat(Directives);
 
 
-        private bool Equals([NotNull] FragmentSpreadSyntax other) =>
-            Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
+        private bool Equals(FragmentSpreadSyntax other)
+        {
+            return Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is FragmentSpreadSyntax && Equals((FragmentSpreadSyntax)obj);
         }

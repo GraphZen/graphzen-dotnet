@@ -1,4 +1,4 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.Internal
 {
@@ -27,26 +30,37 @@ namespace GraphZen.Internal
                 .Be(("customAllTheWay", ConfigurationSource.DataAnnotation));
         }
 
-        private PropertyInfo SelectFoo<T>(Expression<Func<Foo, T>> expr) => expr.GetPropertyInfoFromExpression();
+        private PropertyInfo SelectFoo<T>(Expression<Func<Foo, T>> expr)
+        {
+            return expr.GetPropertyInfoFromExpression();
+        }
 
         [SuppressMessage("ReSharper", "UnusedMember.Local")]
         [SuppressMessage("ReSharper", "UnassignedGetOnlyAutoProperty")]
         private class Foo
         {
-            [GraphQLName("customAllTheWay")]
-            public string CustomProperty { get; }
+            [GraphQLName("customAllTheWay")] public string CustomProperty { get; }
 
             public string Property { get; }
 
-            public bool Method() => true;
+            public bool Method()
+            {
+                return true;
+            }
 
             public void VoidMethod()
             {
             }
 
-            public Task MethodAsync() => Task.CompletedTask;
+            public Task MethodAsync()
+            {
+                return Task.CompletedTask;
+            }
 
-            public Task<string> StringMethodAsync() => Task.FromResult("hello world");
+            public Task<string> StringMethodAsync()
+            {
+                return Task.FromResult("hello world");
+            }
         }
     }
 }

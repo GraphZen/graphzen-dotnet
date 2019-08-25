@@ -1,7 +1,12 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen
 {
@@ -194,7 +199,9 @@ namespace GraphZen
       }
     }";
 
-        public static string IntrospectionQuery(bool descriptions = true) =>
-            descriptions ? WithDescriptions : WithoutDescriptions;
+        public static string IntrospectionQuery(bool descriptions = true)
+        {
+            return descriptions ? WithDescriptions : WithoutDescriptions;
+        }
     }
 }

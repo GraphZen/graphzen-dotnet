@@ -1,37 +1,36 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     public class TypeReference : INamedTypeReference
     {
-        public TypeReference([NotNull] TypeIdentity identity, [NotNull] TypeSyntax typeSyntax)
+        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax)
         {
             Identity = Check.NotNull(identity, nameof(identity));
             TypeSyntax = Check.NotNull(typeSyntax, nameof(typeSyntax));
 
-            if (identity.ClrType == typeof(IEnumTypeDefinition))
-            {
-                throw new Exception("hullo");
-            }
+            if (identity.ClrType == typeof(IEnumTypeDefinition)) throw new Exception("hullo");
         }
 
-        [NotNull]
+
         public TypeIdentity Identity { get; }
 
-        [NotNull]
+
         public TypeSyntax TypeSyntax { get; }
 
         public string Name => Identity.Name;
 
-        [NotNull]
+
         public IGraphQLType ToType(Schema schema)
         {
             IGraphQLType GetType(TypeSyntax node)
@@ -44,10 +43,7 @@ namespace GraphZen.TypeSystem
                         return NonNullType.Of((INullableType)GetType(nn.OfType));
                     case NamedTypeSyntax _:
                         var nameMatch = schema.FindType(Identity.Name);
-                        if (nameMatch != null)
-                        {
-                            return nameMatch;
-                        }
+                        if (nameMatch != null) return nameMatch;
 
                         if (Identity.ClrType != null)
                         {
@@ -59,16 +55,11 @@ namespace GraphZen.TypeSystem
                                 })
                                 .Where(_ => _.ClrType.IsAssignableFrom(Identity.ClrType)).ToArray();
 
-                            if (typeMatches.Length == 1)
-                            {
-                                return typeMatches[0];
-                            }
+                            if (typeMatches.Length == 1) return typeMatches[0];
 
                             if (typeMatches.Length > 1)
-                            {
                                 throw new Exception(
                                     $"More than one type in the schema matched type reference  \"{Identity.Name}\" with CLR type {Identity.ClrType}");
-                            }
 
                             throw new Exception(
                                 $"Unable to find output type for type reference named \"{Identity.Name}\" with CLR type {Identity.ClrType}");
@@ -85,6 +76,9 @@ namespace GraphZen.TypeSystem
             return GetType(TypeSyntax);
         }
 
-        public override string ToString() => "Reference:" + Name;
+        public override string ToString()
+        {
+            return "Reference:" + Name;
+        }
     }
 }

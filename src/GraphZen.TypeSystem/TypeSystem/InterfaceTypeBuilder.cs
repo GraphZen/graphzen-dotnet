@@ -1,10 +1,12 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -16,7 +18,7 @@ namespace GraphZen.TypeSystem
             Builder = Check.NotNull(builder, nameof(builder));
         }
 
-        [NotNull]
+
         private InternalInterfaceTypeBuilder Builder { get; }
 
 
@@ -44,52 +46,54 @@ namespace GraphZen.TypeSystem
 
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name,
-            Action<IFieldBuilder<TInterface, object, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TInterface, object, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
-            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit);
+            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
             // ReSharper disable once AssignNullToNotNullAttribute
             fieldConfigurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
             return this;
         }
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name, string type,
-            Action<IFieldBuilder<TInterface, object, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TInterface, object, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
-            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit).FieldType(type);
+            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
             fieldConfigurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
             return this;
         }
 
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(string name,
-            Action<IFieldBuilder<TInterface, TField, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TInterface, TField, TContext>>? fieldConfigurator = null)
         {
             Check.NotNull(name, nameof(name));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
-            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)
-                .FieldType(typeof(TField));
+            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?
+                .FieldType(typeof(TField))!;
             fieldConfigurator?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
             return this;
         }
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(
             Expression<Func<TInterface, TField>> fieldSelector,
-            Action<IFieldBuilder<TInterface, TField, TContext>> fieldBuilder = null)
+            Action<IFieldBuilder<TInterface, TField, TContext>>? fieldBuilder = null)
         {
             Check.NotNull(fieldSelector, nameof(fieldSelector));
-            Check.NotNull(fieldBuilder, nameof(fieldBuilder));
             var fieldProp = fieldSelector.GetPropertyInfoFromExpression();
-            var fb = Builder.Field(fieldProp, ConfigurationSource.Explicit);
-            // ReSharper disable once AssignNullToNotNullAttribute
-            fieldBuilder(new FieldBuilder<TInterface, TField, TContext>(fb));
+            var fb = Builder.Field(fieldProp, ConfigurationSource.Explicit)!;
+            fieldBuilder?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
             return this;
         }
 
-        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField<TField>(Expression<Func<TInterface, TField>> fieldSelector) => throw new NotImplementedException();
+        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField<TField>(
+            Expression<Func<TInterface, TField>> fieldSelector)
+        {
+            throw new NotImplementedException();
+        }
 
         public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField(string name)
         {
@@ -122,11 +126,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
+        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name)
+        {
+            return DirectiveAnnotation(name, null);
+        }
 
 
-        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name, object value)
+        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;

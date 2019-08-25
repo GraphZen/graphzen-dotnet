@@ -1,12 +1,16 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
+#nullable disable
+
 
 // ReSharper disable UnusedMember.Local
 // ReSharper disable UnassignedGetOnlyAutoProperty
@@ -26,12 +30,15 @@ namespace GraphZen.QueryEngine.Variables
 
         public static Schema SchemaBuilderSchema => GraphQLContext.Schema;
 
-        [NotNull]
+
         public static VariablesTestsGraphQLContext GraphQLContext => new VariablesTestsGraphQLContext();
 
-        public static object[] Array(params object[] values) => values;
+        public static object[] Array(params object[] values)
+        {
+            return values;
+        }
 
-        [NotNull]
+
         protected Task<ExecutionResult> ExecuteAsync(string gql, dynamic variableValues = null)
         {
             var varValues = variableValues != null

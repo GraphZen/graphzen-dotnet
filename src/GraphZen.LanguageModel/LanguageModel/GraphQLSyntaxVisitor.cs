@@ -1,7 +1,12 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -22,10 +27,19 @@ namespace GraphZen.LanguageModel
 
     public abstract partial class GraphQLSyntaxVisitor<TResult>
     {
-        public virtual TResult Visit(SyntaxNode node) => default;
+        public virtual TResult Visit(SyntaxNode node)
+        {
+            return default;
+        }
 
-        public virtual TResult OnEnter(SyntaxNode node) => default;
+        public virtual TResult OnEnter(SyntaxNode node)
+        {
+            return default;
+        }
 
-        public virtual TResult OnLeave(SyntaxNode node) => default;
+        public virtual TResult OnLeave(SyntaxNode node)
+        {
+            return default;
+        }
     }
 }

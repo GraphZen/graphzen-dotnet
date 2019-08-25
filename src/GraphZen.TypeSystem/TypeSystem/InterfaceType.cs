@@ -3,19 +3,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {
     public class InterfaceType : NamedType, IInterfaceType
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
-        [NotNull] [ItemNotNull] private readonly Lazy<InterfaceTypeDefinitionSyntax> _syntax;
+        private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
+        private readonly Lazy<InterfaceTypeDefinitionSyntax> _syntax;
 
         public InterfaceType(string name, string description, Type clrType,
-            [NotNull] [ItemNotNull] IEnumerable<IFieldDefinition> fields,
+            IEnumerable<IFieldDefinition> fields,
             TypeResolver<object, GraphQLContext> resolveType,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(
             Check.NotNull(name, nameof(name)), description, clrType, Check.NotNull(directives, nameof(directives)))
@@ -39,19 +43,28 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Interface;
 
-        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => Fields.Values;
+        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields()
+        {
+            return Fields.Values;
+        }
 
 
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
 
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
-        public IEnumerable<Field> GetFields() => Fields.Values;
+
+        public IEnumerable<Field> GetFields()
+        {
+            return Fields.Values;
+        }
 
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Interface;
 
 
-        [NotNull]
         public static InterfaceType From(IInterfaceTypeDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));

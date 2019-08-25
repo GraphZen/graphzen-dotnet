@@ -1,9 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -14,10 +18,7 @@ namespace GraphZen.TypeSystem
 
         public override object FromSyntax(SyntaxNode node)
         {
-            if (node is DirectiveSyntax directive)
-            {
-                return new DirectiveAnnotation(directive.Name.Value, directive);
-            }
+            if (node is DirectiveSyntax directive) return new DirectiveAnnotation(directive.Name.Value, directive);
 
             return null;
         }
@@ -26,10 +27,7 @@ namespace GraphZen.TypeSystem
         {
             if (value is IDirectiveAnnotation annotation)
             {
-                if (annotation.Value is DirectiveSyntax syntax)
-                {
-                    return syntax;
-                }
+                if (annotation.Value is DirectiveSyntax syntax) return syntax;
                 // TODO: lookup directive in schema based on name, get values from value, create syntax (AstFromValue)
 
                 // Default: return simple directive annotation w/name only

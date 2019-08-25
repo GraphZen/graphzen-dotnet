@@ -2,7 +2,12 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -20,7 +25,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The type of object contained within the colleciton.
         /// </summary>
-        [NotNull]
+
         public TypeSyntax OfType { get; }
 
         public override IEnumerable<SyntaxNode> Children
@@ -28,26 +33,29 @@ namespace GraphZen.LanguageModel
             get { yield return OfType; }
         }
 
-        private bool Equals([NotNull] ListTypeSyntax other) => OfType.Equals(other.OfType);
+        private bool Equals(ListTypeSyntax other)
+        {
+            return OfType.Equals(other.OfType);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is ListTypeSyntax && Equals((ListTypeSyntax)obj);
         }
 
-        public override int GetHashCode() => OfType.GetHashCode();
+        public override int GetHashCode()
+        {
+            return OfType.GetHashCode();
+        }
 
 
-        public override string ToString() => ToSyntaxString();
+        public override string ToString()
+        {
+            return ToSyntaxString();
+        }
     }
 }
