@@ -13,6 +13,7 @@ using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
+
 #nullable disable
 
 namespace GraphZen.TypeSystem
@@ -554,8 +555,7 @@ namespace GraphZen.TypeSystem
             return _types.OfType<T>().Any(_ => _.ClrType == clrType);
         }
 
-           
-      
+
         public T FindType<T>(string name) where T : NamedTypeDefinition
         {
             Check.NotNull(name, nameof(name));
@@ -635,7 +635,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-          public NamedTypeDefinition FindOutputType(Type clrType)
+        public NamedTypeDefinition FindOutputType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.IsOutputType() && _.ClrType == clrType);
         }

@@ -1,14 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
@@ -17,31 +15,31 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine
 {
     internal static class Values
     {
-        
-        internal static DynamicDictionary GetDirectiveValues( Directive directive, SyntaxNode node,
+        internal static DynamicDictionary GetDirectiveValues(Directive directive, SyntaxNode node,
             IReadOnlyDictionary<string, object> variableValues)
         {
             if (node is IDirectivesSyntax directivesNode)
             {
                 var directiveNode = directivesNode.Directives.SingleOrDefault(_ => _.Name.Value == directive.Name);
-                if (directiveNode != null)
-                {
-                    return GetArgumentValues(directive, directiveNode, variableValues);
-                }
+                if (directiveNode != null) return GetArgumentValues(directive, directiveNode, variableValues);
             }
 
             return null;
         }
 
         internal static Maybe<IReadOnlyDictionary<string, object>> GetVariableValues(
-             Schema schema,
-              IReadOnlyList<VariableDefinitionSyntax> variableDefinitions,
-             IReadOnlyDictionary<string, object> inputs)
+            Schema schema,
+            IReadOnlyList<VariableDefinitionSyntax> variableDefinitions,
+            IReadOnlyDictionary<string, object> inputs)
         {
             var coercedValues = new Dictionary<string, object>();
             var errors = new List<GraphQLError>();
@@ -66,9 +64,7 @@ namespace GraphZen.QueryEngine
                         // If no value was provided to a variable with a default value,
                         // use the default value.
                         if (Helpers.ValueFromAst(varDefNode.DefaultValue, varType) is Some<object> some)
-                        {
                             coercedValues[varName] = some.Value;
-                        }
                     }
                     else if ((!maybeValue.HasValue || maybeValue is Some<object> v && v.Value == null) &&
                              varType is NonNullType)
@@ -108,10 +104,7 @@ namespace GraphZen.QueryEngine
                                 errors.AddRange(coercionErrors);
                             }
 
-                            if (coerced is Some<object> some)
-                            {
-                                coercedValues[varName] = some.Value;
-                            }
+                            if (coerced is Some<object> some) coercedValues[varName] = some.Value;
                         }
                     }
                 }
@@ -125,7 +118,6 @@ namespace GraphZen.QueryEngine
         }
 
 
-        
         public static Maybe<object> CoerceValue(object value, IGraphQLType type, SyntaxNode blameNode,
             ResponsePath path)
         {
@@ -135,10 +127,7 @@ namespace GraphZen.QueryEngine
                 var pathStr = p?.ToString();
                 var msg = new StringBuilder();
                 msg.Append(message);
-                if (!string.IsNullOrEmpty(pathStr))
-                {
-                    msg.Append($" at {pathStr}");
-                }
+                if (!string.IsNullOrEmpty(pathStr)) msg.Append($" at {pathStr}");
 
                 msg.Append(!string.IsNullOrEmpty(subMessage) ? $"; {subMessage}" : ".");
                 return new GraphQLError(msg.ToString(), new[] { blame }, null, null, null, originalError);
@@ -147,19 +136,14 @@ namespace GraphZen.QueryEngine
             if (type is NonNullType nonNull)
             {
                 if (value == null)
-                {
                     return Maybe.None<object>(CoercianError(
                         $"Expected non-nullable type {type} not to be null",
                         blameNode, path));
-                }
 
                 return CoerceValue(value, nonNull.OfType, blameNode, path);
             }
 
-            if (value == null)
-            {
-                return Maybe.Some<object>(null);
-            }
+            if (value == null) return Maybe.Some<object>(null);
 
 
             switch (type)
@@ -177,13 +161,8 @@ namespace GraphZen.QueryEngine
                             {
                                 var coerced = CoerceValue(item, itemType, blameNode, path.AddPath(index++));
                                 if (coerced is Some<object> someItem)
-                                {
                                     coercedValue.Add(someItem.Value);
-                                }
-                                else if (coerced is None<object> none)
-                                {
-                                    errors.AddRange(none.Errors);
-                                }
+                                else if (coerced is None<object> none) errors.AddRange(none.Errors);
                             }
 
                             return errors.Any() ? Maybe.None<object>(errors) : Maybe.Some<object>(coercedValue);
@@ -195,10 +174,8 @@ namespace GraphZen.QueryEngine
                 case InputObjectType inputObject:
                     {
                         if (!(value is IDictionary<string, object> values))
-                        {
                             return Maybe.None<object>(CoercianError($"Expected {type} to be an object", blameNode,
                                 path));
-                        }
 
                         var coercedValue = new Dictionary<string, object>();
                         var errors = new List<GraphQLError>();
@@ -211,28 +188,20 @@ namespace GraphZen.QueryEngine
                             if (fieldValue == null)
                             {
                                 if (field.DefaultValue is Some<object> someValue)
-                                {
                                     coercedValue[field.Name] = someValue.Value;
-                                }
                                 else if (field.InputType is NonNullType)
-                                {
                                     errors.Add(CoercianError(
                                         $"Field {path.AddPath(field.Name)} of required type {field.InputType} was not provided",
                                         blameNode, null));
-                                }
                             }
                             else
                             {
                                 var coercedField = CoerceValue(fieldValue, field.InputType, blameNode,
                                     path.AddPath(field.Name));
                                 if (coercedField is None<object> erred)
-                                {
                                     errors.AddRange(erred.Errors);
-                                }
                                 else if (!errors.Any() && coercedField is Some<object> some)
-                                {
                                     coercedValue[field.Name] = some.Value;
-                                }
                             }
                         }
 
@@ -268,10 +237,7 @@ namespace GraphZen.QueryEngine
                     if (value is string strValue)
                     {
                         var enumValue = enumType.FindValue(strValue);
-                        if (enumValue != null)
-                        {
-                            return Maybe.Some(enumValue.Value);
-                        }
+                        if (enumValue != null) return Maybe.Some(enumValue.Value);
                     }
 
                     // TODO: Suggestions
@@ -283,9 +249,8 @@ namespace GraphZen.QueryEngine
         }
 
 
-        
-        public static DynamicDictionary GetArgumentValues<TNode>( IArgumentsContainer def,
-             TNode node,
+        public static DynamicDictionary GetArgumentValues<TNode>(IArgumentsContainer def,
+            TNode node,
             IReadOnlyDictionary<string, object> variableValues) where TNode : SyntaxNode, IArgumentsContainerNode
         {
             var coercedValues = new DynamicDictionary();
@@ -321,18 +286,14 @@ namespace GraphZen.QueryEngine
                 else if ((!hasValue || isNull) && argType is NonNullType)
                 {
                     if (isNull)
-                    {
                         throw new GraphQLException(
                             $"Argument \"{name}\" of non-null type \"{argType}\" must not be null.",
                             argumentNode.Value);
-                    }
 
                     if (argumentNode?.Value is VariableSyntax var)
-                    {
                         throw new GraphQLException(
                             $"Argument \"{name}\" of required type \"{argType}\" was provided the variable \"{var}\" which was not provided a runtime value.",
                             argumentNode.Value);
-                    }
 
                     throw new GraphQLException(
                         $"Argument \"{name}\" of required type \"{argType}\" was not provided.",
@@ -354,10 +315,8 @@ namespace GraphZen.QueryEngine
                         var valueNode = argumentNode.Value;
                         var maybeCoerced = Helpers.ValueFromAst(valueNode, argType, variableValues);
                         if (!(maybeCoerced is Some<object> someCoerced))
-                        {
                             throw new GraphQLException(
                                 $"Argument \"{name}\" has invalid value {valueNode.GetValue().Inspect()}.", node);
-                        }
 
                         coercedValues[name] = someCoerced.Value;
                     }

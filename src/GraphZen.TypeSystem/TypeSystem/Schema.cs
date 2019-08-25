@@ -1,8 +1,5 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
 using System.Collections.Generic;
@@ -15,6 +12,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -24,7 +22,6 @@ namespace GraphZen.TypeSystem
                  "query, mutation, and subscription operations.")]
     public class Schema : AnnotatableMember, ISchema
     {
-
         private readonly Dictionary<string, List<ObjectType>> _implementations =
             new Dictionary<string, List<ObjectType>>();
 
@@ -52,9 +49,7 @@ namespace GraphZen.TypeSystem
             //    initialTypes.AddRange(SpecScalars.All);
             //}
             if (schemaDefinition.Types.All(_ => _.Name != "__Schema"))
-            {
                 initialTypes.AddRange(Introspection.IntrospectionTypes);
-            }
 
 
             initialTypes.AddRange(types);
@@ -83,9 +78,7 @@ namespace GraphZen.TypeSystem
                 .FirstOrDefault();
 
             if (duplicate != null)
-            {
                 throw new InvalidOperationException($"Type `{duplicate.Name}` defined twice, cannot create schema.");
-            }
 
             // ReSharper disable once PossibleNullReferenceException
             Types = initialTypes
@@ -103,58 +96,36 @@ namespace GraphZen.TypeSystem
             // Keep track of all implementations by interface name.
 
             foreach (var type in Types.Values)
-            {
                 if (type is ObjectType objectType)
-                {
                     foreach (var iface in objectType.Interfaces)
-                    {
                         if (_implementations.TryGetValue(iface.Name, out var impls))
-                        {
                             impls.Add(objectType);
-                        }
                         else
-                        {
                             _implementations[iface.Name] = new List<ObjectType>
                             {
                                 objectType
                             };
-                        }
-                    }
-                }
-            }
 
             foreach (var type in Types.Values)
-            {
                 if (type is ObjectType objectType)
-                {
                     foreach (var iface in objectType.Interfaces)
-                    {
                         AssertObjectImplementsInterfaces(objectType, iface);
-                    }
-                }
-            }
 
             _syntax = new Lazy<SchemaDefinitionSyntax>(() =>
             {
                 var rootOperationTypes = new List<OperationTypeDefinitionSyntax>();
                 // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                 if (QueryType != null)
-                {
                     rootOperationTypes.Add(new OperationTypeDefinitionSyntax(OperationType.Query,
                         SyntaxFactory.NamedType(SyntaxFactory.Name(QueryType.Name))));
-                }
 
                 if (MutationType != null)
-                {
                     rootOperationTypes.Add(new OperationTypeDefinitionSyntax(OperationType.Mutation,
                         SyntaxFactory.NamedType(SyntaxFactory.Name(MutationType.Name))));
-                }
 
                 if (SubscriptionType != null)
-                {
                     rootOperationTypes.Add(new OperationTypeDefinitionSyntax(OperationType.Subscription,
                         SyntaxFactory.NamedType(SyntaxFactory.Name(SubscriptionType.Name))));
-                }
 
 
                 return new SchemaDefinitionSyntax(rootOperationTypes);
@@ -164,10 +135,7 @@ namespace GraphZen.TypeSystem
             {
                 var definitions = new List<DefinitionSyntax>();
                 var schemaDef = _syntax.Value;
-                if (!schemaDef.IsSchemaOfCommonNames())
-                {
-                    definitions.Add(schemaDef);
-                }
+                if (!schemaDef.IsSchemaOfCommonNames()) definitions.Add(schemaDef);
 
                 definitions.AddRange(Directives.ToSyntaxNodes<DirectiveDefinitionSyntax>());
                 definitions.AddRange(Types.Values.ToSyntaxNodes<TypeDefinitionSyntax>());
@@ -178,14 +146,13 @@ namespace GraphZen.TypeSystem
             _interfaces = new Lazy<IReadOnlyList<InterfaceType>>(() => GetTypes<InterfaceType>().ToImmutableList());
             _unions = new Lazy<IReadOnlyList<UnionType>>(() => GetTypes<UnionType>().ToImmutableList());
             _enums = new Lazy<IReadOnlyList<EnumType>>(() => GetTypes<EnumType>().ToImmutableList());
-            _inputObjects = new Lazy<IReadOnlyList<InputObjectType>>(() => GetTypes<InputObjectType>().ToImmutableList());
+            _inputObjects =
+                new Lazy<IReadOnlyList<InputObjectType>>(() => GetTypes<InputObjectType>().ToImmutableList());
             _scalars = new Lazy<IReadOnlyList<ScalarType>>(() => GetTypes<ScalarType>().ToImmutableList());
         }
 
 
-
-        [GraphQLIgnore]
-        public SchemaDefinition Definition { get; }
+        [GraphQLIgnore] public SchemaDefinition Definition { get; }
 
 
         [GraphQLName("directives")]
@@ -206,24 +173,29 @@ namespace GraphZen.TypeSystem
         [GraphQLCanBeNull]
         public ObjectType? SubscriptionType { get; }
 
-        [GraphQLIgnore]
-
-        public IReadOnlyDictionary<string, NamedType> Types { get; }
+        [GraphQLIgnore] public IReadOnlyDictionary<string, NamedType> Types { get; }
 
         [GraphQLIgnore]
-
-        public IEnumerable<NamedType> GetTypes() => Types.Values;
+        public IEnumerable<NamedType> GetTypes()
+        {
+            return Types.Values;
+        }
 
         public override string Description { get; } = "Schema";
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Schema;
 
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
 
 
         [GraphQLIgnore]
-        public DocumentSyntax ToDocumentSyntax() => _sdlSyntax.Value;
-
+        public DocumentSyntax ToDocumentSyntax()
+        {
+            return _sdlSyntax.Value;
+        }
 
 
         [GraphQLIgnore]
@@ -252,10 +224,10 @@ namespace GraphZen.TypeSystem
         }
 
 
-
-        public static Schema Create(Action<SchemaBuilder<GraphQLContext>> schemaConfiguration) =>
-            Create<GraphQLContext>(schemaConfiguration);
-
+        public static Schema Create(Action<SchemaBuilder<GraphQLContext>> schemaConfiguration)
+        {
+            return Create<GraphQLContext>(schemaConfiguration);
+        }
 
 
         [GraphQLIgnore]
@@ -304,12 +276,16 @@ namespace GraphZen.TypeSystem
             throw new Exception($"Unexpected type kind: {typeSyntax?.GetType()}");
         }
 
-        private NamedType CreateType(IGraphQLTypeDefinition definition) => NamedType.From(definition, this);
+        private NamedType CreateType(IGraphQLTypeDefinition definition)
+        {
+            return NamedType.From(definition, this);
+        }
 
 
-
-        public IEnumerable<T> GetTypes<T>() where T : INamedType => Types.Values.OfType<T>();
-
+        public IEnumerable<T> GetTypes<T>() where T : INamedType
+        {
+            return Types.Values.OfType<T>();
+        }
 
 
         [GraphQLIgnore]
@@ -333,9 +309,11 @@ namespace GraphZen.TypeSystem
         }
 
 
-
         [GraphQLIgnore]
-        public INamedType GetType(string name) => GetType<NamedType>(name);
+        public INamedType GetType(string name)
+        {
+            return GetType<NamedType>(name);
+        }
 
         public bool HasType<T>(string name) where T : NamedType
         {
@@ -343,7 +321,7 @@ namespace GraphZen.TypeSystem
             return FindType<T>(name) != null;
         }
 
-        public bool TryGetType(string name,[NotNullWhen(true)] out NamedType? type)
+        public bool TryGetType(string name, [NotNullWhen(true)] out NamedType? type)
         {
             Check.NotNull(name, nameof(name));
             return Types.TryGetValue(name, out type);
@@ -369,17 +347,15 @@ namespace GraphZen.TypeSystem
             return TryGetType<T>(name, out var type) ? type : null;
         }
 
-        public bool TryGetType<T>(string name,[NotNullWhen(true)] out T? type) where T : class, IGraphQLType 
+        public bool TryGetType<T>(string name, [NotNullWhen(true)] out T? type) where T : class, IGraphQLType
         {
             Check.NotNull(name, nameof(name));
             if (TryGetType(name, out var t))
-            {
                 if (t is T requestedType)
                 {
                     type = requestedType;
                     return true;
                 }
-            }
 
             type = default;
             return false;
@@ -391,17 +367,15 @@ namespace GraphZen.TypeSystem
             return TryGetType<T>(clrType, out _);
         }
 
-        public bool TryGetType<T>(Type clrType,[NotNullWhen(true)] out T? type) where T :class, INamedType
+        public bool TryGetType<T>(Type clrType, [NotNullWhen(true)] out T? type) where T : class, INamedType
         {
             Check.NotNull(clrType, nameof(clrType));
             if (TryGetType(clrType, out var t))
-            {
                 if (t is T requestedType)
                 {
                     type = requestedType;
                     return true;
                 }
-            }
 
             type = default;
             return false;
@@ -416,16 +390,12 @@ namespace GraphZen.TypeSystem
         }
 
 
-
         public T GetType<T>(Type clrType) where T : INamedType
         {
             Check.NotNull(clrType, nameof(clrType));
             if (TryGetType(clrType, out var type))
             {
-                if (type is T requestedType)
-                {
-                    return requestedType;
-                }
+                if (type is T requestedType) return requestedType;
 
                 throw new InvalidOperationException(
                     $"Type with CLR type \"{clrType}\" already exists, but its type \"{type.GetType().Name}\" is different than the requested type of \"{typeof(T).Name}\".");
@@ -440,10 +410,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             if (TryGetType(name, out var type))
             {
-                if (type is T requestedType)
-                {
-                    return requestedType;
-                }
+                if (type is T requestedType) return requestedType;
 
                 throw new InvalidOperationException(
                     $"Type named \"{name}\" already exists, but its type \"{type.GetType().Name}\" is different than the requested type of \"{typeof(T).Name}\".");
@@ -453,15 +420,10 @@ namespace GraphZen.TypeSystem
         }
 
 
-
-
         [GraphQLIgnore]
         public IEnumerable<ObjectType> GetPossibleTypes(IAbstractType abstractType)
         {
-            if (abstractType is UnionType unionType)
-            {
-                return unionType.MemberTypes;
-            }
+            if (abstractType is UnionType unionType) return unionType.MemberTypes;
 
             return abstractType is InterfaceType interfaceType
                 ? _implementations[interfaceType.Name] ?? throw new InvalidOperationException()
@@ -495,21 +457,17 @@ namespace GraphZen.TypeSystem
                 var fieldName = ifaceField.Name;
                 var objectField = objectType.FindField(ifaceField.Name);
                 if (objectField == null)
-                {
                     throw new GraphQLException(
                         $"\"{interfaceType.Name}\" expects field \"{ifaceField.Name}\" but \"{objectType.Name}\" " +
                         "does not provide it.");
-                }
 
                 // Assert interface field type is satisfied by object field type, by being
                 // a valid subtype. (covariant)
                 if (!objectField.FieldType.IsSubtypeOf(ifaceField.FieldType, this))
-                {
                     throw new GraphQLException(
                         $"{ifaceField} expects type \"{ifaceField.FieldType}\" " +
                         "but" +
                         $"{objectField} provides type \"{objectField.FieldType}\".");
-                }
 
                 // Assert each interface field arg is implemented.
                 foreach (var ifaceArg in ifaceField.GetArguments())
@@ -518,21 +476,17 @@ namespace GraphZen.TypeSystem
                     var objectArg = objectField.FindArgument(argName);
                     // Assert interface field arg exists on object field.
                     if (objectArg == null)
-                    {
                         throw new GraphQLException(
                             $"{ifaceField} expects argument \"{argName}\" " +
                             "but" +
                             $"{objectField} does not provide it.");
-                    }
 
                     // Assert interface field arg type matches object field arg type.
                     if (!ifaceArg.InputType.Equals(objectArg.InputType))
-                    {
                         throw new GraphQLException(
                             $"{ifaceField}(${argName}) expects type \"{ifaceArg.InputType}\" " +
                             "but" +
                             $"{objectField}(${argName}) provides type \"{objectArg.InputType}\".");
-                    }
                 }
 
                 foreach (var objectArg in objectField.GetArguments())
@@ -540,110 +494,137 @@ namespace GraphZen.TypeSystem
                     var argName = objectArg.Name;
                     var ifaceArg = ifaceField.FindArgument(argName);
                     if (ifaceArg == null)
-                    {
                         if (!(objectArg.InputType is NonNullType))
-                        {
                             throw new GraphQLException(
                                 $"{objectField}({argName}) is of required type " +
                                 $"\"{objectArg.InputType}\" but is not also provided by the " +
                                 $"interface {interfaceType.Name}.{fieldName}.");
-                        }
-                    }
                 }
             }
         }
 
-        public override string ToString() => "Schema";
+        public override string ToString()
+        {
+            return "Schema";
+        }
 
         [GraphQLIgnore]
-        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() =>
-            GetInputObjects();
-
-
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects()
+        {
+            return GetInputObjects();
+        }
 
 
         private readonly Lazy<IReadOnlyList<InputObjectType>> _inputObjects;
 
 
-        [GraphQLIgnore]
-        public IReadOnlyList<InputObjectType> InputObjects => _inputObjects.Value;
+        [GraphQLIgnore] public IReadOnlyList<InputObjectType> InputObjects => _inputObjects.Value;
 
         [GraphQLIgnore]
-        public IEnumerable<InputObjectType> GetInputObjects() => InputObjects;
+        public IEnumerable<InputObjectType> GetInputObjects()
+        {
+            return InputObjects;
+        }
 
         [GraphQLIgnore]
-        IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums() => GetEnums();
-
+        IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums()
+        {
+            return GetEnums();
+        }
 
 
         private readonly Lazy<IReadOnlyList<EnumType>> _enums;
 
 
-        [GraphQLIgnore]
-        public IReadOnlyList<EnumType> Enums => _enums.Value;
+        [GraphQLIgnore] public IReadOnlyList<EnumType> Enums => _enums.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars() => GetScalars();
-
-
+        IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars()
+        {
+            return GetScalars();
+        }
 
 
         private readonly Lazy<IReadOnlyList<ScalarType>> _scalars;
 
-        [GraphQLIgnore]
-        public IReadOnlyList<ScalarType> Scalars => _scalars.Value;
+        [GraphQLIgnore] public IReadOnlyList<ScalarType> Scalars => _scalars.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions() => GetUnions();
-
+        IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions()
+        {
+            return GetUnions();
+        }
 
 
         private readonly Lazy<IReadOnlyList<UnionType>> _unions;
 
 
-        [GraphQLIgnore]
-        public IReadOnlyList<UnionType> Unions => _unions.Value;
+        [GraphQLIgnore] public IReadOnlyList<UnionType> Unions => _unions.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces() => GetInterfaces();
-
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces()
+        {
+            return GetInterfaces();
+        }
 
 
         private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
 
 
-        [GraphQLIgnore]
-        public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
+        [GraphQLIgnore] public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects() => GetObjects();
+        IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects()
+        {
+            return GetObjects();
+        }
 
 
         [GraphQLIgnore]
-        IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives() => GetDirectives();
+        IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives()
+        {
+            return GetDirectives();
+        }
 
         [GraphQLIgnore]
-        public IEnumerable<EnumType> GetEnums() => Enums;
+        public IEnumerable<EnumType> GetEnums()
+        {
+            return Enums;
+        }
 
         [GraphQLIgnore]
-        public IEnumerable<ScalarType> GetScalars() => Scalars;
+        public IEnumerable<ScalarType> GetScalars()
+        {
+            return Scalars;
+        }
 
         [GraphQLIgnore]
-        public IEnumerable<UnionType> GetUnions() => Unions;
+        public IEnumerable<UnionType> GetUnions()
+        {
+            return Unions;
+        }
 
         [GraphQLIgnore]
-        public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
+        public IEnumerable<InterfaceType> GetInterfaces()
+        {
+            return Interfaces;
+        }
 
 
         private readonly Lazy<IReadOnlyList<ObjectType>> _objects;
 
-        [GraphQLIgnore]
-        public IReadOnlyList<ObjectType> Objects => _objects.Value;
+        [GraphQLIgnore] public IReadOnlyList<ObjectType> Objects => _objects.Value;
 
         [GraphQLIgnore]
-        public IEnumerable<ObjectType> GetObjects() => Objects;
+        public IEnumerable<ObjectType> GetObjects()
+        {
+            return Objects;
+        }
 
         [GraphQLIgnore]
-        public IEnumerable<Directive> GetDirectives() => Directives;
+        public IEnumerable<Directive> GetDirectives()
+        {
+            return Directives;
+        }
     }
 }

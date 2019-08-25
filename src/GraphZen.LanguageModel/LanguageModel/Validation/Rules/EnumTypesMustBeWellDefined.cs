@@ -1,22 +1,23 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class EnumTypesMustBeWellDefined : DocumentValidationRuleVisitor
     {
-        
         private readonly Dictionary<string, ICollection<EnumTypeDefinitionSyntax>> _enumDefs =
             new Dictionary<string, ICollection<EnumTypeDefinitionSyntax>>();
 
-        
+
         private readonly Dictionary<string, ICollection<EnumTypeExtensionSyntax>> _enumExts =
             new Dictionary<string, ICollection<EnumTypeExtensionSyntax>>();
 

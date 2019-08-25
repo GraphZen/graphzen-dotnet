@@ -1,15 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -19,7 +18,7 @@ namespace GraphZen.TypeSystem
         public ArgumentDefinition(string name,
             ConfigurationSource nameConfigurationSource,
             SchemaDefinition schema,
-            ConfigurationSource configurationSource,  IMutableArgumentsContainerDefinition declaringMember,
+            ConfigurationSource configurationSource, IMutableArgumentsContainerDefinition declaringMember,
             ParameterInfo? clrInfo) : base(
             Check.NotNull(name, nameof(name)), nameConfigurationSource,
             Check.NotNull(schema, nameof(schema)), configurationSource, clrInfo, declaringMember)
@@ -35,15 +34,9 @@ namespace GraphZen.TypeSystem
         public override bool SetName(string name, ConfigurationSource configurationSource)
         {
             Check.NotNull(name, nameof(name));
-            if (!configurationSource.Overrides(GetNameConfigurationSource()))
-            {
-                return false;
-            }
+            if (!configurationSource.Overrides(GetNameConfigurationSource())) return false;
 
-            if (Name != name)
-            {
-                DeclaringMember.RenameArgument(this, name, configurationSource);
-            }
+            if (Name != name) DeclaringMember.RenameArgument(this, name, configurationSource);
 
             Name = name;
             NameConfigurationSource = configurationSource;
@@ -56,6 +49,9 @@ namespace GraphZen.TypeSystem
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsContainerDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 
-        public override string ToString() => $"argument {Name}";
+        public override string ToString()
+        {
+            return $"argument {Name}";
+        }
     }
 }

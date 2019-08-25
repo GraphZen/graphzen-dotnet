@@ -3,9 +3,11 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+
 #nullable disable
 
 
@@ -31,7 +33,7 @@ namespace GraphZen.Infrastructure
             if (dictionary.TryGetValue(key, out var collection))
                 collection.Add(item);
             else
-                dictionary[key] = new List<TItem> {item};
+                dictionary[key] = new List<TItem> { item };
         }
 
 
@@ -48,7 +50,7 @@ namespace GraphZen.Infrastructure
         internal static TValue? FindValueOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : struct
         {
-            return dictionary.TryGetValue(key, out var val) ? val : (TValue?) null;
+            return dictionary.TryGetValue(key, out var val) ? val : (TValue?)null;
         }
 
 

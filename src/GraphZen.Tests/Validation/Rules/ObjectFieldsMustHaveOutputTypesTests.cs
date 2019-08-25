@@ -1,13 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
+
 #nullable disable
-
-
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
+using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Validation.Rules.SDLValidationHelpers;
 
@@ -18,10 +18,12 @@ namespace GraphZen.Validation.Rules
     {
         public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.ObjectFieldsMustHaveOutputTypes;
 
-        public static IEnumerable<object[]> GetValidFieldScenarios() =>
-            from outputType in OutputTypes
-            from fieldType in "SomeOutputType".WithModifiers()
-            select new[] { outputType, fieldType };
+        public static IEnumerable<object[]> GetValidFieldScenarios()
+        {
+            return from outputType in OutputTypes
+                   from fieldType in "SomeOutputType".WithModifiers()
+                   select new[] { outputType, fieldType };
+        }
 
         [Theory]
         [MemberData(nameof(GetValidFieldScenarios))]
@@ -36,10 +38,12 @@ namespace GraphZen.Validation.Rules
             ");
         }
 
-        public static IEnumerable<object[]> GetInvalidFieldScenarios() =>
-            from nonOutputType in NonOutputTypes
-            from fieldType in "SomeInputType".WithModifiers()
-            select new[] { nonOutputType, fieldType };
+        public static IEnumerable<object[]> GetInvalidFieldScenarios()
+        {
+            return from nonOutputType in NonOutputTypes
+                   from fieldType in "SomeInputType".WithModifiers()
+                   select new[] { nonOutputType, fieldType };
+        }
 
 
         [Theory]

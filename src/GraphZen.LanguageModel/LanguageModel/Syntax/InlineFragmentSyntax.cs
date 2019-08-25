@@ -1,13 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -28,7 +30,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The fragment selection set.
         /// </summary>
-        
+
         public SelectionSetSyntax SelectionSet { get; }
 
 
@@ -41,24 +43,20 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The type which this inline fragment applies to. (Optional)
         /// </summary>
-        
+
         public NamedTypeSyntax TypeCondition { get; }
 
-        private bool Equals( InlineFragmentSyntax other) =>
-            SelectionSet.Equals(other.SelectionSet) && Equals(TypeCondition, other.TypeCondition) &&
-            Directives.SequenceEqual(other.Directives);
+        private bool Equals(InlineFragmentSyntax other)
+        {
+            return SelectionSet.Equals(other.SelectionSet) && Equals(TypeCondition, other.TypeCondition) &&
+                   Directives.SequenceEqual(other.Directives);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is InlineFragmentSyntax && Equals((InlineFragmentSyntax)obj);
         }

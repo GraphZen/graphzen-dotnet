@@ -1,14 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -21,7 +20,7 @@ namespace GraphZen.TypeSystem
             Builder = builder;
         }
 
-        
+
         private InternalObjectTypeBuilder Builder { get; }
 
         InternalObjectTypeBuilder IInfrastructure<InternalObjectTypeBuilder>.Instance => Builder;
@@ -127,13 +126,8 @@ namespace GraphZen.TypeSystem
         {
             ImplementsInterface(name);
             if (names != null)
-            {
                 foreach (var n in names)
-                {
                     ImplementsInterface(n);
-
-                }
-            }
 
             return this;
         }
@@ -168,7 +162,10 @@ namespace GraphZen.TypeSystem
         }
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreField<TField>(
-            Expression<Func<TObject, TField>> fieldSelector) => throw new NotImplementedException();
+            Expression<Func<TObject, TField>> fieldSelector)
+        {
+            throw new NotImplementedException();
+        }
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreField(string fieldName)
         {
@@ -184,8 +181,10 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
+        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name)
+        {
+            return DirectiveAnnotation(name, null);
+        }
 
         public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name, object? value)
         {
@@ -199,7 +198,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector) =>
+        public IObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector)
+        {
             throw new NotImplementedException();
+        }
     }
 }

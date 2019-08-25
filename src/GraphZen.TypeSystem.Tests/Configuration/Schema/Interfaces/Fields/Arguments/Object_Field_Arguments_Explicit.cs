@@ -1,11 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System.Diagnostics.CodeAnalysis;
+using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 #nullable disable
 
-
-using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 
 namespace GraphZen.Interfaces.Fields.Arguments
 {
@@ -13,9 +14,11 @@ namespace GraphZen.Interfaces.Fields.Arguments
     {
     }
 
-    public class Interface_Field_Arguments_ViaClrMethodParameters : Interface_Field_Arguments, ICollectionConventionConfigurationFixture
+    public class Interface_Field_Arguments_ViaClrMethodParameters : Interface_Field_Arguments,
+        ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
+
         [GraphQLName(Grandparent)]
         public interface ISomeInterface
         {
@@ -25,14 +28,17 @@ namespace GraphZen.Interfaces.Fields.Arguments
                 [GraphQLName(DataAnnotationName)] string arg2);
         }
 
-        public CollectionConventionContext GetContext() => new CollectionConventionContext()
+        public CollectionConventionContext GetContext()
         {
-            ParentName = nameof(ISomeInterface.SomeField).FirstCharToLower(),
-            ItemIgnoredByDataAnnotation = "ignoreMe",
-            ItemNamedByConvention = "arg1",
-            ItemNamedByDataAnnotation = DataAnnotationName,
-            ItemIgnoredByConvention = "na",
-        };
+            return new CollectionConventionContext
+            {
+                ParentName = nameof(ISomeInterface.SomeField).FirstCharToLower(),
+                ItemIgnoredByDataAnnotation = "ignoreMe",
+                ItemNamedByConvention = "arg1",
+                ItemNamedByDataAnnotation = DataAnnotationName,
+                ItemIgnoredByConvention = "na"
+            };
+        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

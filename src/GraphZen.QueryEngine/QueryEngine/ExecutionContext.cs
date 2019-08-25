@@ -1,13 +1,11 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
@@ -15,6 +13,10 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine
 {
@@ -42,40 +44,36 @@ namespace GraphZen.QueryEngine
         //public SpecifiedDirectives Directives { get; }
 
 
-        
         public Schema Schema { get; }
 
-        
+
         public ExecutionOptions Options { get; }
 
-        
+
         public IReadOnlyDictionary<string, FragmentDefinitionSyntax> Fragments { get; }
 
-        
+
         public GraphQLContext ContextValue { get; }
 
-        
+
         public OperationDefinitionSyntax Operation { get; }
 
         public IReadOnlyDictionary<string, object> VariableValues { get; }
 
-        
+
         public Resolver<object, object> FieldResolver { get; } = DefaultFieldResovler;
 
-        
+
         public ConcurrentBag<GraphQLError> Errors { get; }
 
         public object RootValue { get; }
 
 
-        private static Maybe<object> DefaultFieldResovler(object source,  dynamic args,
-             GraphQLContext context,
-             ResolveInfo info)
+        private static Maybe<object> DefaultFieldResovler(object source, dynamic args,
+            GraphQLContext context,
+            ResolveInfo info)
         {
-            if (source == null)
-            {
-                return Maybe.None<object>();
-            }
+            if (source == null) return Maybe.None<object>();
 
             var fieldNameFirstCharUpper = info.FieldName.FirstCharToUpper();
             Debug.Assert(fieldNameFirstCharUpper != null, nameof(fieldNameFirstCharUpper) + " != null");
@@ -97,38 +95,26 @@ namespace GraphZen.QueryEngine
                         if (i == 0)
                         {
                             if (parameterType == typeof(object) || parameterType == typeof(DynamicDictionary))
-                            {
                                 parameters.Add(args);
-                            }
                             else
-                            {
                                 throw new Exception(
                                     $"The arguments resolver parameter had an unexpected type of \"{parameterType}\". Expected either \"{typeof(object)}\" or \"{typeof(DynamicDictionary)}\".");
-                            }
                         }
                         else if (i == 1)
                         {
                             if (parameterType.IsAssignableFrom(typeof(GraphQLContext)))
-                            {
                                 parameters.Add(context);
-                            }
                             else
-                            {
                                 throw new Exception(
                                     $"The context resolver parameter had an unexpected type of \"{parameterType}\". Expected a type of \"{typeof(GraphQLContext)}\".");
-                            }
                         }
                         else if (i == 2)
                         {
                             if (parameterType == typeof(ResolveInfo))
-                            {
                                 parameters.Add(info);
-                            }
                             else
-                            {
                                 throw new Exception(
                                     $"The context resolver parameter had an unexpected type of \"{parameterType}\". Expected a type of \"{typeof(GraphQLContext)}\".");
-                            }
                         }
                         else
                         {
@@ -144,24 +130,17 @@ namespace GraphZen.QueryEngine
             }
 
             var field = type.GetField(fieldNameFirstCharUpper) ?? type.GetField(info.FieldName);
-            if (field != null)
-            {
-                return Maybe.Some(field.GetValue(source));
-            }
+            if (field != null) return Maybe.Some(field.GetValue(source));
 
             var method = type.GetMethod(fieldNameFirstCharUpper) ?? type.GetMethod(info.FieldName);
 
-            if (method != null)
-            {
-                return InvokeMethodByArgName(method);
-            }
+            if (method != null) return InvokeMethodByArgName(method);
 
             Maybe<object> InvokeMethodByArgName(MethodInfo mi)
             {
                 Check.NotNull(mi, nameof(mi));
                 var parameters = new List<object>();
                 foreach (var parameter in mi.GetParameters())
-                {
                     if (parameter.Name != null)
                     {
                         var argValue = args[parameter.Name];
@@ -171,7 +150,6 @@ namespace GraphZen.QueryEngine
                     {
                         break;
                     }
-                }
 
                 var methodResult = mi.Invoke(source, parameters.ToArray());
 
@@ -181,7 +159,7 @@ namespace GraphZen.QueryEngine
             return Maybe.None<object>();
         }
 
-        
+
         public ObjectType GetOperationRootType(OperationDefinitionSyntax operation)
         {
             Check.NotNull(operation, nameof(operation));
@@ -218,36 +196,26 @@ namespace GraphZen.QueryEngine
             OperationDefinitionSyntax operation = null;
             var hasMultipleAssumedOperations = false;
             foreach (var definition in document.Definitions)
-            {
                 switch (definition)
                 {
                     case OperationDefinitionSyntax operationDefinition:
                         if (operation != null && operationName == null)
-                        {
                             hasMultipleAssumedOperations = true;
-                        }
                         else if (operationName == null || operationDefinition.Name?.Value == operationName)
-                        {
                             operation = operationDefinition;
-                        }
 
                         break;
                     case FragmentDefinitionSyntax fragmentDefinition:
                         fragments[fragmentDefinition.Name.Value] = fragmentDefinition;
                         break;
                 }
-            }
 
             if (operation == null)
             {
                 if (operationName != null)
-                {
                     errors.Add(new GraphQLError($"Unkown operation named '{operationName}'"));
-                }
                 else
-                {
                     errors.Add(new GraphQLError("Must provide an operation"));
-                }
             }
             else if (hasMultipleAssumedOperations)
             {
@@ -262,19 +230,12 @@ namespace GraphZen.QueryEngine
                     operation.VariableDefinitions,
                     rawVariableValues ?? new Dictionary<string, object>());
                 if (coercedVariableValues is Some<IReadOnlyDictionary<string, object>> some)
-                {
                     variableValues = some.Value;
-                }
                 else if (coercedVariableValues is None<IReadOnlyDictionary<string, object>> none)
-                {
                     errors.AddRange(none.Errors);
-                }
             }
 
-            if (!errors.IsEmpty)
-            {
-                return Maybe.None<ExecutionContext>(errors);
-            }
+            if (!errors.IsEmpty) return Maybe.None<ExecutionContext>(errors);
 
             var exeContext =
                 new ExecutionContext(schema, rootValue, fragments, context, operation, variableValues, errors, options);
@@ -289,11 +250,12 @@ namespace GraphZen.QueryEngine
             Errors.Add(error);
         }
 
-        
-        internal ResolveInfo Build( Field fieldDefinition,
-              IReadOnlyList<FieldSyntax> fieldNodes, IFieldsContainer parentType,
-            ResponsePath path) =>
-            new ResolveInfo(
+
+        internal ResolveInfo Build(Field fieldDefinition,
+            IReadOnlyList<FieldSyntax> fieldNodes, IFieldsContainer parentType,
+            ResponsePath path)
+        {
+            return new ResolveInfo(
                 fieldNodes[0].Name.Value,
                 fieldNodes,
                 fieldDefinition.FieldType,
@@ -305,6 +267,7 @@ namespace GraphZen.QueryEngine
                 VariableValues,
                 RootValue
             );
+        }
 
         private class PreBuiltSchemaContext : GraphQLContext
         {

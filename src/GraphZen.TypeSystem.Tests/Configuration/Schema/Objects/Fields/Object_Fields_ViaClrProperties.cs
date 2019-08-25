@@ -1,10 +1,11 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using JetBrains.Annotations;
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.Objects.Fields
 {
@@ -13,8 +14,9 @@ namespace GraphZen.Objects.Fields
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext() =>
-            new CollectionConventionContext
+        public CollectionConventionContext GetContext()
+        {
+            return new CollectionConventionContext
             {
                 ParentName = nameof(ExampleObject),
                 ItemNamedByConvention = nameof(ExampleObject.HelloWorld).FirstCharToLower(),
@@ -22,6 +24,7 @@ namespace GraphZen.Objects.Fields
                 ItemIgnoredByConvention = nameof(ExampleObject.IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(ExampleObject.IgnoredByDataAnnotation).FirstCharToLower()
             };
+        }
 
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
@@ -44,11 +47,9 @@ namespace GraphZen.Objects.Fields
         {
             public string HelloWorld { get; set; }
 
-            [GraphQLName(DataAnnotationName)]
-            public string NamedByDataAnnotation { get; set; }
+            [GraphQLName(DataAnnotationName)] public string NamedByDataAnnotation { get; set; }
 
-            [GraphQLIgnore]
-            public string IgnoredByDataAnnotation { get; set; }
+            [GraphQLIgnore] public string IgnoredByDataAnnotation { get; set; }
 
             public IgnoredType IgnoredByConvention { get; set; }
         }

@@ -1,10 +1,11 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using JetBrains.Annotations;
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.Objects
 {
@@ -12,25 +13,31 @@ namespace GraphZen.Objects
 
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
+
         public class Query
         {
             public NamedByConvention ConventionallyNamed { get; set; }
 
-            [GraphQLIgnore]
-            public IgnoredByConvention IgnoredByConvention { get; set; }
+            [GraphQLIgnore] public IgnoredByConvention IgnoredByConvention { get; set; }
 
             public IgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
 
             public NamedByDataAnnotation NamedByDataAnnoation { get; set; }
-
         }
 
-        public class NamedByConvention { }
+        public class NamedByConvention
+        {
+        }
 
 
         [GraphQLName(DataAnnotationName)]
-        public class NamedByDataAnnotation { }
-        public class IgnoredByConvention { }
+        public class NamedByDataAnnotation
+        {
+        }
+
+        public class IgnoredByConvention
+        {
+        }
 
         [GraphQLIgnore]
         public class IgnoredByDataAnnotation
@@ -38,14 +45,16 @@ namespace GraphZen.Objects
         }
 
 
-
-        public CollectionConventionContext GetContext() => new CollectionConventionContext()
+        public CollectionConventionContext GetContext()
         {
-            ItemNamedByConvention = nameof(NamedByConvention),
-            ItemNamedByDataAnnotation = DataAnnotationName,
-            ItemIgnoredByConvention = nameof(IgnoredByConvention),
-            ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation),
-        };
+            return new CollectionConventionContext
+            {
+                ItemNamedByConvention = nameof(NamedByConvention),
+                ItemNamedByDataAnnotation = DataAnnotationName,
+                ItemIgnoredByConvention = nameof(IgnoredByConvention),
+                ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation)
+            };
+        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

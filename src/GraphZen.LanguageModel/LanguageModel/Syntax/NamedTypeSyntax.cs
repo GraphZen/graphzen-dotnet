@@ -1,11 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -30,27 +32,33 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        public string GetDisplayValue() => ToSyntaxString();
+        public string GetDisplayValue()
+        {
+            return ToSyntaxString();
+        }
 
-        private bool Equals( NamedTypeSyntax other) => Equals(Name, other.Name);
+        private bool Equals(NamedTypeSyntax other)
+        {
+            return Equals(Name, other.Name);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is NamedTypeSyntax && Equals((NamedTypeSyntax)obj);
         }
 
-        public override int GetHashCode() => Name.GetHashCode();
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
 
-        public override string ToString() => Name.ToString();
+        public override string ToString()
+        {
+            return Name.ToString();
+        }
     }
 }

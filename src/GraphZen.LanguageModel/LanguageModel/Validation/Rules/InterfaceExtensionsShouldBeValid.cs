@@ -1,13 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation.Rules
 {
@@ -53,12 +54,9 @@ namespace GraphZen.LanguageModel.Validation.Rules
                         {
                             // TODO: check if implemented field type is a subtype of expected field type
                             if (!implementedField.FieldType.Equals(expectedField.FieldType))
-
-                            {
                                 ReportError(
                                     $"Interface field {implementedInterface}.{expectedField} expects type {expectedField.FieldType} but {objectType}.{implementedField} is type {implementedField.FieldType}.",
                                     expectedField.FieldType, implementedField.FieldType);
-                            }
 
                             foreach (var expectedArg in expectedField.Arguments)
                             {
@@ -66,11 +64,9 @@ namespace GraphZen.LanguageModel.Validation.Rules
                                     // ReSharper disable once PossibleNullReferenceException
                                     _.Name.Value == expectedArg.Name.Value && _.Type.Equals(expectedArg.Type));
                                 if (implementedArg == null)
-                                {
                                     ReportError(
                                         $"Interface field argument {implementedInterface}.{expectedField}({expectedArg.Name}:) expected but {objectType}.{implementedField} does not provide it.",
                                         expectedArg, implementedField);
-                                }
                             }
                         }
                     }

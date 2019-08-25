@@ -1,23 +1,24 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class UnionTypesMustBeValid : DocumentValidationRuleVisitor
     {
-        
         private readonly Dictionary<string, ICollection<UnionTypeDefinitionSyntax>> _unionDefs =
             new Dictionary<string, ICollection<UnionTypeDefinitionSyntax>>();
 
-        
+
         private readonly Dictionary<string, ICollection<UnionTypeExtensionSyntax>> _unionExts =
             new Dictionary<string, ICollection<UnionTypeExtensionSyntax>>();
 
@@ -53,18 +54,14 @@ namespace GraphZen.LanguageModel.Validation.Rules
                 // ReSharper disable once PossibleNullReferenceException
                 var types = union.MemberTypes.Concat(unionExtensions.SelectMany(_ => _.Types)).ToList();
                 if (!types.Any())
-                {
                     ReportError($"Union type {unionTypeName} must define one or more member types.", nodes);
-                }
 
                 // ReSharper disable once PossibleNullReferenceException
                 foreach (var duplicateTypes in types
                     .GroupBy(_ => _.Name.Value)
                     .Where(_ => _.Count() > 1))
-                {
                     ReportError($"Union type {unionTypeName} can only include type {duplicateTypes.Key} once.",
                         duplicateTypes.ToList());
-                }
 
                 var objectTypes = node.Definitions.OfType<ObjectTypeDefinitionSyntax>().ToList();
                 foreach (var type in types)
@@ -75,11 +72,9 @@ namespace GraphZen.LanguageModel.Validation.Rules
                         return _.Name.Value == type.Name.Value;
                     });
                     if (objectType == null)
-                    {
                         ReportError(
                             $"Union type {unionTypeName} can only include Object types, it cannot include {type.Name.Value}.",
                             type);
-                    }
                 }
             }
 

@@ -1,13 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -37,7 +39,7 @@ namespace GraphZen.LanguageModel
         public override bool IsInputType { get; } = false;
         public override bool IsOutputType { get; } = true;
 
-        
+
         public IReadOnlyList<NamedTypeSyntax> MemberTypes { get; }
 
 
@@ -49,22 +51,18 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
 
-        private bool Equals( UnionTypeDefinitionSyntax other) =>
-            Name.Equals(other.Name) && Equals(Description, other.Description) &&
-            MemberTypes.SequenceEqual(other.MemberTypes) &&
-            Directives.SequenceEqual(other.Directives);
+        private bool Equals(UnionTypeDefinitionSyntax other)
+        {
+            return Name.Equals(other.Name) && Equals(Description, other.Description) &&
+                   MemberTypes.SequenceEqual(other.MemberTypes) &&
+                   Directives.SequenceEqual(other.Directives);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is UnionTypeDefinitionSyntax && Equals((UnionTypeDefinitionSyntax)obj);
         }

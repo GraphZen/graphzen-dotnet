@@ -1,20 +1,18 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     public static class TypeKindHelpers
     {
-        
         // ReSharper disable once AssignNullToNotNullAttribute
         private static ImmutableDictionary<Type, TypeKind> KindByType { get; } = new Dictionary<Type, TypeKind>
         {
@@ -59,12 +57,16 @@ namespace GraphZen.TypeSystem
 
 
         public static bool TryGetTypeKindFromDefinition<TGraphQLType>(out TypeKind kind)
-            where TGraphQLType : NamedTypeDefinition =>
-            KindByType.TryGetValue(typeof(TGraphQLType), out kind);
+            where TGraphQLType : NamedTypeDefinition
+        {
+            return KindByType.TryGetValue(typeof(TGraphQLType), out kind);
+        }
 
         public static bool TryGetTypeKindFromType<TGraphQLType>(out TypeKind kind)
-            where TGraphQLType : NamedType =>
-            KindByType.TryGetValue(typeof(TGraphQLType), out kind);
+            where TGraphQLType : NamedType
+        {
+            return KindByType.TryGetValue(typeof(TGraphQLType), out kind);
+        }
 
 
         public static string ToDisplayString(this TypeKind kind)

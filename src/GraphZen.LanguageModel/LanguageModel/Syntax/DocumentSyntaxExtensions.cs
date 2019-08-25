@@ -1,20 +1,21 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
     public static class DocumentSyntaxExtensions
     {
-        
         public static DocumentSyntax WithSpecDefinitions(this DocumentSyntax document)
         {
             Check.NotNull(document, nameof(document));
@@ -34,20 +35,27 @@ namespace GraphZen.LanguageModel
         }
 
 
-        
-        public static DocumentSyntax WithoutSpecDefinitions(this DocumentSyntax document) =>
-            Check.NotNull(document, nameof(document))
+        public static DocumentSyntax WithoutSpecDefinitions(this DocumentSyntax document)
+        {
+            return Check.NotNull(document, nameof(document))
                 .WithFilteredDefinitions(def => !def.IsSpecDefinedType() && !def.IsSpecDefinedDirective());
+        }
 
-        
-        public static DocumentSyntax WithoutIntrospectionTypes(this DocumentSyntax document) => Check
-            .NotNull(document, nameof(document)).WithFilteredDefinitions(_ => !_.IsIntrospectionType());
 
-        
-        public static DocumentSyntax WithoutBuiltInDefinitions(this DocumentSyntax document) => Check
-            .NotNull(document, nameof(document)).WithoutIntrospectionTypes().WithoutSpecDefinitions();
+        public static DocumentSyntax WithoutIntrospectionTypes(this DocumentSyntax document)
+        {
+            return Check
+                .NotNull(document, nameof(document)).WithFilteredDefinitions(_ => !_.IsIntrospectionType());
+        }
 
-        
+
+        public static DocumentSyntax WithoutBuiltInDefinitions(this DocumentSyntax document)
+        {
+            return Check
+                .NotNull(document, nameof(document)).WithoutIntrospectionTypes().WithoutSpecDefinitions();
+        }
+
+
         public static DocumentSyntax WithDefinitionsAdded(this DocumentSyntax document,
             IEnumerable<DefinitionSyntax> definitions)
         {
@@ -61,10 +69,12 @@ namespace GraphZen.LanguageModel
         }
 
         public static DocumentSyntax WithDefinitionsAdded(this DocumentSyntax document,
-            params DefinitionSyntax[] definitions) =>
-            document.WithDefinitionsAdded(definitions.AsEnumerable());
+            params DefinitionSyntax[] definitions)
+        {
+            return document.WithDefinitionsAdded(definitions.AsEnumerable());
+        }
 
-        
+
         public static DocumentSyntax WithSortedChildren(this DocumentSyntax document)
         {
             Check.NotNull(document, nameof(document));

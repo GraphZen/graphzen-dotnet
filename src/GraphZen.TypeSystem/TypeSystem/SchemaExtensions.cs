@@ -312,7 +312,8 @@ namespace GraphZen.TypeSystem
             return Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
         }
 
-        public static bool TryGetInputObject<TClrType>(this Schema schema, [NotNullWhen(true)] out InputObjectType? type)
+        public static bool TryGetInputObject<TClrType>(this Schema schema,
+            [NotNullWhen(true)] out InputObjectType? type)
         {
             return Check.NotNull(schema, nameof(schema)).TryGetType(typeof(TClrType), out type);
         }

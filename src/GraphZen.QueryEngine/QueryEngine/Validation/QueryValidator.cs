@@ -1,16 +1,18 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Validation
 {
@@ -21,8 +23,7 @@ namespace GraphZen.QueryEngine.Validation
             Rules = rules ?? QueryValidationRules.SpecifiedQueryRules;
         }
 
-        
-        
+
         private IReadOnlyCollection<ValidationRule> Rules { get; }
 
         public IReadOnlyCollection<GraphQLError> Validate(Schema schema, DocumentSyntax query)

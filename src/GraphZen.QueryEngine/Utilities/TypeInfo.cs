@@ -1,10 +1,8 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
@@ -12,90 +10,96 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen
 {
     public class TypeInfo
     {
-         private readonly Stack<Maybe<object>> _defaultValueStack = new Stack<Maybe<object>>();
+        private readonly Stack<Maybe<object>> _defaultValueStack = new Stack<Maybe<object>>();
 
-         private readonly Stack<Field> _fieldDefStack = new Stack<Field>();
+        private readonly Stack<Field> _fieldDefStack = new Stack<Field>();
 
-         private readonly Stack<IGraphQLType> _inputTypeStack = new Stack<IGraphQLType>();
+        private readonly Stack<IGraphQLType> _inputTypeStack = new Stack<IGraphQLType>();
 
-         private readonly Stack<ICompositeType> _parentTypeStack = new Stack<ICompositeType>();
+        private readonly Stack<ICompositeType> _parentTypeStack = new Stack<ICompositeType>();
 
-         private readonly Stack<IGraphQLType> _typeStack = new Stack<IGraphQLType>();
+        private readonly Stack<IGraphQLType> _typeStack = new Stack<IGraphQLType>();
 
         public TypeInfo(Schema schema)
         {
             Schema = Check.NotNull(schema, nameof(schema));
         }
 
-        
+
         public Argument Argument { get; private set; }
 
-        
+
         public Directive Directive { get; private set; }
 
-        
+
         public EnumValue EnumValue { get; private set; }
 
-        
+
         protected Schema Schema { get; }
 
-        
+
         public Maybe<object> DefaultValue => _defaultValueStack.PeekOrDefault();
 
-        
-        private static Field GetFieldDef( Schema schema,  IGraphQLType parentType,
-             FieldSyntax node)
+
+        private static Field GetFieldDef(Schema schema, IGraphQLType parentType,
+            FieldSyntax node)
         {
             var name = node.Name.Value;
 
             if (name == Introspection.SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
-            {
                 return Introspection.SchemaMetaFieldDef;
-            }
 
             if (name == Introspection.TypeMetaFieldDef.Name && schema.QueryType.Equals(parentType))
-            {
                 return Introspection.TypeMetaFieldDef;
-            }
 
             if (name == Introspection.TypeNameMetaFieldDef.Name && parentType is ICompositeType)
-            {
                 return Introspection.TypeNameMetaFieldDef;
-            }
 
-            if (parentType is ObjectType objectType)
-            {
-                return objectType.FindField(name);
-            }
+            if (parentType is ObjectType objectType) return objectType.FindField(name);
 
-            if (parentType is InterfaceType interfaceType)
-            {
-                return interfaceType.FindField(name);
-            }
+            if (parentType is InterfaceType interfaceType) return interfaceType.FindField(name);
 
             return null;
         }
 
 
-        
-        public IGraphQLType GetOutputType() => _typeStack.PeekOrDefault();
+        public IGraphQLType GetOutputType()
+        {
+            return _typeStack.PeekOrDefault();
+        }
 
-        
-        public ICompositeType GetParentType() => _parentTypeStack.PeekOrDefault();
 
-        
-        public IGraphQLType GetInputType() => _inputTypeStack.PeekOrDefault();
+        public ICompositeType GetParentType()
+        {
+            return _parentTypeStack.PeekOrDefault();
+        }
 
-        
-        public IGraphQLType GetParentInputType() => _inputTypeStack.Count > 1 ? _inputTypeStack.ElementAt(1) : default;
 
-        
-        public Field GetField() => _fieldDefStack.PeekOrDefault();
+        public IGraphQLType GetInputType()
+        {
+            return _inputTypeStack.PeekOrDefault();
+        }
+
+
+        public IGraphQLType GetParentInputType()
+        {
+            return _inputTypeStack.Count > 1 ? _inputTypeStack.ElementAt(1) : default;
+        }
+
+
+        public Field GetField()
+        {
+            return _fieldDefStack.PeekOrDefault();
+        }
 
         public void Enter(SyntaxNode syntaxNode)
         {
@@ -111,10 +115,7 @@ namespace GraphZen
                     if (parentType != null)
                     {
                         fieldDef = GetFieldDef(Schema, parentType, node);
-                        if (fieldDef != null)
-                        {
-                            fieldType = fieldDef.FieldType;
-                        }
+                        if (fieldDef != null) fieldType = fieldDef.FieldType;
                     }
 
                     _fieldDefStack.Push(fieldDef);
@@ -128,17 +129,10 @@ namespace GraphZen
                     {
                         IGraphQLType type = null;
                         if (node.OperationType == OperationType.Query)
-                        {
                             type = Schema.QueryType;
-                        }
                         else if (node.OperationType == OperationType.Mutation)
-                        {
                             type = Schema.MutationType;
-                        }
-                        else if (node.OperationType == OperationType.Subscription)
-                        {
-                            type = Schema.SubscriptionType;
-                        }
+                        else if (node.OperationType == OperationType.Subscription) type = Schema.SubscriptionType;
 
                         _typeStack.Push(type);
                         break;

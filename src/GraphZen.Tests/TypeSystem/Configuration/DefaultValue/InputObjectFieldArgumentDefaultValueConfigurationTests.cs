@@ -1,12 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
+#nullable disable
 
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local
@@ -32,15 +32,19 @@ namespace GraphZen.TypeSystem
         }
 
         public override InputValueDefinition GetMemberDefinitionWithNoDefaultValueByConvention(
-            SchemaBuilder schemaBuilder) =>
-            schemaBuilder.GetDefinition().GetInputObject<FooInputObject>()
+            SchemaBuilder schemaBuilder)
+        {
+            return schemaBuilder.GetDefinition().GetInputObject<FooInputObject>()
                 .GetField(nameof(FooInputObject.NoDefaultValueSetByConvention).FirstCharToLower());
+        }
 
 
         public override InputValueDefinition GetMemberDefinitionWithDefaultValueConfiguredByDataAnnotation(
-            SchemaBuilder schemaBuilder) =>
-            schemaBuilder.GetDefinition().GetInputObject<FooInputObject>()
+            SchemaBuilder schemaBuilder)
+        {
+            return schemaBuilder.GetDefinition().GetInputObject<FooInputObject>()
                 .GetField(nameof(FooInputObject.DefaultValueSetByAttribute).FirstCharToLower());
+        }
 
         public override void SetDefaultValueOnMemberWithNoDefaultValueByConvention(SchemaBuilder schemaBuilder,
             object defaultValue)
@@ -59,13 +63,17 @@ namespace GraphZen.TypeSystem
                 f => f.DefaultValue(defaultValue));
         }
 
-        public override InputValue GetMemberWithNoDefaultValueByConvention(Schema schema) =>
-            schema.GetInputObject<FooInputObject>()
+        public override InputValue GetMemberWithNoDefaultValueByConvention(Schema schema)
+        {
+            return schema.GetInputObject<FooInputObject>()
                 .GetField(nameof(FooInputObject.NoDefaultValueSetByConvention).FirstCharToLower());
+        }
 
 
-        public override InputValue GetMemberWithDefaultValueSetByDataAnnotation(Schema schema) =>
-            schema.GetInputObject<FooInputObject>()
+        public override InputValue GetMemberWithDefaultValueSetByDataAnnotation(Schema schema)
+        {
+            return schema.GetInputObject<FooInputObject>()
                 .GetField(nameof(FooInputObject.DefaultValueSetByAttribute).FirstCharToLower());
+        }
     }
 }

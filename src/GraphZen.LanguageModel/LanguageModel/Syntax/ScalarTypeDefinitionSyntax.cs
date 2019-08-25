@@ -1,13 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -40,7 +42,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Scalar type directives. (Optional)
         /// </summary>
-        
+
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
 
@@ -49,21 +51,17 @@ namespace GraphZen.LanguageModel
 
         public override StringValueSyntax Description { get; }
 
-        private bool Equals( ScalarTypeDefinitionSyntax other) =>
-            Name.Equals(other.Name) && Equals(Description, other.Description) &&
-            Directives.SequenceEqual(other.Directives);
+        private bool Equals(ScalarTypeDefinitionSyntax other)
+        {
+            return Name.Equals(other.Name) && Equals(Description, other.Description) &&
+                   Directives.SequenceEqual(other.Directives);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is ScalarTypeDefinitionSyntax && Equals((ScalarTypeDefinitionSyntax)obj);
         }

@@ -1,34 +1,45 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using JetBrains.Annotations;
-#nullable disable
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen
 {
-
     public static class NamedCollection
     {
-        
-        public static NamedCollection<T> ToNamedCollection<T>(this IReadOnlyDictionary<string, T> source) where T : INamed =>
-            ToNamedCollection<T, T>(source);
-
-        
-        public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : INamed =>
-            ToNamedCollection<T, T>(source);
+        public static NamedCollection<T> ToNamedCollection<T>(this IReadOnlyDictionary<string, T> source)
+            where T : INamed
+        {
+            return ToNamedCollection<T, T>(source);
+        }
 
 
-        
-        public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : INamed => new DictionaryWrapper<TInner, TOuter>(source);
+        public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : INamed
+        {
+            return ToNamedCollection<T, T>(source);
+        }
 
-        
-        public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IEnumerable<TInner> source) where TInner : TOuter where TOuter : INamed => new EnumerableWrapper<TInner, TOuter>(source);
+
+        public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(
+            this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : INamed
+        {
+            return new DictionaryWrapper<TInner, TOuter>(source);
+        }
+
+
+        public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IEnumerable<TInner> source)
+            where TInner : TOuter where TOuter : INamed
+        {
+            return new EnumerableWrapper<TInner, TOuter>(source);
+        }
 
         private class EnumerableWrapper<TInner, T> : NamedCollection<T> where T : INamed where TInner : T, INamed
         {
@@ -37,8 +48,7 @@ namespace GraphZen
                 InnerEnumerable = Check.NotNull(innerEnumerable, nameof(innerEnumerable));
             }
 
-            
-            
+
             public IEnumerable<TInner> InnerEnumerable { get; }
 
             public override int Count => InnerEnumerable.Count();
@@ -47,16 +57,16 @@ namespace GraphZen
             {
                 get
                 {
-                    if (TryGetValue(key, out var value))
-                    {
-                        return value;
-                    }
+                    if (TryGetValue(key, out var value)) return value;
 
                     throw new InvalidOperationException($"Item named '{key}' does not exist in this collection");
                 }
             }
 
-            public override bool ContainsKey(string key) => InnerEnumerable.Any(_ => _.Name == key);
+            public override bool ContainsKey(string key)
+            {
+                return InnerEnumerable.Any(_ => _.Name == key);
+            }
 
             public override bool TryGetValue(string key, out T value)
             {
@@ -64,7 +74,10 @@ namespace GraphZen
                 return value != null;
             }
 
-            public override IEnumerator<T> GetEnumerator() => InnerEnumerable.Cast<T>().GetEnumerator();
+            public override IEnumerator<T> GetEnumerator()
+            {
+                return InnerEnumerable.Cast<T>().GetEnumerator();
+            }
         }
 
         private class DictionaryWrapper<TInner, T> : NamedCollection<T> where TInner : T where T : INamed
@@ -74,16 +87,20 @@ namespace GraphZen
                 InnerDictionary = Check.NotNull(innerDictionary, nameof(innerDictionary));
             }
 
-            
+
             public IReadOnlyDictionary<string, TInner> InnerDictionary { get; }
 
 
             public override int Count => InnerDictionary.Count;
 
             public override T this[string key] => InnerDictionary[key];
-            public override bool ContainsKey(string key) => InnerDictionary.ContainsKey(key);
 
-            public override bool TryGetValue( string key, out T value)
+            public override bool ContainsKey(string key)
+            {
+                return InnerDictionary.ContainsKey(key);
+            }
+
+            public override bool TryGetValue(string key, out T value)
             {
                 if (InnerDictionary.TryGetValue(key, out var innerVal))
                 {
@@ -95,10 +112,12 @@ namespace GraphZen
                 return false;
             }
 
-            public override IEnumerator<T> GetEnumerator() => InnerDictionary.Values.Cast<T>().GetEnumerator();
+            public override IEnumerator<T> GetEnumerator()
+            {
+                return InnerDictionary.Values.Cast<T>().GetEnumerator();
+            }
         }
     }
-
 
 
     public abstract class NamedCollection<T> : IEnumerable<T> where T : INamed
@@ -111,13 +130,15 @@ namespace GraphZen
 
         public abstract IEnumerator<T> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
         public override string ToString()
         {
             // ReSharper disable once PossibleNullReferenceException
             return string.Join(", ", this.Select(_ => _.Name));
         }
-
     }
 }

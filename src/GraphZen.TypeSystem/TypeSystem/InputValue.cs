@@ -1,17 +1,16 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -22,22 +21,24 @@ namespace GraphZen.TypeSystem
                  "and optionally a default value.")]
     public abstract class InputValue : AnnotatableMember, IInputValue
     {
-          private readonly Lazy<InputValueDefinitionSyntax> _syntax;
-          private readonly Lazy<IGraphQLType> _type;
+        private readonly Lazy<InputValueDefinitionSyntax> _syntax;
+        private readonly Lazy<IGraphQLType> _type;
 
         /// <inheritdoc />
         protected InputValue(
-             string name,
-             string description,
-             IGraphQLTypeReference type,
+            string name,
+            string description,
+            IGraphQLTypeReference type,
             object defaultValue,
             bool hasDefaultValue,
-             IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver, object? clrInfo,  IMemberDefinition declaringMember) : base(directives)
+            IReadOnlyList<IDirectiveAnnotation> directives,
+            TypeResolver typeResolver, object? clrInfo, IMemberDefinition declaringMember) : base(directives)
         {
-            IGraphQLType DefaultTypeResolver(IGraphQLTypeReference typeReference) =>
-                type as IGraphQLType ?? throw new InvalidOperationException(
-                    $"{typeReference} is not a valid GraphQL type. Provide a type resolver to correctly resolve.");
+            IGraphQLType DefaultTypeResolver(IGraphQLTypeReference typeReference)
+            {
+                return type as IGraphQLType ?? throw new InvalidOperationException(
+                           $"{typeReference} is not a valid GraphQL type. Provide a type resolver to correctly resolve.");
+            }
 
             typeResolver = typeResolver ?? DefaultTypeResolver;
             Name = name;
@@ -58,25 +59,24 @@ namespace GraphZen.TypeSystem
         public IGraphQLType InputType =>
             _type.Value;
 
-        [GraphQLIgnore]
-        public IMemberDefinition DeclaringMember { get; }
+        [GraphQLIgnore] public IMemberDefinition DeclaringMember { get; }
 
         IGraphQLTypeReference IInputValueDefinition.InputType => InputType;
 
-        [GraphQLIgnore]
-        public object DefaultValue { get; }
+        [GraphQLIgnore] public object DefaultValue { get; }
 
-        [GraphQLIgnore]
-        public bool HasDefaultValue { get; }
+        [GraphQLIgnore] public bool HasDefaultValue { get; }
 
 
         public override string Description { get; }
 
         public string Name { get; }
 
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
 
-        [GraphQLIgnore]
-        public object? ClrInfo { get; }
+        [GraphQLIgnore] public object? ClrInfo { get; }
     }
 }

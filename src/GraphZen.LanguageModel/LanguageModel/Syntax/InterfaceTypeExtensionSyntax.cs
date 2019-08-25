@@ -1,13 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -27,27 +29,24 @@ namespace GraphZen.LanguageModel
 
         public override NameSyntax Name { get; }
 
-        
+
         public IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
 
         public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Fields);
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals( InterfaceTypeExtensionSyntax other) =>
-            Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives) && Fields.SequenceEqual(other.Fields);
+        private bool Equals(InterfaceTypeExtensionSyntax other)
+        {
+            return Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives) &&
+                   Fields.SequenceEqual(other.Fields);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is InterfaceTypeExtensionSyntax && Equals((InterfaceTypeExtensionSyntax)obj);
         }

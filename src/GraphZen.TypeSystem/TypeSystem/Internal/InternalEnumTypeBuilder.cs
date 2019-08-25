@@ -1,18 +1,17 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
     public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTypeDefinition>
     {
         public InternalEnumTypeBuilder(EnumTypeDefinition definition,
-             InternalSchemaBuilder schemaBuilder) : base(
+            InternalSchemaBuilder schemaBuilder) : base(
             definition, schemaBuilder)
         {
         }
@@ -20,15 +19,14 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalEnumValueBuilder Value(string name,
             ConfigurationSource nameConfigurationSource,
-            ConfigurationSource configurationSource) =>
-            Definition.GetOrAddValue(name, nameConfigurationSource, configurationSource).Builder;
+            ConfigurationSource configurationSource)
+        {
+            return Definition.GetOrAddValue(name, nameConfigurationSource, configurationSource).Builder;
+        }
 
         public InternalEnumTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, configurationSource))
-            {
-                ConfigureEnumFromClrType();
-            }
+            if (Definition.SetClrType(clrType, configurationSource)) ConfigureEnumFromClrType();
 
             return this;
         }
@@ -36,15 +34,10 @@ namespace GraphZen.TypeSystem.Internal
         public bool ConfigureEnumFromClrType()
         {
             var clrType = Definition.ClrType;
-            if (clrType == null)
-            {
-                return false;
-            }
+            if (clrType == null) return false;
 
             if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
-            {
                 Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
-            }
 
             foreach (var value in Enum.GetValues(clrType))
             {
@@ -59,9 +52,7 @@ namespace GraphZen.TypeSystem.Internal
                     var valueBuilder = Value(name, nameConfigurationSource, ConfigurationSource.Convention)
                         .CustomValue(value);
                     if (memberInfo.TryGetDescriptionFromDataAnnotation(out var description))
-                    {
                         valueBuilder.Description(description, ConfigurationSource.DataAnnotation);
-                    }
                 }
             }
 

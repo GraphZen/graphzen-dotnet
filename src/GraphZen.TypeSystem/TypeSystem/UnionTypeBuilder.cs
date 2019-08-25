@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
+
 #nullable disable
 
 namespace GraphZen.TypeSystem
@@ -33,7 +34,7 @@ namespace GraphZen.TypeSystem
         public IUnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TUnion) value, (TContext) context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TUnion)value, (TContext)context, info));
             return this;
         }
 

@@ -1,11 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -23,7 +25,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Inner type.
         /// </summary>
-        
+
         public NullableTypeSyntax OfType { get; }
 
         public override IEnumerable<SyntaxNode> Children
@@ -31,25 +33,28 @@ namespace GraphZen.LanguageModel
             get { yield return OfType; }
         }
 
-        private bool Equals( NonNullTypeSyntax other) => OfType.Equals(other.OfType);
+        private bool Equals(NonNullTypeSyntax other)
+        {
+            return OfType.Equals(other.OfType);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is NonNullTypeSyntax && Equals((NonNullTypeSyntax)obj);
         }
 
-        public override int GetHashCode() => OfType.GetHashCode();
+        public override int GetHashCode()
+        {
+            return OfType.GetHashCode();
+        }
 
-        public override string ToString() => $"{OfType}!";
+        public override string ToString()
+        {
+            return $"{OfType}!";
+        }
     }
 }

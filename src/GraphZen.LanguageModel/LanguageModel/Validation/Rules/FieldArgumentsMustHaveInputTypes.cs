@@ -1,11 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
 
-
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation.Rules
 {
@@ -33,11 +35,9 @@ namespace GraphZen.LanguageModel.Validation.Rules
                 var argNamedType = arg.Type.GetNamedType();
                 var inputType = inputTypes.FirstOrDefault(_ => _.Name.Equals(argNamedType.Name));
                 if (inputType == null)
-                {
                     ReportError(
                         $"The type of {typeName}.{field}({arg}:) must be Input Type but got: {arg.Type}.",
                         arg);
-                }
             }
 
 

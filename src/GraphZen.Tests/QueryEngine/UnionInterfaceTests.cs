@@ -1,15 +1,16 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
 
-
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.QueryEngine
 {
@@ -89,7 +90,9 @@ namespace GraphZen.QueryEngine
         };
 
         [Fact]
-        public Task ItCanIntrospectOnUnionAndIntersectionTypes() => ExecuteAsync(Schema, @"
+        public Task ItCanIntrospectOnUnionAndIntersectionTypes()
+        {
+            return ExecuteAsync(Schema, @"
                {
                 Named: __type(name: ""Named"") {
                   kind
@@ -111,47 +114,50 @@ namespace GraphZen.QueryEngine
                 }
               }
             ").ShouldEqual(new
-        {
-            data = new
             {
-                Named = new
+                data = new
                 {
-                    kind = "INTERFACE",
-                    name = "Named",
-                    fields = new object[] { new { name = "name" } },
-                    interfaces = (object)null,
-                    possibleTypes = new object[]
+                    Named = new
                     {
-                        new {name = "Cat"},
-                        new {name = "Dog"},
-                        new {name = "Person"}
+                        kind = "INTERFACE",
+                        name = "Named",
+                        fields = new object[] { new { name = "name" } },
+                        interfaces = (object)null,
+                        possibleTypes = new object[]
+                        {
+                            new {name = "Cat"},
+                            new {name = "Dog"},
+                            new {name = "Person"}
+                        },
+                        enumValues = (object)null,
+                        inputFields = (object)null
                     },
-                    enumValues = (object)null,
-                    inputFields = (object)null
-                },
-                Pet = new
-                {
-                    kind = "UNION",
-                    name = "Pet",
-                    fields = (object)null,
+                    Pet = new
+                    {
+                        kind = "UNION",
+                        name = "Pet",
+                        fields = (object)null,
 
-                    interfaces = (object)null,
-                    possibleTypes = new object[]
-                    {
-                        new {name = "Dog"},
-                        new {name = "Cat"}
-                    },
-                    enumValues = (object)null,
-                    inputFields = (object)null
+                        interfaces = (object)null,
+                        possibleTypes = new object[]
+                        {
+                            new {name = "Dog"},
+                            new {name = "Cat"}
+                        },
+                        enumValues = (object)null,
+                        inputFields = (object)null
+                    }
                 }
-            }
-        });
+            });
+        }
 
         /// <summary>
         ///     NOTE: This is an *invalid* query, but it should be an *executable* query.
         /// </summary>
         [Fact]
-        public Task ExecutesUsingUnionTypes() => ExecuteAsync(Schema, @"
+        public Task ExecutesUsingUnionTypes()
+        {
+            return ExecuteAsync(Schema, @"
               {
                 __typename
                 name
@@ -163,24 +169,27 @@ namespace GraphZen.QueryEngine
                 }
               }
         ", John).ShouldEqual(new
-        {
-            data = new
             {
-                __typename = "Person",
-                name = "John",
-                pets = new object[]
+                data = new
                 {
-                    new {__typename = "Cat", name = "Garfield", meows = false},
-                    new {__typename = "Dog", name = "Odie", barks = true}
+                    __typename = "Person",
+                    name = "John",
+                    pets = new object[]
+                    {
+                        new {__typename = "Cat", name = "Garfield", meows = false},
+                        new {__typename = "Dog", name = "Odie", barks = true}
+                    }
                 }
-            }
-        });
+            });
+        }
 
         /// <summary>
         ///     This is the valid version of the query in the above test.
         /// </summary>
         [Fact]
-        public Task ExecutesUsingUnionTypesWithInlineFragments() => ExecuteAsync(Schema, @"
+        public Task ExecutesUsingUnionTypesWithInlineFragments()
+        {
+            return ExecuteAsync(Schema, @"
           {
             __typename
             name
@@ -197,25 +206,28 @@ namespace GraphZen.QueryEngine
             }
           }
         ", John).ShouldEqual(new
-        {
-            data = new
             {
-                __typename = "Person",
-                name = "John",
-                pets = new object[]
+                data = new
                 {
-                    new {__typename = "Cat", name = "Garfield", meows = false},
-                    new {__typename = "Dog", name = "Odie", barks = true}
+                    __typename = "Person",
+                    name = "John",
+                    pets = new object[]
+                    {
+                        new {__typename = "Cat", name = "Garfield", meows = false},
+                        new {__typename = "Dog", name = "Odie", barks = true}
+                    }
                 }
-            }
-        });
+            });
+        }
 
 
         /// <summary>
         ///     NOTE: This is an *invalid* query, but it should be an *executable* query.
         /// </summary>
         [Fact]
-        public Task ExecutesUsingInterfaceTypes() => ExecuteAsync(Schema, @"
+        public Task ExecutesUsingInterfaceTypes()
+        {
+            return ExecuteAsync(Schema, @"
               {
                 __typename
                 name
@@ -227,24 +239,27 @@ namespace GraphZen.QueryEngine
                 }
               }
         ", John).ShouldEqual(new
-        {
-            data = new
             {
-                __typename = "Person",
-                name = "John",
-                friends = new object[]
+                data = new
                 {
-                    new {__typename = "Person", name = "Liz"},
-                    new {__typename = "Dog", name = "Odie", barks = true}
+                    __typename = "Person",
+                    name = "John",
+                    friends = new object[]
+                    {
+                        new {__typename = "Person", name = "Liz"},
+                        new {__typename = "Dog", name = "Odie", barks = true}
+                    }
                 }
-            }
-        });
+            });
+        }
 
         /// <summary>
         ///     This is the valid version of the query in the above test.
         /// </summary>
         [Fact]
-        public Task ExecutesInterfaceTypesWithInlineFragments() => ExecuteAsync(Schema, @"
+        public Task ExecutesInterfaceTypesWithInlineFragments()
+        {
+            return ExecuteAsync(Schema, @"
           {
             __typename
             name
@@ -260,21 +275,24 @@ namespace GraphZen.QueryEngine
             }
           }
         ", John).ShouldEqual(new
-        {
-            data = new
             {
-                __typename = "Person",
-                name = "John",
-                friends = new object[]
+                data = new
                 {
-                    new {__typename = "Person", name = "Liz"},
-                    new {__typename = "Dog", name = "Odie", barks = true}
+                    __typename = "Person",
+                    name = "John",
+                    friends = new object[]
+                    {
+                        new {__typename = "Person", name = "Liz"},
+                        new {__typename = "Dog", name = "Odie", barks = true}
+                    }
                 }
-            }
-        });
+            });
+        }
 
         [Fact]
-        public Task AllowsFragmentConditionsToBeAbstractTypes() => ExecuteAsync(Schema, @"
+        public Task AllowsFragmentConditionsToBeAbstractTypes()
+        {
+            return ExecuteAsync(Schema, @"
           {
             __typename
             name
@@ -305,23 +323,24 @@ namespace GraphZen.QueryEngine
             }
           }
         ", John).ShouldEqual(new
-        {
-            data = new
             {
-                __typename = "Person",
-                name = "John",
-                pets = new object[]
+                data = new
                 {
-                    new {__typename = "Cat", name = "Garfield", meows = false},
-                    new {__typename = "Dog", name = "Odie", barks = true}
-                },
-                friends = new object[]
-                {
-                    new {__typename = "Person", name = "Liz"},
-                    new {__typename = "Dog", name = "Odie", barks = true}
+                    __typename = "Person",
+                    name = "John",
+                    pets = new object[]
+                    {
+                        new {__typename = "Cat", name = "Garfield", meows = false},
+                        new {__typename = "Dog", name = "Odie", barks = true}
+                    },
+                    friends = new object[]
+                    {
+                        new {__typename = "Person", name = "Liz"},
+                        new {__typename = "Dog", name = "Odie", barks = true}
+                    }
                 }
-            }
-        });
+            });
+        }
 
         public class CustomContext : GraphQLContext
         {

@@ -1,10 +1,11 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using JetBrains.Annotations;
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.Unions
 {
@@ -12,13 +13,16 @@ namespace GraphZen.Unions
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
-        public CollectionConventionContext GetContext() => new CollectionConventionContext
+        public CollectionConventionContext GetContext()
         {
-            ItemNamedByConvention = nameof(NamedByConvention),
-            ItemNamedByDataAnnotation = DataAnnotationName,
-            ItemIgnoredByConvention = nameof(IgnoredByConvention),
-            ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation)
-        };
+            return new CollectionConventionContext
+            {
+                ItemNamedByConvention = nameof(NamedByConvention),
+                ItemNamedByDataAnnotation = DataAnnotationName,
+                ItemIgnoredByConvention = nameof(IgnoredByConvention),
+                ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation)
+            };
+        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {
@@ -34,8 +38,7 @@ namespace GraphZen.Unions
         {
             public NamedByConvention ConventionallyNamed { get; set; }
 
-            [GraphQLIgnore]
-            public IgnoredByConvention IgnoredByConvention { get; set; }
+            [GraphQLIgnore] public IgnoredByConvention IgnoredByConvention { get; set; }
 
             public IgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
 

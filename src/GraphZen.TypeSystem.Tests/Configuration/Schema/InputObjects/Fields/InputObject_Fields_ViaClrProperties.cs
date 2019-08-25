@@ -1,10 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using JetBrains.Annotations;
-#nullable disable
+using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.InputObjects.Fields
 {
@@ -13,8 +15,9 @@ namespace GraphZen.InputObjects.Fields
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext() =>
-            new CollectionConventionContext
+        public CollectionConventionContext GetContext()
+        {
+            return new CollectionConventionContext
             {
                 ParentName = nameof(ExampleInputObject),
                 ItemNamedByConvention = nameof(ExampleInputObject.HelloWorld).FirstCharToLower(),
@@ -22,6 +25,7 @@ namespace GraphZen.InputObjects.Fields
                 ItemIgnoredByConvention = nameof(ExampleInputObject.IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(ExampleInputObject.IgnoredByDataAnnotation).FirstCharToLower()
             };
+        }
 
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
@@ -36,7 +40,7 @@ namespace GraphZen.InputObjects.Fields
 
         public void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
 
@@ -49,11 +53,9 @@ namespace GraphZen.InputObjects.Fields
         {
             public string HelloWorld { get; set; }
 
-            [GraphQLName(DataAnnotationName)]
-            public string NamedByDataAnnotation { get; set; }
+            [GraphQLName(DataAnnotationName)] public string NamedByDataAnnotation { get; set; }
 
-            [GraphQLIgnore]
-            public string IgnoredByDataAnnotation { get; set; }
+            [GraphQLIgnore] public string IgnoredByDataAnnotation { get; set; }
 
             public IgnoredType IgnoredByConvention { get; set; }
         }

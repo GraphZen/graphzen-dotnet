@@ -1,11 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System.Diagnostics.CodeAnalysis;
+using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 #nullable disable
 
-
-using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.TypeSystem
 {
@@ -25,28 +26,44 @@ namespace GraphZen.TypeSystem
 
         public override string ConventionalName { get; } = nameof(IInterfaceNamedByConvention);
 
-        public override void CreateMemberNamedByConvention(SchemaBuilder schemaBuilder) =>
+        public override void CreateMemberNamedByConvention(SchemaBuilder schemaBuilder)
+        {
             schemaBuilder.Interface<IInterfaceNamedByConvention>();
+        }
 
         public override void CreateMemberWithCustomNameAttribute(SchemaBuilder schemaBuilder)
-            => schemaBuilder.Interface<IInterfaceNamedByDataAnnotation>();
+        {
+            schemaBuilder.Interface<IInterfaceNamedByDataAnnotation>();
+        }
 
-        public override void SetNameOnMemberNamedByConvention(SchemaBuilder schemaBuilder, string name) =>
+        public override void SetNameOnMemberNamedByConvention(SchemaBuilder schemaBuilder, string name)
+        {
             schemaBuilder.Interface<IInterfaceNamedByConvention>().Name(name);
+        }
 
-        public override void SetNameOnMemberNamedByDataAnnotation(SchemaBuilder schemaBuilder, string name) =>
+        public override void SetNameOnMemberNamedByDataAnnotation(SchemaBuilder schemaBuilder, string name)
+        {
             schemaBuilder.Interface<IInterfaceNamedByDataAnnotation>().Name(name);
+        }
 
-        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder) =>
-            schemaBuilder.GetDefinition().GetInterface<IInterfaceNamedByConvention>();
+        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder)
+        {
+            return schemaBuilder.GetDefinition().GetInterface<IInterfaceNamedByConvention>();
+        }
 
-        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder) =>
-            schemaBuilder.GetDefinition().GetInterface<IInterfaceNamedByDataAnnotation>();
+        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder)
+        {
+            return schemaBuilder.GetDefinition().GetInterface<IInterfaceNamedByDataAnnotation>();
+        }
 
-        public override INamed GetMemberNamedByConvention(Schema schema) =>
-            schema.GetInterface<IInterfaceNamedByConvention>();
+        public override INamed GetMemberNamedByConvention(Schema schema)
+        {
+            return schema.GetInterface<IInterfaceNamedByConvention>();
+        }
 
-        public override INamed GetMemberNamedByDataAnnotation(Schema schema) =>
-            schema.GetInterface<IInterfaceNamedByDataAnnotation>();
+        public override INamed GetMemberNamedByDataAnnotation(Schema schema)
+        {
+            return schema.GetInterface<IInterfaceNamedByDataAnnotation>();
+        }
     }
 }

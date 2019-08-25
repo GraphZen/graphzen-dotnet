@@ -1,26 +1,26 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
 #nullable disable
 
 namespace GraphZen.TypeSystem
 {
     [GraphQLType(typeof(InputValue))]
-    public class Argument : InputValue, IArgument 
+    public class Argument : InputValue, IArgument
     {
         public Argument(
-             string name,
+            string name,
             string description,
-             IGraphQLType type,
-             IArgumentsContainer declaringMember,
+            IGraphQLType type,
+            IArgumentsContainer declaringMember,
             object defaultValue, bool hasDefaultValue,
             IReadOnlyList<IDirectiveAnnotation> directives = null,
             ParameterInfo clrInfo = null
@@ -30,14 +30,14 @@ namespace GraphZen.TypeSystem
         }
 
         public Argument(
-             string name,
+            string name,
             string description,
-             IGraphQLTypeReference type,
+            IGraphQLTypeReference type,
             object defaultValue,
             bool hasDefaultValue,
             IReadOnlyList<IDirectiveAnnotation> directives,
             TypeResolver typeResolver,
-             IArgumentsContainer declaringMember,
+            IArgumentsContainer declaringMember,
             ParameterInfo clrInfo) :
             base(name, description, type,
                 defaultValue, hasDefaultValue,
@@ -52,9 +52,9 @@ namespace GraphZen.TypeSystem
         public new ParameterInfo ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsContainerDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 
-        
+
         [GraphQLIgnore]
-        public static Argument From(IArgumentDefinition definition,  IArgumentsContainer declaringMember,
+        public static Argument From(IArgumentDefinition definition, IArgumentsContainer declaringMember,
             TypeResolver typeResolver)
         {
             Check.NotNull(definition, nameof(definition));

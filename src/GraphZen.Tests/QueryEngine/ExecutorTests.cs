@@ -1,10 +1,8 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
@@ -12,8 +10,11 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.QueryEngine
 {
@@ -52,46 +53,81 @@ namespace GraphZen.QueryEngine
             }
 
             [UsedImplicitly]
-            public string A() => "Already Been Done";
+            public string A()
+            {
+                return "Already Been Done";
+            }
 
             [UsedImplicitly]
-            public string B() => "Boring";
+            public string B()
+            {
+                return "Boring";
+            }
 
             [UsedImplicitly]
-            public object[] C() => new object[] { "Contrived", null, "Confusing" };
+            public object[] C()
+            {
+                return new object[] { "Contrived", null, "Confusing" };
+            }
 
             [UsedImplicitly]
-            public object[] Deeper() => new object[] { _data, null, _data };
+            public object[] Deeper()
+            {
+                return new object[] { _data, null, _data };
+            }
         }
 
         private class Data
         {
-            [UsedImplicitly]
-            public string F => "Fish";
+            [UsedImplicitly] public string F => "Fish";
 
             [UsedImplicitly]
-            public string A() => "Apple";
+            public string A()
+            {
+                return "Apple";
+            }
 
             [UsedImplicitly]
-            public string B() => "Banana";
+            public string B()
+            {
+                return "Banana";
+            }
 
             [UsedImplicitly]
-            public string C() => "Cookie";
+            public string C()
+            {
+                return "Cookie";
+            }
 
             [UsedImplicitly]
-            public string D() => "Donut";
+            public string D()
+            {
+                return "Donut";
+            }
 
             [UsedImplicitly]
-            public string E() => "Egg";
+            public string E()
+            {
+                return "Egg";
+            }
 
             [UsedImplicitly]
-            public string Pic(int? size) => $"Pic of size: {size ?? 50}";
+            public string Pic(int? size)
+            {
+                return $"Pic of size: {size ?? 50}";
+            }
 
             [UsedImplicitly]
-            public DeepData Deep() => new DeepData(this);
+            public DeepData Deep()
+            {
+                return new DeepData(this);
+            }
 
             [UsedImplicitly]
-            public Task<Data> DataAsync() => Task.FromResult(this);
+            public Task<Data> DataAsync()
+            {
+                return Task.FromResult(this);
+            }
         }
 
         [Fact]
@@ -279,11 +315,30 @@ namespace GraphZen.QueryEngine
 
         public class OrderingData
         {
-            public string A() => "a";
-            public Task<string> B() => Task.FromResult("b");
-            public string C() => "c";
-            public Task<string> D() => Task.FromResult("d");
-            public string E() => "e";
+            public string A()
+            {
+                return "a";
+            }
+
+            public Task<string> B()
+            {
+                return Task.FromResult("b");
+            }
+
+            public string C()
+            {
+                return "c";
+            }
+
+            public Task<string> D()
+            {
+                return Task.FromResult("d");
+            }
+
+            public string E()
+            {
+                return "e";
+            }
         }
 
 
@@ -478,6 +533,9 @@ namespace GraphZen.QueryEngine
         }
 
         [Fact(Skip = "TODO")]
-        public Task UsesACustomFieldResolver() => throw new NotImplementedException();
+        public Task UsesACustomFieldResolver()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

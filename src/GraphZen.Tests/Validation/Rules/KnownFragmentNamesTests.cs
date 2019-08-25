@@ -1,14 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
 
-
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using GraphZen.QueryEngine.Validation.Rules;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.Validation.Rules
 {
@@ -18,7 +19,9 @@ namespace GraphZen.Validation.Rules
         public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.KnownFragmentNames;
 
         [Fact]
-        public void KnownFragmentNamesAreValid() => QueryShouldPass(@"
+        public void KnownFragmentNamesAreValid()
+        {
+            QueryShouldPass(@"
 
           {
             human(id: 4) {
@@ -43,9 +46,12 @@ namespace GraphZen.Validation.Rules
           }
 
         ");
+        }
 
         [Fact]
-        public void UnknownFragmentNames() => QueryShouldFail(@"
+        public void UnknownFragmentNames()
+        {
+            QueryShouldFail(@"
 
           {
             human(id: 4) {
@@ -62,12 +68,15 @@ namespace GraphZen.Validation.Rules
           }
 
         ",
-            UndefinedFragment("UnknownFragment1", 5, 18),
-            UndefinedFragment("UnknownFragment2", 7, 20),
-            UndefinedFragment("UnknownFragment3", 14, 16)
-        );
+                UndefinedFragment("UnknownFragment1", 5, 18),
+                UndefinedFragment("UnknownFragment2", 7, 20),
+                UndefinedFragment("UnknownFragment3", 14, 16)
+            );
+        }
 
-        private static ExpectedError UndefinedFragment(string fragmentName, int line, int column) =>
-            Error(KnownFragmentNames.UnknownFragmentMessage(fragmentName), (line, column));
+        private static ExpectedError UndefinedFragment(string fragmentName, int line, int column)
+        {
+            return Error(KnownFragmentNames.UnknownFragmentMessage(fragmentName), (line, column));
+        }
     }
 }

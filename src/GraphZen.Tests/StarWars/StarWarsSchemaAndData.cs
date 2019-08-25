@@ -1,17 +1,18 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.QueryEngine;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+#nullable disable
+
 
 namespace GraphZen.StarWars
 {
@@ -29,8 +30,7 @@ namespace GraphZen.StarWars
             [Description("The name of the character.")]
             string Name { get; }
 
-            [GraphQLIgnore]
-            string[] FriendIds { get; }
+            [GraphQLIgnore] string[] FriendIds { get; }
 
             [GraphQLCanBeNull]
             [GraphQLListItemCanBeNull]
@@ -54,15 +54,13 @@ namespace GraphZen.StarWars
             [GraphQLCanBeNull]
             public string HomePlanet { get; set; }
 
-            [Description("The id of the human.")]
-            public string Id { get; set; }
+            [Description("The id of the human.")] public string Id { get; set; }
 
             [GraphQLCanBeNull]
             [Description("The name of the human.")]
             public string Name { get; set; }
 
-            [GraphQLIgnore]
-            public string[] FriendIds { get; set; }
+            [GraphQLIgnore] public string[] FriendIds { get; set; }
 
             [GraphQLCanBeNull]
             [GraphQLListItemCanBeNull]
@@ -91,15 +89,13 @@ namespace GraphZen.StarWars
             [Description("The primary function of the droid")]
             public string PrimaryFunction { get; set; }
 
-            [Description("The id of the droid.")]
-            public string Id { get; set; }
+            [Description("The id of the droid.")] public string Id { get; set; }
 
             [GraphQLCanBeNull]
             [Description("The name of the droid.")]
             public string Name { get; set; }
 
-            [GraphQLIgnore]
-            public string[] FriendIds { get; set; }
+            [GraphQLIgnore] public string[] FriendIds { get; set; }
 
             [GraphQLCanBeNull]
             [GraphQLListItemCanBeNull]
@@ -196,17 +192,31 @@ namespace GraphZen.StarWars
             {"2001", Artoo}
         };
 
-        protected static Task<ICharacter> GetCharacterAsync(string id) =>
-            Task.FromResult(HumanData.TryGetValue(id, out var human) ? (ICharacter)human :
+        protected static Task<ICharacter> GetCharacterAsync(string id)
+        {
+            return Task.FromResult(HumanData.TryGetValue(id, out var human) ? (ICharacter)human :
                 DroidData.TryGetValue(id, out var droid) ? droid : null);
+        }
 
-        protected static IEnumerable<Task<ICharacter>> GetFriendsAsync(ICharacter character) =>
-            character.FriendIds.Select(GetCharacterAsync);
+        protected static IEnumerable<Task<ICharacter>> GetFriendsAsync(ICharacter character)
+        {
+            return character.FriendIds.Select(GetCharacterAsync);
+        }
 
-        protected static ICharacter GetHero(Episode? episode) => episode == Episode.Empire ? (ICharacter)Luke : Artoo;
+        protected static ICharacter GetHero(Episode? episode)
+        {
+            return episode == Episode.Empire ? (ICharacter)Luke : Artoo;
+        }
 
-        protected static Human GetHuman(string id) => HumanData.TryGetValue(id, out var human) ? human : null;
-        protected static Droid GetDroid(string id) => DroidData.TryGetValue(id, out var droid) ? droid : null;
+        protected static Human GetHuman(string id)
+        {
+            return HumanData.TryGetValue(id, out var human) ? human : null;
+        }
+
+        protected static Droid GetDroid(string id)
+        {
+            return DroidData.TryGetValue(id, out var droid) ? droid : null;
+        }
 
 
         protected static Schema SchemaBuilderSchema = Schema.Create(sb =>
@@ -307,18 +317,26 @@ namespace GraphZen.StarWars
             public ICharacter Hero(
                 [Description(
                     "If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.")]
-                Episode? episode) => GetHero(episode);
+                Episode? episode)
+            {
+                return GetHero(episode);
+            }
 
             [UsedImplicitly]
             [GraphQLCanBeNull]
             [GraphQLName("human")]
-            public Task<Human> GetHumanAsync([Description("id of the human")] string id) =>
-                Task.FromResult(GetHuman(id));
+            public Task<Human> GetHumanAsync([Description("id of the human")] string id)
+            {
+                return Task.FromResult(GetHuman(id));
+            }
 
             [GraphQLName("droid")]
             [GraphQLCanBeNull]
             [UsedImplicitly]
-            public Droid GetDroidData([Description("id of the droid")] string id) => GetDroid(id);
+            public Droid GetDroidData([Description("id of the droid")] string id)
+            {
+                return GetDroid(id);
+            }
         }
     }
 }

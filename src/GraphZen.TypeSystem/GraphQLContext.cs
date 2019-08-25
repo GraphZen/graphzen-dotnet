@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
@@ -17,10 +18,10 @@ namespace GraphZen
     public class GraphQLContext
     {
         private static readonly ILog Logger = LogProvider.For<GraphQLContext>();
-         private readonly GraphQLContextOptions _options;
+        private readonly GraphQLContextOptions _options;
 
         private bool _optionsInitialized;
-         private Schema? _schema;
+        private Schema? _schema;
 
         public GraphQLContext() : this(new GraphQLContextOptions<GraphQLContext>())
         {
@@ -38,10 +39,10 @@ namespace GraphZen
             _schema = schema;
         }
 
-        
+
         internal static Dictionary<Type, Schema> SchemaCache { get; } = new Dictionary<Type, Schema>();
 
-        
+
         public GraphQLContextOptions Options
         {
             get
@@ -57,7 +58,7 @@ namespace GraphZen
             }
         }
 
-        
+
         public Schema Schema
         {
             get
@@ -123,17 +124,17 @@ namespace GraphZen
             }
         }
 
-        protected internal virtual void OnConfiguring( GraphQLContextOptionsBuilder optionsBuilder)
+        protected internal virtual void OnConfiguring(GraphQLContextOptionsBuilder optionsBuilder)
         {
         }
 
-        
+
         protected virtual SchemaBuilder CreateSchemaBuilder()
         {
             return new SchemaBuilder(Options.Schema);
         }
 
-        protected internal virtual void OnSchemaCreating( SchemaBuilder schemaBuilder)
+        protected internal virtual void OnSchemaCreating(SchemaBuilder schemaBuilder)
         {
         }
     }

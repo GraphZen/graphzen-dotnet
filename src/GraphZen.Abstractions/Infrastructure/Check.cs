@@ -15,10 +15,7 @@ namespace GraphZen.Infrastructure
         [ContractAnnotation("value:null => halt")]
         public static T NotNull<T>([NotNull] [NoEnumeration] T value, [InvokerParameterName] string parameterName)
         {
-            if (value is null)
-            {
-                throw new ArgumentNullException(parameterName);
-            }
+            if (value is null) throw new ArgumentNullException(parameterName);
             return value;
         }
     }

@@ -1,16 +1,17 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -26,9 +27,15 @@ namespace GraphZen.LanguageModel
 
             private List<(string enterOrLeave, Type type)> Visited { get; }
 
-            public override void OnEnter(SyntaxNode node) => Visited.Add(("enter", node.GetType()));
+            public override void OnEnter(SyntaxNode node)
+            {
+                Visited.Add(("enter", node.GetType()));
+            }
 
-            public override void OnLeave(SyntaxNode node) => Visited.Add(("leave", node.GetType()));
+            public override void OnLeave(SyntaxNode node)
+            {
+                Visited.Add(("leave", node.GetType()));
+            }
         }
 
         [Fact]

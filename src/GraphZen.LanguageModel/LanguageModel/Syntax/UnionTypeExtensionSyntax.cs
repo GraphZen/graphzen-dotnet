@@ -1,13 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -27,7 +29,7 @@ namespace GraphZen.LanguageModel
 
         public override NameSyntax Name { get; }
 
-        
+
         public IReadOnlyList<NamedTypeSyntax> Types { get; }
 
 
@@ -35,21 +37,18 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals( UnionTypeExtensionSyntax other) => Name.Equals(other.Name) &&
-                                                                         Directives.SequenceEqual(other.Directives) &&
-                                                                         Types.SequenceEqual(other.Types);
+        private bool Equals(UnionTypeExtensionSyntax other)
+        {
+            return Name.Equals(other.Name) &&
+                   Directives.SequenceEqual(other.Directives) &&
+                   Types.SequenceEqual(other.Types);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is UnionTypeExtensionSyntax && Equals((UnionTypeExtensionSyntax)obj);
         }

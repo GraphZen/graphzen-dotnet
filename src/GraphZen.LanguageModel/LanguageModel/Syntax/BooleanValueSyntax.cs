@@ -1,13 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -29,27 +31,34 @@ namespace GraphZen.LanguageModel
         public bool Value { get; }
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
-        public string GetDisplayValue() => Value.ToString();
 
-        public override object GetValue() => Value;
+        public string GetDisplayValue()
+        {
+            return Value.ToString();
+        }
 
-        private bool Equals( BooleanValueSyntax other) => Value == other.Value;
+        public override object GetValue()
+        {
+            return Value;
+        }
+
+        private bool Equals(BooleanValueSyntax other)
+        {
+            return Value == other.Value;
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is BooleanValueSyntax && Equals((BooleanValueSyntax)obj);
         }
 
-        public override int GetHashCode() => Value.GetHashCode();
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
     }
 }

@@ -1,11 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
 
-
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation.Rules
 {
@@ -34,11 +36,9 @@ namespace GraphZen.LanguageModel.Validation.Rules
 
                 var outputType = outputTypes.FirstOrDefault(_ => _.Name.Equals(fieldNamedType.Name));
                 if (outputType == null)
-                {
                     ReportError(
                         $"The type of {typeName}.{field} must be Output Type but got: {field.FieldType}.",
                         field.FieldType);
-                }
             }
 
             return false;

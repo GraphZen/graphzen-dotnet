@@ -1,12 +1,11 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -18,7 +17,7 @@ namespace GraphZen.TypeSystem
             Builder = builder;
         }
 
-        
+
         private InternalEnumTypeBuilder Builder { get; }
 
         public IEnumTypeBuilder<TEnum> Description(string description)
@@ -32,9 +31,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(value, nameof(value));
             var enumType = typeof(TEnum);
             if (enumType != typeof(string) && !enumType.IsEnum)
-            {
                 throw new ArgumentException("Enum types can only be bound to strings or CLR enum types", nameof(value));
-            }
 
             var vb = Builder.Value(value.ToString()!, ConfigurationSource.Convention, ConfigurationSource.Explicit);
             valueConfigurator?.Invoke(new EnumValueBuilder(vb));
@@ -62,7 +59,10 @@ namespace GraphZen.TypeSystem
             return new EnumTypeBuilder<T>(Builder);
         }
 
-        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
+        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name)
+        {
+            return DirectiveAnnotation(name, null);
+        }
 
         public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name, object? value)
         {

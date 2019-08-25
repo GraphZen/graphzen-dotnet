@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-
 namespace GraphZen
 {
     public interface IDocumentValidator

@@ -1,14 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
+
 #nullable disable
-
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.LanguageModel.SyntaxFactory;
 using static GraphZen.TypeSystem.Internal.AstFromValue;
@@ -19,8 +19,15 @@ namespace GraphZen
     [NoReorder]
     public class AstFromValueTests
     {
-        private static Maybe<object> Some(object some) => Maybe.Some(some);
-        private static Maybe<object> None() => Maybe.None<object>();
+        private static Maybe<object> Some(object some)
+        {
+            return Maybe.Some(some);
+        }
+
+        private static Maybe<object> None()
+        {
+            return Maybe.None<object>();
+        }
 
 
         private static readonly object ComplexValue = new { someArbitrary = "complexValue" };

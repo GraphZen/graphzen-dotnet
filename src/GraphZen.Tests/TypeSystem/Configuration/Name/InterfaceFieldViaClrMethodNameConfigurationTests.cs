@@ -1,13 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
 
-
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+#nullable disable
+
 
 namespace GraphZen.TypeSystem
 {
@@ -26,34 +27,52 @@ namespace GraphZen.TypeSystem
         public override string ConventionalName { get; } =
             nameof(IFooInterface.ConventionallyNamedField).FirstCharToLower();
 
-        public override void CreateMemberNamedByConvention(SchemaBuilder schemaBuilder) =>
+        public override void CreateMemberNamedByConvention(SchemaBuilder schemaBuilder)
+        {
             schemaBuilder.Interface<IFooInterface>();
+        }
 
         public override void CreateMemberWithCustomNameAttribute(SchemaBuilder schemaBuilder)
-            => schemaBuilder.Interface<IFooInterface>();
+        {
+            schemaBuilder.Interface<IFooInterface>();
+        }
 
-        public override void SetNameOnMemberNamedByConvention(SchemaBuilder schemaBuilder, string name) =>
+        public override void SetNameOnMemberNamedByConvention(SchemaBuilder schemaBuilder, string name)
+        {
             schemaBuilder.Interface<IFooInterface>().Field<string>(ConventionalName, _ => _.Name(name));
+        }
 
-        public override void SetNameOnMemberNamedByDataAnnotation(SchemaBuilder schemaBuilder, string name) =>
+        public override void SetNameOnMemberNamedByDataAnnotation(SchemaBuilder schemaBuilder, string name)
+        {
             schemaBuilder.Interface<IFooInterface>().Field<string>("CustomName", _ => _.Name(name));
+        }
 
-        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder) =>
-            MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
+        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder)
+        {
+            return MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                 schemaBuilder.GetDefinition().GetInterface<IFooInterface>(),
                 nameof(IFooInterface.ConventionallyNamedField).FirstCharToLower());
+        }
 
 
-        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder) =>
-            MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
+        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder)
+        {
+            return MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                 schemaBuilder.GetDefinition().GetInterface<IFooInterface>(), "CustomName");
+        }
 
-        public override INamed GetMemberNamedByConvention(Schema schema) => schema.GetInterface<IFooInterface>()
-            .GetFields().SingleOrDefault(_ =>
-                _.ClrInfo == typeof(IFooInterface).GetMethod(nameof(IFooInterface.ConventionallyNamedField)));
+        public override INamed GetMemberNamedByConvention(Schema schema)
+        {
+            return schema.GetInterface<IFooInterface>()
+                .GetFields().SingleOrDefault(_ =>
+                    _.ClrInfo == typeof(IFooInterface).GetMethod(nameof(IFooInterface.ConventionallyNamedField)));
+        }
 
-        public override INamed GetMemberNamedByDataAnnotation(Schema schema) => schema.GetInterface<IFooInterface>()
-            .GetFields().SingleOrDefault(_ =>
-                _.ClrInfo == typeof(IFooInterface).GetMethod(nameof(IFooInterface.CustomNamedField)));
+        public override INamed GetMemberNamedByDataAnnotation(Schema schema)
+        {
+            return schema.GetInterface<IFooInterface>()
+                .GetFields().SingleOrDefault(_ =>
+                    _.ClrInfo == typeof(IFooInterface).GetMethod(nameof(IFooInterface.CustomNamedField)));
+        }
     }
 }

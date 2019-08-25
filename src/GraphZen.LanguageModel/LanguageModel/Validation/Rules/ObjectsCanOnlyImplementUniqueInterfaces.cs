@@ -1,12 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation.Rules
 {
@@ -37,16 +39,12 @@ namespace GraphZen.LanguageModel.Validation.Rules
                     // ReSharper disable once PossibleNullReferenceException
                     var interfaceName = @interface.Name.Value;
                     if (!interfaces.Contains(interfaceName))
-                    {
                         ReportError(
                             $"Type {objectName} must only implement Interface types, it cannot implement {interfaceName}.",
                             @interface);
-                    }
 
                     if (interfacesByName.Count > 1)
-                    {
                         ReportError($"Type {objectName} can only implement {interfaceName} once.", interfacesByName);
-                    }
                 }
             }
 

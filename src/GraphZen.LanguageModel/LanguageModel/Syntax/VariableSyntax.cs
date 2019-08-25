@@ -1,12 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -25,7 +27,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The variable name.
         /// </summary>
-        
+
         public NameSyntax Name { get; }
 
         public override IEnumerable<SyntaxNode> Children
@@ -34,28 +36,33 @@ namespace GraphZen.LanguageModel
         }
 
 
-
-        private bool Equals( VariableSyntax other) => Name.Equals(other.Name);
+        private bool Equals(VariableSyntax other)
+        {
+            return Name.Equals(other.Name);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is VariableSyntax && Equals((VariableSyntax)obj);
         }
 
-        public override int GetHashCode() => Name.GetHashCode();
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
 
-        public override object GetValue() => $"${Name.Value}";
+        public override object GetValue()
+        {
+            return $"${Name.Value}";
+        }
 
-        public override string ToString() => $"${Name}";
+        public override string ToString()
+        {
+            return $"${Name}";
+        }
     }
 }

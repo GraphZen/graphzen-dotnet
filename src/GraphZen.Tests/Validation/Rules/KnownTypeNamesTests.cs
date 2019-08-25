@@ -1,16 +1,17 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using GraphZen.QueryEngine.Validation.Rules;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.Validation.Rules
 {
@@ -20,7 +21,9 @@ namespace GraphZen.Validation.Rules
         public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.KnownTypeNames;
 
         [Fact]
-        public void KnownTypeNamesAreValid() => QueryShouldPass(@"
+        public void KnownTypeNamesAreValid()
+        {
+            QueryShouldPass(@"
 
           query Foo($var: String, $required: [String!]!) {
             user(id: 4) {
@@ -33,14 +36,20 @@ namespace GraphZen.Validation.Rules
           }
 
         ");
+        }
 
         private static ExpectedError UnknownType(string typeName, IReadOnlyList<string> suggestedTypes, int line,
-            int column) => Error(KnownTypeNames.UnknownTypeMessage(typeName, suggestedTypes ?? Array.Empty<string>()),
-            (line,
-                column));
+            int column)
+        {
+            return Error(KnownTypeNames.UnknownTypeMessage(typeName, suggestedTypes ?? Array.Empty<string>()),
+                (line,
+                    column));
+        }
 
         [Fact]
-        public void UnknownTypeNamesAreInvalid() => QueryShouldFail(@"
+        public void UnknownTypeNamesAreInvalid()
+        {
+            QueryShouldFail(@"
 
           query Foo($var: JumbledUpLetters) {
             user(id: 4) {
@@ -54,13 +63,16 @@ namespace GraphZen.Validation.Rules
           }
 
         ",
-            UnknownType("JumbledUpLetters", null, 3, 27),
-            UnknownType("Badger", null, 6, 29),
-            UnknownType("Peettt", new[] { "Pet" }, 10, 33)
-        );
+                UnknownType("JumbledUpLetters", null, 3, 27),
+                UnknownType("Badger", null, 6, 29),
+                UnknownType("Peettt", new[] { "Pet" }, 10, 33)
+            );
+        }
 
         [Fact]
-        public void IgnoresTypeDefinitions() => QueryShouldFail(@"
+        public void IgnoresTypeDefinitions()
+        {
+            QueryShouldFail(@"
 
           type NotInTheSchema {
             field: FooBar
@@ -79,5 +91,6 @@ namespace GraphZen.Validation.Rules
           }
 
         ", UnknownType("NotInTheSchema", null, 13, 27));
+        }
     }
 }

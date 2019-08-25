@@ -1,13 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -35,20 +37,20 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name node of the input value.
         /// </summary>
-        
+
         public NameSyntax Name { get; }
 
 
         /// <summary>
         ///     The type of the input value.
         /// </summary>
-        
+
         public TypeSyntax Type { get; }
 
         /// <summary>
         ///     The default input value. (Optional)
         /// </summary>
-        
+
         public ValueSyntax DefaultValue { get; }
 
 
@@ -65,21 +67,17 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
 
-        private bool Equals( InputValueDefinitionSyntax other) =>
-            Name.Equals(other.Name) && Equals(Description, other.Description) && Type.Equals(other.Type) &&
-            Equals(DefaultValue, other.DefaultValue) && Directives.SequenceEqual(other.Directives);
+        private bool Equals(InputValueDefinitionSyntax other)
+        {
+            return Name.Equals(other.Name) && Equals(Description, other.Description) && Type.Equals(other.Type) &&
+                   Equals(DefaultValue, other.DefaultValue) && Directives.SequenceEqual(other.Directives);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is InputValueDefinitionSyntax && Equals((InputValueDefinitionSyntax)obj);
         }
@@ -97,6 +95,9 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public override string ToString() => Name.ToString();
+        public override string ToString()
+        {
+            return Name.ToString();
+        }
     }
 }

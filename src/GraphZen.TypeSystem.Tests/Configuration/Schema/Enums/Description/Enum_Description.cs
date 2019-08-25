@@ -1,16 +1,18 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using JetBrains.Annotations;
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.Enums.Description
 {
-    public abstract class Enum_Description : LeafElementConfigurationFixture<IDescription, IDescription, IMutableDescription,
+    public abstract class Enum_Description : LeafElementConfigurationFixture<IDescription, IDescription,
+        IMutableDescription,
         string, EnumTypeDefinition, EnumType>
     {
         public override string ValueA { get; } = "description a";
@@ -21,14 +23,21 @@ namespace GraphZen.Enums.Description
             sb.Enum(parentName);
         }
 
-        public override EnumType GetParent(Schema schema, string parentName) => schema.GetEnum(parentName);
+        public override EnumType GetParent(Schema schema, string parentName)
+        {
+            return schema.GetEnum(parentName);
+        }
 
-        public override EnumTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
-            sb.GetDefinition().GetEnum(parentName);
+        public override EnumTypeDefinition GetParent(SchemaBuilder sb, string parentName)
+        {
+            return sb.GetDefinition().GetEnum(parentName);
+        }
 
 
-        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent) =>
-            parent.GetDescriptionConfigurationSource();
+        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent)
+        {
+            return parent.GetDescriptionConfigurationSource();
+        }
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
         {

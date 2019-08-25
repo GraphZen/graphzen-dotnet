@@ -1,13 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using JetBrains.Annotations;
-#nullable disable
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen
 {
@@ -29,13 +30,15 @@ namespace GraphZen
         where TCollectionItem : Member, INamed
         where TMarker : TDefMarker
     {
-        
         public Type CollectionItemMemberType { get; } = typeof(TCollectionItem);
         public Type CollectionItemMemberDefinitionType { get; } = typeof(TCollectionItemDefinition);
 
         public NamedCollection<IMutableNamed>
-            GetCollection(SchemaBuilder sb, string parentName) =>
-            GetCollection(GetParent(sb, parentName)).ToNamedCollection<IMutableNamed, TCollectionItemDefinition>();
+            GetCollection(SchemaBuilder sb, string parentName)
+        {
+            return GetCollection(GetParent(sb, parentName))
+                .ToNamedCollection<IMutableNamed, TCollectionItemDefinition>();
+        }
 
         public NamedCollection<INamed> GetCollection(Schema schema, string parentName)
         {
@@ -55,17 +58,20 @@ namespace GraphZen
 
         public ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaBuilder sb,
             string parentName,
-            string itemName) => FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
+            string itemName)
+        {
+            return FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
+        }
 
-        
+
         public abstract NamedCollection<TCollectionItemDefinition> GetCollection(
-             TParentMemberDefinition parent);
+            TParentMemberDefinition parent);
 
-        
-        public abstract NamedCollection<TCollectionItem> GetCollection( TParentMember parent);
+
+        public abstract NamedCollection<TCollectionItem> GetCollection(TParentMember parent);
 
         public abstract ConfigurationSource? FindIgnoredItemConfigurationSource(
-             TParentMemberDefinition parent,  string name);
+            TParentMemberDefinition parent, string name);
 
         //public class CollectionWrapper<T>
         //{

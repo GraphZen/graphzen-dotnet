@@ -1,14 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
 
-
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using GraphZen.QueryEngine.Validation.Rules;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.Validation.Rules
 {
@@ -19,7 +20,9 @@ namespace GraphZen.Validation.Rules
 
 
         [Fact]
-        public void WithNoDirectives() => QueryShouldPass(@"
+        public void WithNoDirectives()
+        {
+            QueryShouldPass(@"
 
           query Foo {
             name
@@ -31,9 +34,12 @@ namespace GraphZen.Validation.Rules
           }
 
         ");
+        }
 
         [Fact]
-        public void WithKnownDirectives() => QueryShouldPass(@"
+        public void WithKnownDirectives()
+        {
+            QueryShouldPass(@"
 
           {
             dog @include(if: true) {
@@ -45,13 +51,18 @@ namespace GraphZen.Validation.Rules
           }
 
         ");
+        }
 
 
-        private static ExpectedError UnknownDirective(string directiveName, int line, int column) =>
-            Error(KnownDirectives.UnknownDirectiveMessage(directiveName), (line, column));
+        private static ExpectedError UnknownDirective(string directiveName, int line, int column)
+        {
+            return Error(KnownDirectives.UnknownDirectiveMessage(directiveName), (line, column));
+        }
 
         [Fact]
-        public void WithUnknownDirectives() => QueryShouldFail(@"
+        public void WithUnknownDirectives()
+        {
+            QueryShouldFail(@"
 
           {
             dog @unknown(directive: ""value"") {
@@ -60,9 +71,12 @@ namespace GraphZen.Validation.Rules
           }
 
         ", UnknownDirective("unknown", 4, 17));
+        }
 
         [Fact]
-        public void WithManyUnknownDirectives() => QueryShouldFail(@"
+        public void WithManyUnknownDirectives()
+        {
+            QueryShouldFail(@"
 
           {
             dog @unknown(directive: ""value"") {
@@ -77,13 +91,16 @@ namespace GraphZen.Validation.Rules
           }
 
         ",
-            UnknownDirective("unknown", 4, 17),
-            UnknownDirective("unknown", 7, 19),
-            UnknownDirective("unknown", 9, 20)
-        );
+                UnknownDirective("unknown", 4, 17),
+                UnknownDirective("unknown", 7, 19),
+                UnknownDirective("unknown", 9, 20)
+            );
+        }
 
         [Fact]
-        public void WithWellPlacedDirectives() => QueryShouldPass(@"
+        public void WithWellPlacedDirectives()
+        {
+            QueryShouldPass(@"
 
           query Foo($var: Boolean) @onQuery {
             name @include(if: $var)
@@ -97,21 +114,29 @@ namespace GraphZen.Validation.Rules
           }
 
         ");
+        }
 
         [Fact(Skip = "not implemented")]
-        public void ExperimentalWithWellPlacedVariableDefinitionDirectives() => QueryShouldPass(@"
+        public void ExperimentalWithWellPlacedVariableDefinitionDirectives()
+        {
+            QueryShouldPass(@"
 
           query Foo($var: Boolean @onVariableDefinition) {
             name
           }
 
         ");
+        }
 
-        private static ExpectedError MisplacedDirective(string directiveName, string placement, int line, int column) =>
-            Error(KnownDirectives.MisplacedDirectiveMessage(directiveName, placement), (line, column));
+        private static ExpectedError MisplacedDirective(string directiveName, string placement, int line, int column)
+        {
+            return Error(KnownDirectives.MisplacedDirectiveMessage(directiveName, placement), (line, column));
+        }
 
         [Fact]
-        public void WithMisplacedDirectives() => QueryShouldFail(@"
+        public void WithMisplacedDirectives()
+        {
+            QueryShouldFail(@"
 
           query Foo($var: Boolean) @include(if: true) {
             name @onQuery @include(if: $var)
@@ -123,10 +148,11 @@ namespace GraphZen.Validation.Rules
           }
 
         ",
-            MisplacedDirective("include", "QUERY", 3, 36),
-            MisplacedDirective("onQuery", "FIELD", 4, 18),
-            MisplacedDirective("onQuery", "FRAGMENT_SPREAD", 5, 21),
-            MisplacedDirective("onQuery", "MUTATION", 8, 24)
-        );
+                MisplacedDirective("include", "QUERY", 3, 36),
+                MisplacedDirective("onQuery", "FIELD", 4, 18),
+                MisplacedDirective("onQuery", "FRAGMENT_SPREAD", 5, 21),
+                MisplacedDirective("onQuery", "MUTATION", 8, 24)
+            );
+        }
     }
 }

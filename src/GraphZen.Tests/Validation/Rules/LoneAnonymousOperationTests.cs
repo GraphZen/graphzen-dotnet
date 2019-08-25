@@ -1,12 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
+
 #nullable disable
-
-
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
+using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.QueryEngine.Validation.Rules.LoneAnonymousOperation;
 
@@ -18,25 +18,33 @@ namespace GraphZen.Validation.Rules
         public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.LoneAnonymousOperation;
 
         [Fact]
-        public void NoOperations() => QueryShouldPass(@"
+        public void NoOperations()
+        {
+            QueryShouldPass(@"
 
           fragment fragA on Type {
             field
           }
 
         ");
+        }
 
         [Fact]
-        public void OneAnonymousOperation() => QueryShouldPass(@"
+        public void OneAnonymousOperation()
+        {
+            QueryShouldPass(@"
 
           {
             field
           }
 
         ");
+        }
 
         [Fact]
-        public void MultipleNamedOperations() => QueryShouldPass(@"
+        public void MultipleNamedOperations()
+        {
+            QueryShouldPass(@"
 
           query Foo {
             field
@@ -47,9 +55,12 @@ namespace GraphZen.Validation.Rules
           }
 
         ");
+        }
 
         [Fact]
-        public void MultipleAnonymousOperations() => QueryShouldFail(@"
+        public void MultipleAnonymousOperations()
+        {
+            QueryShouldFail(@"
 
           {
             fieldA
@@ -59,11 +70,14 @@ namespace GraphZen.Validation.Rules
           }
 
         ",
-            Error(AnonymousOperationNotAloneMessage, (3, 11)),
-            Error(AnonymousOperationNotAloneMessage, (6, 11)));
+                Error(AnonymousOperationNotAloneMessage, (3, 11)),
+                Error(AnonymousOperationNotAloneMessage, (6, 11)));
+        }
 
         [Fact]
-        public void AnonymousOperationWithAMutation() => QueryShouldFail(@"
+        public void AnonymousOperationWithAMutation()
+        {
+            QueryShouldFail(@"
 
           {
             fieldA
@@ -73,10 +87,13 @@ namespace GraphZen.Validation.Rules
           }
 
         ",
-            Error(AnonymousOperationNotAloneMessage, (3, 11)));
+                Error(AnonymousOperationNotAloneMessage, (3, 11)));
+        }
 
         [Fact]
-        public void AnonymousOperationWithASubscription() => QueryShouldFail(@"
+        public void AnonymousOperationWithASubscription()
+        {
+            QueryShouldFail(@"
 
           {
             fieldA
@@ -86,6 +103,7 @@ namespace GraphZen.Validation.Rules
           }
 
         ",
-            Error(AnonymousOperationNotAloneMessage, (3, 11)));
+                Error(AnonymousOperationNotAloneMessage, (3, 11)));
+        }
     }
 }

@@ -1,17 +1,18 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.Infrastructure
 {
@@ -35,10 +36,7 @@ namespace GraphZen.Infrastructure
         {
             var result = input.TryGetNullableType(out var nullableClrType);
             result.Should().Be(isNullable);
-            if (result)
-            {
-                nullableClrType.Should().Be(expectedNullableType);
-            }
+            if (result) nullableClrType.Should().Be(expectedNullableType);
         }
 
         [Theory]

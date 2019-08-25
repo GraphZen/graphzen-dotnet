@@ -1,12 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -24,32 +26,39 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The float value.
         /// </summary>
-        
+
         public string Value { get; }
 
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
-        public string GetDisplayValue() => Value;
 
-        private bool Equals( FloatValueSyntax other) => Value.Equals(other.Value);
+        public string GetDisplayValue()
+        {
+            return Value;
+        }
+
+        private bool Equals(FloatValueSyntax other)
+        {
+            return Value.Equals(other.Value);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is FloatValueSyntax && Equals((FloatValueSyntax)obj);
         }
 
-        public override int GetHashCode() => Value.GetHashCode();
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
 
-        public override object GetValue() => Value;
+        public override object GetValue()
+        {
+            return Value;
+        }
     }
 }

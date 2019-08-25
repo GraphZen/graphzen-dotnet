@@ -1,12 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using JetBrains.Annotations;
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.InputObjects.Description
 {
@@ -22,15 +23,21 @@ namespace GraphZen.InputObjects.Description
             sb.InputObject(parentName);
         }
 
-        public override InputObjectType GetParent(Schema schema, string parentName) =>
-            schema.GetInputObject(parentName);
+        public override InputObjectType GetParent(Schema schema, string parentName)
+        {
+            return schema.GetInputObject(parentName);
+        }
 
-        public override InputObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
-            sb.GetDefinition().GetInputObject(parentName);
+        public override InputObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName)
+        {
+            return sb.GetDefinition().GetInputObject(parentName);
+        }
 
 
-        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent) =>
-            parent.GetDescriptionConfigurationSource();
+        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent)
+        {
+            return parent.GetDescriptionConfigurationSource();
+        }
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
         {

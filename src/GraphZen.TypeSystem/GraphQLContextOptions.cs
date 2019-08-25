@@ -1,12 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen
 {
@@ -14,7 +16,7 @@ namespace GraphZen
     {
         private SchemaDefinition _schemaDefinition;
 
-        
+
         protected abstract GraphQLContextOptionsBuilder Builder { get; }
 
         public Type QueryClrType { get; set; }
@@ -23,7 +25,7 @@ namespace GraphZen
         public IServiceProvider InternalServiceProvider { get; set; }
         public bool RevealInternalServerErrors { get; set; } = false;
 
-        
+
         public SchemaDefinition Schema
         {
             get => _schemaDefinition ?? (_schemaDefinition = new SchemaDefinition(SpecScalars.All));

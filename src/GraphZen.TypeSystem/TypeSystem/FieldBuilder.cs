@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
+
 #nullable disable
 
 namespace GraphZen.TypeSystem
@@ -62,7 +63,7 @@ namespace GraphZen.TypeSystem
         public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source));
             return this;
         }
 
@@ -74,7 +75,7 @@ namespace GraphZen.TypeSystem
         public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, dynamic, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source, args));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source, args));
             return this;
         }
 
@@ -82,7 +83,7 @@ namespace GraphZen.TypeSystem
             Func<TDeclaringType, dynamic, GraphQLContext, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source, args, context));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source, args, context));
             return this;
         }
 
@@ -90,7 +91,7 @@ namespace GraphZen.TypeSystem
             Func<TDeclaringType, dynamic, GraphQLContext, ResolveInfo, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source, args, context, info));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source, args, context, info));
             return this;
         }
 

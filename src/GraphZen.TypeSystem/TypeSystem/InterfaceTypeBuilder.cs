@@ -1,13 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -19,7 +18,7 @@ namespace GraphZen.TypeSystem
             Builder = Check.NotNull(builder, nameof(builder));
         }
 
-        
+
         private InternalInterfaceTypeBuilder Builder { get; }
 
 
@@ -90,7 +89,11 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField<TField>(Expression<Func<TInterface, TField>> fieldSelector) => throw new NotImplementedException();
+        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField<TField>(
+            Expression<Func<TInterface, TField>> fieldSelector)
+        {
+            throw new NotImplementedException();
+        }
 
         public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField(string name)
         {
@@ -123,8 +126,10 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
+        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name)
+        {
+            return DirectiveAnnotation(name, null);
+        }
 
 
         public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name, object? value)

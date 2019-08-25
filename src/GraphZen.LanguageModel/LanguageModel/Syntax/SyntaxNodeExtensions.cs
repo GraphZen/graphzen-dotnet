@@ -1,11 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
 
-
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -28,15 +30,22 @@ namespace GraphZen.LanguageModel
 
 
         public static bool IsIntrospectionType(this DefinitionSyntax node)
-            => node is TypeDefinitionSyntax typeDef &&
-               SpecReservedNames.IntrospectionTypeNames.Contains(typeDef.Name.Value);
+        {
+            return node is TypeDefinitionSyntax typeDef &&
+                   SpecReservedNames.IntrospectionTypeNames.Contains(typeDef.Name.Value);
+        }
 
-        public static bool IsSpecDefinedDirective(this DefinitionSyntax node) =>
-            node is DirectiveDefinitionSyntax dirDef && SpecReservedNames.DirectiveNames.Contains(dirDef.Name.Value);
+        public static bool IsSpecDefinedDirective(this DefinitionSyntax node)
+        {
+            return node is DirectiveDefinitionSyntax dirDef &&
+                   SpecReservedNames.DirectiveNames.Contains(dirDef.Name.Value);
+        }
 
-        public static bool IsSpecDefinedType(this DefinitionSyntax node) =>
-            node is ScalarTypeDefinitionSyntax typeDef &&
-            SpecReservedNames.ScalarTypeNames.Contains(typeDef.Name.Value);
+        public static bool IsSpecDefinedType(this DefinitionSyntax node)
+        {
+            return node is ScalarTypeDefinitionSyntax typeDef &&
+                   SpecReservedNames.ScalarTypeNames.Contains(typeDef.Name.Value);
+        }
 
         public static bool IsSchemaOfCommonNames(this SchemaDefinitionSyntax schemaDefinitionNode)
         {

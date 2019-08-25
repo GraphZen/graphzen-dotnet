@@ -1,13 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
@@ -30,27 +29,27 @@ namespace GraphZen.TypeSystem.Internal
             RootValue = rootValue;
         }
 
-        
+
         public string FieldName { get; }
 
-        
+
         public IReadOnlyList<FieldSyntax> FieldNodes { get; }
 
-        
+
         public IGraphQLType ReturnType { get; }
 
-        
+
         public IFieldsContainer ParentType { get; }
 
-        
+
         public ResponsePath Path { get; }
 
         public object RootValue { get; }
 
-        
+
         public Schema Schema { get; }
 
-        
+
         public IReadOnlyDictionary<string, FragmentDefinitionSyntax> Fragments { get; }
 
         public OperationDefinitionSyntax Operation { get; }

@@ -1,15 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 #nullable disable
 namespace GraphZen.TypeSystem
@@ -20,7 +19,7 @@ namespace GraphZen.TypeSystem
                  "returned in a JSON response as a string.")]
     public class EnumValue : AnnotatableMember, IEnumValue
     {
-          private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
+        private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
 
         public EnumValue(string name, string description, object value, bool isDeprecated, string deprecatedReason,
             IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(Check.NotNull(directives,
@@ -38,26 +37,27 @@ namespace GraphZen.TypeSystem
             );
         }
 
-        [GraphQLIgnore]
-        public object Value { get; }
+        [GraphQLIgnore] public object Value { get; }
 
         IEnumTypeDefinition IEnumValueDefinition.DeclaringType => DeclaringType;
 
-        [GraphQLIgnore]
-        public EnumType DeclaringType { get; }
+        [GraphQLIgnore] public EnumType DeclaringType { get; }
 
         public bool IsDeprecated { get; }
 
-        [GraphQLCanBeNull]
-        public string DeprecationReason { get; }
+        [GraphQLCanBeNull] public string DeprecationReason { get; }
 
         public override string Description { get; }
 
         public string Name { get; }
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.EnumValue;
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
-        
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
+
+
         [GraphQLIgnore]
         public static EnumValue From(IEnumValueDefinition definition, EnumType declaringTye)
         {
@@ -66,6 +66,9 @@ namespace GraphZen.TypeSystem
                 definition.DeprecationReason, definition.DirectiveAnnotations, declaringTye);
         }
 
-        public override string ToString() => $"{Name} ({Value.Inspect()})";
+        public override string ToString()
+        {
+            return $"{Name} ({Value.Inspect()})";
+        }
     }
 }

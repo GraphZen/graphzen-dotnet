@@ -1,23 +1,20 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     public abstract class AnnotatableMemberDefinition : MemberDefinition, IMutableAnnotatableDefinition
     {
-        
-        
         private readonly List<IDirectiveAnnotation> _directives = new List<IDirectiveAnnotation>();
 
         protected AnnotatableMemberDefinition(ConfigurationSource configurationSource) : base(configurationSource)
@@ -65,7 +62,9 @@ namespace GraphZen.TypeSystem
         }
 
 
-        private DirectiveAnnotation CreateDirective( string name, object? value) =>
-            new DirectiveAnnotation(name, value);
+        private DirectiveAnnotation CreateDirective(string name, object? value)
+        {
+            return new DirectiveAnnotation(name, value);
+        }
     }
 }

@@ -1,29 +1,27 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjectTypeDefinition
     {
-        
         private readonly Dictionary<string, InputFieldDefinition> _fields =
             new Dictionary<string, InputFieldDefinition>();
 
-        
+
         private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
@@ -38,7 +36,7 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"input {Name}";
 
-        
+
         public InternalInputObjectTypeBuilder Builder { get; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputObject;
@@ -49,48 +47,43 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyDictionary<string, InputFieldDefinition> Fields => _fields;
 
-        public IEnumerable<InputFieldDefinition> GetFields() => _fields.Values;
+        public IEnumerable<InputFieldDefinition> GetFields()
+        {
+            return _fields.Values;
+        }
 
 
-        public bool RenameField( InputFieldDefinition field,  string name,
+        public bool RenameField(InputFieldDefinition field, string name,
             ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(field.GetNameConfigurationSource()))
-            {
-                return false;
-            }
+            if (!configurationSource.Overrides(field.GetNameConfigurationSource())) return false;
 
 
             if (this.TryGetField(name, out var existing) && existing != field)
-            {
                 throw new InvalidOperationException(
                     $"Cannot rename {field} to '{name}'. {this} already contains a field named '{name}'.");
-            }
 
             _fields.Remove(field.Name);
             _fields[name] = field;
             return true;
         }
 
-        public InputFieldDefinition FindField( MemberInfo member)
+        public InputFieldDefinition FindField(MemberInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
             var memberMatch = _fields.Values.SingleOrDefault(_ => _.ClrInfo == member);
-            if (memberMatch != null)
-            {
-                return memberMatch;
-            }
+            if (memberMatch != null) return memberMatch;
 
             var (fieldName, _) = member.GetGraphQLFieldName();
             return this.FindField(fieldName);
         }
 
-        public void UnignoreField( string fieldName)
+        public void UnignoreField(string fieldName)
         {
             _ignoredFields.Remove(fieldName);
         }
 
-        private bool IgnoreField( InputFieldDefinition field, ConfigurationSource configurationSource)
+        private bool IgnoreField(InputFieldDefinition field, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(field.GetConfigurationSource()))
             {
@@ -101,32 +94,26 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-        private InputFieldDefinition AddField( InputFieldDefinition field)
+        private InputFieldDefinition AddField(InputFieldDefinition field)
         {
             if (_fields.ContainsKey(field.Name))
-            {
                 throw new InvalidOperationException(
                     $"Duplicate field names: Cannot add field '{field.Name}' to {Kind.ToString().ToLower()} '{Name}', a field with that name already exists.");
-            }
 
             _fields.Add(field.Name, field);
             return field;
         }
 
-        public InputFieldDefinition AddField( PropertyInfo property,
+        public InputFieldDefinition AddField(PropertyInfo property,
             ConfigurationSource configurationSource)
         {
             if (ClrType == null)
-            {
                 throw new InvalidOperationException(
                     "Cannot add field from property on a type that does not have a CLR type mapped.");
-            }
 
             if (!ClrType.IsSameOrSubclass(property.DeclaringType!))
-            {
                 throw new InvalidOperationException(
                     $"Cannot add field from property with a declaring type ({property.DeclaringType}) that does not exist on the parent's {Kind.ToString().ToLower()} type's mapped CLR type ({ClrType}).");
-            }
 
             var (fieldName, nameConfigurationSource) = property.GetGraphQLFieldName();
             var field = new InputFieldDefinition(fieldName, nameConfigurationSource, Schema, configurationSource,
@@ -138,48 +125,36 @@ namespace GraphZen.TypeSystem
             fb.FieldType(property);
             fb.DefaultValue(property, configurationSource);
             if (property.TryGetDescriptionFromDataAnnotation(out var description))
-            {
                 fb.Description(description, ConfigurationSource.DataAnnotation);
-            }
 
             return AddField(field);
         }
 
-        public void RemoveField( InputFieldDefinition field)
+        public void RemoveField(InputFieldDefinition field)
         {
             _fields.Remove(field.Name);
         }
 
-        public bool IgnoreField( string fieldName, ConfigurationSource configurationSource)
+        public bool IgnoreField(string fieldName, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(fieldName);
-            if (ignoredConfigurationSource.HasValue && ignoredConfigurationSource.Overrides(configurationSource))
-            {
-                return true;
-            }
+            if (ignoredConfigurationSource.HasValue &&
+                ignoredConfigurationSource.Overrides(configurationSource)) return true;
 
             if (ignoredConfigurationSource != null)
-            {
                 configurationSource = configurationSource.Max(ignoredConfigurationSource);
-            }
 
             _ignoredFields[fieldName] = configurationSource;
             var existing = this.FindField(fieldName);
 
-            if (existing != null)
-            {
-                return IgnoreField(existing, configurationSource);
-            }
+            if (existing != null) return IgnoreField(existing, configurationSource);
 
             return true;
         }
 
         public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
         {
-            if (_ignoredFields.TryGetValue(fieldName, out var cs))
-            {
-                return cs;
-            }
+            if (_ignoredFields.TryGetValue(fieldName, out var cs)) return cs;
 
             return null;
         }
@@ -189,10 +164,7 @@ namespace GraphZen.TypeSystem
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)
             {
-                if (!configurationSource.Overrides(ignoredConfigurationSource))
-                {
-                    return null;
-                }
+                if (!configurationSource.Overrides(ignoredConfigurationSource)) return null;
 
                 _ignoredFields.Remove(name);
             }
@@ -204,12 +176,16 @@ namespace GraphZen.TypeSystem
                 field.UpdateConfigurationSource(configurationSource);
                 return field;
             }
+
             field = new InputFieldDefinition(name, configurationSource, Schema, configurationSource,
                 null, this);
             _fields[name] = field;
             return field;
         }
 
-        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields() => GetFields();
+        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields()
+        {
+            return GetFields();
+        }
     }
 }

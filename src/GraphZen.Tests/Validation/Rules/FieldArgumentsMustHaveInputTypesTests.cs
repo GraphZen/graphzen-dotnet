@@ -1,13 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
+
 #nullable disable
-
-
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
+using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Validation.Rules.SDLValidationHelpers;
 
@@ -20,11 +20,13 @@ namespace GraphZen.Validation.Rules
             DocumentValidationRules.FieldArgumentsMustHaveInputTypes;
 
 
-        public static IEnumerable<object[]> GetInputTypeData(string typeName) =>
-            from fieldsType in OutputFieldsTypes
-            from inputType in InputTypes
-            from fieldType in typeName.WithModifiers()
-            select new object[] { fieldsType, inputType, fieldType };
+        public static IEnumerable<object[]> GetInputTypeData(string typeName)
+        {
+            return from fieldsType in OutputFieldsTypes
+                   from inputType in InputTypes
+                   from fieldType in typeName.WithModifiers()
+                   select new object[] { fieldsType, inputType, fieldType };
+        }
 
         [Theory]
         [MemberData(nameof(GetInputTypeData), "SomeInputType")]
@@ -39,11 +41,13 @@ namespace GraphZen.Validation.Rules
             ");
         }
 
-        public static IEnumerable<object[]> GetNonInputTypeData(string typeName) =>
-            from fieldsType in OutputFieldsTypes
-            from inputType in NonInputTypes
-            from fieldType in typeName.WithModifiers()
-            select new object[] { fieldsType, inputType, fieldType };
+        public static IEnumerable<object[]> GetNonInputTypeData(string typeName)
+        {
+            return from fieldsType in OutputFieldsTypes
+                   from inputType in NonInputTypes
+                   from fieldType in typeName.WithModifiers()
+                   select new object[] { fieldsType, inputType, fieldType };
+        }
 
         [Theory]
         [MemberData(nameof(GetNonInputTypeData), "SomeNonInputType")]

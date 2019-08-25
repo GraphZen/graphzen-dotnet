@@ -1,14 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
 using Xunit;
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -18,7 +19,10 @@ namespace GraphZen.LanguageModel
         /// implementations
         private IParser Parser { get; } = new SuperpowerParser();
 
-        protected DocumentSyntax ParseDocument(string source) => Parser.ParseDocument(source);
+        protected DocumentSyntax ParseDocument(string source)
+        {
+            return Parser.ParseDocument(source);
+        }
 
         protected DocumentSyntax PrintAndParse(DocumentSyntax document)
         {
@@ -29,14 +33,18 @@ namespace GraphZen.LanguageModel
         }
 
 
-        protected ValueSyntax ParseValue(string source) =>
-            Parser.ParseValue(source);
+        protected ValueSyntax ParseValue(string source)
+        {
+            return Parser.ParseValue(source);
+        }
 
-        protected TypeSyntax ParseType(string source) =>
-            Parser.ParseType(source);
+        protected TypeSyntax ParseType(string source)
+        {
+            return Parser.ParseType(source);
+        }
 
         protected void AssertSyntaxError(string document, string expectedMessage,
-             params (int line, int column)[] locations)
+            params (int line, int column)[] locations)
         {
             var ex = Assert.Throws<GraphQLException>(() => ParseDocument(document));
             TestHelpers.AssertEqualsDynamic(new

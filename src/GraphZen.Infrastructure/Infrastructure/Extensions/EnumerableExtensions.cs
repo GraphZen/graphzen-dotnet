@@ -9,7 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-#nullable disable 
+
+#nullable disable
 
 
 namespace GraphZen.Infrastructure
@@ -23,7 +24,7 @@ namespace GraphZen.Infrastructure
 
 
         public static bool TryGetDuplicateValueBy<TSource, TValue>(this IEnumerable<TSource> source,
-            Func<TSource, TValue> selector, [NotNullWhen(true)]out TSource duplicate) where TSource : class
+            Func<TSource, TValue> selector, [NotNullWhen(true)] out TSource duplicate) where TSource : class
         {
             Check.NotNull(selector, nameof(selector));
             Check.NotNull(source, nameof(source));
@@ -43,7 +44,7 @@ namespace GraphZen.Infrastructure
         }
 
         public static bool TryGetDuplicateKeyBy<TSource, TKey>(this IEnumerable<TSource> source,
-            Func<TSource, TKey> selector, out TKey duplicate)  where TSource : class
+            Func<TSource, TKey> selector, out TKey duplicate) where TSource : class
         {
             Check.NotNull(selector, nameof(selector));
             if (source.TryGetDuplicateValueBy(selector, out var dupe))
@@ -70,7 +71,7 @@ namespace GraphZen.Infrastructure
 
         public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue, TSource>(
             this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
-            Func<TSource, TValue>valueSelector = null)
+            Func<TSource, TValue> valueSelector = null)
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(keySelector, nameof(keySelector));

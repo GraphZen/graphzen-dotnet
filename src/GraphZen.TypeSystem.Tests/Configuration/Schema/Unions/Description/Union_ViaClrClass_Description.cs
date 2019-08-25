@@ -1,11 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using JetBrains.Annotations;
-#nullable disable
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using JetBrains.Annotations;
+#nullable disable
 
 namespace GraphZen.Unions.Description
 {
@@ -13,11 +14,14 @@ namespace GraphZen.Unions.Description
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext() => new LeafConventionContext
+        public LeafConventionContext GetContext()
         {
-            ParentName = nameof(ExampleUnion),
-            DataAnnotationValue = DataAnnotationDescriptionValue
-        };
+            return new LeafConventionContext
+            {
+                ParentName = nameof(ExampleUnion),
+                DataAnnotationValue = DataAnnotationDescriptionValue
+            };
+        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

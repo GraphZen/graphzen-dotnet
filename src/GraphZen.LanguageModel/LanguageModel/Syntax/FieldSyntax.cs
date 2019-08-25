@@ -1,13 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -40,16 +42,16 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name of the requested field.
         /// </summary>
-        
+
         public NameSyntax Name { get; }
 
-        
+
         public string FieldEntryKey => Alias?.Value ?? Name.Value;
 
         /// <summary>
         ///     Additional child selections. (Optional)
         /// </summary>
-        
+
         public SelectionSetSyntax SelectionSet { get; }
 
         /// <summary>
@@ -72,24 +74,20 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<ArgumentSyntax> Arguments { get; }
 
-        private bool Equals( FieldSyntax other) =>
-            Name.Equals(other.Name)
-            && Equals(SelectionSet, other.SelectionSet)
-            && Equals(Alias, other.Alias)
-            && Directives.SequenceEqual(other.Directives)
-            && Arguments.SequenceEqual(other.Arguments);
+        private bool Equals(FieldSyntax other)
+        {
+            return Name.Equals(other.Name)
+                   && Equals(SelectionSet, other.SelectionSet)
+                   && Equals(Alias, other.Alias)
+                   && Directives.SequenceEqual(other.Directives)
+                   && Arguments.SequenceEqual(other.Arguments);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is FieldSyntax && Equals((FieldSyntax)obj);
         }

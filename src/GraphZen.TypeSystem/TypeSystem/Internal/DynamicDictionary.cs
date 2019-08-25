@@ -11,8 +11,8 @@ using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-#nullable disable
 
+#nullable disable
 
 
 namespace GraphZen.TypeSystem.Internal
@@ -345,7 +345,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary) obj);
+            return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary)obj);
         }
 
         /// <summary>

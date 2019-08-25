@@ -1,14 +1,14 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
 #nullable disable
 
 namespace GraphZen.TypeSystem
@@ -16,13 +16,13 @@ namespace GraphZen.TypeSystem
     public class InputField : InputValue, IInputField
     {
         public InputField(
-             string name,
-             string description,
-             IGraphQLTypeReference type,
-             object defaultValue,
+            string name,
+            string description,
+            IGraphQLTypeReference type,
+            object defaultValue,
             bool hasDefaultValue,
-             IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver, PropertyInfo clrInfo,  InputObjectType inputObject) :
+            IReadOnlyList<IDirectiveAnnotation> directives,
+            TypeResolver typeResolver, PropertyInfo clrInfo, InputObjectType inputObject) :
             base(name, description, type,
                 defaultValue, hasDefaultValue,
                 Check.NotNull(directives, nameof(directives)),
@@ -37,9 +37,9 @@ namespace GraphZen.TypeSystem
 
         public new InputObjectType DeclaringMember => (InputObjectType)base.DeclaringMember;
 
-        
+
         public static InputField From(IInputFieldDefinition definition, TypeResolver typeResolver,
-             InputObjectType declaringType)
+            InputObjectType declaringType)
         {
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(typeResolver, nameof(typeResolver));

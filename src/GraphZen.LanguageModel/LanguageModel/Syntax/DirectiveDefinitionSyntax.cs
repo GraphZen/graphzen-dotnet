@@ -1,13 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-#nullable disable
-
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -33,13 +35,13 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Directive arguments. (Optional)
         /// </summary>
-        
+
         public IReadOnlyList<InputValueDefinitionSyntax> Arguments { get; }
 
         /// <summary>
         ///     Directive locations.
         /// </summary>
-        
+
         public IReadOnlyList<NameSyntax> Locations { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
@@ -53,23 +55,19 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        private bool Equals( DirectiveDefinitionSyntax other) =>
-            Name.Equals(other.Name) &&
-            Equals(Description, other.Description) &&
-            Arguments.SequenceEqual(other.Arguments) &&
-            Locations.SequenceEqual(other.Locations);
+        private bool Equals(DirectiveDefinitionSyntax other)
+        {
+            return Name.Equals(other.Name) &&
+                   Equals(Description, other.Description) &&
+                   Arguments.SequenceEqual(other.Arguments) &&
+                   Locations.SequenceEqual(other.Locations);
+        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is DirectiveDefinitionSyntax && Equals((DirectiveDefinitionSyntax)obj);
         }

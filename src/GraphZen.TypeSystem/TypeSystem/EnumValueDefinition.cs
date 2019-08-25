@@ -1,15 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
 #nullable disable
 
 namespace GraphZen.TypeSystem
@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"enum value {Name}";
 
-        
+
         public InternalEnumValueBuilder Builder { get; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.EnumValue;
@@ -52,10 +52,7 @@ namespace GraphZen.TypeSystem
             set
             {
                 _isDeprecated = value;
-                if (!_isDeprecated)
-                {
-                    DeprecationReason = null;
-                }
+                if (!_isDeprecated) DeprecationReason = null;
             }
         }
 
@@ -65,10 +62,7 @@ namespace GraphZen.TypeSystem
             set
             {
                 _deprecationReason = value;
-                if (_deprecationReason != null)
-                {
-                    IsDeprecated = true;
-                }
+                if (_deprecationReason != null) IsDeprecated = true;
             }
         }
 
@@ -85,11 +79,19 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-        public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
+        public ConfigurationSource GetNameConfigurationSource()
+        {
+            return _nameConfigurationSource;
+        }
 
-        public bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource) =>
+        public bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource)
+        {
             throw new NotImplementedException();
+        }
 
-        public bool RemoveDeprecation(ConfigurationSource configurationSource) => throw new NotImplementedException();
+        public bool RemoveDeprecation(ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

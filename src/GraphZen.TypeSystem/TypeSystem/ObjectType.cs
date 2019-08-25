@@ -1,16 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-using JetBrains.Annotations;
-
-
 
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 #nullable disable
 namespace GraphZen.TypeSystem
@@ -18,10 +17,10 @@ namespace GraphZen.TypeSystem
     [GraphQLType(typeof(IGraphQLType))]
     public class ObjectType : NamedType, IObjectType
     {
-          private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
-          private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
-          private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
-          private readonly Lazy<ObjectTypeDefinitionSyntax> _syntax;
+        private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
+        private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
+        private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
+        private readonly Lazy<ObjectTypeDefinitionSyntax> _syntax;
 
         private ObjectType(string name, string description, Type clrType, IsTypeOf<object, GraphQLContext> isTypeOf,
             IEnumerable<IFieldDefinition> fields,
@@ -70,21 +69,28 @@ namespace GraphZen.TypeSystem
 
 
         public override TypeKind Kind { get; } = TypeKind.Object;
-        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => GetFields();
 
-        public IEnumerable<Field> GetFields() =>
-            // ReSharper disable once PossibleNullReferenceException
-            Fields.Values;
+        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields()
+        {
+            return GetFields();
+        }
+
+        public IEnumerable<Field> GetFields()
+        {
+            return Fields.Values;
+        }
 
 
-        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
+        public override SyntaxNode ToSyntaxNode()
+        {
+            return _syntax.Value;
+        }
 
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;
 
 
-        
         public static ObjectType From(IObjectTypeDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
@@ -96,10 +102,17 @@ namespace GraphZen.TypeSystem
             );
         }
 
-        public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
+        public IEnumerable<InterfaceType> GetInterfaces()
+        {
+            return Interfaces;
+        }
+
         public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
         public IReadOnlyDictionary<string, InterfaceType> InterfacesMap => _interfaceMap.Value;
 
-        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces() => GetInterfaces();
+        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces()
+        {
+            return GetInterfaces();
+        }
     }
 }

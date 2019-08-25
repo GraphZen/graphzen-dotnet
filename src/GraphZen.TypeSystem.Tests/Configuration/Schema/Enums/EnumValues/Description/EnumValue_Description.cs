@@ -1,17 +1,20 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using JetBrains.Annotations;
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+#nullable disable
+
 // ReSharper disable PossibleNullReferenceException
 
 namespace GraphZen.Enums.EnumValues.Description
 {
-    public abstract class EnumValue_Description : LeafElementConfigurationFixture<IDescription, IDescription, IMutableDescription,
+    public abstract class EnumValue_Description : LeafElementConfigurationFixture<IDescription, IDescription,
+        IMutableDescription,
         string, EnumValueDefinition, EnumValue>
     {
         public override string ValueA { get; } = "description a";
@@ -22,15 +25,21 @@ namespace GraphZen.Enums.EnumValues.Description
             sb.Enum(Grandparent).Value(parentName);
         }
 
-        public override EnumValue GetParent(Schema schema, string parentName) =>
-            schema.GetEnum(Grandparent).GetValue(parentName);
+        public override EnumValue GetParent(Schema schema, string parentName)
+        {
+            return schema.GetEnum(Grandparent).GetValue(parentName);
+        }
 
-        public override EnumValueDefinition GetParent(SchemaBuilder sb, string parentName) =>
-            sb.GetDefinition().GetEnum(Grandparent).GetValue(parentName);
+        public override EnumValueDefinition GetParent(SchemaBuilder sb, string parentName)
+        {
+            return sb.GetDefinition().GetEnum(Grandparent).GetValue(parentName);
+        }
 
 
-        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent) =>
-            parent.GetDescriptionConfigurationSource();
+        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent)
+        {
+            return parent.GetDescriptionConfigurationSource();
+        }
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
         {

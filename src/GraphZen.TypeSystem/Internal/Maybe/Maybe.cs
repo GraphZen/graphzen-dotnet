@@ -14,7 +14,7 @@ namespace GraphZen.Internal
     {
         internal static Maybe<T> Some<T>(T value)
         {
-            return new SomeImpl<T>(new object?[] {value}, null);
+            return new SomeImpl<T>(new object?[] { value }, null);
         }
 
 
@@ -87,7 +87,7 @@ namespace GraphZen.Internal
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((Maybe<T>) obj);
+            return Equals((Maybe<T>)obj);
         }
 
         public override int GetHashCode()
@@ -98,7 +98,7 @@ namespace GraphZen.Internal
 
         public Maybe<TC> Cast<TC>()
         {
-            return HasValue ? Maybe.Some((TC) _values.Single()!) : Maybe.None<TC>();
+            return HasValue ? Maybe.Some((TC)_values.Single()!) : Maybe.None<TC>();
         }
 
 
@@ -117,7 +117,7 @@ namespace GraphZen.Internal
 
         protected T ValueOrFailure()
         {
-            if (HasValue) return (T) _values.Single()!;
+            if (HasValue) return (T)_values.Single()!;
 
             throw new InvalidOperationException("Maybe does not have a value");
         }
