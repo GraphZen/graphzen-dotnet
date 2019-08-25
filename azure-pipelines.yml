@@ -10,10 +10,6 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '2.2.108'
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
     useGlobalJson: true
 - task: PowerShell@2
   inputs:
