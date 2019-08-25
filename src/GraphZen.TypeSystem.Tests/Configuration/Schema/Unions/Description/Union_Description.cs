@@ -7,13 +7,13 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
+
 
 namespace GraphZen.Unions.Description
 {
     public abstract class Union_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,
-        string, UnionTypeDefinition, UnionType>
+        string?, UnionTypeDefinition, UnionType>
     {
         public override string ValueA { get; } = "description a";
         public override string ValueB { get; } = "description b";
@@ -39,7 +39,7 @@ namespace GraphZen.Unions.Description
             return parent.GetDescriptionConfigurationSource();
         }
 
-        public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
+        public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {
             sb.Union(parentName).Description(value);
         }
@@ -49,13 +49,13 @@ namespace GraphZen.Unions.Description
             sb.Union(parentName).Description(null);
         }
 
-        public override bool TryGetValue(UnionType parent, out string value)
+        public override bool TryGetValue(UnionType parent, out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(UnionTypeDefinition parent, out string value)
+        public override bool TryGetValue(UnionTypeDefinition parent, out string? value)
         {
             value = parent.Description;
             return value != null;

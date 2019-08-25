@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
 namespace GraphZen.InputObjects.Fields
 {
@@ -49,6 +48,7 @@ namespace GraphZen.InputObjects.Fields
         {
         }
 
+#nullable disable
         public class ExampleInputObject
         {
             public string HelloWorld { get; set; }
@@ -59,5 +59,6 @@ namespace GraphZen.InputObjects.Fields
 
             public IgnoredType IgnoredByConvention { get; set; }
         }
+#nullable restore
     }
 }

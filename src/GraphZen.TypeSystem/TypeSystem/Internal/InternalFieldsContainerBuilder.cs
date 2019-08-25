@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem.Internal
 
 
         private IReadOnlyList<string> IgnoredMethodNames { get; } =
-            // ReSharper disable once AssignNullToNotNullAttribute
+            
             typeof(object).GetMethods().Select(_ => _.Name).ToImmutableList();
 
 
@@ -39,7 +39,7 @@ namespace GraphZen.TypeSystem.Internal
         {
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
             // ReSharper disable once PossibleNullReferenceException
-            // ReSharper disable once AssignNullToNotNullAttribute
+            
             var fieldMembers = Definition.ClrType.GetMembers(flags)
                 .Where(_ => !(_ is MethodInfo method) || method.DeclaringType != typeof(object) &&
                             method.ReturnType != typeof(void) &&

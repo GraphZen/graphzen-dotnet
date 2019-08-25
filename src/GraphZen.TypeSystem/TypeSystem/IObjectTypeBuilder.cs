@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem
         IObjectTypeBuilder<T, TContext> ClrType<T>();
 
 
-        IObjectTypeBuilder<TObject, TContext> Description(string description);
+        IObjectTypeBuilder<TObject, TContext> Description(string? description);
 
 
         IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn);

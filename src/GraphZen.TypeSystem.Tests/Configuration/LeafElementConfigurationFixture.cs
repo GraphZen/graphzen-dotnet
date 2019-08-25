@@ -5,10 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
-
 
 namespace GraphZen
 {
@@ -20,7 +17,7 @@ namespace GraphZen
         where TMutableDefMarker : TDefMarker
         where TParentMemberDefinition : MemberDefinition, TMutableDefMarker
         where TParentMember : Member, TMarker
-        where TMarker : IConfigurationElement<TElement>, TDefMarker
+        where TMarker : TDefMarker
     {
         //public virtual TElement ConventionalValue =>
         //    throw new NotImplementedException($"implement '{nameof(ConventionalValue)}' in type '{GetType().Name}'");
@@ -79,20 +76,28 @@ namespace GraphZen
             return GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition));
         }
 
-        public bool TryGetValue(MemberDefinition parent, out object value)
+        public bool TryGetValue(MemberDefinition parent, [NotNullWhen(true)] out object? value)
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
-            var result = TryGetValue(parent as TParentMemberDefinition, out var inner);
-            value = inner;
-            return result;
+            if (TryGetValue((TParentMemberDefinition)parent, out var inner))
+            {
+                value = inner;
+                return true;
+            }
+
+            value = default;
+            return false;
         }
 
-        public bool TryGetValue(Member parent, out object value)
+        public bool TryGetValue(Member parent, [NotNullWhen(true)] out object? value)
         {
-            // ReSharper disable once AssignNullToNotNullAttribute
-            var result = TryGetValue(parent as TParentMember, out var inner);
-            value = inner;
-            return result;
+            if (TryGetValue((TParentMember)parent, out var inner))
+            {
+                value = inner;
+                return true;
+            }
+
+            value = default;
+            return false;
         }
 
         public void ConfigureExplicitly(SchemaBuilder sb, string parentName, object value)
@@ -103,9 +108,9 @@ namespace GraphZen
         public abstract void RemoveValue(SchemaBuilder sb, string parentName);
 
 
-        object ILeafConfigurationFixture.ValueA => ValueA;
+        object ILeafConfigurationFixture.ValueA => ValueA!;
 
-        object ILeafConfigurationFixture.ValueB => ValueB;
+        object ILeafConfigurationFixture.ValueB => ValueB!;
 
         public abstract void ConfigureExplicitly(SchemaBuilder sb, string parentName, TElement value);
 
@@ -114,8 +119,8 @@ namespace GraphZen
         public abstract TElement ValueB { get; }
 
 
-        public abstract bool TryGetValue(TParentMember parent, out TElement value);
+        public abstract bool TryGetValue(TParentMember parent, [NotNullWhen(true)] out TElement value);
 
-        public abstract bool TryGetValue(TParentMemberDefinition parent, out TElement value);
+        public abstract bool TryGetValue(TParentMemberDefinition parent, [NotNullWhen(true)] out TElement value);
     }
 }

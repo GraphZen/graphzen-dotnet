@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem
             bool itemCanBeNull = false) where TFieldNew : IEnumerable;
 
 
-        IFieldBuilder<TDeclaringType, TField, TContext> Description(string description);
+        IFieldBuilder<TDeclaringType, TField, TContext> Description(string? description);
 
 
         IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TField> resolver);

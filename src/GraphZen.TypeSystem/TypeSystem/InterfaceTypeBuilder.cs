@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem
         InternalInterfaceTypeBuilder IInfrastructure<InternalInterfaceTypeBuilder>.Instance => Builder;
 
 
-        public IInterfaceTypeBuilder<TInterface, TContext> Description(string description)
+        public IInterfaceTypeBuilder<TInterface, TContext> Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
@@ -50,7 +50,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
-            // ReSharper disable once AssignNullToNotNullAttribute
+            
             fieldConfigurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
             return this;
         }

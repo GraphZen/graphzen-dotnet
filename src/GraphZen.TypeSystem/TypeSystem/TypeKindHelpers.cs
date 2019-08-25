@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem
 {
     public static class TypeKindHelpers
     {
-        // ReSharper disable once AssignNullToNotNullAttribute
+        
         private static ImmutableDictionary<Type, TypeKind> KindByType { get; } = new Dictionary<Type, TypeKind>
         {
             {typeof(ScalarTypeDefinition), TypeKind.Scalar},

@@ -7,9 +7,9 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
-#nullable disable
 
-// ReSharper disable PossibleNullReferenceException
+
+
 
 namespace GraphZen.Unions.ClrType
 {

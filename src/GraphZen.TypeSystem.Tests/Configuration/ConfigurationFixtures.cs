@@ -29,8 +29,6 @@ using GraphZen.Scalars.Description;
 using GraphZen.Unions;
 using GraphZen.Unions.Description;
 using JetBrains.Annotations;
-#nullable disable
-
 
 namespace GraphZen
 {

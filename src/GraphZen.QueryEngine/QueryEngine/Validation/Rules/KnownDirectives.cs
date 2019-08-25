@@ -28,7 +28,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
         }
 
 
-        // ReSharper disable once AssignNullToNotNullAttribute
+        
         private IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>> LocationsMap => _lazyLocationsMap.Value;
 
 

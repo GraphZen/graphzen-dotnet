@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(fields, nameof(fields));
             _fields = new Lazy<IReadOnlyDictionary<string, Field>>(() =>
                 // ReSharper disable once PossibleNullReferenceException
-                // ReSharper disable once AssignNullToNotNullAttribute
+                
                 fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, schema.ResolveType)));
             ResolveType = resolveType;
             _syntax = new Lazy<InterfaceTypeDefinitionSyntax>(() => new InterfaceTypeDefinitionSyntax(

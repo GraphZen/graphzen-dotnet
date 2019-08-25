@@ -12,7 +12,7 @@ using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
 
-// ReSharper disable PossibleNullReferenceException
+
 
 namespace GraphZen.TypeSystem
 {

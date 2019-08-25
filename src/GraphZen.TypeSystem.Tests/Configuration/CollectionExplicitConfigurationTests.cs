@@ -9,12 +9,6 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
-#nullable disable
-
-
-// ReSharper disable AssignNullToNotNullAttribute
-
-// ReSharper disable PossibleNullReferenceException
 
 namespace GraphZen
 {

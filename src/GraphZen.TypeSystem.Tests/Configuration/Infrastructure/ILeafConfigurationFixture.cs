@@ -6,15 +6,14 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
-#nullable disable
 
 namespace GraphZen
 {
     public interface ILeafConfigurationFixture : IConfigurationFixture
     {
         ConfigurationSource GetElementConfigurationSource(MemberDefinition parent);
-        bool TryGetValue(MemberDefinition parent, out object value);
-        bool TryGetValue(Member parent, out object value);
+        bool TryGetValue(MemberDefinition parent, [NotNullWhen(true)] out object? value);
+        bool TryGetValue(Member parent, [NotNullWhen(true)] out object? value);
         void ConfigureExplicitly(SchemaBuilder sb, string parentName, object value);
         void RemoveValue(SchemaBuilder sb, string parentName);
 

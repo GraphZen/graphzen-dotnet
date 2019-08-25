@@ -121,7 +121,7 @@ namespace GraphZen.TypeSystem
             "Request the type information of a single type.", null, Schema.GetType<ObjectType>("__Type"),
             new[]
             {
-                // ReSharper disable once AssignNullToNotNullAttribute
+                
                 new Argument("name", null, NonNullType.Of(SpecScalars.String), null, null, false)
             },
             (source, args, context, info) => info.Schema.GetType(args.name), null);

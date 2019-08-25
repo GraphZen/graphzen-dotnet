@@ -85,7 +85,7 @@ namespace GraphZen.TypeSystem
                 .OrderBy(_ => _.Name)
                 .ToDictionary(t => t.Name, t => t);
 
-            // ReSharper disable once AssignNullToNotNullAttribute
+            
             QueryType = FindType<ObjectType>(Definition.QueryType?.Name ?? "Query")!;
             MutationType = Definition.MutationType != null ? FindType<ObjectType>(Definition.MutationType.Name) : null;
             SubscriptionType = Definition.SubscriptionType != null

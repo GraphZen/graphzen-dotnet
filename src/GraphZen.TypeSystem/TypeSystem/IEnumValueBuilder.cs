@@ -9,15 +9,15 @@ namespace GraphZen.TypeSystem
 {
     public interface IEnumValueBuilder : IAnnotableBuilder<IEnumValueBuilder>
     {
-        IEnumValueBuilder Description(string description);
+        IEnumValueBuilder Description(string? description);
 
 
-        IEnumValueBuilder CustomValue(object value);
+        IEnumValueBuilder CustomValue(object? value);
 
 
         IEnumValueBuilder Deprecated(bool deprecated = true);
 
 
-        IEnumValueBuilder Deprecated(string reason);
+        IEnumValueBuilder Deprecated(string? reason);
     }
 }

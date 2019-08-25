@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem
                                        "suggestion for how to access supported similar data. Formatted " +
                                        "in [Markdown](https://daringfireball.net/projects/markdown/).",
                     SpecScalars.String,
-                    // ReSharper disable once AssignNullToNotNullAttribute
+                    
                     DefaultDeprecationReason, true, DirectiveAnnotation.EmptyList, null, null, null)
             }, null
         );
@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem
             new[]
             {
                 new Argument("if", "Included when true.", NonNullType.Of(SpecScalars.Boolean),
-                    // ReSharper disable once AssignNullToNotNullAttribute
+                    
                     null, false, DirectiveAnnotation.EmptyList, null, null, null)
             }, null
         );
@@ -53,7 +53,7 @@ namespace GraphZen.TypeSystem
             new[]
             {
                 new Argument("if", "Skipped when true.", NonNullType.Of(SpecScalars.Boolean),
-                    // ReSharper disable once AssignNullToNotNullAttribute
+                    
                     null, false, DirectiveAnnotation.EmptyList, null, null, null)
             }, null);
 

@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem
         IScalarTypeBuilder<T, TValueNode> ClrType<T>();
 
 
-        IScalarTypeBuilder<TScalar, TValueNode> Description(string description);
+        IScalarTypeBuilder<TScalar, TValueNode> Description(string? description);
 
 
         IScalarTypeBuilder<TScalar, TValueNode> Serializer(LeafSerializer serializer);

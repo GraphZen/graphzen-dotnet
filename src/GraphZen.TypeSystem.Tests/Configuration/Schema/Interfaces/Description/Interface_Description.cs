@@ -7,13 +7,13 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
+
 
 namespace GraphZen.Interfaces.Description
 {
     public abstract class Interface_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,
-        string, InterfaceTypeDefinition, InterfaceType>
+        string?, InterfaceTypeDefinition, InterfaceType>
     {
         public override string ValueA { get; } = "description a";
         public override string ValueB { get; } = "description b";
@@ -39,7 +39,7 @@ namespace GraphZen.Interfaces.Description
             return parent.GetDescriptionConfigurationSource();
         }
 
-        public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string value)
+        public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {
             sb.Interface(parentName).Description(value);
         }
@@ -49,13 +49,13 @@ namespace GraphZen.Interfaces.Description
             sb.Interface(parentName).Description(null);
         }
 
-        public override bool TryGetValue(InterfaceType parent, out string value)
+        public override bool TryGetValue(InterfaceType parent, out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(InterfaceTypeDefinition parent, out string value)
+        public override bool TryGetValue(InterfaceTypeDefinition parent, out string? value)
         {
             value = parent.Description;
             return value != null;

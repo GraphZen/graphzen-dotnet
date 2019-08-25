@@ -72,7 +72,7 @@ namespace GraphZen.TypeSystem
                 throw new Exception($"Unable to create type reference from type node: {node?.GetType()}");
             }
 
-            // ReSharper disable once AssignNullToNotNullAttribute
+            
             return GetType(TypeSyntax);
         }
 

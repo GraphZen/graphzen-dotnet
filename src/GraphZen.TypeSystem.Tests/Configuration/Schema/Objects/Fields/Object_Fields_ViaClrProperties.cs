@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
 namespace GraphZen.Objects.Fields
 {
@@ -45,13 +44,13 @@ namespace GraphZen.Objects.Fields
 
         public class ExampleObject
         {
-            public string HelloWorld { get; set; }
+            public string? HelloWorld { get; set; }
 
-            [GraphQLName(DataAnnotationName)] public string NamedByDataAnnotation { get; set; }
+            [GraphQLName(DataAnnotationName)] public string? NamedByDataAnnotation { get; set; }
 
-            [GraphQLIgnore] public string IgnoredByDataAnnotation { get; set; }
+            [GraphQLIgnore] public string? IgnoredByDataAnnotation { get; set; }
 
-            public IgnoredType IgnoredByConvention { get; set; }
+            public IgnoredType? IgnoredByConvention { get; set; }
         }
     }
 }

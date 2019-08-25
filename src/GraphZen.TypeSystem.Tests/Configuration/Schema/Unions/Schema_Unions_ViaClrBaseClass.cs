@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
+
 
 namespace GraphZen.Unions
 {
@@ -36,13 +36,13 @@ namespace GraphZen.Unions
 
         public class Query
         {
-            public NamedByConvention ConventionallyNamed { get; set; }
+            public NamedByConvention? ConventionallyNamed { get; set; }
 
-            [GraphQLIgnore] public IgnoredByConvention IgnoredByConvention { get; set; }
+            [GraphQLIgnore] public IgnoredByConvention? IgnoredByConvention { get; set; }
 
-            public IgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
+            public IgnoredByDataAnnotation? IgnoredByDataAnnotation { get; set; }
 
-            public NamedByDataAnnotation NamedByDataAnnoation { get; set; }
+            public NamedByDataAnnotation? NamedByDataAnnoation { get; set; }
         }
 
         public abstract class NamedByConvention

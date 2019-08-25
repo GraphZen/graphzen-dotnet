@@ -99,7 +99,7 @@ namespace GraphZen.TypeSystem.Internal
             this ParameterInfo parameter)
         {
             Check.NotNull(parameter, nameof(parameter));
-            // ReSharper disable once AssignNullToNotNullAttribute
+            
             string? customName = parameter.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
             return customName != null
                 ? (customName, ConfigurationSource.DataAnnotation)

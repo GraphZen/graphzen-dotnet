@@ -34,7 +34,7 @@ namespace GraphZen
                     Debug.Assert(httpContext != null, nameof(httpContext) + " != null");
                     Debug.Assert(httpContext.Request != null, "httpContext.Request != null");
                     if (httpContext.Request.Method == "POST")
-                        // ReSharper disable once AssignNullToNotNullAttribute
+                        
                         using (var reader = new StreamReader(httpContext.Request.Body))
                         using (var jsonReader = new JsonTextReader(reader))
                         {

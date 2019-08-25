@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
-#nullable disable
+
 
 namespace GraphZen.Unions
 {
@@ -57,13 +57,13 @@ namespace GraphZen.Unions
 
         public class Query
         {
-            public Foo ConventionallyNamed { get; set; }
+            public Foo? ConventionallyNamed { get; set; }
 
-            public Bar IgnoredByConvention { get; set; }
+            public Bar? IgnoredByConvention { get; set; }
 
-            public Baz IgnoredByDataAnnotation { get; set; }
+            public Baz? IgnoredByDataAnnotation { get; set; }
 
-            public FooBar NamedByDataAnnoation { get; set; }
+            public FooBar? NamedByDataAnnoation { get; set; }
         }
 
         [GraphQLUnion]

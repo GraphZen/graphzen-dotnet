@@ -56,7 +56,7 @@ namespace GraphZen.TypeSystem
             if (!configurationSource.Overrides(_nameConfigurationSource)) return false;
 
             _nameConfigurationSource = configurationSource;
-            // ReSharper disable once AssignNullToNotNullAttribute
+            
             Identity.Name = name;
             return true;
         }

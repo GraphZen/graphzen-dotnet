@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
+
 
 namespace GraphZen.Objects.Fields.Description
 {
@@ -16,7 +16,7 @@ namespace GraphZen.Objects.Fields.Description
         public class ExampleObject
         {
             [Description(DataAnnotationDescriptionValue)]
-            public string ExampleField { get; set; }
+            public string? ExampleField { get; set; }
         }
 
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);

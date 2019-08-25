@@ -7,7 +7,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-#nullable disable
 
 namespace GraphZen
 {

@@ -39,7 +39,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
                     .ToList();
 
                 // ReSharper disable once PossibleNullReferenceException
-                // ReSharper disable once AssignNullToNotNullAttribute
+                
                 var fieldMap = objectFieldMap[objectType.Name].ToDictionary(_ => _.Name);
 
                 foreach (var @interface in interfaces)

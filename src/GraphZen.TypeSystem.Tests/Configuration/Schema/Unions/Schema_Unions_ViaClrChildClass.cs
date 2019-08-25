@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
+
 
 namespace GraphZen.Unions
 {
@@ -36,13 +36,13 @@ namespace GraphZen.Unions
 
         public class Query
         {
-            public Foo Foo { get; set; }
+            public Foo? Foo { get; set; }
 
-            public Bar Bar { get; set; }
+            public Bar? Bar { get; set; }
 
-            public Baz Baz { get; set; }
+            public Baz? Baz { get; set; }
 
-            public FooBar FooBar { get; set; }
+            public FooBar? FooBar { get; set; }
         }
 
 

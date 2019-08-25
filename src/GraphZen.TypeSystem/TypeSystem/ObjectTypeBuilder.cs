@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem
             return new ObjectTypeBuilder<T, TContext>(Builder);
         }
 
-        public IObjectTypeBuilder<TObject, TContext> Description(string description)
+        public IObjectTypeBuilder<TObject, TContext> Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
@@ -57,7 +57,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
-            // ReSharper disable once AssignNullToNotNullAttribute
+            
             fieldConfigurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
             return this;
         }

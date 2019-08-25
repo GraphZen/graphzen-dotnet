@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
+
 
 namespace GraphZen.Unions.Description
 {
@@ -35,7 +35,7 @@ namespace GraphZen.Unions.Description
 
         public class Query
         {
-            public IExampleUnion ExampleUnion { get; set; }
+            public IExampleUnion? ExampleUnion { get; set; }
         }
 
         [Description(DataAnnotationDescriptionValue)]

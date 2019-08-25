@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem
             IFieldsContainerDefinitionBuilder<IInterfaceTypeBuilder<TInterface, TContext>, TInterface, TContext>
         where TContext : GraphQLContext
     {
-        IInterfaceTypeBuilder<TInterface, TContext> Description(string description);
+        IInterfaceTypeBuilder<TInterface, TContext> Description(string? description);
 
 
         IInterfaceTypeBuilder<object, TContext> ClrType(Type clrType);

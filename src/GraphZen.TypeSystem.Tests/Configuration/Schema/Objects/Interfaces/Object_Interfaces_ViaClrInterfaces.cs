@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
+
 
 namespace GraphZen.Objects.Interfaces
 {
@@ -13,7 +13,7 @@ namespace GraphZen.Objects.Interfaces
     {
         public class Query
         {
-            public ObjectWithInterfaces ObjectWithInterfaces { get; set; }
+            public ObjectWithInterfaces? ObjectWithInterfaces { get; set; }
         }
 
         public class ObjectWithInterfaces : INamedByConvention, INamedByDataAnnotation, IIgnoredByDataAnnotation

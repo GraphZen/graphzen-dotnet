@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
 namespace GraphZen.InputObjects
 {
@@ -41,6 +40,8 @@ namespace GraphZen.InputObjects
             throw new NotImplementedException();
         }
 
+
+#nullable disable
         public class ParentInputObject
         {
             public NamedByConvention ConventionallyNamed { get; set; }
@@ -51,6 +52,7 @@ namespace GraphZen.InputObjects
 
             public NamedByDataAnnotation NamedByDataAnnoation { get; set; }
         }
+#nullable restore
 
         public class NamedByConvention
         {
