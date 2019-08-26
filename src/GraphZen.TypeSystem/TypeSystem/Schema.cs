@@ -85,7 +85,7 @@ namespace GraphZen.TypeSystem
                 .OrderBy(_ => _.Name)
                 .ToDictionary(t => t.Name, t => t);
 
-            
+
             QueryType = FindType<ObjectType>(Definition.QueryType?.Name ?? "Query")!;
             MutationType = Definition.MutationType != null ? FindType<ObjectType>(Definition.MutationType.Name) : null;
             SubscriptionType = Definition.SubscriptionType != null
@@ -96,8 +96,10 @@ namespace GraphZen.TypeSystem
             // Keep track of all implementations by interface name.
 
             foreach (var type in Types.Values)
+            {
                 if (type is ObjectType objectType)
                     foreach (var iface in objectType.Interfaces)
+                    {
                         if (_implementations.TryGetValue(iface.Name, out var impls))
                             impls.Add(objectType);
                         else
@@ -105,11 +107,17 @@ namespace GraphZen.TypeSystem
                             {
                                 objectType
                             };
+                    }
+            }
 
             foreach (var type in Types.Values)
+            {
                 if (type is ObjectType objectType)
                     foreach (var iface in objectType.Interfaces)
+                    {
                         AssertObjectImplementsInterfaces(objectType, iface);
+                    }
+            }
 
             _syntax = new Lazy<SchemaDefinitionSyntax>(() =>
             {

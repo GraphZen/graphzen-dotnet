@@ -8,7 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.InputObjects
 {
     public abstract class Schema_InputObjects : CollectionConfigurationFixture<IInputObjectTypesContainer,

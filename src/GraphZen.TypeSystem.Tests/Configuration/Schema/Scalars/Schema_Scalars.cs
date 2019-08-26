@@ -8,7 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Scalars
 {
     public abstract class Schema_Scalars : CollectionConfigurationFixture<IScalarTypesContainer,

@@ -56,10 +56,9 @@ namespace GraphZen.TypeSystem.Internal
             {
                 builder.CustomValue(value);
                 if (enumMember.TryGetDescriptionFromDataAnnotation(out var desc))
-                {
                     builder.Description(desc, ConfigurationSource.DataAnnotation);
-                }
             }
+
             return builder;
         }
 
@@ -97,10 +96,7 @@ namespace GraphZen.TypeSystem.Internal
 
         private static string GetName(object value)
         {
-            if (value is string strValue)
-            {
-                return strValue;
-            }
+            if (value is string strValue) return strValue;
 
             var enumMember = GetMemberInfo(value.GetType(), value.ToString()!);
             var (name, _) = enumMember.GetGraphQLNameForEnumValue();

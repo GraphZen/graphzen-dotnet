@@ -8,8 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.Interfaces.Fields
 {
     public abstract class Interface_Fields :

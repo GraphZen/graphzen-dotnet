@@ -9,7 +9,8 @@ using JetBrains.Annotations;
 namespace GraphZen
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Class |
-                    AttributeTargets.Interface | AttributeTargets.Parameter | AttributeTargets.Enum | AttributeTargets.Field)]
+                    AttributeTargets.Interface | AttributeTargets.Parameter | AttributeTargets.Enum |
+                    AttributeTargets.Field)]
     public class GraphQLIgnoreAttribute : Attribute
     {
     }

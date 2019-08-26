@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Scalars.Description
 {
     public class Scalar_Explicit_Description : Scalar_Description, ILeafExplicitConfigurationFixture

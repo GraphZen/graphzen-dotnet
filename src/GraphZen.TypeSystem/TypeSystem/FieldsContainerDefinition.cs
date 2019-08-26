@@ -112,7 +112,7 @@ namespace GraphZen.TypeSystem
                 throw new InvalidOperationException(
                     "Cannot add field from property on a type that does not have a CLR type mapped.");
 
-            
+
             if (!ClrType.IsSameOrSubclass(propertyInfo.DeclaringType!))
                 throw new InvalidOperationException(
                     $"Cannot add field from property with a declaring type ({propertyInfo.DeclaringType}) that does not exist on the parent's {Kind.ToString().ToLower()} type's mapped CLR type ({ClrType}).");

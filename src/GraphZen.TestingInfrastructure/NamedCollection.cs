@@ -9,6 +9,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
+
 #nullable disable
 
 namespace GraphZen

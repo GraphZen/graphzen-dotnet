@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Interfaces.Fields.Description
 {
     public class Interface_Field_ViaClrProperty_Description : Interface_Field_Description,

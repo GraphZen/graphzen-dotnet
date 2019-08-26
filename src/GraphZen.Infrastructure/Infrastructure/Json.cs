@@ -25,7 +25,6 @@ namespace GraphZen.Infrastructure
         };
 
 
-        
         public static JsonSerializer Serializer { get; } = JsonSerializer.Create(SerializerSettings);
 
         public static JObject CreateJObject(object value)

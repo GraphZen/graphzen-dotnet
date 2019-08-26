@@ -8,9 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.Interfaces.Fields.Arguments.Description
 {
     public abstract class Interface_Field_Argument_Description : LeafElementConfigurationFixture<IDescription,

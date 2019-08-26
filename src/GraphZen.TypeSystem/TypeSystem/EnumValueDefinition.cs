@@ -73,6 +73,7 @@ namespace GraphZen.TypeSystem
 
         // ReSharper disable once UnassignedGetOnlyAutoProperty
         public bool IsDeprecated { get; }
+
         // ReSharper disable once UnassignedGetOnlyAutoProperty
         public string? DeprecationReason { get; }
     }

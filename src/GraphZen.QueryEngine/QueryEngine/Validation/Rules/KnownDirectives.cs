@@ -28,7 +28,6 @@ namespace GraphZen.QueryEngine.Validation.Rules
         }
 
 
-        
         private IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>> LocationsMap => _lazyLocationsMap.Value;
 
 

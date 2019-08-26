@@ -45,7 +45,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
                 var enumTypeName = enums.Key;
                 var enumExts = _enumExts.GetItems(enumTypeName);
                 // ReSharper disable once PossibleNullReferenceException
-                
+
                 var values = enums.Value.SelectMany(_ => _.Values)
                     // ReSharper disable once PossibleNullReferenceException
                     .Concat(enumExts.SelectMany(_ => _.Values)).ToArray();

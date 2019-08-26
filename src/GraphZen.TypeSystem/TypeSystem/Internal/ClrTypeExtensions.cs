@@ -247,6 +247,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 var mapping = property.DeclaringType.GetInterfaceMap(@interface);
                 for (var i = 0; i < mapping.InterfaceMethods.Length; i++)
+                {
                     if (mapping.TargetMethods[i] == methodInfo)
                     {
                         var interfaceMethod = mapping.InterfaceMethods[i];
@@ -254,6 +255,7 @@ namespace GraphZen.TypeSystem.Internal
                         var value = interfaceMethod.DeclaringType.GetProperty(property.Name);
                         if (value != null) yield return value;
                     }
+                }
             }
         }
 
@@ -266,11 +268,13 @@ namespace GraphZen.TypeSystem.Internal
             {
                 var mapping = method.DeclaringType.GetInterfaceMap(@interface);
                 for (var i = 0; i < mapping.InterfaceMethods.Length; i++)
+                {
                     if (mapping.TargetMethods[i] == method)
                     {
                         var interfaceMethod = mapping.InterfaceMethods[i];
                         yield return interfaceMethod;
                     }
+                }
             }
         }
 
@@ -283,12 +287,14 @@ namespace GraphZen.TypeSystem.Internal
                 .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> { clrType.Assembly });
             foreach (var assembly in assemblies)
                 foreach (var type in assembly.DefinedTypes)
+                {
                     if (type != clrType)
                     {
                         if (clrType.IsInterface && clrType.IsAssignableFrom(type))
                             yield return type;
                         else if (clrType.IsClass && type.IsSubclassOf(clrType)) yield return type;
                     }
+                }
         }
     }
 }

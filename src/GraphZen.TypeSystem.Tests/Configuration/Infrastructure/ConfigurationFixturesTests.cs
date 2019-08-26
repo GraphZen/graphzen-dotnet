@@ -16,6 +16,7 @@ namespace GraphZen
         public void ensure_configuration_fixtures_implement_a_marker_interface()
         {
             foreach (var fixture in ConfigurationFixtures.GetAll<IConfigurationFixture>())
+            {
                 switch (fixture)
                 {
                     case ICollectionConfigurationFixture _
@@ -28,6 +29,7 @@ namespace GraphZen
                         throw new Exception(
                             $"{fixture.GetType().Name} needs to implement either {typeof(ILeafConventionConfigurationFixture).Name} or {typeof(ILeafExplicitConfigurationFixture).Name}");
                 }
+            }
         }
 
         [Fact]

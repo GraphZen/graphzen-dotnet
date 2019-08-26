@@ -80,7 +80,6 @@ namespace GraphZen.TypeSystem
         public EnumValueDefinition AddValue(string name, ConfigurationSource configurationSource,
             ConfigurationSource nameConfigurationSource)
         {
-
             var definition =
                 new EnumValueDefinition(name, nameConfigurationSource, this, Schema, configurationSource);
             _values[name] = definition;

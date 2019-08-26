@@ -46,7 +46,6 @@ namespace GraphZen
             Logger.Debug($"Adding GraphQL context {contextType}");
             if (optionsAction != null)
             {
-                
                 // ReSharper disable once PossibleNullReferenceException
                 var declaredConstructors = contextType.GetTypeInfo().DeclaredConstructors.ToList();
                 // ReSharper disable once PossibleNullReferenceException
@@ -57,7 +56,6 @@ namespace GraphZen
 
             Logger.Debug($"Registering {nameof(GraphQLContextOptions<TContext>)}");
             serviceCollection.TryAdd(new ServiceDescriptor(typeof(GraphQLContextOptions<TContext>),
-                
                 p => GraphQLContextOptionsFactory<TContext>(p, optionsActionImpl),
                 ServiceLifetime.Scoped));
 

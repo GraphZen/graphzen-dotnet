@@ -65,16 +65,20 @@ namespace GraphZen.LanguageModel
 
                     foreach (var objectType in GetObjectTypeMap().Values)
                         foreach (var iface in objectType.Interfaces)
+                        {
                             if (implementations.TryGetValue(iface.Name.Value, out
                                 var impls))
                                 ((HashSet<ObjectTypeDefinitionSyntax>)impls).Add(objectType);
                             else
                                 implementations[iface.Name.Value] =
                                     new HashSet<ObjectTypeDefinitionSyntax> { objectType };
+                        }
 
                     foreach (var abstractType in GetAbstractTypeMap().Values)
+                    {
                         if (!implementations.ContainsKey(abstractType.Name.Value))
                             implementations[abstractType.Name.Value] = new HashSet<ObjectTypeDefinitionSyntax>();
+                    }
 
                     return new ReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>(
                         implementations);

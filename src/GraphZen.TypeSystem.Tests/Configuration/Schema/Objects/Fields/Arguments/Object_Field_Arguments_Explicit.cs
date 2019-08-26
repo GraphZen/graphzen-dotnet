@@ -7,8 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.Objects.Fields.Arguments
 {
     public class Object_Field_Arguments_Explicit : Object_Field_Arguments, ICollectionExplicitConfigurationFixture

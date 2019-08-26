@@ -38,8 +38,10 @@ namespace GraphZen.LanguageModel
         {
             if (node != null)
                 foreach (var visitor in Visitors)
+                {
                     if (IsValidVisitor(visitor))
                         HandleResult(node.VisitEnter(visitor), visitor, node);
+                }
         }
 
         public override void OnLeave(SyntaxNode node)

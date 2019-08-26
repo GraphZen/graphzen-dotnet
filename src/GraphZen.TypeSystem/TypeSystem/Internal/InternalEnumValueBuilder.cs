@@ -23,9 +23,6 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-
-
-       
         public InternalEnumValueBuilder Name(string name, ConfigurationSource configurationSource)
         {
             var prevName = Definition.Name;

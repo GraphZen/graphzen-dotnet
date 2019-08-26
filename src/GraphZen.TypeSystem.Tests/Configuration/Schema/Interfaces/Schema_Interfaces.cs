@@ -8,7 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Interfaces
 {
     public abstract class Schema_Interfaces : CollectionConfigurationFixture<IInterfaceTypesContainer,

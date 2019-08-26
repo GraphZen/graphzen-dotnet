@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Objects.Fields.Arguments.Description
 {
     public class Object_Field_Argument_Explicit_Description : Object_Field_Argument_Description,

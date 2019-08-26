@@ -10,8 +10,6 @@ using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-
-
 namespace GraphZen
 {
     [NoReorder]

@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Objects.Fields.Arguments.Description
 {
     public class Object_Field_Argument_ViaClrMethod_Description : Object_Field_Argument_Description,

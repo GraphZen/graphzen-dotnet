@@ -42,7 +42,10 @@ namespace GraphZen.Infrastructure
             Check.NotNull(dictionary, nameof(dictionary));
             var entries = new List<DictionaryEntry>();
             var enumerator = dictionary.GetEnumerator();
-            while (enumerator.MoveNext()) entries.Add(enumerator.Entry);
+            while (enumerator.MoveNext())
+            {
+                entries.Add(enumerator.Entry);
+            }
 
             return entries.AsReadOnly();
         }

@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Scalars.Description
 {
     public class Scalar_ViaClrClass_Description : Scalar_Description, ILeafConventionConfigurationFixture

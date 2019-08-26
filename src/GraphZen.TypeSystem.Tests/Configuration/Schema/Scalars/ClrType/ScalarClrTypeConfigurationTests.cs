@@ -8,9 +8,6 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-
-
-
 namespace GraphZen.Scalars.ClrType
 {
     [NoReorder]

@@ -19,6 +19,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Superpower.Model;
 using Xunit;
+
 #nullable disable
 
 
@@ -167,7 +168,10 @@ namespace GraphZen
         private static void Sort(this JObject jObj)
         {
             var props = jObj.Properties().ToList();
-            foreach (var prop in props) prop.Remove();
+            foreach (var prop in props)
+            {
+                prop.Remove();
+            }
 
 
             foreach (var prop in props.OrderByDescending(p => p.Name == "name").ThenBy(p => p.Name))
@@ -178,8 +182,10 @@ namespace GraphZen
                 if (prop.Value is JArray arr)
                 {
                     foreach (var el in arr)
+                    {
                         if (el is JObject elObj)
                             Sort(elObj);
+                    }
 
 
                     IComparable GetComparable(JToken jt)

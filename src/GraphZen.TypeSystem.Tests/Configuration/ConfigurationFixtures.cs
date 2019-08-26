@@ -198,7 +198,7 @@ namespace GraphZen
                 new Enum_ViaClrEnum_Description(),
                 // Values (Collection)
                 new Enum_Values_Explicit(),
-                new Enum_Values_ViaClrEnumValues(), 
+                new Enum_Values_ViaClrEnumValues(),
                 // Directive Annotations (Collection)
                 // TODO: InputObject_DirectiveAnnotations_Explicit
                 // TODO: InputObject_DirectiveAnnotations_ViaClrClassAttributes

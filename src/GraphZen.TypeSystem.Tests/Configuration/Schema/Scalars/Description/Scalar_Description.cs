@@ -8,7 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Scalars.Description
 {
     public abstract class Scalar_Description : LeafElementConfigurationFixture<IDescription, IDescription,

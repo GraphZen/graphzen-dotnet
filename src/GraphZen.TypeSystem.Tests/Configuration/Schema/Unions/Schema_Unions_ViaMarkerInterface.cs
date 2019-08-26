@@ -7,7 +7,6 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Unions
 {
     public class Schema_Unions_ViaMarkerInterface : Schema_Unions, ICollectionConventionConfigurationFixture

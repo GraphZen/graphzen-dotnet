@@ -9,7 +9,6 @@ namespace GraphZen.TypeSystem
 {
     public interface IEnumValueBuilder : IAnnotableBuilder<IEnumValueBuilder>
     {
-
         IEnumValueBuilder Name(string name);
 
         IEnumValueBuilder Description(string? description);

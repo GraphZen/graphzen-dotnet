@@ -17,7 +17,10 @@ namespace GraphZen.TypeSystem.Taxonomy
         EnumValueDefinition? FindValue(string name);
         bool IgnoreValue(string name, ConfigurationSource configurationSource);
         bool UnignoreValue(string name, ConfigurationSource configurationSource);
-        EnumValueDefinition AddValue(string name, ConfigurationSource configurationSource, ConfigurationSource nameConfigurationSource);
+
+        EnumValueDefinition AddValue(string name, ConfigurationSource configurationSource,
+            ConfigurationSource nameConfigurationSource);
+
         new IEnumerable<EnumValueDefinition> GetValues();
     }
 }

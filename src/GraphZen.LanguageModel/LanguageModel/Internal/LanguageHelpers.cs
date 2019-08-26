@@ -71,10 +71,15 @@ namespace GraphZen.LanguageModel.Internal
                     if (line.Length > commonIndent.Value) lines[i] = line.Substring(commonIndent.Value);
                 }
 
-            while (lines.Count > 0 && string.IsNullOrWhiteSpace(lines[0])) lines.RemoveAt(0);
+            while (lines.Count > 0 && string.IsNullOrWhiteSpace(lines[0]))
+            {
+                lines.RemoveAt(0);
+            }
 
             while (lines.Count > 0 && string.IsNullOrWhiteSpace(lines[lines.Count - 1]))
+            {
                 lines.RemoveAt(lines.Count - 1);
+            }
 
 
             return string.Join(Environment.NewLine, lines);
@@ -104,10 +109,15 @@ namespace GraphZen.LanguageModel.Internal
                     if (line.Length > commonIndent.Value) lines[i] = line.Substring(commonIndent.Value);
                 }
 
-            while (lines.Count > 0 && string.IsNullOrWhiteSpace(lines[0])) lines.RemoveAt(0);
+            while (lines.Count > 0 && string.IsNullOrWhiteSpace(lines[0]))
+            {
+                lines.RemoveAt(0);
+            }
 
             while (lines.Count > 0 && string.IsNullOrWhiteSpace(lines[lines.Count - 1]))
+            {
                 lines.RemoveAt(lines.Count - 1);
+            }
 
 
             return string.Join(Environment.NewLine, lines);
@@ -117,7 +127,10 @@ namespace GraphZen.LanguageModel.Internal
         private static int GetIndent(this string str)
         {
             var i = 0;
-            while (i < str.Length && (str[i] == ' ' || str[i] == '\t')) i++;
+            while (i < str.Length && (str[i] == ' ' || str[i] == '\t'))
+            {
+                i++;
+            }
 
             return i;
         }

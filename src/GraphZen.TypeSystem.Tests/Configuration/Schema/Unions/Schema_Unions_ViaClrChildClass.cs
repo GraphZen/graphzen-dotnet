@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Unions
 {
     public class Schema_Unions_ViaClrChildClass : Schema_Unions, ICollectionConventionConfigurationFixture

@@ -141,6 +141,7 @@ namespace GraphZen.QueryEngine
                 Check.NotNull(mi, nameof(mi));
                 var parameters = new List<object>();
                 foreach (var parameter in mi.GetParameters())
+                {
                     if (parameter.Name != null)
                     {
                         var argValue = args[parameter.Name];
@@ -150,6 +151,7 @@ namespace GraphZen.QueryEngine
                     {
                         break;
                     }
+                }
 
                 var methodResult = mi.Invoke(source, parameters.ToArray());
 
@@ -196,6 +198,7 @@ namespace GraphZen.QueryEngine
             OperationDefinitionSyntax operation = null;
             var hasMultipleAssumedOperations = false;
             foreach (var definition in document.Definitions)
+            {
                 switch (definition)
                 {
                     case OperationDefinitionSyntax operationDefinition:
@@ -209,6 +212,7 @@ namespace GraphZen.QueryEngine
                         fragments[fragmentDefinition.Name.Value] = fragmentDefinition;
                         break;
                 }
+            }
 
             if (operation == null)
             {

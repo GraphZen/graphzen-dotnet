@@ -46,9 +46,14 @@ namespace GraphZen.TypeSystem.Internal
 
 
             foreach (var def in _document.Definitions.OfType<DirectiveDefinitionSyntax>())
+            {
                 ConfigureDirective(schemaBuilder, def);
+            }
 
-            foreach (var def in types) ConfigureType(schemaBuilder, def);
+            foreach (var def in types)
+            {
+                ConfigureType(schemaBuilder, def);
+            }
 
             Debug.Assert(operationTypes != null, nameof(operationTypes) + " != null");
             foreach (var ot in operationTypes.Where(_ => _.Value != null))
@@ -99,12 +104,14 @@ namespace GraphZen.TypeSystem.Internal
             if (def.Description != null) directive.Description(def.Description.Value);
 
             foreach (var arg in def.Arguments)
+            {
                 directive.Argument(arg.Name.Value, arg.Type.ToSyntaxString(), _ =>
                 {
                     Debug.Assert(_ != null, nameof(_) + " != null");
                     // TODO - how to get default value?
                     if (arg.Description != null) _.Description(arg.Description.Value);
                 });
+            }
 
             var locations = def.Locations.Select(_ =>
             {
@@ -156,6 +163,7 @@ namespace GraphZen.TypeSystem.Internal
                         if (node.Description != null) type.Description(node.Description.Value);
 
                         foreach (var fieldNode in node.Fields)
+                        {
                             type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                             {
                                 Debug.Assert(field != null, nameof(field) + " != null");
@@ -170,6 +178,7 @@ namespace GraphZen.TypeSystem.Internal
                                         argument.Description(argumentNode.Description.Value);
                                 }
                             });
+                        }
 
                         break;
                     }
@@ -179,9 +188,13 @@ namespace GraphZen.TypeSystem.Internal
                         var type = schemaBuilder.Object(node.Name.Value);
                         if (node.Description != null) type.Description(node.Description.Value);
 
-                        foreach (var iface in node.Interfaces) type.ImplementsInterface(iface.Name.Value);
+                        foreach (var iface in node.Interfaces)
+                        {
+                            type.ImplementsInterface(iface.Name.Value);
+                        }
 
                         foreach (var fieldNode in node.Fields)
+                        {
                             type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                             {
                                 Debug.Assert(field != null, nameof(field) + " != null");
@@ -196,6 +209,7 @@ namespace GraphZen.TypeSystem.Internal
                                         argument.Description(argumentNode.Description.Value);
                                 }
                             });
+                        }
 
                         break;
                     }

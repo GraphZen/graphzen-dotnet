@@ -8,7 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Objects.Interfaces
 {
     public abstract class Object_Interfaces :

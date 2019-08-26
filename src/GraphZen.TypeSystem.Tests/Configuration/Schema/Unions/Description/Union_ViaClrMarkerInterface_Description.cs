@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Unions.Description
 {
     public class Union_ViaClrMarkerInterface_Description : Union_Description, ILeafConventionConfigurationFixture

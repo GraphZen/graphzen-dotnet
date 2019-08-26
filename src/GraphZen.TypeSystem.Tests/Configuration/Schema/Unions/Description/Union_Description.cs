@@ -8,7 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Unions.Description
 {
     public abstract class Union_Description : LeafElementConfigurationFixture<IDescription, IDescription,

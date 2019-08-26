@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.InputObjects.Fields
 {
     public class InputObject_Fields_Explicit : InputObject_Fields, ICollectionExplicitConfigurationFixture

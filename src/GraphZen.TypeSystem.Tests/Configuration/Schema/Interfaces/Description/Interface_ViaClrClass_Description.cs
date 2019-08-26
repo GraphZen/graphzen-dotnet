@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Interfaces.Description
 {
     public class Interface_ViaClrClass_Description : Interface_Description, ILeafConventionConfigurationFixture

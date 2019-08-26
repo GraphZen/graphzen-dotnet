@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem.Internal
 
 
         private IReadOnlyList<string> IgnoredMethodNames { get; } =
-            
+
             typeof(object).GetMethods().Select(_ => _.Name).ToImmutableList();
 
 
@@ -39,13 +39,14 @@ namespace GraphZen.TypeSystem.Internal
         {
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
             // ReSharper disable once PossibleNullReferenceException
-            
+
             var fieldMembers = Definition.ClrType.GetMembers(flags)
                 .Where(_ => !(_ is MethodInfo method) || method.DeclaringType != typeof(object) &&
                             method.ReturnType != typeof(void) &&
                             !IgnoredMethodNames.Contains(method.Name) && !method.IsSpecialName)
                 .OrderBy(_ => _.MetadataToken);
             foreach (var fieldMember in fieldMembers)
+            {
                 switch (fieldMember)
                 {
                     case MethodInfo method:
@@ -59,6 +60,7 @@ namespace GraphZen.TypeSystem.Internal
                         }
                         break;
                 }
+            }
         }
 
         public bool IgnoreField(string fieldName, ConfigurationSource configurationSource)
@@ -210,7 +212,9 @@ namespace GraphZen.TypeSystem.Internal
             if (method.TryGetDescriptionFromDataAnnotation(out var desc))
                 field?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
             foreach (var parameter in method.GetParameters())
+            {
                 field?.Builder.Argument(parameter, ConfigurationSource.Convention);
+            }
 
             return field?.Builder;
         }

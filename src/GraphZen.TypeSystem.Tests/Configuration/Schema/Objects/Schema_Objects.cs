@@ -8,7 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Objects
 {
     public abstract class Schema_Objects : CollectionConfigurationFixture<IObjectTypesContainer,

@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Objects
 {
     public class Schema_Objects_ViaClrClasses : Schema_Objects, ICollectionConventionConfigurationFixture

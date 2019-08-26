@@ -60,8 +60,10 @@ namespace GraphZen.LanguageModel.Validation.Rules
                 foreach (var duplicateTypes in types
                     .GroupBy(_ => _.Name.Value)
                     .Where(_ => _.Count() > 1))
+                {
                     ReportError($"Union type {unionTypeName} can only include type {duplicateTypes.Key} once.",
                         duplicateTypes.ToList());
+                }
 
                 var objectTypes = node.Definitions.OfType<ObjectTypeDefinitionSyntax>().ToList();
                 foreach (var type in types)

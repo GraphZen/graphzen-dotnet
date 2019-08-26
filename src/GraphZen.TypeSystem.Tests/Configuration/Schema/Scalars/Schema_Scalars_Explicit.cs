@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Scalars
 {
     public class Schema_Scalars_Explicit : Schema_Scalars, ICollectionExplicitConfigurationFixture

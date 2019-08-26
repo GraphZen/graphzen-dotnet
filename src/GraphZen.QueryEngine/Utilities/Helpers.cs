@@ -54,6 +54,7 @@ namespace GraphZen
                 {
                     var coercedValues = new List<object>(listNode.Values.Count);
                     foreach (var itemNode in listNode.Values)
+                    {
                         if (IsMissingVariable(itemNode, variables))
                         {
                             if (itemType is NonNullType) return Maybe.None<object>();
@@ -68,6 +69,7 @@ namespace GraphZen
                             else
                                 return itemValue;
                         }
+                    }
 
                     return Maybe.Some<object>(coercedValues);
                 }

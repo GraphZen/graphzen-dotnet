@@ -70,11 +70,15 @@ namespace GraphZen.TypeSystem.Internal
 
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
             // ReSharper disable once PossibleNullReferenceException
-            
+
             var fieldMembers = clrType.GetMembers(flags)
                 .OfType<PropertyInfo>()
                 .OrderBy(_ => _.MetadataToken);
-            foreach (var property in fieldMembers) Field(property, ConfigurationSource.Convention);
+            foreach (var property in fieldMembers)
+            {
+                Field(property, ConfigurationSource.Convention);
+            }
+
             return true;
         }
 

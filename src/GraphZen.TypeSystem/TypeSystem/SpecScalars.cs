@@ -11,9 +11,6 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.TypeSystem
 {
     public static class SpecScalars

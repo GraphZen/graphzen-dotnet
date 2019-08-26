@@ -8,9 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.Objects.Fields.Arguments
 {
     public abstract class Object_Field_Arguments : CollectionConfigurationFixture<IArgumentsContainer,

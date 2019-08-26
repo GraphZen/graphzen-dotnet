@@ -6,8 +6,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.Interfaces.Fields.Arguments
 {
     public class Interface_Field_Arguments_Explicit : Interface_Field_Arguments, ICollectionExplicitConfigurationFixture

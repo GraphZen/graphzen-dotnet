@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.Interfaces.Fields
 {
     public class Interface_Fields_ViaClrProperties : Interface_Fields, ICollectionConventionConfigurationFixture
