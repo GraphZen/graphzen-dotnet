@@ -23,16 +23,18 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalEnumValueBuilder Deprecated(bool deprecated)
-        {
-            Definition.IsDeprecated = deprecated;
-            return this;
-        }
 
 
-        public InternalEnumValueBuilder Deprecated(string reason)
+       
+        public InternalEnumValueBuilder Name(string name, ConfigurationSource configurationSource)
         {
-            Definition.DeprecationReason = reason;
+            var prevName = Definition.Name;
+            if (Definition.SetName(name, configurationSource))
+            {
+                Definition.DeclaringType._values.Remove(prevName);
+                Definition.DeclaringType._values[name] = Definition;
+            }
+
             return this;
         }
     }

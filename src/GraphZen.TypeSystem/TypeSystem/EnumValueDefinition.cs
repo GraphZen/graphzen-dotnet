@@ -10,16 +10,12 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EnumValueDefinition : AnnotatableMemberDefinition, IMutableEnumValueDefinition
     {
-        private readonly ConfigurationSource _nameConfigurationSource;
-        private string _deprecationReason;
-        private bool _isDeprecated;
+        private ConfigurationSource _nameConfigurationSource;
 
         public EnumValueDefinition(string name, ConfigurationSource nameConfigurationSource,
             EnumTypeDefinition declaringType,
@@ -46,35 +42,16 @@ namespace GraphZen.TypeSystem
         public string Name { get; private set; }
 
 
-        public bool IsDeprecated
-        {
-            get => _isDeprecated || DeprecationReason != null;
-            set
-            {
-                _isDeprecated = value;
-                if (!_isDeprecated) DeprecationReason = null;
-            }
-        }
-
-        public string DeprecationReason
-        {
-            get => _deprecationReason;
-            set
-            {
-                _deprecationReason = value;
-                if (_deprecationReason != null) IsDeprecated = true;
-            }
-        }
-
         public bool SetName(string name, ConfigurationSource configurationSource)
         {
-            if (configurationSource.Overrides(_nameConfigurationSource))
+            if (!configurationSource.Overrides(_nameConfigurationSource)) return false;
+
+            _nameConfigurationSource = configurationSource;
+            if (name != Name)
             {
-                Check.NotNull(name, nameof(name));
                 Name = name;
                 return true;
             }
-
 
             return false;
         }
@@ -93,5 +70,10 @@ namespace GraphZen.TypeSystem
         {
             throw new NotImplementedException();
         }
+
+        // ReSharper disable once UnassignedGetOnlyAutoProperty
+        public bool IsDeprecated { get; }
+        // ReSharper disable once UnassignedGetOnlyAutoProperty
+        public string? DeprecationReason { get; }
     }
 }

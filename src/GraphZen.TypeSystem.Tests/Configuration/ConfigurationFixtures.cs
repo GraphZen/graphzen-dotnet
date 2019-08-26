@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Enums;
 using GraphZen.Enums.Description;
+using GraphZen.Enums.EnumValues;
 using GraphZen.Enums.EnumValues.Description;
 using GraphZen.Infrastructure;
 using GraphZen.InputObjects;
@@ -196,7 +197,8 @@ namespace GraphZen
                 new Enum_Explicit_Description(),
                 new Enum_ViaClrEnum_Description(),
                 // Values (Collection)
-
+                new Enum_Values_Explicit(),
+                new Enum_Values_ViaClrEnumValues(), 
                 // Directive Annotations (Collection)
                 // TODO: InputObject_DirectiveAnnotations_Explicit
                 // TODO: InputObject_DirectiveAnnotations_ViaClrClassAttributes

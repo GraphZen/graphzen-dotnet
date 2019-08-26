@@ -5,14 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.Enums.EnumValues
 {
-    [GraphQLIgnore]
-    public interface IDeprecation
+    public class Enum_Values_Explicit : Enum_Values, ICollectionExplicitConfigurationFixture
     {
-        bool IsDeprecated { get; }
-
-
-        string? DeprecationReason { get; }
     }
 }

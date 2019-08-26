@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
@@ -28,13 +29,18 @@ namespace GraphZen.TypeSystem
 
         public IEnumValueBuilder Deprecated(bool deprecated = true)
         {
-            Builder.Deprecated(deprecated);
-            return this;
+            throw new NotImplementedException();
         }
 
         public IEnumValueBuilder Deprecated(string reason)
         {
-            Builder.Deprecated(reason);
+            throw new NotImplementedException();
+        }
+
+        public IEnumValueBuilder Name(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }
 

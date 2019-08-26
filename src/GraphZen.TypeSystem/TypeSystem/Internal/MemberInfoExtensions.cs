@@ -67,6 +67,13 @@ namespace GraphZen.TypeSystem.Internal
             return ignoredAttribute != null;
         }
 
+        public static bool IsIgnoredByDataAnnotation(this MemberInfo memberInfo)
+        {
+            var ignoredAttribute = memberInfo
+                .GetCustomAttribute<GraphQLIgnoreAttribute>();
+            return ignoredAttribute != null;
+        }
+
 
         public static (string name, ConfigurationSource nameConfigurationSource) GetGraphQLFieldName(
             this MemberInfo member)
@@ -99,7 +106,7 @@ namespace GraphZen.TypeSystem.Internal
             this ParameterInfo parameter)
         {
             Check.NotNull(parameter, nameof(parameter));
-            
+
             string? customName = parameter.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
             return customName != null
                 ? (customName, ConfigurationSource.DataAnnotation)

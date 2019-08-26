@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -16,7 +15,11 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
     {
-        private readonly Dictionary<string, EnumValueDefinition> _values = new Dictionary<string, EnumValueDefinition>();
+        internal readonly Dictionary<string, EnumValueDefinition> _values =
+            new Dictionary<string, EnumValueDefinition>();
+
+        private readonly Dictionary<string, ConfigurationSource> _ignoredValues =
+            new Dictionary<string, ConfigurationSource>();
 
         public EnumTypeDefinition(TypeIdentity identity,
             SchemaDefinition schema,
@@ -41,7 +44,47 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? FindIgnoredValueConfigurationSource(string name)
         {
-            throw new NotImplementedException();
+            return _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
+        }
+
+        public EnumValueDefinition? FindValue(string name)
+        {
+            return _values.TryGetValue(name, out var value) ? value : null;
+        }
+
+        public bool IgnoreValue(string name, ConfigurationSource configurationSource)
+        {
+            var itemConfigurationSource = FindValue(name)?.GetConfigurationSource();
+            if (configurationSource.Overrides(itemConfigurationSource))
+            {
+                var ignoredConfigurationSource = FindIgnoredValueConfigurationSource(name);
+                if (configurationSource.Overrides(ignoredConfigurationSource))
+                {
+                    _ignoredValues[name] = configurationSource;
+                    _values.Remove(name);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool UnignoreValue(string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = FindIgnoredValueConfigurationSource(name);
+            if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+            _ignoredValues.Remove(name);
+            return true;
+        }
+
+        public EnumValueDefinition AddValue(string name, ConfigurationSource configurationSource,
+            ConfigurationSource nameConfigurationSource)
+        {
+
+            var definition =
+                new EnumValueDefinition(name, nameConfigurationSource, this, Schema, configurationSource);
+            _values[name] = definition;
+            return definition;
         }
 
         public IEnumerable<EnumValueDefinition> GetValues()

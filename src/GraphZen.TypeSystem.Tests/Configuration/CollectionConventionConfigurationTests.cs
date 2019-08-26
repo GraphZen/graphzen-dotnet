@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using GraphZen.Enums.EnumValues;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
@@ -43,24 +44,24 @@ namespace GraphZen
 
         {
             TestData(fixture, () =>
-            {
-                var context = fixture.GetContext();
-                var schema = Schema.Create(sb =>
-                {
-                    fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, context.ParentName);
-                    defCollection[context.ItemNamedByConvention].Should()
-                        .BeOfType(fixture.CollectionItemMemberDefinitionType);
-                    defCollection[context.ItemNamedByDataAnnotation].Should()
-                        .BeOfType(fixture.CollectionItemMemberDefinitionType);
-                });
-                fixture.GetParent(schema, context.ParentName).Should().BeOfType(fixture.ParentMemberType);
-                var collection = fixture.GetCollection(schema, context.ParentName);
-                collection[context.ItemNamedByConvention].Should()
-                    .BeOfType(fixture.CollectionItemMemberType);
-                collection[context.ItemNamedByDataAnnotation].Should()
-                    .BeOfType(fixture.CollectionItemMemberType);
-            });
+           {
+               var context = fixture.GetContext();
+               var schema = Schema.Create(sb =>
+               {
+                   fixture.ConfigureContextConventionally(sb);
+                   var defCollection = fixture.GetCollection(sb, context.ParentName);
+                   defCollection[context.ItemNamedByConvention].Should()
+                       .BeOfType(fixture.CollectionItemMemberDefinitionType);
+                   defCollection[context.ItemNamedByDataAnnotation].Should()
+                       .BeOfType(fixture.CollectionItemMemberDefinitionType);
+               });
+               fixture.GetParent(schema, context.ParentName).Should().BeOfType(fixture.ParentMemberType);
+               var collection = fixture.GetCollection(schema, context.ParentName);
+               collection[context.ItemNamedByConvention].Should()
+                   .BeOfType(fixture.CollectionItemMemberType);
+               collection[context.ItemNamedByDataAnnotation].Should()
+                   .BeOfType(fixture.CollectionItemMemberType);
+           });
         }
 
         [Theory]
@@ -139,32 +140,31 @@ namespace GraphZen
         [MemberData(nameof(FixtureData))]
         public void item_added_by_convention_with_name_configured_by_convention_renamed_explicitly(
             ICollectionConventionConfigurationFixture fixture)
-
         {
             TestData(fixture, () =>
-            {
-                var ctx = fixture.GetContext();
-                var explicitName = "ExplicitName";
-                var schema = Schema.Create(sb =>
-                {
-                    fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    defCollection[ctx.ItemNamedByConvention].Name.Should().Be(ctx.ItemNamedByConvention);
-                    defCollection[ctx.ItemNamedByConvention].Should().NotBeNull();
-                    defCollection[ctx.ItemNamedByConvention].GetConfigurationSource().Should()
-                        .Be(ctx.DefaultItemConfigurationSource ?? ConfigurationSource.Convention);
-                    defCollection[ctx.ItemNamedByConvention].GetNameConfigurationSource().Should()
-                        .Be(ConfigurationSource.Convention);
-                    fixture.RenameItem(sb, ctx.ParentName, ctx.ItemNamedByConvention, explicitName);
-                    defCollection.ContainsKey(ctx.ItemNamedByConvention).Should().BeFalse();
-                    defCollection[explicitName].Should().NotBeNull();
-                    defCollection[explicitName].GetNameConfigurationSource().Should().Be(ConfigurationSource.Explicit);
-                    defCollection[explicitName].Name.Should().Be(explicitName);
-                });
-                var collection = fixture.GetCollection(schema, ctx.ParentName);
-                collection[explicitName].Should().NotBeNull();
-                collection[explicitName].Name.Should().Be(explicitName);
-            });
+         {
+             var ctx = fixture.GetContext();
+             var explicitName = "ExplicitName";
+             var schema = Schema.Create(sb =>
+             {
+                 fixture.ConfigureContextConventionally(sb);
+                 var defCollection = fixture.GetCollection(sb, ctx.ParentName);
+                 defCollection[ctx.ItemNamedByConvention].Name.Should().Be(ctx.ItemNamedByConvention);
+                 defCollection[ctx.ItemNamedByConvention].Should().NotBeNull();
+                 defCollection[ctx.ItemNamedByConvention].GetConfigurationSource().Should()
+                     .Be(ctx.DefaultItemConfigurationSource ?? ConfigurationSource.Convention);
+                 defCollection[ctx.ItemNamedByConvention].GetNameConfigurationSource().Should()
+                     .Be(ConfigurationSource.Convention);
+                 fixture.RenameItem(sb, ctx.ParentName, ctx.ItemNamedByConvention, explicitName);
+                 defCollection.ContainsKey(ctx.ItemNamedByConvention).Should().BeFalse();
+                 defCollection[explicitName].Should().NotBeNull();
+                 defCollection[explicitName].GetNameConfigurationSource().Should().Be(ConfigurationSource.Explicit);
+                 defCollection[explicitName].Name.Should().Be(explicitName);
+             });
+             var collection = fixture.GetCollection(schema, ctx.ParentName);
+             collection[explicitName].Should().NotBeNull();
+             collection[explicitName].Name.Should().Be(explicitName);
+         });
         }
 
         [Theory]

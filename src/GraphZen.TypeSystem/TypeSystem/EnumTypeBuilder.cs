@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem
 
         private InternalEnumTypeBuilder Builder { get; }
 
-        public IEnumTypeBuilder<TEnum> Description(string description)
+        public IEnumTypeBuilder<TEnum> Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
@@ -29,12 +29,22 @@ namespace GraphZen.TypeSystem
         public IEnumTypeBuilder<TEnum> Value(TEnum value, Action<IEnumValueBuilder>? valueConfigurator = null)
         {
             Check.NotNull(value, nameof(value));
-            var enumType = typeof(TEnum);
-            if (enumType != typeof(string) && !enumType.IsEnum)
-                throw new ArgumentException("Enum types can only be bound to strings or CLR enum types", nameof(value));
+            var vb = new EnumValueBuilder(Builder.Value(value, ConfigurationSource.Explicit));
+            valueConfigurator?.Invoke(vb);
+            return this;
+        }
 
-            var vb = Builder.Value(value.ToString()!, ConfigurationSource.Convention, ConfigurationSource.Explicit);
-            valueConfigurator?.Invoke(new EnumValueBuilder(vb));
+        public IEnumTypeBuilder<TEnum> IgnoreValue(TEnum value)
+        {
+            Check.NotNull(value, nameof(value));
+            Builder.IgnoreValue(value, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IEnumTypeBuilder<TEnum> UnignoreValue(TEnum value)
+        {
+            Check.NotNull(value, nameof(value));
+            Builder.UnignoreValue(value, ConfigurationSource.Explicit);
             return this;
         }
 
