@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableInterfaceTypeDefinition : IInterfaceTypeDefinition, IMutableGraphQLTypeDefinition,
+    public interface IMutableInterfaceTypeDefinition : IInterfaceTypeDefinition, IMutableNamedTypeDefinition,
         IMutableFieldsContainerDefinition,
         IMutableAbstractTypeDefinition
     {

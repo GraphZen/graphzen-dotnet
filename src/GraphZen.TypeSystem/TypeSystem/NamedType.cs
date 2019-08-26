@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore] public Type ClrType { get; }
 
 
-        public static NamedType From(IGraphQLTypeDefinition definition, Schema schema)
+        public static NamedType From(INamedTypeDefinition definition, Schema schema)
         {
             switch (definition)
             {

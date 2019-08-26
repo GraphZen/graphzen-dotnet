@@ -5,19 +5,19 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
+using static GraphZen.LanguageModel.SyntaxFactory;
 
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public abstract class NamedTypeDefinition : AnnotatableMemberDefinition, IMutableGraphQLTypeDefinition
+    public abstract class NamedTypeDefinition : AnnotatableMemberDefinition, IMutableNamedTypeDefinition
     {
         private ConfigurationSource _nameConfigurationSource;
-        private ConfigurationSource _clrTypeConfiguraitonSource = ConfigurationSource.Convention;
+        private ConfigurationSource? _clrTypeConfigurationSource;
 
         protected NamedTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(configurationSource)
@@ -54,9 +54,7 @@ namespace GraphZen.TypeSystem
         public bool SetName(string name, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(_nameConfigurationSource)) return false;
-
             _nameConfigurationSource = configurationSource;
-            
             Identity.Name = name;
             return true;
         }
@@ -70,22 +68,22 @@ namespace GraphZen.TypeSystem
 
         public virtual bool SetClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(_clrTypeConfiguraitonSource)) return false;
-            _clrTypeConfiguraitonSource = configurationSource;
+            if (!configurationSource.Overrides(_clrTypeConfigurationSource)) return false;
+            _clrTypeConfigurationSource = configurationSource;
             Identity.ClrType = clrType;
             return true;
         }
 
-        public ConfigurationSource GetClrTypeConfigurationSource()
+        public ConfigurationSource? GetClrTypeConfigurationSource()
         {
-            return _clrTypeConfiguraitonSource;
+            return _clrTypeConfigurationSource;
         }
 
 
         public TypeReference GetTypeReference()
         {
             return new TypeReference(Identity,
-                ClrType != null ? SyntaxFactory.NamedType(ClrType) : SyntaxFactory.NamedType(SyntaxFactory.Name(Name)));
+                ClrType != null ? NamedType(ClrType) : NamedType(Name(Name)));
         }
 
         public override string ToString()

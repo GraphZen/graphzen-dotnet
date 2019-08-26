@@ -14,8 +14,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         IReadOnlyDictionary<string, EnumValueDefinition> Values { get; }
         ConfigurationSource? FindIgnoredValueConfigurationSource(string name);
-
-
         new IEnumerable<EnumValueDefinition> GetValues();
     }
 }

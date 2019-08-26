@@ -42,7 +42,7 @@ namespace GraphZen.TypeSystem
         }
 
         [Theory]
-        [InlineData(typeof(IGraphQLTypeDefinition))]
+        [InlineData(typeof(INamedTypeDefinition))]
         public void graphql_type_definitions(Type type)
         {
             var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
@@ -106,7 +106,7 @@ namespace GraphZen.TypeSystem
         }
 
         [Theory]
-        [InlineData(typeof(IGraphQLTypeDefinition))]
+        [InlineData(typeof(INamedTypeDefinition))]
         public void named_type_definitions(Type type)
         {
             var types = ClrTypeUtils.GetImplementedTypes(type);

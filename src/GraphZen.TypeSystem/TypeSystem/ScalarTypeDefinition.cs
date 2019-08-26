@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem
         {
             Builder = new InternalScalarTypeBuilder(this, schema.Builder);
 
-            identity.Definition = Source != null ? (IGraphQLTypeDefinition)Source : this;
+            identity.Definition = Source != null ? (INamedTypeDefinition)Source : this;
         }
 
         private string DebuggerDisplay => $"scalar {Name}";

@@ -8,7 +8,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableAnnotatableDefinition : IAnnotatableDefinition, IMutableDefinition,
+    public interface IMutableAnnotatableDefinition : 
+        IAnnotatableDefinition, 
+        IMutableDefinition,
         IMutableDirectives
     {
     }

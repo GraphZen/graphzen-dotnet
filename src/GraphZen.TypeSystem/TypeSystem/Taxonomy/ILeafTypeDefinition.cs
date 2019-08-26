@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface ILeafTypeDefinition : IGraphQLTypeDefinition
+    public interface ILeafTypeDefinition : INamedTypeDefinition
     {
     }
 }

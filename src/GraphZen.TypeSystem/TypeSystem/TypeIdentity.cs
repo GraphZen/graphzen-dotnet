@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
 
         private string _name;
 
-        private IGraphQLTypeDefinition _typeDefinition;
+        private INamedTypeDefinition _typeDefinition;
 
         public TypeIdentity(string name, SchemaDefinition schema, TypeKind? kind = null)
         {
@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IGraphQLTypeDefinition Definition
+        public INamedTypeDefinition Definition
         {
             get => _typeDefinition;
             set

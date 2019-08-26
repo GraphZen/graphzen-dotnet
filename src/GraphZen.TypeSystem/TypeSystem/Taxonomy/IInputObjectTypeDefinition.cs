@@ -9,7 +9,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IInputObjectTypeDefinition : IInputFieldsContainerDefinition,
-        IGraphQLTypeDefinition, IInputDefinition
+        INamedTypeDefinition, IInputDefinition
     {
     }
 }

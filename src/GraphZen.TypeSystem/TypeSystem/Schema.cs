@@ -276,7 +276,7 @@ namespace GraphZen.TypeSystem
             throw new Exception($"Unexpected type kind: {typeSyntax?.GetType()}");
         }
 
-        private NamedType CreateType(IGraphQLTypeDefinition definition)
+        private NamedType CreateType(INamedTypeDefinition definition)
         {
             return NamedType.From(definition, this);
         }

@@ -21,7 +21,6 @@ namespace GraphZen.TypeSystem
     {
         private readonly Lazy<EnumTypeDefinitionSyntax> _syntax;
 
-
         public EnumType(string name, string description, Type clrType,
             IEnumerable<IEnumValueDefinition> valueDefinitions,
             IReadOnlyList<IDirectiveAnnotation> directives) : base(

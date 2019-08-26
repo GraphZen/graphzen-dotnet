@@ -16,8 +16,7 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
     {
-        private readonly Dictionary<string, EnumValueDefinition>
-            _values = new Dictionary<string, EnumValueDefinition>();
+        private readonly Dictionary<string, EnumValueDefinition> _values = new Dictionary<string, EnumValueDefinition>();
 
         public EnumTypeDefinition(TypeIdentity identity,
             SchemaDefinition schema,
@@ -37,7 +36,6 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
         public override TypeKind Kind { get; } = TypeKind.Enum;
-
 
         public IReadOnlyDictionary<string, EnumValueDefinition> Values => _values;
 

@@ -103,7 +103,7 @@ namespace GraphZen.TypeSystem
 
             if (identity != null)
             {
-                if (Builder.Type(identity)?.Definition is IGraphQLTypeDefinition def &&
+                if (Builder.Type(identity)?.Definition is INamedTypeDefinition def &&
                     identity.Definition == null)
                     identity.Definition = def;
 

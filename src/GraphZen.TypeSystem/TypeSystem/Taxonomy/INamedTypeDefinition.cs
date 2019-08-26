@@ -8,9 +8,12 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableGraphQLTypeDefinition : IGraphQLTypeDefinition, IMutableAnnotatableDefinition,
-        IMutableClrType,
-        IMutableNamed, IMutableDescription
+    public interface INamedTypeDefinition :
+        IMemberDefinition,
+        INamedTypeReference,
+        IDirectives,
+        IClrType
     {
+        TypeKind Kind { get; }
     }
 }
