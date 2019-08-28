@@ -4,13 +4,9 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
-
-#nullable disable
-
 
 namespace GraphZen.TypeSystem
 {
@@ -21,22 +17,22 @@ namespace GraphZen.TypeSystem
     [NoReorder]
     public class TypePredicateTests
     {
-        public static Schema Schema = Schema.Create(_ =>
+        private Schema Schema { get; } = Schema.Create(_ =>
         {
-            _.Object("Object");
-            _.Interface("Interface");
-            _.Union("Union").OfTypes("Object");
-            _.Enum("Enum").Value("foo");
-            _.InputObject("InputObject");
-            _.Scalar("Scalar").Serializer(Maybe.Some).LiteralParser(Maybe.Some<object>).ValueParser(Maybe.Some);
+            _.Object(nameof(ObjectType));
+            _.Interface(nameof(InterfaceType));
+            _.Union(nameof(UnionType)).OfTypes(nameof(ObjectType));
+            _.Enum(nameof(EnumType)).Value("foo");
+            _.InputObject(nameof(InputObjectType));
+            _.Scalar(nameof(ScalarType));
         });
 
-        public ObjectType ObjectType { get; } = Schema.GetType<ObjectType>("Object");
-        public InterfaceType InterfaceType { get; } = Schema.GetType<InterfaceType>("Interface");
-        public UnionType UnionType { get; } = Schema.GetType<UnionType>("Union");
-        public EnumType EnumType { get; } = Schema.GetType<EnumType>("Enum");
-        public InputObjectType InputObjectType { get; } = Schema.GetType<InputObjectType>("InputObject");
-        public ScalarType ScalarType { get; } = Schema.GetType<ScalarType>("Scalar");
+        private ObjectType ObjectType => Schema.GetObject(nameof(ObjectType));
+        private InterfaceType InterfaceType => Schema.GetInterface(nameof(InterfaceType));
+        private UnionType UnionType => Schema.GetUnion(nameof(UnionType));
+        private EnumType EnumType => Schema.GetEnum(nameof(EnumType));
+        private InputObjectType InputObjectType => Schema.GetInputObject(nameof(InputObjectType));
+        private ScalarType ScalarType => Schema.GetScalar(nameof(ScalarType));
 
 
         [Fact]
@@ -409,7 +405,7 @@ namespace GraphZen.TypeSystem
         [Fact]
         public void GetNullableType_ReturnsNullForNoType()
         {
-            ((IGraphQLType)null).GetNullableType().Should().BeNull();
+            ((IGraphQLType) null!).GetNullableType().Should().BeNull();
         }
 
         [Fact]
@@ -444,7 +440,7 @@ namespace GraphZen.TypeSystem
         [Fact]
         public void GetNamedType_ReturnsNullForNoType()
         {
-            ((IGraphQLType)null).GetNamedType().Should().BeNull();
+            ((IGraphQLType) null!).GetNamedType().Should().BeNull();
         }
 
         [Fact]

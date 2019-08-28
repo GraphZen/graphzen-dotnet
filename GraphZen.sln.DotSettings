@@ -15,6 +15,8 @@
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/BRACES_FOR_FOR/@EntryValue">Required</s:String>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/BRACES_FOR_FOREACH/@EntryValue">Required</s:String>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/BRACES_FOR_WHILE/@EntryValue">Required</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/LOCAL_FUNCTION_BODY/@EntryValue">ExpressionBody</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/METHOD_OR_OPERATOR_BODY/@EntryValue">ExpressionBody</s:String>
 	<s:String x:Key="/Default/CodeStyle/CSharpUsing/MandatoryImports/=GraphZen_002EInfrastructure/@EntryIndexedValue">GraphZen.Infrastructure</s:String>
 	<s:String x:Key="/Default/CodeStyle/CSharpUsing/MandatoryImports/=JetBrains_002EAnnotations/@EntryIndexedValue">JetBrains.Annotations</s:String>
 	<s:String x:Key="/Default/CodeStyle/CSharpUsing/MandatoryImports/=System_002EDiagnostics_002ECodeAnalysis/@EntryIndexedValue">System.Diagnostics.CodeAnalysis</s:String>

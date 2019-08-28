@@ -28,8 +28,8 @@ namespace GraphZen.TypeSystem.Internal
             var prevName = Definition.Name;
             if (Definition.SetName(name, configurationSource))
             {
-                Definition.DeclaringType._values.Remove(prevName);
-                Definition.DeclaringType._values[name] = Definition;
+                Definition.DeclaringType.InternalValues.Remove(prevName);
+                Definition.DeclaringType.InternalValues[name] = Definition;
             }
 
             return this;

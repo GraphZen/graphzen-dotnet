@@ -12,10 +12,10 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
     {
-        internal readonly Dictionary<string, EnumValueDefinition> _values =
+        internal readonly Dictionary<string, EnumValueDefinition> InternalValues =
             new Dictionary<string, EnumValueDefinition>();
 
         private readonly Dictionary<string, ConfigurationSource> _ignoredValues =
@@ -33,24 +33,19 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"enum {Name}";
 
-
         public InternalEnumTypeBuilder Builder { get; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
         public override TypeKind Kind { get; } = TypeKind.Enum;
 
-        public IReadOnlyDictionary<string, EnumValueDefinition> Values => _values;
+        public IReadOnlyDictionary<string, EnumValueDefinition> Values => InternalValues;
 
-        public ConfigurationSource? FindIgnoredValueConfigurationSource(string name)
-        {
-            return _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
-        }
+        public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) =>
+            _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
 
-        public EnumValueDefinition? FindValue(string name)
-        {
-            return _values.TryGetValue(name, out var value) ? value : null;
-        }
+        public EnumValueDefinition? FindValue(string name) =>
+            InternalValues.TryGetValue(name, out var value) ? value : null;
 
         public bool IgnoreValue(string name, ConfigurationSource configurationSource)
         {
@@ -61,7 +56,7 @@ namespace GraphZen.TypeSystem
                 if (configurationSource.Overrides(ignoredConfigurationSource))
                 {
                     _ignoredValues[name] = configurationSource;
-                    _values.Remove(name);
+                    InternalValues.Remove(name);
                     return true;
                 }
             }
@@ -82,35 +77,14 @@ namespace GraphZen.TypeSystem
         {
             var definition =
                 new EnumValueDefinition(name, nameConfigurationSource, this, Schema, configurationSource);
-            _values[name] = definition;
+            InternalValues[name] = definition;
             return definition;
         }
 
-        public IEnumerable<EnumValueDefinition> GetValues()
-        {
-            return Values.Values;
-        }
+        public IEnumerable<EnumValueDefinition> GetValues() => Values.Values;
 
-        public override string ToString()
-        {
-            return $"enum {Name}";
-        }
+        public override string ToString() => $"enum {Name}";
 
-        IEnumerable<IEnumValueDefinition> IEnumValuesContainerDefinition.GetValues()
-        {
-            return GetValues();
-        }
-
-
-        public EnumValueDefinition GetOrAddValue(string name,
-            ConfigurationSource nameConfigurationSource,
-            ConfigurationSource configurationSource)
-        {
-            return _values.TryGetValue(Check.NotNull(name, nameof(name)), out var value)
-                ? value
-                : _values[name] = new EnumValueDefinition(name,
-                    nameConfigurationSource,
-                    this, Schema, configurationSource);
-        }
+        IEnumerable<IEnumValueDefinition> IEnumValuesContainerDefinition.GetValues() => GetValues();
     }
 }

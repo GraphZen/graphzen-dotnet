@@ -10,7 +10,10 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IScalarType :
         ILeafType,
-        IScalarTypeDefinition
+        IScalarTypeDefinition,
+        ISerializer,
+        IValueParser,
+        ILiteralParser
     {
     }
 }
