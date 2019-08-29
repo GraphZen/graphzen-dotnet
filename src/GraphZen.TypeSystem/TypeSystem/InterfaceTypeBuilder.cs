@@ -46,54 +46,53 @@ namespace GraphZen.TypeSystem
 
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name,
-            Action<IFieldBuilder<TInterface, object, TContext>>? fieldConfigurator = null)
+            Action<IFieldBuilder<TInterface, object, TContext>>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
 
-            fieldConfigurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
+            configurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
             return this;
         }
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name, string type,
-            Action<IFieldBuilder<TInterface, object, TContext>>? fieldConfigurator = null)
+            Action<IFieldBuilder<TInterface, object?, TContext>>? configurator = null)
+
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
             var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
-            fieldConfigurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
+            configurator?.Invoke(new FieldBuilder<TInterface, object?, TContext>(fb));
             return this;
         }
 
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(string name,
-            Action<IFieldBuilder<TInterface, TField, TContext>>? fieldConfigurator = null)
+            Action<IFieldBuilder<TInterface, TField, TContext>>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
             var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?
                 .FieldType(typeof(TField))!;
-            fieldConfigurator?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
+            configurator?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
             return this;
         }
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(
-            Expression<Func<TInterface, TField>> fieldSelector,
-            Action<IFieldBuilder<TInterface, TField, TContext>>? fieldBuilder = null)
+            Expression<Func<TInterface, TField>> selector,
+            Action<IFieldBuilder<TInterface, TField, TContext>>? configurator = null)
         {
-            Check.NotNull(fieldSelector, nameof(fieldSelector));
-            var fieldProp = fieldSelector.GetPropertyInfoFromExpression();
+            Check.NotNull(selector, nameof(selector));
+            var fieldProp = selector.GetPropertyInfoFromExpression();
             var fb = Builder.Field(fieldProp, ConfigurationSource.Explicit)!;
-            fieldBuilder?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
+            configurator?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
             return this;
         }
 
         public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField<TField>(
-            Expression<Func<TInterface, TField>> fieldSelector)
-        {
+            Expression<Func<TInterface, TField>> selector) =>
             throw new NotImplementedException();
-        }
 
         public IInterfaceTypeBuilder<TInterface, TContext> IgnoreField(string name)
         {
@@ -113,7 +112,7 @@ namespace GraphZen.TypeSystem
             TypeResolver<TInterface, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface)value, (TContext)context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface) value, (TContext) context, info));
             return this;
         }
 
@@ -126,10 +125,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name)
-        {
-            return DirectiveAnnotation(name, null);
-        }
+        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name) =>
+            DirectiveAnnotation(name, null);
 
 
         public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name, object? value)

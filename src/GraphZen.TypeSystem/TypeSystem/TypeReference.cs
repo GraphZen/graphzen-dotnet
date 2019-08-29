@@ -40,7 +40,7 @@ namespace GraphZen.TypeSystem
                     case ListTypeSyntax list:
                         return ListType.Of(GetType(list.OfType));
                     case NonNullTypeSyntax nn:
-                        return NonNullType.Of((INullableType)GetType(nn.OfType));
+                        return NonNullType.Of((INullableType) GetType(nn.OfType));
                     case NamedTypeSyntax _:
                         var nameMatch = schema.FindType(Identity.Name);
                         if (nameMatch != null) return nameMatch;
@@ -76,9 +76,6 @@ namespace GraphZen.TypeSystem
             return GetType(TypeSyntax);
         }
 
-        public override string ToString()
-        {
-            return "Reference:" + Name;
-        }
+        public override string ToString() => "Reference:" + Name;
     }
 }

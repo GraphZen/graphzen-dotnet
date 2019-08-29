@@ -9,8 +9,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen.TypeSystem
 {
     public class TypeIdentity
@@ -21,9 +19,9 @@ namespace GraphZen.TypeSystem
         private bool? _isInputType;
         private bool? _isOutputType;
 
-        private string _name;
+        private string? _name;
 
-        private INamedTypeDefinition _typeDefinition;
+        private INamedTypeDefinition? _typeDefinition;
 
         public TypeIdentity(string name, SchemaDefinition schema, TypeKind? kind = null)
         {
@@ -45,7 +43,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public INamedTypeDefinition Definition
+        public INamedTypeDefinition? Definition
         {
             get => _typeDefinition;
             set
@@ -89,7 +87,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public Type ClrType { get; set; }
+        public Type? ClrType { get; set; }
 
         public bool? IsInputType
         {
@@ -117,12 +115,9 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        private bool Equals(TypeIdentity other)
-        {
-            return Overlaps(other);
-        }
+        private bool Equals(TypeIdentity other) => Overlaps(other);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 
@@ -130,14 +125,11 @@ namespace GraphZen.TypeSystem
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((TypeIdentity)obj);
+            return Equals((TypeIdentity) obj);
         }
 
         // ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
 
         public bool Overlaps(TypeIdentity identity)
@@ -152,9 +144,7 @@ namespace GraphZen.TypeSystem
             return string.Equals(Name, identity.Name);
         }
 
-        public override string ToString()
-        {
-            return $"Identity:{(name: Name, clrType: ClrType, Kind, IsInputType, IsOutputType)}";
-        }
+        public override string ToString() =>
+            $"Identity:{(name: Name, clrType: ClrType, Kind, IsInputType, IsOutputType)}";
     }
 }

@@ -48,7 +48,7 @@ namespace GraphZen.Interfaces.Fields.Description
             sb.Interface(Grandparent).Field(parentName, v => v.Description(null));
         }
 
-        public override bool TryGetValue(Field parent, out string value)
+        public override bool TryGetValue(Field parent, out string? value)
         {
             value = parent.Description;
             return value != null;

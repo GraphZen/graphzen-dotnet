@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class InputFieldDefinition : InputValueDefinition, IMutableInputFieldDefinition
     {
         public InputFieldDefinition(string name,
@@ -42,11 +42,8 @@ namespace GraphZen.TypeSystem
         public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
         IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
 
-        public new InputObjectTypeDefinition DeclaringMember => (InputObjectTypeDefinition)base.DeclaringMember;
+        public new InputObjectTypeDefinition DeclaringMember => (InputObjectTypeDefinition) base.DeclaringMember;
 
-        public override string ToString()
-        {
-            return $"input field {Name}";
-        }
+        public override string ToString() => $"input field {Name}";
     }
 }

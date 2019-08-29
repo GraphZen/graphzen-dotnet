@@ -48,7 +48,7 @@ namespace GraphZen.InputObjects.Fields.Description
             sb.InputObject(Grandparent).Field(parentName, v => v.Description(null));
         }
 
-        public override bool TryGetValue(InputField parent, out string value)
+        public override bool TryGetValue(InputField parent, out string? value)
         {
             value = parent.Description;
             return value != null;

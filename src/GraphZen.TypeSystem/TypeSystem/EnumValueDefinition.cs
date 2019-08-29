@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class EnumValueDefinition : AnnotatableMemberDefinition, IMutableEnumValueDefinition
     {
         private ConfigurationSource _nameConfigurationSource;
@@ -29,7 +29,6 @@ namespace GraphZen.TypeSystem
         }
 
         private string DebuggerDisplay => $"enum value {Name}";
-
 
         public InternalEnumValueBuilder Builder { get; }
 
@@ -56,20 +55,12 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-        public ConfigurationSource GetNameConfigurationSource()
-        {
-            return _nameConfigurationSource;
-        }
+        public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
-        public bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource)
-        {
+        public bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
-        }
 
-        public bool RemoveDeprecation(ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveDeprecation(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
         // ReSharper disable once UnassignedGetOnlyAutoProperty
         public bool IsDeprecated { get; }

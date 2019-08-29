@@ -17,7 +17,7 @@ namespace GraphZen.TypeSystem.Taxonomy
         new IGraphQLTypeReference? FieldType { get; set; }
 
 
-        new Resolver<object, object>? Resolver { get; set; }
+        new Resolver<object, object?>? Resolver { get; set; }
 
 
         new IMutableFieldsContainerDefinition DeclaringType { get; }

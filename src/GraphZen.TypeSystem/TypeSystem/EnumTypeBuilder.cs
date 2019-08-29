@@ -26,11 +26,11 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumTypeBuilder<TEnum> Value(TEnum value, Action<IEnumValueBuilder>? valueConfigurator = null)
+        public IEnumTypeBuilder<TEnum> Value(TEnum value, Action<IEnumValueBuilder>? configurator = null)
         {
             Check.NotNull(value, nameof(value));
-            var vb = new EnumValueBuilder(Builder.Value(value, ConfigurationSource.Explicit));
-            valueConfigurator?.Invoke(vb);
+            var vb = new EnumValueBuilder(Builder.Value(value, ConfigurationSource.Explicit)!);
+            configurator?.Invoke(vb);
             return this;
         }
 

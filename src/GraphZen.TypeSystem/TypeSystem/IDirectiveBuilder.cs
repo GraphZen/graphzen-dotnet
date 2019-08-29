@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     public interface IDirectiveBuilder
@@ -19,10 +18,10 @@ namespace GraphZen.TypeSystem
 
 
         IDirectiveBuilder Argument(string name, string type,
-            Action<InputValueBuilder> argumentBuilder = null);
+            Action<InputValueBuilder>? configurator = null);
 
 
         IDirectiveBuilder Argument<TArg>(string name,
-            Action<InputValueBuilder> argumentBuilder = null);
+            Action<InputValueBuilder>? configurator = null);
     }
 }

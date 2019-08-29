@@ -16,10 +16,10 @@ namespace GraphZen.TypeSystem.Taxonomy
         IGraphQLTypeReference? FieldType { get; }
 
 
-        Resolver<object, object> Resolver { get; }
+        Resolver<object, object?>? Resolver { get; }
 
-        IFieldsContainerDefinition DeclaringType { get; }
+        IFieldsContainerDefinition? DeclaringType { get; }
 
-        new MemberInfo ClrInfo { get; }
+        new MemberInfo? ClrInfo { get; }
     }
 }

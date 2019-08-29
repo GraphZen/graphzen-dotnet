@@ -10,12 +10,10 @@ namespace GraphZen.TypeSystem
 {
     public static class SchemaPrinter
     {
-        public static string Print(this Schema schema)
-        {
-            return Check.NotNull(schema, nameof(schema))
+        public static string Print(this Schema schema) =>
+            Check.NotNull(schema, nameof(schema))
                 .ToDocumentSyntax()
                 .WithoutBuiltInDefinitions()
                 .ToSyntaxString();
-        }
     }
 }

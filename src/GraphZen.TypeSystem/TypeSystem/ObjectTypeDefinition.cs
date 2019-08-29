@@ -14,7 +14,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class ObjectTypeDefinition : FieldsContainerDefinition, IMutableObjectTypeDefinition
     {
         private readonly Dictionary<string, ConfigurationSource> _ignoredInterfaces =

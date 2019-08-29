@@ -14,14 +14,8 @@ namespace GraphZen.TypeSystem
         public virtual bool CanRead { get; } = false;
         public virtual bool CanWrite { get; } = false;
 
-        public virtual object FromSyntax(SyntaxNode node)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual object FromSyntax(SyntaxNode node) => throw new NotImplementedException();
 
-        public virtual SyntaxNode ToSyntax(object value)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual SyntaxNode ToSyntax(object value) => throw new NotImplementedException();
     }
 }

@@ -1,22 +1,21 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
-namespace GraphZen.TypeSystem
+namespace GraphZen
 {
-    internal static class TestExt
+    internal struct StringLiteral : IInspectable
     {
-        public static void ShouldPass(this IEnumerable<GraphQLError> errors)
+        public StringLiteral(string value)
         {
-            errors.Should().BeEmpty();
+            Value = value;
         }
+
+        public string Value { get; set; }
+
+        public string GetDisplayValue() => Value;
     }
 }

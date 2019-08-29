@@ -50,7 +50,7 @@ namespace GraphZen.Objects.Fields.Arguments.Description
                 .Field(Grandparent, field => field.Argument(parentName, v => v.Description(null)));
         }
 
-        public override bool TryGetValue(Argument parent, out string value)
+        public override bool TryGetValue(Argument parent, out string? value)
         {
             value = parent.Description;
             return value != null;

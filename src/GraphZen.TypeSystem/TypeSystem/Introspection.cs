@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -10,11 +11,10 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
+// #nullable disable
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
-    [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
     [NoReorder]
     public static class Introspection
     {
@@ -98,8 +98,8 @@ namespace GraphZen.TypeSystem
                     {
                         if (input.HasDefaultValue)
                         {
-                            var ast = AstFromValue.Get(Maybe.Some(input.DefaultValue), input.InputType);
-                            return ast.ToSyntaxString();
+                            var ast = AstFromValue.Get(Maybe.Some(input.DefaultValue!), input.InputType);
+                            return ast?.ToSyntaxString();
                         }
 
                         return null;
@@ -118,7 +118,7 @@ namespace GraphZen.TypeSystem
 
 
         public static Field TypeMetaFieldDef { get; } = new Field("__type",
-            "Request the type information of a single type.", null, Schema.GetType<ObjectType>("__Type"),
+            "Request the type information of a single type.", null, Schema.GetObject("__Type"),
             new[]
             {
                 new Argument("name", null, NonNullType.Of(SpecScalars.String), null, null, false)
@@ -134,6 +134,6 @@ namespace GraphZen.TypeSystem
         public static readonly IReadOnlyList<NamedType> IntrospectionTypes =
             Schema.GetTypes()
                 .Where(_ => SpecScalars.All.All(ss => ss.Name != _.Name))
-                .ToList().AsReadOnly();
+                .ToImmutableList();
     }
 }

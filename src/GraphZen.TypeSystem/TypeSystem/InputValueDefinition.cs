@@ -57,10 +57,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public ConfigurationSource? GetDefaultValueConfigurationSource()
-        {
-            return _defaultValueConfigurationSource;
-        }
+        public ConfigurationSource? GetDefaultValueConfigurationSource() => _defaultValueConfigurationSource;
 
         public IMemberDefinition DeclaringMember { get; }
         public object? DefaultValue { get; private set; }
@@ -71,10 +68,7 @@ namespace GraphZen.TypeSystem
 
         public abstract bool SetName(string name, ConfigurationSource configurationSource);
 
-        public ConfigurationSource GetNameConfigurationSource()
-        {
-            return NameConfigurationSource;
-        }
+        public ConfigurationSource GetNameConfigurationSource() => NameConfigurationSource;
 
         public object? ClrInfo { get; }
     }

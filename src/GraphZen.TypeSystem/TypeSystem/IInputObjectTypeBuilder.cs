@@ -7,12 +7,11 @@ using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     public interface IInputObjectTypeBuilder<TInputObject> : IAnnotableBuilder<IInputObjectTypeBuilder<TInputObject>>
     {
-        IInputObjectTypeBuilder<TInputObject> Description(string description);
+        IInputObjectTypeBuilder<TInputObject> Description(string? description);
 
 
         IInputObjectTypeBuilder<object> ClrType(Type clrType);
@@ -22,19 +21,19 @@ namespace GraphZen.TypeSystem
 
 
         IInputObjectTypeBuilder<TInputObject> Field(string name, string type,
-            Action<InputValueBuilder> inputFieldConfigurator = null);
+            Action<InputValueBuilder>? inputFieldConfigurator = null);
 
 
         IInputObjectTypeBuilder<TInputObject> Field(string name,
-            Action<InputValueBuilder> inputFieldConfigurator = null);
+            Action<InputValueBuilder>? inputFieldConfigurator = null);
 
 
         IInputObjectTypeBuilder<TInputObject> Field<TField>(string name,
-            Action<InputValueBuilder> inputFieldConfigurator = null);
+            Action<InputValueBuilder>? inputFieldConfigurator = null);
 
 
         IInputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector,
-            Action<InputValueBuilder> fieldBuilder = null);
+            Action<InputValueBuilder>? fieldBuilder = null);
 
 
         IInputObjectTypeBuilder<TInputObject> IgnoreField<TField>(Expression<Func<TInputObject, TField>> fieldSelector);

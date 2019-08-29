@@ -15,6 +15,7 @@ using JetBrains.Annotations;
 #nullable disable
 
 
+
 namespace GraphZen.TypeSystem.Internal
 {
     /// <summary>

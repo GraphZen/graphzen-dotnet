@@ -56,16 +56,12 @@ namespace GraphZen.TypeSystem
 
 
         public static bool TryGetTypeKindFromDefinition<TGraphQLType>(out TypeKind kind)
-            where TGraphQLType : NamedTypeDefinition
-        {
-            return KindByType.TryGetValue(typeof(TGraphQLType), out kind);
-        }
+            where TGraphQLType : NamedTypeDefinition =>
+            KindByType.TryGetValue(typeof(TGraphQLType), out kind);
 
         public static bool TryGetTypeKindFromType<TGraphQLType>(out TypeKind kind)
-            where TGraphQLType : NamedType
-        {
-            return KindByType.TryGetValue(typeof(TGraphQLType), out kind);
-        }
+            where TGraphQLType : NamedType =>
+            KindByType.TryGetValue(typeof(TGraphQLType), out kind);
 
 
         public static string ToDisplayString(this TypeKind kind)

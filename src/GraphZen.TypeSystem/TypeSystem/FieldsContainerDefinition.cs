@@ -13,7 +13,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     public abstract class FieldsContainerDefinition : NamedTypeDefinition, IMutableFieldsContainerDefinition
@@ -186,7 +185,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public FieldDefinition GetOrAddField(string name, ConfigurationSource nameConfigurationSource,
+        public FieldDefinition? GetOrAddField(string name, ConfigurationSource nameConfigurationSource,
             ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);

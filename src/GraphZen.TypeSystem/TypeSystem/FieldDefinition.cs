@@ -13,11 +13,10 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
@@ -27,7 +26,7 @@ namespace GraphZen.TypeSystem
         private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
             new Dictionary<string, ConfigurationSource>();
 
-        private string _deprecationReason;
+        private string? _deprecationReason;
         private bool _isDeprecated;
         private ConfigurationSource _nameConfigurationSource;
 
@@ -35,7 +34,7 @@ namespace GraphZen.TypeSystem
         public FieldDefinition(string name, ConfigurationSource nameConfigurationSource,
             SchemaDefinition schema,
             FieldsContainerDefinition declaringType,
-            ConfigurationSource configurationSource, MemberInfo clrInfo) : base(configurationSource)
+            ConfigurationSource configurationSource, MemberInfo? clrInfo) : base(configurationSource)
         {
             Check.NotNull(schema, nameof(schema));
             ClrInfo = clrInfo;
@@ -58,7 +57,7 @@ namespace GraphZen.TypeSystem
 
         public FieldsContainerDefinition DeclaringType { get; }
 
-        public MemberInfo ClrInfo { get; }
+        public MemberInfo? ClrInfo { get; }
 
         public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
         {
@@ -79,8 +78,8 @@ namespace GraphZen.TypeSystem
             return _arguments.Values;
         }
 
-        public IGraphQLTypeReference FieldType { get; set; }
-        public Resolver<object, object> Resolver { get; set; }
+        public IGraphQLTypeReference? FieldType { get; set; }
+        public Resolver<object, object?>? Resolver { get; set; }
 
         IFieldsContainerDefinition IFieldDefinition.DeclaringType => DeclaringType;
 
@@ -96,7 +95,7 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        public string DeprecationReason
+        public string? DeprecationReason
         {
             get => _deprecationReason;
             set
@@ -134,7 +133,7 @@ namespace GraphZen.TypeSystem
             return GetArguments();
         }
 
-        object IClrInfo.ClrInfo => ClrInfo;
+        object? IClrInfo.ClrInfo => ClrInfo ;
 
         public bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource)
         {

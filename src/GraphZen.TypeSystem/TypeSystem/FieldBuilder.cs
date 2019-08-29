@@ -8,8 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen.TypeSystem
 {
     public class FieldBuilder<TDeclaringType, TField, TContext> : IFieldBuilder<TDeclaringType, TField, TContext>,
@@ -63,19 +61,17 @@ namespace GraphZen.TypeSystem
         public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source));
             return this;
         }
 
-        public IFieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver)
-        {
-            return new FieldBuilder<TSource, TField, TContext>(Builder).Resolve(resolver);
-        }
+        public IFieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver) =>
+            new FieldBuilder<TSource, TField, TContext>(Builder).Resolve(resolver);
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, dynamic, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source, args));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source, args));
             return this;
         }
 
@@ -83,7 +79,7 @@ namespace GraphZen.TypeSystem
             Func<TDeclaringType, dynamic, GraphQLContext, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source, args, context));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source, args, context));
             return this;
         }
 
@@ -91,35 +87,35 @@ namespace GraphZen.TypeSystem
             Func<TDeclaringType, dynamic, GraphQLContext, ResolveInfo, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
-            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source, args, context, info));
+            Builder.Resolve((source, args, context, info) => resolver((TDeclaringType) source, args, context, info));
             return this;
         }
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type,
-            Action<InputValueBuilder> argumentBuilder = null)
+            Action<InputValueBuilder>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(type);
-            argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            configurator?.Invoke(new InputValueBuilder(argBuilder));
             return this;
         }
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
-            Action<InputValueBuilder> argumentBuilder = null)
+            Action<InputValueBuilder>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit);
-            argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            configurator?.Invoke(new InputValueBuilder(argBuilder));
             return this;
         }
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument<TArg>(string name,
-            Action<InputValueBuilder> argumentBuilder = null)
+            Action<InputValueBuilder>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArg));
-            argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            configurator?.Invoke(new InputValueBuilder(argBuilder));
             return this;
         }
 
@@ -150,12 +146,10 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> DirectiveAnnotation(string name)
-        {
-            return DirectiveAnnotation(name, null);
-        }
+        public IFieldBuilder<TDeclaringType, TField, TContext> DirectiveAnnotation(string name) =>
+            DirectiveAnnotation(name, null);
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> DirectiveAnnotation(string name, object value)
+        public IFieldBuilder<TDeclaringType, TField, TContext> DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;

@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class ArgumentDefinition : InputValueDefinition, IMutableArgumentDefinition
     {
         public ArgumentDefinition(string name,
@@ -44,14 +44,11 @@ namespace GraphZen.TypeSystem
         }
 
         public new IMutableArgumentsContainerDefinition DeclaringMember =>
-            (IMutableArgumentsContainerDefinition)base.DeclaringMember;
+            (IMutableArgumentsContainerDefinition) base.DeclaringMember;
 
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsContainerDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 
-        public override string ToString()
-        {
-            return $"argument {Name}";
-        }
+        public override string ToString() => $"argument {Name}";
     }
 }

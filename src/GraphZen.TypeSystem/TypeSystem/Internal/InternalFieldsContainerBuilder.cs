@@ -37,8 +37,13 @@ namespace GraphZen.TypeSystem.Internal
 
         protected void ConfigureOutputFields()
         {
+            if (Definition.ClrType == null)
+            {
+                return;
+            }
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
             // ReSharper disable once PossibleNullReferenceException
+
 
             var fieldMembers = Definition.ClrType.GetMembers(flags)
                 .Where(_ => !(_ is MethodInfo method) || method.DeclaringType != typeof(object) &&

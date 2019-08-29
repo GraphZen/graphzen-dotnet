@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class UnionTypeDefinition : NamedTypeDefinition, IMutableUnionTypeDefinition
     {
         private readonly List<ObjectTypeDefinition> _types = new List<ObjectTypeDefinition>();
@@ -34,15 +34,10 @@ namespace GraphZen.TypeSystem
         public InternalUnionTypeBuilder Builder { get; }
 
 
-        public IEnumerable<ObjectTypeDefinition> GetMemberTypes()
-        {
-            return _types.AsReadOnly();
-        }
+        public IEnumerable<ObjectTypeDefinition> GetMemberTypes() => _types;
 
-        public ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name)
-        {
+        public ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name) =>
             throw new NotImplementedException();
-        }
 
         public TypeResolver<object, GraphQLContext>? ResolveType { get; set; }
 
@@ -61,9 +56,6 @@ namespace GraphZen.TypeSystem
             if (!_types.Contains(type)) _types.Add(type);
         }
 
-        IEnumerable<IObjectTypeDefinition> IMemberTypesContainerDefinition.GetMemberTypes()
-        {
-            return GetMemberTypes();
-        }
+        IEnumerable<IObjectTypeDefinition> IMemberTypesContainerDefinition.GetMemberTypes() => GetMemberTypes();
     }
 }

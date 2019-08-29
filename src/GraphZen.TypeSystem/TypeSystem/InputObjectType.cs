@@ -9,15 +9,14 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen.TypeSystem
 {
     public class InputObjectType : NamedType, IInputObjectType
     {
         private readonly Lazy<InputObjectTypeDefinitionSyntax> _syntax;
 
-        public InputObjectType(string name, string description, Type clrType, IEnumerable<IInputFieldDefinition> fields,
+        public InputObjectType(string name, string? description, Type? clrType,
+            IEnumerable<IInputFieldDefinition> fields,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(Check.NotNull(name, nameof(name)),
             description, clrType, Check.NotNull(directives, nameof(directives)))
         {
@@ -35,17 +34,11 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.InputObject;
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputObject;
 
-        public IEnumerable<InputField> GetFields()
-        {
-            return Fields.Values;
-        }
+        public IEnumerable<InputField> GetFields() => Fields.Values;
 
 
         public static InputObjectType From(IInputObjectTypeDefinition definition,
@@ -57,9 +50,6 @@ namespace GraphZen.TypeSystem
                 definition.GetFields(), definition.DirectiveAnnotations, schema);
         }
 
-        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields()
-        {
-            return GetFields();
-        }
+        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields() => GetFields();
     }
 }

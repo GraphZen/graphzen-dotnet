@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem
 
         IEnumValueBuilder Description(string? description);
 
-        IEnumValueBuilder CustomValue(object? value);
+        IEnumValueBuilder CustomValue(object value);
 
         IEnumValueBuilder Deprecated(bool deprecated = true);
         IEnumValueBuilder Deprecated(string? reason);

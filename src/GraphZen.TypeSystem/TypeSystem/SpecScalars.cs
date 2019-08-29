@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using GraphZen.Infrastructure;
@@ -176,6 +177,6 @@ namespace GraphZen.TypeSystem
             Int,
             Float,
             Boolean
-        }.AsReadOnly();
+        }.ToImmutableList();
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -14,9 +15,9 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public abstract class AnnotatableMember : Member, IDirectives
     {
-        protected AnnotatableMember(IReadOnlyList<IDirectiveAnnotation> directives)
+        protected AnnotatableMember(IReadOnlyList<IDirectiveAnnotation>? directives)
         {
-            DirectiveAnnotations = directives;
+            DirectiveAnnotations = directives ?? ImmutableArray<IDirectiveAnnotation>.Empty;
         }
 
         [GraphQLIgnore] public abstract DirectiveLocation DirectiveLocation { get; }

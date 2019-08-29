@@ -22,21 +22,15 @@ namespace GraphZen.Objects.Fields.Description
             sb.Object(Grandparent).Field(parentName);
         }
 
-        public override Field GetParent(Schema schema, string parentName)
-        {
-            return schema.GetObject(Grandparent).GetField(parentName);
-        }
+        public override Field GetParent(Schema schema, string parentName) =>
+            schema.GetObject(Grandparent).GetField(parentName);
 
-        public override FieldDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetObject(Grandparent).GetField(parentName);
-        }
+        public override FieldDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetObject(Grandparent).GetField(parentName);
 
 
-        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent)
-        {
-            return parent.GetDescriptionConfigurationSource();
-        }
+        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent) =>
+            parent.GetDescriptionConfigurationSource();
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {
@@ -48,7 +42,7 @@ namespace GraphZen.Objects.Fields.Description
             sb.Object(Grandparent).Field(parentName, v => v.Description(null));
         }
 
-        public override bool TryGetValue(Field parent, out string value)
+        public override bool TryGetValue(Field parent, out string? value)
         {
             value = parent.Description;
             return value != null;

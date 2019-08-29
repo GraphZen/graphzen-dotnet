@@ -13,7 +13,7 @@ using static GraphZen.LanguageModel.SyntaxFactory;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public abstract class NamedTypeDefinition : AnnotatableMemberDefinition, IMutableNamedTypeDefinition
     {
         private ConfigurationSource _nameConfigurationSource;
@@ -59,12 +59,9 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public ConfigurationSource GetNameConfigurationSource()
-        {
-            return _nameConfigurationSource;
-        }
+        public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
-        public Type ClrType => Identity.ClrType;
+        public Type? ClrType => Identity.ClrType;
 
         public virtual bool SetClrType(Type clrType, ConfigurationSource configurationSource)
         {
@@ -74,21 +71,13 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public ConfigurationSource? GetClrTypeConfigurationSource()
-        {
-            return _clrTypeConfigurationSource;
-        }
+        public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
 
 
-        public TypeReference GetTypeReference()
-        {
-            return new TypeReference(Identity,
+        public TypeReference GetTypeReference() =>
+            new TypeReference(Identity,
                 ClrType != null ? NamedType(ClrType) : NamedType(Name(Name)));
-        }
 
-        public override string ToString()
-        {
-            return $"{Kind} {Name}";
-        }
+        public override string ToString() => $"{Kind} {Name}";
     }
 }

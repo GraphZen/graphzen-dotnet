@@ -9,7 +9,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -38,7 +37,7 @@ namespace GraphZen.TypeSystem
             return new ScalarTypeBuilder<T, TValueNode>(Builder);
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> Description(string description)
+        public IScalarTypeBuilder<TScalar, TValueNode> Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
@@ -92,7 +91,7 @@ namespace GraphZen.TypeSystem
             return DirectiveAnnotation(name, null);
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name, object value)
+        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;

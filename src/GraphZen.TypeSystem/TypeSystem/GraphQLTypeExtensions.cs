@@ -13,10 +13,8 @@ namespace GraphZen.TypeSystem
 {
     public static class GraphQLTypeExtensions
     {
-        public static string Print(this ISyntaxConvertable source)
-        {
-            return Check.NotNull(source, nameof(source)).ToSyntaxNode().ToSyntaxString();
-        }
+        public static string Print(this ISyntaxConvertable source) =>
+            Check.NotNull(source, nameof(source)).ToSyntaxNode().ToSyntaxString();
 
 
         public static IReadOnlyList<TSyntaxNode> ToSyntaxNodes<TSyntaxNode>(
@@ -24,7 +22,7 @@ namespace GraphZen.TypeSystem
             where TSyntaxNode : SyntaxNode
         {
             Check.NotNull(source, nameof(source));
-            return source.Select(_ => (TSyntaxNode)_.ToSyntaxNode()).ToList().AsReadOnly();
+            return source.Select(_ => (TSyntaxNode) _.ToSyntaxNode()).ToList().AsReadOnly();
         }
 
 
@@ -79,9 +77,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public static INullableType GetNullableType(this IGraphQLType type)
-        {
-            return type is NonNullType nonNull ? nonNull.OfType : (INullableType)type;
-        }
+        public static INullableType GetNullableType(this IGraphQLType type) =>
+            type is NonNullType nonNull ? nonNull.OfType : (INullableType) type;
     }
 }

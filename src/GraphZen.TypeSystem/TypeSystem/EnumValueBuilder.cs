@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     public class EnumValueBuilder : IInfrastructure<InternalEnumValueBuilder>, IEnumValueBuilder
@@ -27,15 +26,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumValueBuilder Deprecated(bool deprecated = true)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumValueBuilder Deprecated(bool deprecated = true) => throw new NotImplementedException();
 
-        public IEnumValueBuilder Deprecated(string reason)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumValueBuilder Deprecated(string? reason) => throw new NotImplementedException();
 
         public IEnumValueBuilder Name(string name)
         {
@@ -44,18 +37,15 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumValueBuilder Description(string description)
+        public IEnumValueBuilder Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumValueBuilder DirectiveAnnotation(string name)
-        {
-            return DirectiveAnnotation(name, null);
-        }
+        public IEnumValueBuilder DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
 
-        public IEnumValueBuilder DirectiveAnnotation(string name, object value)
+        public IEnumValueBuilder DirectiveAnnotation(string name, object? value)
         {
             Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;

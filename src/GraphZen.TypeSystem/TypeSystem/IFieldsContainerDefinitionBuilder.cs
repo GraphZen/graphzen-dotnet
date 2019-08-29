@@ -7,31 +7,29 @@ using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen.TypeSystem
 {
     public interface IFieldsContainerDefinitionBuilder<out TBuilder, TSource, TContext> where TContext : GraphQLContext
     {
-        TBuilder Field<TField>(string name, Action<IFieldBuilder<TSource, TField, TContext>> fieldConfigurator = null);
+        TBuilder Field<TField>(string name, Action<IFieldBuilder<TSource, TField, TContext>>? configurator = null);
 
-        TBuilder Field(string name, Action<IFieldBuilder<TSource, object, TContext>> fieldConfigurator = null);
+        TBuilder Field(string name, Action<IFieldBuilder<TSource, object, TContext>>? configurator = null);
 
 
         TBuilder Field(string name, string type,
-            Action<IFieldBuilder<TSource, object, TContext>> fieldConfigurator = null);
+            Action<IFieldBuilder<TSource, object?, TContext>>? configurator = null);
 
 
-        TBuilder Field<TField>(Expression<Func<TSource, TField>> fieldSelector,
-            Action<IFieldBuilder<TSource, TField, TContext>> fieldBuilder = null);
+        TBuilder Field<TField>(Expression<Func<TSource, TField>> selector,
+            Action<IFieldBuilder<TSource, TField, TContext>>? configurator = null);
 
 
-        TBuilder IgnoreField<TField>(Expression<Func<TSource, TField>> fieldSelector);
+        TBuilder IgnoreField<TField>(Expression<Func<TSource, TField>> selector);
 
 
-        TBuilder IgnoreField(string fieldName);
+        TBuilder IgnoreField(string name);
 
 
-        TBuilder UnignoreField(string fieldName);
+        TBuilder UnignoreField(string name);
     }
 }

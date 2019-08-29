@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class DirectiveDefinition : MemberDefinition, IMutableDirectiveDefinition,
         IInfrastructure<InternalDirectiveBuilder>
     {

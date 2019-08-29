@@ -8,6 +8,8 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
+#nullable disable
+
 namespace GraphZen.TypeSystem
 {
     public interface
@@ -26,7 +28,7 @@ namespace GraphZen.TypeSystem
             bool itemCanBeNull = false) where TFieldNew : IEnumerable;
 
 
-        IFieldBuilder<TDeclaringType, TField, TContext> Description(string? description);
+        IFieldBuilder<TDeclaringType, TField, TContext> Description(string description);
 
 
         IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TField> resolver);

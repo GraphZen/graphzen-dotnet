@@ -62,9 +62,6 @@ namespace GraphZen.TypeSystem
         }
 
 
-        private DirectiveAnnotation CreateDirective(string name, object? value)
-        {
-            return new DirectiveAnnotation(name, value);
-        }
+        private DirectiveAnnotation CreateDirective(string name, object? value) => new DirectiveAnnotation(name, value);
     }
 }

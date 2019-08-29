@@ -9,7 +9,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -17,12 +16,12 @@ namespace GraphZen.TypeSystem
     {
         public InputField(
             string name,
-            string description,
-            IGraphQLTypeReference type,
-            object defaultValue,
+            string? description,
+            IGraphQLTypeReference? type,
+            object? defaultValue,
             bool hasDefaultValue,
             IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver, PropertyInfo clrInfo, InputObjectType inputObject) :
+            TypeResolver typeResolver, PropertyInfo? clrInfo, InputObjectType inputObject) :
             base(name, description, type,
                 defaultValue, hasDefaultValue,
                 Check.NotNull(directives, nameof(directives)),
@@ -32,7 +31,7 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputFieldDefinition;
 
-        public new PropertyInfo ClrInfo => base.ClrInfo as PropertyInfo;
+        public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
         IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
 
         public new InputObjectType DeclaringMember => (InputObjectType)base.DeclaringMember;

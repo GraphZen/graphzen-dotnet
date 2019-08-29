@@ -11,7 +11,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.TypeSystem
+namespace GraphZen
 {
     [NoReorder]
     public class PropertyInfoTests

@@ -9,7 +9,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -18,9 +17,9 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
         private readonly Lazy<InterfaceTypeDefinitionSyntax> _syntax;
 
-        public InterfaceType(string name, string description, Type clrType,
+        public InterfaceType(string name, string? description, Type? clrType,
             IEnumerable<IFieldDefinition> fields,
-            TypeResolver<object, GraphQLContext> resolveType,
+            TypeResolver<object, GraphQLContext>? resolveType,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(
             Check.NotNull(name, nameof(name)), description, clrType, Check.NotNull(directives, nameof(directives)))
         {
@@ -38,7 +37,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public TypeResolver<object, GraphQLContext> ResolveType { get; }
+        public TypeResolver<object, GraphQLContext>? ResolveType { get; }
 
         public override TypeKind Kind { get; } = TypeKind.Interface;
 

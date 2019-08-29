@@ -53,44 +53,44 @@ namespace GraphZen.TypeSystem
 
 
         public IObjectTypeBuilder<TObject, TContext> Field(string name,
-            Action<IFieldBuilder<TObject, object, TContext>>? fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, object, TContext>>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
 
-            fieldConfigurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
+            configurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field(string name, string type,
-            Action<IFieldBuilder<TObject, object, TContext>>? fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, object?, TContext>>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
-            fieldConfigurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
+            configurator?.Invoke(new FieldBuilder<TObject, object?, TContext>(ib));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(string name,
-            Action<IFieldBuilder<TObject, TField, TContext>>? fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, TField, TContext>>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)
                 ?.FieldType(typeof(TField))!;
-            fieldConfigurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(ib));
+            configurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(ib));
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> Field<TField>(Expression<Func<TObject, TField>> fieldSelector,
-            Action<IFieldBuilder<TObject, TField, TContext>>? fieldConfigurator = null)
+        public IObjectTypeBuilder<TObject, TContext> Field<TField>(Expression<Func<TObject, TField>> selector,
+            Action<IFieldBuilder<TObject, TField, TContext>>? configurator = null)
         {
-            Check.NotNull(fieldSelector, nameof(fieldSelector));
-            var property = fieldSelector.GetPropertyInfoFromExpression();
+            Check.NotNull(selector, nameof(selector));
+            var property = selector.GetPropertyInfoFromExpression();
             var fb = Builder.Field(property, ConfigurationSource.Explicit)!;
-            fieldConfigurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(fb));
+            configurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(fb));
             return this;
         }
 
@@ -164,22 +164,22 @@ namespace GraphZen.TypeSystem
         }
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreField<TField>(
-            Expression<Func<TObject, TField>> fieldSelector)
+            Expression<Func<TObject, TField>> selector)
         {
             throw new NotImplementedException();
         }
 
-        public IObjectTypeBuilder<TObject, TContext> IgnoreField(string fieldName)
+        public IObjectTypeBuilder<TObject, TContext> IgnoreField(string name)
         {
-            Check.NotNull(fieldName, nameof(fieldName));
-            Builder.IgnoreField(fieldName, ConfigurationSource.Explicit);
+            Check.NotNull(name, nameof(name));
+            Builder.IgnoreField(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> UnignoreField(string fieldName)
+        public IObjectTypeBuilder<TObject, TContext> UnignoreField(string name)
         {
-            Check.NotNull(fieldName, nameof(fieldName));
-            Builder.UnignoreField(fieldName, ConfigurationSource.Explicit);
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreField(name, ConfigurationSource.Explicit);
             return this;
         }
 

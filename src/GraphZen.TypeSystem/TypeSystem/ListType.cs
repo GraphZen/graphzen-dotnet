@@ -19,20 +19,11 @@ namespace GraphZen.TypeSystem
         public IGraphQLType OfType { get; }
         public TypeKind Kind { get; } = TypeKind.List;
 
-        public SyntaxNode ToSyntaxNode()
-        {
-            return this.ToTypeSyntax();
-        }
+        public SyntaxNode ToSyntaxNode() => this.ToTypeSyntax();
 
-        public static ListType Of(IGraphQLType type)
-        {
-            return new ListType(type);
-        }
+        public static ListType Of(IGraphQLType type) => new ListType(type);
 
-        private bool Equals(ListType other)
-        {
-            return Equals(OfType, other.OfType);
-        }
+        private bool Equals(ListType other) => Equals(OfType, other.OfType);
 
         public override bool Equals(object? obj)
         {
@@ -42,17 +33,11 @@ namespace GraphZen.TypeSystem
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((ListType)obj);
+            return Equals((ListType) obj);
         }
 
-        public override int GetHashCode()
-        {
-            return OfType.GetHashCode();
-        }
+        public override int GetHashCode() => OfType.GetHashCode();
 
-        public override string ToString()
-        {
-            return $"[{OfType}]";
-        }
+        public override string ToString() => $"[{OfType}]";
     }
 }

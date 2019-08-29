@@ -9,22 +9,14 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
+using static GraphZen.LanguageModel.SyntaxFactory;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     public static class SyntaxHelpers
     {
-        public static StringValueSyntax Description(string description)
-        {
-            if (description != null)
-            {
-                var node = SyntaxFactory.StringValue(description, true);
-                return node;
-            }
-
-            return null;
-        }
+        public static StringValueSyntax? Description(string? description) =>
+            description != null ? StringValue(description, true) : null;
 
 
         public static TypeSyntax ToTypeSyntax(this IGraphQLType type)
@@ -33,11 +25,11 @@ namespace GraphZen.TypeSystem
             switch (type)
             {
                 case INamedType namedType:
-                    return SyntaxFactory.NamedType(SyntaxFactory.Name(namedType.Name));
+                    return NamedType(Name(namedType.Name));
                 case NonNullType nonNull:
-                    return SyntaxFactory.NonNull((NullableTypeSyntax)nonNull.OfType.ToTypeSyntax());
+                    return NonNull((NullableTypeSyntax) nonNull.OfType.ToTypeSyntax());
                 case ListType list:
-                    return SyntaxFactory.ListType(list.OfType.ToTypeSyntax());
+                    return ListType(list.OfType.ToTypeSyntax());
             }
 
             throw new Exception($"Cannot create type syntax for type {type}");
@@ -50,7 +42,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(directives, nameof(directives));
 
             var annotationConverter = new DefaultIDirectiveAnnotationSyntaxConverter();
-            return directives.Select(_ => (DirectiveSyntax)annotationConverter.ToSyntax(_)).ToList().AsReadOnly();
+            return directives.Select(_ => (DirectiveSyntax) annotationConverter.ToSyntax(_)).ToList().AsReadOnly();
         }
     }
 }

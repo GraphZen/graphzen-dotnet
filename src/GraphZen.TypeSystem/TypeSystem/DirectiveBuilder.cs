@@ -33,16 +33,16 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IDirectiveBuilder Argument(string name, string type, Action<InputValueBuilder> argumentBuilder = null)
+        public IDirectiveBuilder Argument(string name, string type, Action<InputValueBuilder> configurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(type);
-            argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            configurator?.Invoke(new InputValueBuilder(argBuilder));
             return this;
         }
 
-        public IDirectiveBuilder Argument<TArg>(string name, Action<InputValueBuilder> argumentBuilder = null)
+        public IDirectiveBuilder Argument<TArg>(string name, Action<InputValueBuilder> configurator = null)
         {
             throw new NotImplementedException();
         }

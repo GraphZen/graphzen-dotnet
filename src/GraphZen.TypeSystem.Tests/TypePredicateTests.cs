@@ -4,11 +4,12 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen
 {
     /// <summary>
     ///     Most of these tests are not required for type safety because of static typing,
@@ -405,6 +406,7 @@ namespace GraphZen.TypeSystem
         [Fact]
         public void GetNullableType_ReturnsNullForNoType()
         {
+            // ReSharper disable once ExpressionIsAlwaysNull
             ((IGraphQLType) null!).GetNullableType().Should().BeNull();
         }
 
@@ -440,6 +442,7 @@ namespace GraphZen.TypeSystem
         [Fact]
         public void GetNamedType_ReturnsNullForNoType()
         {
+            // ReSharper disable once ExpressionIsAlwaysNull
             ((IGraphQLType) null!).GetNamedType().Should().BeNull();
         }
 
