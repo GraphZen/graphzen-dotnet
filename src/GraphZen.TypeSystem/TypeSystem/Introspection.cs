@@ -12,8 +12,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-// #nullable disable
-
 namespace GraphZen.TypeSystem
 {
     [NoReorder]

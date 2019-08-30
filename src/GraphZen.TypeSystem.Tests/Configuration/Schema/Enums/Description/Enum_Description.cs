@@ -41,7 +41,7 @@ namespace GraphZen.Enums.Description
             sb.Enum(parentName).Description(null);
         }
 
-        public override bool TryGetValue(EnumType parent, out string value)
+        public override bool TryGetValue(EnumType parent, out string? value)
         {
             value = parent.Description;
             return value != null;

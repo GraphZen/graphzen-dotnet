@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem
             return new FieldBuilder<TDeclaringType, TFieldNew, TContext>(Builder);
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Description(string description)
+        public IFieldBuilder<TDeclaringType, TField, TContext> Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
