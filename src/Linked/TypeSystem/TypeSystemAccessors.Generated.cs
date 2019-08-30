@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem {
 
 
- public static partial class InterfaceTypeDefinitionFieldAccessorExtensions {
+ public static partial class InterfaceTypeDefinitionFieldsAccessorExtensions {
 
         
         public static FieldDefinition? FindField( this InterfaceTypeDefinition source, string name) 
@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class ObjectTypeDefinitionFieldAccessorExtensions {
+ public static partial class ObjectTypeDefinitionFieldsAccessorExtensions {
 
         
         public static FieldDefinition? FindField( this ObjectTypeDefinition source, string name) 
@@ -53,7 +53,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class InputObjectTypeDefinitionFieldAccessorExtensions {
+ public static partial class InputObjectTypeDefinitionFieldsAccessorExtensions {
 
         
         public static InputFieldDefinition? FindField( this InputObjectTypeDefinition source, string name) 
@@ -74,7 +74,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class FieldsContainerDefinitionFieldAccessorExtensions {
+ public static partial class FieldsContainerDefinitionFieldsAccessorExtensions {
 
         
         public static FieldDefinition? FindField( this FieldsContainerDefinition source, string name) 
@@ -95,7 +95,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class InterfaceTypeFieldAccessorExtensions {
+ public static partial class InterfaceTypeFieldsAccessorExtensions {
 
         
         public static Field? FindField( this InterfaceType source, string name) 
@@ -116,7 +116,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class ObjectTypeFieldAccessorExtensions {
+ public static partial class ObjectTypeFieldsAccessorExtensions {
 
         
         public static Field? FindField( this ObjectType source, string name) 
@@ -137,7 +137,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class InputObjectTypeFieldAccessorExtensions {
+ public static partial class InputObjectTypeFieldsAccessorExtensions {
 
         
         public static InputField? FindField( this InputObjectType source, string name) 
@@ -158,7 +158,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class EnumTypeDefinitionValueAccessorExtensions {
+ public static partial class EnumTypeDefinitionValuesAccessorExtensions {
 
         
         public static EnumValueDefinition? FindValue( this EnumTypeDefinition source, string name) 
@@ -179,7 +179,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class EnumTypeValueAccessorExtensions {
+ public static partial class EnumTypeValuesAccessorExtensions {
 
         
         public static EnumValue? FindValue( this EnumType source, string name) 
@@ -200,7 +200,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class EnumTypeValueAccessorExtensions {
+ public static partial class EnumTypeValuesByValueAccessorExtensions {
 
         
         public static EnumValue? FindValue( this EnumType source, object value) 
@@ -221,7 +221,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class FieldDefinitionArgumentAccessorExtensions {
+ public static partial class FieldDefinitionArgumentsAccessorExtensions {
 
         
         public static ArgumentDefinition? FindArgument( this FieldDefinition source, string name) 
@@ -242,7 +242,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class DirectiveDefinitionArgumentAccessorExtensions {
+ public static partial class DirectiveDefinitionArgumentsAccessorExtensions {
 
         
         public static ArgumentDefinition? FindArgument( this DirectiveDefinition source, string name) 
@@ -263,7 +263,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class FieldArgumentAccessorExtensions {
+ public static partial class FieldArgumentsAccessorExtensions {
 
         
         public static Argument? FindArgument( this Field source, string name) 
@@ -284,7 +284,7 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class IArgumentsContainerArgumentAccessorExtensions {
+ public static partial class IArgumentsContainerArgumentsAccessorExtensions {
 
         
         public static Argument? FindArgument( this IArgumentsContainer source, string name) 

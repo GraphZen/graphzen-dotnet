@@ -93,7 +93,7 @@ namespace GraphZen.TypeSystem {
             }
 
             csharp.Append("}");
-            CodeGenHelpers.WriteFile("../GraphZen.TypeSystem/TypeSystem/TypeSystemAccessors.Generated.cs", csharp.ToString());
+            CodeGenHelpers.WriteFile("../Linked/TypeSystem/TypeSystemAccessors.Generated.cs", csharp.ToString());
         }
 
 

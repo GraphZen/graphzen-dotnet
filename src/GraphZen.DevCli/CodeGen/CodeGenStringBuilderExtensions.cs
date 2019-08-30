@@ -16,7 +16,7 @@ namespace GraphZen.CodeGen
             var valueRefName = valueType.FirstCharToLower();
             var code = $@"
 
- public static partial class {containerType}{valueName}AccessorExtensions {{
+ public static partial class {containerType}{propertyName}AccessorExtensions {{
 
         
         public static {valueType}? Find{valueName}( this {containerType} {thisRefName}, {keyType} {keyName}) 
