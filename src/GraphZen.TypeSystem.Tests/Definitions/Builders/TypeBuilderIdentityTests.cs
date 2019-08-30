@@ -5,10 +5,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.Builders
+namespace GraphZen
 {
     [NoReorder]
     public abstract class TypeBuilderIdentityTests<TGraphQLType> where TGraphQLType : NamedType

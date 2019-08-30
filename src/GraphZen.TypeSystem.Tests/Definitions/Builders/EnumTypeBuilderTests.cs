@@ -5,13 +5,14 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
 #nullable disable
 
 
-namespace GraphZen.TypeSystem.Builders
+namespace GraphZen
 {
     [NoReorder]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]

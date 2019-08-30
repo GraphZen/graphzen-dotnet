@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 #nullable disable
 
 
-namespace GraphZen.TypeSystem.Builders
+namespace GraphZen
 {
     [NoReorder]
     public class TypeNodeClrTests
