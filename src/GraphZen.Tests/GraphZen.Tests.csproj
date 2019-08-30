@@ -38,6 +38,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="TypeSystem\Configuration\" />
     <Folder Include="Utilities\BuildFromAst\" />
   </ItemGroup>
   <ItemGroup>

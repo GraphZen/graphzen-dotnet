@@ -6,28 +6,28 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
   </ItemGroup>
-  <ItemGroup>
+  <!-- <ItemGroup>
     <Compile Remove="Internal\Maybe\Internal\**" />
     <Compile Remove="TypeSystem\Validation\**" />
     <EmbeddedResource Remove="Internal\Maybe\Internal\**" />
     <EmbeddedResource Remove="TypeSystem\Validation\**" />
     <None Remove="Internal\Maybe\Internal\**" />
     <None Remove="TypeSystem\Validation\**" />
-  </ItemGroup>
+  </ItemGroup> -->
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.LanguageModel\GraphZen.LanguageModel.csproj" />
   </ItemGroup>
-  <ItemGroup>
+  <!-- <ItemGroup>
     <None Update="TypeSystem\Internal\GraphZenDictionaryContainerExtensions.Generated.tt">
       <LastGenOutput>GraphZenDictionaryContainerExtensions.Generated.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-  </ItemGroup>
-  <ItemGroup>
+  </ItemGroup> -->
+  <!-- <ItemGroup>
     <Compile Update="TypeSystem\Internal\GraphZenDictionaryContainerExtensions.Generated.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>GraphZenDictionaryContainerExtensions.Generated.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
+  </ItemGroup> -->
 </Project>

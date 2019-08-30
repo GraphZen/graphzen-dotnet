@@ -38,6 +38,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.TestingInfrastruct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.Tests", "src\GraphZen.Tests\GraphZen.Tests.csproj", "{6F5DA311-6D88-4C3C-9186-4B746B9F9C2F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.DevCli", "src\GraphZen.DevCli\GraphZen.DevCli.csproj", "{C91EB16A-2257-4D4F-AA83-BDE38074B465}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{6F5DA311-6D88-4C3C-9186-4B746B9F9C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F5DA311-6D88-4C3C-9186-4B746B9F9C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F5DA311-6D88-4C3C-9186-4B746B9F9C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C91EB16A-2257-4D4F-AA83-BDE38074B465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C91EB16A-2257-4D4F-AA83-BDE38074B465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C91EB16A-2257-4D4F-AA83-BDE38074B465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C91EB16A-2257-4D4F-AA83-BDE38074B465}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +115,7 @@ Global
 		{7BED216F-92DF-4F47-84A9-CF1978875DDD} = {C7EEE575-7E89-4398-8289-A93D008346E1}
 		{A48511EE-90BD-46D3-A9FA-289135040A36} = {C7EEE575-7E89-4398-8289-A93D008346E1}
 		{6F5DA311-6D88-4C3C-9186-4B746B9F9C2F} = {C7EEE575-7E89-4398-8289-A93D008346E1}
+		{C91EB16A-2257-4D4F-AA83-BDE38074B465} = {C7EEE575-7E89-4398-8289-A93D008346E1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F2A2408-678E-4184-B769-5C46F0B10F25}

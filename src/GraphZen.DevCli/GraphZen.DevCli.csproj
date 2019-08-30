@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen\GraphZen.csproj" />
+    <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
