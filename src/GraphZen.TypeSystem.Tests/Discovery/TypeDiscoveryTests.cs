@@ -17,7 +17,7 @@ using Xunit;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen.Discovery
+namespace GraphZen
 {
     [NoReorder]
     public class TypeDiscoveryTests

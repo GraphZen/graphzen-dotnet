@@ -65,7 +65,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public InputFieldDefinition FindField(MemberInfo member)
+        public InputFieldDefinition? FindField(MemberInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
             var memberMatch = _fields.Values.SingleOrDefault(_ => _.ClrInfo == member);
