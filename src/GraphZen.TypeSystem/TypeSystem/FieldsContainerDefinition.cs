@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public FieldDefinition FindField(MemberInfo member)
+        public FieldDefinition? FindField(MemberInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
             var memberMatch = _fields.Values.SingleOrDefault(_ => _.ClrInfo == member);
