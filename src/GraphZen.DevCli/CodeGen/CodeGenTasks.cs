@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
-    public static class GodeGenTasks
+    public static class CodeGenTasks
     {
 
         public static void RunCodeGen()
@@ -29,6 +29,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 // ReSharper disable PartialTypeWithSinglePart
+// ReSharper disable UnusedMember.Global
 
 #nullable restore
 
