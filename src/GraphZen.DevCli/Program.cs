@@ -7,6 +7,7 @@ using System.CommandLine.Invocation;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using static GraphZen.CodeGen.GodeGenTasks;
 
 namespace GraphZen
 {
@@ -14,14 +15,7 @@ namespace GraphZen
     {
         private static void Main(string[] args)
         {
-            var cmd = new RootCommand
-            {
-                new Command("gen")
-                {
-                    Handler = CommandHandler.Create(() => { CodeGenHelpers.GenerateTypeSystemDictionaryAccessors(); })
-                }
-            };
-
+            var cmd = new RootCommand {new Command("gen") {Handler = CommandHandler.Create(RunCodeGen)}};
             var cliBuilder = new CommandLineBuilder(cmd);
             var cli = cliBuilder.Build();
             cli.InvokeAsync(args).Wait();

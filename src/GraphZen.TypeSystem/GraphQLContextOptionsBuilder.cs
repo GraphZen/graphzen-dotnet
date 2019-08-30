@@ -29,7 +29,7 @@ namespace GraphZen
         }
 
 
-        public new virtual GraphQLContextOptions<TContext> Options => (GraphQLContextOptions<TContext>)base.Options;
+        public new virtual GraphQLContextOptions<TContext> Options => (GraphQLContextOptions<TContext>) base.Options;
     }
 
     public class GraphQLContextOptionsBuilder
