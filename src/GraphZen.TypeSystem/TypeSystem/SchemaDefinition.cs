@@ -14,7 +14,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -31,6 +30,9 @@ namespace GraphZen.TypeSystem
         private readonly List<TypeIdentity> _typeIdentities;
 
         private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
+        private ConfigurationSource? _queryTypeConfigurationSource;
+        private ConfigurationSource? _subscriptionTypeConfigurationSource;
+        private ConfigurationSource? _mutationTypeConfigurationSource;
 
         // ReSharper disable once NotNullMemberIsNotInitialized
 
@@ -68,27 +70,67 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyList<IDirectiveDefinition> Directives => _directives;
 
+        public ObjectTypeDefinition? QueryType { get; private set; }
+        public bool SetQueryType(ObjectTypeDefinition? type, ConfigurationSource configurationSource)
+        {
+            if (configurationSource.Overrides(GetQueryTypeConfigurationSource()))
+            {
 
-        public IObjectTypeDefinition QueryType { get; set; }
+                _queryTypeConfigurationSource = configurationSource;
+                if (QueryType != type)
+                {
+                    QueryType = type;
+                    return true;
+                }
+            }
 
+            return false;
+        }
 
-        public IObjectTypeDefinition MutationType { get; set; }
+        public ConfigurationSource? GetQueryTypeConfigurationSource() => _queryTypeConfigurationSource;
+        public ObjectTypeDefinition? MutationType { get; private set; }
+        public bool SetMutationType(ObjectTypeDefinition? type, ConfigurationSource configurationSource)
+        {
+            if (configurationSource.Overrides(GetMutationTypeConfigurationSource()))
+            {
 
+                _mutationTypeConfigurationSource = configurationSource;
+                if (MutationType != type)
+                {
+                    MutationType = type;
+                    return true;
+                }
+            }
 
-        public IObjectTypeDefinition SubscriptionType { get; set; }
+            return false;
 
+        }
+
+        public ConfigurationSource? GetMutationTypeConfigurationSource() => _mutationTypeConfigurationSource;
+        public ObjectTypeDefinition? SubscriptionType { get; private set; }
+        public bool SetSubscriptionType(ObjectTypeDefinition? type, ConfigurationSource configurationSource)
+        {
+            if (configurationSource.Overrides(GetSubscriptionTypeConfigurationSource()))
+            {
+                _subscriptionTypeConfigurationSource = configurationSource;
+                if (SubscriptionType != type)
+                {
+                    SubscriptionType = type;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public ConfigurationSource? GetSubscriptionTypeConfigurationSource() => _subscriptionTypeConfigurationSource;
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Schema;
-
-
         public ConfigurationSource? FindIgnoredTypeConfigurationSource(string name) =>
             _ignoredTypes.FindValueOrDefault(name);
-
         public ConfigurationSource? FindIgnoredTypeConfigurationSource(Type clrType) =>
             FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName());
 
-
         // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
-        private bool TryDefineFirstUndefinedType(TypeIdentity prev, [NotNullWhen(true)] out TypeIdentity identity)
+        private bool TryDefineFirstUndefinedType(TypeIdentity? prev, [NotNullWhen(true)] out TypeIdentity identity)
         {
             var undefined = _typeIdentities.Where(_ =>
                 _.Definition == null && _.ClrType != null && _.ClrType.NotIgnored()).ToArray();
@@ -168,14 +210,14 @@ namespace GraphZen.TypeSystem
 
         private void FinalizeTypes()
         {
-            TypeIdentity identity = null;
+            TypeIdentity? identity = null;
             while (TryDefineFirstUndefinedType(identity, out identity))
             {
             }
         }
 
 
-        public TypeIdentity FindTypeIdentity(TypeIdentity identity)
+        public TypeIdentity? FindTypeIdentity(TypeIdentity identity)
         {
             var validIdentities = _typeIdentities
                 .Where(_ => _.Kind == null || identity.Kind == null || _.Kind == identity.Kind).ToList();
@@ -210,7 +252,7 @@ namespace GraphZen.TypeSystem
             return ids.SingleOrDefault();
         }
 
-        public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember
+        public TypeReference? GetOrAddTypeReference(string type, IMemberDefinition referencingMember
         )
         {
             var typeNode = Builder.Parser.ParseType(type);
@@ -226,7 +268,7 @@ namespace GraphZen.TypeSystem
             return identity != null ? new TypeReference(identity, typeNode) : null;
         }
 
-        public TypeReference GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
+        public TypeReference? GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
         )
         {
             if (method.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
@@ -244,7 +286,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public TypeReference GetOrAddTypeReference(ParameterInfo parameter,
+        public TypeReference? GetOrAddTypeReference(ParameterInfo parameter,
             IMemberDefinition referencingMember
         )
         {
@@ -263,7 +305,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public TypeReference NamedTypeReference(Type clrType, TypeKind kind)
+        public TypeReference? NamedTypeReference(Type clrType, TypeKind kind)
         {
             if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
             {
@@ -278,7 +320,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public TypeReference GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
+        public TypeReference? GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
         )
         {
             if (property.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
@@ -297,7 +339,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public TypeReference GetOrAddTypeReference(Type clrType, bool canBeNull, bool itemCanBeNull,
+        public TypeReference? GetOrAddTypeReference(Type clrType, bool canBeNull, bool itemCanBeNull,
             IMemberDefinition referencingMember)
         {
             if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType, canBeNull, itemCanBeNull))
@@ -472,6 +514,7 @@ namespace GraphZen.TypeSystem
         }
 
 
+#nullable disable
         private T AddType<T>(Type clrType, Func<TypeIdentity, T> typeFactory)
             where T : NamedTypeDefinition
         {
@@ -490,6 +533,7 @@ namespace GraphZen.TypeSystem
             var identity = GetOrAddTypeIdentity(new TypeIdentity(name, this));
             return identity != null ? AddType(typeFactory(identity)) : null;
         }
+#nullable restore
 
 
         private T AddType<T>(T type) where T : NamedTypeDefinition
@@ -596,6 +640,7 @@ namespace GraphZen.TypeSystem
         }
 
 
+        [return: MaybeNull]
         public T FindType<T>(TypeIdentity identity) where T : NamedTypeDefinition
         {
             Check.NotNull(identity, nameof(identity));
@@ -610,7 +655,7 @@ namespace GraphZen.TypeSystem
                     $"Expected type \"{type.Name}\" to be of type \"{typeof(T).Name}\", but instead found a  type of \"{type.GetType().Name}\" ");
             }
 
-            return null;
+            return null!;
         }
 
 
@@ -721,5 +766,11 @@ namespace GraphZen.TypeSystem
 
         IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() =>
             GetInputObjects();
+
+        IObjectTypeDefinition? IQueryTypeDefinition.QueryType => QueryType;
+
+        IObjectTypeDefinition? IMutationTypeDefinition.MutationType => MutationType;
+
+        IObjectTypeDefinition? ISubscriptionTypeDefinition.SubscriptionType => SubscriptionType;
     }
 }

@@ -569,5 +569,11 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public IEnumerable<Directive> GetDirectives() => Directives;
+
+        IObjectTypeDefinition? IQueryTypeDefinition.QueryType => QueryType;
+
+        IObjectTypeDefinition? IMutationTypeDefinition.MutationType => MutationType;
+
+        IObjectTypeDefinition? ISubscriptionTypeDefinition.SubscriptionType => SubscriptionType;
     }
 }

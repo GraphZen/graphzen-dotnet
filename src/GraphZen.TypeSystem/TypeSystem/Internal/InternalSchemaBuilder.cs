@@ -497,10 +497,10 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalSchemaBuilder QueryType(string type, ConfigurationSource configurationSource)
+        public InternalSchemaBuilder QueryType(string name, ConfigurationSource configurationSource)
         {
-            Check.NotNull(type, nameof(type));
-            Definition.QueryType = Object(type, configurationSource)?.Definition;
+            Check.NotNull(name, nameof(name));
+            Definition.SetQueryType(Object(name, configurationSource)?.Definition, configurationSource);
             return this;
         }
 
@@ -508,7 +508,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalSchemaBuilder QueryType(Type clrtType, ConfigurationSource configurationSource)
         {
             Check.NotNull(clrtType, nameof(clrtType));
-            Definition.QueryType = Object(clrtType, configurationSource)?.Definition;
+            Definition.SetQueryType(Object(clrtType, configurationSource)?.Definition, configurationSource);
             return this;
         }
 
@@ -516,21 +516,21 @@ namespace GraphZen.TypeSystem.Internal
         public InternalSchemaBuilder SubscriptionType(string type, ConfigurationSource configurationSource)
         {
             Check.NotNull(type, nameof(type));
-            Definition.SubscriptionType = Object(type, configurationSource)?.Definition;
+            Definition.SetSubscriptionType(Object(type, configurationSource)?.Definition, configurationSource);
             return this;
         }
 
 
-        public InternalSchemaBuilder MutationType(string type, ConfigurationSource configurationSource)
+        public InternalSchemaBuilder MutationType(string name, ConfigurationSource configurationSource)
         {
-            Definition.MutationType = Object(type, configurationSource)?.Definition;
+            Definition.SetMutationType(Object(name, configurationSource)?.Definition, configurationSource);
             return this;
         }
 
 
         public InternalSchemaBuilder MutationType(Type clrType, ConfigurationSource configurationSource)
         {
-            Definition.MutationType = Object(clrType, configurationSource)?.Definition;
+            Definition.SetMutationType(Object(clrType, configurationSource)?.Definition, configurationSource);
             return this;
         }
 

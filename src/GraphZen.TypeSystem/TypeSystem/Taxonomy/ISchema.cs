@@ -9,6 +9,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface ISchema : ISchemaDefinition,
+        IQueryType,IMutationType,ISubscriptionType,
         IDirectivesContainer, IObjectTypesContainer, IInterfaceTypesContainer, IUnionTypesContainer,
         IScalarTypesContainer, IEnumTypesContainer, IInputObjectTypesContainer
     {
