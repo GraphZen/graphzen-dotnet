@@ -66,7 +66,7 @@ namespace {containerNamespace} {{
  public static partial class {extensionTypeName}{valueName}AccessorExtensions {{
 
         
-        public static {valueType} Find{valueName}( this {containerType} {thisRefName}, {keyType} {keyName}) 
+        public static {valueType}? Find{valueName}( this {containerType} {thisRefName}, {keyType} {keyName}) 
             => {thisRefName}.{property.Name}.TryGetValue(Check.NotNull({keyName},nameof({keyName})), out var {keyName}{valueName}) ? {keyName}{valueName} : null;
 
         public static bool Has{valueName}( this {containerType} {thisRefName},  {keyType} {keyName}) 
@@ -76,7 +76,7 @@ namespace {containerNamespace} {{
         public static {valueType} Get{valueName}( this {containerType} {thisRefName},  {keyType} {keyName}) 
             => {thisRefName}.Find{valueName}(Check.NotNull({keyName}, nameof({keyName}))) ?? throw new Exception($""{{{thisRefName}}} does not contain a {valueNameCamelized} named '{{{keyName}}}'."");
 
-        public static bool TryGet{valueName}( this {containerType} {thisRefName},  {keyType} {keyName}, out {valueType} {valueRefName})
+        public static bool TryGet{valueName}( this {containerType} {thisRefName},  {keyType} {keyName}, [NotNullWhen(true)] out {valueType} {valueRefName})
              => {thisRefName}.{property.Name}.TryGetValue(Check.NotNull({keyName}, nameof({keyName})), out {valueRefName});
 }}
  
