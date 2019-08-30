@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 // ReSharper disable PartialTypeWithSinglePart
 
@@ -151,6 +152,153 @@ namespace GraphZen.TypeSystem {
 
         public static bool TryGetField( this InputObjectType source,  string name, [NotNullWhen(true)] out InputField? inputField)
              => source.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out inputField);
+}
+ 
+
+
+
+
+ public static partial class EnumTypeDefinitionValueAccessorExtensions {
+
+        
+        public static EnumValueDefinition? FindValue( this EnumTypeDefinition source, string name) 
+            => source.Values.TryGetValue(Check.NotNull(name,nameof(name)), out var nameValue) ? nameValue : null;
+
+        public static bool HasValue( this EnumTypeDefinition source,  string name) 
+            => source.Values.ContainsKey(Check.NotNull(name, nameof(name)));
+
+        
+        public static EnumValueDefinition GetValue( this EnumTypeDefinition source,  string name) 
+            => source.FindValue(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a value named '{name}'.");
+
+        public static bool TryGetValue( this EnumTypeDefinition source,  string name, [NotNullWhen(true)] out EnumValueDefinition? enumValueDefinition)
+             => source.Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValueDefinition);
+}
+ 
+
+
+
+
+ public static partial class EnumTypeValueAccessorExtensions {
+
+        
+        public static EnumValue? FindValue( this EnumType source, string name) 
+            => source.Values.TryGetValue(Check.NotNull(name,nameof(name)), out var nameValue) ? nameValue : null;
+
+        public static bool HasValue( this EnumType source,  string name) 
+            => source.Values.ContainsKey(Check.NotNull(name, nameof(name)));
+
+        
+        public static EnumValue GetValue( this EnumType source,  string name) 
+            => source.FindValue(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a value named '{name}'.");
+
+        public static bool TryGetValue( this EnumType source,  string name, [NotNullWhen(true)] out EnumValue? enumValue)
+             => source.Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValue);
+}
+ 
+
+
+
+
+ public static partial class EnumTypeValueAccessorExtensions {
+
+        
+        public static EnumValue? FindValue( this EnumType source, object value) 
+            => source.ValuesByValue.TryGetValue(Check.NotNull(value,nameof(value)), out var valueValue) ? valueValue : null;
+
+        public static bool HasValue( this EnumType source,  object value) 
+            => source.ValuesByValue.ContainsKey(Check.NotNull(value, nameof(value)));
+
+        
+        public static EnumValue GetValue( this EnumType source,  object value) 
+            => source.FindValue(Check.NotNull(value, nameof(value))) ?? throw new Exception($"{source} does not contain a value named '{value}'.");
+
+        public static bool TryGetValue( this EnumType source,  object value, [NotNullWhen(true)] out EnumValue? enumValue)
+             => source.ValuesByValue.TryGetValue(Check.NotNull(value, nameof(value)), out enumValue);
+}
+ 
+
+
+
+
+ public static partial class FieldDefinitionArgumentAccessorExtensions {
+
+        
+        public static ArgumentDefinition? FindArgument( this FieldDefinition source, string name) 
+            => source.Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var nameArgument) ? nameArgument : null;
+
+        public static bool HasArgument( this FieldDefinition source,  string name) 
+            => source.Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
+
+        
+        public static ArgumentDefinition GetArgument( this FieldDefinition source,  string name) 
+            => source.FindArgument(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a argument named '{name}'.");
+
+        public static bool TryGetArgument( this FieldDefinition source,  string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
+             => source.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
+}
+ 
+
+
+
+
+ public static partial class DirectiveDefinitionArgumentAccessorExtensions {
+
+        
+        public static ArgumentDefinition? FindArgument( this DirectiveDefinition source, string name) 
+            => source.Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var nameArgument) ? nameArgument : null;
+
+        public static bool HasArgument( this DirectiveDefinition source,  string name) 
+            => source.Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
+
+        
+        public static ArgumentDefinition GetArgument( this DirectiveDefinition source,  string name) 
+            => source.FindArgument(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a argument named '{name}'.");
+
+        public static bool TryGetArgument( this DirectiveDefinition source,  string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
+             => source.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
+}
+ 
+
+
+
+
+ public static partial class FieldArgumentAccessorExtensions {
+
+        
+        public static Argument? FindArgument( this Field source, string name) 
+            => source.Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var nameArgument) ? nameArgument : null;
+
+        public static bool HasArgument( this Field source,  string name) 
+            => source.Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
+
+        
+        public static Argument GetArgument( this Field source,  string name) 
+            => source.FindArgument(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a argument named '{name}'.");
+
+        public static bool TryGetArgument( this Field source,  string name, [NotNullWhen(true)] out Argument? argument)
+             => source.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argument);
+}
+ 
+
+
+
+
+ public static partial class IArgumentsContainerArgumentAccessorExtensions {
+
+        
+        public static Argument? FindArgument( this IArgumentsContainer source, string name) 
+            => source.Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var nameArgument) ? nameArgument : null;
+
+        public static bool HasArgument( this IArgumentsContainer source,  string name) 
+            => source.Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
+
+        
+        public static Argument GetArgument( this IArgumentsContainer source,  string name) 
+            => source.FindArgument(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a argument named '{name}'.");
+
+        public static bool TryGetArgument( this IArgumentsContainer source,  string name, [NotNullWhen(true)] out Argument? argument)
+             => source.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argument);
 }
  
 

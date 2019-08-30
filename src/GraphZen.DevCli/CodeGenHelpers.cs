@@ -13,7 +13,6 @@ namespace GraphZen
 {
     public static class CodeGenHelpers
     {
-
         public static void GenerateFile(string path, string contents)
         {
             Console.Write($"Generating file: {path} ");
@@ -22,6 +21,7 @@ namespace GraphZen
                 Console.Write("(deleted existing)");
                 File.Delete(path);
             }
+
             Console.Write(" (writing ...");
             File.AppendAllText(path, contents);
             Console.WriteLine(" done)");
@@ -30,13 +30,13 @@ namespace GraphZen
 
         public static void GenerateTypeSystemDictionaryAccessors()
         {
-
             var csharp = new StringBuilder();
 
             csharp.Append(@"
 using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 // ReSharper disable PartialTypeWithSinglePart
 
@@ -50,7 +50,7 @@ namespace GraphZen.TypeSystem {
                 ("InterfaceTypeDefinition", "FieldDefinition"),
                 ("ObjectTypeDefinition", "FieldDefinition"),
                 ("InputObjectTypeDefinition", "InputFieldDefinition"),
-                ("FieldsContainerDefinition", "FieldDefinition"),
+                ("FieldsContainerDefinition", "FieldDefinition")
             };
 
             foreach (var (containerType, valueType) in fieldDefinitionAccessors)
@@ -63,16 +63,43 @@ namespace GraphZen.TypeSystem {
             {
                 ("InterfaceType", "Field"),
                 ("ObjectType", "Field"),
-                ("InputObjectType", "InputField"),
+                ("InputObjectType", "InputField")
             };
 
             foreach (var (containerType, valueType) in fieldAccessors)
             {
-                csharp.AppendDictionaryAccessor( containerType, "Fields", "name", "string", "Field", valueType);
+                csharp.AppendDictionaryAccessor(containerType, "Fields", "name", "string", "Field", valueType);
             }
 
+            csharp.AppendDictionaryAccessor("EnumTypeDefinition", "Values", "name", "string", "Value", "EnumValueDefinition");
+            csharp.AppendDictionaryAccessor("EnumType", "Values", "name", "string", "Value", "EnumValue");
+            csharp.AppendDictionaryAccessor("EnumType", "ValuesByValue", "value", "object", "Value", "EnumValue");
 
 
+            var argumentDefinitionAccessors = new List<(string containerType, string valueType)>
+            {
+                ("FieldDefinition", "ArgumentDefinition"),
+                ("DirectiveDefinition", "ArgumentDefinition"),
+            };
+
+            foreach (var (containerType, valueType) in argumentDefinitionAccessors)
+            {
+                csharp.AppendDictionaryAccessor(
+                    containerType, "Arguments", "name", "string", "Argument", valueType);
+            }
+
+            var argumentAccessors = new List<(string containerType, string valueType)>
+            {
+                ("Field", "Argument"),
+                ("IArgumentsContainer", "Argument"),
+            };
+
+            foreach (var (containerType, valueType) in argumentAccessors)
+            {
+                csharp.AppendDictionaryAccessor(
+                                    containerType, "Arguments", "name", "string", "Argument", valueType);
+
+            }
 
             csharp.Append("}");
             GenerateFile("../GraphZen.TypeSystem/TypeSystem/TypeSystemAccessors.Generated.cs", csharp.ToString());
