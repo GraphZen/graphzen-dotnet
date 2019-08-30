@@ -15,21 +15,12 @@ namespace GraphZen.LanguageModel.Internal
         private static readonly IParser Instance = new SuperpowerParser();
 
 
-        public static DocumentSyntax ParseDocument(string text)
-        {
-            return Instance.ParseDocument(text);
-        }
+        public static DocumentSyntax ParseDocument(string text) => Instance.ParseDocument(text);
 
 
-        public static ValueSyntax ParseValue(string text)
-        {
-            return Instance.ParseValue(text);
-        }
+        public static ValueSyntax ParseValue(string text) => Instance.ParseValue(text);
 
 
-        public static TypeSyntax ParseType(string text)
-        {
-            return Instance.ParseType(text);
-        }
+        public static TypeSyntax ParseType(string text) => Instance.ParseType(text);
     }
 }

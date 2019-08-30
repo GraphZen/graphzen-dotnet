@@ -22,21 +22,14 @@ namespace GraphZen.Objects
             sb.Object(parentName);
         }
 
-        public override ObjectType GetParent(Schema schema, string parentName)
-        {
-            return schema.GetObject(parentName);
-        }
+        public override ObjectType GetParent(Schema schema, string parentName) => schema.GetObject(parentName);
 
-        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetObject(parentName);
-        }
+        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetObject(parentName);
 
 
-        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent)
-        {
-            return parent.GetDescriptionConfigurationSource();
-        }
+        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent) =>
+            parent.GetDescriptionConfigurationSource();
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {

@@ -52,10 +52,7 @@ namespace GraphZen.TypeSystem
         public string Name { get; }
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.EnumValue;
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
 
         [GraphQLIgnore]
@@ -66,9 +63,6 @@ namespace GraphZen.TypeSystem
                 definition.DeprecationReason, definition.DirectiveAnnotations, declaringTye);
         }
 
-        public override string ToString()
-        {
-            return $"{Name} ({Value.Inspect()})";
-        }
+        public override string ToString() => $"{Name} ({Value.Inspect()})";
     }
 }

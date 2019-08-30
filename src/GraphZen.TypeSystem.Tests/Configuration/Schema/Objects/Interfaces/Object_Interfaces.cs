@@ -21,31 +21,20 @@ namespace GraphZen.Objects.Interfaces
             sb.Object(parentName);
         }
 
-        public override ObjectType GetParent(Schema schema, string parentName)
-        {
-            return schema.GetObject(parentName);
-        }
+        public override ObjectType GetParent(Schema schema, string parentName) => schema.GetObject(parentName);
 
-        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetObject(parentName);
-        }
+        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetObject(parentName);
 
-        public override NamedCollection<InterfaceTypeDefinition> GetCollection(ObjectTypeDefinition parent)
-        {
-            return parent.GetInterfaces().ToNamedCollection();
-        }
+        public override NamedCollection<InterfaceTypeDefinition> GetCollection(ObjectTypeDefinition parent) =>
+            parent.GetInterfaces().ToNamedCollection();
 
-        public override NamedCollection<InterfaceType> GetCollection(ObjectType parent)
-        {
-            return parent.Interfaces.ToNamedCollection();
-        }
+        public override NamedCollection<InterfaceType> GetCollection(ObjectType parent) =>
+            parent.Interfaces.ToNamedCollection();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(ObjectTypeDefinition parent,
-            string name)
-        {
-            return parent.FindIgnoredInterfaceConfigurationSource(name);
-        }
+            string name) =>
+            parent.FindIgnoredInterfaceConfigurationSource(name);
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {

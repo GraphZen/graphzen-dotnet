@@ -57,22 +57,13 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyList<DirectiveLocation> Locations { get; }
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         [GraphQLName("args")]
-        public IEnumerable<Argument> GetArguments()
-        {
-            return Arguments.Values;
-        }
+        public IEnumerable<Argument> GetArguments() => Arguments.Values;
 
         [GraphQLIgnore]
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments()
-        {
-            return GetArguments();
-        }
+        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments() => GetArguments();
 
 
         [GraphQLIgnore]

@@ -199,9 +199,7 @@ namespace GraphZen
       }
     }";
 
-        public static string IntrospectionQuery(bool descriptions = true)
-        {
-            return descriptions ? WithDescriptions : WithoutDescriptions;
-        }
+        public static string IntrospectionQuery(bool descriptions = true) =>
+            descriptions ? WithDescriptions : WithoutDescriptions;
     }
 }

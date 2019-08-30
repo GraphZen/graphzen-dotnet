@@ -19,14 +19,12 @@ namespace GraphZen.InputObjects.Description
         }
 
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(ExampleInputObject),
                 DataAnnotationValue = DataAnnotationDescription
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

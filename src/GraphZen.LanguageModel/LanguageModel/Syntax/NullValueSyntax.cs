@@ -24,10 +24,7 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
 
-        public string GetDisplayValue()
-        {
-            return "null";
-        }
+        public string GetDisplayValue() => "null";
 
         public override bool Equals(object obj)
         {
@@ -38,15 +35,9 @@ namespace GraphZen.LanguageModel
             return obj is NullValueSyntax;
         }
 
-        public override int GetHashCode()
-        {
-            return -1;
-        }
+        public override int GetHashCode() => -1;
 
 
-        public override object GetValue()
-        {
-            return null;
-        }
+        public override object GetValue() => null;
     }
 }

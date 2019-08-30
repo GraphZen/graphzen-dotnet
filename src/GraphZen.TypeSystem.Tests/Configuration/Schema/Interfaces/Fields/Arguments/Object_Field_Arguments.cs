@@ -19,15 +19,11 @@ namespace GraphZen.Interfaces.Fields.Arguments
             sb.Interface(Grandparent).Field(parentName, "String");
         }
 
-        public override Field GetParent(Schema schema, string parentName)
-        {
-            return schema.GetInterface(Grandparent).GetField(parentName);
-        }
+        public override Field GetParent(Schema schema, string parentName) =>
+            schema.GetInterface(Grandparent).GetField(parentName);
 
-        public override FieldDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetInterface(Grandparent).GetField(parentName);
-        }
+        public override FieldDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetInterface(Grandparent).GetField(parentName);
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -44,20 +40,13 @@ namespace GraphZen.Interfaces.Fields.Arguments
             sb.Interface(Grandparent).Field(parentName, f => f.UnignoreArgument(name));
         }
 
-        public override NamedCollection<ArgumentDefinition> GetCollection(FieldDefinition parent)
-        {
-            return parent.Arguments.ToNamedCollection();
-        }
+        public override NamedCollection<ArgumentDefinition> GetCollection(FieldDefinition parent) =>
+            parent.Arguments.ToNamedCollection();
 
-        public override NamedCollection<Argument> GetCollection(Field parent)
-        {
-            return parent.Arguments.ToNamedCollection();
-        }
+        public override NamedCollection<Argument> GetCollection(Field parent) => parent.Arguments.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(FieldDefinition parent, string name)
-        {
-            return parent.FindIgnoredArgumentConfigurationSource(name);
-        }
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(FieldDefinition parent, string name) =>
+            parent.FindIgnoredArgumentConfigurationSource(name);
 
         public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
         {

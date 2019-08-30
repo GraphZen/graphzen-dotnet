@@ -19,10 +19,8 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        public InternalInputValueBuilder? Field(string name, ConfigurationSource configurationSource)
-        {
-            return Definition.GetOrAddField(name, configurationSource)?.Builder;
-        }
+        public InternalInputValueBuilder? Field(string name, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddField(name, configurationSource)?.Builder;
 
         public bool IgnoreField(string fieldName, ConfigurationSource configurationSource)
         {

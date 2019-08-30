@@ -29,16 +29,11 @@ namespace GraphZen
         public Type ParentMemberDefinitionType { get; } = typeof(TParentMemberDefinition);
         public abstract void ConfigureParentExplicitly(SchemaBuilder sb, string parentName);
 
-        Member IConfigurationFixture.GetParent(Schema schema, string parentName)
-        {
-            return GetParent(schema, parentName);
-        }
+        Member IConfigurationFixture.GetParent(Schema schema, string parentName) => GetParent(schema, parentName);
 
         MemberDefinition IConfigurationFixture.GetParent(SchemaBuilder sb,
-            string parentName)
-        {
-            return GetParent(sb, parentName);
-        }
+            string parentName) =>
+            GetParent(sb, parentName);
 
         //public virtual void DefineParentConventionally( SchemaBuilder sb,  out string parentName) =>
         //    throw new NotImplementedException(NotImplementedMessage(nameof(DefineParentConventionally), false));
@@ -48,10 +43,8 @@ namespace GraphZen
         //    throw new NotImplementedException(
         //        NotImplementedMessage(nameof(DefineParentConventionallyWithDataAnnotation), false));
 
-        protected string NotImplementedMessage(string memberName, bool baseClass = true)
-        {
-            return $"implement '{memberName}' in type '{GetType().Name}{(baseClass ? "__Base" : "")}'";
-        }
+        protected string NotImplementedMessage(string memberName, bool baseClass = true) =>
+            $"implement '{memberName}' in type '{GetType().Name}{(baseClass ? "__Base" : "")}'";
 
 
         public abstract TParentMemberDefinition GetParent(SchemaBuilder sb,

@@ -22,21 +22,15 @@ namespace GraphZen.InputObjects.Fields.Description
             sb.InputObject(Grandparent).Field(parentName);
         }
 
-        public override InputField GetParent(Schema schema, string parentName)
-        {
-            return schema.GetInputObject(Grandparent).GetField(parentName);
-        }
+        public override InputField GetParent(Schema schema, string parentName) =>
+            schema.GetInputObject(Grandparent).GetField(parentName);
 
-        public override InputFieldDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetInputObject(Grandparent).GetField(parentName);
-        }
+        public override InputFieldDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetInputObject(Grandparent).GetField(parentName);
 
 
-        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent)
-        {
-            return parent.GetDescriptionConfigurationSource();
-        }
+        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent) =>
+            parent.GetDescriptionConfigurationSource();
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {

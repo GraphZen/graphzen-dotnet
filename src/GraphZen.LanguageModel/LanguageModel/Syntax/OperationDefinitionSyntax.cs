@@ -67,13 +67,11 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals(OperationDefinitionSyntax other)
-        {
-            return SelectionSet.Equals(other.SelectionSet) && OperationType == other.OperationType &&
-                   Equals(Name, other.Name)
-                   && VariableDefinitions.SequenceEqual(other.VariableDefinitions)
-                   && Directives.SequenceEqual(other.Directives);
-        }
+        private bool Equals(OperationDefinitionSyntax other) =>
+            SelectionSet.Equals(other.SelectionSet) && OperationType == other.OperationType &&
+            Equals(Name, other.Name)
+            && VariableDefinitions.SequenceEqual(other.VariableDefinitions)
+            && Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {

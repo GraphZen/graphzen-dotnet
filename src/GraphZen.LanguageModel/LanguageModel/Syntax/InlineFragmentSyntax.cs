@@ -46,11 +46,9 @@ namespace GraphZen.LanguageModel
 
         public NamedTypeSyntax TypeCondition { get; }
 
-        private bool Equals(InlineFragmentSyntax other)
-        {
-            return SelectionSet.Equals(other.SelectionSet) && Equals(TypeCondition, other.TypeCondition) &&
-                   Directives.SequenceEqual(other.Directives);
-        }
+        private bool Equals(InlineFragmentSyntax other) =>
+            SelectionSet.Equals(other.SelectionSet) && Equals(TypeCondition, other.TypeCondition) &&
+            Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {

@@ -34,25 +34,17 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Enum<EnumWithDescriptionDataAnnotation>();
         }
 
-        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return schemaDef.GetEnum<EnumWithoutDescriptionDataAnnotation>();
-        }
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetEnum<EnumWithoutDescriptionDataAnnotation>();
 
-        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return schemaDef.GetEnum<EnumWithDescriptionDataAnnotation>();
-        }
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetEnum<EnumWithDescriptionDataAnnotation>();
 
-        public override Member GetMemberWithoutDataAnnotation(Schema schema)
-        {
-            return schema.GetEnum<EnumWithoutDescriptionDataAnnotation>();
-        }
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetEnum<EnumWithoutDescriptionDataAnnotation>();
 
-        public override Member GetMemberWithDataAnnotation(Schema schema)
-        {
-            return schema.GetEnum<EnumWithDescriptionDataAnnotation>();
-        }
+        public override Member GetMemberWithDataAnnotation(Schema schema) =>
+            schema.GetEnum<EnumWithDescriptionDataAnnotation>();
 
         public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description)

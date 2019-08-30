@@ -134,54 +134,42 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool TryGetGraphQLTypeInfo(this Type clrType,
             [NotNullWhen(true)] out TypeSyntax? typeNode,
-            [NotNullWhen(true)] out Type? innerClrType, bool canBeNull = false, bool itemCanBeNull = false)
-        {
-            return TryGetGraphQLTypeInfoRecursive(
+            [NotNullWhen(true)] out Type? innerClrType, bool canBeNull = false, bool itemCanBeNull = false) =>
+            TryGetGraphQLTypeInfoRecursive(
                 Check.NotNull(clrType, nameof(clrType)), out typeNode, out innerClrType, canBeNull, itemCanBeNull);
-        }
 
         public static bool TryGetGraphQLTypeInfo(this MethodInfo method, [NotNullWhen(true)] out TypeSyntax? typeNode,
-            [NotNullWhen(true)] out Type? innerClrType)
-        {
-            return Check.NotNull(method, nameof(method))
+            [NotNullWhen(true)] out Type? innerClrType) =>
+            Check.NotNull(method, nameof(method))
                 .ReturnType
                 .TryGetGraphQLTypeInfo(
                     out typeNode, out innerClrType,
                     method.CanBeNull(), method.ItemCanBeNull());
-        }
 
         public static bool TryGetGraphQLTypeInfo(this PropertyInfo property,
             [NotNullWhen(true)] out TypeSyntax? typeNode,
-            [NotNullWhen(true)] out Type? innerClrType)
-        {
-            return Check.NotNull(property, nameof(property))
+            [NotNullWhen(true)] out Type? innerClrType) =>
+            Check.NotNull(property, nameof(property))
                 .PropertyType
                 .TryGetGraphQLTypeInfo(
                     out typeNode, out innerClrType,
                     property.CanBeNull(), property.ItemCanBeNull());
-        }
 
         public static bool TryGetGraphQLTypeInfo(this ParameterInfo parameter,
             [NotNullWhen(true)] out TypeSyntax? typeNode,
-            [NotNullWhen(true)] out Type? innerClrType)
-        {
-            return Check.NotNull(parameter, nameof(parameter)).ParameterType
+            [NotNullWhen(true)] out Type? innerClrType) =>
+            Check.NotNull(parameter, nameof(parameter)).ParameterType
                 .TryGetGraphQLTypeInfo(
                     out typeNode, out innerClrType,
                     parameter.CanBeNull(), parameter.ItemCanBeNull());
-        }
 
 
-        public static Type GetEffectiveClrType(this Type clrType)
-        {
-            return clrType.GetCustomAttribute<GraphQLTypeAttribute>()?.ClrType ?? clrType;
-        }
+        public static Type GetEffectiveClrType(this Type clrType) =>
+            clrType.GetCustomAttribute<GraphQLTypeAttribute>()?.ClrType ?? clrType;
 
 
-        public static bool IsSameOrSubclass(this Type potentialSubClass, Type potentialBase)
-        {
-            return potentialSubClass.IsSubclassOf(potentialBase) || potentialBase == potentialSubClass;
-        }
+        public static bool IsSameOrSubclass(this Type potentialSubClass, Type potentialBase) =>
+            potentialSubClass.IsSubclassOf(potentialBase) || potentialBase == potentialSubClass;
 
         public static bool TryGetOutputTypeKind(this Type clrType, [NotNullWhen(true)] out TypeKind? kind)
         {

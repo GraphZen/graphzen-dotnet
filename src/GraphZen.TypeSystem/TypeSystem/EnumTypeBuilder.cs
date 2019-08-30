@@ -69,10 +69,7 @@ namespace GraphZen.TypeSystem
             return new EnumTypeBuilder<T>(Builder);
         }
 
-        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name)
-        {
-            return DirectiveAnnotation(name, null);
-        }
+        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
 
         public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name, object? value)
         {

@@ -164,10 +164,8 @@ namespace GraphZen.TypeSystem
         }
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreField<TField>(
-            Expression<Func<TObject, TField>> selector)
-        {
+            Expression<Func<TObject, TField>> selector) =>
             throw new NotImplementedException();
-        }
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreField(string name)
         {
@@ -183,10 +181,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name)
-        {
-            return DirectiveAnnotation(name, null);
-        }
+        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name) =>
+            DirectiveAnnotation(name, null);
 
         public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name, object? value)
         {
@@ -200,9 +196,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector)
-        {
+        public IObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector) =>
             throw new NotImplementedException();
-        }
     }
 }

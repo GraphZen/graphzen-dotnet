@@ -9,7 +9,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.TypeSystem
 {
     public class ScalarTypeBuilder<TScalar, TValueNode> : IInfrastructure<InternalScalarTypeBuilder>,
@@ -25,10 +24,8 @@ namespace GraphZen.TypeSystem
 
         InternalScalarTypeBuilder IInfrastructure<InternalScalarTypeBuilder>.Instance => Builder;
 
-        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType)
-        {
-            return new ScalarTypeBuilder<object, TValueNode>(Builder);
-        }
+        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType) =>
+            new ScalarTypeBuilder<object, TValueNode>(Builder);
 
         public IScalarTypeBuilder<T, TValueNode> ClrType<T>()
         {
@@ -86,10 +83,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name)
-        {
-            return DirectiveAnnotation(name, null);
-        }
+        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name) =>
+            DirectiveAnnotation(name, null);
 
         public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name, object? value)
         {

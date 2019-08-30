@@ -47,24 +47,16 @@ namespace GraphZen.TypeSystem
             schemaBuilder.InputObject<InputObjectNamedByDataAnnotation>().Name(name);
         }
 
-        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetInputObject<InputObjectNamedByConvention>();
-        }
+        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetInputObject<InputObjectNamedByConvention>();
 
-        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetInputObject<InputObjectNamedByDataAnnotation>();
-        }
+        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetInputObject<InputObjectNamedByDataAnnotation>();
 
-        public override INamed GetMemberNamedByConvention(Schema schema)
-        {
-            return schema.GetInputObject<InputObjectNamedByConvention>();
-        }
+        public override INamed GetMemberNamedByConvention(Schema schema) =>
+            schema.GetInputObject<InputObjectNamedByConvention>();
 
-        public override INamed GetMemberNamedByDataAnnotation(Schema schema)
-        {
-            return schema.GetInputObject<InputObjectNamedByDataAnnotation>();
-        }
+        public override INamed GetMemberNamedByDataAnnotation(Schema schema) =>
+            schema.GetInputObject<InputObjectNamedByDataAnnotation>();
     }
 }

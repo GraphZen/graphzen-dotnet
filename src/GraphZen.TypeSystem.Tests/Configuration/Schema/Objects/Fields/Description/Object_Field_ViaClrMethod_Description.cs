@@ -16,22 +16,17 @@ namespace GraphZen.Objects.Fields.Description
         public class ExampleObject
         {
             [Description(DataAnnotationDescriptionValue)]
-            public string ExampleField()
-            {
-                throw new NotImplementedException();
-            }
+            public string ExampleField() => throw new NotImplementedException();
         }
 
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(ExampleObject.ExampleField).FirstCharToLower(),
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

@@ -104,10 +104,8 @@ namespace GraphZen.Validation.Rules
         }
 
         private static ExpectedError
-            DuplicateOp(string operationName, params (int line, int column)[] lineColumnPairs)
-        {
-            return Error(UniqueOperationNames.DuplicateOperationNameMessage(operationName), lineColumnPairs);
-        }
+            DuplicateOp(string operationName, params (int line, int column)[] lineColumnPairs) =>
+            Error(UniqueOperationNames.DuplicateOperationNameMessage(operationName), lineColumnPairs);
 
         [Fact]
         public void MultipleOperationsOfSameNameMutation()

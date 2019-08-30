@@ -28,9 +28,8 @@ namespace GraphZen.QueryEngine.Variables
         }
 
         [Fact]
-        public Task AllowsNullableInputsToBeOmitted()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeOmitted() =>
+            ExecuteAsync(@"
               {
                 fieldWithNullableStringInput
               }
@@ -41,12 +40,10 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithNullableStringInput = (string)null
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsNullableInputsToBeOmittedInAnUnlistedVariable()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeOmittedInAnUnlistedVariable() =>
+            ExecuteAsync(@"
               query {
                 fieldWithNullableStringInput(input: $value)
               }
@@ -57,12 +54,10 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithNullableStringInput = (string)null
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsNullableInputsToBeOmittedInAVariable()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeOmittedInAVariable() =>
+            ExecuteAsync(@"
               query ($value: String) {
                 fieldWithNullableStringInput(input: $value)
               }
@@ -73,12 +68,10 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithNullableStringInput = (string)null
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsNullableInputsToBeSetInAVariable()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeSetInAVariable() =>
+            ExecuteAsync(@"
               query ($value: String) {
                 fieldWithNullableStringInput(input: $value)
               }
@@ -89,12 +82,10 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithNullableStringInput = "\"a\""
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsNullableInputsToBeSetToNullInAVariable()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeSetToNullInAVariable() =>
+            ExecuteAsync(@"
               query ($value: String) {
                 fieldWithNullableStringInput(input: $value)
               }
@@ -105,12 +96,10 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithNullableStringInput = "null"
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsNullableInputsToBeSetToValueDirectly()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNullableInputsToBeSetToValueDirectly() =>
+            ExecuteAsync(@"
                {
                 fieldWithNullableStringInput(input: ""a"")
               }
@@ -121,6 +110,5 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithNullableStringInput = "\"a\""
                 }
             });
-        }
     }
 }

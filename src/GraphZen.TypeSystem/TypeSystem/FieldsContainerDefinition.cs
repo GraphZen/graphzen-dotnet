@@ -31,17 +31,11 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IEnumerable<FieldDefinition> GetFields()
-        {
-            return _fields.Values;
-        }
+        public IEnumerable<FieldDefinition> GetFields() => _fields.Values;
 
         public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
 
-        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields()
-        {
-            return GetFields();
-        }
+        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => GetFields();
 
 
         public void UnignoreField(string fieldName)

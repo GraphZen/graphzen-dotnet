@@ -34,10 +34,7 @@ namespace GraphZen.QueryEngine.Variables
 
         public static VariablesTestsGraphQLContext GraphQLContext => new VariablesTestsGraphQLContext();
 
-        public static object[] Array(params object[] values)
-        {
-            return values;
-        }
+        public static object[] Array(params object[] values) => values;
 
 
         protected Task<ExecutionResult> ExecuteAsync(string gql, dynamic variableValues = null)

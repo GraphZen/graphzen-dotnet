@@ -13,14 +13,12 @@ namespace GraphZen.Scalars.Description
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(ExampleScalar),
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         [Description(DataAnnotationDescriptionValue)]
         public class ExampleScalar

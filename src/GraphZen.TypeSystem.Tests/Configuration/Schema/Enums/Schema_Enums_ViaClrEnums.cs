@@ -14,16 +14,14 @@ namespace GraphZen.Enums
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ItemNamedByConvention = nameof(NamedByConvention),
                 ItemNamedByDataAnnotation = DataAnnotationName,
                 ItemIgnoredByConvention = nameof(IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation)
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

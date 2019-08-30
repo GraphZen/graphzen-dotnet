@@ -65,10 +65,8 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalInputValueBuilder Argument(string name, ConfigurationSource configurationSource)
-        {
-            return Definition.GetOrAddArgument(name, configurationSource).Builder;
-        }
+        public InternalInputValueBuilder Argument(string name, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddArgument(name, configurationSource).Builder;
 
         public InternalInputValueBuilder? Argument(ParameterInfo parameter,
             ConfigurationSource configurationSource)

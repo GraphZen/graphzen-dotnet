@@ -23,10 +23,8 @@ namespace GraphZen
         internal static Maybe<object> ValueFromAst(ValueSyntax valueSyntax, IGraphQLType type,
             IReadOnlyDictionary<string, object> variables = null)
         {
-            bool IsMissingVariable(ValueSyntax value, IReadOnlyDictionary<string, object> vars)
-            {
-                return value is VariableSyntax variable && (vars == null || !vars.ContainsKey(variable.Name.Value));
-            }
+            bool IsMissingVariable(ValueSyntax value, IReadOnlyDictionary<string, object> vars) =>
+                value is VariableSyntax variable && (vars == null || !vars.ContainsKey(variable.Name.Value));
 
             if (valueSyntax == null) return Maybe.None<object>();
 

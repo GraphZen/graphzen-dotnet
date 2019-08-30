@@ -10,40 +10,39 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableScalarTypeDefinition : 
-        IScalarTypeDefinition, 
+    public interface IMutableScalarTypeDefinition :
+        IScalarTypeDefinition,
         IMutableNamedTypeDefinition,
-        IMutableValueParserDefinition, 
-        IMutableSerializerDefinition, 
+        IMutableValueParserDefinition,
+        IMutableSerializerDefinition,
         IMutableLiteralParserDefinition
 
     {
-
-
-
-
     }
 
     public interface IValueParserDefinition
     {
         LeafValueParser<object>? ValueParser { get; }
-
     }
-    public interface IValueParser : IValueParserDefinition { }
+
+    public interface IValueParser : IValueParserDefinition
+    {
+    }
 
     public interface IMutableValueParserDefinition : IValueParserDefinition
     {
         ConfigurationSource? GetValueParserConfigurationSource();
         bool SetValueParser(LeafValueParser<object>? valueParser, ConfigurationSource configurationSource);
-
     }
 
     public interface ILiteralParserDefinition
     {
         LeafLiteralParser<object, ValueSyntax>? LiteralParser { get; }
-
     }
-    public interface ILiteralParser : ILiteralParserDefinition { }
+
+    public interface ILiteralParser : ILiteralParserDefinition
+    {
+    }
 
     public interface IMutableLiteralParserDefinition : ILiteralParserDefinition
     {
@@ -51,20 +50,20 @@ namespace GraphZen.TypeSystem.Taxonomy
 
         bool SetLiteralParser(LeafLiteralParser<object, ValueSyntax>? literalParser,
             ConfigurationSource configurationSource);
-
     }
 
     public interface ISerializerDefinition
     {
         LeafSerializer<object>? Serializer { get; }
     }
-    public interface ISerializer : ISerializerDefinition { }
+
+    public interface ISerializer : ISerializerDefinition
+    {
+    }
 
     public interface IMutableSerializerDefinition : ISerializerDefinition
     {
         ConfigurationSource? GetSerializerConfigurationSource();
         bool SetSerializer(LeafSerializer<object>? serializer, ConfigurationSource configurationSource);
     }
-
-
 }

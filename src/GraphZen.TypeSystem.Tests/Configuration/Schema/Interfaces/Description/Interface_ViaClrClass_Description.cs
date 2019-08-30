@@ -13,14 +13,12 @@ namespace GraphZen.Interfaces.Description
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(IExampleInterface),
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         [Description(DataAnnotationDescriptionValue)]
         public interface IExampleInterface

@@ -64,9 +64,8 @@ namespace GraphZen.StarWars
         }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForTheQueryType()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForTheQueryType() =>
+            ExecuteAsync(StarWarsSchema, @"
             
             query IntrospectionQueryTypeQuery {
               __schema {
@@ -89,12 +88,10 @@ namespace GraphZen.StarWars
                     }
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForASpecificType()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForASpecificType() =>
+            ExecuteAsync(StarWarsSchema, @"
             
         query IntrospectionDroidTypeQuery {
           __type(name: ""Droid"") {
@@ -112,12 +109,10 @@ namespace GraphZen.StarWars
                     }
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForAnObjectKind()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForAnObjectKind() =>
+            ExecuteAsync(StarWarsSchema, @"
             
         query IntrospectionDroidKindQuery {
           __type(name: ""Droid"") {
@@ -137,12 +132,10 @@ namespace GraphZen.StarWars
                     }
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForAnInterfaceKind()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForAnInterfaceKind() =>
+            ExecuteAsync(StarWarsSchema, @"
             
         query IntrospectionCharacterKindQuery {
           __type(name: ""Character"") {
@@ -162,7 +155,6 @@ namespace GraphZen.StarWars
                     }
                 }
             });
-        }
 
         [Fact]
         public Task AllowsQueryingTheSchemaForObjectFields()
@@ -475,9 +467,8 @@ namespace GraphZen.StarWars
         }
 
         [Fact]
-        public Task AllowsQueryingTheSchemaForDocumentation()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsQueryingTheSchemaForDocumentation() =>
+            ExecuteAsync(StarWarsSchema, @"
 
         query IntrospectionDroidDescriptionQuery {
           __type(name: ""Droid"") {
@@ -497,6 +488,5 @@ namespace GraphZen.StarWars
                     }
                 }
             });
-        }
     }
 }

@@ -34,31 +34,23 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Object<ObjectWithPropertyFields>();
         }
 
-        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
                 schemaDef.GetObject<ObjectWithPropertyFields>(),
                 nameof(ObjectWithPropertyFields.PropertyWithoutDescription).FirstCharToLower());
-        }
 
-        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
                 schemaDef.GetObject<ObjectWithPropertyFields>(),
                 nameof(ObjectWithPropertyFields.PropertyWithDescription).FirstCharToLower());
-        }
 
-        public override Member GetMemberWithoutDataAnnotation(Schema schema)
-        {
-            return schema.GetObject<ObjectWithPropertyFields>()
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetObject<ObjectWithPropertyFields>()
                 .FindField(nameof(ObjectWithPropertyFields.PropertyWithoutDescription).FirstCharToLower());
-        }
 
-        public override Member GetMemberWithDataAnnotation(Schema schema)
-        {
-            return schema.GetObject<ObjectWithPropertyFields>()
+        public override Member GetMemberWithDataAnnotation(Schema schema) =>
+            schema.GetObject<ObjectWithPropertyFields>()
                 .FindField(nameof(ObjectWithPropertyFields.PropertyWithDescription).FirstCharToLower());
-        }
 
         public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description)

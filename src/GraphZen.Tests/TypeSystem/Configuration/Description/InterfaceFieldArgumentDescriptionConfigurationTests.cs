@@ -34,31 +34,23 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Interface<IInterfaceWithMethodFields>();
         }
 
-        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
                 MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                     schemaDef.GetInterface<IInterfaceWithMethodFields>(), "foo"), "without");
-        }
 
-        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
                 MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                     schemaDef.GetInterface<IInterfaceWithMethodFields>(), "foo"), "with");
-        }
 
-        public override Member GetMemberWithoutDataAnnotation(Schema schema)
-        {
-            return schema.GetInterface<IInterfaceWithMethodFields>()
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetInterface<IInterfaceWithMethodFields>()
                 .GetField("foo").GetArgument("without");
-        }
 
-        public override Member GetMemberWithDataAnnotation(Schema schema)
-        {
-            return schema.GetInterface<IInterfaceWithMethodFields>()
+        public override Member GetMemberWithDataAnnotation(Schema schema) =>
+            schema.GetInterface<IInterfaceWithMethodFields>()
                 .GetField("foo").GetArgument("with");
-        }
 
         public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description)

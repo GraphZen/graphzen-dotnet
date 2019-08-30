@@ -13,10 +13,8 @@ namespace GraphZen.TypeSystem
     {
         public static TBuilder Deprecated<TBuilder>(
             this TBuilder builder,
-            string reason = null) where TBuilder : IAnnotableBuilder<TBuilder>
-        {
-            return Check.NotNull(builder, nameof(builder))
+            string reason = null) where TBuilder : IAnnotableBuilder<TBuilder> =>
+            Check.NotNull(builder, nameof(builder))
                 .DirectiveAnnotation("deprecated", new GraphQLDeprecatedAttribute(reason));
-        }
     }
 }

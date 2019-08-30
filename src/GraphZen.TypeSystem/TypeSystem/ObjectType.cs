@@ -69,21 +69,12 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Object;
 
-        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields()
-        {
-            return GetFields();
-        }
+        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => GetFields();
 
-        public IEnumerable<Field> GetFields()
-        {
-            return Fields.Values;
-        }
+        public IEnumerable<Field> GetFields() => Fields.Values;
 
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
 
@@ -101,17 +92,11 @@ namespace GraphZen.TypeSystem
             );
         }
 
-        public IEnumerable<InterfaceType> GetInterfaces()
-        {
-            return Interfaces;
-        }
+        public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
 
         public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
         public IReadOnlyDictionary<string, InterfaceType> InterfacesMap => _interfaceMap.Value;
 
-        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces()
-        {
-            return GetInterfaces();
-        }
+        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces() => GetInterfaces();
     }
 }

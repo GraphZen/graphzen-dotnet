@@ -29,9 +29,8 @@ namespace GraphZen.QueryEngine.Variables
 
 
         [Fact]
-        public Task AllowsListsOfNonNullsToBeNull()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsListsOfNonNullsToBeNull() =>
+            ExecuteAsync(@"
               query ($input: [String!]) {
                 listNN(input: $input)
               }
@@ -40,12 +39,10 @@ namespace GraphZen.QueryEngine.Variables
                 {
                     data = new { listNN = "null" }
                 });
-        }
 
         [Fact]
-        public Task AllowsListsOfNonNullsToContainValues()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsListsOfNonNullsToContainValues() =>
+            ExecuteAsync(@"
               query ($input: [String!]) {
                 listNN(input: $input)
               }
@@ -54,12 +51,10 @@ namespace GraphZen.QueryEngine.Variables
                 {
                     data = new { listNN = "[\"A\"]" }
                 });
-        }
 
         [Fact]
-        public Task AllowsListsToBeNull()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsListsToBeNull() =>
+            ExecuteAsync(@"
               query ($input: [String]) {
                 list(input: $input)
               }
@@ -70,12 +65,10 @@ namespace GraphZen.QueryEngine.Variables
                     list = "null"
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsListsToContainNull()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsListsToContainNull() =>
+            ExecuteAsync(@"
               query ($input: [String]) {
                 list(input: $input)
               }
@@ -86,12 +79,10 @@ namespace GraphZen.QueryEngine.Variables
                     list = "[\"A\",null,\"B\"]"
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsListsToContainValues()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsListsToContainValues() =>
+            ExecuteAsync(@"
               query ($input: [String]) {
                 list(input: $input)
               }
@@ -102,12 +93,10 @@ namespace GraphZen.QueryEngine.Variables
                     list = "[\"A\"]"
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsNonNullListsOfNonNullsToContainValues()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNonNullListsOfNonNullsToContainValues() =>
+            ExecuteAsync(@"
               query ($input: [String!]!) {
                 nnListNN(input: $input)
               }
@@ -119,12 +108,10 @@ namespace GraphZen.QueryEngine.Variables
                         nnListNN = "[\"A\"]"
                     }
                 });
-        }
 
         [Fact]
-        public Task AllowsNonNullListsToContainValues()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNonNullListsToContainValues() =>
+            ExecuteAsync(@"
               query ($input: [String]!) {
                 nnList(input: $input)
               }
@@ -135,12 +122,10 @@ namespace GraphZen.QueryEngine.Variables
                     nnList = "[\"A\"]"
                 }
             });
-        }
 
         [Fact]
-        public Task DoesNotAllowInvalidTypesToBeUsedAsValues()
-        {
-            return ExecuteAsync(@"
+        public Task DoesNotAllowInvalidTypesToBeUsedAsValues() =>
+            ExecuteAsync(@"
               query ($input: TestType!) {
                 fieldWithObjectInput(input: $input)
               }
@@ -157,12 +142,10 @@ namespace GraphZen.QueryEngine.Variables
                     })
                 })
             });
-        }
 
         [Fact]
-        public Task DoesNotAllowListsOfNonNullsToContainNull()
-        {
-            return ExecuteAsync(@"
+        public Task DoesNotAllowListsOfNonNullsToContainNull() =>
+            ExecuteAsync(@"
               query ($input: [String!]) {
                 listNN(input: $input)
               }
@@ -180,12 +163,10 @@ namespace GraphZen.QueryEngine.Variables
                         })
                     })
                 });
-        }
 
         [Fact]
-        public Task DoesNotAllowNonNullListsOfNonNullsToBeNull()
-        {
-            return ExecuteAsync(@"
+        public Task DoesNotAllowNonNullListsOfNonNullsToBeNull() =>
+            ExecuteAsync(@"
               query ($input: [String!]!) {
                 nnListNN(input: $input)
               }
@@ -202,12 +183,10 @@ namespace GraphZen.QueryEngine.Variables
                         })
                     })
                 });
-        }
 
         [Fact]
-        public Task DoesNotAllowNonNullListsToBeNull()
-        {
-            return ExecuteAsync(@"
+        public Task DoesNotAllowNonNullListsToBeNull() =>
+            ExecuteAsync(@"
               query ($input: [String]!) {
                 nnList(input: $input)
               }
@@ -223,12 +202,10 @@ namespace GraphZen.QueryEngine.Variables
                     })
                 })
             });
-        }
 
         [Fact]
-        public Task DoesNotAllowsNonNullListsOfNonNullsToContainNull()
-        {
-            return ExecuteAsync(@"
+        public Task DoesNotAllowsNonNullListsOfNonNullsToContainNull() =>
+            ExecuteAsync(@"
               query ($input: [String!]!) {
                 nnListNN(input: $input)
               }
@@ -246,12 +223,10 @@ namespace GraphZen.QueryEngine.Variables
                         })
                     })
                 });
-        }
 
         [Fact]
-        public Task DoesNotAllowUnknownTypesToBeUsedAsValues()
-        {
-            return ExecuteAsync(@"
+        public Task DoesNotAllowUnknownTypesToBeUsedAsValues() =>
+            ExecuteAsync(@"
               query ($input: UnknownType!) {
                 fieldWithObjectInput(input: $input)
               }
@@ -268,12 +243,10 @@ namespace GraphZen.QueryEngine.Variables
                     })
                 })
             });
-        }
 
         [Fact]
-        public Task ItAllowsNonNullListsToContainNull()
-        {
-            return ExecuteAsync(@"
+        public Task ItAllowsNonNullListsToContainNull() =>
+            ExecuteAsync(@"
               query ($input: [String]!) {
                 nnList(input: $input)
               }
@@ -284,6 +257,5 @@ namespace GraphZen.QueryEngine.Variables
                     nnList = "[\"A\",null,\"B\"]"
                 }
             });
-        }
     }
 }

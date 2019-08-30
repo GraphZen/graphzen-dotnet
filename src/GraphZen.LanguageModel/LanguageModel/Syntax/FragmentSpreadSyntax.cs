@@ -47,10 +47,8 @@ namespace GraphZen.LanguageModel
             Name.ToEnumerable().Concat(Directives);
 
 
-        private bool Equals(FragmentSpreadSyntax other)
-        {
-            return Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
-        }
+        private bool Equals(FragmentSpreadSyntax other) =>
+            Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {

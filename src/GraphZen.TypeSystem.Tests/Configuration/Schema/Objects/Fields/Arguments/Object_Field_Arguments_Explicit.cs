@@ -24,15 +24,12 @@ namespace GraphZen.Objects.Fields.Arguments
             public string SomeField(
                 string arg1,
                 [GraphQLIgnore] string ignoreMe,
-                [GraphQLName(DataAnnotationName)] string arg2)
-            {
+                [GraphQLName(DataAnnotationName)] string arg2) =>
                 throw new NotImplementedException();
-            }
         }
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ParentName = nameof(SomeObject.SomeField).FirstCharToLower(),
                 ItemIgnoredByDataAnnotation = "ignoreMe",
@@ -40,7 +37,6 @@ namespace GraphZen.Objects.Fields.Arguments
                 ItemNamedByDataAnnotation = DataAnnotationName,
                 ItemIgnoredByConvention = "na"
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

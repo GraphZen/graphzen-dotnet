@@ -91,16 +91,12 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public static (string name, ConfigurationSource nameConfigurationSource) GetGraphQLFieldName(
-            this PropertyInfo property)
-        {
-            return Check.NotNull(property, nameof(property)).GetGraphQLFieldName(property.PropertyType);
-        }
+            this PropertyInfo property) =>
+            Check.NotNull(property, nameof(property)).GetGraphQLFieldName(property.PropertyType);
 
         public static (string name, ConfigurationSource configurationSource)
-            GetGraphQLFieldName(this MethodInfo method)
-        {
-            return Check.NotNull(method, nameof(method)).GetGraphQLFieldName(method.ReturnType);
-        }
+            GetGraphQLFieldName(this MethodInfo method) =>
+            Check.NotNull(method, nameof(method)).GetGraphQLFieldName(method.ReturnType);
 
         public static (string name, ConfigurationSource configurationSource) GetGraphQLArgumentName(
             this ParameterInfo parameter)

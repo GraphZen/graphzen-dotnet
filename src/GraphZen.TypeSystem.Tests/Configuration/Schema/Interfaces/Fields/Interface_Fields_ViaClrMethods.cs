@@ -14,9 +14,8 @@ namespace GraphZen.Interfaces.Fields
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ParentName = nameof(IExampleInterface),
                 ItemNamedByConvention = nameof(IExampleInterface.HelloWorld).FirstCharToLower(),
@@ -24,7 +23,6 @@ namespace GraphZen.Interfaces.Fields
                 ItemIgnoredByConvention = nameof(IExampleInterface.IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(IExampleInterface.IgnoredByDataAnnotation).FirstCharToLower()
             };
-        }
 
 
         public void ConfigureContextConventionally(SchemaBuilder sb)

@@ -95,22 +95,13 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.FieldDefinition;
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments()
-        {
-            return GetArguments();
-        }
+        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments() => GetArguments();
 
         [GraphQLName("args")]
-        public IEnumerable<Argument> GetArguments()
-        {
-            return Arguments.Values;
-        }
+        public IEnumerable<Argument> GetArguments() => Arguments.Values;
 
         [GraphQLIgnore] public MemberInfo? ClrInfo { get; }
 
@@ -128,9 +119,6 @@ namespace GraphZen.TypeSystem
                 definition.DeprecationReason, definition.DirectiveAnnotations, typeResolver, definition.ClrInfo);
         }
 
-        public override string ToString()
-        {
-            return $"{DeclaringType}.{Name}";
-        }
+        public override string ToString() => $"{DeclaringType}.{Name}";
     }
 }

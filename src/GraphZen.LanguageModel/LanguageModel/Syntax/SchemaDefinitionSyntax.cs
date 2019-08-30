@@ -42,11 +42,9 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals(SchemaDefinitionSyntax other)
-        {
-            return RootOperationTypes.SequenceEqual(other.RootOperationTypes) &&
-                   Directives.SequenceEqual(other.Directives);
-        }
+        private bool Equals(SchemaDefinitionSyntax other) =>
+            RootOperationTypes.SequenceEqual(other.RootOperationTypes) &&
+            Directives.SequenceEqual(other.Directives);
 
         public SchemaDefinitionSyntax WithRootOperation(OperationTypeDefinitionSyntax definition)
         {

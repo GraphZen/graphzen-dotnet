@@ -115,10 +115,8 @@ namespace GraphZen
             return hasDiff;
         }
 
-        public static string GetDiff(string expected, string actual, ResultComparisonOptions options)
-        {
-            return TryGetDiff(expected, actual, out var differences, options) ? differences : null;
-        }
+        public static string GetDiff(string expected, string actual, ResultComparisonOptions options) =>
+            TryGetDiff(expected, actual, out var differences, options) ? differences : null;
 
         private static void AssertEquals(JObject expected, JObject actual, ResultComparisonOptions options)
         {
@@ -246,9 +244,7 @@ namespace GraphZen
             if (!result.HasValue) throw new Exception(result.ToString());
         }
 
-        public static string ToMultiLineString(this IEnumerable<string> values)
-        {
-            return string.Join(Environment.NewLine, values);
-        }
+        public static string ToMultiLineString(this IEnumerable<string> values) =>
+            string.Join(Environment.NewLine, values);
     }
 }

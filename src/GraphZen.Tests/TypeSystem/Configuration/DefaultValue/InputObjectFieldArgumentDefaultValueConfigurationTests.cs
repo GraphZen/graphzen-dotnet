@@ -33,19 +33,15 @@ namespace GraphZen.TypeSystem
         }
 
         public override InputValueDefinition GetMemberDefinitionWithNoDefaultValueByConvention(
-            SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetInputObject<FooInputObject>()
+            SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetInputObject<FooInputObject>()
                 .GetField(nameof(FooInputObject.NoDefaultValueSetByConvention).FirstCharToLower());
-        }
 
 
         public override InputValueDefinition GetMemberDefinitionWithDefaultValueConfiguredByDataAnnotation(
-            SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetInputObject<FooInputObject>()
+            SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetInputObject<FooInputObject>()
                 .GetField(nameof(FooInputObject.DefaultValueSetByAttribute).FirstCharToLower());
-        }
 
         public override void SetDefaultValueOnMemberWithNoDefaultValueByConvention(SchemaBuilder schemaBuilder,
             object defaultValue)
@@ -64,17 +60,13 @@ namespace GraphZen.TypeSystem
                 f => f.DefaultValue(defaultValue));
         }
 
-        public override InputValue GetMemberWithNoDefaultValueByConvention(Schema schema)
-        {
-            return schema.GetInputObject<FooInputObject>()
+        public override InputValue GetMemberWithNoDefaultValueByConvention(Schema schema) =>
+            schema.GetInputObject<FooInputObject>()
                 .GetField(nameof(FooInputObject.NoDefaultValueSetByConvention).FirstCharToLower());
-        }
 
 
-        public override InputValue GetMemberWithDefaultValueSetByDataAnnotation(Schema schema)
-        {
-            return schema.GetInputObject<FooInputObject>()
+        public override InputValue GetMemberWithDefaultValueSetByDataAnnotation(Schema schema) =>
+            schema.GetInputObject<FooInputObject>()
                 .GetField(nameof(FooInputObject.DefaultValueSetByAttribute).FirstCharToLower());
-        }
     }
 }

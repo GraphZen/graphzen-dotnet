@@ -35,25 +35,17 @@ namespace GraphZen.TypeSystem
             schemaBuilder.InputObject<InputObjectWithDescription>();
         }
 
-        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return schemaDef.GetInputObject<InputObjectWithoutDescription>();
-        }
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetInputObject<InputObjectWithoutDescription>();
 
-        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return schemaDef.GetInputObject<InputObjectWithDescription>();
-        }
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetInputObject<InputObjectWithDescription>();
 
-        public override Member GetMemberWithoutDataAnnotation(Schema schema)
-        {
-            return schema.GetInputObject<InputObjectWithoutDescription>();
-        }
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetInputObject<InputObjectWithoutDescription>();
 
-        public override Member GetMemberWithDataAnnotation(Schema schema)
-        {
-            return schema.GetInputObject<InputObjectWithDescription>();
-        }
+        public override Member GetMemberWithDataAnnotation(Schema schema) =>
+            schema.GetInputObject<InputObjectWithDescription>();
 
         public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description)

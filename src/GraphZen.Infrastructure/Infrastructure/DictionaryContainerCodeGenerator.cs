@@ -31,10 +31,7 @@ namespace GraphZen.Infrastructure
         }
 
 
-        public AccessorGenerator<TContainer> ForType<TContainer>()
-        {
-            return new AccessorGenerator<TContainer>(_csharp);
-        }
+        public AccessorGenerator<TContainer> ForType<TContainer>() => new AccessorGenerator<TContainer>(_csharp);
 
 
         public class AccessorGenerator<TContainer>

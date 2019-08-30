@@ -18,14 +18,12 @@ namespace GraphZen.Enums.Description
 
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(ExampleEnum),
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

@@ -33,10 +33,7 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children => Fields;
 
-        private bool Equals(ObjectValueSyntax other)
-        {
-            return Fields.SequenceEqual(other.Fields);
-        }
+        private bool Equals(ObjectValueSyntax other) => Fields.SequenceEqual(other.Fields);
 
         public override bool Equals(object obj)
         {
@@ -47,15 +44,9 @@ namespace GraphZen.LanguageModel
             return obj is ObjectValueSyntax && Equals((ObjectValueSyntax)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return Fields.GetHashCode();
-        }
+        public override int GetHashCode() => Fields.GetHashCode();
 
 
-        public override object GetValue()
-        {
-            return Fields;
-        }
+        public override object GetValue() => Fields;
     }
 }

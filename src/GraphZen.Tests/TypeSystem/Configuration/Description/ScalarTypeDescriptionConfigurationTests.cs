@@ -35,25 +35,16 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Scalar<ScalarWithDescription>();
         }
 
-        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return schemaDef.GetScalar<ScalarWithoutDescription>();
-        }
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetScalar<ScalarWithoutDescription>();
 
-        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return schemaDef.GetScalar<ScalarWithDescription>();
-        }
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetScalar<ScalarWithDescription>();
 
-        public override Member GetMemberWithoutDataAnnotation(Schema schema)
-        {
-            return schema.GetScalar<ScalarWithoutDescription>();
-        }
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetScalar<ScalarWithoutDescription>();
 
-        public override Member GetMemberWithDataAnnotation(Schema schema)
-        {
-            return schema.GetScalar<ScalarWithDescription>();
-        }
+        public override Member GetMemberWithDataAnnotation(Schema schema) => schema.GetScalar<ScalarWithDescription>();
 
         public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description)

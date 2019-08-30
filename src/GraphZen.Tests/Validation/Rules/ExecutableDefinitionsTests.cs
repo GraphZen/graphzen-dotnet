@@ -19,10 +19,8 @@ namespace GraphZen.Validation.Rules
     {
         public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ExecutableDefinitions;
 
-        private static ExpectedError NonExecutableDefinition(string defName, int line, int column)
-        {
-            return Error(ExecutableDefinitions.NonExecutableDefinitionMessage(defName), (line, column));
-        }
+        private static ExpectedError NonExecutableDefinition(string defName, int line, int column) =>
+            Error(ExecutableDefinitions.NonExecutableDefinitionMessage(defName), (line, column));
 
         [Fact]
         public void WithOnlyOperation()

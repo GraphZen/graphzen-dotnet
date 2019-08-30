@@ -38,11 +38,9 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Fields);
 
-        private bool Equals(InputObjectTypeExtensionSyntax other)
-        {
-            return Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives) &&
-                   Fields.SequenceEqual(other.Fields);
-        }
+        private bool Equals(InputObjectTypeExtensionSyntax other) =>
+            Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives) &&
+            Fields.SequenceEqual(other.Fields);
 
         public override bool Equals(object obj)
         {

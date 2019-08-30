@@ -18,15 +18,11 @@ namespace GraphZen.QueryEngine.Validation.Rules
         {
         }
 
-        public static string InlineFragmentOnNonCompositeErrorMessage(string type)
-        {
-            return $"Fragment cannot condition on non composite type \"{type}\".";
-        }
+        public static string InlineFragmentOnNonCompositeErrorMessage(string type) =>
+            $"Fragment cannot condition on non composite type \"{type}\".";
 
-        public static string FragmentOnNonCompositeErrorMessage(string fragmentName, string type)
-        {
-            return $"Fragment \"{fragmentName}\" cannot condition on non composite type \"{type}\".";
-        }
+        public static string FragmentOnNonCompositeErrorMessage(string fragmentName, string type) =>
+            $"Fragment \"{fragmentName}\" cannot condition on non composite type \"{type}\".";
 
         public override VisitAction EnterInlineFragment(InlineFragmentSyntax node)
         {

@@ -12,9 +12,8 @@ namespace GraphZen.Enums.EnumValues
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ParentName = nameof(ExampleEnum),
                 ItemNamedByConvention = nameof(ExampleEnum.HelloWorld),
@@ -22,7 +21,6 @@ namespace GraphZen.Enums.EnumValues
                 ItemIgnoredByConvention = "IgnoredByConvention",
                 ItemIgnoredByDataAnnotation = nameof(ExampleEnum.IgnoredByDataAnnotation)
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {
@@ -42,9 +40,6 @@ namespace GraphZen.Enums.EnumValues
             [GraphQLIgnore] IgnoredByDataAnnotation
         }
 
-        public override string ToString()
-        {
-            return nameof(Enum_Values_ViaClrEnumValues);
-        }
+        public override string ToString() => nameof(Enum_Values_ViaClrEnumValues);
     }
 }

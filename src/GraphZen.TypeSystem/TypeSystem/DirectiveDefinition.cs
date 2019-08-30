@@ -38,15 +38,10 @@ namespace GraphZen.TypeSystem
 
         public string Name { get; }
 
-        public bool SetName(string name, ConfigurationSource configurationSource)
-        {
+        public bool SetName(string name, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
-        }
 
-        public ConfigurationSource GetNameConfigurationSource()
-        {
-            throw new NotImplementedException();
-        }
+        public ConfigurationSource GetNameConfigurationSource() => throw new NotImplementedException();
 
         public IReadOnlyList<DirectiveLocation> Locations => _locations;
 
@@ -63,17 +58,11 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public IEnumerable<IArgumentDefinition> GetArguments()
-        {
-            return _arguments.Values;
-        }
+        public IEnumerable<IArgumentDefinition> GetArguments() => _arguments.Values;
 
         public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
 
-        IEnumerable<ArgumentDefinition> IMutableArgumentsContainerDefinition.GetArguments()
-        {
-            return Arguments.Values;
-        }
+        IEnumerable<ArgumentDefinition> IMutableArgumentsContainerDefinition.GetArguments() => Arguments.Values;
 
         public void SetLocations(DirectiveLocation[] locations)
         {

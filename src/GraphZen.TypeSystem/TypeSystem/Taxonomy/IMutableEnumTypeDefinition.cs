@@ -8,8 +8,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableEnumTypeDefinition : 
-        IEnumTypeDefinition, 
+    public interface IMutableEnumTypeDefinition :
+        IEnumTypeDefinition,
         IMutableNamedTypeDefinition,
         IMutableEnumValuesContainerDefinition
     {

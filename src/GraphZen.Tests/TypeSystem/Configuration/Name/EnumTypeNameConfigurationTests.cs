@@ -47,24 +47,14 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Enum<FooEnum>().Name(name);
         }
 
-        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetEnum<EnumNamedByConvention>();
-        }
+        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetEnum<EnumNamedByConvention>();
 
-        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetEnum<FooEnum>();
-        }
+        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetEnum<FooEnum>();
 
-        public override INamed GetMemberNamedByConvention(Schema schema)
-        {
-            return schema.GetEnum<EnumNamedByConvention>();
-        }
+        public override INamed GetMemberNamedByConvention(Schema schema) => schema.GetEnum<EnumNamedByConvention>();
 
-        public override INamed GetMemberNamedByDataAnnotation(Schema schema)
-        {
-            return schema.GetEnum<FooEnum>();
-        }
+        public override INamed GetMemberNamedByDataAnnotation(Schema schema) => schema.GetEnum<FooEnum>();
     }
 }

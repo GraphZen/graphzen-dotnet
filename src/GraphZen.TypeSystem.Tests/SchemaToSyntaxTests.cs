@@ -128,7 +128,7 @@ namespace GraphZen
             var expected = new UnionTypeDefinitionSyntax(Name("Union"),
                 SyntaxHelpers.Description("union description"),
                 null,
-                new[] {NamedType(Name("Object"))});
+                new[] { NamedType(Name("Object")) });
             union.ToSyntaxNode().Should().Be(expected);
         }
 

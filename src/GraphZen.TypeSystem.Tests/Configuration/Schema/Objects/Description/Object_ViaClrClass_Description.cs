@@ -13,14 +13,12 @@ namespace GraphZen.Objects
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(ExampleObject),
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         [Description(DataAnnotationDescriptionValue)]
         public class ExampleObject

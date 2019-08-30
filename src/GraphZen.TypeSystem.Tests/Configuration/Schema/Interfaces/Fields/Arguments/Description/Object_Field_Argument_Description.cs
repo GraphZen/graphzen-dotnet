@@ -19,24 +19,18 @@ namespace GraphZen.Interfaces.Fields.Arguments.Description
 
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
         {
-            sb.Interface(GreatGrandparent).Field(Grandparent, field => field.Argument(parentName));
+            sb.Interface(GreatGrandparent).Field(Grandparent, "String", field => field.Argument(parentName, "String"));
         }
 
-        public override Argument GetParent(Schema schema, string parentName)
-        {
-            return schema.GetInterface(GreatGrandparent).GetField(Grandparent).GetArgument(parentName);
-        }
+        public override Argument GetParent(Schema schema, string parentName) => schema.GetInterface(GreatGrandparent)
+            .GetField(Grandparent).GetArgument(parentName);
 
-        public override ArgumentDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetInterface(GreatGrandparent).GetField(Grandparent).GetArgument(parentName);
-        }
+        public override ArgumentDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition()
+            .GetInterface(GreatGrandparent).GetField(Grandparent).GetArgument(parentName);
 
 
-        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent)
-        {
-            return parent.GetDescriptionConfigurationSource();
-        }
+        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent) =>
+            parent.GetDescriptionConfigurationSource();
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {

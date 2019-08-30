@@ -22,21 +22,14 @@ namespace GraphZen.Unions.Description
             sb.Union(parentName);
         }
 
-        public override UnionType GetParent(Schema schema, string parentName)
-        {
-            return schema.GetUnion(parentName);
-        }
+        public override UnionType GetParent(Schema schema, string parentName) => schema.GetUnion(parentName);
 
-        public override UnionTypeDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetUnion(parentName);
-        }
+        public override UnionTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetUnion(parentName);
 
 
-        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent)
-        {
-            return parent.GetDescriptionConfigurationSource();
-        }
+        public override ConfigurationSource GetElementConfigurationSource(IMutableDescription parent) =>
+            parent.GetDescriptionConfigurationSource();
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {

@@ -91,34 +91,20 @@ namespace GraphZen.LanguageModel
         public override IEnumerable<SyntaxNode> Children => Definitions;
 
 
-        public IReadOnlyList<TypeDefinitionSyntax> GetInputTypeDefinitions()
-        {
-            return _inputTypeDefinitions.Value;
-        }
+        public IReadOnlyList<TypeDefinitionSyntax> GetInputTypeDefinitions() => _inputTypeDefinitions.Value;
 
 
-        public IReadOnlyList<TypeDefinitionSyntax> GetOutputTypeDefinitions()
-        {
-            return _outputTypeDefinitions.Value;
-        }
+        public IReadOnlyList<TypeDefinitionSyntax> GetOutputTypeDefinitions() => _outputTypeDefinitions.Value;
 
 
-        private IReadOnlyDictionary<string, TypeDefinitionSyntax> GetAbstractTypeMap()
-        {
-            return _abstractTypeMap.Value;
-        }
+        private IReadOnlyDictionary<string, TypeDefinitionSyntax> GetAbstractTypeMap() => _abstractTypeMap.Value;
 
 
-        private IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax> GetObjectTypeMap()
-        {
-            return _objectTypeMap.Value;
-        }
+        private IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax> GetObjectTypeMap() => _objectTypeMap.Value;
 
 
-        private IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>> GetImplementationMap()
-        {
-            return _implementations.Value;
-        }
+        private IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>> GetImplementationMap() =>
+            _implementations.Value;
 
 
         public bool IsTypeSubTypeOf(TypeSyntax maybeSubType, TypeSyntax superType)
@@ -194,10 +180,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals(DocumentSyntax other)
-        {
-            return Definitions.SequenceEqual(other.Definitions);
-        }
+        private bool Equals(DocumentSyntax other) => Definitions.SequenceEqual(other.Definitions);
 
         public override bool Equals(object obj)
         {
@@ -208,9 +191,6 @@ namespace GraphZen.LanguageModel
             return obj is DocumentSyntax syntax && Equals(syntax);
         }
 
-        public override int GetHashCode()
-        {
-            return Definitions.GetHashCode();
-        }
+        public override int GetHashCode() => Definitions.GetHashCode();
     }
 }

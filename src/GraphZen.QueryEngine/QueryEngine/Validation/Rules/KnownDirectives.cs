@@ -31,15 +31,10 @@ namespace GraphZen.QueryEngine.Validation.Rules
         private IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>> LocationsMap => _lazyLocationsMap.Value;
 
 
-        public static string UnknownDirectiveMessage(string directiveName)
-        {
-            return $"Unknown directive \"{directiveName}\".";
-        }
+        public static string UnknownDirectiveMessage(string directiveName) => $"Unknown directive \"{directiveName}\".";
 
-        public static string MisplacedDirectiveMessage(string directiveName, string location)
-        {
-            return $"Directive \"{directiveName}\" may not be used on {location}.";
-        }
+        public static string MisplacedDirectiveMessage(string directiveName, string location) =>
+            $"Directive \"{directiveName}\" may not be used on {location}.";
 
         public override VisitAction EnterDirective(DirectiveSyntax node)
         {

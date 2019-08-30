@@ -9,7 +9,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.TypeSystem
 {
     public class InterfaceType : NamedType, IInterfaceType
@@ -41,23 +40,14 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Interface;
 
-        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields()
-        {
-            return Fields.Values;
-        }
+        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => Fields.Values;
 
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
 
-        public IEnumerable<Field> GetFields()
-        {
-            return Fields.Values;
-        }
+        public IEnumerable<Field> GetFields() => Fields.Values;
 
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Interface;

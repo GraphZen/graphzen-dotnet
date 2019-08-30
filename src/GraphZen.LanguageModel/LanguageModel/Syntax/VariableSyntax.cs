@@ -36,10 +36,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals(VariableSyntax other)
-        {
-            return Name.Equals(other.Name);
-        }
+        private bool Equals(VariableSyntax other) => Name.Equals(other.Name);
 
         public override bool Equals(object obj)
         {
@@ -50,19 +47,10 @@ namespace GraphZen.LanguageModel
             return obj is VariableSyntax && Equals((VariableSyntax)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
+        public override int GetHashCode() => Name.GetHashCode();
 
-        public override object GetValue()
-        {
-            return $"${Name.Value}";
-        }
+        public override object GetValue() => $"${Name.Value}";
 
-        public override string ToString()
-        {
-            return $"${Name}";
-        }
+        public override string ToString() => $"${Name}";
     }
 }

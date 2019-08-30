@@ -18,16 +18,10 @@ namespace GraphZen.TypeSystem
     {
         public class ObjectWithMethodFields
         {
-            public string MethodWithoutDescription()
-            {
-                return "";
-            }
+            public string MethodWithoutDescription() => "";
 
             [Description("set by data annotation")]
-            public string MethodWithDescription()
-            {
-                return "";
-            }
+            public string MethodWithDescription() => "";
         }
 
         public override void CreateMemberWithoutDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder)
@@ -40,31 +34,23 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Object<ObjectWithMethodFields>();
         }
 
-        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
                 schemaDef.GetObject<ObjectWithMethodFields>(),
                 nameof(ObjectWithMethodFields.MethodWithoutDescription).FirstCharToLower());
-        }
 
-        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
                 schemaDef.GetObject<ObjectWithMethodFields>(),
                 nameof(ObjectWithMethodFields.MethodWithDescription).FirstCharToLower());
-        }
 
-        public override Member GetMemberWithoutDataAnnotation(Schema schema)
-        {
-            return schema.GetObject<ObjectWithMethodFields>()
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetObject<ObjectWithMethodFields>()
                 .FindField(nameof(ObjectWithMethodFields.MethodWithoutDescription).FirstCharToLower());
-        }
 
-        public override Member GetMemberWithDataAnnotation(Schema schema)
-        {
-            return schema.GetObject<ObjectWithMethodFields>()
+        public override Member GetMemberWithDataAnnotation(Schema schema) =>
+            schema.GetObject<ObjectWithMethodFields>()
                 .FindField(nameof(ObjectWithMethodFields.MethodWithDescription).FirstCharToLower());
-        }
 
         public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description)

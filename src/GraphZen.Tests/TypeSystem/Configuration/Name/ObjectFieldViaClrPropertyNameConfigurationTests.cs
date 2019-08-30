@@ -47,19 +47,15 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Object<FooObject>().Field(_ => _.CustomNamedField, _ => _.Name(name));
         }
 
-        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder)
-        {
-            return MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
+        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder) =>
+            MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                 schemaBuilder.GetDefinition().GetObject<FooObject>(),
                 nameof(FooObject.ConventionallyNamedField).FirstCharToLower());
-        }
 
 
-        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder)
-        {
-            return MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
+        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder) =>
+            MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                 schemaBuilder.GetDefinition().GetObject<FooObject>(), "CustomName");
-        }
 
         public override INamed GetMemberNamedByConvention(Schema schema)
         {

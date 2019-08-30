@@ -29,26 +29,20 @@ namespace GraphZen.LanguageModel.Internal
 
         internal static IEnumerable<SyntaxNode> Concat(
             this IEnumerable<SyntaxNode> first,
-            IEnumerable<SyntaxNode> second)
-        {
-            return first.Concat<SyntaxNode>(second);
-        }
+            IEnumerable<SyntaxNode> second) =>
+            first.Concat<SyntaxNode>(second);
 
 
         internal static IEnumerable<SyntaxNode> Concat(
             this IEnumerable<SyntaxNode> first,
-            Func<IEnumerable<SyntaxNode>> second)
-        {
-            return first.Concat<SyntaxNode>(second());
-        }
+            Func<IEnumerable<SyntaxNode>> second) =>
+            first.Concat<SyntaxNode>(second());
 
 
         internal static IEnumerable<SyntaxNode> Concat(
             this IEnumerable<SyntaxNode> nodes,
-            SyntaxNode node)
-        {
-            return nodes.Concat(node.ToEnumerable());
-        }
+            SyntaxNode node) =>
+            nodes.Concat(node.ToEnumerable());
 
 
         internal static bool NodesEqual<T>(

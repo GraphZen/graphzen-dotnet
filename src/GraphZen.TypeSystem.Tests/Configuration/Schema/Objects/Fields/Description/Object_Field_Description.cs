@@ -19,7 +19,7 @@ namespace GraphZen.Objects.Fields.Description
 
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
         {
-            sb.Object(Grandparent).Field(parentName);
+            sb.Object(Grandparent).Field(parentName, "String");
         }
 
         public override Field GetParent(Schema schema, string parentName) =>

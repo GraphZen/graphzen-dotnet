@@ -59,12 +59,10 @@ namespace GraphZen
 
         [JsonIgnore] public Exception? InnerException { get; }
 
-        private bool Equals(GraphQLError other)
-        {
-            return string.Equals(Message, other.Message) &&
-                   Equals(Locations, other.Locations) &&
-                   Equals(Path, other.Path);
-        }
+        private bool Equals(GraphQLError other) =>
+            string.Equals(Message, other.Message) &&
+            Equals(Locations, other.Locations) &&
+            Equals(Path, other.Path);
 
         public override bool Equals(object? obj)
         {
@@ -94,17 +92,12 @@ namespace GraphZen
             throw new GraphQLException(this);
         }
 
-        public override string ToString()
-        {
-            return Json.SerializeObject(this) ?? Message;
-        }
+        public override string ToString() => Json.SerializeObject(this) ?? Message;
 
 
-        public GraphQLError WithLocationInfo(IReadOnlyList<SyntaxNode> nodes, ResponsePath path)
-        {
-            return new GraphQLError(Message, nodes, Source, Positions,
+        public GraphQLError WithLocationInfo(IReadOnlyList<SyntaxNode> nodes, ResponsePath path) =>
+            new GraphQLError(Message, nodes, Source, Positions,
                 Check.NotNull(path, nameof(path)).AsReadOnlyList(),
                 InnerException);
-        }
     }
 }

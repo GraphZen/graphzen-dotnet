@@ -14,9 +14,8 @@ namespace GraphZen.Objects.Fields
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ParentName = nameof(ExampleObject),
                 ItemNamedByConvention = nameof(ExampleObject.HelloWorld).FirstCharToLower(),
@@ -24,7 +23,6 @@ namespace GraphZen.Objects.Fields
                 ItemIgnoredByConvention = nameof(ExampleObject.IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(ExampleObject.IgnoredByDataAnnotation).FirstCharToLower()
             };
-        }
 
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
@@ -45,32 +43,17 @@ namespace GraphZen.Objects.Fields
 
         public class ExampleObject
         {
-            public string HelloWorld()
-            {
-                throw new NotImplementedException();
-            }
+            public string HelloWorld() => throw new NotImplementedException();
 
             [GraphQLName(DataAnnotationName)]
-            public string NamedByDataAnnotation()
-            {
-                throw new NotImplementedException();
-            }
+            public string NamedByDataAnnotation() => throw new NotImplementedException();
 
             [GraphQLIgnore]
-            public string IgnoredByDataAnnotation()
-            {
-                throw new NotImplementedException();
-            }
+            public string IgnoredByDataAnnotation() => throw new NotImplementedException();
 
-            public IgnoredType IgnoredByConvention()
-            {
-                throw new NotImplementedException();
-            }
+            public IgnoredType IgnoredByConvention() => throw new NotImplementedException();
         }
 
-        public override string ToString()
-        {
-            return nameof(Object_Fields_ViaClrMethods);
-        }
+        public override string ToString() => nameof(Object_Fields_ViaClrMethods);
     }
 }

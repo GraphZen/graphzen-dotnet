@@ -35,9 +35,8 @@ namespace GraphZen
 {
     public static class ConfigurationFixtures
     {
-        public static IEnumerable<T> GetAll<T>() where T : IConfigurationFixture
-        {
-            return new List<IConfigurationFixture>
+        public static IEnumerable<T> GetAll<T>() where T : IConfigurationFixture =>
+            new List<IConfigurationFixture>
             {
                 // SCHEMA
 
@@ -208,6 +207,5 @@ namespace GraphZen
                 new EnumValue_Explicit_Description(),
                 new EnumValue_ViaClrEnumValue_Description()
             }.OfType<T>();
-        }
     }
 }

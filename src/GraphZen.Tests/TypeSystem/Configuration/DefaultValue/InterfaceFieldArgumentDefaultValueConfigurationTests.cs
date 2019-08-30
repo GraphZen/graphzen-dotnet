@@ -32,32 +32,26 @@ namespace GraphZen.TypeSystem
         }
 
         public override InputValueDefinition GetMemberDefinitionWithNoDefaultValueByConvention(
-            SchemaBuilder schemaBuilder)
-        {
-            return MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
+            SchemaBuilder schemaBuilder) =>
+            MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
                 MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                     schemaBuilder.GetDefinition().GetInterface<IFooInterface>(),
                     nameof(IFooInterface.FieldWithArgDefaultValues).FirstCharToLower()), "noDefaultValueByConvention");
-        }
 
 
         public override InputValueDefinition GetMemberDefinitionWithDefaultValueConfiguredByConvention(
-            SchemaBuilder schemaBuilder)
-        {
-            return MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
+            SchemaBuilder schemaBuilder) =>
+            MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
                 MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                     schemaBuilder.GetDefinition().GetInterface<IFooInterface>(),
                     nameof(IFooInterface.FieldWithArgDefaultValues).FirstCharToLower()), "defaultValueSetByConvention");
-        }
 
         public override InputValueDefinition GetMemberDefinitionWithDefaultValueConfiguredByDataAnnotation(
-            SchemaBuilder schemaBuilder)
-        {
-            return MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
+            SchemaBuilder schemaBuilder) =>
+            MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
                 MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                     schemaBuilder.GetDefinition().GetInterface<IFooInterface>(),
                     nameof(IFooInterface.FieldWithArgDefaultValues).FirstCharToLower()), "defaultValueSetByAttribute");
-        }
 
         public override void SetDefaultValueOnMemberWithNoDefaultValueByConvention(SchemaBuilder schemaBuilder,
             object defaultValue)
@@ -83,25 +77,19 @@ namespace GraphZen.TypeSystem
                     f => f.Argument<string>("defaultValueSetByAttribute", a => a.DefaultValue(defaultValue)));
         }
 
-        public override InputValue GetMemberWithNoDefaultValueByConvention(Schema schema)
-        {
-            return schema.GetInterface<IFooInterface>()
+        public override InputValue GetMemberWithNoDefaultValueByConvention(Schema schema) =>
+            schema.GetInterface<IFooInterface>()
                 .GetField(nameof(IFooInterface.FieldWithArgDefaultValues).FirstCharToLower())
                 .GetArgument("noDefaultValueByConvention");
-        }
 
-        public override InputValue GetMemberWithDefaultValueSetByConvention(Schema schema)
-        {
-            return schema.GetInterface<IFooInterface>()
+        public override InputValue GetMemberWithDefaultValueSetByConvention(Schema schema) =>
+            schema.GetInterface<IFooInterface>()
                 .GetField(nameof(IFooInterface.FieldWithArgDefaultValues).FirstCharToLower())
                 .GetArgument("defaultValueSetByConvention");
-        }
 
-        public override InputValue GetMemberWithDefaultValueSetByDataAnnotation(Schema schema)
-        {
-            return schema.GetInterface<IFooInterface>()
+        public override InputValue GetMemberWithDefaultValueSetByDataAnnotation(Schema schema) =>
+            schema.GetInterface<IFooInterface>()
                 .GetField(nameof(IFooInterface.FieldWithArgDefaultValues).FirstCharToLower())
                 .GetArgument("defaultValueSetByAttribute");
-        }
     }
 }

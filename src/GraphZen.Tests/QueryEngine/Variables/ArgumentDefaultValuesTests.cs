@@ -29,9 +29,8 @@ namespace GraphZen.QueryEngine.Variables
 
 
         [Fact]
-        public Task NotWhenArugmentCannotBeCoerced()
-        {
-            return ExecuteAsync(@"
+        public Task NotWhenArugmentCannotBeCoerced() =>
+            ExecuteAsync(@"
               {
                 fieldWithDefaultArgumentValue(input: WRONG_TYPE)
               }
@@ -52,12 +51,10 @@ namespace GraphZen.QueryEngine.Variables
                     path = Array("fieldWithDefaultArgumentValue")
                 })
             });
-        }
 
         [Fact]
-        public Task WhenNoArgumentProvided()
-        {
-            return ExecuteAsync("{fieldWithDefaultArgumentValue}")
+        public Task WhenNoArgumentProvided() =>
+            ExecuteAsync("{fieldWithDefaultArgumentValue}")
                 .ShouldEqual(new
                 {
                     data = new
@@ -65,12 +62,10 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithDefaultArgumentValue = "\"Hello World\""
                     }
                 });
-        }
 
         [Fact]
-        public Task WhenNoRuntimeValueIsProvidedToANonNullArgument()
-        {
-            return ExecuteAsync(@"
+        public Task WhenNoRuntimeValueIsProvidedToANonNullArgument() =>
+            ExecuteAsync(@"
               query optionalVariable($optional: String) {
                 fieldWithNonNullableStringInputAndDefaultArgumentValue(input: $optional)
               }
@@ -81,12 +76,10 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithNonNullableStringInputAndDefaultArgumentValue = "\"Hello World\""
                 }
             });
-        }
 
         [Fact]
-        public Task WhenOmittedVariableProvided()
-        {
-            return ExecuteAsync(@"
+        public Task WhenOmittedVariableProvided() =>
+            ExecuteAsync(@"
               query ($optional: String) {
                 fieldWithDefaultArgumentValue(input: $optional)
               }
@@ -97,6 +90,5 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithDefaultArgumentValue = "\"Hello World\""
                 }
             });
-        }
     }
 }

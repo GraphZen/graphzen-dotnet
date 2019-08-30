@@ -63,14 +63,12 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
 
 
-        private bool Equals(ObjectTypeDefinitionSyntax other)
-        {
-            return Name.Equals(other.Name) &&
-                   Fields.SequenceEqual(other.Fields) &&
-                   Equals(Description, other.Description) &&
-                   Interfaces.SequenceEqual(other.Interfaces) &&
-                   Directives.SequenceEqual(other.Directives);
-        }
+        private bool Equals(ObjectTypeDefinitionSyntax other) =>
+            Name.Equals(other.Name) &&
+            Fields.SequenceEqual(other.Fields) &&
+            Equals(Description, other.Description) &&
+            Interfaces.SequenceEqual(other.Interfaces) &&
+            Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {
@@ -94,9 +92,6 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public override string ToString()
-        {
-            return Name.ToString();
-        }
+        public override string ToString() => Name.ToString();
     }
 }

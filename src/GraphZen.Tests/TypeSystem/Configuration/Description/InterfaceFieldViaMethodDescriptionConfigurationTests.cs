@@ -34,31 +34,23 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Interface<IInterfaceWithMethodFields>();
         }
 
-        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
                 schemaDef.GetInterface<IInterfaceWithMethodFields>(),
                 nameof(IInterfaceWithMethodFields.MethodWithoutDescription).FirstCharToLower());
-        }
 
-        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            MutableFieldsContainerDefinitionFieldAccessorExtensions.FindField(
                 schemaDef.GetInterface<IInterfaceWithMethodFields>(),
                 nameof(IInterfaceWithMethodFields.MethodWithDescription).FirstCharToLower());
-        }
 
-        public override Member GetMemberWithoutDataAnnotation(Schema schema)
-        {
-            return schema.GetInterface<IInterfaceWithMethodFields>()
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetInterface<IInterfaceWithMethodFields>()
                 .FindField(nameof(IInterfaceWithMethodFields.MethodWithoutDescription).FirstCharToLower());
-        }
 
-        public override Member GetMemberWithDataAnnotation(Schema schema)
-        {
-            return schema.GetInterface<IInterfaceWithMethodFields>()
+        public override Member GetMemberWithDataAnnotation(Schema schema) =>
+            schema.GetInterface<IInterfaceWithMethodFields>()
                 .FindField(nameof(IInterfaceWithMethodFields.MethodWithDescription).FirstCharToLower());
-        }
 
         public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description)

@@ -48,10 +48,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals(EnumValueSyntax other)
-        {
-            return string.Equals(Value, other.Value);
-        }
+        private bool Equals(EnumValueSyntax other) => string.Equals(Value, other.Value);
 
         public override bool Equals(object obj)
         {
@@ -62,19 +59,10 @@ namespace GraphZen.LanguageModel
             return obj is EnumValueSyntax && Equals((EnumValueSyntax)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return Value.GetHashCode();
-        }
+        public override int GetHashCode() => Value.GetHashCode();
 
-        public override object GetValue()
-        {
-            return Value;
-        }
+        public override object GetValue() => Value;
 
-        public override string ToString()
-        {
-            return Value;
-        }
+        public override string ToString() => Value;
     }
 }

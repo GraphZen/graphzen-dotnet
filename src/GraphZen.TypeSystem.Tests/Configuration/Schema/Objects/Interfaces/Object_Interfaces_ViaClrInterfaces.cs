@@ -42,9 +42,8 @@ namespace GraphZen.Objects.Interfaces
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ParentName = nameof(ObjectWithInterfaces),
                 ItemNamedByConvention = nameof(INamedByConvention),
@@ -52,7 +51,6 @@ namespace GraphZen.Objects.Interfaces
                 ItemIgnoredByConvention = nameof(IIgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(IIgnoredByDataAnnotation)
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

@@ -33,11 +33,9 @@ namespace GraphZen
         public Type CollectionItemMemberDefinitionType { get; } = typeof(TCollectionItemDefinition);
 
         public NamedCollection<IMutableNamed>
-            GetCollection(SchemaBuilder sb, string parentName)
-        {
-            return GetCollection(GetParent(sb, parentName))
+            GetCollection(SchemaBuilder sb, string parentName) =>
+            GetCollection(GetParent(sb, parentName))
                 .ToNamedCollection<IMutableNamed, TCollectionItemDefinition>();
-        }
 
         public NamedCollection<INamed> GetCollection(Schema schema, string parentName)
         {
@@ -57,10 +55,8 @@ namespace GraphZen
 
         public ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaBuilder sb,
             string parentName,
-            string itemName)
-        {
-            return FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
-        }
+            string itemName) =>
+            FindIgnoredItemConfigurationSource(GetParent(sb, parentName), itemName);
 
 
         public abstract NamedCollection<TCollectionItemDefinition> GetCollection(

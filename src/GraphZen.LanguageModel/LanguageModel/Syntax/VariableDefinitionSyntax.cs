@@ -54,12 +54,10 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals(VariableDefinitionSyntax other)
-        {
-            return Variable.Equals(other.Variable)
-                   && VariableType.Equals(other.VariableType)
-                   && Equals(DefaultValue, other.DefaultValue);
-        }
+        private bool Equals(VariableDefinitionSyntax other) =>
+            Variable.Equals(other.Variable)
+            && VariableType.Equals(other.VariableType)
+            && Equals(DefaultValue, other.DefaultValue);
 
         public override bool Equals(object obj)
         {

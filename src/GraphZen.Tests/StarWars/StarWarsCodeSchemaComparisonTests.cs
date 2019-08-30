@@ -19,11 +19,9 @@ namespace GraphZen.StarWars
         [Fact]
         public void SDLMatches()
         {
-            string Print(Schema schema)
-            {
-                return schema.ToDocumentSyntax().WithoutBuiltInDefinitions().WithSortedChildren()
+            string Print(Schema schema) =>
+                schema.ToDocumentSyntax().WithoutBuiltInDefinitions().WithSortedChildren()
                     .ToSyntaxString();
-            }
 
             var codeFirstSdl = Print(CodeFirstSchema);
             var schemaBuilderSdl = Print(SchemaBuilderSchema);

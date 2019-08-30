@@ -49,10 +49,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals(ObjectFieldSyntax other)
-        {
-            return Name.Equals(other.Name) && Value.Equals(other.Value);
-        }
+        private bool Equals(ObjectFieldSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
 
         public override bool Equals(object obj)
         {

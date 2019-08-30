@@ -16,9 +16,8 @@ namespace GraphZen.StarWars
     public class StarWarsQueryTest : StarWarsSchemaAndData
     {
         [Fact]
-        public Task CorrectlyIdentifiesR2D2AsTHeHeroOfTheStarWarsSaga()
-        {
-            return ExecuteAsync(StarWarsSchema, "query HeroNameQuery { hero { name } }").ShouldEqual(new
+        public Task CorrectlyIdentifiesR2D2AsTHeHeroOfTheStarWarsSaga() =>
+            ExecuteAsync(StarWarsSchema, "query HeroNameQuery { hero { name } }").ShouldEqual(new
             {
                 data = new
                 {
@@ -28,13 +27,9 @@ namespace GraphZen.StarWars
                     }
                 }
             });
-        }
 
         [Fact(Skip = "Not applicable to .NET implementation")]
-        public Task AcceptsAnObjectWithNamedPropertiesToGraphQL()
-        {
-            return Task.CompletedTask;
-        }
+        public Task AcceptsAnObjectWithNamedPropertiesToGraphQL() => Task.CompletedTask;
 
         [Fact]
         public Task AllowsUsToQueryForTheIdAndFriendsOfR2D2()
@@ -134,9 +129,8 @@ namespace GraphZen.StarWars
         }
 
         [Fact]
-        public Task AllowsUsToQueryFOrLukeSkywalkerDirectlyUsingHisId()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task AllowsUsToQueryFOrLukeSkywalkerDirectlyUsingHisId() =>
+            ExecuteAsync(StarWarsSchema, @"
             query FetchLukeQuery {
               human(id: ""1000"") {
                 name
@@ -151,7 +145,6 @@ namespace GraphZen.StarWars
                     }
                 }
             });
-        }
 
         [Theory]
         [InlineData("1000", "Luke Skywalker")]
@@ -175,9 +168,8 @@ namespace GraphZen.StarWars
         }
 
         [Fact]
-        public Task QueryForLukeWithAlias()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task QueryForLukeWithAlias() =>
+            ExecuteAsync(StarWarsSchema, @"
               query FetchLukeAliased {
                 luke: human(id: ""1000"") {
                   name
@@ -189,12 +181,10 @@ namespace GraphZen.StarWars
                     luke = new { name = "Luke Skywalker" }
                 }
             });
-        }
 
         [Fact]
-        public Task QueryForLukeAndLeiaOnRootWithAliases()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task QueryForLukeAndLeiaOnRootWithAliases() =>
+            ExecuteAsync(StarWarsSchema, @"
               query FetchLukeAndLeiaAliased {
                 luke: human(id: ""1000"") {
                   name
@@ -210,12 +200,10 @@ namespace GraphZen.StarWars
                     leia = new { name = "Leia Organa" }
                 }
             });
-        }
 
         [Fact]
-        public Task QueryUsingDuplicatedContent()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task QueryUsingDuplicatedContent() =>
+            ExecuteAsync(StarWarsSchema, @"
           query DuplicateFields {
             luke: human(id: ""1000"") {
               name
@@ -233,12 +221,10 @@ namespace GraphZen.StarWars
                     leia = new { name = "Leia Organa", homePlanet = "Alderaan" }
                 }
             });
-        }
 
         [Fact]
-        public Task QueryUsingFragmentToAvoidDuplicatedContent()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task QueryUsingFragmentToAvoidDuplicatedContent() =>
+            ExecuteAsync(StarWarsSchema, @"
             query UseFragment {
               luke: human(id: ""1000"") {
                 ...HumanFragment
@@ -260,12 +246,10 @@ namespace GraphZen.StarWars
                     leia = new { name = "Leia Organa", homePlanet = "Alderaan" }
                 }
             });
-        }
 
         [Fact]
-        public Task UsingTypenameToVerifyR2D2IsADroid()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task UsingTypenameToVerifyR2D2IsADroid() =>
+            ExecuteAsync(StarWarsSchema, @"
             query CheckTypeOfR2{
               hero {
                 __typename
@@ -283,12 +267,10 @@ namespace GraphZen.StarWars
                     }
                 }
             });
-        }
 
         [Fact]
-        public Task UsingTypenameToVerifyLukeIsAHuman()
-        {
-            return ExecuteAsync(StarWarsSchema, @"
+        public Task UsingTypenameToVerifyLukeIsAHuman() =>
+            ExecuteAsync(StarWarsSchema, @"
             query CheckTypeOfLuke {
               hero(episode: EMPIRE) {
                 __typename
@@ -306,7 +288,6 @@ namespace GraphZen.StarWars
                     }
                 }
             });
-        }
 
         [Fact]
         public Task CorrectlyReportsErrorOnAccessingSecretBackstory()

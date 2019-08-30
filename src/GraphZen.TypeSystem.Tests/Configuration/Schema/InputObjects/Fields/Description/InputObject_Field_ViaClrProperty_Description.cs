@@ -21,14 +21,12 @@ namespace GraphZen.InputObjects.Fields.Description
 
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(ExampleInputObject.ExampleField).FirstCharToLower(),
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

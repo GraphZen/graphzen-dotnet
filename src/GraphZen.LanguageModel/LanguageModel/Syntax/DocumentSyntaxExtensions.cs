@@ -49,11 +49,9 @@ namespace GraphZen.LanguageModel
         }
 
 
-        public static DocumentSyntax WithoutBuiltInDefinitions(this DocumentSyntax document)
-        {
-            return Check
+        public static DocumentSyntax WithoutBuiltInDefinitions(this DocumentSyntax document) =>
+            Check
                 .NotNull(document, nameof(document)).WithoutIntrospectionTypes().WithoutSpecDefinitions();
-        }
 
 
         public static DocumentSyntax WithDefinitionsAdded(this DocumentSyntax document,
@@ -69,10 +67,8 @@ namespace GraphZen.LanguageModel
         }
 
         public static DocumentSyntax WithDefinitionsAdded(this DocumentSyntax document,
-            params DefinitionSyntax[] definitions)
-        {
-            return document.WithDefinitionsAdded(definitions.AsEnumerable());
-        }
+            params DefinitionSyntax[] definitions) =>
+            document.WithDefinitionsAdded(definitions.AsEnumerable());
 
 
         public static DocumentSyntax WithSortedChildren(this DocumentSyntax document)

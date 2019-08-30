@@ -14,14 +14,12 @@ namespace GraphZen.Interfaces.Fields.Arguments.Description
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = "argName",
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

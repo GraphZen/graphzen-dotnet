@@ -17,30 +17,22 @@ namespace GraphZen
     public static class NamedCollection
     {
         public static NamedCollection<T> ToNamedCollection<T>(this IReadOnlyDictionary<string, T> source)
-            where T : INamed
-        {
-            return ToNamedCollection<T, T>(source);
-        }
+            where T : INamed =>
+            ToNamedCollection<T, T>(source);
 
 
-        public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : INamed
-        {
-            return ToNamedCollection<T, T>(source);
-        }
+        public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : INamed =>
+            ToNamedCollection<T, T>(source);
 
 
         public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(
-            this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : INamed
-        {
-            return new DictionaryWrapper<TInner, TOuter>(source);
-        }
+            this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : INamed =>
+            new DictionaryWrapper<TInner, TOuter>(source);
 
 
         public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IEnumerable<TInner> source)
-            where TInner : TOuter where TOuter : INamed
-        {
-            return new EnumerableWrapper<TInner, TOuter>(source);
-        }
+            where TInner : TOuter where TOuter : INamed =>
+            new EnumerableWrapper<TInner, TOuter>(source);
 
         private class EnumerableWrapper<TInner, T> : NamedCollection<T> where T : INamed where TInner : T, INamed
         {
@@ -75,10 +67,7 @@ namespace GraphZen
                 return value != null;
             }
 
-            public override IEnumerator<T> GetEnumerator()
-            {
-                return InnerEnumerable.Cast<T>().GetEnumerator();
-            }
+            public override IEnumerator<T> GetEnumerator() => InnerEnumerable.Cast<T>().GetEnumerator();
         }
 
         private class DictionaryWrapper<TInner, T> : NamedCollection<T> where TInner : T where T : INamed
@@ -96,10 +85,7 @@ namespace GraphZen
 
             public override T this[string key] => InnerDictionary[key];
 
-            public override bool ContainsKey(string key)
-            {
-                return InnerDictionary.ContainsKey(key);
-            }
+            public override bool ContainsKey(string key) => InnerDictionary.ContainsKey(key);
 
             public override bool TryGetValue(string key, out T value)
             {
@@ -113,10 +99,7 @@ namespace GraphZen
                 return false;
             }
 
-            public override IEnumerator<T> GetEnumerator()
-            {
-                return InnerDictionary.Values.Cast<T>().GetEnumerator();
-            }
+            public override IEnumerator<T> GetEnumerator() => InnerDictionary.Values.Cast<T>().GetEnumerator();
         }
     }
 
@@ -131,10 +114,7 @@ namespace GraphZen
 
         public abstract IEnumerator<T> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public override string ToString()
         {

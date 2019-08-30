@@ -21,10 +21,8 @@ namespace GraphZen.TypeSystem
         {
             [UsedImplicitly]
             public string Foo(string without, [Description("set by data annotation")]
-                string with)
-            {
-                return "bar";
-            }
+                string with) =>
+                "bar";
         }
 
         public override void CreateMemberWithoutDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder)
@@ -37,31 +35,23 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Object<ObjectWithFieldWithDescribedArguments>();
         }
 
-        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
                 MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                     schemaDef.GetObject<ObjectWithFieldWithDescribedArguments>(), "foo"), "without");
-        }
 
-        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
                 MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                     schemaDef.GetObject<ObjectWithFieldWithDescribedArguments>(), "foo"), "with");
-        }
 
-        public override Member GetMemberWithoutDataAnnotation(Schema schema)
-        {
-            return schema.GetObject<ObjectWithFieldWithDescribedArguments>()
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetObject<ObjectWithFieldWithDescribedArguments>()
                 .GetField("foo").GetArgument("without");
-        }
 
-        public override Member GetMemberWithDataAnnotation(Schema schema)
-        {
-            return schema.GetObject<ObjectWithFieldWithDescribedArguments>()
+        public override Member GetMemberWithDataAnnotation(Schema schema) =>
+            schema.GetObject<ObjectWithFieldWithDescribedArguments>()
                 .GetField("foo").GetArgument("with");
-        }
 
         public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description)

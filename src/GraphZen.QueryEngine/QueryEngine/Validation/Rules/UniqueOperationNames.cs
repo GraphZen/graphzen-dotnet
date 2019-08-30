@@ -21,10 +21,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
         {
         }
 
-        public static string DuplicateOperationNameMessage(string operationName)
-        {
-            return $"There can be only one operation named \"{operationName}\".";
-        }
+        public static string DuplicateOperationNameMessage(string operationName) =>
+            $"There can be only one operation named \"{operationName}\".";
 
         public override VisitAction EnterOperationDefinition(OperationDefinitionSyntax node)
         {
@@ -41,9 +39,6 @@ namespace GraphZen.QueryEngine.Validation.Rules
             return false;
         }
 
-        public override VisitAction EnterFragmentDefinition(FragmentDefinitionSyntax node)
-        {
-            return false;
-        }
+        public override VisitAction EnterFragmentDefinition(FragmentDefinitionSyntax node) => false;
     }
 }

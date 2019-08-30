@@ -50,10 +50,7 @@ namespace GraphZen.LanguageModel
         public abstract TResult VisitLeave<TResult>(GraphQLSyntaxVisitor<TResult> visitor);
 
 
-        public string ToSyntaxString()
-        {
-            return _printed.Value;
-        }
+        public string ToSyntaxString() => _printed.Value;
 
 
         internal string DebuggerDisplay => ToSyntaxString();

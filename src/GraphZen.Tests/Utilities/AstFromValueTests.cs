@@ -19,15 +19,9 @@ namespace GraphZen
     [NoReorder]
     public class AstFromValueTests
     {
-        private static Maybe<object> Some(object some)
-        {
-            return Maybe.Some(some);
-        }
+        private static Maybe<object> Some(object some) => Maybe.Some(some);
 
-        private static Maybe<object> None()
-        {
-            return Maybe.None<object>();
-        }
+        private static Maybe<object> None() => Maybe.None<object>();
 
 
         private static readonly object ComplexValue = new { someArbitrary = "complexValue" };

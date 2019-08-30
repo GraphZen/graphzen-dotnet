@@ -257,9 +257,8 @@ namespace GraphZen.QueryEngine
 
         internal ResolveInfo Build(Field fieldDefinition,
             IReadOnlyList<FieldSyntax> fieldNodes, IFieldsContainer parentType,
-            ResponsePath path)
-        {
-            return new ResolveInfo(
+            ResponsePath path) =>
+            new ResolveInfo(
                 fieldNodes[0].Name.Value,
                 fieldNodes,
                 fieldDefinition.FieldType,
@@ -271,7 +270,6 @@ namespace GraphZen.QueryEngine
                 VariableValues,
                 RootValue
             );
-        }
 
         private class PreBuiltSchemaContext : GraphQLContext
         {

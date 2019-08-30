@@ -17,10 +17,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
         {
         }
 
-        public static string NonExecutableDefinitionMessage(string definitionName)
-        {
-            return $"The {definitionName} definition is not executable.";
-        }
+        public static string NonExecutableDefinitionMessage(string definitionName) =>
+            $"The {definitionName} definition is not executable.";
 
         public override VisitAction EnterDocument(DocumentSyntax node)
         {

@@ -30,17 +30,12 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalFieldBuilder? Field(string name,
             ConfigurationSource nameConfigurationSource,
-            ConfigurationSource configurationSource)
-        {
-            return Definition.GetOrAddField(name, nameConfigurationSource, configurationSource)?.Builder;
-        }
+            ConfigurationSource configurationSource) =>
+            Definition.GetOrAddField(name, nameConfigurationSource, configurationSource)?.Builder;
 
         protected void ConfigureOutputFields()
         {
-            if (Definition.ClrType == null)
-            {
-                return;
-            }
+            if (Definition.ClrType == null) return;
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
             // ReSharper disable once PossibleNullReferenceException
 

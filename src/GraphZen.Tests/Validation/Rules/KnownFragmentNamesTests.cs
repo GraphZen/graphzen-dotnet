@@ -75,9 +75,7 @@ namespace GraphZen.Validation.Rules
             );
         }
 
-        private static ExpectedError UndefinedFragment(string fragmentName, int line, int column)
-        {
-            return Error(KnownFragmentNames.UnknownFragmentMessage(fragmentName), (line, column));
-        }
+        private static ExpectedError UndefinedFragment(string fragmentName, int line, int column) =>
+            Error(KnownFragmentNames.UnknownFragmentMessage(fragmentName), (line, column));
     }
 }

@@ -20,31 +20,19 @@ namespace GraphZen.Objects.Fields
             sb.Object(parentName);
         }
 
-        public override ObjectType GetParent(Schema schema, string parentName)
-        {
-            return schema.GetObject(parentName);
-        }
+        public override ObjectType GetParent(Schema schema, string parentName) => schema.GetObject(parentName);
 
-        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetObject(parentName);
-        }
+        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetObject(parentName);
 
-        public override NamedCollection<FieldDefinition> GetCollection(ObjectTypeDefinition parent)
-        {
-            return parent.Fields.ToNamedCollection();
-        }
+        public override NamedCollection<FieldDefinition> GetCollection(ObjectTypeDefinition parent) =>
+            parent.Fields.ToNamedCollection();
 
-        public override NamedCollection<Field> GetCollection(ObjectType parent)
-        {
-            return parent.Fields.ToNamedCollection();
-        }
+        public override NamedCollection<Field> GetCollection(ObjectType parent) => parent.Fields.ToNamedCollection();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(ObjectTypeDefinition parent,
-            string name)
-        {
-            return parent.FindIgnoredFieldConfigurationSource(name);
-        }
+            string name) =>
+            parent.FindIgnoredFieldConfigurationSource(name);
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {

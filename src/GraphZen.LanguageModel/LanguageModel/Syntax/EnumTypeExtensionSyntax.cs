@@ -47,12 +47,10 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals(EnumTypeExtensionSyntax other)
-        {
-            return Name.Equals(other.Name) &&
-                   Directives.SequenceEqual(other.Directives) &&
-                   Values.SequenceEqual(other.Values);
-        }
+        private bool Equals(EnumTypeExtensionSyntax other) =>
+            Name.Equals(other.Name) &&
+            Directives.SequenceEqual(other.Directives) &&
+            Values.SequenceEqual(other.Values);
 
         public override bool Equals(object obj)
         {

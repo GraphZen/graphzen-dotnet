@@ -27,25 +27,13 @@ namespace GraphZen.QueryEngine.Validation.Rules
             return message;
         }
 
-        public override VisitAction EnterObjectTypeDefinition(ObjectTypeDefinitionSyntax node)
-        {
-            return false;
-        }
+        public override VisitAction EnterObjectTypeDefinition(ObjectTypeDefinitionSyntax node) => false;
 
-        public override VisitAction EnterInterfaceTypeDefinition(InterfaceTypeDefinitionSyntax node)
-        {
-            return false;
-        }
+        public override VisitAction EnterInterfaceTypeDefinition(InterfaceTypeDefinitionSyntax node) => false;
 
-        public override VisitAction EnterUnionTypeDefinition(UnionTypeDefinitionSyntax node)
-        {
-            return false;
-        }
+        public override VisitAction EnterUnionTypeDefinition(UnionTypeDefinitionSyntax node) => false;
 
-        public override VisitAction EnterInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node)
-        {
-            return false;
-        }
+        public override VisitAction EnterInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) => false;
 
         public override VisitAction EnterNamedType(NamedTypeSyntax node)
         {

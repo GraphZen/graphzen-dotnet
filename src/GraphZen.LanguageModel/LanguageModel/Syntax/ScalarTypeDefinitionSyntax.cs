@@ -51,11 +51,9 @@ namespace GraphZen.LanguageModel
 
         public override StringValueSyntax Description { get; }
 
-        private bool Equals(ScalarTypeDefinitionSyntax other)
-        {
-            return Name.Equals(other.Name) && Equals(Description, other.Description) &&
-                   Directives.SequenceEqual(other.Directives);
-        }
+        private bool Equals(ScalarTypeDefinitionSyntax other) =>
+            Name.Equals(other.Name) && Equals(Description, other.Description) &&
+            Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {

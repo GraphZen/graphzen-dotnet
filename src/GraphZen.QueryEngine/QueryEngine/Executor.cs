@@ -19,10 +19,8 @@ namespace GraphZen.QueryEngine
         public Task<ExecutionResult> ExecuteAsync(Schema schema, DocumentSyntax document, object rootValue,
             GraphQLContext context,
             IDictionary<string, object> variableValues = null, string operationName = null,
-            ExecutionOptions options = null)
-        {
-            return ExecutionFunctions.ExecuteAsync(schema, document, rootValue, context, variableValues, operationName,
+            ExecutionOptions options = null) =>
+            ExecutionFunctions.ExecuteAsync(schema, document, rootValue, context, variableValues, operationName,
                 options);
-        }
     }
 }

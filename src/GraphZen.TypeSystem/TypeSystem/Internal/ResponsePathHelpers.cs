@@ -11,9 +11,6 @@ namespace GraphZen.TypeSystem.Internal
     public static class ResponsePathHelpers
     {
         [DebuggerStepThrough]
-        public static ResponsePath AddPath(this ResponsePath path, object key)
-        {
-            return new ResponsePath(path, key);
-        }
+        public static ResponsePath AddPath(this ResponsePath path, object key) => new ResponsePath(path, key);
     }
 }

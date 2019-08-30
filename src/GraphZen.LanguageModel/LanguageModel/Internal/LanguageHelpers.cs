@@ -18,10 +18,7 @@ namespace GraphZen.LanguageModel.Internal
     {
         public static readonly Regex NameTokenRegex = new Regex(@"^[_A-Za-z][\w]*$");
 
-        public static bool IsValidGraphQLName(this string name)
-        {
-            return NameTokenRegex.IsMatch(name);
-        }
+        public static bool IsValidGraphQLName(this string name) => NameTokenRegex.IsMatch(name);
 
 
         public static string ThrowIfInvalidGraphQLName(this string name)
@@ -40,10 +37,7 @@ namespace GraphZen.LanguageModel.Internal
     {
         private static readonly Regex NewlineRegex = new Regex("\r\n?|\n");
 
-        internal static bool HasNewline(this string value)
-        {
-            return NewlineRegex.IsMatch(value);
-        }
+        internal static bool HasNewline(this string value) => NewlineRegex.IsMatch(value);
 
 
         public static string BlockStringValue(string rawString)

@@ -19,16 +19,10 @@ namespace GraphZen.TypeSystem
     {
         private class FooObject
         {
-            public string ConventionallyNamedField()
-            {
-                return "foo";
-            }
+            public string ConventionallyNamedField() => "foo";
 
             [GraphQLName("CustomName")]
-            public string CustomNamedField()
-            {
-                return "bar";
-            }
+            public string CustomNamedField() => "bar";
         }
 
         public override string ConventionalName { get; } =
@@ -54,16 +48,12 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Object<FooObject>().Field<string>("CustomName", _ => _.Name(name));
         }
 
-        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetObject<FooObject>().GetField(
+        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetObject<FooObject>().GetField(
                 nameof(FooObject.ConventionallyNamedField).FirstCharToLower());
-        }
 
-        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetObject<FooObject>().GetField("CustomName");
-        }
+        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetObject<FooObject>().GetField("CustomName");
 
         public override INamed GetMemberNamedByConvention(Schema schema)
         {

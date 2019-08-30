@@ -68,10 +68,8 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public bool IsValueIgnored(string name, ConfigurationSource configurationSource)
-        {
-            return !configurationSource.Overrides(Definition.FindIgnoredValueConfigurationSource(name));
-        }
+        public bool IsValueIgnored(string name, ConfigurationSource configurationSource) =>
+            !configurationSource.Overrides(Definition.FindIgnoredValueConfigurationSource(name));
 
         public bool ConfigureEnumFromClrType()
         {
@@ -89,10 +87,8 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        private static MemberInfo GetMemberInfo(Type clrEnumType, string memberName)
-        {
-            return clrEnumType.GetMember(memberName)[0];
-        }
+        private static MemberInfo GetMemberInfo(Type clrEnumType, string memberName) =>
+            clrEnumType.GetMember(memberName)[0];
 
         private static string GetName(object value)
         {

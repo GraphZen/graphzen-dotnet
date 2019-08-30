@@ -37,18 +37,12 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
 
-        public string GetDisplayValue()
-        {
-            return Value;
-        }
+        public string GetDisplayValue() => Value;
 
 
         // public static implicit operator NameSyntax( string name) => new NameSyntax(name);
 
-        private bool Equals(NameSyntax other)
-        {
-            return string.Equals(Value, other.Value);
-        }
+        private bool Equals(NameSyntax other) => string.Equals(Value, other.Value);
 
         public override bool Equals(object obj)
         {
@@ -59,14 +53,8 @@ namespace GraphZen.LanguageModel
             return obj is NameSyntax syntax && Equals(syntax);
         }
 
-        public override int GetHashCode()
-        {
-            return Value.GetHashCode();
-        }
+        public override int GetHashCode() => Value.GetHashCode();
 
-        public override string ToString()
-        {
-            return Value;
-        }
+        public override string ToString() => Value;
     }
 }

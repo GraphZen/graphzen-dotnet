@@ -21,31 +21,19 @@ namespace GraphZen.Interfaces.Fields
             sb.Interface(parentName);
         }
 
-        public override InterfaceType GetParent(Schema schema, string parentName)
-        {
-            return schema.GetInterface(parentName);
-        }
+        public override InterfaceType GetParent(Schema schema, string parentName) => schema.GetInterface(parentName);
 
-        public override InterfaceTypeDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetInterface(parentName);
-        }
+        public override InterfaceTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetInterface(parentName);
 
-        public override NamedCollection<FieldDefinition> GetCollection(InterfaceTypeDefinition parent)
-        {
-            return parent.Fields.ToNamedCollection();
-        }
+        public override NamedCollection<FieldDefinition> GetCollection(InterfaceTypeDefinition parent) =>
+            parent.Fields.ToNamedCollection();
 
-        public override NamedCollection<Field> GetCollection(InterfaceType parent)
-        {
-            return parent.Fields.ToNamedCollection();
-        }
+        public override NamedCollection<Field> GetCollection(InterfaceType parent) => parent.Fields.ToNamedCollection();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(InterfaceTypeDefinition parent,
-            string name)
-        {
-            return parent.FindIgnoredFieldConfigurationSource(name);
-        }
+            string name) =>
+            parent.FindIgnoredFieldConfigurationSource(name);
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {

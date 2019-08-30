@@ -216,21 +216,21 @@ namespace GraphZen.TypeSystem
                 ConfigurationSource.Explicit)!);
 
         public new ISchemaBuilder<TContext> IgnoreType<TObject>() =>
-            (ISchemaBuilder<TContext>) base.IgnoreType<TObject>();
+            (ISchemaBuilder<TContext>)base.IgnoreType<TObject>();
 
         public new ISchemaBuilder<TContext> IgnoreType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.IgnoreType(clrType);
+            (ISchemaBuilder<TContext>)base.IgnoreType(clrType);
 
-        public new ISchemaBuilder<TContext> IgnoreType(string name) => (ISchemaBuilder<TContext>) base.IgnoreType(name);
+        public new ISchemaBuilder<TContext> IgnoreType(string name) => (ISchemaBuilder<TContext>)base.IgnoreType(name);
 
         public new ISchemaBuilder<TContext> UnignoreType<TObject>() =>
-            (ISchemaBuilder<TContext>) base.UnignoreType(typeof(TObject));
+            (ISchemaBuilder<TContext>)base.UnignoreType(typeof(TObject));
 
         public new ISchemaBuilder<TContext> UnignoreType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.UnignoreType(clrType);
+            (ISchemaBuilder<TContext>)base.UnignoreType(clrType);
 
         public new ISchemaBuilder<TContext> UnignoreType(string name) =>
-            (ISchemaBuilder<TContext>) base.UnignoreType(name);
+            (ISchemaBuilder<TContext>)base.UnignoreType(name);
 
         public new IInterfaceTypeBuilder<object, TContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
@@ -263,7 +263,7 @@ namespace GraphZen.TypeSystem
         }
 
         public new ISchemaBuilder<TContext> QueryType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.QueryType(clrType);
+            (ISchemaBuilder<TContext>)base.QueryType(clrType);
 
         public new ISchemaBuilder<TContext> MutationType(string type)
         {
@@ -272,7 +272,7 @@ namespace GraphZen.TypeSystem
         }
 
         public new ISchemaBuilder<TContext> MutationType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.MutationType(clrType);
+            (ISchemaBuilder<TContext>)base.MutationType(clrType);
 
         public new ISchemaBuilder<TContext> SubscriptionType(string type)
         {

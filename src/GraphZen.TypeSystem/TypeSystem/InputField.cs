@@ -9,7 +9,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.TypeSystem
 {
     public class InputField : InputValue, IInputField

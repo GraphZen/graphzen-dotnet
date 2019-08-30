@@ -67,11 +67,9 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
 
-        private bool Equals(InputValueDefinitionSyntax other)
-        {
-            return Name.Equals(other.Name) && Equals(Description, other.Description) && Type.Equals(other.Type) &&
-                   Equals(DefaultValue, other.DefaultValue) && Directives.SequenceEqual(other.Directives);
-        }
+        private bool Equals(InputValueDefinitionSyntax other) =>
+            Name.Equals(other.Name) && Equals(Description, other.Description) && Type.Equals(other.Type) &&
+            Equals(DefaultValue, other.DefaultValue) && Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {
@@ -95,9 +93,6 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public override string ToString()
-        {
-            return Name.ToString();
-        }
+        public override string ToString() => Name.ToString();
     }
 }

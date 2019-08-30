@@ -80,15 +80,11 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Schema;
 
 
-        public ConfigurationSource? FindIgnoredTypeConfigurationSource(string name)
-        {
-            return _ignoredTypes.FindValueOrDefault(name);
-        }
+        public ConfigurationSource? FindIgnoredTypeConfigurationSource(string name) =>
+            _ignoredTypes.FindValueOrDefault(name);
 
-        public ConfigurationSource? FindIgnoredTypeConfigurationSource(Type clrType)
-        {
-            return FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName());
-        }
+        public ConfigurationSource? FindIgnoredTypeConfigurationSource(Type clrType) =>
+            FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName());
 
 
         // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
@@ -697,74 +693,33 @@ namespace GraphZen.TypeSystem
             _types.Remove(type);
         }
 
-        public IEnumerable<DirectiveDefinition> GetDirectives()
-        {
-            return _directives;
-        }
+        public IEnumerable<DirectiveDefinition> GetDirectives() => _directives;
 
-        public IEnumerable<ObjectTypeDefinition> GetObjects()
-        {
-            return _types.OfType<ObjectTypeDefinition>();
-        }
+        public IEnumerable<ObjectTypeDefinition> GetObjects() => _types.OfType<ObjectTypeDefinition>();
 
-        public IEnumerable<InterfaceTypeDefinition> GetInterfaces()
-        {
-            return _types.OfType<InterfaceTypeDefinition>();
-        }
+        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _types.OfType<InterfaceTypeDefinition>();
 
-        public IEnumerable<UnionTypeDefinition> GetUnions()
-        {
-            return _types.OfType<UnionTypeDefinition>();
-        }
+        public IEnumerable<UnionTypeDefinition> GetUnions() => _types.OfType<UnionTypeDefinition>();
 
-        public IEnumerable<ScalarTypeDefinition> GetScalars()
-        {
-            return _types.OfType<ScalarTypeDefinition>();
-        }
+        public IEnumerable<ScalarTypeDefinition> GetScalars() => _types.OfType<ScalarTypeDefinition>();
 
-        public IEnumerable<EnumTypeDefinition> GetEnums()
-        {
-            return _types.OfType<EnumTypeDefinition>();
-        }
+        public IEnumerable<EnumTypeDefinition> GetEnums() => _types.OfType<EnumTypeDefinition>();
 
-        IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives()
-        {
-            return GetDirectives();
-        }
+        IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives() => GetDirectives();
 
-        IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects()
-        {
-            return GetObjects();
-        }
+        IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects() => GetObjects();
 
-        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces()
-        {
-            return GetInterfaces();
-        }
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces() => GetInterfaces();
 
-        IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions()
-        {
-            return GetUnions();
-        }
+        IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions() => GetUnions();
 
-        IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars()
-        {
-            return GetScalars();
-        }
+        IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars() => GetScalars();
 
-        IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums()
-        {
-            return GetEnums();
-        }
+        IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums() => GetEnums();
 
-        public IEnumerable<InputObjectTypeDefinition> GetInputObjects()
-        {
-            return _types.OfType<InputObjectTypeDefinition>();
-        }
+        public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => _types.OfType<InputObjectTypeDefinition>();
 
-        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects()
-        {
-            return GetInputObjects();
-        }
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() =>
+            GetInputObjects();
     }
 }

@@ -34,24 +34,16 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Enum<FooEnum>();
         }
 
-        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetEnum<FooEnum>().GetValue(nameof(FooEnum.ConventionallyNamedValue));
-        }
+        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder) => schemaBuilder
+            .GetDefinition().GetEnum<FooEnum>().GetValue(nameof(FooEnum.ConventionallyNamedValue));
 
-        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetEnum<FooEnum>().GetValue("CustomName");
-        }
+        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetEnum<FooEnum>().GetValue("CustomName");
 
-        public override INamed GetMemberNamedByConvention(Schema schema)
-        {
-            return schema.GetEnum<FooEnum>().GetValue(FooEnum.ConventionallyNamedValue);
-        }
+        public override INamed GetMemberNamedByConvention(Schema schema) =>
+            schema.GetEnum<FooEnum>().GetValue(FooEnum.ConventionallyNamedValue);
 
-        public override INamed GetMemberNamedByDataAnnotation(Schema schema)
-        {
-            return schema.GetEnum<FooEnum>().GetValue(FooEnum.CustomNamedValue);
-        }
+        public override INamed GetMemberNamedByDataAnnotation(Schema schema) =>
+            schema.GetEnum<FooEnum>().GetValue(FooEnum.CustomNamedValue);
     }
 }

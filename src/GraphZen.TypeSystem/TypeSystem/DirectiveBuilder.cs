@@ -42,9 +42,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IDirectiveBuilder Argument<TArg>(string name, Action<InputValueBuilder> configurator = null)
-        {
+        public IDirectiveBuilder Argument<TArg>(string name, Action<InputValueBuilder> configurator = null) =>
             throw new NotImplementedException();
-        }
     }
 }

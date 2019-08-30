@@ -60,17 +60,12 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        public string GetDisplayValue()
-        {
-            return Name.Value;
-        }
+        public string GetDisplayValue() => Name.Value;
 
-        private bool Equals(FieldDefinitionSyntax other)
-        {
-            return Name.Equals(other.Name) && Equals(Description, other.Description) &&
-                   FieldType.Equals(other.FieldType) && Arguments.SequenceEqual(other.Arguments) &&
-                   Directives.SequenceEqual(other.Directives);
-        }
+        private bool Equals(FieldDefinitionSyntax other) =>
+            Name.Equals(other.Name) && Equals(Description, other.Description) &&
+            FieldType.Equals(other.FieldType) && Arguments.SequenceEqual(other.Arguments) &&
+            Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {
@@ -94,9 +89,6 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public override string ToString()
-        {
-            return Name.ToString();
-        }
+        public override string ToString() => Name.ToString();
     }
 }

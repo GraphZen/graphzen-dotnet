@@ -13,7 +13,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
@@ -73,10 +72,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IEnumerable<ArgumentDefinition> GetArguments()
-        {
-            return _arguments.Values;
-        }
+        public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
 
         public IGraphQLTypeReference? FieldType { get; set; }
         public Resolver<object, object?>? Resolver { get; set; }
@@ -123,27 +119,16 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public ConfigurationSource GetNameConfigurationSource()
-        {
-            return _nameConfigurationSource;
-        }
+        public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments()
-        {
-            return GetArguments();
-        }
+        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments() => GetArguments();
 
-        object? IClrInfo.ClrInfo => ClrInfo ;
+        object? IClrInfo.ClrInfo => ClrInfo;
 
-        public bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource)
-        {
+        public bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
-        }
 
-        public bool RemoveDeprecation(ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveDeprecation(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
         public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name)
         {
@@ -228,10 +213,7 @@ namespace GraphZen.TypeSystem
             return argument;
         }
 
-        public override string ToString()
-        {
-            return $"field {Name}";
-        }
+        public override string ToString() => $"field {Name}";
 
 
         public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)

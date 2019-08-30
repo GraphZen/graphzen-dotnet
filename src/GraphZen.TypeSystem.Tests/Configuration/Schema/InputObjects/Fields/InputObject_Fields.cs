@@ -21,31 +21,21 @@ namespace GraphZen.InputObjects.Fields
             sb.InputObject(parentName);
         }
 
-        public override InputObjectType GetParent(Schema schema, string parentName)
-        {
-            return schema.GetInputObject(parentName);
-        }
+        public override InputObjectType GetParent(Schema schema, string parentName) =>
+            schema.GetInputObject(parentName);
 
-        public override InputObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetInputObject(parentName);
-        }
+        public override InputObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetInputObject(parentName);
 
-        public override NamedCollection<InputFieldDefinition> GetCollection(InputObjectTypeDefinition parent)
-        {
-            return parent.Fields.ToNamedCollection();
-        }
+        public override NamedCollection<InputFieldDefinition> GetCollection(InputObjectTypeDefinition parent) =>
+            parent.Fields.ToNamedCollection();
 
-        public override NamedCollection<InputField> GetCollection(InputObjectType parent)
-        {
-            return parent.Fields.ToNamedCollection();
-        }
+        public override NamedCollection<InputField> GetCollection(InputObjectType parent) =>
+            parent.Fields.ToNamedCollection();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(InputObjectTypeDefinition parent,
-            string name)
-        {
-            return parent.FindIgnoredFieldConfigurationSource(name);
-        }
+            string name) =>
+            parent.FindIgnoredFieldConfigurationSource(name);
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {

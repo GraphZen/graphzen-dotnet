@@ -70,16 +70,11 @@ namespace GraphZen.TypeSystem
             public object_included_via_method_return_type_on_class MethodField(
                 input_object_ignored_by_data_annotation arg1,
                 input_object_included_via_field_argument arg2,
-                [GraphQLIgnore] type_never_included arg3)
-            {
-                return default;
-            }
+                [GraphQLIgnore] type_never_included arg3) =>
+                default;
 
             [GraphQLIgnore]
-            public type_never_included MethodIgnoredByDataAnnotation()
-            {
-                return default;
-            }
+            public type_never_included MethodIgnoredByDataAnnotation() => default;
         }
 
 

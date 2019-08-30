@@ -47,24 +47,15 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Union<UnionNamedByDataAnnotation>().Name(name);
         }
 
-        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetUnion<UnionNamedByConvention>();
-        }
+        public override IMutableNamed GetMemberDefinitionNamedByConvention(SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetUnion<UnionNamedByConvention>();
 
-        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder)
-        {
-            return schemaBuilder.GetDefinition().GetUnion<UnionNamedByDataAnnotation>();
-        }
+        public override IMutableNamed GetMemberDefinitionWithCustomNameDataAnnotation(SchemaBuilder schemaBuilder) =>
+            schemaBuilder.GetDefinition().GetUnion<UnionNamedByDataAnnotation>();
 
-        public override INamed GetMemberNamedByConvention(Schema schema)
-        {
-            return schema.GetUnion<UnionNamedByConvention>();
-        }
+        public override INamed GetMemberNamedByConvention(Schema schema) => schema.GetUnion<UnionNamedByConvention>();
 
-        public override INamed GetMemberNamedByDataAnnotation(Schema schema)
-        {
-            return schema.GetUnion<UnionNamedByDataAnnotation>();
-        }
+        public override INamed GetMemberNamedByDataAnnotation(Schema schema) =>
+            schema.GetUnion<UnionNamedByDataAnnotation>();
     }
 }

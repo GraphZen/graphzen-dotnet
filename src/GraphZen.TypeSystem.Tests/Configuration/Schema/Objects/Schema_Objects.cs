@@ -19,15 +19,9 @@ namespace GraphZen.Objects
         {
         }
 
-        public override Schema GetParent(Schema schema, string parentName)
-        {
-            return schema;
-        }
+        public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition();
-        }
+        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -49,10 +43,8 @@ namespace GraphZen.Objects
             sb.Object(itemName).Name(newName);
         }
 
-        public override NamedCollection<ObjectTypeDefinition> GetCollection(SchemaDefinition parent)
-        {
-            return parent.GetObjects().ToNamedCollection();
-        }
+        public override NamedCollection<ObjectTypeDefinition> GetCollection(SchemaDefinition parent) =>
+            parent.GetObjects().ToNamedCollection();
 
         public override NamedCollection<ObjectType> GetCollection(Schema parent)
         {
@@ -61,9 +53,7 @@ namespace GraphZen.Objects
             return casted;
         }
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name)
-        {
-            return parent.FindIgnoredTypeConfigurationSource(name);
-        }
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+            parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

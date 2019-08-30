@@ -71,10 +71,8 @@ namespace GraphZen
         //public abstract bool TryGetValue(TMarker parent, out TElement value);
         public abstract ConfigurationSource GetElementConfigurationSource(TMutableDefMarker parent);
 
-        public ConfigurationSource GetElementConfigurationSource(MemberDefinition parent)
-        {
-            return GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition));
-        }
+        public ConfigurationSource GetElementConfigurationSource(MemberDefinition parent) =>
+            GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition));
 
         public bool TryGetValue(MemberDefinition parent, [NotNullWhen(true)] out object? value)
         {

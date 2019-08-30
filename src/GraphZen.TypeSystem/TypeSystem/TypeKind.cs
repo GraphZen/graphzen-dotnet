@@ -12,7 +12,8 @@ namespace GraphZen.TypeSystem
     [Description("An enum describing what kind of type a given `__Type` is.")]
     public enum TypeKind
     {
-        [Description("Indicates this type is a scalar.")] [GraphQLName("SCALAR")]
+        [Description("Indicates this type is a scalar.")]
+        [GraphQLName("SCALAR")]
         Scalar,
 
         [Description("Indicates this type is an object fields` and `interfaces` are valid fields.")]
@@ -23,20 +24,24 @@ namespace GraphZen.TypeSystem
         [GraphQLName("INTERFACE")]
         Interface,
 
-        [Description("Indicates this type is a union. `possibleTypes` is a valid field.")] [GraphQLName("UNION")]
+        [Description("Indicates this type is a union. `possibleTypes` is a valid field.")]
+        [GraphQLName("UNION")]
         Union,
 
-        [Description("Indicates this type is an enum. `enumValues` is a valid field.")] [GraphQLName("ENUM")]
+        [Description("Indicates this type is an enum. `enumValues` is a valid field.")]
+        [GraphQLName("ENUM")]
         Enum,
 
         [Description("Indicates this type is an input object. `inputFields` is a valid field.")]
         [GraphQLName("INPUT_OBJECT")]
         InputObject,
 
-        [Description("Indicates this type is a list. `ofType` is a valid field.")] [GraphQLName("LIST")]
+        [Description("Indicates this type is a list. `ofType` is a valid field.")]
+        [GraphQLName("LIST")]
         List,
 
-        [Description("Indicates this type is a non-null. `ofType` is a valid field.")] [GraphQLName("NON_NULL")]
+        [Description("Indicates this type is a non-null. `ofType` is a valid field.")]
+        [GraphQLName("NON_NULL")]
         NonNull
     }
 }

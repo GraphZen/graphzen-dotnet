@@ -23,10 +23,8 @@ namespace GraphZen.TypeSystem
                 string noDefaultValueByConvention,
                 [DefaultValue("default value set by attribute")]
                 string defaultValueSetByAttribute = "default value set by convention",
-                string defaultValueSetByConvention = "default value set by convention")
-            {
-                return "";
-            }
+                string defaultValueSetByConvention = "default value set by convention") =>
+                "";
         }
 
         public override void CreateMembersByConvention(SchemaBuilder schemaBuilder)
@@ -35,32 +33,26 @@ namespace GraphZen.TypeSystem
         }
 
         public override InputValueDefinition GetMemberDefinitionWithNoDefaultValueByConvention(
-            SchemaBuilder schemaBuilder)
-        {
-            return MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
+            SchemaBuilder schemaBuilder) =>
+            MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
                 MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                     schemaBuilder.GetDefinition().GetObject<FooObject>(),
                     nameof(FooObject.FieldWithArgDefaultValues).FirstCharToLower()), "noDefaultValueByConvention");
-        }
 
 
         public override InputValueDefinition GetMemberDefinitionWithDefaultValueConfiguredByConvention(
-            SchemaBuilder schemaBuilder)
-        {
-            return MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
+            SchemaBuilder schemaBuilder) =>
+            MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
                 MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                     schemaBuilder.GetDefinition().GetObject<FooObject>(),
                     nameof(FooObject.FieldWithArgDefaultValues).FirstCharToLower()), "defaultValueSetByConvention");
-        }
 
         public override InputValueDefinition GetMemberDefinitionWithDefaultValueConfiguredByDataAnnotation(
-            SchemaBuilder schemaBuilder)
-        {
-            return MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
+            SchemaBuilder schemaBuilder) =>
+            MutableArgumentsContainerDefinitionArgumentAccessorExtensions.GetArgument(
                 MutableFieldsContainerDefinitionFieldAccessorExtensions.GetField(
                     schemaBuilder.GetDefinition().GetObject<FooObject>(),
                     nameof(FooObject.FieldWithArgDefaultValues).FirstCharToLower()), "defaultValueSetByAttribute");
-        }
 
         public override void SetDefaultValueOnMemberWithNoDefaultValueByConvention(SchemaBuilder schemaBuilder,
             object defaultValue)
@@ -86,26 +78,20 @@ namespace GraphZen.TypeSystem
                     f => f.Argument<string>("defaultValueSetByAttribute", a => a.DefaultValue(defaultValue)));
         }
 
-        public override InputValue GetMemberWithNoDefaultValueByConvention(Schema schema)
-        {
-            return schema.GetObject<FooObject>()
+        public override InputValue GetMemberWithNoDefaultValueByConvention(Schema schema) =>
+            schema.GetObject<FooObject>()
                 .GetField(nameof(FooObject.FieldWithArgDefaultValues).FirstCharToLower())
                 .GetArgument("noDefaultValueByConvention");
-        }
 
-        public override InputValue GetMemberWithDefaultValueSetByConvention(Schema schema)
-        {
-            return schema.GetObject<FooObject>()
+        public override InputValue GetMemberWithDefaultValueSetByConvention(Schema schema) =>
+            schema.GetObject<FooObject>()
                 .GetField(nameof(FooObject.FieldWithArgDefaultValues).FirstCharToLower())
                 .GetArgument("defaultValueSetByConvention");
-        }
 
-        public override InputValue GetMemberWithDefaultValueSetByDataAnnotation(Schema schema)
-        {
-            return schema
+        public override InputValue GetMemberWithDefaultValueSetByDataAnnotation(Schema schema) =>
+            schema
                 .GetObject<FooObject>()
                 .GetField(nameof(FooObject.FieldWithArgDefaultValues).FirstCharToLower())
                 .GetArgument("defaultValueSetByAttribute");
-        }
     }
 }

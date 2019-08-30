@@ -34,29 +34,21 @@ namespace GraphZen.TypeSystem
             schemaBuilder.InputObject<InputObjectWithPropertyFields>();
         }
 
-        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return schemaDef.GetInputObject<InputObjectWithPropertyFields>()
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetInputObject<InputObjectWithPropertyFields>()
                 .FindField(nameof(InputObjectWithPropertyFields.PropertyWithoutDescription).FirstCharToLower());
-        }
 
-        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return schemaDef.GetInputObject<InputObjectWithPropertyFields>()
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetInputObject<InputObjectWithPropertyFields>()
                 .FindField(nameof(InputObjectWithPropertyFields.PropertyWithDescription).FirstCharToLower());
-        }
 
-        public override Member GetMemberWithoutDataAnnotation(Schema schema)
-        {
-            return schema.GetInputObject<InputObjectWithPropertyFields>()
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetInputObject<InputObjectWithPropertyFields>()
                 .FindField(nameof(InputObjectWithPropertyFields.PropertyWithoutDescription).FirstCharToLower());
-        }
 
-        public override Member GetMemberWithDataAnnotation(Schema schema)
-        {
-            return schema.GetInputObject<InputObjectWithPropertyFields>()
+        public override Member GetMemberWithDataAnnotation(Schema schema) =>
+            schema.GetInputObject<InputObjectWithPropertyFields>()
                 .FindField(nameof(InputObjectWithPropertyFields.PropertyWithDescription).FirstCharToLower());
-        }
 
         public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description)

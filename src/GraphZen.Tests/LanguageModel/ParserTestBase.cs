@@ -20,10 +20,7 @@ namespace GraphZen.LanguageModel
         /// implementations
         private IParser Parser { get; } = new SuperpowerParser();
 
-        protected DocumentSyntax ParseDocument(string source)
-        {
-            return Parser.ParseDocument(source);
-        }
+        protected DocumentSyntax ParseDocument(string source) => Parser.ParseDocument(source);
 
         protected DocumentSyntax PrintAndParse(DocumentSyntax document)
         {
@@ -34,15 +31,9 @@ namespace GraphZen.LanguageModel
         }
 
 
-        protected ValueSyntax ParseValue(string source)
-        {
-            return Parser.ParseValue(source);
-        }
+        protected ValueSyntax ParseValue(string source) => Parser.ParseValue(source);
 
-        protected TypeSyntax ParseType(string source)
-        {
-            return Parser.ParseType(source);
-        }
+        protected TypeSyntax ParseType(string source) => Parser.ParseType(source);
 
         protected void AssertSyntaxError(string document, string expectedMessage,
             params (int line, int column)[] locations)

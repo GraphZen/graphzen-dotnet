@@ -35,25 +35,16 @@ namespace GraphZen.TypeSystem
             schemaBuilder.Union<UnionWithDescription>();
         }
 
-        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return schemaDef.GetUnion<UnionWithoutDescription>();
-        }
+        public override MemberDefinition GetMemberDefinitionWithoutDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetUnion<UnionWithoutDescription>();
 
-        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef)
-        {
-            return schemaDef.GetUnion<UnionWithDescription>();
-        }
+        public override MemberDefinition GetMemberDefinitionWithDataAnnotation(SchemaDefinition schemaDef) =>
+            schemaDef.GetUnion<UnionWithDescription>();
 
-        public override Member GetMemberWithoutDataAnnotation(Schema schema)
-        {
-            return schema.GetUnion<UnionWithoutDescription>();
-        }
+        public override Member GetMemberWithoutDataAnnotation(Schema schema) =>
+            schema.GetUnion<UnionWithoutDescription>();
 
-        public override Member GetMemberWithDataAnnotation(Schema schema)
-        {
-            return schema.GetUnion<UnionWithDescription>();
-        }
+        public override Member GetMemberWithDataAnnotation(Schema schema) => schema.GetUnion<UnionWithDescription>();
 
         public override void SetDescriptionOnMemberWithDataAnnotation(ISchemaBuilder<GraphQLContext> schemaBuilder,
             string description)

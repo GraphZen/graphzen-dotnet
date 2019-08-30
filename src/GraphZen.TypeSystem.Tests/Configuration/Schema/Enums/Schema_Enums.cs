@@ -20,15 +20,9 @@ namespace GraphZen.Enums
         {
         }
 
-        public override Schema GetParent(Schema schema, string parentName)
-        {
-            return schema;
-        }
+        public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition();
-        }
+        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -50,19 +44,12 @@ namespace GraphZen.Enums
             sb.Enum(itemName).Name(newName);
         }
 
-        public override NamedCollection<EnumTypeDefinition> GetCollection(SchemaDefinition parent)
-        {
-            return parent.GetEnums().ToNamedCollection();
-        }
+        public override NamedCollection<EnumTypeDefinition> GetCollection(SchemaDefinition parent) =>
+            parent.GetEnums().ToNamedCollection();
 
-        public override NamedCollection<EnumType> GetCollection(Schema parent)
-        {
-            return parent.Enums.ToNamedCollection();
-        }
+        public override NamedCollection<EnumType> GetCollection(Schema parent) => parent.Enums.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name)
-        {
-            return parent.FindIgnoredTypeConfigurationSource(name);
-        }
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+            parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

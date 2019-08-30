@@ -129,10 +129,7 @@ namespace GraphZen
         }
 
 
-        protected virtual SchemaBuilder CreateSchemaBuilder()
-        {
-            return new SchemaBuilder(Options.Schema);
-        }
+        protected virtual SchemaBuilder CreateSchemaBuilder() => new SchemaBuilder(Options.Schema);
 
         protected internal virtual void OnSchemaCreating(SchemaBuilder schemaBuilder)
         {

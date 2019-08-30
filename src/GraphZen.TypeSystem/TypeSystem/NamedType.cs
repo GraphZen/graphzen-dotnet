@@ -50,9 +50,6 @@ namespace GraphZen.TypeSystem
             throw new InvalidOperationException($"Unknown type definition: {definition.GetType()}");
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
     }
 }

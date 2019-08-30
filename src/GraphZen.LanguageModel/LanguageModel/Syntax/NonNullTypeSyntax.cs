@@ -33,10 +33,7 @@ namespace GraphZen.LanguageModel
             get { yield return OfType; }
         }
 
-        private bool Equals(NonNullTypeSyntax other)
-        {
-            return OfType.Equals(other.OfType);
-        }
+        private bool Equals(NonNullTypeSyntax other) => OfType.Equals(other.OfType);
 
         public override bool Equals(object obj)
         {
@@ -47,14 +44,8 @@ namespace GraphZen.LanguageModel
             return obj is NonNullTypeSyntax && Equals((NonNullTypeSyntax)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return OfType.GetHashCode();
-        }
+        public override int GetHashCode() => OfType.GetHashCode();
 
-        public override string ToString()
-        {
-            return $"{OfType}!";
-        }
+        public override string ToString() => $"{OfType}!";
     }
 }

@@ -34,9 +34,8 @@ namespace GraphZen.QueryEngine.Variables
 
 
         [Fact]
-        public Task ErrorsOnAdditionOfUnkownInputField()
-        {
-            return ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz", extra = "dog" } })
+        public Task ErrorsOnAdditionOfUnkownInputField() =>
+            ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz", extra = "dog" } })
                 .ShouldEqual(new
                 {
                     errors = Array(new
@@ -50,12 +49,10 @@ namespace GraphZen.QueryEngine.Variables
                         })
                     })
                 });
-        }
 
         [Fact]
-        public Task ErrorsOnDeepNestedErrorsAndWithmanyErrors()
-        {
-            return ExecuteAsync(@"
+        public Task ErrorsOnDeepNestedErrorsAndWithmanyErrors() =>
+            ExecuteAsync(@"
             query ($input: TestNestedInputObject) {
               fieldWithNestedObjectInput(input: $input)
             }", new
@@ -89,12 +86,10 @@ namespace GraphZen.QueryEngine.Variables
                         }
                     )
                 });
-        }
 
         [Fact]
-        public Task ErrorsOnIncorrectType()
-        {
-            return ExecuteAsync(Doc, new
+        public Task ErrorsOnIncorrectType() =>
+            ExecuteAsync(Doc, new
             {
                 input = "foo bar"
             }).ShouldEqual(new
@@ -110,12 +105,10 @@ namespace GraphZen.QueryEngine.Variables
                     })
                 })
             });
-        }
 
         [Fact]
-        public Task ErrorsOnNullForNestedNonNull()
-        {
-            return ExecuteAsync(Doc, new
+        public Task ErrorsOnNullForNestedNonNull() =>
+            ExecuteAsync(Doc, new
             {
                 input = new
                 {
@@ -133,12 +126,10 @@ namespace GraphZen.QueryEngine.Variables
                         locations = Array(new { line = 2, column = 25 })
                     })
             });
-        }
 
         [Fact]
-        public Task ErrorsOnOmissionOfNestedNonNull()
-        {
-            return ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar" } })
+        public Task ErrorsOnOmissionOfNestedNonNull() =>
+            ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar" } })
                 .ShouldEqual(new
                 {
                     errors = Array(new
@@ -152,12 +143,10 @@ namespace GraphZen.QueryEngine.Variables
                         })
                     })
                 });
-        }
 
         [Fact]
-        public Task ItDoesNotUseDefaultValueWhenProvided()
-        {
-            return ExecuteAsync(@" 
+        public Task ItDoesNotUseDefaultValueWhenProvided() =>
+            ExecuteAsync(@" 
                         query q($input: String = ""Default value"") {
                           fieldWithNullableStringInput(input: $input)
                         }
@@ -172,12 +161,10 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithNullableStringInput = "\"Variable value\""
                     }
                 });
-        }
 
         [Fact]
-        public Task ItExecutesWithComplexInput()
-        {
-            return ExecuteAsync(Doc,
+        public Task ItExecutesWithComplexInput() =>
+            ExecuteAsync(Doc,
                 new
                 {
                     input = new
@@ -194,24 +181,20 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithObjectInput = @"{""a"":""foo"",""b"":[""bar""],""c"":""baz""}"
                 }
             });
-        }
 
         [Fact]
-        public Task ItExecutesWithComplexScalarInput()
-        {
-            return ExecuteAsync(Doc, new { input = new { c = "foo", d = "SerializedValue" } }).ShouldEqual(new
+        public Task ItExecutesWithComplexScalarInput() =>
+            ExecuteAsync(Doc, new { input = new { c = "foo", d = "SerializedValue" } }).ShouldEqual(new
             {
                 data = new
                 {
                     fieldWithObjectInput = "{\"c\":\"foo\",\"d\":\"DeserializedValue\"}"
                 }
             });
-        }
 
         [Fact]
-        public Task ItUsesDefaultValueWhenNotProvided()
-        {
-            return ExecuteAsync(@" 
+        public Task ItUsesDefaultValueWhenNotProvided() =>
+            ExecuteAsync(@" 
                         query ($input: TestInputObject = {a: ""foo"", b: [""bar""], c: ""baz""}) {
                             fieldWithObjectInput(input: $input)
                         }")
@@ -222,13 +205,11 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithObjectInput = "{\"a\":\"foo\",\"b\":[\"bar\"],\"c\":\"baz\"}"
                     }
                 });
-        }
 
 
         [Fact]
-        public Task ItUsesExplicitNullValueInsteadOfDefaultValue()
-        {
-            return ExecuteAsync(@" 
+        public Task ItUsesExplicitNullValueInsteadOfDefaultValue() =>
+            ExecuteAsync(@" 
                         query q($input: String = ""Default value"") {
                           fieldWithNullableStringInput(input: $input)
                         }
@@ -243,12 +224,10 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithNullableStringInput = "null"
                     }
                 });
-        }
 
         [Fact]
-        public Task ItUsesNullDefaultValueWhenNotProvided()
-        {
-            return ExecuteAsync(@" 
+        public Task ItUsesNullDefaultValueWhenNotProvided() =>
+            ExecuteAsync(@" 
                         query q($input: String = null) {
                           fieldWithNullableStringInput(input: $input)
                         }
@@ -260,12 +239,10 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithNullableStringInput = "null"
                     }
                 });
-        }
 
         [Fact]
-        public Task ItUsesNullWhenVariableProvidedExplicitNullValue()
-        {
-            return ExecuteAsync(@" 
+        public Task ItUsesNullWhenVariableProvidedExplicitNullValue() =>
+            ExecuteAsync(@" 
                         query q($input: String) {
                             fieldWithNullableStringInput(input: $input)
                        }", new { input = (string)null })
@@ -276,12 +253,10 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithNullableStringInput = "null"
                     }
                 });
-        }
 
         [Fact]
-        public Task ItUsesUndefinedWhenVariableNotProvided()
-        {
-            return ExecuteAsync(@" 
+        public Task ItUsesUndefinedWhenVariableNotProvided() =>
+            ExecuteAsync(@" 
                         query q($input: String) {
                             fieldWithNullableStringInput(input: $input)
                        }", new { })
@@ -292,12 +267,10 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithNullableStringInput = (string)null
                     }
                 });
-        }
 
         [Fact]
-        public Task ProperlyParsesSingleValueToList()
-        {
-            return ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz" } })
+        public Task ProperlyParsesSingleValueToList() =>
+            ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz" } })
                 .ShouldEqual(new
                 {
                     data = new
@@ -305,6 +278,5 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithObjectInput = "{\"a\":\"foo\",\"b\":[\"bar\"],\"c\":\"baz\"}"
                     }
                 });
-        }
     }
 }

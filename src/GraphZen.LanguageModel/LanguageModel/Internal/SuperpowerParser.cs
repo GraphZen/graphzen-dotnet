@@ -14,20 +14,13 @@ namespace GraphZen.LanguageModel.Internal
 {
     public class SuperpowerParser : IParser
     {
-        public DocumentSyntax ParseDocument(string document)
-        {
-            return Parse(Check.NotNull(document, nameof(document)), Grammar.Grammar.Document);
-        }
+        public DocumentSyntax ParseDocument(string document) =>
+            Parse(Check.NotNull(document, nameof(document)), Grammar.Grammar.Document);
 
-        public ValueSyntax ParseValue(string value)
-        {
-            return Parse(Check.NotNull(value, nameof(value)), Grammar.Grammar.Value);
-        }
+        public ValueSyntax ParseValue(string value) =>
+            Parse(Check.NotNull(value, nameof(value)), Grammar.Grammar.Value);
 
-        public TypeSyntax ParseType(string type)
-        {
-            return Parse(Check.NotNull(type, nameof(type)), Grammar.Grammar.Type);
-        }
+        public TypeSyntax ParseType(string type) => Parse(Check.NotNull(type, nameof(type)), Grammar.Grammar.Type);
 
 
         private static T Parse<T>(string text, TokenListParser<TokenKind, T> parser)
