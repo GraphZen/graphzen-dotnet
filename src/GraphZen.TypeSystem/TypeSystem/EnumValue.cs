@@ -10,7 +10,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     [GraphQLName("__EnumValue")]
@@ -21,7 +20,7 @@ namespace GraphZen.TypeSystem
     {
         private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
 
-        public EnumValue(string name, string description, object value, bool isDeprecated, string deprecatedReason,
+        public EnumValue(string name, string? description, object value, bool isDeprecated, string? deprecatedReason,
             IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(Check.NotNull(directives,
             nameof(directives)))
         {
@@ -45,9 +44,9 @@ namespace GraphZen.TypeSystem
 
         public bool IsDeprecated { get; }
 
-        [GraphQLCanBeNull] public string DeprecationReason { get; }
+        [GraphQLCanBeNull] public string? DeprecationReason { get; }
 
-        public override string Description { get; }
+        public override string? Description { get; }
 
         public string Name { get; }
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.EnumValue;
