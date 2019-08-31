@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IArgumentsDefinition  : IMemberDefinition
+    public interface IArgumentsDefinition : IMemberDefinition
     {
         IEnumerable<IArgumentDefinition> GetArguments();
     }

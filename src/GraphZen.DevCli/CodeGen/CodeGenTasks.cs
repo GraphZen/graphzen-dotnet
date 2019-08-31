@@ -11,7 +11,6 @@ namespace GraphZen.CodeGen
 {
     public static class CodeGenTasks
     {
-
         public static void RunCodeGen()
         {
             GenerateTypeSystemDictionaryAccessors();
@@ -63,7 +62,8 @@ namespace GraphZen.TypeSystem {
                 csharp.AppendDictionaryAccessor(containerType, "Fields", "name", "string", "Field", valueType);
             }
 
-            csharp.AppendDictionaryAccessor("EnumTypeDefinition", "Values", "name", "string", "Value", "EnumValueDefinition");
+            csharp.AppendDictionaryAccessor("EnumTypeDefinition", "Values", "name", "string", "Value",
+                "EnumValueDefinition");
             csharp.AppendDictionaryAccessor("EnumType", "Values", "name", "string", "Value", "EnumValue");
             csharp.AppendDictionaryAccessor("EnumType", "ValuesByValue", "value", "object", "Value", "EnumValue");
 
@@ -71,7 +71,7 @@ namespace GraphZen.TypeSystem {
             var argumentDefinitionAccessors = new List<(string containerType, string valueType)>
             {
                 ("FieldDefinition", "ArgumentDefinition"),
-                ("DirectiveDefinition", "ArgumentDefinition"),
+                ("DirectiveDefinition", "ArgumentDefinition")
             };
 
             foreach (var (containerType, valueType) in argumentDefinitionAccessors)
@@ -83,14 +83,13 @@ namespace GraphZen.TypeSystem {
             var argumentAccessors = new List<(string containerType, string valueType)>
             {
                 ("Field", "Argument"),
-                ("IArgumentsContainer", "Argument"),
+                ("IArgumentsContainer", "Argument")
             };
 
             foreach (var (containerType, valueType) in argumentAccessors)
             {
                 csharp.AppendDictionaryAccessor(
-                                    containerType, "Arguments", "name", "string", "Argument", valueType);
-
+                    containerType, "Arguments", "name", "string", "Argument", valueType);
             }
 
             csharp.Append("}");

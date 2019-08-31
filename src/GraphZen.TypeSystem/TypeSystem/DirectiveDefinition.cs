@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -20,8 +21,11 @@ namespace GraphZen.TypeSystem
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
-        private readonly Dictionary<DirectiveLocation, ConfigurationSource> _locations = new Dictionary<DirectiveLocation, ConfigurationSource>();
-        private readonly Dictionary<DirectiveLocation, ConfigurationSource> _ignoredLocations = new Dictionary<DirectiveLocation, ConfigurationSource>();
+        private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _locations =
+            new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
+
+        private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _ignoredLocations =
+            new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
         public DirectiveDefinition(string name, SchemaDefinition schema, ConfigurationSource configurationSource) :
             base(configurationSource)
@@ -80,9 +84,10 @@ namespace GraphZen.TypeSystem
             var locationConfigurationSource = FindDirectiveLocationConfigurationSource(location);
             if (configurationSource.Overrides(locationConfigurationSource))
             {
-                _locations[location] = configurationSource;
+                _locations.AddOrUpdate(location, configurationSource, (dl, cs) => configurationSource);
                 return true;
             }
+
             return false;
         }
 
@@ -92,12 +97,13 @@ namespace GraphZen.TypeSystem
             if (configurationSource.Overrides(existingConfigurationSource))
             {
                 var ignoredConfigurationSource = FindIgnoredDirectiveLocationConfigurationSource(location);
-                _ignoredLocations[location] = configurationSource.Max(ignoredConfigurationSource);
+                var newIgnoredConfigurationSource = configurationSource.Max(ignoredConfigurationSource);
+                _ignoredLocations.AddOrUpdate(location, newIgnoredConfigurationSource,
+                    (dl, cs) => newIgnoredConfigurationSource);
                 return true;
             }
 
             return false;
-
         }
 
         public bool UnignoreLocation(DirectiveLocation location, ConfigurationSource configurationSource)
@@ -105,13 +111,12 @@ namespace GraphZen.TypeSystem
             var ignoredConfigurationSource = FindIgnoredDirectiveLocationConfigurationSource(location);
             if (ignoredConfigurationSource.HasValue && configurationSource.Overrides(ignoredConfigurationSource))
             {
-                _ignoredLocations.Remove(location);
+                _ignoredLocations.Remove(location, out _);
                 return true;
             }
 
             return false;
         }
-
 
 
         public ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
@@ -121,7 +126,7 @@ namespace GraphZen.TypeSystem
             FindIgnoredDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
             _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
 
-        public IReadOnlyCollection<DirectiveLocation> Locations => _locations.Keys;
-
+        public IReadOnlyCollection<DirectiveLocation> Locations =>
+            (IReadOnlyCollection<DirectiveLocation>)_locations.Keys;
     }
 }

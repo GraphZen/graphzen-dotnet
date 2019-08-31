@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable PartialTypeWithSinglePart
 

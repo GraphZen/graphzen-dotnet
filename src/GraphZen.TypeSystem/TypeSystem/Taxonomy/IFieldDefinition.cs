@@ -9,7 +9,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IFieldDefinition : IAnnotatableDefinition, IArgumentsDefinition, INamed, IDescription, IDeprecation,
+    public interface IFieldDefinition : IAnnotatableDefinition, IArgumentsDefinition, INamed, IDescription,
+        IDeprecation,
         IClrInfo,
         IOutputDefinition
     {

@@ -14,7 +14,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
@@ -71,11 +70,11 @@ namespace GraphZen.TypeSystem
         public IReadOnlyList<IDirectiveDefinition> Directives => _directives;
 
         public ObjectTypeDefinition? QueryType { get; private set; }
+
         public bool SetQueryType(ObjectTypeDefinition? type, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(GetQueryTypeConfigurationSource()))
             {
-
                 _queryTypeConfigurationSource = configurationSource;
                 if (QueryType != type)
                 {
@@ -89,11 +88,11 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? GetQueryTypeConfigurationSource() => _queryTypeConfigurationSource;
         public ObjectTypeDefinition? MutationType { get; private set; }
+
         public bool SetMutationType(ObjectTypeDefinition? type, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(GetMutationTypeConfigurationSource()))
             {
-
                 _mutationTypeConfigurationSource = configurationSource;
                 if (MutationType != type)
                 {
@@ -103,11 +102,11 @@ namespace GraphZen.TypeSystem
             }
 
             return false;
-
         }
 
         public ConfigurationSource? GetMutationTypeConfigurationSource() => _mutationTypeConfigurationSource;
         public ObjectTypeDefinition? SubscriptionType { get; private set; }
+
         public bool SetSubscriptionType(ObjectTypeDefinition? type, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(GetSubscriptionTypeConfigurationSource()))
@@ -119,13 +118,16 @@ namespace GraphZen.TypeSystem
                     return true;
                 }
             }
+
             return false;
         }
 
         public ConfigurationSource? GetSubscriptionTypeConfigurationSource() => _subscriptionTypeConfigurationSource;
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Schema;
+
         public ConfigurationSource? FindIgnoredTypeConfigurationSource(string name) =>
             _ignoredTypes.FindValueOrDefault(name);
+
         public ConfigurationSource? FindIgnoredTypeConfigurationSource(Type clrType) =>
             FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName());
 

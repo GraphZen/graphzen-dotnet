@@ -28,7 +28,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
         }
 
 
-        private IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>> LocationsMap => _lazyLocationsMap.Value;
+        private IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>> LocationsMap =>
+            _lazyLocationsMap.Value;
 
 
         public static string UnknownDirectiveMessage(string directiveName) => $"Unknown directive \"{directiveName}\".";

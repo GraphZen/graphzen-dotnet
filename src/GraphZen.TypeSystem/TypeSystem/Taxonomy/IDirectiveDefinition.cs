@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
@@ -17,7 +16,9 @@ namespace GraphZen.TypeSystem.Taxonomy
     }
 
 
-    public interface IDirectiveLocations : IDirectiveLocationsDefinition { }
+    public interface IDirectiveLocations : IDirectiveLocationsDefinition
+    {
+    }
 
     [GraphQLIgnore]
     public interface IDirectiveLocationsDefinition

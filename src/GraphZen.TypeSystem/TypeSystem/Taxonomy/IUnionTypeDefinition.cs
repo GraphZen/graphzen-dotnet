@@ -8,10 +8,10 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IUnionTypeDefinition : 
+    public interface IUnionTypeDefinition :
         ICompositeTypeDefinition,
-        IAbstractTypeDefinition, 
-        IOutputDefinition, 
+        IAbstractTypeDefinition,
+        IOutputDefinition,
         IMemberTypesDefinition
     {
     }

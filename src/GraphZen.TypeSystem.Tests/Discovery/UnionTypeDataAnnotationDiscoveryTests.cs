@@ -23,17 +23,6 @@ namespace GraphZen
     {
         public interface explicitly_created_union_type
         {
-
-
-    
-
-
-    
-    
-
-
-    
-
         }
 
         public class explicitly_created_union_type_member_a : explicitly_created_union_type
