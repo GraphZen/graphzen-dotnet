@@ -98,7 +98,7 @@ namespace GraphZen.TypeSystem
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments() => GetArguments();
+        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
         [GraphQLName("args")]
         public IEnumerable<Argument> GetArguments() => Arguments.Values;

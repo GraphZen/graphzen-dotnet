@@ -10,8 +10,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Interfaces.Fields.Arguments
 {
-    public abstract class Interface_Field_Arguments : CollectionConfigurationFixture<IArgumentsContainer,
-        IArgumentsContainerDefinition, IMutableArgumentsContainerDefinition, ArgumentDefinition, Argument,
+    public abstract class Interface_Field_Arguments : CollectionConfigurationFixture<IArguments,
+        IArgumentsDefinition, IMutableArgumentsDefinition, ArgumentDefinition, Argument,
         FieldDefinition, Field>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)

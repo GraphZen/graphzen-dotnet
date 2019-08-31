@@ -10,14 +10,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableArgumentsContainerDefinition : IArgumentsContainerDefinition
+    public interface IMutableMemberTypesDefinition : IMemberTypesDefinition
     {
-        IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
-
-        bool RenameArgument(ArgumentDefinition argument, string name,
-            ConfigurationSource configurationSource);
-
-
-        new IEnumerable<ArgumentDefinition> GetArguments();
+        new IEnumerable<ObjectTypeDefinition> GetMemberTypes();
+        ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name);
     }
 }

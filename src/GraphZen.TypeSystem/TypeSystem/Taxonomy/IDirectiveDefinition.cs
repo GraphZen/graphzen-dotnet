@@ -3,15 +3,34 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IDirectiveDefinition : INamed, IArgumentsContainerDefinition
+    public interface IDirectiveDefinition : INamed, IDescription, IArgumentsDefinition, IDirectiveLocationsDefinition
     {
-        IReadOnlyList<DirectiveLocation> Locations { get; }
+    }
+
+
+    public interface IDirectiveLocations : IDirectiveLocationsDefinition { }
+
+    [GraphQLIgnore]
+    public interface IDirectiveLocationsDefinition
+    {
+        IReadOnlyCollection<DirectiveLocation> Locations { get; }
+    }
+
+    public interface IMutableDirectiveLocationsDefinition : IDirectiveLocationsDefinition
+    {
+        bool AddLocation(DirectiveLocation location, ConfigurationSource configurationSource);
+        bool IgnoreLocation(DirectiveLocation location, ConfigurationSource configurationSource);
+        bool UnignoreLocation(DirectiveLocation location, ConfigurationSource configurationSource);
+        ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation location);
+        ConfigurationSource? FindIgnoredDirectiveLocationConfigurationSource(DirectiveLocation location);
     }
 }

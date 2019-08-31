@@ -15,9 +15,12 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        public InternalDirectiveBuilder Locations(DirectiveLocation[] locations)
+        public InternalDirectiveBuilder Locations(DirectiveLocation[] locations, ConfigurationSource configurationSource)
         {
-            Definition.SetLocations(locations);
+            foreach (var directiveLocation in locations)
+            {
+                Definition.AddLocation(directiveLocation, configurationSource);
+            }
             return this;
         }
 

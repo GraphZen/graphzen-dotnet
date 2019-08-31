@@ -20,7 +20,8 @@ namespace GraphZen.TypeSystem
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
-        private DirectiveLocation[] _locations = { };
+        private readonly Dictionary<DirectiveLocation, ConfigurationSource> _locations = new Dictionary<DirectiveLocation, ConfigurationSource>();
+        private readonly Dictionary<DirectiveLocation, ConfigurationSource> _ignoredLocations = new Dictionary<DirectiveLocation, ConfigurationSource>();
 
         public DirectiveDefinition(string name, SchemaDefinition schema, ConfigurationSource configurationSource) :
             base(configurationSource)
@@ -43,8 +44,6 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource GetNameConfigurationSource() => throw new NotImplementedException();
 
-        public IReadOnlyList<DirectiveLocation> Locations => _locations;
-
         public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(argument.GetNameConfigurationSource())) return false;
@@ -62,14 +61,7 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
 
-        IEnumerable<ArgumentDefinition> IMutableArgumentsContainerDefinition.GetArguments() => Arguments.Values;
-
-        public void SetLocations(DirectiveLocation[] locations)
-        {
-            Check.NotNull(locations, nameof(locations));
-            _locations = locations;
-        }
-
+        IEnumerable<ArgumentDefinition> IMutableArgumentsDefinition.GetArguments() => Arguments.Values;
 
         public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
         {
@@ -82,5 +74,54 @@ namespace GraphZen.TypeSystem
 
             return argument;
         }
+
+        public bool AddLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        {
+            var locationConfigurationSource = FindDirectiveLocationConfigurationSource(location);
+            if (configurationSource.Overrides(locationConfigurationSource))
+            {
+                _locations[location] = configurationSource;
+                return true;
+            }
+            return false;
+        }
+
+        public bool IgnoreLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        {
+            var existingConfigurationSource = FindDirectiveLocationConfigurationSource(location);
+            if (configurationSource.Overrides(existingConfigurationSource))
+            {
+                var ignoredConfigurationSource = FindIgnoredDirectiveLocationConfigurationSource(location);
+                _ignoredLocations[location] = configurationSource.Max(ignoredConfigurationSource);
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public bool UnignoreLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = FindIgnoredDirectiveLocationConfigurationSource(location);
+            if (ignoredConfigurationSource.HasValue && configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                _ignoredLocations.Remove(location);
+                return true;
+            }
+
+            return false;
+        }
+
+
+
+        public ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
+            _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+
+        public ConfigurationSource?
+            FindIgnoredDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
+            _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+
+        public IReadOnlyCollection<DirectiveLocation> Locations => _locations.Keys;
+
     }
 }

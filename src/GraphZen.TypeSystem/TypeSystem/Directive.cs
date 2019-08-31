@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem
     {
         private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
 
-        public Directive(string name, string description, IReadOnlyList<DirectiveLocation> locations,
+        public Directive(string name, string description, IReadOnlyCollection<DirectiveLocation> locations,
             IEnumerable<IArgumentDefinition> arguments, TypeResolver typeResolver)
         {
             Name = Check.NotNull(name, nameof(name));
@@ -55,7 +55,6 @@ namespace GraphZen.TypeSystem
 
         public override string Description { get; }
 
-        public IReadOnlyList<DirectiveLocation> Locations { get; }
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
@@ -63,7 +62,7 @@ namespace GraphZen.TypeSystem
         public IEnumerable<Argument> GetArguments() => Arguments.Values;
 
         [GraphQLIgnore]
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments() => GetArguments();
+        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
 
         [GraphQLIgnore]
@@ -73,5 +72,7 @@ namespace GraphZen.TypeSystem
             return new Directive(definition.Name, definition.Description, definition.Locations,
                 definition.GetArguments(), typeResolver);
         }
+
+        public IReadOnlyCollection<DirectiveLocation> Locations { get; }
     }
 }

@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem
             string name,
             string? description,
             IGraphQLType? type,
-            IArgumentsContainer? declaringMember,
+            IArguments? declaringMember,
             object? defaultValue, bool hasDefaultValue,
             IReadOnlyList<IDirectiveAnnotation>? directives = null,
             ParameterInfo? clrInfo = null
@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem
             bool hasDefaultValue,
             IReadOnlyList<IDirectiveAnnotation> directives,
             TypeResolver typeResolver,
-            IArgumentsContainer declaringMember,
+            IArguments declaringMember,
             ParameterInfo? clrInfo) :
             base(name, description, type,
                 defaultValue, hasDefaultValue,
@@ -45,14 +45,13 @@ namespace GraphZen.TypeSystem
         }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.ArgumentDefinition;
-
-        public new IArgumentsContainer DeclaringMember => (IArgumentsContainer)base.DeclaringMember;
+        public new IArguments DeclaringMember => (IArguments)base.DeclaringMember;
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
-        IArgumentsContainerDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
+        IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 
 
         [GraphQLIgnore]
-        public static Argument From(IArgumentDefinition definition, IArgumentsContainer declaringMember,
+        public static Argument From(IArgumentDefinition definition, IArguments declaringMember,
             TypeResolver typeResolver)
         {
             Check.NotNull(definition, nameof(definition));

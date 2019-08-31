@@ -10,7 +10,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IMutableUnionTypeDefinition :
         IUnionTypeDefinition, IMutableNamedTypeDefinition, IMutableAbstractTypeDefinition,
-        IMutableMemberTypesContainerDefinition
+        IMutableMemberTypesDefinition
     {
     }
 }

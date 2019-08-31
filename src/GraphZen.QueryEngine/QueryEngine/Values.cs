@@ -249,7 +249,7 @@ namespace GraphZen.QueryEngine
         }
 
 
-        public static DynamicDictionary GetArgumentValues<TNode>(IArgumentsContainer def,
+        public static DynamicDictionary GetArgumentValues<TNode>(IArguments def,
             TNode node,
             IReadOnlyDictionary<string, object> variableValues) where TNode : SyntaxNode, IArgumentsContainerNode
         {

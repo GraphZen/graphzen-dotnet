@@ -12,7 +12,4 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         string Name { get; }
     }
-
-
-    // ReSharper disable once UnusedTypeParameter
 }

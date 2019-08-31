@@ -81,7 +81,7 @@ namespace GraphZen.TypeSystem
             var schema = new Schema(schemaDef);
             return From(definition, schema);
         }*/
-        IEnumerable<IObjectTypeDefinition> IMemberTypesContainerDefinition.GetMemberTypes() => GetMemberTypes();
+        IEnumerable<IObjectTypeDefinition> IMemberTypesDefinition.GetMemberTypes() => GetMemberTypes();
 
 
         public static UnionType From(IUnionTypeDefinition definition, Schema schema)

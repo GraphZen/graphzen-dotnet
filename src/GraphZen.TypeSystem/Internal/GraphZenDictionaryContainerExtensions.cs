@@ -38,11 +38,11 @@ namespace GraphZen.Internal
 
                 // Output field arguments
                 // (generating for all implementations as intellisense will be different)
-                generate.ForType<IMutableArgumentsContainerDefinition>()
+                generate.ForType<IMutableArgumentsDefinition>()
                     .ForDictionary(_ => _.Arguments, "name", "Argument", "arguments");
                 generate.ForType<FieldDefinition>().ForDictionary(_ => _.Arguments, "name", "Argument");
                 generate.ForType<DirectiveDefinition>().ForDictionary(_ => _.Arguments, "name", "Argument");
-                generate.ForType<IArgumentsContainer>()
+                generate.ForType<IArguments>()
                     .ForDictionary(_ => _.Arguments, "name", "Argument", "arguments");
                 generate.ForType<Field>().ForDictionary(_ => _.Arguments, "name", "Argument");
                 generate.ForType<Directive>().ForDictionary(_ => _.Arguments, "name", "Argument");

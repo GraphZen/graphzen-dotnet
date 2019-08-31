@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem
         public ArgumentDefinition(string name,
             ConfigurationSource nameConfigurationSource,
             SchemaDefinition schema,
-            ConfigurationSource configurationSource, IMutableArgumentsContainerDefinition declaringMember,
+            ConfigurationSource configurationSource, IMutableArgumentsDefinition declaringMember,
             ParameterInfo? clrInfo) : base(
             Check.NotNull(name, nameof(name)), nameConfigurationSource,
             Check.NotNull(schema, nameof(schema)), configurationSource, clrInfo, declaringMember)
@@ -43,11 +43,11 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public new IMutableArgumentsContainerDefinition DeclaringMember =>
-            (IMutableArgumentsContainerDefinition)base.DeclaringMember;
+        public new IMutableArgumentsDefinition DeclaringMember =>
+            (IMutableArgumentsDefinition)base.DeclaringMember;
 
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
-        IArgumentsContainerDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
+        IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 
         public override string ToString() => $"argument {Name}";
     }

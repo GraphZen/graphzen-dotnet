@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IEnumValueDefinition : IAnnotatableDefinition, INamed, IDeprecation, IInputDefinition,
+    public interface IEnumValueDefinition : IAnnotatableDefinition, INamed, IDescription, IDeprecation, IInputDefinition,
         IOutputDefinition
     {
         object Value { get; }

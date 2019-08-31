@@ -4,19 +4,20 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMemberTypesContainer : IMemberTypesContainerDefinition
+    public interface IMutableArgumentsDefinition : IArgumentsDefinition
     {
-        new IEnumerable<ObjectType> GetMemberTypes();
+        IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
+
+        bool RenameArgument(ArgumentDefinition argument, string name,
+            ConfigurationSource configurationSource);
 
 
-        IReadOnlyList<ObjectType> MemberTypes { get; }
-
-
-        IReadOnlyDictionary<string, ObjectType> MemberTypesMap { get; }
+        new IEnumerable<ArgumentDefinition> GetArguments();
     }
 }

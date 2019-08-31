@@ -4,15 +4,16 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableMemberTypesContainerDefinition : IMemberTypesContainerDefinition
+    public interface IArguments : IArgumentsDefinition
     {
-        new IEnumerable<ObjectTypeDefinition> GetMemberTypes();
-        ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name);
+        IReadOnlyDictionary<string, Argument> Arguments { get; }
+
+
+        new IEnumerable<Argument> GetArguments();
     }
 }

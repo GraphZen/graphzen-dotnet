@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem
 
         public IDirectiveBuilder Locations(params DirectiveLocation[] locations)
         {
-            Builder.Locations(locations);
+            Builder.Locations(locations, ConfigurationSource.Explicit);
             return this;
         }
 

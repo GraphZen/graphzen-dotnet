@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IFieldsContainerDefinition //: IGraphQLTypeDefinition
+    public interface IFieldsContainerDefinition 
     {
         IEnumerable<IFieldDefinition> GetFields();
     }

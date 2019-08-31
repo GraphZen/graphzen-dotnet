@@ -141,7 +141,7 @@ namespace GraphZen
                         Argument argDef = null;
                         IGraphQLType argType = null;
 
-                        var fieldOrDirective = (IArgumentsContainer)Directive ?? GetField();
+                        var fieldOrDirective = (IArguments)Directive ?? GetField();
                         if (fieldOrDirective != null)
                         {
                             argDef = fieldOrDirective.FindArgument(node.Name.Value);

@@ -10,6 +10,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface INamedTypeDefinition :
         IMemberDefinition,
+        IDescription,
         INamedTypeReference,
         IDirectives,
         IClrType

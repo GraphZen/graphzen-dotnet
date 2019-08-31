@@ -121,7 +121,7 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments() => GetArguments();
+        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
         object? IClrInfo.ClrInfo => ClrInfo;
 

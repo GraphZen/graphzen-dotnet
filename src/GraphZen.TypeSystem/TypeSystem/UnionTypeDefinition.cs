@@ -56,6 +56,6 @@ namespace GraphZen.TypeSystem
             if (!_types.Contains(type)) _types.Add(type);
         }
 
-        IEnumerable<IObjectTypeDefinition> IMemberTypesContainerDefinition.GetMemberTypes() => GetMemberTypes();
+        IEnumerable<IObjectTypeDefinition> IMemberTypesDefinition.GetMemberTypes() => GetMemberTypes();
     }
 }

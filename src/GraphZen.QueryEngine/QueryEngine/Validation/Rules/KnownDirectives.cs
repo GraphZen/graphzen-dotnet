@@ -17,18 +17,18 @@ namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class KnownDirectives : QueryValidationRuleVisitor
     {
-        private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>>> _lazyLocationsMap;
+        private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>>> _lazyLocationsMap;
 
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public KnownDirectives(QueryValidationContext context) : base(context)
         {
-            _lazyLocationsMap = new Lazy<IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>>>(() =>
+            _lazyLocationsMap = new Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>>>(() =>
                 Context.Schema.Directives.ToReadOnlyDictionary(_ => _.Name, _ => _.Locations));
         }
 
 
-        private IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>> LocationsMap => _lazyLocationsMap.Value;
+        private IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>> LocationsMap => _lazyLocationsMap.Value;
 
 
         public static string UnknownDirectiveMessage(string directiveName) => $"Unknown directive \"{directiveName}\".";

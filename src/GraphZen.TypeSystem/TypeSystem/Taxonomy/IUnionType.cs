@@ -10,7 +10,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IUnionType : IUnionTypeDefinition,
         ICompositeType,
-        IAbstractType, IMemberTypesContainer
+        IAbstractType, IMemberTypes
     {
     }
 }
