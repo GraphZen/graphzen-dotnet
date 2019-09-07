@@ -4,14 +4,15 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    [GraphQLIgnore]
-    public interface IMutableInterfaceTypesContainerDefinition : IInterfaceTypesContainerDefinition
+    public interface IMutableInterfacesDefinition : IInterfacesDefinition
     {
-        [GraphQLIgnore]
         new IEnumerable<InterfaceTypeDefinition> GetInterfaces();
+
+        ConfigurationSource? FindIgnoredInterfaceConfigurationSource(string name);
     }
 }

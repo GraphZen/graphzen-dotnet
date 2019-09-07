@@ -15,7 +15,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public abstract class FieldsContainerDefinition : NamedTypeDefinition, IMutableFieldsContainerDefinition
+    public abstract class FieldsDefinition : NamedTypeDefinition, IMutableFieldsContainerDefinition
     {
         private readonly Dictionary<string, FieldDefinition> _fields =
             new Dictionary<string, FieldDefinition>();
@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem
             new Dictionary<string, ConfigurationSource>();
 
 
-        public FieldsContainerDefinition(TypeIdentity identity, SchemaDefinition schema,
+        protected FieldsDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(identity, schema, configurationSource)
         {
         }

@@ -7,8 +7,8 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-// ReSharper disable UnusedMember.Global
 // ReSharper disable PartialTypeWithSinglePart
+// ReSharper disable UnusedMember.Global
 
 #nullable restore
 
@@ -71,20 +71,20 @@ namespace GraphZen.TypeSystem
     }
 
 
-    public static partial class FieldsContainerDefinitionFieldsAccessorExtensions
+    public static partial class FieldsDefinitionFieldsAccessorExtensions
     {
-        public static FieldDefinition? FindField(this FieldsContainerDefinition source, string name)
+        public static FieldDefinition? FindField(this FieldsDefinition source, string name)
             => source.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out var nameField) ? nameField : null;
 
-        public static bool HasField(this FieldsContainerDefinition source, string name)
+        public static bool HasField(this FieldsDefinition source, string name)
             => source.Fields.ContainsKey(Check.NotNull(name, nameof(name)));
 
 
-        public static FieldDefinition GetField(this FieldsContainerDefinition source, string name)
+        public static FieldDefinition GetField(this FieldsDefinition source, string name)
             => source.FindField(Check.NotNull(name, nameof(name))) ??
                throw new Exception($"{source} does not contain a field named '{name}'.");
 
-        public static bool TryGetField(this FieldsContainerDefinition source, string name,
+        public static bool TryGetField(this FieldsDefinition source, string name,
             [NotNullWhen(true)] out FieldDefinition? fieldDefinition)
             => source.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out fieldDefinition);
     }
@@ -264,7 +264,7 @@ namespace GraphZen.TypeSystem
     }
 
 
-    public static partial class IArgumentsContainerArgumentsAccessorExtensions
+    public static partial class IArgumentsArgumentsAccessorExtensions
     {
         public static Argument? FindArgument(this IArguments source, string name)
             => source.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var nameArgument)

@@ -13,7 +13,7 @@ namespace GraphZen.Configuration.Objects.Interfaces
 {
     public abstract class Object_Interfaces :
         CollectionConfigurationFixture<IInterfaces,
-            IInterfacesContainerDefinition, IMutableInterfacesContainerDefinition, InterfaceTypeDefinition,
+            IInterfacesDefinition, IMutableInterfacesDefinition, InterfaceTypeDefinition,
             InterfaceType, ObjectTypeDefinition,
             ObjectType>
     {

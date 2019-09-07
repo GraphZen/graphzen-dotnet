@@ -15,9 +15,9 @@ namespace GraphZen.TypeSystem.Taxonomy
         ISubscriptionTypeDefinition,
         IDirectivesDefinition,
         IObjectTypesDefinition,
-        IInterfaceTypesContainerDefinition,
+        IInterfaceTypesDefinition,
         IUnionTypesDefinition,
         IScalarTypesDefinition,
         IEnumTypesDefinition,
-        IInputObjectTypesContainerDefinition { }
+        IInputObjectTypesDefinition { }
 }

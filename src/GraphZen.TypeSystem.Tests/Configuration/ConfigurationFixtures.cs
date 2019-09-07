@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using GraphZen.Configuration.Directives;
 using GraphZen.Configuration.Enums;
 using GraphZen.Configuration.Enums.Description;
 using GraphZen.Configuration.Enums.EnumValues;
@@ -41,6 +42,10 @@ namespace GraphZen.Configuration
             new List<IConfigurationFixture>
             {
                 // SCHEMA
+
+                // Directives (Collection)
+                new Schema_Directives_Explicit(),
+
 
                 // Objects (Collection)
                 new Schema_Objects_Explicit(),

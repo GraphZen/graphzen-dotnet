@@ -493,7 +493,7 @@ namespace GraphZen.TypeSystem
         public override string ToString() => "Schema";
 
         [GraphQLIgnore]
-        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() =>
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.GetInputObjects() =>
             GetInputObjects();
 
 
@@ -532,7 +532,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore] public IReadOnlyList<UnionType> Unions => _unions.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces() => GetInterfaces();
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces() => GetInterfaces();
 
 
         private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;

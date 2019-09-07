@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     public class
-        InternalInterfaceTypeBuilder : InternalFieldsContainerBuilder<InterfaceTypeDefinition,
+        InternalInterfaceTypeBuilder : InternalFieldsBuilder<InterfaceTypeDefinition,
             InternalInterfaceTypeBuilder>
     {
         public InternalInterfaceTypeBuilder(InterfaceTypeDefinition definition,

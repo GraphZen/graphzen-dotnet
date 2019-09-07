@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableEnumTypeDefinition :
         IEnumTypeDefinition,
         IMutableNamedTypeDefinition,
-        IMutableEnumValuesContainerDefinition
+        IMutableEnumValuesDefinition
     {
     }
 }

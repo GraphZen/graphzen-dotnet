@@ -97,6 +97,6 @@ namespace GraphZen.TypeSystem
         public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
         public IReadOnlyDictionary<string, InterfaceType> InterfacesMap => _interfaceMap.Value;
 
-        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces() => GetInterfaces();
+        IEnumerable<IInterfaceTypeDefinition> IInterfacesDefinition.GetInterfaces() => GetInterfaces();
     }
 }

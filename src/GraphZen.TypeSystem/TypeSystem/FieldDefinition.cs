@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem
 
         public FieldDefinition(string name, ConfigurationSource nameConfigurationSource,
             SchemaDefinition schema,
-            FieldsContainerDefinition declaringType,
+            FieldsDefinition declaringType,
             ConfigurationSource configurationSource, MemberInfo? clrInfo) : base(configurationSource)
         {
             Check.NotNull(schema, nameof(schema));
@@ -54,7 +54,7 @@ namespace GraphZen.TypeSystem
         public InternalFieldBuilder Builder { get; }
 
 
-        public FieldsContainerDefinition DeclaringType { get; }
+        public FieldsDefinition DeclaringType { get; }
 
         public MemberInfo? ClrInfo { get; }
 
@@ -105,7 +105,7 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
 
-        IMutableFieldsContainerDefinition IMutableFieldDefinition.DeclaringType => DeclaringType;
+        IMutableFieldsDefinition IMutableFieldDefinition.DeclaringType => DeclaringType;
 
         public bool SetName(string name, ConfigurationSource configurationSource)
         {

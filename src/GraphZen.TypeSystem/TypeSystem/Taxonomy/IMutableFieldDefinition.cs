@@ -20,6 +20,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         new Resolver<object, object?>? Resolver { get; set; }
 
 
-        new IMutableFieldsContainerDefinition DeclaringType { get; }
+        new IMutableFieldsDefinition DeclaringType { get; }
     }
 }

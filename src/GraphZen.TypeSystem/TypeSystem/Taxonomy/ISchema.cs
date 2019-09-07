@@ -10,8 +10,8 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface ISchema : ISchemaDefinition,
         IQueryType, IMutationType, ISubscriptionType,
-        IDirectives, IObjectTypes, IInterfaceTypesContainer, IUnionTypes,
-        IScalarTypes, IEnumTypes, IInputObjectTypesContainer
+        IDirectives, IObjectTypes, IInterfaceTypes, IUnionTypes,
+        IScalarTypes, IEnumTypes, IInputObjectTypes
     {
     }
 }

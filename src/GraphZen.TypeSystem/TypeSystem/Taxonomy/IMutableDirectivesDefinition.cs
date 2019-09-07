@@ -9,9 +9,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableInputObjectTypesContainerDefinition : IInputObjectTypesContainerDefinition
+    public interface IMutableDirectivesDefinition : IDirectivesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<InputObjectTypeDefinition> GetInputObjects();
+        new IEnumerable<DirectiveDefinition> GetDirectives();
     }
 }

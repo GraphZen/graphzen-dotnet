@@ -13,7 +13,7 @@ namespace GraphZen.Configuration.Interfaces.Fields
 {
     public abstract class Interface_Fields :
         CollectionConfigurationFixture<IFields,
-            IFieldsDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field,
+            IFieldsDefinition, IMutableFieldsDefinition, FieldDefinition, Field,
             InterfaceTypeDefinition,
             InterfaceType>
     {

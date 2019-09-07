@@ -10,7 +10,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IObjectTypeDefinition :
         IFieldsDefinition,
-        IInterfacesContainerDefinition,
+        IInterfacesDefinition,
         ICompositeTypeDefinition, IOutputDefinition
     {
         IsTypeOf<object, GraphQLContext>? IsTypeOf { get; }

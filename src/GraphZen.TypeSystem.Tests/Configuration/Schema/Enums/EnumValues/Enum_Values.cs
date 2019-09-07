@@ -13,7 +13,7 @@ namespace GraphZen.Configuration.Enums.EnumValues
 {
     public abstract class Enum_Values :
         CollectionConfigurationFixture<IEnumValues,
-            IEnumValuesDefinition, IMutableEnumValuesContainerDefinition, EnumValueDefinition, EnumValue,
+            IEnumValuesDefinition, IMutableEnumValuesDefinition, EnumValueDefinition, EnumValue,
             EnumTypeDefinition,
             EnumType>
     {

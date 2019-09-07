@@ -11,8 +11,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Configuration.Interfaces
 {
-    public abstract class Schema_Interfaces : CollectionConfigurationFixture<IInterfaceTypesContainer,
-        IInterfaceTypesContainerDefinition, IMutableInterfaceTypesContainerDefinition, InterfaceTypeDefinition,
+    public abstract class Schema_Interfaces : CollectionConfigurationFixture<IInterfaceTypes,
+        IInterfaceTypesDefinition, IMutableInterfaceTypesDefinition, InterfaceTypeDefinition,
         InterfaceType,
         SchemaDefinition,
         Schema>

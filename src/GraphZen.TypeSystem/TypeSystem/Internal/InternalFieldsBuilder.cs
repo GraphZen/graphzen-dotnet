@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.Internal
 {
     public abstract class
         InternalFieldsContainerBuilder<TDefinition, TBuilder> : AnnotatableMemberDefinitionBuilder<TDefinition>
-        where TDefinition : FieldsContainerDefinition
+        where TDefinition : FieldsDefinition
         where TBuilder : InternalFieldsContainerBuilder<TDefinition, TBuilder>
     {
         protected InternalFieldsContainerBuilder(TDefinition definition,

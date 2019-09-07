@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 namespace GraphZen.Configuration.Scalars
 {
     public abstract class Schema_Scalars : CollectionConfigurationFixture<IScalarTypes,
-        IScalarTypesDefinition, IMutableScalarTypesContainerDefinition, ScalarTypeDefinition,
+        IScalarTypesDefinition, IMutableScalarTypesDefinition, ScalarTypeDefinition,
         ScalarType,
         SchemaDefinition,
         Schema>

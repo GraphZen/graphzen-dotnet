@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem
     public interface IObjectTypeBuilder<TObject, TContext> :
         IInfrastructure<InternalObjectTypeBuilder>,
         IAnnotableBuilder<IObjectTypeBuilder<TObject, TContext>>,
-        IFieldsContainerDefinitionBuilder<
+        IFieldsDefinitionBuilder<
             IObjectTypeBuilder<TObject, TContext>, TObject, TContext> where TContext : GraphQLContext
     {
         IObjectTypeBuilder<TObject, TContext> Name(string name);

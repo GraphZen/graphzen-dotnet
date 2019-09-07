@@ -756,7 +756,7 @@ namespace GraphZen.TypeSystem
 
         IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects() => GetObjects();
 
-        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces() => GetInterfaces();
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces() => GetInterfaces();
 
         IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions() => GetUnions();
 
@@ -766,7 +766,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => _types.OfType<InputObjectTypeDefinition>();
 
-        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects() =>
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.GetInputObjects() =>
             GetInputObjects();
 
         IObjectTypeDefinition? IQueryTypeDefinition.QueryType => QueryType;

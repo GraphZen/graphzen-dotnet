@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 namespace GraphZen.Configuration.Enums
 {
     public abstract class Schema_Enums : CollectionConfigurationFixture<IEnumTypes,
-        IEnumTypesDefinition, IMutableEnumTypesContainerDefinition, EnumTypeDefinition,
+        IEnumTypesDefinition, IMutableEnumTypesDefinition, EnumTypeDefinition,
         EnumType,
         SchemaDefinition,
         Schema>

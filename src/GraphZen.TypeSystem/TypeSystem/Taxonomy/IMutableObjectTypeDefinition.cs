@@ -9,7 +9,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IMutableObjectTypeDefinition : IObjectTypeDefinition, IMutableNamedTypeDefinition,
-        IMutableFieldsContainerDefinition, IMutableInterfacesContainerDefinition
+        IMutableFieldsDefinition, IMutableInterfacesDefinition
     {
         new IsTypeOf<object, GraphQLContext>? IsTypeOf { get; }
     }

@@ -8,10 +8,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    [GraphQLIgnore]
-    public interface IInputObjectTypesContainerDefinition
+    public interface IInterfacesDefinition
     {
-        [GraphQLIgnore]
-        IEnumerable<IInputObjectTypeDefinition> GetInputObjects();
+        IEnumerable<IInterfaceTypeDefinition> GetInterfaces();
     }
 }

@@ -13,7 +13,7 @@ namespace GraphZen.Configuration.Objects.Fields
 {
     public abstract class Object_Fields :
         CollectionConfigurationFixture<IFields,
-            IFieldsDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field, ObjectTypeDefinition,
+            IFieldsDefinition, IMutableFieldsDefinition, FieldDefinition, Field, ObjectTypeDefinition,
             ObjectType>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)

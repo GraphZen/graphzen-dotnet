@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     public class
-        InternalObjectTypeBuilder : InternalFieldsContainerBuilder<ObjectTypeDefinition, InternalObjectTypeBuilder>
+        InternalObjectTypeBuilder : InternalFieldsBuilder<ObjectTypeDefinition, InternalObjectTypeBuilder>
     {
         public InternalObjectTypeBuilder(ObjectTypeDefinition definition,
             InternalSchemaBuilder schemaBuilder) : base(

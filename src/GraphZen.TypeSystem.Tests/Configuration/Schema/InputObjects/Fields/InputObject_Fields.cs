@@ -13,7 +13,7 @@ namespace GraphZen.Configuration.InputObjects.Fields
 {
     public abstract class InputObject_Fields :
         CollectionConfigurationFixture<IInputFields,
-            IInputFieldsDefinition, IMutableInputFieldsContainerDefinition, InputFieldDefinition, InputField,
+            IInputFieldsDefinition, IMutableInputFieldsDefinition, InputFieldDefinition, InputField,
             InputObjectTypeDefinition,
             InputObjectType>
     {
