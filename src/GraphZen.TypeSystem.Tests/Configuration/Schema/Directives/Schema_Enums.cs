@@ -46,15 +46,10 @@ namespace GraphZen.Configuration.Directives
             sb.Enum(itemName).Name(newName);
         }
 
-        public override NamedCollection<EnumTypeDefinition> GetCollection(SchemaDefinition parent)
-        {
+        public override NamedCollection<EnumTypeDefinition> GetCollection(SchemaDefinition parent) =>
             throw new NotImplementedException();
-        }
 
-        public override NamedCollection<EnumType> GetCollection(Schema parent)
-        {
-            throw new NotImplementedException();
-        }
+        public override NamedCollection<EnumType> GetCollection(Schema parent) => throw new NotImplementedException();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
             parent.FindIgnoredTypeConfigurationSource(name);

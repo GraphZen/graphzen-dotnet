@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
@@ -27,7 +28,7 @@ namespace GraphZen.Configuration
             TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
-                var schema = TypeSystem.Schema.Create(sb =>
+                var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var parentDef = fixture.GetParent(sb, context.ParentName);
@@ -50,7 +51,7 @@ namespace GraphZen.Configuration
             TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
-                var schema = TypeSystem.Schema.Create(sb =>
+                var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, context.ParentName);
                     var parentDef = fixture.GetParent(sb, context.ParentName);
@@ -76,7 +77,7 @@ namespace GraphZen.Configuration
             TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
-                var schema = TypeSystem.Schema.Create(sb =>
+                var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, context.ParentName);
                     fixture.ConfigureExplicitly(sb, context.ParentName, fixture.ValueA);
