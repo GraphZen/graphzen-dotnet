@@ -4,13 +4,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen
+namespace GraphZen.Configuration
 {
     [NoReorder]
     public class LeafExplicitConfigurationTests : TestDataHelper<ILeafExplicitConfigurationFixture>
@@ -26,7 +26,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var parentName = "parent";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.GetParent(sb, parentName).Should().BeOfType(fixture.ParentMemberDefinitionType);
@@ -43,7 +43,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var parentName = "parent";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     var parentDef = fixture.GetParent(sb, parentName);
@@ -64,7 +64,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var parentName = "parent";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     var parentDef = fixture.GetParent(sb, parentName);
@@ -89,7 +89,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var parentName = "parent";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     var parentDef = fixture.GetParent(sb, parentName);
@@ -114,7 +114,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var parentName = "parent";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     var parentDef = fixture.GetParent(sb, parentName);

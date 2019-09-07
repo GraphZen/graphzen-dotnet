@@ -3,11 +3,12 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.Enums.EnumValues.Description
+namespace GraphZen.Configuration.Enums.EnumValues.Description
 {
     public class EnumValue_ViaClrEnumValue_Description : EnumValue_Description, ILeafConventionConfigurationFixture
     {

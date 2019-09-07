@@ -10,6 +10,7 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
+using GraphZen.Utilities;
 using JetBrains.Annotations;
 
 #nullable disable

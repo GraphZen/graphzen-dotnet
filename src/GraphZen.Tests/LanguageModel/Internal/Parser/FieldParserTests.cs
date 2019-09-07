@@ -21,7 +21,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         {
             var source = "bar: foo";
             var tokens = _sut.Tokenize(source);
-            var test = Grammar.Grammar.Field(tokens);
+            var test = Grammar.Field(tokens);
             var expectedValue = new FieldSyntax(SyntaxFactory.Name("foo"), SyntaxFactory.Name("bar"));
             Assert.True(expectedValue.Equals(test.Value));
         }
@@ -31,7 +31,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         {
             var source = @"bar: foo(booleanParam: false, stringParam: ""foo"", intParam: -1, floatParam: 4.123e-3)";
             var tokens = _sut.Tokenize(source);
-            var test = Grammar.Grammar.Field(tokens);
+            var test = Grammar.Field(tokens);
             var expectedValue = new FieldSyntax(SyntaxFactory.Name("foo"),
                 arguments: new[]
                 {
@@ -49,7 +49,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         {
             var source = "foo";
             var tokens = _sut.Tokenize(source);
-            var test = Grammar.Grammar.Field(tokens);
+            var test = Grammar.Field(tokens);
             var expectedValue = SyntaxFactory.Field(SyntaxFactory.Name("foo"));
             Assert.True(expectedValue.Equals(test.Value));
         }

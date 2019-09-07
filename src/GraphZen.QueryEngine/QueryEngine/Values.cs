@@ -15,6 +15,7 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using GraphZen.Utilities;
 using JetBrains.Annotations;
 
 #nullable disable

@@ -14,7 +14,7 @@ using JetBrains.Annotations;
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.Utilities
 {
     public class TypeInfo
     {

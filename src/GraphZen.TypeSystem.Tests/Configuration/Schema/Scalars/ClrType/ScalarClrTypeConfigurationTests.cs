@@ -8,7 +8,7 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Scalars.ClrType
+namespace GraphZen.Configuration.Scalars.ClrType
 {
     [NoReorder]
     public class ScalarClrTypeConfigurationTests

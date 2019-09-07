@@ -2,13 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Enums
+namespace GraphZen.Configuration.Enums
 {
     public abstract class Schema_Enums : CollectionConfigurationFixture<IEnumTypesContainer,
         IEnumTypesContainerDefinition, IMutableEnumTypesContainerDefinition, EnumTypeDefinition,

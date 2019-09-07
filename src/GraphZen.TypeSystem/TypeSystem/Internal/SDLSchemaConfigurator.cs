@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.LanguageModel.Internal.Grammar;
+using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal

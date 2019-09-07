@@ -8,7 +8,7 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Objects.ClrType
+namespace GraphZen.Configuration.Objects.ClrType
 {
     [NoReorder]
     public class ObjectClrTypeConfigurationTests

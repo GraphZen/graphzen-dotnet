@@ -8,7 +8,7 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Enums.Description
+namespace GraphZen.Configuration.Enums.Description
 {
     public abstract class Enum_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,

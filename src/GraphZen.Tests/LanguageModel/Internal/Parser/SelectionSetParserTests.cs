@@ -34,7 +34,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
 ";
 
             var tokens = _sut.Tokenize(source);
-            var testResult = Grammar.Grammar.SelectionSet(tokens);
+            var testResult = Grammar.SelectionSet(tokens);
             var expectedResultValue = SyntaxFactory.SelectionSet(
                 SyntaxFactory.Field(SyntaxFactory.Name("foo")),
                 SyntaxFactory.FragmentSpread(SyntaxFactory.Name("barFields")),
@@ -50,7 +50,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         public void SelectionSetWithField()
         {
             var tokens = _sut.Tokenize("{foo}");
-            var testResult = Grammar.Grammar.SelectionSet(tokens);
+            var testResult = Grammar.SelectionSet(tokens);
             var expectedResultValue = SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("foo")));
             Assert.Equal(expectedResultValue, testResult.Value);
         }
@@ -59,7 +59,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         public void SelectionSetWithMultipleFields()
         {
             var tokens = _sut.Tokenize("{foo bar}");
-            var testResult = Grammar.Grammar.SelectionSet(tokens);
+            var testResult = Grammar.SelectionSet(tokens);
             var expectedResultValue = SyntaxFactory.SelectionSet(
                 SyntaxFactory.Field(SyntaxFactory.Name("foo")),
                 SyntaxFactory.Field(SyntaxFactory.Name("bar"))
@@ -71,7 +71,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         public void SelectionSetWithMultipleFieldsWithCommas()
         {
             var tokens = _sut.Tokenize("{foo,bar}");
-            var testResult = Grammar.Grammar.SelectionSet(tokens);
+            var testResult = Grammar.SelectionSet(tokens);
             var expectedResultValue = SyntaxFactory.SelectionSet(
                 SyntaxFactory.Field(SyntaxFactory.Name("foo")),
                 SyntaxFactory.Field(SyntaxFactory.Name("bar"))

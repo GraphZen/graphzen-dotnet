@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.Configuration.Infrastructure
 {
     public interface ICollectionExplicitConfigurationFixture : ICollectionConfigurationFixture
     {

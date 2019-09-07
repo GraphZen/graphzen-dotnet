@@ -10,12 +10,12 @@ using Superpower;
 #nullable disable
 
 
-namespace GraphZen.LanguageModel.Internal.Grammar
+namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar
     {
         internal static TokenListParser<TokenKind, StringValueSyntax> Description { get; } =
-            (from value in Parse.Ref(() => StringValue) select value)
+            (from value in Parse.Ref(() => Grammar.StringValue) select value)
             .Select(_ =>
             {
                 Debug.Assert(_ != null, nameof(_) + " != null");

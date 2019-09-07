@@ -4,13 +4,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen
+namespace GraphZen.Configuration
 {
     [NoReorder]
     public class CollectionConventionConfigurationTests : TestDataHelper<ICollectionConventionConfigurationFixture>
@@ -26,7 +26,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     fixture.GetParent(sb, context.ParentName).Should().BeOfType(fixture.ParentMemberDefinitionType);
@@ -45,7 +45,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, context.ParentName);
@@ -71,7 +71,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var context = fixture.GetContext();
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, context.ParentName);
@@ -98,7 +98,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var parentName = "parent";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.GetParent(sb, parentName).Should().BeOfType(fixture.ParentMemberDefinitionType);
@@ -116,7 +116,7 @@ namespace GraphZen
             {
                 var ctx = fixture.GetContext();
 
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     //fixture.GetParent(sb, ctx.ParentName).GetType().Should().Be(fixture.Pa)
@@ -144,7 +144,7 @@ namespace GraphZen
             {
                 var ctx = fixture.GetContext();
                 var explicitName = "ExplicitName";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
@@ -176,7 +176,7 @@ namespace GraphZen
             {
                 var ctx = fixture.GetContext();
 
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
@@ -204,7 +204,7 @@ namespace GraphZen
             {
                 var ctx = fixture.GetContext();
                 var explicitName = "ExplicitName";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
@@ -234,7 +234,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
@@ -257,7 +257,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
@@ -283,7 +283,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
@@ -305,7 +305,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var defCollection = fixture.GetCollection(sb, ctx.ParentName);
@@ -332,7 +332,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var ctx = fixture.GetContext();
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, ctx.ParentName);
                     fixture.ConfigureClrContext(sb, ctx.ParentName);

@@ -8,7 +8,7 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.InputObjects.Fields.Description
+namespace GraphZen.Configuration.InputObjects.Fields.Description
 {
     public abstract class InputObject_Field_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,

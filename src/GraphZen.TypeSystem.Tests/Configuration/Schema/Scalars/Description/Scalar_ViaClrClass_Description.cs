@@ -3,11 +3,12 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.Scalars.Description
+namespace GraphZen.Configuration.Scalars.Description
 {
     public class Scalar_ViaClrClass_Description : Scalar_Description, ILeafConventionConfigurationFixture
     {

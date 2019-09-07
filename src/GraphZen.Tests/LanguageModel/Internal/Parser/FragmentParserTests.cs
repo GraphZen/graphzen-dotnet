@@ -22,7 +22,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         {
             var source = "... address";
             var tokens = _sut.Tokenize(source);
-            var test = Grammar.Grammar.FragmentSpread(tokens);
+            var test = Grammar.FragmentSpread(tokens);
             var expectedValue = SyntaxFactory.FragmentSpread(SyntaxFactory.Name("address"));
             Assert.Equal(expectedValue, test.Value);
         }
@@ -33,7 +33,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         {
             var source = "... address @include";
             var tokens = _sut.Tokenize(source);
-            var test = Grammar.Grammar.FragmentSpread(tokens);
+            var test = Grammar.FragmentSpread(tokens);
             var expectedValue = new FragmentSpreadSyntax(SyntaxFactory.Name("address"),
                 new[]
                 {
@@ -47,7 +47,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         {
             var source = " ... on Bar @include(times: 1) {foo}";
             var tokens = _sut.Tokenize(source);
-            var test = Grammar.Grammar.InlineFragment(tokens);
+            var test = Grammar.InlineFragment(tokens);
             var expectedValue = new InlineFragmentSyntax(
                 SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("foo"))),
                 SyntaxFactory.NamedType(SyntaxFactory.Name("Bar")),
@@ -78,7 +78,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
   }
 ";
             var tokens = _sut.Tokenize(source);
-            var test = Grammar.Grammar.SelectionSet(tokens);
+            var test = Grammar.SelectionSet(tokens);
             test.ThrowOnParserError();
         }
 
@@ -87,7 +87,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         {
             var source = "... {foo}";
             var tokens = _sut.Tokenize(source);
-            var test = Grammar.Grammar.InlineFragment(tokens);
+            var test = Grammar.InlineFragment(tokens);
             var expectedValue =
                 new InlineFragmentSyntax(SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("foo"))));
             Assert.Equal(expectedValue, test.Value);
@@ -101,7 +101,7 @@ fragment address on User @directive {
     line1
 }";
             var tokens = _sut.Tokenize(source);
-            var test = Grammar.Grammar.FragmentDefinition(tokens);
+            var test = Grammar.FragmentDefinition(tokens);
             var expectedValue = new FragmentDefinitionSyntax(SyntaxFactory.Name("address"),
                 SyntaxFactory.NamedType(SyntaxFactory.Name("User")),
                 SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("line1"))), new[]

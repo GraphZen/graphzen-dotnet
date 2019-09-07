@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.Utilities
 {
     public static partial class Helpers
     {

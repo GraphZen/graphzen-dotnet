@@ -3,11 +3,12 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.InputObjects
+namespace GraphZen.Configuration.InputObjects
 {
     public class Schema_InputObjects_ViaClrClasses : Schema_InputObjects, ICollectionConventionConfigurationFixture
     {

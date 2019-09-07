@@ -7,7 +7,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.Configuration.Infrastructure
 {
     public abstract class ConfigurationFixture<
         TMarker,

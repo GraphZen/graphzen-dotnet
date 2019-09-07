@@ -4,13 +4,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen
+namespace GraphZen.Configuration
 {
     [NoReorder]
     public class CollectionExplicitConfigurationTests : TestDataHelper<ICollectionExplicitConfigurationFixture>
@@ -26,7 +26,7 @@ namespace GraphZen
             TestData(fixture, () =>
             {
                 var parentName = "parent";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.GetParent(sb, parentName).Should().BeOfType(fixture.ParentMemberDefinitionType);
@@ -45,7 +45,7 @@ namespace GraphZen
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -71,7 +71,7 @@ namespace GraphZen
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -95,7 +95,7 @@ namespace GraphZen
             {
                 var itemName = "addedExplicitly";
                 var parentName = "parent";
-                Schema.Create(sb =>
+                TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -116,7 +116,7 @@ namespace GraphZen
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -143,7 +143,7 @@ namespace GraphZen
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -171,7 +171,7 @@ namespace GraphZen
             {
                 var itemName = "addedExplicitly";
                 var parentName = "parent";
-                Schema.Create(sb =>
+                TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -191,7 +191,7 @@ namespace GraphZen
             {
                 var parentName = "test";
                 var itemName = "item";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -218,7 +218,7 @@ namespace GraphZen
                 var parentName = "test";
                 var initialItemName = "item";
                 var changedItemName = "itemFinal";
-                var schema = Schema.Create(sb =>
+                var schema = TypeSystem.Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, initialItemName);

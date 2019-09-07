@@ -13,14 +13,10 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface ILeafType : INamedType
     {
         Maybe<object> Serialize(object value);
-
         bool IsValidValue(string value);
         bool IsValidLiteral(ValueSyntax value);
 
-
         Maybe<object> ParseValue(object value);
-
-
         Maybe<object> ParseLiteral(ValueSyntax value);
     }
 }

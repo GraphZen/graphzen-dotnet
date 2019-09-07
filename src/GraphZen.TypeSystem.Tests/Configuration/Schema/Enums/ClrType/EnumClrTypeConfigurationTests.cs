@@ -8,7 +8,7 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Enums.ClrType
+namespace GraphZen.Configuration.Enums.ClrType
 {
     [NoReorder]
     public class EnumClrTypeConfigurationTests

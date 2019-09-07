@@ -7,7 +7,7 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.Configuration.Infrastructure
 {
     public interface ILeafConfigurationFixture : IConfigurationFixture
     {

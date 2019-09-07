@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.QueryEngine;
+using GraphZen.Utilities;
 using JetBrains.Annotations;
 using Xunit;
 
 #nullable disable
 
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.IntrospectionTests
 {
     [NoReorder]
     public class IntrospectionTests : ExecutorHarness

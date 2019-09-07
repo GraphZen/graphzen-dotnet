@@ -53,13 +53,20 @@ namespace GraphZen.TypeSystem
 
 
         public IObjectTypeBuilder<TObject, TContext> Field(string name,
-            Action<IFieldBuilder<TObject, object, TContext>>? configurator = null)
+            Action<IFieldBuilder<TObject, object, TContext>> configurator)
         {
             Check.NotNull(name, nameof(name));
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
 
             configurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
             return this;
+        }
+
+        public IFieldBuilder<TObject, object, TContext> Field(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
+            return new FieldBuilder<TObject, object, TContext>(ib);
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field(string name, string type,
@@ -97,21 +104,21 @@ namespace GraphZen.TypeSystem
         public IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value, (TContext)context));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value, (TContext) context));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, ResolveInfo, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value, (TContext)context, info));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value, (TContext) context, info));
             return this;
         }
 

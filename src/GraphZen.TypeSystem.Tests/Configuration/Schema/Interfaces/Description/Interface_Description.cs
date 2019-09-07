@@ -8,7 +8,7 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Interfaces.Description
+namespace GraphZen.Configuration.Interfaces.Description
 {
     public abstract class Interface_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,

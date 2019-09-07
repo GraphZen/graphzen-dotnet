@@ -3,11 +3,12 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.Interfaces.Fields
+namespace GraphZen.Configuration.Interfaces.Fields
 {
     public class Interface_Fields_ViaClrMethods : Interface_Fields, ICollectionConventionConfigurationFixture
     {

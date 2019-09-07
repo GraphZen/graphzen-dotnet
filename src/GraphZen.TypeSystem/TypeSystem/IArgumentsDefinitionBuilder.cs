@@ -8,10 +8,10 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public interface IArgumentsContainerDefinitionBuilder<out TBuilder>
+    public interface IArgumentsDefinitionBuilder<out TBuilder>
     {
-        TBuilder Argument(string name, Action<InputValueBuilder>? configurator = null);
-
+        TBuilder Argument(string name, Action<InputValueBuilder> configurator);
+        InputValueBuilder Argument(string name);
 
         TBuilder Argument(string name, string type, Action<InputValueBuilder>? configurator = null);
 

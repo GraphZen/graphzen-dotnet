@@ -4,6 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
+using GraphZen.Utilities;
 using JetBrains.Annotations;
 
 #nullable disable

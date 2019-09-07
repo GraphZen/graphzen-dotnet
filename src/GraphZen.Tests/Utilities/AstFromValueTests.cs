@@ -14,7 +14,7 @@ using static GraphZen.LanguageModel.SyntaxFactory;
 using static GraphZen.TypeSystem.Internal.AstFromValue;
 using ListType = GraphZen.TypeSystem.ListType;
 
-namespace GraphZen
+namespace GraphZen.Utilities
 {
     [NoReorder]
     public class AstFromValueTests

@@ -2,12 +2,13 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.Unions
+namespace GraphZen.Configuration.Unions
 {
     public class Schema_Unions_ViaMarkerInterface : Schema_Unions, ICollectionConventionConfigurationFixture
     {

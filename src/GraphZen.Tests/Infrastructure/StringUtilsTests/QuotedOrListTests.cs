@@ -10,22 +10,21 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Infrastructure.StringUtils;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure.StringUtilsTests
 {
     public class QuotedOrListTests
     {
         [Fact]
         public void DoesNotAcceptAnEmptyList()
         {
-            ((Action)(() => QuotedOrList())).Should().Throw<Exception>();
+            ((Action) (() => QuotedOrList())).Should().Throw<Exception>();
         }
 
 
         [Fact]
         public void LimitsToFiveItems()
         {
-            QuotedOrList("A", "B", "C", "D", "E", "F")
-                .Should().Be("\"A\", \"B\", \"C\", \"D\", or \"E\"");
+            QuotedOrList("A", "B", "C", "D", "E", "F").Should().Be("\"A\", \"B\", \"C\", \"D\", or \"E\"");
         }
 
         [Fact]

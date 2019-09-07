@@ -2,13 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Objects.Interfaces
+namespace GraphZen.Configuration.Objects.Interfaces
 {
     public abstract class Object_Interfaces :
         CollectionConfigurationFixture<IInterfacesContainer,

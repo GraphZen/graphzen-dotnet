@@ -46,13 +46,20 @@ namespace GraphZen.TypeSystem
 
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name,
-            Action<IFieldBuilder<TInterface, object, TContext>>? configurator = null)
+            Action<IFieldBuilder<TInterface, object, TContext>> configurator)
         {
             Check.NotNull(name, nameof(name));
             var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
 
             configurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
             return this;
+        }
+
+        public IFieldBuilder<TInterface, object, TContext> Field(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            return new FieldBuilder<TInterface, object, TContext>(Builder.Field(name, ConfigurationSource.Explicit,
+                ConfigurationSource.Explicit)!);
         }
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name, string type,
@@ -112,7 +119,7 @@ namespace GraphZen.TypeSystem
             TypeResolver<TInterface, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface)value, (TContext)context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface) value, (TContext) context, info));
             return this;
         }
 

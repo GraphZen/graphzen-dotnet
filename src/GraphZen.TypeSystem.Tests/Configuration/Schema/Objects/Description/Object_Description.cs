@@ -8,7 +8,7 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Objects
+namespace GraphZen.Configuration.Objects.Description
 {
     public abstract class Object_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,

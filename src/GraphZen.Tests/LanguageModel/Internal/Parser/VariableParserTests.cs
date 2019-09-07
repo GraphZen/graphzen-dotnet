@@ -27,7 +27,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         public void VariableDefinition()
         {
             var tokens = _sut.Tokenize("$name");
-            var test = Grammar.Grammar.Variable(tokens);
+            var test = Grammar.Variable(tokens);
             var expectedValue = SyntaxFactory.Variable(SyntaxFactory.Name("name"));
             Assert.Equal(expectedValue, test.Value);
         }

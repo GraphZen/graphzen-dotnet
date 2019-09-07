@@ -13,22 +13,19 @@ namespace GraphZen.TypeSystem
     {
         TBuilder Field<TField>(string name, Action<IFieldBuilder<TSource, TField, TContext>>? configurator = null);
 
-        TBuilder Field(string name, Action<IFieldBuilder<TSource, object, TContext>>? configurator = null);
+        TBuilder Field(string name, Action<IFieldBuilder<TSource, object, TContext>> configurator);
 
+        IFieldBuilder<TSource, object, TContext> Field(string name);
 
         TBuilder Field(string name, string type,
             Action<IFieldBuilder<TSource, object?, TContext>>? configurator = null);
 
-
         TBuilder Field<TField>(Expression<Func<TSource, TField>> selector,
             Action<IFieldBuilder<TSource, TField, TContext>>? configurator = null);
 
-
         TBuilder IgnoreField<TField>(Expression<Func<TSource, TField>> selector);
 
-
         TBuilder IgnoreField(string name);
-
 
         TBuilder UnignoreField(string name);
     }

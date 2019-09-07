@@ -3,11 +3,12 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.Unions.Description
+namespace GraphZen.Configuration.Unions.Description
 {
     public class Union_ViaClrClass_Description : Union_Description, ILeafConventionConfigurationFixture
     {

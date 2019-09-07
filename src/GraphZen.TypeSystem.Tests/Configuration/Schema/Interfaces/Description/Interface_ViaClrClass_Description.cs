@@ -3,11 +3,12 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.Interfaces.Description
+namespace GraphZen.Configuration.Interfaces.Description
 {
     public class Interface_ViaClrClass_Description : Interface_Description, ILeafConventionConfigurationFixture
     {

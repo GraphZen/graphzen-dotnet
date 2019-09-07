@@ -8,7 +8,7 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Unions.ClrType
+namespace GraphZen.Configuration.Unions.ClrType
 {
     [NoReorder]
     public class UnionClrTypeConfigurationTests

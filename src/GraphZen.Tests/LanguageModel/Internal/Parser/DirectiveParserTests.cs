@@ -20,7 +20,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         public void NameOnly()
         {
             var tokens = _tokenizer.Tokenize("@skip");
-            var testResult = Grammar.Grammar.Directives(tokens);
+            var testResult = Grammar.Directives(tokens);
             var expectedValue = new[]
             {
                 SyntaxFactory.Directive(SyntaxFactory.Name("skip"))
@@ -32,7 +32,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         public void NameWithArguments()
         {
             var tokens = _tokenizer.Tokenize("@skip(count: 1)");
-            var testResult = Grammar.Grammar.Directives(tokens);
+            var testResult = Grammar.Directives(tokens);
             var expectedValue =
                 new[]
                 {

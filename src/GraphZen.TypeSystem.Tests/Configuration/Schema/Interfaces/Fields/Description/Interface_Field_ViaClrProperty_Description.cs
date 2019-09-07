@@ -3,11 +3,12 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.Interfaces.Fields.Description
+namespace GraphZen.Configuration.Interfaces.Fields.Description
 {
     public class Interface_Field_ViaClrProperty_Description : Interface_Field_Description,
         ILeafConventionConfigurationFixture

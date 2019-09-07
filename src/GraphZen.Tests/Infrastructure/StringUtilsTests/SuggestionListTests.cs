@@ -6,30 +6,31 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.Infrastructure.StringUtils;
 
 #nullable disable
 
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure.StringUtilsTests
 {
     public class SuggestionListTests
     {
         [Fact]
         public void ReturnsEmptyArrayWhenThereAreNoOptions()
         {
-            StringUtils.GetSuggestionList("input").Should().BeEquivalentTo();
+            GetSuggestionList("input").Should().BeEquivalentTo();
         }
 
         [Fact]
         public void ReturnsOptionsSortedBasedOnSimilarity()
         {
-            StringUtils.GetSuggestionList("abc", "a", "ab", "abc").Should().BeEquivalentTo("abc", "ab");
+            GetSuggestionList("abc", "a", "ab", "abc").Should().BeEquivalentTo("abc", "ab");
         }
 
         [Fact]
         public void ReturnsResultsWhenInputIsEmpty()
         {
-            StringUtils.GetSuggestionList("", "a").Should().BeEquivalentTo("a");
+            GetSuggestionList("", "a").Should().BeEquivalentTo("a");
         }
     }
 }

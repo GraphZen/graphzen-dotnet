@@ -18,7 +18,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.Utilities
 {
     [NoReorder]
     public class SDLSchemaConfiguratorTests : ExecutorHarness
