@@ -13,6 +13,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         new IGraphQLType FieldType { get; }
 
 
-        new IFieldsContainer DeclaringType { get; }
+        new IFields DeclaringType { get; }
     }
 }

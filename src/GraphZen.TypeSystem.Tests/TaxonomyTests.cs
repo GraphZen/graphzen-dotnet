@@ -211,7 +211,7 @@ namespace GraphZen
         [Fact(Skip = "wip")]
         public void Annotated()
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(IDirectives));
+            var types = ClrTypeUtils.GetImplementedTypes(typeof(IDirectiveAnnotations));
 
             var expected = new[]
             {

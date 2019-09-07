@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel
     ///     Field selection
     ///     http://facebook.github.io/graphql/June2018/#sec-Language.Fields
     /// </summary>
-    public partial class FieldSyntax : SelectionSyntax, IArgumentsContainerNode
+    public partial class FieldSyntax : SelectionSyntax, IArgumentsNode
     {
         public FieldSyntax(NameSyntax name, SelectionSetSyntax selectionSet) : this(name, null, null, null,
             selectionSet)

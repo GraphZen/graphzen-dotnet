@@ -8,11 +8,12 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    public interface IInputFieldsContainer : IInputFieldsContainerDefinition
+    [GraphQLIgnore]
+    public interface IUnionTypes : IUnionTypesDefinition
     {
-        IReadOnlyDictionary<string, InputField> Fields { get; }
+        [GraphQLIgnore]
+        new IEnumerable<UnionType> GetUnions();
 
-
-        new IEnumerable<InputField> GetFields();
+        [GraphQLIgnore] IReadOnlyList<UnionType> Unions { get; }
     }
 }

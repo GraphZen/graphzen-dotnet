@@ -50,6 +50,6 @@ namespace GraphZen.TypeSystem
                 definition.GetFields(), definition.DirectiveAnnotations, schema);
         }
 
-        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields() => GetFields();
+        IEnumerable<IInputFieldDefinition> IInputFieldsDefinition.GetFields() => GetFields();
     }
 }

@@ -6,13 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
-namespace GraphZen.LanguageModel
+namespace GraphZen.TypeSystem.Taxonomy
 {
-    public interface IArgumentsContainerNode
+    public interface IInputFields : IInputFieldsDefinition
     {
-        IReadOnlyList<ArgumentSyntax> Arguments { get; }
+        IReadOnlyDictionary<string, InputField> Fields { get; }
+
+
+        new IEnumerable<InputField> GetFields();
     }
 }

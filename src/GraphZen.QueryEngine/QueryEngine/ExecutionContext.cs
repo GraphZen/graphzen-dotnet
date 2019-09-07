@@ -256,7 +256,7 @@ namespace GraphZen.QueryEngine
 
 
         internal ResolveInfo Build(Field fieldDefinition,
-            IReadOnlyList<FieldSyntax> fieldNodes, IFieldsContainer parentType,
+            IReadOnlyList<FieldSyntax> fieldNodes, IFields parentType,
             ResponsePath path) =>
             new ResolveInfo(
                 fieldNodes[0].Name.Value,

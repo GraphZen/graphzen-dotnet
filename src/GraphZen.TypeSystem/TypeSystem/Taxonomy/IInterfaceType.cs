@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IInterfaceType : IInterfaceTypeDefinition,
         ICompositeType,
         IAbstractType,
-        IFieldsContainer
+        IFields
     {
     }
 }

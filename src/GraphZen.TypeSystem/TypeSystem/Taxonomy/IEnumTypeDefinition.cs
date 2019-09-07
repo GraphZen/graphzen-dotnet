@@ -9,7 +9,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IEnumTypeDefinition :
-        IEnumValuesContainerDefinition,
+        IEnumValuesDefinition,
         ILeafTypeDefinition,
         IInputDefinition,
         IOutputDefinition

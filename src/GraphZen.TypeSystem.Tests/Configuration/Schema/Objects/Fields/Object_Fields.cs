@@ -12,8 +12,8 @@ using JetBrains.Annotations;
 namespace GraphZen.Configuration.Objects.Fields
 {
     public abstract class Object_Fields :
-        CollectionConfigurationFixture<IFieldsContainer,
-            IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field, ObjectTypeDefinition,
+        CollectionConfigurationFixture<IFields,
+            IFieldsDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field, ObjectTypeDefinition,
             ObjectType>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)

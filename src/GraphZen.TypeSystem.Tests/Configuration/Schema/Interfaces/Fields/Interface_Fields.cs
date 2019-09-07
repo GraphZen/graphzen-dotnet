@@ -12,8 +12,8 @@ using JetBrains.Annotations;
 namespace GraphZen.Configuration.Interfaces.Fields
 {
     public abstract class Interface_Fields :
-        CollectionConfigurationFixture<IFieldsContainer,
-            IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field,
+        CollectionConfigurationFixture<IFields,
+            IFieldsDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field,
             InterfaceTypeDefinition,
             InterfaceType>
     {

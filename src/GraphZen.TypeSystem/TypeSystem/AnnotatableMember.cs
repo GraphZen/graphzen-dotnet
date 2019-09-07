@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public abstract class AnnotatableMember : Member, IDirectives
+    public abstract class AnnotatableMember : Member, IDirectiveAnnotations
     {
         protected AnnotatableMember(IReadOnlyList<IDirectiveAnnotation>? directives)
         {

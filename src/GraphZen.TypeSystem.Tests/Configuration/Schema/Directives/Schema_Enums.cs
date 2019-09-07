@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
@@ -9,11 +10,11 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Unions
+namespace GraphZen.Configuration.Directives
 {
-    public abstract class Schema_Unions : CollectionConfigurationFixture<IUnionTypes,
-        IUnionTypesDefinition, IMutableUnionTypesContainerDefinition, UnionTypeDefinition,
-        UnionType,
+    public abstract class Schema_Directives : CollectionConfigurationFixture<IEnumTypes,
+        IEnumTypesDefinition, IMutableEnumTypesContainerDefinition, EnumTypeDefinition,
+        EnumType,
         SchemaDefinition,
         Schema>
     {
@@ -27,7 +28,7 @@ namespace GraphZen.Configuration.Unions
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
-            sb.Union(name);
+            sb.Enum(name);
         }
 
         public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
@@ -42,13 +43,18 @@ namespace GraphZen.Configuration.Unions
 
         public override void RenameItem(SchemaBuilder sb, string parentName, string itemName, string newName)
         {
-            sb.Union(itemName).Name(newName);
+            sb.Enum(itemName).Name(newName);
         }
 
-        public override NamedCollection<UnionTypeDefinition> GetCollection(SchemaDefinition parent) =>
-            parent.GetUnions().ToNamedCollection();
+        public override NamedCollection<EnumTypeDefinition> GetCollection(SchemaDefinition parent)
+        {
+            throw new NotImplementedException();
+        }
 
-        public override NamedCollection<UnionType> GetCollection(Schema parent) => parent.Unions.ToNamedCollection();
+        public override NamedCollection<EnumType> GetCollection(Schema parent)
+        {
+            throw new NotImplementedException();
+        }
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
             parent.FindIgnoredTypeConfigurationSource(name);

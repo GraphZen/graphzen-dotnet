@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableEnumValuesContainerDefinition : IEnumValuesContainerDefinition
+    public interface IMutableEnumValuesContainerDefinition : IEnumValuesDefinition
     {
         IReadOnlyDictionary<string, EnumValueDefinition> Values { get; }
         ConfigurationSource? FindIgnoredValueConfigurationSource(string name);

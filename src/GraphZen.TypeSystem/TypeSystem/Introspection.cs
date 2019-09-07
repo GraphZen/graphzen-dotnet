@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem
                     _.Argument("includeDeprecated", "Boolean", a => a.DefaultValue(false))
                         .Resolve((type, args) =>
                         {
-                            if (type is IFieldsContainer fieldsType)
+                            if (type is IFields fieldsType)
                             {
                                 var includeDeprecated = args.includeDeprecated == true;
                                 return fieldsType.Fields.Values.Where(field =>

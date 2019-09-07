@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
 
-        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => GetFields();
+        IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => GetFields();
 
 
         public void UnignoreField(string fieldName)

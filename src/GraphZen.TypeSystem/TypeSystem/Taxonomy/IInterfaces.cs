@@ -8,13 +8,15 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    [GraphQLIgnore]
-    public interface IFieldsContainer : IFieldsContainerDefinition, INamedType
+    public interface IInterfaces : IInterfacesContainerDefinition
+
     {
-        IReadOnlyDictionary<string, Field> Fields { get; }
+        IReadOnlyList<InterfaceType> Interfaces { get; }
 
 
-        [GraphQLCanBeNull]
-        new IEnumerable<Field> GetFields();
+        IReadOnlyDictionary<string, InterfaceType> InterfacesMap { get; }
+
+
+        new IEnumerable<InterfaceType> GetInterfaces();
     }
 }

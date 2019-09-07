@@ -77,7 +77,7 @@ namespace GraphZen.TypeSystem
         public IGraphQLTypeReference? FieldType { get; set; }
         public Resolver<object, object?>? Resolver { get; set; }
 
-        IFieldsContainerDefinition IFieldDefinition.DeclaringType => DeclaringType;
+        IFieldsDefinition IFieldDefinition.DeclaringType => DeclaringType;
 
         public string Name { get; private set; }
 

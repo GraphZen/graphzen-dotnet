@@ -9,11 +9,12 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IDirectivesContainer : IDirectivesContainerDefinition
+    public interface IFields : IFieldsDefinition, INamedType
     {
-        [GraphQLIgnore]
-        new IEnumerable<Directive> GetDirectives();
+        IReadOnlyDictionary<string, Field> Fields { get; }
 
-        [GraphQLIgnore] IReadOnlyList<Directive> Directives { get; }
+
+        [GraphQLCanBeNull]
+        new IEnumerable<Field> GetFields();
     }
 }

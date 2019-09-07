@@ -9,7 +9,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IObjectTypeDefinition :
-        IFieldsContainerDefinition,
+        IFieldsDefinition,
         IInterfacesContainerDefinition,
         ICompositeTypeDefinition, IOutputDefinition
     {

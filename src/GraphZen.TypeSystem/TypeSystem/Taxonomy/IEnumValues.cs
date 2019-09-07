@@ -9,11 +9,14 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IScalarTypesContainer : IScalarTypesContainerDefinition
+    public interface IEnumValues : IEnumValuesDefinition
     {
-        [GraphQLIgnore]
-        new IEnumerable<ScalarType> GetScalars();
+        IReadOnlyDictionary<string, EnumValue> Values { get; }
 
-        [GraphQLIgnore] IReadOnlyList<ScalarType> Scalars { get; }
+
+        IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
+
+
+        new IEnumerable<EnumValue> GetValues();
     }
 }

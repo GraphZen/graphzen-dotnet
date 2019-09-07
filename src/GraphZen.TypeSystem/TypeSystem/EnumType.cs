@@ -88,7 +88,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<EnumValue> GetValues() => Values.Values;
 
-        IEnumerable<IEnumValueDefinition> IEnumValuesContainerDefinition.GetValues() => GetValues();
+        IEnumerable<IEnumValueDefinition> IEnumValuesDefinition.GetValues() => GetValues();
 
 
         [GraphQLIgnore]

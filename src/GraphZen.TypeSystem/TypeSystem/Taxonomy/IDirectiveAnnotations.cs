@@ -4,17 +4,20 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IObjectTypesContainer : IObjectTypesContainerDefinition
+    public interface IDirectiveAnnotations
     {
-        [GraphQLIgnore]
-        new IEnumerable<ObjectType> GetObjects();
+        DirectiveLocation DirectiveLocation { get; }
 
 
-        [GraphQLIgnore] IReadOnlyList<ObjectType> Objects { get; }
+        IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations { get; }
+
+
+        IDirectiveAnnotation FindDirectiveAnnotation(string name);
     }
 }

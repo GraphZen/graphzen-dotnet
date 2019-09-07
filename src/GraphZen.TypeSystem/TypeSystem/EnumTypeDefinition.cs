@@ -85,6 +85,6 @@ namespace GraphZen.TypeSystem
 
         public override string ToString() => $"enum {Name}";
 
-        IEnumerable<IEnumValueDefinition> IEnumValuesContainerDefinition.GetValues() => GetValues();
+        IEnumerable<IEnumValueDefinition> IEnumValuesDefinition.GetValues() => GetValues();
     }
 }

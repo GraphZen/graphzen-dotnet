@@ -506,7 +506,7 @@ namespace GraphZen.TypeSystem
         public IEnumerable<InputObjectType> GetInputObjects() => InputObjects;
 
         [GraphQLIgnore]
-        IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums() => GetEnums();
+        IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums() => GetEnums();
 
 
         private readonly Lazy<IReadOnlyList<EnumType>> _enums;
@@ -515,7 +515,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore] public IReadOnlyList<EnumType> Enums => _enums.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars() => GetScalars();
+        IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars() => GetScalars();
 
 
         private readonly Lazy<IReadOnlyList<ScalarType>> _scalars;
@@ -523,7 +523,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore] public IReadOnlyList<ScalarType> Scalars => _scalars.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions() => GetUnions();
+        IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions() => GetUnions();
 
 
         private readonly Lazy<IReadOnlyList<UnionType>> _unions;
@@ -541,11 +541,11 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore] public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects() => GetObjects();
+        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects() => GetObjects();
 
 
         [GraphQLIgnore]
-        IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives() => GetDirectives();
+        IEnumerable<IDirectiveDefinition> IDirectivesDefinition.GetDirectives() => GetDirectives();
 
         [GraphQLIgnore]
         public IEnumerable<EnumType> GetEnums() => Enums;

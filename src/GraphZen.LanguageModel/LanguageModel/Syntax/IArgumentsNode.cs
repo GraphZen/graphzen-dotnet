@@ -6,10 +6,12 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+
+
+namespace GraphZen.LanguageModel
 {
-    public interface IInputFieldsContainerDefinition
+    public interface IArgumentsNode
     {
-        IEnumerable<IInputFieldDefinition> GetFields();
+        IReadOnlyList<ArgumentSyntax> Arguments { get; }
     }
 }

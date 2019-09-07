@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    public interface IMutableInputFieldsContainerDefinition : IInputFieldsContainerDefinition
+    public interface IMutableInputFieldsContainerDefinition : IInputFieldsDefinition
     {
         IReadOnlyDictionary<string, InputFieldDefinition> Fields { get; }
 

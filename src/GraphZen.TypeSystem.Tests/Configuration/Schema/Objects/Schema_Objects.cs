@@ -11,8 +11,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Configuration.Objects
 {
-    public abstract class Schema_Objects : CollectionConfigurationFixture<IObjectTypesContainer,
-        IObjectTypesContainerDefinition, IMutableObjectTypesContainerDefinition, ObjectTypeDefinition, ObjectType,
+    public abstract class Schema_Objects : CollectionConfigurationFixture<IObjectTypes,
+        IObjectTypesDefinition, IMutableObjectTypesContainerDefinition, ObjectTypeDefinition, ObjectType,
         SchemaDefinition,
         Schema>
     {

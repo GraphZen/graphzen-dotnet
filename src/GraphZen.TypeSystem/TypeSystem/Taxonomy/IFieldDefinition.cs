@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 
         Resolver<object, object?>? Resolver { get; }
 
-        IFieldsContainerDefinition? DeclaringType { get; }
+        IFieldsDefinition? DeclaringType { get; }
 
         new MemberInfo? ClrInfo { get; }
     }

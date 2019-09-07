@@ -9,9 +9,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IDirectivesContainerDefinition
+    public interface IUnionTypesDefinition
     {
         [GraphQLIgnore]
-        IEnumerable<IDirectiveDefinition> GetDirectives();
+        IEnumerable<IUnionTypeDefinition> GetUnions();
     }
 }

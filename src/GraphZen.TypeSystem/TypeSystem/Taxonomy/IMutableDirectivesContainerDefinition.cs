@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableDirectivesContainerDefinition : IDirectivesContainerDefinition
+    public interface IMutableDirectivesContainerDefinition : IDirectivesDefinition
     {
         [GraphQLIgnore]
         new IEnumerable<DirectiveDefinition> GetDirectives();

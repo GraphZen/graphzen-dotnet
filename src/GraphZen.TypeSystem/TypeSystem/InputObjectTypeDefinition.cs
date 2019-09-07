@@ -180,6 +180,6 @@ namespace GraphZen.TypeSystem
             return field;
         }
 
-        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields() => GetFields();
+        IEnumerable<IInputFieldDefinition> IInputFieldsDefinition.GetFields() => GetFields();
     }
 }

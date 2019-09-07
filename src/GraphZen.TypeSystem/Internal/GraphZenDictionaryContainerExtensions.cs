@@ -27,7 +27,7 @@ namespace GraphZen.Internal
                 generate.ForType<FieldsContainerDefinition>().ForDictionary(_ => _.Fields, "name", "Field");
                 generate.ForType<InterfaceTypeDefinition>().ForDictionary(_ => _.Fields, "name", "Field");
                 generate.ForType<ObjectTypeDefinition>().ForDictionary(_ => _.Fields, "name", "Field");
-                generate.ForType<IFieldsContainer>().ForDictionary(_ => _.Fields, "name", "Field", "fields");
+                generate.ForType<IFields>().ForDictionary(_ => _.Fields, "name", "Field", "fields");
                 generate.ForType<ObjectType>().ForDictionary(_ => _.Fields, "name", "Field");
                 generate.ForType<InterfaceType>().ForDictionary(_ => _.Fields, "name", "Field");
 

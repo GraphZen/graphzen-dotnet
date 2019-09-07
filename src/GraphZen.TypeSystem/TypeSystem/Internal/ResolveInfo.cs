@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.Internal
     public class ResolveInfo
     {
         internal ResolveInfo(string fieldName, IReadOnlyList<FieldSyntax> fieldNodes, IGraphQLType returnType,
-            IFieldsContainer parentType, ResponsePath path, Schema schema,
+            IFields parentType, ResponsePath path, Schema schema,
             IReadOnlyDictionary<string, FragmentDefinitionSyntax> fragments, OperationDefinitionSyntax operation,
             IReadOnlyDictionary<string, object> variableValues, object rootValue)
         {
@@ -39,7 +39,7 @@ namespace GraphZen.TypeSystem.Internal
         public IGraphQLType ReturnType { get; }
 
 
-        public IFieldsContainer ParentType { get; }
+        public IFields ParentType { get; }
 
 
         public ResponsePath Path { get; }

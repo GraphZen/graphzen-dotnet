@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableObjectTypesContainerDefinition : IObjectTypesContainerDefinition
+    public interface IMutableObjectTypesContainerDefinition : IObjectTypesDefinition
     {
         [GraphQLIgnore]
         new IEnumerable<ObjectTypeDefinition> GetObjects();

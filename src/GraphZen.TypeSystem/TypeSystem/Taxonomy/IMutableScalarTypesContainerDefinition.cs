@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableScalarTypesContainerDefinition : IScalarTypesContainerDefinition
+    public interface IMutableScalarTypesContainerDefinition : IScalarTypesDefinition
     {
         [GraphQLIgnore]
         new IEnumerable<ScalarTypeDefinition> GetScalars();

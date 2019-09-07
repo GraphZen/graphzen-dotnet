@@ -94,7 +94,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
 
         private IReadOnlyList<string> GetSuggestedFieldNames(IGraphQLType type, string fieldName)
         {
-            if (type is IFieldsContainer fields)
+            if (type is IFields fields)
             {
                 // ReSharper disable once UnusedVariable
                 var possibleFieldNames = fields.Fields.Keys;

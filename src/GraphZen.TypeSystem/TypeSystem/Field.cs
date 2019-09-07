@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<IGraphQLType> _fieldType;
         private readonly Lazy<FieldDefinitionSyntax> _syntax;
 
-        public Field(string name, string description, IFieldsContainer? declaringType, IGraphQLType fieldType,
+        public Field(string name, string description, IFields? declaringType, IGraphQLType fieldType,
             IEnumerable<IArgumentDefinition>? arguments, Resolver<object, object?> resolver, MemberInfo? clrMember,
             bool isDeprecated = false, string? deprecatedReason = null,
             IReadOnlyList<IDirectiveAnnotation>? directives = null
@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem
         {
         }
 
-        public Field(string name, string? description, IFieldsContainer? declaringType, IGraphQLTypeReference fieldType,
+        public Field(string name, string? description, IFields? declaringType, IGraphQLTypeReference fieldType,
             IEnumerable<IArgumentDefinition>? arguments, Resolver<object, object?>? resolver,
             bool isDeprecated, string? deprecatedReason,
             IReadOnlyList<IDirectiveAnnotation>? directives,
@@ -71,7 +71,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [GraphQLIgnore] public IFieldsContainer DeclaringType { get; }
+        [GraphQLIgnore] public IFields DeclaringType { get; }
 
 
         [GraphQLName("type")] public IGraphQLType FieldType => _fieldType.Value;
@@ -81,7 +81,7 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore] public Resolver<object, object?>? Resolver { get; }
 
-        IFieldsContainerDefinition IFieldDefinition.DeclaringType => DeclaringType;
+        IFieldsDefinition IFieldDefinition.DeclaringType => DeclaringType;
 
         public bool IsDeprecated { get; }
 
@@ -109,7 +109,7 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public static Field From(IFieldDefinition definition, IFieldsContainer declaringType,
+        public static Field From(IFieldDefinition definition, IFields declaringType,
             TypeResolver typeResolver)
         {
             Check.NotNull(definition, nameof(definition));

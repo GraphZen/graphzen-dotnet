@@ -8,15 +8,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    [GraphQLIgnore]
-    public interface IEnumValuesContainer : IEnumValuesContainerDefinition
+    public interface IInputFieldsDefinition
     {
-        IReadOnlyDictionary<string, EnumValue> Values { get; }
-
-
-        IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
-
-
-        new IEnumerable<EnumValue> GetValues();
+        IEnumerable<IInputFieldDefinition> GetFields();
     }
 }

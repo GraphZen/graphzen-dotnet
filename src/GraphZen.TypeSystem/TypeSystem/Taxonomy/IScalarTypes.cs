@@ -8,15 +8,12 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    public interface IInterfacesContainer : IInterfacesContainerDefinition
-
+    [GraphQLIgnore]
+    public interface IScalarTypes : IScalarTypesDefinition
     {
-        IReadOnlyList<InterfaceType> Interfaces { get; }
+        [GraphQLIgnore]
+        new IEnumerable<ScalarType> GetScalars();
 
-
-        IReadOnlyDictionary<string, InterfaceType> InterfacesMap { get; }
-
-
-        new IEnumerable<InterfaceType> GetInterfaces();
+        [GraphQLIgnore] IReadOnlyList<ScalarType> Scalars { get; }
     }
 }

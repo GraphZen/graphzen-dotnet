@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel
     ///     Directive
     ///     http://facebook.github.io/graphql/June2018/#Directive
     /// </summary>
-    public partial class DirectiveSyntax : SyntaxNode, IArgumentsContainerNode, INamedSyntax
+    public partial class DirectiveSyntax : SyntaxNode, IArgumentsNode, INamedSyntax
     {
         public DirectiveSyntax(NameSyntax name,
             IReadOnlyList<ArgumentSyntax> arguments = null,

@@ -40,7 +40,7 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Interface;
 
-        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields() => Fields.Values;
+        IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => Fields.Values;
 
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;

@@ -12,8 +12,8 @@ using JetBrains.Annotations;
 namespace GraphZen.Configuration.Enums.EnumValues
 {
     public abstract class Enum_Values :
-        CollectionConfigurationFixture<IEnumValuesContainer,
-            IEnumValuesContainerDefinition, IMutableEnumValuesContainerDefinition, EnumValueDefinition, EnumValue,
+        CollectionConfigurationFixture<IEnumValues,
+            IEnumValuesDefinition, IMutableEnumValuesContainerDefinition, EnumValueDefinition, EnumValue,
             EnumTypeDefinition,
             EnumType>
     {

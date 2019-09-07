@@ -13,11 +13,11 @@ namespace GraphZen.TypeSystem.Taxonomy
         IQueryTypeDefinition, 
         IMutationTypeDefinition, 
         ISubscriptionTypeDefinition,
-        IDirectivesContainerDefinition,
-        IObjectTypesContainerDefinition,
+        IDirectivesDefinition,
+        IObjectTypesDefinition,
         IInterfaceTypesContainerDefinition,
-        IUnionTypesContainerDefinition,
-        IScalarTypesContainerDefinition,
-        IEnumTypesContainerDefinition,
+        IUnionTypesDefinition,
+        IScalarTypesDefinition,
+        IEnumTypesDefinition,
         IInputObjectTypesContainerDefinition { }
 }

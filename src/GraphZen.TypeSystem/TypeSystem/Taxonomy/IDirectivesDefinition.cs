@@ -9,8 +9,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IEnumValuesContainerDefinition
+    public interface IDirectivesDefinition
     {
-        IEnumerable<IEnumValueDefinition> GetValues();
+        [GraphQLIgnore]
+        IEnumerable<IDirectiveDefinition> GetDirectives();
     }
 }

@@ -9,9 +9,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IScalarTypesContainerDefinition
+    public interface IObjectTypesDefinition
     {
         [GraphQLIgnore]
-        IEnumerable<IScalarTypeDefinition> GetScalars();
+        IEnumerable<IObjectTypeDefinition> GetObjects();
     }
 }

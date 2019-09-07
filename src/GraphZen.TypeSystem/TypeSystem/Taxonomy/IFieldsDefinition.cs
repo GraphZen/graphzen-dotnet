@@ -9,9 +9,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IUnionTypesContainerDefinition
+    public interface IFieldsDefinition
     {
-        [GraphQLIgnore]
-        IEnumerable<IUnionTypeDefinition> GetUnions();
+        IEnumerable<IFieldDefinition> GetFields();
     }
 }

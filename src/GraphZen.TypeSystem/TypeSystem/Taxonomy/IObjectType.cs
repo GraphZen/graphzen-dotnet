@@ -8,9 +8,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IObjectType : IObjectTypeDefinition, IInterfacesContainer,
+    public interface IObjectType : IObjectTypeDefinition, IInterfaces,
         ICompositeType,
-        IFieldsContainer
+        IFields
     {
     }
 }

@@ -9,11 +9,11 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IUnionTypesContainer : IUnionTypesContainerDefinition
+    public interface IEnumTypes : IEnumTypesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<UnionType> GetUnions();
+        new IEnumerable<EnumType> GetEnums();
 
-        [GraphQLIgnore] IReadOnlyList<UnionType> Unions { get; }
+        [GraphQLIgnore] IReadOnlyList<EnumType> Enums { get; }
     }
 }
