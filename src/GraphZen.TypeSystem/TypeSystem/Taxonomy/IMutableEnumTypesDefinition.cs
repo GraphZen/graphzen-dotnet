@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableEnumTypesContainerDefinition : IEnumTypesDefinition
+    public interface IMutableEnumTypesDefinition : IEnumTypesDefinition
     {
         [GraphQLIgnore]
         new IEnumerable<EnumTypeDefinition> GetEnums();

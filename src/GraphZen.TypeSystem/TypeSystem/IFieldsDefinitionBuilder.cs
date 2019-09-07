@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public interface IFieldsContainerDefinitionBuilder<out TBuilder, TSource, TContext> where TContext : GraphQLContext
+    public interface IFieldsDefinitionBuilder<out TBuilder, TSource, TContext> where TContext : GraphQLContext
     {
         TBuilder Field<TField>(string name, Action<IFieldBuilder<TSource, TField, TContext>>? configurator = null);
 

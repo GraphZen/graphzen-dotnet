@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    public interface IMutableFieldsContainerDefinition : IFieldsDefinition
+    public interface IMutableFieldsDefinition : IFieldsDefinition
     {
         IReadOnlyDictionary<string, FieldDefinition> Fields { get; }
 

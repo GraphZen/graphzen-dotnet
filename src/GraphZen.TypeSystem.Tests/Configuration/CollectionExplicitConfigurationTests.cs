@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
@@ -26,7 +27,7 @@ namespace GraphZen.Configuration
             TestData(fixture, () =>
             {
                 var parentName = "parent";
-                var schema = TypeSystem.Schema.Create(sb =>
+                var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.GetParent(sb, parentName).Should().BeOfType(fixture.ParentMemberDefinitionType);
@@ -45,7 +46,7 @@ namespace GraphZen.Configuration
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
-                var schema = TypeSystem.Schema.Create(sb =>
+                var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -71,7 +72,7 @@ namespace GraphZen.Configuration
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
-                var schema = TypeSystem.Schema.Create(sb =>
+                var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -95,7 +96,7 @@ namespace GraphZen.Configuration
             {
                 var itemName = "addedExplicitly";
                 var parentName = "parent";
-                TypeSystem.Schema.Create(sb =>
+                Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -116,7 +117,7 @@ namespace GraphZen.Configuration
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
-                var schema = TypeSystem.Schema.Create(sb =>
+                var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -143,7 +144,7 @@ namespace GraphZen.Configuration
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
-                var schema = TypeSystem.Schema.Create(sb =>
+                var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -171,7 +172,7 @@ namespace GraphZen.Configuration
             {
                 var itemName = "addedExplicitly";
                 var parentName = "parent";
-                TypeSystem.Schema.Create(sb =>
+                Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -191,7 +192,7 @@ namespace GraphZen.Configuration
             {
                 var parentName = "test";
                 var itemName = "item";
-                var schema = TypeSystem.Schema.Create(sb =>
+                var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
@@ -218,7 +219,7 @@ namespace GraphZen.Configuration
                 var parentName = "test";
                 var initialItemName = "item";
                 var changedItemName = "itemFinal";
-                var schema = TypeSystem.Schema.Create(sb =>
+                var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, initialItemName);

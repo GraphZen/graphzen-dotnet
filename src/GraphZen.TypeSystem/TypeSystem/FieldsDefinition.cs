@@ -15,7 +15,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public abstract class FieldsDefinition : NamedTypeDefinition, IMutableFieldsContainerDefinition
+    public abstract class FieldsDefinition : NamedTypeDefinition, IMutableFieldsDefinition
     {
         private readonly Dictionary<string, FieldDefinition> _fields =
             new Dictionary<string, FieldDefinition>();

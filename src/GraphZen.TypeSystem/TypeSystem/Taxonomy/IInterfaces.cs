@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    public interface IInterfaces : IInterfacesContainerDefinition
+    public interface IInterfaces : IInterfacesDefinition
 
     {
         IReadOnlyList<InterfaceType> Interfaces { get; }

@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IInterfaceTypesContainer : IInterfaceTypesContainerDefinition
+    public interface IInterfaceTypes : IInterfaceTypesDefinition
     {
         [GraphQLIgnore]
         new IEnumerable<InterfaceType> GetInterfaces();

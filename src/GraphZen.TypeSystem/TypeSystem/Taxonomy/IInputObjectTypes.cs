@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IInputObjectTypesContainer : IInputObjectTypesContainerDefinition
+    public interface IInputObjectTypes : IInputObjectTypesDefinition
     {
         [GraphQLIgnore]
         new IEnumerable<InputObjectType> GetInputObjects();

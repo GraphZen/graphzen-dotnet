@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 namespace GraphZen.Configuration.Directives
 {
     public abstract class Schema_Directives : CollectionConfigurationFixture<IEnumTypes,
-        IEnumTypesDefinition, IMutableEnumTypesContainerDefinition, EnumTypeDefinition,
+        IEnumTypesDefinition, IMutableEnumTypesDefinition, EnumTypeDefinition,
         EnumType,
         SchemaDefinition,
         Schema>

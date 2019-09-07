@@ -12,11 +12,11 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     public abstract class
-        InternalFieldsContainerBuilder<TDefinition, TBuilder> : AnnotatableMemberDefinitionBuilder<TDefinition>
+        InternalFieldsBuilder<TDefinition, TBuilder> : AnnotatableMemberDefinitionBuilder<TDefinition>
         where TDefinition : FieldsDefinition
-        where TBuilder : InternalFieldsContainerBuilder<TDefinition, TBuilder>
+        where TBuilder : InternalFieldsBuilder<TDefinition, TBuilder>
     {
-        protected InternalFieldsContainerBuilder(TDefinition definition,
+        protected InternalFieldsBuilder(TDefinition definition,
             InternalSchemaBuilder schemaBuilder)
             : base(definition, schemaBuilder)
         {
