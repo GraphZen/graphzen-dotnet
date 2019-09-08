@@ -428,6 +428,50 @@ namespace GraphZen.TypeSystem.Internal
             return objectType?.Builder;
         }
 
+        public InternalDirectiveBuilder? Directive(string name, ConfigurationSource configurationSource)
+        {
+            if (IsDirectiveIgnored(name, configurationSource)) return null;
+
+            var directive = Definition.FindDirective(name);
+
+            if (directive != null)
+            {
+                directive.UpdateConfigurationSource(configurationSource);
+                return directive.Builder;
+            }
+
+            Definition.UnignoreDirective(name, configurationSource);
+            directive = Definition.AddDirective(name, configurationSource);
+            if (directive != null) OnDirectiveAdded(directive);
+
+            return directive?.Builder;
+        }
+
+        private InternalDirectiveBuilder? Directive(Type clrType, ConfigurationSource configurationSource)
+        {
+            if (clrType.IsIgnoredByDataAnnotation())
+                Definition.IgnoreDirective(clrType, ConfigurationSource.DataAnnotation);
+
+            if (IsDirectiveIgnored(clrType, configurationSource)) return null;
+
+            var directive = Definition.FindDirective(clrType);
+
+            if (directive != null)
+            {
+                directive.UpdateConfigurationSource(configurationSource);
+                return directive.Builder;
+            }
+
+            Definition.UnignoreDirective(clrType, configurationSource);
+            directive = Definition.AddDirective(clrType, configurationSource);
+            if (directive != null) OnDirectiveAdded(directive);
+
+            return directive?.Builder;
+        }
+
+        private void OnDirectiveAdded(DirectiveDefinition directive)
+        {
+        }
 
         private void OnObjectAdded(ObjectTypeDefinition objectType)
         {
@@ -452,6 +496,7 @@ namespace GraphZen.TypeSystem.Internal
             Definition.UnignoreType(clrType);
             return true;
         }
+
 
         public bool IgnoreType(Type clrType, ConfigurationSource configurationSource) =>
             IgnoreType(clrType.GetGraphQLName(), configurationSource);
@@ -487,6 +532,15 @@ namespace GraphZen.TypeSystem.Internal
             return RemoveType(type, configurationSource);
         }
 
+        private bool IsDirectiveIgnored(Type clrType, ConfigurationSource configurationSource) =>
+            IsDirectiveIgnored(clrType.GetGraphQLName(), configurationSource);
+
+        private bool IsDirectiveIgnored(string name, ConfigurationSource configurationSource)
+        {
+            if (configurationSource == ConfigurationSource.Explicit) return false;
+            var ignoredConfigurationSource = Definition.FindIgnoredDirectiveConfigurationSource(name);
+            return !configurationSource.Overrides(ignoredConfigurationSource);
+        }
 
         private bool IsTypeIgnored(in TypeIdentity identity, ConfigurationSource configurationSource)
         {
@@ -535,10 +589,6 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalDirectiveBuilder Directive(string name, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddDirective(name, configurationSource).GetInfrastructure();
-
-
         public bool RemoveType(NamedTypeDefinition type, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(type.GetConfigurationSource())) return false;
@@ -546,6 +596,28 @@ namespace GraphZen.TypeSystem.Internal
             Schema.RemoveType(type);
 
             return true;
+        }
+
+        public void IgnoreDirective(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreDirective(string name, ConfigurationSource configurationSource)
+        {
+            Definition.IgnoreDirective(name, configurationSource);
+
+        }
+
+        public void UnignoreDirective(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreDirective(string name, ConfigurationSource configurationSource)
+        {
+            Definition.UnignoreDirective(name, configurationSource);
+
         }
     }
 }

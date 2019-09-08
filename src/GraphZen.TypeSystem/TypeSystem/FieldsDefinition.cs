@@ -73,10 +73,6 @@ namespace GraphZen.TypeSystem
         public bool RenameField(FieldDefinition field, string name,
             ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(field.GetNameConfigurationSource())) return false;
-
-            // field.UpdateConfigurationSource(configurationSource);
-
             if (this.TryGetField(name, out var existing) && existing != field)
                 throw new InvalidOperationException(
                     $"Cannot rename {field} to '{name}'. {this} already contains a field named '{name}'.");

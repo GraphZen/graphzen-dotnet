@@ -11,6 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IDirectiveDefinition :
         INamed,
         IDescription,
+        IClrType,
         IArgumentsDefinition,
         IDirectiveLocationsDefinition
     {

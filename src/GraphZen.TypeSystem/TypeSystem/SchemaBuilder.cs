@@ -24,8 +24,8 @@ namespace GraphZen.TypeSystem
 
 
         [DebuggerStepThrough]
-        public IDirectiveBuilder Directive(string name) =>
-            new DirectiveBuilder(Builder.Directive(Check.NotNull(name, nameof(name)),
+        public IDirectiveBuilder<object> Directive(string name) =>
+            new DirectiveBuilder<object>(Builder.Directive(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit));
 
         public IScalarTypeBuilder<object, ValueSyntax> Scalar(string name) =>
@@ -88,6 +88,38 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             Builder.UnignoreType(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public ISchemaBuilder<GraphQLContext> IgnoreDirective<TDirective>() => IgnoreDirective(typeof(TDirective));
+
+        public ISchemaBuilder<GraphQLContext> IgnoreDirective(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.IgnoreDirective(clrType, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public ISchemaBuilder<GraphQLContext> IgnoreDirective(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.IgnoreDirective(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public ISchemaBuilder<GraphQLContext> UnignoreDirective<TObject>() => UnignoreDirective(typeof(TObject));
+        
+        public ISchemaBuilder<GraphQLContext> UnignoreDirective(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.UnignoreDirective(clrType, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public ISchemaBuilder<GraphQLContext> UnignoreDirective(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreDirective(name, ConfigurationSource.Explicit);
             return this;
         }
 
@@ -231,6 +263,18 @@ namespace GraphZen.TypeSystem
 
         public new ISchemaBuilder<TContext> UnignoreType(string name) =>
             (ISchemaBuilder<TContext>)base.UnignoreType(name);
+
+        public new ISchemaBuilder<TContext> IgnoreDirective<TDirective>() => (ISchemaBuilder<TContext>)base.IgnoreDirective<TDirective>();
+
+        public new ISchemaBuilder<TContext> IgnoreDirective(Type clrType) => (ISchemaBuilder<TContext>)base.IgnoreDirective(clrType);
+
+        public new ISchemaBuilder<TContext> IgnoreDirective(string name) => (ISchemaBuilder<TContext>)base.IgnoreDirective(name);
+
+        public new ISchemaBuilder<TContext> UnignoreDirective<TObject>() => (ISchemaBuilder<TContext>)base.UnignoreDirective<TObject>();
+
+        public new ISchemaBuilder<TContext> UnignoreDirective(Type clrType) => (ISchemaBuilder<TContext>)base.UnignoreDirective(clrType);
+
+        public new ISchemaBuilder<TContext> UnignoreDirective(string name) => (ISchemaBuilder<TContext>)base.UnignoreDirective(name);
 
         public new IInterfaceTypeBuilder<object, TContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(name, nameof(name)),

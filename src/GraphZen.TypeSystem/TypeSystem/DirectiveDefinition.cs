@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
@@ -27,26 +28,57 @@ namespace GraphZen.TypeSystem
         private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _ignoredLocations =
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
-        public DirectiveDefinition(string name, SchemaDefinition schema, ConfigurationSource configurationSource) :
+        private ConfigurationSource _nameConfigurationSource;
+
+        public DirectiveDefinition(string? name, Type? clrType, SchemaDefinition schema, ConfigurationSource configurationSource) :
             base(configurationSource)
         {
-            Name = Check.NotNull(name, nameof(name));
+            ClrType = clrType;
+            if (clrType != null)
+            {
+                if (clrType.TryGetGraphQLNameFromDataAnnotation(out var n))
+                {
+                    Name = n;
+                    _nameConfigurationSource = ConfigurationSource.DataAnnotation;
+                }
+                else
+                {
+                    Name = clrType.GetGraphQLName();
+                    _nameConfigurationSource = ConfigurationSource.Convention;
+                }
+
+            }
+            else
+            {
+                Name = Check.NotNull(name, nameof(name));
+                _nameConfigurationSource = ConfigurationSource.Explicit;
+            }
             Builder = new InternalDirectiveBuilder(this, Check.NotNull(schema, nameof(schema)).Builder);
         }
 
 
-        private InternalDirectiveBuilder Builder { get; }
+        internal InternalDirectiveBuilder Builder { get; }
 
         private string DebuggerDisplay => $"directive {Name}";
 
         InternalDirectiveBuilder IInfrastructure<InternalDirectiveBuilder>.Instance => Builder;
 
-        public string Name { get; }
+        public string Name { get; private set; }
 
-        public bool SetName(string name, ConfigurationSource configurationSource) =>
-            throw new NotImplementedException();
+        public bool SetName(string name, ConfigurationSource configurationSource)
+        {
+            Check.NotNull(name, nameof(name));
+            if (!configurationSource.Overrides(GetNameConfigurationSource())) return false;
 
-        public ConfigurationSource GetNameConfigurationSource() => throw new NotImplementedException();
+            if (Name != name) this.Builder.Schema.RenameDirective(this, name, configurationSource);
+
+            Name = name;
+            _nameConfigurationSource = configurationSource;
+            return true;
+
+        }
+
+        public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
         public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
         {
@@ -128,5 +160,10 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyCollection<DirectiveLocation> Locations =>
             (IReadOnlyCollection<DirectiveLocation>)_locations.Keys;
+
+        public Type? ClrType { get; }
+        public bool SetClrType(Type clrType, ConfigurationSource configurationSource) => throw new NotImplementedException();
+
+        public ConfigurationSource? GetClrTypeConfigurationSource() => throw new NotImplementedException();
     }
 }

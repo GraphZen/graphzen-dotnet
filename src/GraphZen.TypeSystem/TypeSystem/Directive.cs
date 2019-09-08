@@ -13,7 +13,6 @@ using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -28,14 +27,14 @@ namespace GraphZen.TypeSystem
     {
         private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
 
-        public Directive(string name, string description, IReadOnlyCollection<DirectiveLocation> locations,
+        public Directive(string name, string? description, IReadOnlyCollection<DirectiveLocation> locations,
             IEnumerable<IArgumentDefinition> arguments, TypeResolver typeResolver)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
             Locations = Check.NotNull(locations, nameof(locations));
 
-            arguments = arguments ?? Enumerable.Empty<IArgumentDefinition>();
+            arguments ??= Enumerable.Empty<IArgumentDefinition>();
             // ReSharper disable once PossibleNullReferenceException
             Arguments = new ReadOnlyDictionary<string, Argument>(arguments.ToDictionary(_ => _.Name,
                 _ => Argument.From(_, this, typeResolver)));
@@ -53,7 +52,7 @@ namespace GraphZen.TypeSystem
 
         public string Name { get; }
 
-        public override string Description { get; }
+        public override string? Description { get; }
 
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
@@ -74,5 +73,7 @@ namespace GraphZen.TypeSystem
         }
 
         public IReadOnlyCollection<DirectiveLocation> Locations { get; }
+        [GraphQLIgnore]
+        public Type? ClrType { get; }
     }
 }

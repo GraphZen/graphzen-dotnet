@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
@@ -12,9 +11,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Configuration.Directives
 {
-    public abstract class Schema_Directives : CollectionConfigurationFixture<IEnumTypes,
-        IEnumTypesDefinition, IMutableEnumTypesDefinition, EnumTypeDefinition,
-        EnumType,
+    public abstract class Schema_Directives : CollectionConfigurationFixture<IDirectives,
+        IDirectivesDefinition, IMutableDirectivesDefinition, DirectiveDefinition,
+        Directive,
         SchemaDefinition,
         Schema>
     {
@@ -28,30 +27,31 @@ namespace GraphZen.Configuration.Directives
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
-            sb.Enum(name);
+            sb.Directive(name);
         }
 
         public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
         {
-            sb.IgnoreType(name);
+            sb.IgnoreDirective(name);
         }
 
         public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
         {
-            sb.UnignoreType(name);
+            sb.UnignoreDirective(name);
         }
 
         public override void RenameItem(SchemaBuilder sb, string parentName, string itemName, string newName)
         {
-            sb.Enum(itemName).Name(newName);
+            sb.Directive(itemName).Name(newName);
         }
 
-        public override NamedCollection<EnumTypeDefinition> GetCollection(SchemaDefinition parent) =>
-            throw new NotImplementedException();
+        public override NamedCollection<DirectiveDefinition> GetCollection(SchemaDefinition parent) =>
+            parent.GetDirectives().ToNamedCollection();
 
-        public override NamedCollection<EnumType> GetCollection(Schema parent) => throw new NotImplementedException();
+        public override NamedCollection<Directive> GetCollection(Schema parent) =>
+            parent.GetDirectives().ToNamedCollection();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
-            parent.FindIgnoredTypeConfigurationSource(name);
+            parent.FindIgnoredDirectiveConfigurationSource(name);
     }
 }

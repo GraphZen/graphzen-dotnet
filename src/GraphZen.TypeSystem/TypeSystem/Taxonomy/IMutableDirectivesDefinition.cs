@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
@@ -13,5 +14,10 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         [GraphQLIgnore]
         new IEnumerable<DirectiveDefinition> GetDirectives();
+
+        bool RenameDirective(DirectiveDefinition directive, string name, ConfigurationSource configurationSource);
+
+
+        ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name);
     }
 }

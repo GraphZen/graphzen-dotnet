@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableDirectives : IDirectiveAnnotations
+    public interface IMutableDirectiveAnnotations : IDirectiveAnnotations
     {
         IDirectiveAnnotation GetOrAddDirectiveAnnotation(string name, object value);
         IDirectiveAnnotation AddDirectiveAnnotation(string name, object value);

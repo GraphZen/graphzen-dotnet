@@ -57,7 +57,7 @@ namespace GraphZen.TypeSystem
             {
                 Debug.Assert(directives != null, nameof(directives) + " != null");
                 var definedDirectives =
-                    schemaDefinition.Directives.Select(_ => Directive.From(_, ResolveType)).ToList();
+                    schemaDefinition.GetDirectives().Select(_ => Directive.From(_, ResolveType)).ToList();
 
                 directives.RemoveAll(_ => definedDirectives.Any(dd =>
                 {

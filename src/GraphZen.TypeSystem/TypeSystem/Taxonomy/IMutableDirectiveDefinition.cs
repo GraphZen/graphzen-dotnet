@@ -13,7 +13,8 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMutableArgumentsDefinition,
         IMutableDirectiveLocationsDefinition,
         IMutableNamed,
-        IMutableDescription
+        IMutableDescription,
+        IMutableClrType
     {
     }
 }

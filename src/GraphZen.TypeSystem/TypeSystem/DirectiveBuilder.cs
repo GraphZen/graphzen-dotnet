@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 #nullable disable
 namespace GraphZen.TypeSystem
 {
-    public class DirectiveBuilder : IDirectiveBuilder
+    public class DirectiveBuilder<TDirective> : IDirectiveBuilder<TDirective>
     {
         public DirectiveBuilder(InternalDirectiveBuilder builder)
         {
@@ -21,19 +21,26 @@ namespace GraphZen.TypeSystem
 
         private InternalDirectiveBuilder Builder { get; }
 
-        public IDirectiveBuilder Description(string description)
+        public IDirectiveBuilder<TDirective> Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder Locations(params DirectiveLocation[] locations)
+        public IDirectiveBuilder<TDirective> Name(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.Name(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations)
         {
             Builder.Locations(locations, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder Argument(string name, string type, Action<InputValueBuilder> configurator = null)
+        public IDirectiveBuilder<TDirective> Argument(string name, string type, Action<InputValueBuilder> configurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
@@ -42,7 +49,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IDirectiveBuilder Argument<TArg>(string name, Action<InputValueBuilder> configurator = null) =>
+        public IDirectiveBuilder<TDirective> Argument<TArg>(string name, Action<InputValueBuilder> configurator = null) =>
             throw new NotImplementedException();
     }
 }

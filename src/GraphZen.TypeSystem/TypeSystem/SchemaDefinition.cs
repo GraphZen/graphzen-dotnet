@@ -16,18 +16,13 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
     {
-        private readonly List<DirectiveDefinition> _directives = new List<DirectiveDefinition>();
-
-
-        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
-            new Dictionary<string, ConfigurationSource>();
-
-
+        private readonly Dictionary<string, DirectiveDefinition> _directives = new Dictionary<string, DirectiveDefinition>();
+        private readonly Dictionary<string, ConfigurationSource> _ignoredDirectives = new Dictionary<string, ConfigurationSource>();
+        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes = new Dictionary<string, ConfigurationSource>();
         private readonly List<TypeIdentity> _typeIdentities;
-
         private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
         private ConfigurationSource? _queryTypeConfigurationSource;
         private ConfigurationSource? _subscriptionTypeConfigurationSource;
@@ -58,7 +53,7 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        private string DebuggerDisplay { get; } = "schema";
+        private string DebuggerDisplay { [UsedImplicitly] get; } = "schema";
 
 
         public InternalSchemaBuilder Builder { get; }
@@ -67,7 +62,6 @@ namespace GraphZen.TypeSystem
         public IReadOnlyList<NamedTypeDefinition> Types => _types;
 
 
-        public IReadOnlyList<IDirectiveDefinition> Directives => _directives;
 
         public ObjectTypeDefinition? QueryType { get; private set; }
 
@@ -414,6 +408,11 @@ namespace GraphZen.TypeSystem
             return unionType;
         }
 
+
+
+
+
+
         public ScalarTypeDefinition AddScalar(Type clrType, ConfigurationSource configurationSource)
         {
             var id = GetOrAddTypeIdentity(new TypeIdentity(clrType, this));
@@ -560,6 +559,29 @@ namespace GraphZen.TypeSystem
         }
 
 
+        public void IgnoreDirective(Type clrType, ConfigurationSource configurationSource) =>
+            IgnoreDirective(clrType.GetGraphQLName(), configurationSource);
+
+        public void IgnoreDirective(string name, ConfigurationSource configurationSource)
+        {
+
+            var newCs = configurationSource.Max(FindIgnoredDirectiveConfigurationSource(name));
+            _ignoredDirectives[name] = newCs;
+            _directives.Remove(name);
+        }
+
+        public void UnignoreDirective(Type clrType, ConfigurationSource configurationSource) =>
+            UnignoreDirective(clrType.GetGraphQLName(), configurationSource);
+
+        public void UnignoreDirective(string name, ConfigurationSource configurationSource)
+        {
+            var existingIgnoredConfigurationSource = FindIgnoredDirectiveConfigurationSource(name);
+            if (existingIgnoredConfigurationSource != null && configurationSource.Overrides(existingIgnoredConfigurationSource))
+            {
+                _ignoredDirectives.Remove(name);
+            }
+        }
+
         public void IgnoreType(string name, ConfigurationSource configurationSource)
         {
             if (_ignoredTypes.TryGetValue(name, out var existingIgnoredConfigurationSource))
@@ -672,6 +694,10 @@ namespace GraphZen.TypeSystem
             return _types.SingleOrDefault(_ => _.Name == name);
         }
 
+        public DirectiveDefinition? FindDirective(string name) =>
+            _directives.TryGetValue(name, out var directive) ? directive : null;
+        public DirectiveDefinition? FindDirective(Type clrType) => _directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
+
         public NamedTypeDefinition FindType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.ClrType == clrType);
@@ -714,17 +740,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public DirectiveDefinition GetOrAddDirective(string name, ConfigurationSource configurationSource)
-        {
-            Check.NotNull(name, nameof(name));
-            // ReSharper disable once PossibleNullReferenceException
-            var existing = _directives.SingleOrDefault(_ => _.Name == name);
-            if (existing != null) return existing;
 
-            var newDirective = new DirectiveDefinition(name, this, configurationSource);
-            _directives.Add(newDirective);
-            return newDirective;
-        }
 
 
         public Schema ToSchema()
@@ -740,7 +756,23 @@ namespace GraphZen.TypeSystem
             _types.Remove(type);
         }
 
-        public IEnumerable<DirectiveDefinition> GetDirectives() => _directives;
+        public IEnumerable<DirectiveDefinition> GetDirectives() => _directives.Values;
+        public bool RenameDirective(DirectiveDefinition directive, string name, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(directive.GetNameConfigurationSource())) return false;
+
+            if (this._directives.TryGetValue(directive.Name, out var existing) && existing != directive)
+                throw new InvalidOperationException(
+                    $"Cannot rename {directive} to '{name}'. {this} already contains a directive named '{name}'.");
+
+            _directives.Remove(directive.Name);
+            _directives[name] = directive;
+            return true;
+
+        }
+
+        public ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name) =>
+            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
 
         public IEnumerable<ObjectTypeDefinition> GetObjects() => _types.OfType<ObjectTypeDefinition>();
 
@@ -774,5 +806,23 @@ namespace GraphZen.TypeSystem
         IObjectTypeDefinition? IMutationTypeDefinition.MutationType => MutationType;
 
         IObjectTypeDefinition? ISubscriptionTypeDefinition.SubscriptionType => SubscriptionType;
+
+        public DirectiveDefinition AddDirective(Type clrType, ConfigurationSource configurationSource)
+        {
+            var directive = new DirectiveDefinition(null, clrType, this, configurationSource);
+            return AddDirective(directive);
+        }
+
+        public DirectiveDefinition AddDirective(string name, ConfigurationSource configurationSource)
+        {
+            var directive = new DirectiveDefinition(name, null, this, configurationSource);
+            return AddDirective(directive);
+        }
+
+        private DirectiveDefinition AddDirective(DirectiveDefinition directive)
+        {
+            _directives[directive.Name] = directive;
+            return directive;
+        }
     }
 }
