@@ -91,7 +91,7 @@ namespace GraphZen.TypeSystem
             var lazyTypes = new Lazy<IReadOnlyDictionary<string, ObjectType>>(() =>
             {
                 return definition.GetMemberTypes()
-                    .ToDictionary(_ => _.Name, _ => schema.GetType<ObjectType>(_.Name));
+                    .ToDictionary(_ => _.Name, _ => schema.GetObject(_.Name));
             });
             return new UnionType(definition.Name, definition.Description, definition.ClrType, lazyTypes,
                 definition.ResolveType, definition.DirectiveAnnotations);

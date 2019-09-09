@@ -43,7 +43,7 @@ namespace GraphZen
                     .Field<List<Foo>>("fooClrList");
             });
 
-            var query = schema.GetType<ObjectType>("Query");
+            var query = schema.GetObject("Query");
 
             query.FindField("fooNNClr")
                 .FieldType.As<NonNullType>().OfType.As<ObjectType>().ClrType

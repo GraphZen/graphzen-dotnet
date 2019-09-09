@@ -112,7 +112,7 @@ namespace GraphZen.TypeSystem
 
         public static Field SchemaMetaFieldDef { get; } = new Field("__schema",
             "Access the current type schema of this server.", null,
-            NonNullType.Of(Schema.GetType<ObjectType>("__Schema")), null,
+            NonNullType.Of(Schema.GetObject("__Schema")), null,
             (source, args, context, info) => info.Schema, null);
 
 
