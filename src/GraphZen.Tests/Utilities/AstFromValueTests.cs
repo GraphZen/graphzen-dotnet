@@ -39,7 +39,7 @@ namespace GraphZen.Utilities
         });
 
         private static readonly EnumType MyEnum = TestSchema.GetType<EnumType>("MyEnum");
-        private static readonly InputObjectType MyInputObj = TestSchema.GetType<InputObjectType>("MyInputObj");
+        private static readonly InputObjectType MyInputObj = TestSchema.GetInputObject("MyInputObj");
 
 
         [Fact]

@@ -8,6 +8,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen
 {
+
+
     [AttributeUsage(AttributeTargets.Class
                     | AttributeTargets.Enum
                     | AttributeTargets.Field

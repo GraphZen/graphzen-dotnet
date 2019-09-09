@@ -18,7 +18,6 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-
         public IParser Parser { get; } = new SuperpowerParser();
 
         public override InternalSchemaBuilder SchemaBuilder => this;
@@ -606,7 +605,6 @@ namespace GraphZen.TypeSystem.Internal
         public void IgnoreDirective(string name, ConfigurationSource configurationSource)
         {
             Definition.IgnoreDirective(name, configurationSource);
-
         }
 
         public void UnignoreDirective(Type clrType, ConfigurationSource configurationSource)
@@ -617,7 +615,6 @@ namespace GraphZen.TypeSystem.Internal
         public void UnignoreDirective(string name, ConfigurationSource configurationSource)
         {
             Definition.UnignoreDirective(name, configurationSource);
-
         }
     }
 }

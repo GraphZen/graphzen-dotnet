@@ -33,13 +33,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalDirectiveBuilder Name(string name, ConfigurationSource configurationSource)
         {
-            var oldName = Definition.Name;
-            if (Definition.SetName(name, configurationSource))
-            {
-
-
-            }
-
+            Definition.SetName(name, configurationSource);
             return this;
         }
 

@@ -11,8 +11,8 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableSchemaDefinition :
         ISchemaDefinition,
         IMutableDescription,
-        IMutableQueryTypeDefinition, 
-        IMutableSubscriptionTypeDefinition, 
+        IMutableQueryTypeDefinition,
+        IMutableSubscriptionTypeDefinition,
         IMutableMutationTypeDefinition,
         IMutableDirectivesDefinition,
         IMutableObjectTypesDefinition,

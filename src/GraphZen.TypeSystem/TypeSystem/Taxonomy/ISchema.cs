@@ -8,10 +8,10 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface ISchema : 
+    public interface ISchema :
         ISchemaDefinition,
-        IQueryType, 
-        IMutationType, 
+        IQueryType,
+        IMutationType,
         ISubscriptionType,
         IDirectives, IObjectTypes, IInterfaceTypes, IUnionTypes,
         IScalarTypes, IEnumTypes, IInputObjectTypes

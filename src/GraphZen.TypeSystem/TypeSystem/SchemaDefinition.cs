@@ -19,9 +19,15 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
     {
-        private readonly Dictionary<string, DirectiveDefinition> _directives = new Dictionary<string, DirectiveDefinition>();
-        private readonly Dictionary<string, ConfigurationSource> _ignoredDirectives = new Dictionary<string, ConfigurationSource>();
-        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes = new Dictionary<string, ConfigurationSource>();
+        private readonly Dictionary<string, DirectiveDefinition> _directives =
+            new Dictionary<string, DirectiveDefinition>();
+
+        private readonly Dictionary<string, ConfigurationSource> _ignoredDirectives =
+            new Dictionary<string, ConfigurationSource>();
+
+        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
+            new Dictionary<string, ConfigurationSource>();
+
         private readonly List<TypeIdentity> _typeIdentities;
         private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
         private ConfigurationSource? _queryTypeConfigurationSource;
@@ -60,7 +66,6 @@ namespace GraphZen.TypeSystem
 
 
         public IReadOnlyList<NamedTypeDefinition> Types => _types;
-
 
 
         public ObjectTypeDefinition? QueryType { get; private set; }
@@ -409,10 +414,6 @@ namespace GraphZen.TypeSystem
         }
 
 
-
-
-
-
         public ScalarTypeDefinition AddScalar(Type clrType, ConfigurationSource configurationSource)
         {
             var id = GetOrAddTypeIdentity(new TypeIdentity(clrType, this));
@@ -564,7 +565,6 @@ namespace GraphZen.TypeSystem
 
         public void IgnoreDirective(string name, ConfigurationSource configurationSource)
         {
-
             var newCs = configurationSource.Max(FindIgnoredDirectiveConfigurationSource(name));
             _ignoredDirectives[name] = newCs;
             _directives.Remove(name);
@@ -576,10 +576,8 @@ namespace GraphZen.TypeSystem
         public void UnignoreDirective(string name, ConfigurationSource configurationSource)
         {
             var existingIgnoredConfigurationSource = FindIgnoredDirectiveConfigurationSource(name);
-            if (existingIgnoredConfigurationSource != null && configurationSource.Overrides(existingIgnoredConfigurationSource))
-            {
-                _ignoredDirectives.Remove(name);
-            }
+            if (existingIgnoredConfigurationSource != null &&
+                configurationSource.Overrides(existingIgnoredConfigurationSource)) _ignoredDirectives.Remove(name);
         }
 
         public void IgnoreType(string name, ConfigurationSource configurationSource)
@@ -696,7 +694,9 @@ namespace GraphZen.TypeSystem
 
         public DirectiveDefinition? FindDirective(string name) =>
             _directives.TryGetValue(name, out var directive) ? directive : null;
-        public DirectiveDefinition? FindDirective(Type clrType) => _directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
+
+        public DirectiveDefinition? FindDirective(Type clrType) =>
+            _directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
 
         public NamedTypeDefinition FindType(Type clrType)
         {
@@ -740,9 +740,6 @@ namespace GraphZen.TypeSystem
         }
 
 
-
-
-
         public Schema ToSchema()
         {
             FinalizeTypes();
@@ -757,18 +754,18 @@ namespace GraphZen.TypeSystem
         }
 
         public IEnumerable<DirectiveDefinition> GetDirectives() => _directives.Values;
+
         public bool RenameDirective(DirectiveDefinition directive, string name, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(directive.GetNameConfigurationSource())) return false;
 
-            if (this._directives.TryGetValue(directive.Name, out var existing) && existing != directive)
+            if (_directives.TryGetValue(directive.Name, out var existing) && existing != directive)
                 throw new InvalidOperationException(
                     $"Cannot rename {directive} to '{name}'. {this} already contains a directive named '{name}'.");
 
             _directives.Remove(directive.Name);
             _directives[name] = directive;
             return true;
-
         }
 
         public ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name) =>

@@ -87,8 +87,7 @@ namespace GraphZen.Configuration
 
         [Theory]
         [MemberData(nameof(FixtureData))]
-        public void
-            when_item_added_explicitly_then_ignored_explicitly_item_ignored_configuration_source_should_be_explicit(
+        public void when_item_added_explicitly_then_ignored_explicitly_item_ignored_configuration_source_should_be_explicit(
                 ICollectionExplicitConfigurationFixture fixture)
 
         {

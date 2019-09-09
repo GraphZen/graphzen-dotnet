@@ -108,7 +108,7 @@ namespace GraphZen.TypeSystem
         }
 
         public ISchemaBuilder<GraphQLContext> UnignoreDirective<TObject>() => UnignoreDirective(typeof(TObject));
-        
+
         public ISchemaBuilder<GraphQLContext> UnignoreDirective(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
@@ -264,17 +264,23 @@ namespace GraphZen.TypeSystem
         public new ISchemaBuilder<TContext> UnignoreType(string name) =>
             (ISchemaBuilder<TContext>)base.UnignoreType(name);
 
-        public new ISchemaBuilder<TContext> IgnoreDirective<TDirective>() => (ISchemaBuilder<TContext>)base.IgnoreDirective<TDirective>();
+        public new ISchemaBuilder<TContext> IgnoreDirective<TDirective>() =>
+            (ISchemaBuilder<TContext>)base.IgnoreDirective<TDirective>();
 
-        public new ISchemaBuilder<TContext> IgnoreDirective(Type clrType) => (ISchemaBuilder<TContext>)base.IgnoreDirective(clrType);
+        public new ISchemaBuilder<TContext> IgnoreDirective(Type clrType) =>
+            (ISchemaBuilder<TContext>)base.IgnoreDirective(clrType);
 
-        public new ISchemaBuilder<TContext> IgnoreDirective(string name) => (ISchemaBuilder<TContext>)base.IgnoreDirective(name);
+        public new ISchemaBuilder<TContext> IgnoreDirective(string name) =>
+            (ISchemaBuilder<TContext>)base.IgnoreDirective(name);
 
-        public new ISchemaBuilder<TContext> UnignoreDirective<TObject>() => (ISchemaBuilder<TContext>)base.UnignoreDirective<TObject>();
+        public new ISchemaBuilder<TContext> UnignoreDirective<TObject>() =>
+            (ISchemaBuilder<TContext>)base.UnignoreDirective<TObject>();
 
-        public new ISchemaBuilder<TContext> UnignoreDirective(Type clrType) => (ISchemaBuilder<TContext>)base.UnignoreDirective(clrType);
+        public new ISchemaBuilder<TContext> UnignoreDirective(Type clrType) =>
+            (ISchemaBuilder<TContext>)base.UnignoreDirective(clrType);
 
-        public new ISchemaBuilder<TContext> UnignoreDirective(string name) => (ISchemaBuilder<TContext>)base.UnignoreDirective(name);
+        public new ISchemaBuilder<TContext> UnignoreDirective(string name) =>
+            (ISchemaBuilder<TContext>)base.UnignoreDirective(name);
 
         public new IInterfaceTypeBuilder<object, TContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(name, nameof(name)),

@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
@@ -14,7 +15,6 @@ namespace GraphZen.TypeSystem
     public static class SpecDirectives
     {
         private const string DefaultDeprecationReason = "No longer supported";
-
 
         public static Directive Deprecated { get; } = new Directive("deprecated",
             "Marks an element of a GraphQL schema as no longer supported.",

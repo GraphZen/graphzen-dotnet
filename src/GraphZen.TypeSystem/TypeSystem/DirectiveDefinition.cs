@@ -30,7 +30,8 @@ namespace GraphZen.TypeSystem
 
         private ConfigurationSource _nameConfigurationSource;
 
-        public DirectiveDefinition(string? name, Type? clrType, SchemaDefinition schema, ConfigurationSource configurationSource) :
+        public DirectiveDefinition(string? name, Type? clrType, SchemaDefinition schema,
+            ConfigurationSource configurationSource) :
             base(configurationSource)
         {
             ClrType = clrType;
@@ -46,13 +47,13 @@ namespace GraphZen.TypeSystem
                     Name = clrType.GetGraphQLName();
                     _nameConfigurationSource = ConfigurationSource.Convention;
                 }
-
             }
             else
             {
                 Name = Check.NotNull(name, nameof(name));
                 _nameConfigurationSource = ConfigurationSource.Explicit;
             }
+
             Builder = new InternalDirectiveBuilder(this, Check.NotNull(schema, nameof(schema)).Builder);
         }
 
@@ -70,12 +71,11 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             if (!configurationSource.Overrides(GetNameConfigurationSource())) return false;
 
-            if (Name != name) this.Builder.Schema.RenameDirective(this, name, configurationSource);
+            if (Name != name) Builder.Schema.RenameDirective(this, name, configurationSource);
 
             Name = name;
             _nameConfigurationSource = configurationSource;
             return true;
-
         }
 
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
@@ -162,7 +162,9 @@ namespace GraphZen.TypeSystem
             (IReadOnlyCollection<DirectiveLocation>)_locations.Keys;
 
         public Type? ClrType { get; }
-        public bool SetClrType(Type clrType, ConfigurationSource configurationSource) => throw new NotImplementedException();
+
+        public bool SetClrType(Type clrType, ConfigurationSource configurationSource) =>
+            throw new NotImplementedException();
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => throw new NotImplementedException();
     }

@@ -40,7 +40,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> Argument(string name, string type, Action<InputValueBuilder> configurator = null)
+        public IDirectiveBuilder<TDirective> Argument(string name, string type,
+            Action<InputValueBuilder> configurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
@@ -49,7 +50,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> Argument<TArg>(string name, Action<InputValueBuilder> configurator = null) =>
+        public IDirectiveBuilder<TDirective>
+            Argument<TArg>(string name, Action<InputValueBuilder> configurator = null) =>
             throw new NotImplementedException();
     }
 }

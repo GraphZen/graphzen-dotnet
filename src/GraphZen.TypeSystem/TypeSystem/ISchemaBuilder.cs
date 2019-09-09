@@ -76,7 +76,6 @@ namespace GraphZen.TypeSystem
         ISchemaBuilder<TContext> UnignoreDirective(string name);
 
 
-
         IInterfaceTypeBuilder<object, TContext> Interface(string name);
 
 
