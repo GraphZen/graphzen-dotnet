@@ -140,7 +140,7 @@ namespace GraphZen.TypeSystem
 
         public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name, object? value)
         {
-            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

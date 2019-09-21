@@ -74,7 +74,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name, object? value)
         {
-            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

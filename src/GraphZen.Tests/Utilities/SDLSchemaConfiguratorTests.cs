@@ -15,8 +15,6 @@ using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
 
-
-
 namespace GraphZen.Utilities
 {
     [NoReorder]
@@ -31,7 +29,7 @@ namespace GraphZen.Utilities
                 }
             ");
 
-            return ExecuteAsync(schema, " { str } ", new { str = 123 }).ShouldEqual(new
+            return ExecuteAsync(schema, " { str } ", new {str = 123}).ShouldEqual(new
             {
                 data = new
                 {
@@ -52,7 +50,7 @@ namespace GraphZen.Utilities
 
             var root = new
             {
-                add = (Func<dynamic, int>)(args => args.x + args.y)
+                add = (Func<dynamic, int>) (args => args.x + args.y)
             };
 
             return ExecuteAsync(schema, "{ add(x: 34, y: 55) }", root).ShouldEqual(new
