@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
@@ -58,7 +59,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(schema, nameof(schema));
             return new InterfaceType(definition.Name, definition.Description, definition.ClrType,
-                definition.GetFields(), definition.ResolveType, definition.DirectiveAnnotations, schema);
+                definition.GetFields(), definition.ResolveType, definition.GetDirectiveAnnotations().ToList(), schema);
         }
     }
 }

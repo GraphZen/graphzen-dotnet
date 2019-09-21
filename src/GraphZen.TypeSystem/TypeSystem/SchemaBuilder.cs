@@ -208,10 +208,11 @@ namespace GraphZen.TypeSystem
         }
 
         public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
+        public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(object directive) => throw new NotImplementedException();
 
         public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(string name, object? value)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
@@ -331,10 +332,11 @@ namespace GraphZen.TypeSystem
         }
 
         public new ISchemaBuilder<TContext> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
+        public new ISchemaBuilder<TContext> DirectiveAnnotation(object directive) => throw new NotImplementedException();
 
         public new ISchemaBuilder<TContext> DirectiveAnnotation(string name, object? value)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

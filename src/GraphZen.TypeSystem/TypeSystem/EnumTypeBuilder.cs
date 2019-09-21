@@ -70,10 +70,11 @@ namespace GraphZen.TypeSystem
         }
 
         public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
+        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(object directive) => throw new NotImplementedException();
 
         public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name, object? value)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;
         }
 

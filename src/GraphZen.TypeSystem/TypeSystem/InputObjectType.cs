@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
@@ -47,7 +48,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(schema, nameof(schema));
             return new InputObjectType(definition.Name, definition.Description, definition.ClrType,
-                definition.GetFields(), definition.DirectiveAnnotations, schema);
+                definition.GetFields(), definition.GetDirectiveAnnotations().ToList(), schema);
         }
 
         IEnumerable<IInputFieldDefinition> IInputFieldsDefinition.GetFields() => GetFields();

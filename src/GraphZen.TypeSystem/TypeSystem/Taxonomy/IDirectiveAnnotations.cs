@@ -10,14 +10,21 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IDirectiveAnnotations
+    public interface IDirectiveAnnotationsDefinition
     {
         DirectiveLocation DirectiveLocation { get; }
+        IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations();
+    }
 
+    [GraphQLIgnore]
+    public interface IMutableDirectiveAnnotations : IDirectiveAnnotationsDefinition
+    {
+        
+    }
 
-        IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations { get; }
-
-
+    [GraphQLIgnore]
+    public interface IDirectiveAnnotations : IDirectiveAnnotationsDefinition
+    {
         IDirectiveAnnotation FindDirectiveAnnotation(string name);
     }
 }

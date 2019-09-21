@@ -150,21 +150,33 @@ namespace GraphZen.Utilities
         }
 
         [Fact]
-        public void ShouldInitializeDeprecatedDirective()
+        public void ShouldCreateSchemaWithDeprecatedDirective()
         {
             var body = @"
               type Query {
-                str: String @deprecated(reason: ""test"")
+                str: String @deprecated(reason: ""test"") 
               }
             ".Dedent();
             var schema = Schema.Create(body);
             var expectedDirective = new GraphQLDeprecatedAttribute("test");
-            // schema.QueryType.GetField("str")
+            var field = schema.QueryType.GetField("str");
+            var actualDirective = field.FindDirectiveAnnotation("deprecated");
+            actualDirective.Value.Should().Be(expectedDirective);
+            field.DeprecationReason.Should().Be("test");
+        }
 
-            schema.Directives.Count.Should().Be(3);
-            schema.FindDirective("skip").Should().Be(SpecDirectives.Skip);
-            schema.FindDirective("include").Should().Be(SpecDirectives.Include);
-            schema.FindDirective("deprecated").Should().Be(SpecDirectives.Deprecated);
+        [Fact]
+        public void ShouldCreateSchemaWithSyntaxDirective()
+        {
+            var body = @"
+              type Query @unknown {
+                str: String 
+              }
+            ".Dedent();
+            var schema = Schema.Create(body);
+            var expectedDirective = SyntaxFactory.Directive(SyntaxFactory.Name("unknown"));
+            var actualDirective = schema.QueryType.FindDirectiveAnnotation("unknown");
+            actualDirective.Value.Should().Be(expectedDirective);
         }
 
         [Fact]
@@ -716,11 +728,11 @@ namespace GraphZen.Utilities
 
             var query = schema.GetObject("Query");
             var testInput = schema.GetInputObject("TestInput");
-            var testEnum = schema.GetType<EnumType>("TestEnum");
-            var testUnion = schema.GetType<UnionType>("TestUnion");
-            var testInterface = schema.GetType<InterfaceType>("TestInterface");
+            var testEnum = schema.GetEnum("TestEnum");
+            var testUnion = schema.GetUnion("TestUnion");
+            var testInterface = schema.GetInterface("TestInterface");
             var testType = schema.GetObject("TestType");
-            var testScalar = schema.GetType<ScalarType>("TestScalar");
+            var testScalar = schema.GetScalar("TestScalar");
             var testDirective = schema.FindDirective("test");
 
 

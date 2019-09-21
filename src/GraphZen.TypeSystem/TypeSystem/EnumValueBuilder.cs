@@ -44,10 +44,11 @@ namespace GraphZen.TypeSystem
         }
 
         public IEnumValueBuilder DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
+        public IEnumValueBuilder DirectiveAnnotation(object directive) => throw new NotImplementedException();
 
         public IEnumValueBuilder DirectiveAnnotation(string name, object? value)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;
         }
 

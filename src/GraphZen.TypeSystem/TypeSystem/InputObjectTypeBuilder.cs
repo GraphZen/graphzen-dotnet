@@ -111,9 +111,11 @@ namespace GraphZen.TypeSystem
         public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name) =>
             DirectiveAnnotation(name, null);
 
+        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(object directive) => throw new NotImplementedException();
+
         public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name, object? value)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
             return this;
         }
 

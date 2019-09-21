@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem
                     return interfaces.ToReadOnlyDictionary(_ => _.Name, _ =>
                     {
                         // ReSharper disable once PossibleNullReferenceException
-                        return schema.GetType<InterfaceType>(_.Name);
+                        return schema.GetInterface(_.Name);
                     });
                 }
             );
@@ -87,7 +87,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(schema, nameof(Schema));
             return new ObjectType(definition.Name, definition.Description, definition.ClrType, definition.IsTypeOf,
                 definition.GetFields(), definition.GetInterfaces(),
-                definition.DirectiveAnnotations,
+                definition.GetDirectiveAnnotations().ToList(),
                 schema
             );
         }

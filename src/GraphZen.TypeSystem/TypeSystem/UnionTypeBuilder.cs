@@ -109,11 +109,12 @@ namespace GraphZen.TypeSystem
         }
 
         public IUnionTypeBuilder<TUnion, TContext> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
+        public IUnionTypeBuilder<TUnion, TContext> DirectiveAnnotation(object directive) => throw new NotImplementedException();
 
         public IUnionTypeBuilder<TUnion, TContext> DirectiveAnnotation(string name, object? value)
         {
             Check.NotNull(name, nameof(name));
-            Builder.AddOrUpdateDirectiveAnnotation(name, value);
+            Builder.DirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 

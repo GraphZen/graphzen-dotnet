@@ -58,7 +58,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition.InputType, nameof(definition.InputType));
             return new Argument(definition.Name, definition.Description, definition.InputType,
                 definition.DefaultValue, definition.HasDefaultValue,
-                definition.DirectiveAnnotations,
+                definition.GetDirectiveAnnotations().ToReadOnlyList(),
                 typeResolver, declaringMember, definition.ClrInfo);
         }
     }

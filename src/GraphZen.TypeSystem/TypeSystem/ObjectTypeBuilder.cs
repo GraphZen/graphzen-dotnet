@@ -191,9 +191,16 @@ namespace GraphZen.TypeSystem
         public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name) =>
             DirectiveAnnotation(name, null);
 
+        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(object directive)
+        {
+            Check.NotNull(directive, nameof(directive));
+            Builder.DirectiveAnnotation(directive, ConfigurationSource.Explicit);
+            return this;
+        }
+
         public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name, object? value)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

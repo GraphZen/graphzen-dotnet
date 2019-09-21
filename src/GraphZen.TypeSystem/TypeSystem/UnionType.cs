@@ -94,7 +94,7 @@ namespace GraphZen.TypeSystem
                     .ToDictionary(_ => _.Name, _ => schema.GetObject(_.Name));
             });
             return new UnionType(definition.Name, definition.Description, definition.ClrType, lazyTypes,
-                definition.ResolveType, definition.DirectiveAnnotations);
+                definition.ResolveType, definition.GetDirectiveAnnotations().ToList());
         }
     }
 }

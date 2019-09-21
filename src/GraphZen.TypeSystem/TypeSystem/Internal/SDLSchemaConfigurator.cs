@@ -45,12 +45,17 @@ namespace GraphZen.TypeSystem.Internal
                 };
 
 
+            foreach (var def in types.Where(_ => _.IsInputType))
+            {
+                ConfigureType(schemaBuilder, def);
+            }
+
             foreach (var def in _document.Definitions.OfType<DirectiveDefinitionSyntax>())
             {
                 ConfigureDirective(schemaBuilder, def);
             }
 
-            foreach (var def in types)
+            foreach (var def in types.Where(_ => !_.IsInputType && _.IsOutputType))
             {
                 ConfigureType(schemaBuilder, def);
             }
@@ -188,6 +193,11 @@ namespace GraphZen.TypeSystem.Internal
                         var type = schemaBuilder.Object(node.Name.Value);
                         if (node.Description != null) type.Description(node.Description.Value);
 
+                        foreach (var directive in node.Directives)
+                        {
+                            type.DirectiveAnnotation(directive);
+                        }
+
                         foreach (var iface in node.Interfaces)
                         {
                             type.ImplementsInterface(iface.Name.Value);
@@ -197,16 +207,22 @@ namespace GraphZen.TypeSystem.Internal
                         {
                             type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                             {
-                                Debug.Assert(field != null, nameof(field) + " != null");
                                 if (fieldNode.Description != null) field.Description(fieldNode.Description.Value);
 
+                                foreach (var directiveNode in fieldNode.Directives)
+                                {
+                                    field.DirectiveAnnotation(directiveNode);
+                                }
 
                                 foreach (var argumentNode in fieldNode.Arguments)
                                 {
                                     var argument = field.Argument(argumentNode.Name.Value,
                                         argumentNode.Type.ToSyntaxString());
+
                                     if (argumentNode.Description != null)
                                         argument.Description(argumentNode.Description.Value);
+
+
                                 }
                             });
                         }
