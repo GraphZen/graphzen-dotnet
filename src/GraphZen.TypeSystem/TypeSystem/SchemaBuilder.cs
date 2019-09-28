@@ -216,6 +216,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public ISchemaBuilder<GraphQLContext> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+
         public ISchemaBuilder<GraphQLContext> RemoveDirectiveAnnotation(string name)
         {
             Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
@@ -331,19 +333,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public new ISchemaBuilder<TContext> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
-        public new ISchemaBuilder<TContext> DirectiveAnnotation(object directive) => throw new NotImplementedException();
 
-        public new ISchemaBuilder<TContext> DirectiveAnnotation(string name, object? value)
+        public new ISchemaBuilder<TContext> DirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public new ISchemaBuilder<TContext> RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public new ISchemaBuilder<TContext> IgnoreDirectiveAnnotation(string name) => (ISchemaBuilder<TContext>) base.IgnoreDirectiveAnnotation(name);
     }
 }

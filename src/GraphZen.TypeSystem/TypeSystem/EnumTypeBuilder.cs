@@ -69,20 +69,15 @@ namespace GraphZen.TypeSystem
             return new EnumTypeBuilder<T>(Builder);
         }
 
-        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
-        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(object directive) => throw new NotImplementedException();
-
-        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name, object? value)
+       
+        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumTypeBuilder<TEnum> RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public IEnumTypeBuilder<TEnum> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+
 
         InternalEnumTypeBuilder IInfrastructure<InternalEnumTypeBuilder>.Instance => Builder;
     }

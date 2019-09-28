@@ -132,22 +132,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
 
-        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(object directive) => throw new NotImplementedException();
-
-
-        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name, object? value)
+        public IInterfaceTypeBuilder<TInterface, TContext> DirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IInterfaceTypeBuilder<TInterface, TContext> RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
     }
 }

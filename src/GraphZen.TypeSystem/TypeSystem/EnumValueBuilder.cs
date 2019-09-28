@@ -43,20 +43,15 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumValueBuilder DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
-        public IEnumValueBuilder DirectiveAnnotation(object directive) => throw new NotImplementedException();
-
-        public IEnumValueBuilder DirectiveAnnotation(string name, object? value)
+       
+        public IEnumValueBuilder DirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumValueBuilder RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public IEnumValueBuilder IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+
 
         InternalEnumValueBuilder IInfrastructure<InternalEnumValueBuilder>.Instance => Builder;
     }

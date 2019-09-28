@@ -41,7 +41,6 @@ namespace GraphZen.Configuration
         [MemberData(nameof(FixtureData))]
         public void conventional_item_added_explicitly_via_clr_member_should_have_clr_member(
             ICollectionConventionConfigurationFixture fixture)
-
         {
             TestData(fixture, () =>
             {

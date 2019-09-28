@@ -108,21 +108,14 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
 
-        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(object directive) => throw new NotImplementedException();
 
-        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name, object? value)
+        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public IInputObjectTypeBuilder<TInputObject> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
     }
 }

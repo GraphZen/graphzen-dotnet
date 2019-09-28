@@ -83,21 +83,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
 
-        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(object directive) => throw new NotImplementedException();
-
-        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name, object? value)
+        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public IScalarTypeBuilder<TScalar, TValueNode> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
     }
 }

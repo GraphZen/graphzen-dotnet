@@ -19,20 +19,15 @@ namespace GraphZen.TypeSystem
 
         protected InternalInputValueBuilder Builder { get; }
 
-        public InputValueBuilder DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
-        public InputValueBuilder DirectiveAnnotation(object directive) => throw new System.NotImplementedException();
 
-        public InputValueBuilder DirectiveAnnotation(string name, object? value)
+        public InputValueBuilder DirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public InputValueBuilder RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public InputValueBuilder IgnoreDirectiveAnnotation(string name) => throw new System.NotImplementedException();
+
 
         InternalInputValueBuilder IInfrastructure<InternalInputValueBuilder>.Instance => Builder;
 
