@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Configuration.Infrastructure
 {
-    public abstract class CollectionConfigurationFixture<
+    public abstract class NamedCollectionConfigurationFixture<
         TMarker,
         TDefMarker,
         TMutableDefMarker,

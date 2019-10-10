@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 namespace GraphZen.Configuration.Objects.Interfaces
 {
     public abstract class Object_Interfaces :
-        CollectionConfigurationFixture<IInterfaces,
+        NamedCollectionConfigurationFixture<IInterfaces,
             IInterfacesDefinition, IMutableInterfacesDefinition, InterfaceTypeDefinition,
             InterfaceType, ObjectTypeDefinition,
             ObjectType>

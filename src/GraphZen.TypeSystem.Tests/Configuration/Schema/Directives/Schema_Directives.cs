@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Configuration.Directives
 {
-    public abstract class Schema_Directives : CollectionConfigurationFixture<IDirectives,
+    public abstract class Schema_Directives : NamedCollectionConfigurationFixture<IDirectives,
         IDirectivesDefinition, IMutableDirectivesDefinition, DirectiveDefinition,
         Directive,
         SchemaDefinition,

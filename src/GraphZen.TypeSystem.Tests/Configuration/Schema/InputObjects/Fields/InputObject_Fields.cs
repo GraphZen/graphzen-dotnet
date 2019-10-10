@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 namespace GraphZen.Configuration.InputObjects.Fields
 {
     public abstract class InputObject_Fields :
-        CollectionConfigurationFixture<IInputFields,
+        NamedCollectionConfigurationFixture<IInputFields,
             IInputFieldsDefinition, IMutableInputFieldsDefinition, InputFieldDefinition, InputField,
             InputObjectTypeDefinition,
             InputObjectType>

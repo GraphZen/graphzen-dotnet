@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Configuration.Unions
 {
-    public abstract class Schema_Unions : CollectionConfigurationFixture<IUnionTypes,
+    public abstract class Schema_Unions : NamedCollectionConfigurationFixture<IUnionTypes,
         IUnionTypesDefinition, IMutableUnionTypesDefinition, UnionTypeDefinition,
         UnionType,
         SchemaDefinition,

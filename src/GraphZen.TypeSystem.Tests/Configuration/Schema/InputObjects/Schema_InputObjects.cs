@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Configuration.InputObjects
 {
-    public abstract class Schema_InputObjects : CollectionConfigurationFixture<IInputObjectTypes,
+    public abstract class Schema_InputObjects : NamedCollectionConfigurationFixture<IInputObjectTypes,
         IInputObjectTypesDefinition, IMutableInputObjectTypesDefinition, InputObjectTypeDefinition,
         InputObjectType,
         SchemaDefinition,

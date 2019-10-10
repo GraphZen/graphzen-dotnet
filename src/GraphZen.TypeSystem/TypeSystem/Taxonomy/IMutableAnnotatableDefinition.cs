@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableAnnotatableDefinition :
         IAnnotatableDefinition,
         IMutableDefinition,
-        IMutableDirectiveAnnotations
+        IMutableDirectiveAnnotationsDefinition
     {
     }
 }

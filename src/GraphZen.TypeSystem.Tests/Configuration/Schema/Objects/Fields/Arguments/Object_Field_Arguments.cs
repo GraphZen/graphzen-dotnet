@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Configuration.Objects.Fields.Arguments
 {
-    public abstract class Object_Field_Arguments : CollectionConfigurationFixture<IArguments,
+    public abstract class Object_Field_Arguments : NamedCollectionConfigurationFixture<IArguments,
         IArgumentsDefinition, IMutableArgumentsDefinition, ArgumentDefinition, Argument,
         FieldDefinition, Field>
     {

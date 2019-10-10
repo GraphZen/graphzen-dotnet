@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Configuration.Enums
 {
-    public abstract class Schema_Enums : CollectionConfigurationFixture<IEnumTypes,
+    public abstract class Schema_Enums : NamedCollectionConfigurationFixture<IEnumTypes,
         IEnumTypesDefinition, IMutableEnumTypesDefinition, EnumTypeDefinition,
         EnumType,
         SchemaDefinition,

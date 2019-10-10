@@ -17,7 +17,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     }
 
     [GraphQLIgnore]
-    public interface IMutableDirectiveAnnotations : IDirectiveAnnotationsDefinition
+    public interface IMutableDirectiveAnnotationsDefinition : IDirectiveAnnotationsDefinition
     {
         
     }
