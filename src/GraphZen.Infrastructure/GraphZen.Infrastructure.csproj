@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
-
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
     <Description></Description>
@@ -17,5 +16,4 @@
     <ItemGroup>
     <ProjectReference Include="..\GraphZen.Abstractions\GraphZen.Abstractions.csproj" />
   </ItemGroup>
-
 </Project>
