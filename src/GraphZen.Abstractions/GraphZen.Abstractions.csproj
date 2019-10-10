@@ -4,7 +4,7 @@
     <Description>Lightweight package containing code attributes for use when building code-first GraphQL APIs in .NET. Use the "GraphZen" package for hosting your API on ASP.NET.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Shared\JetBrainsAnnotations.cs" Link="JetBrainsAnnotations.cs" />
