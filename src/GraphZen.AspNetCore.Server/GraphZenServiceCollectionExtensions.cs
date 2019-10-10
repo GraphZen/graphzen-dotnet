@@ -12,10 +12,6 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-#nullable disable
-
-
-// ReSharper disable once CheckNamespace
 namespace GraphZen
 {
     public static class GraphZenServiceCollectionExtensions
@@ -24,7 +20,7 @@ namespace GraphZen
 
         public static void AddGraphQLContext(
             this IServiceCollection serviceCollection,
-            Action<GraphQLContextOptionsBuilder> optionsAction = null)
+            Action<GraphQLContextOptionsBuilder>? optionsAction = null)
         {
             AddGraphQLContext<GraphQLContext>(serviceCollection, optionsAction);
         }
@@ -32,23 +28,22 @@ namespace GraphZen
 
         public static void AddGraphQLContext<TContext>(
             this IServiceCollection serviceCollection,
-            Action<GraphQLContextOptionsBuilder> optionsAction = null)
+            Action<GraphQLContextOptionsBuilder>? optionsAction = null)
             where TContext : GraphQLContext
         {
             Check.NotNull(serviceCollection, nameof(serviceCollection));
 
             var optionsActionImpl =
                 optionsAction != null
-                    ? (p, b) => optionsAction(b)
-                    : (Action<IServiceProvider, GraphQLContextOptionsBuilder>)null;
+                    // ReSharper disable once ConstantConditionalAccessQualifier
+                    ? (p, b) => { optionsAction?.Invoke(b); }
+                    : (Action<IServiceProvider, GraphQLContextOptionsBuilder>?) null;
 
             var contextType = typeof(TContext);
             Logger.Debug($"Adding GraphQL context {contextType}");
             if (optionsAction != null)
             {
-                // ReSharper disable once PossibleNullReferenceException
                 var declaredConstructors = contextType.GetTypeInfo().DeclaredConstructors.ToList();
-                // ReSharper disable once PossibleNullReferenceException
                 if (declaredConstructors.Count == 1 && declaredConstructors[0].GetParameters().Length == 0)
                     throw new ArgumentException(
                         $"{nameof(AddGraphQLContext)} was called with configuration, but the context type '{contextType}' only declares a parameterless constructor. This means that the configuration passed to {nameof(AddGraphQLContext)} will never be used. If configuration is passed to {nameof(AddGraphQLContext)}, then '{contextType}' should declare a constructor that accepts a {nameof(GraphQLContextOptions)}<{contextType.Name}> and must pass it to the base constructor for {nameof(GraphQLContext)}.");
@@ -81,9 +76,7 @@ namespace GraphZen
             var tempServiceProvider = serviceCollection.BuildServiceProvider();
 
             Logger.Debug("Building temporary service provider");
-            var context = tempServiceProvider.GetRequiredService(contextType) as TContext;
-            // ReSharper disable once PossibleNullReferenceException
-            // ReSharper disable once ConstantConditionalAccessQualifier
+            var context = tempServiceProvider.GetRequiredService<TContext>();
             var queryClrType = context.Schema.QueryType?.ClrType;
             if (queryClrType != null) serviceCollection.TryAddScoped(queryClrType);
 
@@ -93,7 +86,7 @@ namespace GraphZen
 
         private static GraphQLContextOptions<TContext> GraphQLContextOptionsFactory<TContext>(
             IServiceProvider serviceProvider,
-            Action<IServiceProvider, GraphQLContextOptionsBuilder> optionsAction)
+            Action<IServiceProvider, GraphQLContextOptionsBuilder>? optionsAction)
             where TContext : GraphQLContext
         {
             var builder = new GraphQLContextOptionsBuilder<TContext>(new GraphQLContextOptions<TContext>());

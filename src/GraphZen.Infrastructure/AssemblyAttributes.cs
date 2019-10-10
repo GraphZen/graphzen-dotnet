@@ -11,6 +11,8 @@ using JetBrains.Annotations;
 
 [assembly: InternalsVisibleTo("GraphZen.Tests")]
 [assembly: InternalsVisibleTo("GraphZen")]
+[assembly: InternalsVisibleTo("GraphZen.AspNetCore")]
+[assembly: InternalsVisibleTo("GraphZen.AspNetCore.Server")]
 [assembly: InternalsVisibleTo("GraphZen.DevCli")]
 [assembly: InternalsVisibleTo("GraphZen.Infrastructure")]
 [assembly: InternalsVisibleTo("GraphZen.AspNetCore")]
