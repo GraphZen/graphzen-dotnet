@@ -32,15 +32,9 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
 
-        public string GetDisplayValue()
-        {
-            return Value;
-        }
+        public string GetDisplayValue() => Value;
 
-        private bool Equals(FloatValueSyntax other)
-        {
-            return Value.Equals(other.Value);
-        }
+        private bool Equals(FloatValueSyntax other) => Value.Equals(other.Value);
 
         public override bool Equals(object obj)
         {
@@ -51,14 +45,8 @@ namespace GraphZen.LanguageModel
             return obj is FloatValueSyntax && Equals((FloatValueSyntax)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return Value.GetHashCode();
-        }
+        public override int GetHashCode() => Value.GetHashCode();
 
-        public override object GetValue()
-        {
-            return Value;
-        }
+        public override object GetValue() => Value;
     }
 }

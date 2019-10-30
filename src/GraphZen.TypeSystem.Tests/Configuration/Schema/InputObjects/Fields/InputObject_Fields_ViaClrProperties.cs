@@ -3,21 +3,20 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.InputObjects.Fields
+namespace GraphZen.Configuration.InputObjects.Fields
 {
     public class InputObject_Fields_ViaClrProperties : InputObject_Fields, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ParentName = nameof(ExampleInputObject),
                 ItemNamedByConvention = nameof(ExampleInputObject.HelloWorld).FirstCharToLower(),
@@ -25,7 +24,6 @@ namespace GraphZen.InputObjects.Fields
                 ItemIgnoredByConvention = nameof(ExampleInputObject.IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(ExampleInputObject.IgnoredByDataAnnotation).FirstCharToLower()
             };
-        }
 
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
@@ -49,6 +47,7 @@ namespace GraphZen.InputObjects.Fields
         {
         }
 
+#nullable disable
         public class ExampleInputObject
         {
             public string HelloWorld { get; set; }
@@ -59,5 +58,6 @@ namespace GraphZen.InputObjects.Fields
 
             public IgnoredType IgnoredByConvention { get; set; }
         }
+#nullable restore
     }
 }

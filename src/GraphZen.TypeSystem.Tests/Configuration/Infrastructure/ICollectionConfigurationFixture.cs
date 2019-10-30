@@ -8,9 +8,8 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen
+namespace GraphZen.Configuration.Infrastructure
 {
     public interface ICollectionConfigurationFixture : IConfigurationFixture
     {

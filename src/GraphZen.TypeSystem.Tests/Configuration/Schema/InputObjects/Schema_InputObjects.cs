@@ -2,17 +2,17 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.InputObjects
+namespace GraphZen.Configuration.InputObjects
 {
-    public abstract class Schema_InputObjects : CollectionConfigurationFixture<IInputObjectTypesContainer,
-        IInputObjectTypesContainerDefinition, IMutableInputObjectTypesContainerDefinition, InputObjectTypeDefinition,
+    public abstract class Schema_InputObjects : NamedCollectionConfigurationFixture<IInputObjectTypes,
+        IInputObjectTypesDefinition, IMutableInputObjectTypesDefinition, InputObjectTypeDefinition,
         InputObjectType,
         SchemaDefinition,
         Schema>
@@ -21,15 +21,9 @@ namespace GraphZen.InputObjects
         {
         }
 
-        public override Schema GetParent(Schema schema, string parentName)
-        {
-            return schema;
-        }
+        public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition();
-        }
+        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -51,19 +45,13 @@ namespace GraphZen.InputObjects
             sb.InputObject(itemName).Name(newName);
         }
 
-        public override NamedCollection<InputObjectTypeDefinition> GetCollection(SchemaDefinition parent)
-        {
-            return parent.GetInputObjects().ToNamedCollection();
-        }
+        public override NamedCollection<InputObjectTypeDefinition> GetCollection(SchemaDefinition parent) =>
+            parent.GetInputObjects().ToNamedCollection();
 
-        public override NamedCollection<InputObjectType> GetCollection(Schema parent)
-        {
-            return parent.InputObjects.ToNamedCollection();
-        }
+        public override NamedCollection<InputObjectType> GetCollection(Schema parent) =>
+            parent.InputObjects.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name)
-        {
-            return parent.FindIgnoredTypeConfigurationSource(name);
-        }
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+            parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

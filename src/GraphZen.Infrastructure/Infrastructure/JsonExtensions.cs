@@ -36,6 +36,7 @@ namespace GraphZen.Infrastructure
 
 
             foreach (var (arrayKey, arrayValue) in arrayEntries)
+            {
                 result[arrayKey] = arrayValue.Children().Select(v =>
                 {
                     switch (v)
@@ -48,8 +49,12 @@ namespace GraphZen.Infrastructure
 
                     throw new NotImplementedException($"unsupported type {v?.GetType()}");
                 }).ToArray();
+            }
 
-            foreach (var (objectKey, objectValue) in objectEntries) result[objectKey] = objectValue.ToDictionary();
+            foreach (var (objectKey, objectValue) in objectEntries)
+            {
+                result[objectKey] = objectValue.ToDictionary();
+            }
 
             return result;
         }

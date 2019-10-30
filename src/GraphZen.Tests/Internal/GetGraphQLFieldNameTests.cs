@@ -11,6 +11,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
+
 #nullable disable
 
 
@@ -30,10 +31,7 @@ namespace GraphZen.Internal
                 .Be(("customAllTheWay", ConfigurationSource.DataAnnotation));
         }
 
-        private PropertyInfo SelectFoo<T>(Expression<Func<Foo, T>> expr)
-        {
-            return expr.GetPropertyInfoFromExpression();
-        }
+        private PropertyInfo SelectFoo<T>(Expression<Func<Foo, T>> expr) => expr.GetPropertyInfoFromExpression();
 
         [SuppressMessage("ReSharper", "UnusedMember.Local")]
         [SuppressMessage("ReSharper", "UnassignedGetOnlyAutoProperty")]
@@ -43,24 +41,15 @@ namespace GraphZen.Internal
 
             public string Property { get; }
 
-            public bool Method()
-            {
-                return true;
-            }
+            public bool Method() => true;
 
             public void VoidMethod()
             {
             }
 
-            public Task MethodAsync()
-            {
-                return Task.CompletedTask;
-            }
+            public Task MethodAsync() => Task.CompletedTask;
 
-            public Task<string> StringMethodAsync()
-            {
-                return Task.FromResult("hello world");
-            }
+            public Task<string> StringMethodAsync() => Task.FromResult("hello world");
         }
     }
 }

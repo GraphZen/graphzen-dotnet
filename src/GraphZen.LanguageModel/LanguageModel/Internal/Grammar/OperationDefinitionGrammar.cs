@@ -11,7 +11,7 @@ using Superpower.Parsers;
 #nullable disable
 
 
-namespace GraphZen.LanguageModel.Internal.Grammar
+namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar
     {

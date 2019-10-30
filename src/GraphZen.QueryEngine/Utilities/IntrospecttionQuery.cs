@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.Utilities
 {
     public static partial class Helpers
     {
@@ -199,9 +199,7 @@ namespace GraphZen
       }
     }";
 
-        public static string IntrospectionQuery(bool descriptions = true)
-        {
-            return descriptions ? WithDescriptions : WithoutDescriptions;
-        }
+        public static string IntrospectionQuery(bool descriptions = true) =>
+            descriptions ? WithDescriptions : WithoutDescriptions;
     }
 }

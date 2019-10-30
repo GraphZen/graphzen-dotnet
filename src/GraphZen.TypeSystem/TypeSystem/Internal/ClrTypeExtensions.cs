@@ -134,54 +134,42 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool TryGetGraphQLTypeInfo(this Type clrType,
             [NotNullWhen(true)] out TypeSyntax? typeNode,
-            [NotNullWhen(true)] out Type? innerClrType, bool canBeNull = false, bool itemCanBeNull = false)
-        {
-            return TryGetGraphQLTypeInfoRecursive(
+            [NotNullWhen(true)] out Type? innerClrType, bool canBeNull = false, bool itemCanBeNull = false) =>
+            TryGetGraphQLTypeInfoRecursive(
                 Check.NotNull(clrType, nameof(clrType)), out typeNode, out innerClrType, canBeNull, itemCanBeNull);
-        }
 
         public static bool TryGetGraphQLTypeInfo(this MethodInfo method, [NotNullWhen(true)] out TypeSyntax? typeNode,
-            [NotNullWhen(true)] out Type? innerClrType)
-        {
-            return Check.NotNull(method, nameof(method))
+            [NotNullWhen(true)] out Type? innerClrType) =>
+            Check.NotNull(method, nameof(method))
                 .ReturnType
                 .TryGetGraphQLTypeInfo(
                     out typeNode, out innerClrType,
                     method.CanBeNull(), method.ItemCanBeNull());
-        }
 
         public static bool TryGetGraphQLTypeInfo(this PropertyInfo property,
             [NotNullWhen(true)] out TypeSyntax? typeNode,
-            [NotNullWhen(true)] out Type? innerClrType)
-        {
-            return Check.NotNull(property, nameof(property))
+            [NotNullWhen(true)] out Type? innerClrType) =>
+            Check.NotNull(property, nameof(property))
                 .PropertyType
                 .TryGetGraphQLTypeInfo(
                     out typeNode, out innerClrType,
                     property.CanBeNull(), property.ItemCanBeNull());
-        }
 
         public static bool TryGetGraphQLTypeInfo(this ParameterInfo parameter,
             [NotNullWhen(true)] out TypeSyntax? typeNode,
-            [NotNullWhen(true)] out Type? innerClrType)
-        {
-            return Check.NotNull(parameter, nameof(parameter)).ParameterType
+            [NotNullWhen(true)] out Type? innerClrType) =>
+            Check.NotNull(parameter, nameof(parameter)).ParameterType
                 .TryGetGraphQLTypeInfo(
                     out typeNode, out innerClrType,
                     parameter.CanBeNull(), parameter.ItemCanBeNull());
-        }
 
 
-        public static Type GetEffectiveClrType(this Type clrType)
-        {
-            return clrType.GetCustomAttribute<GraphQLTypeAttribute>()?.ClrType ?? clrType;
-        }
+        public static Type GetEffectiveClrType(this Type clrType) =>
+            clrType.GetCustomAttribute<GraphQLTypeAttribute>()?.ClrType ?? clrType;
 
 
-        public static bool IsSameOrSubclass(this Type potentialSubClass, Type potentialBase)
-        {
-            return potentialSubClass.IsSubclassOf(potentialBase) || potentialBase == potentialSubClass;
-        }
+        public static bool IsSameOrSubclass(this Type potentialSubClass, Type potentialBase) =>
+            potentialSubClass.IsSubclassOf(potentialBase) || potentialBase == potentialSubClass;
 
         public static bool TryGetOutputTypeKind(this Type clrType, [NotNullWhen(true)] out TypeKind? kind)
         {
@@ -247,6 +235,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 var mapping = property.DeclaringType.GetInterfaceMap(@interface);
                 for (var i = 0; i < mapping.InterfaceMethods.Length; i++)
+                {
                     if (mapping.TargetMethods[i] == methodInfo)
                     {
                         var interfaceMethod = mapping.InterfaceMethods[i];
@@ -254,6 +243,7 @@ namespace GraphZen.TypeSystem.Internal
                         var value = interfaceMethod.DeclaringType.GetProperty(property.Name);
                         if (value != null) yield return value;
                     }
+                }
             }
         }
 
@@ -266,11 +256,13 @@ namespace GraphZen.TypeSystem.Internal
             {
                 var mapping = method.DeclaringType.GetInterfaceMap(@interface);
                 for (var i = 0; i < mapping.InterfaceMethods.Length; i++)
+                {
                     if (mapping.TargetMethods[i] == method)
                     {
                         var interfaceMethod = mapping.InterfaceMethods[i];
                         yield return interfaceMethod;
                     }
+                }
             }
         }
 
@@ -283,12 +275,14 @@ namespace GraphZen.TypeSystem.Internal
                 .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> { clrType.Assembly });
             foreach (var assembly in assemblies)
                 foreach (var type in assembly.DefinedTypes)
+                {
                     if (type != clrType)
                     {
                         if (clrType.IsInterface && clrType.IsAssignableFrom(type))
                             yield return type;
                         else if (clrType.IsClass && type.IsSubclassOf(clrType)) yield return type;
                     }
+                }
         }
     }
 }

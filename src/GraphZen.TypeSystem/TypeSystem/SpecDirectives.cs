@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
@@ -15,7 +16,6 @@ namespace GraphZen.TypeSystem
     {
         private const string DefaultDeprecationReason = "No longer supported";
 
-
         public static Directive Deprecated { get; } = new Directive("deprecated",
             "Marks an element of a GraphQL schema as no longer supported.",
             new[]
@@ -29,7 +29,6 @@ namespace GraphZen.TypeSystem
                                        "suggestion for how to access supported similar data. Formatted " +
                                        "in [Markdown](https://daringfireball.net/projects/markdown/).",
                     SpecScalars.String,
-                    // ReSharper disable once AssignNullToNotNullAttribute
                     DefaultDeprecationReason, true, DirectiveAnnotation.EmptyList, null, null, null)
             }, null
         );
@@ -41,7 +40,6 @@ namespace GraphZen.TypeSystem
             new[]
             {
                 new Argument("if", "Included when true.", NonNullType.Of(SpecScalars.Boolean),
-                    // ReSharper disable once AssignNullToNotNullAttribute
                     null, false, DirectiveAnnotation.EmptyList, null, null, null)
             }, null
         );
@@ -53,7 +51,6 @@ namespace GraphZen.TypeSystem
             new[]
             {
                 new Argument("if", "Skipped when true.", NonNullType.Of(SpecScalars.Boolean),
-                    // ReSharper disable once AssignNullToNotNullAttribute
                     null, false, DirectiveAnnotation.EmptyList, null, null, null)
             }, null);
 

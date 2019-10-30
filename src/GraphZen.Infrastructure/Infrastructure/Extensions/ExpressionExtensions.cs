@@ -16,10 +16,8 @@ namespace GraphZen.Infrastructure
     internal static class ExpressionExtensions
     {
         public static Func<T, TResult> GetFuncFromExpression<T, TResult>(
-            this Expression<Func<T, TResult>> propertySelector)
-        {
-            return propertySelector.Compile();
-        }
+            this Expression<Func<T, TResult>> propertySelector) =>
+            propertySelector.Compile();
 
 
         public static PropertyInfo GetPropertyInfoFromExpression<T, TResult>(

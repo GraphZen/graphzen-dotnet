@@ -14,23 +14,25 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
     {
-        private readonly List<DirectiveDefinition> _directives = new List<DirectiveDefinition>();
+        private readonly Dictionary<string, DirectiveDefinition> _directives =
+            new Dictionary<string, DirectiveDefinition>();
 
+        private readonly Dictionary<string, ConfigurationSource> _ignoredDirectives =
+            new Dictionary<string, ConfigurationSource>();
 
         private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
             new Dictionary<string, ConfigurationSource>();
 
-
         private readonly List<TypeIdentity> _typeIdentities;
-
         private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
+        private ConfigurationSource? _queryTypeConfigurationSource;
+        private ConfigurationSource? _subscriptionTypeConfigurationSource;
+        private ConfigurationSource? _mutationTypeConfigurationSource;
 
         // ReSharper disable once NotNullMemberIsNotInitialized
 
@@ -57,7 +59,7 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        private string DebuggerDisplay { get; } = "schema";
+        private string DebuggerDisplay { [UsedImplicitly] get; } = "schema";
 
 
         public InternalSchemaBuilder Builder { get; }
@@ -66,33 +68,70 @@ namespace GraphZen.TypeSystem
         public IReadOnlyList<NamedTypeDefinition> Types => _types;
 
 
-        public IReadOnlyList<IDirectiveDefinition> Directives => _directives;
+        public ObjectTypeDefinition? QueryType { get; private set; }
 
+        public bool SetQueryType(ObjectTypeDefinition? type, ConfigurationSource configurationSource)
+        {
+            if (configurationSource.Overrides(GetQueryTypeConfigurationSource()))
+            {
+                _queryTypeConfigurationSource = configurationSource;
+                if (QueryType != type)
+                {
+                    QueryType = type;
+                    return true;
+                }
+            }
 
-        public IObjectTypeDefinition QueryType { get; set; }
+            return false;
+        }
 
+        public ConfigurationSource? GetQueryTypeConfigurationSource() => _queryTypeConfigurationSource;
+        public ObjectTypeDefinition? MutationType { get; private set; }
 
-        public IObjectTypeDefinition MutationType { get; set; }
+        public bool SetMutationType(ObjectTypeDefinition? type, ConfigurationSource configurationSource)
+        {
+            if (configurationSource.Overrides(GetMutationTypeConfigurationSource()))
+            {
+                _mutationTypeConfigurationSource = configurationSource;
+                if (MutationType != type)
+                {
+                    MutationType = type;
+                    return true;
+                }
+            }
 
+            return false;
+        }
 
-        public IObjectTypeDefinition SubscriptionType { get; set; }
+        public ConfigurationSource? GetMutationTypeConfigurationSource() => _mutationTypeConfigurationSource;
+        public ObjectTypeDefinition? SubscriptionType { get; private set; }
 
+        public bool SetSubscriptionType(ObjectTypeDefinition? type, ConfigurationSource configurationSource)
+        {
+            if (configurationSource.Overrides(GetSubscriptionTypeConfigurationSource()))
+            {
+                _subscriptionTypeConfigurationSource = configurationSource;
+                if (SubscriptionType != type)
+                {
+                    SubscriptionType = type;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public ConfigurationSource? GetSubscriptionTypeConfigurationSource() => _subscriptionTypeConfigurationSource;
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Schema;
 
+        public ConfigurationSource? FindIgnoredTypeConfigurationSource(string name) =>
+            _ignoredTypes.FindValueOrDefault(name);
 
-        public ConfigurationSource? FindIgnoredTypeConfigurationSource(string name)
-        {
-            return _ignoredTypes.FindValueOrDefault(name);
-        }
-
-        public ConfigurationSource? FindIgnoredTypeConfigurationSource(Type clrType)
-        {
-            return FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName());
-        }
-
+        public ConfigurationSource? FindIgnoredTypeConfigurationSource(Type clrType) =>
+            FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName());
 
         // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
-        private bool TryDefineFirstUndefinedType(TypeIdentity prev, [NotNullWhen(true)] out TypeIdentity identity)
+        private bool TryDefineFirstUndefinedType(TypeIdentity? prev, [NotNullWhen(true)] out TypeIdentity identity)
         {
             var undefined = _typeIdentities.Where(_ =>
                 _.Definition == null && _.ClrType != null && _.ClrType.NotIgnored()).ToArray();
@@ -103,7 +142,7 @@ namespace GraphZen.TypeSystem
 
             if (identity != null)
             {
-                if (Builder.Type(identity)?.Definition is IGraphQLTypeDefinition def &&
+                if (Builder.Type(identity)?.Definition is INamedTypeDefinition def &&
                     identity.Definition == null)
                     identity.Definition = def;
 
@@ -172,14 +211,14 @@ namespace GraphZen.TypeSystem
 
         private void FinalizeTypes()
         {
-            TypeIdentity identity = null;
+            TypeIdentity? identity = null;
             while (TryDefineFirstUndefinedType(identity, out identity))
             {
             }
         }
 
 
-        public TypeIdentity FindTypeIdentity(TypeIdentity identity)
+        public TypeIdentity? FindTypeIdentity(TypeIdentity identity)
         {
             var validIdentities = _typeIdentities
                 .Where(_ => _.Kind == null || identity.Kind == null || _.Kind == identity.Kind).ToList();
@@ -214,7 +253,7 @@ namespace GraphZen.TypeSystem
             return ids.SingleOrDefault();
         }
 
-        public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember
+        public TypeReference? GetOrAddTypeReference(string type, IMemberDefinition referencingMember
         )
         {
             var typeNode = Builder.Parser.ParseType(type);
@@ -230,7 +269,7 @@ namespace GraphZen.TypeSystem
             return identity != null ? new TypeReference(identity, typeNode) : null;
         }
 
-        public TypeReference GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
+        public TypeReference? GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
         )
         {
             if (method.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
@@ -248,7 +287,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public TypeReference GetOrAddTypeReference(ParameterInfo parameter,
+        public TypeReference? GetOrAddTypeReference(ParameterInfo parameter,
             IMemberDefinition referencingMember
         )
         {
@@ -267,7 +306,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public TypeReference NamedTypeReference(Type clrType, TypeKind kind)
+        public TypeReference? NamedTypeReference(Type clrType, TypeKind kind)
         {
             if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
             {
@@ -282,7 +321,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public TypeReference GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
+        public TypeReference? GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
         )
         {
             if (property.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
@@ -301,7 +340,7 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        public TypeReference GetOrAddTypeReference(Type clrType, bool canBeNull, bool itemCanBeNull,
+        public TypeReference? GetOrAddTypeReference(Type clrType, bool canBeNull, bool itemCanBeNull,
             IMemberDefinition referencingMember)
         {
             if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType, canBeNull, itemCanBeNull))
@@ -373,6 +412,7 @@ namespace GraphZen.TypeSystem
             _types.Add(unionType);
             return unionType;
         }
+
 
         public ScalarTypeDefinition AddScalar(Type clrType, ConfigurationSource configurationSource)
         {
@@ -476,6 +516,7 @@ namespace GraphZen.TypeSystem
         }
 
 
+#nullable disable
         private T AddType<T>(Type clrType, Func<TypeIdentity, T> typeFactory)
             where T : NamedTypeDefinition
         {
@@ -494,6 +535,7 @@ namespace GraphZen.TypeSystem
             var identity = GetOrAddTypeIdentity(new TypeIdentity(name, this));
             return identity != null ? AddType(typeFactory(identity)) : null;
         }
+#nullable restore
 
 
         private T AddType<T>(T type) where T : NamedTypeDefinition
@@ -517,6 +559,26 @@ namespace GraphZen.TypeSystem
             return type;
         }
 
+
+        public void IgnoreDirective(Type clrType, ConfigurationSource configurationSource) =>
+            IgnoreDirective(clrType.GetGraphQLName(), configurationSource);
+
+        public void IgnoreDirective(string name, ConfigurationSource configurationSource)
+        {
+            var newCs = configurationSource.Max(FindIgnoredDirectiveConfigurationSource(name));
+            _ignoredDirectives[name] = newCs;
+            _directives.Remove(name);
+        }
+
+        public void UnignoreDirective(Type clrType, ConfigurationSource configurationSource) =>
+            UnignoreDirective(clrType.GetGraphQLName(), configurationSource);
+
+        public void UnignoreDirective(string name, ConfigurationSource configurationSource)
+        {
+            var existingIgnoredConfigurationSource = FindIgnoredDirectiveConfigurationSource(name);
+            if (existingIgnoredConfigurationSource != null &&
+                configurationSource.Overrides(existingIgnoredConfigurationSource)) _ignoredDirectives.Remove(name);
+        }
 
         public void IgnoreType(string name, ConfigurationSource configurationSource)
         {
@@ -600,6 +662,7 @@ namespace GraphZen.TypeSystem
         }
 
 
+        [return: MaybeNull]
         public T FindType<T>(TypeIdentity identity) where T : NamedTypeDefinition
         {
             Check.NotNull(identity, nameof(identity));
@@ -614,7 +677,7 @@ namespace GraphZen.TypeSystem
                     $"Expected type \"{type.Name}\" to be of type \"{typeof(T).Name}\", but instead found a  type of \"{type.GetType().Name}\" ");
             }
 
-            return null;
+            return null!;
         }
 
 
@@ -628,6 +691,12 @@ namespace GraphZen.TypeSystem
         {
             return _types.SingleOrDefault(_ => _.Name == name);
         }
+
+        public DirectiveDefinition? FindDirective(string name) =>
+            _directives.TryGetValue(name, out var directive) ? directive : null;
+
+        public DirectiveDefinition? FindDirective(Type clrType) =>
+            _directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
 
         public NamedTypeDefinition FindType(Type clrType)
         {
@@ -671,19 +740,6 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public DirectiveDefinition GetOrAddDirective(string name, ConfigurationSource configurationSource)
-        {
-            Check.NotNull(name, nameof(name));
-            // ReSharper disable once PossibleNullReferenceException
-            var existing = _directives.SingleOrDefault(_ => _.Name == name);
-            if (existing != null) return existing;
-
-            var newDirective = new DirectiveDefinition(name, this, configurationSource);
-            _directives.Add(newDirective);
-            return newDirective;
-        }
-
-
         public Schema ToSchema()
         {
             FinalizeTypes();
@@ -697,74 +753,73 @@ namespace GraphZen.TypeSystem
             _types.Remove(type);
         }
 
-        public IEnumerable<DirectiveDefinition> GetDirectives()
+        public IEnumerable<DirectiveDefinition> GetDirectives() => _directives.Values;
+
+        public bool RenameDirective(DirectiveDefinition directive, string name, ConfigurationSource configurationSource)
         {
-            return _directives;
+            if (!configurationSource.Overrides(directive.GetNameConfigurationSource())) return false;
+
+            if (_directives.TryGetValue(directive.Name, out var existing) && existing != directive)
+                throw new InvalidOperationException(
+                    $"Cannot rename {directive} to '{name}'. {this} already contains a directive named '{name}'.");
+
+            _directives.Remove(directive.Name);
+            _directives[name] = directive;
+            return true;
         }
 
-        public IEnumerable<ObjectTypeDefinition> GetObjects()
+        public ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name) =>
+            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
+
+        public IEnumerable<ObjectTypeDefinition> GetObjects() => _types.OfType<ObjectTypeDefinition>();
+
+        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _types.OfType<InterfaceTypeDefinition>();
+
+        public IEnumerable<UnionTypeDefinition> GetUnions() => _types.OfType<UnionTypeDefinition>();
+
+        public IEnumerable<ScalarTypeDefinition> GetScalars() => _types.OfType<ScalarTypeDefinition>();
+
+        public IEnumerable<EnumTypeDefinition> GetEnums() => _types.OfType<EnumTypeDefinition>();
+
+        IEnumerable<IDirectiveDefinition> IDirectivesDefinition.GetDirectives() => GetDirectives();
+
+        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects() => GetObjects();
+
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces() => GetInterfaces();
+
+        IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions() => GetUnions();
+
+        IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars() => GetScalars();
+
+        IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums() => GetEnums();
+
+        public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => _types.OfType<InputObjectTypeDefinition>();
+
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.GetInputObjects() =>
+            GetInputObjects();
+
+        IObjectTypeDefinition? IQueryTypeDefinition.QueryType => QueryType;
+
+        IObjectTypeDefinition? IMutationTypeDefinition.MutationType => MutationType;
+
+        IObjectTypeDefinition? ISubscriptionTypeDefinition.SubscriptionType => SubscriptionType;
+
+        public DirectiveDefinition AddDirective(Type clrType, ConfigurationSource configurationSource)
         {
-            return _types.OfType<ObjectTypeDefinition>();
+            var directive = new DirectiveDefinition(null, clrType, this, configurationSource);
+            return AddDirective(directive);
         }
 
-        public IEnumerable<InterfaceTypeDefinition> GetInterfaces()
+        public DirectiveDefinition AddDirective(string name, ConfigurationSource configurationSource)
         {
-            return _types.OfType<InterfaceTypeDefinition>();
+            var directive = new DirectiveDefinition(name, null, this, configurationSource);
+            return AddDirective(directive);
         }
 
-        public IEnumerable<UnionTypeDefinition> GetUnions()
+        private DirectiveDefinition AddDirective(DirectiveDefinition directive)
         {
-            return _types.OfType<UnionTypeDefinition>();
-        }
-
-        public IEnumerable<ScalarTypeDefinition> GetScalars()
-        {
-            return _types.OfType<ScalarTypeDefinition>();
-        }
-
-        public IEnumerable<EnumTypeDefinition> GetEnums()
-        {
-            return _types.OfType<EnumTypeDefinition>();
-        }
-
-        IEnumerable<IDirectiveDefinition> IDirectivesContainerDefinition.GetDirectives()
-        {
-            return GetDirectives();
-        }
-
-        IEnumerable<IObjectTypeDefinition> IObjectTypesContainerDefinition.GetObjects()
-        {
-            return GetObjects();
-        }
-
-        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesContainerDefinition.GetInterfaces()
-        {
-            return GetInterfaces();
-        }
-
-        IEnumerable<IUnionTypeDefinition> IUnionTypesContainerDefinition.GetUnions()
-        {
-            return GetUnions();
-        }
-
-        IEnumerable<IScalarTypeDefinition> IScalarTypesContainerDefinition.GetScalars()
-        {
-            return GetScalars();
-        }
-
-        IEnumerable<IEnumTypeDefinition> IEnumTypesContainerDefinition.GetEnums()
-        {
-            return GetEnums();
-        }
-
-        public IEnumerable<InputObjectTypeDefinition> GetInputObjects()
-        {
-            return _types.OfType<InputObjectTypeDefinition>();
-        }
-
-        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesContainerDefinition.GetInputObjects()
-        {
-            return GetInputObjects();
+            _directives[directive.Name] = directive;
+            return directive;
         }
     }
 }

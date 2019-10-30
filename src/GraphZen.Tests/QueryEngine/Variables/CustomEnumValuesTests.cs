@@ -7,6 +7,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
+
 #nullable disable
 
 
@@ -28,9 +29,8 @@ namespace GraphZen.QueryEngine.Variables
 
 
         [Fact]
-        public Task AllowsCustomEnumValuesAsInputs()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsCustomEnumValuesAsInputs() =>
+            ExecuteAsync(@"
             {
               null: fieldWithEnumInput(input: NULL)
               negative: fieldWithEnumInput(input: NEGATIVE)
@@ -48,12 +48,10 @@ namespace GraphZen.QueryEngine.Variables
                     defaultValue = "{}"
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsNonNullableInputsToHaveNullAsCustomEnumValue()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNonNullableInputsToHaveNullAsCustomEnumValue() =>
+            ExecuteAsync(@"
             {
               fieldWithNonNullableEnumInput(input: NULL)
             }").ShouldEqual(new
@@ -63,6 +61,5 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithNonNullableEnumInput = "null"
                 }
             });
-        }
     }
 }

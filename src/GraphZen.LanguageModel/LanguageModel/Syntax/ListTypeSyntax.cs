@@ -33,10 +33,7 @@ namespace GraphZen.LanguageModel
             get { yield return OfType; }
         }
 
-        private bool Equals(ListTypeSyntax other)
-        {
-            return OfType.Equals(other.OfType);
-        }
+        private bool Equals(ListTypeSyntax other) => OfType.Equals(other.OfType);
 
         public override bool Equals(object obj)
         {
@@ -47,15 +44,9 @@ namespace GraphZen.LanguageModel
             return obj is ListTypeSyntax && Equals((ListTypeSyntax)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return OfType.GetHashCode();
-        }
+        public override int GetHashCode() => OfType.GetHashCode();
 
 
-        public override string ToString()
-        {
-            return ToSyntaxString();
-        }
+        public override string ToString() => ToSyntaxString();
     }
 }

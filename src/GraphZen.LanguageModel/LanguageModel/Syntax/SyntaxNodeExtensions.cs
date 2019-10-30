@@ -29,23 +29,17 @@ namespace GraphZen.LanguageModel
         //    SpecDirectives.All.ToSyntaxNodes<DirectiveDefinitionSyntax>().ToList().AsReadOnly();
 
 
-        public static bool IsIntrospectionType(this DefinitionSyntax node)
-        {
-            return node is TypeDefinitionSyntax typeDef &&
-                   SpecReservedNames.IntrospectionTypeNames.Contains(typeDef.Name.Value);
-        }
+        public static bool IsIntrospectionType(this DefinitionSyntax node) =>
+            node is TypeDefinitionSyntax typeDef &&
+            SpecReservedNames.IntrospectionTypeNames.Contains(typeDef.Name.Value);
 
-        public static bool IsSpecDefinedDirective(this DefinitionSyntax node)
-        {
-            return node is DirectiveDefinitionSyntax dirDef &&
-                   SpecReservedNames.DirectiveNames.Contains(dirDef.Name.Value);
-        }
+        public static bool IsSpecDefinedDirective(this DefinitionSyntax node) =>
+            node is DirectiveDefinitionSyntax dirDef &&
+            SpecReservedNames.DirectiveNames.Contains(dirDef.Name.Value);
 
-        public static bool IsSpecDefinedType(this DefinitionSyntax node)
-        {
-            return node is ScalarTypeDefinitionSyntax typeDef &&
-                   SpecReservedNames.ScalarTypeNames.Contains(typeDef.Name.Value);
-        }
+        public static bool IsSpecDefinedType(this DefinitionSyntax node) =>
+            node is ScalarTypeDefinitionSyntax typeDef &&
+            SpecReservedNames.ScalarTypeNames.Contains(typeDef.Name.Value);
 
         public static bool IsSchemaOfCommonNames(this SchemaDefinitionSyntax schemaDefinitionNode)
         {

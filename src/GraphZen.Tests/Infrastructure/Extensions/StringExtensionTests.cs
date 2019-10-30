@@ -6,10 +6,11 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
+
 #nullable disable
 
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure.Extensions
 {
     public class StringExtensionTests
     {

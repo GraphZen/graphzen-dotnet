@@ -7,6 +7,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
+
 #nullable disable
 
 
@@ -27,9 +28,8 @@ namespace GraphZen.QueryEngine.Variables
         }
 
         [Fact]
-        public Task AllowsNonNullableInputsToBeOmittedGivenADefault()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNonNullableInputsToBeOmittedGivenADefault() =>
+            ExecuteAsync(@"
               query ($value: String = ""default"") {
                 fieldWithNonNullableStringInput(input: $value)
               }
@@ -37,12 +37,10 @@ namespace GraphZen.QueryEngine.Variables
             {
                 data = new { fieldWithNonNullableStringInput = "\"default\"" }
             });
-        }
 
         [Fact]
-        public Task AllowsNonNullableInputsToBeSetToAValueDirectly()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNonNullableInputsToBeSetToAValueDirectly() =>
+            ExecuteAsync(@"
               {
                 fieldWithNonNullableStringInput(input: ""a"")
               }
@@ -53,12 +51,10 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithNonNullableStringInput = "\"a\""
                 }
             });
-        }
 
         [Fact]
-        public Task AllowsNonNullableInputsToBeSetToAValueInAVariable()
-        {
-            return ExecuteAsync(@"
+        public Task AllowsNonNullableInputsToBeSetToAValueInAVariable() =>
+            ExecuteAsync(@"
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
@@ -69,12 +65,10 @@ namespace GraphZen.QueryEngine.Variables
                     fieldWithNonNullableStringInput = "\"a\""
                 }
             });
-        }
 
         [Fact]
-        public Task DoesNotAllowNonNullableInputsToBeOmittedInAVariable()
-        {
-            return ExecuteAsync(@"
+        public Task DoesNotAllowNonNullableInputsToBeOmittedInAVariable() =>
+            ExecuteAsync(@"
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
@@ -90,12 +84,10 @@ namespace GraphZen.QueryEngine.Variables
                     })
                 })
             });
-        }
 
         [Fact]
-        public Task DoesNotAllowNonNullableInputsToBeSetToNullInAVairable()
-        {
-            return ExecuteAsync(@"
+        public Task DoesNotAllowNonNullableInputsToBeSetToNullInAVairable() =>
+            ExecuteAsync(@"
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
@@ -111,7 +103,6 @@ namespace GraphZen.QueryEngine.Variables
                     })
                 })
             });
-        }
 
         [Fact]
         public async Task ReportsErrorForArrayPassedIntoStringInput()
@@ -134,9 +125,8 @@ namespace GraphZen.QueryEngine.Variables
         }
 
         [Fact]
-        public Task ReportsErrorForMissingNonNullabeInputs()
-        {
-            return ExecuteAsync("{ fieldWithNonNullableStringInput }").ShouldEqual(new
+        public Task ReportsErrorForMissingNonNullabeInputs() =>
+            ExecuteAsync("{ fieldWithNonNullableStringInput }").ShouldEqual(new
             {
                 data = new
                 {
@@ -153,12 +143,10 @@ namespace GraphZen.QueryEngine.Variables
                     path = Array("fieldWithNonNullableStringInput")
                 })
             });
-        }
 
         [Fact]
-        public Task ReportsErrorForNonProvidedVariablesForNonNullableInputs()
-        {
-            return ExecuteAsync(@"
+        public Task ReportsErrorForNonProvidedVariablesForNonNullableInputs() =>
+            ExecuteAsync(@"
               {
                 fieldWithNonNullableStringInput(input: $foo)
               }
@@ -180,6 +168,5 @@ namespace GraphZen.QueryEngine.Variables
                     path = Array("fieldWithNonNullableStringInput")
                 })
             });
-        }
     }
 }

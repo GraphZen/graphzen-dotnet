@@ -65,16 +65,20 @@ namespace GraphZen.LanguageModel
 
                     foreach (var objectType in GetObjectTypeMap().Values)
                         foreach (var iface in objectType.Interfaces)
+                        {
                             if (implementations.TryGetValue(iface.Name.Value, out
                                 var impls))
                                 ((HashSet<ObjectTypeDefinitionSyntax>)impls).Add(objectType);
                             else
                                 implementations[iface.Name.Value] =
                                     new HashSet<ObjectTypeDefinitionSyntax> { objectType };
+                        }
 
                     foreach (var abstractType in GetAbstractTypeMap().Values)
+                    {
                         if (!implementations.ContainsKey(abstractType.Name.Value))
                             implementations[abstractType.Name.Value] = new HashSet<ObjectTypeDefinitionSyntax>();
+                    }
 
                     return new ReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>(
                         implementations);
@@ -87,34 +91,20 @@ namespace GraphZen.LanguageModel
         public override IEnumerable<SyntaxNode> Children => Definitions;
 
 
-        public IReadOnlyList<TypeDefinitionSyntax> GetInputTypeDefinitions()
-        {
-            return _inputTypeDefinitions.Value;
-        }
+        public IReadOnlyList<TypeDefinitionSyntax> GetInputTypeDefinitions() => _inputTypeDefinitions.Value;
 
 
-        public IReadOnlyList<TypeDefinitionSyntax> GetOutputTypeDefinitions()
-        {
-            return _outputTypeDefinitions.Value;
-        }
+        public IReadOnlyList<TypeDefinitionSyntax> GetOutputTypeDefinitions() => _outputTypeDefinitions.Value;
 
 
-        private IReadOnlyDictionary<string, TypeDefinitionSyntax> GetAbstractTypeMap()
-        {
-            return _abstractTypeMap.Value;
-        }
+        private IReadOnlyDictionary<string, TypeDefinitionSyntax> GetAbstractTypeMap() => _abstractTypeMap.Value;
 
 
-        private IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax> GetObjectTypeMap()
-        {
-            return _objectTypeMap.Value;
-        }
+        private IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax> GetObjectTypeMap() => _objectTypeMap.Value;
 
 
-        private IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>> GetImplementationMap()
-        {
-            return _implementations.Value;
-        }
+        private IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>> GetImplementationMap() =>
+            _implementations.Value;
 
 
         public bool IsTypeSubTypeOf(TypeSyntax maybeSubType, TypeSyntax superType)
@@ -190,10 +180,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals(DocumentSyntax other)
-        {
-            return Definitions.SequenceEqual(other.Definitions);
-        }
+        private bool Equals(DocumentSyntax other) => Definitions.SequenceEqual(other.Definitions);
 
         public override bool Equals(object obj)
         {
@@ -204,9 +191,6 @@ namespace GraphZen.LanguageModel
             return obj is DocumentSyntax syntax && Equals(syntax);
         }
 
-        public override int GetHashCode()
-        {
-            return Definitions.GetHashCode();
-        }
+        public override int GetHashCode() => Definitions.GetHashCode();
     }
 }

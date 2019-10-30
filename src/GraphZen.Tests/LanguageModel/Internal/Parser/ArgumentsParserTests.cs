@@ -6,6 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 using Xunit;
+
 #nullable disable
 
 
@@ -21,7 +22,7 @@ namespace GraphZen.LanguageModel.Internal.Parser
         {
             var source = @"(booleanParam: false, stringParam: ""foo"", intParam: -1, floatParam: 4.123e-3)";
             var tokens = _sut.Tokenize(source);
-            var test = Grammar.Grammar.Arguments(tokens);
+            var test = Grammar.Arguments(tokens);
             var expectedValue = new[]
             {
                 SyntaxFactory.Argument(SyntaxFactory.Name("booleanParam"), SyntaxFactory.BooleanValue(false)),

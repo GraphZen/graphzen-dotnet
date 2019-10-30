@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem
         public string? Description { get; private set; }
 
 
-        public bool SetDescription(string description, ConfigurationSource configurationSource)
+        public bool SetDescription(string? description, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(_descriptionConfigurationSource))
             {
@@ -34,15 +34,9 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-        public ConfigurationSource GetDescriptionConfigurationSource()
-        {
-            return _descriptionConfigurationSource;
-        }
+        public ConfigurationSource GetDescriptionConfigurationSource() => _descriptionConfigurationSource;
 
-        public ConfigurationSource GetConfigurationSource()
-        {
-            return _configurationSource;
-        }
+        public ConfigurationSource GetConfigurationSource() => _configurationSource;
 
         public void UpdateConfigurationSource(ConfigurationSource configurationSource)
         {

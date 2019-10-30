@@ -10,6 +10,7 @@ using GraphZen.QueryEngine.Validation;
 using GraphZen.QueryEngine.Validation.Rules;
 using JetBrains.Annotations;
 using Xunit;
+
 #nullable disable
 
 
@@ -39,12 +40,10 @@ namespace GraphZen.Validation.Rules
         }
 
         private static ExpectedError UnknownType(string typeName, IReadOnlyList<string> suggestedTypes, int line,
-            int column)
-        {
-            return Error(KnownTypeNames.UnknownTypeMessage(typeName, suggestedTypes ?? Array.Empty<string>()),
+            int column) =>
+            Error(KnownTypeNames.UnknownTypeMessage(typeName, suggestedTypes ?? Array.Empty<string>()),
                 (line,
                     column));
-        }
 
         [Fact]
         public void UnknownTypeNamesAreInvalid()

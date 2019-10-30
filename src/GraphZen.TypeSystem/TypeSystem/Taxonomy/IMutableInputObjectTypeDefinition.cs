@@ -8,8 +8,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableInputObjectTypeDefinition : IInputObjectTypeDefinition, IMutableGraphQLTypeDefinition,
-        IMutableInputFieldsContainerDefinition
+    public interface IMutableInputObjectTypeDefinition : IInputObjectTypeDefinition, IMutableNamedTypeDefinition,
+        IMutableInputFieldsDefinition
     {
     }
 }

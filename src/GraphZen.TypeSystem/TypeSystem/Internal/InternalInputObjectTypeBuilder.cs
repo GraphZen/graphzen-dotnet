@@ -19,10 +19,8 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        public InternalInputValueBuilder? Field(string name, ConfigurationSource configurationSource)
-        {
-            return Definition.GetOrAddField(name, configurationSource)?.Builder;
-        }
+        public InternalInputValueBuilder? Field(string name, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddField(name, configurationSource)?.Builder;
 
         public bool IgnoreField(string fieldName, ConfigurationSource configurationSource)
         {
@@ -70,11 +68,15 @@ namespace GraphZen.TypeSystem.Internal
 
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
             // ReSharper disable once PossibleNullReferenceException
-            // ReSharper disable once AssignNullToNotNullAttribute
+
             var fieldMembers = clrType.GetMembers(flags)
                 .OfType<PropertyInfo>()
                 .OrderBy(_ => _.MetadataToken);
-            foreach (var property in fieldMembers) Field(property, ConfigurationSource.Convention);
+            foreach (var property in fieldMembers)
+            {
+                Field(property, ConfigurationSource.Convention);
+            }
+
             return true;
         }
 

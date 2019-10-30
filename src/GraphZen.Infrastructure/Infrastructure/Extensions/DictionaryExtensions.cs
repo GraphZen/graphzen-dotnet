@@ -42,16 +42,17 @@ namespace GraphZen.Infrastructure
             Check.NotNull(dictionary, nameof(dictionary));
             var entries = new List<DictionaryEntry>();
             var enumerator = dictionary.GetEnumerator();
-            while (enumerator.MoveNext()) entries.Add(enumerator.Entry);
+            while (enumerator.MoveNext())
+            {
+                entries.Add(enumerator.Entry);
+            }
 
             return entries.AsReadOnly();
         }
 
         internal static TValue? FindValueOrDefault<TKey, TValue>(
-            this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : struct
-        {
-            return dictionary.TryGetValue(key, out var val) ? val : (TValue?)null;
-        }
+            this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : struct =>
+            dictionary.TryGetValue(key, out var val) ? val : (TValue?)null;
 
 
         public static void Increment<TKey>(this IDictionary<TKey, int> dictionary, TKey key)

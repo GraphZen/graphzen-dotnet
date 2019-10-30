@@ -36,11 +36,9 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals(InterfaceTypeExtensionSyntax other)
-        {
-            return Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives) &&
-                   Fields.SequenceEqual(other.Fields);
-        }
+        private bool Equals(InterfaceTypeExtensionSyntax other) =>
+            Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives) &&
+            Fields.SequenceEqual(other.Fields);
 
         public override bool Equals(object obj)
         {

@@ -4,17 +4,14 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
-#nullable disable
 
-// ReSharper disable AssignNullToNotNullAttribute
-// ReSharper disable PossibleNullReferenceException
-
-namespace GraphZen
+namespace GraphZen.Configuration
 {
     [NoReorder]
     public class LeafConventionConfigurationTests : TestDataHelper<ILeafConventionConfigurationFixture>

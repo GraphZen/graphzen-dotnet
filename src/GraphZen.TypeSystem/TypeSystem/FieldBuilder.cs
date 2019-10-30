@@ -8,8 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen.TypeSystem
 {
     public class FieldBuilder<TDeclaringType, TField, TContext> : IFieldBuilder<TDeclaringType, TField, TContext>,
@@ -20,7 +18,6 @@ namespace GraphZen.TypeSystem
         {
             Builder = builder;
         }
-
 
         private InternalFieldBuilder Builder { get; }
 
@@ -47,7 +44,7 @@ namespace GraphZen.TypeSystem
             return new FieldBuilder<TDeclaringType, TFieldNew, TContext>(Builder);
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Description(string description)
+        public IFieldBuilder<TDeclaringType, TField, TContext> Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
@@ -67,10 +64,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver)
-        {
-            return new FieldBuilder<TSource, TField, TContext>(Builder).Resolve(resolver);
-        }
+        public IFieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver) =>
+            new FieldBuilder<TSource, TField, TContext>(Builder).Resolve(resolver);
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, dynamic, TField> resolver)
         {
@@ -95,31 +90,38 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public InputValueBuilder Argument(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            var ib = Builder.Argument(name, ConfigurationSource.Explicit);
+            return new InputValueBuilder(ib);
+        }
+
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type,
-            Action<InputValueBuilder> argumentBuilder = null)
+            Action<InputValueBuilder>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(type);
-            argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            configurator?.Invoke(new InputValueBuilder(argBuilder));
             return this;
         }
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
-            Action<InputValueBuilder> argumentBuilder = null)
+            Action<InputValueBuilder> configurator)
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit);
-            argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            configurator?.Invoke(new InputValueBuilder(argBuilder));
             return this;
         }
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument<TArg>(string name,
-            Action<InputValueBuilder> argumentBuilder = null)
+            Action<InputValueBuilder>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArg));
-            argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            configurator?.Invoke(new InputValueBuilder(argBuilder));
             return this;
         }
 
@@ -150,22 +152,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> DirectiveAnnotation(string name)
+        public IFieldBuilder<TDeclaringType, TField, TContext> DirectiveAnnotation(string name, object? value = null)
         {
-            return DirectiveAnnotation(name, null);
-        }
-
-        public IFieldBuilder<TDeclaringType, TField, TContext> DirectiveAnnotation(string name, object value)
-        {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public IFieldBuilder<TDeclaringType, TField, TContext> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
 
         InternalFieldBuilder IInfrastructure<InternalFieldBuilder>.Instance => Builder;
 

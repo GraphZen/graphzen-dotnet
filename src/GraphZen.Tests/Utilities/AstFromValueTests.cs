@@ -14,20 +14,14 @@ using static GraphZen.LanguageModel.SyntaxFactory;
 using static GraphZen.TypeSystem.Internal.AstFromValue;
 using ListType = GraphZen.TypeSystem.ListType;
 
-namespace GraphZen
+namespace GraphZen.Utilities
 {
     [NoReorder]
     public class AstFromValueTests
     {
-        private static Maybe<object> Some(object some)
-        {
-            return Maybe.Some(some);
-        }
+        private static Maybe<object> Some(object some) => Maybe.Some(some);
 
-        private static Maybe<object> None()
-        {
-            return Maybe.None<object>();
-        }
+        private static Maybe<object> None() => Maybe.None<object>();
 
 
         private static readonly object ComplexValue = new { someArbitrary = "complexValue" };
@@ -44,8 +38,8 @@ namespace GraphZen
                 .Field("bar", "MyEnum");
         });
 
-        private static readonly EnumType MyEnum = TestSchema.GetType<EnumType>("MyEnum");
-        private static readonly InputObjectType MyInputObj = TestSchema.GetType<InputObjectType>("MyInputObj");
+        private static readonly EnumType MyEnum = TestSchema.GetEnum("MyEnum");
+        private static readonly InputObjectType MyInputObj = TestSchema.GetInputObject("MyInputObj");
 
 
         [Fact]

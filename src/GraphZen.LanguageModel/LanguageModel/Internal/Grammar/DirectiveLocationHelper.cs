@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 #nullable disable
 
 
-namespace GraphZen.LanguageModel.Internal.Grammar
+namespace GraphZen.LanguageModel.Internal
 {
     internal static class DirectiveLocationHelper
     {

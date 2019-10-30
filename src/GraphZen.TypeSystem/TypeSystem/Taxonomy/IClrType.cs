@@ -11,6 +11,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IClrType
     {
-        Type ClrType { get; }
+        Type? ClrType { get; }
     }
 }

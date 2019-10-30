@@ -32,20 +32,11 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
 
-        public string GetDisplayValue()
-        {
-            return Value.ToString();
-        }
+        public string GetDisplayValue() => Value.ToString();
 
-        public override object GetValue()
-        {
-            return Value;
-        }
+        public override object GetValue() => Value;
 
-        private bool Equals(BooleanValueSyntax other)
-        {
-            return Value == other.Value;
-        }
+        private bool Equals(BooleanValueSyntax other) => Value == other.Value;
 
         public override bool Equals(object obj)
         {
@@ -56,9 +47,6 @@ namespace GraphZen.LanguageModel
             return obj is BooleanValueSyntax && Equals((BooleanValueSyntax)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return Value.GetHashCode();
-        }
+        public override int GetHashCode() => Value.GetHashCode();
     }
 }

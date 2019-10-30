@@ -2,20 +2,18 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
 
-// ReSharper disable PossibleNullReferenceException
-
-namespace GraphZen.InputObjects.Fields
+namespace GraphZen.Configuration.InputObjects.Fields
 {
     public abstract class InputObject_Fields :
-        CollectionConfigurationFixture<IInputFieldsContainer,
-            IInputFieldsContainerDefinition, IMutableInputFieldsContainerDefinition, InputFieldDefinition, InputField,
+        NamedCollectionConfigurationFixture<IInputFields,
+            IInputFieldsDefinition, IMutableInputFieldsDefinition, InputFieldDefinition, InputField,
             InputObjectTypeDefinition,
             InputObjectType>
     {
@@ -24,31 +22,21 @@ namespace GraphZen.InputObjects.Fields
             sb.InputObject(parentName);
         }
 
-        public override InputObjectType GetParent(Schema schema, string parentName)
-        {
-            return schema.GetInputObject(parentName);
-        }
+        public override InputObjectType GetParent(Schema schema, string parentName) =>
+            schema.GetInputObject(parentName);
 
-        public override InputObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetInputObject(parentName);
-        }
+        public override InputObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetInputObject(parentName);
 
-        public override NamedCollection<InputFieldDefinition> GetCollection(InputObjectTypeDefinition parent)
-        {
-            return parent.Fields.ToNamedCollection();
-        }
+        public override NamedCollection<InputFieldDefinition> GetCollection(InputObjectTypeDefinition parent) =>
+            parent.Fields.ToNamedCollection();
 
-        public override NamedCollection<InputField> GetCollection(InputObjectType parent)
-        {
-            return parent.Fields.ToNamedCollection();
-        }
+        public override NamedCollection<InputField> GetCollection(InputObjectType parent) =>
+            parent.Fields.ToNamedCollection();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(InputObjectTypeDefinition parent,
-            string name)
-        {
-            return parent.FindIgnoredFieldConfigurationSource(name);
-        }
+            string name) =>
+            parent.FindIgnoredFieldConfigurationSource(name);
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {

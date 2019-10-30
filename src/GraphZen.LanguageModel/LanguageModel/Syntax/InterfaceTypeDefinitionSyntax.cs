@@ -54,12 +54,10 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
 
-        private bool Equals(InterfaceTypeDefinitionSyntax other)
-        {
-            return Name.Equals(other.Name) && Equals(Description, other.Description) &&
-                   Fields.SequenceEqual(other.Fields) &&
-                   Directives.SequenceEqual(other.Directives);
-        }
+        private bool Equals(InterfaceTypeDefinitionSyntax other) =>
+            Name.Equals(other.Name) && Equals(Description, other.Description) &&
+            Fields.SequenceEqual(other.Fields) &&
+            Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {

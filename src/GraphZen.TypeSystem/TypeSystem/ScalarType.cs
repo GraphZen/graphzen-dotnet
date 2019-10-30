@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
@@ -12,25 +13,22 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     public class ScalarType : NamedType, IScalarType
     {
-        private readonly LeafLiteralParser<object, ValueSyntax> _literalParser;
-        private readonly LeafSerializer<object> _serializer;
-
+        private readonly LeafLiteralParser<object, ValueSyntax>? _literalParser;
+        private readonly LeafSerializer<object>? _serializer;
         private readonly Lazy<SyntaxNode> _syntax;
-
-        private readonly LeafValueParser<object> _valueParser;
+        private readonly LeafValueParser<object>? _valueParser;
 
         public ScalarType(
             string name,
-            string description,
-            Type clrType,
-            LeafValueParser<object> valueParser,
-            LeafLiteralParser<object, ValueSyntax> literalParser,
-            LeafSerializer<object> serializer,
+            string? description,
+            Type? clrType,
+            LeafValueParser<object>? valueParser,
+            LeafLiteralParser<object, ValueSyntax>? literalParser,
+            LeafSerializer<object>? serializer,
             IReadOnlyList<IDirectiveAnnotation> directives
         ) : base(Check.NotNull(name, nameof(name)), description, clrType, Check.NotNull(directives, nameof(directives)))
 
@@ -53,30 +51,17 @@ namespace GraphZen.TypeSystem
                                                     throw new Exception(
                                                         $"Scalar {Name} does not have a {nameof(Serializer)} not defined.");
 
-
         public LeafValueParser<object> ValueParser => _valueParser ??
                                                       throw new Exception(
                                                           $"Scalar {Name} does not have a {nameof(ValueParser)} not defined.");
 
-        public Maybe<object> Serialize(object value)
-        {
-            return Serializer(value) ?? throw new InvalidOperationException();
-        }
+        public Maybe<object> Serialize(object value) => Serializer(value) ?? throw new InvalidOperationException();
 
-        public bool IsValidValue(string value)
-        {
-            return ParseValue(value).HasValue;
-        }
+        public bool IsValidValue(string value) => ParseValue(value).HasValue;
 
-        public bool IsValidLiteral(ValueSyntax value)
-        {
-            return ParseLiteral(value).HasValue;
-        }
+        public bool IsValidLiteral(ValueSyntax value) => ParseLiteral(value).HasValue;
 
-        public Maybe<object> ParseValue(object value)
-        {
-            return ValueParser(value) ?? throw new InvalidOperationException();
-        }
+        public Maybe<object> ParseValue(object value) => ValueParser(value) ?? throw new InvalidOperationException();
 
         public Maybe<object> ParseLiteral(ValueSyntax value)
         {
@@ -86,13 +71,9 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Scalar;
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Scalar;
-
 
         public static ScalarType From(IScalarTypeDefinition definition)
         {
@@ -106,7 +87,7 @@ namespace GraphZen.TypeSystem
                 definition.ValueParser,
                 definition.LiteralParser,
                 definition.Serializer,
-                definition.DirectiveAnnotations
+                definition.GetDirectiveAnnotations().ToList()
             );
         }
 

@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem
     public interface
         IFieldBuilder<out TDeclaringType, in TField, TContext> : IAnnotableBuilder<
                 IFieldBuilder<TDeclaringType, TField, TContext>>,
-            IArgumentsContainerDefinitionBuilder<IFieldBuilder<TDeclaringType, TField, TContext>>
+            IArgumentsDefinitionBuilder<IFieldBuilder<TDeclaringType, TField, TContext>>
         where TContext : GraphQLContext
     {
         IFieldBuilder<TDeclaringType, object, TContext> FieldType(string type);
@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem
             bool itemCanBeNull = false) where TFieldNew : IEnumerable;
 
 
-        IFieldBuilder<TDeclaringType, TField, TContext> Description(string description);
+        IFieldBuilder<TDeclaringType, TField, TContext> Description(string? description);
 
 
         IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TField> resolver);

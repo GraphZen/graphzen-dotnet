@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
@@ -94,7 +94,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
 
         private IReadOnlyList<string> GetSuggestedFieldNames(IGraphQLType type, string fieldName)
         {
-            if (type is IFieldsContainer fields)
+            if (type is IFields fields)
             {
                 // ReSharper disable once UnusedVariable
                 var possibleFieldNames = fields.Fields.Keys;

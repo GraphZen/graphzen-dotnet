@@ -3,21 +3,20 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Interfaces.Fields
+namespace GraphZen.Configuration.Interfaces.Fields
 {
     public class Interface_Fields_ViaClrMethods : Interface_Fields, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ParentName = nameof(IExampleInterface),
                 ItemNamedByConvention = nameof(IExampleInterface.HelloWorld).FirstCharToLower(),
@@ -25,7 +24,6 @@ namespace GraphZen.Interfaces.Fields
                 ItemIgnoredByConvention = nameof(IExampleInterface.IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(IExampleInterface.IgnoredByDataAnnotation).FirstCharToLower()
             };
-        }
 
 
         public void ConfigureContextConventionally(SchemaBuilder sb)

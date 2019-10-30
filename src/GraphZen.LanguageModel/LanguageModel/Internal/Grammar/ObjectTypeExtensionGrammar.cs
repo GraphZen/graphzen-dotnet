@@ -9,7 +9,7 @@ using Superpower;
 #nullable disable
 
 
-namespace GraphZen.LanguageModel.Internal.Grammar
+namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar
     {

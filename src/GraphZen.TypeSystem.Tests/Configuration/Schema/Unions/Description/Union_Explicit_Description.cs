@@ -2,11 +2,11 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Unions.Description
+namespace GraphZen.Configuration.Unions.Description
 {
     public class Union_Explicit_Description : Union_Description, ILeafExplicitConfigurationFixture
     {

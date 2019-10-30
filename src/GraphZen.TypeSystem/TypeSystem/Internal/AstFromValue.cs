@@ -53,12 +53,14 @@ namespace GraphZen.TypeSystem.Internal
                 var fieldsNodes = new List<ObjectFieldSyntax>();
                 var valueDictionary = JObject.FromObject(value).ToDictionary();
                 foreach (var field in inputObject.Fields.Values)
+                {
                     if (valueDictionary.TryGetValue(field.Name, out var fv))
                     {
                         var fieldValue = Get(Maybe.Some(fv), field.InputType);
                         if (fieldValue != null)
                             fieldsNodes.Add(SyntaxFactory.ObjectField(SyntaxFactory.Name(field.Name), fieldValue));
                     }
+                }
 
                 return SyntaxFactory.ObjectValue(fieldsNodes);
             }

@@ -8,14 +8,13 @@ using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
-using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.Utilities
 {
     public class TypeInfo
     {
@@ -72,34 +71,19 @@ namespace GraphZen
         }
 
 
-        public IGraphQLType GetOutputType()
-        {
-            return _typeStack.PeekOrDefault();
-        }
+        public IGraphQLType GetOutputType() => _typeStack.PeekOrDefault();
 
 
-        public ICompositeType GetParentType()
-        {
-            return _parentTypeStack.PeekOrDefault();
-        }
+        public ICompositeType GetParentType() => _parentTypeStack.PeekOrDefault();
 
 
-        public IGraphQLType GetInputType()
-        {
-            return _inputTypeStack.PeekOrDefault();
-        }
+        public IGraphQLType GetInputType() => _inputTypeStack.PeekOrDefault();
 
 
-        public IGraphQLType GetParentInputType()
-        {
-            return _inputTypeStack.Count > 1 ? _inputTypeStack.ElementAt(1) : default;
-        }
+        public IGraphQLType GetParentInputType() => _inputTypeStack.Count > 1 ? _inputTypeStack.ElementAt(1) : default;
 
 
-        public Field GetField()
-        {
-            return _fieldDefStack.PeekOrDefault();
-        }
+        public Field GetField() => _fieldDefStack.PeekOrDefault();
 
         public void Enter(SyntaxNode syntaxNode)
         {
@@ -157,7 +141,7 @@ namespace GraphZen
                         Argument argDef = null;
                         IGraphQLType argType = null;
 
-                        var fieldOrDirective = (IArgumentsContainer)Directive ?? GetField();
+                        var fieldOrDirective = (IArguments)Directive ?? GetField();
                         if (fieldOrDirective != null)
                         {
                             argDef = fieldOrDirective.FindArgument(node.Name.Value);

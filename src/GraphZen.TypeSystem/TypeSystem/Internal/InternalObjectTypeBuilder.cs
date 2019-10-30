@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     public class
-        InternalObjectTypeBuilder : InternalFieldsContainerBuilder<ObjectTypeDefinition, InternalObjectTypeBuilder>
+        InternalObjectTypeBuilder : InternalFieldsBuilder<ObjectTypeDefinition, InternalObjectTypeBuilder>
     {
         public InternalObjectTypeBuilder(ObjectTypeDefinition definition,
             InternalSchemaBuilder schemaBuilder) : base(
@@ -85,10 +85,12 @@ namespace GraphZen.TypeSystem.Internal
                 .OrderBy(_ => _.MetadataToken);
 
             foreach (var @interface in interfaces)
+            {
                 if (@interface.GetCustomAttribute<GraphQLUnionAttribute>() != null)
                     Schema.Builder.Union(@interface, ConfigurationSource.DataAnnotation);
                 else
                     Definition.Builder.ImplementsInterface(@interface, ConfigurationSource.Convention);
+            }
 
             return true;
         }

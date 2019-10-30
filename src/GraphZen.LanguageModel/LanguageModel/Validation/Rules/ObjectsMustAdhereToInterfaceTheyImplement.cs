@@ -39,12 +39,14 @@ namespace GraphZen.LanguageModel.Validation.Rules
                     .ToList();
 
                 // ReSharper disable once PossibleNullReferenceException
-                // ReSharper disable once AssignNullToNotNullAttribute
+
                 var fieldMap = objectFieldMap[objectType.Name].ToDictionary(_ => _.Name);
 
                 foreach (var @interface in interfaces)
+                {
                     if (interfaceFieldMap.TryGetValue(@interface, out var interfaceFields))
                         foreach (var interfaceField in interfaceFields)
+                        {
                             if (fieldMap.TryGetValue(interfaceField.Name, out var objectField))
                             {
                                 if (!schema.IsTypeSubTypeOf(objectField.FieldType, interfaceField.FieldType))
@@ -82,6 +84,8 @@ namespace GraphZen.LanguageModel.Validation.Rules
                                     $"Interface field {@interface}.{interfaceField} expected but {objectType} does not provide it.",
                                     interfaceField, objectType.Name);
                             }
+                        }
+                }
 
                 // Validate object impelments interfaces
             }

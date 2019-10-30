@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -11,10 +12,8 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
-    [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
     [NoReorder]
     public static class Introspection
     {
@@ -39,7 +38,7 @@ namespace GraphZen.TypeSystem
                     _.Argument("includeDeprecated", "Boolean", a => a.DefaultValue(false))
                         .Resolve((type, args) =>
                         {
-                            if (type is IFieldsContainer fieldsType)
+                            if (type is IFields fieldsType)
                             {
                                 var includeDeprecated = args.includeDeprecated == true;
                                 return fieldsType.Fields.Values.Where(field =>
@@ -98,8 +97,8 @@ namespace GraphZen.TypeSystem
                     {
                         if (input.HasDefaultValue)
                         {
-                            var ast = AstFromValue.Get(Maybe.Some(input.DefaultValue), input.InputType);
-                            return ast.ToSyntaxString();
+                            var ast = AstFromValue.Get(Maybe.Some(input.DefaultValue!), input.InputType);
+                            return ast?.ToSyntaxString();
                         }
 
                         return null;
@@ -113,15 +112,14 @@ namespace GraphZen.TypeSystem
 
         public static Field SchemaMetaFieldDef { get; } = new Field("__schema",
             "Access the current type schema of this server.", null,
-            NonNullType.Of(Schema.GetType<ObjectType>("__Schema")), null,
+            NonNullType.Of(Schema.GetObject("__Schema")), null,
             (source, args, context, info) => info.Schema, null);
 
 
         public static Field TypeMetaFieldDef { get; } = new Field("__type",
-            "Request the type information of a single type.", null, Schema.GetType<ObjectType>("__Type"),
+            "Request the type information of a single type.", null, Schema.GetObject("__Type"),
             new[]
             {
-                // ReSharper disable once AssignNullToNotNullAttribute
                 new Argument("name", null, NonNullType.Of(SpecScalars.String), null, null, false)
             },
             (source, args, context, info) => info.Schema.GetType(args.name), null);
@@ -135,6 +133,6 @@ namespace GraphZen.TypeSystem
         public static readonly IReadOnlyList<NamedType> IntrospectionTypes =
             Schema.GetTypes()
                 .Where(_ => SpecScalars.All.All(ss => ss.Name != _.Name))
-                .ToList().AsReadOnly();
+                .ToImmutableList();
     }
 }

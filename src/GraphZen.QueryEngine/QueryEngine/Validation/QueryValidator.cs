@@ -9,6 +9,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.TypeSystem;
+using GraphZen.Utilities;
 using JetBrains.Annotations;
 
 #nullable disable

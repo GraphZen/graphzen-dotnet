@@ -10,9 +10,11 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IMutableDirectiveDefinition :
         IDirectiveDefinition,
-        IMutableArgumentsContainerDefinition,
+        IMutableArgumentsDefinition,
+        IMutableDirectiveLocationsDefinition,
         IMutableNamed,
-        IMutableDescription
+        IMutableDescription,
+        IMutableClrType
     {
     }
 }

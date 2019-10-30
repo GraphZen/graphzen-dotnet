@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using GraphZen.Infrastructure;
@@ -10,9 +11,6 @@ using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
-
-
-// ReSharper disable PossibleNullReferenceException
 
 namespace GraphZen.TypeSystem
 {
@@ -179,6 +177,6 @@ namespace GraphZen.TypeSystem
             Int,
             Float,
             Boolean
-        }.AsReadOnly();
+        }.ToImmutableList();
     }
 }

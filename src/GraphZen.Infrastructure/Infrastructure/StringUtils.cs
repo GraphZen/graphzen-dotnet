@@ -24,10 +24,7 @@ namespace GraphZen.Infrastructure
             return OrList(source.Select(v => $"\"{v}\"").ToArray());
         }
 
-        public static string QuotedOrList(params string[] values)
-        {
-            return values.QuotedOrList();
-        }
+        public static string QuotedOrList(params string[] values) => values.QuotedOrList();
 
         private static string OrList(
             IEnumerable<string> items)
@@ -44,11 +41,9 @@ namespace GraphZen.Infrastructure
                 });
         }
 
-        public static IEnumerable<string> GetSuggestionList(string input, params string[] options)
-        {
-            return GetSuggestionList(Check.NotNull(input, nameof(input)),
+        public static IEnumerable<string> GetSuggestionList(string input, params string[] options) =>
+            GetSuggestionList(Check.NotNull(input, nameof(input)),
                 (IEnumerable<string>)Check.NotNull(options, nameof(options)));
-        }
 
 
         public static IReadOnlyList<string> GetSuggestionList(string input,

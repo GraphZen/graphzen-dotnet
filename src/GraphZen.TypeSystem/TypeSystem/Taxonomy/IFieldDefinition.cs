@@ -9,17 +9,18 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IFieldDefinition : IAnnotatableDefinition, IArgumentsContainerDefinition, INamed, IDeprecation,
+    public interface IFieldDefinition : IAnnotatableDefinition, IArgumentsDefinition, INamed, IDescription,
+        IDeprecation,
         IClrInfo,
         IOutputDefinition
     {
         IGraphQLTypeReference? FieldType { get; }
 
 
-        Resolver<object, object> Resolver { get; }
+        Resolver<object, object?>? Resolver { get; }
 
-        IFieldsContainerDefinition DeclaringType { get; }
+        IFieldsDefinition? DeclaringType { get; }
 
-        new MemberInfo ClrInfo { get; }
+        new MemberInfo? ClrInfo { get; }
     }
 }

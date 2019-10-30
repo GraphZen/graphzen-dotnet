@@ -8,6 +8,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
+
 #nullable disable
 
 
@@ -49,10 +50,7 @@ namespace GraphZen.QueryEngine
                 return NumberHolder;
             }
 
-            public NumberHolder FailToChangeTheNumber()
-            {
-                throw new Exception("Cannot change the number");
-            }
+            public NumberHolder FailToChangeTheNumber() => throw new Exception("Cannot change the number");
 
             public Task<NumberHolder> PromiseAndFailToChangeTheNumber() => Task.Run(() =>
             {
@@ -84,9 +82,8 @@ namespace GraphZen.QueryEngine
 
 
         [Fact]
-        public Task EvaluatesMutationsSerially()
-        {
-            return ExecuteAsync(Schema, @"
+        public Task EvaluatesMutationsSerially() =>
+            ExecuteAsync(Schema, @"
             mutation M {
               first: immediatelyChangeTheNumber(newNumber: 1) {
                 theNumber
@@ -114,7 +111,6 @@ namespace GraphZen.QueryEngine
                     fifth = new { theNumber = 5 }
                 }
             });
-        }
 
 
         [Fact]

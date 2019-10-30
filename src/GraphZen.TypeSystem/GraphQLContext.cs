@@ -81,12 +81,23 @@ namespace GraphZen
                     else
                     {
                         Type? queryClrType = default;
-                        if (contextType != typeof(GraphQLContext))
-                            queryClrType = contextType.Assembly.GetExportedTypes()
-                                .SingleOrDefault(_ => _.IsClass && _.Name == "Query");
 
-                        queryClrType = queryClrType ?? Assembly.GetEntryAssembly()?.GetTypes()
-                                           .SingleOrDefault(_ => _.IsClass && _.Name == "Query");
+                        Type? discoverQueryType(Assembly? assembly, Func<Assembly, IEnumerable<Type>> getTypes)
+                        {
+                            if (assembly == null) return null;
+                            var candidates = getTypes(assembly)
+                                .Where(_ => _.IsClass && _.Name == "Query" && !_.IsNested).ToArray();
+                            if (candidates.Length > 1)
+                                throw new InvalidOperationException(
+                                    $"Unable to determine query type by convention. More than one class named 'Query' in assembly '{assembly}'");
+                            return candidates.SingleOrDefault();
+                        }
+
+                        if (contextType != typeof(GraphQLContext))
+                            queryClrType = discoverQueryType(contextType.Assembly, a => a.GetExportedTypes());
+
+                        if (queryClrType == null)
+                            queryClrType = discoverQueryType(Assembly.GetEntryAssembly(), a => a.GetTypes());
 
                         if (queryClrType != null)
                             internalBuilder.QueryType(queryClrType, ConfigurationSource.Convention);
@@ -129,10 +140,7 @@ namespace GraphZen
         }
 
 
-        protected virtual SchemaBuilder CreateSchemaBuilder()
-        {
-            return new SchemaBuilder(Options.Schema);
-        }
+        protected virtual SchemaBuilder CreateSchemaBuilder() => new SchemaBuilder(Options.Schema);
 
         protected internal virtual void OnSchemaCreating(SchemaBuilder schemaBuilder)
         {

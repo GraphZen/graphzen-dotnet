@@ -21,21 +21,12 @@ namespace GraphZen.TypeSystem
         IGraphQLType IWrappingType.OfType => OfType;
         public TypeKind Kind { get; } = TypeKind.NonNull;
 
-        public SyntaxNode ToSyntaxNode()
-        {
-            return this.ToTypeSyntax();
-        }
+        public SyntaxNode ToSyntaxNode() => this.ToTypeSyntax();
 
 
-        public static NonNullType Of(INullableType type)
-        {
-            return new NonNullType(Check.NotNull(type, nameof(type)));
-        }
+        public static NonNullType Of(INullableType type) => new NonNullType(Check.NotNull(type, nameof(type)));
 
-        private bool Equals(NonNullType other)
-        {
-            return Equals(OfType, other.OfType);
-        }
+        private bool Equals(NonNullType other) => Equals(OfType, other.OfType);
 
         public override bool Equals(object? obj)
         {
@@ -48,14 +39,8 @@ namespace GraphZen.TypeSystem
             return Equals((NonNullType)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return OfType.GetHashCode();
-        }
+        public override int GetHashCode() => OfType.GetHashCode();
 
-        public override string ToString()
-        {
-            return $"{OfType}!";
-        }
+        public override string ToString() => $"{OfType}!";
     }
 }

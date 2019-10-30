@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     [GraphQLName("__EnumValue")]
@@ -21,7 +21,7 @@ namespace GraphZen.TypeSystem
     {
         private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
 
-        public EnumValue(string name, string description, object value, bool isDeprecated, string deprecatedReason,
+        public EnumValue(string name, string? description, object value, bool isDeprecated, string? deprecatedReason,
             IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(Check.NotNull(directives,
             nameof(directives)))
         {
@@ -45,17 +45,14 @@ namespace GraphZen.TypeSystem
 
         public bool IsDeprecated { get; }
 
-        [GraphQLCanBeNull] public string DeprecationReason { get; }
+        [GraphQLCanBeNull] public string? DeprecationReason { get; }
 
-        public override string Description { get; }
+        public override string? Description { get; }
 
         public string Name { get; }
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.EnumValue;
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
 
         [GraphQLIgnore]
@@ -63,12 +60,9 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(definition, nameof(definition));
             return new EnumValue(definition.Name, definition.Description, definition.Value, definition.IsDeprecated,
-                definition.DeprecationReason, definition.DirectiveAnnotations, declaringTye);
+                definition.DeprecationReason, definition.GetDirectiveAnnotations().ToList(), declaringTye);
         }
 
-        public override string ToString()
-        {
-            return $"{Name} ({Value.Inspect()})";
-        }
+        public override string ToString() => $"{Name} ({Value.Inspect()})";
     }
 }

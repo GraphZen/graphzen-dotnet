@@ -16,9 +16,6 @@ namespace GraphZen.LanguageModel
         public static VisitAction Continue { get; } = new ContinueAction();
         public static VisitAction Skip { get; } = new Skip();
 
-        public static implicit operator VisitAction(bool value)
-        {
-            return value ? Continue : Skip;
-        }
+        public static implicit operator VisitAction(bool value) => value ? Continue : Skip;
     }
 }

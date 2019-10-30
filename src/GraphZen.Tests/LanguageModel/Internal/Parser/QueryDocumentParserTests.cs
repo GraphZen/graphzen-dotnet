@@ -6,6 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 using Xunit;
+
 #nullable disable
 
 
@@ -28,7 +29,7 @@ query testQuery($var1: String! = ""Foo"") @queryDirective {
 
             var tokens = _sut.Tokenize(source);
 
-            var test = Grammar.Grammar.Document(tokens);
+            var test = Grammar.Document(tokens);
             var expectedValue = SyntaxFactory.Document(new OperationDefinitionSyntax(OperationType.Query,
                 SyntaxFactory.SelectionSet(new FieldSyntax(SyntaxFactory.Name("story"),
                     SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("likeCount"))))),

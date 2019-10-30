@@ -3,25 +3,23 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Objects
+namespace GraphZen.Configuration.Objects.Description
 {
     public class Object_ViaClrClass_Description : Object_Description, ILeafConventionConfigurationFixture
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(ExampleObject),
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         [Description(DataAnnotationDescriptionValue)]
         public class ExampleObject

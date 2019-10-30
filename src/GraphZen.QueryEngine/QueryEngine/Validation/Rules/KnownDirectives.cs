@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.LanguageModel.Internal.Grammar;
+using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
 #nullable disable
@@ -17,30 +17,25 @@ namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class KnownDirectives : QueryValidationRuleVisitor
     {
-        private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>>> _lazyLocationsMap;
+        private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>>> _lazyLocationsMap;
 
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public KnownDirectives(QueryValidationContext context) : base(context)
         {
-            _lazyLocationsMap = new Lazy<IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>>>(() =>
+            _lazyLocationsMap = new Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>>>(() =>
                 Context.Schema.Directives.ToReadOnlyDictionary(_ => _.Name, _ => _.Locations));
         }
 
 
-        // ReSharper disable once AssignNullToNotNullAttribute
-        private IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>> LocationsMap => _lazyLocationsMap.Value;
+        private IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>> LocationsMap =>
+            _lazyLocationsMap.Value;
 
 
-        public static string UnknownDirectiveMessage(string directiveName)
-        {
-            return $"Unknown directive \"{directiveName}\".";
-        }
+        public static string UnknownDirectiveMessage(string directiveName) => $"Unknown directive \"{directiveName}\".";
 
-        public static string MisplacedDirectiveMessage(string directiveName, string location)
-        {
-            return $"Directive \"{directiveName}\" may not be used on {location}.";
-        }
+        public static string MisplacedDirectiveMessage(string directiveName, string location) =>
+            $"Directive \"{directiveName}\" may not be used on {location}.";
 
         public override VisitAction EnterDirective(DirectiveSyntax node)
         {

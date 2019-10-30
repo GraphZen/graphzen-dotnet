@@ -6,9 +6,6 @@ using System.Runtime.CompilerServices;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 [assembly: InternalsVisibleTo("GraphZen.Tests")]
 [assembly: InternalsVisibleTo("GraphZen.TypeSystem.Tests")]
 [assembly: InternalsVisibleTo("GraphZen.QueryEngine")]

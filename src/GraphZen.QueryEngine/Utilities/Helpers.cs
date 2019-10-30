@@ -16,17 +16,15 @@ using JetBrains.Annotations;
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.Utilities
 {
     public static partial class Helpers
     {
         internal static Maybe<object> ValueFromAst(ValueSyntax valueSyntax, IGraphQLType type,
             IReadOnlyDictionary<string, object> variables = null)
         {
-            bool IsMissingVariable(ValueSyntax value, IReadOnlyDictionary<string, object> vars)
-            {
-                return value is VariableSyntax variable && (vars == null || !vars.ContainsKey(variable.Name.Value));
-            }
+            bool IsMissingVariable(ValueSyntax value, IReadOnlyDictionary<string, object> vars) =>
+                value is VariableSyntax variable && (vars == null || !vars.ContainsKey(variable.Name.Value));
 
             if (valueSyntax == null) return Maybe.None<object>();
 
@@ -54,6 +52,7 @@ namespace GraphZen
                 {
                     var coercedValues = new List<object>(listNode.Values.Count);
                     foreach (var itemNode in listNode.Values)
+                    {
                         if (IsMissingVariable(itemNode, variables))
                         {
                             if (itemType is NonNullType) return Maybe.None<object>();
@@ -68,6 +67,7 @@ namespace GraphZen
                             else
                                 return itemValue;
                         }
+                    }
 
                     return Maybe.Some<object>(coercedValues);
                 }

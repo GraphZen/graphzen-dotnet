@@ -8,10 +8,18 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface ISchemaDefinition : IDescription,
-        IDirectivesContainerDefinition, IObjectTypesContainerDefinition, IInterfaceTypesContainerDefinition,
-        IUnionTypesContainerDefinition, IScalarTypesContainerDefinition, IEnumTypesContainerDefinition,
-        IInputObjectTypesContainerDefinition
+    public interface ISchemaDefinition :
+        IDescription,
+        IQueryTypeDefinition,
+        IMutationTypeDefinition,
+        ISubscriptionTypeDefinition,
+        IDirectivesDefinition,
+        IObjectTypesDefinition,
+        IInterfaceTypesDefinition,
+        IUnionTypesDefinition,
+        IScalarTypesDefinition,
+        IEnumTypesDefinition,
+        IInputObjectTypesDefinition
     {
     }
 }

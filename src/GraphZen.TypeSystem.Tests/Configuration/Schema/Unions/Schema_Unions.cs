@@ -2,17 +2,17 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Unions
+namespace GraphZen.Configuration.Unions
 {
-    public abstract class Schema_Unions : CollectionConfigurationFixture<IUnionTypesContainer,
-        IUnionTypesContainerDefinition, IMutableUnionTypesContainerDefinition, UnionTypeDefinition,
+    public abstract class Schema_Unions : NamedCollectionConfigurationFixture<IUnionTypes,
+        IUnionTypesDefinition, IMutableUnionTypesDefinition, UnionTypeDefinition,
         UnionType,
         SchemaDefinition,
         Schema>
@@ -21,15 +21,9 @@ namespace GraphZen.Unions
         {
         }
 
-        public override Schema GetParent(Schema schema, string parentName)
-        {
-            return schema;
-        }
+        public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition();
-        }
+        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -51,19 +45,12 @@ namespace GraphZen.Unions
             sb.Union(itemName).Name(newName);
         }
 
-        public override NamedCollection<UnionTypeDefinition> GetCollection(SchemaDefinition parent)
-        {
-            return parent.GetUnions().ToNamedCollection();
-        }
+        public override NamedCollection<UnionTypeDefinition> GetCollection(SchemaDefinition parent) =>
+            parent.GetUnions().ToNamedCollection();
 
-        public override NamedCollection<UnionType> GetCollection(Schema parent)
-        {
-            return parent.Unions.ToNamedCollection();
-        }
+        public override NamedCollection<UnionType> GetCollection(Schema parent) => parent.Unions.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name)
-        {
-            return parent.FindIgnoredTypeConfigurationSource(name);
-        }
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+            parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

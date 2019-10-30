@@ -7,11 +7,8 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
-#nullable disable
 
-// ReSharper disable PossibleNullReferenceException
-
-namespace GraphZen.InputObjects.ClrType
+namespace GraphZen.Configuration.InputObjects.ClrType
 {
     [NoReorder]
     public class InputObjectClrTypeConfigurationTests

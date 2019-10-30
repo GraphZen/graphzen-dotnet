@@ -2,22 +2,21 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Unions
+namespace GraphZen.Configuration.Unions
 {
     public class Schema_Unions_ViaMarkerInterface : Schema_Unions, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ItemNamedByConvention = nameof(INamedByConvention),
                 DefaultItemConfigurationSource = ConfigurationSource.DataAnnotation,
@@ -25,7 +24,6 @@ namespace GraphZen.Unions
                 ItemIgnoredByConvention = nameof(IIgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(IIgnoredByDataAnnotation)
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {
@@ -57,13 +55,13 @@ namespace GraphZen.Unions
 
         public class Query
         {
-            public Foo ConventionallyNamed { get; set; }
+            public Foo? ConventionallyNamed { get; set; }
 
-            public Bar IgnoredByConvention { get; set; }
+            public Bar? IgnoredByConvention { get; set; }
 
-            public Baz IgnoredByDataAnnotation { get; set; }
+            public Baz? IgnoredByDataAnnotation { get; set; }
 
-            public FooBar NamedByDataAnnoation { get; set; }
+            public FooBar? NamedByDataAnnoation { get; set; }
         }
 
         [GraphQLUnion]

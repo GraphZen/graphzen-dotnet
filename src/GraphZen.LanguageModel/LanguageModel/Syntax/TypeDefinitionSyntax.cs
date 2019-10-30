@@ -26,9 +26,6 @@ namespace GraphZen.LanguageModel
         public abstract StringValueSyntax Description { get; }
         public abstract NameSyntax Name { get; }
 
-        public string GetDisplayValue()
-        {
-            return Name.Value;
-        }
+        public string GetDisplayValue() => Name.Value;
     }
 }

@@ -371,9 +371,11 @@ namespace GraphZen.QueryEngine
             var subFieldNodes = new Dictionary<string, List<FieldSyntax>>();
             var visitedFargmentNames = new Dictionary<string, bool>();
             foreach (var fieldNode in fieldNodes)
+            {
                 if (fieldNode.SelectionSet != null)
                     subFieldNodes = CollectFields(exeContext, returnType, fieldNode.SelectionSet, subFieldNodes,
                         visitedFargmentNames);
+            }
 
             return ExecuteFieldsAsync(exeContext, returnType, result, path, subFieldNodes);
         }
@@ -491,6 +493,7 @@ namespace GraphZen.QueryEngine
             Dictionary<string, bool> visitedFragmentNames)
         {
             foreach (var selection in selectionSet.Selections)
+            {
                 switch (selection)
                 {
                     case FieldSyntax field:
@@ -525,6 +528,7 @@ namespace GraphZen.QueryEngine
 
                         break;
                 }
+            }
 
             return fields;
         }

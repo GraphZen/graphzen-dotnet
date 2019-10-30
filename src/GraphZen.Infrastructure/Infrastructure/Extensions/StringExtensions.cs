@@ -37,25 +37,14 @@ namespace GraphZen.Infrastructure
             return value;
         }
 
-        private static bool IsUpperCaseAtIndex(this string value, int index)
-        {
-            return value != null && value.Length > index && char.IsUpper(value[index]);
-        }
+        private static bool IsUpperCaseAtIndex(this string value, int index) =>
+            value != null && value.Length > index && char.IsUpper(value[index]);
 
-        private static bool IsSnakeCase(this string value)
-        {
-            return value != null && value.Contains('_');
-        }
+        private static bool IsSnakeCase(this string value) => value != null && value.Contains('_');
 
-        private static bool IsKebabCase(this string value)
-        {
-            return value != null && value.Contains('-');
-        }
+        private static bool IsKebabCase(this string value) => value != null && value.Contains('-');
 
-        private static bool IsSpaceCase(this string value)
-        {
-            return value != null && value.Contains(' ');
-        }
+        private static bool IsSpaceCase(this string value) => value != null && value.Contains(' ');
 
 
         public static string ToUpperSnakeCase(this string value)

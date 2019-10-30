@@ -13,6 +13,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         bool IsDeprecated { get; }
 
 
-        string DeprecationReason { get; }
+        string? DeprecationReason { get; }
     }
 }

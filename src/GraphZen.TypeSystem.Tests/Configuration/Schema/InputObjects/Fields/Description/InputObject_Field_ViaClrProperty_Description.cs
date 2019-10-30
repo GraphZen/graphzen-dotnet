@@ -3,12 +3,12 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.InputObjects.Fields.Description
+namespace GraphZen.Configuration.InputObjects.Fields.Description
 {
     public class InputObject_Field_ViaClrProperty_Description : InputObject_Field_Description,
         ILeafConventionConfigurationFixture
@@ -17,19 +17,17 @@ namespace GraphZen.InputObjects.Fields.Description
         public class ExampleInputObject
         {
             [Description(DataAnnotationDescriptionValue)]
-            public string ExampleField { get; set; }
+            public string? ExampleField { get; set; }
         }
 
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(ExampleInputObject.ExampleField).FirstCharToLower(),
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

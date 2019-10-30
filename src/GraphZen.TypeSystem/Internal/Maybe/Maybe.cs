@@ -32,10 +32,7 @@ namespace GraphZen.Internal
         }
 
 
-        internal static Maybe<T> None<T>(string errorMessage)
-        {
-            return None<T>(new GraphQLError(errorMessage));
-        }
+        internal static Maybe<T> None<T>(string errorMessage) => None<T>(new GraphQLError(errorMessage));
 
 
         private class NoneImpl<T> : None<T>
@@ -90,16 +87,10 @@ namespace GraphZen.Internal
             return Equals((Maybe<T>)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return _values.GetHashCode();
-        }
+        public override int GetHashCode() => _values.GetHashCode();
 
 
-        public Maybe<TC> Cast<TC>()
-        {
-            return HasValue ? Maybe.Some((TC)_values.Single()!) : Maybe.None<TC>();
-        }
+        public Maybe<TC> Cast<TC>() => HasValue ? Maybe.Some((TC)_values.Single()!) : Maybe.None<TC>();
 
 
         internal Maybe<TP> Select<TP>(Func<T, TP> selector)

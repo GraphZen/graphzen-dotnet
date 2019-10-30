@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 #nullable disable
 namespace GraphZen.TypeSystem
 {
-    public class DirectiveBuilder : IDirectiveBuilder
+    public class DirectiveBuilder<TDirective> : IDirectiveBuilder<TDirective>
     {
         public DirectiveBuilder(InternalDirectiveBuilder builder)
         {
@@ -21,30 +21,37 @@ namespace GraphZen.TypeSystem
 
         private InternalDirectiveBuilder Builder { get; }
 
-        public IDirectiveBuilder Description(string description)
+        public IDirectiveBuilder<TDirective> Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder Locations(params DirectiveLocation[] locations)
+        public IDirectiveBuilder<TDirective> Name(string name)
         {
-            Builder.Locations(locations);
+            Check.NotNull(name, nameof(name));
+            Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder Argument(string name, string type, Action<InputValueBuilder> argumentBuilder = null)
+        public IDirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations)
+        {
+            Builder.Locations(locations, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder<TDirective> Argument(string name, string type,
+            Action<InputValueBuilder> configurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(type);
-            argumentBuilder?.Invoke(new InputValueBuilder(argBuilder));
+            configurator?.Invoke(new InputValueBuilder(argBuilder));
             return this;
         }
 
-        public IDirectiveBuilder Argument<TArg>(string name, Action<InputValueBuilder> argumentBuilder = null)
-        {
+        public IDirectiveBuilder<TDirective>
+            Argument<TArg>(string name, Action<InputValueBuilder> configurator = null) =>
             throw new NotImplementedException();
-        }
     }
 }

@@ -13,6 +13,7 @@ using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Xunit;
+
 #nullable disable
 
 
@@ -53,16 +54,10 @@ namespace GraphZen.QueryEngine
             }
 
             [UsedImplicitly]
-            public string A()
-            {
-                return "Already Been Done";
-            }
+            public string A() => "Already Been Done";
 
             [UsedImplicitly]
-            public string B()
-            {
-                return "Boring";
-            }
+            public string B() => "Boring";
 
             [UsedImplicitly]
             public object[] C()
@@ -82,52 +77,28 @@ namespace GraphZen.QueryEngine
             [UsedImplicitly] public string F => "Fish";
 
             [UsedImplicitly]
-            public string A()
-            {
-                return "Apple";
-            }
+            public string A() => "Apple";
 
             [UsedImplicitly]
-            public string B()
-            {
-                return "Banana";
-            }
+            public string B() => "Banana";
 
             [UsedImplicitly]
-            public string C()
-            {
-                return "Cookie";
-            }
+            public string C() => "Cookie";
 
             [UsedImplicitly]
-            public string D()
-            {
-                return "Donut";
-            }
+            public string D() => "Donut";
 
             [UsedImplicitly]
-            public string E()
-            {
-                return "Egg";
-            }
+            public string E() => "Egg";
 
             [UsedImplicitly]
-            public string Pic(int? size)
-            {
-                return $"Pic of size: {size ?? 50}";
-            }
+            public string Pic(int? size) => $"Pic of size: {size ?? 50}";
 
             [UsedImplicitly]
-            public DeepData Deep()
-            {
-                return new DeepData(this);
-            }
+            public DeepData Deep() => new DeepData(this);
 
             [UsedImplicitly]
-            public Task<Data> DataAsync()
-            {
-                return Task.FromResult(this);
-            }
+            public Task<Data> DataAsync() => Task.FromResult(this);
         }
 
         [Fact]
@@ -315,30 +286,15 @@ namespace GraphZen.QueryEngine
 
         public class OrderingData
         {
-            public string A()
-            {
-                return "a";
-            }
+            public string A() => "a";
 
-            public Task<string> B()
-            {
-                return Task.FromResult("b");
-            }
+            public Task<string> B() => Task.FromResult("b");
 
-            public string C()
-            {
-                return "c";
-            }
+            public string C() => "c";
 
-            public Task<string> D()
-            {
-                return Task.FromResult("d");
-            }
+            public Task<string> D() => Task.FromResult("d");
 
-            public string E()
-            {
-                return "e";
-            }
+            public string E() => "e";
         }
 
 
@@ -533,9 +489,6 @@ namespace GraphZen.QueryEngine
         }
 
         [Fact(Skip = "TODO")]
-        public Task UsesACustomFieldResolver()
-        {
-            throw new NotImplementedException();
-        }
+        public Task UsesACustomFieldResolver() => throw new NotImplementedException();
     }
 }

@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.Internal
                 src = awaitable.GetResult();
             }
 
-            return src != null && objectType.IsTypeOf(src, context, info);
+            return src != null && objectType.IsTypeOf != null && objectType.IsTypeOf(src, context, info);
         }
     }
 }

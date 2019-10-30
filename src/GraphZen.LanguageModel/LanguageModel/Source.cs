@@ -23,10 +23,7 @@ namespace GraphZen.LanguageModel
 
         public string Body { get; }
 
-        protected bool Equals(Source other)
-        {
-            return string.Equals(Body, other.Body);
-        }
+        protected bool Equals(Source other) => string.Equals(Body, other.Body);
 
         public override bool Equals(object obj)
         {
@@ -39,10 +36,7 @@ namespace GraphZen.LanguageModel
             return Equals((Source)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return Body.GetHashCode();
-        }
+        public override int GetHashCode() => Body.GetHashCode();
 
         public SourceLocation GetLocation(int position)
         {

@@ -2,27 +2,25 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Unions
+namespace GraphZen.Configuration.Unions
 {
     public class Schema_Unions_ViaClrBaseClass : Schema_Unions, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ItemNamedByConvention = nameof(NamedByConvention),
                 ItemNamedByDataAnnotation = DataAnnotationName,
                 ItemIgnoredByConvention = nameof(IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation)
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {
@@ -36,13 +34,13 @@ namespace GraphZen.Unions
 
         public class Query
         {
-            public NamedByConvention ConventionallyNamed { get; set; }
+            public NamedByConvention? ConventionallyNamed { get; set; }
 
-            [GraphQLIgnore] public IgnoredByConvention IgnoredByConvention { get; set; }
+            [GraphQLIgnore] public IgnoredByConvention? IgnoredByConvention { get; set; }
 
-            public IgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
+            public IgnoredByDataAnnotation? IgnoredByDataAnnotation { get; set; }
 
-            public NamedByDataAnnotation NamedByDataAnnoation { get; set; }
+            public NamedByDataAnnotation? NamedByDataAnnoation { get; set; }
         }
 
         public abstract class NamedByConvention

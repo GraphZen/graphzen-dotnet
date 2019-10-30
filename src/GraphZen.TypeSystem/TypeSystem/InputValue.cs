@@ -27,30 +27,28 @@ namespace GraphZen.TypeSystem
         /// <inheritdoc />
         protected InputValue(
             string name,
-            string description,
-            IGraphQLTypeReference type,
-            object defaultValue,
+            string? description,
+            IGraphQLTypeReference? type,
+            object? defaultValue,
             bool hasDefaultValue,
             IReadOnlyList<IDirectiveAnnotation> directives,
             TypeResolver typeResolver, object? clrInfo, IMemberDefinition declaringMember) : base(directives)
         {
-            IGraphQLType DefaultTypeResolver(IGraphQLTypeReference typeReference)
-            {
-                return type as IGraphQLType ?? throw new InvalidOperationException(
-                           $"{typeReference} is not a valid GraphQL type. Provide a type resolver to correctly resolve.");
-            }
+            IGraphQLType DefaultTypeResolver(IGraphQLTypeReference typeReference) =>
+                type as IGraphQLType ?? throw new InvalidOperationException(
+                    $"{typeReference} is not a valid GraphQL type. Provide a type resolver to correctly resolve.");
 
-            typeResolver = typeResolver ?? DefaultTypeResolver;
+            typeResolver ??= DefaultTypeResolver;
             Name = name;
             Description = description;
-            _type = new Lazy<IGraphQLType>(() => typeResolver(type));
+            _type = new Lazy<IGraphQLType>(() => typeResolver(type!));
             DefaultValue = defaultValue;
             HasDefaultValue = hasDefaultValue;
             ClrInfo = clrInfo;
             _syntax = new Lazy<InputValueDefinitionSyntax>(() =>
                 new InputValueDefinitionSyntax(SyntaxFactory.Name(name), InputType.ToTypeSyntax(),
                     SyntaxHelpers.Description(Description),
-                    AstFromValue.Get(hasDefaultValue ? Maybe.Some(defaultValue) : Maybe.None<object>(),
+                    AstFromValue.Get(hasDefaultValue ? Maybe.Some(defaultValue!) : Maybe.None<object>(),
                         InputType)));
             DeclaringMember = declaringMember;
         }
@@ -63,19 +61,14 @@ namespace GraphZen.TypeSystem
 
         IGraphQLTypeReference IInputValueDefinition.InputType => InputType;
 
-        [GraphQLIgnore] public object DefaultValue { get; }
+        [GraphQLIgnore] public object? DefaultValue { get; }
 
         [GraphQLIgnore] public bool HasDefaultValue { get; }
-
-
-        public override string Description { get; }
+        public override string? Description { get; }
 
         public string Name { get; }
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         [GraphQLIgnore] public object? ClrInfo { get; }
     }

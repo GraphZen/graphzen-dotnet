@@ -8,11 +8,11 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IField : IFieldDefinition, IArgumentsContainer, ISyntaxConvertable
+    public interface IField : IFieldDefinition, IArguments, ISyntaxConvertable
     {
         new IGraphQLType FieldType { get; }
 
 
-        new IFieldsContainer DeclaringType { get; }
+        new IFields DeclaringType { get; }
     }
 }

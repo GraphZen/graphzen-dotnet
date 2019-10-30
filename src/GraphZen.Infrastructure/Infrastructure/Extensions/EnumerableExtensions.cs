@@ -17,10 +17,8 @@ namespace GraphZen.Infrastructure
 {
     internal static class EnumerableExtensions
     {
-        public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(this IEnumerable<TSource> source)
-        {
-            return source.ToList().AsReadOnly();
-        }
+        public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(this IEnumerable<TSource> source) =>
+            source.ToList().AsReadOnly();
 
 
         public static bool TryGetDuplicateValueBy<TSource, TValue>(this IEnumerable<TSource> source,
@@ -69,14 +67,23 @@ namespace GraphZen.Infrastructure
         }
 
 
-        public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue, TSource>(
-            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
-            Func<TSource, TValue> valueSelector = null)
+        public static IReadOnlyDictionary<TKey, TSource> ToReadOnlyDictionary<TKey, TSource>(
+            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector
+        )
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(keySelector, nameof(keySelector));
-            Check.NotNull(valueSelector, nameof(valueSelector));
+            return new ReadOnlyDictionary<TKey, TSource>(source.ToDictionary(keySelector, v => v));
+        }
 
+
+        public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue, TSource>(
+            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
+            Func<TSource, TValue> valueSelector)
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(keySelector, nameof(keySelector));
+            Check.NotNull(valueSelector, nameof(ValueInspector));
             return new ReadOnlyDictionary<TKey, TValue>(source.ToDictionary(keySelector, valueSelector));
         }
 
@@ -88,7 +95,7 @@ namespace GraphZen.Infrastructure
             Check.NotNull(keySelector, nameof(keySelector));
 
             // ReSharper disable once PossibleNullReferenceException
-            // ReSharper disable once AssignNullToNotNullAttribute
+
             var dict = source.GroupBy(keySelector).ToDictionary(_ => _.Key, _ => _.First());
             return new ReadOnlyDictionary<TKey, TSource>(dict);
         }

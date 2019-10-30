@@ -4,43 +4,49 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using GraphZen.Enums;
-using GraphZen.Enums.Description;
-using GraphZen.Enums.EnumValues.Description;
+using GraphZen.Configuration.Directives;
+using GraphZen.Configuration.Enums;
+using GraphZen.Configuration.Enums.Description;
+using GraphZen.Configuration.Enums.EnumValues;
+using GraphZen.Configuration.Enums.EnumValues.Description;
+using GraphZen.Configuration.Infrastructure;
+using GraphZen.Configuration.InputObjects;
+using GraphZen.Configuration.InputObjects.Description;
+using GraphZen.Configuration.InputObjects.Fields;
+using GraphZen.Configuration.InputObjects.Fields.Description;
+using GraphZen.Configuration.Interfaces;
+using GraphZen.Configuration.Interfaces.Description;
+using GraphZen.Configuration.Interfaces.Fields;
+using GraphZen.Configuration.Interfaces.Fields.Arguments;
+using GraphZen.Configuration.Interfaces.Fields.Arguments.Description;
+using GraphZen.Configuration.Interfaces.Fields.Description;
+using GraphZen.Configuration.Objects;
+using GraphZen.Configuration.Objects.Description;
+using GraphZen.Configuration.Objects.Fields;
+using GraphZen.Configuration.Objects.Fields.Arguments;
+using GraphZen.Configuration.Objects.Fields.Arguments.Description;
+using GraphZen.Configuration.Objects.Fields.Description;
+using GraphZen.Configuration.Objects.Interfaces;
+using GraphZen.Configuration.Scalars;
+using GraphZen.Configuration.Scalars.Description;
+using GraphZen.Configuration.Unions;
+using GraphZen.Configuration.Unions.Description;
 using GraphZen.Infrastructure;
-using GraphZen.InputObjects;
-using GraphZen.InputObjects.Description;
-using GraphZen.InputObjects.Fields;
-using GraphZen.InputObjects.Fields.Description;
-using GraphZen.Interfaces;
-using GraphZen.Interfaces.Description;
-using GraphZen.Interfaces.Fields;
-using GraphZen.Interfaces.Fields.Arguments;
-using GraphZen.Interfaces.Fields.Arguments.Description;
-using GraphZen.Interfaces.Fields.Description;
-using GraphZen.Objects;
-using GraphZen.Objects.Fields;
-using GraphZen.Objects.Fields.Arguments;
-using GraphZen.Objects.Fields.Arguments.Description;
-using GraphZen.Objects.Fields.Description;
-using GraphZen.Objects.Interfaces;
-using GraphZen.Scalars;
-using GraphZen.Scalars.Description;
-using GraphZen.Unions;
-using GraphZen.Unions.Description;
 using JetBrains.Annotations;
-#nullable disable
 
-
-namespace GraphZen
+namespace GraphZen.Configuration
 {
     public static class ConfigurationFixtures
     {
-        public static IEnumerable<T> GetAll<T>() where T : IConfigurationFixture
-        {
-            return new List<IConfigurationFixture>
+        public static IEnumerable<T> GetAll<T>() where T : IConfigurationFixture =>
+            new List<IConfigurationFixture>
             {
                 // SCHEMA
+
+                // Directives (Collection)
+                new Schema_Directives_Explicit(),
+               // new Schema_Directives_ViaObjectClrPropertyAttribute(), 
+
 
                 // Objects (Collection)
                 new Schema_Objects_Explicit(),
@@ -198,7 +204,8 @@ namespace GraphZen
                 new Enum_Explicit_Description(),
                 new Enum_ViaClrEnum_Description(),
                 // Values (Collection)
-
+                new Enum_Values_Explicit(),
+                new Enum_Values_ViaClrEnumValues(),
                 // Directive Annotations (Collection)
                 // TODO: InputObject_DirectiveAnnotations_Explicit
                 // TODO: InputObject_DirectiveAnnotations_ViaClrClassAttributes
@@ -208,6 +215,5 @@ namespace GraphZen
                 new EnumValue_Explicit_Description(),
                 new EnumValue_ViaClrEnumValue_Description()
             }.OfType<T>();
-        }
     }
 }

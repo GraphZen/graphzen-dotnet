@@ -2,19 +2,18 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
 
-
-namespace GraphZen.Interfaces.Fields
+namespace GraphZen.Configuration.Interfaces.Fields
 {
     public abstract class Interface_Fields :
-        CollectionConfigurationFixture<IFieldsContainer,
-            IFieldsContainerDefinition, IMutableFieldsContainerDefinition, FieldDefinition, Field,
+        NamedCollectionConfigurationFixture<IFields,
+            IFieldsDefinition, IMutableFieldsDefinition, FieldDefinition, Field,
             InterfaceTypeDefinition,
             InterfaceType>
     {
@@ -23,31 +22,19 @@ namespace GraphZen.Interfaces.Fields
             sb.Interface(parentName);
         }
 
-        public override InterfaceType GetParent(Schema schema, string parentName)
-        {
-            return schema.GetInterface(parentName);
-        }
+        public override InterfaceType GetParent(Schema schema, string parentName) => schema.GetInterface(parentName);
 
-        public override InterfaceTypeDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetInterface(parentName);
-        }
+        public override InterfaceTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetInterface(parentName);
 
-        public override NamedCollection<FieldDefinition> GetCollection(InterfaceTypeDefinition parent)
-        {
-            return parent.Fields.ToNamedCollection();
-        }
+        public override NamedCollection<FieldDefinition> GetCollection(InterfaceTypeDefinition parent) =>
+            parent.Fields.ToNamedCollection();
 
-        public override NamedCollection<Field> GetCollection(InterfaceType parent)
-        {
-            return parent.Fields.ToNamedCollection();
-        }
+        public override NamedCollection<Field> GetCollection(InterfaceType parent) => parent.Fields.ToNamedCollection();
 
         public override ConfigurationSource? FindIgnoredItemConfigurationSource(InterfaceTypeDefinition parent,
-            string name)
-        {
-            return parent.FindIgnoredFieldConfigurationSource(name);
-        }
+            string name) =>
+            parent.FindIgnoredFieldConfigurationSource(name);
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {

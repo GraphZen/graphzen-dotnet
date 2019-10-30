@@ -27,263 +27,173 @@ namespace GraphZen.LanguageModel
 
 
         [DebuggerStepThrough]
-        public static NullValueSyntax NullValue()
-        {
-            return NullValueInstance;
-        }
+        public static NullValueSyntax NullValue() => NullValueInstance;
 
         [DebuggerStepThrough]
-        public static SchemaDefinitionSyntax SchemaDefinition()
-        {
-            return new SchemaDefinitionSyntax(OperationTypeDefinitionSyntax.EmptyList);
-        }
+        public static SchemaDefinitionSyntax SchemaDefinition() =>
+            new SchemaDefinitionSyntax(OperationTypeDefinitionSyntax.EmptyList);
 
 
         [DebuggerStepThrough]
         public static OperationTypeDefinitionSyntax OperationTypeDefinition(OperationType operationType,
-            NamedTypeSyntax type)
-        {
-            return new OperationTypeDefinitionSyntax(operationType, type);
-        }
+            NamedTypeSyntax type) =>
+            new OperationTypeDefinitionSyntax(operationType, type);
 
 
         [DebuggerStepThrough]
-        public static NamedTypeSyntax NamedType(NameSyntax name)
-        {
-            return new NamedTypeSyntax(name);
-        }
+        public static NamedTypeSyntax NamedType(NameSyntax name) => new NamedTypeSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static NamedTypeSyntax NamedType(Type clrType)
-        {
-            return new NamedTypeSyntax(Name(Check.NotNull(clrType, nameof(clrType)).GetGraphQLName()));
-        }
+        public static NamedTypeSyntax NamedType(Type clrType) =>
+            new NamedTypeSyntax(Name(Check.NotNull(clrType, nameof(clrType)).GetGraphQLName()));
 
 
         [DebuggerStepThrough]
-        public static ObjectFieldSyntax ObjectField(NameSyntax name, ValueSyntax value)
-        {
-            return new ObjectFieldSyntax(name, value);
-        }
+        public static ObjectFieldSyntax ObjectField(NameSyntax name, ValueSyntax value) =>
+            new ObjectFieldSyntax(name, value);
 
 
         [DebuggerStepThrough]
-        public static EnumValueSyntax EnumValue(NameSyntax name)
-        {
-            return new EnumValueSyntax(name);
-        }
+        public static EnumValueSyntax EnumValue(NameSyntax name) => new EnumValueSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static EnumValueDefinitionSyntax EnumValueDefinition(EnumValueSyntax enumValue)
-        {
-            return new EnumValueDefinitionSyntax(enumValue);
-        }
+        public static EnumValueDefinitionSyntax EnumValueDefinition(EnumValueSyntax enumValue) =>
+            new EnumValueDefinitionSyntax(enumValue);
 
 
         [DebuggerStepThrough]
-        public static ListValueSyntax ListValue(params ValueSyntax[] values)
-        {
-            return new ListValueSyntax(values);
-        }
+        public static ListValueSyntax ListValue(params ValueSyntax[] values) => new ListValueSyntax(values);
 
 
         [DebuggerStepThrough]
-        public static ListValueSyntax ListValue(IReadOnlyList<ValueSyntax> values)
-        {
-            return new ListValueSyntax(values);
-        }
+        public static ListValueSyntax ListValue(IReadOnlyList<ValueSyntax> values) => new ListValueSyntax(values);
 
 
         [DebuggerStepThrough]
-        public static ObjectValueSyntax ObjectValue(params ObjectFieldSyntax[] fields)
-        {
-            return new ObjectValueSyntax(fields);
-        }
+        public static ObjectValueSyntax ObjectValue(params ObjectFieldSyntax[] fields) => new ObjectValueSyntax(fields);
 
 
         [DebuggerStepThrough]
-        public static ObjectValueSyntax ObjectValue(IReadOnlyList<ObjectFieldSyntax> fields)
-        {
-            return new ObjectValueSyntax(fields);
-        }
+        public static ObjectValueSyntax ObjectValue(IReadOnlyList<ObjectFieldSyntax> fields) =>
+            new ObjectValueSyntax(fields);
 
 
         [DebuggerStepThrough]
-        public static BooleanValueSyntax BooleanValue(bool value)
-        {
-            return value ? TrueBooleanValueInstance : FalseBooleanValueInstance;
-        }
+        public static BooleanValueSyntax BooleanValue(bool value) =>
+            value ? TrueBooleanValueInstance : FalseBooleanValueInstance;
 
 
         [DebuggerStepThrough]
-        public static StringValueSyntax StringValue(string value, bool isBlockString = false)
-        {
-            return new StringValueSyntax(value, isBlockString);
-        }
+        public static StringValueSyntax StringValue(string value, bool isBlockString = false) =>
+            new StringValueSyntax(value, isBlockString);
 
 
         [DebuggerStepThrough]
-        public static IntValueSyntax IntValue(int value)
-        {
-            return new IntValueSyntax(value);
-        }
+        public static IntValueSyntax IntValue(int value) => new IntValueSyntax(value);
 
 
         [DebuggerStepThrough]
-        public static FloatValueSyntax FloatValue(string value)
-        {
-            return new FloatValueSyntax(value);
-        }
+        public static FloatValueSyntax FloatValue(string value) => new FloatValueSyntax(value);
 
 
         [DebuggerStepThrough]
-        public static FragmentSpreadSyntax FragmentSpread(NameSyntax name)
-        {
-            return new FragmentSpreadSyntax(name);
-        }
+        public static FragmentSpreadSyntax FragmentSpread(NameSyntax name) => new FragmentSpreadSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static InputObjectTypeDefinitionSyntax InputObjectTypeDefinition(NameSyntax name)
-        {
-            return new InputObjectTypeDefinitionSyntax(name);
-        }
+        public static InputObjectTypeDefinitionSyntax InputObjectTypeDefinition(NameSyntax name) =>
+            new InputObjectTypeDefinitionSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static ListTypeSyntax ListType(TypeSyntax type)
-        {
-            return new ListTypeSyntax(type);
-        }
+        public static ListTypeSyntax ListType(TypeSyntax type) => new ListTypeSyntax(type);
 
 
         [DebuggerStepThrough]
-        public static ObjectTypeDefinitionSyntax ObjectTypeDefinition(NameSyntax name)
-        {
-            return new ObjectTypeDefinitionSyntax(name);
-        }
+        public static ObjectTypeDefinitionSyntax ObjectTypeDefinition(NameSyntax name) =>
+            new ObjectTypeDefinitionSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static InterfaceTypeDefinitionSyntax InterfaceTypeDefinition(NameSyntax name)
-        {
-            return new InterfaceTypeDefinitionSyntax(name);
-        }
+        public static InterfaceTypeDefinitionSyntax InterfaceTypeDefinition(NameSyntax name) =>
+            new InterfaceTypeDefinitionSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static DocumentSyntax Document(params DefinitionSyntax[] definitions)
-        {
-            return new DocumentSyntax(definitions);
-        }
+        public static DocumentSyntax Document(params DefinitionSyntax[] definitions) => new DocumentSyntax(definitions);
 
 
         [DebuggerStepThrough]
-        public static FieldDefinitionSyntax FieldDefinition(NameSyntax name, TypeSyntax type)
-        {
-            return new FieldDefinitionSyntax(name, type);
-        }
+        public static FieldDefinitionSyntax FieldDefinition(NameSyntax name, TypeSyntax type) =>
+            new FieldDefinitionSyntax(name, type);
 
 
         [DebuggerStepThrough]
-        public static InputObjectTypeExtensionSyntax InputObjectTypeExtension(NameSyntax name)
-        {
-            return new InputObjectTypeExtensionSyntax(name);
-        }
+        public static InputObjectTypeExtensionSyntax InputObjectTypeExtension(NameSyntax name) =>
+            new InputObjectTypeExtensionSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static ArgumentSyntax Argument(NameSyntax name, ValueSyntax node)
-        {
-            return new ArgumentSyntax(name, null, node);
-        }
+        public static ArgumentSyntax Argument(NameSyntax name, ValueSyntax node) =>
+            new ArgumentSyntax(name, null, node);
 
 
         [DebuggerStepThrough]
-        public static VariableSyntax Variable(NameSyntax name)
-        {
-            return new VariableSyntax(name);
-        }
+        public static VariableSyntax Variable(NameSyntax name) => new VariableSyntax(name);
 
 
         [DebuggerStepThrough]
         public static VariableDefinitionSyntax VariableDefinition(VariableSyntax variable, TypeSyntax type,
-            ValueSyntax defaultValue = null)
-        {
-            return new VariableDefinitionSyntax(variable, type, defaultValue);
-        }
+            ValueSyntax defaultValue = null) =>
+            new VariableDefinitionSyntax(variable, type, defaultValue);
 
 
         [DebuggerStepThrough]
-        public static NameSyntax Name(string name)
-        {
-            return new NameSyntax(name);
-        }
+        public static NameSyntax Name(string name) => new NameSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static NameSyntax[] Names(params string[] names)
-        {
-            return Check.NotNull(names, nameof(names)).Select(Name).ToArray();
-        }
+        public static NameSyntax[] Names(params string[] names) =>
+            Check.NotNull(names, nameof(names)).Select(Name).ToArray();
 
 
         [DebuggerStepThrough]
-        public static DirectiveSyntax Directive(NameSyntax name)
-        {
-            return new DirectiveSyntax(name);
-        }
+        public static DirectiveSyntax Directive(NameSyntax name) => new DirectiveSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static InputValueDefinitionSyntax InputValueDefinition(NameSyntax name, TypeSyntax type)
-        {
-            return new InputValueDefinitionSyntax(name, type);
-        }
+        public static InputValueDefinitionSyntax InputValueDefinition(NameSyntax name, TypeSyntax type) =>
+            new InputValueDefinitionSyntax(name, type);
 
 
         [DebuggerStepThrough]
-        public static EnumTypeDefinitionSyntax EnumTypeDefinition(NameSyntax name)
-        {
-            return new EnumTypeDefinitionSyntax(name);
-        }
+        public static EnumTypeDefinitionSyntax EnumTypeDefinition(NameSyntax name) =>
+            new EnumTypeDefinitionSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static NonNullTypeSyntax NonNull(NullableTypeSyntax node)
-        {
-            return new NonNullTypeSyntax(node);
-        }
+        public static NonNullTypeSyntax NonNull(NullableTypeSyntax node) => new NonNullTypeSyntax(node);
 
 
         [DebuggerStepThrough]
-        public static FieldSyntax Field(NameSyntax name)
-        {
-            return new FieldSyntax(name);
-        }
+        public static FieldSyntax Field(NameSyntax name) => new FieldSyntax(name);
 
 
         [DebuggerStepThrough]
-        public static UnionTypeDefinitionSyntax UnionTypeDefinition(NameSyntax name)
-        {
-            return new UnionTypeDefinitionSyntax(name);
-        }
+        public static UnionTypeDefinitionSyntax UnionTypeDefinition(NameSyntax name) =>
+            new UnionTypeDefinitionSyntax(name);
 
 
         [DebuggerStepThrough]
         public static ScalarTypeDefinitionSyntax ScalarTypeDefinition(NameSyntax name,
-            StringValueSyntax description = null)
-        {
-            return new ScalarTypeDefinitionSyntax(name, description);
-        }
+            StringValueSyntax description = null) =>
+            new ScalarTypeDefinitionSyntax(name, description);
 
 
         [DebuggerStepThrough]
-        public static SelectionSetSyntax SelectionSet(params SelectionSyntax[] selections)
-        {
-            return new SelectionSetSyntax(selections);
-        }
+        public static SelectionSetSyntax SelectionSet(params SelectionSyntax[] selections) =>
+            new SelectionSetSyntax(selections);
     }
 }

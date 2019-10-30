@@ -39,7 +39,7 @@ namespace GraphZen.LanguageModel
                 throw new Exception($"Unable to identity named type for node {this}");
             }
 
-            // ReSharper disable once AssignNullToNotNullAttribute
+
             return (NamedTypeSyntax)GetNamedType(this);
         }
     }

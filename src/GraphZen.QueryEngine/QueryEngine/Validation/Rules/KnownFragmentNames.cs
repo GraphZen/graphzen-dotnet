@@ -17,10 +17,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
         {
         }
 
-        public static string UnknownFragmentMessage(string fragmentName)
-        {
-            return $"Unknown fragment \"{fragmentName}\".";
-        }
+        public static string UnknownFragmentMessage(string fragmentName) => $"Unknown fragment \"{fragmentName}\".";
 
         public override VisitAction EnterFragmentSpread(FragmentSpreadSyntax node)
         {

@@ -3,12 +3,12 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Interfaces.Fields.Description
+namespace GraphZen.Configuration.Interfaces.Fields.Description
 {
     public class Interface_Field_ViaClrProperty_Description : Interface_Field_Description,
         ILeafConventionConfigurationFixture
@@ -22,14 +22,12 @@ namespace GraphZen.Interfaces.Fields.Description
 
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(IExampleInterface.ExampleField).FirstCharToLower(),
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

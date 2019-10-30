@@ -4,19 +4,14 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
-#nullable disable
 
-
-// ReSharper disable AssignNullToNotNullAttribute
-
-// ReSharper disable PossibleNullReferenceException
-
-namespace GraphZen
+namespace GraphZen.Configuration
 {
     [NoReorder]
     public class CollectionExplicitConfigurationTests : TestDataHelper<ICollectionExplicitConfigurationFixture>
@@ -92,8 +87,7 @@ namespace GraphZen
 
         [Theory]
         [MemberData(nameof(FixtureData))]
-        public void
-            when_item_added_explicitly_then_ignored_explicitly_item_ignored_configuration_source_should_be_explicit(
+        public void when_item_added_explicitly_then_ignored_explicitly_item_ignored_configuration_source_should_be_explicit(
                 ICollectionExplicitConfigurationFixture fixture)
 
         {

@@ -2,17 +2,17 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Enums
+namespace GraphZen.Configuration.Enums
 {
-    public abstract class Schema_Enums : CollectionConfigurationFixture<IEnumTypesContainer,
-        IEnumTypesContainerDefinition, IMutableEnumTypesContainerDefinition, EnumTypeDefinition,
+    public abstract class Schema_Enums : NamedCollectionConfigurationFixture<IEnumTypes,
+        IEnumTypesDefinition, IMutableEnumTypesDefinition, EnumTypeDefinition,
         EnumType,
         SchemaDefinition,
         Schema>
@@ -21,15 +21,9 @@ namespace GraphZen.Enums
         {
         }
 
-        public override Schema GetParent(Schema schema, string parentName)
-        {
-            return schema;
-        }
+        public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition();
-        }
+        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -51,19 +45,12 @@ namespace GraphZen.Enums
             sb.Enum(itemName).Name(newName);
         }
 
-        public override NamedCollection<EnumTypeDefinition> GetCollection(SchemaDefinition parent)
-        {
-            return parent.GetEnums().ToNamedCollection();
-        }
+        public override NamedCollection<EnumTypeDefinition> GetCollection(SchemaDefinition parent) =>
+            parent.GetEnums().ToNamedCollection();
 
-        public override NamedCollection<EnumType> GetCollection(Schema parent)
-        {
-            return parent.Enums.ToNamedCollection();
-        }
+        public override NamedCollection<EnumType> GetCollection(Schema parent) => parent.Enums.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name)
-        {
-            return parent.FindIgnoredTypeConfigurationSource(name);
-        }
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+            parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

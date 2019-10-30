@@ -4,12 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-
-#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -17,7 +16,8 @@ namespace GraphZen.TypeSystem
     {
         private readonly Lazy<InputObjectTypeDefinitionSyntax> _syntax;
 
-        public InputObjectType(string name, string description, Type clrType, IEnumerable<IInputFieldDefinition> fields,
+        public InputObjectType(string name, string? description, Type? clrType,
+            IEnumerable<IInputFieldDefinition> fields,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(Check.NotNull(name, nameof(name)),
             description, clrType, Check.NotNull(directives, nameof(directives)))
         {
@@ -35,17 +35,11 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.InputObject;
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputObject;
 
-        public IEnumerable<InputField> GetFields()
-        {
-            return Fields.Values;
-        }
+        public IEnumerable<InputField> GetFields() => Fields.Values;
 
 
         public static InputObjectType From(IInputObjectTypeDefinition definition,
@@ -54,12 +48,9 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(schema, nameof(schema));
             return new InputObjectType(definition.Name, definition.Description, definition.ClrType,
-                definition.GetFields(), definition.DirectiveAnnotations, schema);
+                definition.GetFields(), definition.GetDirectiveAnnotations().ToList(), schema);
         }
 
-        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields()
-        {
-            return GetFields();
-        }
+        IEnumerable<IInputFieldDefinition> IInputFieldsDefinition.GetFields() => GetFields();
     }
 }

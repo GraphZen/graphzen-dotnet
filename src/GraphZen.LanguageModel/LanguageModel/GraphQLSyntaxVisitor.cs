@@ -27,19 +27,10 @@ namespace GraphZen.LanguageModel
 
     public abstract partial class GraphQLSyntaxVisitor<TResult>
     {
-        public virtual TResult Visit(SyntaxNode node)
-        {
-            return default;
-        }
+        public virtual TResult Visit(SyntaxNode node) => default;
 
-        public virtual TResult OnEnter(SyntaxNode node)
-        {
-            return default;
-        }
+        public virtual TResult OnEnter(SyntaxNode node) => default;
 
-        public virtual TResult OnLeave(SyntaxNode node)
-        {
-            return default;
-        }
+        public virtual TResult OnLeave(SyntaxNode node) => default;
     }
 }

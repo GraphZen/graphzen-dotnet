@@ -39,10 +39,8 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
 
-        private bool Equals(StringValueSyntax other)
-        {
-            return IsBlockString == other.IsBlockString && string.Equals(Value, other.Value);
-        }
+        private bool Equals(StringValueSyntax other) =>
+            IsBlockString == other.IsBlockString && string.Equals(Value, other.Value);
 
         public override bool Equals(object obj)
         {
@@ -63,14 +61,8 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public override object GetValue()
-        {
-            return Value;
-        }
+        public override object GetValue() => Value;
 
-        public override string ToString()
-        {
-            return $"\"{Value}\"";
-        }
+        public override string ToString() => $"\"{Value}\"";
     }
 }

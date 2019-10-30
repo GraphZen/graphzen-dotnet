@@ -70,10 +70,8 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        public static bool HasValidGraphQLName(this Type clrType, object source = null)
-        {
-            return clrType.TryGetGraphQLName(out _, source);
-        }
+        public static bool HasValidGraphQLName(this Type clrType, object source = null) =>
+            clrType.TryGetGraphQLName(out _, source);
 
 
         public static bool TryGetGraphQLNameFromDataAnnotation(this Type clrType, out string name)

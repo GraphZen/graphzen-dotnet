@@ -9,8 +9,7 @@ namespace GraphZen.TypeSystem
 {
     public interface IAnnotableBuilder<out TBuilder>
     {
-        TBuilder DirectiveAnnotation(string name);
-        TBuilder DirectiveAnnotation(string name, object value);
-        TBuilder RemoveDirectiveAnnotation(string name);
+        TBuilder DirectiveAnnotation(string name, object? value = null);
+        TBuilder IgnoreDirectiveAnnotation(string name);
     }
 }

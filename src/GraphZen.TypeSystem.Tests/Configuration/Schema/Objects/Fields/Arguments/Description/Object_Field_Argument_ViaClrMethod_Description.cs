@@ -4,12 +4,12 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Objects.Fields.Arguments.Description
+namespace GraphZen.Configuration.Objects.Fields.Arguments.Description
 {
     public class Object_Field_Argument_ViaClrMethod_Description : Object_Field_Argument_Description,
         ILeafConventionConfigurationFixture
@@ -19,22 +19,18 @@ namespace GraphZen.Objects.Fields.Arguments.Description
         {
             [GraphQLName(Grandparent)]
             public string ExampleField([Description(DataAnnotationDescriptionValue)]
-                string argName)
-            {
+                string argName) =>
                 throw new NotImplementedException();
-            }
         }
 
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = "argName",
                 DataAnnotationValue = DataAnnotationDescriptionValue
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

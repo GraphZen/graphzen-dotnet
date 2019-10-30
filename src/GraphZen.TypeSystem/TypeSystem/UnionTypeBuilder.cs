@@ -7,8 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen.TypeSystem
 {
     public class UnionTypeBuilder<TUnion, TContext> : IUnionTypeBuilder<TUnion, TContext>,
@@ -25,7 +23,7 @@ namespace GraphZen.TypeSystem
         InternalUnionTypeBuilder IInfrastructure<InternalUnionTypeBuilder>.Instance => Builder;
 
 
-        public IUnionTypeBuilder<TUnion, TContext> Description(string description)
+        public IUnionTypeBuilder<TUnion, TContext> Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
@@ -45,10 +43,7 @@ namespace GraphZen.TypeSystem
             return new UnionTypeBuilder<object, TContext>(Builder);
         }
 
-        public IUnionTypeBuilder<T, TContext> ClrType<T>()
-        {
-            throw new NotImplementedException();
-        }
+        public IUnionTypeBuilder<T, TContext> ClrType<T>() => throw new NotImplementedException();
 
         public IUnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes)
         {
@@ -66,8 +61,10 @@ namespace GraphZen.TypeSystem
         {
             // TODO: Check.NotEmpty(types, nameof(types));
             foreach (var type in types)
+            {
                 if (type != null)
                     Builder.IncludesType(type, ConfigurationSource.Explicit);
+            }
 
             return this;
         }
@@ -78,49 +75,31 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2>()
-        {
-            return OfTypes(typeof(T1), typeof(T2));
-        }
+        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2>() => OfTypes(typeof(T1), typeof(T2));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3>()
-        {
-            return OfTypes(typeof(T1), typeof(T2), typeof(T3));
-        }
+        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3>() => OfTypes(typeof(T1), typeof(T2), typeof(T3));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4>()
-        {
-            return OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4));
-        }
+        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4>() =>
+            OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5>()
-        {
-            return OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5));
-        }
+        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5>() =>
+            OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6>()
-        {
-            return OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6));
-        }
+        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6>() => OfTypes(typeof(T1), typeof(T2),
+            typeof(T3), typeof(T4), typeof(T5), typeof(T6));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7>()
-        {
-            return OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7));
-        }
+        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7>() => OfTypes(typeof(T1),
+            typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>()
-        {
-            return OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7),
+        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>() =>
+            OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7),
                 typeof(T8),
                 typeof(T9));
-        }
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>()
-        {
-            return OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7),
+        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>() =>
+            OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7),
                 typeof(T8),
                 typeof(T9), typeof(T10));
-        }
 
         public IUnionTypeBuilder<TUnion, TContext> Name(string name)
         {
@@ -129,22 +108,14 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IUnionTypeBuilder<TUnion, TContext> DirectiveAnnotation(string name)
-        {
-            return DirectiveAnnotation(name, null);
-        }
 
-        public IUnionTypeBuilder<TUnion, TContext> DirectiveAnnotation(string name, object value)
+        public IUnionTypeBuilder<TUnion, TContext> DirectiveAnnotation(string name, object? value = null)
         {
             Check.NotNull(name, nameof(name));
-            Builder.AddOrUpdateDirectiveAnnotation(name, value);
+            Builder.DirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IUnionTypeBuilder<TUnion, TContext> RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public IUnionTypeBuilder<TUnion, TContext> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
     }
 }

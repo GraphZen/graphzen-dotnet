@@ -47,9 +47,6 @@ namespace GraphZen.LanguageModel.Validation
         }
 
 
-        public IReadOnlyCollection<GraphQLError> GetErrors()
-        {
-            return Errors.AsReadOnly();
-        }
+        public IReadOnlyCollection<GraphQLError> GetErrors() => Errors.AsReadOnly();
     }
 }

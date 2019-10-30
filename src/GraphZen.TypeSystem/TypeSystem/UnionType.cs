@@ -11,22 +11,17 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     public class UnionType : NamedType, IUnionType
     {
         private readonly Lazy<UnionTypeDefinitionSyntax> _syntax;
-
-
         private readonly Lazy<IReadOnlyDictionary<string, ObjectType>> _memberTypeMap;
-
-
         private readonly Lazy<IReadOnlyList<ObjectType>> _memberTypes;
 
-        public UnionType(string name, string description, Type clrType,
+        public UnionType(string name, string? description, Type? clrType,
             Lazy<IReadOnlyDictionary<string, ObjectType>> lazyTypes,
-            TypeResolver<object, GraphQLContext> resolveType,
+            TypeResolver<object, GraphQLContext>? resolveType,
             IReadOnlyList<IDirectiveAnnotation> directives
         ) : base(
             Check.NotNull(name, nameof(name)), description, clrType, Check.NotNull(directives, nameof(directives)))
@@ -57,22 +52,16 @@ namespace GraphZen.TypeSystem
                     MemberTypes.Select(_ => (NamedTypeSyntax)_.ToTypeSyntax()).ToArray()));
         }
 
-        public TypeResolver<object, GraphQLContext> ResolveType { get; }
+        public TypeResolver<object, GraphQLContext>? ResolveType { get; }
 
-        public IEnumerable<ObjectType> GetMemberTypes()
-        {
-            return MemberTypes;
-        }
+        public IEnumerable<ObjectType> GetMemberTypes() => MemberTypes;
 
         public IReadOnlyList<ObjectType> MemberTypes => _memberTypes.Value;
         public IReadOnlyDictionary<string, ObjectType> MemberTypesMap => _memberTypeMap.Value;
 
         public override TypeKind Kind { get; } = TypeKind.Union;
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Union;
 
@@ -92,10 +81,7 @@ namespace GraphZen.TypeSystem
             var schema = new Schema(schemaDef);
             return From(definition, schema);
         }*/
-        IEnumerable<IObjectTypeDefinition> IMemberTypesContainerDefinition.GetMemberTypes()
-        {
-            return GetMemberTypes();
-        }
+        IEnumerable<IObjectTypeDefinition> IMemberTypesDefinition.GetMemberTypes() => GetMemberTypes();
 
 
         public static UnionType From(IUnionTypeDefinition definition, Schema schema)
@@ -105,10 +91,10 @@ namespace GraphZen.TypeSystem
             var lazyTypes = new Lazy<IReadOnlyDictionary<string, ObjectType>>(() =>
             {
                 return definition.GetMemberTypes()
-                    .ToDictionary(_ => _.Name, _ => schema.GetType<ObjectType>(_.Name));
+                    .ToDictionary(_ => _.Name, _ => schema.GetObject(_.Name));
             });
             return new UnionType(definition.Name, definition.Description, definition.ClrType, lazyTypes,
-                definition.ResolveType, definition.DirectiveAnnotations);
+                definition.ResolveType, definition.GetDirectiveAnnotations().ToList());
         }
     }
 }

@@ -2,18 +2,18 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Objects.Interfaces
+namespace GraphZen.Configuration.Objects.Interfaces
 {
     public class Object_Interfaces_ViaClrInterfaces : Object_Interfaces, ICollectionConventionConfigurationFixture
     {
         public class Query
         {
-            public ObjectWithInterfaces ObjectWithInterfaces { get; set; }
+            public ObjectWithInterfaces? ObjectWithInterfaces { get; set; }
         }
 
         public class ObjectWithInterfaces : INamedByConvention, INamedByDataAnnotation, IIgnoredByDataAnnotation
@@ -43,9 +43,8 @@ namespace GraphZen.Objects.Interfaces
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ParentName = nameof(ObjectWithInterfaces),
                 ItemNamedByConvention = nameof(INamedByConvention),
@@ -53,7 +52,6 @@ namespace GraphZen.Objects.Interfaces
                 ItemIgnoredByConvention = nameof(IIgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(IIgnoredByDataAnnotation)
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

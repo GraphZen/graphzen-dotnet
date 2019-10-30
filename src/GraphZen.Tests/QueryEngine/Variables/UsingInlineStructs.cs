@@ -7,6 +7,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
+
 #nullable disable
 
 
@@ -52,9 +53,8 @@ namespace GraphZen.QueryEngine.Variables
         }
 
         [Fact]
-        public Task ExecutesWithComplextInput()
-        {
-            return ExecuteAsync(@"
+        public Task ExecutesWithComplextInput() =>
+            ExecuteAsync(@"
                     {
                         fieldWithObjectInput(input: { a: ""foo"", b: [""bar""], c: ""baz""})
                     }
@@ -67,12 +67,10 @@ namespace GraphZen.QueryEngine.Variables
                     }
                 }
             );
-        }
 
         [Fact]
-        public Task ProperlyParsesNullValueInList()
-        {
-            return ExecuteAsync(@"
+        public Task ProperlyParsesNullValueInList() =>
+            ExecuteAsync(@"
                     {
                         fieldWithObjectInput(input: {b: [""A"",null,""C""], c: ""C""})
                     }
@@ -84,12 +82,10 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithObjectInput = @"{""b"":[""A"",null,""C""],""c"":""C""}"
                     }
                 });
-        }
 
         [Fact]
-        public Task ProperlyParsesNullValueToNull()
-        {
-            return ExecuteAsync(@"
+        public Task ProperlyParsesNullValueToNull() =>
+            ExecuteAsync(@"
                     {
                         fieldWithObjectInput(input: {a: null, b: null, c: ""C"", d: null})
                     }
@@ -101,12 +97,10 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithObjectInput = @"{""a"":null,""b"":null,""c"":""C"",""d"":null}"
                     }
                 });
-        }
 
         [Fact]
-        public Task ProperlyParsesSingleValueToList()
-        {
-            return ExecuteAsync(@"
+        public Task ProperlyParsesSingleValueToList() =>
+            ExecuteAsync(@"
                     {
                         fieldWithObjectInput(input: {a: ""foo"", b: ""bar"", c: ""baz""})
                     }
@@ -119,12 +113,10 @@ namespace GraphZen.QueryEngine.Variables
                     }
                 }
             );
-        }
 
         [Fact]
-        public Task ProperlyRunsParseLiteralOnComplexScalarTypes()
-        {
-            return ExecuteAsync(@"
+        public Task ProperlyRunsParseLiteralOnComplexScalarTypes() =>
+            ExecuteAsync(@"
                     {
                         fieldWithObjectInput(input: {c: ""foo"", d: ""SerializedValue""}) 
                     }")
@@ -135,6 +127,5 @@ namespace GraphZen.QueryEngine.Variables
                         fieldWithObjectInput = @"{""c"":""foo"",""d"":""DeserializedValue""}"
                     }
                 });
-        }
     }
 }

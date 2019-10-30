@@ -8,8 +8,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableObjectTypeDefinition : IObjectTypeDefinition, IMutableGraphQLTypeDefinition,
-        IMutableFieldsContainerDefinition, IMutableInterfacesContainerDefinition
+    public interface IMutableObjectTypeDefinition : IObjectTypeDefinition, IMutableNamedTypeDefinition,
+        IMutableFieldsDefinition, IMutableInterfacesDefinition
     {
         new IsTypeOf<object, GraphQLContext>? IsTypeOf { get; }
     }

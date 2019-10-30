@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -18,6 +19,6 @@ namespace GraphZen.TypeSystem
             SpecScalars.Boolean,
             SpecScalars.Float,
             SpecScalars.Int
-        }.Concat(Introspection.Schema.GetTypes()).ToList().AsReadOnly();
+        }.Concat(Introspection.Schema.GetTypes()).ToImmutableList();
     }
 }

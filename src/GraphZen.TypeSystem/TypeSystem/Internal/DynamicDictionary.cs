@@ -110,10 +110,8 @@ namespace GraphZen.TypeSystem.Internal
         ///     A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the
         ///     collection.
         /// </returns>
-        IEnumerator<KeyValuePair<string, dynamic>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator()
-        {
-            return _dictionary.GetEnumerator();
-        }
+        IEnumerator<KeyValuePair<string, dynamic>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator() =>
+            _dictionary.GetEnumerator();
 
         /// <summary>
         ///     Adds an element with the provided key and value to the <see cref="DynamicDictionary" />.
@@ -236,19 +234,13 @@ namespace GraphZen.TypeSystem.Internal
         ///     Returns the enumeration of all dynamic member names.
         /// </summary>
         /// <returns>A <see cref="IEnumerable{T}" /> that contains dynamic member names.</returns>
-        public IEnumerator<string> GetEnumerator()
-        {
-            return _dictionary.Keys.GetEnumerator();
-        }
+        public IEnumerator<string> GetEnumerator() => _dictionary.Keys.GetEnumerator();
 
         /// <summary>
         ///     Returns the enumeration of all dynamic member names.
         /// </summary>
         /// <returns>A <see cref="IEnumerator" /> that contains dynamic member names.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _dictionary.Keys.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => _dictionary.Keys.GetEnumerator();
 
         /// <summary>
         ///     Indicates whether the current <see cref="DynamicDictionary" /> is equal to another object of the same type.
@@ -326,10 +318,7 @@ namespace GraphZen.TypeSystem.Internal
         ///     Returns the enumeration of all dynamic member names.
         /// </summary>
         /// <returns>A <see cref="IEnumerable{T}" /> that contains dynamic member names.</returns>
-        public override IEnumerable<string> GetDynamicMemberNames()
-        {
-            return _dictionary.Keys;
-        }
+        public override IEnumerable<string> GetDynamicMemberNames() => _dictionary.Keys;
 
         /// <summary>
         ///     Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -355,10 +344,7 @@ namespace GraphZen.TypeSystem.Internal
         ///     A hash code for this <see cref="DynamicDictionary" />, suitable for use in hashing algorithms and data
         ///     structures like a hash table.
         /// </returns>
-        public override int GetHashCode()
-        {
-            return _dictionary != null ? _dictionary.GetHashCode() : 0;
-        }
+        public override int GetHashCode() => _dictionary != null ? _dictionary.GetHashCode() : 0;
 
         private KeyValuePair<string, dynamic> GetDynamicKeyValuePair(KeyValuePair<string, dynamic> item)
         {
@@ -367,10 +353,7 @@ namespace GraphZen.TypeSystem.Internal
             return dynamicValueKeyValuePair;
         }
 
-        private static string GetNeutralKey(string key)
-        {
-            return key.Replace("-", string.Empty);
-        }
+        private static string GetNeutralKey(string key) => key.Replace("-", string.Empty);
 
         /// <summary>
         ///     Gets a typed Dictionary of <see cref="T:Dictionary{String, Object}" /> from <see cref="DynamicDictionary" />

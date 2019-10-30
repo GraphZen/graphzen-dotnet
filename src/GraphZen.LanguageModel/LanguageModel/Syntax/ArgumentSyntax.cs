@@ -60,10 +60,7 @@ namespace GraphZen.LanguageModel
 
         public StringValueSyntax Description { get; }
 
-        private bool Equals(ArgumentSyntax other)
-        {
-            return Name.Equals(other.Name) && Value.Equals(other.Value);
-        }
+        private bool Equals(ArgumentSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
 
         public override bool Equals(object obj)
         {

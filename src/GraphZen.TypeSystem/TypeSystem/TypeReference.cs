@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -18,8 +17,6 @@ namespace GraphZen.TypeSystem
         {
             Identity = Check.NotNull(identity, nameof(identity));
             TypeSyntax = Check.NotNull(typeSyntax, nameof(typeSyntax));
-
-            if (identity.ClrType == typeof(IEnumTypeDefinition)) throw new Exception("hullo");
         }
 
 
@@ -48,12 +45,8 @@ namespace GraphZen.TypeSystem
                         if (Identity.ClrType != null)
                         {
                             var typeMatches = schema.Types.Values
-                                .Where(_ =>
-                                {
-                                    Debug.Assert(_ != null, nameof(_) + " != null");
-                                    return _.ClrType != null;
-                                })
-                                .Where(_ => _.ClrType.IsAssignableFrom(Identity.ClrType)).ToArray();
+                                .Where(_ => _.ClrType != null && _.ClrType.IsAssignableFrom(Identity.ClrType))
+                                .ToArray();
 
                             if (typeMatches.Length == 1) return typeMatches[0];
 
@@ -72,13 +65,10 @@ namespace GraphZen.TypeSystem
                 throw new Exception($"Unable to create type reference from type node: {node?.GetType()}");
             }
 
-            // ReSharper disable once AssignNullToNotNullAttribute
+
             return GetType(TypeSyntax);
         }
 
-        public override string ToString()
-        {
-            return "Reference:" + Name;
-        }
+        public override string ToString() => "Reference:" + Name;
     }
 }

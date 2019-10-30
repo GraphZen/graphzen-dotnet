@@ -25,13 +25,9 @@ namespace GraphZen.Infrastructure
         };
 
 
-        // ReSharper disable once AssignNullToNotNullAttribute
         public static JsonSerializer Serializer { get; } = JsonSerializer.Create(SerializerSettings);
 
-        public static JObject CreateJObject(object value)
-        {
-            return JObject.FromObject(value, Serializer);
-        }
+        public static JObject CreateJObject(object value) => JObject.FromObject(value, Serializer);
 
         [DebuggerStepThrough]
         public static string SerializeObject(object value)

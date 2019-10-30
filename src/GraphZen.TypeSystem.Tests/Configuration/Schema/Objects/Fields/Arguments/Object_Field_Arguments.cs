@@ -2,19 +2,17 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
 
-// ReSharper disable PossibleNullReferenceException
-
-namespace GraphZen.Objects.Fields.Arguments
+namespace GraphZen.Configuration.Objects.Fields.Arguments
 {
-    public abstract class Object_Field_Arguments : CollectionConfigurationFixture<IArgumentsContainer,
-        IArgumentsContainerDefinition, IMutableArgumentsContainerDefinition, ArgumentDefinition, Argument,
+    public abstract class Object_Field_Arguments : NamedCollectionConfigurationFixture<IArguments,
+        IArgumentsDefinition, IMutableArgumentsDefinition, ArgumentDefinition, Argument,
         FieldDefinition, Field>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
@@ -22,15 +20,11 @@ namespace GraphZen.Objects.Fields.Arguments
             sb.Object(Grandparent).Field(parentName, "String");
         }
 
-        public override Field GetParent(Schema schema, string parentName)
-        {
-            return schema.GetObject(Grandparent).GetField(parentName);
-        }
+        public override Field GetParent(Schema schema, string parentName) =>
+            schema.GetObject(Grandparent).GetField(parentName);
 
-        public override FieldDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition().GetObject(Grandparent).GetField(parentName);
-        }
+        public override FieldDefinition GetParent(SchemaBuilder sb, string parentName) =>
+            sb.GetDefinition().GetObject(Grandparent).GetField(parentName);
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -47,20 +41,13 @@ namespace GraphZen.Objects.Fields.Arguments
             sb.Object(Grandparent).Field(parentName, f => f.UnignoreArgument(name));
         }
 
-        public override NamedCollection<ArgumentDefinition> GetCollection(FieldDefinition parent)
-        {
-            return parent.Arguments.ToNamedCollection();
-        }
+        public override NamedCollection<ArgumentDefinition> GetCollection(FieldDefinition parent) =>
+            parent.Arguments.ToNamedCollection();
 
-        public override NamedCollection<Argument> GetCollection(Field parent)
-        {
-            return parent.Arguments.ToNamedCollection();
-        }
+        public override NamedCollection<Argument> GetCollection(Field parent) => parent.Arguments.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(FieldDefinition parent, string name)
-        {
-            return parent.FindIgnoredArgumentConfigurationSource(name);
-        }
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(FieldDefinition parent, string name) =>
+            parent.FindIgnoredArgumentConfigurationSource(name);
 
         public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
         {

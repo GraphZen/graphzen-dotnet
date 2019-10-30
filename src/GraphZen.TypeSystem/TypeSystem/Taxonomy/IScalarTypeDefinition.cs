@@ -3,21 +3,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IScalarTypeDefinition :
-        ILeafTypeDefinition, IInputDefinition, IOutputDefinition
+        ILeafTypeDefinition,
+        ISerializerDefinition,
+        ILiteralParserDefinition,
+        IValueParserDefinition,
+        IInputDefinition,
+        IOutputDefinition
     {
-        LeafSerializer<object>? Serializer { get; }
-
-
-        LeafLiteralParser<object, ValueSyntax>? LiteralParser { get; }
-
-
-        LeafValueParser<object>? ValueParser { get; }
     }
 }

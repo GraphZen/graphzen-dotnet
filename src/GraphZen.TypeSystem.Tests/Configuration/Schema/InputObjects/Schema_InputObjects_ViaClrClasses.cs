@@ -3,28 +3,26 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.InputObjects
+namespace GraphZen.Configuration.InputObjects
 {
     public class Schema_InputObjects_ViaClrClasses : Schema_InputObjects, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ItemNamedByConvention = nameof(NamedByConvention),
                 ItemNamedByDataAnnotation = DataAnnotationName,
                 ItemIgnoredByConvention = nameof(IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation)
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {
@@ -41,6 +39,8 @@ namespace GraphZen.InputObjects
             throw new NotImplementedException();
         }
 
+
+#nullable disable
         public class ParentInputObject
         {
             public NamedByConvention ConventionallyNamed { get; set; }
@@ -51,6 +51,7 @@ namespace GraphZen.InputObjects
 
             public NamedByDataAnnotation NamedByDataAnnoation { get; set; }
         }
+#nullable restore
 
         public class NamedByConvention
         {

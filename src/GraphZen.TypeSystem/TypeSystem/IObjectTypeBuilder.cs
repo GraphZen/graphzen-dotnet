@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem
     public interface IObjectTypeBuilder<TObject, TContext> :
         IInfrastructure<InternalObjectTypeBuilder>,
         IAnnotableBuilder<IObjectTypeBuilder<TObject, TContext>>,
-        IFieldsContainerDefinitionBuilder<
+        IFieldsDefinitionBuilder<
             IObjectTypeBuilder<TObject, TContext>, TObject, TContext> where TContext : GraphQLContext
     {
         IObjectTypeBuilder<TObject, TContext> Name(string name);
@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem
         IObjectTypeBuilder<T, TContext> ClrType<T>();
 
 
-        IObjectTypeBuilder<TObject, TContext> Description(string description);
+        IObjectTypeBuilder<TObject, TContext> Description(string? description);
 
 
         IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn);

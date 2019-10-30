@@ -10,6 +10,7 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
+using GraphZen.Utilities;
 using JetBrains.Annotations;
 
 #nullable disable
@@ -60,29 +61,14 @@ namespace GraphZen.QueryEngine.Validation
             TypeInfo.Leave(node);
         }
 
-        public ICompositeType GetParentType()
-        {
-            return TypeInfo.GetParentType();
-        }
+        public ICompositeType GetParentType() => TypeInfo.GetParentType();
 
-        public Field GetFieldDef()
-        {
-            return TypeInfo.GetField();
-        }
+        public Field GetFieldDef() => TypeInfo.GetField();
 
-        public IGraphQLType OutputType()
-        {
-            return TypeInfo.GetOutputType();
-        }
+        public IGraphQLType OutputType() => TypeInfo.GetOutputType();
 
-        public IGraphQLType GetInputType()
-        {
-            return TypeInfo.GetInputType();
-        }
+        public IGraphQLType GetInputType() => TypeInfo.GetInputType();
 
-        public IGraphQLType GetParentInputType()
-        {
-            return TypeInfo.GetParentInputType();
-        }
+        public IGraphQLType GetParentInputType() => TypeInfo.GetParentInputType();
     }
 }

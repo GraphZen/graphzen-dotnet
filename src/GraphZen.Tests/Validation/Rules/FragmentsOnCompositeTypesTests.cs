@@ -82,11 +82,9 @@ namespace GraphZen.Validation.Rules
         ");
         }
 
-        private static ExpectedError Error(string fragmentName, string typeName, int line, int column)
-        {
-            return Error(
+        private static ExpectedError Error(string fragmentName, string typeName, int line, int column) =>
+            Error(
                 FragmentOnNonCompositeErrorMessage(fragmentName, typeName), (line, column));
-        }
 
 
         [Fact]

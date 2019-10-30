@@ -40,10 +40,8 @@ namespace GraphZen.LanguageModel
             get { yield return Type; }
         }
 
-        private bool Equals(OperationTypeDefinitionSyntax other)
-        {
-            return OperationType == other.OperationType && Type.Equals(other.Type);
-        }
+        private bool Equals(OperationTypeDefinitionSyntax other) =>
+            OperationType == other.OperationType && Type.Equals(other.Type);
 
         public override bool Equals(object obj)
         {

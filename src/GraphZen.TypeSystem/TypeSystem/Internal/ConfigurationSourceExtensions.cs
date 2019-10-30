@@ -25,33 +25,25 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public static bool Overrides(this ConfigurationSource? newConfigurationSource,
-            ConfigurationSource? oldConfigurationSource)
-        {
-            return newConfigurationSource?.Overrides(oldConfigurationSource) ?? oldConfigurationSource == null;
-        }
+            ConfigurationSource? oldConfigurationSource) =>
+            newConfigurationSource?.Overrides(oldConfigurationSource) ?? oldConfigurationSource == null;
 
 
         public static bool OverridesStrictly(this ConfigurationSource newConfigurationSource,
-            ConfigurationSource? oldConfigurationSource)
-        {
-            return newConfigurationSource.Overrides(oldConfigurationSource) &&
-                   newConfigurationSource != oldConfigurationSource;
-        }
+            ConfigurationSource? oldConfigurationSource) =>
+            newConfigurationSource.Overrides(oldConfigurationSource) &&
+            newConfigurationSource != oldConfigurationSource;
 
 
         [ContractAnnotation("left:notnull => notnull;right:notnull => notnull")]
-        public static ConfigurationSource? Max(this ConfigurationSource? left, ConfigurationSource? right)
-        {
-            return !right.HasValue
-                   || left.HasValue
-                   && left.Value.Overrides(right.Value)
+        public static ConfigurationSource? Max(this ConfigurationSource? left, ConfigurationSource? right) =>
+            !right.HasValue
+            || left.HasValue
+            && left.Value.Overrides(right.Value)
                 ? left
                 : right.Value;
-        }
 
-        public static ConfigurationSource Max(this ConfigurationSource left, ConfigurationSource? right)
-        {
-            return Max((ConfigurationSource?)left, right)!.Value;
-        }
+        public static ConfigurationSource Max(this ConfigurationSource left, ConfigurationSource? right) =>
+            Max((ConfigurationSource?)left, right)!.Value;
     }
 }

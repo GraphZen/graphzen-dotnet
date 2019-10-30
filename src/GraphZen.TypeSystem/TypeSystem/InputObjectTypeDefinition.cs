@@ -15,7 +15,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjectTypeDefinition
     {
         private readonly Dictionary<string, InputFieldDefinition> _fields =
@@ -47,10 +47,7 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyDictionary<string, InputFieldDefinition> Fields => _fields;
 
-        public IEnumerable<InputFieldDefinition> GetFields()
-        {
-            return _fields.Values;
-        }
+        public IEnumerable<InputFieldDefinition> GetFields() => _fields.Values;
 
 
         public bool RenameField(InputFieldDefinition field, string name,
@@ -68,7 +65,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public InputFieldDefinition FindField(MemberInfo member)
+        public InputFieldDefinition? FindField(MemberInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
             var memberMatch = _fields.Values.SingleOrDefault(_ => _.ClrInfo == member);
@@ -183,9 +180,6 @@ namespace GraphZen.TypeSystem
             return field;
         }
 
-        IEnumerable<IInputFieldDefinition> IInputFieldsContainerDefinition.GetFields()
-        {
-            return GetFields();
-        }
+        IEnumerable<IInputFieldDefinition> IInputFieldsDefinition.GetFields() => GetFields();
     }
 }

@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel
     ///     Field selection
     ///     http://facebook.github.io/graphql/June2018/#sec-Language.Fields
     /// </summary>
-    public partial class FieldSyntax : SelectionSyntax, IArgumentsContainerNode
+    public partial class FieldSyntax : SelectionSyntax, IArgumentsNode
     {
         public FieldSyntax(NameSyntax name, SelectionSetSyntax selectionSet) : this(name, null, null, null,
             selectionSet)
@@ -74,14 +74,12 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<ArgumentSyntax> Arguments { get; }
 
-        private bool Equals(FieldSyntax other)
-        {
-            return Name.Equals(other.Name)
-                   && Equals(SelectionSet, other.SelectionSet)
-                   && Equals(Alias, other.Alias)
-                   && Directives.SequenceEqual(other.Directives)
-                   && Arguments.SequenceEqual(other.Arguments);
-        }
+        private bool Equals(FieldSyntax other) =>
+            Name.Equals(other.Name)
+            && Equals(SelectionSet, other.SelectionSet)
+            && Equals(Alias, other.Alias)
+            && Directives.SequenceEqual(other.Directives)
+            && Arguments.SequenceEqual(other.Arguments);
 
         public override bool Equals(object obj)
         {

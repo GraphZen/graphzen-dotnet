@@ -13,6 +13,7 @@ namespace GraphZen.Infrastructure
     public static class Check
     {
         [ContractAnnotation("value:null => halt")]
+        [return: NotNull]
         public static T NotNull<T>([NotNull] [NoEnumeration] T value, [InvokerParameterName] string parameterName)
         {
             if (value is null) throw new ArgumentNullException(parameterName);

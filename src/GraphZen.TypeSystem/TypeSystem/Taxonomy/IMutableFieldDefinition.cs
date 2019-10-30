@@ -11,15 +11,15 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableFieldDefinition : IFieldDefinition, IMutableAnnotatableDefinition,
         IMutableNamed,
         IMutableDescription,
-        IMutableArgumentsContainerDefinition,
+        IMutableArgumentsDefinition,
         IMutableDeprecation
     {
         new IGraphQLTypeReference? FieldType { get; set; }
 
 
-        new Resolver<object, object>? Resolver { get; set; }
+        new Resolver<object, object?>? Resolver { get; set; }
 
 
-        new IMutableFieldsContainerDefinition DeclaringType { get; }
+        new IMutableFieldsDefinition DeclaringType { get; }
     }
 }

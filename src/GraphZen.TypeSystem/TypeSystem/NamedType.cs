@@ -8,13 +8,11 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen.TypeSystem
 {
     public abstract class NamedType : AnnotatableMember, INamedType
     {
-        protected NamedType(string name, string description, Type clrType,
+        protected NamedType(string name, string? description, Type? clrType,
             IReadOnlyList<IDirectiveAnnotation> directives) : base(directives)
         {
             Name = name;
@@ -24,12 +22,12 @@ namespace GraphZen.TypeSystem
 
         public abstract TypeKind Kind { get; }
         public string Name { get; }
-        public override string Description { get; }
+        public override string? Description { get; }
 
-        [GraphQLIgnore] public Type ClrType { get; }
+        [GraphQLIgnore] public Type? ClrType { get; }
 
 
-        public static NamedType From(IGraphQLTypeDefinition definition, Schema schema)
+        public static NamedType From(INamedTypeDefinition definition, Schema schema)
         {
             switch (definition)
             {
@@ -50,9 +48,6 @@ namespace GraphZen.TypeSystem
             throw new InvalidOperationException($"Unknown type definition: {definition.GetType()}");
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
     }
 }

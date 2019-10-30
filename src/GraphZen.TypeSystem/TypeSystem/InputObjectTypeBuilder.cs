@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem
 
         InternalInputObjectTypeBuilder IInfrastructure<InternalInputObjectTypeBuilder>.Instance => Builder;
 
-        public IInputObjectTypeBuilder<TInputObject> Description(string description)
+        public IInputObjectTypeBuilder<TInputObject> Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
@@ -83,10 +83,8 @@ namespace GraphZen.TypeSystem
         }
 
         public IInputObjectTypeBuilder<TInputObject> IgnoreField<TField>(
-            Expression<Func<TInputObject, TField>> fieldSelector)
-        {
+            Expression<Func<TInputObject, TField>> fieldSelector) =>
             throw new NotImplementedException();
-        }
 
         public IInputObjectTypeBuilder<TInputObject> IgnoreField(string name)
         {
@@ -110,21 +108,14 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name)
-        {
-            return DirectiveAnnotation(name, null);
-        }
 
-        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name, object? value)
+
+        public IInputObjectTypeBuilder<TInputObject> DirectiveAnnotation(string name, object? value = null)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public IInputObjectTypeBuilder<TInputObject> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
     }
 }

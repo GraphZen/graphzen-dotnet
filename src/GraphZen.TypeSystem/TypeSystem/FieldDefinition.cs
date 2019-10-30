@@ -13,11 +13,9 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
@@ -27,15 +25,15 @@ namespace GraphZen.TypeSystem
         private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
             new Dictionary<string, ConfigurationSource>();
 
-        private string _deprecationReason;
+        private string? _deprecationReason;
         private bool _isDeprecated;
         private ConfigurationSource _nameConfigurationSource;
 
 
         public FieldDefinition(string name, ConfigurationSource nameConfigurationSource,
             SchemaDefinition schema,
-            FieldsContainerDefinition declaringType,
-            ConfigurationSource configurationSource, MemberInfo clrInfo) : base(configurationSource)
+            FieldsDefinition declaringType,
+            ConfigurationSource configurationSource, MemberInfo? clrInfo) : base(configurationSource)
         {
             Check.NotNull(schema, nameof(schema));
             ClrInfo = clrInfo;
@@ -56,9 +54,9 @@ namespace GraphZen.TypeSystem
         public InternalFieldBuilder Builder { get; }
 
 
-        public FieldsContainerDefinition DeclaringType { get; }
+        public FieldsDefinition DeclaringType { get; }
 
-        public MemberInfo ClrInfo { get; }
+        public MemberInfo? ClrInfo { get; }
 
         public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
         {
@@ -74,15 +72,12 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IEnumerable<ArgumentDefinition> GetArguments()
-        {
-            return _arguments.Values;
-        }
+        public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
 
-        public IGraphQLTypeReference FieldType { get; set; }
-        public Resolver<object, object> Resolver { get; set; }
+        public IGraphQLTypeReference? FieldType { get; set; }
+        public Resolver<object, object?>? Resolver { get; set; }
 
-        IFieldsContainerDefinition IFieldDefinition.DeclaringType => DeclaringType;
+        IFieldsDefinition IFieldDefinition.DeclaringType => DeclaringType;
 
         public string Name { get; private set; }
 
@@ -96,7 +91,7 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        public string DeprecationReason
+        public string? DeprecationReason
         {
             get => _deprecationReason;
             set
@@ -110,7 +105,7 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
 
-        IMutableFieldsContainerDefinition IMutableFieldDefinition.DeclaringType => DeclaringType;
+        IMutableFieldsDefinition IMutableFieldDefinition.DeclaringType => DeclaringType;
 
         public bool SetName(string name, ConfigurationSource configurationSource)
         {
@@ -124,27 +119,16 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public ConfigurationSource GetNameConfigurationSource()
-        {
-            return _nameConfigurationSource;
-        }
+        public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments()
-        {
-            return GetArguments();
-        }
+        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
-        object IClrInfo.ClrInfo => ClrInfo;
+        object? IClrInfo.ClrInfo => ClrInfo;
 
-        public bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource)
-        {
+        public bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
-        }
 
-        public bool RemoveDeprecation(ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveDeprecation(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
         public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name)
         {
@@ -181,7 +165,7 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-        public ArgumentDefinition FindArgument(ParameterInfo member)
+        public ArgumentDefinition? FindArgument(ParameterInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
             var memberMatch = _arguments.Values.SingleOrDefault(_ => _.ClrInfo == member);
@@ -229,10 +213,7 @@ namespace GraphZen.TypeSystem
             return argument;
         }
 
-        public override string ToString()
-        {
-            return $"field {Name}";
-        }
+        public override string ToString() => $"field {Name}";
 
 
         public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)

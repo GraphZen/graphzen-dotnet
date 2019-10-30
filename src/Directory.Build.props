@@ -1,5 +1,4 @@
 <Project>
-  <!-- These properties will be shared for all projects -->
   <PropertyGroup>
     <Product>GraphZen</Product>
     <Authors>GraphZen</Authors>
@@ -27,7 +26,6 @@
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
-
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>

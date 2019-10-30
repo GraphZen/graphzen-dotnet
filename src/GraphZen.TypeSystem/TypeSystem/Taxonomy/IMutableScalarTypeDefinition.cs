@@ -3,20 +3,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableScalarTypeDefinition : IScalarTypeDefinition, IMutableGraphQLTypeDefinition
+    public interface IMutableScalarTypeDefinition :
+        IScalarTypeDefinition,
+        IMutableNamedTypeDefinition,
+        IMutableValueParserDefinition,
+        IMutableSerializerDefinition,
+        IMutableLiteralParserDefinition
+
     {
-        new LeafSerializer<object>? Serializer { get; set; }
-
-
-        new LeafLiteralParser<object, ValueSyntax>? LiteralParser { get; set; }
-
-
-        new LeafValueParser<object>? ValueParser { get; set; }
     }
 }

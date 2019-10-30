@@ -4,18 +4,14 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
-#nullable disable
 
-
-// ReSharper disable PossibleNullReferenceException
-// ReSharper disable AssignNullToNotNullAttribute
-
-namespace GraphZen
+namespace GraphZen.Configuration
 {
     [NoReorder]
     public class CollectionConventionConfigurationTests : TestDataHelper<ICollectionConventionConfigurationFixture>
@@ -45,7 +41,6 @@ namespace GraphZen
         [MemberData(nameof(FixtureData))]
         public void conventional_item_added_explicitly_via_clr_member_should_have_clr_member(
             ICollectionConventionConfigurationFixture fixture)
-
         {
             TestData(fixture, () =>
             {
@@ -144,7 +139,6 @@ namespace GraphZen
         [MemberData(nameof(FixtureData))]
         public void item_added_by_convention_with_name_configured_by_convention_renamed_explicitly(
             ICollectionConventionConfigurationFixture fixture)
-
         {
             TestData(fixture, () =>
             {

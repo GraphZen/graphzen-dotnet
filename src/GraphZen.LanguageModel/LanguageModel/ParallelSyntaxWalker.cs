@@ -29,17 +29,17 @@ namespace GraphZen.LanguageModel
         private HashSet<GraphQLSyntaxVisitor<VisitAction>> IgnoredVisitors { get; } =
             new HashSet<GraphQLSyntaxVisitor<VisitAction>>();
 
-        private bool IsValidVisitor(GraphQLSyntaxVisitor<VisitAction> visitor)
-        {
-            return !IgnoredVisitors.Contains(visitor) && !Skips.ContainsKey(visitor);
-        }
+        private bool IsValidVisitor(GraphQLSyntaxVisitor<VisitAction> visitor) =>
+            !IgnoredVisitors.Contains(visitor) && !Skips.ContainsKey(visitor);
 
         public override void OnEnter(SyntaxNode node)
         {
             if (node != null)
                 foreach (var visitor in Visitors)
+                {
                     if (IsValidVisitor(visitor))
                         HandleResult(node.VisitEnter(visitor), visitor, node);
+                }
         }
 
         public override void OnLeave(SyntaxNode node)

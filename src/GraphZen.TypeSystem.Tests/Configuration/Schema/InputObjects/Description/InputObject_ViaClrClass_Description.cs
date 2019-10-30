@@ -3,12 +3,12 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.InputObjects.Description
+namespace GraphZen.Configuration.InputObjects.Description
 {
     public class InputObject_ViaClrClass_Description : InputObject_Description, ILeafConventionConfigurationFixture
     {
@@ -20,14 +20,12 @@ namespace GraphZen.InputObjects.Description
         }
 
 
-        public LeafConventionContext GetContext()
-        {
-            return new LeafConventionContext
+        public LeafConventionContext GetContext() =>
+            new LeafConventionContext
             {
                 ParentName = nameof(ExampleInputObject),
                 DataAnnotationValue = DataAnnotationDescription
             };
-        }
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
         {

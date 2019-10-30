@@ -8,6 +8,7 @@ using GraphZen.QueryEngine.Validation;
 using GraphZen.QueryEngine.Validation.Rules;
 using JetBrains.Annotations;
 using Xunit;
+
 #nullable disable
 
 
@@ -54,10 +55,8 @@ namespace GraphZen.Validation.Rules
         }
 
 
-        private static ExpectedError UnknownDirective(string directiveName, int line, int column)
-        {
-            return Error(KnownDirectives.UnknownDirectiveMessage(directiveName), (line, column));
-        }
+        private static ExpectedError UnknownDirective(string directiveName, int line, int column) =>
+            Error(KnownDirectives.UnknownDirectiveMessage(directiveName), (line, column));
 
         [Fact]
         public void WithUnknownDirectives()
@@ -128,10 +127,8 @@ namespace GraphZen.Validation.Rules
         ");
         }
 
-        private static ExpectedError MisplacedDirective(string directiveName, string placement, int line, int column)
-        {
-            return Error(KnownDirectives.MisplacedDirectiveMessage(directiveName, placement), (line, column));
-        }
+        private static ExpectedError MisplacedDirective(string directiveName, string placement, int line, int column) =>
+            Error(KnownDirectives.MisplacedDirectiveMessage(directiveName, placement), (line, column));
 
         [Fact]
         public void WithMisplacedDirectives()

@@ -2,21 +2,20 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Objects.Fields
+namespace GraphZen.Configuration.Objects.Fields
 {
     public class Object_Fields_ViaClrProperties : Object_Fields, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
 
 
-        public CollectionConventionContext GetContext()
-        {
-            return new CollectionConventionContext
+        public CollectionConventionContext GetContext() =>
+            new CollectionConventionContext
             {
                 ParentName = nameof(ExampleObject),
                 ItemNamedByConvention = nameof(ExampleObject.HelloWorld).FirstCharToLower(),
@@ -24,7 +23,6 @@ namespace GraphZen.Objects.Fields
                 ItemIgnoredByConvention = nameof(ExampleObject.IgnoredByConvention),
                 ItemIgnoredByDataAnnotation = nameof(ExampleObject.IgnoredByDataAnnotation).FirstCharToLower()
             };
-        }
 
 
         public void ConfigureContextConventionally(SchemaBuilder sb)
@@ -45,13 +43,13 @@ namespace GraphZen.Objects.Fields
 
         public class ExampleObject
         {
-            public string HelloWorld { get; set; }
+            public string? HelloWorld { get; set; }
 
-            [GraphQLName(DataAnnotationName)] public string NamedByDataAnnotation { get; set; }
+            [GraphQLName(DataAnnotationName)] public string? NamedByDataAnnotation { get; set; }
 
-            [GraphQLIgnore] public string IgnoredByDataAnnotation { get; set; }
+            [GraphQLIgnore] public string? IgnoredByDataAnnotation { get; set; }
 
-            public IgnoredType IgnoredByConvention { get; set; }
+            public IgnoredType? IgnoredByConvention { get; set; }
         }
     }
 }

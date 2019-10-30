@@ -15,6 +15,7 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using GraphZen.Utilities;
 using JetBrains.Annotations;
 
 #nullable disable
@@ -249,9 +250,9 @@ namespace GraphZen.QueryEngine
         }
 
 
-        public static DynamicDictionary GetArgumentValues<TNode>(IArgumentsContainer def,
+        public static DynamicDictionary GetArgumentValues<TNode>(IArguments def,
             TNode node,
-            IReadOnlyDictionary<string, object> variableValues) where TNode : SyntaxNode, IArgumentsContainerNode
+            IReadOnlyDictionary<string, object> variableValues) where TNode : SyntaxNode, IArgumentsNode
         {
             var coercedValues = new DynamicDictionary();
             var argDefs = def.GetArguments();

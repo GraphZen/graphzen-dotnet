@@ -11,7 +11,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     [GraphQLType(typeof(IGraphQLType))]
@@ -22,7 +21,7 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
         private readonly Lazy<ObjectTypeDefinitionSyntax> _syntax;
 
-        private ObjectType(string name, string description, Type clrType, IsTypeOf<object, GraphQLContext> isTypeOf,
+        private ObjectType(string name, string? description, Type? clrType, IsTypeOf<object, GraphQLContext>? isTypeOf,
             IEnumerable<IFieldDefinition> fields,
             IEnumerable<INamedTypeReference> interfaces,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(Check.NotNull(name, nameof(name)),
@@ -42,7 +41,7 @@ namespace GraphZen.TypeSystem
                     return interfaces.ToReadOnlyDictionary(_ => _.Name, _ =>
                     {
                         // ReSharper disable once PossibleNullReferenceException
-                        return schema.GetType<InterfaceType>(_.Name);
+                        return schema.GetInterface(_.Name);
                     });
                 }
             );
@@ -65,26 +64,17 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IsTypeOf<object, GraphQLContext> IsTypeOf { get; }
+        public IsTypeOf<object, GraphQLContext>? IsTypeOf { get; }
 
 
         public override TypeKind Kind { get; } = TypeKind.Object;
 
-        IEnumerable<IFieldDefinition> IFieldsContainerDefinition.GetFields()
-        {
-            return GetFields();
-        }
+        IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => GetFields();
 
-        public IEnumerable<Field> GetFields()
-        {
-            return Fields.Values;
-        }
+        public IEnumerable<Field> GetFields() => Fields.Values;
 
 
-        public override SyntaxNode ToSyntaxNode()
-        {
-            return _syntax.Value;
-        }
+        public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
 
@@ -97,22 +87,16 @@ namespace GraphZen.TypeSystem
             Check.NotNull(schema, nameof(Schema));
             return new ObjectType(definition.Name, definition.Description, definition.ClrType, definition.IsTypeOf,
                 definition.GetFields(), definition.GetInterfaces(),
-                definition.DirectiveAnnotations,
+                definition.GetDirectiveAnnotations().ToList(),
                 schema
             );
         }
 
-        public IEnumerable<InterfaceType> GetInterfaces()
-        {
-            return Interfaces;
-        }
+        public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
 
         public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
         public IReadOnlyDictionary<string, InterfaceType> InterfacesMap => _interfaceMap.Value;
 
-        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces()
-        {
-            return GetInterfaces();
-        }
+        IEnumerable<IInterfaceTypeDefinition> IInterfacesDefinition.GetInterfaces() => GetInterfaces();
     }
 }

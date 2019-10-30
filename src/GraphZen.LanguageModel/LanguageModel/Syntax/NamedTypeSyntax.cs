@@ -32,15 +32,9 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        public string GetDisplayValue()
-        {
-            return ToSyntaxString();
-        }
+        public string GetDisplayValue() => ToSyntaxString();
 
-        private bool Equals(NamedTypeSyntax other)
-        {
-            return Equals(Name, other.Name);
-        }
+        private bool Equals(NamedTypeSyntax other) => Equals(Name, other.Name);
 
         public override bool Equals(object obj)
         {
@@ -51,14 +45,8 @@ namespace GraphZen.LanguageModel
             return obj is NamedTypeSyntax && Equals((NamedTypeSyntax)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
+        public override int GetHashCode() => Name.GetHashCode();
 
-        public override string ToString()
-        {
-            return Name.ToString();
-        }
+        public override string ToString() => Name.ToString();
     }
 }

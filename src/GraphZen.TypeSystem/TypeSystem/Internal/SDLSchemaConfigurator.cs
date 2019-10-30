@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.LanguageModel.Internal.Grammar;
+using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
@@ -45,10 +45,20 @@ namespace GraphZen.TypeSystem.Internal
                 };
 
 
-            foreach (var def in _document.Definitions.OfType<DirectiveDefinitionSyntax>())
-                ConfigureDirective(schemaBuilder, def);
+            foreach (var def in types.Where(_ => _.IsInputType))
+            {
+                ConfigureType(schemaBuilder, def);
+            }
 
-            foreach (var def in types) ConfigureType(schemaBuilder, def);
+            foreach (var def in _document.Definitions.OfType<DirectiveDefinitionSyntax>())
+            {
+                ConfigureDirective(schemaBuilder, def);
+            }
+
+            foreach (var def in types.Where(_ => !_.IsInputType && _.IsOutputType))
+            {
+                ConfigureType(schemaBuilder, def);
+            }
 
             Debug.Assert(operationTypes != null, nameof(operationTypes) + " != null");
             foreach (var ot in operationTypes.Where(_ => _.Value != null))
@@ -99,12 +109,14 @@ namespace GraphZen.TypeSystem.Internal
             if (def.Description != null) directive.Description(def.Description.Value);
 
             foreach (var arg in def.Arguments)
+            {
                 directive.Argument(arg.Name.Value, arg.Type.ToSyntaxString(), _ =>
                 {
                     Debug.Assert(_ != null, nameof(_) + " != null");
                     // TODO - how to get default value?
                     if (arg.Description != null) _.Description(arg.Description.Value);
                 });
+            }
 
             var locations = def.Locations.Select(_ =>
             {
@@ -156,6 +168,7 @@ namespace GraphZen.TypeSystem.Internal
                         if (node.Description != null) type.Description(node.Description.Value);
 
                         foreach (var fieldNode in node.Fields)
+                        {
                             type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                             {
                                 Debug.Assert(field != null, nameof(field) + " != null");
@@ -170,6 +183,7 @@ namespace GraphZen.TypeSystem.Internal
                                         argument.Description(argumentNode.Description.Value);
                                 }
                             });
+                        }
 
                         break;
                     }
@@ -179,23 +193,39 @@ namespace GraphZen.TypeSystem.Internal
                         var type = schemaBuilder.Object(node.Name.Value);
                         if (node.Description != null) type.Description(node.Description.Value);
 
-                        foreach (var iface in node.Interfaces) type.ImplementsInterface(iface.Name.Value);
+                        foreach (var directive in node.Directives)
+                        {
+                            type.DirectiveAnnotation(directive.Name.Value, directive);
+                        }
+
+                        foreach (var iface in node.Interfaces)
+                        {
+                            type.ImplementsInterface(iface.Name.Value);
+                        }
 
                         foreach (var fieldNode in node.Fields)
+                        {
                             type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                             {
-                                Debug.Assert(field != null, nameof(field) + " != null");
                                 if (fieldNode.Description != null) field.Description(fieldNode.Description.Value);
 
+                                foreach (var directiveNode in fieldNode.Directives)
+                                {
+                                    field.DirectiveAnnotation(directiveNode.Name.Value, directiveNode);
+                                }
 
                                 foreach (var argumentNode in fieldNode.Arguments)
                                 {
                                     var argument = field.Argument(argumentNode.Name.Value,
                                         argumentNode.Type.ToSyntaxString());
+
                                     if (argumentNode.Description != null)
                                         argument.Description(argumentNode.Description.Value);
+
+
                                 }
                             });
+                        }
 
                         break;
                     }

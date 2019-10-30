@@ -55,13 +55,11 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        private bool Equals(DirectiveDefinitionSyntax other)
-        {
-            return Name.Equals(other.Name) &&
-                   Equals(Description, other.Description) &&
-                   Arguments.SequenceEqual(other.Arguments) &&
-                   Locations.SequenceEqual(other.Locations);
-        }
+        private bool Equals(DirectiveDefinitionSyntax other) =>
+            Name.Equals(other.Name) &&
+            Equals(Description, other.Description) &&
+            Arguments.SequenceEqual(other.Arguments) &&
+            Locations.SequenceEqual(other.Locations);
 
         public override bool Equals(object obj)
         {

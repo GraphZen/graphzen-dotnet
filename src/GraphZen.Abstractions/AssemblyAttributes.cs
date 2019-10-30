@@ -7,6 +7,9 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 [assembly: InternalsVisibleTo("GraphZen")]
+[assembly: InternalsVisibleTo("GraphZen.AspNetCore")]
+[assembly: InternalsVisibleTo("GraphZen.AspNetCore.Server")]
+[assembly: InternalsVisibleTo("GraphZen.AspNetCore.Server.Tests")]
 [assembly: InternalsVisibleTo("GraphZen.Tests")]
 [assembly: InternalsVisibleTo("GraphZen.TestingInfrastructure")]
 [assembly: InternalsVisibleTo("GraphZen.Infrastructure")]

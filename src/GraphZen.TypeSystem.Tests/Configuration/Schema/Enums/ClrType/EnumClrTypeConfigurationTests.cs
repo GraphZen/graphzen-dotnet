@@ -7,11 +7,8 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
-#nullable disable
 
-// ReSharper disable PossibleNullReferenceException
-
-namespace GraphZen.Enums.ClrType
+namespace GraphZen.Configuration.Enums.ClrType
 {
     [NoReorder]
     public class EnumClrTypeConfigurationTests

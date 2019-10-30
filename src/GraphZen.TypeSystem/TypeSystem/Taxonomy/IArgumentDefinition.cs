@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IArgumentDefinition : IInputValueDefinition
     {
-        new IArgumentsContainerDefinition DeclaringMember { get; }
+        new IArgumentsDefinition DeclaringMember { get; }
 
         new ParameterInfo? ClrInfo { get; }
     }

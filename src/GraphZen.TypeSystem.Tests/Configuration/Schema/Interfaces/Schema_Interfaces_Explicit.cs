@@ -2,11 +2,11 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Interfaces
+namespace GraphZen.Configuration.Interfaces
 {
     public class Schema_Interfaces_Explicit : Schema_Interfaces, ICollectionExplicitConfigurationFixture
     {

@@ -37,17 +37,15 @@ namespace GraphZen.Validation.Rules
         public IReadOnlyList<object> Path { get; }
 
 
-        protected bool Equals(ExpectedError other)
-        {
-            return string.Equals(Message, other.Message) &&
-                   (Locations == null && other.Locations == null ||
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    Locations.SequenceEqual(other.Locations))
-                   &&
-                   (Path == null && other.Path == null ||
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    Path.SequenceEqual(other.Path));
-        }
+        protected bool Equals(ExpectedError other) =>
+            string.Equals(Message, other.Message) &&
+            (Locations == null && other.Locations == null ||
+             // ReSharper disable once AssignNullToNotNullAttribute
+             Locations.SequenceEqual(other.Locations))
+            &&
+            (Path == null && other.Path == null ||
+             // ReSharper disable once AssignNullToNotNullAttribute
+             Path.SequenceEqual(other.Path));
 
 
         public override bool Equals(object obj)

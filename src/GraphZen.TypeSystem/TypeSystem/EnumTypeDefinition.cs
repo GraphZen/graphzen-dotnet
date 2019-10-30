@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -13,11 +12,14 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
     {
-        private readonly Dictionary<string, EnumValueDefinition>
-            _values = new Dictionary<string, EnumValueDefinition>();
+        internal readonly Dictionary<string, EnumValueDefinition> InternalValues =
+            new Dictionary<string, EnumValueDefinition>();
+
+        private readonly Dictionary<string, ConfigurationSource> _ignoredValues =
+            new Dictionary<string, ConfigurationSource>();
 
         public EnumTypeDefinition(TypeIdentity identity,
             SchemaDefinition schema,
@@ -31,46 +33,58 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"enum {Name}";
 
-
         public InternalEnumTypeBuilder Builder { get; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
         public override TypeKind Kind { get; } = TypeKind.Enum;
 
+        public IReadOnlyDictionary<string, EnumValueDefinition> Values => InternalValues;
 
-        public IReadOnlyDictionary<string, EnumValueDefinition> Values => _values;
+        public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) =>
+            _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
 
-        public ConfigurationSource? FindIgnoredValueConfigurationSource(string name)
+        public EnumValueDefinition? FindValue(string name) =>
+            InternalValues.TryGetValue(name, out var value) ? value : null;
+
+        public bool IgnoreValue(string name, ConfigurationSource configurationSource)
         {
-            throw new NotImplementedException();
+            var itemConfigurationSource = FindValue(name)?.GetConfigurationSource();
+            if (configurationSource.Overrides(itemConfigurationSource))
+            {
+                var ignoredConfigurationSource = FindIgnoredValueConfigurationSource(name);
+                if (configurationSource.Overrides(ignoredConfigurationSource))
+                {
+                    _ignoredValues[name] = configurationSource;
+                    InternalValues.Remove(name);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
-        public IEnumerable<EnumValueDefinition> GetValues()
+        public bool UnignoreValue(string name, ConfigurationSource configurationSource)
         {
-            return Values.Values;
+            var ignoredConfigurationSource = FindIgnoredValueConfigurationSource(name);
+            if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+            _ignoredValues.Remove(name);
+            return true;
         }
 
-        public override string ToString()
+        public EnumValueDefinition AddValue(string name, ConfigurationSource configurationSource,
+            ConfigurationSource nameConfigurationSource)
         {
-            return $"enum {Name}";
+            var definition =
+                new EnumValueDefinition(name, nameConfigurationSource, this, Schema, configurationSource);
+            InternalValues[name] = definition;
+            return definition;
         }
 
-        IEnumerable<IEnumValueDefinition> IEnumValuesContainerDefinition.GetValues()
-        {
-            return GetValues();
-        }
+        public IEnumerable<EnumValueDefinition> GetValues() => Values.Values;
 
+        public override string ToString() => $"enum {Name}";
 
-        public EnumValueDefinition GetOrAddValue(string name,
-            ConfigurationSource nameConfigurationSource,
-            ConfigurationSource configurationSource)
-        {
-            return _values.TryGetValue(Check.NotNull(name, nameof(name)), out var value)
-                ? value
-                : _values[name] = new EnumValueDefinition(name,
-                    nameConfigurationSource,
-                    this, Schema, configurationSource);
-        }
+        IEnumerable<IEnumValueDefinition> IEnumValuesDefinition.GetValues() => GetValues();
     }
 }

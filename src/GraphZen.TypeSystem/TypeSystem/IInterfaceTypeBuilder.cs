@@ -10,10 +10,10 @@ namespace GraphZen.TypeSystem
 {
     public interface
         IInterfaceTypeBuilder<TInterface, TContext> : IAnnotableBuilder<IInterfaceTypeBuilder<TInterface, TContext>>,
-            IFieldsContainerDefinitionBuilder<IInterfaceTypeBuilder<TInterface, TContext>, TInterface, TContext>
+            IFieldsDefinitionBuilder<IInterfaceTypeBuilder<TInterface, TContext>, TInterface, TContext>
         where TContext : GraphQLContext
     {
-        IInterfaceTypeBuilder<TInterface, TContext> Description(string description);
+        IInterfaceTypeBuilder<TInterface, TContext> Description(string? description);
 
 
         IInterfaceTypeBuilder<object, TContext> ClrType(Type clrType);

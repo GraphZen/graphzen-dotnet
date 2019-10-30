@@ -5,9 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
+
 #nullable disable
 
-namespace GraphZen
+namespace GraphZen.Configuration.Infrastructure
 {
     public class CollectionConventionContext
     {

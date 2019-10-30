@@ -8,8 +8,11 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IEnumTypeDefinition : IEnumValuesContainerDefinition,
-        ILeafTypeDefinition, IInputDefinition, IOutputDefinition
+    public interface IEnumTypeDefinition :
+        IEnumValuesDefinition,
+        ILeafTypeDefinition,
+        IInputDefinition,
+        IOutputDefinition
     {
     }
 }

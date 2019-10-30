@@ -2,17 +2,17 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Objects
+namespace GraphZen.Configuration.Objects
 {
-    public abstract class Schema_Objects : CollectionConfigurationFixture<IObjectTypesContainer,
-        IObjectTypesContainerDefinition, IMutableObjectTypesContainerDefinition, ObjectTypeDefinition, ObjectType,
+    public abstract class Schema_Objects : NamedCollectionConfigurationFixture<IObjectTypes,
+        IObjectTypesDefinition, IMutableObjectTypesDefinition, ObjectTypeDefinition, ObjectType,
         SchemaDefinition,
         Schema>
     {
@@ -20,15 +20,9 @@ namespace GraphZen.Objects
         {
         }
 
-        public override Schema GetParent(Schema schema, string parentName)
-        {
-            return schema;
-        }
+        public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName)
-        {
-            return sb.GetDefinition();
-        }
+        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -50,10 +44,8 @@ namespace GraphZen.Objects
             sb.Object(itemName).Name(newName);
         }
 
-        public override NamedCollection<ObjectTypeDefinition> GetCollection(SchemaDefinition parent)
-        {
-            return parent.GetObjects().ToNamedCollection();
-        }
+        public override NamedCollection<ObjectTypeDefinition> GetCollection(SchemaDefinition parent) =>
+            parent.GetObjects().ToNamedCollection();
 
         public override NamedCollection<ObjectType> GetCollection(Schema parent)
         {
@@ -62,9 +54,7 @@ namespace GraphZen.Objects
             return casted;
         }
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name)
-        {
-            return parent.FindIgnoredTypeConfigurationSource(name);
-        }
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+            parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

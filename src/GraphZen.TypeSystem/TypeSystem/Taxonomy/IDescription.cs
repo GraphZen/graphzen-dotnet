@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IDescription : IConfigurationElement<string>
+    public interface IDescription
     {
         string? Description { get; }
     }

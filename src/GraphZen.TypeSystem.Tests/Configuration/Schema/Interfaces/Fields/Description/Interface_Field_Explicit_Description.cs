@@ -2,11 +2,11 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-#nullable disable
 
-namespace GraphZen.Interfaces.Fields.Description
+namespace GraphZen.Configuration.Interfaces.Fields.Description
 {
     public class Interface_Field_Explicit_Description : Interface_Field_Description, ILeafExplicitConfigurationFixture
     {

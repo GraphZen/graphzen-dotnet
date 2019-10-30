@@ -17,20 +17,20 @@ namespace GraphZen.QueryEngine.Validation.Rules
         {
         }
 
-        public static string NonExecutableDefinitionMessage(string definitionName)
-        {
-            return $"The {definitionName} definition is not executable.";
-        }
+        public static string NonExecutableDefinitionMessage(string definitionName) =>
+            $"The {definitionName} definition is not executable.";
 
         public override VisitAction EnterDocument(DocumentSyntax node)
         {
             foreach (var definition in node.Definitions)
+            {
                 if (definition.Kind != SyntaxKind.OperationDefinition &&
                     definition.Kind != SyntaxKind.FragmentDefinition)
                 {
                     var defName = definition is INamedSyntax named ? named.Name.Value : "schema";
                     ReportError(new GraphQLError(NonExecutableDefinitionMessage(defName), new[] { definition }));
                 }
+            }
 
             return false;
         }

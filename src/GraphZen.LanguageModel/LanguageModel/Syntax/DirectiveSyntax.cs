@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel
     ///     Directive
     ///     http://facebook.github.io/graphql/June2018/#Directive
     /// </summary>
-    public partial class DirectiveSyntax : SyntaxNode, IArgumentsContainerNode, INamedSyntax
+    public partial class DirectiveSyntax : SyntaxNode, IArgumentsNode, INamedSyntax
     {
         public DirectiveSyntax(NameSyntax name,
             IReadOnlyList<ArgumentSyntax> arguments = null,
@@ -41,10 +41,8 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        private bool Equals(DirectiveSyntax other)
-        {
-            return Name.Equals(other.Name) && Arguments.SequenceEqual(other.Arguments);
-        }
+        private bool Equals(DirectiveSyntax other) =>
+            Name.Equals(other.Name) && Arguments.SequenceEqual(other.Arguments);
 
         public override bool Equals(object obj)
         {

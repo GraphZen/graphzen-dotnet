@@ -14,8 +14,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class ObjectTypeDefinition : FieldsContainerDefinition, IMutableObjectTypeDefinition
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+    public class ObjectTypeDefinition : FieldsDefinition, IMutableObjectTypeDefinition
     {
         private readonly Dictionary<string, ConfigurationSource> _ignoredInterfaces =
             new Dictionary<string, ConfigurationSource>();
@@ -40,10 +40,7 @@ namespace GraphZen.TypeSystem
 
         public IsTypeOf<object, GraphQLContext>? IsTypeOf { get; set; }
 
-        public IEnumerable<InterfaceTypeDefinition> GetInterfaces()
-        {
-            return _interfaces;
-        }
+        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _interfaces;
 
         public ConfigurationSource? FindIgnoredInterfaceConfigurationSource(string name)
         {
@@ -117,9 +114,6 @@ namespace GraphZen.TypeSystem
         }
 
 
-        IEnumerable<IInterfaceTypeDefinition> IInterfacesContainerDefinition.GetInterfaces()
-        {
-            return GetInterfaces();
-        }
+        IEnumerable<IInterfaceTypeDefinition> IInterfacesDefinition.GetInterfaces() => GetInterfaces();
     }
 }

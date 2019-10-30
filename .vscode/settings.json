@@ -1,0 +1,11 @@
+{
+  "search.exclude": {
+    "api-website-artifacts": true
+  },
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  }
+}

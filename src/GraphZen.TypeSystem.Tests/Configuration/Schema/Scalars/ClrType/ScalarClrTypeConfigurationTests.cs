@@ -7,11 +7,8 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
-#nullable disable
 
-// ReSharper disable PossibleNullReferenceException
-
-namespace GraphZen.Scalars.ClrType
+namespace GraphZen.Configuration.Scalars.ClrType
 {
     [NoReorder]
     public class ScalarClrTypeConfigurationTests

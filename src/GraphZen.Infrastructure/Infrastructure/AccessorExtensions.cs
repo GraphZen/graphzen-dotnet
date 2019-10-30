@@ -14,9 +14,7 @@ namespace GraphZen.Infrastructure
     public static class AccessorExtensions
     {
         [DebuggerStepThrough]
-        public static T GetInfrastructure<T>(this IInfrastructure<T> accessor)
-        {
-            return Check.NotNull(accessor, nameof(accessor)).Instance;
-        }
+        public static T GetInfrastructure<T>(this IInfrastructure<T> accessor) =>
+            Check.NotNull(accessor, nameof(accessor)).Instance;
     }
 }

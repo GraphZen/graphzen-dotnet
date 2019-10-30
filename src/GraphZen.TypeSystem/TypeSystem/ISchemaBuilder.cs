@@ -16,7 +16,7 @@ namespace GraphZen.TypeSystem
         IAnnotableBuilder<ISchemaBuilder<TContext>>, IInfrastructure<SchemaDefinition>
         where TContext : GraphQLContext
     {
-        IDirectiveBuilder Directive(string name);
+        IDirectiveBuilder<object> Directive(string name);
 
 
         IScalarTypeBuilder<object, ValueSyntax> Scalar(string name);
@@ -57,6 +57,23 @@ namespace GraphZen.TypeSystem
 
 
         ISchemaBuilder<TContext> UnignoreType(string name);
+
+        ISchemaBuilder<TContext> IgnoreDirective<TDirective>();
+
+
+        ISchemaBuilder<TContext> IgnoreDirective(Type clrType);
+
+
+        ISchemaBuilder<TContext> IgnoreDirective(string name);
+
+
+        ISchemaBuilder<TContext> UnignoreDirective<TObject>();
+
+
+        ISchemaBuilder<TContext> UnignoreDirective(Type clrType);
+
+
+        ISchemaBuilder<TContext> UnignoreDirective(string name);
 
 
         IInterfaceTypeBuilder<object, TContext> Interface(string name);

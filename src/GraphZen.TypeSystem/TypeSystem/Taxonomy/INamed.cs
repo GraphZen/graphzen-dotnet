@@ -8,11 +8,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface INamed : IConfigurationElement<string>
+    public interface INamed
     {
         string Name { get; }
     }
-
-
-    // ReSharper disable once UnusedTypeParameter
 }

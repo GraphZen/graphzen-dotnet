@@ -58,13 +58,11 @@ namespace GraphZen.LanguageModel
 
         public NamedTypeSyntax TypeCondition { get; }
 
-        private bool Equals(FragmentDefinitionSyntax other)
-        {
-            return Name.Equals(other.Name) &&
-                   TypeCondition.Equals(other.TypeCondition) &&
-                   SelectionSet.Equals(other.SelectionSet) &&
-                   Directives.SequenceEqual(other.Directives);
-        }
+        private bool Equals(FragmentDefinitionSyntax other) =>
+            Name.Equals(other.Name) &&
+            TypeCondition.Equals(other.TypeCondition) &&
+            SelectionSet.Equals(other.SelectionSet) &&
+            Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {

@@ -53,10 +53,7 @@ namespace GraphZen.LanguageModel
 
         public Source Source { get; }
 
-        protected bool Equals(SyntaxLocation other)
-        {
-            return Start == other.Start && End == other.End;
-        }
+        protected bool Equals(SyntaxLocation other) => Start == other.Start && End == other.End;
 
         public override bool Equals(object obj)
         {
@@ -82,10 +79,7 @@ namespace GraphZen.LanguageModel
             return FromMany(nodes.Select(_ => _?.Location));
         }
 
-        public static SyntaxLocation FromMany(params SyntaxLocation[] locations)
-        {
-            return FromMany(locations.AsEnumerable());
-        }
+        public static SyntaxLocation FromMany(params SyntaxLocation[] locations) => FromMany(locations.AsEnumerable());
 
         private static SyntaxLocation FromMany(IEnumerable<SyntaxLocation> locations)
         {

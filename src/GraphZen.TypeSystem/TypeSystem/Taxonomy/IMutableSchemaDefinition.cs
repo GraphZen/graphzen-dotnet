@@ -11,12 +11,15 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableSchemaDefinition :
         ISchemaDefinition,
         IMutableDescription,
-        IMutableDirectivesContainerDefinition,
-        IMutableObjectTypesContainerDefinition,
-        IMutableInterfaceTypesContainerDefinition,
-        IMutableUnionTypesContainerDefinition,
-        IMutableScalarTypesContainerDefinition,
-        IMutableEnumTypesContainerDefinition, IMutableInputObjectTypesContainerDefinition
+        IMutableQueryTypeDefinition,
+        IMutableSubscriptionTypeDefinition,
+        IMutableMutationTypeDefinition,
+        IMutableDirectivesDefinition,
+        IMutableObjectTypesDefinition,
+        IMutableInterfaceTypesDefinition,
+        IMutableUnionTypesDefinition,
+        IMutableScalarTypesDefinition,
+        IMutableEnumTypesDefinition, IMutableInputObjectTypesDefinition
     {
     }
 }
