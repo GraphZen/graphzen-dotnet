@@ -147,7 +147,7 @@ namespace GraphZen.Utilities
             schema.FindDirective("deprecated").Should().Be(SpecDirectives.Deprecated);
         }
 
-        [Fact]
+        [Fact(Skip = "wip")]
         public void ShouldCreateSchemaWithDeprecatedDirective()
         {
             var body = @"

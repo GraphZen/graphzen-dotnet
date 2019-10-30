@@ -45,7 +45,7 @@ namespace GraphZen.Configuration
 
                 // Directives (Collection)
                 new Schema_Directives_Explicit(),
-                new Schema_Directives_ViaObjectClrPropertyAttribute(), 
+               // new Schema_Directives_ViaObjectClrPropertyAttribute(), 
 
 
                 // Objects (Collection)
