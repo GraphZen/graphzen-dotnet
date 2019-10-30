@@ -136,7 +136,7 @@ namespace GraphZen
                             result = new ExecutionResult(null, new[] {error});
                         }
 
-                        var resp = Json.SerializeObject(result);
+                        var resp = JsonConvert.SerializeObject(result, Json.SerializerSettings);
                         await httpContext.Response.WriteAsync(resp);
                     }
                 });
