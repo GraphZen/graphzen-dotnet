@@ -2,15 +2,20 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation
 {
     public class ParallelValidationVisitor : ParallelSyntaxWalker
     {
-        [NotNull] private readonly ValidationContext _validationContext;
+        private readonly ValidationContext _validationContext;
 
-        public ParallelValidationVisitor([NotNull] ValidationContext validationContext,
+        public ParallelValidationVisitor(ValidationContext validationContext,
             IReadOnlyCollection<ValidationRuleVisitor> visitors) : base(visitors)
         {
             _validationContext = validationContext;

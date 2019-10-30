@@ -1,4 +1,4 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
@@ -7,26 +7,29 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.LanguageModel.Internal.Grammar;
+using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class KnownDirectives : QueryValidationRuleVisitor
     {
-        [NotNull]
-        private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>>> _lazyLocationsMap;
+        private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>>> _lazyLocationsMap;
 
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public KnownDirectives(QueryValidationContext context) : base(context)
         {
-            _lazyLocationsMap = new Lazy<IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>>>(() =>
+            _lazyLocationsMap = new Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>>>(() =>
                 Context.Schema.Directives.ToReadOnlyDictionary(_ => _.Name, _ => _.Locations));
         }
 
-        [NotNull]
-        // ReSharper disable once AssignNullToNotNullAttribute
-        private IReadOnlyDictionary<string, IReadOnlyList<DirectiveLocation>> LocationsMap => _lazyLocationsMap.Value;
+
+        private IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>> LocationsMap =>
+            _lazyLocationsMap.Value;
 
 
         public static string UnknownDirectiveMessage(string directiveName) => $"Unknown directive \"{directiveName}\".";
@@ -45,33 +48,31 @@ namespace GraphZen.QueryEngine.Validation.Rules
 
             var candidateLocation = GetDirectiveLocationForAstPath(Context.Ancestors);
             if (candidateLocation != null && !locations.Contains(candidateLocation.Value))
-            {
                 ReportError(MisplacedDirectiveMessage(name, candidateLocation.Value.ToStringValue()), node);
-            }
 
             return VisitAction.Continue;
         }
 
         private static DirectiveLocation? GetDirectiveLocationForAstPath(
-            [NotNull] IReadOnlyCollection<SyntaxNode> ancestors)
+            IReadOnlyCollection<SyntaxNode> ancestors)
         {
             var appliedTo = ancestors.ElementAt(0);
             switch (appliedTo)
             {
                 case OperationDefinitionSyntax op:
-                {
-                    switch (op.OperationType)
                     {
-                        case OperationType.Query:
-                            return DirectiveLocation.Query;
-                        case OperationType.Mutation:
-                            return DirectiveLocation.Mutation;
-                        case OperationType.Subscription:
-                            return DirectiveLocation.Subscription;
-                    }
+                        switch (op.OperationType)
+                        {
+                            case OperationType.Query:
+                                return DirectiveLocation.Query;
+                            case OperationType.Mutation:
+                                return DirectiveLocation.Mutation;
+                            case OperationType.Subscription:
+                                return DirectiveLocation.Subscription;
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case FieldSyntax _:
                     return DirectiveLocation.Field;
                 case FragmentSpreadSyntax _:
@@ -107,12 +108,12 @@ namespace GraphZen.QueryEngine.Validation.Rules
                 case InputObjectTypeExtensionSyntax _:
                     return DirectiveLocation.InputObject;
                 case InputValueDefinitionSyntax _:
-                {
-                    var parentNode = ancestors.ElementAt(2);
-                    return parentNode is InputObjectTypeDefinitionSyntax
-                        ? DirectiveLocation.InputFieldDefinition
-                        : DirectiveLocation.ArgumentDefinition;
-                }
+                    {
+                        var parentNode = ancestors.ElementAt(2);
+                        return parentNode is InputObjectTypeDefinitionSyntax
+                            ? DirectiveLocation.InputFieldDefinition
+                            : DirectiveLocation.ArgumentDefinition;
+                    }
             }
 
             return null;

@@ -2,7 +2,12 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -27,7 +32,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name of the operation.
         /// </summary>
-        [NotNull]
+
         public NamedTypeSyntax Type { get; }
 
         public override IEnumerable<SyntaxNode> Children
@@ -35,29 +40,23 @@ namespace GraphZen.LanguageModel
             get { yield return Type; }
         }
 
-        private bool Equals([NotNull] OperationTypeDefinitionSyntax other) =>
+        private bool Equals(OperationTypeDefinitionSyntax other) =>
             OperationType == other.OperationType && Type.Equals(other.Type);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is OperationTypeDefinitionSyntax && Equals((OperationTypeDefinitionSyntax) obj);
+            return obj is OperationTypeDefinitionSyntax && Equals((OperationTypeDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return ((int) OperationType * 397) ^ Type.GetHashCode();
+                return ((int)OperationType * 397) ^ Type.GetHashCode();
             }
         }
     }

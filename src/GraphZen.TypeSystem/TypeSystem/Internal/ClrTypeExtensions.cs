@@ -1,16 +1,18 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
 
 
 // ReSharper disable UnusedMember.Global
@@ -19,14 +21,14 @@ namespace GraphZen.TypeSystem.Internal
 {
     public static class ClrTypeExtensions
     {
-        internal static bool IsFunc([NotNull] this Type clrType)
+        internal static bool IsFunc(this Type clrType)
         {
             Debug.Assert(clrType.FullName != null, "clrType.FullName != null");
             return clrType.Assembly == typeof(Func<>).Assembly && clrType.FullName.StartsWith("System.Func");
         }
 
 
-        internal static bool TryGetListItemType([NotNull] this Type clrType, out Type itemType)
+        internal static bool TryGetListItemType(this Type clrType, [NotNullWhen(true)] out Type? itemType)
         {
             itemType = default;
 
@@ -37,7 +39,6 @@ namespace GraphZen.TypeSystem.Internal
                 || clrType.IsGenericType && clrType.GetGenericTypeDefinition() == typeof(ICollection<>)
                 || clrType.GetInterfaces().Any(i =>
                 {
-                    // ReSharper disable once PossibleNullReferenceException
                     if (i.IsGenericType)
                     {
                         var def = i.GetGenericTypeDefinition();
@@ -51,10 +52,7 @@ namespace GraphZen.TypeSystem.Internal
                 if (clrType.IsGenericType)
                 {
                     var args = clrType.GetGenericArguments();
-                    if (args.Length == 1)
-                    {
-                        itemType = args[0];
-                    }
+                    if (args.Length == 1) itemType = args[0];
                 }
                 else
                 {
@@ -67,7 +65,7 @@ namespace GraphZen.TypeSystem.Internal
             return false;
         }
 
-        internal static bool TryGetNullableType([NotNull] this Type clrType, out Type nullableClrType)
+        internal static bool TryGetNullableType(this Type clrType, [NotNullWhen(true)] out Type? nullableClrType)
         {
             nullableClrType = default;
             if (clrType.IsGenericType)
@@ -83,7 +81,7 @@ namespace GraphZen.TypeSystem.Internal
             return false;
         }
 
-        internal static bool TryGetTaskResultType([NotNull] this Type clrType, out Type resultClrType)
+        internal static bool TryGetTaskResultType(this Type clrType, [NotNullWhen(true)] out Type? resultClrType)
         {
             resultClrType = default;
             if (clrType.IsGenericType)
@@ -99,26 +97,23 @@ namespace GraphZen.TypeSystem.Internal
             return false;
         }
 
-        private static bool TryGetGraphQLTypeInfoRecursive([NotNull] this Type clrType,
-            out TypeSyntax typeNode, out Type innerClrType, bool canBeNull = false,
+        private static bool TryGetGraphQLTypeInfoRecursive(this Type clrType,
+            [NotNullWhen(true)] out TypeSyntax? typeNode, [NotNullWhen(true)] out Type? innerClrType,
+            bool canBeNull = false,
             bool itemCanBeNull = false)
         {
             if (clrType.TryGetTaskResultType(out var resultType))
-            {
                 return resultType.TryGetGraphQLTypeInfoRecursive(out typeNode,
                     out innerClrType, canBeNull, itemCanBeNull);
-            }
 
             if (clrType.TryGetNullableType(out var nullable))
-            {
                 return nullable.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, true);
-            }
 
             if (clrType.TryGetListItemType(out var itemType) &&
                 itemType.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, itemCanBeNull))
             {
                 typeNode = canBeNull
-                    ? (TypeSyntax) SyntaxFactory.ListType(typeNode)
+                    ? (TypeSyntax)SyntaxFactory.ListType(typeNode)
                     : SyntaxFactory.NonNull(SyntaxFactory.ListType(typeNode));
                 return true;
             }
@@ -131,56 +126,55 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             typeNode = canBeNull
-                ? (TypeSyntax) SyntaxFactory.NamedType(clrType)
+                ? (TypeSyntax)SyntaxFactory.NamedType(clrType)
                 : SyntaxFactory.NonNull(SyntaxFactory.NamedType(clrType));
             innerClrType = clrType.GetEffectiveClrType();
             return true;
         }
 
         public static bool TryGetGraphQLTypeInfo(this Type clrType,
-            out TypeSyntax typeNode,
-            out Type innerClrType, bool canBeNull = false, bool itemCanBeNull = false) =>
+            [NotNullWhen(true)] out TypeSyntax? typeNode,
+            [NotNullWhen(true)] out Type? innerClrType, bool canBeNull = false, bool itemCanBeNull = false) =>
             TryGetGraphQLTypeInfoRecursive(
                 Check.NotNull(clrType, nameof(clrType)), out typeNode, out innerClrType, canBeNull, itemCanBeNull);
 
-        public static bool TryGetGraphQLTypeInfo(this MethodInfo method, out TypeSyntax typeNode, out Type innerClrType)
-            => Check.NotNull(method, nameof(method))
+        public static bool TryGetGraphQLTypeInfo(this MethodInfo method, [NotNullWhen(true)] out TypeSyntax? typeNode,
+            [NotNullWhen(true)] out Type? innerClrType) =>
+            Check.NotNull(method, nameof(method))
                 .ReturnType
                 .TryGetGraphQLTypeInfo(
                     out typeNode, out innerClrType,
                     method.CanBeNull(), method.ItemCanBeNull());
 
-        public static bool TryGetGraphQLTypeInfo(this PropertyInfo property, out TypeSyntax typeNode,
-            out Type innerClrType)
-            => Check.NotNull(property, nameof(property))
+        public static bool TryGetGraphQLTypeInfo(this PropertyInfo property,
+            [NotNullWhen(true)] out TypeSyntax? typeNode,
+            [NotNullWhen(true)] out Type? innerClrType) =>
+            Check.NotNull(property, nameof(property))
                 .PropertyType
                 .TryGetGraphQLTypeInfo(
                     out typeNode, out innerClrType,
                     property.CanBeNull(), property.ItemCanBeNull());
 
-        public static bool TryGetGraphQLTypeInfo(this ParameterInfo parameter, out TypeSyntax typeNode,
-            out Type innerClrType)
-            => Check.NotNull(parameter, nameof(parameter)).ParameterType
+        public static bool TryGetGraphQLTypeInfo(this ParameterInfo parameter,
+            [NotNullWhen(true)] out TypeSyntax? typeNode,
+            [NotNullWhen(true)] out Type? innerClrType) =>
+            Check.NotNull(parameter, nameof(parameter)).ParameterType
                 .TryGetGraphQLTypeInfo(
                     out typeNode, out innerClrType,
                     parameter.CanBeNull(), parameter.ItemCanBeNull());
 
 
-        [NotNull]
-        public static Type GetEffectiveClrType([NotNull] this Type clrType) =>
+        public static Type GetEffectiveClrType(this Type clrType) =>
             clrType.GetCustomAttribute<GraphQLTypeAttribute>()?.ClrType ?? clrType;
 
 
-        public static bool IsSameOrSubclass([NotNull] this Type potentialSubClass, [NotNull] Type potentialBase) =>
+        public static bool IsSameOrSubclass(this Type potentialSubClass, Type potentialBase) =>
             potentialSubClass.IsSubclassOf(potentialBase) || potentialBase == potentialSubClass;
 
-        public static bool TryGetOutputTypeKind([NotNull] this Type clrType, out TypeKind? kind)
+        public static bool TryGetOutputTypeKind(this Type clrType, [NotNullWhen(true)] out TypeKind? kind)
         {
             kind = null;
-            if (!IsValidClrType(clrType))
-            {
-                return false;
-            }
+            if (!IsValidClrType(clrType)) return false;
 
             if (clrType.IsEnum)
             {
@@ -204,13 +198,10 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public static bool TryGetInputTypeKind([NotNull] this Type clrType, out TypeKind? kind)
+        public static bool TryGetInputTypeKind(this Type clrType, out TypeKind? kind)
         {
             kind = null;
-            if (!IsValidClrType(clrType))
-            {
-                return false;
-            }
+            if (!IsValidClrType(clrType)) return false;
 
             if (clrType.IsEnum)
             {
@@ -229,45 +220,41 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public static bool IsValidClrType([NotNull] this Type clrType)
+        public static bool IsValidClrType(this Type clrType)
         {
-            if (clrType.IsGenericType)
-            {
-                return false;
-            }
+            if (clrType.IsGenericType) return false;
 
             return clrType.HasValidGraphQLName();
         }
 
-        public static IEnumerable<MemberInfo> GetTargetingInterfaceProperties([NotNull] this PropertyInfo property)
+        public static IEnumerable<MemberInfo> GetTargetingInterfaceProperties(this PropertyInfo property)
         {
             var methodInfo = property.GetGetMethod();
-            // ReSharper disable once PossibleNullReferenceException
-            foreach (var iface in property.DeclaringType.GetInterfaces())
+            Debug.Assert(property.DeclaringType != null, "property.DeclaringType != null");
+            foreach (var @interface in property.DeclaringType.GetInterfaces())
             {
-                var mapping = property.DeclaringType.GetInterfaceMap(iface);
+                var mapping = property.DeclaringType.GetInterfaceMap(@interface);
                 for (var i = 0; i < mapping.InterfaceMethods.Length; i++)
                 {
-                    // ReSharper disable once PossibleNullReferenceException
                     if (mapping.TargetMethods[i] == methodInfo)
                     {
-                        // ReSharper disable once PossibleNullReferenceException
                         var interfaceMethod = mapping.InterfaceMethods[i];
-                        // ReSharper disable twice PossibleNullReferenceException
-                        yield return interfaceMethod.DeclaringType.GetProperty(property.Name);
+                        Debug.Assert(interfaceMethod.DeclaringType != null, "interfaceMethod.DeclaringType != null");
+                        var value = interfaceMethod.DeclaringType.GetProperty(property.Name);
+                        if (value != null) yield return value;
                     }
                 }
             }
         }
 
 
-        public static IEnumerable<MemberInfo> GetTargetingInterfaceMethods([NotNull] this MethodInfo method
+        public static IEnumerable<MemberInfo> GetTargetingInterfaceMethods(this MethodInfo method
         )
         {
-            // ReSharper disable once PossibleNullReferenceException
-            foreach (var iface in method.DeclaringType.GetInterfaces())
+            Debug.Assert(method.DeclaringType != null, "method.DeclaringType != null");
+            foreach (var @interface in method.DeclaringType.GetInterfaces())
             {
-                var mapping = method.DeclaringType.GetInterfaceMap(iface);
+                var mapping = method.DeclaringType.GetInterfaceMap(@interface);
                 for (var i = 0; i < mapping.InterfaceMethods.Length; i++)
                 {
                     if (mapping.TargetMethods[i] == method)
@@ -279,33 +266,23 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        [NotNull]
-        [ItemNotNull]
-        public static IEnumerable<Type> GetImplementingTypes([NotNull] this Type clrType)
+
+        public static IEnumerable<Type> GetImplementingTypes(this Type clrType)
         {
-            // ReSharper disable once PossibleNullReferenceException
-            var referencedAssemblies = Assembly.GetEntryAssembly().GetReferencedAssemblies();
+            AssemblyName[] referencedAssemblies =
+                Assembly.GetEntryAssembly()?.GetReferencedAssemblies() ?? Array.Empty<AssemblyName>();
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                // ReSharper disable once PossibleNullReferenceException
-                .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> {clrType.Assembly});
+                .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> { clrType.Assembly });
             foreach (var assembly in assemblies)
-            {
-                // ReSharper disable once PossibleNullReferenceException
                 foreach (var type in assembly.DefinedTypes)
                 {
                     if (type != clrType)
                     {
                         if (clrType.IsInterface && clrType.IsAssignableFrom(type))
-                        {
                             yield return type;
-                        }
-                        else if (clrType.IsClass && type.IsSubclassOf(clrType))
-                        {
-                            yield return type;
-                        }
+                        else if (clrType.IsClass && type.IsSubclassOf(clrType)) yield return type;
                     }
                 }
-            }
         }
     }
 }

@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -49,23 +54,18 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
 
-        private bool Equals([NotNull] InterfaceTypeDefinitionSyntax other) =>
-            Name.Equals(other.Name) && Equals(Description, other.Description) && Fields.SequenceEqual(other.Fields) &&
+        private bool Equals(InterfaceTypeDefinitionSyntax other) =>
+            Name.Equals(other.Name) && Equals(Description, other.Description) &&
+            Fields.SequenceEqual(other.Fields) &&
             Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is InterfaceTypeDefinitionSyntax && Equals((InterfaceTypeDefinitionSyntax) obj);
+            return obj is InterfaceTypeDefinitionSyntax && Equals((InterfaceTypeDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

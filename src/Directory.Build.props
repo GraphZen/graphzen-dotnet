@@ -1,5 +1,4 @@
 <Project>
-  <!-- These properties will be shared for all projects -->
   <PropertyGroup>
     <Product>GraphZen</Product>
     <Authors>GraphZen</Authors>
@@ -9,12 +8,15 @@
     <PackageProjectUrl>https://github.com/GraphZen/graphzen-dotnet</PackageProjectUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <IsPackable>True</IsPackable>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <WarningsAsErrors />
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>latest</LangVersion>
     <RootNamespace>GraphZen</RootNamespace>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugType>full</DebugType>
@@ -24,7 +26,6 @@
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
-
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>

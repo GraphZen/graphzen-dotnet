@@ -2,72 +2,74 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation.Rules;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation
 {
     public static class DocumentValidationRules
     {
-        [NotNull]
         public static ValidationRule LoneSchemaDefinition { get; } =
-            _ => new LoneSchemaDefinition((DocumentValidationContext) _);
+            _ => new LoneSchemaDefinition((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule SchemaMustHaveRootObjectTypes { get; } =
-            _ => new SchemaMustHaveRootObjectTypes((DocumentValidationContext) _);
+            _ => new SchemaMustHaveRootObjectTypes((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule FieldArgsMustBeProperlyNamed { get; } =
-            _ => new FieldArgsMustBeProperlyNamed((DocumentValidationContext) _);
+            _ => new FieldArgsMustBeProperlyNamed((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule UnionTypesMustBeValid { get; } =
-            _ => new UnionTypesMustBeValid((DocumentValidationContext) _);
+            _ => new UnionTypesMustBeValid((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule InputObjectsMustHaveFields { get; } =
-            _ => new InputObjectsMustHaveFields((DocumentValidationContext) _);
+            _ => new InputObjectsMustHaveFields((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule EnumTypesMustBeWellDefined { get; } =
-            _ => new EnumTypesMustBeWellDefined((DocumentValidationContext) _);
+            _ => new EnumTypesMustBeWellDefined((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule ObjectFieldsMustHaveOutputTypes { get; } =
-            _ => new ObjectFieldsMustHaveOutputTypes((DocumentValidationContext) _);
+            _ => new ObjectFieldsMustHaveOutputTypes((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule ObjectsCanOnlyImplementUniqueInterfaces { get; } = _ =>
-            new ObjectsCanOnlyImplementUniqueInterfaces((DocumentValidationContext) _);
+            new ObjectsCanOnlyImplementUniqueInterfaces((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule InterfaceExtensionsShouldBeValid { get; } =
-            _ => new InterfaceExtensionsShouldBeValid((DocumentValidationContext) _);
+            _ => new InterfaceExtensionsShouldBeValid((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule InterfaceFieldsMustHaveOutputTypes { get; } = _ =>
-            new InterfaceFieldsMustHaveOutputTypes((DocumentValidationContext) _);
+            new InterfaceFieldsMustHaveOutputTypes((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule FieldArgumentsMustHaveInputTypes { get; } =
-            _ => new FieldArgumentsMustHaveInputTypes((DocumentValidationContext) _);
+            _ => new FieldArgumentsMustHaveInputTypes((DocumentValidationContext)_);
 
-        [NotNull]
+
         public static ValidationRule ObjectsMustAdhereToInterfaceTheyImplement { get; } = _ =>
-            new ObjectsMustAdhereToInterfaceTheyImplement((DocumentValidationContext) _);
+            new ObjectsMustAdhereToInterfaceTheyImplement((DocumentValidationContext)_);
 
 
-        [NotNull]
         public static ValidationRule ObjectsMustHaveFields { get; } = _ => new ObjectsMustHaveFields(_);
 
-        [NotNull]
+
         public static ValidationRule InputObjectFieldsMustHaveInputTypes { get; } =
             _ => new InputObjectFieldsMustHaveInputTypes(_);
 
-        [NotNull]
-        [ItemNotNull]
+
         public static IReadOnlyList<ValidationRule> SpecifiedSDLRules { get; } = new[]
         {
             LoneSchemaDefinition
@@ -77,8 +79,7 @@ namespace GraphZen.LanguageModel.Validation
             // UniqueInputFieldNames
         };
 
-        [NotNull]
-        [ItemNotNull]
+
         public static IReadOnlyList<ValidationRule> SpecifiedSchemaRules { get; } =
             SpecifiedSDLRules.Concat(
                 new[]

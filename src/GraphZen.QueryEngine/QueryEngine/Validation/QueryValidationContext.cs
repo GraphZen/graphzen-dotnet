@@ -10,16 +10,21 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
+using GraphZen.Utilities;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Validation
 {
     [SuppressMessage("ReSharper", "NotAccessedField.Local")]
     public class QueryValidationContext : ValidationContext
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, FragmentDefinitionSyntax>> _fragments;
+        private readonly Lazy<IReadOnlyDictionary<string, FragmentDefinitionSyntax>> _fragments;
 
 
-        public QueryValidationContext(Schema schema, DocumentSyntax ast, [NotNull] TypeInfo typeInfo,
+        public QueryValidationContext(Schema schema, DocumentSyntax ast, TypeInfo typeInfo,
             Lazy<GraphQLSyntaxWalker> parentVisitor) : base(
             Check.NotNull(ast, nameof(ast)), Check.NotNull(parentVisitor, nameof(parentVisitor))
         )
@@ -32,14 +37,13 @@ namespace GraphZen.QueryEngine.Validation
                     .ToReadOnlyDictionaryIgnoringDuplicates(_ => _.Name.Value));
         }
 
-        [NotNull]
+
         public Schema Schema { get; }
 
 
-        [NotNull]
         public IReadOnlyDictionary<string, FragmentDefinitionSyntax> Fragments => _fragments.Value;
 
-        [NotNull]
+
         public TypeInfo TypeInfo { get; }
 
         public Directive Directive => TypeInfo.Directive;

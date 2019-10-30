@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -39,7 +44,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The values of the enum type.
         /// </summary>
-        [NotNull]
+
         public IReadOnlyList<EnumValueDefinitionSyntax> Values { get; }
 
 
@@ -53,23 +58,18 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] EnumTypeDefinitionSyntax other) =>
-            Name.Equals(other.Name) && Equals(Description, other.Description) && Values.SequenceEqual(other.Values) &&
+        private bool Equals(EnumTypeDefinitionSyntax other) =>
+            Name.Equals(other.Name) && Equals(Description, other.Description) &&
+            Values.SequenceEqual(other.Values) &&
             Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is EnumTypeDefinitionSyntax && Equals((EnumTypeDefinitionSyntax) obj);
+            return obj is EnumTypeDefinitionSyntax && Equals((EnumTypeDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

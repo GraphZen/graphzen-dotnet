@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -12,7 +17,7 @@ namespace GraphZen.LanguageModel
     ///     Directive
     ///     http://facebook.github.io/graphql/June2018/#Directive
     /// </summary>
-    public partial class DirectiveSyntax : SyntaxNode, IArgumentsContainerNode, INamedSyntax
+    public partial class DirectiveSyntax : SyntaxNode, IArgumentsNode, INamedSyntax
     {
         public DirectiveSyntax(NameSyntax name,
             IReadOnlyList<ArgumentSyntax> arguments = null,
@@ -36,22 +41,16 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public NameSyntax Name { get; }
 
-        private bool Equals([NotNull] DirectiveSyntax other) =>
+        private bool Equals(DirectiveSyntax other) =>
             Name.Equals(other.Name) && Arguments.SequenceEqual(other.Arguments);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is DirectiveSyntax && Equals((DirectiveSyntax) obj);
+            return obj is DirectiveSyntax && Equals((DirectiveSyntax)obj);
         }
 
         public override int GetHashCode()

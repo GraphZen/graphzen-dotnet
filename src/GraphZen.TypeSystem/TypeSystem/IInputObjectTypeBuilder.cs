@@ -1,31 +1,50 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     public interface IInputObjectTypeBuilder<TInputObject> : IAnnotableBuilder<IInputObjectTypeBuilder<TInputObject>>
     {
-        [NotNull]
-        IInputObjectTypeBuilder<TInputObject> Description([Description] string description);
+        IInputObjectTypeBuilder<TInputObject> Description(string? description);
 
-        [NotNull]
+
+        IInputObjectTypeBuilder<object> ClrType(Type clrType);
+
+
+        IInputObjectTypeBuilder<T> ClrType<T>();
+
+
         IInputObjectTypeBuilder<TInputObject> Field(string name, string type,
-            Action<InputValueBuilder> inputFieldConfigurator = null);
+            Action<InputValueBuilder>? inputFieldConfigurator = null);
 
-        [NotNull]
+
+        IInputObjectTypeBuilder<TInputObject> Field(string name,
+            Action<InputValueBuilder>? inputFieldConfigurator = null);
+
+
         IInputObjectTypeBuilder<TInputObject> Field<TField>(string name,
-            Action<InputValueBuilder> inputFieldConfigurator = null);
+            Action<InputValueBuilder>? inputFieldConfigurator = null);
 
-        [NotNull]
+
         IInputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector,
-            Action<InputValueBuilder> fieldBuilder = null);
+            Action<InputValueBuilder>? fieldBuilder = null);
 
-        [NotNull]
+
+        IInputObjectTypeBuilder<TInputObject> IgnoreField<TField>(Expression<Func<TInputObject, TField>> fieldSelector);
+
+
+        IInputObjectTypeBuilder<TInputObject> IgnoreField(string name);
+
+
+        IInputObjectTypeBuilder<TInputObject> UnignoreField(string name);
+
+
         IInputObjectTypeBuilder<TInputObject> Name(string name);
     }
 }

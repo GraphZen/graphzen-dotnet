@@ -1,9 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Validation.Rules
 {
@@ -26,10 +31,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
             {
                 var type = Context.Schema.GetTypeFromAst(typeCondition);
                 if (type != null && !(type is ICompositeType))
-                {
                     ReportError(InlineFragmentOnNonCompositeErrorMessage(typeCondition.ToSyntaxString()),
                         typeCondition);
-                }
             }
 
             return VisitAction.Continue;
@@ -40,11 +43,9 @@ namespace GraphZen.QueryEngine.Validation.Rules
             var type = Context.Schema.GetTypeFromAst(node.TypeCondition);
             {
                 if (type != null && !(type is ICompositeType))
-                {
                     ReportError(
                         FragmentOnNonCompositeErrorMessage(node.Name.Value, node.TypeCondition.ToSyntaxString()),
                         node.TypeCondition);
-                }
 
                 return VisitAction.Continue;
             }

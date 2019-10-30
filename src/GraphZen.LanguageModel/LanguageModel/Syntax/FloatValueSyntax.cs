@@ -2,8 +2,13 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -21,28 +26,23 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The float value.
         /// </summary>
-        [NotNull]
+
         public string Value { get; }
 
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
+
         public string GetDisplayValue() => Value;
 
-        private bool Equals([NotNull] FloatValueSyntax other) => Value.Equals(other.Value);
+        private bool Equals(FloatValueSyntax other) => Value.Equals(other.Value);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is FloatValueSyntax && Equals((FloatValueSyntax) obj);
+            return obj is FloatValueSyntax && Equals((FloatValueSyntax)obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();

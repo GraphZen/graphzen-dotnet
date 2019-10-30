@@ -1,46 +1,41 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
-namespace GraphZen
+#nullable disable
+
+
+namespace GraphZen.Utilities
 {
     public static partial class Helpers
     {
-        [NotNull]
         internal static Maybe<object> ValueFromAst(ValueSyntax valueSyntax, IGraphQLType type,
             IReadOnlyDictionary<string, object> variables = null)
         {
             bool IsMissingVariable(ValueSyntax value, IReadOnlyDictionary<string, object> vars) =>
                 value is VariableSyntax variable && (vars == null || !vars.ContainsKey(variable.Name.Value));
 
-            if (valueSyntax == null)
-            {
-                return Maybe.None<object>();
-            }
+            if (valueSyntax == null) return Maybe.None<object>();
 
             if (type is NonNullType nonNull)
             {
-                if (valueSyntax is NullValueSyntax)
-                {
-                    return Maybe.None<object>();
-                }
+                if (valueSyntax is NullValueSyntax) return Maybe.None<object>();
 
                 return ValueFromAst(valueSyntax, nonNull.OfType, variables);
             }
 
-            if (valueSyntax is NullValueSyntax)
-            {
-                return Maybe.Some<object>(null);
-            }
+            if (valueSyntax is NullValueSyntax) return Maybe.Some<object>(null);
 
             if (valueSyntax is VariableSyntax variableNode)
             {
@@ -60,10 +55,7 @@ namespace GraphZen
                     {
                         if (IsMissingVariable(itemNode, variables))
                         {
-                            if (itemType is NonNullType)
-                            {
-                                return Maybe.None<object>();
-                            }
+                            if (itemType is NonNullType) return Maybe.None<object>();
 
                             coercedValues.Add(null);
                         }
@@ -71,13 +63,9 @@ namespace GraphZen
                         {
                             var itemValue = ValueFromAst(itemNode, itemType, variables);
                             if (itemValue is Some<object> some)
-                            {
                                 coercedValues.Add(some.Value);
-                            }
                             else
-                            {
                                 return itemValue;
-                            }
                         }
                     }
 
@@ -86,7 +74,7 @@ namespace GraphZen
 
                 var coerecedValue = ValueFromAst(valueSyntax, itemType, variables);
 
-                return coerecedValue.Select(_ => (object) new List<object> {_});
+                return coerecedValue.Select(_ => (object)new List<object> { _ });
             }
 
             if (type is InputObjectType inputObject)
@@ -107,26 +95,17 @@ namespace GraphZen
                             IsMissingVariable(fieldNode.Value, variables))
                         {
                             if (field.DefaultValue is Some<object> someDefaultValue)
-                            {
                                 coercedObject[field.Name] = someDefaultValue.Value;
-                            }
-                            else if (field.InputType is NonNullType)
-                            {
-                                return Maybe.None<object>();
-                            }
+                            else if (field.InputType is NonNullType) return Maybe.None<object>();
 
                             continue;
                         }
 
                         var fieldValue = ValueFromAst(fieldNode.Value, field.InputType, variables);
                         if (fieldValue is Some<object> fv)
-                        {
                             coercedObject[field.Name] = fv.Value;
-                        }
                         else
-                        {
                             return Maybe.None<object>();
-                        }
                     }
 
                     return Maybe.Some<object>(coercedObject);
@@ -136,7 +115,6 @@ namespace GraphZen
             }
 
             if (type is ILeafType leafType)
-            {
                 try
                 {
                     return leafType.ParseLiteral(valueSyntax);
@@ -145,7 +123,6 @@ namespace GraphZen
                 {
                     return Maybe.None<object>();
                 }
-            }
 
             throw new Exception($"Unknown type: {type}");
         }

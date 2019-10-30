@@ -3,22 +3,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     public class UnionType : NamedType, IUnionType
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<UnionTypeDefinitionSyntax> _syntax;
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, INamedTypeReference>> _typeRefs;
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyDictionary<string, ObjectType>> _types;
+        private readonly Lazy<UnionTypeDefinitionSyntax> _syntax;
+        private readonly Lazy<IReadOnlyDictionary<string, ObjectType>> _memberTypeMap;
+        private readonly Lazy<IReadOnlyList<ObjectType>> _memberTypes;
 
-        public UnionType(string name, string description, Type clrType,
+        public UnionType(string name, string? description, Type? clrType,
             Lazy<IReadOnlyDictionary<string, ObjectType>> lazyTypes,
-            TypeResolver<object, GraphQLContext> resolveType,
+            TypeResolver<object, GraphQLContext>? resolveType,
             IReadOnlyList<IDirectiveAnnotation> directives
         ) : base(
             Check.NotNull(name, nameof(name)), description, clrType, Check.NotNull(directives, nameof(directives)))
@@ -26,57 +29,41 @@ namespace GraphZen.TypeSystem
             Check.NotNull(lazyTypes, nameof(lazyTypes));
             ResolveType = resolveType;
 
-            _types = new Lazy<IReadOnlyDictionary<string, ObjectType>>(() =>
+            _memberTypeMap = new Lazy<IReadOnlyDictionary<string, ObjectType>>(() =>
             {
                 var types = lazyTypes.Value;
                 if (types == null || types.Count == 0)
-                {
                     throw new Exception($"Must provide list of types for Union {name}");
-                }
 
                 var includedTypeNames = new Dictionary<string, bool>();
                 foreach (var objectType in types.Values)
                 {
                     if (includedTypeNames.ContainsKey(objectType.Name))
-                    {
                         throw new Exception($"Union {name} can include {objectType.Name} only once.");
-                    }
 
                     includedTypeNames[objectType.Name] = true;
                 }
 
                 return types;
             });
-            _typeRefs = new Lazy<IReadOnlyDictionary<string, INamedTypeReference>>(() =>
-                MemberTypes.ToReadOnlyDictionary(_ => _.Key, _ => (INamedTypeReference) _.Value));
+            _memberTypes = new Lazy<IReadOnlyList<ObjectType>>(() => MemberTypesMap.Values.ToImmutableList());
             _syntax = new Lazy<UnionTypeDefinitionSyntax>(() =>
                 new UnionTypeDefinitionSyntax(SyntaxFactory.Name(Name), SyntaxHelpers.Description(Description), null,
-                    MemberTypes.Select(_ => (NamedTypeSyntax) _.Value.ToTypeSyntax()).ToArray()));
+                    MemberTypes.Select(_ => (NamedTypeSyntax)_.ToTypeSyntax()).ToArray()));
         }
 
-        public TypeResolver<object, GraphQLContext> ResolveType { get; }
+        public TypeResolver<object, GraphQLContext>? ResolveType { get; }
 
-        IReadOnlyDictionary<string, INamedTypeReference> IUnionTypeDefinition.MemberTypes => _typeRefs.Value;
+        public IEnumerable<ObjectType> GetMemberTypes() => MemberTypes;
 
-        public IReadOnlyDictionary<string, ObjectType> MemberTypes => _types.Value;
+        public IReadOnlyList<ObjectType> MemberTypes => _memberTypes.Value;
+        public IReadOnlyDictionary<string, ObjectType> MemberTypesMap => _memberTypeMap.Value;
+
         public override TypeKind Kind { get; } = TypeKind.Union;
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Union;
-
-        [NotNull]
-        public static UnionType From(IUnionTypeDefinition definition, Schema schema)
-        {
-            Check.NotNull(definition, nameof(definition));
-            Check.NotNull(schema, nameof(schema));
-            var lazyTypes = new Lazy<IReadOnlyDictionary<string, ObjectType>>(() =>
-            {
-                return definition.MemberTypes.ToDictionary(_ => _.Key, _ => schema.GetType<ObjectType>(_.Key));
-            });
-            return new UnionType(definition.Name, definition.Description, definition.ClrType, lazyTypes,
-                definition.ResolveType, definition.DirectiveAnnotations);
-        }
 
         /*public static UnionType Create<TUnion>() => Create<TUnion, GraphQLContext>(null);
 
@@ -94,5 +81,20 @@ namespace GraphZen.TypeSystem
             var schema = new Schema(schemaDef);
             return From(definition, schema);
         }*/
+        IEnumerable<IObjectTypeDefinition> IMemberTypesDefinition.GetMemberTypes() => GetMemberTypes();
+
+
+        public static UnionType From(IUnionTypeDefinition definition, Schema schema)
+        {
+            Check.NotNull(definition, nameof(definition));
+            Check.NotNull(schema, nameof(schema));
+            var lazyTypes = new Lazy<IReadOnlyDictionary<string, ObjectType>>(() =>
+            {
+                return definition.GetMemberTypes()
+                    .ToDictionary(_ => _.Name, _ => schema.GetObject(_.Name));
+            });
+            return new UnionType(definition.Name, definition.Description, definition.ClrType, lazyTypes,
+                definition.ResolveType, definition.GetDirectiveAnnotations().ToList());
+        }
     }
 }

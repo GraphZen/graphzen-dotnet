@@ -1,21 +1,23 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class UnionTypeDefinition : NamedTypeDefinition, IMutableUnionTypeDefinition
     {
-        [NotNull] private readonly Dictionary<string, INamedTypeReference> _types =
-            new Dictionary<string, INamedTypeReference>();
+        private readonly List<ObjectTypeDefinition> _types = new List<ObjectTypeDefinition>();
+
 
         public UnionTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource)
@@ -28,12 +30,16 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"union {Name}";
 
-        [NotNull]
+
         public InternalUnionTypeBuilder Builder { get; }
 
 
-        public IReadOnlyDictionary<string, INamedTypeReference> MemberTypes => _types;
-        public TypeResolver<object, GraphQLContext> ResolveType { get; set; }
+        public IEnumerable<ObjectTypeDefinition> GetMemberTypes() => _types;
+
+        public ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name) =>
+            throw new NotImplementedException();
+
+        public TypeResolver<object, GraphQLContext>? ResolveType { get; set; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Union;
 
@@ -41,19 +47,15 @@ namespace GraphZen.TypeSystem
         public override TypeKind Kind { get; } = TypeKind.Union;
 
 
-        public void AddType(INamedTypeReference type)
+        public void AddType(ObjectTypeDefinition type)
         {
             Check.NotNull(type, nameof(type));
             if (type.Name == null)
-            {
                 throw new ArgumentException(
                     $"Cannot include {type} in {Name} union type definition unless a name is defined");
-            }
-
-            if (!_types.ContainsKey(type.Name))
-            {
-                _types[type.Name] = type;
-            }
+            if (!_types.Contains(type)) _types.Add(type);
         }
+
+        IEnumerable<IObjectTypeDefinition> IMemberTypesDefinition.GetMemberTypes() => GetMemberTypes();
     }
 }

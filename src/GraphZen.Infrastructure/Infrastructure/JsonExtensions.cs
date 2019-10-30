@@ -1,17 +1,21 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
+
+#nullable enable
+
 
 namespace GraphZen.Infrastructure
 {
     public static class JsonExtensions
     {
-        [NotNull]
         public static IDictionary<string, object> ToDictionary(this JObject jobject)
         {
             Check.NotNull(jobject, nameof(jobject));
@@ -21,13 +25,13 @@ namespace GraphZen.Infrastructure
             var objectEntries = (from r in result
                                  where r.Value?.GetType() == typeof(JObject)
                                  let objectKey = r.Key
-                                 let objectValue = (JObject) r.Value
+                                 let objectValue = (JObject)r.Value
                                  select (objectKey, objectValue)).ToList();
 
             var arrayEntries = (from r in result
                                 where r.Value?.GetType() == typeof(JArray)
                                 let arrayKey = r.Key
-                                let arrayValue = (JArray) r.Value
+                                let arrayValue = (JArray)r.Value
                                 select (arrayKey, arrayValue)).ToList();
 
 

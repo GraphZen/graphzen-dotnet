@@ -1,8 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Validation.Rules
 {
@@ -23,7 +28,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
                     definition.Kind != SyntaxKind.FragmentDefinition)
                 {
                     var defName = definition is INamedSyntax named ? named.Name.Value : "schema";
-                    ReportError(new GraphQLError(NonExecutableDefinitionMessage(defName), new[] {definition}));
+                    ReportError(new GraphQLError(NonExecutableDefinitionMessage(defName), new[] { definition }));
                 }
             }
 

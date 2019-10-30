@@ -1,8 +1,11 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -14,7 +17,7 @@ namespace GraphZen.TypeSystem
             Builder = builder;
         }
 
-        [NotNull]
+
         private InternalEnumValueBuilder Builder { get; }
 
         public IEnumValueBuilder CustomValue(object value)
@@ -23,37 +26,32 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumValueBuilder Deprecated(bool deprecated = true)
+        public IEnumValueBuilder Deprecated(bool deprecated = true) => throw new NotImplementedException();
+
+        public IEnumValueBuilder Deprecated(string? reason) => throw new NotImplementedException();
+
+        public IEnumValueBuilder Name(string name)
         {
-            Builder.Deprecated(deprecated);
+            Check.NotNull(name, nameof(name));
+            Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumValueBuilder Deprecated(string reason)
-        {
-            Builder.Deprecated(reason);
-            return this;
-        }
-
-        public IEnumValueBuilder Description(string description)
+        public IEnumValueBuilder Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumValueBuilder DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
-
-        public IEnumValueBuilder DirectiveAnnotation(string name, object value)
+       
+        public IEnumValueBuilder DirectiveAnnotation(string name, object? value = null)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumValueBuilder RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public IEnumValueBuilder IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+
 
         InternalEnumValueBuilder IInfrastructure<InternalEnumValueBuilder>.Instance => Builder;
     }

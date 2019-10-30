@@ -1,8 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
+using GraphZen.Utilities;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.QueryEngine.Validation
 {
@@ -13,10 +19,10 @@ namespace GraphZen.QueryEngine.Validation
             Context = Check.NotNull(context, nameof(context));
         }
 
-        [NotNull]
+
         public new QueryValidationContext Context { get; }
 
-        [NotNull]
+
         public TypeInfo TypeInfo => Context.TypeInfo;
     }
 }

@@ -4,9 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -16,9 +19,9 @@ namespace GraphZen.TypeSystem
                  "returned in a JSON response as a string.")]
     public class EnumValue : AnnotatableMember, IEnumValue
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
+        private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
 
-        public EnumValue(string name, string description, object value, bool isDeprecated, string deprecatedReason,
+        public EnumValue(string name, string? description, object value, bool isDeprecated, string? deprecatedReason,
             IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(Check.NotNull(directives,
             nameof(directives)))
         {
@@ -34,32 +37,30 @@ namespace GraphZen.TypeSystem
             );
         }
 
-        [GraphQLIgnore]
-        public object Value { get; }
+        [GraphQLIgnore] public object Value { get; }
 
         IEnumTypeDefinition IEnumValueDefinition.DeclaringType => DeclaringType;
 
-        [GraphQLIgnore]
-        public EnumType DeclaringType { get; }
+        [GraphQLIgnore] public EnumType DeclaringType { get; }
 
         public bool IsDeprecated { get; }
 
-        [GraphQLCanBeNull]
-        public string DeprecationReason { get; }
+        [GraphQLCanBeNull] public string? DeprecationReason { get; }
 
-        public override string Description { get; }
+        public override string? Description { get; }
 
         public string Name { get; }
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.EnumValue;
+
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
-        [NotNull]
+
         [GraphQLIgnore]
         public static EnumValue From(IEnumValueDefinition definition, EnumType declaringTye)
         {
             Check.NotNull(definition, nameof(definition));
             return new EnumValue(definition.Name, definition.Description, definition.Value, definition.IsDeprecated,
-                definition.DeprecationReason, definition.DirectiveAnnotations, declaringTye);
+                definition.DeprecationReason, definition.GetDirectiveAnnotations().ToList(), declaringTye);
         }
 
         public override string ToString() => $"{Name} ({Value.Inspect()})";

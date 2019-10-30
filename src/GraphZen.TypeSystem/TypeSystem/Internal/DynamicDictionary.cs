@@ -1,14 +1,19 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.TypeSystem.Internal
 {
@@ -19,7 +24,7 @@ namespace GraphZen.TypeSystem.Internal
     public class DynamicDictionary : DynamicObject, IEquatable<DynamicDictionary>, IEnumerable<string>,
         IDictionary<string, object>
     {
-        [NotNull] private readonly IDictionary<string, dynamic> _dictionary =
+        private readonly IDictionary<string, dynamic> _dictionary =
             new Dictionary<string, dynamic>(StringComparer.OrdinalIgnoreCase);
 
         private string DebuggerDisplay
@@ -38,10 +43,7 @@ namespace GraphZen.TypeSystem.Internal
                     builder.AppendFormat(" {0} = {1}{2}", item.Key, item.Value, i < maxItems - 1 ? "," : string.Empty);
                 }
 
-                if (maxItems < _dictionary.Count)
-                {
-                    builder.Append("...");
-                }
+                if (maxItems < _dictionary.Count) builder.Append("...");
 
                 builder.Append(" }");
 
@@ -58,7 +60,6 @@ namespace GraphZen.TypeSystem.Internal
 
                 if (!_dictionary.TryGetValue(name, out var member))
                 {
-                    member = null;
                 }
 
                 return member;
@@ -251,10 +252,7 @@ namespace GraphZen.TypeSystem.Internal
         /// <param name="other">An <see cref="DynamicDictionary" /> instance to compare with this instance.</param>
         public bool Equals(DynamicDictionary other)
         {
-            if (ReferenceEquals(null, other))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, other)) return false;
 
             return ReferenceEquals(this, other) || Equals(other._dictionary, _dictionary);
         }
@@ -311,7 +309,6 @@ namespace GraphZen.TypeSystem.Internal
         {
             if (!_dictionary.TryGetValue(binder.Name, out result))
             {
-                result = null;
             }
 
             return true;
@@ -333,17 +330,11 @@ namespace GraphZen.TypeSystem.Internal
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary) obj);
+            return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary)obj);
         }
 
         /// <summary>

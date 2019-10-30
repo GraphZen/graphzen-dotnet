@@ -1,8 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation
 {
@@ -13,15 +18,22 @@ namespace GraphZen.LanguageModel.Validation
             Context = Check.NotNull(context, nameof(context));
         }
 
-        [NotNull]
+
         protected ValidationContext Context { get; }
 
-        public void ReportError(GraphQLError error) => Context.ReportError(error);
+        public void ReportError(GraphQLError error)
+        {
+            Context.ReportError(error);
+        }
 
-        public void ReportError(string message, params SyntaxNode[] nodes) =>
+        public void ReportError(string message, params SyntaxNode[] nodes)
+        {
             ReportError(new GraphQLError(message, nodes));
+        }
 
-        public void ReportError(string message, IReadOnlyList<SyntaxNode> nodes) =>
+        public void ReportError(string message, IReadOnlyList<SyntaxNode> nodes)
+        {
             ReportError(new GraphQLError(message, nodes));
+        }
     }
 }

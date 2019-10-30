@@ -3,17 +3,18 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     public abstract class AnnotatableMemberDefinition : MemberDefinition, IMutableAnnotatableDefinition
     {
-        [ItemNotNull] [NotNull]
         private readonly List<IDirectiveAnnotation> _directives = new List<IDirectiveAnnotation>();
 
         protected AnnotatableMemberDefinition(ConfigurationSource configurationSource) : base(configurationSource)
@@ -21,6 +22,7 @@ namespace GraphZen.TypeSystem
         }
 
         public abstract DirectiveLocation DirectiveLocation { get; }
+        public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => _directives;
 
         public IDirectiveAnnotation FindDirectiveAnnotation(string name)
         {
@@ -36,14 +38,14 @@ namespace GraphZen.TypeSystem
             return FindDirectiveAnnotation(name) ?? AddDirectiveAnnotation(name, value);
         }
 
-        public IDirectiveAnnotation AddDirectiveAnnotation(string name, object value)
+        public IDirectiveAnnotation AddDirectiveAnnotation(string name, object? value)
         {
             var directive = CreateDirective(Check.NotNull(name, nameof(name)), value);
             _directives.Add(directive);
             return directive;
         }
 
-        public IDirectiveAnnotation UpdateDirectiveAnnotation(string name, object value)
+        public IDirectiveAnnotation UpdateDirectiveAnnotation(string name, object? value)
         {
             Check.NotNull(name, nameof(name));
             RemoveDirectiveAnnotation(name);
@@ -61,7 +63,6 @@ namespace GraphZen.TypeSystem
         }
 
 
-        private DirectiveAnnotation CreateDirective([NotNull] string name, object value) =>
-            new DirectiveAnnotation(name, value);
+        private DirectiveAnnotation CreateDirective(string name, object? value) => new DirectiveAnnotation(name, value);
     }
 }

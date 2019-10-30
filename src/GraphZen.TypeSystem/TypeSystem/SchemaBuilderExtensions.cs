@@ -1,16 +1,17 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     public static class SchemaBuilderExtensions
     {
-        [NotNull]
         public static SchemaBuilder Build(this SchemaBuilder schemaBuilder,
             DocumentSyntax schemaDocument)
         {
@@ -21,7 +22,7 @@ namespace GraphZen.TypeSystem
             return schemaBuilder;
         }
 
-        [NotNull]
+
         public static SchemaBuilder Build(this SchemaBuilder schemaBuilder, string schemaDocument)
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
@@ -29,5 +30,9 @@ namespace GraphZen.TypeSystem
             var ast = Parser.ParseDocument(schemaDocument);
             return schemaBuilder.Build(ast);
         }
+
+
+        internal static SchemaDefinition GetDefinition(this SchemaBuilder schemaBuilder) =>
+            Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<SchemaDefinition>();
     }
 }

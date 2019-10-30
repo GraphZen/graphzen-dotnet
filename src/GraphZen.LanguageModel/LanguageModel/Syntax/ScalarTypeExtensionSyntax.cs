@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -27,22 +32,16 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] ScalarTypeExtensionSyntax other) =>
+        private bool Equals(ScalarTypeExtensionSyntax other) =>
             Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ScalarTypeExtensionSyntax && Equals((ScalarTypeExtensionSyntax) obj);
+            return obj is ScalarTypeExtensionSyntax && Equals((ScalarTypeExtensionSyntax)obj);
         }
 
         public override int GetHashCode()

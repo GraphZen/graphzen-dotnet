@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -18,25 +20,23 @@ namespace GraphZen.TypeSystem
                  "which has a name, potentially a list of arguments, and a return type.")]
     public sealed class Field : AnnotatableMember, IField
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<IGraphQLType> _fieldType;
+        private readonly Lazy<IGraphQLType> _fieldType;
+        private readonly Lazy<FieldDefinitionSyntax> _syntax;
 
-        [NotNull] [ItemNotNull] private readonly Lazy<FieldDefinitionSyntax> _syntax;
-
-
-        public Field(string name, string description, IFieldsContainer declaringType, IGraphQLType fieldType,
-            IEnumerable<IArgumentDefinition> arguments, Resolver<object, object> resolver, MemberInfo clrMember,
-            bool isDeprecated = false, string deprecatedReason = null,
-            IReadOnlyList<IDirectiveAnnotation> directives = null
+        public Field(string name, string description, IFields? declaringType, IGraphQLType fieldType,
+            IEnumerable<IArgumentDefinition>? arguments, Resolver<object, object?> resolver, MemberInfo? clrMember,
+            bool isDeprecated = false, string? deprecatedReason = null,
+            IReadOnlyList<IDirectiveAnnotation>? directives = null
         ) : this(name, description, declaringType, fieldType, arguments, resolver, isDeprecated, deprecatedReason,
-            directives ?? DirectiveAnnotation.EmptyList, typeRef => (IGraphQLType) typeRef, clrMember)
+            directives ?? DirectiveAnnotation.EmptyList, typeRef => (IGraphQLType)typeRef, clrMember)
         {
         }
 
-        public Field(string name, string description, IFieldsContainer declaringType, IGraphQLTypeReference fieldType,
-            IEnumerable<IArgumentDefinition> arguments, Resolver<object, object> resolver,
-            bool isDeprecated, string deprecatedReason,
-            IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver, MemberInfo clrInfo) : base(Check.NotNull(directives, nameof(directives)))
+        public Field(string name, string? description, IFields? declaringType, IGraphQLTypeReference fieldType,
+            IEnumerable<IArgumentDefinition>? arguments, Resolver<object, object?>? resolver,
+            bool isDeprecated, string? deprecatedReason,
+            IReadOnlyList<IDirectiveAnnotation>? directives,
+            TypeResolver typeResolver, MemberInfo? clrInfo) : base(directives)
         {
             Check.NotNull(typeResolver, nameof(typeResolver));
             Name = Check.NotNull(name, nameof(name));
@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem
             IsDeprecated = isDeprecated;
             DeprecationReason = deprecatedReason;
             ClrInfo = clrInfo;
-            DeclaringType = declaringType;
+            DeclaringType = declaringType!;
             _syntax = new Lazy<FieldDefinitionSyntax>(() =>
             {
                 var fieldTypeNode = FieldType.ToTypeSyntax();
@@ -71,30 +71,25 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [GraphQLIgnore]
-        public IFieldsContainer DeclaringType { get; }
+        [GraphQLIgnore] public IFields DeclaringType { get; }
 
 
-        [GraphQLName("type")]
-        public IGraphQLType FieldType => _fieldType.Value;
+        [GraphQLName("type")] public IGraphQLType FieldType => _fieldType.Value;
 
 
         IGraphQLTypeReference IFieldDefinition.FieldType => FieldType;
 
-        [GraphQLIgnore]
-        public Resolver<object, object> Resolver { get; }
+        [GraphQLIgnore] public Resolver<object, object?>? Resolver { get; }
 
-        IFieldsContainerDefinition IFieldDefinition.DeclaringType => DeclaringType;
+        IFieldsDefinition IFieldDefinition.DeclaringType => DeclaringType;
 
         public bool IsDeprecated { get; }
 
-        [GraphQLCanBeNull]
-        public string DeprecationReason { get; }
+        [GraphQLCanBeNull] public string? DeprecationReason { get; }
 
-        [GraphQLIgnore]
-        public IReadOnlyDictionary<string, Argument> Arguments { get; }
+        [GraphQLIgnore] public IReadOnlyDictionary<string, Argument> Arguments { get; }
 
-        public override string Description { get; }
+        public override string? Description { get; }
 
         public string Name { get; }
 
@@ -103,25 +98,25 @@ namespace GraphZen.TypeSystem
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments() => GetArguments();
+        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
         [GraphQLName("args")]
         public IEnumerable<Argument> GetArguments() => Arguments.Values;
 
+        [GraphQLIgnore] public MemberInfo? ClrInfo { get; }
+
+        object? IClrInfo.ClrInfo => ClrInfo;
+
+
         [GraphQLIgnore]
-        public MemberInfo ClrInfo { get; }
-
-        object IClrInfo.ClrInfo => ClrInfo;
-
-
-        [GraphQLIgnore]
-        public static Field From([NotNull] IFieldDefinition definition, [NotNull] IFieldsContainer declaringType,
+        public static Field From(IFieldDefinition definition, IFields declaringType,
             TypeResolver typeResolver)
         {
             Check.NotNull(definition, nameof(definition));
+            Check.NotNull(definition.FieldType, nameof(definition.FieldType));
             return new Field(definition.Name, definition.Description, declaringType,
                 definition.FieldType, definition.GetArguments(), definition.Resolver, definition.IsDeprecated,
-                definition.DeprecationReason, definition.DirectiveAnnotations, typeResolver, definition.ClrInfo);
+                definition.DeprecationReason, definition.GetDirectiveAnnotations().ToList(), typeResolver, definition.ClrInfo);
         }
 
         public override string ToString() => $"{DeclaringType}.{Name}";

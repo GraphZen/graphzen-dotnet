@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -26,7 +31,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Schema operation types.
         /// </summary>
-        [NotNull]
+
         public IReadOnlyList<OperationTypeDefinitionSyntax> OperationTypes { get; }
 
         public override IEnumerable<SyntaxNode> Children =>
@@ -37,22 +42,16 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
-        private bool Equals([NotNull] SchemaExtensionSyntax other) =>
+        private bool Equals(SchemaExtensionSyntax other) =>
             OperationTypes.SequenceEqual(other.OperationTypes) && Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is SchemaExtensionSyntax && Equals((SchemaExtensionSyntax) obj);
+            return obj is SchemaExtensionSyntax && Equals((SchemaExtensionSyntax)obj);
         }
 
         public override int GetHashCode()

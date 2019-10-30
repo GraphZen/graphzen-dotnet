@@ -1,18 +1,23 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
+
+#nullable disable
+
 
 namespace GraphZen.Infrastructure
 {
     internal static class ValueInspector
     {
-        public static T Dump<T, TR>(this T value, [NotNull] Func<T, TR> selector, string prefix = null)
+        public static T Dump<T, TR>(this T value, Func<T, TR> selector, string prefix = null)
         {
             selector(value).Dump(prefix);
             return value;
@@ -21,13 +26,9 @@ namespace GraphZen.Infrastructure
         public static T Dump<T>(this T value, string label = "_", bool expanded = false)
         {
             if (expanded)
-            {
                 Console.WriteLine($"= {label} =\n{value.Inspect(true)}");
-            }
             else
-            {
                 Console.WriteLine($"\t\t{label} \t\t-> {value.Inspect()}");
-            }
 
             return value;
         }

@@ -1,10 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Superpower;
 
-namespace GraphZen.LanguageModel.Internal.Grammar
+#nullable disable
+
+
+namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar
     {
@@ -21,8 +26,8 @@ namespace GraphZen.LanguageModel.Internal.Grammar
 
 
         internal static TokenListParser<TokenKind, SelectionSyntax> Selection { get; } =
-            Parse.Ref(() => Field).Select(_ => (SelectionSyntax) _)
-                .Or(Parse.Ref(() => FragmentSpread.Select(_ => (SelectionSyntax) _)))
-                .Or(InlineFragment.Select(_ => (SelectionSyntax) _)).Named("selection");
+            Parse.Ref(() => Field).Select(_ => (SelectionSyntax)_)
+                .Or(Parse.Ref(() => FragmentSpread.Select(_ => (SelectionSyntax)_)))
+                .Or(InlineFragment.Select(_ => (SelectionSyntax)_)).Named("selection");
     }
 }

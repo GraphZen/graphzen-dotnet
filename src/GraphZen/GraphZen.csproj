@@ -1,16 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Description>Code-first GraphQL framework for .NET. Use the GraphZen.AspNetCore.App package if you intend to host your GraphQL API with ASP.NET Core.</Description>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
+    <Description>Code-first GraphQL framework for .NET</Description>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="Microsoft.CSharp" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen.AspNetCore\GraphZen.AspNetCore.csproj" />
-    <ProjectReference Include="..\GraphZen.Playground.AspNetCore\GraphZen.Playground.AspNetCore.csproj" />
+    <ProjectReference Include="..\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,10 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -15,22 +17,16 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [NotNull]
         protected InternalInputValueBuilder Builder { get; }
 
-        public InputValueBuilder DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
-
-        public InputValueBuilder DirectiveAnnotation(string name, object value)
+        public InputValueBuilder DirectiveAnnotation(string name, object? value = null)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public InputValueBuilder RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public InputValueBuilder IgnoreDirectiveAnnotation(string name) => throw new System.NotImplementedException();
+
 
         InternalInputValueBuilder IInfrastructure<InternalInputValueBuilder>.Instance => Builder;
 
@@ -40,38 +36,15 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        [NotNull]
-        public InputValueBuilder Type(string type)
-        {
-            Check.NotNull(type, nameof(type));
-            Builder.Type(type);
-            return this;
-        }
 
-        [NotNull]
-        public InputValueBuilder Type<TInputValue>(bool canBeNull = false)
-        {
-            Builder.Type(typeof(TInputValue));
-            return this;
-        }
-
-        [NotNull]
-        public InputValueBuilder DefaultValue([CanBeNull] object value)
+        public InputValueBuilder DefaultValue(object value)
         {
             Builder.DefaultValue(value, ConfigurationSource.Explicit);
             return this;
         }
 
-        [NotNull]
-        public InputValueBuilder RemoveDefaultValue()
-        {
-            Builder.RemoveDefaultValue(ConfigurationSource.Explicit);
-            return this;
-        }
 
-
-        [NotNull]
-        public InputValueBuilder Description([CanBeNull] string description)
+        public InputValueBuilder Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;

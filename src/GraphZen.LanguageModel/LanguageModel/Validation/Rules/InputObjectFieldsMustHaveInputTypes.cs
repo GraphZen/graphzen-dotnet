@@ -1,8 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation.Rules
 {
@@ -24,10 +29,8 @@ namespace GraphZen.LanguageModel.Validation.Rules
                 var fieldNamedType = field.Type.GetNamedType();
                 var inputFieldType = inputTypes.FirstOrDefault(_ => _.Name.Equals(fieldNamedType.Name));
                 if (inputFieldType == null)
-                {
                     ReportError($"The type of {inputObject}.{field} must be Input Type but got: {field.Type}.",
                         field.Type);
-                }
             }
 
             return false;

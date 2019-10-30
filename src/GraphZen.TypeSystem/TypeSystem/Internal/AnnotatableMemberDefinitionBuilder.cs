@@ -1,33 +1,78 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
     public abstract class AnnotatableMemberDefinitionBuilder<TDefinition> : MemberDefinitionBuilder<TDefinition>
         where TDefinition : AnnotatableMemberDefinition
     {
-        protected AnnotatableMemberDefinitionBuilder([NotNull] TDefinition definition,
-            [NotNull] InternalSchemaBuilder schemaBuilder) : base(
+        protected AnnotatableMemberDefinitionBuilder(TDefinition definition,
+            InternalSchemaBuilder schemaBuilder) : base(
             definition, schemaBuilder)
         {
         }
 
-        public void AddOrUpdateDirectiveAnnotation([NotNull] string name, object value)
+        private static bool TryGetDeprecatedAttribute(DirectiveSyntax node, [NotNullWhen(true)] out GraphQLDeprecatedAttribute? attribute)
         {
-            var existing = Definition.FindDirectiveAnnotation(name);
-            if (existing == null)
+            if (node.Name.Value != "deprecated")
             {
-                Definition.AddDirectiveAnnotation(name, value);
+                attribute = null;
+                return false;
             }
-            else
+
+            var reason =
+                node.Arguments.SingleOrDefault(_ => _.Name.Value == "reason")?.Value is StringValueSyntax strValue
+                    ? strValue.Value
+                    : null;
+
+            attribute = new GraphQLDeprecatedAttribute(reason);
+            return true;
+        }
+
+        public void DirectiveAnnotation(object value, ConfigurationSource configurationSource)
+        {
+            if (value is DirectiveSyntax node)
             {
-                Definition.UpdateDirectiveAnnotation(name, value);
+                if (TryGetDeprecatedAttribute(node, out var attr))
+                {
+                    DirectiveAnnotation("deprecated", attr, configurationSource);
+                    return;
+                }
+                var existingDirective = Schema.FindDirective(node.Name.Value);
+                if (existingDirective != null)
+                {
+
+                }
+                else
+                {
+                    DirectiveAnnotation(node, configurationSource);
+                }
             }
         }
 
-        public void RemoveDirectiveAnnotation([NotNull] string name)
+        private void DirectiveAnnotation(DirectiveSyntax directive, ConfigurationSource configurationSource)
+        {
+            Definition.AddDirectiveAnnotation(directive.Name.Value, directive);
+        }
+
+
+
+        public void DirectiveAnnotation(string name, object? value, ConfigurationSource configurationSource)
+        {
+            var existing = Definition.FindDirectiveAnnotation(name);
+            if (existing == null)
+                Definition.AddDirectiveAnnotation(name, value);
+            else
+                Definition.UpdateDirectiveAnnotation(name, value);
+        }
+
+        public void RemoveDirectiveAnnotation(string name)
         {
             Definition.RemoveDirectiveAnnotation(name);
         }

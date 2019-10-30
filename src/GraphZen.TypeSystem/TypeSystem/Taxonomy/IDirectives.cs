@@ -2,21 +2,18 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IDirectives
+    public interface IDirectives : IDirectivesDefinition
     {
-        DirectiveLocation DirectiveLocation { get; }
+        [GraphQLIgnore]
+        new IEnumerable<Directive> GetDirectives();
 
-        [NotNull]
-        [ItemNotNull]
-        IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations { get; }
-
-        [CanBeNull]
-        IDirectiveAnnotation FindDirectiveAnnotation([NotNull] string name);
+        [GraphQLIgnore] IReadOnlyList<Directive> Directives { get; }
     }
 }

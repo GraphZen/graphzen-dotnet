@@ -3,29 +3,33 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation
 {
     public abstract class ValidationContext
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<GraphQLSyntaxWalker> _parentVisitor;
+        private readonly Lazy<GraphQLSyntaxWalker> _parentVisitor;
 
 
-        protected ValidationContext([NotNull] DocumentSyntax ast, [NotNull] Lazy<GraphQLSyntaxWalker> parentVisitor)
+        protected ValidationContext(DocumentSyntax ast, Lazy<GraphQLSyntaxWalker> parentVisitor)
         {
             AST = ast;
             _parentVisitor = parentVisitor;
         }
 
-        [NotNull]
+
         public IReadOnlyCollection<SyntaxNode> Ancestors => _parentVisitor.Value.Ancestors;
 
-        [NotNull]
+
         public DocumentSyntax AST { get; }
 
-        [NotNull]
-        [ItemNotNull]
+
         private List<GraphQLError> Errors { get; } = new List<GraphQLError>();
 
         public virtual void Enter(SyntaxNode node)
@@ -42,8 +46,7 @@ namespace GraphZen.LanguageModel.Validation
             Errors.Add(error);
         }
 
-        [NotNull]
-        [ItemNotNull]
+
         public IReadOnlyCollection<GraphQLError> GetErrors() => Errors.AsReadOnly();
     }
 }

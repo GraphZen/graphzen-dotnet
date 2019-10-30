@@ -1,9 +1,14 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.Reflection;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Internal
 {
@@ -22,15 +27,12 @@ namespace GraphZen.LanguageModel.Internal
             return false;
         }
 
-        [NotNull]
+
         public static string GetGraphQLName(this Type clrType, object source = null)
         {
             if (clrType.TryGetGraphQLNameWithoutValidation(out var maybeInvalidName, source))
             {
-                if (maybeInvalidName.IsValidGraphQLName())
-                {
-                    return maybeInvalidName;
-                }
+                if (maybeInvalidName.IsValidGraphQLName()) return maybeInvalidName;
 
                 throw new Exception(
                     $"Failed to get a valid GraphQL name for CLR type '{clrType}' because it was invalid. The invalid name was '{maybeInvalidName}'.");
@@ -44,10 +46,7 @@ namespace GraphZen.LanguageModel.Internal
             Check.NotNull(clrType, nameof(clrType));
             name = default;
 
-            if (clrType.TryGetGraphQLNameFromDataAnnotation(out name))
-            {
-                return true;
-            }
+            if (clrType.TryGetGraphQLNameFromDataAnnotation(out name)) return true;
 
             if (source != null)
             {
@@ -58,7 +57,7 @@ namespace GraphZen.LanguageModel.Internal
 
                     if (typename != null)
                     {
-                        name = (string) typename;
+                        name = (string)typename;
                         return true;
                     }
 
@@ -75,9 +74,10 @@ namespace GraphZen.LanguageModel.Internal
             clrType.TryGetGraphQLName(out _, source);
 
 
-        public static bool TryGetGraphQLNameFromDataAnnotation([NotNull] this Type clrType, out string name)
+        public static bool TryGetGraphQLNameFromDataAnnotation(this Type clrType, out string name)
         {
-            name = clrType.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
+            name = clrType.GetCustomAttributes(typeof(GraphQLNameAttribute), false).Cast<GraphQLNameAttribute>()
+                .SingleOrDefault()?.Name;
             return name != null;
         }
     }

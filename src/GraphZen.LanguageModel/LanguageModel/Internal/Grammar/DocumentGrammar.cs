@@ -1,10 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Superpower;
 
-namespace GraphZen.LanguageModel.Internal.Grammar
+#nullable disable
+
+
+namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar
     {
@@ -24,9 +29,9 @@ namespace GraphZen.LanguageModel.Internal.Grammar
         /// </summary>
         private static TokenListParser<TokenKind, DefinitionSyntax> Definition { get; } =
             (from leadingComments in Parse.Ref(() => Comment.Many())
-             from def in ExecutableDefinition.Select(_ => (DefinitionSyntax) _)
-                 .Or(TypeSystemDefinition.Select(_ => (DefinitionSyntax) _))
-                 .Or(TypeSystemExtension.Select(_ => (DefinitionSyntax) _))
+             from def in ExecutableDefinition.Select(_ => (DefinitionSyntax)_)
+                 .Or(TypeSystemDefinition.Select(_ => (DefinitionSyntax)_))
+                 .Or(TypeSystemExtension.Select(_ => (DefinitionSyntax)_))
              from trailingComments in Comment.Many()
              select def)
             .Named("definition");
@@ -35,8 +40,8 @@ namespace GraphZen.LanguageModel.Internal.Grammar
         ///     http://facebook.github.io/graphql/June2018/#ExecutableDefinition
         /// </summary>
         private static TokenListParser<TokenKind, ExecutableDefinitionSyntax> ExecutableDefinition { get; } =
-            Parse.Ref(() => OperationDefintion).Select(_ => (ExecutableDefinitionSyntax) _)
-                .Or(FragmentDefinition.Select(_ => (ExecutableDefinitionSyntax) _))
+            Parse.Ref(() => OperationDefintion).Select(_ => (ExecutableDefinitionSyntax)_)
+                .Or(FragmentDefinition.Select(_ => (ExecutableDefinitionSyntax)_))
                 .Named("executable definition");
     }
 }

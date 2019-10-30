@@ -2,7 +2,12 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -24,13 +29,13 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The variable being assigned.
         /// </summary>
-        [NotNull]
+
         public VariableSyntax Variable { get; }
 
         /// <summary>
         ///     The type of the variable.
         /// </summary>
-        [NotNull]
+
         public TypeSyntax VariableType { get; }
 
         /// <summary>
@@ -44,32 +49,23 @@ namespace GraphZen.LanguageModel
             {
                 yield return Variable;
                 yield return VariableType;
-                if (DefaultValue != null)
-                {
-                    yield return DefaultValue;
-                }
+                if (DefaultValue != null) yield return DefaultValue;
             }
         }
 
 
-        private bool Equals([NotNull] VariableDefinitionSyntax other) =>
+        private bool Equals(VariableDefinitionSyntax other) =>
             Variable.Equals(other.Variable)
             && VariableType.Equals(other.VariableType)
             && Equals(DefaultValue, other.DefaultValue);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is VariableDefinitionSyntax && Equals((VariableDefinitionSyntax) obj);
+            return obj is VariableDefinitionSyntax && Equals((VariableDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

@@ -1,19 +1,25 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class InputObjectsMustHaveFields : DocumentValidationRuleVisitor
     {
-        [NotNull] private readonly Dictionary<string, ICollection<InputObjectTypeDefinitionSyntax>>
+        private readonly Dictionary<string, ICollection<InputObjectTypeDefinitionSyntax>>
             _inputDefs = new Dictionary<string, ICollection<InputObjectTypeDefinitionSyntax>>();
 
-        [NotNull] private readonly Dictionary<string, ICollection<InputObjectTypeExtensionSyntax>> _inputExts =
+
+        private readonly Dictionary<string, ICollection<InputObjectTypeExtensionSyntax>> _inputExts =
             new Dictionary<string, ICollection<InputObjectTypeExtensionSyntax>>();
 
         public InputObjectsMustHaveFields(DocumentValidationContext context) : base(context)
@@ -46,22 +52,18 @@ namespace GraphZen.LanguageModel.Validation.Rules
                     .Concat(inputExts.SelectMany(_ => _.Fields))
                     .ToArray();
                 if (!inputFields.Any())
-                {
                     ReportError($"Input Object type {input.Key} must define one or more fields.",
                         // ReSharper disable twice PossibleNullReferenceException
                         input.Value.Select(_ => _.Name).Concat(inputExts.Select(_ => _.Name)).ToArray<SyntaxNode>());
-                }
 
                 foreach (var inputField in inputFields)
                 {
                     var inputFieldNamedType = inputField.Type.GetNamedType();
                     var inputType = inputTypes.FirstOrDefault(_ => _.Name.Value == inputFieldNamedType.Name.Value);
                     if (inputType == null)
-                    {
                         ReportError(
                             $"The type of {input.Key}.{inputField} must be Input Type but got: {inputField.Type}.",
                             inputField.Type);
-                    }
                 }
             }
 

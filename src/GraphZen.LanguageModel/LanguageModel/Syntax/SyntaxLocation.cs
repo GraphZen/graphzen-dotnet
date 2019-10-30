@@ -4,8 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -29,15 +34,9 @@ namespace GraphZen.LanguageModel
 
         public SyntaxLocation(int start, int end, int line, int column, Source source)
         {
-            if (start < 0)
-            {
-                throw new ArgumentException($"Location start index ({start}) must be greater than 0.");
-            }
+            if (start < 0) throw new ArgumentException($"Location start index ({start}) must be greater than 0.");
 
-            if (end < start)
-            {
-                throw new ArgumentException($"Location start (${start}) must precede end (${end}).");
-            }
+            if (end < start) throw new ArgumentException($"Location start (${start}) must precede end (${end}).");
 
             Start = start;
             End = end;
@@ -54,27 +53,17 @@ namespace GraphZen.LanguageModel
 
         public Source Source { get; }
 
-        protected bool Equals([NotNull] SyntaxLocation other) =>
-            Start == other.Start && End == other.End;
+        protected bool Equals(SyntaxLocation other) => Start == other.Start && End == other.End;
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            if (obj.GetType() != GetType())
-            {
-                return false;
-            }
+            if (obj.GetType() != GetType()) return false;
 
-            return Equals((SyntaxLocation) obj);
+            return Equals((SyntaxLocation)obj);
         }
 
         public override int GetHashCode()
@@ -85,20 +74,19 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public static SyntaxLocation FromMany([NotNull] [ItemCanBeNull] params ISyntaxNodeLocation[] nodes)
-            => FromMany(nodes.Select(_ => _?.Location));
+        public static SyntaxLocation FromMany(params ISyntaxNodeLocation[] nodes)
+        {
+            return FromMany(nodes.Select(_ => _?.Location));
+        }
 
         public static SyntaxLocation FromMany(params SyntaxLocation[] locations) => FromMany(locations.AsEnumerable());
 
-        private static SyntaxLocation FromMany([ItemCanBeNull] IEnumerable<SyntaxLocation> locations)
+        private static SyntaxLocation FromMany(IEnumerable<SyntaxLocation> locations)
         {
             Check.NotNull(locations, nameof(locations));
 
             var locs = locations.Where(l => l != null).OrderBy(_ => _.Start).ToArray();
-            if (locs.Length == 0)
-            {
-                return null;
-            }
+            if (locs.Length == 0) return null;
 
             var min = locs[0];
             var max = locs[locs.Length - 1];

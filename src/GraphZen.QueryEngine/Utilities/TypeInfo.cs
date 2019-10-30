@@ -1,97 +1,88 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
-using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
-namespace GraphZen
+#nullable disable
+
+
+namespace GraphZen.Utilities
 {
     public class TypeInfo
     {
-        [NotNull] private readonly Stack<Maybe<object>> _defaultValueStack = new Stack<Maybe<object>>();
+        private readonly Stack<Maybe<object>> _defaultValueStack = new Stack<Maybe<object>>();
 
-        [NotNull] private readonly Stack<Field> _fieldDefStack = new Stack<Field>();
+        private readonly Stack<Field> _fieldDefStack = new Stack<Field>();
 
-        [NotNull] private readonly Stack<IGraphQLType> _inputTypeStack = new Stack<IGraphQLType>();
+        private readonly Stack<IGraphQLType> _inputTypeStack = new Stack<IGraphQLType>();
 
-        [NotNull] private readonly Stack<ICompositeType> _parentTypeStack = new Stack<ICompositeType>();
+        private readonly Stack<ICompositeType> _parentTypeStack = new Stack<ICompositeType>();
 
-        [NotNull] private readonly Stack<IGraphQLType> _typeStack = new Stack<IGraphQLType>();
+        private readonly Stack<IGraphQLType> _typeStack = new Stack<IGraphQLType>();
 
         public TypeInfo(Schema schema)
         {
             Schema = Check.NotNull(schema, nameof(schema));
         }
 
-        [CanBeNull]
+
         public Argument Argument { get; private set; }
 
-        [CanBeNull]
+
         public Directive Directive { get; private set; }
 
-        [CanBeNull]
+
         public EnumValue EnumValue { get; private set; }
 
-        [NotNull]
+
         protected Schema Schema { get; }
 
-        [CanBeNull]
+
         public Maybe<object> DefaultValue => _defaultValueStack.PeekOrDefault();
 
-        [CanBeNull]
-        private static Field GetFieldDef([NotNull] Schema schema, [NotNull] IGraphQLType parentType,
-            [NotNull] FieldSyntax node)
+
+        private static Field GetFieldDef(Schema schema, IGraphQLType parentType,
+            FieldSyntax node)
         {
             var name = node.Name.Value;
 
             if (name == Introspection.SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
-            {
                 return Introspection.SchemaMetaFieldDef;
-            }
 
             if (name == Introspection.TypeMetaFieldDef.Name && schema.QueryType.Equals(parentType))
-            {
                 return Introspection.TypeMetaFieldDef;
-            }
 
             if (name == Introspection.TypeNameMetaFieldDef.Name && parentType is ICompositeType)
-            {
                 return Introspection.TypeNameMetaFieldDef;
-            }
 
-            if (parentType is ObjectType objectType)
-            {
-                return objectType.FindField(name);
-            }
+            if (parentType is ObjectType objectType) return objectType.FindField(name);
 
-            if (parentType is InterfaceType interfaceType)
-            {
-                return interfaceType.FindField(name);
-            }
+            if (parentType is InterfaceType interfaceType) return interfaceType.FindField(name);
 
             return null;
         }
 
 
-        [CanBeNull]
         public IGraphQLType GetOutputType() => _typeStack.PeekOrDefault();
 
-        [CanBeNull]
+
         public ICompositeType GetParentType() => _parentTypeStack.PeekOrDefault();
 
-        [CanBeNull]
+
         public IGraphQLType GetInputType() => _inputTypeStack.PeekOrDefault();
 
-        [CanBeNull]
+
         public IGraphQLType GetParentInputType() => _inputTypeStack.Count > 1 ? _inputTypeStack.ElementAt(1) : default;
 
-        [CanBeNull]
+
         public Field GetField() => _fieldDefStack.PeekOrDefault();
 
         public void Enter(SyntaxNode syntaxNode)
@@ -108,10 +99,7 @@ namespace GraphZen
                     if (parentType != null)
                     {
                         fieldDef = GetFieldDef(Schema, parentType, node);
-                        if (fieldDef != null)
-                        {
-                            fieldType = fieldDef.FieldType;
-                        }
+                        if (fieldDef != null) fieldType = fieldDef.FieldType;
                     }
 
                     _fieldDefStack.Push(fieldDef);
@@ -122,92 +110,85 @@ namespace GraphZen
                     Directive = Schema.FindDirective(directive.Name.Value);
                     break;
                 case OperationDefinitionSyntax node:
-                {
-                    IGraphQLType type = null;
-                    if (node.OperationType == OperationType.Query)
                     {
-                        type = Schema.QueryType;
-                    }
-                    else if (node.OperationType == OperationType.Mutation)
-                    {
-                        type = Schema.MutationType;
-                    }
-                    else if (node.OperationType == OperationType.Subscription)
-                    {
-                        type = Schema.SubscriptionType;
-                    }
+                        IGraphQLType type = null;
+                        if (node.OperationType == OperationType.Query)
+                            type = Schema.QueryType;
+                        else if (node.OperationType == OperationType.Mutation)
+                            type = Schema.MutationType;
+                        else if (node.OperationType == OperationType.Subscription) type = Schema.SubscriptionType;
 
-                    _typeStack.Push(type);
-                    break;
-                }
+                        _typeStack.Push(type);
+                        break;
+                    }
                 case IFragmentTypeConditionSyntax node:
-                {
-                    var typeCondition = node.TypeCondition;
-                    var type = typeCondition != null
-                        ? Schema.GetTypeFromAst(typeCondition)
-                        : GetOutputType().GetNamedType();
-                    _typeStack.Push(type);
-                    break;
-                }
+                    {
+                        var typeCondition = node.TypeCondition;
+                        var type = typeCondition != null
+                            ? Schema.GetTypeFromAst(typeCondition)
+                            : GetOutputType().GetNamedType();
+                        _typeStack.Push(type);
+                        break;
+                    }
                 case VariableDefinitionSyntax node:
-                {
-                    var type = Schema.GetTypeFromAst(node.VariableType);
-                    _inputTypeStack.Push(type);
-                    break;
-                }
+                    {
+                        var type = Schema.GetTypeFromAst(node.VariableType);
+                        _inputTypeStack.Push(type);
+                        break;
+                    }
                 case ArgumentSyntax node:
-                {
-                    Argument argDef = null;
-                    IGraphQLType argType = null;
-
-                    var fieldOrDirective = (IArgumentsContainer) Directive ?? GetField();
-                    if (fieldOrDirective != null)
                     {
-                        argDef = fieldOrDirective.FindArgument(node.Name.Value);
-                        argType = argDef?.InputType;
-                    }
+                        Argument argDef = null;
+                        IGraphQLType argType = null;
 
-                    Argument = argDef;
-                    _defaultValueStack.Push(argDef != null && argDef.HasDefaultValue
-                        ? Maybe.Some(argDef.DefaultValue)
-                        : Maybe.None<object>());
-                    _inputTypeStack.Push(argType);
-                    break;
-                }
+                        var fieldOrDirective = (IArguments)Directive ?? GetField();
+                        if (fieldOrDirective != null)
+                        {
+                            argDef = fieldOrDirective.FindArgument(node.Name.Value);
+                            argType = argDef?.InputType;
+                        }
+
+                        Argument = argDef;
+                        _defaultValueStack.Push(argDef != null && argDef.HasDefaultValue
+                            ? Maybe.Some(argDef.DefaultValue)
+                            : Maybe.None<object>());
+                        _inputTypeStack.Push(argType);
+                        break;
+                    }
                 case ListValueSyntax _:
-                {
-                    var listType = GetInputType().GetNullableType();
-                    var itemType = listType is ListType list ? list.OfType : listType;
-                    _defaultValueStack.Push(null);
-                    _inputTypeStack.Push(itemType);
-
-                    break;
-                }
-                case ObjectFieldSyntax node:
-                {
-                    var objectType = GetInputType().GetNamedType();
-                    IGraphQLType inputFieldType = null;
-                    InputField inputField = null;
-                    if (objectType is InputObjectType inputObject)
                     {
-                        inputField = inputObject.FindField(node.Name.Value);
-                        inputFieldType = inputField?.InputType;
-                    }
+                        var listType = GetInputType().GetNullableType();
+                        var itemType = listType is ListType list ? list.OfType : listType;
+                        _defaultValueStack.Push(null);
+                        _inputTypeStack.Push(itemType);
 
-                    _defaultValueStack.Push(inputField != null && inputField.HasDefaultValue
-                        ? Maybe.Some(inputField.DefaultValue)
-                        : Maybe.None<object>());
-                    _inputTypeStack.Push(inputFieldType);
-                    break;
-                }
+                        break;
+                    }
+                case ObjectFieldSyntax node:
+                    {
+                        var objectType = GetInputType().GetNamedType();
+                        IGraphQLType inputFieldType = null;
+                        InputField inputField = null;
+                        if (objectType is InputObjectType inputObject)
+                        {
+                            inputField = inputObject.FindField(node.Name.Value);
+                            inputFieldType = inputField?.InputType;
+                        }
+
+                        _defaultValueStack.Push(inputField != null && inputField.HasDefaultValue
+                            ? Maybe.Some(inputField.DefaultValue)
+                            : Maybe.None<object>());
+                        _inputTypeStack.Push(inputFieldType);
+                        break;
+                    }
                 case EnumValueSyntax node:
 
-                {
-                    var type = GetInputType().GetNamedType();
-                    EnumValue = type is EnumType enumType ? enumType.FindValue(node.Value) : null;
+                    {
+                        var type = GetInputType().GetNamedType();
+                        EnumValue = type is EnumType enumType ? enumType.FindValue(node.Value) : null;
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 

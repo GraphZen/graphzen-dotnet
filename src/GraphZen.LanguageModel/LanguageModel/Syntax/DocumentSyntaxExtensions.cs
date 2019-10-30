@@ -3,15 +3,19 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
     public static class DocumentSyntaxExtensions
     {
-        [NotNull]
         public static DocumentSyntax WithSpecDefinitions(this DocumentSyntax document)
         {
             Check.NotNull(document, nameof(document));
@@ -31,20 +35,25 @@ namespace GraphZen.LanguageModel
         }
 
 
-        [NotNull]
-        public static DocumentSyntax WithoutSpecDefinitions(this DocumentSyntax document) =>
-            Check.NotNull(document, nameof(document))
+        public static DocumentSyntax WithoutSpecDefinitions(this DocumentSyntax document)
+        {
+            return Check.NotNull(document, nameof(document))
                 .WithFilteredDefinitions(def => !def.IsSpecDefinedType() && !def.IsSpecDefinedDirective());
+        }
 
-        [NotNull]
-        public static DocumentSyntax WithoutIntrospectionTypes(this DocumentSyntax document) => Check
-            .NotNull(document, nameof(document)).WithFilteredDefinitions(_ => !_.IsIntrospectionType());
 
-        [NotNull]
-        public static DocumentSyntax WithoutBuiltInDefinitions(this DocumentSyntax document) => Check
-            .NotNull(document, nameof(document)).WithoutIntrospectionTypes().WithoutSpecDefinitions();
+        public static DocumentSyntax WithoutIntrospectionTypes(this DocumentSyntax document)
+        {
+            return Check
+                .NotNull(document, nameof(document)).WithFilteredDefinitions(_ => !_.IsIntrospectionType());
+        }
 
-        [NotNull]
+
+        public static DocumentSyntax WithoutBuiltInDefinitions(this DocumentSyntax document) =>
+            Check
+                .NotNull(document, nameof(document)).WithoutIntrospectionTypes().WithoutSpecDefinitions();
+
+
         public static DocumentSyntax WithDefinitionsAdded(this DocumentSyntax document,
             IEnumerable<DefinitionSyntax> definitions)
         {
@@ -61,7 +70,7 @@ namespace GraphZen.LanguageModel
             params DefinitionSyntax[] definitions) =>
             document.WithDefinitionsAdded(definitions.AsEnumerable());
 
-        [NotNull]
+
         public static DocumentSyntax WithSortedChildren(this DocumentSyntax document)
         {
             Check.NotNull(document, nameof(document));

@@ -1,22 +1,21 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     public interface IEnumValueBuilder : IAnnotableBuilder<IEnumValueBuilder>
     {
-        [NotNull]
-        IEnumValueBuilder Description([CanBeNull] string description);
+        IEnumValueBuilder Name(string name);
 
-        [NotNull]
+        IEnumValueBuilder Description(string? description);
+
         IEnumValueBuilder CustomValue(object value);
 
-        [NotNull]
         IEnumValueBuilder Deprecated(bool deprecated = true);
-
-        [NotNull]
-        IEnumValueBuilder Deprecated(string reason);
+        IEnumValueBuilder Deprecated(string? reason);
     }
 }

@@ -1,18 +1,24 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class EnumTypesMustBeWellDefined : DocumentValidationRuleVisitor
     {
-        [NotNull] private readonly Dictionary<string, ICollection<EnumTypeDefinitionSyntax>> _enumDefs =
+        private readonly Dictionary<string, ICollection<EnumTypeDefinitionSyntax>> _enumDefs =
             new Dictionary<string, ICollection<EnumTypeDefinitionSyntax>>();
 
-        [NotNull] private readonly Dictionary<string, ICollection<EnumTypeExtensionSyntax>> _enumExts =
+
+        private readonly Dictionary<string, ICollection<EnumTypeExtensionSyntax>> _enumExts =
             new Dictionary<string, ICollection<EnumTypeExtensionSyntax>>();
 
 
@@ -39,7 +45,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
                 var enumTypeName = enums.Key;
                 var enumExts = _enumExts.GetItems(enumTypeName);
                 // ReSharper disable once PossibleNullReferenceException
-                // ReSharper disable once AssignNullToNotNullAttribute
+
                 var values = enums.Value.SelectMany(_ => _.Values)
                     // ReSharper disable once PossibleNullReferenceException
                     .Concat(enumExts.SelectMany(_ => _.Values)).ToArray();

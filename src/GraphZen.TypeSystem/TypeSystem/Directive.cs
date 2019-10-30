@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.LanguageModel.Internal.Grammar;
+using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -22,16 +24,16 @@ namespace GraphZen.TypeSystem
                  "describing additional information to the executor.")]
     public class Directive : Member, IDirective
     {
-        [NotNull] [ItemNotNull] private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
+        private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
 
-        public Directive(string name, string description, IReadOnlyList<DirectiveLocation> locations,
-            IEnumerable<IArgumentDefinition> arguments, TypeResolver typeResolver)
+        public Directive(string name, string? description, IReadOnlyCollection<DirectiveLocation> locations,
+            IEnumerable<IArgumentDefinition>? arguments, TypeResolver typeResolver)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
             Locations = Check.NotNull(locations, nameof(locations));
 
-            arguments = arguments ?? Enumerable.Empty<IArgumentDefinition>();
+            //arguments = arguments != null ? Enumerable.Empty<IArgumentDefinition>();
             // ReSharper disable once PossibleNullReferenceException
             Arguments = new ReadOnlyDictionary<string, Argument>(arguments.ToDictionary(_ => _.Name,
                 _ => Argument.From(_, this, typeResolver)));
@@ -45,14 +47,12 @@ namespace GraphZen.TypeSystem
             });
         }
 
-        [GraphQLIgnore]
-        public IReadOnlyDictionary<string, Argument> Arguments { get; }
+        [GraphQLIgnore] public IReadOnlyDictionary<string, Argument> Arguments { get; }
 
         public string Name { get; }
 
-        public override string Description { get; }
+        public override string? Description { get; }
 
-        public IReadOnlyList<DirectiveLocation> Locations { get; }
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
@@ -60,10 +60,9 @@ namespace GraphZen.TypeSystem
         public IEnumerable<Argument> GetArguments() => Arguments.Values;
 
         [GraphQLIgnore]
-        IEnumerable<IArgumentDefinition> IArgumentsContainerDefinition.GetArguments() => GetArguments();
+        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
 
-        [NotNull]
         [GraphQLIgnore]
         public static Directive From(IDirectiveDefinition definition, TypeResolver typeResolver)
         {
@@ -71,5 +70,8 @@ namespace GraphZen.TypeSystem
             return new Directive(definition.Name, definition.Description, definition.Locations,
                 definition.GetArguments(), typeResolver);
         }
+
+        public IReadOnlyCollection<DirectiveLocation> Locations { get; }
+        [GraphQLIgnore] public Type? ClrType { get;  }
     }
 }

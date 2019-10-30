@@ -2,8 +2,13 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -21,27 +26,21 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The values contained within the list. (Optional)
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
+
+
         public IReadOnlyList<ValueSyntax> Values { get; }
 
         public override IEnumerable<SyntaxNode> Children => Values;
 
-        private bool Equals([NotNull] ListValueSyntax other) => Values.SequenceEqual(other.Values);
+        private bool Equals(ListValueSyntax other) => Values.SequenceEqual(other.Values);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ListValueSyntax && Equals((ListValueSyntax) obj);
+            return obj is ListValueSyntax && Equals((ListValueSyntax)obj);
         }
 
         public override int GetHashCode() => Values.GetHashCode();

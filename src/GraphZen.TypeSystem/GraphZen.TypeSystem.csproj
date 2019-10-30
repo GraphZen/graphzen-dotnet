@@ -1,32 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
     <Description>Object model for the GraphQL type system for creating, inspecting and manipulating GraphQL schemas.</Description>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+  <ItemGroup>
+    <Compile Include="..\Linked\TypeSystem\TypeSystemAccessors.Generated.cs" Link="TypeSystemAccessors.Generated.cs" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="Microsoft.CSharp" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.LanguageModel\GraphZen.LanguageModel.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="TypeSystem\Internal\GraphZenDictionaryContainerExtensions.Generated.tt">
-      <LastGenOutput>GraphZenDictionaryContainerExtensions.Generated.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="TypeSystem\Internal\GraphZenDictionaryContainerExtensions.Generated.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>GraphZenDictionaryContainerExtensions.Generated.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Internal\Maybe\Internal\" />
-    <Folder Include="TypeSystem\Validation\" />
   </ItemGroup>
 </Project>

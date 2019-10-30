@@ -1,11 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -18,7 +20,7 @@ namespace GraphZen.TypeSystem
             Builder = builder;
         }
 
-        [NotNull]
+
         private InternalObjectTypeBuilder Builder { get; }
 
         InternalObjectTypeBuilder IInfrastructure<InternalObjectTypeBuilder>.Instance => Builder;
@@ -30,83 +32,115 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> Description(string description)
+        public IObjectTypeBuilder<object, TContext> ClrType(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(ClrType));
+            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            return new ObjectTypeBuilder<object, TContext>(Builder);
+        }
+
+        public IObjectTypeBuilder<T, TContext> ClrType<T>()
+        {
+            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            return new ObjectTypeBuilder<T, TContext>(Builder);
+        }
+
+        public IObjectTypeBuilder<TObject, TContext> Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
 
+        public IObjectTypeBuilder<TObject, TContext> Field(string name,
+            Action<IFieldBuilder<TObject, object, TContext>> configurator)
+        {
+            Check.NotNull(name, nameof(name));
+            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
+
+            configurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
+            return this;
+        }
+
+        public IFieldBuilder<TObject, object, TContext> Field(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
+            return new FieldBuilder<TObject, object, TContext>(ib);
+        }
+
         public IObjectTypeBuilder<TObject, TContext> Field(string name, string type,
-            Action<IFieldBuilder<TObject, object, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, object?, TContext>>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
-            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit).FieldType(type);
-            fieldConfigurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
+            var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
+            configurator?.Invoke(new FieldBuilder<TObject, object?, TContext>(ib));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(string name,
-            Action<IFieldBuilder<TObject, TField, TContext>> fieldConfigurator = null)
+            Action<IFieldBuilder<TObject, TField, TContext>>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)
-                .FieldType(typeof(TField));
-            fieldConfigurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(ib));
+                ?.FieldType(typeof(TField))!;
+            configurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(ib));
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> Field<TField>(Expression<Func<TObject, TField>> fieldSelector,
-            Action<IFieldBuilder<TObject, TField, TContext>> fieldConfigurator = null)
+        public IObjectTypeBuilder<TObject, TContext> Field<TField>(Expression<Func<TObject, TField>> selector,
+            Action<IFieldBuilder<TObject, TField, TContext>>? configurator = null)
         {
-            Check.NotNull(fieldSelector, nameof(fieldSelector));
-            // var resolver = fieldSelector.GetFuncFromExpression();
-            var property = fieldSelector.GetPropertyInfoFromExpression();
-
-            var fb = Builder.Field(property, ConfigurationSource.Explicit);
-            // ReSharper disable once AssignNullToNotNullAttribute
-            fieldConfigurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(fb));
+            Check.NotNull(selector, nameof(selector));
+            var property = selector.GetPropertyInfoFromExpression();
+            var fb = Builder.Field(property, ConfigurationSource.Explicit)!;
+            configurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(fb));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value, (TContext) context));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value, (TContext)context));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, ResolveInfo, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value, (TContext) context, info));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value, (TContext)context, info));
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> Interfaces(string interfaceType, params string[] interfaceTypes)
+        public IObjectTypeBuilder<TObject, TContext> ImplementsInterface(string name)
         {
-            Check.NotNull(interfaceType, nameof(interfaceType));
-            Check.NotNull(interfaceTypes, nameof(interfaceTypes));
-            Builder.Interface(interfaceType, ConfigurationSource.Explicit);
+            Check.NotNull(name, nameof(name));
+            Builder.ImplementsInterface(name, ConfigurationSource.Explicit);
+            return this;
+        }
 
-            foreach (var _ in interfaceTypes)
-            {
-                Check.NotNull(_, nameof(interfaceTypes));
-                Builder.Interface(_, ConfigurationSource.Explicit);
-            }
+        public IObjectTypeBuilder<TObject, TContext> ImplementsInterfaces(string name, params string[] names)
+        {
+            ImplementsInterface(name);
+            if (names != null)
+                foreach (var n in names)
+                {
+                    ImplementsInterface(n);
+                }
 
             return this;
         }
+
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreInterface<T>()
         {
@@ -115,32 +149,52 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IObjectTypeBuilder<TObject, TContext> IgnoreInterface(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.IgnoreInterface(clrType.GetGraphQLName(), ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IObjectTypeBuilder<TObject, TContext> IgnoreInterface(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.IgnoreInterface(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IObjectTypeBuilder<TObject, TContext> UnignoreInterface(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreInterface(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
         public IObjectTypeBuilder<TObject, TContext> IgnoreField<TField>(
-            Expression<Func<TObject, TField>> fieldSelector) => throw new NotImplementedException();
+            Expression<Func<TObject, TField>> selector) =>
+            throw new NotImplementedException();
 
-        public IObjectTypeBuilder<TObject, TContext> IgnoreField(string fieldName)
+        public IObjectTypeBuilder<TObject, TContext> IgnoreField(string name)
         {
-            Check.NotNull(fieldName, nameof(fieldName));
-            Builder.IgnoreField(fieldName, ConfigurationSource.Explicit);
-
-
+            Check.NotNull(name, nameof(name));
+            Builder.IgnoreField(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
-
-        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name, object value)
+        public IObjectTypeBuilder<TObject, TContext> UnignoreField(string name)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Check.NotNull(name, nameof(name));
+            Builder.UnignoreField(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotation(string name)
+        public IObjectTypeBuilder<TObject, TContext> DirectiveAnnotation(string name, object? value = null)
         {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
+
+        public IObjectTypeBuilder<TObject, TContext> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector) =>
             throw new NotImplementedException();

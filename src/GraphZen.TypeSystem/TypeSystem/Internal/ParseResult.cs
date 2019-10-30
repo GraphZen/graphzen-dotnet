@@ -2,7 +2,11 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
 
 namespace GraphZen.TypeSystem.Internal
 {
@@ -15,7 +19,7 @@ namespace GraphZen.TypeSystem.Internal
 
         internal ParseResult(object value, bool hasValue)
         {
-            _value = (T) value;
+            _value = (T)value;
             HasValue = hasValue;
         }
 
@@ -26,6 +30,7 @@ namespace GraphZen.TypeSystem.Internal
     public static class ParseResult
     {
         public static ParseResult<TInner> FromValue<TInner>(TInner value) => new ParseResult<TInner>(value, true);
+
         public static ParseResult<TInner> Empty<TInner>() => new ParseResult<TInner>(default(TInner), false);
     }
 }

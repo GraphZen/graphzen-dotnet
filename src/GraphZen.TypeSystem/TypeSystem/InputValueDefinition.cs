@@ -1,9 +1,11 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -13,11 +15,11 @@ namespace GraphZen.TypeSystem
         protected ConfigurationSource NameConfigurationSource;
 
         public InputValueDefinition(
-            [NotNull] string name,
+            string name,
             ConfigurationSource nameConfigurationSource,
-            [NotNull] SchemaDefinition schema,
+            SchemaDefinition schema,
             ConfigurationSource configurationSource,
-            object clrInfo, [NotNull] IMemberDefinition declaringMember) : base(configurationSource)
+            object? clrInfo, IMemberDefinition declaringMember) : base(configurationSource)
         {
             ClrInfo = clrInfo;
             DeclaringMember = declaringMember;
@@ -27,17 +29,13 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [NotNull]
         public InternalInputValueBuilder Builder { get; }
 
-        public IGraphQLTypeReference InputType { get; set; }
+        public IGraphQLTypeReference? InputType { get; set; }
 
         public bool SetDefaultValue(object value, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(_defaultValueConfigurationSource))
-            {
-                return false;
-            }
+            if (!configurationSource.Overrides(_defaultValueConfigurationSource)) return false;
 
             DefaultValue = value;
             HasDefaultValue = true;
@@ -49,10 +47,7 @@ namespace GraphZen.TypeSystem
 
         public bool RemoveDefaultValue(ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(_defaultValueConfigurationSource))
-            {
-                return false;
-            }
+            if (!configurationSource.Overrides(_defaultValueConfigurationSource)) return false;
 
             DefaultValue = null;
             HasDefaultValue = false;
@@ -65,7 +60,7 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? GetDefaultValueConfigurationSource() => _defaultValueConfigurationSource;
 
         public IMemberDefinition DeclaringMember { get; }
-        public object DefaultValue { get; private set; }
+        public object? DefaultValue { get; private set; }
         public bool HasDefaultValue { get; private set; }
 
 
@@ -74,6 +69,7 @@ namespace GraphZen.TypeSystem
         public abstract bool SetName(string name, ConfigurationSource configurationSource);
 
         public ConfigurationSource GetNameConfigurationSource() => NameConfigurationSource;
-        public object ClrInfo { get; }
+
+        public object? ClrInfo { get; }
     }
 }

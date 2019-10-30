@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -12,7 +17,7 @@ namespace GraphZen.LanguageModel
     ///     Field selection
     ///     http://facebook.github.io/graphql/June2018/#sec-Language.Fields
     /// </summary>
-    public partial class FieldSyntax : SelectionSyntax, IArgumentsContainerNode
+    public partial class FieldSyntax : SelectionSyntax, IArgumentsNode
     {
         public FieldSyntax(NameSyntax name, SelectionSetSyntax selectionSet) : this(name, null, null, null,
             selectionSet)
@@ -37,16 +42,16 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The name of the requested field.
         /// </summary>
-        [NotNull]
+
         public NameSyntax Name { get; }
 
-        [NotNull]
+
         public string FieldEntryKey => Alias?.Value ?? Name.Value;
 
         /// <summary>
         ///     Additional child selections. (Optional)
         /// </summary>
-        [CanBeNull]
+
         public SelectionSetSyntax SelectionSet { get; }
 
         /// <summary>
@@ -69,7 +74,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public IReadOnlyList<ArgumentSyntax> Arguments { get; }
 
-        private bool Equals([NotNull] FieldSyntax other) =>
+        private bool Equals(FieldSyntax other) =>
             Name.Equals(other.Name)
             && Equals(SelectionSet, other.SelectionSet)
             && Equals(Alias, other.Alias)
@@ -78,17 +83,11 @@ namespace GraphZen.LanguageModel
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is FieldSyntax && Equals((FieldSyntax) obj);
+            return obj is FieldSyntax && Equals((FieldSyntax)obj);
         }
 
         public override int GetHashCode()

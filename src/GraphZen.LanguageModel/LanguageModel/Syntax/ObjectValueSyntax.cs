@@ -2,8 +2,13 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -22,27 +27,21 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The fields of an object.
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
+
+
         public IReadOnlyList<ObjectFieldSyntax> Fields { get; }
 
         public override IEnumerable<SyntaxNode> Children => Fields;
 
-        private bool Equals([NotNull] ObjectValueSyntax other) => Fields.SequenceEqual(other.Fields);
+        private bool Equals(ObjectValueSyntax other) => Fields.SequenceEqual(other.Fields);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ObjectValueSyntax && Equals((ObjectValueSyntax) obj);
+            return obj is ObjectValueSyntax && Equals((ObjectValueSyntax)obj);
         }
 
         public override int GetHashCode() => Fields.GetHashCode();

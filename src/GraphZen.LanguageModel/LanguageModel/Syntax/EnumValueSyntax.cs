@@ -3,8 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -19,47 +24,39 @@ namespace GraphZen.LanguageModel
             Value = value.Value;
 
             if (!IsValidValue(value.Value))
-            {
                 throw new ArgumentException(
                     $"Enum values cannot be 'true', 'false', or 'null'. Supplied value was: '{value.Value}'",
                     nameof(value));
-            }
         }
 
 
-        [NotNull]
-        [ItemNotNull]
-        private static string[] ProhibtedValues { get; } = {"true", "false", "null"};
+        private static string[] ProhibtedValues { get; } = { "true", "false", "null" };
 
         /// <summary>
         ///     The enum value.
         /// </summary>
-        [NotNull]
+
         public string Value { get; }
 
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
 
 
-        internal static bool IsValidValue(string value) =>
-            ProhibtedValues.All(v => !v.Equals(value));
+        internal static bool IsValidValue(string value)
+        {
+            return ProhibtedValues.All(v => !v.Equals(value));
+        }
 
 
-        private bool Equals([NotNull] EnumValueSyntax other) => string.Equals(Value, other.Value);
+        private bool Equals(EnumValueSyntax other) => string.Equals(Value, other.Value);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is EnumValueSyntax && Equals((EnumValueSyntax) obj);
+            return obj is EnumValueSyntax && Equals((EnumValueSyntax)obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();

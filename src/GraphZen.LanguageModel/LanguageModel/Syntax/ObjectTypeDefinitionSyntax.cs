@@ -2,9 +2,14 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -32,7 +37,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     Interfaces implemented by the object type. (Optional)
         /// </summary>
-        [NotNull]
+
         public IReadOnlyList<NamedTypeSyntax> Interfaces { get; }
 
 
@@ -58,25 +63,20 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
 
 
-        private bool Equals([NotNull] ObjectTypeDefinitionSyntax other) => Name.Equals(other.Name) &&
-                                                                           Fields.SequenceEqual(other.Fields) &&
-                                                                           Equals(Description, other.Description) &&
-                                                                           Interfaces.SequenceEqual(other.Interfaces) &&
-                                                                           Directives.SequenceEqual(other.Directives);
+        private bool Equals(ObjectTypeDefinitionSyntax other) =>
+            Name.Equals(other.Name) &&
+            Fields.SequenceEqual(other.Fields) &&
+            Equals(Description, other.Description) &&
+            Interfaces.SequenceEqual(other.Interfaces) &&
+            Directives.SequenceEqual(other.Directives);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ObjectTypeDefinitionSyntax && Equals((ObjectTypeDefinitionSyntax) obj);
+            return obj is ObjectTypeDefinitionSyntax && Equals((ObjectTypeDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

@@ -4,8 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -15,21 +20,21 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class DocumentSyntax : SyntaxNode
     {
-        [NotNull] [ItemNotNull]
         private readonly Lazy<IReadOnlyDictionary<string, TypeDefinitionSyntax>> _abstractTypeMap;
 
-        [NotNull] [ItemNotNull]
+
         private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>>
             _implementations;
 
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<TypeDefinitionSyntax>> _inputTypeDefinitions;
+        private readonly Lazy<IReadOnlyList<TypeDefinitionSyntax>> _inputTypeDefinitions;
 
-        [NotNull] [ItemNotNull]
+
         private readonly Lazy<IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax>> _objectTypeMap;
 
-        [NotNull] [ItemNotNull] private readonly Lazy<IReadOnlyList<TypeDefinitionSyntax>> _outputTypeDefinitions;
+        private readonly Lazy<IReadOnlyList<TypeDefinitionSyntax>> _outputTypeDefinitions;
 
-        [NotNull] private readonly Dictionary<string, IReadOnlyDictionary<string, bool>> _possibleTypeMap =
+
+        private readonly Dictionary<string, IReadOnlyDictionary<string, bool>> _possibleTypeMap =
             new Dictionary<string, IReadOnlyDictionary<string, bool>>();
 
 
@@ -59,28 +64,20 @@ namespace GraphZen.LanguageModel
                     var implementations = new Dictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>();
 
                     foreach (var objectType in GetObjectTypeMap().Values)
-                    {
                         foreach (var iface in objectType.Interfaces)
                         {
                             if (implementations.TryGetValue(iface.Name.Value, out
                                 var impls))
-                            {
-                                ((HashSet<ObjectTypeDefinitionSyntax>) impls).Add(objectType);
-                            }
+                                ((HashSet<ObjectTypeDefinitionSyntax>)impls).Add(objectType);
                             else
-                            {
                                 implementations[iface.Name.Value] =
-                                    new HashSet<ObjectTypeDefinitionSyntax> {objectType};
-                            }
+                                    new HashSet<ObjectTypeDefinitionSyntax> { objectType };
                         }
-                    }
 
                     foreach (var abstractType in GetAbstractTypeMap().Values)
                     {
                         if (!implementations.ContainsKey(abstractType.Name.Value))
-                        {
                             implementations[abstractType.Name.Value] = new HashSet<ObjectTypeDefinitionSyntax>();
-                        }
                     }
 
                     return new ReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>(
@@ -88,27 +85,24 @@ namespace GraphZen.LanguageModel
                 });
         }
 
-        [NotNull]
-        [ItemNotNull]
+
         public IReadOnlyList<DefinitionSyntax> Definitions { get; }
 
         public override IEnumerable<SyntaxNode> Children => Definitions;
 
-        [NotNull]
-        [ItemNotNull]
+
         public IReadOnlyList<TypeDefinitionSyntax> GetInputTypeDefinitions() => _inputTypeDefinitions.Value;
 
-        [NotNull]
-        [ItemNotNull]
+
         public IReadOnlyList<TypeDefinitionSyntax> GetOutputTypeDefinitions() => _outputTypeDefinitions.Value;
 
-        [NotNull]
+
         private IReadOnlyDictionary<string, TypeDefinitionSyntax> GetAbstractTypeMap() => _abstractTypeMap.Value;
 
-        [NotNull]
+
         private IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax> GetObjectTypeMap() => _objectTypeMap.Value;
 
-        [NotNull]
+
         private IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>> GetImplementationMap() =>
             _implementations.Value;
 
@@ -117,89 +111,68 @@ namespace GraphZen.LanguageModel
         {
             Check.NotNull(maybeSubType, nameof(maybeSubType));
             Check.NotNull(superType, nameof(superType));
-            if (maybeSubType.Equals(superType))
-            {
-                return true;
-            }
+            if (maybeSubType.Equals(superType)) return true;
 
             if (superType is NonNullTypeSyntax nnSuper)
             {
                 if (maybeSubType is NonNullTypeSyntax nnMaybeSub)
-                {
                     return IsTypeSubTypeOf(nnMaybeSub.OfType, nnSuper.OfType);
-                }
 
                 return false;
             }
 
             if (maybeSubType is NonNullTypeSyntax nnMaybeSubType)
-            {
                 return IsTypeSubTypeOf(nnMaybeSubType.OfType, superType);
-            }
 
             if (superType is ListTypeSyntax listSuper)
             {
                 if (maybeSubType is ListTypeSyntax listMaybeSub)
-                {
                     return IsTypeSubTypeOf(listMaybeSub.OfType, listSuper.OfType);
-                }
 
                 return false;
             }
 
-            if (maybeSubType is ListTypeSyntax)
-            {
-                return false;
-            }
+            if (maybeSubType is ListTypeSyntax) return false;
 
             if (
                 // Is super type abstract type?
-                GetAbstractTypeMap().TryGetValue(((NamedTypeSyntax) superType).Name.Value, out var abstractSuperType)
+                GetAbstractTypeMap().TryGetValue(((NamedTypeSyntax)superType).Name.Value, out var abstractSuperType)
                 // Is possible sub type object type?
-                && GetObjectTypeMap().TryGetValue(((NamedTypeSyntax) maybeSubType).Name.Value,
+                && GetObjectTypeMap().TryGetValue(((NamedTypeSyntax)maybeSubType).Name.Value,
                     out var maybeSubTypeObjectType)
                 && IsPossibleType(abstractSuperType, maybeSubTypeObjectType))
-
-            {
                 return true;
-            }
 
             return false;
         }
 
-        [NotNull]
-        [ItemNotNull]
+
         private IReadOnlyCollection<ObjectTypeDefinitionSyntax> GetPossibleTypes(
-            [NotNull] TypeDefinitionSyntax abstractType)
+            TypeDefinitionSyntax abstractType)
         {
             if (abstractType is UnionTypeDefinitionSyntax unionType)
-            {
                 return unionType.MemberTypes.Select(_ =>
                         // ReSharper disable once PossibleNullReferenceException
                         GetObjectTypeMap().TryGetValue(_.Name.Value, out var outputType) ? outputType : null)
                     .Where(_ => _ != null).ToReadOnlyList();
-            }
 
             return GetImplementationMap().TryGetValue(abstractType.Name.Value, out var possibleTypes)
                 ? possibleTypes
                 : new List<ObjectTypeDefinitionSyntax>();
         }
 
-        private bool IsPossibleType([NotNull] TypeDefinitionSyntax abstractType,
-            [NotNull] ObjectTypeDefinitionSyntax possibleType)
+        private bool IsPossibleType(TypeDefinitionSyntax abstractType,
+            ObjectTypeDefinitionSyntax possibleType)
         {
             if (!_possibleTypeMap.ContainsKey(abstractType.Name.Value))
-            {
                 _possibleTypeMap[abstractType.Name.Value] =
                     GetPossibleTypes(abstractType).ToDictionary(_ => _.Name.Value, _ => true);
-            }
 
             return _possibleTypeMap.TryGetValue(abstractType.Name.Value, out var possibleTypesMap) &&
                    possibleTypesMap.ContainsKey(possibleType.Name.Value);
         }
 
 
-        [NotNull]
         public DocumentSyntax WithFilteredDefinitions(Func<DefinitionSyntax, bool> predicate)
         {
             Check.NotNull(predicate, nameof(predicate));
@@ -207,19 +180,13 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private bool Equals([NotNull] DocumentSyntax other) => Definitions.SequenceEqual(other.Definitions);
+        private bool Equals(DocumentSyntax other) => Definitions.SequenceEqual(other.Definitions);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
             return obj is DocumentSyntax syntax && Equals(syntax);
         }

@@ -4,10 +4,14 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Superpower;
 using Superpower.Model;
 using Superpower.Parsers;
 using Superpower.Tokenizers;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Internal
 {
@@ -36,10 +40,7 @@ namespace GraphZen.LanguageModel.Internal
                 {
                     Debug.Assert(delimmiter != null, nameof(delimmiter) + " != null");
                     var begin = delimmiter(i);
-                    if (!begin.HasValue)
-                    {
-                        return begin;
-                    }
+                    if (!begin.HasValue) return begin;
 
                     var content = begin.Remainder;
 
@@ -48,10 +49,7 @@ namespace GraphZen.LanguageModel.Internal
                         // ReSharper disable once PossibleNullReferenceException
                         content = Span.EqualTo("\\\"\"\"").Value(Unit.Value).Try()(content).Remainder;
                         var end = delimmiter(content);
-                        if (end.HasValue)
-                        {
-                            return end;
-                        }
+                        if (end.HasValue) return end;
 
                         content = content.ConsumeChar().Remainder;
                     }
@@ -61,7 +59,7 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        [NotNull]
+
         [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public static Tokenizer<TokenKind> Instance { get; } = new TokenizerBuilder<TokenKind>()

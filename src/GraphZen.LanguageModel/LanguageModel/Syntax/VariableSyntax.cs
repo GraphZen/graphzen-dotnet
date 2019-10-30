@@ -3,7 +3,12 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -22,7 +27,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The variable name.
         /// </summary>
-        [NotNull]
+
         public NameSyntax Name { get; }
 
         public override IEnumerable<SyntaxNode> Children
@@ -31,23 +36,15 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private string DebuggerDisplay => $"${Name.Value}";
-
-        private bool Equals([NotNull] VariableSyntax other) => Name.Equals(other.Name);
+        private bool Equals(VariableSyntax other) => Name.Equals(other.Name);
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is VariableSyntax && Equals((VariableSyntax) obj);
+            return obj is VariableSyntax && Equals((VariableSyntax)obj);
         }
 
         public override int GetHashCode() => Name.GetHashCode();

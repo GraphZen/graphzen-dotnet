@@ -5,20 +5,24 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.Infrastructure
 {
     internal static class EnumerableExtensions
     {
-        [NotNull]
-        public static IReadOnlyList<TSource> ToReadOnlyList<TSource>([NotNull] this IEnumerable<TSource> source) =>
+        public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(this IEnumerable<TSource> source) =>
             source.ToList().AsReadOnly();
 
 
         public static bool TryGetDuplicateValueBy<TSource, TValue>(this IEnumerable<TSource> source,
-            Func<TSource, TValue> selector, out TSource duplicate)
+            Func<TSource, TValue> selector, [NotNullWhen(true)] out TSource duplicate) where TSource : class
         {
             Check.NotNull(selector, nameof(selector));
             Check.NotNull(source, nameof(source));
@@ -38,7 +42,7 @@ namespace GraphZen.Infrastructure
         }
 
         public static bool TryGetDuplicateKeyBy<TSource, TKey>(this IEnumerable<TSource> source,
-            Func<TSource, TKey> selector, out TKey duplicate)
+            Func<TSource, TKey> selector, out TKey duplicate) where TSource : class
         {
             Check.NotNull(selector, nameof(selector));
             if (source.TryGetDuplicateValueBy(selector, out var dupe))
@@ -52,7 +56,6 @@ namespace GraphZen.Infrastructure
         }
 
 
-        [NotNull]
         public static IReadOnlyList<T> ToReadOnlyListWithMutations<T>(this IEnumerable<T> source,
             Action<List<T>> listConfigurator)
         {
@@ -64,20 +67,27 @@ namespace GraphZen.Infrastructure
         }
 
 
-        [NotNull]
-        public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue, TSource>(
-            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
-            Func<TSource, TValue> valueSelector = null)
+        public static IReadOnlyDictionary<TKey, TSource> ToReadOnlyDictionary<TKey, TSource>(
+            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector
+        )
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(keySelector, nameof(keySelector));
-            Check.NotNull(valueSelector, nameof(valueSelector));
+            return new ReadOnlyDictionary<TKey, TSource>(source.ToDictionary(keySelector, v => v));
+        }
 
+
+        public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue, TSource>(
+            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
+            Func<TSource, TValue> valueSelector)
+        {
+            Check.NotNull(source, nameof(source));
+            Check.NotNull(keySelector, nameof(keySelector));
+            Check.NotNull(valueSelector, nameof(ValueInspector));
             return new ReadOnlyDictionary<TKey, TValue>(source.ToDictionary(keySelector, valueSelector));
         }
 
 
-        [NotNull]
         public static IReadOnlyDictionary<TKey, TSource> ToReadOnlyDictionaryIgnoringDuplicates<TKey, TSource>(
             this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
@@ -85,13 +95,12 @@ namespace GraphZen.Infrastructure
             Check.NotNull(keySelector, nameof(keySelector));
 
             // ReSharper disable once PossibleNullReferenceException
-            // ReSharper disable once AssignNullToNotNullAttribute
+
             var dict = source.GroupBy(keySelector).ToDictionary(_ => _.Key, _ => _.First());
             return new ReadOnlyDictionary<TKey, TSource>(dict);
         }
 
 
-        [NotNull]
         internal static IEnumerable<TSource> ToEnumerable<TSource>(this TSource value)
         {
             yield return value;

@@ -1,10 +1,13 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -16,12 +19,22 @@ namespace GraphZen.TypeSystem
             Builder = Check.NotNull(builder, nameof(builder));
         }
 
-        [NotNull]
+
         private InternalScalarTypeBuilder Builder { get; }
 
         InternalScalarTypeBuilder IInfrastructure<InternalScalarTypeBuilder>.Instance => Builder;
 
-        public IScalarTypeBuilder<TScalar, TValueNode> Description(string description)
+        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType) =>
+            new ScalarTypeBuilder<object, TValueNode>(Builder);
+
+        public IScalarTypeBuilder<T, TValueNode> ClrType<T>()
+        {
+            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+
+            return new ScalarTypeBuilder<T, TValueNode>(Builder);
+        }
+
+        public IScalarTypeBuilder<TScalar, TValueNode> Description(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
@@ -41,7 +54,7 @@ namespace GraphZen.TypeSystem
             Builder.LiteralParser(value =>
             {
                 Debug.Assert(value != null, nameof(value) + " != null");
-                var parsed = literalParser((TValueNode) value);
+                var parsed = literalParser((TValueNode)value);
                 Debug.Assert(parsed != null, nameof(parsed) + " != null");
                 return parsed.Cast<object>();
             });
@@ -70,19 +83,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name) =>
-            DirectiveAnnotation(name, null);
 
-        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name, object value)
+        public IScalarTypeBuilder<TScalar, TValueNode> DirectiveAnnotation(string name, object? value = null)
         {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value);
+            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
+        public IScalarTypeBuilder<TScalar, TValueNode> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
     }
 }

@@ -1,13 +1,16 @@
 
 #load "./build-scripts/parameters.cake"
+// Modules
+#module nuget:?package=Cake.DotNetTool.Module&version=0.1.0
 #tool "nuget:?package=ReportGenerator&version=4.0.12"
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
-#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2018.3.3"
-#tool "nuget:?package=docfx.console&version=2.40.11"
+#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.1"
+#tool "nuget:?package=docfx.console&version=2.46.0"
 #addin "nuget:?package=Cake.Coverlet&version=2.2.1"
 #addin "Cake.Powershell&version=0.4.7"
 #addin "nuget:?package=Cake.Git&version=0.19.0"
+#tool dotnet:?package=dotnet-format&version=3.0.4
 using System.Diagnostics;
 
 
@@ -60,6 +63,22 @@ Setup<BuildParameters>(context =>
     var buildParams = BuildParameters.GetParameters(context);
     buildParams.Initialize(context, version);
     return buildParams;
+});
+Task("Format-Check").Does(() => {
+    var dotnetFormatExe = Context.Tools.Resolve("dotnet-format.exe");
+    var exitCode= StartProcess(dotnetFormatExe, new ProcessSettings {
+        Arguments = new ProcessArgumentBuilder()
+            .Append("--dry-run")
+            .Append("--check")
+        });
+        if (exitCode != 0) {
+            throw new Exception("Solution files not formatted correctly");
+        }
+});
+
+Task("Format").Does(() => {
+    var dotnetFormatExe = Context.Tools.Resolve("dotnet-format.exe");
+    StartProcess(dotnetFormatExe);
 });
 
 
@@ -127,20 +146,30 @@ void ResharperCleanupCode(string profile) {
   }
 }
 
-Task("Cleanup").IsDependentOn("Cleanup-Full");
+Task("Cleanup").IsDependentOn("Cleanup-Full").IsDependentOn("Format");
 
 Task("Cleanup-Full")
 .IsDependentOn("Compile")
 .Does(() => ResharperCleanupCode("GraphZen Full Cleanup"));
 
-Task("Cleanup-Reformat")
-.IsDependentOn("Compile")
-.Does(() => ResharperCleanupCode("GraphZen Reformat"));
-
-
 Task("Restore").Does(() => {
-  NuGetRestore(paths.sln);
+  DotNetCoreRestore(paths.sln);
 });
+
+
+Task("Run-Gen")
+.Does(() => {
+   var settings = new DotNetCoreRunSettings
+     {
+     };
+
+     DotNetCoreRun("./src/GraphZen.DevCli", "gen", settings);
+});
+
+
+Task("Gen")
+.IsDependentOn("Run-Gen")
+.IsDependentOn("Format");
 
 Task("Compile")
 .IsDependentOn("Clean")
@@ -180,8 +209,9 @@ Task("Test")
         CoverletOutputName = $"coverage"
     };
 
-    var testProject = GetFile("./test/**/*Tests.csproj");
-    DotNetCoreTest(testProject.FullPath, settings, coverletSettings);
+    //var testProject = GetFile("./src/**/*Tests.csproj");
+    //DotNetCoreTest(testProject.FullPath, settings, coverletSettings);
+    DotNetCoreTest(buildParams.Paths.Directories.Solution.FullPath, settings, coverletSettings);
 });
 
  Task("Test-Coverage-Report")

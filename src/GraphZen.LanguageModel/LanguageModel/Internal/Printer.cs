@@ -1,18 +1,23 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel.Internal
 {
     public class Printer : IPrinter
     {
-        [NotNull] private readonly StringBuilder _outputBuilder = new StringBuilder();
+        private readonly StringBuilder _outputBuilder = new StringBuilder();
 
         private int _indentLevel;
 
@@ -28,10 +33,7 @@ namespace GraphZen.LanguageModel.Internal
 
         private void PrintNode(SyntaxNode node)
         {
-            if (node == null)
-            {
-                return;
-            }
+            if (node == null) return;
 
             switch (node)
             {
@@ -56,10 +58,7 @@ namespace GraphZen.LanguageModel.Internal
                         // Operation type and name
                         Wrap($"{def.OperationType.ToString().ToLower()} ", def.Name);
                         // Variable definitions
-                        if (def.VariableDefinitions.Any())
-                        {
-                            Wrap("(", () => Join(def.VariableDefinitions, ", "), ")");
-                        }
+                        if (def.VariableDefinitions.Any()) Wrap("(", () => Join(def.VariableDefinitions, ", "), ")");
 
                         // Directives
                         Append(' ');
@@ -72,10 +71,7 @@ namespace GraphZen.LanguageModel.Internal
                     Block(set.Selections);
                     break;
                 case FieldSyntax field:
-                    if (field.Alias != null)
-                    {
-                        Wrap("", field.Alias, ": ");
-                    }
+                    if (field.Alias != null) Wrap("", field.Alias, ": ");
 
                     PrintNode(field.Name);
                     PrintArguments(field.Arguments);
@@ -91,10 +87,7 @@ namespace GraphZen.LanguageModel.Internal
                     PrintNode(varDef.Variable);
                     Append(": ");
                     PrintNode(varDef.VariableType);
-                    if (varDef.DefaultValue != null)
-                    {
-                        Wrap(" = ", varDef.DefaultValue);
-                    }
+                    if (varDef.DefaultValue != null) Wrap(" = ", varDef.DefaultValue);
 
                     break;
                 case FragmentSpreadSyntax fragmentSpread:
@@ -103,10 +96,7 @@ namespace GraphZen.LanguageModel.Internal
                     break;
                 case InlineFragmentSyntax inlineFragment:
                     Append("... ");
-                    if (inlineFragment.TypeCondition != null)
-                    {
-                        Wrap("on ", inlineFragment.TypeCondition, " ");
-                    }
+                    if (inlineFragment.TypeCondition != null) Wrap("on ", inlineFragment.TypeCondition, " ");
 
                     PrintDirectives(inlineFragment.Directives);
                     PrintNode(inlineFragment.SelectionSet);
@@ -177,16 +167,10 @@ namespace GraphZen.LanguageModel.Internal
                     PrintDescription(objectDef);
                     Append("type ");
                     PrintNode(objectDef.Name);
-                    if (objectDef.Interfaces.Any())
-                    {
-                        Wrap(" implements ", () => Join(objectDef.Interfaces, " & "));
-                    }
+                    if (objectDef.Interfaces.Any()) Wrap(" implements ", () => Join(objectDef.Interfaces, " & "));
 
                     PrintDirectives(objectDef.Directives);
-                    if (objectDef.Fields.Any())
-                    {
-                        Append(" ");
-                    }
+                    if (objectDef.Fields.Any()) Append(" ");
 
                     Block(objectDef.Fields);
                     break;
@@ -213,10 +197,7 @@ namespace GraphZen.LanguageModel.Internal
                     PrintDescription(interfaceDef);
                     Wrap("interface ", interfaceDef.Name);
                     PrintDirectives(interfaceDef.Directives);
-                    if (interfaceDef.Fields.Any())
-                    {
-                        Append(" ");
-                    }
+                    if (interfaceDef.Fields.Any()) Append(" ");
 
                     Block(interfaceDef.Fields);
                     break;
@@ -235,10 +216,7 @@ namespace GraphZen.LanguageModel.Internal
                     PrintDescription(enumType);
                     Wrap("enum ", enumType.Name);
                     PrintDirectives(enumType.Directives);
-                    if (enumType.Values.Any())
-                    {
-                        Append(" ");
-                    }
+                    if (enumType.Values.Any()) Append(" ");
 
                     Block(enumType.Values);
                     break;
@@ -246,10 +224,7 @@ namespace GraphZen.LanguageModel.Internal
                     PrintDescription(inputObjectDef);
                     Wrap("input ", inputObjectDef.Name);
                     PrintDirectives(inputObjectDef.Directives);
-                    if (inputObjectDef.Fields.Any())
-                    {
-                        Append(" ");
-                    }
+                    if (inputObjectDef.Fields.Any()) Append(" ");
 
                     Block(inputObjectDef.Fields);
                     break;
@@ -268,20 +243,14 @@ namespace GraphZen.LanguageModel.Internal
                 case EnumTypeExtensionSyntax enumExtension:
                     Wrap("extend enum ", enumExtension.Name);
                     PrintDirectives(enumExtension.Directives);
-                    if (enumExtension.Values.Any())
-                    {
-                        Append(" ");
-                    }
+                    if (enumExtension.Values.Any()) Append(" ");
 
                     Block(enumExtension.Values);
                     break;
                 case InterfaceTypeExtensionSyntax ifaceExt:
                     Wrap("extend interface ", ifaceExt.Name);
                     PrintDirectives(ifaceExt.Directives);
-                    if (ifaceExt.Fields.Any())
-                    {
-                        Append(" ");
-                    }
+                    if (ifaceExt.Fields.Any()) Append(" ");
 
                     Block(ifaceExt.Fields);
                     break;
@@ -292,16 +261,10 @@ namespace GraphZen.LanguageModel.Internal
 
                 case ObjectTypeExtensionSyntax objectExt:
                     Wrap("extend type ", objectExt.Name);
-                    if (objectExt.Interfaces.Any())
-                    {
-                        Wrap(" implements ", () => Join(objectExt.Interfaces, " & "));
-                    }
+                    if (objectExt.Interfaces.Any()) Wrap(" implements ", () => Join(objectExt.Interfaces, " & "));
 
                     PrintDirectives(objectExt.Directives);
-                    if (objectExt.Fields.Any())
-                    {
-                        Append(" ");
-                    }
+                    if (objectExt.Fields.Any()) Append(" ");
 
                     Block(objectExt.Fields);
                     break;
@@ -309,10 +272,7 @@ namespace GraphZen.LanguageModel.Internal
                 case SchemaExtensionSyntax schemaExt:
                     Append("extend schema");
                     PrintDirectives(schemaExt.Directives);
-                    if (schemaExt.OperationTypes.Any())
-                    {
-                        Append(" ");
-                    }
+                    if (schemaExt.OperationTypes.Any()) Append(" ");
 
                     Block(schemaExt.OperationTypes);
                     break;
@@ -329,10 +289,7 @@ namespace GraphZen.LanguageModel.Internal
                 case InputObjectTypeExtensionSyntax inputExt:
                     Wrap("extend input ", inputExt.Name);
                     PrintDirectives(inputExt.Directives);
-                    if (inputExt.Fields.Any())
-                    {
-                        Append(" ");
-                    }
+                    if (inputExt.Fields.Any()) Append(" ");
 
                     Block(inputExt.Fields);
                     break;
@@ -342,7 +299,7 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        private void PrintDirectives([NotNull] IReadOnlyList<DirectiveSyntax> directives)
+        private void PrintDirectives(IReadOnlyList<DirectiveSyntax> directives)
         {
             if (directives.Any())
             {
@@ -351,7 +308,7 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        private void PrintStringValue([NotNull] StringValueSyntax stringValue, bool isDescription)
+        private void PrintStringValue(StringValueSyntax stringValue, bool isDescription)
         {
             if (!stringValue.IsBlockString)
             {
@@ -393,7 +350,7 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        private void PrintDescription([NotNull] IDescribedSyntax node)
+        private void PrintDescription(IDescribedSyntax node)
         {
             if (node.Description != null)
             {
@@ -403,7 +360,7 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        private void PrintArguments([NotNull] [ItemNotNull] IReadOnlyList<InputValueDefinitionSyntax> arguments)
+        private void PrintArguments(IReadOnlyList<InputValueDefinitionSyntax> arguments)
         {
             if (arguments.Any())
             {
@@ -432,12 +389,9 @@ namespace GraphZen.LanguageModel.Internal
             }
         }
 
-        private void PrintArguments([NotNull] IReadOnlyList<ArgumentSyntax> arguments)
+        private void PrintArguments(IReadOnlyList<ArgumentSyntax> arguments)
         {
-            if (arguments.Any())
-            {
-                Wrap("(", () => { Join(arguments, ", "); }, ")");
-            }
+            if (arguments.Any()) Wrap("(", () => { Join(arguments, ", "); }, ")");
         }
 
 
@@ -463,7 +417,7 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        public void Wrap(string start, [NotNull] Action action, string end = "")
+        public void Wrap(string start, Action action, string end = "")
         {
             Append(start);
             action();
@@ -478,9 +432,15 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        public void Append(char value) => _outputBuilder.Append(value);
+        public void Append(char value)
+        {
+            _outputBuilder.Append(value);
+        }
 
-        public void Append(string value) => _outputBuilder.Append(value);
+        public void Append(string value)
+        {
+            _outputBuilder.Append(value);
+        }
 
         public void AppendLine(string value = null)
         {
@@ -492,9 +452,12 @@ namespace GraphZen.LanguageModel.Internal
             _outputBuilder.Append(GetCurrentIndent());
         }
 
-        private string GetCurrentIndent() => string.Concat(Enumerable.Range(0, _indentLevel).Select(_ => "  "));
+        private string GetCurrentIndent()
+        {
+            return string.Concat(Enumerable.Range(0, _indentLevel).Select(_ => "  "));
+        }
 
-        public void Join([NotNull] IReadOnlyList<SyntaxNode> nodes, Action seperatorAction = null)
+        public void Join(IReadOnlyList<SyntaxNode> nodes, Action seperatorAction = null)
         {
             var hasSeperator = seperatorAction != null;
 
@@ -503,18 +466,15 @@ namespace GraphZen.LanguageModel.Internal
             {
                 PrintNode(node);
                 var isLastElement = i == nodes.Count;
-                if (hasSeperator && !isLastElement)
-                {
-                    seperatorAction();
-                }
+                if (hasSeperator && !isLastElement) seperatorAction();
 
                 i++;
             }
         }
 
-        private void Join([NotNull] IReadOnlyList<SyntaxNode> nodes, string seperator = null)
+        private void Join(IReadOnlyList<SyntaxNode> nodes, string seperator = null)
         {
-            Join(nodes, seperator != null ? () => { Append(seperator); } : (Action) null);
+            Join(nodes, seperator != null ? () => { Append(seperator); } : (Action)null);
         }
 
         #endregion

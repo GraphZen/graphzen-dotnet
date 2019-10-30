@@ -2,8 +2,13 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+
+#nullable disable
+
 
 namespace GraphZen.LanguageModel
 {
@@ -24,23 +29,18 @@ namespace GraphZen.LanguageModel
         public int Value { get; }
 
         public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
+
         public string GetDisplayValue() => Value.ToString();
 
-        private bool Equals([NotNull] IntValueSyntax other) => Value == other.Value;
+        private bool Equals(IntValueSyntax other) => Value == other.Value;
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
+            if (ReferenceEquals(null, obj)) return false;
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
+            if (ReferenceEquals(this, obj)) return true;
 
-            return obj is IntValueSyntax && Equals((IntValueSyntax) obj);
+            return obj is IntValueSyntax && Equals((IntValueSyntax)obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();

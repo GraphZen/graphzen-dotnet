@@ -2,16 +2,18 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
+using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
     public class ResolveInfo
     {
         internal ResolveInfo(string fieldName, IReadOnlyList<FieldSyntax> fieldNodes, IGraphQLType returnType,
-            IFieldsContainer parentType, ResponsePath path, Schema schema,
+            IFields parentType, ResponsePath path, Schema schema,
             IReadOnlyDictionary<string, FragmentDefinitionSyntax> fragments, OperationDefinitionSyntax operation,
             IReadOnlyDictionary<string, object> variableValues, object rootValue)
         {
@@ -27,27 +29,27 @@ namespace GraphZen.TypeSystem.Internal
             RootValue = rootValue;
         }
 
-        [NotNull]
+
         public string FieldName { get; }
 
-        [NotNull]
+
         public IReadOnlyList<FieldSyntax> FieldNodes { get; }
 
-        [NotNull]
+
         public IGraphQLType ReturnType { get; }
 
-        [NotNull]
-        public IFieldsContainer ParentType { get; }
 
-        [NotNull]
+        public IFields ParentType { get; }
+
+
         public ResponsePath Path { get; }
 
         public object RootValue { get; }
 
-        [NotNull]
+
         public Schema Schema { get; }
 
-        [NotNull]
+
         public IReadOnlyDictionary<string, FragmentDefinitionSyntax> Fragments { get; }
 
         public OperationDefinitionSyntax Operation { get; }
