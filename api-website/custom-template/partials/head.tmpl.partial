@@ -12,13 +12,9 @@
 
     <link href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" />
 
-    <link rel="stylesheet" href="https://graphzen-assets.netlify.com/vendor/font-awesome/css/fontawesome-all.min.css" />
-    <link rel="stylesheet" href="https://graphzen-assets.netlify.com/vendor/animate.css/animate.min.css" />
-    <link rel="stylesheet" href="https://graphzen-assets.netlify.com/vendor/hs-megamenu/src/hs.megamenu.css" />
-    <link rel="stylesheet" href="https://graphzen-assets.netlify.com/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
+    <link rel="stylesheet" href="https://assets.graphzen.com/vendor/front/assets/css/theme.min.css" />
+    <link rel="stylesheet" href="https://assets.graphzen.com/vendor/front/assets/vendor/animate.css/animate.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.1/styles/atelier-forest-light.min.css" />
-    
-    <link rel="stylesheet" href="https://graphzen-assets.netlify.com/css/theme.css" />
     <link rel="stylesheet" href="{{_rel}}assets/docfx.css">
     <link rel="stylesheet" href="{{_rel}}assets/main-custom.css">
 

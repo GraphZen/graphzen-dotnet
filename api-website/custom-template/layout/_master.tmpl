@@ -8,13 +8,13 @@
         <!-- ========== HEADER ========== -->
         <header>
             <div class="border-bottom">
-                <div class="container">
+                <div class="container-fluid">
                     {{^_disableNavbar}} {{>partials/navbar}} {{/_disableNavbar}}
                 </div>
             </div>
             {{^_disableBreadcrumb}}
             <div class="border-bottom">
-                <div class="container">
+                <div class="container-fluid">
                     {{>partials/breadcrumb}}
                 </div>
             </div>
@@ -22,7 +22,7 @@
         </header>
         <!-- ========== END HEADER ========== -->
 
-        <div role="main" class="container body-content hide-when-search">
+        <div role="main" class="container-fluid body-content hide-when-search">
             {{^_disableToc}} {{>partials/toc}}
             <div class="article row grid-right">
                 {{/_disableToc}} {{#_disableToc}}
@@ -42,10 +42,10 @@
                 {{^_disableFooter}} {{>partials/footer}} {{/_disableFooter}}
             </div>
 
-            <script src="https://graphzen-assets.netlify.com/vendor/jquery/dist/jquery.min.js"></script>
-            <script src="https://graphzen-assets.netlify.com/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
-            <script src="https://graphzen-assets.netlify.com/vendor/popper.js/dist/umd/popper.min.js"></script>
-            <script src="https://graphzen-assets.netlify.com/vendor/bootstrap/bootstrap.min.js"></script>
+            <script src="https://assets.graphzen.com/vendor/front/assets/vendor/jquery/dist/jquery.min.js"></script>
+            <script src="https://assets.graphzen.com/vendor/front/assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+            <script src="https://assets.graphzen.com/vendor/front/assets/vendor/popper.js/dist/popper.min.js"></script>
+            <script src="https://assets.graphzen.com//vendor/front/assets/js/theme.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.1/highlight.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.1/languages/cs.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.js"></script>

@@ -6,7 +6,7 @@
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
 #tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.1"
-#tool "nuget:?package=docfx.console&version=2.40.11"
+#tool "nuget:?package=docfx.console&version=2.46.0"
 #addin "nuget:?package=Cake.Coverlet&version=2.2.1"
 #addin "Cake.Powershell&version=0.4.7"
 #addin "nuget:?package=Cake.Git&version=0.19.0"

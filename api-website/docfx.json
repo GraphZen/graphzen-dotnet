@@ -4,7 +4,13 @@
       "src": [
         {
           "files": ["src/**/*.csproj"],
-          "exclude": ["**/bin/**", "**/obj/**", "test/**", "examples/**"],
+          "exclude": [
+            "**/bin/**",
+            "**/obj/**",
+            "test/**",
+            "examples/**",
+            "src/**/*Test*.csproj"
+          ],
           "src": "../"
         }
       ],
@@ -25,7 +31,7 @@
     ],
     "resource": [
       {
-        "files": ["assets/**", "_redirects"]
+        "files": ["assets/**", "_redirects", "serve.json"]
       }
     ],
     "overwrite": "specs/*.md",
