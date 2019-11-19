@@ -25,8 +25,8 @@
 
 | Package Name                                                         |                                    Pre-Release                                     |                                   Release                                   | Description |
 | -------------------------------------------------------------------- | :--------------------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :---------: |
-| **Meta-Package**                                                     |
-| [GraphZen.AspNetCore.App][graphzen.aspnetcore.app.url]               |        ![GraphZen.AspNetCore.App pre-release][graphzen.aspnetcore.app.vpre]        |        ![GraphZen.AspNetCore.App release][graphzen.aspnetcore.app.v]        |             |
+| **Server-Package**                                                   |
+| [GraphZen.AspNetCore.Server][graphzen.aspnetcore.server.url]         |     ![GraphZen.AspNetCore.Server pre-release][graphzen.aspnetcore.server.vpre]     |     ![GraphZen.AspNetCore.Server release][graphzen.aspnetcore.server.v]     |             |
 | **Core Framework**                                                   |
 | [GraphZen][graphzen.url]                                             |                       ![GraphZen pre-release][graphzen.vpre]                       |                       ![GraphZen release][graphzen.v]                       |             |
 | [GraphZen.Abstractions][graphzen.abstractions.url]                   |          ![GraphZen.Abstractions pre-release][graphzen.abstractions.vpre]          |          ![GraphZen.Abstractions release][graphzen.abstractions.v]          |             |
@@ -34,9 +34,9 @@
 | [GraphZen.AspNetCore][graphzen.aspnetcore.url]                       |            ![GraphZen.AspNetCore pre-release][graphzen.aspnetcore.vpre]            |            ![GraphZen.AspNetCore release][graphzen.aspnetcore.v]            |             |
 | [GraphZen.Playground.AspNetCore][graphzen.playground.aspnetcore.url] | ![GraphZen.Playground.AspNetCore pre-release][graphzen.playground.aspnetcore.vpre] | ![GraphZen.Playground.AspNetCore release][graphzen.playground.aspnetcore.v] |             |
 
-[graphzen.aspnetcore.app.url]: https://www.nuget.org/packages/GraphZen.AspNetCore.App
-[graphzen.aspnetcore.app.v]: https://img.shields.io/nuget/v/GraphZen.AspNetCore.App.svg
-[graphzen.aspnetcore.app.vpre]: https://img.shields.io/nuget/vpre/GraphZen.AspNetCore.App.svg
+[graphzen.aspnetcore.server.url]: https://www.nuget.org/packages/GraphZen.AspNetCore.Server
+[graphzen.aspnetcore.server.v]: https://img.shields.io/nuget/v/GraphZen.AspNetCore.Server.svg
+[graphzen.aspnetcore.server.vpre]: https://img.shields.io/nuget/vpre/GraphZen.AspNetCore.Server.svg
 [graphzen.url]: https://www.nuget.org/packages/GraphZen
 [graphzen.v]: https://img.shields.io/nuget/v/GraphZen.svg
 [graphzen.vpre]: https://img.shields.io/nuget/vpre/GraphZen.svg
