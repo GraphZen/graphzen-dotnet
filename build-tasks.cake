@@ -98,6 +98,7 @@ Task("DocFx")
 Task("Api-Website-Clean").Does(() => CleanDirectory("./api-website-artifacts"));
 Task("Api-Website")
     .IsDependentOn("Api-Website-Clean")
+    .IsDependentOn("Compile")
     .IsDependentOn("DocFx");
 
 Task("Publish-Api-Website").Does(() => {

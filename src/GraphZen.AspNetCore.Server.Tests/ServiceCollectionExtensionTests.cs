@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -15,8 +16,28 @@ using Xunit;
 namespace GraphZen
 {
     [NoReorder]
+    public class ApplicationBuilderExtensionsTests
+    {
+        [Fact]
+        public void should_share_IApplicationBuilder_namespace() =>
+            typeof(GraphZenApplicationBuilderExtensions).Namespace
+                .Should().Be(typeof(IApplicationBuilder).Namespace);
+
+        [Fact]
+        public void playground_should_share_IApplicationBuilder_namespace() =>
+            typeof(PlaygroundApplicationBuilderExtensions).Namespace
+                .Should().Be(typeof(IApplicationBuilder).Namespace);
+    }
+
+
+    [NoReorder]
     public class ServiceCollectionExtensionTests
     {
+        [Fact]
+        public void should_share_IServiceCollection_namespace() =>
+            typeof(GraphZenServiceCollectionExtensions).Namespace
+                .Should().Be(typeof(IServiceCollection).Namespace);
+
         [Fact]
         public void add_default_graphql_context_resolves()
         {

@@ -175,6 +175,7 @@ header {
   right: 0;
   z-index: 1000;
 }
+/*
 header .navbar {
   border-width: 0 0 1px;
   border-radius: 0;
@@ -184,11 +185,12 @@ header .navbar {
   padding: 0;
 }
 .navbar-collapse {
-  margin: 0 -15px;
+   margin: 0 -15px; 
 }
 .subnav {
   min-height: 40px;
 }
+*/
 
 .inheritance h5,
 .inheritedMembers h5 {

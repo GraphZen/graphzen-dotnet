@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
-    <Description>Object model for the GraphQL type system for creating, inspecting and manipulating GraphQL schemas.</Description>
+    <Description>GraphQL type system object model for creating, inspecting, and manipulating GraphQL schemas</Description>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\Linked\TypeSystem\TypeSystemAccessors.Generated.cs" Link="TypeSystemAccessors.Generated.cs" />

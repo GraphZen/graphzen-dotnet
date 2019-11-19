@@ -23,32 +23,39 @@
 
 ## Packages
 
-| Package Name                                                         |                                    Pre-Release                                     |                                   Release                                   |
-| -------------------------------------------------------------------- | :--------------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
-| **Meta-Package**                                                     |
-| [GraphZen.AspNetCore.App][graphzen.aspnetcore.app.url]               |        ![GraphZen.AspNetCore.App pre-release][graphzen.aspnetcore.app.vpre]        |        ![GraphZen.AspNetCore.App release][graphzen.aspnetcore.app.v]        |
-| **Core Framework**                                                   |
-| [GraphZen][graphzen.url]                                             |                       ![GraphZen pre-release][graphzen.vpre]                       |                       ![GraphZen release][graphzen.v]                       |
-| [GraphZen.Abstractions][graphzen.abstractions.url]                   |          ![GraphZen.Abstractions pre-release][graphzen.abstractions.vpre]          |          ![GraphZen.Abstractions release][graphzen.abstractions.v]          |
-| **Auxiliary Packages**                                               |
-| [GraphZen.AspNetCore][graphzen.aspnetcore.url]                       |            ![GraphZen.AspNetCore pre-release][graphzen.aspnetcore.vpre]            |            ![GraphZen.AspNetCore release][graphzen.aspnetcore.v]            |
-| [GraphZen.Playground.AspNetCore][graphzen.playground.aspnetcore.url] | ![GraphZen.Playground.AspNetCore pre-release][graphzen.playground.aspnetcore.vpre] | ![GraphZen.Playground.AspNetCore release][graphzen.playground.aspnetcore.v] |
+| Package                                             |                            Pre-Release                            |                          Release                           |
+| --------------------------------------------------- | :---------------------------------------------------------------: | :--------------------------------------------------------: |
+| **Server**                                          |
+| [GraphZen.AspNetCore.Server][aspnetcore.server.url] | ![GraphZen.AspNetCore.Server pre-release][aspnetcore.server.vpre] | ![GraphZen.AspNetCore.Server release][aspnetcore.server.v] |
+| **SDK**                                             |
+| [GraphZen.Abstractions][abstractions.url]           |      ![GraphZen.Abstractions pre-release][abstractions.vpre]      |      ![GraphZen.Abstractions release][abstractions.v]      |
+| [GraphZen.LanguageModel][languagemodel.url]         |     ![GraphZen.LanguageModel pre-release][languagemodel.vpre]     |     ![GraphZen.LanguageModel release][languagemodel.v]     |
+| [GraphZen.TypeSystem][typesystem.url]               |        ![GraphZen.TypeSystem pre-release][typesystem.vpre]        |        ![GraphZen.TypeSystem release][typesystem.v]        |
+| [GraphZen.QueryEngine][queryengine.url]             |       ![GraphZen.QueryEngine pre-release][queryengine.vpre]       |       ![GraphZen.QueryEngine release][queryengine.v]       |
 
-[graphzen.aspnetcore.app.url]: https://www.nuget.org/packages/GraphZen.AspNetCore.App
-[graphzen.aspnetcore.app.v]: https://img.shields.io/nuget/v/GraphZen.AspNetCore.App.svg
-[graphzen.aspnetcore.app.vpre]: https://img.shields.io/nuget/vpre/GraphZen.AspNetCore.App.svg
-[graphzen.url]: https://www.nuget.org/packages/GraphZen
-[graphzen.v]: https://img.shields.io/nuget/v/GraphZen.svg
-[graphzen.vpre]: https://img.shields.io/nuget/vpre/GraphZen.svg
-[graphzen.abstractions.url]: https://www.nuget.org/packages/GraphZen.Abstractions
-[graphzen.abstractions.v]: https://img.shields.io/nuget/v/GraphZen.Abstractions.svg
-[graphzen.abstractions.vpre]: https://img.shields.io/nuget/vpre/GraphZen.Abstractions.svg
-[graphzen.aspnetcore.url]: https://www.nuget.org/packages/GraphZen.AspNetCore
-[graphzen.aspnetcore.v]: https://img.shields.io/nuget/v/GraphZen.AspNetCore.svg
-[graphzen.aspnetcore.vpre]: https://img.shields.io/nuget/vpre/GraphZen.AspNetCore.svg
-[graphzen.playground.url]: https://www.nuget.org/packages/GraphZen.Playground
-[graphzen.playground.v]: https://img.shields.io/nuget/v/GraphZen.Playground.svg
-[graphzen.playground.vpre]: https://img.shields.io/nuget/vpre/GraphZen.Playground.svg
-[graphzen.playground.aspnetcore.url]: https://www.nuget.org/packages/GraphZen.Playground.AspNetCore
-[graphzen.playground.aspnetcore.v]: https://img.shields.io/nuget/v/GraphZen.Playground.AspNetCore.svg
-[graphzen.playground.aspnetcore.vpre]: https://img.shields.io/nuget/vpre/GraphZen.Playground.AspNetCore.svg
+[aspnetcore.server.url]: https://www.nuget.org/packages/GraphZen.AspNetCore.Server
+[aspnetcore.server.v]: https://img.shields.io/nuget/v/GraphZen.AspNetCore.Server.svg
+[aspnetcore.server.vpre]: https://img.shields.io/nuget/vpre/GraphZen.AspNetCore.Server.svg
+[meta.url]: https://www.nuget.org/packages/GraphZen
+[meta.v]: https://img.shields.io/nuget/v/GraphZen.svg
+[meta.vpre]: https://img.shields.io/nuget/vpre/GraphZen.svg
+[abstractions.url]: https://www.nuget.org/packages/GraphZen.Abstractions
+[abstractions.v]: https://img.shields.io/nuget/v/GraphZen.Abstractions.svg
+[abstractions.vpre]: https://img.shields.io/nuget/vpre/GraphZen.Abstractions.svg
+[languagemodel.url]: https://www.nuget.org/packages/GraphZen.LanguageModel
+[languagemodel.v]: https://img.shields.io/nuget/v/GraphZen.LanguageModel.svg
+[languagemodel.vpre]: https://img.shields.io/nuget/vpre/GraphZen.LanguageModel.svg
+[typesystem.url]: https://www.nuget.org/packages/GraphZen.TypeSystem
+[typesystem.v]: https://img.shields.io/nuget/v/GraphZen.TypeSystem.svg
+[typesystem.vpre]: https://img.shields.io/nuget/vpre/GraphZen.TypeSystem.svg
+[queryengine.url]: https://www.nuget.org/packages/GraphZen.QueryEngine
+[queryengine.v]: https://img.shields.io/nuget/v/GraphZen.QueryEngine.svg
+[queryengine.vpre]: https://img.shields.io/nuget/vpre/GraphZen.QueryEngine.svg
+
+## Copyright and Trademark
+
+Copyright © 2017-2019 GraphZen LLC. "GraphZen" is a registered trademark of GraphZen LLC.
+
+## License
+
+GraphZen is licensed under the GraphZen Community License. See the [LICENSE](https://github.com/GraphZen/graphzen-dotnet/blob/master/LICENSE) file for more information.

@@ -4,14 +4,14 @@
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.StaticFiles.Infrastructure;
 using Microsoft.Extensions.FileProviders;
 
 #nullable disable
 
 
-namespace GraphZen
+// ReSharper disable once CheckNamespace
+namespace Microsoft.AspNetCore.Builder
 {
     public static class PlaygroundApplicationBuilderExtensions
     {

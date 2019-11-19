@@ -4,6 +4,20 @@
 header {
   background: white;
 }
+
+.breadcrumb-wrapper .navbar {
+  padding: 0;
+}
+.breadcrumb-wrapper {
+  width: 100%;
+  position: fixed;
+  top: 5rem;
+  background: white;
+  z-index: 1000;
+
+  height: 3rem;
+}
+
 .navbar .navbar-nav {
   display: flex;
 }
@@ -15,12 +29,16 @@ header {
 }
 
 .sidetoc {
-  top: 188px;
+  top: 8rem;
   width: 300px;
 }
 .sidefilter {
-  top: 130px;
+  top: 8rem;
   width: 300px;
+}
+.article {
+  margin-top: 8rem;
+  margin-bottom: 115px;
 }
 
 .article.grid-right {

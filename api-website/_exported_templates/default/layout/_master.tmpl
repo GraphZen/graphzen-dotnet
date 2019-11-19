@@ -14,10 +14,11 @@
         {{^_disableNavbar}}
         {{>partials/navbar}}
         {{/_disableNavbar}}
-        {{^_disableBreadcrumb}}
-        {{>partials/breadcrumb}}
-        {{/_disableBreadcrumb}}
+        
       </header>
+      {{^_disableBreadcrumb}}
+        {{>partials/breadcrumb}}
+      {{/_disableBreadcrumb}}
       {{#_enableSearch}}
       <div class="container-fluid body-content">
         {{>partials/searchResults}}

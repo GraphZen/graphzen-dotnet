@@ -5,14 +5,15 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using GraphZen;
 using GraphZen.Infrastructure;
 using GraphZen.Logging;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace GraphZen
+// ReSharper disable once CheckNamespace
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class GraphZenServiceCollectionExtensions
     {
@@ -37,7 +38,7 @@ namespace GraphZen
                 optionsAction != null
                     // ReSharper disable once ConstantConditionalAccessQualifier
                     ? (p, b) => { optionsAction?.Invoke(b); }
-                    : (Action<IServiceProvider, GraphQLContextOptionsBuilder>?) null;
+            : (Action<IServiceProvider, GraphQLContextOptionsBuilder>?)null;
 
             var contextType = typeof(TContext);
             Logger.Debug($"Adding GraphQL context {contextType}");
