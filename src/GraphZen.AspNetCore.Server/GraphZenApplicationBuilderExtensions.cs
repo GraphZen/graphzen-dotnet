@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using GraphZen;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
@@ -13,13 +14,13 @@ using GraphZen.Logging;
 using GraphZen.QueryEngine;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace GraphZen
+// ReSharper disable once CheckNamespace
+namespace Microsoft.AspNetCore.Builder
 {
     public static class GraphZenApplicationBuilderExtensions
     {
@@ -86,7 +87,7 @@ namespace GraphZen
                         try
                         {
                             var req = Json.Serializer.Deserialize<GraphQLRequest>(jsonReader);
-                            var document = Parser.ParseDocument(req.Query);
+                            var document = Parser.ParseDocument(req!.Query);
                             var queryValidator = httpContext.RequestServices.GetRequiredService<IQueryValidator>();
                             var validationErrors = queryValidator.Validate(graphQLContext.Schema, document);
 

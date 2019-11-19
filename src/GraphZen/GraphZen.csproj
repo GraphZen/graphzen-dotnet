@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
-    <Description>Code-first GraphQL framework for .NET</Description>
+    <Description>GraphZen is a GraphQL SDK for .NET. Install the GraphZen.AspNetCore.Server package to get started building GraphQL APIs on ASP.NET Core.</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />

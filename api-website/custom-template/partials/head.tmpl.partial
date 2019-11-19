@@ -10,11 +10,13 @@
     <meta name="description" content="{{_description}}">{{/_description}}
     <link rel="shortcut icon" href="{{_rel}}{{{_appFaviconPath}}}{{^_appFaviconPath}}favicon.ico{{/_appFaviconPath}}">
 
+     {{>partials/styles}}
+     <!--
     <link href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://assets.graphzen.com/vendor/front/assets/css/theme.min.css" />
     <link rel="stylesheet" href="https://assets.graphzen.com/vendor/front/assets/vendor/animate.css/animate.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.1/styles/atelier-forest-light.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.1/styles/atelier-forest-light.min.css" /> -->
     <link rel="stylesheet" href="{{_rel}}assets/docfx.css">
     <link rel="stylesheet" href="{{_rel}}assets/main-custom.css">
 

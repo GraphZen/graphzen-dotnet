@@ -1,3 +1,30 @@
-<script type="text/javascript" src="{{_rel}}styles/docfx.vendor.js"></script>
-<script type="text/javascript" src="{{_rel}}styles/docfx.js"></script>
-<script type="text/javascript" src="{{_rel}}styles/main.js"></script>
+
+    <script src="https://assets.graphzen.com/vendor/front/assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="https://assets.graphzen.com/vendor/front/assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+    <script src="https://assets.graphzen.com/vendor/front/assets/vendor/popper.js/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.js"></script>
+    <script src="https://docs.graphzen.com/js/prism-graphql.min.js"></script>
+
+    
+    <script src="https://assets.graphzen.com/vendor/front/assets/js/theme.min.js"></script>
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136112254-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'UA-136112254-1',
+        {
+          'linker': {
+            'domains': ['docs.graphzen.com', 'api.graphzen.com', 'graphzen.com', 'blog.graphzen.com', 'www.graphzen.com']
+          }
+        });
+        $( document ).ready(function() {
+           
+        });
+    </script>

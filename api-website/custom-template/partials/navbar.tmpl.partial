@@ -1,46 +1,41 @@
-<!-- Nav -->
 
-<nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--no-space">
-    <!-- Logo -->
-    <a class="navbar-brand u-header__navbar-brand u-header__navbar-brand-center" href="/" aria-label="GraphZen">
-    <span class="u-header__navbar-brand-text">GraphZen</span>
-  </a>
-    <!-- End Logo -->
 
-    <!-- Responsive Toggle Button -->
-    <button type="button" class="navbar-toggler btn u-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
-            <span id="hamburgerTrigger" class="u-hamburger__box">
-              <span class="u-hamburger__inner"></span>
-            </span>
-          </button>
-    <!-- End Responsive Toggle Button -->
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <a class="navbar-brand gz-logo" href="https://www.graphzen.com">
+      GraphZen 
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <!-- Navigation -->
-    <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
-        <ul class="navbar-nav u-header__navbar-nav">
-            <!-- Home -->
-            <li class="nav-item  u-header__nav-item">
-                <a class="nav-link u-header__nav-link " href="https://graphzen.com">Home</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item">
+        <a href="https://www.graphzen.com" class="nav-link"><span>Home</span></a>
+      </li>
+      <li class="nav-item  ">
+        <a href="https://blog.graphzen.com" class="nav-link"><span>Blog</span></a>
+      </li>
+      <li class="nav-item  ">
+        <a href="https://docs.graphzen.com" class="nav-link"><span>Documentation</span></a>
+      </li>
+      <li class="nav-item  active">
+        <a href="https://api.graphzen.com" class="nav-link"><span>API</span></a>
+      </li>
+  </ul>
+      <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="btn btn-sm btn-primary " href="https://docs.graphzen.com/handbook/get-started/introduction/">Get Started</a>
             </li>
-            <li class="nav-item  u-header__nav-item">
-                <a class="nav-link u-header__nav-link " href="https://docs.graphzen.com">Docs</a>
-            </li>
-            <li class="nav-item  u-header__nav-item">
-                <a class="nav-link u-header__nav-link " href="https://api.graphzen.com">API</a>
-            </li>
-
-
-            <!-- End Home -->
-
-
-            <!-- Button -->
-            <li class="nav-item u-header__nav-last-item">
-                <a class="btn btn-sm btn-primary btn-pill transition-3d-hover" href="https://themes.getbootstrap.com/product/front-multipurpose-responsive-template/" target="_blank">
-                  Get Started
-                </a>
-            </li>
-            <!-- End Button -->
         </ul>
     </div>
-    <!-- End Navigation -->
-</nav>
+  </nav> 

@@ -7,19 +7,16 @@
     <div id="wrapper">
         <!-- ========== HEADER ========== -->
         <header>
-            <div class="border-bottom">
-                <div class="container-fluid">
-                    {{^_disableNavbar}} {{>partials/navbar}} {{/_disableNavbar}}
-                </div>
-            </div>
-            {{^_disableBreadcrumb}}
-            <div class="border-bottom">
+            {{^_disableNavbar}} {{>partials/navbar}} {{/_disableNavbar}}
+            
+        </header>
+        {{^_disableBreadcrumb}}
+            <div class="border-bottom breadcrumb-wrapper">
                 <div class="container-fluid">
                     {{>partials/breadcrumb}}
                 </div>
             </div>
             {{/_disableBreadcrumb}}
-        </header>
         <!-- ========== END HEADER ========== -->
 
         <div role="main" class="container-fluid body-content hide-when-search">
@@ -42,28 +39,9 @@
                 {{^_disableFooter}} {{>partials/footer}} {{/_disableFooter}}
             </div>
 
-            <script src="https://assets.graphzen.com/vendor/front/assets/vendor/jquery/dist/jquery.min.js"></script>
-            <script src="https://assets.graphzen.com/vendor/front/assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
-            <script src="https://assets.graphzen.com/vendor/front/assets/vendor/popper.js/dist/popper.min.js"></script>
-            <script src="https://assets.graphzen.com//vendor/front/assets/js/theme.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.1/highlight.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.1/languages/cs.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.js"></script>
-
-            <script type="text/javascript" src="{{_rel}}assets/docfx-custom.js"></script>
+            {{>partials/scripts}}
+  <script type="text/javascript" src="{{_rel}}assets/docfx-custom.js"></script>
             <script type="text/javascript" src="{{_rel}}assets/main-custom.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136112254-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'UA-136112254-1',
-      {
-        'linker': {
-          'domains': ['docs.graphzen.com', 'api.graphzen.com', 'graphzen.com']
-        }
-      });
-  </script>
 </body>
 
 </html>

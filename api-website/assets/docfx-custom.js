@@ -87,6 +87,7 @@ $(function() {
 
   // Enable highlight.js
   function highlight() {
+    return;
     $("pre code").each(function(i, block) {
       hljs.highlightBlock(block);
     });
