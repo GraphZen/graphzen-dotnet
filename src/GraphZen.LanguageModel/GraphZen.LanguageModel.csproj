@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
-    <Description>GraphQL language AST syntax model, parser, printer, and utilities.</Description>
+    <Description>GraphQL language abstract syntax tree model, parser, printer, and utilities.</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Superpower" Version="2.3.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
   </ItemGroup>
-    <ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
   </ItemGroup>
 

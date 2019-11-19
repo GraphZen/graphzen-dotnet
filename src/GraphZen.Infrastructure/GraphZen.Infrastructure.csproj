@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
-    <Description>Infrasstructure code supporting the GraphZen GraphQL SDK.</Description>
+    <Description>Infrastructure code supporting the GraphZen GraphQL SDK.</Description>
     <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
