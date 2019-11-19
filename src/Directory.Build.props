@@ -3,7 +3,7 @@
     <Product>GraphZen</Product>
     <Authors>GraphZen</Authors>
     <Company>GraphZen LLC</Company>
-    <Copyright>Copyright (c) GraphZen LLC. All Rights Reserved.</Copyright>
+    <Copyright>Copyright (c) 2017-2019 GraphZen LLC. All Rights Reserved.</Copyright>
     <RepositoryUrl>https://github.com/GraphZen/graphzen-dotnet</RepositoryUrl>
     <PackageProjectUrl>https://github.com/GraphZen/graphzen-dotnet</PackageProjectUrl>
     <RepositoryType>Git</RepositoryType>

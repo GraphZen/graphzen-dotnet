@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
-    <Description>GraphZen query execution engine for GraphQL. Not intended for stand-alone usage, install GraphZen.AspNetCore.App to to build and host GraphQL APIs.</Description>
+    <Description>Contains the GraphQL query executine engine and is not intended for stand-alone use. Install the GraphZen.AspNetCore.Server package to build, configure, and host GraphQL API servers.</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
