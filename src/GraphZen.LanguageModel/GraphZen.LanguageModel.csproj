@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
-    <Description>GraphQL language abstract syntax tree model, parser, printer, and utilities.</Description>
+    <Description>GraphQL abstract syntax tree, parser, printer, and language utilities.</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Superpower" Version="2.3.0" />
