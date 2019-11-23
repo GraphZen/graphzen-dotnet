@@ -53,7 +53,7 @@ namespace GraphZen
     {
         IEnumerable<IGraphQLContextOptionsExtension> Extensions { get; }
 
-        TExtension FindExtension<TExtension>()
+        TExtension? FindExtension<TExtension>()
             where TExtension : class, IGraphQLContextOptionsExtension;
     }
 

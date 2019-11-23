@@ -9,35 +9,6 @@ using Xunit;
 
 namespace GraphZen
 {
-
-    public class CoreOptionsExtensionTests
-    {
-        [Fact]
-        public void it_should_have_default_constructor()
-        {
-            new CoreOptionsExtension().Should().NotBeNull();
-        }
-    }
-
-    public class GraphQLContextOptionsTests
-    {
-        public class CustomContext : GraphQLContext
-        {
-        }
-        [Fact]
-        public void it_should_be_created_with_default_context()
-        {
-            var sut = new GraphQLContextOptions<GraphQLContext>();
-            sut.Should().NotBeNull();
-        }
-
-        [Fact]
-        public void it_should_be_created_with_custom_context()
-        {
-            var sut = new GraphQLContextOptions<CustomContext>();
-            sut.Should().NotBeNull();
-        }
-    }
     public class GraphQLContextOptionsBuilderTests
     {
         public class CustomContext : GraphQLContext
