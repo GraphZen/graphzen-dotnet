@@ -15,7 +15,9 @@ namespace GraphZen.Infrastructure
         public ISchema? Schema { get; private set; }
         public Type? QueryClrType { get; private set; }
         public Type? MutationClrType { get; private set; }
-
+        public IServiceProvider? ApplicationServiceProvider { get; private set; }
+        public IServiceProvider? InternalServiceProvider { get; private set; }
+        public bool RevealInternalServerErrors { get; private set; }
         public CoreOptionsExtension() { }
 
         protected CoreOptionsExtension(CoreOptionsExtension copyFrom)
@@ -23,6 +25,9 @@ namespace GraphZen.Infrastructure
             Schema = copyFrom.Schema;
             QueryClrType = copyFrom.QueryClrType;
             MutationClrType = copyFrom.MutationClrType;
+            ApplicationServiceProvider = copyFrom.ApplicationServiceProvider;
+            InternalServiceProvider = copyFrom.InternalServiceProvider;
+            RevealInternalServerErrors = copyFrom.RevealInternalServerErrors;
         }
 
         protected CoreOptionsExtension Clone() => new CoreOptionsExtension(this);
@@ -47,6 +52,28 @@ namespace GraphZen.Infrastructure
         {
             var clone = Clone();
             clone.MutationClrType = clrType;
+            return clone;
+        }
+
+        public CoreOptionsExtension WithRevealInternalServerErrors(bool value)
+        {
+            var clone = Clone();
+            clone.RevealInternalServerErrors = value;
+            return clone;
+        }
+
+
+        public CoreOptionsExtension WithApplicationServiceProvider(IServiceProvider serviceProvider)
+        {
+            var clone = Clone();
+            clone.ApplicationServiceProvider = serviceProvider;
+            return clone;
+        }
+
+        public CoreOptionsExtension WithInternalServiceProvider(IServiceProvider serviceProvider)
+        {
+            var clone = Clone();
+            clone.InternalServiceProvider = serviceProvider;
             return clone;
         }
     }

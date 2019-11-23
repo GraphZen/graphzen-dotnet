@@ -36,25 +36,27 @@ namespace GraphZen
 
         public virtual GraphQLContextOptions Options { get; private set; }
 
-        public void UseInternalServiceProvider(IServiceProvider serviceProvider)
-        {
-            Check.NotNull(serviceProvider, nameof(serviceProvider));
-            Options.InternalServiceProvider = serviceProvider;
-        }
+        public GraphQLContextOptionsBuilder UseInternalServiceProvider(IServiceProvider serviceProvider)
+            => WithOption(o => o.WithInternalServiceProvider(serviceProvider));
+
+        public GraphQLContextOptionsBuilder UseApplicationServiceProvider(IServiceProvider serviceProvider)
+            => WithOption(o => o.WithApplicationServiceProvider(serviceProvider));
+
+        public GraphQLContextOptionsBuilder RevealInternalServerErrors(bool enabled = true)
+            => WithOption(o => o.WithRevealInternalServerErrors(enabled));
 
         public virtual GraphQLContextOptionsBuilder UseSchema(ISchema schema) =>
             WithOption(o => o.WithSchema(schema));
 
-        public GraphQLContextOptionsBuilder UseQueryType<TQueryType>() => 
+        public GraphQLContextOptionsBuilder UseQueryType<TQueryType>() =>
             WithOption(o => o.WithQueryClrType(typeof(TQueryType)));
 
-        void IGraphQLContextOptionsBuilderInfrastructure.AddOrUpdateExtension<TExtension>(TExtension extension)
-        {
+        void IGraphQLContextOptionsBuilderInfrastructure.AddOrUpdateExtension<TExtension>(TExtension extension) =>
             Options = Options.WithExtension(extension);
-        }
+
         private GraphQLContextOptionsBuilder WithOption(Func<CoreOptionsExtension, CoreOptionsExtension> withFunc)
         {
-            ((IGraphQLContextOptionsBuilderInfrastructure)this).AddOrUpdateExtension(
+            ((IGraphQLContextOptionsBuilderInfrastructure) this).AddOrUpdateExtension(
                 withFunc(Options.FindExtension<CoreOptionsExtension>() ?? new CoreOptionsExtension()));
 
             return this;

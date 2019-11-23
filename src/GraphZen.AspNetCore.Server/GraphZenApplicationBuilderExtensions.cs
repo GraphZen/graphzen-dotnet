@@ -71,7 +71,7 @@ namespace Microsoft.AspNetCore.Builder
                             var contentLength = request.ContentLength.GetValueOrDefault();
                             if (contentLength > 0 && contentLength < memoryThreshold)
                                 // If the Content-Length is known and is smaller than the default buffer size, use it.
-                                memoryThreshold = (int)contentLength;
+                                memoryThreshold = (int) contentLength;
 
                             readStream = new FileBufferingReadStream(request.Body, memoryThreshold, null,
                                 TempDirectoryFactory);
@@ -126,15 +126,15 @@ namespace Microsoft.AspNetCore.Builder
                         catch (GraphQLException gqlException)
                         {
                             Logger.Error(gqlException, gqlException.Message);
-                            result = new ExecutionResult(null, new[] { gqlException.GraphQLError });
+                            result = new ExecutionResult(null, new[] {gqlException.GraphQLError});
                         }
                         catch (Exception e)
                         {
                             Logger.Error(e, e.Message);
-                            var error = graphQLContext.Options.RevealInternalServerErrors
+                            var error = graphQLContext.Options.GetExtension<CoreOptionsExtension>().RevealInternalServerErrors
                                 ? new GraphQLError(e.Message, innerException: e)
                                 : new GraphQLError("An unknown error occured.");
-                            result = new ExecutionResult(null, new[] { error });
+                            result = new ExecutionResult(null, new[] {error});
                         }
 
                         var resp = JsonConvert.SerializeObject(result, Json.SerializerSettings);

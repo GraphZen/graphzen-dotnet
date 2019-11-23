@@ -7,6 +7,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleBlog.Models;
 
 namespace SimpleBlog
 {
@@ -14,7 +15,9 @@ namespace SimpleBlog
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGraphQLContext();
+            services.AddGraphQLContext(options => options
+                .UseQueryType<Query>()
+                .RevealInternalServerErrors());
         }
 
         public void Configure(IApplicationBuilder app)

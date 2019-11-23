@@ -63,7 +63,7 @@ namespace GraphZen.QueryEngine
             {
                 if (context?.Options != null)
                 {
-                    var error = context.Options.RevealInternalServerErrors
+                    var error = context.Options.GetExtension<CoreOptionsExtension>().RevealInternalServerErrors
                         ? new GraphQLError(e.Message, innerException: e)
                         : new GraphQLError("An unknown error occured");
                     return new ExecutionResult(null, new[] { error });

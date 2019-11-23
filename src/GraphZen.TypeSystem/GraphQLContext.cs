@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -50,7 +49,8 @@ namespace GraphZen
                 if (!_optionsInitialized)
                 {
                     var optionsBuilder = new GraphQLContextOptionsBuilder(_options);
-                    ((IGraphQLContextOptionsBuilderInfrastructure) optionsBuilder).AddOrUpdateExtension(new CoreOptionsExtension());
+                    ((IGraphQLContextOptionsBuilderInfrastructure) optionsBuilder).AddOrUpdateExtension(
+                        new CoreOptionsExtension());
                     OnConfiguring(optionsBuilder);
                     _options = optionsBuilder.Options;
                     _optionsInitialized = true;
@@ -119,8 +119,9 @@ namespace GraphZen
                             mutationClrType = contextType.Assembly.GetExportedTypes()
                                 .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
 
-                        mutationClrType = mutationClrType ?? Assembly.GetEntryAssembly()?.GetTypes()
-                                              .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
+                        if (mutationClrType == null)
+                            mutationClrType = Assembly.GetEntryAssembly()?.GetTypes()
+                                .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
 
                         if (mutationClrType != null)
                             internalBuilder.MutationType(mutationClrType, ConfigurationSource.Convention);
@@ -134,7 +135,6 @@ namespace GraphZen
                     SchemaCache[contextType] = _schema;
                 }
 
-                Debug.Assert(_schema != null, nameof(_schema) + " != null");
                 return _schema;
             }
         }
@@ -142,9 +142,6 @@ namespace GraphZen
         protected internal virtual void OnConfiguring(GraphQLContextOptionsBuilder optionsBuilder)
         {
         }
-
-
-        protected virtual SchemaBuilder CreateSchemaBuilder() => new SchemaBuilder(Options.Schema);
 
         protected internal virtual void OnSchemaCreating(SchemaBuilder schemaBuilder)
         {
