@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
@@ -9,7 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen
 {
-    public abstract class GraphQLContextOptions : IInfrastructure<GraphQLContextOptionsBuilder>
+    public abstract class GraphQLContextOptions : IInfrastructure<GraphQLContextOptionsBuilder>, IGraphQLContextOptions
     {
         private SchemaDefinition? _schemaDefinition;
         protected abstract GraphQLContextOptionsBuilder Builder { get; }
@@ -23,12 +24,19 @@ namespace GraphZen
 
         public SchemaDefinition Schema
         {
-            get => _schemaDefinition ?? (_schemaDefinition = new SchemaDefinition(SpecScalars.All));
+            get
+            {
+                if (_schemaDefinition != null) return _schemaDefinition;
+                _schemaDefinition = new SchemaDefinition(SpecScalars.All);
+                return _schemaDefinition;
+            }
             set => _schemaDefinition = value;
         }
 
 
         GraphQLContextOptionsBuilder IInfrastructure<GraphQLContextOptionsBuilder>.Instance => Builder;
+        public IEnumerable<IGraphQLContextOptionsExtension> Extensions { get; }
+        public TExtension FindExtension<TExtension>() where TExtension : class, IGraphQLContextOptionsExtension => throw new NotImplementedException();
     }
 
 
