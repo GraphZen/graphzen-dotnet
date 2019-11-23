@@ -18,7 +18,7 @@ namespace GraphZen
     public class GraphQLContext
     {
         private static readonly ILog Logger = LogProvider.For<GraphQLContext>();
-        private readonly GraphQLContextOptions _options;
+        private GraphQLContextOptions _options;
 
         private bool _optionsInitialized;
         private Schema? _schema;
@@ -49,7 +49,10 @@ namespace GraphZen
             {
                 if (!_optionsInitialized)
                 {
-                    OnConfiguring(new GraphQLContextOptionsBuilder(_options));
+                    var optionsBuilder = new GraphQLContextOptionsBuilder(_options);
+                    ((IGraphQLContextOptionsBuilderInfrastructure) optionsBuilder).AddOrUpdateExtension(new CoreOptionsExtension());
+                    OnConfiguring(optionsBuilder);
+                    _options = optionsBuilder.Options;
                     _optionsInitialized = true;
                     Logger.Debug("howdy from GraphZen");
                 }
@@ -72,11 +75,12 @@ namespace GraphZen
                     var schemaDef = new SchemaDefinition(SpecScalars.All);
                     var schemaBuilder = new SchemaBuilder(schemaDef);
                     var internalBuilder = schemaBuilder.GetInfrastructure<InternalSchemaBuilder>();
+                    var options = Options.GetExtension<CoreOptionsExtension>();
 
                     // Configure query type
-                    if (Options.QueryClrType != null)
+                    if (options.QueryClrType != null)
                     {
-                        schemaBuilder.QueryType(Options.QueryClrType);
+                        schemaBuilder.QueryType(options.QueryClrType);
                     }
                     else
                     {
@@ -104,9 +108,9 @@ namespace GraphZen
                     }
 
                     // Configure mutation type
-                    if (Options.MutationClrType != null)
+                    if (options.MutationClrType != null)
                     {
-                        schemaBuilder.MutationType(Options.MutationClrType);
+                        schemaBuilder.MutationType(options.MutationClrType);
                     }
                     else
                     {

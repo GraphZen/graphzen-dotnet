@@ -24,12 +24,9 @@ namespace GraphZen
 
         protected abstract GraphQLContextOptionsBuilder Builder { get; }
 
-        public Type? QueryClrType { get; set; }
-        public Type? MutationClrType { get; set; }
 
         public IServiceProvider? InternalServiceProvider { get; set; }
         public bool RevealInternalServerErrors { get; set; } = false;
-
 
         public SchemaDefinition Schema
         {
@@ -82,11 +79,8 @@ namespace GraphZen
         protected override GraphQLContextOptionsBuilder Builder { get; }
         public override GraphQLContextOptions WithExtension<TExtension>(TExtension extension)
         {
-
-
             var extensions = Extensions.ToDictionary(p => p.GetType(), p => p);
             extensions[typeof(TExtension)] = extension;
-
             return new GraphQLContextOptions<TContext>(extensions);
         }
     }
