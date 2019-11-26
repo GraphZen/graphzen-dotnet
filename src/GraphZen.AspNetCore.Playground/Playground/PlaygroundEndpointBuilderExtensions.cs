@@ -13,10 +13,10 @@ namespace Microsoft.AspNetCore.Builder
 {
     public static class PlaygroundEndpointBuilderExtensions
     {
-        public static void MapGraphQLPlayground(this IEndpointRouteBuilder endpointRouteBuilder, string path = "/")
+        public static IEndpointConventionBuilder MapGraphQLPlayground(this IEndpointRouteBuilder endpointRouteBuilder, string path = "/")
         {
             var handler = CreatePlaygroundRequestHandler();
-            endpointRouteBuilder.MapGet(path, handler);
+            return endpointRouteBuilder.MapGet(path, handler);
         }
 
         private static RequestDelegate CreatePlaygroundRequestHandler()

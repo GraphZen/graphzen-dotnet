@@ -2,12 +2,12 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using GraphZen;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleBlog.Models;
+using Microsoft.Extensions.Hosting;
 
 namespace SimpleBlog
 {
@@ -15,23 +15,21 @@ namespace SimpleBlog
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGraphQLContext(options =>
-            {
-                options
-                    .UseQueryType<Query>()
-                    .RevealInternalServerErrors();
-            });
+            services.AddGraphQLContext();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGraphQLPlayground();
-            });
+                endpoints.MapGraphQL();
 
-            app.UseGraphQL();
+                if (env.IsDevelopment())
+                {
+                    endpoints.MapGraphQLPlayground();
+                }
+            });
         }
     }
 }
