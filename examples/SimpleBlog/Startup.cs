@@ -15,15 +15,25 @@ namespace SimpleBlog
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGraphQLContext(options => options
-                .UseQueryType<Query>()
-                .RevealInternalServerErrors());
+            services.AddGraphQLContext(options =>
+            {
+                options
+                    .UseQueryType<Query>()
+                    .RevealInternalServerErrors();
+            });
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseGraphQLPlayground();
-            app.UseGraphQL();
+            // app.UseGraphQLPlayground();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGraphQLPlayground();
+            });
+
+            //app.UseGraphQL();
         }
     }
 }

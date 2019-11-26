@@ -48,7 +48,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2B1883B3-BF6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Development", "Development", "{BED64EBD-A696-4B6D-98BA-A98597C4B40E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.AspNetCore.Server.Tests", "src\GraphZen.AspNetCore.Server.Tests\GraphZen.AspNetCore.Server.Tests.csproj", "{24FA0F04-34BC-4DFE-8971-45D0704BCD6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.AspNetCore.Server.Tests", "src\GraphZen.AspNetCore.Server.Tests\GraphZen.AspNetCore.Server.Tests.csproj", "{24FA0F04-34BC-4DFE-8971-45D0704BCD6A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.AspNetCore.Playground", "src\GraphZen.AspNetCore.Playground\GraphZen.AspNetCore.Playground.csproj", "{C8AE64A4-268D-4AD8-80E9-2C09E545AEAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.AspNetCore.Playground.Tests", "src\GraphZen.AspNetCore.Playground.Tests\GraphZen.AspNetCore.Playground.Tests.csproj", "{3D09DC6A-90E5-42C1-8793-F3340BF318A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,6 +120,14 @@ Global
 		{24FA0F04-34BC-4DFE-8971-45D0704BCD6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24FA0F04-34BC-4DFE-8971-45D0704BCD6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24FA0F04-34BC-4DFE-8971-45D0704BCD6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8AE64A4-268D-4AD8-80E9-2C09E545AEAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8AE64A4-268D-4AD8-80E9-2C09E545AEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8AE64A4-268D-4AD8-80E9-2C09E545AEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8AE64A4-268D-4AD8-80E9-2C09E545AEAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D09DC6A-90E5-42C1-8793-F3340BF318A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D09DC6A-90E5-42C1-8793-F3340BF318A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D09DC6A-90E5-42C1-8793-F3340BF318A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D09DC6A-90E5-42C1-8793-F3340BF318A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +151,8 @@ Global
 		{B32BAA64-D5CE-4200-B78F-034AA00AFB87} = {2B1883B3-BF6E-4073-9E5D-AD01961BA7D1}
 		{BED64EBD-A696-4B6D-98BA-A98597C4B40E} = {2B1883B3-BF6E-4073-9E5D-AD01961BA7D1}
 		{24FA0F04-34BC-4DFE-8971-45D0704BCD6A} = {B32BAA64-D5CE-4200-B78F-034AA00AFB87}
+		{C8AE64A4-268D-4AD8-80E9-2C09E545AEAA} = {B32BAA64-D5CE-4200-B78F-034AA00AFB87}
+		{3D09DC6A-90E5-42C1-8793-F3340BF318A1} = {B32BAA64-D5CE-4200-B78F-034AA00AFB87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F2A2408-678E-4184-B769-5C46F0B10F25}
