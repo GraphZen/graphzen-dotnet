@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Routing;
 // ReSharper disable once CheckNamespace
 namespace Microsoft.AspNetCore.Builder
 {
-    public static class PlaygroundApplicationEndpointBuilderExtensions
+    public static class PlaygroundEndpointBuilderExtensions
     {
         public static void MapGraphQLPlayground(this IEndpointRouteBuilder endpointRouteBuilder, string path = "/")
         {

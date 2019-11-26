@@ -23,10 +23,7 @@ namespace GraphZen
             typeof(GraphZenApplicationBuilderExtensions).Namespace
                 .Should().Be(typeof(IApplicationBuilder).Namespace);
 
-        [Fact]
-        public void playground_should_share_IApplicationBuilder_namespace() =>
-            typeof(PlaygroundApplicationBuilderExtensions).Namespace
-                .Should().Be(typeof(IApplicationBuilder).Namespace);
+      
     }
 
 

@@ -25,15 +25,13 @@ namespace SimpleBlog
 
         public void Configure(IApplicationBuilder app)
         {
-            // app.UseGraphQLPlayground();
-
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGraphQLPlayground();
             });
 
-            //app.UseGraphQL();
+            app.UseGraphQL();
         }
     }
 }

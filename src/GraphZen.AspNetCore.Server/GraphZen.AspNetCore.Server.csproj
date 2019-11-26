@@ -6,12 +6,6 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="StaticFiles\playground.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="StaticFiles\playground.html" />
-  </ItemGroup>
-  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
