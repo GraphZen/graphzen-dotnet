@@ -1,7 +1,6 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
@@ -18,7 +17,6 @@ namespace GraphZen
         public static async Task<ExecutionResult> ShouldEqual(this Task<ExecutionResult> result, object expected,
             ResultComparisonOptions? options = null)
         {
-
             var final = await result;
             final.Should().BeEquivalentToJson(expected, options);
             return final;

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using FluentAssertions.Primitives;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -35,7 +34,7 @@ namespace GraphZen.Internal
                 "{\"errors\": [{\"message\": \"hello\"}]}");
 
             result.Should().BeEquivalentTo(
-                new List<GraphQLError> { new GraphQLError("hello") });
+                new List<GraphQLError> {new GraphQLError("hello")});
         }
 
         [Theory]
@@ -55,12 +54,10 @@ namespace GraphZen.Internal
         {
             var result = GraphQLJsonSerializer.ParseData("{\"data\":{\"value\": 1}}");
             Console.WriteLine(JsonConvert.SerializeObject(result));
-            ObjectAssertions test = (result as object).Should(); 
+
+            // ObjectAssertions test = (result as object).Should();
             throw new NotImplementedException();
             //TestHelpers.AssertEqualsDynamic(new { value = 2 }, result);
         }
-
-
     }
-    
 }

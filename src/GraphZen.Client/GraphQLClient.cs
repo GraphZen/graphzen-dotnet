@@ -1,7 +1,9 @@
-﻿using System;
+﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -19,7 +21,6 @@ namespace GraphZen
         {
             public object? Data { get; set; }
             public List<GraphQLError>? Errors { get; set; }
-
         }
 
         private class GraphQLResponseJson<T> : GraphQLResponseJson where T : class
@@ -49,7 +50,7 @@ namespace GraphZen
             var raw = JsonConvert.DeserializeObject<GraphQLResponseJson>(responseJson, DeserializationSettings);
             Console.WriteLine("test" + responseJson);
 
-           throw new NotImplementedException(); 
+            throw new NotImplementedException();
         }
 
         private static JsonSerializerSettings DeserializationSettings { get; } = new JsonSerializerSettings

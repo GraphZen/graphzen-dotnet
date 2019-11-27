@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    public static class ObjectAssertionExtensions
+    public static class ReferenceTypeAssertionsExtensions
     {
         [UsedImplicitly]
         public static AndConstraint<ReferenceTypeAssertions<TSubject, TAssertions>>
@@ -18,10 +18,11 @@ namespace GraphZen.Infrastructure
                 object expected, ResultComparisonOptions? comparisonOptionsAction = null)
             where TAssertions : ReferenceTypeAssertions<TSubject, TAssertions>
         {
-            var diff = JsonDiffer.GetDiff(expected, assertions.Subject.As<object>(), comparisonOptionsAction);
+            // var diff = JsonDiffer.GetDiff(expected, assertions.Subject.As<object>(), comparisonOptionsAction);
+            throw new NotImplementedException();
 
 
-            return new AndConstraint<ReferenceTypeAssertions<TSubject, TAssertions>>(assertions);
+            // return new AndConstraint<ReferenceTypeAssertions<TSubject, TAssertions>>(assertions);
         }
 
         [UsedImplicitly]

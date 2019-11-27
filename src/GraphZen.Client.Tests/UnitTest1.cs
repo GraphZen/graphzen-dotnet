@@ -1,7 +1,8 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
 using System.Threading.Tasks;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore;
@@ -13,9 +14,6 @@ using Xunit;
 
 namespace GraphZen
 {
-
-
-
     public class UnitTest1
     {
         public class Query
@@ -27,22 +25,14 @@ namespace GraphZen
         {
             public void ConfigureServices(IServiceCollection services)
             {
-                services.AddGraphQLContext(optionsAction: options =>
-                {
-                    options.UseQueryType<Query>().RevealInternalServerErrors();
-                });
+                services.AddGraphQLContext(options => { options.UseQueryType<Query>().RevealInternalServerErrors(); });
             }
 
             public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             {
                 app.UseRouting();
-                app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapGraphQL();
-                });
+                app.UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
             }
-
-
         }
 
         private readonly GraphQLClient _graphQL;
@@ -57,11 +47,10 @@ namespace GraphZen
         [Fact(Skip = "wip")]
         public async Task Test1()
         {
-            GraphQLResponse result = await _graphQL.SendAsync(new GraphQLRequest()
+            await _graphQL.SendAsync(new GraphQLRequest
             {
                 Query = @"{ message }"
             });
         }
-
     }
 }
