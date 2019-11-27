@@ -9,17 +9,14 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 
-#nullable enable
-
-
 namespace GraphZen.Infrastructure
 {
-    public static class JsonExtensions
+    public static class JObjectExtensions
     {
-        public static IDictionary<string, object> ToDictionary(this JObject jobject)
+        public static IDictionary<string, object> ToDictionary(this JObject jObject)
         {
-            Check.NotNull(jobject, nameof(jobject));
-            var result = jobject.ToObject<Dictionary<string, object>>() ??
+            Check.NotNull(jObject, nameof(jObject));
+            var result = jObject.ToObject<Dictionary<string, object>>() ??
                          throw new Exception("Unable to convert JObject to Dictionary<string, object>");
 
             var objectEntries = (from r in result

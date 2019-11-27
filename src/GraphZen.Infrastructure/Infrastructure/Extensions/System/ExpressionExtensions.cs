@@ -8,9 +8,6 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable enable
-
-
 namespace GraphZen.Infrastructure
 {
     internal static class ExpressionExtensions
@@ -42,7 +39,7 @@ namespace GraphZen.Infrastructure
                 throw new ArgumentException();
             }
 
-            return (PropertyInfo)exp.Member;
+            return (PropertyInfo) exp.Member;
         }
     }
 }

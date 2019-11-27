@@ -14,11 +14,9 @@ namespace GraphZen.Infrastructure
         public static IDictionary<string, object> ToDictionary(dynamic value)
         {
             var dict = value != null
-                ? JsonExtensions.ToDictionary(JObject.FromObject(value, Json.Serializer))
+                ? JObjectExtensions.ToDictionary(JObject.FromObject(value, Json.Serializer))
                 : new Dictionary<string, object>();
             return dict;
         }
-
-        
     }
 }
