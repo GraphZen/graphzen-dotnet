@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.TypeSystem.Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.QueryEngine.Tests", "src\GraphZen.QueryEngine.Tests\GraphZen.QueryEngine.Tests.csproj", "{7BED216F-92DF-4F47-84A9-CF1978875DDD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.Infrastructure.Testing", "src\GraphZen.TestingInfrastructure\GraphZen.Infrastructure.Testing.csproj", "{A48511EE-90BD-46D3-A9FA-289135040A36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.Infrastructure.Testing", "src\GraphZen.Infrastructure.Testing\GraphZen.Infrastructure.Testing.csproj", "{A48511EE-90BD-46D3-A9FA-289135040A36}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.Tests", "src\GraphZen.Tests\GraphZen.Tests.csproj", "{6F5DA311-6D88-4C3C-9186-4B746B9F9C2F}"
 EndProject

@@ -17,7 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.AspNetCore.Playground\GraphZen.AspNetCore.Playground.csproj" />
-    <ProjectReference Include="..\GraphZen.TestingInfrastructure\GraphZen.Infrastructure.Testing.csproj" />
+    <ProjectReference Include="..\GraphZen.Infrastructure.Testing\GraphZen.Infrastructure.Testing.csproj" />
   </ItemGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
