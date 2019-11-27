@@ -6,27 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-#nullable disable
 
 
 namespace GraphZen
 {
-    [NoReorder]
-    public class ApplicationBuilderExtensionsTests
-    {
-        [Fact]
-        public void should_share_IApplicationBuilder_namespace() =>
-            typeof(GraphZenApplicationBuilderExtensions).Namespace
-                .Should().Be(typeof(IApplicationBuilder).Namespace);
-
-      
-    }
-
-
     [NoReorder]
     public class ServiceCollectionExtensionTests
     {

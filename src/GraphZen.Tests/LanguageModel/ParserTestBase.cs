@@ -9,15 +9,10 @@ using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
-
 namespace GraphZen.LanguageModel
 {
     public abstract class ParserTestBase
     {
-        /// In the future this can be made abstract and implmented by various
-        /// implementations
         private IParser Parser { get; } = new SuperpowerParser();
 
         protected DocumentSyntax ParseDocument(string source) => Parser.ParseDocument(source);
@@ -30,7 +25,6 @@ namespace GraphZen.LanguageModel
             return ParseDocument(printed);
         }
 
-
         protected ValueSyntax ParseValue(string source) => Parser.ParseValue(source);
 
         protected TypeSyntax ParseType(string source) => Parser.ParseType(source);
@@ -42,7 +36,7 @@ namespace GraphZen.LanguageModel
             TestHelpers.AssertEqualsDynamic(new
             {
                 message = expectedMessage,
-                locations = locations.Select(l => new { l.line, l.column })
+                locations = locations.Select(l => new {l.line, l.column})
             }, ex.GraphQLError);
         }
     }

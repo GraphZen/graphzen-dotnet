@@ -23,8 +23,13 @@ namespace GraphZen.Playground.Internal
         [Fact]
         public void playground_html_should_contain_options_object()
         {
-            var html = PlaygroundHtmlWriter.GetHtml();
-            html.Should().Contain("{ /* options */ }");
+            var options = new PlaygroundOptions { Endpoint = "foo" };
+            var html = PlaygroundHtmlWriter.GetHtml(options);
+            var optionsJson = PlaygroundHtmlWriter.GetPlaygroundOptionsJson(options);
+            html.Should().Contain(optionsJson);
         }
+
+
+
     }
 }

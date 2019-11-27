@@ -16,7 +16,7 @@ namespace GraphZen.Validation.Rules
 {
     public class ExpectedError
     {
-        public ExpectedError(GraphQLError error) : this(error.Message, error.Locations, error.Path)
+        public ExpectedError(GraphQLServerError error) : this(error.Message, error.Locations, error.Path)
         {
         }
 

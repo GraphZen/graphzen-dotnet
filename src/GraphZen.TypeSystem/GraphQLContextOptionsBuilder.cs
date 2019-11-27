@@ -20,7 +20,7 @@ namespace GraphZen
         {
         }
 
-        public new virtual GraphQLContextOptions<TContext> Options => (GraphQLContextOptions<TContext>) base.Options;
+        public new virtual GraphQLContextOptions<TContext> Options => (GraphQLContextOptions<TContext>)base.Options;
     }
 
     public class GraphQLContextOptionsBuilder : IGraphQLContextOptionsBuilderInfrastructure
@@ -51,13 +51,25 @@ namespace GraphZen
         public GraphQLContextOptionsBuilder UseQueryType<TQueryType>() =>
             WithOption(o => o.WithQueryClrType(typeof(TQueryType)));
 
-        void IGraphQLContextOptionsBuilderInfrastructure.AddOrUpdateExtension<TExtension>(TExtension extension) =>
+        void IGraphQLContextOptionsBuilderInfrastructure.AddOrUpdateExtension<TExtension>(TExtension extension)
+        {
+
             Options = Options.WithExtension(extension);
+
+
+        }
 
         private GraphQLContextOptionsBuilder WithOption(Func<CoreOptionsExtension, CoreOptionsExtension> withFunc)
         {
-            ((IGraphQLContextOptionsBuilderInfrastructure) this).AddOrUpdateExtension(
-                withFunc(Options.FindExtension<CoreOptionsExtension>() ?? new CoreOptionsExtension()));
+            var extension = Options.FindExtension<CoreOptionsExtension>();
+            if (extension == null)
+            {
+                extension = new CoreOptionsExtension();
+            }
+
+            var updated = withFunc(extension);
+
+            ((IGraphQLContextOptionsBuilderInfrastructure)this).AddOrUpdateExtension(updated);
 
             return this;
         }

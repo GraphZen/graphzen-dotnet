@@ -7,7 +7,11 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Playground
 {
-    public class PlaygroundConfiguration
+    public class PlaygroundOptions
     {
+        public string? Endpoint { get; set; }
+        public string? SubscriptionEndpoint { get; set; }
+        public string? WorkspaceName { get; set; }
+        public PlaygroundSettings Settings { get; set; } = new PlaygroundSettings();
     }
 }

@@ -14,7 +14,7 @@ using Xunit;
 namespace GraphZen.Configuration
 {
     [NoReorder]
-    public class CollectionConventionConfigurationTests : TestDataHelper<ICollectionConventionConfigurationFixture>
+    public class CollectionConventionConfigurationTests : TestDataFixtureRunner<ICollectionConventionConfigurationFixture>
     {
         public static IEnumerable<object[]> FixtureData =
             ConfigurationFixtures.GetAll<ICollectionConventionConfigurationFixture>().ToTestData();
@@ -24,7 +24,7 @@ namespace GraphZen.Configuration
         [MemberData(nameof(FixtureData))]
         public void conventional_parent_should_be_of_expected_type(ICollectionConventionConfigurationFixture fixture)
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -42,7 +42,7 @@ namespace GraphZen.Configuration
         public void conventional_item_added_explicitly_via_clr_member_should_have_clr_member(
             ICollectionConventionConfigurationFixture fixture)
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -68,7 +68,7 @@ namespace GraphZen.Configuration
         public void conventional_item_should_be_of_expected_type(ICollectionConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -95,7 +95,7 @@ namespace GraphZen.Configuration
         public void parent_should_be_of_expected_type(ICollectionConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -112,7 +112,7 @@ namespace GraphZen.Configuration
         public void item_added_by_conventional_name(ICollectionConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var ctx = fixture.GetContext();
 
@@ -140,7 +140,7 @@ namespace GraphZen.Configuration
         public void item_added_by_convention_with_name_configured_by_convention_renamed_explicitly(
             ICollectionConventionConfigurationFixture fixture)
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var explicitName = "ExplicitName";
@@ -172,7 +172,7 @@ namespace GraphZen.Configuration
             ICollectionConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var ctx = fixture.GetContext();
 
@@ -200,7 +200,7 @@ namespace GraphZen.Configuration
             ICollectionConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var explicitName = "ExplicitName";
@@ -231,7 +231,7 @@ namespace GraphZen.Configuration
         public void item_ignored_by_convention(ICollectionConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -254,7 +254,7 @@ namespace GraphZen.Configuration
             ICollectionConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -280,7 +280,7 @@ namespace GraphZen.Configuration
         public void item_ignored_by_data_annotation(ICollectionConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -302,7 +302,7 @@ namespace GraphZen.Configuration
             ICollectionConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -329,7 +329,7 @@ namespace GraphZen.Configuration
             ICollectionConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>

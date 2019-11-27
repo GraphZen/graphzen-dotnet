@@ -2,12 +2,10 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-
-#nullable disable
-
 
 namespace GraphZen.LanguageModel
 {
@@ -16,18 +14,19 @@ namespace GraphZen.LanguageModel
         [Fact]
         public void ItCorrectlyPrintsSingleLineWithLeadingSpace()
         {
-            var doc = ParseDocument(@"{ field(arg: """"""    space-led value"""""") }");
-            TestHelpers.AssertEquals(@"
+            ParseDocument(@"{ field(arg: """"""    space-led value"""""") }")
+                .ToSyntaxString().Should().Be(
+                    @"
               {
                 field(arg: """"""    space-led value"""""")
               }
-              ".Dedent(), doc.ToSyntaxString());
+              ".Dedent());
         }
 
         [Fact]
         public void ItCorrectlyPrintsStringWithFirstLineOfIndentation()
         {
-            var doc = ParseDocument(@"
+            ParseDocument(@"
                 {
                   field(arg: """"""
                         first
@@ -35,8 +34,8 @@ namespace GraphZen.LanguageModel
                     indentation
                   """""")
                 }
-            ");
-            TestHelpers.AssertEquals(@"
+            ").ToSyntaxString().Should().Be(
+                @"
                 {
                   field(arg: """"""
                         first
@@ -44,7 +43,7 @@ namespace GraphZen.LanguageModel
                     indentation
                   """""")
                 }
-                ".Dedent(), doc.ToSyntaxString());
+                ".Dedent());
         }
     }
 }

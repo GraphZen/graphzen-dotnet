@@ -10,31 +10,29 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 namespace GraphZen
 {
     public static class NamedCollection
     {
         public static NamedCollection<T> ToNamedCollection<T>(this IReadOnlyDictionary<string, T> source)
-            where T : INamed =>
+            where T : class, INamed =>
             ToNamedCollection<T, T>(source);
 
 
-        public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : INamed =>
+        public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : class, INamed =>
             ToNamedCollection<T, T>(source);
 
 
         public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(
-            this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : INamed =>
+            this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : class, INamed =>
             new DictionaryWrapper<TInner, TOuter>(source);
 
 
         public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IEnumerable<TInner> source)
-            where TInner : TOuter where TOuter : INamed =>
+            where TInner : TOuter where TOuter : class, INamed =>
             new EnumerableWrapper<TInner, TOuter>(source);
 
-        private class EnumerableWrapper<TInner, T> : NamedCollection<T> where T : INamed where TInner : T, INamed
+        private class EnumerableWrapper<TInner, T> : NamedCollection<T> where T : class, INamed where TInner : T, INamed
         {
             public EnumerableWrapper(IEnumerable<TInner> innerEnumerable)
             {
@@ -70,7 +68,7 @@ namespace GraphZen
             public override IEnumerator<T> GetEnumerator() => InnerEnumerable.Cast<T>().GetEnumerator();
         }
 
-        private class DictionaryWrapper<TInner, T> : NamedCollection<T> where TInner : T where T : INamed
+        private class DictionaryWrapper<TInner, T> : NamedCollection<T> where TInner : T where T : class, INamed
         {
             public DictionaryWrapper(IReadOnlyDictionary<string, TInner> innerDictionary)
             {
@@ -87,7 +85,7 @@ namespace GraphZen
 
             public override bool ContainsKey(string key) => InnerDictionary.ContainsKey(key);
 
-            public override bool TryGetValue(string key, out T value)
+            public override bool TryGetValue(string key, [NotNullWhen(true)] out T? value)
             {
                 if (InnerDictionary.TryGetValue(key, out var innerVal))
                 {
@@ -104,11 +102,11 @@ namespace GraphZen
     }
 
 
-    public abstract class NamedCollection<T> : IEnumerable<T> where T : INamed
+    public abstract class NamedCollection<T> : IEnumerable<T> where T : class, INamed
     {
         public abstract int Count { get; }
         public abstract bool ContainsKey(string key);
-        public abstract bool TryGetValue(string key, out T value);
+        public abstract bool TryGetValue(string key, [NotNullWhen(true)] out T? value);
 
         public abstract T this[string key] { get; }
 

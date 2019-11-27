@@ -13,9 +13,9 @@ using Newtonsoft.Json;
 
 namespace GraphZen
 {
-    public class GraphQLError
+    public class GraphQLServerError
     {
-        public GraphQLError(string message,
+        public GraphQLServerError(string message,
             IReadOnlyList<SyntaxNode>? nodes = null,
             Source? source = null,
             IReadOnlyList<int>? positions = null,
@@ -59,7 +59,7 @@ namespace GraphZen
 
         [JsonIgnore] public Exception? InnerException { get; }
 
-        private bool Equals(GraphQLError other) =>
+        private bool Equals(GraphQLServerError other) =>
             string.Equals(Message, other.Message) &&
             Equals(Locations, other.Locations) &&
             Equals(Path, other.Path);
@@ -72,7 +72,7 @@ namespace GraphZen
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((GraphQLError)obj);
+            return Equals((GraphQLServerError)obj);
         }
 
         public override int GetHashCode()
@@ -95,8 +95,8 @@ namespace GraphZen
         public override string ToString() => Json.SerializeObject(this) ?? Message;
 
 
-        public GraphQLError WithLocationInfo(IReadOnlyList<SyntaxNode> nodes, ResponsePath path) =>
-            new GraphQLError(Message, nodes, Source, Positions,
+        public GraphQLServerError WithLocationInfo(IReadOnlyList<SyntaxNode> nodes, ResponsePath path) =>
+            new GraphQLServerError(Message, nodes, Source, Positions,
                 Check.NotNull(path, nameof(path)).AsReadOnlyList(),
                 InnerException);
     }

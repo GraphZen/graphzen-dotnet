@@ -2,10 +2,12 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.LanguageModel.SyntaxFactory;
 
 #nullable disable
 
@@ -24,13 +26,13 @@ enum AnnotatedEnum @onEnum {
 }
 
 ");
-            var expected = SyntaxFactory.Document(new EnumTypeDefinitionSyntax(SyntaxFactory.Name("AnnotatedEnum"),
+            var expected = Document(new EnumTypeDefinitionSyntax(Name("AnnotatedEnum"),
                 null,
-                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onEnum")) }, new[]
+                new[] { Directive(Name("onEnum")) }, new[]
                 {
-                    new EnumValueDefinitionSyntax(SyntaxFactory.EnumValue(SyntaxFactory.Name("ANNOTATED_VALUE")), null,
-                        new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onEnumValue"))}),
-                    SyntaxFactory.EnumValueDefinition(SyntaxFactory.EnumValue(SyntaxFactory.Name("OTHER_VALUE")))
+                    new EnumValueDefinitionSyntax(EnumValue(Name("ANNOTATED_VALUE")), null,
+                        new[] {Directive(Name("onEnumValue"))}),
+                    EnumValueDefinition(EnumValue(Name("OTHER_VALUE")))
                 }));
 
             Assert.Equal(expected, result);
@@ -46,11 +48,11 @@ enum Site {
   MOBILE
 }
 ");
-            var expected = SyntaxFactory.Document(new EnumTypeDefinitionSyntax(SyntaxFactory.Name("Site"), null, null,
+            var expected = Document(new EnumTypeDefinitionSyntax(Name("Site"), null, null,
                 new[]
                 {
-                    SyntaxFactory.EnumValueDefinition(SyntaxFactory.EnumValue(SyntaxFactory.Name("DESKTOP"))),
-                    SyntaxFactory.EnumValueDefinition(SyntaxFactory.EnumValue(SyntaxFactory.Name("MOBILE")))
+                    EnumValueDefinition(EnumValue(Name("DESKTOP"))),
+                    EnumValueDefinition(EnumValue(Name("MOBILE")))
                 }));
 
             Assert.Equal(expected, result);
@@ -62,7 +64,7 @@ enum Site {
         {
             var result = ParseDocument("enum UndefinedEnum");
             var expected =
-                SyntaxFactory.Document(SyntaxFactory.EnumTypeDefinition(SyntaxFactory.Name("UndefinedEnum")));
+                Document(EnumTypeDefinition(Name("UndefinedEnum")));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
         }
@@ -80,16 +82,16 @@ enum Site {
                 }
             ");
             var expected =
-                SyntaxFactory.Document(new EnumTypeDefinitionSyntax(SyntaxFactory.Name("DescribedEnum"),
+                Document(new EnumTypeDefinitionSyntax(Name("DescribedEnum"),
                     SyntaxHelpers.Description("Enum description"), null, new[
                     ]
                     {
-                        SyntaxFactory.EnumValueDefinition(SyntaxFactory.EnumValue(SyntaxFactory.Name("UNDESCRIBED"))),
-                        new EnumValueDefinitionSyntax(SyntaxFactory.EnumValue(SyntaxFactory.Name("DESCRIBED")),
+                        EnumValueDefinition(EnumValue(Name("UNDESCRIBED"))),
+                        new EnumValueDefinitionSyntax(EnumValue(Name("DESCRIBED")),
                             SyntaxHelpers.Description("Enum value description"))
                     }));
 
-            TestHelpers.AssertEquals(expected.ToSyntaxString(), parsed.ToSyntaxString());
+            parsed.ToSyntaxString().Should().Be(expected.ToSyntaxString());
         }
     }
 }

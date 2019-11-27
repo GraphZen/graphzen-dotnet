@@ -7,13 +7,11 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen
 {
-    public static class StringHelpers
+    public static class StringTestExtensions
     {
+
         public static string Dedent(this string str)
         {
             var trimmedStr =

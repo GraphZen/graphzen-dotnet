@@ -11,13 +11,13 @@ namespace GraphZen.Internal
 {
     internal class None<T> : Maybe<T>
     {
-        protected None(IReadOnlyList<object>? values, IReadOnlyList<GraphQLError> errors) : base(values,
+        protected None(IReadOnlyList<object>? values, IReadOnlyList<GraphQLServerError> errors) : base(values,
             errors)
         {
         }
 
 
-        public IReadOnlyList<GraphQLError> Errors => Errs;
+        public IReadOnlyList<GraphQLServerError> Errors => Errs;
 
         public override string ToString()
         {

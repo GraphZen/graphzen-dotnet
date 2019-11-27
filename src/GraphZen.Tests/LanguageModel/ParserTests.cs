@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
@@ -35,8 +36,7 @@ namespace GraphZen.LanguageModel
             var kitchenSink = File.ReadAllText("./LanguageModel/schema-kitchen-sink.graphql");
             var result = ParseDocument(kitchenSink);
             var printResult = ParseDocument(result.ToSyntaxString());
-            TestHelpers.AssertEquals(result.ToSyntaxString(), printResult.ToSyntaxString());
-            Assert.Equal(result, printResult);
+            result.ToSyntaxString().Should().Be(printResult.ToSyntaxString());
         }
 
         [Fact]
@@ -167,11 +167,11 @@ namespace GraphZen.LanguageModel
                 subscription: SubscriptionType
               }
             ".Dedent();
-            TestHelpers.AssertEquals(expected, printResult, new ResultComparisonOptions
+            printResult.Should().Be(expected, opt =>
             {
-                ShowActual = true,
-                ShowExpected = false,
-                ShowDiffs = true
+                opt.ShowActual = true;
+                opt.ShowExpected = false;
+                opt.ShowDiffs = true;
             });
         }
 

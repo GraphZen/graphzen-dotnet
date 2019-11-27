@@ -14,12 +14,10 @@ using GraphZen.Logging;
 using GraphZen.QueryEngine;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 
 // ReSharper disable once CheckNamespace
@@ -129,9 +127,10 @@ namespace Microsoft.AspNetCore.Builder
                 catch (Exception e)
                 {
                     Logger.Error(e, e.Message);
-                    var error = graphQLContext.Options.GetExtension<CoreOptionsExtension>().RevealInternalServerErrors
-                        ? new GraphQLError(e.Message, innerException: e)
-                        : new GraphQLError("An unknown error occured.");
+                    var coreOptions = graphQLContext.Options.GetExtension<CoreOptionsExtension>();
+                    var error = coreOptions.RevealInternalServerErrors
+                        ? new GraphQLServerError(e.Message, innerException: e)
+                        : new GraphQLServerError("An unknown error occured.");
                     result = new ExecutionResult(null, new[] { error });
                 }
 
@@ -139,97 +138,5 @@ namespace Microsoft.AspNetCore.Builder
                 await httpContext.Response.WriteAsync(resp);
             });
         }
-
-        //[UsedImplicitly]
-        //public static void UseGraphQL(this IApplicationBuilder app)
-        //{
-        //    app.Map("", a =>
-        //    {
-        //        a.Run(async httpContext =>
-        //        {
-        //            if (httpContext.Request.Method == "POST")
-        //            {
-        //                var request = httpContext.Request;
-        //                var readStream = request.Body;
-        //                if (!request.Body.CanSeek)
-        //                {
-        //                    // JSON.Net does synchronous reads. In order to avoid blocking on the stream, we asynchronously
-        //                    // read everything into a buffer, and then seek back to the beginning.
-        //                    var memoryThreshold = DefaultMemoryThreshold;
-        //                    var contentLength = request.ContentLength.GetValueOrDefault();
-        //                    if (contentLength > 0 && contentLength < memoryThreshold)
-        //                        // If the Content-Length is known and is smaller than the default buffer size, use it.
-        //                        memoryThreshold = (int)contentLength;
-
-        //                    readStream = new FileBufferingReadStream(request.Body, memoryThreshold, null,
-        //                        TempDirectoryFactory);
-
-        //                    await readStream.DrainAsync(CancellationToken.None);
-        //                    readStream.Seek(0L, SeekOrigin.Begin);
-        //                }
-
-        //                using var reader = new StreamReader(readStream);
-        //                using var jsonReader = new JsonTextReader(reader);
-        //                ExecutionResult result;
-        //                var graphQLContext = httpContext.RequestServices.GetRequiredService<GraphQLContext>();
-        //                try
-        //                {
-        //                    var req = Json.Serializer.Deserialize<GraphQLRequest>(jsonReader);
-        //                    var document = Parser.ParseDocument(req!.Query);
-        //                    var queryValidator = httpContext.RequestServices.GetRequiredService<IQueryValidator>();
-        //                    var validationErrors = queryValidator.Validate(graphQLContext.Schema, document);
-
-        //                    if (validationErrors.Any())
-        //                    {
-        //                        result = new ExecutionResult(null, validationErrors);
-        //                    }
-        //                    else
-        //                    {
-        //                        var operationDefinitions =
-        //                            document.Definitions.OfType<OperationDefinitionSyntax>().ToList();
-
-        //                        var operation = req.OperationName != null
-        //                            ? operationDefinitions
-        //                                .FirstOrDefault(_ => _.Name?.Value == req.OperationName)
-        //                            : operationDefinitions.First();
-
-        //                        var rootClrType = operation?.OperationType == OperationType.Query
-        //                            ? graphQLContext.Schema.QueryType.ClrType
-        //                            : operation?.OperationType == OperationType.Mutation
-        //                                ? graphQLContext.Schema.MutationType?.ClrType
-        //                                : null;
-
-        //                        var rootValue = rootClrType != null
-        //                            ? httpContext.RequestServices.GetService(rootClrType)
-        //                            : new { };
-
-        //                        result = await new Executor().ExecuteAsync(graphQLContext.Schema, document,
-        //                            rootValue,
-        //                            graphQLContext, req.Variables, req.OperationName, new ExecutionOptions
-        //                            {
-        //                                ThrowOnError = false
-        //                            });
-        //                    }
-        //                }
-        //                catch (GraphQLException gqlException)
-        //                {
-        //                    Logger.Error(gqlException, gqlException.Message);
-        //                    result = new ExecutionResult(null, new[] { gqlException.GraphQLError });
-        //                }
-        //                catch (Exception e)
-        //                {
-        //                    Logger.Error(e, e.Message);
-        //                    var error = graphQLContext.Options.GetExtension<CoreOptionsExtension>().RevealInternalServerErrors
-        //                        ? new GraphQLError(e.Message, innerException: e)
-        //                        : new GraphQLError("An unknown error occured.");
-        //                    result = new ExecutionResult(null, new[] { error });
-        //                }
-
-        //                var resp = JsonConvert.SerializeObject(result, Json.SerializerSettings);
-        //                await httpContext.Response.WriteAsync(resp);
-        //            }
-        //        });
-        //    });
-        //}
     }
 }

@@ -197,7 +197,7 @@ namespace GraphZen.Validation.Rules
             }
             catch (Exception)
             {
-                var diff = TestHelpers.GetObjectDiff(expectedErrors, result, new ResultComparisonOptions());
+                var diff = JsonDiffer.GetDiff(expectedErrors, result);
                 Console.WriteLine(diff);
                 throw;
             }
@@ -219,7 +219,7 @@ namespace GraphZen.Validation.Rules
             }
             catch (Exception)
             {
-                var diff = TestHelpers.GetObjectDiff(expectedErrors, result, new ResultComparisonOptions());
+                var diff = JsonDiffer.GetDiff(expectedErrors, result);
                 Console.WriteLine(diff);
                 throw;
             }

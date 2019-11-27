@@ -14,7 +14,7 @@ using Xunit;
 namespace GraphZen.Configuration
 {
     [NoReorder]
-    public class LeafConventionConfigurationTests : TestDataHelper<ILeafConventionConfigurationFixture>
+    public class LeafConventionConfigurationTests : TestDataFixtureRunner<ILeafConventionConfigurationFixture>
     {
         public static IEnumerable<object[]> FixtureData { get; } =
             ConfigurationFixtures.GetAll<ILeafConventionConfigurationFixture>().ToTestData();
@@ -25,7 +25,7 @@ namespace GraphZen.Configuration
         public void parent_configured_conventionally_optional_configured_by_data_annotation(
             ILeafConventionConfigurationFixture fixture)
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -48,7 +48,7 @@ namespace GraphZen.Configuration
             ILeafConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>
@@ -74,7 +74,7 @@ namespace GraphZen.Configuration
             ILeafConventionConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var context = fixture.GetContext();
                 var schema = Schema.Create(sb =>

@@ -12,7 +12,6 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen.AspNetCore.Playground\GraphZen.AspNetCore.Playground.csproj" />
     <ProjectReference Include="..\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />
   </ItemGroup>
 </Project>

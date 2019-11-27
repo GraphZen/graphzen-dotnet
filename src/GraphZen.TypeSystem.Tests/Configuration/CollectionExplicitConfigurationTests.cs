@@ -14,7 +14,7 @@ using Xunit;
 namespace GraphZen.Configuration
 {
     [NoReorder]
-    public class CollectionExplicitConfigurationTests : TestDataHelper<ICollectionExplicitConfigurationFixture>
+    public class CollectionExplicitConfigurationTests : TestDataFixtureRunner<ICollectionExplicitConfigurationFixture>
     {
         public static IEnumerable<object[]> FixtureData { get; } =
             ConfigurationFixtures.GetAll<ICollectionExplicitConfigurationFixture>().ToTestData();
@@ -24,7 +24,7 @@ namespace GraphZen.Configuration
         [MemberData(nameof(FixtureData))]
         public void parent_should_be_of_expected_type(ICollectionExplicitConfigurationFixture fixture)
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -42,7 +42,7 @@ namespace GraphZen.Configuration
             ICollectionExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -68,7 +68,7 @@ namespace GraphZen.Configuration
             ICollectionExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -91,7 +91,7 @@ namespace GraphZen.Configuration
                 ICollectionExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var itemName = "addedExplicitly";
                 var parentName = "parent";
@@ -112,7 +112,7 @@ namespace GraphZen.Configuration
             ICollectionExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -139,7 +139,7 @@ namespace GraphZen.Configuration
             ICollectionExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var itemName = "addedExplicitly";
@@ -167,7 +167,7 @@ namespace GraphZen.Configuration
                 ICollectionExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var itemName = "addedExplicitly";
                 var parentName = "parent";
@@ -187,7 +187,7 @@ namespace GraphZen.Configuration
         public void item_added_explicitly(ICollectionExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "test";
                 var itemName = "item";
@@ -213,7 +213,7 @@ namespace GraphZen.Configuration
         public void item_added_explicitly_then_renamed_explicitly(ICollectionExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "test";
                 var initialItemName = "item";

@@ -52,7 +52,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.AspNetCore.Server.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.AspNetCore.Playground", "src\GraphZen.AspNetCore.Playground\GraphZen.AspNetCore.Playground.csproj", "{C8AE64A4-268D-4AD8-80E9-2C09E545AEAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.AspNetCore.Playground.Tests", "src\GraphZen.AspNetCore.Playground.Tests\GraphZen.AspNetCore.Playground.Tests.csproj", "{3D09DC6A-90E5-42C1-8793-F3340BF318A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.AspNetCore.Playground.Tests", "src\GraphZen.AspNetCore.Playground.Tests\GraphZen.AspNetCore.Playground.Tests.csproj", "{3D09DC6A-90E5-42C1-8793-F3340BF318A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.AspNetCore", "src\GraphZen.AspNetCore\GraphZen.AspNetCore.csproj", "{9A980D40-8349-4B15-9DA9-FA7BBCF776D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.Client", "src\GraphZen.Client\GraphZen.Client.csproj", "{A085CF02-72A3-492B-A39D-2F337FB73085}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.Client.Tests", "src\GraphZen.Client.Tests\GraphZen.Client.Tests.csproj", "{A3BCFF0D-97B4-4A45-8DE9-E71F3FC19AC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,6 +134,18 @@ Global
 		{3D09DC6A-90E5-42C1-8793-F3340BF318A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D09DC6A-90E5-42C1-8793-F3340BF318A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D09DC6A-90E5-42C1-8793-F3340BF318A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A980D40-8349-4B15-9DA9-FA7BBCF776D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A980D40-8349-4B15-9DA9-FA7BBCF776D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A980D40-8349-4B15-9DA9-FA7BBCF776D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A980D40-8349-4B15-9DA9-FA7BBCF776D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A085CF02-72A3-492B-A39D-2F337FB73085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A085CF02-72A3-492B-A39D-2F337FB73085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A085CF02-72A3-492B-A39D-2F337FB73085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A085CF02-72A3-492B-A39D-2F337FB73085}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3BCFF0D-97B4-4A45-8DE9-E71F3FC19AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3BCFF0D-97B4-4A45-8DE9-E71F3FC19AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3BCFF0D-97B4-4A45-8DE9-E71F3FC19AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3BCFF0D-97B4-4A45-8DE9-E71F3FC19AC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +171,9 @@ Global
 		{24FA0F04-34BC-4DFE-8971-45D0704BCD6A} = {B32BAA64-D5CE-4200-B78F-034AA00AFB87}
 		{C8AE64A4-268D-4AD8-80E9-2C09E545AEAA} = {B32BAA64-D5CE-4200-B78F-034AA00AFB87}
 		{3D09DC6A-90E5-42C1-8793-F3340BF318A1} = {B32BAA64-D5CE-4200-B78F-034AA00AFB87}
+		{9A980D40-8349-4B15-9DA9-FA7BBCF776D0} = {B32BAA64-D5CE-4200-B78F-034AA00AFB87}
+		{A085CF02-72A3-492B-A39D-2F337FB73085} = {C7EEE575-7E89-4398-8289-A93D008346E1}
+		{A3BCFF0D-97B4-4A45-8DE9-E71F3FC19AC1} = {C7EEE575-7E89-4398-8289-A93D008346E1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F2A2408-678E-4184-B769-5C46F0B10F25}

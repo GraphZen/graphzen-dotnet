@@ -5,9 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen
 {
     public class ResultComparisonOptions
@@ -15,6 +12,6 @@ namespace GraphZen
         public bool ShowExpected { get; set; } = true;
         public bool ShowActual { get; set; } = true;
         public bool ShowDiffs { get; set; } = true;
-        public bool SortBeforeCompare { get; set; } = false;
+        public bool SortBeforeCompare { get; set; }
     }
 }

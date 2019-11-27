@@ -7,7 +7,6 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace SimpleBlog
 {
@@ -24,11 +23,7 @@ namespace SimpleBlog
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGraphQL();
-
-                if (env.IsDevelopment())
-                {
-                    endpoints.MapGraphQLPlayground();
-                }
+                endpoints.MapGraphQLPlayground();
             });
         }
     }

@@ -15,12 +15,12 @@ namespace GraphZen.QueryEngine
 {
     public class ExecutionResult
     {
-        private readonly IReadOnlyList<GraphQLError> _errors;
+        private readonly IReadOnlyList<GraphQLServerError> _errors;
 
-        public ExecutionResult(IDictionary<string, object> data, IEnumerable<GraphQLError> errors)
+        public ExecutionResult(IDictionary<string, object> data, IEnumerable<GraphQLServerError> errors)
         {
             Data = data;
-            _errors = errors?.ToArray() ?? new GraphQLError[] { };
+            _errors = errors?.ToArray() ?? new GraphQLServerError[] { };
         }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -29,6 +29,6 @@ namespace GraphZen.QueryEngine
 
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<GraphQLError> Errors => _errors.Any() ? _errors : null;
+        public IReadOnlyList<GraphQLServerError> Errors => _errors.Any() ? _errors : null;
     }
 }

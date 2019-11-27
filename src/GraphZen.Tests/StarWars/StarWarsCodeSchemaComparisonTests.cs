@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
@@ -25,10 +26,10 @@ namespace GraphZen.StarWars
 
             var codeFirstSdl = Print(CodeFirstSchema);
             var schemaBuilderSdl = Print(SchemaBuilderSchema);
-            TestHelpers.AssertEquals(schemaBuilderSdl, codeFirstSdl, new ResultComparisonOptions
+            codeFirstSdl.Should().Be(schemaBuilderSdl, opt =>
             {
-                ShowActual = false,
-                ShowExpected = false
+                opt.ShowActual = false;
+                opt.ShowExpected = false;
             });
         }
     }

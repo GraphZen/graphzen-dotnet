@@ -18,33 +18,33 @@ namespace GraphZen.Internal
         }
 
 
-        internal static Maybe<T> None<T>(params GraphQLError[] errors)
+        internal static Maybe<T> None<T>(params GraphQLServerError[] errors)
         {
             errors = Check.NotNull(errors, nameof(errors));
             return new NoneImpl<T>(errors);
         }
 
 
-        internal static Maybe<T> None<T>(IEnumerable<GraphQLError> errors)
+        internal static Maybe<T> None<T>(IEnumerable<GraphQLServerError> errors)
         {
             errors = Check.NotNull(errors, nameof(errors));
             return new NoneImpl<T>(errors.ToArray());
         }
 
 
-        internal static Maybe<T> None<T>(string errorMessage) => None<T>(new GraphQLError(errorMessage));
+        internal static Maybe<T> None<T>(string errorMessage) => None<T>(new GraphQLServerError(errorMessage));
 
 
         private class NoneImpl<T> : None<T>
         {
-            internal NoneImpl(IReadOnlyList<GraphQLError> errors) : base(null, errors)
+            internal NoneImpl(IReadOnlyList<GraphQLServerError> errors) : base(null, errors)
             {
             }
         }
 
         private class SomeImpl<T> : Some<T>
         {
-            internal SomeImpl(IReadOnlyList<object?> values, IReadOnlyList<GraphQLError>? errors) : base(
+            internal SomeImpl(IReadOnlyList<object?> values, IReadOnlyList<GraphQLServerError>? errors) : base(
                 values, errors)
             {
             }
@@ -56,14 +56,14 @@ namespace GraphZen.Internal
     {
         private readonly IReadOnlyList<object?> _values;
 
-        protected Maybe(IReadOnlyList<object?>? values, IReadOnlyList<GraphQLError>? errors)
+        protected Maybe(IReadOnlyList<object?>? values, IReadOnlyList<GraphQLServerError>? errors)
         {
             _values = values ?? Array.AsReadOnly(new object?[] { });
-            Errs = errors ?? Array.AsReadOnly(new GraphQLError[] { });
+            Errs = errors ?? Array.AsReadOnly(new GraphQLServerError[] { });
         }
 
 
-        protected IReadOnlyList<GraphQLError> Errs { get; }
+        protected IReadOnlyList<GraphQLServerError> Errs { get; }
 
         public bool HasValue => _values.Any();
 

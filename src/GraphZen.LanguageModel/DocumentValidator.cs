@@ -22,7 +22,7 @@ namespace GraphZen
 
         private IReadOnlyCollection<ValidationRule> Rules { get; }
 
-        public IEnumerable<GraphQLError> Validate(DocumentSyntax schemaDocument,
+        public IEnumerable<GraphQLServerError> Validate(DocumentSyntax schemaDocument,
             DocumentSyntax? initialSchemaDocument = null)
         {
             Check.NotNull(schemaDocument, nameof(schemaDocument));

@@ -14,7 +14,7 @@ using Xunit;
 namespace GraphZen.Configuration
 {
     [NoReorder]
-    public class LeafExplicitConfigurationTests : TestDataHelper<ILeafExplicitConfigurationFixture>
+    public class LeafExplicitConfigurationTests : TestDataFixtureRunner<ILeafExplicitConfigurationFixture>
     {
         public static IEnumerable<object[]> FixtureData { get; } =
             ConfigurationFixtures.GetAll<ILeafExplicitConfigurationFixture>().ToTestData();
@@ -24,7 +24,7 @@ namespace GraphZen.Configuration
         [MemberData(nameof(FixtureData))]
         public void parent_should_be_of_expected_type(ILeafExplicitConfigurationFixture fixture)
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -41,7 +41,7 @@ namespace GraphZen.Configuration
         public void initial_value(ILeafExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -62,7 +62,7 @@ namespace GraphZen.Configuration
         public void initial_value_then_configured_explicitly(ILeafExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -87,7 +87,7 @@ namespace GraphZen.Configuration
             ILeafExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
@@ -112,7 +112,7 @@ namespace GraphZen.Configuration
         public void initial_value_then_reconfigured_explicitly_then_removed(ILeafExplicitConfigurationFixture fixture)
 
         {
-            TestData(fixture, () =>
+            RunFixture(fixture, () =>
             {
                 var parentName = "parent";
                 var schema = Schema.Create(sb =>
