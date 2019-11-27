@@ -7,7 +7,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.Infrastructure
 {
     public static class TestDataExtensions
     {
@@ -18,6 +18,6 @@ namespace GraphZen
         /// <param name="source"></param>
         /// <returns></returns>
         public static IEnumerable<object[]> ToTestData<T>(this IEnumerable<T> source) =>
-            source.Select(_ => new object[] {_});
+            source.Select(_ => new object[] { _! });
     }
 }

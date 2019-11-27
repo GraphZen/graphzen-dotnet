@@ -7,10 +7,11 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.Infrastructure
 {
     public static class StringTestExtensions
     {
+        public static string EscapeCurlyBraces(this string value) => value.Replace("{", "{{").Replace("}", "}}");
 
         public static string Dedent(this string str)
         {

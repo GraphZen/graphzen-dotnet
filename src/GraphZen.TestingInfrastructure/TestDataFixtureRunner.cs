@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.Infrastructure
 {
     public abstract class TestDataFixtureRunner<T>
     {
@@ -15,13 +15,13 @@ namespace GraphZen
         ///     failed.
         /// </summary>
         /// <typeparam name="TFilter"></typeparam>
-        /// <param name="data"></param>
+        /// <param name="fixture"></param>
         /// <param name="test"></param>
-        protected void RunFixture<TFilter>(T data, Action test) where TFilter : T, new()
+        protected void RunFixture<TFilter>(T fixture, Action test) where TFilter : T, new()
         {
-            if (data is TFilter)
+            if (fixture is TFilter)
             {
-                RunFixture(data, test);
+                RunFixture(fixture, test);
                 throw new Exception(
                     $"{typeof(TFilter).Name} was successful, but remove type parameter to test all fixtures");
             }
@@ -31,10 +31,11 @@ namespace GraphZen
         ///     Identifies which fixture has failed. Useful for test explorers such as NCrunch that can't pinpoint which fixture
         ///     caused the issue.
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="fixture"></param>
         /// <param name="test"></param>
-        protected void RunFixture(T data, Action test)
+        protected void RunFixture(T fixture, Action test)
         {
+            Check.NotNull(fixture, nameof(fixture));
             try
             {
                 test();
@@ -43,7 +44,7 @@ namespace GraphZen
             {
                 throw new Exception($@"Failed fixture:
 
-  {data.GetType().Name}  
+  {fixture.GetType().Name}  
 
 Inner exception: 
 

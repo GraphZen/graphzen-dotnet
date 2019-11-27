@@ -55,11 +55,7 @@ namespace GraphZen.Error
         [Fact]
         public void ItSerializesToIncludeMessage()
         {
-            var e = new GraphQLServerError("msg");
-            TestHelpers.AssertEqualsDynamic(new
-            {
-                message = "msg"
-            }, e);
+            new GraphQLServerError("msg").Should().BeEquivalentToJson(new { message = "msg" });
         }
 
         [Fact]
@@ -69,11 +65,12 @@ namespace GraphZen.Error
             var ast = new SuperpowerParser().ParseDocument(gql);
             var node = ast.Definitions[0].As<OperationDefinitionSyntax>().SelectionSet.Selections.First();
             var e = new GraphQLServerError("msg", new[] { node });
-            TestHelpers.AssertEqualsDynamic(new
-            {
-                message = "msg",
-                locations = new object[] { new { line = 1, column = 3 } }
-            }, e);
+            e.Should().BeEquivalentToJson(
+                new
+                {
+                    message = "msg",
+                    locations = new object[] { new { line = 1, column = 3 } }
+                });
         }
 
         [Fact]
@@ -81,11 +78,11 @@ namespace GraphZen.Error
         {
             var e = new GraphQLServerError("msg", null, null, null, new object[] { "path", 3, "to", "field" });
             Assert.Equal(new object[] { "path", 3, "to", "field" }, e.Path);
-            TestHelpers.AssertEqualsDynamic(new
+            e.Should().BeEquivalentToJson(new
             {
                 message = "msg",
                 path = new object[] { "path", 3, "to", "field" }
-            }, e);
+            });
         }
     }
 }

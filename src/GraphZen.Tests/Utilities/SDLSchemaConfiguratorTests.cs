@@ -67,11 +67,7 @@ namespace GraphZen.Utilities
             var body = sdl.Dedent();
             var schema = Schema.Create(body);
             var printed = schema.Print();
-            if (printed != body)
-            {
-                var diff = JsonDiffer.GetDiff(body, printed, options);
-                throw new Exception(diff);
-            }
+            printed.Should().Be(body, options);
         }
 
         [Fact]

@@ -261,7 +261,7 @@ namespace GraphZen.QueryEngine
             info.Schema.Should().Be(schemaSut);
             info.RootValue.Should().Be(rootValue);
             info.Operation.Should().Be(ast.Definitions[0]);
-            TestHelpers.AssertEqualsDynamic(new { var = "abc" }, info.VariableValues);
+            info.VariableValues.As<object>().Should().BeEquivalentToJson(new { var = "abc" });
         }
 
         [Fact]

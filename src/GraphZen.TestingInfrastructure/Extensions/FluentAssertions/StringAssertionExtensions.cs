@@ -9,36 +9,33 @@ using FluentAssertions.Primitives;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.Infrastructure
 {
     public static class StringAssertionExtensions
     {
         public static AndConstraint<StringAssertions> Be(this StringAssertions assertions, string expected,
-            Action<ResultComparisonOptions>? comparisonOptionsAction)
+            ResultComparisonOptions? options)
         {
-            ResultComparisonOptions? options = null;
-            if (comparisonOptionsAction != null)
-            {
-                options = new ResultComparisonOptions();
-                comparisonOptionsAction(options);
-            }
-
             var diff = StringDiffer.GetDiff(expected, assertions.Subject, options);
-            var friendlyDiff = diff?.Replace("{", "{{").Replace("}", "}}");
 
             Execute.Assertion
                 .ForCondition(diff == null)
-                .FailWith(friendlyDiff);
+                .FailWith(() => new FailReason(diff!.EscapeCurlyBraces()));
 
             return new AndConstraint<StringAssertions>(assertions);
         }
 
+
         public static AndConstraint<StringAssertions> Be(this StringAssertions assertions, string expected,
-            bool showDiff)
+            Action<ResultComparisonOptions>? comparisonOptionsAction)
         {
-            if (showDiff)
-                return assertions.Be(expected, (Action<ResultComparisonOptions>?) null);
-            return assertions.Be(expected);
+            var options = ResultComparisonOptions.FromOptionsAction(comparisonOptionsAction);
+            return assertions.Be(expected, options);
         }
+
+        public static AndConstraint<StringAssertions> Be(this StringAssertions assertions, string expected,
+            bool showDiff) => showDiff
+            ? assertions.Be(expected, (Action<ResultComparisonOptions>?) null)
+            : assertions.Be(expected);
     }
 }

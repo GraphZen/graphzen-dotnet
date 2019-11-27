@@ -39,7 +39,7 @@
     <Folder Include="Utilities\BuildFromAst\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphZen.TestingInfrastructure\GraphZen.TestingInfrastructure.csproj" />
+    <ProjectReference Include="..\GraphZen.TestingInfrastructure\GraphZen.Infrastructure.Testing.csproj" />
     <ProjectReference Include="..\GraphZen\GraphZen.csproj" />
   </ItemGroup>
 </Project>

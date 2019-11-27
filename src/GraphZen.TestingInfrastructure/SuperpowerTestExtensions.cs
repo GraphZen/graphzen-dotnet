@@ -7,7 +7,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower.Model;
 
-namespace GraphZen
+namespace GraphZen.Infrastructure
 {
     public static class SuperpowerTestExtensions
     {

@@ -6,9 +6,8 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
-using Xunit;
 
-namespace GraphZen
+namespace GraphZen.Infrastructure
 {
     public static class TestHelpers
     {

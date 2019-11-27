@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
@@ -33,11 +34,11 @@ namespace GraphZen.LanguageModel
             params (int line, int column)[] locations)
         {
             var ex = Assert.Throws<GraphQLException>(() => ParseDocument(document));
-            TestHelpers.AssertEqualsDynamic(new
+            ex.GraphQLError.Should().BeEquivalentToJson(new
             {
                 message = expectedMessage,
                 locations = locations.Select(l => new {l.line, l.column})
-            }, ex.GraphQLError);
+            });
         }
     }
 }

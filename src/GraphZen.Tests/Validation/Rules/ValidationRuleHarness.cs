@@ -170,14 +170,14 @@ namespace GraphZen.Validation.Rules
         private void ExpectValidSDL(ValidationRule rule, string sdl)
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
-            var result = new DocumentValidator(new[] { rule }).Validate(sdlSyntax);
+            var result = new DocumentValidator(new[] {rule}).Validate(sdlSyntax);
             result.Should().BeEmpty("it should validate");
         }
 
         private void ExpectValidQuery(Schema schema, ValidationRule rule, string query)
         {
             var document = Parser.ParseDocument(query);
-            var result = new QueryValidator(new[] { rule }).Validate(schema, document);
+            var result = new QueryValidator(new[] {rule}).Validate(schema, document);
             result.Should().BeEmpty("it should validate");
         }
 
@@ -185,44 +185,26 @@ namespace GraphZen.Validation.Rules
             IReadOnlyList<ExpectedError> expectedErrors)
         {
             var document = Parser.ParseDocument(query);
-            var result = new QueryValidator(new[] { rule }).Validate(schema, document)
+            var result = new QueryValidator(new[] {rule}).Validate(schema, document)
                 // Convert for comparison
                 .Select(e => new ExpectedError(e))
                 .ToArray();
             result.Should().HaveCountGreaterThan(0, "it should not validate");
-            try
-            {
-                // ReSharper disable once CoVariantArrayConversion
-                expectedErrors.Should().BeEquivalentTo(result);
-            }
-            catch (Exception)
-            {
-                var diff = JsonDiffer.GetDiff(expectedErrors, result);
-                Console.WriteLine(diff);
-                throw;
-            }
+            expectedErrors.Should().BeEquivalentToJson(result);
+            // TODO - validate fails
         }
 
         private void ExpectInvalidSDL(ValidationRule rule, string sdl,
             IReadOnlyList<ExpectedError> expectedErrors)
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
-            var result = new DocumentValidator(new[] { rule }).Validate(sdlSyntax)
+            var result = new DocumentValidator(new[] {rule}).Validate(sdlSyntax)
                 // Convert for comparison
                 .Select(e => new ExpectedError(e))
                 .ToArray();
             result.Should().HaveCountGreaterThan(0, "it should not validate");
-            try
-            {
-                // ReSharper disable once CoVariantArrayConversion
-                expectedErrors.Should().BeEquivalentTo(result);
-            }
-            catch (Exception)
-            {
-                var diff = JsonDiffer.GetDiff(expectedErrors, result);
-                Console.WriteLine(diff);
-                throw;
-            }
+            expectedErrors.Should().BeEquivalentToJson(result);
+            // TODO - validate fails
         }
 
         protected void QueryShouldPass(string query)
@@ -232,7 +214,7 @@ namespace GraphZen.Validation.Rules
 
         protected void QueryShouldFail(string query, ExpectedError error, params ExpectedError[] errors)
         {
-            ExpectInvalidQuery(TestSchema, RuleUnderTest, query, new[] { error }.Concat(errors).ToArray());
+            ExpectInvalidQuery(TestSchema, RuleUnderTest, query, new[] {error}.Concat(errors).ToArray());
         }
 
         protected void SDLShouldPass(string sdl)
@@ -242,7 +224,7 @@ namespace GraphZen.Validation.Rules
 
         protected void SDLShouldFail(string sdl, ExpectedError error, params ExpectedError[] errors)
         {
-            ExpectInvalidSDL(RuleUnderTest, sdl.Dedent(), new[] { error }.Concat(errors).ToArray());
+            ExpectInvalidSDL(RuleUnderTest, sdl.Dedent(), new[] {error}.Concat(errors).ToArray());
         }
     }
 }

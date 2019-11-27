@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,17 @@ using DiffPlex.DiffBuilder.Model;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.Infrastructure
 {
     public static class StringDiffer
     {
+        public static string? GetDiff(string expected, string actual,
+            Action<ResultComparisonOptions>? comparisonOptionsAction = null)
+        {
+            var options = ResultComparisonOptions.FromOptionsAction(comparisonOptionsAction);
+            return GetDiff(expected, actual, options);
+        }
+
         public static string? GetDiff(string expected, string actual, ResultComparisonOptions? options = null) =>
             TryGetDiff(expected, actual, out var differences, options) ? differences : null;
 

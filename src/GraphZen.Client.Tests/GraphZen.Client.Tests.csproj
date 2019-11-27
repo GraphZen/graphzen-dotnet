@@ -22,7 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.AspNetCore.Server\GraphZen.AspNetCore.Server.csproj" />
     <ProjectReference Include="..\GraphZen.Client\GraphZen.Client.csproj" />
-    <ProjectReference Include="..\GraphZen.TestingInfrastructure\GraphZen.TestingInfrastructure.csproj" />
+    <ProjectReference Include="..\GraphZen.TestingInfrastructure\GraphZen.Infrastructure.Testing.csproj" />
   </ItemGroup>
 
 </Project>
