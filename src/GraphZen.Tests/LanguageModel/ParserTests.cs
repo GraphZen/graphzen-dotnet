@@ -178,7 +178,7 @@ namespace GraphZen.LanguageModel
         [Fact]
         public void ItProvidesUsefulErrors()
         {
-            AssertSyntaxError("{", "Syntax error: unexpected end of input, expected selection. Should fail", (1, 2));
+            AssertSyntaxError("{", "Syntax error: unexpected end of input, expected selection.", (1, 2));
         }
 
         [Fact]

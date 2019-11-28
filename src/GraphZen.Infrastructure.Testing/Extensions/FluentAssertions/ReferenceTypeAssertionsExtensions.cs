@@ -4,9 +4,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using Newtonsoft.Json.Linq;
 
 namespace GraphZen.Infrastructure
 {
@@ -15,29 +17,37 @@ namespace GraphZen.Infrastructure
         [UsedImplicitly]
         public static AndConstraint<ReferenceTypeAssertions<TSubject, TAssertions>>
             BeEquivalentToJson<TSubject, TAssertions>(this ReferenceTypeAssertions<TSubject, TAssertions> assertions,
-                object expected, ResultComparisonOptions? comparisonOptionsAction = null)
+                object expected, JsonDiffOptions? options = null)
             where TAssertions : ReferenceTypeAssertions<TSubject, TAssertions>
         {
-            // var diff = JsonDiffer.GetDiff(expected, assertions.Subject.As<object>(), comparisonOptionsAction);
-            throw new NotImplementedException();
+            var diff = JsonDiffer.GetDiff(assertions.Subject.As<object>(), expected, options);
+
+            Execute.Assertion.ForCondition(diff == null).FailWith(() => new FailReason(diff!.EscapeCurlyBraces()));
 
 
-            // return new AndConstraint<ReferenceTypeAssertions<TSubject, TAssertions>>(assertions);
+            return new AndConstraint<ReferenceTypeAssertions<TSubject, TAssertions>>(assertions);
         }
 
         [UsedImplicitly]
         public static
             AndConstraint<ReferenceTypeAssertions<TSubject, TAssertions>>
             BeEquivalentToJson<TSubject, TAssertions>(this ReferenceTypeAssertions<TSubject, TAssertions> assertions,
-                object expected, Action<ResultComparisonOptions>? comparisonOptionsAction)
+                object expected, Action<JsonDiffOptions>? optionsAction)
             where TAssertions : ReferenceTypeAssertions<TSubject, TAssertions>
         {
-            var options = ResultComparisonOptions.FromOptionsAction(comparisonOptionsAction);
+            var options = JsonDiffOptions.FromOptionsAction(optionsAction);
             return BeEquivalentToJson(assertions, expected, options);
         }
 
         [UsedImplicitly]
-        public static AndConstraint<ObjectAssertions> BeEquivalentToJson(this ObjectAssertions objectAssertions,
-            string expectedJson) => throw new NotImplementedException();
+        public static AndConstraint<ObjectAssertions> BeEquivalentToJson(this ObjectAssertions assertions,
+            string expectedJson, JsonDiffOptions? options)
+        {
+            var expectedJObj = JObject.Parse(expectedJson);
+            var diff = JsonDiffer.GetDiff(assertions.Subject, expectedJObj, options);
+
+
+            throw new NotImplementedException();
+        }
     }
 }

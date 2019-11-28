@@ -8,19 +8,18 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    public class ResultComparisonOptions
+    public class StringDiffOptions
     {
         public bool ShowExpected { get; set; } = true;
         public bool ShowActual { get; set; } = true;
         public bool ShowDiffs { get; set; } = true;
-        public bool SortBeforeCompare { get; set; }
 
-        internal static ResultComparisonOptions? FromOptionsAction(
-            Action<ResultComparisonOptions>? comparisonOptionsAction)
+        internal static StringDiffOptions? FromOptionsAction(
+            Action<StringDiffOptions>? optionsAction)
         {
-            if (comparisonOptionsAction == null) return null;
-            var options = new ResultComparisonOptions();
-            comparisonOptionsAction(options);
+            if (optionsAction == null) return null;
+            var options = new StringDiffOptions();
+            optionsAction(options);
             return options;
         }
     }

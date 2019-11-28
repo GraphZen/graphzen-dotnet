@@ -13,22 +13,25 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    public static class StringDiffer
+    public static class StringDiffExtensions
     {
-        public static string? GetDiff(string expected, string actual,
-            Action<ResultComparisonOptions>? comparisonOptionsAction = null)
+        public static string? GetDiff(this string actual, string expected) =>
+            GetDiff(actual, expected, (StringDiffOptions?) null);
+
+        public static string? GetDiff(this string actual, string expected,
+            Action<StringDiffOptions>? comparisonOptionsAction)
         {
-            var options = ResultComparisonOptions.FromOptionsAction(comparisonOptionsAction);
-            return GetDiff(expected, actual, options);
+            var options = StringDiffOptions.FromOptionsAction(comparisonOptionsAction);
+            return actual.GetDiff(expected, options);
         }
 
-        public static string? GetDiff(string expected, string actual, ResultComparisonOptions? options = null) =>
-            TryGetDiff(expected, actual, out var differences, options) ? differences : null;
+        public static string? GetDiff(this string actual, string expected, StringDiffOptions? options) =>
+            TryGetDiff(actual, expected, out var differences, options) ? differences : null;
 
-        private static bool TryGetDiff(string expected, string actual, out string differences,
-            ResultComparisonOptions? options = null)
+        private static bool TryGetDiff(string actual, string expected, out string differences,
+            StringDiffOptions? options = null)
         {
-            options = options ?? new ResultComparisonOptions();
+            options = options ?? new StringDiffOptions();
             var diffStringBuilder = new StringBuilder();
             var diffBuilder = new InlineDiffBuilder(new Differ());
             var diff = diffBuilder.BuildDiffModel(actual, expected);

@@ -48,12 +48,15 @@ namespace GraphZen.TypeSystem.IntrospectionTests
             var query = Helpers.IntrospectionQuery(false);
             await ExecuteAsync(schema, query, throwOnError: true)
                 .ShouldEqualJsonFile("./TypeSystem/IntrospectionTests/introspection-expected-result.json",
-                    new ResultComparisonOptions
+                    new JsonDiffOptions
                     {
-                        ShowExpected = false,
-                        ShowActual = false,
-                        ShowDiffs = true,
-                        SortBeforeCompare = true
+                        SortBeforeCompare = true,
+                        StringDiffOptions =
+                        {
+                            ShowExpected = false,
+                            ShowActual = false,
+                            ShowDiffs = true
+                        }
                     });
         }
     }

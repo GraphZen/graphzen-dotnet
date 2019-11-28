@@ -14,10 +14,26 @@ namespace GraphZen.Infrastructure
     {
         public static void Sort(this JToken jToken)
         {
-            if (jToken is JObject jObject) Sort(jObject);
+            if (jToken is JObject jObject) jObject.Sort();
+            if (jToken is JArray jArr) jArr.Sort();
         }
 
-        internal static JArray ToSorted(this JArray arr)
+        private static void Sort(this JObject jObj)
+        {
+            var props = jObj.Properties().ToList();
+            foreach (var prop in props)
+            {
+                prop.Remove();
+            }
+
+            foreach (var prop in props.OrderByDescending(p => p.Name == "name").ThenBy(p => p.Name))
+            {
+                jObj.Add(prop);
+                prop.Value.Sort();
+            }
+        }
+
+        private static void Sort(this JArray arr)
         {
             foreach (var el in arr)
             {
@@ -70,25 +86,10 @@ namespace GraphZen.Infrastructure
             //    return 0;
             //});
 
-
-            return new JArray();
+            arr.Clear();
+            elList.ForEach(arr.Add);
         }
 
-        private static void Sort(JObject jObj)
-        {
-            var props = jObj.Properties().ToList();
-            foreach (var prop in props)
-            {
-                prop.Remove();
-            }
 
-            foreach (var prop in props.OrderByDescending(p => p.Name == "name").ThenBy(p => p.Name))
-            {
-                jObj.Add(prop);
-                if (prop.Value is JObject objValue) Sort(objValue);
-
-                if (prop.Value is JArray arr) prop.Value = arr.ToSorted();
-            }
-        }
     }
 }

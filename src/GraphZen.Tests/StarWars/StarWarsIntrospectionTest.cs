@@ -57,7 +57,7 @@ namespace GraphZen.StarWars
                         }
                     }
                 }
-            }, new ResultComparisonOptions
+            }, new JsonDiffOptions()
             {
                 SortBeforeCompare = true
             });
@@ -460,7 +460,7 @@ namespace GraphZen.StarWars
                         }
                     }
                 }
-            }, new ResultComparisonOptions
+            }, new JsonDiffOptions
             {
                 SortBeforeCompare = true
             });

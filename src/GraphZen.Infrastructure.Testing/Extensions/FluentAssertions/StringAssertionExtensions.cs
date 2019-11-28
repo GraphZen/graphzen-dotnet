@@ -14,9 +14,9 @@ namespace GraphZen.Infrastructure
     public static class StringAssertionExtensions
     {
         public static AndConstraint<StringAssertions> Be(this StringAssertions assertions, string expected,
-            ResultComparisonOptions? options)
+            StringDiffOptions? options)
         {
-            var diff = StringDiffer.GetDiff(expected, assertions.Subject, options);
+            var diff = assertions.Subject.GetDiff(expected, options);
 
             Execute.Assertion
                 .ForCondition(diff == null)
@@ -27,15 +27,15 @@ namespace GraphZen.Infrastructure
 
 
         public static AndConstraint<StringAssertions> Be(this StringAssertions assertions, string expected,
-            Action<ResultComparisonOptions>? comparisonOptionsAction)
+            Action<StringDiffOptions>? comparisonOptionsAction)
         {
-            var options = ResultComparisonOptions.FromOptionsAction(comparisonOptionsAction);
+            var options = StringDiffOptions.FromOptionsAction(comparisonOptionsAction);
             return assertions.Be(expected, options);
         }
 
         public static AndConstraint<StringAssertions> Be(this StringAssertions assertions, string expected,
             bool showDiff) => showDiff
-            ? assertions.Be(expected, (Action<ResultComparisonOptions>?) null)
+            ? assertions.Be(expected, (Action<StringDiffOptions>?)null)
             : assertions.Be(expected);
     }
 }

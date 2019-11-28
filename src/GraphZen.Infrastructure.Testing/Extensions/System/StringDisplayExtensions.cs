@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    public static class StringTestExtensions
+    public static class StringDisplayExtensions
     {
         public static string EscapeCurlyBraces(this string value) => value.Replace("{", "{{").Replace("}", "}}");
 

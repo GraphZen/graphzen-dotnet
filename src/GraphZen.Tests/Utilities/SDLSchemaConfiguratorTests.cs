@@ -62,7 +62,7 @@ namespace GraphZen.Utilities
             });
         }
 
-        private static void ShouldRoundTrip(string sdl, ResultComparisonOptions? options = null)
+        private static void ShouldRoundTrip(string sdl, StringDiffOptions? options = null)
         {
             var body = sdl.Dedent();
             var schema = Schema.Create(body);

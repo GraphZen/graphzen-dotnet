@@ -11,18 +11,17 @@ namespace GraphZen.Infrastructure
 {
     public static class JsonDiffer
     {
-        public static string? GetDiff(object expected, object actual,
-            Action<ResultComparisonOptions>? comparisonOptionsAction = null)
+        public static string? GetDiff(object actual, object expected,
+            Action<JsonDiffOptions>? optionsAction = null)
         {
-            var options = ResultComparisonOptions.FromOptionsAction(comparisonOptionsAction);
-            return GetDiff(expected, actual, options);
+            var options = JsonDiffOptions.FromOptionsAction(optionsAction);
+            return GetDiff(actual, expected, options);
         }
 
-
-        public static string? GetDiff(object expected, object actual,
-            ResultComparisonOptions? options)
+        public static string? GetDiff(object actual, object expected,
+            JsonDiffOptions? options)
         {
-            options = options ?? new ResultComparisonOptions();
+            options = options ?? new JsonDiffOptions();
             var expectedToken = expected is JToken ejc ? ejc : JToken.FromObject(expected, Json.Serializer);
             var actualToken = actual is JToken ajc ? ajc : JToken.FromObject(actual, Json.Serializer);
 
@@ -37,7 +36,7 @@ namespace GraphZen.Infrastructure
             {
                 var expectedJson = Json.SerializeObject(expected);
                 var actualJson = Json.SerializeObject(actual);
-                var diff = StringDiffer.GetDiff(expectedJson, actualJson, options);
+                var diff = actualJson.GetDiff(expectedJson, options.StringDiffOptions);
                 if (diff == null) return "a difference was detected, but there was an error calculating the difference";
                 return diff;
             }
