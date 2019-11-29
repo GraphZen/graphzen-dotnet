@@ -55,7 +55,7 @@ namespace GraphZen.Error
         [Fact]
         public void ItSerializesToIncludeMessage()
         {
-            new GraphQLServerError("msg").Should().BeEquivalentToJson(new { message = "msg" });
+            new GraphQLServerError("msg").Should().BeEquivalentToJsonFromObject(new { message = "msg" });
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace GraphZen.Error
             var ast = new SuperpowerParser().ParseDocument(gql);
             var node = ast.Definitions[0].As<OperationDefinitionSyntax>().SelectionSet.Selections.First();
             var e = new GraphQLServerError("msg", new[] { node });
-            e.Should().BeEquivalentToJson(
+            e.Should().BeEquivalentToJsonFromObject(
                 new
                 {
                     message = "msg",
@@ -78,7 +78,7 @@ namespace GraphZen.Error
         {
             var e = new GraphQLServerError("msg", null, null, null, new object[] { "path", 3, "to", "field" });
             Assert.Equal(new object[] { "path", 3, "to", "field" }, e.Path);
-            e.Should().BeEquivalentToJson(new
+            e.Should().BeEquivalentToJsonFromObject(new
             {
                 message = "msg",
                 path = new object[] { "path", 3, "to", "field" }

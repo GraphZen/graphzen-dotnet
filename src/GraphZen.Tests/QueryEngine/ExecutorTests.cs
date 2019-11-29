@@ -261,7 +261,7 @@ namespace GraphZen.QueryEngine
             info.Schema.Should().Be(schemaSut);
             info.RootValue.Should().Be(rootValue);
             info.Operation.Should().Be(ast.Definitions[0]);
-            info.VariableValues.As<object>().Should().BeEquivalentToJson(new { var = "abc" });
+            info.VariableValues.As<object>().Should().BeEquivalentToJsonFromObject(new { var = "abc" });
         }
 
         [Fact]

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -11,6 +12,11 @@ namespace GraphZen
     {
         public static HttpRequestMessage ToHttpRequest(this GraphQLRequest request)
         {
+            Check.NotNull(request, nameof(request));
+            if (request.OperationName == null && request.Query == null)
+            {
+                throw new ArgumentException($"Cannot convert {nameof(GraphQLRequest)} to {nameof(HttpRequestMessage)}: query or operation name required.");
+            }
             var requestJson = JsonSerializer.Serialize(request);
             var requestJsonContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
             var message = new HttpRequestMessage

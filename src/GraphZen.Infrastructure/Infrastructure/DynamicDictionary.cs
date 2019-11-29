@@ -15,7 +15,7 @@ using JetBrains.Annotations;
 #nullable disable
 
 
-namespace GraphZen.TypeSystem.Internal
+namespace GraphZen.Infrastructure
 {
     /// <summary>
     ///     A dictionary that supports dynamic access.
@@ -334,7 +334,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary)obj);
+            return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary) obj);
         }
 
         /// <summary>

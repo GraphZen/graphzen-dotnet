@@ -14,8 +14,15 @@ namespace GraphZen.Infrastructure
     {
         public static void Sort(this JToken jToken)
         {
-            if (jToken is JObject jObject) jObject.Sort();
-            if (jToken is JArray jArr) jArr.Sort();
+            switch (jToken)
+            {
+                case JObject jObject:
+                    jObject.Sort();
+                    break;
+                case JArray jArr:
+                    jArr.Sort();
+                    break;
+            }
         }
 
         private static void Sort(this JObject jObj)
@@ -55,8 +62,8 @@ namespace GraphZen.Infrastructure
                 return null;
             }
 
-            var elList = arr.ToList();
-            elList.Sort((x, y) =>
+            var elements = arr.ToList();
+            elements.Sort((x, y) =>
             {
                 var xc = GetComparable(x);
                 var yc = GetComparable(y);
@@ -87,9 +94,7 @@ namespace GraphZen.Infrastructure
             //});
 
             arr.Clear();
-            elList.ForEach(arr.Add);
+            elements.ForEach(arr.Add);
         }
-
-
     }
 }

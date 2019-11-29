@@ -190,7 +190,7 @@ namespace GraphZen.Validation.Rules
                 .Select(e => new ExpectedError(e))
                 .ToArray();
             result.Should().HaveCountGreaterThan(0, "it should not validate");
-            expectedErrors.Should().BeEquivalentToJson(result);
+            expectedErrors.Should().BeEquivalentToJsonFromObject(result);
             // TODO - validate fails
         }
 
@@ -203,7 +203,7 @@ namespace GraphZen.Validation.Rules
                 .Select(e => new ExpectedError(e))
                 .ToArray();
             result.Should().HaveCountGreaterThan(0, "it should not validate");
-            expectedErrors.Should().BeEquivalentToJson(result);
+            expectedErrors.Should().BeEquivalentToJsonFromObject(result);
             // TODO - validate fails
         }
 

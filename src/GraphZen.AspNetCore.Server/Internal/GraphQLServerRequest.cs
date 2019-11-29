@@ -6,15 +6,12 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
-namespace GraphZen
+namespace GraphZen.Internal
 {
-    internal class GraphQLRequest
+    internal class GraphQLServerRequest
     {
-        public string OperationName { get; set; }
-        public string Query { get; set; }
-        public IDictionary<string, object> Variables { get; set; }
+        public string? OperationName { get; set; }
+        public string? Query { get; set; }
+        public IDictionary<string, object>? Variables { get; set; }
     }
 }

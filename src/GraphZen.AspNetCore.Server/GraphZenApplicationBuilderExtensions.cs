@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using GraphZen;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.Logging;
@@ -82,7 +83,7 @@ namespace Microsoft.AspNetCore.Builder
                 var graphQLContext = httpContext.RequestServices.GetRequiredService<GraphQLContext>();
                 try
                 {
-                    var req = Json.Serializer.Deserialize<GraphQLRequest>(jsonReader);
+                    var req = Json.Serializer.Deserialize<GraphQLServerRequest>(jsonReader);
                     var document = Parser.ParseDocument(req!.Query);
                     var queryValidator = httpContext.RequestServices.GetRequiredService<IQueryValidator>();
                     var validationErrors = queryValidator.Validate(graphQLContext.Schema, document);

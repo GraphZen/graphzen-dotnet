@@ -22,8 +22,14 @@ namespace GraphZen.Infrastructure
             JsonDiffOptions? options)
         {
             options = options ?? new JsonDiffOptions();
-            var expectedToken = expected is JToken ejc ? ejc : JToken.FromObject(expected, Json.Serializer);
-            var actualToken = actual is JToken ajc ? ajc : JToken.FromObject(actual, Json.Serializer);
+
+            JToken Coerce(object val) =>
+                val is string str ? JToken.Parse(str)
+                : val is JToken jt ? jt
+                : JToken.FromObject(val, Json.Serializer);
+
+            var expectedToken = Coerce(expected);
+            var actualToken = Coerce(actual);
 
             if (options.SortBeforeCompare)
             {

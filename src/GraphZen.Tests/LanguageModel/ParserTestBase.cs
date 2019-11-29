@@ -34,7 +34,7 @@ namespace GraphZen.LanguageModel
             params (int line, int column)[] locations)
         {
             var ex = Assert.Throws<GraphQLException>(() => ParseDocument(document));
-            ex.GraphQLError.Should().BeEquivalentToJson(new
+            ex.GraphQLError.Should().BeEquivalentToJsonFromObject(new
             {
                 message = expectedMessage,
                 locations = locations.Select(l => new {l.line, l.column})

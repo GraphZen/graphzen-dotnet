@@ -17,7 +17,7 @@ namespace GraphZen
             JsonDiffOptions? options = null)
         {
             var final = await result;
-            final.Should().BeEquivalentToJson(expected, options);
+            final.Should().BeEquivalentToJsonFromObject(expected, options);
             return final;
             // TestHelpers.AssertEqualsDynamic(expected, final, options);
             // return final;

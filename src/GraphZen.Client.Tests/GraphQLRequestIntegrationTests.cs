@@ -3,6 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore;
@@ -14,7 +15,7 @@ using Xunit;
 
 namespace GraphZen
 {
-    public class UnitTest1
+    public class GraphQLRequestIntegrationTests
     {
         public class Query
         {
@@ -35,22 +36,32 @@ namespace GraphZen
             }
         }
 
-        private readonly GraphQLClient _graphQL;
+        private readonly IGraphQLClient _client;
 
-        public UnitTest1()
+        public GraphQLRequestIntegrationTests()
         {
-            var _httpClient = new TestServer(WebHost.CreateDefaultBuilder().UseStartup<Startup>()).CreateClient();
-            _graphQL = new GraphQLClient(_httpClient);
+            var httpClient = new TestServer(WebHost.CreateDefaultBuilder().UseStartup<Startup>()).CreateClient();
+            _client = new GraphQLClient(httpClient);
+        }
+
+        public class TypedQueryResult
+        {
+            public string? Message { get; set; }
         }
 
 
-        [Fact(Skip = "wip")]
-        public async Task Test1()
+        [Fact]
+        public async Task it_can_be_used_to_execute_graphql_request()
         {
-            await _graphQL.SendAsync(new GraphQLRequest
+            var graphqlRequest = new GraphQLRequest
             {
                 Query = @"{ message }"
-            });
+            };
+
+            var expected = new {message = "Hello world"};
+            var response = await _client.SendAsync(graphqlRequest);
+            (response.GetData() as object).Should().BeEquivalentToJsonFromObject(expected);
+            response.GetData<TypedQueryResult>().Should().BeEquivalentToJsonFromObject(expected);
         }
     }
 }
