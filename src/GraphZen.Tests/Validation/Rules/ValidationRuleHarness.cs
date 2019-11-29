@@ -15,9 +15,6 @@ using GraphZen.QueryEngine.Validation;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen.Validation.Rules
 {
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
@@ -94,7 +91,10 @@ namespace GraphZen.Validation.Rules
                 .Value("BLACK", _ => _.CustomValue(1))
                 .Value("TAN", _ => _.CustomValue(2))
                 .Value("SPOTTED", _ => _.CustomValue(3))
-                .Value("NO_FUR", _ => _.CustomValue(null))
+                .Value("NO_FUR", _ =>
+                {
+                    // _.CustomValue(null);
+                })
                 .Value("UNKNOWN");
 
             sb.InputObject("ComplexInput")
@@ -148,7 +148,7 @@ namespace GraphZen.Validation.Rules
                 .Field("dogOrHuman", "DogOrHuman")
                 .Field("humanOrAlien", "HumanOrAlien")
                 .Field("complicatedArgs", "ComplicatedArgs")
-                .Field("invliadArg", "String", _ => _.Argument("arg", "Invalid"))
+                .Field("invalidArg", "String", _ => _.Argument("arg", "Invalid"))
                 .Field("anyArg", "String", _ => _.Argument("arg", "Any"));
             sb.QueryType("QueryRoot");
 
@@ -161,11 +161,9 @@ namespace GraphZen.Validation.Rules
             sb.Directive("onInlineFragment").Locations(DirectiveLocation.InlineFragment);
         });
 
-        protected static ExpectedError Error(string message, params (int line, int column)[] lineColumnPairs)
-        {
-            return new ExpectedError(message,
+        protected static ExpectedError Error(string message, params (int line, int column)[] lineColumnPairs) =>
+            new ExpectedError(message,
                 lineColumnPairs.Select(pair => new SourceLocation(pair.line, pair.column)).ToArray(), null);
-        }
 
         private void ExpectValidSDL(ValidationRule rule, string sdl)
         {
@@ -191,7 +189,6 @@ namespace GraphZen.Validation.Rules
                 .ToArray();
             result.Should().HaveCountGreaterThan(0, "it should not validate");
             expectedErrors.Should().BeEquivalentToJsonFromObject(result);
-            // TODO - validate fails
         }
 
         private void ExpectInvalidSDL(ValidationRule rule, string sdl,
@@ -204,27 +201,16 @@ namespace GraphZen.Validation.Rules
                 .ToArray();
             result.Should().HaveCountGreaterThan(0, "it should not validate");
             expectedErrors.Should().BeEquivalentToJsonFromObject(result);
-            // TODO - validate fails
         }
 
-        protected void QueryShouldPass(string query)
-        {
-            ExpectValidQuery(TestSchema, RuleUnderTest, query);
-        }
+        protected void QueryShouldPass(string query) => ExpectValidQuery(TestSchema, RuleUnderTest, query);
 
-        protected void QueryShouldFail(string query, ExpectedError error, params ExpectedError[] errors)
-        {
+        protected void QueryShouldFail(string query, ExpectedError error, params ExpectedError[] errors) =>
             ExpectInvalidQuery(TestSchema, RuleUnderTest, query, new[] {error}.Concat(errors).ToArray());
-        }
 
-        protected void SDLShouldPass(string sdl)
-        {
-            ExpectValidSDL(RuleUnderTest, sdl);
-        }
+        protected void SDLShouldPass(string sdl) => ExpectValidSDL(RuleUnderTest, sdl);
 
-        protected void SDLShouldFail(string sdl, ExpectedError error, params ExpectedError[] errors)
-        {
+        protected void SDLShouldFail(string sdl, ExpectedError error, params ExpectedError[] errors) =>
             ExpectInvalidSDL(RuleUnderTest, sdl.Dedent(), new[] {error}.Concat(errors).ToArray());
-        }
     }
 }

@@ -9,9 +9,6 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-#nullable disable
-
-
 namespace GraphZen.Validation.Rules
 {
     public class ExpectedError
@@ -21,7 +18,7 @@ namespace GraphZen.Validation.Rules
         }
 
 
-        public ExpectedError(string message, IReadOnlyList<SourceLocation> locations, IReadOnlyList<object> path)
+        public ExpectedError(string message, IReadOnlyList<SourceLocation>? locations, IReadOnlyList<object>? path)
         {
             Message = message;
             Locations = locations != null && locations.Any() ? locations : null;
@@ -31,10 +28,10 @@ namespace GraphZen.Validation.Rules
         public string Message { get; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<SourceLocation> Locations { get; }
+        public IReadOnlyList<SourceLocation>? Locations { get; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public IReadOnlyList<object> Path { get; }
+        public IReadOnlyList<object>? Path { get; }
 
 
         protected bool Equals(ExpectedError other) =>
@@ -48,7 +45,7 @@ namespace GraphZen.Validation.Rules
              Path.SequenceEqual(other.Path));
 
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

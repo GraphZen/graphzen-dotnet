@@ -15,20 +15,15 @@ namespace GraphZen
         private readonly Lazy<object?> _data;
         private readonly Dictionary<Type, object?> _typedData = new Dictionary<Type, object?>();
         private readonly Lazy<IReadOnlyList<GraphQLError>> _errors;
-        private readonly string _responseJson;
+        private readonly string _jsonResponse;
 
-        public GraphQLResponse(string responseJson)
+        public GraphQLResponse(string jsonResponse)
         {
-            _responseJson = responseJson;
-            _data = new Lazy<object?>(valueFactory: () =>
-            {
-                dynamic? data = GraphQLJsonSerializer.ParseData(responseJson);
-                return data;
-            });
-            _errors = new Lazy<IReadOnlyList<GraphQLError>>(() => GraphQLJsonSerializer.ParseErrors(responseJson));
+            _jsonResponse = jsonResponse;
+            _data = new Lazy<object?>(valueFactory: () => GraphQLJsonSerializer.ParseData(jsonResponse));
+            _errors = new Lazy<IReadOnlyList<GraphQLError>>(() => GraphQLJsonSerializer.ParseErrors(jsonResponse));
         }
 
-        public dynamic? Data => _data.Value;
         public IReadOnlyList<GraphQLError> Errors => _errors.Value;
 
         public dynamic? GetData() => _data.Value;
@@ -36,7 +31,7 @@ namespace GraphZen
         public T? GetData<T>() where T : class
         {
             if (_typedData.TryGetValue(typeof(T), out var data)) return (T?)data;
-            var parsed = GraphQLJsonSerializer.ParseData<T>(_responseJson);
+            var parsed = GraphQLJsonSerializer.ParseData<T>(_jsonResponse);
             _typedData[typeof(T)] = parsed;
             return parsed;
         }

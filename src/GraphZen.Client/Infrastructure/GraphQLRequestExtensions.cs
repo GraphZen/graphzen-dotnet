@@ -6,7 +6,7 @@ using System.Text.Json;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.Infrastructure
 {
     public static class GraphQLRequestExtensions
     {

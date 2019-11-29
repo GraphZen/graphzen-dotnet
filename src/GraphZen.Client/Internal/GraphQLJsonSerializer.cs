@@ -1,11 +1,9 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using System.Dynamic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -13,7 +11,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -23,7 +20,7 @@ namespace GraphZen.Internal
     {
         private static JsonSerializerOptions SerializerOptions { get; } = new JsonSerializerOptions
         {
-            Converters = { new JsonStringEnumConverter() },
+            Converters = {new JsonStringEnumConverter()},
             IgnoreNullValues = false,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
@@ -32,6 +29,7 @@ namespace GraphZen.Internal
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
+
         private static ExpandoObjectConverter ExpandoObjectObjectConverter { get; } = new ExpandoObjectConverter();
 
         private static ImmutableList<GraphQLError> EmptyErrors { get; } = ImmutableList.Create<GraphQLError>();
@@ -48,9 +46,7 @@ namespace GraphZen.Internal
             Check.NotNull(json, nameof(json));
             var expando = JsonConvert.DeserializeObject<DynamicDictionary>(json);
             if (expando != null)
-            {
-                return ((IDictionary<string, object>)expando).TryGetValue("data", out var data) ? data : null;
-            }
+                return ((IDictionary<string, object>) expando).TryGetValue("data", out var data) ? data : null;
 
             return null;
         }
