@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
     <Description>Infrastructure code supporting the GraphZen SDK. Not intended for direct installation or use.</Description>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Collections.Immutable" Version="1.6.0" />
@@ -12,7 +14,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
   </ItemGroup>
-    <ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GraphZen.Abstractions\GraphZen.Abstractions.csproj" />
   </ItemGroup>
+
 </Project>

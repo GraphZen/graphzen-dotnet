@@ -4,12 +4,10 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Playground;
-using GraphZen.Playground.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Internal
+namespace GraphZen.Playground.Internal
 {
     public class PlaygroundHtmlWriterTests
     {

@@ -60,6 +60,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0B6910A4-E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.AspNetCore.Playground.IntegrationTests", "src\GraphZen.AspNetCore.Playground.IntegrationTests\GraphZen.AspNetCore.Playground.IntegrationTests.csproj", "{E9A6C473-36DF-406D-9925-50C38D62600D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.AspNetCore.Server.IntegrationTests", "src\GraphZen.AspNetCore.Server.IntegrationTests\GraphZen.AspNetCore.Server.IntegrationTests.csproj", "{43182E86-0B45-4C92-A10B-D6C4FC97516D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.AspNetCore.Server.FunctionalTests", "src\GraphZen.AspNetCore.Server.FunctionalTests\GraphZen.AspNetCore.Server.FunctionalTests.csproj", "{C7DFDE96-721A-476E-A032-0BD359BE6FF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.Client.IntegrationTests", "src\GraphZen.Client.IntegrationTests\GraphZen.Client.IntegrationTests.csproj", "{6F2006BB-19E2-4294-93A7-BF9F7DEAD984}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.Client.FunctionalTests", "src\GraphZen.Client.FunctionalTests\GraphZen.Client.FunctionalTests.csproj", "{C470DF34-3A7C-41B1-BF20-EAA50EC4CC02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.LanguageModel.FunctionalTests", "src\GraphZen.LanguageModel.FunctionalTests\GraphZen.LanguageModel.FunctionalTests.csproj", "{9523FAD2-CE09-400D-8E01-5EBD7A6065C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.LanguageModel.IntegrationTests", "src\GraphZen.LanguageModel.IntegrationTests\GraphZen.LanguageModel.IntegrationTests.csproj", "{28585FA8-5075-4BEA-8CE2-FDBA9C37C2E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.QueryEngine.FunctionalTests", "src\GraphZen.QueryEngine.FunctionalTests\GraphZen.QueryEngine.FunctionalTests.csproj", "{997387E3-D8B8-4C46-B7A6-8B108ABE43ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.TypeSystem.FunctionalTests", "src\GraphZen.TypeSystem.FunctionalTests\GraphZen.TypeSystem.FunctionalTests.csproj", "{6F4724C4-24B7-4F52-AD43-E652F9DAE48C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -154,6 +170,38 @@ Global
 		{E9A6C473-36DF-406D-9925-50C38D62600D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9A6C473-36DF-406D-9925-50C38D62600D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9A6C473-36DF-406D-9925-50C38D62600D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43182E86-0B45-4C92-A10B-D6C4FC97516D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43182E86-0B45-4C92-A10B-D6C4FC97516D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43182E86-0B45-4C92-A10B-D6C4FC97516D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43182E86-0B45-4C92-A10B-D6C4FC97516D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7DFDE96-721A-476E-A032-0BD359BE6FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7DFDE96-721A-476E-A032-0BD359BE6FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7DFDE96-721A-476E-A032-0BD359BE6FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7DFDE96-721A-476E-A032-0BD359BE6FF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F2006BB-19E2-4294-93A7-BF9F7DEAD984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F2006BB-19E2-4294-93A7-BF9F7DEAD984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F2006BB-19E2-4294-93A7-BF9F7DEAD984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F2006BB-19E2-4294-93A7-BF9F7DEAD984}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C470DF34-3A7C-41B1-BF20-EAA50EC4CC02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C470DF34-3A7C-41B1-BF20-EAA50EC4CC02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C470DF34-3A7C-41B1-BF20-EAA50EC4CC02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C470DF34-3A7C-41B1-BF20-EAA50EC4CC02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9523FAD2-CE09-400D-8E01-5EBD7A6065C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9523FAD2-CE09-400D-8E01-5EBD7A6065C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9523FAD2-CE09-400D-8E01-5EBD7A6065C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9523FAD2-CE09-400D-8E01-5EBD7A6065C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28585FA8-5075-4BEA-8CE2-FDBA9C37C2E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28585FA8-5075-4BEA-8CE2-FDBA9C37C2E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28585FA8-5075-4BEA-8CE2-FDBA9C37C2E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28585FA8-5075-4BEA-8CE2-FDBA9C37C2E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{997387E3-D8B8-4C46-B7A6-8B108ABE43ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{997387E3-D8B8-4C46-B7A6-8B108ABE43ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{997387E3-D8B8-4C46-B7A6-8B108ABE43ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{997387E3-D8B8-4C46-B7A6-8B108ABE43ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F4724C4-24B7-4F52-AD43-E652F9DAE48C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4724C4-24B7-4F52-AD43-E652F9DAE48C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4724C4-24B7-4F52-AD43-E652F9DAE48C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4724C4-24B7-4F52-AD43-E652F9DAE48C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +229,14 @@ Global
 		{A3BCFF0D-97B4-4A45-8DE9-E71F3FC19AC1} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
 		{60FBD751-87AC-4297-B4DA-3A25FD9961C1} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
 		{E9A6C473-36DF-406D-9925-50C38D62600D} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
+		{43182E86-0B45-4C92-A10B-D6C4FC97516D} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
+		{C7DFDE96-721A-476E-A032-0BD359BE6FF0} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
+		{6F2006BB-19E2-4294-93A7-BF9F7DEAD984} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
+		{C470DF34-3A7C-41B1-BF20-EAA50EC4CC02} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
+		{9523FAD2-CE09-400D-8E01-5EBD7A6065C2} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
+		{28585FA8-5075-4BEA-8CE2-FDBA9C37C2E5} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
+		{997387E3-D8B8-4C46-B7A6-8B108ABE43ED} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
+		{6F4724C4-24B7-4F52-AD43-E652F9DAE48C} = {0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F2A2408-678E-4184-B769-5C46F0B10F25}

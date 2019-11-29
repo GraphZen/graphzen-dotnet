@@ -10,7 +10,6 @@ using System.Text.Json.Serialization;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -29,8 +28,6 @@ namespace GraphZen.Internal
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
-
-        private static ExpandoObjectConverter ExpandoObjectObjectConverter { get; } = new ExpandoObjectConverter();
 
         private static ImmutableList<GraphQLError> EmptyErrors { get; } = ImmutableList.Create<GraphQLError>();
 
@@ -61,7 +58,7 @@ namespace GraphZen.Internal
 
         private class GraphQLErrorsJson
         {
-            // ReSharper disable once UnusedAutoPropertyAccessor.Local
+            // ReSharper disable once CollectionNeverUpdated.Local
             public List<GraphQLErrorJson?>? Errors { get; set; }
 
             public ImmutableList<GraphQLError> GetErrors() =>

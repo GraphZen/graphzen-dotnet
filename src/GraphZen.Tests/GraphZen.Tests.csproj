@@ -2,13 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>GraphZen</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-  <ItemGroup>
 
+  <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
-        <PackageReference Include="coverlet.msbuild" Version="2.7.0">
+    <PackageReference Include="coverlet.msbuild" Version="2.7.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -20,6 +19,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
   <ItemGroup>
     <None Update="LanguageModel\kitchen-sink-temp.graphql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -34,12 +34,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+
   <ItemGroup>
     <Folder Include="TypeSystem\Configuration\" />
     <Folder Include="Utilities\BuildFromAst\" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.Infrastructure.Testing\GraphZen.Infrastructure.Testing.csproj" />
     <ProjectReference Include="..\GraphZen\GraphZen.csproj" />
   </ItemGroup>
+
 </Project>

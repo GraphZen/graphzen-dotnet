@@ -1,8 +1,0 @@
-﻿<ProjectConfiguration>
-  <Settings>
-    <HiddenComponentWarnings>
-      <Value>CopyReferencedAssembliesToWorkspaceIsOn</Value>
-      <Value>AspNetTestHostCompatibility</Value>
-    </HiddenComponentWarnings>
-  </Settings>
-</ProjectConfiguration>
