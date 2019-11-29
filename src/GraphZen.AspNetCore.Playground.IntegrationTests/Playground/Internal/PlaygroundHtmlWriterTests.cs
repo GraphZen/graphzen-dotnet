@@ -4,10 +4,12 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.Playground;
+using GraphZen.Playground.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Playground.Internal
+namespace GraphZen.Internal
 {
     public class PlaygroundHtmlWriterTests
     {
@@ -23,7 +25,7 @@ namespace GraphZen.Playground.Internal
         [Fact]
         public void playground_html_should_contain_options_object()
         {
-            var options = new PlaygroundOptions {Endpoint = "foo"};
+            var options = new PlaygroundOptions { Endpoint = "foo" };
             var html = PlaygroundHtmlWriter.GetHtml(options);
             var optionsJson = PlaygroundHtmlWriter.GetPlaygroundOptionsJson(options);
             html.Should().Contain(optionsJson);
