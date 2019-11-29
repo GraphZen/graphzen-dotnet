@@ -36,12 +36,12 @@ namespace GraphZen
             }
         }
 
-        private readonly IGraphQLClient _client;
+        private readonly IGraphQLClient _gql;
 
         public GraphQLRequestIntegrationTests()
         {
             var httpClient = new TestServer(WebHost.CreateDefaultBuilder().UseStartup<Startup>()).CreateClient();
-            _client = new GraphQLClient(httpClient);
+            _gql = new GraphQLClient(httpClient);
         }
 
         public class TypedQueryResult
@@ -58,8 +58,8 @@ namespace GraphZen
                 Query = @"{ message }"
             };
 
-            var expected = new {message = "Hello world"};
-            var response = await _client.SendAsync(graphqlRequest);
+            var expected = new { message = "Hello world" };
+            var response = await _gql.SendAsync(graphqlRequest);
             (response.GetData() as object).Should().BeEquivalentToJsonFromObject(expected);
             response.GetData<TypedQueryResult>().Should().BeEquivalentToJsonFromObject(expected);
         }

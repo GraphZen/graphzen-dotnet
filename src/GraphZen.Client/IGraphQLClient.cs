@@ -14,5 +14,4 @@ namespace GraphZen
         Task<GraphQLResponse> SendAsync(GraphQLRequest request, CancellationToken cancellationToken);
         Task<GraphQLResponse> SendAsync(GraphQLRequest request);
     }
-
 }
