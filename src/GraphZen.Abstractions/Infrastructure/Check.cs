@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 namespace GraphZen.Infrastructure
 {
     [DebuggerStepThrough]
-    public static class Check
+    internal static class Check
     {
         [ContractAnnotation("value:null => halt")]
         [return: NotNull]

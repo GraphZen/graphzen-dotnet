@@ -27,7 +27,7 @@ namespace GraphZen.QueryEngine.Validation
 
         private IReadOnlyCollection<ValidationRule> Rules { get; }
 
-        public IReadOnlyCollection<GraphQLError> Validate(Schema schema, DocumentSyntax query)
+        public IReadOnlyCollection<GraphQLServerError> Validate(Schema schema, DocumentSyntax query)
         {
             GraphQLSyntaxWalker validationVisitor = null;
             var validationContext = new QueryValidationContext(schema, query, new TypeInfo(schema),

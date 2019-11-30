@@ -30,7 +30,7 @@ namespace GraphZen.LanguageModel.Validation
         public DocumentSyntax AST { get; }
 
 
-        private List<GraphQLError> Errors { get; } = new List<GraphQLError>();
+        private List<GraphQLServerError> Errors { get; } = new List<GraphQLServerError>();
 
         public virtual void Enter(SyntaxNode node)
         {
@@ -40,13 +40,13 @@ namespace GraphZen.LanguageModel.Validation
         {
         }
 
-        public void ReportError(GraphQLError error)
+        public void ReportError(GraphQLServerError error)
         {
             Check.NotNull(error, nameof(error));
             Errors.Add(error);
         }
 
 
-        public IReadOnlyCollection<GraphQLError> GetErrors() => Errors.AsReadOnly();
+        public IReadOnlyCollection<GraphQLServerError> GetErrors() => Errors.AsReadOnly();
     }
 }

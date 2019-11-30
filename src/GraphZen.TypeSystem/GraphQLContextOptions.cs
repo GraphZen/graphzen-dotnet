@@ -2,43 +2,57 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
 namespace GraphZen
 {
-    public abstract class GraphQLContextOptions : IInfrastructure<GraphQLContextOptionsBuilder>
+    public abstract class GraphQLContextOptions :
+        IGraphQLContextOptions
     {
-        private SchemaDefinition? _schemaDefinition;
-        protected abstract GraphQLContextOptionsBuilder Builder { get; }
+        private readonly IReadOnlyDictionary<Type, IGraphQLContextOptionsExtension> _extensions;
 
-        public Type? QueryClrType { get; set; }
-        public Type? MutationClrType { get; set; }
-
-        public IServiceProvider? InternalServiceProvider { get; set; }
-        public bool RevealInternalServerErrors { get; set; } = false;
-
-
-        public SchemaDefinition Schema
+        protected GraphQLContextOptions(IReadOnlyDictionary<Type, IGraphQLContextOptionsExtension> extensions)
         {
-            get => _schemaDefinition ?? (_schemaDefinition = new SchemaDefinition(SpecScalars.All));
-            set => _schemaDefinition = value;
+            _extensions = extensions;
         }
 
+        public IEnumerable<IGraphQLContextOptionsExtension> Extensions => _extensions.Values;
 
-        GraphQLContextOptionsBuilder IInfrastructure<GraphQLContextOptionsBuilder>.Instance => Builder;
+        public TExtension? FindExtension<TExtension>() where TExtension : class, IGraphQLContextOptionsExtension =>
+            _extensions.TryGetValue(typeof(TExtension), out var ext) ? (TExtension) ext : null;
+
+
+        public virtual TExtension GetExtension<TExtension>()
+            where TExtension : class, IGraphQLContextOptionsExtension =>
+            FindExtension<TExtension>() ??
+            throw new InvalidOperationException($"{typeof(TExtension).Name} extension not found.");
+
+        public abstract GraphQLContextOptions WithExtension<TExtension>([NotNull] TExtension extension)
+            where TExtension : class, IGraphQLContextOptionsExtension;
     }
 
 
     public class GraphQLContextOptions<TContext> : GraphQLContextOptions where TContext : GraphQLContext
     {
-        public GraphQLContextOptions()
+        public GraphQLContextOptions() : this(new Dictionary<Type, IGraphQLContextOptionsExtension>())
         {
-            Builder = new GraphQLContextOptionsBuilder<TContext>(this);
         }
 
-        protected override GraphQLContextOptionsBuilder Builder { get; }
+        public GraphQLContextOptions(IReadOnlyDictionary<Type, IGraphQLContextOptionsExtension> extensions) :
+            base(extensions)
+        {
+        }
+
+
+        public override GraphQLContextOptions WithExtension<TExtension>(TExtension extension)
+        {
+            var extensions = Extensions.ToDictionary(p => p.GetType(), p => p);
+            extensions[typeof(TExtension)] = extension;
+            return new GraphQLContextOptions<TContext>(extensions);
+        }
     }
 }

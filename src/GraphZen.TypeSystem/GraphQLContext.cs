@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -18,7 +17,7 @@ namespace GraphZen
     public class GraphQLContext
     {
         private static readonly ILog Logger = LogProvider.For<GraphQLContext>();
-        private readonly GraphQLContextOptions _options;
+        private GraphQLContextOptions _options;
 
         private bool _optionsInitialized;
         private Schema? _schema;
@@ -49,7 +48,11 @@ namespace GraphZen
             {
                 if (!_optionsInitialized)
                 {
-                    OnConfiguring(new GraphQLContextOptionsBuilder(_options));
+                    var optionsBuilder = new GraphQLContextOptionsBuilder(_options);
+                    ((IGraphQLContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(
+                        _options.FindExtension<CoreOptionsExtension>() ?? new CoreOptionsExtension());
+                    OnConfiguring(optionsBuilder);
+                    _options = optionsBuilder.Options;
                     _optionsInitialized = true;
                     Logger.Debug("howdy from GraphZen");
                 }
@@ -72,11 +75,12 @@ namespace GraphZen
                     var schemaDef = new SchemaDefinition(SpecScalars.All);
                     var schemaBuilder = new SchemaBuilder(schemaDef);
                     var internalBuilder = schemaBuilder.GetInfrastructure<InternalSchemaBuilder>();
+                    var options = Options.GetExtension<CoreOptionsExtension>();
 
                     // Configure query type
-                    if (Options.QueryClrType != null)
+                    if (options.QueryClrType != null)
                     {
-                        schemaBuilder.QueryType(Options.QueryClrType);
+                        schemaBuilder.QueryType(options.QueryClrType);
                     }
                     else
                     {
@@ -104,9 +108,9 @@ namespace GraphZen
                     }
 
                     // Configure mutation type
-                    if (Options.MutationClrType != null)
+                    if (options.MutationClrType != null)
                     {
-                        schemaBuilder.MutationType(Options.MutationClrType);
+                        schemaBuilder.MutationType(options.MutationClrType);
                     }
                     else
                     {
@@ -115,8 +119,9 @@ namespace GraphZen
                             mutationClrType = contextType.Assembly.GetExportedTypes()
                                 .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
 
-                        mutationClrType = mutationClrType ?? Assembly.GetEntryAssembly()?.GetTypes()
-                                              .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
+                        if (mutationClrType == null)
+                            mutationClrType = Assembly.GetEntryAssembly()?.GetTypes()
+                                .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
 
                         if (mutationClrType != null)
                             internalBuilder.MutationType(mutationClrType, ConfigurationSource.Convention);
@@ -130,7 +135,6 @@ namespace GraphZen
                     SchemaCache[contextType] = _schema;
                 }
 
-                Debug.Assert(_schema != null, nameof(_schema) + " != null");
                 return _schema;
             }
         }
@@ -138,9 +142,6 @@ namespace GraphZen
         protected internal virtual void OnConfiguring(GraphQLContextOptionsBuilder optionsBuilder)
         {
         }
-
-
-        protected virtual SchemaBuilder CreateSchemaBuilder() => new SchemaBuilder(Options.Schema);
 
         protected internal virtual void OnSchemaCreating(SchemaBuilder schemaBuilder)
         {

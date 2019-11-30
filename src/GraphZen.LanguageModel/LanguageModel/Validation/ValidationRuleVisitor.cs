@@ -21,19 +21,19 @@ namespace GraphZen.LanguageModel.Validation
 
         protected ValidationContext Context { get; }
 
-        public void ReportError(GraphQLError error)
+        public void ReportError(GraphQLServerError error)
         {
             Context.ReportError(error);
         }
 
         public void ReportError(string message, params SyntaxNode[] nodes)
         {
-            ReportError(new GraphQLError(message, nodes));
+            ReportError(new GraphQLServerError(message, nodes));
         }
 
         public void ReportError(string message, IReadOnlyList<SyntaxNode> nodes)
         {
-            ReportError(new GraphQLError(message, nodes));
+            ReportError(new GraphQLServerError(message, nodes));
         }
     }
 }

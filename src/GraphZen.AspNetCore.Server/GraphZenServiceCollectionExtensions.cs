@@ -91,8 +91,8 @@ namespace Microsoft.Extensions.DependencyInjection
             where TContext : GraphQLContext
         {
             var builder = new GraphQLContextOptionsBuilder<TContext>(new GraphQLContextOptions<TContext>());
-            builder.UseInternalServiceProvider(serviceProvider);
             optionsAction?.Invoke(serviceProvider, builder);
+            builder.UseApplicationServiceProvider(serviceProvider);
             return builder.Options;
         }
     }

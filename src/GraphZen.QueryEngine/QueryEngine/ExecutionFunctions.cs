@@ -63,16 +63,16 @@ namespace GraphZen.QueryEngine
             {
                 if (context?.Options != null)
                 {
-                    var error = context.Options.RevealInternalServerErrors
-                        ? new GraphQLError(e.Message, innerException: e)
-                        : new GraphQLError("An unknown error occured");
+                    var error = context.Options.GetExtension<CoreOptionsExtension>().RevealInternalServerErrors
+                        ? new GraphQLServerError(e.Message, innerException: e)
+                        : new GraphQLServerError("An unknown error occured");
                     return new ExecutionResult(null, new[] { error });
                 }
 
                 throw;
             }
 
-            return new ExecutionResult(null, new[] { new GraphQLError("An unknown error occured.") });
+            return new ExecutionResult(null, new[] { new GraphQLServerError("An unknown error occured.") });
         }
 
 
@@ -461,7 +461,7 @@ namespace GraphZen.QueryEngine
             {
                 if (exeContext.Options.ThrowOnError) throw;
 
-                return Maybe.None<object>(new GraphQLError(e.Message, fieldNodes, null,
+                return Maybe.None<object>(new GraphQLServerError(e.Message, fieldNodes, null,
                     null, info.Path.AsReadOnlyList(), e));
             }
         }

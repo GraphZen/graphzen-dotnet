@@ -15,6 +15,6 @@ namespace GraphZen.QueryEngine.Validation
 {
     public interface IQueryValidator
     {
-        IReadOnlyCollection<GraphQLError> Validate(Schema schema, DocumentSyntax query);
+        IReadOnlyCollection<GraphQLServerError> Validate(Schema schema, DocumentSyntax query);
     }
 }
