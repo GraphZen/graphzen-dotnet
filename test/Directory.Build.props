@@ -1,7 +1,6 @@
 <Project>
   <PropertyGroup>
     <IsPackable>False</IsPackable>
-    <RootNamespace>GraphZen</RootNamespace>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 </Project>
