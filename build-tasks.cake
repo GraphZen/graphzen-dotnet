@@ -153,7 +153,9 @@ Task("Cleanup-Full")
 .IsDependentOn("Compile")
 .Does(() => ResharperCleanupCode("GraphZen Full Cleanup"));
 
-Task("Restore").Does(() => {
+Task("Restore")
+.IsDependentOn("Clean")
+.Does(() => {
   DotNetCoreRestore(paths.sln);
 });
 
@@ -173,6 +175,7 @@ Task("Gen")
 .IsDependentOn("Format");
 
 Task("Compile")
+.IsDependentOn("Restore")
 .IsDependentOn("Clean")
 .Does<BuildParameters>(data => {
 
@@ -235,6 +238,7 @@ Task("Test")
 
 Task("Pack")
 .IsDependentOn("Clean-Packages")
+.IsDependentOn("Compile")
 .Does<BuildParameters>(_ => {
    var settings = new DotNetCorePackSettings{
         NoRestore = true,
