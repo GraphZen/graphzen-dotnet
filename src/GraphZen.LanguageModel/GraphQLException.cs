@@ -23,18 +23,18 @@ namespace GraphZen
             IReadOnlyList<int>? positions = null,
             ResponsePath? path = null,
             Exception? innerException = null
-        ) : this(new GraphQLError(message, nodes, source, positions, path?.AsReadOnlyList(), innerException))
+        ) : this(new GraphQLServerError(message, nodes, source, positions, path?.AsReadOnlyList(), innerException))
         {
         }
 
 
-        internal GraphQLException(GraphQLError error) : base(Check.NotNull(error, nameof(error)).Message,
+        internal GraphQLException(GraphQLServerError error) : base(Check.NotNull(error, nameof(error)).Message,
             error.InnerException)
         {
             GraphQLError = error;
         }
 
 
-        public GraphQLError GraphQLError { get; }
+        public GraphQLServerError GraphQLError { get; }
     }
 }

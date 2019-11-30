@@ -33,7 +33,7 @@ namespace GraphZen.LanguageModel.Internal
             var result = parser(tokens);
             if (!result.HasValue)
             {
-                var error = new GraphQLError(result.ToString(), null, source, new[] { result.ErrorPosition.Absolute });
+                var error = new GraphQLServerError(result.ToString(), null, source, new[] { result.ErrorPosition.Absolute });
                 error.Throw();
             }
 

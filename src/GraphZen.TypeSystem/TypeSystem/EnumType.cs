@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem
         {
             var values = valueDefinitions.Select(v => EnumValue.From(v, this)).ToImmutableList();
             Values = values.ToReadOnlyDictionary(v => v.Name);
-            ValuesByValue = values.Where(v => v.Value != null).ToReadOnlyDictionary(v => v.Value);
+            ValuesByValue = values.Where(_ => _.Value != null).ToReadOnlyDictionary(v => v.Value);
             _syntax = new Lazy<EnumTypeDefinitionSyntax>(() =>
             {
                 var syntax = new EnumTypeDefinitionSyntax(Name(Name),

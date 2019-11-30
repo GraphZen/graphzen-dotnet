@@ -27,7 +27,7 @@ namespace GraphZen.QueryEngine
             IReadOnlyDictionary<string, FragmentDefinitionSyntax> fragments,
             GraphQLContext contextValue, OperationDefinitionSyntax operation,
             IReadOnlyDictionary<string, object> variableValues,
-            ConcurrentBag<GraphQLError> errors, ExecutionOptions options)
+            ConcurrentBag<GraphQLServerError> errors, ExecutionOptions options)
         {
             Schema = Check.NotNull(schema, nameof(schema));
             //Directives = new SpecifiedDirectives(Schema);
@@ -64,7 +64,7 @@ namespace GraphZen.QueryEngine
         public Resolver<object, object> FieldResolver { get; } = DefaultFieldResovler;
 
 
-        public ConcurrentBag<GraphQLError> Errors { get; }
+        public ConcurrentBag<GraphQLServerError> Errors { get; }
 
         public object RootValue { get; }
 
@@ -193,7 +193,7 @@ namespace GraphZen.QueryEngine
             Check.NotNull(document, nameof(document));
             context = context ?? new PreBuiltSchemaContext(schema);
             Check.NotNull(document, nameof(document));
-            var errors = new ConcurrentBag<GraphQLError>();
+            var errors = new ConcurrentBag<GraphQLServerError>();
             var fragments = new Dictionary<string, FragmentDefinitionSyntax>();
             OperationDefinitionSyntax operation = null;
             var hasMultipleAssumedOperations = false;
@@ -217,13 +217,13 @@ namespace GraphZen.QueryEngine
             if (operation == null)
             {
                 if (operationName != null)
-                    errors.Add(new GraphQLError($"Unkown operation named '{operationName}'"));
+                    errors.Add(new GraphQLServerError($"Unkown operation named '{operationName}'"));
                 else
-                    errors.Add(new GraphQLError("Must provide an operation"));
+                    errors.Add(new GraphQLServerError("Must provide an operation"));
             }
             else if (hasMultipleAssumedOperations)
             {
-                errors.Add(new GraphQLError("Must provide operation name if query contains multiple operations"));
+                errors.Add(new GraphQLServerError("Must provide operation name if query contains multiple operations"));
             }
 
 
@@ -250,7 +250,7 @@ namespace GraphZen.QueryEngine
         {
             var error = e is GraphQLException graphQLException
                 ? graphQLException.GraphQLError
-                : new GraphQLError($"An unknown error occured. {e?.Message}", innerException: e);
+                : new GraphQLServerError($"An unknown error occured. {e?.Message}", innerException: e);
             Errors.Add(error);
         }
 

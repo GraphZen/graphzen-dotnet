@@ -4,53 +4,74 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 namespace GraphZen
-
 {
-    [UsedImplicitly]
-    public class Program
-    {
-        [UsedImplicitly]
-        public static void Main(string? nullableString)
-        {
-            Check.NotNull(nullableString, nameof(nullableString));
-            string nonNullableString = nullableString;
-            Console.WriteLine(nonNullableString);
-        }
-    }
-
     public class GraphQLContextOptionsBuilder<TContext> : GraphQLContextOptionsBuilder where
         TContext : GraphQLContext
     {
+        public GraphQLContextOptionsBuilder() : this(new GraphQLContextOptions<TContext>())
+        {
+        }
+
         public GraphQLContextOptionsBuilder(GraphQLContextOptions<TContext> options) : base(options)
         {
         }
 
-
         public new virtual GraphQLContextOptions<TContext> Options => (GraphQLContextOptions<TContext>)base.Options;
     }
 
-    public class GraphQLContextOptionsBuilder
+    public class GraphQLContextOptionsBuilder : IGraphQLContextOptionsBuilderInfrastructure
     {
+        public GraphQLContextOptionsBuilder() : this(new GraphQLContextOptions<GraphQLContext>())
+        {
+        }
+
         public GraphQLContextOptionsBuilder(GraphQLContextOptions options)
         {
             Options = Check.NotNull(options, nameof(options));
         }
 
+        public virtual GraphQLContextOptions Options { get; private set; }
 
-        public virtual GraphQLContextOptions Options { get; }
+        public GraphQLContextOptionsBuilder UseInternalServiceProvider(IServiceProvider serviceProvider)
+            => WithOption(o => o.WithInternalServiceProvider(serviceProvider));
 
-        public void UseInternalServiceProvider(IServiceProvider serviceProvider)
+        public GraphQLContextOptionsBuilder UseApplicationServiceProvider(IServiceProvider serviceProvider)
+            => WithOption(o => o.WithApplicationServiceProvider(serviceProvider));
+
+        public GraphQLContextOptionsBuilder RevealInternalServerErrors(bool enabled = true)
+            => WithOption(o => o.WithRevealInternalServerErrors(enabled));
+
+        public virtual GraphQLContextOptionsBuilder UseSchema(ISchema schema) =>
+            WithOption(o => o.WithSchema(schema));
+
+        public GraphQLContextOptionsBuilder UseQueryType<TQueryType>() =>
+            WithOption(o => o.WithQueryClrType(typeof(TQueryType)));
+
+        void IGraphQLContextOptionsBuilderInfrastructure.AddOrUpdateExtension<TExtension>(TExtension extension)
         {
-            Check.NotNull(serviceProvider, nameof(serviceProvider));
-            Options.InternalServiceProvider = serviceProvider;
+
+            Options = Options.WithExtension(extension);
+
+
         }
 
-        public void UseQueryType<TQueryType>()
+        private GraphQLContextOptionsBuilder WithOption(Func<CoreOptionsExtension, CoreOptionsExtension> withFunc)
         {
-            Options.QueryClrType = typeof(TQueryType);
+            var extension = Options.FindExtension<CoreOptionsExtension>();
+            if (extension == null)
+            {
+                extension = new CoreOptionsExtension();
+            }
+
+            var updated = withFunc(extension);
+
+            ((IGraphQLContextOptionsBuilderInfrastructure)this).AddOrUpdateExtension(updated);
+
+            return this;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace GraphZen.Internal
 {
     internal class Some<T> : Maybe<T>
     {
-        protected Some(IReadOnlyList<object?>? values, IReadOnlyList<GraphQLError>? errors) : base(values,
+        protected Some(IReadOnlyList<object?>? values, IReadOnlyList<GraphQLServerError>? errors) : base(values,
             errors)
         {
         }

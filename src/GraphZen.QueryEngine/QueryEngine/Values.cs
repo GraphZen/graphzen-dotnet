@@ -43,7 +43,7 @@ namespace GraphZen.QueryEngine
             IReadOnlyDictionary<string, object> inputs)
         {
             var coercedValues = new Dictionary<string, object>();
-            var errors = new List<GraphQLError>();
+            var errors = new List<GraphQLServerError>();
             foreach (var varDefNode in variableDefinitions)
             {
                 var variable = varDefNode.Variable;
@@ -51,7 +51,7 @@ namespace GraphZen.QueryEngine
                 var varType = schema.GetTypeFromAst(varDefNode.VariableType);
                 if (!varType.IsInputType())
                 {
-                    errors.Add(new GraphQLError(
+                    errors.Add(new GraphQLServerError(
                         $"Variable \"{variable}\" expected value of type \"{varDefNode.VariableType}\" which cannot be used as an input type.",
                         new[] { varDefNode.VariableType }));
                 }
@@ -75,7 +75,7 @@ namespace GraphZen.QueryEngine
                         var message = maybeValue.HasValue
                             ? $"Variable \"{variable}\" of non-null type \"{varType}\" must not be null."
                             : $"Variable \"{variable}\" of required type \"{varType}\" was not provided.";
-                        errors.Add(new GraphQLError(
+                        errors.Add(new GraphQLServerError(
                             message, new[] { varDefNode }
                         ));
                     }
@@ -122,7 +122,7 @@ namespace GraphZen.QueryEngine
         public static Maybe<object> CoerceValue(object value, IGraphQLType type, SyntaxNode blameNode,
             ResponsePath path)
         {
-            GraphQLError CoercianError(string message, SyntaxNode blame, ResponsePath p, string subMessage = null,
+            GraphQLServerError CoercianError(string message, SyntaxNode blame, ResponsePath p, string subMessage = null,
                 Exception originalError = null)
             {
                 var pathStr = p?.ToString();
@@ -131,7 +131,7 @@ namespace GraphZen.QueryEngine
                 if (!string.IsNullOrEmpty(pathStr)) msg.Append($" at {pathStr}");
 
                 msg.Append(!string.IsNullOrEmpty(subMessage) ? $"; {subMessage}" : ".");
-                return new GraphQLError(msg.ToString(), new[] { blame }, null, null, null, originalError);
+                return new GraphQLServerError(msg.ToString(), new[] { blame }, null, null, null, originalError);
             }
 
             if (type is NonNullType nonNull)
@@ -151,7 +151,7 @@ namespace GraphZen.QueryEngine
             {
                 case ListType list:
                     {
-                        var errors = new List<GraphQLError>();
+                        var errors = new List<GraphQLServerError>();
                         var itemType = list.OfType;
 
                         if (value is ICollection collection)
@@ -179,7 +179,7 @@ namespace GraphZen.QueryEngine
                                 path));
 
                         var coercedValue = new Dictionary<string, object>();
-                        var errors = new List<GraphQLError>();
+                        var errors = new List<GraphQLServerError>();
 
 
                         // Ensure every defined field is valid

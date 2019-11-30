@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\GraphZen.AspNetCore.Server\GraphZen.AspNetCore.Server.csproj" />
+    <ProjectReference Include="..\..\src\GraphZen.AspNetCore\GraphZen.AspNetCore.csproj" />
   </ItemGroup>
+
 </Project>

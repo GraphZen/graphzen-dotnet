@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Description>GraphQL server and playground for ASP.NET Core</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GraphZen.AspNetCore.Playground\GraphZen.AspNetCore.Playground.csproj" />
+    <ProjectReference Include="..\GraphZen.AspNetCore.Server\GraphZen.AspNetCore.Server.csproj" />
+  </ItemGroup>
+
+</Project>
