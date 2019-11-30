@@ -59,6 +59,7 @@ namespace GraphZen.Internal
         private class GraphQLErrorsJson
         {
             // ReSharper disable once CollectionNeverUpdated.Local
+            // ReSharper disable once UnusedAutoPropertyAccessor.Local
             public List<GraphQLErrorJson?>? Errors { get; set; }
 
             public ImmutableList<GraphQLError> GetErrors() =>
