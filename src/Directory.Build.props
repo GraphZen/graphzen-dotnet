@@ -13,7 +13,6 @@
     <IsPackable>True</IsPackable>
     <RootNamespace>GraphZen</RootNamespace>
     <Nullable>enable</Nullable>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
