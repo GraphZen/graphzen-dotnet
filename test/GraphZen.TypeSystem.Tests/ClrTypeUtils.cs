@@ -8,7 +8,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     public static class ClrTypeUtils
     {

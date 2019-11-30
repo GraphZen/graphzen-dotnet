@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Playground\Internal\" />
+    <Folder Include="Internal\" />
   </ItemGroup>
 
 </Project>

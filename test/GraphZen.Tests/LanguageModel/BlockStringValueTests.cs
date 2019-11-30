@@ -10,7 +10,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.LanguageModel
+namespace GraphZen.Tests.LanguageModel
 {
     public class BlockStringValueTests
     {

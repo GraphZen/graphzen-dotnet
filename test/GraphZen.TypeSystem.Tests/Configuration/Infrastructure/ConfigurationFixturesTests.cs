@@ -8,7 +8,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Configuration.Infrastructure
+namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
 {
     public class ConfigurationFixturesTests
     {

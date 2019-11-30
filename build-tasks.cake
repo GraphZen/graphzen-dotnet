@@ -190,6 +190,36 @@ Task("Compile")
     DotNetCoreBuild(data.Paths.Directories.Solution.FullPath, settings);
 });
 
+Task("Foo")
+.IsDependentOn("Compile")
+.Does<BuildParameters>(buildParams => {
+Information("hello");
+
+    var testArtifactsDir = buildParams.Paths.Directories.TestArtifacts.FullPath;
+ var settings = new DotNetCoreTestSettings
+    {
+        NoRestore = true,
+        NoBuild = true,
+        Configuration = buildParams.Configuration,
+        DiagnosticOutput = true,
+        ArgumentCustomization = args => args
+        .Append($"--logger trx --results-directory {testArtifactsDir}")
+    };
+    var coverletSettings = new CoverletSettings
+    {
+        CollectCoverage = true,
+        CoverletOutputDirectory = testArtifactsDir,
+        CoverletOutputName = $"coverage"
+    };
+
+    DotNetCoreTest(@".\test\GraphZen.AspNetCore.Playground.IntegrationTests\GraphZen.AspNetCore.Playground.IntegrationTests.csproj", settings, coverletSettings);
+  foreach (var (csproj, i) in GetFiles("./test/**/*Tests.csproj").Select((csproj, i) => (csproj, i)))
+	{
+    // Information(csproj);
+    // Information(i);
+	}
+
+});
 
 Task("Test")
 .IsDependentOn("Compile")
@@ -213,8 +243,6 @@ Task("Test")
         CoverletOutputName = $"coverage"
     };
 
-    //var testProject = GetFile("./src/**/*Tests.csproj");
-    //DotNetCoreTest(testProject.FullPath, settings, coverletSettings);
     DotNetCoreTest(buildParams.Paths.Directories.Solution.FullPath, settings, coverletSettings);
 });
 

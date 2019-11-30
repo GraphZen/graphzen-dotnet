@@ -4,12 +4,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     public class TaxonomyTests
     {

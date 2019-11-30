@@ -5,14 +5,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     public class SchemaBuilderTests
     {

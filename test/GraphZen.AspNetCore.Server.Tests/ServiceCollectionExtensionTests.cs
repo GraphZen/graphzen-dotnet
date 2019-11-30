@@ -9,9 +9,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-
-
-namespace GraphZen
+namespace GraphZen.AspNetCore.Server.Tests
 {
     [NoReorder]
     public class ServiceCollectionExtensionTests

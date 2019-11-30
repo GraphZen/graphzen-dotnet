@@ -4,11 +4,10 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Configuration.InputObjects.ClrType
+namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.ClrType
 {
     [NoReorder]
     public class InputObjectClrTypeConfigurationTests

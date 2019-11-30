@@ -6,13 +6,12 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.LanguageModel.SyntaxFactory;
 
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     [NoReorder]
     public class SchemaToSyntaxTests

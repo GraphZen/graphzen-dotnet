@@ -3,12 +3,11 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.InputObjects.Fields.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields.Description
 {
     public class InputObject_Field_ViaClrProperty_Description : InputObject_Field_Description,
         ILeafConventionConfigurationFixture

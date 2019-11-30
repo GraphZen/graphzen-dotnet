@@ -4,6 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
@@ -12,7 +13,7 @@ using static GraphZen.LanguageModel.SyntaxFactory;
 #nullable disable
 
 
-namespace GraphZen.LanguageModel.Internal.Parser
+namespace GraphZen.Tests.LanguageModel.Internal.Parser
 {
     public class EnumTypeDefinitionParsingTests : ParserTestBase
     {

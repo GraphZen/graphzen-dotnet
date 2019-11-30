@@ -2,14 +2,13 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Unions
+namespace GraphZen.TypeSystem.Tests.Configuration.Unions
 {
     public abstract class Schema_Unions : NamedCollectionConfigurationFixture<IUnionTypes,
         IUnionTypesDefinition, IMutableUnionTypesDefinition, UnionTypeDefinition,

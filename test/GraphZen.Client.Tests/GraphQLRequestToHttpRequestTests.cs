@@ -11,7 +11,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen
+namespace GraphZen.Client.Tests
 {
     public class GraphQLRequestToHttpRequestTests
     {

@@ -4,11 +4,10 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Configuration.Scalars.ClrType
+namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.ClrType
 {
     [NoReorder]
     public class ScalarClrTypeConfigurationTests

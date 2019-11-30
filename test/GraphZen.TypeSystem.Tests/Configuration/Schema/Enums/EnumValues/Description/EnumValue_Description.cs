@@ -3,12 +3,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Enums.EnumValues.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues.Description
 {
     public abstract class EnumValue_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,

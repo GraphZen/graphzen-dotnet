@@ -15,7 +15,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.Internal
+namespace GraphZen.Tests.Internal
 {
     [NoReorder]
     public class GetGraphQLFieldNameTests

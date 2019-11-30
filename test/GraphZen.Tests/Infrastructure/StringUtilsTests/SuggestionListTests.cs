@@ -11,7 +11,7 @@ using static GraphZen.Infrastructure.StringUtils;
 #nullable disable
 
 
-namespace GraphZen.Infrastructure.StringUtilsTests
+namespace GraphZen.Tests.Infrastructure.StringUtilsTests
 {
     public class SuggestionListTests
     {

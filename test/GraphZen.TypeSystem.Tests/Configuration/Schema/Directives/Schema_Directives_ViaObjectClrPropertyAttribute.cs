@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Directives
+namespace GraphZen.TypeSystem.Tests.Configuration.Directives
 {
     public class Schema_Directives_ViaObjectClrPropertyAttribute : Schema_Directives, ICollectionConventionConfigurationFixture
     {

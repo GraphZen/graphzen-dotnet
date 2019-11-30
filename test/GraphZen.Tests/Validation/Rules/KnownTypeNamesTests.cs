@@ -14,7 +14,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules
 {
     [NoReorder]
     public class KnownTypeNamesTests : ValidationRuleHarness

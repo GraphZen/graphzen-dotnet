@@ -3,6 +3,8 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Superpower;
 using Xunit;
@@ -10,7 +12,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.LanguageModel.Internal.Parser
+namespace GraphZen.Tests.LanguageModel.Internal.Parser
 {
     public class FieldParserTests
     {

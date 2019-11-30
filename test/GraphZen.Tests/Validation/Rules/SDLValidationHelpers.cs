@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 #nullable disable
 
 
-namespace GraphZen.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules
 {
     public static class SDLValidationHelpers
     {

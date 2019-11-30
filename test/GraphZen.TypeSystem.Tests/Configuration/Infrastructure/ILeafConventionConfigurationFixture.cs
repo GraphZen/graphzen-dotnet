@@ -3,10 +3,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Infrastructure
+namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
 {
     public interface ILeafConventionConfigurationFixture : ILeafConfigurationFixture
     {
