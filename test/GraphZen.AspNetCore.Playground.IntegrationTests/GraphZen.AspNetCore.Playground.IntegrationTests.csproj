@@ -22,4 +22,8 @@
     <ProjectReference Include="..\GraphZen.Infrastructure.Testing\GraphZen.Infrastructure.Testing.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Playground\Internal\" />
+  </ItemGroup>
+
 </Project>
