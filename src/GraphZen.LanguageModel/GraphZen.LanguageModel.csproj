@@ -13,7 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="LanguageModel\GraphQLSyntaxVisitor.Generated.cs">
       <DependentUpon>GraphQLSyntaxVisitor.Generated.tt</DependentUpon>
@@ -26,7 +25,6 @@
       <AutoGen>True</AutoGen>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <None Update="LanguageModel\GraphQLSyntaxVisitor.Generated.tt">
       <LastGenOutput>GraphQLSyntaxVisitor.Generated.cs</LastGenOutput>
