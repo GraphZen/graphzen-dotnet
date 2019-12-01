@@ -196,6 +196,7 @@ Task("Foo")
 Information("hello");
 
     var testArtifactsDir = buildParams.Paths.Directories.TestArtifacts.FullPath;
+    var coverageJson = testArtifactsDir + "/coverage.json";
  var settings = new DotNetCoreTestSettings
     {
         NoRestore = true,
@@ -209,16 +210,28 @@ Information("hello");
     {
         CollectCoverage = true,
         CoverletOutputDirectory = testArtifactsDir,
-        CoverletOutputName = $"coverage"
+        CoverletOutputName =  "cresults" // $"coverage"
     };
 
-    DotNetCoreTest(@".\test\GraphZen.AspNetCore.Playground.IntegrationTests\GraphZen.AspNetCore.Playground.IntegrationTests.csproj", settings, coverletSettings);
-  foreach (var (csproj, i) in GetFiles("./test/**/*Tests.csproj").Select((csproj, i) => (csproj, i)))
-	{
-    // Information(csproj);
-    // Information(i);
-	}
+    //DotNetCoreTest(@".\test\GraphZen.AspNetCore.Playground.IntegrationTests\GraphZen.AspNetCore.Playground.IntegrationTests.csproj", settings, coverletSettings);
+    var testProjects = GetFiles("./test/**/*Tests.csproj").ToList();
+    for (int i = 0; i < testProjects.Count; i++)
+    {
+        var isFirst = i == 0;
+        var isLast = i == testProjects.Count - 1;
 
+        if (!isFirst) {
+          coverletSettings.MergeWithFile = coverageJson;
+        }
+
+        if (isLast) {
+            coverletSettings.CoverletOutputFormat  = CoverletOutputFormat.cobertura;
+        }
+
+        var testProjectFile = testProjects[i];
+
+        DotNetCoreTest(testProjectFile, settings, coverletSettings);
+    }
 });
 
 Task("Test")

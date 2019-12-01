@@ -30,7 +30,7 @@ namespace GraphZen.TypeSystem.Tests
                     sb.Interface<Foo>();
                 addDuplicateInterface.Should().ThrowExactly<InvalidOperationException>()
                     .WithMessage(
-                        "Cannot add interface using CLR type 'GraphZen.SchemaBuilderTests+Foo', an existing object already exists with that CLR type.");
+                        $"Cannot add interface using CLR type '{typeof(Foo)}', an existing object already exists with that CLR type.");
             });
         }
 

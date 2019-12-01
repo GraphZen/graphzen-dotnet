@@ -100,7 +100,7 @@ namespace GraphZen.AspNetCore.Server.Tests
                 services.AddGraphQLContext<GraphQLContextNoOptionsConstructor>(options => { });
             };
             addContext.Should().Throw<ArgumentException>().WithMessage(
-                "AddGraphQLContext was called with configuration, but the context type 'GraphZen.ServiceCollectionExtensionTests+GraphQLContextNoOptionsConstructor' only declares a parameterless constructor. This means that the configuration passed to AddGraphQLContext will never be used. If configuration is passed to AddGraphQLContext, then 'GraphZen.ServiceCollectionExtensionTests+GraphQLContextNoOptionsConstructor' should declare a constructor that accepts a GraphQLContextOptions<GraphQLContextNoOptionsConstructor> and must pass it to the base constructor for GraphQLContext.");
+                $"AddGraphQLContext was called with configuration, but the context type '{typeof(GraphQLContextNoOptionsConstructor)}' only declares a parameterless constructor. This means that the configuration passed to AddGraphQLContext will never be used. If configuration is passed to AddGraphQLContext, then '{typeof(GraphQLContextNoOptionsConstructor)}' should declare a constructor that accepts a GraphQLContextOptions<GraphQLContextNoOptionsConstructor> and must pass it to the base constructor for GraphQLContext.");
         }
     }
 }
