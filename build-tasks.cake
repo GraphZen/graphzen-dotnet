@@ -6,12 +6,12 @@
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
 #tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.3"
-#tool "nuget:?package=docfx.console&version=2.46.0"
+#tool "nuget:?package=docfx.console&version=2.47.0"
 #addin "nuget:?package=Cake.Coverlet&version=2.3.4"
-#addin "Cake.Powershell&version=0.4.7"
-#addin "nuget:?package=Cake.Git&version=0.19.0"
+#addin "Cake.Powershell&version=0.4.8"
+#addin "nuget:?package=Cake.Git&version=0.21.0"
 #addin "nuget:?package=Cake.Incubator&version=5.1.0"
-#tool dotnet:?package=dotnet-format&version=3.0.4
+#tool dotnet:?package=dotnet-format&version=3.1.37601
 using System.Diagnostics;
 
 

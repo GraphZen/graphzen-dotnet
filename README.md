@@ -9,7 +9,7 @@
 
 | Branch  |            Build             |         Tests         | Test Coverage            |
 | ------- | :--------------------------: | :-------------------: | ------------------------ |
-| Master  | [![master build][bbm]][bum]  | ![master tests][tbm]  | ![master coverage][cbd]  |
+| Master  | [![master build][bbm]][bum]  | ![master tests][tbm]  | ![master coverage][cbm]  |
 | Develop | [![develop build][bbd]][bud] | ![develop tests][tbd] | ![develop coverage][cbd] |
 
 [bbm]: https://img.shields.io/azure-devops/build/graphzen/graphzen/4/master.svg
@@ -18,7 +18,7 @@
 [bud]: https://dev.azure.com/graphzen/GraphZen/_build?definitionId=4&branchName=develop
 [tbm]: https://img.shields.io/azure-devops/tests/graphzen/graphzen/4/master.svg
 [tbd]: https://img.shields.io/azure-devops/tests/graphzen/graphzen/4/develop.svg
-[cbm]: https://img.shields.io/azure-devops/coverage/graphzen/graphzen/4.svg
+[cbm]: https://img.shields.io/azure-devops/coverage/graphzen/graphzen/4/master.svg
 [cbd]: https://img.shields.io/azure-devops/coverage/graphzen/graphzen/4/develop.svg
 
 ## Packages
