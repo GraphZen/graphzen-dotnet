@@ -4,17 +4,16 @@
     <WarningsAsErrors />
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>latest</LangVersion>
-    <DefineConstants>LIBLOG_EXCLUDE_CODE_COVERAGE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugType>full</DebugType>
-    <DefineConstants>DEBUG;TRACE;$(DefineConstants)</DefineConstants>
+    <DefineConstants>LIBLOG_EXCLUDE_CODE_COVERAGE;DEBUG;TRACE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;$(DefineConstants)</DefineConstants>
+    <DefineConstants>LIBLOG_EXCLUDE_CODE_COVERAGE;TRACE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
 </Project>
