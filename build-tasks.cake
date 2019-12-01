@@ -212,7 +212,7 @@ Task("Test")
         CoverletOutputName =  "coverage",
         Exclude = new List<string> {
           "[*]JetBrains.Annotations.*",
-          "[*]GraphZen.Logging.*"
+          // "[*]GraphZen.Logging.*"
         },
     };
 
