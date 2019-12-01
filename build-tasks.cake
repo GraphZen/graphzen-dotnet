@@ -5,7 +5,7 @@
 #tool "nuget:?package=ReportGenerator&version=4.3.6"
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
-#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.1"
+#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.3"
 #tool "nuget:?package=docfx.console&version=2.46.0"
 #addin "nuget:?package=Cake.Coverlet&version=2.3.4"
 #addin "Cake.Powershell&version=0.4.7"

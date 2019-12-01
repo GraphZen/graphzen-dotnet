@@ -20,7 +20,7 @@ namespace GraphZen
         public GraphQLResponse(string jsonResponse)
         {
             _jsonResponse = jsonResponse;
-            _data = new Lazy<object?>(valueFactory: () => GraphQLJsonSerializer.ParseData(jsonResponse));
+            _data = new Lazy<object?>(() => GraphQLJsonSerializer.ParseData(jsonResponse));
             _errors = new Lazy<IReadOnlyList<GraphQLError>>(() => GraphQLJsonSerializer.ParseErrors(jsonResponse));
         }
 

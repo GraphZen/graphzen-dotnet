@@ -27,7 +27,7 @@ namespace GraphZen.Playground.Internal
         public static string GetHtml(PlaygroundOptions? options = null)
         {
             if (options == null) return Html.Value;
-            var html = Html.Value.Replace("{ /* options */ }", GetPlaygroundOptionsJson(options));
+            var html = Html.Value.Replace("var options = {};", $"var options = {GetPlaygroundOptionsJson(options)};");
             return html;
         }
 

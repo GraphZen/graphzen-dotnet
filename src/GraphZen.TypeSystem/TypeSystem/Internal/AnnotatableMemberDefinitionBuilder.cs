@@ -18,7 +18,8 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        private static bool TryGetDeprecatedAttribute(DirectiveSyntax node, [NotNullWhen(true)] out GraphQLDeprecatedAttribute? attribute)
+        private static bool TryGetDeprecatedAttribute(DirectiveSyntax node,
+            [NotNullWhen(true)] out GraphQLDeprecatedAttribute? attribute)
         {
             if (node.Name.Value != "deprecated")
             {
@@ -44,10 +45,10 @@ namespace GraphZen.TypeSystem.Internal
                     DirectiveAnnotation("deprecated", attr, configurationSource);
                     return;
                 }
+
                 var existingDirective = Schema.FindDirective(node.Name.Value);
                 if (existingDirective != null)
                 {
-
                 }
                 else
                 {
@@ -60,7 +61,6 @@ namespace GraphZen.TypeSystem.Internal
         {
             Definition.AddDirectiveAnnotation(directive.Name.Value, directive);
         }
-
 
 
         public void DirectiveAnnotation(string name, object? value, ConfigurationSource configurationSource)

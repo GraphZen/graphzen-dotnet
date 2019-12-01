@@ -57,7 +57,7 @@ namespace GraphZen.Tests.StarWars
                         }
                     }
                 }
-            }, new JsonDiffOptions()
+            }, new JsonDiffOptions
             {
                 SortBeforeCompare = true
             });

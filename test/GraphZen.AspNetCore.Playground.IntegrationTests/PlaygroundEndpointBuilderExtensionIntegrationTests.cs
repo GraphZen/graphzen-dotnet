@@ -25,7 +25,7 @@ namespace GraphZen.Playground
             options.Endpoint = "customViaAction";
         };
 
-        private static PlaygroundOptions CustomOptions { get; } = new PlaygroundOptions {Endpoint = "custom"};
+        private static PlaygroundOptions CustomOptions { get; } = new PlaygroundOptions { Endpoint = "custom" };
 
         public class DefaultMappingStartup
         {
