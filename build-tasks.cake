@@ -1,15 +1,16 @@
 
 #load "./build-scripts/parameters.cake"
 // Modules
-#module nuget:?package=Cake.DotNetTool.Module&version=0.1.0
-#tool "nuget:?package=ReportGenerator&version=4.0.12"
+#module nuget:?package=Cake.DotNetTool.Module&version=0.4.0
+#tool "nuget:?package=ReportGenerator&version=4.3.6"
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
 #tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.1"
 #tool "nuget:?package=docfx.console&version=2.46.0"
-#addin "nuget:?package=Cake.Coverlet&version=2.2.1"
+#addin "nuget:?package=Cake.Coverlet&version=2.3.4"
 #addin "Cake.Powershell&version=0.4.7"
 #addin "nuget:?package=Cake.Git&version=0.19.0"
+#addin "nuget:?package=Cake.Incubator&version=5.1.0"
 #tool dotnet:?package=dotnet-format&version=3.0.4
 using System.Diagnostics;
 
@@ -220,17 +221,22 @@ Information("hello");
         var isFirst = i == 0;
         var isLast = i == testProjects.Count - 1;
 
-        if (!isFirst) {
+        if (!isFirst && !isLast) {
           coverletSettings.MergeWithFile = coverageJson;
         }
 
         if (isLast) {
             coverletSettings.CoverletOutputFormat  = CoverletOutputFormat.cobertura;
+        } else if (!isFirst) {
+          coverletSettings.MergeWithFile = coverageJson;
         }
 
         var testProjectFile = testProjects[i];
 
-        DotNetCoreTest(testProjectFile, settings, coverletSettings);
+        Information($"should test: {testProjectFile}");
+        Information(LoggingExtensions.Dump<CoverletSettings>(coverletSettings));
+        // coverletSettings.Dump();
+        // DotNetCoreTest(testProjectFile, settings, coverletSettings);
     }
 });
 
