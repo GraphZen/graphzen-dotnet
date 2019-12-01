@@ -4,7 +4,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     public class GraphQLContextOptionsTests
     {

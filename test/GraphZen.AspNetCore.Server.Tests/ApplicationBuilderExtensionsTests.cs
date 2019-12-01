@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Xunit;
 
-namespace GraphZen
+namespace GraphZen.AspNetCore.Server.Tests
 {
     [NoReorder]
     public class ApplicationBuilderExtensionsTests

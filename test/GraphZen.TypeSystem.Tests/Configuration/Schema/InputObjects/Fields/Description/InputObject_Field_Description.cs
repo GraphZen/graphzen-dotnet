@@ -3,12 +3,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.InputObjects.Fields.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields.Description
 {
     public abstract class InputObject_Field_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,

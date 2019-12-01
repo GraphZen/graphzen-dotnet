@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Internal
+namespace GraphZen.Client.Tests.Internal
 {
     [NoReorder]
     public class GraphQLSerializerTests

@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Infrastructure.StringUtils;
 
-namespace GraphZen.Infrastructure.StringUtilsTests
+namespace GraphZen.Tests.Infrastructure.StringUtilsTests
 {
     public class QuotedOrListTests
     {

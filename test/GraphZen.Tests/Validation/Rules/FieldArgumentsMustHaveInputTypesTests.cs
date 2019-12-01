@@ -9,9 +9,9 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.Validation.Rules.SDLValidationHelpers;
+using static GraphZen.Tests.Validation.Rules.SDLValidationHelpers;
 
-namespace GraphZen.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules
 {
     [NoReorder]
     public class FieldArgumentsMustHaveInputTypesTests : ValidationRuleHarness

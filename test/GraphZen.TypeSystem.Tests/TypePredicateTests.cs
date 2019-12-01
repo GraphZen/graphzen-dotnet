@@ -4,12 +4,11 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     /// <summary>
     ///     Most of these tests are not required for type safety because of static typing,

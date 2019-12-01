@@ -7,7 +7,6 @@ using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
@@ -17,7 +16,7 @@ using Xunit;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     [NoReorder]
     public class TypeDiscoveryTests

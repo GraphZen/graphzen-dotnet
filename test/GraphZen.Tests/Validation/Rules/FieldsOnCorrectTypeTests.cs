@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.QueryEngine.Validation.Rules.FieldsOnCorrectType;
 
-namespace GraphZen.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules
 {
     [NoReorder]
     public class FieldsOnCorrectTypeTests : ValidationRuleHarness

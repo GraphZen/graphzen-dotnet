@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
+using GraphZen.QueryEngine;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
@@ -16,7 +17,7 @@ using Newtonsoft.Json.Linq;
 // ReSharper disable UnusedMember.Local
 // ReSharper disable UnassignedGetOnlyAutoProperty
 
-namespace GraphZen.QueryEngine.Variables
+namespace GraphZen.Tests.QueryEngine.Variables
 {
     public abstract class VariablesTests
     {

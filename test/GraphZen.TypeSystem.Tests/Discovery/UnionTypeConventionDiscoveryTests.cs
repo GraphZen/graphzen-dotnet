@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     [NoReorder]
     public class UnionTypeConventionDiscoveryTests

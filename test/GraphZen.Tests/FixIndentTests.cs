@@ -10,7 +10,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.Tests
 {
     public class FixIndentTests
     {

@@ -7,7 +7,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.LanguageModel
+namespace GraphZen.Tests.LanguageModel
 {
     public class BlockStringPrinterTests : ParserTestBase
     {

@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 #nullable disable
 
 
-namespace GraphZen.QueryEngine.Variables
+namespace GraphZen.Tests.QueryEngine.Variables
 {
     public class VariablesTestsGraphQLContext : GraphQLContext
     {

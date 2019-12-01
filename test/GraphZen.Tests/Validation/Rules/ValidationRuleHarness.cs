@@ -15,7 +15,7 @@ using GraphZen.QueryEngine.Validation;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules
 {
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public abstract class ValidationRuleHarness

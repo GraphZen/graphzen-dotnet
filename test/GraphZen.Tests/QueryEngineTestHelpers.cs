@@ -9,7 +9,7 @@ using GraphZen.Infrastructure;
 using GraphZen.QueryEngine;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen.Tests
 {
     public static class QueryEngineTestHelpers
     {

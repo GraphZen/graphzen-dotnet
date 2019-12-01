@@ -15,7 +15,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.Infrastructure.Extensions
+namespace GraphZen.Tests.Infrastructure.Extensions
 {
     [NoReorder]
     public class ClrTypeExtensionTests

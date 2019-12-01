@@ -3,12 +3,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Scalars.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description
 {
     public abstract class Scalar_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,

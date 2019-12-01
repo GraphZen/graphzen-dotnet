@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace GraphZen
+namespace GraphZen.Client.IntegrationTests
 {
     public class GraphQLRequestIntegrationTests
     {

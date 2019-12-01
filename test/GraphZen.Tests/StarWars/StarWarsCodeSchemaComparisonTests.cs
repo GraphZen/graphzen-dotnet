@@ -12,7 +12,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.StarWars
+namespace GraphZen.Tests.StarWars
 {
     [NoReorder]
     public class StarWarsCodeSchemaComparisonTests : StarWarsSchemaAndData

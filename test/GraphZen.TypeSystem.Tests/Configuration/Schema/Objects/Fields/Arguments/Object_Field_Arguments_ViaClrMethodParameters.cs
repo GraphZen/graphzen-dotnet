@@ -1,11 +1,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Objects.Fields.Arguments
+namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Arguments
 {
     public class Object_Field_Arguments_ViaClrMethodParameters : Object_Field_Arguments,
         ICollectionConventionConfigurationFixture
