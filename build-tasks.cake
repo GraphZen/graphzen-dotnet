@@ -191,14 +191,12 @@ Task("Compile")
     DotNetCoreBuild(data.Paths.Directories.Solution.FullPath, settings);
 });
 
-Task("Foo")
+Task("Test")
 .IsDependentOn("Compile")
 .Does<BuildParameters>(buildParams => {
-Information("hello");
-
     var testArtifactsDir = buildParams.Paths.Directories.TestArtifacts.FullPath;
     var coverageJson = testArtifactsDir + "/coverage.json";
- var settings = new DotNetCoreTestSettings
+    var settings = new DotNetCoreTestSettings
     {
         NoRestore = true,
         NoBuild = true,
@@ -211,19 +209,17 @@ Information("hello");
     {
         CollectCoverage = true,
         CoverletOutputDirectory = testArtifactsDir,
-        CoverletOutputName =  "cresults" // $"coverage"
+        CoverletOutputName =  "coverage",
+        Exclude = new List<string> {
+          "[*]JetBrains.Annotations.*"
+        },
     };
 
-    //DotNetCoreTest(@".\test\GraphZen.AspNetCore.Playground.IntegrationTests\GraphZen.AspNetCore.Playground.IntegrationTests.csproj", settings, coverletSettings);
     var testProjects = GetFiles("./test/**/*Tests.csproj").ToList();
     for (int i = 0; i < testProjects.Count; i++)
     {
         var isFirst = i == 0;
         var isLast = i == testProjects.Count - 1;
-
-        if (!isFirst && !isLast) {
-          coverletSettings.MergeWithFile = coverageJson;
-        }
 
         if (isLast) {
             coverletSettings.CoverletOutputFormat  = CoverletOutputFormat.cobertura;
@@ -232,15 +228,11 @@ Information("hello");
         }
 
         var testProjectFile = testProjects[i];
-
-        Information($"should test: {testProjectFile}");
-        Information(LoggingExtensions.Dump<CoverletSettings>(coverletSettings));
-        // coverletSettings.Dump();
-        // DotNetCoreTest(testProjectFile, settings, coverletSettings);
+        DotNetCoreTest(testProjectFile, settings, coverletSettings);
     }
 });
 
-Task("Test")
+Task("Test-Old")
 .IsDependentOn("Compile")
 .Does<BuildParameters>(buildParams =>
 {
@@ -259,7 +251,8 @@ Task("Test")
         CollectCoverage = true,
         CoverletOutputFormat = CoverletOutputFormat.cobertura,
         CoverletOutputDirectory = testArtifactsDir,
-        CoverletOutputName = $"coverage"
+        CoverletOutputName = $"coverage",
+        
     };
 
     DotNetCoreTest(buildParams.Paths.Directories.Solution.FullPath, settings, coverletSettings);
