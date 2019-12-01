@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
     <Description>Infrastructure code supporting the GraphZen SDK. Not intended for direct installation or use.</Description>
+    <DefineConstants>LIBLOG_EXCLUDE_CODE_COVERAGE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

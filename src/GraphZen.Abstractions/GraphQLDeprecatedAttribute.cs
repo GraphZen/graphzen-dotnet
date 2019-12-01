@@ -12,6 +12,7 @@ using JetBrains.Annotations;
 namespace GraphZen
 {
     [Description("Marks an element of a GraphQL schema as no longer supported.")]
+    [ExcludeFromCodeCoverage]
     public class GraphQLDeprecatedAttribute : Attribute, IGraphQLDirective
     {
         /// <summary>

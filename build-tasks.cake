@@ -182,6 +182,7 @@ Task("Compile")
 
    var settings = new DotNetCoreBuildSettings{
         NoRestore = true,
+        // Verbosity = DotNetCoreVerbosity.Normal,
         Configuration = data.Configuration,
         MSBuildSettings = new DotNetCoreMSBuildSettings()
         .WithProperty("Version", data.PackageVersion)

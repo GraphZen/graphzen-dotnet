@@ -8,12 +8,12 @@
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugType>full</DebugType>
-    <DefineConstants>LIBLOG_EXCLUDE_CODE_COVERAGE;DEBUG;TRACE;$(DefineConstants)</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <Optimize>true</Optimize>
-    <DefineConstants>LIBLOG_EXCLUDE_CODE_COVERAGE;TRACE;$(DefineConstants)</DefineConstants>
+    <DefineConstants>TRACE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
 </Project>
