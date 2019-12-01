@@ -211,7 +211,8 @@ Task("Test")
         CoverletOutputDirectory = testArtifactsDir,
         CoverletOutputName =  "coverage",
         Exclude = new List<string> {
-          "[*]JetBrains.Annotations.*"
+          "[*]JetBrains.Annotations.*",
+          "[*]GraphZen.Logging.*"
         },
     };
 
