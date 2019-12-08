@@ -59,6 +59,8 @@ namespace GraphZen.TypeSystem.Internal
 
         private void DirectiveAnnotation(DirectiveSyntax directive, ConfigurationSource configurationSource)
         {
+
+
             Definition.AddDirectiveAnnotation(directive.Name.Value, directive);
         }
 

@@ -41,9 +41,7 @@ namespace GraphZen.TypeSystem
 
         public TypeIdentity Identity { get; }
 
-
         public SchemaDefinition Schema { get; }
-
 
         private string DebuggerDisplay => ClrType != null ? $"{Kind}: {Name} ({ClrType.Name})" : $"{Kind}: {Name}";
 

@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
@@ -41,7 +42,17 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalFieldBuilder FieldType(string type)
         {
-            Definition.FieldType = Schema.GetOrAddTypeReference(type, Definition);
+            try
+            {
+                Definition.FieldType = Schema.GetOrAddTypeReference(type, Definition);
+            }
+            catch (InvalidTypeReferenceException e)
+            {
+                throw new InvalidOperationException(
+                    $"Invalid type reference: '{type}' is not a valid type reference for {Definition.DeclaringType.Kind.ToDisplayString()} field '{Definition.DeclaringType.Name}.{Definition.Name}'.",
+                    e);
+            }
+
             return this;
         }
 
