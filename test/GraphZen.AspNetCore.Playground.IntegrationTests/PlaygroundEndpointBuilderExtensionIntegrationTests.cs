@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.Playground;
 using GraphZen.Playground.Internal;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore;
@@ -15,7 +16,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
-namespace GraphZen.Playground
+namespace GraphZen.AspNetCore.Playground.IntegrationTests
 {
     [NoReorder]
     public class PlaygroundEndpointBuilderExtensionIntegrationTests
