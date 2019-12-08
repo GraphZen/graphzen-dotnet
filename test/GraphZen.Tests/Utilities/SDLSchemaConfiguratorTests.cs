@@ -159,19 +159,6 @@ namespace GraphZen.Tests.Utilities
             field.DeprecationReason.Should().Be("test");
         }
 
-        [Fact]
-        public void ShouldCreateSchemaWithSyntaxDirective()
-        {
-            var body = @"
-              type Query @unknown {
-                str: String 
-              }
-            ".Dedent();
-            var schema = Schema.Create(body);
-            var expectedDirective = SyntaxFactory.Directive(SyntaxFactory.Name("unknown"));
-            var actualDirective = schema.QueryType.FindDirectiveAnnotation("unknown");
-            actualDirective.Value.Should().Be(expectedDirective);
-        }
 
         [Fact]
         public void OverridingDirectivesExcludesSpecified()

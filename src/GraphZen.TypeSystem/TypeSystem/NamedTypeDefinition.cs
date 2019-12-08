@@ -76,6 +76,6 @@ namespace GraphZen.TypeSystem
             new TypeReference(Identity,
                 ClrType != null ? NamedType(ClrType) : NamedType(Name(Name)));
 
-        public override string ToString() => $"{Kind} {Name}";
+        public override string ToString() => Name;
     }
 }

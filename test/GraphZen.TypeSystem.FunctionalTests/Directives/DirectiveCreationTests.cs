@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Directives
 
     public class DirectiveCreationTests
     {
-        [Fact]
+        [Fact(Skip = "obsolete")]
         public void it_can_create_directive_by_name()
         {
             var schema = Schema.Create(_ =>
