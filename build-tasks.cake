@@ -1,6 +1,6 @@
 
 #load "./build-scripts/parameters.cake"
-// Modules
+// Modules 
 #module nuget:?package=Cake.DotNetTool.Module&version=0.4.0
 #tool "nuget:?package=ReportGenerator&version=4.3.6"
 #tool "nuget:?package=GitVersion.CommandLine&version=5.1.2"
