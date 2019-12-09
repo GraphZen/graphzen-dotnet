@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Interfaces
 {
+    // ReSharper disable once InconsistentNaming
     public abstract class Object_Interfaces :
         NamedCollectionConfigurationFixture<IInterfaces,
             IInterfacesDefinition, IMutableInterfacesDefinition, InterfaceTypeDefinition,

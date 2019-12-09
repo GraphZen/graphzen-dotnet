@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Objects
 {
+    // ReSharper disable once InconsistentNaming
     public abstract class Schema_Objects : NamedCollectionConfigurationFixture<IObjectTypes,
         IObjectTypesDefinition, IMutableObjectTypesDefinition, ObjectTypeDefinition, ObjectType,
         SchemaDefinition,

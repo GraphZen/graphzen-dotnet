@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Arguments.Description
 {
+    // ReSharper disable once InconsistentNaming
     public abstract class Interface_Field_Argument_Description : LeafElementConfigurationFixture<IDescription,
         IDescription, IMutableDescription,
         string?, ArgumentDefinition, Argument>

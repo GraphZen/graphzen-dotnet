@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Directives
 {
+    // ReSharper disable once InconsistentNaming
     public class Schema_Directives_ViaObjectClrPropertyAttribute : Schema_Directives,
         ICollectionConventionConfigurationFixture
     {

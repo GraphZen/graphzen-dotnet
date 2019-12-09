@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues
 {
+    // ReSharper disable once InconsistentNaming
     public abstract class Enum_Values :
         NamedCollectionConfigurationFixture<IEnumValues,
             IEnumValuesDefinition, IMutableEnumValuesDefinition, EnumValueDefinition, EnumValue,

@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Directives
         [Fact(Skip = "obsolete")]
         public void it_can_create_directive_by_name()
         {
-            var schema = Schema.Create(_ => { _.Object("Foo").DirectiveAnnotation("example"); });
+            Schema.Create(_ => { _.Object("Foo").DirectiveAnnotation("example"); });
         }
 
         [Fact]

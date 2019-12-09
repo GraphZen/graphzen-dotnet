@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Interface_Explicit_Description : Interface_Description, ILeafExplicitConfigurationFixture
     {
     }

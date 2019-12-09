@@ -33,22 +33,24 @@ namespace GraphZen.Tests.Internal
 
         private PropertyInfo SelectFoo<T>(Expression<Func<Foo, T>> expr) => expr.GetPropertyInfoFromExpression();
 
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
-        [SuppressMessage("ReSharper", "UnassignedGetOnlyAutoProperty")]
         private class Foo
         {
-            [GraphQLName("customAllTheWay")] public string CustomProperty { get; }
+            [GraphQLName("customAllTheWay")] public string CustomProperty { get; } = null!;
 
             public string Property { get; }
 
+            [UsedImplicitly]
             public bool Method() => true;
 
+            [UsedImplicitly]
             public void VoidMethod()
             {
             }
 
+            // ReSharper disable once UnusedMember.Local
             public Task MethodAsync() => Task.CompletedTask;
 
+            [UsedImplicitly]
             public Task<string> StringMethodAsync() => Task.FromResult("hello world");
         }
     }

@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Arguments
 {
+    // ReSharper disable once InconsistentNaming
     public class Interface_Field_Arguments_ViaClrMethodParameters : Interface_Field_Arguments,
         ICollectionConventionConfigurationFixture
     {

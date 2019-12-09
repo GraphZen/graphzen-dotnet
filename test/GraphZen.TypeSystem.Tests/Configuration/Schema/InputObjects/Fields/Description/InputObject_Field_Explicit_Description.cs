@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class InputObject_Field_Explicit_Description : InputObject_Field_Description,
         ILeafExplicitConfigurationFixture
     {

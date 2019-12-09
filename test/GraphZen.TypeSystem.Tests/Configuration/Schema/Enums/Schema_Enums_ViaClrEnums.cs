@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Enums
 {
+    // ReSharper disable once InconsistentNaming
     public class Schema_Enums_ViaClrEnums : Schema_Enums, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);

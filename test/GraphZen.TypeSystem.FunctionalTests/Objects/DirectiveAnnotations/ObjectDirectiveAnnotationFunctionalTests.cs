@@ -30,13 +30,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.Objects.DirectiveAnnotations
         [Fact]
         public void it_should_throw_on_adding_with_invalid_location()
         {
-            Schema.Create(_ =>
+            Schema.Create(sb =>
             {
                 var directiveLocations = Enum.GetValues(typeof(DirectiveLocation)).Cast<DirectiveLocation>()
                     .Where(_ => _ != DirectiveLocation.Object).ToArray();
-                _.Directive("notObject").Locations(directiveLocations);
+                sb.Directive("notObject").Locations(directiveLocations);
 
-                Action act = () => _.Object("Foo").DirectiveAnnotation("notObject");
+                Action act = () => sb.Object("Foo").DirectiveAnnotation("notObject");
                 act.Should().Throw<InvalidOperationException>()
                     .WithMessage(
                         $"Invalid directive location: the 'notObject' directive cannot be annotated on the object 'Foo'. The 'notObject' directive is only valid on a {directiveLocations.Select(_ => _.GetDisplayValue()).OrList()}.");

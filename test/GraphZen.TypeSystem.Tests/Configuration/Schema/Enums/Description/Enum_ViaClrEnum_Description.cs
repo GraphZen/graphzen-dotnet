@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Enum_ViaClrEnum_Description : Enum_Description, ILeafConventionConfigurationFixture
     {
         [Description(DataAnnotationDescriptionValue)]

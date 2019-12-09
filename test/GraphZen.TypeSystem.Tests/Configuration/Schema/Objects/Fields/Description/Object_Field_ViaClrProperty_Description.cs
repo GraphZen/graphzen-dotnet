@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Object_Field_ViaClrProperty_Description : Object_Field_Description, ILeafConventionConfigurationFixture
     {
         [GraphQLName(Grandparent)]

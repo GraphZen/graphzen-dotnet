@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Union_Explicit_Description : Union_Description, ILeafExplicitConfigurationFixture
     {
     }
