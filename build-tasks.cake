@@ -316,8 +316,7 @@ void Push(BuildParameters buildParams, string source) {
 }
 
 Task("Push-Azure")
-//.IsDependentOn("Pack")
-.ContinueOnError()
+.IsDependentOn("Pack")
 .Does<BuildParameters>((buildParams) =>  {
   Push(buildParams, "GraphZen-Public");
 });
