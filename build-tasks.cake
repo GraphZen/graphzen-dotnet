@@ -285,7 +285,7 @@ Task("Pack")
         NoRestore = true,
         NoBuild = true,
         IncludeSource = false,
-        IncludeSymbols = false,
+        IncludeSymbols = true,
         OutputDirectory = _.Paths.Directories.BuildArtifacts,
         Configuration = _.Configuration,
         MSBuildSettings = new DotNetCoreMSBuildSettings()
@@ -294,23 +294,32 @@ Task("Pack")
     DotNetCorePack(_.Paths.Directories.Solution.FullPath, settings);
 });
 
-Task("Publish")
-.IsDependentOn("Pack")
-.Does<BuildParameters>((buildParams) =>  {
-  if (!buildParams.IsMasterBranch) {
-    Warning("Not on master branch, skipping publishing"); 
-    // TODO: Publish locally
-    return;
-  }
+void Push(BuildParameters buildParams, string source) {
   var settings = new DotNetCoreNuGetPushSettings {
-    ApiKey = buildParams.NugetApiKey,
-    Source = buildParams.NugetSource,
+    ApiKey = "apikey",
+    Source = source,
+    ArgumentCustomization = args => args.Append("--interactive")
   };
-  var packages = GetFiles($"{buildParams.Paths.Directories.BuildArtifacts}/*nupkg");
+  var packages = GetFiles($"{buildParams.Paths.Directories.BuildArtifacts}/*");
   foreach (var package in packages) {
     Information($"Publishing package {package}");
-    DotNetCoreNuGetPush(package.ToString(), settings);
+    try {
+      DotNetCoreNuGetPush(package.ToString(), settings);
+    } catch (Exception e) {
+      if (e.Message.Contains("Conflict")) {
+        Warning(e.Message);
+      } else {
+        throw;
+      }
+    }
   }
+}
+
+Task("Push-Azure")
+//.IsDependentOn("Pack")
+.ContinueOnError()
+.Does<BuildParameters>((buildParams) =>  {
+  Push(buildParams, "GraphZen-Public");
 });
 
 
