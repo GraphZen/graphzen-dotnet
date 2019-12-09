@@ -221,8 +221,6 @@ namespace GraphZen.TypeSystem.Internal
 
                                     if (argumentNode.Description != null)
                                         argument.Description(argumentNode.Description.Value);
-
-
                                 }
                             });
                         }

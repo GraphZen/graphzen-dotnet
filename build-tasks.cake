@@ -1,17 +1,17 @@
 
 #load "./build-scripts/parameters.cake"
-// Modules
+// Modules 
 #module nuget:?package=Cake.DotNetTool.Module&version=0.4.0
 #tool "nuget:?package=ReportGenerator&version=4.3.6"
-#tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
+#tool "nuget:?package=GitVersion.CommandLine&version=5.1.2"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
-#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.1"
-#tool "nuget:?package=docfx.console&version=2.46.0"
+#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.3"
+#tool "nuget:?package=docfx.console&version=2.47.0"
 #addin "nuget:?package=Cake.Coverlet&version=2.3.4"
-#addin "Cake.Powershell&version=0.4.7"
-#addin "nuget:?package=Cake.Git&version=0.19.0"
+#addin "Cake.Powershell&version=0.4.8"
+#addin "nuget:?package=Cake.Git&version=0.21.0"
 #addin "nuget:?package=Cake.Incubator&version=5.1.0"
-#tool dotnet:?package=dotnet-format&version=3.0.4
+#tool dotnet:?package=dotnet-format&version=3.1.37601
 using System.Diagnostics;
 
 
@@ -152,7 +152,7 @@ Task("Cleanup").IsDependentOn("Cleanup-Full").IsDependentOn("Format");
 
 Task("Cleanup-Full")
 .IsDependentOn("Compile")
-.Does(() => ResharperCleanupCode("GraphZen Full Cleanup"));
+.Does(() => ResharperCleanupCode("GraphZen: Full Cleanup"));
 
 Task("Restore")
 .IsDependentOn("Clean")
@@ -285,7 +285,7 @@ Task("Pack")
         NoRestore = true,
         NoBuild = true,
         IncludeSource = false,
-        IncludeSymbols = false,
+        IncludeSymbols = true,
         OutputDirectory = _.Paths.Directories.BuildArtifacts,
         Configuration = _.Configuration,
         MSBuildSettings = new DotNetCoreMSBuildSettings()
@@ -294,23 +294,31 @@ Task("Pack")
     DotNetCorePack(_.Paths.Directories.Solution.FullPath, settings);
 });
 
-Task("Publish")
-.IsDependentOn("Pack")
-.Does<BuildParameters>((buildParams) =>  {
-  if (!buildParams.IsMasterBranch) {
-    Warning("Not on master branch, skipping publishing"); 
-    // TODO: Publish locally
-    return;
-  }
+void Push(BuildParameters buildParams, string source) {
   var settings = new DotNetCoreNuGetPushSettings {
-    ApiKey = buildParams.NugetApiKey,
-    Source = buildParams.NugetSource,
+    ApiKey = "apikey",
+    Source = source,
+    ArgumentCustomization = args => args.Append("--interactive")
   };
-  var packages = GetFiles($"{buildParams.Paths.Directories.BuildArtifacts}/*nupkg");
+  var packages = GetFiles($"{buildParams.Paths.Directories.BuildArtifacts}/*");
   foreach (var package in packages) {
     Information($"Publishing package {package}");
-    DotNetCoreNuGetPush(package.ToString(), settings);
+    try {
+      DotNetCoreNuGetPush(package.ToString(), settings);
+    } catch (Exception e) {
+      if (e.Message.Contains("Conflict")) {
+        Warning(e.Message);
+      } else {
+        throw;
+      }
+    }
   }
+}
+
+Task("Push-Azure")
+.IsDependentOn("Pack")
+.Does<BuildParameters>((buildParams) =>  {
+  Push(buildParams, "GraphZen-Public");
 });
 
 

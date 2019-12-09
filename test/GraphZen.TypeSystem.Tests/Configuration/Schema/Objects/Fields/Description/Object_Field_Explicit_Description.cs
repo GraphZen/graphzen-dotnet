@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Object_Field_Explicit_Description : Object_Field_Description, ILeafExplicitConfigurationFixture
     {
     }

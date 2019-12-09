@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields
 {
+    // ReSharper disable once InconsistentNaming
     public class Object_Fields_ViaClrMethods : Object_Fields, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);

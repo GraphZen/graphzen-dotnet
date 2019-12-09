@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Enums
 {
+    // ReSharper disable once InconsistentNaming
     public abstract class Schema_Enums : NamedCollectionConfigurationFixture<IEnumTypes,
         IEnumTypesDefinition, IMutableEnumTypesDefinition, EnumTypeDefinition,
         EnumType,

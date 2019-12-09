@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Directives
 {
+    // ReSharper disable once InconsistentNaming
     public abstract class Schema_Directives : NamedCollectionConfigurationFixture<IDirectives,
         IDirectivesDefinition, IMutableDirectivesDefinition, DirectiveDefinition,
         Directive,

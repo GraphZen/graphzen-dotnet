@@ -17,6 +17,5 @@ namespace GraphZen.AspNetCore.Server.Tests
         public void should_share_IApplicationBuilder_namespace() =>
             typeof(GraphZenApplicationBuilderExtensions).Namespace
                 .Should().Be(typeof(IApplicationBuilder).Namespace);
-
     }
 }

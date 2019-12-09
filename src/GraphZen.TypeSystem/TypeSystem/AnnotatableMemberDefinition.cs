@@ -32,15 +32,9 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations => _directives;
 
-        public IDirectiveAnnotation GetOrAddDirectiveAnnotation(string name, object value)
-        {
-            Check.NotNull(name, nameof(name));
-            return FindDirectiveAnnotation(name) ?? AddDirectiveAnnotation(name, value);
-        }
-
         public IDirectiveAnnotation AddDirectiveAnnotation(string name, object? value)
         {
-            var directive = CreateDirective(Check.NotNull(name, nameof(name)), value);
+            var directive = new DirectiveAnnotation(name, value);
             _directives.Add(directive);
             return directive;
         }
@@ -61,8 +55,5 @@ namespace GraphZen.TypeSystem
                 return _.Name == name;
             });
         }
-
-
-        private DirectiveAnnotation CreateDirective(string name, object? value) => new DirectiveAnnotation(name, value);
     }
 }

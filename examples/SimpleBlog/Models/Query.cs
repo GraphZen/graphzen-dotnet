@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using GraphZen;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 

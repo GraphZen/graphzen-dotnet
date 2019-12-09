@@ -116,7 +116,8 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition.FieldType, nameof(definition.FieldType));
             return new Field(definition.Name, definition.Description, declaringType,
                 definition.FieldType, definition.GetArguments(), definition.Resolver, definition.IsDeprecated,
-                definition.DeprecationReason, definition.GetDirectiveAnnotations().ToList(), typeResolver, definition.ClrInfo);
+                definition.DeprecationReason, definition.GetDirectiveAnnotations().ToList(), typeResolver,
+                definition.ClrInfo);
         }
 
         public override string ToString() => $"{DeclaringType}.{Name}";

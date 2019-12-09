@@ -41,9 +41,7 @@ namespace GraphZen.TypeSystem
 
         public TypeIdentity Identity { get; }
 
-
         public SchemaDefinition Schema { get; }
-
 
         private string DebuggerDisplay => ClrType != null ? $"{Kind}: {Name} ({ClrType.Name})" : $"{Kind}: {Name}";
 
@@ -78,6 +76,6 @@ namespace GraphZen.TypeSystem
             new TypeReference(Identity,
                 ClrType != null ? NamedType(ClrType) : NamedType(Name(Name)));
 
-        public override string ToString() => $"{Kind} {Name}";
+        public override string ToString() => Name;
     }
 }

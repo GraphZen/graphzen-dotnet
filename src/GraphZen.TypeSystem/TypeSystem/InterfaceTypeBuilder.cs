@@ -139,6 +139,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public IInterfaceTypeBuilder<TInterface, TContext> IgnoreDirectiveAnnotation(string name) =>
+            throw new NotImplementedException();
     }
 }

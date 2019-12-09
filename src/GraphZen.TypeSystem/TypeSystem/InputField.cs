@@ -43,7 +43,8 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(typeResolver, nameof(typeResolver));
             return new InputField(definition.Name, definition.Description, definition.InputType,
-                definition.DefaultValue, definition.HasDefaultValue, definition.GetDirectiveAnnotations().ToList(), typeResolver,
+                definition.DefaultValue, definition.HasDefaultValue, definition.GetDirectiveAnnotations().ToList(),
+                typeResolver,
                 definition.ClrInfo, declaringType);
         }
     }

@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Unions
 {
+    // ReSharper disable once InconsistentNaming
     public abstract class Schema_Unions : NamedCollectionConfigurationFixture<IUnionTypes,
         IUnionTypesDefinition, IMutableUnionTypesDefinition, UnionTypeDefinition,
         UnionType,

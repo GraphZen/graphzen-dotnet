@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using SimpleBlog.Models;
 
-namespace SimpleBlog.Models
+namespace SimpleBlog
 {
     public static class FakeBlogData
     {

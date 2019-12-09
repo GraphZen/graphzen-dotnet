@@ -16,6 +16,7 @@ namespace GraphZen.LanguageModel.Internal
             Name("String"),
             StringValue("string value"));
 
+        // ReSharper disable once InconsistentNaming
         public static ScalarTypeDefinitionSyntax ID { get; } =
             ScalarTypeDefinition(Name("ID"),
                 StringValue("The `ID` scalar type represents a unique identifier, often used to " +

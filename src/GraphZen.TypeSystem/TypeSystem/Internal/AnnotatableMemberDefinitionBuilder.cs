@@ -1,10 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
@@ -18,7 +21,8 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        private static bool TryGetDeprecatedAttribute(DirectiveSyntax node, [NotNullWhen(true)] out GraphQLDeprecatedAttribute? attribute)
+        private static bool TryGetDeprecatedAttribute(DirectiveSyntax node,
+            [NotNullWhen(true)] out GraphQLDeprecatedAttribute? attribute)
         {
             if (node.Name.Value != "deprecated")
             {
@@ -44,10 +48,10 @@ namespace GraphZen.TypeSystem.Internal
                     DirectiveAnnotation("deprecated", attr, configurationSource);
                     return;
                 }
+
                 var existingDirective = Schema.FindDirective(node.Name.Value);
                 if (existingDirective != null)
                 {
-
                 }
                 else
                 {
@@ -62,14 +66,35 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-
         public void DirectiveAnnotation(string name, object? value, ConfigurationSource configurationSource)
         {
             var existing = Definition.FindDirectiveAnnotation(name);
             if (existing == null)
+            {
+                var directive = Schema.FindDirective(name);
+                var displayVal = Definition.DirectiveLocation.GetDisplayValue();
+                var directiveDescription =
+                    Definition is INamed namedDef ? $"{displayVal} '{namedDef}'" : displayVal;
+                if (directive == null)
+                    throw new InvalidOperationException(
+                        $"Unknown directive: cannot add '{name}' directive to the {directiveDescription}. Ensure the '{name}' directive is defined in the schema before it is used.");
+
+                if (!directive.Locations.Contains(Definition.DirectiveLocation))
+                {
+                    var validLocations = directive.Locations.Any()
+                        ? $" The '{name}' directive is only valid on a {directive.Locations.Select(_ => _.GetDisplayValue()).OrList()}."
+                        : "";
+
+                    throw new InvalidOperationException(
+                        $"Invalid directive location: The '{name}' directive cannot be annotated on the {directiveDescription}.{validLocations}");
+                }
+
                 Definition.AddDirectiveAnnotation(name, value);
+            }
             else
+            {
                 Definition.UpdateDirectiveAnnotation(name, value);
+            }
         }
 
         public void RemoveDirectiveAnnotation(string name)

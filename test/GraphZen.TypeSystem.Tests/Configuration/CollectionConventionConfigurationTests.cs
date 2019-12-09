@@ -13,7 +13,8 @@ using Xunit;
 namespace GraphZen.TypeSystem.Tests.Configuration
 {
     [NoReorder]
-    public class CollectionConventionConfigurationTests : TestDataFixtureRunner<ICollectionConventionConfigurationFixture>
+    public class
+        CollectionConventionConfigurationTests : TestDataFixtureRunner<ICollectionConventionConfigurationFixture>
     {
         public static IEnumerable<object[]> FixtureData =
             ConfigurationFixtures.GetAll<ICollectionConventionConfigurationFixture>().ToTestData();

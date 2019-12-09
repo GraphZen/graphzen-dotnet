@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues
 {
+    // ReSharper disable once InconsistentNaming
     public class Enum_Values_Explicit : Enum_Values, ICollectionExplicitConfigurationFixture
     {
     }

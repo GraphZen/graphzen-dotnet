@@ -194,7 +194,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public IObjectTypeBuilder<TObject, TContext> IgnoreDirectiveAnnotation(string name) =>
+            throw new NotImplementedException();
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector) =>
             throw new NotImplementedException();

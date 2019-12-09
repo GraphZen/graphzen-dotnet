@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Scalars
 {
+    // ReSharper disable once InconsistentNaming
     public abstract class Schema_Scalars : NamedCollectionConfigurationFixture<IScalarTypes,
         IScalarTypesDefinition, IMutableScalarTypesDefinition, ScalarTypeDefinition,
         ScalarType,

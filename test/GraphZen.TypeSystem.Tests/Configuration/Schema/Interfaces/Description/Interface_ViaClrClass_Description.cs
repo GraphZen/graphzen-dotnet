@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Interface_ViaClrClass_Description : Interface_Description, ILeafConventionConfigurationFixture
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);

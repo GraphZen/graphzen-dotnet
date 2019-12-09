@@ -26,8 +26,8 @@ namespace GraphZen.Infrastructure
 
         public static string QuotedOrList(params string[] values) => values.QuotedOrList();
 
-        private static string OrList(
-            IEnumerable<string> items)
+        public static string OrList(
+            this IEnumerable<string> items)
         {
             var selected = items.Take(OrListMaxLength).ToArray();
             return selected.Select((quoted, index) => (quoted, index)).Aggregate("",

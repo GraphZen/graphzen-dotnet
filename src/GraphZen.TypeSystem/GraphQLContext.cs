@@ -86,7 +86,7 @@ namespace GraphZen
                     {
                         Type? queryClrType = default;
 
-                        Type? discoverQueryType(Assembly? assembly, Func<Assembly, IEnumerable<Type>> getTypes)
+                        Type? DiscoverQueryType(Assembly? assembly, Func<Assembly, IEnumerable<Type>> getTypes)
                         {
                             if (assembly == null) return null;
                             var candidates = getTypes(assembly)
@@ -98,10 +98,10 @@ namespace GraphZen
                         }
 
                         if (contextType != typeof(GraphQLContext))
-                            queryClrType = discoverQueryType(contextType.Assembly, a => a.GetExportedTypes());
+                            queryClrType = DiscoverQueryType(contextType.Assembly, a => a.GetExportedTypes());
 
                         if (queryClrType == null)
-                            queryClrType = discoverQueryType(Assembly.GetEntryAssembly(), a => a.GetTypes());
+                            queryClrType = DiscoverQueryType(Assembly.GetEntryAssembly(), a => a.GetTypes());
 
                         if (queryClrType != null)
                             internalBuilder.QueryType(queryClrType, ConfigurationSource.Convention);

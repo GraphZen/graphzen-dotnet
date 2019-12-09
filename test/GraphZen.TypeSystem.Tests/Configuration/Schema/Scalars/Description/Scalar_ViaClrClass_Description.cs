@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Scalar_ViaClrClass_Description : Scalar_Description, ILeafConventionConfigurationFixture
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);

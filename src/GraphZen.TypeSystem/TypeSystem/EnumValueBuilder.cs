@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-       
+
         public IEnumValueBuilder DirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);

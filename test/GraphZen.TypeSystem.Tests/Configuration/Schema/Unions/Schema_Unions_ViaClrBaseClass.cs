@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Unions
 {
+    // ReSharper disable once InconsistentNaming
     public class Schema_Unions_ViaClrBaseClass : Schema_Unions, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);
