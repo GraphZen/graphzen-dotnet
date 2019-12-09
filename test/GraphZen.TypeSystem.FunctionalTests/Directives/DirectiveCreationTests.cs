@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -11,17 +10,12 @@ using Xunit;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Directives
 {
-
-
     public class DirectiveCreationTests
     {
         [Fact(Skip = "obsolete")]
         public void it_can_create_directive_by_name()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Foo").DirectiveAnnotation("example");
-            });
+            var schema = Schema.Create(_ => { _.Object("Foo").DirectiveAnnotation("example"); });
         }
 
         [Fact]

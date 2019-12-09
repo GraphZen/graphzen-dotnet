@@ -34,8 +34,6 @@ namespace GraphZen.TypeSystem
 
         public IDirectiveAnnotation AddDirectiveAnnotation(string name, object? value)
         {
-
-
             var directive = new DirectiveAnnotation(name, value);
             _directives.Add(directive);
             return directive;
@@ -57,7 +55,5 @@ namespace GraphZen.TypeSystem
                 return _.Name == name;
             });
         }
-
-
     }
 }

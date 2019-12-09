@@ -152,7 +152,7 @@ Task("Cleanup").IsDependentOn("Cleanup-Full").IsDependentOn("Format");
 
 Task("Cleanup-Full")
 .IsDependentOn("Compile")
-.Does(() => ResharperCleanupCode("GraphZen Full Cleanup"));
+.Does(() => ResharperCleanupCode("GraphZen: Full Cleanup"));
 
 Task("Restore")
 .IsDependentOn("Clean")

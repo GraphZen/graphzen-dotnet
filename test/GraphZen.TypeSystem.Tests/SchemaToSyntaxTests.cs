@@ -143,7 +143,7 @@ namespace GraphZen.TypeSystem.Tests
                 null, new List<EnumValueDefinitionSyntax>
                 {
                     new EnumValueDefinitionSyntax(EnumValue(Name("EnumValue")),
-                        description: Description("enum value description"))
+                        Description("enum value description"))
                 });
             enumType.ToSyntaxNode().Should().Be(expected);
         }

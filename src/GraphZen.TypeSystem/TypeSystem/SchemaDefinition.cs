@@ -14,9 +14,6 @@ using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-using Superpower;
-
-
 
 namespace GraphZen.TypeSystem
 {
@@ -267,7 +264,8 @@ namespace GraphZen.TypeSystem
             }
             catch (Exception e)
             {
-                throw new InvalidTypeReferenceException("Unable to parse type reference. See inner exception for details.", e);
+                throw new InvalidTypeReferenceException(
+                    "Unable to parse type reference. See inner exception for details.", e);
             }
 
             var named = typeNode.GetNamedType();
