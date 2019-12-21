@@ -27,6 +27,8 @@
 	<s:String x:Key="/Default/CodeStyle/CSharpUsing/MandatoryImports/=GraphZen_002EInfrastructure/@EntryIndexedValue">GraphZen.Infrastructure</s:String>
 	<s:String x:Key="/Default/CodeStyle/CSharpUsing/MandatoryImports/=JetBrains_002EAnnotations/@EntryIndexedValue">JetBrains.Annotations</s:String>
 	<s:String x:Key="/Default/CodeStyle/CSharpUsing/MandatoryImports/=System_002EDiagnostics_002ECodeAnalysis/@EntryIndexedValue">System.Diagnostics.CodeAnalysis</s:String>
+	<s:Boolean x:Key="/Default/CodeStyle/EditorConfig/EnableClangFormatSupport/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/EditorConfig/EnableEditorConfigSupport/@EntryValue">False</s:Boolean>
 	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright (c) GraphZen LLC. All rights reserved.&#xD;
 Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=AST/@EntryIndexedValue">AST</s:String>

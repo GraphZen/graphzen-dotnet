@@ -84,7 +84,7 @@ namespace GraphZen.TypeSystem.Tests
         private class Query
         {
             // ReSharper disable once UnusedMember.Local
-            public union_abstract_class union_field { get; set; }
+            public union_abstract_class union_field { get; set; } = null!;
         }
 
         [Fact]

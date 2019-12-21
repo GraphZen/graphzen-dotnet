@@ -59,7 +59,7 @@ namespace GraphZen.Infrastructure
                 return InnerEnumerable.Any(_ => _.Name == key);
             }
 
-            public override bool TryGetValue(string key, out T? value)
+            public override bool TryGetValue(string key, [NotNullWhen(true)] out T? value)
             {
                 value = InnerEnumerable.SingleOrDefault(_ => _.Name == key);
                 return value != null;
@@ -105,14 +105,14 @@ namespace GraphZen.Infrastructure
     public abstract class NamedCollection<T> : IEnumerable<T> where T : class, INamed
     {
         public abstract int Count { get; }
-        public abstract bool ContainsKey(string key);
-        public abstract bool TryGetValue(string key, [NotNullWhen(true)] out T? value);
 
         public abstract T this[string key] { get; }
 
         public abstract IEnumerator<T> GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public abstract bool ContainsKey(string key);
+        public abstract bool TryGetValue(string key, [NotNullWhen(true)] out T? value);
 
         public override string ToString()
         {
