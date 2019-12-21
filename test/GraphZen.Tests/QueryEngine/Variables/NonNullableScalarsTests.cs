@@ -35,7 +35,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
               }
             ").ShouldEqual(new
             {
-                data = new { fieldWithNonNullableStringInput = "\"default\"" }
+                data = new {fieldWithNonNullableStringInput = "\"default\""}
             });
 
         [Fact]
@@ -58,7 +58,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
-            ", new { value = "a" }).ShouldEqual(new
+            ", new {value = "a"}).ShouldEqual(new
             {
                 data = new
                 {
@@ -91,7 +91,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
-            ", new { value = (string)null }).ShouldEqual(new
+            ", new {value = (string) null}).ShouldEqual(new
             {
                 errors = Array(new
                 {
@@ -111,13 +111,13 @@ namespace GraphZen.Tests.QueryEngine.Variables
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
-            ", new { value = Array(1, 2, 3) }).ShouldEqual(new
+            ", new {value = Array(1, 2, 3)}).ShouldEqual(new
             {
                 errors = Array(new
                 {
                     message =
                         "Variable \"$value\" got invalid value `[1, 2, 3]`; Expected type String; String cannot represent a non string value: [1, 2, 3]",
-                    locations = Array(new { line = 2, column = 22 })
+                    locations = Array(new {line = 2, column = 22})
                 })
             });
 
@@ -130,7 +130,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
             {
                 data = new
                 {
-                    fieldWithNonNullableStringInput = (object)null
+                    fieldWithNonNullableStringInput = (object) null
                 },
                 errors = Array(new
                 {
@@ -154,7 +154,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
             {
                 data = new
                 {
-                    fieldWithNonNullableStringInput = (object)null
+                    fieldWithNonNullableStringInput = (object) null
                 },
                 errors = Array(new
                 {

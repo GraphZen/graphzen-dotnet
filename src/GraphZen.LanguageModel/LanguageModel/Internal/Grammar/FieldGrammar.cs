@@ -15,24 +15,24 @@ namespace GraphZen.LanguageModel.Internal
     {
         internal static TokenListParser<TokenKind, FieldSyntax> Field { get; } =
             (from firstName in Parse.Ref(() => Name.OptionalOrDefault())
-             from aliasedName in (from colon in Colon
-                                  from aliasedName in Name
-                                  select aliasedName).OptionalOrDefault()
-             from arguments in Arguments.OptionalOrDefault().Named("field arguments")
-             from directives in Directives.OptionalOrDefault().Named("field directives")
-             from selectionSet in SelectionSet.OptionalOrDefault().Named("field selections")
-             let alias = aliasedName != null ? firstName : null
-             let name = aliasedName ?? firstName
-             where firstName != null
-             select new FieldSyntax(name,
-                 alias,
-                 arguments,
-                 directives,
-                 selectionSet,
-                 SyntaxLocation.FromMany(alias, name, arguments?.GetLocation(),
-                     selectionSet,
-                     directives?.GetLocation()
-                 )))
+                from aliasedName in (from colon in Colon
+                    from aliasedName in Name
+                    select aliasedName).OptionalOrDefault()
+                from arguments in Arguments.OptionalOrDefault().Named("field arguments")
+                from directives in Directives.OptionalOrDefault().Named("field directives")
+                from selectionSet in SelectionSet.OptionalOrDefault().Named("field selections")
+                let alias = aliasedName != null ? firstName : null
+                let name = aliasedName ?? firstName
+                where firstName != null
+                select new FieldSyntax(name,
+                    alias,
+                    arguments,
+                    directives,
+                    selectionSet,
+                    SyntaxLocation.FromMany(alias, name, arguments?.GetLocation(),
+                        selectionSet,
+                        directives?.GetLocation()
+                    )))
             .Try()
             .Named("field");
     }

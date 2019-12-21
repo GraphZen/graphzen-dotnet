@@ -39,7 +39,7 @@ extend input InputType {
             var expected =
                 SyntaxFactory.Document(
                     new InputObjectTypeExtensionSyntax(SyntaxFactory.Name("InputType"),
-                        new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onInputObject")) }));
+                        new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onInputObject"))}));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
         }

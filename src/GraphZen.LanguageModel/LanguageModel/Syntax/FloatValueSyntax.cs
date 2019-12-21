@@ -42,7 +42,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is FloatValueSyntax && Equals((FloatValueSyntax)obj);
+            return obj is FloatValueSyntax && Equals((FloatValueSyntax) obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();

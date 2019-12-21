@@ -54,10 +54,7 @@ namespace GraphZen.Infrastructure
                 }
             }
 
-            public override bool ContainsKey(string key)
-            {
-                return InnerEnumerable.Any(_ => _.Name == key);
-            }
+            public override bool ContainsKey(string key) => InnerEnumerable.Any(_ => _.Name == key);
 
             public override bool TryGetValue(string key, [NotNullWhen(true)] out T? value)
             {

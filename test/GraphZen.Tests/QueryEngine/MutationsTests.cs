@@ -104,11 +104,11 @@ namespace GraphZen.Tests.QueryEngine
             {
                 data = new
                 {
-                    first = new { theNumber = 1 },
-                    second = new { theNumber = 2 },
-                    third = new { theNumber = 3 },
-                    fourth = new { theNumber = 4 },
-                    fifth = new { theNumber = 5 }
+                    first = new {theNumber = 1},
+                    second = new {theNumber = 2},
+                    third = new {theNumber = 3},
+                    fourth = new {theNumber = 4},
+                    fifth = new {theNumber = 5}
                 }
             });
 
@@ -140,12 +140,12 @@ namespace GraphZen.Tests.QueryEngine
             {
                 data = new
                 {
-                    first = new { theNumber = 1 },
-                    second = new { theNumber = 2 },
-                    third = (object)null,
-                    fourth = new { theNumber = 4 },
-                    fifth = new { theNumber = 5 },
-                    sixth = (object)null
+                    first = new {theNumber = 1},
+                    second = new {theNumber = 2},
+                    third = (object) null,
+                    fourth = new {theNumber = 4},
+                    fifth = new {theNumber = 5},
+                    sixth = (object) null
                 },
                 errors = new object[]
                 {

@@ -24,7 +24,7 @@ namespace GraphZen.Tests.Utilities
         private static Maybe<object> None() => Maybe.None<object>();
 
 
-        private static readonly object ComplexValue = new { someArbitrary = "complexValue" };
+        private static readonly object ComplexValue = new {someArbitrary = "complexValue"};
 
         private static readonly Schema TestSchema = Schema.Create(_ =>
         {
@@ -159,10 +159,10 @@ namespace GraphZen.Tests.Utilities
         [Fact]
         public void ItConvertsArrayValuesToListValueNodes()
         {
-            Get(Some(new object[] { "FOO", "BAR" }), ListType.Of(SpecScalars.String)).Should()
+            Get(Some(new object[] {"FOO", "BAR"}), ListType.Of(SpecScalars.String)).Should()
                 .Be(ListValue(StringValue("FOO"), StringValue("BAR")));
 
-            Get(Some(new[] { "HELLO", "GOODBYE" }), ListType.Of(MyEnum))
+            Get(Some(new[] {"HELLO", "GOODBYE"}), ListType.Of(MyEnum))
                 .Should()
                 .Be(ListValue(EnumValue(Name("HELLO")), EnumValue(Name("GOODBYE"))));
         }
@@ -177,10 +177,10 @@ namespace GraphZen.Tests.Utilities
         public void ItConvertsInputObjects()
         {
             Get(Some(new
-            {
-                foo = 3,
-                bar = "HELLO"
-            }), MyInputObj).Should()
+                {
+                    foo = 3,
+                    bar = "HELLO"
+                }), MyInputObj).Should()
                 .Be(ObjectValue(ObjectField(Name("foo"), IntValue(3)),
                     ObjectField(Name("bar"), EnumValue(Name("HELLO")))));
         }
@@ -190,7 +190,7 @@ namespace GraphZen.Tests.Utilities
         {
             Get(Some(new
             {
-                foo = (string)null
+                foo = (string) null
             }), MyInputObj).Should().Be(ObjectValue(ObjectField(Name("foo"), NullValue())));
         }
     }

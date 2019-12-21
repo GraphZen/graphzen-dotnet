@@ -113,7 +113,7 @@ namespace GraphZen.TypeSystem.Internal
                 itemType.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, itemCanBeNull))
             {
                 typeNode = canBeNull
-                    ? (TypeSyntax)SyntaxFactory.ListType(typeNode)
+                    ? (TypeSyntax) SyntaxFactory.ListType(typeNode)
                     : SyntaxFactory.NonNull(SyntaxFactory.ListType(typeNode));
                 return true;
             }
@@ -126,7 +126,7 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             typeNode = canBeNull
-                ? (TypeSyntax)SyntaxFactory.NamedType(clrType)
+                ? (TypeSyntax) SyntaxFactory.NamedType(clrType)
                 : SyntaxFactory.NonNull(SyntaxFactory.NamedType(clrType));
             innerClrType = clrType.GetEffectiveClrType();
             return true;
@@ -272,17 +272,17 @@ namespace GraphZen.TypeSystem.Internal
             AssemblyName[] referencedAssemblies =
                 Assembly.GetEntryAssembly()?.GetReferencedAssemblies() ?? Array.Empty<AssemblyName>();
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> { clrType.Assembly });
+                .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> {clrType.Assembly});
             foreach (var assembly in assemblies)
-                foreach (var type in assembly.DefinedTypes)
+            foreach (var type in assembly.DefinedTypes)
+            {
+                if (type != clrType)
                 {
-                    if (type != clrType)
-                    {
-                        if (clrType.IsInterface && clrType.IsAssignableFrom(type))
-                            yield return type;
-                        else if (clrType.IsClass && type.IsSubclassOf(clrType)) yield return type;
-                    }
+                    if (clrType.IsInterface && clrType.IsAssignableFrom(type))
+                        yield return type;
+                    else if (clrType.IsClass && type.IsSubclassOf(clrType)) yield return type;
                 }
+            }
         }
     }
 }

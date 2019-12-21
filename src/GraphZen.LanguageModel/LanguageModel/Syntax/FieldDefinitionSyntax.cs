@@ -73,7 +73,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is FieldDefinitionSyntax && Equals((FieldDefinitionSyntax)obj);
+            return obj is FieldDefinitionSyntax && Equals((FieldDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

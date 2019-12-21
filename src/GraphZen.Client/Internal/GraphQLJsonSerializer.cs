@@ -19,7 +19,7 @@ namespace GraphZen.Internal
     {
         private static JsonSerializerOptions SerializerOptions { get; } = new JsonSerializerOptions
         {
-            Converters = { new JsonStringEnumConverter() },
+            Converters = {new JsonStringEnumConverter()},
             IgnoreNullValues = false,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
@@ -43,7 +43,7 @@ namespace GraphZen.Internal
             Check.NotNull(json, nameof(json));
             var expando = JsonConvert.DeserializeObject<DynamicDictionary>(json);
             if (expando != null)
-                return ((IDictionary<string, object>)expando).TryGetValue("data", out var data) ? data : null;
+                return ((IDictionary<string, object>) expando).TryGetValue("data", out var data) ? data : null;
 
             return null;
         }

@@ -44,7 +44,7 @@ namespace GraphZen.TypeSystem.Tests
             schema.QueryType.Should().Be(queryType);
 
             var articleField = queryType.FindField("article");
-            var articleFieldType = (ObjectType)articleField.FieldType;
+            var articleFieldType = (ObjectType) articleField.FieldType;
             articleFieldType.Should().Be(articleType);
             articleFieldType.Name.Should().Be("Article");
             articleField.Name.Should().Be("article");

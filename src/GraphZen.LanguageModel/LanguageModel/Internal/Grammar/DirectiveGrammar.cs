@@ -24,10 +24,10 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         internal static TokenListParser<TokenKind, DirectiveSyntax> Directive { get; } =
             (from at in Parse.Ref(() => AtSymbol.Named("directive symbol"))
-             from name in Name.Named("directive name")
-             from args in Arguments.OptionalOrDefault().Named("directive arguments")
-             select new DirectiveSyntax(name, args,
-                 SyntaxLocation.FromMany(at, name, args.GetLocation()))).Try()
+                from name in Name.Named("directive name")
+                from args in Arguments.OptionalOrDefault().Named("directive arguments")
+                select new DirectiveSyntax(name, args,
+                    SyntaxLocation.FromMany(at, name, args.GetLocation()))).Try()
             .Named("directive");
     }
 }

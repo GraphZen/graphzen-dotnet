@@ -8,11 +8,10 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable ClassNeverInstantiated.Local
 // ReSharper disable UnusedType.Local
-
-
 
 
 namespace GraphZen.TypeSystem.Tests

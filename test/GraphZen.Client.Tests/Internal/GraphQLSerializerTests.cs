@@ -33,7 +33,7 @@ namespace GraphZen.Client.Tests.Internal
                 "{\"errors\": [{\"message\": \"hello\"}]}");
 
             result.Should().BeEquivalentTo(
-                new List<GraphQLError> { new GraphQLError("hello") });
+                new List<GraphQLError> {new GraphQLError("hello")});
         }
 
         [Theory]
@@ -52,7 +52,7 @@ namespace GraphZen.Client.Tests.Internal
         public void parse_data_should_return_dynamic()
         {
             var result = GraphQLJsonSerializer.ParseData("{\"data\":{\"value\": 1}}");
-            (result as object).Should().BeEquivalentToJsonFromObject(new { value = 1 });
+            (result as object).Should().BeEquivalentToJsonFromObject(new {value = 1});
         }
 
         public class TypedQueryResult

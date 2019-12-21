@@ -15,7 +15,7 @@ namespace GraphZen
     {
         private static void Main(string[] args)
         {
-            var cmd = new RootCommand { new Command("gen") { Handler = CommandHandler.Create(RunCodeGen) } };
+            var cmd = new RootCommand {new Command("gen") {Handler = CommandHandler.Create(RunCodeGen)}};
             var cliBuilder = new CommandLineBuilder(cmd);
             var cli = cliBuilder.Build();
             cli.InvokeAsync(args).Wait();

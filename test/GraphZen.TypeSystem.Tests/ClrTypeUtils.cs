@@ -37,15 +37,15 @@ namespace GraphZen.TypeSystem.Tests
         {
             var assembly = openGenericType.Assembly;
             return from x in assembly.GetTypes()
-                   from z in x.GetInterfaces()
-                   let y = x.BaseType
-                   where
-                       y != null && y.IsGenericType &&
-                       openGenericType.IsAssignableFrom(y.GetGenericTypeDefinition()) ||
-                       z.IsGenericType &&
-                       openGenericType.IsAssignableFrom(z.GetGenericTypeDefinition())
-                   where !isAbstract.HasValue || x.IsAbstract == isAbstract.Value
-                   select x;
+                from z in x.GetInterfaces()
+                let y = x.BaseType
+                where
+                    y != null && y.IsGenericType &&
+                    openGenericType.IsAssignableFrom(y.GetGenericTypeDefinition()) ||
+                    z.IsGenericType &&
+                    openGenericType.IsAssignableFrom(z.GetGenericTypeDefinition())
+                where !isAbstract.HasValue || x.IsAbstract == isAbstract.Value
+                select x;
         }
     }
 }

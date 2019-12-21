@@ -18,16 +18,16 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         internal static TokenListParser<TokenKind, SelectionSetSyntax> SelectionSet { get; } =
             (from lb in Parse.Ref(() => LeftBrace)
-             from selections in Selection
-                 .AtLeastOnce()
-             from rb in RightBrace
-             select new SelectionSetSyntax(selections, new SyntaxLocation(lb, rb)))
+                from selections in Selection
+                    .AtLeastOnce()
+                from rb in RightBrace
+                select new SelectionSetSyntax(selections, new SyntaxLocation(lb, rb)))
             .Named("selection set");
 
 
         internal static TokenListParser<TokenKind, SelectionSyntax> Selection { get; } =
-            Parse.Ref(() => Field).Select(_ => (SelectionSyntax)_)
-                .Or(Parse.Ref(() => FragmentSpread.Select(_ => (SelectionSyntax)_)))
-                .Or(InlineFragment.Select(_ => (SelectionSyntax)_)).Named("selection");
+            Parse.Ref(() => Field).Select(_ => (SelectionSyntax) _)
+                .Or(Parse.Ref(() => FragmentSpread.Select(_ => (SelectionSyntax) _)))
+                .Or(InlineFragment.Select(_ => (SelectionSyntax) _)).Named("selection");
     }
 }

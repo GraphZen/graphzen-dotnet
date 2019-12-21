@@ -18,19 +18,19 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         private static TokenListParser<TokenKind, InputObjectTypeExtensionSyntax> InputObjectTypeExtension { get; } =
             (from extend in Keyword("extend")
-             from input in Keyword("input")
-             from name in Parse.Ref(() => Name)
-             from directives in Directives.OptionalOrDefault()
-             from fields in InputFieldsDefinition
-             select new InputObjectTypeExtensionSyntax(name, directives, fields,
-                 SyntaxLocation.FromMany(extend, fields.GetLocation())))
+                from input in Keyword("input")
+                from name in Parse.Ref(() => Name)
+                from directives in Directives.OptionalOrDefault()
+                from fields in InputFieldsDefinition
+                select new InputObjectTypeExtensionSyntax(name, directives, fields,
+                    SyntaxLocation.FromMany(extend, fields.GetLocation())))
             .Try().Or
             ((from extend in Keyword("extend")
-              from input in Keyword("input")
-              from name in Parse.Ref(() => Name)
-              from directives in Directives
-              select new InputObjectTypeExtensionSyntax(name, directives, null,
-                  SyntaxLocation.FromMany(extend, directives.GetLocation())))
+                    from input in Keyword("input")
+                    from name in Parse.Ref(() => Name)
+                    from directives in Directives
+                    select new InputObjectTypeExtensionSyntax(name, directives, null,
+                        SyntaxLocation.FromMany(extend, directives.GetLocation())))
                 .Try())
             .Named("input object type extension");
     }

@@ -58,7 +58,7 @@ namespace GraphZen.Client.IntegrationTests
                 Query = @"{ message }"
             };
 
-            var expected = new { message = "Hello world" };
+            var expected = new {message = "Hello world"};
             var response = await _gql.SendAsync(graphqlRequest);
             (response.GetData() as object).Should().BeEquivalentToJsonFromObject(expected);
             response.GetData<TypedQueryResult>().Should().BeEquivalentToJsonFromObject(expected);

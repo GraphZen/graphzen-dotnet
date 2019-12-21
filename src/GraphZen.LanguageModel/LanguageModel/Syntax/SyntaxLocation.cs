@@ -63,7 +63,7 @@ namespace GraphZen.LanguageModel
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((SyntaxLocation)obj);
+            return Equals((SyntaxLocation) obj);
         }
 
         public override int GetHashCode()

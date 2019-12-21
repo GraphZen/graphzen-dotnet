@@ -152,14 +152,14 @@ namespace GraphZen.TypeSystem
 
 
         public ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
-            _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+            _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?) null;
 
         public ConfigurationSource?
             FindIgnoredDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
-            _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+            _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?) null;
 
         public IReadOnlyCollection<DirectiveLocation> Locations =>
-            (IReadOnlyCollection<DirectiveLocation>)_locations.Keys;
+            (IReadOnlyCollection<DirectiveLocation>) _locations.Keys;
 
         public Type? ClrType { get; }
 

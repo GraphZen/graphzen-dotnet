@@ -168,14 +168,14 @@ namespace GraphZen.Tests.Validation.Rules
         private void ExpectValidSDL(ValidationRule rule, string sdl)
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
-            var result = new DocumentValidator(new[] { rule }).Validate(sdlSyntax);
+            var result = new DocumentValidator(new[] {rule}).Validate(sdlSyntax);
             result.Should().BeEmpty("it should validate");
         }
 
         private void ExpectValidQuery(Schema schema, ValidationRule rule, string query)
         {
             var document = Parser.ParseDocument(query);
-            var result = new QueryValidator(new[] { rule }).Validate(schema, document);
+            var result = new QueryValidator(new[] {rule}).Validate(schema, document);
             result.Should().BeEmpty("it should validate");
         }
 
@@ -183,7 +183,7 @@ namespace GraphZen.Tests.Validation.Rules
             IReadOnlyList<ExpectedError> expectedErrors)
         {
             var document = Parser.ParseDocument(query);
-            var result = new QueryValidator(new[] { rule }).Validate(schema, document)
+            var result = new QueryValidator(new[] {rule}).Validate(schema, document)
                 // Convert for comparison
                 .Select(e => new ExpectedError(e))
                 .ToArray();
@@ -195,7 +195,7 @@ namespace GraphZen.Tests.Validation.Rules
             IReadOnlyList<ExpectedError> expectedErrors)
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
-            var result = new DocumentValidator(new[] { rule }).Validate(sdlSyntax)
+            var result = new DocumentValidator(new[] {rule}).Validate(sdlSyntax)
                 // Convert for comparison
                 .Select(e => new ExpectedError(e))
                 .ToArray();
@@ -206,11 +206,11 @@ namespace GraphZen.Tests.Validation.Rules
         protected void QueryShouldPass(string query) => ExpectValidQuery(TestSchema, RuleUnderTest, query);
 
         protected void QueryShouldFail(string query, ExpectedError error, params ExpectedError[] errors) =>
-            ExpectInvalidQuery(TestSchema, RuleUnderTest, query, new[] { error }.Concat(errors).ToArray());
+            ExpectInvalidQuery(TestSchema, RuleUnderTest, query, new[] {error}.Concat(errors).ToArray());
 
         protected void SDLShouldPass(string sdl) => ExpectValidSDL(RuleUnderTest, sdl);
 
         protected void SDLShouldFail(string sdl, ExpectedError error, params ExpectedError[] errors) =>
-            ExpectInvalidSDL(RuleUnderTest, sdl.Dedent(), new[] { error }.Concat(errors).ToArray());
+            ExpectInvalidSDL(RuleUnderTest, sdl.Dedent(), new[] {error}.Concat(errors).ToArray());
     }
 }

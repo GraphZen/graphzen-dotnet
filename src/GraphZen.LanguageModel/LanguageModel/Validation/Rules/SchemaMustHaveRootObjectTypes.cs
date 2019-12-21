@@ -33,7 +33,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
             var queryTypeName = queryRootOpeartionTypeDef?.Type.Name.Value ?? "Query";
             var queryType = node.Definitions.OfType<TypeDefinitionSyntax>()
                 .FirstOrDefault(_ => _.Name.Value == queryTypeName);
-            var queryRootOperationType = (SyntaxNode)queryRootOpeartionTypeDef?.Type ?? queryType;
+            var queryRootOperationType = (SyntaxNode) queryRootOpeartionTypeDef?.Type ?? queryType;
             if (queryType == null)
                 ReportError("Query root type must be provided.", _schema);
             else if (!(queryType is ObjectTypeDefinitionSyntax))
@@ -45,7 +45,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
             var mutationTypeName = mutationRootOpeartionTypeDef?.Type.Name.Value ?? "Mutation";
             var mutationType = node.Definitions.OfType<TypeDefinitionSyntax>()
                 .FirstOrDefault(_ => _.Name.Value == mutationTypeName);
-            var mutationRootOperationType = (SyntaxNode)mutationRootOpeartionTypeDef?.Type ?? mutationType;
+            var mutationRootOperationType = (SyntaxNode) mutationRootOpeartionTypeDef?.Type ?? mutationType;
             if (mutationType != null && !(mutationType is ObjectTypeDefinitionSyntax))
                 ReportError(
                     $"Mutation root type must be Object type if provided, it cannot be {mutationType.Name.Value}.",
@@ -56,7 +56,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
             var subscriptionTypeName = subscriptionRootOpeartionTypeDef?.Type.Name.Value ?? "Subscription";
             var subscriptionType = node.Definitions.OfType<TypeDefinitionSyntax>()
                 .FirstOrDefault(_ => _.Name.Value == subscriptionTypeName);
-            var subscriptionRootOperationType = (SyntaxNode)subscriptionRootOpeartionTypeDef?.Type ?? subscriptionType;
+            var subscriptionRootOperationType = (SyntaxNode) subscriptionRootOpeartionTypeDef?.Type ?? subscriptionType;
 
             if (subscriptionType != null && !(subscriptionType is ObjectTypeDefinitionSyntax))
                 ReportError(

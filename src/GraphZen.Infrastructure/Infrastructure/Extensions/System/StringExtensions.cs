@@ -61,7 +61,7 @@ namespace GraphZen.Infrastructure
             var chars = value.SelectMany((c, i) =>
             {
                 c = char.ToUpper(c);
-                return value.IsUpperCaseAtIndex(i + 1) ? new[] { c, '_' } : new[] { c };
+                return value.IsUpperCaseAtIndex(i + 1) ? new[] {c, '_'} : new[] {c};
             }).ToArray();
 
             return new string(chars);

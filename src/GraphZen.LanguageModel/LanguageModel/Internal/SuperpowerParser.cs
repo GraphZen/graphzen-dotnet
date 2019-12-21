@@ -34,7 +34,7 @@ namespace GraphZen.LanguageModel.Internal
             if (!result.HasValue)
             {
                 var error = new GraphQLServerError(result.ToString(), null, source,
-                    new[] { result.ErrorPosition.Absolute });
+                    new[] {result.ErrorPosition.Absolute});
                 error.Throw();
             }
 

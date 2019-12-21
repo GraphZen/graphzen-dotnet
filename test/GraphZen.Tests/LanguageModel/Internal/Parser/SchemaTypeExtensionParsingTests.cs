@@ -33,7 +33,7 @@ extend schema @onSchema {
   subscription: SubscriptionType
 }");
             var expected = SyntaxFactory.Document(new SchemaExtensionSyntax(
-                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onSchema")) },
+                new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onSchema"))},
                 new[]
                 {
                     new OperationTypeDefinitionSyntax(OperationType.Subscription,

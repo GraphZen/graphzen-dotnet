@@ -42,7 +42,7 @@ namespace GraphZen.TypeSystem
         public IReadOnlyDictionary<string, EnumValueDefinition> Values => InternalValues;
 
         public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) =>
-            _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
+            _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?) null;
 
         public EnumValueDefinition? FindValue(string name) =>
             InternalValues.TryGetValue(name, out var value) ? value : null;

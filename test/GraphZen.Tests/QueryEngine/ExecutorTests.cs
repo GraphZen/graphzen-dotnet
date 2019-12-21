@@ -62,13 +62,13 @@ namespace GraphZen.Tests.QueryEngine
             [UsedImplicitly]
             public object[] C()
             {
-                return new object[] { "Contrived", null, "Confusing" };
+                return new object[] {"Contrived", null, "Confusing"};
             }
 
             [UsedImplicitly]
             public object[] Deeper()
             {
-                return new object[] { _data, null, _data };
+                return new object[] {_data, null, _data};
             }
         }
 
@@ -143,12 +143,12 @@ namespace GraphZen.Tests.QueryEngine
                     e = "Egg",
                     f = "Fish",
                     pic = "Pic of size: 100",
-                    task = new { a = "Apple" },
+                    task = new {a = "Apple"},
                     deep = new
                     {
                         a = "Already Been Done",
                         b = "Boring",
-                        c = new object[] { "Contrived", null, "Confusing" },
+                        c = new object[] {"Contrived", null, "Confusing"},
                         deeper = new object[]
                         {
                             new {a = "Apple", b = "Banana"},
@@ -181,7 +181,7 @@ namespace GraphZen.Tests.QueryEngine
 
                 sb.QueryType("DataType");
             });
-            await ExecuteAsync(schema, doc, new Data(), new { size = 100 }).ShouldEqual(expected);
+            await ExecuteAsync(schema, doc, new Data(), new {size = 100}).ShouldEqual(expected);
         }
 
         [Fact]
@@ -247,9 +247,9 @@ namespace GraphZen.Tests.QueryEngine
                 sb.QueryType("Test");
             });
 
-            var rootValue = new { root = "val" };
+            var rootValue = new {root = "val"};
 
-            await ExecuteAsync(schemaSut, ast, rootValue, new { var = "abc" });
+            await ExecuteAsync(schemaSut, ast, rootValue, new {var = "abc"});
             info.FieldName.Should().Be("test");
             info.FieldNodes.Count.Should().Be(1);
             info.FieldNodes[0].Should()
@@ -261,7 +261,7 @@ namespace GraphZen.Tests.QueryEngine
             info.Schema.Should().Be(schemaSut);
             info.RootValue.Should().Be(rootValue);
             info.Operation.Should().Be(ast.Definitions[0]);
-            info.VariableValues.As<object>().Should().BeEquivalentToJsonFromObject(new { var = "abc" });
+            info.VariableValues.As<object>().Should().BeEquivalentToJsonFromObject(new {var = "abc"});
         }
 
         [Fact]
@@ -333,7 +333,7 @@ namespace GraphZen.Tests.QueryEngine
             });
 
             result.Data.Keys.Should()
-                .BeEquivalentTo(new[] { "a", "b", "c", "d", "e" }, opts => opts.WithStrictOrdering());
+                .BeEquivalentTo(new[] {"a", "b", "c", "d", "e"}, opts => opts.WithStrictOrdering());
         }
 
         [Fact]
@@ -351,7 +351,7 @@ namespace GraphZen.Tests.QueryEngine
                 ...Frag
               }
             ";
-            var data = new { a = "b" };
+            var data = new {a = "b"};
             var schema = Schema.Create(_ =>
             {
                 _.Object("Type").Field("a", "String");
@@ -385,7 +385,7 @@ namespace GraphZen.Tests.QueryEngine
                 _.MutationType("M");
             });
 
-            await ExecuteAsync(schema, doc).ShouldEqual(new { data = new { } });
+            await ExecuteAsync(schema, doc).ShouldEqual(new {data = new { }});
         }
 
         [Fact]
@@ -437,19 +437,19 @@ namespace GraphZen.Tests.QueryEngine
                 _.Object("SpecialType").IsTypeOf(
                     o => o is Special).Field("value", "String");
                 _.Object("Query").Field("specials", "[SpecialType]",
-                    f => f.Resolve(root => ((SpecialsRoot)root).Specials));
+                    f => f.Resolve(root => ((SpecialsRoot) root).Specials));
             });
 
             var rootValue = new SpecialsRoot
             {
-                Specials = new object[] { new Special { Value = "foo" }, new NotSpecial { Value = "bar" } }
+                Specials = new object[] {new Special {Value = "foo"}, new NotSpecial {Value = "bar"}}
             };
 
             return ExecuteAsync(schema, "{specials { value } }", rootValue).ShouldEqual(new
             {
                 data = new
                 {
-                    specials = new object[] { new { value = "foo" }, null }
+                    specials = new object[] {new {value = "foo"}, null}
                 },
                 errors = new object[]
                 {
@@ -483,7 +483,7 @@ namespace GraphZen.Tests.QueryEngine
             {
                 data = new
                 {
-                    foo = (object)null
+                    foo = (object) null
                 }
             });
         }

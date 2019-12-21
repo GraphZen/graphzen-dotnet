@@ -139,20 +139,22 @@ Task("Clean-All")
     CleanDirectories(data.Paths.Directories.ToClean);
 });
 
-void ResharperCleanupCode(string profile) {
+void ResharperCleanupCode() {
   var exitCode= StartProcess(paths.cleanupCode, new ProcessSettings {
-    Arguments = new ProcessArgumentBuilder().Append(paths.sln).Append($"--profile=\"{profile}\"")
+    Arguments = new ProcessArgumentBuilder().Append(paths.sln).Append($"--config=cleanupcode.config")
   });
   if (exitCode != 0) {
     throw new Exception($"Cleanup code failed with exit code {exitCode}");
   }
 }
 
-Task("Cleanup").IsDependentOn("Cleanup-Full").IsDependentOn("Format");
+Task("Cleanup")
+.IsDependentOn("Format")
+.IsDependentOn("Cleanup-Full");
 
 Task("Cleanup-Full")
 .IsDependentOn("Compile")
-.Does(() => ResharperCleanupCode("GraphZen: Full Cleanup"));
+.Does(() => ResharperCleanupCode());
 
 Task("Restore")
 .IsDependentOn("Clean")

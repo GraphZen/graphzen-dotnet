@@ -38,7 +38,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
             {
                 data = new
                 {
-                    fieldWithObjectInput = (object)null
+                    fieldWithObjectInput = (object) null
                 },
                 errors = new object[]
                 {

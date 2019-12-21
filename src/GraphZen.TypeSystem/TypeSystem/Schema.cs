@@ -243,21 +243,21 @@ namespace GraphZen.TypeSystem
             switch (typeSyntax)
             {
                 case ListTypeSyntax listNode:
-                    {
-                        var innerType = GetTypeFromAst(listNode.OfType);
-                        return innerType != null ? ListType.Of(innerType) : null;
-                    }
+                {
+                    var innerType = GetTypeFromAst(listNode.OfType);
+                    return innerType != null ? ListType.Of(innerType) : null;
+                }
                 case NonNullTypeSyntax nnNode:
+                {
+                    var innerType = GetTypeFromAst(nnNode.OfType);
+                    switch (innerType)
                     {
-                        var innerType = GetTypeFromAst(nnNode.OfType);
-                        switch (innerType)
-                        {
-                            case null:
-                                return null;
-                            case INullableType nullable:
-                                return NonNullType.Of(nullable);
-                        }
+                        case null:
+                            return null;
+                        case INullableType nullable:
+                            return NonNullType.Of(nullable);
                     }
+                }
                     break;
                 case NamedTypeSyntax namedTypeNode:
                     return Types.TryGetValue(namedTypeNode.Name.Value, out var result) ? result : null;

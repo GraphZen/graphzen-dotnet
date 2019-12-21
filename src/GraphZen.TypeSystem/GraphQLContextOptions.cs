@@ -23,7 +23,7 @@ namespace GraphZen
         public IEnumerable<IGraphQLContextOptionsExtension> Extensions => _extensions.Values;
 
         public TExtension? FindExtension<TExtension>() where TExtension : class, IGraphQLContextOptionsExtension =>
-            _extensions.TryGetValue(typeof(TExtension), out var ext) ? (TExtension)ext : null;
+            _extensions.TryGetValue(typeof(TExtension), out var ext) ? (TExtension) ext : null;
 
 
         public virtual TExtension GetExtension<TExtension>()

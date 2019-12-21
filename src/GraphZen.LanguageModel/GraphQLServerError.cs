@@ -72,7 +72,7 @@ namespace GraphZen
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((GraphQLServerError)obj);
+            return Equals((GraphQLServerError) obj);
         }
 
         public override int GetHashCode()

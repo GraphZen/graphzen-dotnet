@@ -38,7 +38,7 @@ namespace GraphZen.Tests.LanguageModel
             ex.GraphQLError.Should().BeEquivalentToJsonFromObject(new
             {
                 message = expectedMessage,
-                locations = locations.Select(l => new { l.line, l.column })
+                locations = locations.Select(l => new {l.line, l.column})
             });
         }
     }

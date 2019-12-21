@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem
                 case INamedType namedType:
                     return NamedType(Name(namedType.Name));
                 case NonNullType nonNull:
-                    return NonNull((NullableTypeSyntax)nonNull.OfType.ToTypeSyntax());
+                    return NonNull((NullableTypeSyntax) nonNull.OfType.ToTypeSyntax());
                 case ListType list:
                     return ListType(list.OfType.ToTypeSyntax());
             }
@@ -42,7 +42,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(directives, nameof(directives));
 
             var annotationConverter = new DefaultIDirectiveAnnotationSyntaxConverter();
-            return directives.Select(_ => (DirectiveSyntax)annotationConverter.ToSyntax(_)).ToList().AsReadOnly();
+            return directives.Select(_ => (DirectiveSyntax) annotationConverter.ToSyntax(_)).ToList().AsReadOnly();
         }
     }
 }

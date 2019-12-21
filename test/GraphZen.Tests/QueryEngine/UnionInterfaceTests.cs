@@ -79,15 +79,15 @@ namespace GraphZen.Tests.QueryEngine
             _.QueryType("Person");
         });
 
-        public static Cat Garfield { get; } = new Cat { Name = "Garfield", Meows = false };
-        public static Dog Odie { get; } = new Dog { Name = "Odie", Barks = true };
-        public static Person Liz { get; } = new Person { Name = "Liz" };
+        public static Cat Garfield { get; } = new Cat {Name = "Garfield", Meows = false};
+        public static Dog Odie { get; } = new Dog {Name = "Odie", Barks = true};
+        public static Person Liz { get; } = new Person {Name = "Liz"};
 
         public static Person John { get; } = new Person
         {
             Name = "John",
-            Pets = new object[] { Garfield, Odie },
-            Friends = new object[] { Liz, Odie }
+            Pets = new object[] {Garfield, Odie},
+            Friends = new object[] {Liz, Odie}
         };
 
         [Fact]
@@ -122,31 +122,31 @@ namespace GraphZen.Tests.QueryEngine
                     {
                         kind = "INTERFACE",
                         name = "Named",
-                        fields = new object[] { new { name = "name" } },
-                        interfaces = (object)null,
+                        fields = new object[] {new {name = "name"}},
+                        interfaces = (object) null,
                         possibleTypes = new object[]
                         {
                             new {name = "Cat"},
                             new {name = "Dog"},
                             new {name = "Person"}
                         },
-                        enumValues = (object)null,
-                        inputFields = (object)null
+                        enumValues = (object) null,
+                        inputFields = (object) null
                     },
                     Pet = new
                     {
                         kind = "UNION",
                         name = "Pet",
-                        fields = (object)null,
+                        fields = (object) null,
 
-                        interfaces = (object)null,
+                        interfaces = (object) null,
                         possibleTypes = new object[]
                         {
                             new {name = "Dog"},
                             new {name = "Cat"}
                         },
-                        enumValues = (object)null,
-                        inputFields = (object)null
+                        enumValues = (object) null,
+                        inputFields = (object) null
                     }
                 }
             });
@@ -373,7 +373,7 @@ namespace GraphZen.Tests.QueryEngine
                 _.QueryType("Person");
             });
 
-            var john = new Person { Name = "John", Friends = new object[] { Liz }, Pets = new object[] { } };
+            var john = new Person {Name = "John", Friends = new object[] {Liz}, Pets = new object[] { }};
             var cxt = new CustomContext();
 
 

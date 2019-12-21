@@ -160,7 +160,7 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ",
-                UndefinedField("meowVolume", "Dog", null, new[] { "barkVolume" }, 5, 15));
+                UndefinedField("meowVolume", "Dog", null, new[] {"barkVolume"}, 5, 15));
         }
 
         [Fact]
@@ -172,7 +172,7 @@ namespace GraphZen.Tests.Validation.Rules
             volume : mooVolume
           }
 
-        ", UndefinedField("mooVolume", "Dog", null, new[] { "barkVolume" }, 4, 13));
+        ", UndefinedField("mooVolume", "Dog", null, new[] {"barkVolume"}, 4, 13));
         }
 
 
@@ -198,7 +198,7 @@ namespace GraphZen.Tests.Validation.Rules
             nickname
           }
 
-        ", UndefinedField("nickname", "Pet", new[] { "Cat", "Dog" }, new[] { "name" }, 4, 13));
+        ", UndefinedField("nickname", "Pet", new[] {"Cat", "Dog"}, new[] {"name"}, 4, 13));
         }
 
         [Fact]
@@ -234,7 +234,7 @@ namespace GraphZen.Tests.Validation.Rules
             name
           }
 
-        ", UndefinedField("name", "CatOrDog", new[] { "Being", "Pet", "Canine", "Cat", "Dog" }, null, 4, 13));
+        ", UndefinedField("name", "CatOrDog", new[] {"Being", "Pet", "Canine", "Cat", "Dog"}, null, 4, 13));
         }
 
         [Fact]
@@ -267,7 +267,7 @@ namespace GraphZen.Tests.Validation.Rules
             [Fact]
             public void SmallNumberOfTypeSuggestions()
             {
-                UndefinedFieldMessage("f", "T", new[] { "A", "B" }, new string[] { }).Should()
+                UndefinedFieldMessage("f", "T", new[] {"A", "B"}, new string[] { }).Should()
                     .Be(
                         "Cannot query field \"f\" on type \"T\". Did you mean to use an inline fragment on \"A\" or \"B\"?");
             }
@@ -275,14 +275,14 @@ namespace GraphZen.Tests.Validation.Rules
             [Fact]
             public void SmallNumberOfFieldSuggestions()
             {
-                UndefinedFieldMessage("f", "T", new string[] { }, new[] { "z", "y" }).Should()
+                UndefinedFieldMessage("f", "T", new string[] { }, new[] {"z", "y"}).Should()
                     .Be("Cannot query field \"f\" on type \"T\". Did you mean \"z\" or \"y\"?");
             }
 
             [Fact]
             public void OnlyShowsOneSetOfSuggestionsAtATimePreferringTypes()
             {
-                UndefinedFieldMessage("f", "T", new[] { "A", "B" }, new[] { "z", "y" }).Should()
+                UndefinedFieldMessage("f", "T", new[] {"A", "B"}, new[] {"z", "y"}).Should()
                     .Be(
                         "Cannot query field \"f\" on type \"T\". Did you mean to use an inline fragment on \"A\" or \"B\"?");
             }
@@ -290,7 +290,7 @@ namespace GraphZen.Tests.Validation.Rules
             [Fact]
             public void LimitsLotsOfTypeSuggestions()
             {
-                UndefinedFieldMessage("f", "T", new[] { "A", "B", "C", "D", "E", "F" }, new string[] { }).Should()
+                UndefinedFieldMessage("f", "T", new[] {"A", "B", "C", "D", "E", "F"}, new string[] { }).Should()
                     .Be(
                         "Cannot query field \"f\" on type \"T\". Did you mean to use an inline fragment on \"A\", \"B\", \"C\", \"D\", or \"E\"?");
             }
@@ -298,7 +298,7 @@ namespace GraphZen.Tests.Validation.Rules
             [Fact]
             public void LimitsLotsOfFieldSuggestions()
             {
-                UndefinedFieldMessage("f", "T", new string[] { }, new[] { "z", "y", "x", "w", "v", "u" }).Should()
+                UndefinedFieldMessage("f", "T", new string[] { }, new[] {"z", "y", "x", "w", "v", "u"}).Should()
                     .Be("Cannot query field \"f\" on type \"T\". Did you mean \"z\", \"y\", \"x\", \"w\", or \"v\"?");
             }
         }

@@ -35,7 +35,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
 
         [Fact]
         public Task ErrorsOnAdditionOfUnkownInputField() =>
-            ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz", extra = "dog" } })
+            ExecuteAsync(Doc, new {input = new {a = "foo", b = "bar", c = "baz", extra = "dog"}})
                 .ShouldEqual(new
                 {
                     errors = Array(new
@@ -56,24 +56,24 @@ namespace GraphZen.Tests.QueryEngine.Variables
             query ($input: TestNestedInputObject) {
               fieldWithNestedObjectInput(input: $input)
             }", new
-            {
-                input = new
                 {
-                    na = new { a = "foo" }
-                }
-            })
+                    input = new
+                    {
+                        na = new {a = "foo"}
+                    }
+                })
                 .ShouldEqual(new
                 {
                     errors = Array(new
-                    {
-                        message =
-                                "Variable \"$input\" got invalid value `{na: {a: \"foo\"}}`; Field value.nb of required type String! was not provided.",
-                        locations = Array(new
                         {
-                            line = 2,
-                            column = 20
-                        })
-                    },
+                            message =
+                                "Variable \"$input\" got invalid value `{na: {a: \"foo\"}}`; Field value.nb of required type String! was not provided.",
+                            locations = Array(new
+                            {
+                                line = 2,
+                                column = 20
+                            })
+                        },
                         new
                         {
                             message =
@@ -114,7 +114,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
                 {
                     a = "foo",
                     b = "bar",
-                    c = (string)null
+                    c = (string) null
                 }
             }).ShouldEqual(new
             {
@@ -123,13 +123,13 @@ namespace GraphZen.Tests.QueryEngine.Variables
                     {
                         message =
                             "Variable \"$input\" got invalid value `{a: \"foo\", b: \"bar\", c: null}`; Field value.c of required type String! was not provided.",
-                        locations = Array(new { line = 2, column = 25 })
+                        locations = Array(new {line = 2, column = 25})
                     })
             });
 
         [Fact]
         public Task ErrorsOnOmissionOfNestedNonNull() =>
-            ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar" } })
+            ExecuteAsync(Doc, new {input = new {a = "foo", b = "bar"}})
                 .ShouldEqual(new
                 {
                     errors = Array(new
@@ -151,9 +151,9 @@ namespace GraphZen.Tests.QueryEngine.Variables
                           fieldWithNullableStringInput(input: $input)
                         }
                     ", new
-            {
-                input = "Variable value"
-            })
+                {
+                    input = "Variable value"
+                })
                 .ShouldEqual(new
                 {
                     data = new
@@ -184,7 +184,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
 
         [Fact]
         public Task ItExecutesWithComplexScalarInput() =>
-            ExecuteAsync(Doc, new { input = new { c = "foo", d = "SerializedValue" } }).ShouldEqual(new
+            ExecuteAsync(Doc, new {input = new {c = "foo", d = "SerializedValue"}}).ShouldEqual(new
             {
                 data = new
                 {
@@ -214,9 +214,9 @@ namespace GraphZen.Tests.QueryEngine.Variables
                           fieldWithNullableStringInput(input: $input)
                         }
                     ", new
-            {
-                input = (string)null
-            })
+                {
+                    input = (string) null
+                })
                 .ShouldEqual(new
                 {
                     data = new
@@ -245,7 +245,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
             ExecuteAsync(@" 
                         query q($input: String) {
                             fieldWithNullableStringInput(input: $input)
-                       }", new { input = (string)null })
+                       }", new {input = (string) null})
                 .ShouldEqual(new
                 {
                     data = new
@@ -264,13 +264,13 @@ namespace GraphZen.Tests.QueryEngine.Variables
                 {
                     data = new
                     {
-                        fieldWithNullableStringInput = (string)null
+                        fieldWithNullableStringInput = (string) null
                     }
                 });
 
         [Fact]
         public Task ProperlyParsesSingleValueToList() =>
-            ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz" } })
+            ExecuteAsync(Doc, new {input = new {a = "foo", b = "bar", c = "baz"}})
                 .ShouldEqual(new
                 {
                     data = new
