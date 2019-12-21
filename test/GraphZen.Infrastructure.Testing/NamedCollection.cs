@@ -59,7 +59,7 @@ namespace GraphZen.Infrastructure
                 return InnerEnumerable.Any(_ => _.Name == key);
             }
 
-            public override bool TryGetValue(string key, out T value)
+            public override bool TryGetValue(string key, out T? value)
             {
                 value = InnerEnumerable.SingleOrDefault(_ => _.Name == key);
                 return value != null;

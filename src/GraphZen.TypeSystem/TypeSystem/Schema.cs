@@ -245,13 +245,7 @@ namespace GraphZen.TypeSystem
                 case ListTypeSyntax listNode:
                     {
                         var innerType = GetTypeFromAst(listNode.OfType);
-                        switch (innerType)
-                        {
-                            case null:
-                                return null;
-                            case IGraphQLType input:
-                                return ListType.Of(input);
-                        }
+                        return innerType != null ? ListType.Of(innerType) : null;
                     }
                 case NonNullTypeSyntax nnNode:
                     {

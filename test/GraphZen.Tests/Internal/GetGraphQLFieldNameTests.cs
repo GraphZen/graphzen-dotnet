@@ -37,6 +37,7 @@ namespace GraphZen.Tests.Internal
         {
             [GraphQLName("customAllTheWay")] public string CustomProperty { get; } = null!;
 
+            // ReSharper disable once UnassignedGetOnlyAutoProperty
             public string Property { get; }
 
             [UsedImplicitly]

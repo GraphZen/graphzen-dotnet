@@ -47,7 +47,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description
             return value != null;
         }
 
-        public override bool TryGetValue(EnumTypeDefinition parent, [NotNullWhen(true)] out string value)
+        public override bool TryGetValue(EnumTypeDefinition parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description!;
             return value != null;

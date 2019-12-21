@@ -35,7 +35,7 @@ namespace GraphZen.Infrastructure
 
         public static AndConstraint<StringAssertions> Be(this StringAssertions assertions, string expected,
             bool showDiff) => showDiff
-            ? assertions.Be(expected, (Action<StringDiffOptions>?)null)
+            ? assertions.Be(expected, (Action<StringDiffOptions>?) null)
             : assertions.Be(expected);
     }
 }
