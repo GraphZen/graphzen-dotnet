@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
@@ -256,7 +257,17 @@ namespace GraphZen.TypeSystem
         public TypeReference? GetOrAddTypeReference(string type, IMemberDefinition referencingMember
         )
         {
-            var typeNode = Builder.Parser.ParseType(type);
+            TypeSyntax typeNode;
+            try
+            {
+                typeNode = Builder.Parser.ParseType(type);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidTypeReferenceException(
+                    "Unable to parse type reference. See inner exception for details.", e);
+            }
+
             var named = typeNode.GetNamedType();
 
             var identity = GetOverlappingOrAddTypeIdentity(

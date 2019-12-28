@@ -5,13 +5,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
-using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     [NoReorder]
     public class ScalarTypeBuilderIdentityTests : TypeBuilderIdentityTests<ScalarType>

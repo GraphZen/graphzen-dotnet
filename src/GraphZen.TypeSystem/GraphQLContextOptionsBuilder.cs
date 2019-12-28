@@ -53,19 +53,13 @@ namespace GraphZen
 
         void IGraphQLContextOptionsBuilderInfrastructure.AddOrUpdateExtension<TExtension>(TExtension extension)
         {
-
             Options = Options.WithExtension(extension);
-
-
         }
 
         private GraphQLContextOptionsBuilder WithOption(Func<CoreOptionsExtension, CoreOptionsExtension> withFunc)
         {
             var extension = Options.FindExtension<CoreOptionsExtension>();
-            if (extension == null)
-            {
-                extension = new CoreOptionsExtension();
-            }
+            if (extension == null) extension = new CoreOptionsExtension();
 
             var updated = withFunc(extension);
 

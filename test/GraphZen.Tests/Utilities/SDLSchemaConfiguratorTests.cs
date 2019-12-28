@@ -9,13 +9,13 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
-using GraphZen.QueryEngine;
+using GraphZen.Tests.QueryEngine;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Utilities
+namespace GraphZen.Tests.Utilities
 {
     [NoReorder]
     public class SDLSchemaConfiguratorTests : ExecutorHarness
@@ -159,19 +159,6 @@ namespace GraphZen.Utilities
             field.DeprecationReason.Should().Be("test");
         }
 
-        [Fact]
-        public void ShouldCreateSchemaWithSyntaxDirective()
-        {
-            var body = @"
-              type Query @unknown {
-                str: String 
-              }
-            ".Dedent();
-            var schema = Schema.Create(body);
-            var expectedDirective = SyntaxFactory.Directive(SyntaxFactory.Name("unknown"));
-            var actualDirective = schema.QueryType.FindDirectiveAnnotation("unknown");
-            actualDirective.Value.Should().Be(expectedDirective);
-        }
 
         [Fact]
         public void OverridingDirectivesExcludesSpecified()

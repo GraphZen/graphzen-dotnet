@@ -4,13 +4,14 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
 #nullable disable
 
 
-namespace GraphZen.LanguageModel.Internal
+namespace GraphZen.Tests.LanguageModel.Internal
 {
     public class GraphQLNameTests
     {

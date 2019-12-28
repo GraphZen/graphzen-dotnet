@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Xunit;
@@ -14,7 +15,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.LanguageModel
+namespace GraphZen.Tests.LanguageModel
 {
     [NoReorder]
     public class VisitorTests

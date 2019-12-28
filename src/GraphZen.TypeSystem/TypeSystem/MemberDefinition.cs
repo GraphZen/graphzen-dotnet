@@ -21,7 +21,6 @@ namespace GraphZen.TypeSystem
 
         public string? Description { get; private set; }
 
-
         public bool SetDescription(string? description, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(_descriptionConfigurationSource))

@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
+using GraphZen.QueryEngine;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
 #nullable disable
 
 
-namespace GraphZen.QueryEngine
+namespace GraphZen.Tests.QueryEngine
 {
     public abstract class ExecutorHarness
     {

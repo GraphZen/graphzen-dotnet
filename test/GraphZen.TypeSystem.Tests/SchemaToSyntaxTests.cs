@@ -6,23 +6,25 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.LanguageModel.SyntaxFactory;
+using static GraphZen.TypeSystem.SyntaxHelpers;
 
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     [NoReorder]
     public class SchemaToSyntaxTests
     {
         private Schema Schema { get; } = Schema.Create(schema =>
         {
+            schema.Directive("customDirective");
+            schema.Directive("onSchema").Locations(DirectiveLocation.Schema);
+            schema.Directive("onInterface").Locations(DirectiveLocation.Interface);
+
             schema.DirectiveAnnotation("onSchema");
 
-            schema
-                .Directive("customDirective");
             schema.Interface("Interface")
                 .DirectiveAnnotation("onInterface")
                 .Description("interface description")
@@ -69,7 +71,7 @@ namespace GraphZen
             var objectType = Schema.GetType("Object");
             var expected = new ObjectTypeDefinitionSyntax(
                 Name("Object"),
-                SyntaxHelpers.Description("object description")
+                Description("object description")
                 , new[]
                 {
                     NamedType(Name("Interface"))
@@ -126,7 +128,7 @@ namespace GraphZen
         {
             var union = Schema.GetType("Union");
             var expected = new UnionTypeDefinitionSyntax(Name("Union"),
-                SyntaxHelpers.Description("union description"),
+                Description("union description"),
                 null,
                 new[] { NamedType(Name("Object")) });
             union.ToSyntaxNode().Should().Be(expected);
@@ -137,11 +139,11 @@ namespace GraphZen
         {
             var enumType = Schema.GetType("Enum");
             var expected = new EnumTypeDefinitionSyntax(Name("Enum"),
-                SyntaxHelpers.Description("enum description"),
+                Description("enum description"),
                 null, new List<EnumValueDefinitionSyntax>
                 {
                     new EnumValueDefinitionSyntax(EnumValue(Name("EnumValue")),
-                        SyntaxHelpers.Description("enum value description"))
+                        Description("enum value description"))
                 });
             enumType.ToSyntaxNode().Should().Be(expected);
         }
@@ -151,7 +153,7 @@ namespace GraphZen
         {
             var inputObject = Schema.GetType("InputObject");
             var expected = new InputObjectTypeDefinitionSyntax(Name("InputObject"),
-                SyntaxHelpers.Description("input object description"), null, new[]
+                Description("input object description"), null, new[]
                 {
                     new InputValueDefinitionSyntax(Name("field"),
                         NamedType(Name("String")),

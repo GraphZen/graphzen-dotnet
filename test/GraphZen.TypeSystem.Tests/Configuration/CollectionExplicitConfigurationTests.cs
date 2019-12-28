@@ -4,14 +4,13 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Configuration
+namespace GraphZen.TypeSystem.Tests.Configuration
 {
     [NoReorder]
     public class CollectionExplicitConfigurationTests : TestDataFixtureRunner<ICollectionExplicitConfigurationFixture>
@@ -87,7 +86,8 @@ namespace GraphZen.Configuration
 
         [Theory]
         [MemberData(nameof(FixtureData))]
-        public void when_item_added_explicitly_then_ignored_explicitly_item_ignored_configuration_source_should_be_explicit(
+        public void
+            when_item_added_explicitly_then_ignored_explicitly_item_ignored_configuration_source_should_be_explicit(
                 ICollectionExplicitConfigurationFixture fixture)
 
         {

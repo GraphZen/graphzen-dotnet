@@ -90,6 +90,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public IScalarTypeBuilder<TScalar, TValueNode> IgnoreDirectiveAnnotation(string name) =>
+            throw new NotImplementedException();
     }
 }

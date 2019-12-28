@@ -3,13 +3,13 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Enums.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Enum_ViaClrEnum_Description : Enum_Description, ILeafConventionConfigurationFixture
     {
         [Description(DataAnnotationDescriptionValue)]

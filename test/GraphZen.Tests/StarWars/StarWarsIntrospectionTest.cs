@@ -10,7 +10,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.StarWars
+namespace GraphZen.Tests.StarWars
 {
     [NoReorder]
     public class StarWarsIntrospectionTest : StarWarsSchemaAndData
@@ -57,7 +57,7 @@ namespace GraphZen.StarWars
                         }
                     }
                 }
-            }, new JsonDiffOptions()
+            }, new JsonDiffOptions
             {
                 SortBeforeCompare = true
             });

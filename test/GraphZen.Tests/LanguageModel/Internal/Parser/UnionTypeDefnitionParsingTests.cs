@@ -3,13 +3,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
 #nullable disable
 
 
-namespace GraphZen.LanguageModel.Internal.Parser
+namespace GraphZen.Tests.LanguageModel.Internal.Parser
 {
     public class UnionTypeDefnitionParsingTests : ParserTestBase
     {

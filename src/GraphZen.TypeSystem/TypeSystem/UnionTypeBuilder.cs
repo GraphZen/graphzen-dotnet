@@ -116,6 +116,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IUnionTypeBuilder<TUnion, TContext> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public IUnionTypeBuilder<TUnion, TContext> IgnoreDirectiveAnnotation(string name) =>
+            throw new NotImplementedException();
     }
 }

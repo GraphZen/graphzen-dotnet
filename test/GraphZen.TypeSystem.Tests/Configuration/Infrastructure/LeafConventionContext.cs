@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 #nullable disable
 
-namespace GraphZen.Configuration.Infrastructure
+namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
 {
     public class LeafConventionContext
     {

@@ -16,12 +16,12 @@ namespace Microsoft.AspNetCore.Builder
     public static class PlaygroundEndpointBuilderExtensions
     {
         public static IEndpointConventionBuilder MapGraphQLPlayground(this IEndpointRouteBuilder endpointRouteBuilder)
-            => MapGraphQLPlayground(endpointRouteBuilder, null, (PlaygroundOptions?) null);
+            => MapGraphQLPlayground(endpointRouteBuilder, null, (PlaygroundOptions?)null);
 
 
         public static IEndpointConventionBuilder MapGraphQLPlayground(this IEndpointRouteBuilder endpointRouteBuilder,
             string path)
-            => MapGraphQLPlayground(endpointRouteBuilder, path, (PlaygroundOptions?) null);
+            => MapGraphQLPlayground(endpointRouteBuilder, path, (PlaygroundOptions?)null);
 
 
         public static IEndpointConventionBuilder MapGraphQLPlayground(this IEndpointRouteBuilder endpointRouteBuilder,

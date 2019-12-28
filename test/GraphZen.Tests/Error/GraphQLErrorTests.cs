@@ -13,7 +13,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.Error
+namespace GraphZen.Tests.Error
 {
     public class GraphQLErrorTests
     {

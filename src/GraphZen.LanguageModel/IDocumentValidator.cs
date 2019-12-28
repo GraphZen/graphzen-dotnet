@@ -11,6 +11,7 @@ namespace GraphZen
 {
     public interface IDocumentValidator
     {
-        IEnumerable<GraphQLServerError> Validate(DocumentSyntax schemaDocument, DocumentSyntax? initialSchemaDocument = null);
+        IEnumerable<GraphQLServerError> Validate(DocumentSyntax schemaDocument,
+            DocumentSyntax? initialSchemaDocument = null);
     }
 }

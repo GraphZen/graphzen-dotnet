@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.QueryEngine.Validation.Rules.LoneAnonymousOperation;
 
-namespace GraphZen.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules
 {
     [NoReorder]
     public class LoneAnonymousOperationTests : ValidationRuleHarness

@@ -2,15 +2,15 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Enums.EnumValues
+namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues
 {
+    // ReSharper disable once InconsistentNaming
     public abstract class Enum_Values :
         NamedCollectionConfigurationFixture<IEnumValues,
             IEnumValuesDefinition, IMutableEnumValuesDefinition, EnumValueDefinition, EnumValue,

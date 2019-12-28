@@ -9,7 +9,7 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace GraphZen.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules
 {
     public class ExpectedError
     {

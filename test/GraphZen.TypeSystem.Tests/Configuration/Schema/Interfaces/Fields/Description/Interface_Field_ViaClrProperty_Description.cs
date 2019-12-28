@@ -3,13 +3,13 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Interfaces.Fields.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Interface_Field_ViaClrProperty_Description : Interface_Field_Description,
         ILeafConventionConfigurationFixture
     {

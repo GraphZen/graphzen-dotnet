@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Internal
+namespace GraphZen.Client.Tests.Internal
 {
     [NoReorder]
     public class GraphQLSerializerTests
@@ -32,7 +33,7 @@ namespace GraphZen.Internal
                 "{\"errors\": [{\"message\": \"hello\"}]}");
 
             result.Should().BeEquivalentTo(
-                new List<GraphQLError> {new GraphQLError("hello")});
+                new List<GraphQLError> { new GraphQLError("hello") });
         }
 
         [Theory]
@@ -51,7 +52,7 @@ namespace GraphZen.Internal
         public void parse_data_should_return_dynamic()
         {
             var result = GraphQLJsonSerializer.ParseData("{\"data\":{\"value\": 1}}");
-            (result as object).Should().BeEquivalentToJsonFromObject(new {value = 1});
+            (result as object).Should().BeEquivalentToJsonFromObject(new { value = 1 });
         }
 
         public class TypedQueryResult

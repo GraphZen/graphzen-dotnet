@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace GraphZen.LanguageModel.Internal
                 });
 
 
-        internal static readonly IReadOnlyDictionary<string, DirectiveLocation> ExecutableDirectiveLocationsByName =
+        private static readonly IReadOnlyDictionary<string, DirectiveLocation> ExecutableDirectiveLocationsByName =
             ExecutableDirectiveLocations.ToDictionary(_ => _.Value, _ => _.Key);
 
 
@@ -52,8 +53,8 @@ namespace GraphZen.LanguageModel.Internal
                 });
 
 
-        internal static readonly IReadOnlyDictionary<string, DirectiveLocation> TypeSystemDirectiveLocationsByName =
-            TypeSystemDirectiveLocations.ToDictionary(_ => _.Value, _ => _.Key);
+        private static readonly IReadOnlyDictionary<string, DirectiveLocation> TypeSystemDirectiveLocationsByName =
+            TypeSystemDirectiveLocations.ToImmutableDictionary(_ => _.Value, _ => _.Key);
 
 
         internal static string ToStringValue(this DirectiveLocation loc)
@@ -74,5 +75,34 @@ namespace GraphZen.LanguageModel.Internal
 
             throw new Exception($"Unable to find Directive Location that matches value \"{value}\".");
         }
+    }
+
+    public static class DirectiveLocationExtensions
+    {
+        private static readonly Dictionary<DirectiveLocation, string> DirectiveLocationDisplayValues =
+            new Dictionary<DirectiveLocation, string>
+            {
+                {DirectiveLocation.Query, "query"},
+                {DirectiveLocation.Schema, "schema"},
+                {DirectiveLocation.ArgumentDefinition, "argument"},
+                {DirectiveLocation.Enum, "enum"},
+                {DirectiveLocation.EnumValue, "enum value"},
+                {DirectiveLocation.Object, "object"},
+                {DirectiveLocation.InputObject, "input object"},
+                {DirectiveLocation.InputFieldDefinition, "input field"},
+                {DirectiveLocation.Field, "field"},
+                {DirectiveLocation.FieldDefinition, "field definition"},
+                {DirectiveLocation.FragmentDefinition, "fragment definition"},
+                {DirectiveLocation.Mutation, "mutation"},
+                {DirectiveLocation.Subscription, "subscription"},
+                {DirectiveLocation.FragmentSpread, "fragment spread"},
+                {DirectiveLocation.InlineFragment, "inline fragment"},
+                {DirectiveLocation.Scalar, "scalar"},
+                {DirectiveLocation.Union, "union"},
+                {DirectiveLocation.Interface, "interface"}
+            };
+
+        public static string GetDisplayValue(this DirectiveLocation directiveLocation) =>
+            DirectiveLocationDisplayValues[directiveLocation];
     }
 }

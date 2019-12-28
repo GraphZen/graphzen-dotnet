@@ -8,14 +8,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
-using GraphZen.QueryEngine;
+using GraphZen.Tests.QueryEngine;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
 #nullable disable
 
 
-namespace GraphZen.StarWars
+namespace GraphZen.Tests.StarWars
 {
     [NoReorder]
     public abstract class StarWarsSchemaAndData : ExecutorHarness

@@ -16,7 +16,7 @@ namespace GraphZen.Infrastructure
     public static class StringDiffExtensions
     {
         public static string? GetDiff(this string actual, string expected) =>
-            GetDiff(actual, expected, (StringDiffOptions?) null);
+            GetDiff(actual, expected, (StringDiffOptions?)null);
 
         public static string? GetDiff(this string actual, string expected,
             Action<StringDiffOptions>? comparisonOptionsAction)

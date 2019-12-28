@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Xunit;
 
-namespace GraphZen
+namespace GraphZen.AspNetCore.Server.Tests
 {
     [NoReorder]
     public class ApplicationBuilderExtensionsTests
@@ -17,6 +17,5 @@ namespace GraphZen
         public void should_share_IApplicationBuilder_namespace() =>
             typeof(GraphZenApplicationBuilderExtensions).Namespace
                 .Should().Be(typeof(IApplicationBuilder).Namespace);
-
     }
 }

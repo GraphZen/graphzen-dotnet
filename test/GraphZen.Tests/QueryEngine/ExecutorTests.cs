@@ -17,7 +17,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.QueryEngine
+namespace GraphZen.Tests.QueryEngine
 {
     [NoReorder]
     public class ExecutorTests : ExecutorHarness

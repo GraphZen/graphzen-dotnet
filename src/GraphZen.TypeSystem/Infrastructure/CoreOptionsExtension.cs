@@ -18,7 +18,10 @@ namespace GraphZen.Infrastructure
         public IServiceProvider? ApplicationServiceProvider { get; private set; }
         public IServiceProvider? InternalServiceProvider { get; private set; }
         public bool RevealInternalServerErrors { get; private set; }
-        public CoreOptionsExtension() { }
+
+        public CoreOptionsExtension()
+        {
+        }
 
         protected CoreOptionsExtension(CoreOptionsExtension copyFrom)
         {
@@ -32,8 +35,14 @@ namespace GraphZen.Infrastructure
 
         protected CoreOptionsExtension Clone() => new CoreOptionsExtension(this);
 
-        public void ApplyServices(IServiceCollection services) { }
-        public void Validate(IGraphQLContextOptions options) { }
+        public void ApplyServices(IServiceCollection services)
+        {
+        }
+
+        public void Validate(IGraphQLContextOptions options)
+        {
+        }
+
         public CoreOptionsExtension WithSchema(ISchema schema)
         {
             var clone = Clone();

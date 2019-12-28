@@ -60,8 +60,6 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public static Tokenizer<TokenKind> Instance { get; } = new TokenizerBuilder<TokenKind>()
             .Ignore(Span.WhiteSpace)
             .Ignore(Character.EqualTo(','))

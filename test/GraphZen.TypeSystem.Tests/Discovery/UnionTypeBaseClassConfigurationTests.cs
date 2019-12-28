@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
@@ -19,7 +18,7 @@ using Xunit;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable ClassNeverInstantiated.Local
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     [NoReorder]
     public class UnionTypeBaseClassConfigurationTests

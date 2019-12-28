@@ -11,7 +11,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.QueryEngine.Variables
+namespace GraphZen.Tests.QueryEngine.Variables
 {
     public abstract class CustomEnumValuesTests : VariablesTests
     {

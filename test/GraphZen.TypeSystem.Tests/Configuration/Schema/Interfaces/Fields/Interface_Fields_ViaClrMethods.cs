@@ -3,13 +3,13 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Interfaces.Fields
+namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields
 {
+    // ReSharper disable once InconsistentNaming
     public class Interface_Fields_ViaClrMethods : Interface_Fields, ICollectionConventionConfigurationFixture
     {
         public const string DataAnnotationName = nameof(DataAnnotationName);

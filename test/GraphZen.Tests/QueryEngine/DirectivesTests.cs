@@ -4,6 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
+using GraphZen.QueryEngine;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
@@ -11,7 +12,7 @@ using Xunit;
 #nullable disable
 
 
-namespace GraphZen.QueryEngine
+namespace GraphZen.Tests.QueryEngine
 {
     [NoReorder]
     public class DirectivesTests : ExecutorHarness

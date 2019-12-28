@@ -6,11 +6,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.LanguageModel
+namespace GraphZen.Tests.LanguageModel
 {
     public abstract class ParserTestBase
     {
@@ -37,7 +38,7 @@ namespace GraphZen.LanguageModel
             ex.GraphQLError.Should().BeEquivalentToJsonFromObject(new
             {
                 message = expectedMessage,
-                locations = locations.Select(l => new {l.line, l.column})
+                locations = locations.Select(l => new { l.line, l.column })
             });
         }
     }

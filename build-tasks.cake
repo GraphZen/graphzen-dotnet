@@ -1,16 +1,17 @@
 
 #load "./build-scripts/parameters.cake"
-// Modules
-#module nuget:?package=Cake.DotNetTool.Module&version=0.1.0
-#tool "nuget:?package=ReportGenerator&version=4.0.12"
-#tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
+// Modules 
+#module nuget:?package=Cake.DotNetTool.Module&version=0.4.0
+#tool "nuget:?package=ReportGenerator&version=4.3.6"
+#tool "nuget:?package=GitVersion.CommandLine&version=5.1.2"
 #tool "nuget:?package=xunit.runner.console&version=2.4.1"
-#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.1"
-#tool "nuget:?package=docfx.console&version=2.46.0"
-#addin "nuget:?package=Cake.Coverlet&version=2.2.1"
-#addin "Cake.Powershell&version=0.4.7"
-#addin "nuget:?package=Cake.Git&version=0.19.0"
-#tool dotnet:?package=dotnet-format&version=3.0.4
+#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2019.2.3"
+#tool "nuget:?package=docfx.console&version=2.47.0"
+#addin "nuget:?package=Cake.Coverlet&version=2.3.4"
+#addin "Cake.Powershell&version=0.4.8"
+#addin "nuget:?package=Cake.Git&version=0.21.0"
+#addin "nuget:?package=Cake.Incubator&version=5.1.0"
+#tool dotnet:?package=dotnet-format&version=3.1.37601
 using System.Diagnostics;
 
 
@@ -151,9 +152,11 @@ Task("Cleanup").IsDependentOn("Cleanup-Full").IsDependentOn("Format");
 
 Task("Cleanup-Full")
 .IsDependentOn("Compile")
-.Does(() => ResharperCleanupCode("GraphZen Full Cleanup"));
+.Does(() => ResharperCleanupCode("GraphZen: Full Cleanup"));
 
-Task("Restore").Does(() => {
+Task("Restore")
+.IsDependentOn("Clean")
+.Does(() => {
   DotNetCoreRestore(paths.sln);
 });
 
@@ -173,11 +176,13 @@ Task("Gen")
 .IsDependentOn("Format");
 
 Task("Compile")
+.IsDependentOn("Restore")
 .IsDependentOn("Clean")
 .Does<BuildParameters>(data => {
 
    var settings = new DotNetCoreBuildSettings{
         NoRestore = true,
+        // Verbosity = DotNetCoreVerbosity.Normal,
         Configuration = data.Configuration,
         MSBuildSettings = new DotNetCoreMSBuildSettings()
         .WithProperty("Version", data.PackageVersion)
@@ -187,8 +192,48 @@ Task("Compile")
     DotNetCoreBuild(data.Paths.Directories.Solution.FullPath, settings);
 });
 
-
 Task("Test")
+.IsDependentOn("Compile")
+.Does<BuildParameters>(buildParams => {
+    var testArtifactsDir = buildParams.Paths.Directories.TestArtifacts.FullPath;
+    var coverageJson = testArtifactsDir + "/coverage.json";
+    var settings = new DotNetCoreTestSettings
+    {
+        NoRestore = true,
+        NoBuild = true,
+        Configuration = buildParams.Configuration,
+        DiagnosticOutput = true,
+        ArgumentCustomization = args => args
+        .Append($"--logger trx --results-directory {testArtifactsDir}")
+    };
+    var coverletSettings = new CoverletSettings
+    {
+        CollectCoverage = true,
+        CoverletOutputDirectory = testArtifactsDir,
+        CoverletOutputName =  "coverage",
+        Exclude = new List<string> {
+          "[*]JetBrains.Annotations.*"
+        },
+    };
+
+    var testProjects = GetFiles("./test/**/*Tests.csproj").ToList();
+    for (int i = 0; i < testProjects.Count; i++)
+    {
+        var isFirst = i == 0;
+        var isLast = i == testProjects.Count - 1;
+
+        if (isLast) {
+            coverletSettings.CoverletOutputFormat  = CoverletOutputFormat.cobertura;
+        } else if (!isFirst) {
+          coverletSettings.MergeWithFile = coverageJson;
+        }
+
+        var testProjectFile = testProjects[i];
+        DotNetCoreTest(testProjectFile, settings, coverletSettings);
+    }
+});
+
+Task("Test-Old")
 .IsDependentOn("Compile")
 .Does<BuildParameters>(buildParams =>
 {
@@ -207,11 +252,10 @@ Task("Test")
         CollectCoverage = true,
         CoverletOutputFormat = CoverletOutputFormat.cobertura,
         CoverletOutputDirectory = testArtifactsDir,
-        CoverletOutputName = $"coverage"
+        CoverletOutputName = $"coverage",
+        
     };
 
-    //var testProject = GetFile("./src/**/*Tests.csproj");
-    //DotNetCoreTest(testProject.FullPath, settings, coverletSettings);
     DotNetCoreTest(buildParams.Paths.Directories.Solution.FullPath, settings, coverletSettings);
 });
 
@@ -235,12 +279,13 @@ Task("Test")
 
 Task("Pack")
 .IsDependentOn("Clean-Packages")
+.IsDependentOn("Compile")
 .Does<BuildParameters>(_ => {
    var settings = new DotNetCorePackSettings{
         NoRestore = true,
         NoBuild = true,
         IncludeSource = false,
-        IncludeSymbols = false,
+        IncludeSymbols = true,
         OutputDirectory = _.Paths.Directories.BuildArtifacts,
         Configuration = _.Configuration,
         MSBuildSettings = new DotNetCoreMSBuildSettings()
@@ -249,23 +294,31 @@ Task("Pack")
     DotNetCorePack(_.Paths.Directories.Solution.FullPath, settings);
 });
 
-Task("Publish")
-.IsDependentOn("Pack")
-.Does<BuildParameters>((buildParams) =>  {
-  if (!buildParams.IsMasterBranch) {
-    Warning("Not on master branch, skipping publishing"); 
-    // TODO: Publish locally
-    return;
-  }
+void Push(BuildParameters buildParams, string source) {
   var settings = new DotNetCoreNuGetPushSettings {
-    ApiKey = buildParams.NugetApiKey,
-    Source = buildParams.NugetSource,
+    ApiKey = "apikey",
+    Source = source,
+    ArgumentCustomization = args => args.Append("--interactive")
   };
-  var packages = GetFiles($"{buildParams.Paths.Directories.BuildArtifacts}/*nupkg");
+  var packages = GetFiles($"{buildParams.Paths.Directories.BuildArtifacts}/*");
   foreach (var package in packages) {
     Information($"Publishing package {package}");
-    DotNetCoreNuGetPush(package.ToString(), settings);
+    try {
+      DotNetCoreNuGetPush(package.ToString(), settings);
+    } catch (Exception e) {
+      if (e.Message.Contains("Conflict")) {
+        Warning(e.Message);
+      } else {
+        throw;
+      }
+    }
   }
+}
+
+Task("Push-Azure")
+.IsDependentOn("Pack")
+.Does<BuildParameters>((buildParams) =>  {
+  Push(buildParams, "GraphZen-Public");
 });
 
 

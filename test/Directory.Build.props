@@ -1,7 +1,9 @@
 <Project>
   <PropertyGroup>
     <IsPackable>False</IsPackable>
-    <RootNamespace>GraphZen</RootNamespace>
     <Nullable>enable</Nullable>
+    <WarningsAsErrors />
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 </Project>

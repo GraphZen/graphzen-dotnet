@@ -4,37 +4,37 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using GraphZen.Configuration.Directives;
-using GraphZen.Configuration.Enums;
-using GraphZen.Configuration.Enums.Description;
-using GraphZen.Configuration.Enums.EnumValues;
-using GraphZen.Configuration.Enums.EnumValues.Description;
-using GraphZen.Configuration.Infrastructure;
-using GraphZen.Configuration.InputObjects;
-using GraphZen.Configuration.InputObjects.Description;
-using GraphZen.Configuration.InputObjects.Fields;
-using GraphZen.Configuration.InputObjects.Fields.Description;
-using GraphZen.Configuration.Interfaces;
-using GraphZen.Configuration.Interfaces.Description;
-using GraphZen.Configuration.Interfaces.Fields;
-using GraphZen.Configuration.Interfaces.Fields.Arguments;
-using GraphZen.Configuration.Interfaces.Fields.Arguments.Description;
-using GraphZen.Configuration.Interfaces.Fields.Description;
-using GraphZen.Configuration.Objects;
-using GraphZen.Configuration.Objects.Description;
-using GraphZen.Configuration.Objects.Fields;
-using GraphZen.Configuration.Objects.Fields.Arguments;
-using GraphZen.Configuration.Objects.Fields.Arguments.Description;
-using GraphZen.Configuration.Objects.Fields.Description;
-using GraphZen.Configuration.Objects.Interfaces;
-using GraphZen.Configuration.Scalars;
-using GraphZen.Configuration.Scalars.Description;
-using GraphZen.Configuration.Unions;
-using GraphZen.Configuration.Unions.Description;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Tests.Configuration.Directives;
+using GraphZen.TypeSystem.Tests.Configuration.Enums;
+using GraphZen.TypeSystem.Tests.Configuration.Enums.Description;
+using GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues;
+using GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues.Description;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
+using GraphZen.TypeSystem.Tests.Configuration.InputObjects;
+using GraphZen.TypeSystem.Tests.Configuration.InputObjects.Description;
+using GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields;
+using GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields.Description;
+using GraphZen.TypeSystem.Tests.Configuration.Interfaces;
+using GraphZen.TypeSystem.Tests.Configuration.Interfaces.Description;
+using GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields;
+using GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Arguments;
+using GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Arguments.Description;
+using GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Description;
+using GraphZen.TypeSystem.Tests.Configuration.Objects;
+using GraphZen.TypeSystem.Tests.Configuration.Objects.Description;
+using GraphZen.TypeSystem.Tests.Configuration.Objects.Fields;
+using GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Arguments;
+using GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Arguments.Description;
+using GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Description;
+using GraphZen.TypeSystem.Tests.Configuration.Objects.Interfaces;
+using GraphZen.TypeSystem.Tests.Configuration.Scalars;
+using GraphZen.TypeSystem.Tests.Configuration.Scalars.Description;
+using GraphZen.TypeSystem.Tests.Configuration.Unions;
+using GraphZen.TypeSystem.Tests.Configuration.Unions.Description;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration
+namespace GraphZen.TypeSystem.Tests.Configuration
 {
     public static class ConfigurationFixtures
     {
@@ -45,7 +45,7 @@ namespace GraphZen.Configuration
 
                 // Directives (Collection)
                 new Schema_Directives_Explicit(),
-               // new Schema_Directives_ViaObjectClrPropertyAttribute(), 
+                // new Schema_Directives_ViaObjectClrPropertyAttribute(), 
 
 
                 // Objects (Collection)

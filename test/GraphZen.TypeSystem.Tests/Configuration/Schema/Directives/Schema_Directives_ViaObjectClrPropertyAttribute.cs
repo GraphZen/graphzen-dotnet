@@ -1,15 +1,19 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Directives
+namespace GraphZen.TypeSystem.Tests.Configuration.Directives
 {
-    public class Schema_Directives_ViaObjectClrPropertyAttribute : Schema_Directives, ICollectionConventionConfigurationFixture
+    // ReSharper disable once InconsistentNaming
+    public class Schema_Directives_ViaObjectClrPropertyAttribute : Schema_Directives,
+        ICollectionConventionConfigurationFixture
     {
         [GraphQLName("hello")]
         public class FieldDefinitionTwoAttribute : Attribute, IGraphQLDirective
@@ -19,6 +23,7 @@ namespace GraphZen.Configuration.Directives
                 yield return DirectiveLocation.FieldDefinition;
             }
         }
+
         public class FieldDefinitionAttribute : Attribute, IGraphQLDirective
         {
             public IEnumerable<DirectiveLocation> GetDirectiveLocations()
@@ -29,20 +34,14 @@ namespace GraphZen.Configuration.Directives
 
         public class FooObject
         {
-            [FieldDefinition]
-            public string? Bar { get; set; }
+            [FieldDefinition] public string? Bar { get; set; }
         }
 
 
-
-        public CollectionConventionContext GetContext() => new CollectionConventionContext()
+        public CollectionConventionContext GetContext() => new CollectionConventionContext
         {
             ItemNamedByConvention = nameof(FieldDefinition),
-            ItemNamedByDataAnnotation = "hello",
-            
-
-
-
+            ItemNamedByDataAnnotation = "hello"
         };
 
         public void ConfigureContextConventionally(SchemaBuilder sb)

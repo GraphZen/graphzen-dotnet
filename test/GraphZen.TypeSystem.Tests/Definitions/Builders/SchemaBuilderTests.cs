@@ -5,14 +5,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
 #nullable disable
 
 
-namespace GraphZen
+namespace GraphZen.TypeSystem.Tests
 {
     public class SchemaBuilderTests
     {
@@ -31,7 +30,7 @@ namespace GraphZen
                     sb.Interface<Foo>();
                 addDuplicateInterface.Should().ThrowExactly<InvalidOperationException>()
                     .WithMessage(
-                        "Cannot add interface using CLR type 'GraphZen.SchemaBuilderTests+Foo', an existing object already exists with that CLR type.");
+                        $"Cannot add interface using CLR type '{typeof(Foo)}', an existing object already exists with that CLR type.");
             });
         }
 

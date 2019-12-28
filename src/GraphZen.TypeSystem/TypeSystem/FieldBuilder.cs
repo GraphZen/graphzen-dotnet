@@ -158,7 +158,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public IFieldBuilder<TDeclaringType, TField, TContext> IgnoreDirectiveAnnotation(string name) =>
+            throw new NotImplementedException();
 
         InternalFieldBuilder IInfrastructure<InternalFieldBuilder>.Instance => Builder;
 

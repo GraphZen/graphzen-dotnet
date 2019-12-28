@@ -3,13 +3,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Interfaces.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Description
 {
+    // ReSharper disable once InconsistentNaming
     public abstract class Interface_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,
         string?, InterfaceTypeDefinition, InterfaceType>

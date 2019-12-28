@@ -3,13 +3,13 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Interfaces.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Interface_ViaClrClass_Description : Interface_Description, ILeafConventionConfigurationFixture
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);

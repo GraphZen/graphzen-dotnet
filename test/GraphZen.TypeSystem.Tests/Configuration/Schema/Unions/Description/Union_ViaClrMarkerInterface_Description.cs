@@ -3,13 +3,13 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using GraphZen.Configuration.Infrastructure;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Configuration.Unions.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description
 {
+    // ReSharper disable once InconsistentNaming
     public class Union_ViaClrMarkerInterface_Description : Union_Description, ILeafConventionConfigurationFixture
     {
         public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
