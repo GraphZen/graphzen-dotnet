@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
-using GraphZen.Logging;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
@@ -16,7 +15,6 @@ namespace GraphZen
 {
     public class GraphQLContext
     {
-        private static readonly ILog Logger = LogProvider.For<GraphQLContext>();
         private GraphQLContextOptions _options;
 
         private bool _optionsInitialized;
@@ -49,12 +47,17 @@ namespace GraphZen
                 if (!_optionsInitialized)
                 {
                     var optionsBuilder = new GraphQLContextOptionsBuilder(_options);
-                    ((IGraphQLContextOptionsBuilderInfrastructure) optionsBuilder).AddOrUpdateExtension(
+                    ((IGraphQLContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(
                         _options.FindExtension<CoreOptionsExtension>() ?? new CoreOptionsExtension());
                     OnConfiguring(optionsBuilder);
+
+                    foreach (var extension in optionsBuilder.Options.Extensions)
+                    {
+                        extension.Validate(optionsBuilder.Options);
+                    }
+
                     _options = optionsBuilder.Options;
                     _optionsInitialized = true;
-                    Logger.Debug("howdy from GraphZen");
                 }
 
                 return _options;

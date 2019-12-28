@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using GraphZen;
 using GraphZen.Infrastructure;
-using GraphZen.Logging;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -17,8 +16,6 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class GraphZenServiceCollectionExtensions
     {
-        private static ILog Logger { get; } = LogProvider.GetCurrentClassLogger();
-
         public static void AddGraphQLContext(
             this IServiceCollection serviceCollection,
             Action<GraphQLContextOptionsBuilder>? optionsAction = null)
@@ -41,7 +38,6 @@ namespace Microsoft.Extensions.DependencyInjection
                     : (Action<IServiceProvider, GraphQLContextOptionsBuilder>?) null;
 
             var contextType = typeof(TContext);
-            Logger.Debug($"Adding GraphQL context {contextType}");
             if (optionsAction != null)
             {
                 var declaredConstructors = contextType.GetTypeInfo().DeclaredConstructors.ToList();
@@ -50,33 +46,26 @@ namespace Microsoft.Extensions.DependencyInjection
                         $"{nameof(AddGraphQLContext)} was called with configuration, but the context type '{contextType}' only declares a parameterless constructor. This means that the configuration passed to {nameof(AddGraphQLContext)} will never be used. If configuration is passed to {nameof(AddGraphQLContext)}, then '{contextType}' should declare a constructor that accepts a {nameof(GraphQLContextOptions)}<{contextType.Name}> and must pass it to the base constructor for {nameof(GraphQLContext)}.");
             }
 
-            Logger.Debug($"Registering {nameof(GraphQLContextOptions<TContext>)}");
             serviceCollection.TryAdd(new ServiceDescriptor(typeof(GraphQLContextOptions<TContext>),
                 p => GraphQLContextOptionsFactory<TContext>(p, optionsActionImpl),
                 ServiceLifetime.Scoped));
 
-            Logger.Debug($"Registering {nameof(GraphQLContextOptions)}");
             serviceCollection.Add(new ServiceDescriptor(typeof(GraphQLContextOptions),
                 p => p.GetRequiredService<GraphQLContextOptions<TContext>>(), ServiceLifetime.Scoped));
 
 
-            Logger.Debug($"Registering {typeof(TContext)}");
             serviceCollection.TryAdd(new ServiceDescriptor(typeof(TContext),
                 typeof(TContext), ServiceLifetime.Scoped));
 
-            Logger.Debug($"Registering {nameof(GraphQLContext)}");
             serviceCollection.TryAdd(new ServiceDescriptor(typeof(GraphQLContext),
                 p => p.GetRequiredService<TContext>(),
                 ServiceLifetime.Scoped));
 
-            Logger.Debug($"Registering {nameof(IQueryValidator)}");
             serviceCollection.TryAddScoped<IQueryValidator>(_ => new QueryValidator());
 
 
-            Logger.Debug("Building temporary service provider");
             var tempServiceProvider = serviceCollection.BuildServiceProvider();
 
-            Logger.Debug("Building temporary service provider");
             var context = tempServiceProvider.GetRequiredService<TContext>();
             var queryClrType = context.Schema.QueryType?.ClrType;
             if (queryClrType != null) serviceCollection.TryAddScoped(queryClrType);

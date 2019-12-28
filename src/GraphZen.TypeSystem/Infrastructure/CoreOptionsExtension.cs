@@ -7,6 +7,8 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace GraphZen.Infrastructure
 {
@@ -15,12 +17,14 @@ namespace GraphZen.Infrastructure
         public ISchema? Schema { get; private set; }
         public Type? QueryClrType { get; private set; }
         public Type? MutationClrType { get; private set; }
+        public ILoggerFactory LoggerFactory { get; private set; }
         public IServiceProvider? ApplicationServiceProvider { get; private set; }
         public IServiceProvider? InternalServiceProvider { get; private set; }
         public bool RevealInternalServerErrors { get; private set; }
 
         public CoreOptionsExtension()
         {
+             LoggerFactory = NullLoggerFactory.Instance;
         }
 
         protected CoreOptionsExtension(CoreOptionsExtension copyFrom)
@@ -31,6 +35,7 @@ namespace GraphZen.Infrastructure
             ApplicationServiceProvider = copyFrom.ApplicationServiceProvider;
             InternalServiceProvider = copyFrom.InternalServiceProvider;
             RevealInternalServerErrors = copyFrom.RevealInternalServerErrors;
+            LoggerFactory = copyFrom.LoggerFactory;
         }
 
         protected CoreOptionsExtension Clone() => new CoreOptionsExtension(this);
@@ -76,6 +81,13 @@ namespace GraphZen.Infrastructure
         {
             var clone = Clone();
             clone.ApplicationServiceProvider = serviceProvider;
+            return clone;
+        }
+
+        public CoreOptionsExtension WithLoggerFactory(ILoggerFactory loggerFactory)
+        {
+            var clone = Clone();
+            clone.LoggerFactory = loggerFactory;
             return clone;
         }
 

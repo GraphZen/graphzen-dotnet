@@ -11,7 +11,6 @@ using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
-using GraphZen.Logging;
 using GraphZen.QueryEngine;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
@@ -19,6 +18,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 // ReSharper disable once CheckNamespace
@@ -26,9 +26,7 @@ namespace Microsoft.AspNetCore.Builder
 {
     public static class GraphZenApplicationBuilderExtensions
     {
-        private static ILog Logger { get; } = LogProvider.GetCurrentClassLogger();
         private const int DefaultMemoryThreshold = 1024 * 30;
-
         private static string? s_tempDirectory;
 
         public static string TempDirectory
@@ -68,7 +66,7 @@ namespace Microsoft.AspNetCore.Builder
                     var contentLength = request.ContentLength.GetValueOrDefault();
                     if (contentLength > 0 && contentLength < memoryThreshold)
                         // If the Content-Length is known and is smaller than the default buffer size, use it.
-                        memoryThreshold = (int) contentLength;
+                        memoryThreshold = (int)contentLength;
 
                     readStream = new FileBufferingReadStream(request.Body, memoryThreshold, null,
                         TempDirectoryFactory);
@@ -81,6 +79,9 @@ namespace Microsoft.AspNetCore.Builder
                 using var jsonReader = new JsonTextReader(reader);
                 ExecutionResult result;
                 var graphQLContext = httpContext.RequestServices.GetRequiredService<GraphQLContext>();
+                var coreOptions = graphQLContext.Options.GetExtension<CoreOptionsExtension>();
+                var loggerFactory = coreOptions.LoggerFactory;
+                var logger = loggerFactory.CreateLogger("GraphZen.AspNetCore.Server");
                 try
                 {
                     var req = Json.Serializer.Deserialize<GraphQLServerRequest>(jsonReader);
@@ -122,17 +123,16 @@ namespace Microsoft.AspNetCore.Builder
                 }
                 catch (GraphQLException gqlException)
                 {
-                    Logger.Error(gqlException, gqlException.Message);
-                    result = new ExecutionResult(null, new[] {gqlException.GraphQLError});
+                    logger.LogError(gqlException, gqlException.Message);
+                    result = new ExecutionResult(null, new[] { gqlException.GraphQLError });
                 }
                 catch (Exception e)
                 {
-                    Logger.Error(e, e.Message);
-                    var coreOptions = graphQLContext.Options.GetExtension<CoreOptionsExtension>();
+                    logger.LogError(e, e.Message);
                     var error = coreOptions.RevealInternalServerErrors
                         ? new GraphQLServerError(e.Message, innerException: e)
                         : new GraphQLServerError("An unknown error occured.");
-                    result = new ExecutionResult(null, new[] {error});
+                    result = new ExecutionResult(null, new[] { error });
                 }
 
                 var resp = JsonConvert.SerializeObject(result, Json.SerializerSettings);

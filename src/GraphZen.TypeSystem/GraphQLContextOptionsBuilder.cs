@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 
 namespace GraphZen
 {
@@ -47,6 +48,9 @@ namespace GraphZen
 
         public virtual GraphQLContextOptionsBuilder UseSchema(ISchema schema) =>
             WithOption(o => o.WithSchema(schema));
+
+        public GraphQLContextOptionsBuilder UseLoggerFactory(ILoggerFactory loggerFactory) =>
+            WithOption(o => o.WithLoggerFactory(loggerFactory));
 
         public GraphQLContextOptionsBuilder UseQueryType<TQueryType>() =>
             WithOption(o => o.WithQueryClrType(typeof(TQueryType)));
