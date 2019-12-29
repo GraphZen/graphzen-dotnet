@@ -20,6 +20,10 @@ namespace GraphZen.LanguageModel
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public partial class BooleanValueSyntax : ValueSyntax
     {
+        public static BooleanValueSyntax TrueInstance { get; } = new BooleanValueSyntax(true);
+        public static BooleanValueSyntax FalseInstance { get; } = new BooleanValueSyntax(false);
+
+
         public BooleanValueSyntax(bool value, SyntaxLocation location = null) : base(location)
         {
             Value = value;
@@ -44,9 +48,12 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is BooleanValueSyntax && Equals((BooleanValueSyntax) obj);
+            return obj is BooleanValueSyntax && Equals((BooleanValueSyntax)obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();
+
+        public static BooleanValueSyntax Create(bool value, SyntaxLocation location = null) =>
+            location == null ? value ? TrueInstance : FalseInstance : new BooleanValueSyntax(value, location);
     }
 }

@@ -20,12 +20,7 @@ namespace GraphZen.LanguageModel
         private static NullValueSyntax NullValueInstance { get; } = new NullValueSyntax();
 
 
-        private static BooleanValueSyntax TrueBooleanValueInstance { get; } = new BooleanValueSyntax(true);
-
-
-        private static BooleanValueSyntax FalseBooleanValueInstance { get; } = new BooleanValueSyntax(false);
-
-
+        
         [DebuggerStepThrough]
         public static NullValueSyntax NullValue() => NullValueInstance;
 
@@ -81,8 +76,8 @@ namespace GraphZen.LanguageModel
 
 
         [DebuggerStepThrough]
-        public static BooleanValueSyntax BooleanValue(bool value) =>
-            value ? TrueBooleanValueInstance : FalseBooleanValueInstance;
+        public static BooleanValueSyntax BooleanValue(bool value) => BooleanValueSyntax.Create(value);
+            
 
 
         [DebuggerStepThrough]

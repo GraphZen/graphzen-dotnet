@@ -8,7 +8,6 @@ using Superpower;
 
 #nullable disable
 
-
 namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar

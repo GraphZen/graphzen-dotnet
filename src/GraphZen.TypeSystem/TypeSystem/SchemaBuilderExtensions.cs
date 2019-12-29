@@ -12,23 +12,22 @@ namespace GraphZen.TypeSystem
 {
     public static class SchemaBuilderExtensions
     {
-        public static SchemaBuilder Build(this SchemaBuilder schemaBuilder,
-            DocumentSyntax schemaDocument)
+        public static SchemaBuilder ConfigureFromSchema(this SchemaBuilder schemaBuilder, DocumentSyntax schema)
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
-            Check.NotNull(schemaDocument, nameof(schemaDocument));
-            var sdlConfig = new SDLSchemaConfigurator(schemaDocument);
+            Check.NotNull(schema, nameof(schema));
+            var sdlConfig = new SDLSchemaConfigurator(schema);
             sdlConfig.Configure(schemaBuilder);
             return schemaBuilder;
         }
 
 
-        public static SchemaBuilder Build(this SchemaBuilder schemaBuilder, string schemaDocument)
+        public static SchemaBuilder ConfigureFromSchema(this SchemaBuilder schemaBuilder, string schema)
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
-            Check.NotNull(schemaDocument, nameof(schemaDocument));
-            var ast = Parser.ParseDocument(schemaDocument);
-            return schemaBuilder.Build(ast);
+            Check.NotNull(schema, nameof(schema));
+            var ast = Parser.ParseDocument(schema);
+            return schemaBuilder.ConfigureFromSchema(ast);
         }
 
 

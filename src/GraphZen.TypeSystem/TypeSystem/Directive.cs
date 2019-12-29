@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem
             Description = description;
             Locations = Check.NotNull(locations, nameof(locations));
 
-            //arguments = arguments != null ? Enumerable.Empty<IArgumentDefinition>();
+            // arguments = arguments != null ? Enumerable.Empty<IArgumentDefinition>();
             // ReSharper disable once PossibleNullReferenceException
             Arguments = new ReadOnlyDictionary<string, Argument>(arguments.ToDictionary(_ => _.Name,
                 _ => Argument.From(_, this, typeResolver)));

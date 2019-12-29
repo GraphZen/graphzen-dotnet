@@ -168,10 +168,8 @@ namespace GraphZen.LanguageModel.Internal
                     Append("type ");
                     PrintNode(objectDef.Name);
                     if (objectDef.Interfaces.Any()) Wrap(" implements ", () => Join(objectDef.Interfaces, " & "));
-
                     PrintDirectives(objectDef.Directives);
                     if (objectDef.Fields.Any()) Append(" ");
-
                     Block(objectDef.Fields);
                     break;
                 case FieldDefinitionSyntax fieldDef:
@@ -474,7 +472,7 @@ namespace GraphZen.LanguageModel.Internal
 
         private void Join(IReadOnlyList<SyntaxNode> nodes, string seperator = null)
         {
-            Join(nodes, seperator != null ? () => { Append(seperator); } : (Action) null);
+            Join(nodes, seperator != null ? () => { Append(seperator); } : (Action)null);
         }
 
         #endregion
