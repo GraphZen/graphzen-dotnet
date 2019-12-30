@@ -28,6 +28,7 @@ using JetBrains.Annotations;
 [assembly: InternalsVisibleTo("GraphZen.Abstractions")]
 [assembly: InternalsVisibleTo("GraphZen.Abstractions.Tests")]
 [assembly: InternalsVisibleTo("GraphZen.DevCli")]
+[assembly: InternalsVisibleTo("GraphZen.DevCli.Tests")]
 [assembly: InternalsVisibleTo("GraphZen.LanguageModel")]
 [assembly: InternalsVisibleTo("GraphZen.LanguageModel.Tests")]
 [assembly: InternalsVisibleTo("GraphZen.LanguageModel.FunctionalTests")]

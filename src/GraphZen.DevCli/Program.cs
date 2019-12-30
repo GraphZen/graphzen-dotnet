@@ -26,9 +26,10 @@ namespace GraphZen
 
         private static void Main(string[] args)
         {
-            var cmd = new RootCommand
+
+
+            var root = new RootCommand
             {
-                Command("gen"),
                 new Command("all")
                 {
                     Handler = CommandHandler.Create(() =>
@@ -40,7 +41,15 @@ namespace GraphZen
                     })
                 }
             };
-            var cliBuilder = new CommandLineBuilder(cmd);
+            var genCmd = new Command("gen")
+            {
+                Command("typeSystem")
+            };
+            genCmd.Handler = CommandHandler.Create(() => { Console.WriteLine("Gen=All"); });
+            root.AddCommand(genCmd);
+            
+
+            var cliBuilder = new CommandLineBuilder(root);
             var cli = cliBuilder.Build();
             cli.InvokeAsync(args).Wait();
         }

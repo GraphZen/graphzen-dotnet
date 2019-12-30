@@ -1,0 +1,1 @@
+& dotnet run --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- $args
