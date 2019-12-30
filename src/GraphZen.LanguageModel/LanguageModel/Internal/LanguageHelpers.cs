@@ -9,7 +9,6 @@ using System.Text.RegularExpressions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -19,7 +18,6 @@ namespace GraphZen.LanguageModel.Internal
         public static readonly Regex NameTokenRegex = new Regex(@"^[_A-Za-z][\w]*$");
 
         public static bool IsValidGraphQLName(this string name) => NameTokenRegex.IsMatch(name);
-
 
         public static string ThrowIfInvalidGraphQLName(this string name)
         {

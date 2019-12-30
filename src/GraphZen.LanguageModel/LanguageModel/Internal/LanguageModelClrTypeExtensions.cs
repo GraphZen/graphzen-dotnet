@@ -7,14 +7,12 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     public static class LanguageModelClrTypeExtensions
     {
-        public static bool TryGetGraphQLName(this Type clrTYpe, out string name, object source = null)
+        public static bool TryGetGraphQLName(this Type clrTYpe, [NotNullWhen(true)] out string? name,
+            object? source = null)
         {
             name = default;
             if (clrTYpe.TryGetGraphQLNameWithoutValidation(out var maybeInvalidName, source) &&
@@ -28,7 +26,7 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        public static string GetGraphQLName(this Type clrType, object source = null)
+        public static string GetGraphQLName(this Type clrType, object? source = null)
         {
             if (clrType.TryGetGraphQLNameWithoutValidation(out var maybeInvalidName, source))
             {
@@ -41,7 +39,8 @@ namespace GraphZen.LanguageModel.Internal
             throw new InvalidOperationException($"Failed to get a valid GraphQL name for CLR type '{clrType}'.");
         }
 
-        private static bool TryGetGraphQLNameWithoutValidation(this Type clrType, out string name, object source = null)
+        private static bool TryGetGraphQLNameWithoutValidation(this Type clrType, [NotNullWhen(true)] out string? name,
+            object? source = null)
         {
             Check.NotNull(clrType, nameof(clrType));
             name = default;
@@ -70,11 +69,11 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        public static bool HasValidGraphQLName(this Type clrType, object source = null) =>
+        public static bool HasValidGraphQLName(this Type clrType, object? source = null) =>
             clrType.TryGetGraphQLName(out _, source);
 
 
-        public static bool TryGetGraphQLNameFromDataAnnotation(this Type clrType, out string name)
+        public static bool TryGetGraphQLNameFromDataAnnotation(this Type clrType, [NotNullWhen(true)] out string? name)
         {
             name = clrType.GetCustomAttributes(typeof(GraphQLNameAttribute), false).Cast<GraphQLNameAttribute>()
                 .SingleOrDefault()?.Name;

@@ -10,9 +10,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-#nullable disable
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     public class Printer : IPrinter
@@ -31,12 +28,13 @@ namespace GraphZen.LanguageModel.Internal
             return result;
         }
 
-        private void PrintNode(SyntaxNode node)
+        private void PrintNode(SyntaxNode? node)
         {
-            if (node == null) return;
 
             switch (node)
             {
+                case null:
+                    break;
                 case NameSyntax name:
                     Append(name.Value);
                     break;
@@ -415,14 +413,14 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-        public void Wrap(string start, Action action, string end = "")
+        public void Wrap(string start, Action action, string? end = "")
         {
             Append(start);
             action();
             Append(end);
         }
 
-        public void Wrap(string start, SyntaxNode node, string end = "")
+        public void Wrap(string start, SyntaxNode? node, string? end = "")
         {
             Append(start);
             PrintNode(node);
@@ -435,12 +433,12 @@ namespace GraphZen.LanguageModel.Internal
             _outputBuilder.Append(value);
         }
 
-        public void Append(string value)
+        public void Append(string? value)
         {
             _outputBuilder.Append(value);
         }
 
-        public void AppendLine(string value = null)
+        public void AppendLine(string? value = null)
         {
             _outputBuilder.AppendLine(value);
         }
@@ -455,24 +453,22 @@ namespace GraphZen.LanguageModel.Internal
             return string.Concat(Enumerable.Range(0, _indentLevel).Select(_ => "  "));
         }
 
-        public void Join(IReadOnlyList<SyntaxNode> nodes, Action seperatorAction = null)
+        public void Join(IReadOnlyList<SyntaxNode> nodes, Action? seperatorAction = null)
         {
-            var hasSeperator = seperatorAction != null;
 
             var i = 1;
             foreach (var node in nodes)
             {
                 PrintNode(node);
                 var isLastElement = i == nodes.Count;
-                if (hasSeperator && !isLastElement) seperatorAction();
-
+                if (!isLastElement) seperatorAction?.Invoke();
                 i++;
             }
         }
 
-        private void Join(IReadOnlyList<SyntaxNode> nodes, string seperator = null)
+        private void Join(IReadOnlyList<SyntaxNode> nodes, string? seperator = null)
         {
-            Join(nodes, seperator != null ? () => { Append(seperator); } : (Action)null);
+            Join(nodes, seperator != null ? () => { Append(seperator); } : (Action?) null);
         }
 
         #endregion
