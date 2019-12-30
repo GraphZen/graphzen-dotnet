@@ -7,7 +7,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -16,44 +16,44 @@ namespace GraphZen.LanguageModel.Internal
     {
         private static TokenListParser<TokenKind, NamedTypeSyntax> TypeCondition { get; } =
             (from @on in Keyword("on")
-                from type in NamedType
-                select type)
+             from type in NamedType
+             select type)
             .Try()
             .Named("type condition");
 
         private static TokenListParser<TokenKind, NameSyntax> FragmentName { get; } =
             (from name in Parse.Ref(() => Name)
-                where !name.Value.Equals("on", StringComparison.OrdinalIgnoreCase)
-                select name)
+             where !name.Value.Equals("on", StringComparison.OrdinalIgnoreCase)
+             select name)
             .Try()
             .Named("fragment name");
 
         internal static TokenListParser<TokenKind, FragmentSpreadSyntax> FragmentSpread { get; } =
             (from spread in Parse.Ref(() => Spread)
-                from name in FragmentName.OptionalOrDefault()
-                from directives in Directives.OptionalOrDefault()
-                where name != null
-                select new FragmentSpreadSyntax(name, directives,
-                    SyntaxLocation.FromMany(spread, name, directives.GetLocation())))
+             from name in FragmentName.OptionalOrNull()
+             from directives in Directives.OptionalOrNull()
+             where name != null
+             select new FragmentSpreadSyntax(name, directives,
+                 SyntaxLocation.FromMany(spread, name, directives.GetLocation())))
             .Try()
             .Named("fragment spread");
 
         internal static TokenListParser<TokenKind, InlineFragmentSyntax> InlineFragment =>
             (from spread in Spread
-                from typeCondition in TypeCondition.OptionalOrDefault()
-                from directives in Directives.OptionalOrDefault()
-                from selectionSet in SelectionSet
-                select new InlineFragmentSyntax(selectionSet, typeCondition, directives,
-                    SyntaxLocation.From(spread, selectionSet))).Named("inline fragment");
+             from typeCondition in TypeCondition.OptionalOrNull()
+             from directives in Directives.OptionalOrNull()
+             from selectionSet in SelectionSet
+             select new InlineFragmentSyntax(selectionSet, typeCondition, directives,
+                 SyntaxLocation.From(spread, selectionSet))).Named("inline fragment");
 
 
         internal static TokenListParser<TokenKind, FragmentDefinitionSyntax> FragmentDefinition =>
             (from fragment in Keyword("fragment")
-                from fragmentName in FragmentName
-                from type in TypeCondition.OptionalOrDefault()
-                from directives in Directives.OptionalOrDefault()
-                from selectionSet in SelectionSet
-                select new FragmentDefinitionSyntax(fragmentName, type, selectionSet, directives,
-                    SyntaxLocation.From(fragment, selectionSet))).Named("fragment definition");
+             from fragmentName in FragmentName
+             from type in TypeCondition.OptionalOrNull()
+             from directives in Directives.OptionalOrNull()
+             from selectionSet in SelectionSet
+             select new FragmentDefinitionSyntax(fragmentName, type, selectionSet, directives,
+                 SyntaxLocation.From(fragment, selectionSet))).Named("fragment definition");
     }
 }

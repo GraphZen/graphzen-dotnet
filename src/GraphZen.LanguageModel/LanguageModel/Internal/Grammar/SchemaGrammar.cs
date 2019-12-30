@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -15,7 +15,7 @@ namespace GraphZen.LanguageModel.Internal
     {
         private static TokenListParser<TokenKind, SchemaDefinitionSyntax> SchemaDefinition { get; } =
             (from schema in Keyword("schema")
-                from directives in Directives.OptionalOrDefault()
+                from directives in Directives.OptionalOrNull()
                 from leftBrace in Parse.Ref(() => LeftBrace)
                 from operationTypeDefinitionNodes in OperationTypeDefinition.Many()
                 from rightBrace in RightBrace

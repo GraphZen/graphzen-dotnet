@@ -14,10 +14,12 @@ namespace GraphZen.Infrastructure
     public static class NullablityHelpers
     {
         public static Type GetMemberType(this MemberInfo memberInfo)
-            => (memberInfo as PropertyInfo)?.PropertyType ?? ((FieldInfo)memberInfo)?.FieldType!;
+            => (memberInfo as PropertyInfo)?.PropertyType ?? ((FieldInfo) memberInfo)?.FieldType!;
 
         public const string NullableAttributeFullName = "System.Runtime.CompilerServices.NullableAttribute";
-        public const string NullableContextAttributeFullName = "System.Runtime.CompilerServices.NullableContextAttribute";
+
+        public const string NullableContextAttributeFullName =
+            "System.Runtime.CompilerServices.NullableContextAttribute";
 
         private class NonNullablityState
         {
@@ -29,8 +31,6 @@ namespace GraphZen.Infrastructure
         }
 
         private static readonly NonNullablityState State = new NonNullablityState();
-
-       
 
 
         public static bool IsNonNullableReferenceTypeDepr(MemberInfo memberInfo)

@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -20,7 +20,7 @@ namespace GraphZen.LanguageModel.Internal
             (from extend in Keyword("extend")
                 from input in Keyword("input")
                 from name in Parse.Ref(() => Name)
-                from directives in Directives.OptionalOrDefault()
+                from directives in Directives.OptionalOrNull()
                 from fields in InputFieldsDefinition
                 select new InputObjectTypeExtensionSyntax(name, directives, fields,
                     SyntaxLocation.FromMany(extend, fields.GetLocation())))

@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -20,7 +20,7 @@ namespace GraphZen.LanguageModel.Internal
             (from extend in Keyword("extend")
                 from @enum in Keyword("enum")
                 from name in Name
-                from directives in Directives.OptionalOrDefault()
+                from directives in Directives.OptionalOrNull()
                 from values in EnumValuesDefinition
                 select new EnumTypeExtensionSyntax(name, directives, values,
                     SyntaxLocation.FromMany(extend, name, directives.GetLocation(), values.GetLocation()))).Try()

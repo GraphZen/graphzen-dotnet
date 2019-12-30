@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -30,7 +30,7 @@ namespace GraphZen.LanguageModel.Internal
             (from v in Parse.Ref(() => Variable)
                 from c in Colon
                 from t in Type
-                from defaultValue in DefaultValue.OptionalOrDefault()
+                from defaultValue in DefaultValue.OptionalOrNull()
                 select new VariableDefinitionSyntax(v, t, defaultValue, SyntaxLocation.FromMany(v, c, t, defaultValue)))
             .Named("variable definition");
 

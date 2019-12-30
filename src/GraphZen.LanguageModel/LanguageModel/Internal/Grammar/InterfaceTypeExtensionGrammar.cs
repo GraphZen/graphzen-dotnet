@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -20,7 +20,7 @@ namespace GraphZen.LanguageModel.Internal
             (from extend in Keyword("extend")
                 from iface in Keyword("interface")
                 from name in Name
-                from directives in Directives.OptionalOrDefault()
+                from directives in Directives.OptionalOrNull()
                 from fields in FieldsDefinition
                 select new InterfaceTypeExtensionSyntax(name, directives, fields,
                     SyntaxLocation.FromMany(extend, fields.GetLocation()))).Try().Or(

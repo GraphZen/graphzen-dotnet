@@ -3,7 +3,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel.Internal.Extensions.Superpower;
 using JetBrains.Annotations;
 using Superpower;
 
@@ -19,7 +18,7 @@ namespace GraphZen.LanguageModel.Internal
                 from directive in Keyword("directive")
                 from at in AtSymbol
                 from name in Name
-                from args in ArgumentsDefinition.OptionalOrDefault()
+                from args in ArgumentsDefinition.OptionalOrNull()
                 from @on in Keyword("on")
                 from locations in DirectiveLocations
                 select new DirectiveDefinitionSyntax(name, locations, desc, args,
@@ -34,7 +33,7 @@ namespace GraphZen.LanguageModel.Internal
         ///     http://facebook.github.io/graphql/June2018/#DirectiveLocations
         /// </summary>
         private static TokenListParser<TokenKind, NameSyntax[]> DirectiveLocations { get; } =
-            (from pipe in Parse.Ref(() => Pipe).OptionalOrDefault()
+            (from pipe in Parse.Ref(() => Pipe).OptionalOrNull()
                 from locations in DirectiveLocation.ManyDelimitedBy(Pipe)
                 select locations)
             .Try()

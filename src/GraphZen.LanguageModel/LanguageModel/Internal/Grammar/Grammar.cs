@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel.Internal
         ///     http://facebook.github.io/graphql/June2018/#Argument
         /// </summary>
         internal static TokenListParser<TokenKind, ArgumentSyntax> Argument { get; } =
-            (from desc in Parse.Ref(() => Description).OptionalOrDefault()
+            (from desc in Parse.Ref(() => Description).OptionalOrNull()
                 from name in Parse.Ref(() => Name.Named("argument name"))
                 from colon in Colon
                 from value in Value.Named("argument value")

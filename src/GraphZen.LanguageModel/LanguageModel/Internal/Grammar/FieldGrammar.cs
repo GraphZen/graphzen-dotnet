@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -14,13 +14,13 @@ namespace GraphZen.LanguageModel.Internal
     internal static partial class Grammar
     {
         internal static TokenListParser<TokenKind, FieldSyntax> Field { get; } =
-            (from firstName in Parse.Ref(() => Name.OptionalOrDefault())
+            (from firstName in Parse.Ref(() => Name.OptionalOrNull())
                 from aliasedName in (from colon in Colon
                     from aliasedName in Name
-                    select aliasedName).OptionalOrDefault()
-                from arguments in Arguments.OptionalOrDefault().Named("field arguments")
-                from directives in Directives.OptionalOrDefault().Named("field directives")
-                from selectionSet in SelectionSet.OptionalOrDefault().Named("field selections")
+                    select aliasedName).OptionalOrNull()
+                from arguments in Arguments.OptionalOrNull().Named("field arguments")
+                from directives in Directives.OptionalOrNull().Named("field directives")
+                from selectionSet in SelectionSet.OptionalOrNull().Named("field selections")
                 let alias = aliasedName != null ? firstName : null
                 let name = aliasedName ?? firstName
                 where firstName != null

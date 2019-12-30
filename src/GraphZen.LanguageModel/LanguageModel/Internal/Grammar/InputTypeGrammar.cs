@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -30,7 +30,7 @@ namespace GraphZen.LanguageModel.Internal
             (from type in ListType
                     .Select(n => (NullableTypeSyntax) n)
                     .Or(NamedType.Select(n => (NullableTypeSyntax) n))
-                from bang in Bang.OptionalOrDefault()
+                from bang in Bang.OptionalOrNull()
                 select bang == null
                     ? type
                     : new NonNullTypeSyntax(type, SyntaxLocation.FromMany(type, bang)) as TypeSyntax)

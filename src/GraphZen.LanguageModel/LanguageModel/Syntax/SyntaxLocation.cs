@@ -86,9 +86,9 @@ namespace GraphZen.LanguageModel
             return new SyntaxLocation(start.Location, end.Location);
 
         }
-        public static SyntaxLocation? FromMany(params SyntaxLocation[] locations) => FromMany(locations.AsEnumerable());
+        public static SyntaxLocation? FromMany(params SyntaxLocation?[]? locations) => FromMany(locations?.AsEnumerable());
 
-        private static SyntaxLocation? FromMany(IEnumerable<SyntaxLocation?> locations)
+        private static SyntaxLocation? FromMany(IEnumerable<SyntaxLocation?>? locations)
         {
             Check.NotNull(locations, nameof(locations));
 

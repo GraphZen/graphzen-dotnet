@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -17,11 +17,11 @@ namespace GraphZen.LanguageModel.Internal
         ///     http://facebook.github.io/graphql/June2018/#InputObjectTypeDefinition
         /// </summary>
         private static TokenListParser<TokenKind, InputObjectTypeDefinitionSyntax> InputObjectTypeDefinition { get; } =
-            (from desc in Parse.Ref(() => Description).OptionalOrDefault()
+            (from desc in Parse.Ref(() => Description).OptionalOrNull()
                 from input in Keyword("input")
                 from name in Name
-                from directives in Directives.OptionalOrDefault()
-                from fields in InputFieldsDefinition.OptionalOrDefault()
+                from directives in Directives.OptionalOrNull()
+                from fields in InputFieldsDefinition.OptionalOrNull()
                 select new InputObjectTypeDefinitionSyntax(name, desc, directives, fields,
                     SyntaxLocation.FromMany(desc, input, name, directives.GetLocation(), fields.GetLocation())))
             .Named("input object type definition");

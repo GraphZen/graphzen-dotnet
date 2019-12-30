@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -17,8 +17,8 @@ namespace GraphZen.LanguageModel.Internal
             (from extend in Keyword("extend")
                 from type in Keyword("type")
                 from name in Name
-                from ifaces in ImplementsIntefaces.OptionalOrDefault()
-                from directives in Directives.OptionalOrDefault()
+                from ifaces in ImplementsIntefaces.OptionalOrNull()
+                from directives in Directives.OptionalOrNull()
                 from fields in FieldsDefinition
                 select new ObjectTypeExtensionSyntax(name, ifaces, directives, fields,
                     SyntaxLocation.FromMany(extend, name, ifaces?.GetLocation(), directives?.GetLocation(),
@@ -27,7 +27,7 @@ namespace GraphZen.LanguageModel.Internal
                 (from extend in Keyword("extend")
                     from type in Keyword("type")
                     from name in Name
-                    from ifaces in ImplementsIntefaces.OptionalOrDefault()
+                    from ifaces in ImplementsIntefaces.OptionalOrNull()
                     from directives in Directives
                     select new ObjectTypeExtensionSyntax(name, ifaces, directives, null,
                         SyntaxLocation.FromMany(extend, name, ifaces?.GetLocation(), directives?.GetLocation())))

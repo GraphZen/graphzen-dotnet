@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -17,11 +17,11 @@ namespace GraphZen.LanguageModel.Internal
         ///     http://facebook.github.io/graphql/June2018/#InterfaceTypeDefinition
         /// </summary>
         private static TokenListParser<TokenKind, InterfaceTypeDefinitionSyntax> InterfaceTypeDefinition { get; } =
-            (from desc in Parse.Ref(() => Description.OptionalOrDefault())
+            (from desc in Parse.Ref(() => Description.OptionalOrNull())
                 from @interface in Keyword("interface")
                 from name in Name
-                from directives in Directives.OptionalOrDefault()
-                from fields in FieldsDefinition.OptionalOrDefault()
+                from directives in Directives.OptionalOrNull()
+                from fields in FieldsDefinition.OptionalOrNull()
                 select new InterfaceTypeDefinitionSyntax(name, desc, directives, fields,
                     SyntaxLocation.FromMany(desc, @interface, name, directives.GetLocation(), fields.GetLocation())))
             .Named("interface");

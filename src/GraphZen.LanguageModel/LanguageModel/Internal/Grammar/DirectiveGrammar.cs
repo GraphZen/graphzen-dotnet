@@ -6,8 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar
@@ -24,7 +22,7 @@ namespace GraphZen.LanguageModel.Internal
         internal static TokenListParser<TokenKind, DirectiveSyntax> Directive { get; } =
             (from at in Parse.Ref(() => AtSymbol.Named("directive symbol"))
                 from name in Name.Named("directive name")
-                from args in Arguments.OptionalOrDefault().Named("directive arguments")
+                from args in Arguments.OptionalOrNull().Named("directive arguments")
                 select new DirectiveSyntax(name, args,
                     SyntaxLocation.FromMany(at, name, args.GetLocation()))).Try()
             .Named("directive");

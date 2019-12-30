@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -17,12 +17,12 @@ namespace GraphZen.LanguageModel.Internal
         ///     http://facebook.github.io/graphql/June2018/#ObjectTypeDefinition
         /// </summary>
         private static TokenListParser<TokenKind, ObjectTypeDefinitionSyntax> ObjectTypeDefinition { get; } =
-            (from desc in Parse.Ref(() => Description).OptionalOrDefault()
+            (from desc in Parse.Ref(() => Description).OptionalOrNull()
                 from type in Keyword("type")
                 from typeName in Name
-                from interfaces in ImplementsIntefaces.OptionalOrDefault()
-                from directives in Directives.OptionalOrDefault()
-                from fields in FieldsDefinition.OptionalOrDefault()
+                from interfaces in ImplementsIntefaces.OptionalOrNull()
+                from directives in Directives.OptionalOrNull()
+                from fields in FieldsDefinition.OptionalOrNull()
                 select new ObjectTypeDefinitionSyntax(typeName,
                     desc,
                     interfaces, directives, fields,
@@ -56,12 +56,12 @@ namespace GraphZen.LanguageModel.Internal
         ///     http://facebook.github.io/graphql/June2018/#FieldDefinition
         /// </summary>
         private static TokenListParser<TokenKind, FieldDefinitionSyntax> FieldDefinition { get; } =
-            (from desc in Parse.Ref(() => Description).OptionalOrDefault()
+            (from desc in Parse.Ref(() => Description).OptionalOrNull()
                 from name in Name
-                from args in ArgumentsDefinition.OptionalOrDefault()
+                from args in ArgumentsDefinition.OptionalOrNull()
                 from c in Colon
                 from type in Type
-                from directives in Directives.OptionalOrDefault()
+                from directives in Directives.OptionalOrNull()
                 select new FieldDefinitionSyntax(name, type, desc, args, directives,
                     SyntaxLocation.FromMany(desc, name, args?.GetLocation(), c, type)))
             .Try()
@@ -77,12 +77,12 @@ namespace GraphZen.LanguageModel.Internal
             .Named("arguments definition");
 
         private static TokenListParser<TokenKind, InputValueDefinitionSyntax> InputValueDefinition { get; } =
-            (from desc in Parse.Ref(() => Description).OptionalOrDefault()
+            (from desc in Parse.Ref(() => Description).OptionalOrNull()
                 from name in Name
                 from c in Colon
                 from type in Type
-                from defaultValue in DefaultValue.OptionalOrDefault()
-                from directives in Directives.OptionalOrDefault()
+                from defaultValue in DefaultValue.OptionalOrNull()
+                from directives in Directives.OptionalOrNull()
                 select new InputValueDefinitionSyntax(name, type, desc, defaultValue, directives,
                     SyntaxLocation.FromMany(
                         desc, name, type, defaultValue, directives?.GetLocation())))

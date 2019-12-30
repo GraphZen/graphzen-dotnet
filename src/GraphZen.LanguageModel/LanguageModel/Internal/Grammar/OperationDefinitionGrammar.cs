@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 using Superpower;
 using Superpower.Parsers;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -18,13 +18,13 @@ namespace GraphZen.LanguageModel.Internal
         private static TokenListParser<TokenKind, OperationDefinitionSyntax> OperationDefintion { get; } =
             Parse.Ref(() => QueryShorthandOpeartion).Or(
                     from type in Parse.Ref(() => OperationType).Named("operation type")
-                    from name in Name.OptionalOrDefault().Named("operation name")
-                    from varDefs in VariableDefinitions.OptionalOrDefault().Named("operation variable definitions")
-                    from directives in Directives.OptionalOrDefault().Named("operation directives")
+                    from name in Name.OptionalOrNull().Named("operation name")
+                    from varDefs in VariableDefinitions.OptionalOrNull().Named("operation variable definitions")
+                    from directives in Directives.OptionalOrNull().Named("operation directives")
                     from selectionSet in SelectionSet
                     select new OperationDefinitionSyntax(type.type, selectionSet, name,
                         varDefs, directives,
-                        new SyntaxLocation(type.location, selectionSet.Location)))
+                        SyntaxLocation.FromMany(type.location, selectionSet?.Location)))
                 .Named("operation definition");
 
         private static TokenListParser<TokenKind, (OperationType type, SyntaxLocation location)> OperationType { get; }

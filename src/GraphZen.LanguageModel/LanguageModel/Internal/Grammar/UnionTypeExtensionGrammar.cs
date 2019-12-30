@@ -6,7 +6,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -28,7 +28,7 @@ namespace GraphZen.LanguageModel.Internal
             .Or(from extend in Keyword("extend")
                 from union in Keyword("union")
                 from name in Parse.Ref(() => Name)
-                from directives in Directives.OptionalOrDefault()
+                from directives in Directives.OptionalOrNull()
                 from types in UnionMemberTypes
                 select new UnionTypeExtensionSyntax(name, directives, types,
                     SyntaxLocation.FromMany(extend, types.GetLocation()))).Try()

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
+using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Superpower;
 
-namespace GraphZen.LanguageModel.Internal.Extensions.Superpower
+namespace GraphZen.LanguageModel.Internal
 {
     public static class TokenListParserExtensions
     {
