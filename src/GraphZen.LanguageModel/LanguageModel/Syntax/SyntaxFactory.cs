@@ -15,12 +15,12 @@ using JetBrains.Annotations;
 
 namespace GraphZen.LanguageModel
 {
-    public static class SyntaxFactory
+    public static partial class SyntaxFactory
     {
         private static NullValueSyntax NullValueInstance { get; } = new NullValueSyntax();
 
 
-        
+
         [DebuggerStepThrough]
         public static NullValueSyntax NullValue() => NullValueInstance;
 
@@ -77,7 +77,7 @@ namespace GraphZen.LanguageModel
 
         [DebuggerStepThrough]
         public static BooleanValueSyntax BooleanValue(bool value) => BooleanValueSyntax.Create(value);
-            
+
 
 
         [DebuggerStepThrough]

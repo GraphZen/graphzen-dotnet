@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -22,7 +21,7 @@ namespace GraphZen.LanguageModel
     {
         [GenFactory(nameof(SyntaxFactory))]
         public ArgumentSyntax(NameSyntax name, StringValueSyntax description, ValueSyntax value,
-            SyntaxLocation location = null) : base(location)
+            SyntaxLocation? location = null) : base(location)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(value, nameof(value));
@@ -63,7 +62,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(ArgumentSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

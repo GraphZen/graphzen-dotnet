@@ -25,8 +25,7 @@ namespace GraphZen.CodeGen
         [Fact]
         public void get_factory_method_match_expected()
         {
-            var method = FactoryGenerator.GetFactoryMethods(typeof(TestSyntax)).First().method;
-            method.Should().Be("hello");
+            var method = FactoryGenerator.GetFactoryMethods(typeof(TestSyntax)).First();
         }
     }
 }
