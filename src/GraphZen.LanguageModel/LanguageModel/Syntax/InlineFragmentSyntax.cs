@@ -35,7 +35,7 @@ namespace GraphZen.LanguageModel
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            TypeCondition.ToEnumerable().Concat(Directives).Concat(SelectionSet);
+            TypeCondition.Concat(Directives).Concat(SelectionSet);
 
 
         public override IReadOnlyList<DirectiveSyntax> Directives { get; }
@@ -56,7 +56,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is InlineFragmentSyntax && Equals((InlineFragmentSyntax) obj);
+            return obj is InlineFragmentSyntax && Equals((InlineFragmentSyntax)obj);
         }
 
         public override int GetHashCode()

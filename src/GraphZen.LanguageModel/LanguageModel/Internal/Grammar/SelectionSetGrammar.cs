@@ -21,7 +21,7 @@ namespace GraphZen.LanguageModel.Internal
                 from selections in Selection
                     .AtLeastOnce()
                 from rb in RightBrace
-                select new SelectionSetSyntax(selections, new SyntaxLocation(lb, rb)))
+                select new SelectionSetSyntax(selections, SyntaxLocation.From(lb, rb)))
             .Named("selection set");
 
 

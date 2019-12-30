@@ -65,7 +65,7 @@ namespace GraphZen.LanguageModel
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            Alias.ToEnumerable().Concat(Name).Concat(Arguments).Concat(Directives).Concat(SelectionSet);
+            Alias.Concat(Name).Concat(Arguments).Concat(Directives).Concat(SelectionSet);
 
 
         /// <summary>

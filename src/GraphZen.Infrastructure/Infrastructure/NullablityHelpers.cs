@@ -55,7 +55,7 @@ namespace GraphZen.Infrastructure
 
             // First look for NullableAttribute on the member itself
             if (Attribute.GetCustomAttributes(memberInfo)
-                .FirstOrDefault(a => a.GetType().FullName == NullableAttributeFullName) is Attribute attribute)
+                .FirstOrDefault(a => a.GetType().FullName == NullableAttributeFullName) is { } attribute)
             {
                 var attributeType = attribute.GetType();
 

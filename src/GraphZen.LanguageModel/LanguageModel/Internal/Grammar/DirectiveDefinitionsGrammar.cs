@@ -3,10 +3,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel.Internal.Extensions.Superpower;
 using JetBrains.Annotations;
 using Superpower;
-
-#nullable disable
 
 namespace GraphZen.LanguageModel.Internal
 {
@@ -16,7 +15,7 @@ namespace GraphZen.LanguageModel.Internal
         ///     http://facebook.github.io/graphql/June2018/#DirectiveDefinition
         /// </summary>
         private static TokenListParser<TokenKind, DirectiveDefinitionSyntax> DirectiveDefinition { get; } =
-            (from desc in Parse.Ref(() => Description.OptionalOrDefault())
+            (from desc in Parse.Ref(() => Description.OptionalOrNull())
                 from directive in Keyword("directive")
                 from at in AtSymbol
                 from name in Name

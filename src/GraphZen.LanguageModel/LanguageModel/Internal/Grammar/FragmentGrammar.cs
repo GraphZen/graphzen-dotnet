@@ -44,7 +44,7 @@ namespace GraphZen.LanguageModel.Internal
                 from directives in Directives.OptionalOrDefault()
                 from selectionSet in SelectionSet
                 select new InlineFragmentSyntax(selectionSet, typeCondition, directives,
-                    new SyntaxLocation(spread, selectionSet))).Named("inline fragment");
+                    SyntaxLocation.From(spread, selectionSet))).Named("inline fragment");
 
 
         internal static TokenListParser<TokenKind, FragmentDefinitionSyntax> FragmentDefinition =>
@@ -54,6 +54,6 @@ namespace GraphZen.LanguageModel.Internal
                 from directives in Directives.OptionalOrDefault()
                 from selectionSet in SelectionSet
                 select new FragmentDefinitionSyntax(fragmentName, type, selectionSet, directives,
-                    new SyntaxLocation(fragment, selectionSet))).Named("fragment definition");
+                    SyntaxLocation.From(fragment, selectionSet))).Named("fragment definition");
     }
 }

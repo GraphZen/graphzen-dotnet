@@ -22,7 +22,7 @@ namespace GraphZen.LanguageModel.Internal
             (from leftBracket in Parse.Ref(() => LeftBracket)
                 from type in Type
                 from rightBracket in RightBracket
-                select new ListTypeSyntax(type, new SyntaxLocation(leftBracket, rightBracket)))
+                select new ListTypeSyntax(type, SyntaxLocation.From(leftBracket, rightBracket)))
             .Try()
             .Named("list type");
 

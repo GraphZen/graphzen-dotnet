@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -27,10 +26,8 @@ namespace GraphZen.LanguageModel
 
     public abstract partial class GraphQLSyntaxVisitor<TResult>
     {
-        public virtual TResult Visit(SyntaxNode node) => default;
-
-        public virtual TResult OnEnter(SyntaxNode node) => default;
-
-        public virtual TResult OnLeave(SyntaxNode node) => default;
+        public virtual TResult Visit(SyntaxNode node) => default!;
+        public virtual TResult OnEnter(SyntaxNode node) => default!;
+        public virtual TResult OnLeave(SyntaxNode node) => default!;
     }
 }

@@ -11,7 +11,7 @@ using Superpower.Display;
 
 namespace GraphZen.LanguageModel.Internal
 {
-    internal enum TokenKind
+    public enum TokenKind
     {
         StartOfFile, // '<SOF>'
         EndOfFile, // '<EOF>'

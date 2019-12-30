@@ -6,14 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen.LanguageModel.Validation
 {
     public class DocumentValidationContext : ValidationContext
     {
-        public DocumentValidationContext(DocumentSyntax schema, DocumentSyntax initialSchema,
+        public DocumentValidationContext(DocumentSyntax schema, DocumentSyntax? initialSchema,
             Lazy<GraphQLSyntaxWalker> parentVisitor) : base(schema,
             Check.NotNull(parentVisitor, nameof(parentVisitor))
         )
@@ -22,7 +19,7 @@ namespace GraphZen.LanguageModel.Validation
         }
 
 
-        public DocumentSyntax InitialSchema { get; }
+        public DocumentSyntax? InitialSchema { get; }
 
 
         public DocumentSyntax Schema => AST;

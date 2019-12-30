@@ -40,7 +40,7 @@ namespace GraphZen.LanguageModel.Internal
         internal static TokenListParser<TokenKind, VariableSyntax> Variable { get; } =
             (from d in Parse.Ref(() => DollarSign)
                 from n in Name.Named("variable name")
-                select new VariableSyntax(n, new SyntaxLocation(d, n)))
+                select new VariableSyntax(n, SyntaxLocation.From(d, n)))
             .Named("variable");
 
         /// <summary>

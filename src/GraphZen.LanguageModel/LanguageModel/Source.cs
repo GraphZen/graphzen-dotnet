@@ -6,9 +6,6 @@ using System.Text.RegularExpressions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen.LanguageModel
 {
     public class Source
@@ -25,7 +22,7 @@ namespace GraphZen.LanguageModel
 
         protected bool Equals(Source other) => string.Equals(Body, other.Body);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 
