@@ -20,7 +20,8 @@ namespace GraphZen.LanguageModel
     public partial class ArgumentSyntax : SyntaxNode, IDescribedSyntax
     {
         [GenFactory(nameof(SyntaxFactory))]
-        public ArgumentSyntax(NameSyntax name, StringValueSyntax? description, ValueSyntax value,
+        public ArgumentSyntax(NameSyntax name, ValueSyntax value,
+StringValueSyntax? description = null,
             SyntaxLocation? location = null) : base(location)
         {
             Check.NotNull(name, nameof(name));

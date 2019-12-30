@@ -73,7 +73,8 @@ namespace {@namespace} {{
         public static IEnumerable<(string ClassName, string Namespace, string Method)> GetFactoryMethods(Type type)
         {
             var name = type.Name;
-            var methodName = name.Substring(0, name.LastIndexOf("Syntax", StringComparison.Ordinal));
+            var methodName = name.EndsWith("Syntax") ?
+            name.Substring(0, name.LastIndexOf("Syntax", StringComparison.Ordinal)) : name;
             foreach (var ctor in type.GetConstructors())
             {
                 var genFactory = ctor.GetCustomAttribute<GenFactory>();
@@ -81,7 +82,7 @@ namespace {@namespace} {{
                 {
                     var methodParameters = ctor.GetParameters().Select(p =>
                     {
-                        
+
                         var parameterType = p.HasNullableReferenceType()
                             ? $"{GetParameterType(p.ParameterType)}?"
                             : GetParameterType(p.ParameterType);
@@ -107,7 +108,7 @@ namespace {@namespace} {{
                 return type.FullName!;
             }
 
-            var gargs =string.Join(", ",type.GetGenericArguments().Select(_ => _.FullName));
+            var gargs = string.Join(", ", type.GetGenericArguments().Select(_ => _.FullName));
             return $"{type.Namespace}.{type.Name.Remove(type.Name.LastIndexOf("`", StringComparison.Ordinal))}<{gargs}>";
         }
 

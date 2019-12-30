@@ -8,6 +8,7 @@ using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Superpower;
 using Xunit;
+using static GraphZen.LanguageModel.SyntaxFactory;
 
 #nullable disable
 
@@ -24,7 +25,7 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
             var source = "bar: foo";
             var tokens = _sut.Tokenize(source);
             var test = Grammar.Field(tokens);
-            var expectedValue = new FieldSyntax(SyntaxFactory.Name("foo"), SyntaxFactory.Name("bar"));
+            var expectedValue = new FieldSyntax(Name("foo"), Name("bar"));
             Assert.True(expectedValue.Equals(test.Value));
         }
 
@@ -34,15 +35,15 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
             var source = @"bar: foo(booleanParam: false, stringParam: ""foo"", intParam: -1, floatParam: 4.123e-3)";
             var tokens = _sut.Tokenize(source);
             var test = Grammar.Field(tokens);
-            var expectedValue = new FieldSyntax(SyntaxFactory.Name("foo"),
+            var expectedValue = new FieldSyntax(Name("foo"),
                 arguments: new[]
                 {
-                    SyntaxFactory.Argument(SyntaxFactory.Name("booleanParam"), SyntaxFactory.BooleanValue(false)),
-                    SyntaxFactory.Argument(SyntaxFactory.Name("stringParam"), SyntaxFactory.StringValue("foo")),
-                    SyntaxFactory.Argument(SyntaxFactory.Name("intParam"), SyntaxFactory.IntValue(-1)),
-                    SyntaxFactory.Argument(SyntaxFactory.Name("floatParam"), SyntaxFactory.FloatValue("4.123e-3"))
+                    Argument(Name("booleanParam"), BooleanValue(false)),
+                    Argument(Name("stringParam"), StringValue("foo")),
+                    Argument(Name("intParam"), IntValue(-1)),
+                    Argument(Name("floatParam"), FloatValue("4.123e-3"))
                 },
-                alias: SyntaxFactory.Name("bar"));
+                alias: Name("bar"));
             Assert.True(expectedValue.Equals(test.Value));
         }
 
@@ -52,7 +53,7 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
             var source = "foo";
             var tokens = _sut.Tokenize(source);
             var test = Grammar.Field(tokens);
-            var expectedValue = SyntaxFactory.Field(SyntaxFactory.Name("foo"));
+            var expectedValue = Field(Name("foo"));
             Assert.True(expectedValue.Equals(test.Value));
         }
     }

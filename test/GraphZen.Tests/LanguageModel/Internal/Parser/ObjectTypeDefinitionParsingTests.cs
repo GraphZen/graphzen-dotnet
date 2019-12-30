@@ -89,7 +89,7 @@ of the `Foo` type.", true), new[]
                         SyntaxFactory.StringValue("This is a description of the `two` field.", true), new[]
                         {
                             new InputValueDefinitionSyntax(SyntaxFactory.Name("argument"),
-                                SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("InputType"))),
+                                SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("InputType"))),
                                 SyntaxFactory.StringValue("This is a description of the `argument` argument.", true))
                         }),
                     new FieldDefinitionSyntax(SyntaxFactory.Name("three"),

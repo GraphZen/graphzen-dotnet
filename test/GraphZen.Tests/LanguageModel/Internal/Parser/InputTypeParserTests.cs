@@ -32,13 +32,13 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
         public void ParseNonNullableListType()
         {
             ParseType("[Foo]!").Should()
-                .Be(SyntaxFactory.NonNull(SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo")))));
+                .Be(SyntaxFactory.NonNullType(SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo")))));
         }
 
         [Fact]
         public void ParseNonNullableNamedType()
         {
-            ParseType("Foo!").Should().Be(SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo"))));
+            ParseType("Foo!").Should().Be(SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo"))));
         }
     }
 }

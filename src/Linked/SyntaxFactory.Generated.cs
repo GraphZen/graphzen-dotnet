@@ -13,8 +13,9 @@ namespace GraphZen.LanguageModel
 {
     public static partial class SyntaxFactory
     {
-        public static ArgumentSyntax Argument(NameSyntax name, StringValueSyntax? description, ValueSyntax value,
-            SyntaxLocation? location = null) => new ArgumentSyntax(name, description, value, location);
+        public static ArgumentSyntax Argument(NameSyntax name, ValueSyntax value,
+StringValueSyntax? description = null,
+            SyntaxLocation? location = null) => new ArgumentSyntax(name, value, description, location);
 
         public static DirectiveSyntax Directive(NameSyntax name, IReadOnlyList<ArgumentSyntax>? arguments = null,
             SyntaxLocation? location = null) => new DirectiveSyntax(name, arguments, location);

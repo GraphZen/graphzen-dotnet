@@ -40,7 +40,7 @@ extend interface Bar {
                         new[]
                         {
                             SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("argument"),
-                                SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("InputType"))))
+                                SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("InputType"))))
                         })
                 }));
             Assert.Equal(expected, result);

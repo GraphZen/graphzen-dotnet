@@ -19,30 +19,30 @@ namespace GraphZen.TypeSystem.Tests.Nullability
     public class NullabilityCheckerTests
     {
         [Theory]
-        [InlineData(typeof(INullabilityTest), nameof(INullabilityTest.NullableReferenceTypeProperty))]
-        [InlineData(typeof(INullabilityTest), nameof(INullabilityTest.NullableReferenceTypeMethod))]
-        [InlineData(typeof(INullabilityTest),
-            nameof(INullabilityTest.NullableReferenceTypeMethodWithNonNullableParameter))]
-        [InlineData(typeof(INullabilityTest),
-            nameof(INullabilityTest.NullableReferenceTypeMethodWithNullableParameter))]
-        [InlineData(typeof(INullabilityTest),
-            nameof(INullabilityTest.NullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
-        [InlineData(typeof(NullableTestClassA), nameof(INullabilityTest.NullableReferenceTypeProperty))]
-        [InlineData(typeof(NullableTestClassA), nameof(INullabilityTest.NullableReferenceTypeMethod))]
+        [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NullableReferenceTypeProperty))]
+        [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NullableReferenceTypeMethod))]
+        [InlineData(typeof(INullableTestClass),
+            nameof(INullableTestClass.NullableReferenceTypeMethodWithNonNullableParameter))]
+        [InlineData(typeof(INullableTestClass),
+            nameof(INullableTestClass.NullableReferenceTypeMethodWithNullableParameter))]
+        [InlineData(typeof(INullableTestClass),
+            nameof(INullableTestClass.NullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
+        [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NullableReferenceTypeProperty))]
+        [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NullableReferenceTypeMethod))]
         [InlineData(typeof(NullableTestClassA),
-            nameof(INullabilityTest.NullableReferenceTypeMethodWithNonNullableParameter))]
+            nameof(INullableTestClass.NullableReferenceTypeMethodWithNonNullableParameter))]
         [InlineData(typeof(NullableTestClassA),
-            nameof(INullabilityTest.NullableReferenceTypeMethodWithNullableParameter))]
+            nameof(INullableTestClass.NullableReferenceTypeMethodWithNullableParameter))]
         [InlineData(typeof(NullableTestClassA),
-            nameof(INullabilityTest.NullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
-        [InlineData(typeof(NullableTestClassB), nameof(INullabilityTest.NullableReferenceTypeProperty))]
-        [InlineData(typeof(NullableTestClassB), nameof(INullabilityTest.NullableReferenceTypeMethod))]
+            nameof(INullableTestClass.NullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
+        [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NullableReferenceTypeProperty))]
+        [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NullableReferenceTypeMethod))]
         [InlineData(typeof(NullableTestClassB),
-            nameof(INullabilityTest.NullableReferenceTypeMethodWithNonNullableParameter))]
+            nameof(INullableTestClass.NullableReferenceTypeMethodWithNonNullableParameter))]
         [InlineData(typeof(NullableTestClassB),
-            nameof(INullabilityTest.NullableReferenceTypeMethodWithNullableParameter))]
+            nameof(INullableTestClass.NullableReferenceTypeMethodWithNullableParameter))]
         [InlineData(typeof(NullableTestClassB),
-            nameof(INullabilityTest.NullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
+            nameof(INullableTestClass.NullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
         public void members_should_have_nullable_reference_type(Type type, string memberName)
         {
             var member = type.GetMember(memberName).Single();
@@ -51,30 +51,43 @@ namespace GraphZen.TypeSystem.Tests.Nullability
         }
 
         [Theory]
-        [InlineData(typeof(INullabilityTest), nameof(INullabilityTest.NonNullableReferenceTypeProperty))]
-        [InlineData(typeof(INullabilityTest), nameof(INullabilityTest.NonNullableReferenceTypeMethod))]
-        [InlineData(typeof(INullabilityTest),
-            nameof(INullabilityTest.NonNullableReferenceTypeMethodWithNonNullableParameter))]
-        [InlineData(typeof(INullabilityTest),
-            nameof(INullabilityTest.NonNullableReferenceTypeMethodWithNullableParameter))]
-        [InlineData(typeof(INullabilityTest),
-            nameof(INullabilityTest.NonNullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
-        [InlineData(typeof(NullableTestClassA), nameof(INullabilityTest.NonNullableReferenceTypeProperty))]
-        [InlineData(typeof(NullableTestClassA), nameof(INullabilityTest.NonNullableReferenceTypeMethod))]
+        [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NonNullableReferenceTypeProperty))]
+        [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NonNullableReferenceTypeMethod))]
+        [InlineData(typeof(INullableTestClass),
+            nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNonNullableParameter))]
+        [InlineData(typeof(INullableTestClass),
+            nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNullableParameter))]
+        [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
+        [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NonNullableValueTypeProperty))]
+        [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NullableValueTypeProperty))]
+        [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NullableValueTypeMethod))]
+        [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NonNullableValueTypeMethod))]
+        [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NonNullableReferenceTypeProperty))]
+        [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NonNullableReferenceTypeMethod))]
         [InlineData(typeof(NullableTestClassA),
-            nameof(INullabilityTest.NonNullableReferenceTypeMethodWithNonNullableParameter))]
+            nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNonNullableParameter))]
         [InlineData(typeof(NullableTestClassA),
-            nameof(INullabilityTest.NonNullableReferenceTypeMethodWithNullableParameter))]
+            nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNullableParameter))]
         [InlineData(typeof(NullableTestClassA),
-            nameof(INullabilityTest.NonNullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
-        [InlineData(typeof(NullableTestClassB), nameof(INullabilityTest.NonNullableReferenceTypeProperty))]
-        [InlineData(typeof(NullableTestClassB), nameof(INullabilityTest.NonNullableReferenceTypeMethod))]
+            nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
+        [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NonNullableValueTypeProperty))]
+        [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NullableValueTypeProperty))]
+        [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NullableValueTypeMethod))]
+        [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NonNullableValueTypeMethod))]
+
+        [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NonNullableReferenceTypeProperty))]
+        [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NonNullableReferenceTypeMethod))]
         [InlineData(typeof(NullableTestClassB),
-            nameof(INullabilityTest.NonNullableReferenceTypeMethodWithNonNullableParameter))]
+            nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNonNullableParameter))]
         [InlineData(typeof(NullableTestClassB),
-            nameof(INullabilityTest.NonNullableReferenceTypeMethodWithNullableParameter))]
+            nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNullableParameter))]
         [InlineData(typeof(NullableTestClassB),
-            nameof(INullabilityTest.NonNullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
+            nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
+        [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NonNullableValueTypeProperty))]
+        [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NullableValueTypeProperty))]
+        [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NullableValueTypeMethod))]
+        [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NonNullableValueTypeMethod))]
+
         public void members_should_not_have_nullable_reference_type(Type type, string memberName)
         {
             var member = type.GetMember(memberName).Single();

@@ -114,7 +114,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 typeNode = canBeNull
                     ? (TypeSyntax) SyntaxFactory.ListType(typeNode)
-                    : SyntaxFactory.NonNull(SyntaxFactory.ListType(typeNode));
+                    : SyntaxFactory.NonNullType(SyntaxFactory.ListType(typeNode));
                 return true;
             }
 
@@ -127,7 +127,7 @@ namespace GraphZen.TypeSystem.Internal
 
             typeNode = canBeNull
                 ? (TypeSyntax) SyntaxFactory.NamedType(clrType)
-                : SyntaxFactory.NonNull(SyntaxFactory.NamedType(clrType));
+                : SyntaxFactory.NonNullType(SyntaxFactory.NamedType(clrType));
             innerClrType = clrType.GetEffectiveClrType();
             return true;
         }

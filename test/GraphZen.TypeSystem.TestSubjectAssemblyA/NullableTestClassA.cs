@@ -8,14 +8,14 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.TestSubjectAssemblyA
 {
-    public class NullableTestClassA : INullabilityTest
+    public class NullableTestClassA : INullableTestClass
     {
         public const string ConstructorWithNullableAndNonNullableParameters = nameof(ConstructorWithNullableAndNonNullableParameters);
         public const string ConstructorWithOnlyNullableParameters = nameof(ConstructorWithOnlyNullableParameters);
         public const string ConstructorWithOnlyNonNullableParameters = nameof(ConstructorWithOnlyNonNullableParameters);
 
         [Description(ConstructorWithNullableAndNonNullableParameters)]
-        public NullableTestClassA(string? nullable, string nonNullable)
+        public NullableTestClassA(string? nullable, string nonNullable, int? nonNullableInt, int nonNullableValueTypeInt)
         {
 
         }
@@ -33,8 +33,14 @@ namespace GraphZen.TypeSystem.TestSubjectAssemblyA
         }
 
         public string? NullableReferenceTypeProperty { get; } = null!;
+        public int? NullableValueTypeProperty { get; }
         public string NonNullableReferenceTypeProperty { get; } = null!;
+        public int NonNullableValueTypeProperty { get; }
         public string? NullableReferenceTypeMethod() => throw new System.NotImplementedException();
+        public int? NullableValueTypeMethod() => throw new System.NotImplementedException();
+
+        public int NonNullableValueTypeMethod() => throw new System.NotImplementedException();
+
         public string? NullableReferenceTypeMethodWithNonNullableParameter(string nonNullable) => throw new System.NotImplementedException();
         public string NonNullableReferenceTypeMethodWithNonNullableParameter(string nonNullable) => throw new System.NotImplementedException();
 

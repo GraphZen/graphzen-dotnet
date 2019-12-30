@@ -26,7 +26,7 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
                 {
                     SyntaxFactory.InputValueDefinition(
                         SyntaxFactory.Name("if"),
-                        SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("Boolean"))))
+                        SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("Boolean"))))
                 }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
@@ -49,7 +49,7 @@ directive @include(if: Boolean!)
                 new[]
                 {
                     SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("if"),
-                        SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("Boolean"))))
+                        SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("Boolean"))))
                 }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
@@ -70,7 +70,7 @@ directive @include2(if: Boolean!) on
                 new[]
                 {
                     SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("if"),
-                        SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("Boolean"))))
+                        SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("Boolean"))))
                 }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));

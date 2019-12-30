@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.TestSubjectAssemblyB
 {
-    public class NullableTestClassB : INullabilityTest
+    public class NullableTestClassB : INullableTestClass
     {
         public NullableTestClassB(string? nullableReferenceTypeProperty, string nonNullableReferenceTypeProperty)
         {
@@ -16,8 +16,14 @@ namespace GraphZen.TypeSystem.TestSubjectAssemblyB
         }
 
         public string? NullableReferenceTypeProperty { get; }
+        public int? NullableValueTypeProperty { get; }
         public string NonNullableReferenceTypeProperty { get; }
+        public int NonNullableValueTypeProperty { get; }
         public string? NullableReferenceTypeMethod() => throw new System.NotImplementedException();
+        public int? NullableValueTypeMethod() => throw new System.NotImplementedException();
+
+        public int NonNullableValueTypeMethod() => throw new System.NotImplementedException();
+
         public string? NullableReferenceTypeMethodWithNonNullableParameter(string nonNullable) => throw new System.NotImplementedException();
         public string NonNullableReferenceTypeMethodWithNonNullableParameter(string nonNullable) => throw new System.NotImplementedException();
         public string? NullableReferenceTypeMethodWithNullableParameter(string? nullable) => throw new System.NotImplementedException();

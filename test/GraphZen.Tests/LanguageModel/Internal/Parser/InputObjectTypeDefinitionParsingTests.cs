@@ -48,7 +48,7 @@ input InputType {
                 null, null, new[]
                 {
                     SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("key"),
-                        SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("String")))),
+                        SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("String")))),
                     new InputValueDefinitionSyntax(SyntaxFactory.Name("answer"),
                         SyntaxFactory.NamedType(SyntaxFactory.Name("Int"))
                         , null, SyntaxFactory.IntValue(42))

@@ -18,6 +18,9 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ListValueSyntax : ValueSyntax
     {
+
+        [GenFactory(nameof(SyntaxFactory))]
+        public ListValueSyntax(params ValueSyntax[] values) : this(values, null) { }
         [GenFactory(nameof(SyntaxFactory))]
         public ListValueSyntax(IReadOnlyList<ValueSyntax> values, SyntaxLocation? location = null) : base(location)
         {
@@ -41,7 +44,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ListValueSyntax && Equals((ListValueSyntax) obj);
+            return obj is ListValueSyntax && Equals((ListValueSyntax)obj);
         }
 
         public override int GetHashCode() => Values.GetHashCode();

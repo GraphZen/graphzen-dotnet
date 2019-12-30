@@ -38,6 +38,12 @@ namespace GraphZen.LanguageModel
 
 
         [GenFactory(nameof(SyntaxFactory))]
+        public DocumentSyntax(params DefinitionSyntax[] definitions) : this(definitions, null)
+        {
+
+        }
+
+        [GenFactory(nameof(SyntaxFactory))]
         public DocumentSyntax(IReadOnlyList<DefinitionSyntax> definitions,
             SyntaxLocation? location = null) : base(location)
         {
@@ -64,15 +70,15 @@ namespace GraphZen.LanguageModel
                     var implementations = new Dictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>();
 
                     foreach (var objectType in GetObjectTypeMap().Values)
-                    foreach (var iface in objectType.Interfaces)
-                    {
-                        if (implementations.TryGetValue(iface.Name.Value, out
-                            var impls))
-                            ((HashSet<ObjectTypeDefinitionSyntax>) impls).Add(objectType);
-                        else
-                            implementations[iface.Name.Value] =
-                                new HashSet<ObjectTypeDefinitionSyntax> {objectType};
-                    }
+                        foreach (var iface in objectType.Interfaces)
+                        {
+                            if (implementations.TryGetValue(iface.Name.Value, out
+                                var impls))
+                                ((HashSet<ObjectTypeDefinitionSyntax>)impls).Add(objectType);
+                            else
+                                implementations[iface.Name.Value] =
+                                    new HashSet<ObjectTypeDefinitionSyntax> { objectType };
+                        }
 
                     foreach (var abstractType in GetAbstractTypeMap().Values)
                     {
@@ -136,9 +142,9 @@ namespace GraphZen.LanguageModel
 
             if (
                 // Is super type abstract type?
-                GetAbstractTypeMap().TryGetValue(((NamedTypeSyntax) superType).Name.Value, out var abstractSuperType)
+                GetAbstractTypeMap().TryGetValue(((NamedTypeSyntax)superType).Name.Value, out var abstractSuperType)
                 // Is possible sub type object type?
-                && GetObjectTypeMap().TryGetValue(((NamedTypeSyntax) maybeSubType).Name.Value,
+                && GetObjectTypeMap().TryGetValue(((NamedTypeSyntax)maybeSubType).Name.Value,
                     out var maybeSubTypeObjectType)
                 && IsPossibleType(abstractSuperType, maybeSubTypeObjectType))
                 return true;

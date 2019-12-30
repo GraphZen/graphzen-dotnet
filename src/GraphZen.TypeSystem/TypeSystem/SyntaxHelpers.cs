@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem
                 case INamedType namedType:
                     return NamedType(Name(namedType.Name));
                 case NonNullType nonNull:
-                    return NonNull((NullableTypeSyntax) nonNull.OfType.ToTypeSyntax());
+                    return NonNullType((NullableTypeSyntax) nonNull.OfType.ToTypeSyntax());
                 case ListType list:
                     return ListType(list.OfType.ToTypeSyntax());
             }

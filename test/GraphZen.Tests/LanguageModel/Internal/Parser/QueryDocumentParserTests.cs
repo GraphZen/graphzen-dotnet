@@ -39,7 +39,7 @@ query testQuery($var1: String! = ""Foo"") @queryDirective {
                 new[]
                 {
                     SyntaxFactory.VariableDefinition(SyntaxFactory.Variable(SyntaxFactory.Name("var1")),
-                        SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("String"))),
+                        SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("String"))),
                         SyntaxFactory.StringValue("Foo"))
                 }, new[]
                 {

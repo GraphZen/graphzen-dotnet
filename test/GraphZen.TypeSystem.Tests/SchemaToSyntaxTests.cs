@@ -81,15 +81,15 @@ namespace GraphZen.TypeSystem.Tests
                         NamedType(Name("String")),
                         StringValue("field description", true)),
                     FieldDefinition(Name("nn"),
-                        NonNull(NamedType(Name("String")))),
+                        NonNullType(NamedType(Name("String")))),
                     FieldDefinition(Name("list"),
                         ListType(NamedType(Name("String")))),
                     FieldDefinition(Name("nnList"),
-                        NonNull(
+                        NonNullType(
                             ListType(NamedType(Name("String"))))),
                     FieldDefinition(Name("nnListOfnn"),
-                        NonNull(ListType(
-                            NonNull(NamedType(Name("String"))))))
+                        NonNullType(ListType(
+                            NonNullType(NamedType(Name("String"))))))
                 });
             objectType.ToSyntaxNode().ToSyntaxString().Should().Be(expected.ToSyntaxString());
             objectType.ToSyntaxNode().Should().Be(expected);
@@ -110,15 +110,15 @@ namespace GraphZen.TypeSystem.Tests
                         NamedType(Name("String")),
                         StringValue("field description", true)),
                     FieldDefinition(Name("nn"),
-                        NonNull(NamedType(Name("String")))),
+                        NonNullType(NamedType(Name("String")))),
                     FieldDefinition(Name("list"),
                         ListType(NamedType(Name("String")))),
                     FieldDefinition(Name("nnList"),
-                        NonNull(
+                        NonNullType(
                             ListType(NamedType(Name("String"))))),
                     FieldDefinition(Name("nnListOfnn"),
-                        NonNull(ListType(
-                            NonNull(NamedType(Name("String"))))))
+                        NonNullType(ListType(
+                            NonNullType(NamedType(Name("String"))))))
                 });
             objectType.ToSyntaxNode().Should().Be(expected);
         }
@@ -159,15 +159,15 @@ namespace GraphZen.TypeSystem.Tests
                         NamedType(Name("String")),
                         StringValue("field description", true)),
                     InputValueDefinition(Name("nn"),
-                        NonNull(NamedType(Name("String")))),
+                        NonNullType(NamedType(Name("String")))),
                     InputValueDefinition(Name("list"),
                         ListType(NamedType(Name("String")))),
                     InputValueDefinition(Name("nnList"),
-                        NonNull(
+                        NonNullType(
                             ListType(NamedType(Name("String"))))),
                     InputValueDefinition(Name("nnListOfnn"),
-                        NonNull(ListType(
-                            NonNull(NamedType(Name("String"))))))
+                        NonNullType(ListType(
+                            NonNullType(NamedType(Name("String"))))))
                 });
             inputObject.ToSyntaxNode().Should().Be(expected);
         }
