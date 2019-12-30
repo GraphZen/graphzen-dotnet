@@ -79,7 +79,7 @@ namespace {@namespace} {{
                 var genFactory = ctor.GetCustomAttribute<GenFactory>();
                 if (genFactory != null)
                 {
-                    var paramValues = ctor.GetParameters().Select(p =>
+                    var methodParameters = ctor.GetParameters().Select(p =>
                     {
                         var parameterType = p.HasNullableReferenceType()
                             ? $"{p.ParameterType.FullName}?"
@@ -88,9 +88,10 @@ namespace {@namespace} {{
                             $"{parameterType} {p.Name} {(p.HasDefaultValue ? " = " + PrintDefaultValue(p.DefaultValue) : "")}";
                     });
 
-                    var paramDisplay = string.Join(", ", paramValues);
+                    var parameters = string.Join(", ", methodParameters);
+                    var ctorParameters = string.Join(", ", ctor.GetParameters().Select(p => p.Name));
                     var method =
-                        $"public static {type.Name} {methodName}({paramDisplay}) => new {name}({paramDisplay});";
+                        $"public static {type.Name} {methodName}({parameters}) => new {name}({ctorParameters});";
                     yield return (genFactory.FactoryClassName, type.Namespace!, method);
                 }
             }
