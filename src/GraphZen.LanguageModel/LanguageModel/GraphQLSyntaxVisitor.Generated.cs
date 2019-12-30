@@ -1,13 +1,11 @@
-// Copyright (c) GraphZen LLC. All rights reserved.
+﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
+#nullable enable
 namespace GraphZen.LanguageModel
 {
     public abstract partial class GraphQLSyntaxVisitor
@@ -103,20 +101,16 @@ namespace GraphZen.LanguageModel
         public virtual void LeaveInlineFragment(InlineFragmentSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="InputObjectTypeDefinitionSyntax" /> node.</summary>
-        public virtual void EnterInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) =>
-            OnEnter(node);
+        public virtual void EnterInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="InputObjectTypeDefinitionSyntax" /> node.</summary>
-        public virtual void LeaveInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) =>
-            OnLeave(node);
+        public virtual void LeaveInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="InputObjectTypeExtensionSyntax" /> node.</summary>
-        public virtual void EnterInputObjectTypeExtension(InputObjectTypeExtensionSyntax node) =>
-            OnEnter(node);
+        public virtual void EnterInputObjectTypeExtension(InputObjectTypeExtensionSyntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="InputObjectTypeExtensionSyntax" /> node.</summary>
-        public virtual void LeaveInputObjectTypeExtension(InputObjectTypeExtensionSyntax node) =>
-            OnLeave(node);
+        public virtual void LeaveInputObjectTypeExtension(InputObjectTypeExtensionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="InputValueDefinitionSyntax" /> node.</summary>
         public virtual void EnterInputValueDefinition(InputValueDefinitionSyntax node) => OnEnter(node);
@@ -374,20 +368,16 @@ namespace GraphZen.LanguageModel
         public virtual TResult LeaveInlineFragment(InlineFragmentSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="InputObjectTypeDefinitionSyntax" /> node.</summary>
-        public virtual TResult EnterInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) =>
-            OnEnter(node);
+        public virtual TResult EnterInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="InputObjectTypeDefinitionSyntax" /> node.</summary>
-        public virtual TResult LeaveInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) =>
-            OnLeave(node);
+        public virtual TResult LeaveInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="InputObjectTypeExtensionSyntax" /> node.</summary>
-        public virtual TResult EnterInputObjectTypeExtension(InputObjectTypeExtensionSyntax node) =>
-            OnEnter(node);
+        public virtual TResult EnterInputObjectTypeExtension(InputObjectTypeExtensionSyntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="InputObjectTypeExtensionSyntax" /> node.</summary>
-        public virtual TResult LeaveInputObjectTypeExtension(InputObjectTypeExtensionSyntax node) =>
-            OnLeave(node);
+        public virtual TResult LeaveInputObjectTypeExtension(InputObjectTypeExtensionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="InputValueDefinitionSyntax" /> node.</summary>
         public virtual TResult EnterInputValueDefinition(InputValueDefinitionSyntax node) => OnEnter(node);
@@ -396,20 +386,16 @@ namespace GraphZen.LanguageModel
         public virtual TResult LeaveInputValueDefinition(InputValueDefinitionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="InterfaceTypeDefinitionSyntax" /> node.</summary>
-        public virtual TResult EnterInterfaceTypeDefinition(InterfaceTypeDefinitionSyntax node) =>
-            OnEnter(node);
+        public virtual TResult EnterInterfaceTypeDefinition(InterfaceTypeDefinitionSyntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="InterfaceTypeDefinitionSyntax" /> node.</summary>
-        public virtual TResult LeaveInterfaceTypeDefinition(InterfaceTypeDefinitionSyntax node) =>
-            OnLeave(node);
+        public virtual TResult LeaveInterfaceTypeDefinition(InterfaceTypeDefinitionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="InterfaceTypeExtensionSyntax" /> node.</summary>
-        public virtual TResult EnterInterfaceTypeExtension(InterfaceTypeExtensionSyntax node) =>
-            OnEnter(node);
+        public virtual TResult EnterInterfaceTypeExtension(InterfaceTypeExtensionSyntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="InterfaceTypeExtensionSyntax" /> node.</summary>
-        public virtual TResult LeaveInterfaceTypeExtension(InterfaceTypeExtensionSyntax node) =>
-            OnLeave(node);
+        public virtual TResult LeaveInterfaceTypeExtension(InterfaceTypeExtensionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="IntValueSyntax" /> node.</summary>
         public virtual TResult EnterIntValue(IntValueSyntax node) => OnEnter(node);
@@ -484,12 +470,10 @@ namespace GraphZen.LanguageModel
         public virtual TResult LeaveOperationDefinition(OperationDefinitionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="OperationTypeDefinitionSyntax" /> node.</summary>
-        public virtual TResult EnterOperationTypeDefinition(OperationTypeDefinitionSyntax node) =>
-            OnEnter(node);
+        public virtual TResult EnterOperationTypeDefinition(OperationTypeDefinitionSyntax node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref="OperationTypeDefinitionSyntax" /> node.</summary>
-        public virtual TResult LeaveOperationTypeDefinition(OperationTypeDefinitionSyntax node) =>
-            OnLeave(node);
+        public virtual TResult LeaveOperationTypeDefinition(OperationTypeDefinitionSyntax node) => OnLeave(node);
 
         /// <summary>Called when the visitor enters a <see cref="PunctuatorSyntax" /> node.</summary>
         public virtual TResult EnterPunctuator(PunctuatorSyntax node) => OnEnter(node);

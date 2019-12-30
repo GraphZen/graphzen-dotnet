@@ -16,6 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class EnumValueSyntax : ValueSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public EnumValueSyntax(NameSyntax value) : base(Check.NotNull(value, nameof(value)).Location)
         {
             Value = value.Value;

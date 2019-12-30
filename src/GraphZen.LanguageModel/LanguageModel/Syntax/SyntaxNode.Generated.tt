@@ -68,7 +68,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-
+#nullable enable
 namespace GraphZen.LanguageModel
 {
 

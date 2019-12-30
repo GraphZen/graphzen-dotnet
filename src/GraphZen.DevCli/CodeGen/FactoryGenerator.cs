@@ -82,8 +82,8 @@ namespace {@namespace} {{
                     var methodParameters = ctor.GetParameters().Select(p =>
                     {
                         var parameterType = p.HasNullableReferenceType()
-                            ? $"{p.ParameterType.FullName}?"
-                            : p.ParameterType.FullName;
+                            ? $"{GetParameterType(p.ParameterType)}?"
+                            : GetParameterType(p.ParameterType);
                         return
                             $"{parameterType} {p.Name} {(p.HasDefaultValue ? " = " + PrintDefaultValue(p.DefaultValue) : "")}";
                     });
@@ -95,6 +95,17 @@ namespace {@namespace} {{
                     yield return (genFactory.FactoryClassName, type.Namespace!, method);
                 }
             }
+        }
+
+        private static string GetParameterType(Type type)
+        {
+            if (!type.IsGenericType)
+            {
+                return type.FullName!;
+            }
+
+            var gargs =string.Join(", ",type.GetGenericArguments().Select(_ => _.FullName));
+            return $"{type.Namespace}.{type.Name.Remove(type.Name.LastIndexOf("`", StringComparison.Ordinal))}<{gargs}>";
         }
 
 

@@ -17,8 +17,9 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ObjectFieldSyntax : SyntaxNode
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public ObjectFieldSyntax(NameSyntax name, ValueSyntax value, SyntaxLocation? location = null) :
-            base(location)
+             base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Value = Check.NotNull(value, nameof(value));
@@ -57,7 +58,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ObjectFieldSyntax && Equals((ObjectFieldSyntax) obj);
+            return obj is ObjectFieldSyntax && Equals((ObjectFieldSyntax)obj);
         }
 
         public override int GetHashCode()

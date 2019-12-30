@@ -9,9 +9,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -20,10 +17,11 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class SchemaDefinitionSyntax : TypeSystemDefinitionSyntax, IDirectivesSyntax
     {
-        public SchemaDefinitionSyntax(IReadOnlyList<OperationTypeDefinitionSyntax> operationTypes,
+        [GenFactory(nameof(SyntaxFactory))]
+        public SchemaDefinitionSyntax(IReadOnlyList<OperationTypeDefinitionSyntax>? operationTypes = null,
             IReadOnlyList<DirectiveSyntax>? directives = null, SyntaxLocation? location = null) : base(location)
         {
-            RootOperationTypes = Check.NotNull(operationTypes, nameof(operationTypes));
+            RootOperationTypes = operationTypes ?? OperationTypeDefinitionSyntax.EmptyList;
             Directives = directives ?? DirectiveSyntax.EmptyList;
         }
 
@@ -62,7 +60,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is SchemaDefinitionSyntax && Equals((SchemaDefinitionSyntax) obj);
+            return obj is SchemaDefinitionSyntax && Equals((SchemaDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

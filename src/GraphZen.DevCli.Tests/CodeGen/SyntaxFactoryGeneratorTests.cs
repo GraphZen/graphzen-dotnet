@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
@@ -17,15 +18,16 @@ namespace GraphZen.CodeGen
         public class TestSyntax
         {
             [GenFactory(nameof(SyntaxFactory))]
-            public TestSyntax(SyntaxLocation location, string? nullalbe = TestValue, bool test = false)
+            public TestSyntax(List<string> hello, SyntaxLocation location, string? nullalbe = TestValue, bool test = false)
             {
             }
         }
-        
+
         [Fact]
         public void get_factory_method_match_expected()
         {
             var method = FactoryGenerator.GetFactoryMethods(typeof(TestSyntax)).First();
+            // method.Method.Should().Be("");
         }
     }
 }

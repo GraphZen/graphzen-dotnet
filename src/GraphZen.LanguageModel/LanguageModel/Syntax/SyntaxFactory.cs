@@ -17,26 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public static partial class SyntaxFactory
     {
-        private static NullValueSyntax NullValueInstance { get; } = new NullValueSyntax();
-
-
-
         [DebuggerStepThrough]
-        public static NullValueSyntax NullValue() => NullValueInstance;
-
-        [DebuggerStepThrough]
-        public static SchemaDefinitionSyntax SchemaDefinition() =>
-            new SchemaDefinitionSyntax(OperationTypeDefinitionSyntax.EmptyList);
-
-
-        [DebuggerStepThrough]
-        public static OperationTypeDefinitionSyntax OperationTypeDefinition(OperationType operationType,
-            NamedTypeSyntax type) =>
-            new OperationTypeDefinitionSyntax(operationType, type);
-
-
-        [DebuggerStepThrough]
-        public static NamedTypeSyntax NamedType(NameSyntax name) => new NamedTypeSyntax(name);
+        public static NullValueSyntax NullValue() => NullValueSyntax.Instance;
 
 
         [DebuggerStepThrough]

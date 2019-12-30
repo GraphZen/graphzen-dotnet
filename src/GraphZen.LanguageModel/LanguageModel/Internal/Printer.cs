@@ -30,7 +30,6 @@ namespace GraphZen.LanguageModel.Internal
 
         private void PrintNode(SyntaxNode? node)
         {
-
             switch (node)
             {
                 case null:
@@ -455,7 +454,6 @@ namespace GraphZen.LanguageModel.Internal
 
         public void Join(IReadOnlyList<SyntaxNode> nodes, Action? seperatorAction = null)
         {
-
             var i = 1;
             foreach (var node in nodes)
             {
