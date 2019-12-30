@@ -18,10 +18,16 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class SelectionSetSyntax : SyntaxNode
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public SelectionSetSyntax(IReadOnlyList<SelectionSyntax> selections,
             SyntaxLocation? location = null) : base(location)
         {
             Selections = Check.NotNull(selections, nameof(selections));
+        }
+
+        [GenFactory(nameof(SyntaxFactory))]
+        public SelectionSetSyntax(params SelectionSyntax[] selections) : this(selections, null)
+        {
         }
 
         /// <summary>
@@ -45,7 +51,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is SelectionSetSyntax && Equals((SelectionSetSyntax) obj);
+            return obj is SelectionSetSyntax && Equals((SelectionSetSyntax)obj);
         }
 
         public override int GetHashCode() => Selections.GetHashCode();

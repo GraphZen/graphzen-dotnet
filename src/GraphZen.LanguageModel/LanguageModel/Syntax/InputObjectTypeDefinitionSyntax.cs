@@ -19,6 +19,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class InputObjectTypeDefinitionSyntax : TypeDefinitionSyntax, IDirectivesSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public InputObjectTypeDefinitionSyntax(
             NameSyntax name,
             StringValueSyntax? description = null,

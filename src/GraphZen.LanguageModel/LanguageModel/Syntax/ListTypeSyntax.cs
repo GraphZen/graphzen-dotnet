@@ -17,6 +17,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ListTypeSyntax : NullableTypeSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public ListTypeSyntax(TypeSyntax type, SyntaxLocation? location = null) : base(location)
         {
             OfType = Check.NotNull(type, nameof(type));

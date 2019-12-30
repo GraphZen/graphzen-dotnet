@@ -81,11 +81,14 @@ namespace {@namespace} {{
                 {
                     var methodParameters = ctor.GetParameters().Select(p =>
                     {
+                        
                         var parameterType = p.HasNullableReferenceType()
                             ? $"{GetParameterType(p.ParameterType)}?"
                             : GetParameterType(p.ParameterType);
+
+                        var pararmsArray = p.GetCustomAttribute<ParamArrayAttribute>() != null ? "params" : "";
                         return
-                            $"{parameterType} {p.Name} {(p.HasDefaultValue ? " = " + PrintDefaultValue(p.DefaultValue) : "")}";
+                            $"{pararmsArray} {parameterType} {p.Name} {(p.HasDefaultValue ? " = " + PrintDefaultValue(p.DefaultValue) : "")}";
                     });
 
                     var parameters = string.Join(", ", methodParameters);

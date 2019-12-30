@@ -19,6 +19,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class InputValueDefinitionSyntax : SyntaxNode, IDirectivesSyntax, IDescribedSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public InputValueDefinitionSyntax(
             NameSyntax name,
             TypeSyntax type,

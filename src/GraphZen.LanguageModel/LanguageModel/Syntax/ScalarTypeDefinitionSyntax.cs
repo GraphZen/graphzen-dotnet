@@ -19,6 +19,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ScalarTypeDefinitionSyntax : TypeDefinitionSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public ScalarTypeDefinitionSyntax(
             NameSyntax name,
             StringValueSyntax? description = null,

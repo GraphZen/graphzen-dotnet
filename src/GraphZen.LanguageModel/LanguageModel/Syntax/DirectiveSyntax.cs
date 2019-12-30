@@ -16,6 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class DirectiveSyntax : SyntaxNode, IArgumentsNode, INamedSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public DirectiveSyntax(NameSyntax name,
             IReadOnlyList<ArgumentSyntax>? arguments = null,
             SyntaxLocation? location = null) : base(location)

@@ -13,6 +13,7 @@ using Xunit;
 using static GraphZen.LanguageModel.SyntaxFactory;
 using static GraphZen.TypeSystem.Internal.AstFromValue;
 using ListType = GraphZen.TypeSystem.ListType;
+using NonNullType = GraphZen.TypeSystem.NonNullType;
 
 namespace GraphZen.Tests.Utilities
 {

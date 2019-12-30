@@ -18,6 +18,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ObjectValueSyntax : ValueSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public ObjectValueSyntax(IReadOnlyList<ObjectFieldSyntax> fields, SyntaxLocation? location = null) :
             base(location)
         {

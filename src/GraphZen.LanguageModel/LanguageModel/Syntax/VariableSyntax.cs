@@ -19,6 +19,7 @@ namespace GraphZen.LanguageModel
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public partial class VariableSyntax : ValueSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public VariableSyntax(NameSyntax name, SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));

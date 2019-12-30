@@ -41,8 +41,6 @@ namespace GraphZen.LanguageModel
             new ObjectFieldSyntax(name, value);
 
 
-
-
         [DebuggerStepThrough]
         public static EnumValueDefinitionSyntax EnumValueDefinition(EnumValueSyntax enumValue) =>
             new EnumValueDefinitionSyntax(enumValue);
@@ -67,11 +65,6 @@ namespace GraphZen.LanguageModel
         [DebuggerStepThrough]
         public static BooleanValueSyntax BooleanValue(bool value) => BooleanValueSyntax.Create(value);
 
-
-
-        [DebuggerStepThrough]
-        public static StringValueSyntax StringValue(string value, bool isBlockString = false) =>
-            new StringValueSyntax(value, isBlockString);
 
 
         [DebuggerStepThrough]
@@ -128,11 +121,7 @@ namespace GraphZen.LanguageModel
         public static VariableSyntax Variable(NameSyntax name) => new VariableSyntax(name);
 
 
-        [DebuggerStepThrough]
-        public static VariableDefinitionSyntax VariableDefinition(VariableSyntax variable, TypeSyntax type,
-            ValueSyntax defaultValue = null) =>
-            new VariableDefinitionSyntax(variable, type, defaultValue);
-
+        
 
         [DebuggerStepThrough]
         public static NameSyntax Name(string name) => new NameSyntax(name);
@@ -170,14 +159,8 @@ namespace GraphZen.LanguageModel
             new UnionTypeDefinitionSyntax(name);
 
 
-        [DebuggerStepThrough]
-        public static ScalarTypeDefinitionSyntax ScalarTypeDefinition(NameSyntax name,
-            StringValueSyntax description = null) =>
-            new ScalarTypeDefinitionSyntax(name, description);
+        
 
-
-        [DebuggerStepThrough]
-        public static SelectionSetSyntax SelectionSet(params SelectionSyntax[] selections) =>
-            new SelectionSetSyntax(selections);
+        
     }
 }

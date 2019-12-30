@@ -19,6 +19,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ObjectTypeDefinitionSyntax : TypeDefinitionSyntax, IDirectivesSyntax, IFieldsNode
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public ObjectTypeDefinitionSyntax(NameSyntax name,
             StringValueSyntax? description = null,
             IReadOnlyList<NamedTypeSyntax>? interfaces = null,

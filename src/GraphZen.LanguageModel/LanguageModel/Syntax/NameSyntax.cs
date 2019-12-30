@@ -21,6 +21,7 @@ namespace GraphZen.LanguageModel
     [DebuggerDisplay("Name={Value}")]
     public partial class NameSyntax : SyntaxNode
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public NameSyntax(string value, SyntaxLocation? location = null) : base(location)
         {
             Value = Check.NotNull(value, nameof(value));

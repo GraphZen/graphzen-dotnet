@@ -18,7 +18,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ListValueSyntax : ValueSyntax
     {
-        [GenFactory(nameof(SyntaxFactory)]
+        [GenFactory(nameof(SyntaxFactory))]
         public ListValueSyntax(IReadOnlyList<ValueSyntax> values, SyntaxLocation? location = null) : base(location)
         {
             Values = values ?? EmptyValuesCollection;

@@ -6,6 +6,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.LanguageModel.SyntaxFactory;
 
 #nullable disable
 
@@ -41,55 +42,55 @@ query queryName($foo: ComplexType, $site: Site = MOBILE) {
 
             var result = ParseDocument(query);
 
-            var expected = SyntaxFactory.Document(new OperationDefinitionSyntax(OperationType.Query,
-                SyntaxFactory.SelectionSet(new FieldSyntax(SyntaxFactory.Name("node"),
-                    SyntaxFactory.Name("whoever123is"), new[]
+            var expected = Document(new OperationDefinitionSyntax(OperationType.Query,
+                SelectionSet(new FieldSyntax(Name("node"),
+                    Name("whoever123is"), new[]
                     {
-                        SyntaxFactory.Argument(SyntaxFactory.Name("id"),
-                            SyntaxFactory.ListValue(SyntaxFactory.IntValue(123), SyntaxFactory.IntValue(456)))
-                    }, null, SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("id")),
-                        new InlineFragmentSyntax(SyntaxFactory.SelectionSet(new FieldSyntax(
-                                SyntaxFactory.Name("field2"),
-                                SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("id")),
+                        Argument(Name("id"),
+                            ListValue(IntValue(123), IntValue(456)))
+                    }, null, SelectionSet(Field(Name("id")),
+                        new InlineFragmentSyntax(SelectionSet(new FieldSyntax(
+                                Name("field2"),
+                                SelectionSet(Field(Name("id")),
                                     new FieldSyntax(
-                                        SyntaxFactory.Name("field1"), SyntaxFactory.Name("alias"), new[]
+                                        Name("field1"), Name("alias"), new[]
                                         {
-                                            SyntaxFactory.Argument(SyntaxFactory.Name("first"),
-                                                SyntaxFactory.IntValue(10)),
-                                            SyntaxFactory.Argument(SyntaxFactory.Name("after"),
-                                                SyntaxFactory.Variable(SyntaxFactory.Name("foo")))
+                                            Argument(Name("first"),
+                                                IntValue(10)),
+                                            Argument(Name("after"),
+                                                Variable(Name("foo")))
                                         }, new[]
                                         {
-                                            new DirectiveSyntax(SyntaxFactory.Name("include"), new[]
+                                            new DirectiveSyntax(Name("include"), new[]
                                             {
-                                                SyntaxFactory.Argument(SyntaxFactory.Name("if"),
-                                                    SyntaxFactory.Variable(SyntaxFactory.Name("foo")))
+                                                Argument(Name("if"),
+                                                    Variable(Name("foo")))
                                             })
                                         },
-                                        SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("id")),
-                                            SyntaxFactory.FragmentSpread(SyntaxFactory.Name("frag"))))))),
-                            SyntaxFactory.NamedType(SyntaxFactory.Name("User")), new[]
+                                        SelectionSet(Field(Name("id")),
+                                            FragmentSpread(Name("frag"))))))),
+                            NamedType(Name("User")), new[]
                             {
-                                SyntaxFactory.Directive(SyntaxFactory.Name("defer"))
+                                Directive(Name("defer"))
                             }), new InlineFragmentSyntax(
-                            SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("id"))), null, new[]
+                            SelectionSet(Field(Name("id"))), null, new[]
                             {
-                                new DirectiveSyntax(SyntaxFactory.Name("skip"),
+                                new DirectiveSyntax(Name("skip"),
                                     new[]
                                     {
-                                        SyntaxFactory.Argument(SyntaxFactory.Name("unless"),
-                                            SyntaxFactory.Variable(SyntaxFactory.Name("foo")))
+                                        Argument(Name("unless"),
+                                            Variable(Name("foo")))
                                     })
                             }),
                         new InlineFragmentSyntax(
-                            SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("id"))))))),
-                SyntaxFactory.Name("queryName"), new[]
+                            SelectionSet(Field(Name("id"))))))),
+                Name("queryName"), new[]
                 {
-                    SyntaxFactory.VariableDefinition(SyntaxFactory.Variable(SyntaxFactory.Name("foo")),
-                        SyntaxFactory.NamedType(SyntaxFactory.Name("ComplexType"))),
-                    SyntaxFactory.VariableDefinition(SyntaxFactory.Variable(SyntaxFactory.Name("site")),
-                        SyntaxFactory.NamedType(SyntaxFactory.Name("Site")),
-                        SyntaxFactory.EnumValue(SyntaxFactory.Name("MOBILE")))
+                    VariableDefinition(Variable(Name("foo")),
+                        NamedType(Name("ComplexType"))),
+                    VariableDefinition(Variable(Name("site")),
+                        NamedType(Name("Site")),
+                        EnumValue(Name("MOBILE")))
                 }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
@@ -108,18 +109,18 @@ mutation likeStory {
   }
 }";
             var result = ParseDocument(query);
-            var expected = SyntaxFactory.Document(new OperationDefinitionSyntax(OperationType.Mutation,
-                SyntaxFactory.SelectionSet(new FieldSyntax(
-                    SyntaxFactory.Name("like"), null, new[]
+            var expected = Document(new OperationDefinitionSyntax(OperationType.Mutation,
+                SelectionSet(new FieldSyntax(
+                    Name("like"), null, new[]
                     {
-                        SyntaxFactory.Argument(SyntaxFactory.Name("story"), SyntaxFactory.IntValue(123))
+                        Argument(Name("story"), IntValue(123))
                     }, new[]
                     {
-                        SyntaxFactory.Directive(SyntaxFactory.Name("defer"))
+                        Directive(Name("defer"))
                     },
-                    SyntaxFactory.SelectionSet(new FieldSyntax(SyntaxFactory.Name("story"),
-                        SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("id"))))))),
-                SyntaxFactory.Name("likeStory")));
+                    SelectionSet(new FieldSyntax(Name("story"),
+                        SelectionSet(Field(Name("id"))))))),
+                Name("likeStory")));
 
 
             Assert.Equal(expected, result);
@@ -143,23 +144,23 @@ subscription StoryLikeSubscription($input: StoryLikeSubscribeInput) {
   }
 }";
             var result = ParseDocument(query);
-            var expected = SyntaxFactory.Document(new OperationDefinitionSyntax(OperationType.Subscription,
-                SyntaxFactory.SelectionSet(
-                    new FieldSyntax(SyntaxFactory.Name("storyLikeSubscribe"), null, new[]
+            var expected = Document(new OperationDefinitionSyntax(OperationType.Subscription,
+                SelectionSet(
+                    new FieldSyntax(Name("storyLikeSubscribe"), null, new[]
                         {
-                            SyntaxFactory.Argument(SyntaxFactory.Name("input"),
-                                SyntaxFactory.Variable(SyntaxFactory.Name("input")))
+                            Argument(Name("input"),
+                                Variable(Name("input")))
                         }, null,
-                        SyntaxFactory.SelectionSet(new FieldSyntax(SyntaxFactory.Name("story"),
-                            SyntaxFactory.SelectionSet(
-                                new FieldSyntax(SyntaxFactory.Name("likers"),
-                                    SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("count")))),
-                                new FieldSyntax(SyntaxFactory.Name("likeSentence"),
-                                    SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("text")))))))
-                    )), SyntaxFactory.Name("StoryLikeSubscription"), new[]
+                        SelectionSet(new FieldSyntax(Name("story"),
+                            SelectionSet(
+                                new FieldSyntax(Name("likers"),
+                                    SelectionSet(Field(Name("count")))),
+                                new FieldSyntax(Name("likeSentence"),
+                                    SelectionSet(Field(Name("text")))))))
+                    )), Name("StoryLikeSubscription"), new[]
                 {
-                    SyntaxFactory.VariableDefinition(SyntaxFactory.Variable(SyntaxFactory.Name("input")),
-                        SyntaxFactory.NamedType(SyntaxFactory.Name("StoryLikeSubscribeInput")))
+                    VariableDefinition(Variable(Name("input")),
+                        NamedType(Name("StoryLikeSubscribeInput")))
                 }));
 
             Assert.Equal(expected, result);

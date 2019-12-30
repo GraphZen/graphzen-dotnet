@@ -19,6 +19,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class FragmentSpreadSyntax : SelectionSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public FragmentSpreadSyntax(NameSyntax name,
             IReadOnlyList<DirectiveSyntax>? directives = null,
             SyntaxLocation? location = null) : base(location)

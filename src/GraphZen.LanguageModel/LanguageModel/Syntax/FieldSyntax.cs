@@ -24,6 +24,7 @@ namespace GraphZen.LanguageModel
         }
 
 
+        [GenFactory(nameof(SyntaxFactory))]
         public FieldSyntax(NameSyntax name,
             NameSyntax? alias = null,
             IReadOnlyList<ArgumentSyntax>? arguments = null,

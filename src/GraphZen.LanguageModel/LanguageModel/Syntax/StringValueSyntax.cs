@@ -19,6 +19,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class StringValueSyntax : ValueSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public StringValueSyntax(string value, bool isBlockString = false,
             SyntaxLocation? location = null) :
             base(location)
