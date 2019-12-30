@@ -9,6 +9,19 @@ using Newtonsoft.Json.Linq;
 
 namespace GraphZen.Infrastructure
 {
+    public interface INullabilityTest
+    {
+        string? NullableReferenceTypeProperty { get; }
+        string NonNullableReferenceTypeProperty { get; }
+        string? NullableReferenceTypeMethod();
+        string? NullableReferenceTypeMethodWithNonNullableParameter(string nonNullable);
+        string NonNullableReferenceTypeMethodWithNonNullableParameter(string nonNullable);
+        string? NullableReferenceTypeMethodWithNullableParameter(string? nullable);
+        string? NullableReferenceTypeMethodWithNullableAndNonNullableParameters(string? nullable, string nonNullable);
+        string NonNullableReferenceTypeMethodWithNullableParameter(string? nullable);
+        string NonNullableReferenceTypeMethodWithNullableAndNonNullableParameters(string? nullable, string nonNullable);
+        string NonNullableReferenceTypeMethod();
+    }
     public static class TestHelpers
     {
         public static IDictionary<string, object> ToDictionary(dynamic value)

@@ -20,6 +20,7 @@ namespace GraphZen.LanguageModel
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public partial class ArgumentSyntax : SyntaxNode, IDescribedSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public ArgumentSyntax(NameSyntax name, StringValueSyntax description, ValueSyntax value,
             SyntaxLocation location = null) : base(location)
         {
@@ -68,7 +69,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ArgumentSyntax && Equals((ArgumentSyntax) obj);
+            return obj is ArgumentSyntax && Equals((ArgumentSyntax)obj);
         }
 
         public override int GetHashCode()

@@ -13,18 +13,19 @@ namespace GraphZen.CodeGen
 {
     public class SyntaxFactoryGeneratorTests
     {
+        public const string TestValue = "hello";
         public class TestSyntax
         {
             [GenFactory(nameof(SyntaxFactory))]
-            public TestSyntax(SyntaxLocation location)
+            public TestSyntax(SyntaxLocation location, string? nullalbe = TestValue, bool test = false)
             {
             }
         }
-
-        [Fact(Skip = "wip")]
+        
+        [Fact]
         public void get_factory_method_match_expected()
         {
-            var method = GenerateSyntaxFactory.GetFactoryMethod(typeof(TestSyntax)).First().method;
+            var method = FactoryGenerator.GetFactoryMethods(typeof(TestSyntax)).First().method;
             method.Should().Be("hello");
         }
     }

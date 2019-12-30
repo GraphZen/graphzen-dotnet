@@ -7,6 +7,7 @@ using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Invocation;
 using System.Diagnostics.CodeAnalysis;
+using GraphZen.CodeGen;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using static GraphZen.CodeGen.CodeGenTasks;
@@ -17,11 +18,12 @@ namespace GraphZen
     {
         private static readonly Dictionary<string, Action> CodeGenTasks = new Dictionary<string, Action>
         {
-            {"typeSystem", RunCodeGen}
+            {"typeSystem", GenerateTypeSystem},
+            {"factories", FactoryGenerator.GenerateFactoryMethods}
         };
 
         private static Command Command(string name) => new Command(name)
-            {Handler = CommandHandler.Create(CodeGenTasks[name])};
+        { Handler = CommandHandler.Create(CodeGenTasks[name]) };
 
 
         private static void Main(string[] args)
@@ -30,24 +32,20 @@ namespace GraphZen
 
             var root = new RootCommand
             {
-                new Command("all")
-                {
-                    Handler = CommandHandler.Create(() =>
-                    {
-                        foreach (var (_, action) in CodeGenTasks)
-                        {
-                            action();
-                        }
-                    })
-                }
             };
             var genCmd = new Command("gen")
             {
-                Command("typeSystem")
+                // Command("typeSystem")
             };
-            genCmd.Handler = CommandHandler.Create(() => { Console.WriteLine("Gen=All"); });
+            genCmd.Handler = CommandHandler.Create(() =>
+            {
+                foreach (var (_, action) in CodeGenTasks)
+                {
+                    action();
+                }
+            });
             root.AddCommand(genCmd);
-            
+
 
             var cliBuilder = new CommandLineBuilder(root);
             var cli = cliBuilder.Build();

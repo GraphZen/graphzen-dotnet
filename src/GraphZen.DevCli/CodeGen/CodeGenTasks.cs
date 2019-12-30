@@ -11,7 +11,7 @@ namespace GraphZen.CodeGen
 {
     public static class CodeGenTasks
     {
-        public static void RunCodeGen()
+        public static void GenerateTypeSystem()
         {
             GenerateTypeSystemDictionaryAccessors();
         }

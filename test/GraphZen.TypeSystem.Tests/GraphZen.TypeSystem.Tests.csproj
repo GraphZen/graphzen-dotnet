@@ -28,6 +28,8 @@
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.Infrastructure.Testing\GraphZen.Infrastructure.Testing.csproj" />
     <ProjectReference Include="..\..\src\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
+    <ProjectReference Include="..\GraphZen.TypeSystem.TestSubjectAssemblyA\GraphZen.TypeSystem.TestSubjectAssemblyA.csproj" />
+    <ProjectReference Include="..\GraphZen.TypeSystem.TestSubjectAssemblyB\GraphZen.TypeSystem.TestSubjectAssemblyB.csproj" />
   </ItemGroup>
   
 </Project>
