@@ -20,8 +20,8 @@ namespace GraphZen.LanguageModel
         IDirectivesSyntax
     {
         public FragmentDefinitionSyntax(NameSyntax name, NamedTypeSyntax typeCondition,
-            SelectionSetSyntax selectionSet, IReadOnlyList<DirectiveSyntax> directives = null,
-            SyntaxLocation location = null) : base(location)
+            SelectionSetSyntax selectionSet, IReadOnlyList<DirectiveSyntax>? directives = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             TypeCondition = Check.NotNull(typeCondition, nameof(typeCondition));
@@ -63,7 +63,7 @@ namespace GraphZen.LanguageModel
             SelectionSet.Equals(other.SelectionSet) &&
             Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

@@ -8,7 +8,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -20,7 +20,7 @@ namespace GraphZen.LanguageModel
     public partial class ScalarTypeExtensionSyntax : TypeExtensionSyntax, IDirectivesSyntax
     {
         public ScalarTypeExtensionSyntax(NameSyntax name, IReadOnlyList<DirectiveSyntax> directives,
-            SyntaxLocation location = null) : base(location)
+            SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Directives = directives ?? DirectiveSyntax.EmptyList;
@@ -35,7 +35,7 @@ namespace GraphZen.LanguageModel
         private bool Equals(ScalarTypeExtensionSyntax other) =>
             Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

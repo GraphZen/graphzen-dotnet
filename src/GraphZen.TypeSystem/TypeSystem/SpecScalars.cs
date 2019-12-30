@@ -21,7 +21,7 @@ namespace GraphZen.TypeSystem
         public static ScalarType ID { get; } = ScalarType.Create("ID", _ =>
             {
                 _
-                    .Description(SpecScalarSyntaxNodes.ID.Description.Value)
+                    .Description(SpecScalarSyntaxNodes.ID.Description?.Value)
                     .Serializer(value =>
                     {
                         if (value is string str) return Maybe.Some<object>(str);
@@ -56,7 +56,7 @@ namespace GraphZen.TypeSystem
 
 
         public static ScalarType String { get; } = ScalarType.Create<string>(
-            _ => _.Description(SpecScalarSyntaxNodes.String.Description.Value)
+            _ => _.Description(SpecScalarSyntaxNodes.String.Description?.Value)
                 .ValueParser(value =>
                 {
                     if (value is string str) return Maybe.Some<object>(str);
@@ -81,7 +81,7 @@ namespace GraphZen.TypeSystem
         public static ScalarType Int { get; } = ScalarType.Create<int>(_ =>
         {
             _
-                .Description(SpecScalarSyntaxNodes.Int.Description.Value)
+                .Description(SpecScalarSyntaxNodes.Int.Description?.Value)
                 .Name("Int")
                 .ValueParser(value =>
                 {
@@ -121,7 +121,7 @@ namespace GraphZen.TypeSystem
         public static ScalarType Float { get; } = ScalarType.Create<float>(_ =>
         {
             _
-                .Description(SpecScalarSyntaxNodes.Float.Description.Value)
+                .Description(SpecScalarSyntaxNodes.Float.Description?.Value)
                 .Name("Float")
                 .Serializer(value =>
                 {
@@ -162,7 +162,7 @@ namespace GraphZen.TypeSystem
 
         public static ScalarType Boolean { get; } = ScalarType.Create<bool>(_ =>
         {
-            _.Description(SpecScalarSyntaxNodes.Boolean.Description.Value)
+            _.Description(SpecScalarSyntaxNodes.Boolean.Description?.Value)
                 .ValueParser(val => Maybe.Some<object>(Convert.ToBoolean(val)))
                 .LiteralParser(
                     node => node is BooleanValueSyntax bvn ? Maybe.Some<object>(bvn.Value) : Maybe.None<object>())

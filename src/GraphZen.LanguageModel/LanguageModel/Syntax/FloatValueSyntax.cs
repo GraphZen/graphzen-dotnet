@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class FloatValueSyntax : ValueSyntax
     {
-        public FloatValueSyntax(string value, SyntaxLocation location = null) : base(location)
+        public FloatValueSyntax(string value, SyntaxLocation? location = null) : base(location)
         {
             Value = Check.NotNull(value, nameof(value));
         }
@@ -35,7 +35,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(FloatValueSyntax other) => Value.Equals(other.Value);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

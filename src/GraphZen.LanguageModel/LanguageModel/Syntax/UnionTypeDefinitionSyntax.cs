@@ -8,7 +8,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -20,10 +20,10 @@ namespace GraphZen.LanguageModel
     public partial class UnionTypeDefinitionSyntax : TypeDefinitionSyntax, IDirectivesSyntax
     {
         public UnionTypeDefinitionSyntax(NameSyntax name,
-            StringValueSyntax description = null,
-            IReadOnlyList<DirectiveSyntax> directives = null,
-            IReadOnlyList<NamedTypeSyntax> types = null,
-            SyntaxLocation location = null) : base(location)
+            StringValueSyntax? description = null,
+            IReadOnlyList<DirectiveSyntax>? directives = null,
+            IReadOnlyList<NamedTypeSyntax>? types = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
@@ -46,7 +46,7 @@ namespace GraphZen.LanguageModel
         public override IEnumerable<SyntaxNode> Children =>
             Name.ToEnumerable().Concat(Directives).Concat(MemberTypes);
 
-        public override StringValueSyntax Description { get; }
+        public override StringValueSyntax? Description { get; }
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
@@ -56,7 +56,7 @@ namespace GraphZen.LanguageModel
             MemberTypes.SequenceEqual(other.MemberTypes) &&
             Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

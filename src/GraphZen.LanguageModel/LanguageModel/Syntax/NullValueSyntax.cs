@@ -7,7 +7,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -18,7 +18,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class NullValueSyntax : ValueSyntax
     {
-        public NullValueSyntax(SyntaxLocation location = null) : base(location)
+        public NullValueSyntax(SyntaxLocation? location = null) : base(location)
         {
         }
 
@@ -26,7 +26,7 @@ namespace GraphZen.LanguageModel
 
         public string GetDisplayValue() => "null";
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 
@@ -38,6 +38,6 @@ namespace GraphZen.LanguageModel
         public override int GetHashCode() => -1;
 
 
-        public override object GetValue() => null;
+        public override object? GetValue() => null;
     }
 }

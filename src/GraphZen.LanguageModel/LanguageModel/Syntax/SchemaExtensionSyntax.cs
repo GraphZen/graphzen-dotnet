@@ -8,7 +8,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -20,9 +20,9 @@ namespace GraphZen.LanguageModel
     public partial class SchemaExtensionSyntax : TypeSystemExtensionSyntax, IDirectivesSyntax
     {
         public SchemaExtensionSyntax(
-            IReadOnlyList<DirectiveSyntax> directives = null,
-            IReadOnlyList<OperationTypeDefinitionSyntax> operationTypes = null,
-            SyntaxLocation location = null) : base(location)
+            IReadOnlyList<DirectiveSyntax>? directives = null,
+            IReadOnlyList<OperationTypeDefinitionSyntax>? operationTypes = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Directives = directives ?? DirectiveSyntax.EmptyList;
             OperationTypes = operationTypes ?? OperationTypeDefinitionSyntax.EmptyList;
@@ -45,7 +45,7 @@ namespace GraphZen.LanguageModel
         private bool Equals(SchemaExtensionSyntax other) =>
             OperationTypes.SequenceEqual(other.OperationTypes) && Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

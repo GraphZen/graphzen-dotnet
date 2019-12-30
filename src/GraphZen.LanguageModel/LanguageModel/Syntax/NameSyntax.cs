@@ -10,7 +10,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -21,7 +21,7 @@ namespace GraphZen.LanguageModel
     [DebuggerDisplay("Name={Value}")]
     public partial class NameSyntax : SyntaxNode
     {
-        public NameSyntax(string value, SyntaxLocation location = null) : base(location)
+        public NameSyntax(string value, SyntaxLocation? location = null) : base(location)
         {
             Value = Check.NotNull(value, nameof(value));
             if (!value.IsValidGraphQLName())
@@ -44,7 +44,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(NameSyntax other) => string.Equals(Value, other.Value);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

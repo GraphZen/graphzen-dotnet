@@ -20,7 +20,7 @@ namespace GraphZen.LanguageModel
     public partial class ArgumentSyntax : SyntaxNode, IDescribedSyntax
     {
         [GenFactory(nameof(SyntaxFactory))]
-        public ArgumentSyntax(NameSyntax name, StringValueSyntax description, ValueSyntax value,
+        public ArgumentSyntax(NameSyntax name, StringValueSyntax? description, ValueSyntax value,
             SyntaxLocation? location = null) : base(location)
         {
             Check.NotNull(name, nameof(name));
@@ -58,7 +58,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        public StringValueSyntax Description { get; }
+        public StringValueSyntax? Description { get; }
 
         private bool Equals(ArgumentSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
 

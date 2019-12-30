@@ -7,7 +7,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -19,7 +19,7 @@ namespace GraphZen.LanguageModel
     public partial class SelectionSetSyntax : SyntaxNode
     {
         public SelectionSetSyntax(IReadOnlyList<SelectionSyntax> selections,
-            SyntaxLocation location = null) : base(location)
+            SyntaxLocation? location = null) : base(location)
         {
             Selections = Check.NotNull(selections, nameof(selections));
         }
@@ -39,7 +39,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(SelectionSetSyntax other) => Selections.SequenceEqual(other.Selections);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

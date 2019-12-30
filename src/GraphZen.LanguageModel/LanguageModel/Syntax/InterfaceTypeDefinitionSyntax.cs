@@ -8,7 +8,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -20,10 +20,10 @@ namespace GraphZen.LanguageModel
     public partial class InterfaceTypeDefinitionSyntax : TypeDefinitionSyntax, IDirectivesSyntax, IFieldsNode
     {
         public InterfaceTypeDefinitionSyntax(NameSyntax name,
-            StringValueSyntax description = null,
-            IReadOnlyList<DirectiveSyntax> directives = null,
-            IReadOnlyList<FieldDefinitionSyntax> fields = null,
-            SyntaxLocation location = null) : base(location)
+            StringValueSyntax? description = null,
+            IReadOnlyList<DirectiveSyntax>? directives = null,
+            IReadOnlyList<FieldDefinitionSyntax>? fields = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
@@ -33,7 +33,7 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Fields);
 
-        public override StringValueSyntax Description { get; }
+        public override StringValueSyntax? Description { get; }
 
         public override bool IsInputType { get; } = false;
         public override bool IsOutputType { get; } = true;
@@ -59,7 +59,7 @@ namespace GraphZen.LanguageModel
             Fields.SequenceEqual(other.Fields) &&
             Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

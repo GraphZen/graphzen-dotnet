@@ -24,6 +24,6 @@ namespace GraphZen.LanguageModel
         internal static IReadOnlyList<ValueSyntax> EmptyValuesCollection { get; } =
             Array.AsReadOnly(new ValueSyntax[] { });
 
-        public abstract object GetValue();
+        public abstract object? GetValue();
     }
 }

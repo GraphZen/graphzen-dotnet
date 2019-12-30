@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -18,7 +18,7 @@ namespace GraphZen.LanguageModel
     public partial class OperationTypeDefinitionSyntax : SyntaxNode
     {
         public OperationTypeDefinitionSyntax(OperationType operationType, NamedTypeSyntax type,
-            SyntaxLocation location = null) : base(location)
+            SyntaxLocation? location = null) : base(location)
         {
             OperationType = operationType;
             Type = Check.NotNull(type, nameof(type));
@@ -43,7 +43,7 @@ namespace GraphZen.LanguageModel
         private bool Equals(OperationTypeDefinitionSyntax other) =>
             OperationType == other.OperationType && Type.Equals(other.Type);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

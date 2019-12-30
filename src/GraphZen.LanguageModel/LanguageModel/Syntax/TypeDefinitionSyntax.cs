@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -16,14 +16,14 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public abstract class TypeDefinitionSyntax : TypeSystemDefinitionSyntax, INamedSyntax, IDescribedSyntax
     {
-        protected TypeDefinitionSyntax(SyntaxLocation location) : base(location)
+        protected TypeDefinitionSyntax(SyntaxLocation? location) : base(location)
         {
         }
 
         public abstract bool IsInputType { get; }
         public abstract bool IsOutputType { get; }
 
-        public abstract StringValueSyntax Description { get; }
+        public abstract StringValueSyntax? Description { get; }
         public abstract NameSyntax Name { get; }
 
         public string GetDisplayValue() => Name.Value;

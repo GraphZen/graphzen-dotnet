@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public abstract class SelectionSyntax : SyntaxNode, IDirectivesSyntax
     {
-        protected SelectionSyntax(SyntaxLocation location) : base(location)
+        protected SelectionSyntax(SyntaxLocation? location) : base(location)
         {
         }
 

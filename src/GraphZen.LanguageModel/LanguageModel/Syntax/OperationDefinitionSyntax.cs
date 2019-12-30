@@ -8,7 +8,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -22,10 +22,10 @@ namespace GraphZen.LanguageModel
         public OperationDefinitionSyntax(
             OperationType type,
             SelectionSetSyntax selectionSet,
-            NameSyntax name = null,
-            IReadOnlyList<VariableDefinitionSyntax> variableDefinitions = null,
-            IReadOnlyList<DirectiveSyntax> directives = null,
-            SyntaxLocation location = null) : base(location)
+            NameSyntax? name = null,
+            IReadOnlyList<VariableDefinitionSyntax>? variableDefinitions = null,
+            IReadOnlyList<DirectiveSyntax>? directives = null,
+            SyntaxLocation? location = null) : base(location)
         {
             OperationType = type;
             SelectionSet = Check.NotNull(selectionSet, nameof(selectionSet));
@@ -49,7 +49,7 @@ namespace GraphZen.LanguageModel
         ///     The name of the operation. (Optional)
         /// </summary>
 
-        public NameSyntax Name { get; }
+        public NameSyntax? Name { get; }
 
         /// <summary>
         ///     Operation variable definitions. (Optional)
@@ -73,7 +73,7 @@ namespace GraphZen.LanguageModel
             && VariableDefinitions.SequenceEqual(other.VariableDefinitions)
             && Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

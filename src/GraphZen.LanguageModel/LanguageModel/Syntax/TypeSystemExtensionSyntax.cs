@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public abstract class TypeSystemExtensionSyntax : DefinitionSyntax
     {
-        protected TypeSystemExtensionSyntax(SyntaxLocation location) : base(location)
+        protected TypeSystemExtensionSyntax(SyntaxLocation? location) : base(location)
         {
         }
     }

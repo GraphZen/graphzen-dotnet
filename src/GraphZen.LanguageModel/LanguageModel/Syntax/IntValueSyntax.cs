@@ -7,7 +7,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -18,7 +18,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class IntValueSyntax : ValueSyntax
     {
-        public IntValueSyntax(int value, SyntaxLocation location = null) : base(location)
+        public IntValueSyntax(int value, SyntaxLocation? location = null) : base(location)
         {
             Value = value;
         }
@@ -34,7 +34,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(IntValueSyntax other) => Value == other.Value;
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

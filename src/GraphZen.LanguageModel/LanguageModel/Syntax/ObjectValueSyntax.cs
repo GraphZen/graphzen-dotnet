@@ -7,7 +7,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -18,7 +18,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ObjectValueSyntax : ValueSyntax
     {
-        public ObjectValueSyntax(IReadOnlyList<ObjectFieldSyntax> fields, SyntaxLocation location = null) :
+        public ObjectValueSyntax(IReadOnlyList<ObjectFieldSyntax> fields, SyntaxLocation? location = null) :
             base(location)
         {
             Fields = Check.NotNull(fields, nameof(fields));
@@ -35,7 +35,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(ObjectValueSyntax other) => Fields.SequenceEqual(other.Fields);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

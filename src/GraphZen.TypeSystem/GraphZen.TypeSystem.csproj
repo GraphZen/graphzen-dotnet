@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <Compile Include="..\Linked\TypeSystem\TypeSystemAccessors.Generated.cs" Link="TypeSystemAccessors.Generated.cs" />
+    <Compile Include="..\Shared\FriendAssemblies.cs" Link="FriendAssemblies.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -18,7 +18,7 @@ namespace GraphZen.LanguageModel
     public partial class VariableDefinitionSyntax : SyntaxNode
     {
         public VariableDefinitionSyntax(VariableSyntax variable, TypeSyntax type,
-            ValueSyntax defaultValue = null, SyntaxLocation location = null) : base(location)
+            ValueSyntax? defaultValue = null, SyntaxLocation? location = null) : base(location)
         {
             Variable = Check.NotNull(variable, nameof(variable));
             VariableType = Check.NotNull(type, nameof(type));
@@ -41,7 +41,7 @@ namespace GraphZen.LanguageModel
         /// <summary>
         ///     The variable's default value. (Optional)
         /// </summary>
-        public ValueSyntax DefaultValue { get; }
+        public ValueSyntax? DefaultValue { get; }
 
         public override IEnumerable<SyntaxNode> Children
         {
@@ -59,7 +59,7 @@ namespace GraphZen.LanguageModel
             && VariableType.Equals(other.VariableType)
             && Equals(DefaultValue, other.DefaultValue);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

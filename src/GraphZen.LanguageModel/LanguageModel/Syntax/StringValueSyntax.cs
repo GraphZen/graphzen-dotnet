@@ -8,7 +8,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -20,7 +20,7 @@ namespace GraphZen.LanguageModel
     public partial class StringValueSyntax : ValueSyntax
     {
         public StringValueSyntax(string value, bool isBlockString = false,
-            SyntaxLocation location = null) :
+            SyntaxLocation? location = null) :
             base(location)
         {
             Check.NotNull(value, nameof(value));
@@ -42,7 +42,7 @@ namespace GraphZen.LanguageModel
         private bool Equals(StringValueSyntax other) =>
             IsBlockString == other.IsBlockString && string.Equals(Value, other.Value);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

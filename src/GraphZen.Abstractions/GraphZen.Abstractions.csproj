@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Shared\FriendAssemblies.cs" Link="FriendAssemblies.cs" />
     <Compile Include="..\Shared\JetBrainsAnnotations.cs" Link="JetBrainsAnnotations.cs" />
   </ItemGroup>
 

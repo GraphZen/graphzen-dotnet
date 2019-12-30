@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
+
 
 
 namespace GraphZen.LanguageModel
@@ -19,7 +19,7 @@ namespace GraphZen.LanguageModel
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public partial class VariableSyntax : ValueSyntax
     {
-        public VariableSyntax(NameSyntax name, SyntaxLocation location = null) : base(location)
+        public VariableSyntax(NameSyntax name, SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
         }
@@ -38,7 +38,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(VariableSyntax other) => Name.Equals(other.Name);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 
