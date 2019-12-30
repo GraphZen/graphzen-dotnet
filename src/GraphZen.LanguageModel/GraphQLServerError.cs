@@ -26,7 +26,7 @@ namespace GraphZen
             Message = Check.NotNull(message, nameof(message));
             Nodes = nodes;
             Path = path;
-            Positions = positions ?? Nodes?.Where(_ => _?.Location != null).Select(_ => _.Location.Start).ToList();
+            Positions = positions ?? Nodes?.Where(_ => _?.Location != null).Select(_ => _.Location!.Start).ToList();
             Positions = Positions != null && Positions.Count == 0 ? null : Positions;
             Source = source ?? nodes?.FirstOrDefault()?.Location?.Source;
             InnerException = innerException;
@@ -35,11 +35,7 @@ namespace GraphZen
             else if (Nodes != null && Source != null)
                 Locations = Nodes
                     .Where(_ => _?.Location != null)
-                    .Select(n =>
-                    {
-                        Debug.Assert(n.Location != null, "n.Location != null");
-                        return Source.GetLocation(n.Location.Start);
-                    }).ToList();
+                    .Select(n => Source.GetLocation(n.Location!.Start)).ToList();
         }
 
 
@@ -72,7 +68,7 @@ namespace GraphZen
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((GraphQLServerError) obj);
+            return Equals((GraphQLServerError)obj);
         }
 
         public override int GetHashCode()

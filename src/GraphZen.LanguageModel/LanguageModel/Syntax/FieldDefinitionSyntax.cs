@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -21,9 +20,9 @@ namespace GraphZen.LanguageModel
     {
         public FieldDefinitionSyntax(
             NameSyntax name,
-            TypeSyntax type, StringValueSyntax description = null,
-            IReadOnlyList<InputValueDefinitionSyntax> arguments = null,
-            IReadOnlyList<DirectiveSyntax> directives = null, SyntaxLocation location = null) : base(location)
+            TypeSyntax type, StringValueSyntax? description = null,
+            IReadOnlyList<InputValueDefinitionSyntax>? arguments = null,
+            IReadOnlyList<DirectiveSyntax>? directives = null, SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             FieldType = Check.NotNull(type, nameof(type));
@@ -48,7 +47,7 @@ namespace GraphZen.LanguageModel
             Name.ToEnumerable().Concat(Arguments)
                 .Concat(FieldType).Concat(Directives);
 
-        public StringValueSyntax Description { get; }
+        public StringValueSyntax? Description { get; }
 
         /// <summary>
         ///     Field directives. (Optional)
@@ -67,7 +66,7 @@ namespace GraphZen.LanguageModel
             FieldType.Equals(other.FieldType) && Arguments.SequenceEqual(other.Arguments) &&
             Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

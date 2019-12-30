@@ -8,9 +8,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -30,7 +27,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private static string[] ProhibtedValues { get; } = {"true", "false", "null"};
+        private static string[] ProhibitedValues { get; } = {"true", "false", "null"};
 
         /// <summary>
         ///     The enum value.
@@ -44,13 +41,13 @@ namespace GraphZen.LanguageModel
 
         internal static bool IsValidValue(string value)
         {
-            return ProhibtedValues.All(v => !v.Equals(value));
+            return ProhibitedValues.All(v => !v.Equals(value));
         }
 
 
         private bool Equals(EnumValueSyntax other) => string.Equals(Value, other.Value);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

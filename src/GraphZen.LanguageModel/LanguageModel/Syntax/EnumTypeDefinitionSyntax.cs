@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -21,10 +20,10 @@ namespace GraphZen.LanguageModel
     {
         public EnumTypeDefinitionSyntax(
             NameSyntax name,
-            StringValueSyntax description = null,
-            IReadOnlyList<DirectiveSyntax> directives = null,
-            IReadOnlyList<EnumValueDefinitionSyntax> values = null,
-            SyntaxLocation location = null) : base(location)
+            StringValueSyntax? description = null,
+            IReadOnlyList<DirectiveSyntax>? directives = null,
+            IReadOnlyList<EnumValueDefinitionSyntax>? values = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
@@ -51,7 +50,7 @@ namespace GraphZen.LanguageModel
         public override IEnumerable<SyntaxNode> Children =>
             Name.ToEnumerable().Concat(Directives).Concat(Values);
 
-        public override StringValueSyntax Description { get; }
+        public override StringValueSyntax? Description { get; }
 
         /// <summary>
         ///     Enum directives. (Optional)
@@ -63,13 +62,13 @@ namespace GraphZen.LanguageModel
             Values.SequenceEqual(other.Values) &&
             Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is EnumTypeDefinitionSyntax && Equals((EnumTypeDefinitionSyntax) obj);
+            return obj is EnumTypeDefinitionSyntax && Equals((EnumTypeDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

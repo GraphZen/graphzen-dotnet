@@ -9,7 +9,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -39,7 +38,7 @@ namespace GraphZen.LanguageModel
 
 
         public DocumentSyntax(IReadOnlyList<DefinitionSyntax> definitions,
-            SyntaxLocation location = null) : base(location)
+            SyntaxLocation? location = null) : base(location)
         {
             Definitions = Check.NotNull(definitions, nameof(definitions));
             _inputTypeDefinitions = new Lazy<IReadOnlyList<TypeDefinitionSyntax>>(() => Definitions
@@ -152,9 +151,8 @@ namespace GraphZen.LanguageModel
         {
             if (abstractType is UnionTypeDefinitionSyntax unionType)
                 return unionType.MemberTypes.Select(_ =>
-                        // ReSharper disable once PossibleNullReferenceException
                         GetObjectTypeMap().TryGetValue(_.Name.Value, out var outputType) ? outputType : null)
-                    .Where(_ => _ != null).ToReadOnlyList();
+                    .Where(_ => _ != null).Select(_ => _!).ToReadOnlyList();
 
             return GetImplementationMap().TryGetValue(abstractType.Name.Value, out var possibleTypes)
                 ? possibleTypes
@@ -182,7 +180,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(DocumentSyntax other) => Definitions.SequenceEqual(other.Definitions);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -26,11 +25,11 @@ namespace GraphZen.LanguageModel
 
 
         public FieldSyntax(NameSyntax name,
-            NameSyntax alias = null,
-            IReadOnlyList<ArgumentSyntax> arguments = null,
-            IReadOnlyList<DirectiveSyntax> directives = null,
-            SelectionSetSyntax selectionSet = null,
-            SyntaxLocation location = null) : base(location)
+            NameSyntax? alias = null,
+            IReadOnlyList<ArgumentSyntax>? arguments = null,
+            IReadOnlyList<DirectiveSyntax>? directives = null,
+            SelectionSetSyntax? selectionSet = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Alias = alias;
@@ -52,12 +51,12 @@ namespace GraphZen.LanguageModel
         ///     Additional child selections. (Optional)
         /// </summary>
 
-        public SelectionSetSyntax SelectionSet { get; }
+        public SelectionSetSyntax? SelectionSet { get; }
 
         /// <summary>
         ///     A user-defined alias for the requested field. (Optional)
         /// </summary>
-        public NameSyntax Alias { get; }
+        public NameSyntax? Alias { get; }
 
         /// <summary>
         ///     Field directives.
@@ -81,7 +80,7 @@ namespace GraphZen.LanguageModel
             && Directives.SequenceEqual(other.Directives)
             && Arguments.SequenceEqual(other.Arguments);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -20,9 +19,9 @@ namespace GraphZen.LanguageModel
     public partial class EnumValueDefinitionSyntax : SyntaxNode, IDirectivesSyntax, IDescribedSyntax
     {
         public EnumValueDefinitionSyntax(EnumValueSyntax value,
-            StringValueSyntax description = null,
-            IReadOnlyList<DirectiveSyntax> directives = null,
-            SyntaxLocation location = null) : base(location)
+            StringValueSyntax? description = null,
+            IReadOnlyList<DirectiveSyntax>? directives = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Value = Check.NotNull(value, nameof(value));
             Description = description;
@@ -39,7 +38,7 @@ namespace GraphZen.LanguageModel
         public override IEnumerable<SyntaxNode> Children =>
             Value.ToEnumerable().Concat(Directives);
 
-        public StringValueSyntax Description { get; }
+        public StringValueSyntax? Description { get; }
 
         /// <summary>
         ///     Enum value directives.
@@ -50,7 +49,7 @@ namespace GraphZen.LanguageModel
             Value.Equals(other.Value) && Equals(Description, other.Description) &&
             Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 
