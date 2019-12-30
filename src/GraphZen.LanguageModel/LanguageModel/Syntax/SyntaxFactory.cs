@@ -22,6 +22,16 @@ namespace GraphZen.LanguageModel
 
 
         [DebuggerStepThrough]
+        public static OperationTypeDefinitionSyntax OperationTypeDefinition(OperationType operationType,
+            NamedTypeSyntax type) =>
+            new OperationTypeDefinitionSyntax(operationType, type);
+
+
+        [DebuggerStepThrough]
+        public static NamedTypeSyntax NamedType(NameSyntax name) => new NamedTypeSyntax(name);
+
+
+        [DebuggerStepThrough]
         public static NamedTypeSyntax NamedType(Type clrType) =>
             new NamedTypeSyntax(Name(Check.NotNull(clrType, nameof(clrType)).GetGraphQLName()));
 
@@ -31,14 +41,11 @@ namespace GraphZen.LanguageModel
             new ObjectFieldSyntax(name, value);
 
 
-        [DebuggerStepThrough]
-        public static EnumValueSyntax EnumValue(NameSyntax name) => new EnumValueSyntax(name);
 
 
         [DebuggerStepThrough]
         public static EnumValueDefinitionSyntax EnumValueDefinition(EnumValueSyntax enumValue) =>
             new EnumValueDefinitionSyntax(enumValue);
-
 
         [DebuggerStepThrough]
         public static ListValueSyntax ListValue(params ValueSyntax[] values) => new ListValueSyntax(values);

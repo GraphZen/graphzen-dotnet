@@ -17,6 +17,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class VariableDefinitionSyntax : SyntaxNode
     {
+        [GenFactory(nameof(SyntaxFactory)]
         public VariableDefinitionSyntax(VariableSyntax variable, TypeSyntax type,
             ValueSyntax? defaultValue = null, SyntaxLocation? location = null) : base(location)
         {

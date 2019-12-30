@@ -12,12 +12,14 @@ using JetBrains.Annotations;
 
 #nullable enable
 
-namespace GraphZen.LanguageModel
-{
-    public static partial class SyntaxFactory
-    {
-        public static ArgumentSyntax Argument(GraphZen.LanguageModel.NameSyntax name, GraphZen.LanguageModel.StringValueSyntax? description, GraphZen.LanguageModel.ValueSyntax value, GraphZen.LanguageModel.SyntaxLocation? location = null) => new ArgumentSyntax(name, description, value, location);
-        public static OperationTypeDefinitionSyntax OperationTypeDefinition(GraphZen.LanguageModel.OperationType operationType, GraphZen.LanguageModel.NamedTypeSyntax type, GraphZen.LanguageModel.SyntaxLocation? location = null) => new OperationTypeDefinitionSyntax(operationType, type, location);
-        public static SchemaDefinitionSyntax SchemaDefinition(System.Collections.Generic.IReadOnlyList<GraphZen.LanguageModel.OperationTypeDefinitionSyntax>? operationTypes = null, System.Collections.Generic.IReadOnlyList<GraphZen.LanguageModel.DirectiveSyntax>? directives = null, GraphZen.LanguageModel.SyntaxLocation? location = null) => new SchemaDefinitionSyntax(operationTypes, directives, location);
+namespace GraphZen.LanguageModel {
+    public static partial class SyntaxFactory {
+        public static ArgumentSyntax Argument(GraphZen.LanguageModel.NameSyntax name , GraphZen.LanguageModel.StringValueSyntax? description , GraphZen.LanguageModel.ValueSyntax value , GraphZen.LanguageModel.SyntaxLocation? location  = null) => new ArgumentSyntax(name, description, value, location);
+public static EnumValueDefinitionSyntax EnumValueDefinition(GraphZen.LanguageModel.EnumValueSyntax value , GraphZen.LanguageModel.StringValueSyntax? description  = null, System.Collections.Generic.IReadOnlyList<GraphZen.LanguageModel.DirectiveSyntax>? directives  = null, GraphZen.LanguageModel.SyntaxLocation? location  = null) => new EnumValueDefinitionSyntax(value, description, directives, location);
+public static EnumValueSyntax EnumValue(GraphZen.LanguageModel.NameSyntax value ) => new EnumValueSyntax(value);
+public static NamedTypeSyntax NamedType(GraphZen.LanguageModel.NameSyntax name , GraphZen.LanguageModel.SyntaxLocation? location  = null) => new NamedTypeSyntax(name, location);
+public static ObjectFieldSyntax ObjectField(GraphZen.LanguageModel.NameSyntax name , GraphZen.LanguageModel.ValueSyntax value , GraphZen.LanguageModel.SyntaxLocation? location  = null) => new ObjectFieldSyntax(name, value, location);
+public static OperationTypeDefinitionSyntax OperationTypeDefinition(GraphZen.LanguageModel.OperationType operationType , GraphZen.LanguageModel.NamedTypeSyntax type , GraphZen.LanguageModel.SyntaxLocation? location  = null) => new OperationTypeDefinitionSyntax(operationType, type, location);
+public static SchemaDefinitionSyntax SchemaDefinition(System.Collections.Generic.IReadOnlyList<GraphZen.LanguageModel.OperationTypeDefinitionSyntax>? operationTypes  = null, System.Collections.Generic.IReadOnlyList<GraphZen.LanguageModel.DirectiveSyntax>? directives  = null, GraphZen.LanguageModel.SyntaxLocation? location  = null) => new SchemaDefinitionSyntax(operationTypes, directives, location);
     }
 }
