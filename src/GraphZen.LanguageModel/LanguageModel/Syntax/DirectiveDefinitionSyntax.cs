@@ -18,11 +18,12 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class DirectiveDefinitionSyntax : TypeSystemDefinitionSyntax, INamedSyntax, IDescribedSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public DirectiveDefinitionSyntax(
             NameSyntax name,
             IReadOnlyList<NameSyntax> locations,
-            StringValueSyntax? description = null,
             IReadOnlyList<InputValueDefinitionSyntax>? arguments = null,
+            StringValueSyntax? description = null,
             SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
@@ -66,7 +67,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is DirectiveDefinitionSyntax && Equals((DirectiveDefinitionSyntax) obj);
+            return obj is DirectiveDefinitionSyntax && Equals((DirectiveDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

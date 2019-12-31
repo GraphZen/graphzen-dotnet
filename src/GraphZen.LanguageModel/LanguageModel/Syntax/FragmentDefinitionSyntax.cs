@@ -19,6 +19,7 @@ namespace GraphZen.LanguageModel
     public partial class FragmentDefinitionSyntax : ExecutableDefinitionSyntax, IFragmentTypeConditionSyntax,
         IDirectivesSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public FragmentDefinitionSyntax(NameSyntax name, NamedTypeSyntax typeCondition,
             SelectionSetSyntax selectionSet, IReadOnlyList<DirectiveSyntax>? directives = null,
             SyntaxLocation? location = null) : base(location)
@@ -69,7 +70,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is FragmentDefinitionSyntax && Equals((FragmentDefinitionSyntax) obj);
+            return obj is FragmentDefinitionSyntax && Equals((FragmentDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

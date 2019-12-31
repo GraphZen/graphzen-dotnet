@@ -52,7 +52,7 @@ namespace GraphZen.LanguageModel
 
         public override int GetHashCode() => Value.GetHashCode();
 
-        public static BooleanValueSyntax Create(bool value, SyntaxLocation? location = null) =>
+        public static BooleanValueSyntax From(bool value, SyntaxLocation? location = null) =>
             location == null ? value ? TrueInstance : FalseInstance : new BooleanValueSyntax(value, location);
     }
 }

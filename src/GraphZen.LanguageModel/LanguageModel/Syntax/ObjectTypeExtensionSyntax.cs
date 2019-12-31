@@ -19,6 +19,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ObjectTypeExtensionSyntax : TypeExtensionSyntax, IDirectivesSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public ObjectTypeExtensionSyntax(NameSyntax name,
             IReadOnlyList<NamedTypeSyntax>? interfaces = null, IReadOnlyList<DirectiveSyntax>? directives = null,
             IReadOnlyList<FieldDefinitionSyntax>? fields = null, SyntaxLocation? location = null) : base(location)
@@ -53,7 +54,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ObjectTypeExtensionSyntax && Equals((ObjectTypeExtensionSyntax) obj);
+            return obj is ObjectTypeExtensionSyntax && Equals((ObjectTypeExtensionSyntax)obj);
         }
 
         public override int GetHashCode()

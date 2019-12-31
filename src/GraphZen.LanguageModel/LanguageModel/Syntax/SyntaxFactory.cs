@@ -9,9 +9,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen.LanguageModel
 {
     public static partial class SyntaxFactory
@@ -23,25 +20,10 @@ namespace GraphZen.LanguageModel
         public static NamedTypeSyntax NamedType(Type clrType) =>
             new NamedTypeSyntax(Name(Check.NotNull(clrType, nameof(clrType)).GetGraphQLName()));
 
+        [DebuggerStepThrough]
+        public static BooleanValueSyntax BooleanValue(bool value) => BooleanValueSyntax.From(value);
 
         [DebuggerStepThrough]
-        public static ListValueSyntax ListValue(params ValueSyntax[] values) => new ListValueSyntax(values);
-
-
-        [DebuggerStepThrough]
-        public static ObjectValueSyntax ObjectValue(params ObjectFieldSyntax[] fields) => new ObjectValueSyntax(fields);
-
-
-        [DebuggerStepThrough]
-        public static BooleanValueSyntax BooleanValue(bool value) => BooleanValueSyntax.Create(value);
-
-
-        [DebuggerStepThrough]
-        public static DocumentSyntax Document(params DefinitionSyntax[] definitions) => new DocumentSyntax(definitions);
-
-
-        [DebuggerStepThrough]
-        public static NameSyntax[] Names(params string[] names) =>
-            Check.NotNull(names, nameof(names)).Select(_ => Name(_)).ToArray();
+        public static NameSyntax[] Names(params string[] names) => names.Select(_ => Name(_)).ToArray();
     }
 }

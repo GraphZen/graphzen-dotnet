@@ -6,6 +6,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.LanguageModel.SyntaxFactory;
 
 #nullable disable
 
@@ -18,15 +19,14 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
         public void InlineDirectiveDefinition()
         {
             var result = ParseDocument("directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT");
-            var expected = SyntaxFactory.Document(new DirectiveDefinitionSyntax(
-                SyntaxFactory.Name(
-                    "skip"), SyntaxFactory.Names("FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"),
-                null,
+            var expected = Document(new DirectiveDefinitionSyntax(
+                Name(
+                    "skip"), Names("FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"),
                 new[]
                 {
-                    SyntaxFactory.InputValueDefinition(
-                        SyntaxFactory.Name("if"),
-                        SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("Boolean"))))
+                    InputValueDefinition(
+                        Name("if"),
+                        NonNullType(NamedType(Name("Boolean"))))
                 }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
@@ -41,15 +41,14 @@ directive @include(if: Boolean!)
    | FRAGMENT_SPREAD
    | INLINE_FRAGMENT
 ");
-            var expected = SyntaxFactory.Document(new DirectiveDefinitionSyntax(
-                SyntaxFactory.Name(
+            var expected = Document(new DirectiveDefinitionSyntax(
+                Name(
                     "include"),
-                SyntaxFactory.Names("FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"),
-                null,
+                Names("FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"),
                 new[]
                 {
-                    SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("if"),
-                        SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("Boolean"))))
+                    InputValueDefinition(Name("if"),
+                        NonNullType(NamedType(Name("Boolean"))))
                 }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
@@ -64,13 +63,12 @@ directive @include2(if: Boolean!) on
    | FRAGMENT_SPREAD
    | INLINE_FRAGMENT
 ");
-            var expected = SyntaxFactory.Document(new DirectiveDefinitionSyntax(SyntaxFactory.Name("include2"),
-                SyntaxFactory.Names("FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"),
-                null,
+            var expected = Document(new DirectiveDefinitionSyntax(Name("include2"),
+                Names("FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"),
                 new[]
                 {
-                    SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("if"),
-                        SyntaxFactory.NonNullType(SyntaxFactory.NamedType(SyntaxFactory.Name("Boolean"))))
+                    InputValueDefinition(Name("if"),
+                        NonNullType(NamedType(Name("Boolean"))))
                 }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));

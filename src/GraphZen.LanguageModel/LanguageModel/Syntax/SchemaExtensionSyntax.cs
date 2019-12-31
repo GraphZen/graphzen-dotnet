@@ -19,6 +19,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class SchemaExtensionSyntax : TypeSystemExtensionSyntax, IDirectivesSyntax
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public SchemaExtensionSyntax(
             IReadOnlyList<DirectiveSyntax>? directives = null,
             IReadOnlyList<OperationTypeDefinitionSyntax>? operationTypes = null,

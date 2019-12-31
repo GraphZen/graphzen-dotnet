@@ -21,7 +21,7 @@ namespace GraphZen.LanguageModel.Internal
                 from args in ArgumentsDefinition.OptionalOrNull()
                 from @on in Keyword("on")
                 from locations in DirectiveLocations
-                select new DirectiveDefinitionSyntax(name, locations, desc, args,
+                select new DirectiveDefinitionSyntax(name, locations,  args,desc,
                     SyntaxLocation.FromMany(desc, directive, at, name,
                         args?.GetLocation()
                         , @on,

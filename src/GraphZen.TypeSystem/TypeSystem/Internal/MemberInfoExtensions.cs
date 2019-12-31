@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -14,13 +15,6 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-
-    public static class ReflectionHelpers
-    {
-
-    }
-
-
     public static class MemberInfoExtensions
     {
         public const string NullableAttributeFullName = "System.Runtime.CompilerServices.NullableAttribute";
@@ -71,6 +65,11 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool HasNullableReferenceType(this MethodInfo method)
         {
+            if (method.ReturnType.IsValueType)
+            {
+                return false;
+            }
+
             if (method.GetCustomAttributes().TryGetNullableContextFlag(out var flag))
             {
                 if (flag == Annotated) { return true; }
@@ -87,8 +86,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool HasNullableReferenceType(this ParameterInfo parameterInfo)
         {
-
-
+            if (parameterInfo.ParameterType.IsValueType)
+            {
+                return false;
+            }
             if (parameterInfo.GetCustomAttributes().TryGetNullableAttributeFlags(out var flags))
             {
 
@@ -97,43 +98,39 @@ namespace GraphZen.TypeSystem.Internal
                 if (flag == NotAnnotated) { return false; }
             }
 
-            if (parameterInfo.Member.GetCustomAttributes().TryGetNullableContextFlag(out var contextFalg))
+            if (parameterInfo.Member.GetCustomAttributes().TryGetNullableContextFlag(out var contextFlag))
             {
-                if (contextFalg == Annotated) { return true; }
-                if (contextFalg == NotAnnotated) { return false; }
+                if (contextFlag == Annotated) { return true; }
+                if (contextFlag == NotAnnotated) { return false; }
             }
 
             return false;
         }
 
-        //public static bool HasNullableReferenceType(this ParameterInfo parameterInfo)
-        //{
-
-        //}
-
-        // public static bool 
-
-
-        public static bool HasNullableReferenceType(this MemberInfo member)
+        public static bool HasNullableReferenceType(this PropertyInfo propertyInfo)
         {
-            if (member is MethodInfo method)
+            if (propertyInfo.PropertyType.IsValueType)
             {
-                return method.HasNullableReferenceType();
+                return false;
             }
-            Attribute[] attributes = Attribute.GetCustomAttributes(member);
-            Attribute? nullableAttr = attributes.SingleOrDefault(_ => _.GetType().FullName == NullableAttributeFullName);
-            if (nullableAttr != null)
+            if (propertyInfo.GetCustomAttributes().TryGetNullableAttributeFlags(out var flags))
             {
-                var type = nullableAttr.GetType();
-                var field = type.GetField("NullableFlags");
-                if (field?.GetValue(nullableAttr) is byte[] flags)
-                {
-                    return flags.FirstOrDefault() == 2;
-                }
-            }
 
+                var flag = flags.FirstOrDefault();
+                if (flag == Annotated) { return true; }
+                if (flag == NotAnnotated) { return false; }
+            }
             return false;
         }
+
+        public static bool HasNullableReferenceType(this MemberInfo member) =>
+            member switch
+            {
+                MethodInfo method => method.HasNullableReferenceType(),
+                PropertyInfo property => property.HasNullableReferenceType(),
+                _ => throw new NotImplementedException()
+
+            };
 
 
         public static bool TryGetDescriptionFromDataAnnotation(this MemberInfo memberInfo,

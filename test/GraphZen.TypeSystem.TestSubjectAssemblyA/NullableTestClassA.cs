@@ -15,20 +15,20 @@ namespace GraphZen.TypeSystem.TestSubjectAssemblyA
         public const string ConstructorWithOnlyNonNullableParameters = nameof(ConstructorWithOnlyNonNullableParameters);
 
         [Description(ConstructorWithNullableAndNonNullableParameters)]
-        public NullableTestClassA(string? nullable, string nonNullable, int? nonNullableInt, int nonNullableValueTypeInt)
+        public NullableTestClassA(string? nullableRef, string nonNullable, int? nonNullableInt, int nonNullableValueTypeInt)
         {
 
         }
 
         [Description(ConstructorWithOnlyNonNullableParameters)]
-        public NullableTestClassA(string nonNullable, string nonNullableB, string nonNullableC)
+        public NullableTestClassA(string nonNullable, string nonNullableB, string nonNullableC )
         {
 
         }
 
 
         [Description(ConstructorWithOnlyNullableParameters)]
-        public NullableTestClassA(string? nullable)
+        public NullableTestClassA(string? nullableRef, int valueType)
         {
         }
 

@@ -14,6 +14,7 @@ namespace GraphZen.LanguageModel
 {
     public partial class PunctuatorSyntax : SyntaxNode
     {
+        [GenFactory(nameof(SyntaxFactory))]
         public PunctuatorSyntax(SyntaxLocation location) : base(location)
         {
         }

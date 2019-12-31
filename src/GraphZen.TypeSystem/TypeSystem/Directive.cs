@@ -42,8 +42,10 @@ namespace GraphZen.TypeSystem
                 return new DirectiveDefinitionSyntax(SyntaxFactory.Name(Name),
                     Locations.Select(DirectiveLocationHelper.ToStringValue).Select(_ => SyntaxFactory.Name(_))
                         .ToArray(),
-                    SyntaxHelpers.Description(Description),
-                    Arguments.Values.ToSyntaxNodes<InputValueDefinitionSyntax>().ToList());
+
+                    Arguments.Values.ToSyntaxNodes<InputValueDefinitionSyntax>().ToList(),
+                    SyntaxHelpers.Description(Description)
+                    );
             });
         }
 
