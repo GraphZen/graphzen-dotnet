@@ -14,7 +14,7 @@ namespace GraphZen.Infrastructure
     public static class NullablityHelpers
     {
         public static Type GetMemberType(this MemberInfo memberInfo)
-            => (memberInfo as PropertyInfo)?.PropertyType ?? ((FieldInfo) memberInfo)?.FieldType!;
+            => (memberInfo as PropertyInfo)?.PropertyType ?? ((FieldInfo)memberInfo)?.FieldType!;
 
         public const string NullableAttributeFullName = "System.Runtime.CompilerServices.NullableAttribute";
 

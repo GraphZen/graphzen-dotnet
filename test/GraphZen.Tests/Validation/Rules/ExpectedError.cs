@@ -53,7 +53,7 @@ namespace GraphZen.Tests.Validation.Rules
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((ExpectedError) obj);
+            return Equals((ExpectedError)obj);
         }
 
         public override int GetHashCode()

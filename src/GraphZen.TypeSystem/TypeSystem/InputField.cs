@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem
         public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
         IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
 
-        public new InputObjectType DeclaringMember => (InputObjectType) base.DeclaringMember;
+        public new InputObjectType DeclaringMember => (InputObjectType)base.DeclaringMember;
 
 
         public static InputField From(IInputFieldDefinition definition, TypeResolver typeResolver,

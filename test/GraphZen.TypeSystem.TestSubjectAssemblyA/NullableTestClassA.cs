@@ -21,7 +21,7 @@ namespace GraphZen.TypeSystem.TestSubjectAssemblyA
         }
 
         [Description(ConstructorWithOnlyNonNullableParameters)]
-        public NullableTestClassA(string nonNullable, string nonNullableB, string nonNullableC )
+        public NullableTestClassA(string nonNullable, string nonNullableB, string nonNullableC)
         {
 
         }

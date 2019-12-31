@@ -74,7 +74,7 @@ namespace GraphZen.Utilities
 
                 var coerecedValue = ValueFromAst(valueSyntax, itemType, variables);
 
-                return coerecedValue.Select(_ => (object) new List<object> {_});
+                return coerecedValue.Select(_ => (object)new List<object> { _ });
             }
 
             if (type is InputObjectType inputObject)

@@ -23,7 +23,7 @@ input AnnotatedInput @onInputObject {
 }");
             var expected = SyntaxFactory.Document(new InputObjectTypeDefinitionSyntax(
                 SyntaxFactory.Name("AnnotatedInput"), null,
-                new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onInputObject"))},
+                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onInputObject")) },
                 new[]
                 {
                     new InputValueDefinitionSyntax(SyntaxFactory.Name("annotatedField"),

@@ -22,9 +22,9 @@ namespace GraphZen.Tests.Validation.Rules
         public static IEnumerable<object[]> GetValidInputFieldScenarios()
         {
             return from inputType in InputTypes
-                from fieldsType in InputFieldsTypes
-                from fieldType in "SomeInputType".WithModifiers()
-                select new object[] {inputType, fieldsType, fieldType};
+                   from fieldsType in InputFieldsTypes
+                   from fieldType in "SomeInputType".WithModifiers()
+                   select new object[] { inputType, fieldsType, fieldType };
         }
 
         [Theory]
@@ -43,9 +43,9 @@ namespace GraphZen.Tests.Validation.Rules
         public static IEnumerable<object[]> GetInvalidInputFieldScenarios()
         {
             return from nonInputType in NonInputTypes
-                from inputFieldsType in InputFieldsTypes
-                from fieldType in "SomeOutputType".WithModifiers()
-                select new object[] {nonInputType, inputFieldsType, fieldType};
+                   from inputFieldsType in InputFieldsTypes
+                   from fieldType in "SomeOutputType".WithModifiers()
+                   select new object[] { nonInputType, inputFieldsType, fieldType };
         }
 
         [Theory]

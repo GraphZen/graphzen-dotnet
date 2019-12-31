@@ -17,7 +17,7 @@ namespace GraphZen.Tests.Infrastructure.StringUtilsTests
         [Fact]
         public void DoesNotAcceptAnEmptyList()
         {
-            ((Action) (() => QuotedOrList())).Should().Throw<Exception>();
+            ((Action)(() => QuotedOrList())).Should().Throw<Exception>();
         }
 
 

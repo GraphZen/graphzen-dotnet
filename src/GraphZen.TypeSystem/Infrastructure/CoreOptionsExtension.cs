@@ -24,7 +24,7 @@ namespace GraphZen.Infrastructure
 
         public CoreOptionsExtension()
         {
-             LoggerFactory = NullLoggerFactory.Instance;
+            LoggerFactory = NullLoggerFactory.Instance;
         }
 
         protected CoreOptionsExtension(CoreOptionsExtension copyFrom)

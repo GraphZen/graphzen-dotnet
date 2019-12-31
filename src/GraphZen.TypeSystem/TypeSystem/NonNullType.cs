@@ -36,7 +36,7 @@ namespace GraphZen.TypeSystem
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((NonNullType) obj);
+            return Equals((NonNullType)obj);
         }
 
         public override int GetHashCode() => OfType.GetHashCode();

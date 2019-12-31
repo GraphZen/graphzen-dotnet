@@ -66,7 +66,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is VariableDefinitionSyntax && Equals((VariableDefinitionSyntax) obj);
+            return obj is VariableDefinitionSyntax && Equals((VariableDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()

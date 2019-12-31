@@ -23,9 +23,9 @@ namespace GraphZen.Tests.Validation.Rules
         public static IEnumerable<object[]> GetInputTypeData(string typeName)
         {
             return from fieldsType in OutputFieldsTypes
-                from inputType in InputTypes
-                from fieldType in typeName.WithModifiers()
-                select new object[] {fieldsType, inputType, fieldType};
+                   from inputType in InputTypes
+                   from fieldType in typeName.WithModifiers()
+                   select new object[] { fieldsType, inputType, fieldType };
         }
 
         [Theory]
@@ -44,9 +44,9 @@ namespace GraphZen.Tests.Validation.Rules
         public static IEnumerable<object[]> GetNonInputTypeData(string typeName)
         {
             return from fieldsType in OutputFieldsTypes
-                from inputType in NonInputTypes
-                from fieldType in typeName.WithModifiers()
-                select new object[] {fieldsType, inputType, fieldType};
+                   from inputType in NonInputTypes
+                   from fieldType in typeName.WithModifiers()
+                   select new object[] { fieldsType, inputType, fieldType };
         }
 
         [Theory]

@@ -36,23 +36,23 @@ namespace GraphZen.Tests.QueryEngine
 
         [Fact]
         public Task WorksWithoutDirectives() =>
-            ExecuteAsync("{ a, b }").ShouldEqual(new {data = new {a = "a", b = "b"}});
+            ExecuteAsync("{ a, b }").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
         [Fact]
         public Task IfTrueIncludesScalar() => ExecuteAsync("{ a, b @include(if: true) }")
-            .ShouldEqual(new {data = new {a = "a", b = "b"}});
+            .ShouldEqual(new { data = new { a = "a", b = "b" } });
 
         [Fact]
         public Task IfFalseOmitsScalar() =>
-            ExecuteAsync("{ a, b @include(if: false) }").ShouldEqual(new {data = new {a = "a"}});
+            ExecuteAsync("{ a, b @include(if: false) }").ShouldEqual(new { data = new { a = "a" } });
 
         [Fact]
         public Task UnlessFalseIncludesScalar() => ExecuteAsync("{ a, b @skip(if: false) }")
-            .ShouldEqual(new {data = new {a = "a", b = "b"}});
+            .ShouldEqual(new { data = new { a = "a", b = "b" } });
 
         [Fact]
         public Task UnlessTrueOmitsScalar() =>
-            ExecuteAsync("{ a, b @skip(if: true) }").ShouldEqual(new {data = new {a = "a"}});
+            ExecuteAsync("{ a, b @skip(if: true) }").ShouldEqual(new { data = new { a = "a" } });
 
         [Fact]
         public Task IfFalseOmitsFragmentSpread() =>
@@ -64,7 +64,7 @@ namespace GraphZen.Tests.QueryEngine
         fragment Frag on TestType {
           b
         }
-        ").ShouldEqual(new {data = new {a = "a"}});
+        ").ShouldEqual(new { data = new { a = "a" } });
 
         [Fact]
         public Task IfTrueIncludesFragmentSpread() =>
@@ -76,7 +76,7 @@ namespace GraphZen.Tests.QueryEngine
         fragment Frag on TestType {
           b
         }
-        ").ShouldEqual(new {data = new {a = "a", b = "b"}});
+        ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
         [Fact]
         public Task UnlessFalseIncludesFragmentSpread() =>
@@ -88,7 +88,7 @@ namespace GraphZen.Tests.QueryEngine
         fragment Frag on TestType {
           b
         }
-        ").ShouldEqual(new {data = new {a = "a", b = "b"}});
+        ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
         [Fact]
         public Task UnlessTrueOmitsFragmentSpread() =>
@@ -100,7 +100,7 @@ namespace GraphZen.Tests.QueryEngine
         fragment Frag on TestType {
           b
         }
-        ").ShouldEqual(new {data = new {a = "a"}});
+        ").ShouldEqual(new { data = new { a = "a" } });
 
         [Fact]
         public Task IfFalseOmitsInlineFragment() =>
@@ -111,7 +111,7 @@ namespace GraphZen.Tests.QueryEngine
             b
           }
         }
-        ").ShouldEqual(new {data = new {a = "a"}});
+        ").ShouldEqual(new { data = new { a = "a" } });
 
         [Fact]
         public Task IfTrueIncludesInlineFragment() =>
@@ -122,7 +122,7 @@ namespace GraphZen.Tests.QueryEngine
             b
           }
         }
-        ").ShouldEqual(new {data = new {a = "a", b = "b"}});
+        ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
 
         [Fact]
@@ -134,7 +134,7 @@ namespace GraphZen.Tests.QueryEngine
             b
           }
         }
-        ").ShouldEqual(new {data = new {a = "a", b = "b"}});
+        ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
         [Fact]
         public Task UnlessTrueIncludesInlineFragment() =>
@@ -145,7 +145,7 @@ namespace GraphZen.Tests.QueryEngine
             b
           }
         }
-        ").ShouldEqual(new {data = new {a = "a"}});
+        ").ShouldEqual(new { data = new { a = "a" } });
 
         //
 
@@ -158,7 +158,7 @@ namespace GraphZen.Tests.QueryEngine
             b
           }
         }
-        ").ShouldEqual(new {data = new {a = "a"}});
+        ").ShouldEqual(new { data = new { a = "a" } });
 
         [Fact]
         public Task IfTrueIncludesAnonymousInlineFragment() =>
@@ -169,7 +169,7 @@ namespace GraphZen.Tests.QueryEngine
             b
           }
         }
-        ").ShouldEqual(new {data = new {a = "a", b = "b"}});
+        ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
 
         [Fact]
@@ -181,7 +181,7 @@ namespace GraphZen.Tests.QueryEngine
             b
           }
         }
-        ").ShouldEqual(new {data = new {a = "a", b = "b"}});
+        ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
         [Fact]
         public Task UnlessTrueIncludesAnonymousInlineFragment() =>
@@ -192,7 +192,7 @@ namespace GraphZen.Tests.QueryEngine
             b
           }
         }
-        ").ShouldEqual(new {data = new {a = "a"}});
+        ").ShouldEqual(new { data = new { a = "a" } });
 
         [Fact]
         public Task IncludeAndNoSkip() =>
@@ -201,7 +201,7 @@ namespace GraphZen.Tests.QueryEngine
           a
           b @include(if: true) @skip(if: false)
         }
-        ").ShouldEqual(new {data = new {a = "a", b = "b"}});
+        ").ShouldEqual(new { data = new { a = "a", b = "b" } });
 
         [Fact]
         public Task IncludeAndSkip() =>
@@ -210,7 +210,7 @@ namespace GraphZen.Tests.QueryEngine
           a
           b @include(if: true) @skip(if: true)
         }
-        ").ShouldEqual(new {data = new {a = "a"}});
+        ").ShouldEqual(new { data = new { a = "a" } });
 
         [Fact]
         public Task NoIncludeOrSkip() =>
@@ -219,6 +219,6 @@ namespace GraphZen.Tests.QueryEngine
           a
           b @include(if: false) @skip(if: false)
         }
-        ").ShouldEqual(new {data = new {a = "a"}});
+        ").ShouldEqual(new { data = new { a = "a" } });
     }
 }

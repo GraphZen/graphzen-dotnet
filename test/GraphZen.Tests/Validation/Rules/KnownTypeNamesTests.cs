@@ -64,7 +64,7 @@ namespace GraphZen.Tests.Validation.Rules
         ",
                 UnknownType("JumbledUpLetters", null, 3, 27),
                 UnknownType("Badger", null, 6, 29),
-                UnknownType("Peettt", new[] {"Pet"}, 10, 33)
+                UnknownType("Peettt", new[] { "Pet" }, 10, 33)
             );
         }
 

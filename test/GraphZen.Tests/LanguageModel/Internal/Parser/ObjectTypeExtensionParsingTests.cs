@@ -43,7 +43,7 @@ extend type Foo {
             var result = ParseDocument("extend type Foo @onType");
             var expected =
                 SyntaxFactory.Document(new ObjectTypeExtensionSyntax(SyntaxFactory.Name("Foo"), null,
-                    new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onType"))}));
+                    new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onType")) }));
             Assert.Equal(expected, result);
             Assert.Equal(expected, PrintAndParse(result));
         }

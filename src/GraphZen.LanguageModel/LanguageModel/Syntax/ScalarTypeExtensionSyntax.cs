@@ -42,7 +42,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ScalarTypeExtensionSyntax && Equals((ScalarTypeExtensionSyntax) obj);
+            return obj is ScalarTypeExtensionSyntax && Equals((ScalarTypeExtensionSyntax)obj);
         }
 
         public override int GetHashCode()

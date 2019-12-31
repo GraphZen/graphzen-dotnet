@@ -53,7 +53,7 @@ namespace GraphZen.QueryEngine
                 {
                     errors.Add(new GraphQLServerError(
                         $"Variable \"{variable}\" expected value of type \"{varDefNode.VariableType}\" which cannot be used as an input type.",
-                        new[] {varDefNode.VariableType}));
+                        new[] { varDefNode.VariableType }));
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace GraphZen.QueryEngine
                             ? $"Variable \"{variable}\" of non-null type \"{varType}\" must not be null."
                             : $"Variable \"{variable}\" of required type \"{varType}\" was not provided.";
                         errors.Add(new GraphQLServerError(
-                            message, new[] {varDefNode}
+                            message, new[] { varDefNode }
                         ));
                     }
                     else if (maybeValue is Some<object> s)
@@ -131,7 +131,7 @@ namespace GraphZen.QueryEngine
                 if (!string.IsNullOrEmpty(pathStr)) msg.Append($" at {pathStr}");
 
                 msg.Append(!string.IsNullOrEmpty(subMessage) ? $"; {subMessage}" : ".");
-                return new GraphQLServerError(msg.ToString(), new[] {blame}, null, null, null, originalError);
+                return new GraphQLServerError(msg.ToString(), new[] { blame }, null, null, null, originalError);
             }
 
             if (type is NonNullType nonNull)
@@ -150,80 +150,80 @@ namespace GraphZen.QueryEngine
             switch (type)
             {
                 case ListType list:
-                {
-                    var errors = new List<GraphQLServerError>();
-                    var itemType = list.OfType;
-
-                    if (value is ICollection collection)
                     {
-                        var coercedValue = new List<object>();
-                        var index = 0;
-                        foreach (var item in collection)
+                        var errors = new List<GraphQLServerError>();
+                        var itemType = list.OfType;
+
+                        if (value is ICollection collection)
                         {
-                            var coerced = CoerceValue(item, itemType, blameNode, path.AddPath(index++));
-                            if (coerced is Some<object> someItem)
-                                coercedValue.Add(someItem.Value);
-                            else if (coerced is None<object> none) errors.AddRange(none.Errors);
+                            var coercedValue = new List<object>();
+                            var index = 0;
+                            foreach (var item in collection)
+                            {
+                                var coerced = CoerceValue(item, itemType, blameNode, path.AddPath(index++));
+                                if (coerced is Some<object> someItem)
+                                    coercedValue.Add(someItem.Value);
+                                else if (coerced is None<object> none) errors.AddRange(none.Errors);
+                            }
+
+                            return errors.Any() ? Maybe.None<object>(errors) : Maybe.Some<object>(coercedValue);
+                        }
+
+                        // Lists accept a non-list value as a list of one
+                        return CoerceValue(value, itemType, blameNode, null).Select<object>(_ => new[] { _ });
+                    }
+                case InputObjectType inputObject:
+                    {
+                        if (!(value is IDictionary<string, object> values))
+                            return Maybe.None<object>(CoercianError($"Expected {type} to be an object", blameNode,
+                                path));
+
+                        var coercedValue = new Dictionary<string, object>();
+                        var errors = new List<GraphQLServerError>();
+
+
+                        // Ensure every defined field is valid
+                        foreach (var field in inputObject.Fields.Values)
+                        {
+                            var fieldValue = values.TryGetValue(field.Name, out var fv) ? fv : null;
+                            if (fieldValue == null)
+                            {
+                                if (field.DefaultValue is Some<object> someValue)
+                                    coercedValue[field.Name] = someValue.Value;
+                                else if (field.InputType is NonNullType)
+                                    errors.Add(CoercianError(
+                                        $"Field {path.AddPath(field.Name)} of required type {field.InputType} was not provided",
+                                        blameNode, null));
+                            }
+                            else
+                            {
+                                var coercedField = CoerceValue(fieldValue, field.InputType, blameNode,
+                                    path.AddPath(field.Name));
+                                if (coercedField is None<object> erred)
+                                    errors.AddRange(erred.Errors);
+                                else if (!errors.Any() && coercedField is Some<object> some)
+                                    coercedValue[field.Name] = some.Value;
+                            }
+                        }
+
+
+                        // Ensure every provided field is defined
+                        foreach (var fieldName in values.Keys.Where(_ =>
+                        {
+                            Debug.Assert(_ != null, nameof(_) + " != null");
+                            return !inputObject.HasField(_);
+                        }))
+                        {
+                            // TODO: Suggestions for subMessage in error
+                            var suggestions = "Did you mean to select another field?";
+                            errors.Add(CoercianError($"Field \"{fieldName}\" is not defined by type {type}",
+                                blameNode,
+                                path,
+                                suggestions));
                         }
 
                         return errors.Any() ? Maybe.None<object>(errors) : Maybe.Some<object>(coercedValue);
                     }
-
-                    // Lists accept a non-list value as a list of one
-                    return CoerceValue(value, itemType, blameNode, null).Select<object>(_ => new[] {_});
-                }
-                case InputObjectType inputObject:
-                {
-                    if (!(value is IDictionary<string, object> values))
-                        return Maybe.None<object>(CoercianError($"Expected {type} to be an object", blameNode,
-                            path));
-
-                    var coercedValue = new Dictionary<string, object>();
-                    var errors = new List<GraphQLServerError>();
-
-
-                    // Ensure every defined field is valid
-                    foreach (var field in inputObject.Fields.Values)
-                    {
-                        var fieldValue = values.TryGetValue(field.Name, out var fv) ? fv : null;
-                        if (fieldValue == null)
-                        {
-                            if (field.DefaultValue is Some<object> someValue)
-                                coercedValue[field.Name] = someValue.Value;
-                            else if (field.InputType is NonNullType)
-                                errors.Add(CoercianError(
-                                    $"Field {path.AddPath(field.Name)} of required type {field.InputType} was not provided",
-                                    blameNode, null));
-                        }
-                        else
-                        {
-                            var coercedField = CoerceValue(fieldValue, field.InputType, blameNode,
-                                path.AddPath(field.Name));
-                            if (coercedField is None<object> erred)
-                                errors.AddRange(erred.Errors);
-                            else if (!errors.Any() && coercedField is Some<object> some)
-                                coercedValue[field.Name] = some.Value;
-                        }
-                    }
-
-
-                    // Ensure every provided field is defined
-                    foreach (var fieldName in values.Keys.Where(_ =>
-                    {
-                        Debug.Assert(_ != null, nameof(_) + " != null");
-                        return !inputObject.HasField(_);
-                    }))
-                    {
-                        // TODO: Suggestions for subMessage in error
-                        var suggestions = "Did you mean to select another field?";
-                        errors.Add(CoercianError($"Field \"{fieldName}\" is not defined by type {type}",
-                            blameNode,
-                            path,
-                            suggestions));
-                    }
-
-                    return errors.Any() ? Maybe.None<object>(errors) : Maybe.Some<object>(coercedValue);
-                }
                 case ScalarType scalarType:
                     try
                     {

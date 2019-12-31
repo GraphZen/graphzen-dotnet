@@ -41,7 +41,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is IntValueSyntax && Equals((IntValueSyntax) obj);
+            return obj is IntValueSyntax && Equals((IntValueSyntax)obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();

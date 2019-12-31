@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.Internal
 
         internal ParseResult(object value, bool hasValue)
         {
-            _value = (T) value;
+            _value = (T)value;
             HasValue = hasValue;
         }
 

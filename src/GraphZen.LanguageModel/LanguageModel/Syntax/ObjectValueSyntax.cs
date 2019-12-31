@@ -20,9 +20,9 @@ namespace GraphZen.LanguageModel
     {
 
         [GenFactory(nameof(SyntaxFactory))]
-        public ObjectValueSyntax(params ObjectFieldSyntax[] fields) :this(fields, null)
+        public ObjectValueSyntax(params ObjectFieldSyntax[] fields) : this(fields, null)
         {
-            
+
         }
 
         [GenFactory(nameof(SyntaxFactory))]
@@ -49,7 +49,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ObjectValueSyntax && Equals((ObjectValueSyntax) obj);
+            return obj is ObjectValueSyntax && Equals((ObjectValueSyntax)obj);
         }
 
         public override int GetHashCode() => Fields.GetHashCode();

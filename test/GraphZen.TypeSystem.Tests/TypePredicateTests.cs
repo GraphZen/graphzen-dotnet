@@ -406,7 +406,7 @@ namespace GraphZen.TypeSystem.Tests
         public void GetNullableType_ReturnsNullForNoType()
         {
             // ReSharper disable once ExpressionIsAlwaysNull
-            ((IGraphQLType) null!).GetNullableType().Should().BeNull();
+            ((IGraphQLType)null!).GetNullableType().Should().BeNull();
         }
 
         [Fact]
@@ -442,7 +442,7 @@ namespace GraphZen.TypeSystem.Tests
         public void GetNamedType_ReturnsNullForNoType()
         {
             // ReSharper disable once ExpressionIsAlwaysNull
-            ((IGraphQLType) null!).GetNamedType().Should().BeNull();
+            ((IGraphQLType)null!).GetNamedType().Should().BeNull();
         }
 
         [Fact]
