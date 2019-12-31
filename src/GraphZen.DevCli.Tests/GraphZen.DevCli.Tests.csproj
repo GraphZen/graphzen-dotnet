@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="coverlet.msbuild" Version="2.7.0">
       <PrivateAssets>all</PrivateAssets>
@@ -16,11 +15,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\test\GraphZen.Infrastructure.Testing\GraphZen.Infrastructure.Testing.csproj" />
     <ProjectReference Include="..\GraphZen.DevCli\GraphZen.DevCli.csproj" />
   </ItemGroup>
-
-
 </Project>
