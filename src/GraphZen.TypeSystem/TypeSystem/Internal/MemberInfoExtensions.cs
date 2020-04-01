@@ -4,11 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -18,35 +16,33 @@ namespace GraphZen.TypeSystem.Internal
     public static class MemberInfoExtensions
     {
         public const string NullableAttributeFullName = "System.Runtime.CompilerServices.NullableAttribute";
-        public const string NullableContextAttributeFullName = "System.Runtime.CompilerServices.NullableContextAttribute";
+
+        public const string NullableContextAttributeFullName =
+            "System.Runtime.CompilerServices.NullableContextAttribute";
+
         public const byte Oblivious = 0;
         public const byte NotAnnotated = 1;
         public const byte Annotated = 2;
 
 
         private static bool TryGetNullableContextFlag(this IEnumerable<Attribute> attributes,
-            [NotNullWhen(true)]
-            out byte? flag)
+            [NotNullWhen(true)] out byte? flag)
         {
             flag = default;
-            Attribute? nullableContextAttr =
+            var nullableContextAttr =
                 attributes.SingleOrDefault(_ => _.GetType().FullName == NullableContextAttributeFullName);
             if (nullableContextAttr != null)
             {
                 var type = nullableContextAttr.GetType();
                 var fieldInfo = type.GetField("Flag");
-                if (fieldInfo?.GetValue(nullableContextAttr) is byte value)
-                {
-                    flag = value;
-                }
+                if (fieldInfo?.GetValue(nullableContextAttr) is byte value) flag = value;
             }
 
             return flag != null;
         }
 
         private static bool TryGetNullableAttributeFlags(this IEnumerable<Attribute> attributes,
-                    [NotNullWhen(true)]
-            out byte[]? flags)
+            [NotNullWhen(true)] out byte[]? flags)
         {
             flags = default;
             if (attributes.SingleOrDefault(_ => _.GetType().FullName == NullableAttributeFullName) is { } attr)
@@ -65,43 +61,35 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool HasNullableReferenceType(this MethodInfo method)
         {
-            if (method.ReturnType.IsValueType)
-            {
-                return false;
-            }
+            if (method.ReturnType.IsValueType) return false;
 
             if (method.GetCustomAttributes().TryGetNullableContextFlag(out var flag))
             {
-                if (flag == Annotated) { return true; }
-                if (flag == NotAnnotated) { return false; }
+                if (flag == Annotated) return true;
+                if (flag == NotAnnotated) return false;
             }
 
+            // ReSharper disable once AssignNullToNotNullAttribute
             if (method.ReturnParameter.GetCustomAttributes().TryGetNullableAttributeFlags(out var flags))
-            {
                 return flags.FirstOrDefault() == Annotated;
-            }
 
             return false;
         }
 
         public static bool HasNullableReferenceType(this ParameterInfo parameterInfo)
         {
-            if (parameterInfo.ParameterType.IsValueType)
-            {
-                return false;
-            }
+            if (parameterInfo.ParameterType.IsValueType) return false;
             if (parameterInfo.GetCustomAttributes().TryGetNullableAttributeFlags(out var flags))
             {
-
                 var flag = flags.FirstOrDefault();
-                if (flag == Annotated) { return true; }
-                if (flag == NotAnnotated) { return false; }
+                if (flag == Annotated) return true;
+                if (flag == NotAnnotated) return false;
             }
 
             if (parameterInfo.Member.GetCustomAttributes().TryGetNullableContextFlag(out var contextFlag))
             {
-                if (contextFlag == Annotated) { return true; }
-                if (contextFlag == NotAnnotated) { return false; }
+                if (contextFlag == Annotated) return true;
+                if (contextFlag == NotAnnotated) return false;
             }
 
             return false;
@@ -109,17 +97,14 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool HasNullableReferenceType(this PropertyInfo propertyInfo)
         {
-            if (propertyInfo.PropertyType.IsValueType)
-            {
-                return false;
-            }
+            if (propertyInfo.PropertyType.IsValueType) return false;
             if (propertyInfo.GetCustomAttributes().TryGetNullableAttributeFlags(out var flags))
             {
-
                 var flag = flags.FirstOrDefault();
-                if (flag == Annotated) { return true; }
-                if (flag == NotAnnotated) { return false; }
+                if (flag == Annotated) return true;
+                if (flag == NotAnnotated) return false;
             }
+
             return false;
         }
 
@@ -129,7 +114,6 @@ namespace GraphZen.TypeSystem.Internal
                 MethodInfo method => method.HasNullableReferenceType(),
                 PropertyInfo property => property.HasNullableReferenceType(),
                 _ => throw new NotImplementedException()
-
             };
 
 
@@ -221,7 +205,7 @@ namespace GraphZen.TypeSystem.Internal
         {
             Check.NotNull(parameter, nameof(parameter));
 
-            string? customName = parameter.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
+            var customName = parameter.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
             return customName != null
                 ? (customName, ConfigurationSource.DataAnnotation)
                 : (parameter.Name!, ConfigurationSource.Convention);

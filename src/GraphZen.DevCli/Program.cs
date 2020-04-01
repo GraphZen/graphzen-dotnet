@@ -23,22 +23,22 @@ namespace GraphZen
         };
 
         private static Command Command(string name) => new Command(name)
-        { Handler = CommandHandler.Create(CodeGenTasks[name]) };
+            {Handler = CommandHandler.Create(CodeGenTasks[name])};
 
 
         private static void Main(string[] args)
         {
-
-
             var root = new RootCommand
             {
+                new Command("benchmark")
             };
             var genCmd = new Command("gen")
             {
-                // Command("typeSystem")
+                Command("typeSystem")
             };
             genCmd.Handler = CommandHandler.Create(() =>
             {
+                Console.WriteLine("all handlers");
                 foreach (var (_, action) in CodeGenTasks)
                 {
                     action();

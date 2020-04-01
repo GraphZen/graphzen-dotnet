@@ -29,6 +29,7 @@ namespace GraphZen
             schemaDocument = schemaDocument.WithSpecDefinitions();
             GraphQLSyntaxWalker validationVisitor = null!;
             var validationContext = new DocumentValidationContext(schemaDocument, initialSchemaDocument,
+                // ReSharper disable once AccessToModifiedClosure
                 new Lazy<GraphQLSyntaxWalker>(() => validationVisitor));
             var ruleVisitors = Rules.Select(rule => rule(validationContext)).ToArray();
             validationVisitor = new ParallelValidationVisitor(validationContext, ruleVisitors);

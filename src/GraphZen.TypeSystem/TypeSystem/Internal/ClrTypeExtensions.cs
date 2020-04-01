@@ -21,11 +21,9 @@ namespace GraphZen.TypeSystem.Internal
 {
     public static class ClrTypeExtensions
     {
-        internal static bool IsFunc(this Type clrType)
-        {
-            Debug.Assert(clrType.FullName != null, "clrType.FullName != null");
-            return clrType.Assembly == typeof(Func<>).Assembly && clrType.FullName.StartsWith("System.Func");
-        }
+        internal static bool IsFunc(this Type clrType) =>
+            clrType.Assembly == typeof(Func<>).Assembly
+            && clrType.FullName is { } name && name.StartsWith("System.Func");
 
 
         internal static bool TryGetListItemType(this Type clrType, [NotNullWhen(true)] out Type? itemType)

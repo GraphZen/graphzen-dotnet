@@ -50,12 +50,13 @@ namespace GraphZen.TypeSystem
             _syntax = new Lazy<ObjectTypeDefinitionSyntax>(() =>
             {
                 var fieldNodes = Fields.Values.ToSyntaxNodes<FieldDefinitionSyntax>();
+                var dirs = DirectiveAnnotations.ToDirectiveNodes();
 
                 var syntax = new ObjectTypeDefinitionSyntax(
                     SyntaxFactory.Name(Name),
                     SyntaxHelpers.Description(Description),
                     Interfaces.Select(_ => SyntaxFactory.NamedType(SyntaxFactory.Name(_.Name))).ToArray(),
-                    null,
+                    dirs,
                     // ReSharper disable once PossibleNullReferenceException
                     fieldNodes
                 );

@@ -14,6 +14,7 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.LanguageModel.SyntaxFactory;
 
 namespace GraphZen.Tests.Utilities
 {
@@ -37,7 +38,6 @@ namespace GraphZen.Tests.Utilities
                 }
             });
         }
-
 
         [Fact]
         public Task ItCanBuildSchemaDirectlyFromTheSource()
@@ -88,7 +88,7 @@ namespace GraphZen.Tests.Utilities
         public void WithDirectives()
         {
             ShouldRoundTrip(@"
-          directive @foo(arg: Int) on FIELD
+          directive @foo(arg: Int) on FIELD_DEFINITION
 
           type Query {
             str: String
@@ -429,7 +429,7 @@ namespace GraphZen.Tests.Utilities
         }
 
         [Fact]
-        public async Task SpecifyingInterfaceUsing__typename()
+        public async Task specifying_interface_using_typename()
         {
             var schema = Schema.Create(@"
               type Query {
@@ -717,7 +717,7 @@ namespace GraphZen.Tests.Utilities
             var testDirective = schema.FindDirective("test");
 
 
-            var restoredSchemaAST = SyntaxFactory.Document(
+            var restoredSchemaAST = Document(
                 new ISyntaxConvertable[]
                 {
                     schema,
@@ -788,6 +788,18 @@ namespace GraphZen.Tests.Utilities
         [Fact(Skip = "TODO")]
         public void RejectsInvalidSDL()
         {
+        }
+
+        [Fact]
+        public void round_trip_directive_annotations()
+        {
+            ShouldRoundTrip(@"
+                directive @foo(arg: String) on SCHEMA | SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+                type Query @foo(arg: ""Hello"") {
+                  abc: String!
+                }
+            ");
         }
     }
 }

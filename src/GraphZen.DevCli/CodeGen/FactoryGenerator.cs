@@ -60,7 +60,7 @@ using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
 
-#nullable enable
+#nullable restore
 
 namespace {@namespace} {{
     public static partial class {className} {{

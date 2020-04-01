@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.TestSubjectAssemblyA;
 using GraphZen.TypeSystem.TestSubjectAssemblyB;

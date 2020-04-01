@@ -8,6 +8,7 @@ namespace GraphZen.LanguageModel.Internal
     public static class TokenListParserExtensions
     {
         public static TokenListParser<TokenKind, T?> OptionalOrNull<T>(this TokenListParser<TokenKind, T> parser) where T : class =>
+            // ReSharper disable once RedundantCast
             parser.Select(_ => (T?)_).OptionalOrDefault();
     }
 }

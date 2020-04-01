@@ -16,9 +16,9 @@ namespace GraphZen.TypeSystem.TestSubjectAssemblyB
         }
 
         public string? NullableReferenceTypeProperty { get; }
-        public int? NullableValueTypeProperty { get; }
+        public int? NullableValueTypeProperty { get; } = null;
         public string NonNullableReferenceTypeProperty { get; }
-        public int NonNullableValueTypeProperty { get; }
+        public int NonNullableValueTypeProperty { get; } = 0;
         public string? NullableReferenceTypeMethod() => throw new System.NotImplementedException();
         public int? NullableValueTypeMethod() => throw new System.NotImplementedException();
 

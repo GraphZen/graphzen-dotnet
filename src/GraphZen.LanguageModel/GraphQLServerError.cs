@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -68,7 +67,7 @@ namespace GraphZen
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((GraphQLServerError)obj);
+            return Equals((GraphQLServerError) obj);
         }
 
         public override int GetHashCode()

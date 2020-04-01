@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+// ReSharper disable UnusedParameter.Local
 
 namespace GraphZen.TypeSystem.TestSubjectAssemblyA
 {
@@ -33,9 +34,9 @@ namespace GraphZen.TypeSystem.TestSubjectAssemblyA
         }
 
         public string? NullableReferenceTypeProperty { get; } = null!;
-        public int? NullableValueTypeProperty { get; }
+        public int? NullableValueTypeProperty { get; } = null!;
         public string NonNullableReferenceTypeProperty { get; } = null!;
-        public int NonNullableValueTypeProperty { get; }
+        public int NonNullableValueTypeProperty { get; } = 0;
         public string? NullableReferenceTypeMethod() => throw new System.NotImplementedException();
         public int? NullableValueTypeMethod() => throw new System.NotImplementedException();
 
