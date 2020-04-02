@@ -3,11 +3,11 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
+
 // ReSharper disable UnusedParameter.Local
 
 namespace GraphZen.CodeGen
@@ -15,10 +15,12 @@ namespace GraphZen.CodeGen
     public class SyntaxFactoryGeneratorTests
     {
         public const string TestValue = "hello";
+
         public class TestSyntax
         {
             [GenFactory(nameof(SyntaxFactory))]
-            public TestSyntax(List<string> hello, SyntaxLocation location, string? nullalbe = TestValue, bool test = false)
+            public TestSyntax(List<string> hello, SyntaxLocation location, string? nullalbe = TestValue,
+                bool test = false)
             {
             }
         }

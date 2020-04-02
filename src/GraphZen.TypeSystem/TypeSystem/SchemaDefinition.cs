@@ -245,7 +245,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public TypeIdentity FindOverlappingTypeIdentity(TypeIdentity identity)
+        public TypeIdentity? FindOverlappingTypeIdentity(TypeIdentity identity)
         {
             Check.NotNull(identity, nameof(identity));
             var ids = _typeIdentities.Where(_ => _.Overlaps(identity)).ToList();
@@ -277,7 +277,7 @@ namespace GraphZen.TypeSystem
                     IsOutputType = referencingMember is IOutputDefinition
                 }
             );
-            return identity != null ? new TypeReference(identity, typeNode) : null;
+            return new TypeReference(identity, typeNode);
         }
 
         public TypeReference? GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
@@ -292,7 +292,7 @@ namespace GraphZen.TypeSystem
                         IsOutputType = referencingMember is IOutputDefinition
                     }
                 );
-                return identity != null ? new TypeReference(identity, typeNode) : null;
+                return new TypeReference(identity, typeNode);
             }
 
             return null;
@@ -311,7 +311,7 @@ namespace GraphZen.TypeSystem
                         IsOutputType = referencingMember is IOutputDefinition
                     }
                 );
-                return identity != null ? new TypeReference(identity, typeNode) : null;
+                return new TypeReference(identity, typeNode);
             }
 
             return null;
@@ -325,7 +325,7 @@ namespace GraphZen.TypeSystem
 
 
                 var identity = GetOrAddTypeIdentity(new TypeIdentity(innerClrType, this, kind));
-                return identity != null ? new TypeReference(identity, typeNode) : null;
+                return new TypeReference(identity, typeNode);
             }
 
             return null;
@@ -345,7 +345,7 @@ namespace GraphZen.TypeSystem
                     }
                 );
 
-                return identity != null ? new TypeReference(identity, typeNode) : null;
+                return new TypeReference(identity, typeNode);
             }
 
             return null;
@@ -363,7 +363,7 @@ namespace GraphZen.TypeSystem
                         IsOutputType = referencingMember is IOutputDefinition
                     }
                 );
-                return identity != null ? new TypeReference(identity, typeNode) : null;
+                return new TypeReference(identity, typeNode);
             }
 
             return null;
@@ -534,7 +534,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(typeFactory, nameof(typeFactory));
             var identity = GetOrAddTypeIdentity(new TypeIdentity(clrType, this));
-            return identity != null ? AddType(typeFactory(identity)) : null;
+            return AddType(typeFactory(identity));
         }
 
 
@@ -544,7 +544,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Check.NotNull(typeFactory, nameof(typeFactory));
             var identity = GetOrAddTypeIdentity(new TypeIdentity(name, this));
-            return identity != null ? AddType(typeFactory(identity)) : null;
+            return AddType(typeFactory(identity));
         }
 #nullable restore
 
@@ -629,14 +629,14 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public T FindType<T>(string name) where T : NamedTypeDefinition
+        public T? FindType<T>(string name) where T : NamedTypeDefinition
         {
             Check.NotNull(name, nameof(name));
             return _types.OfType<T>().SingleOrDefault(_ => _.Name == name);
         }
 
 
-        public T FindType<T>(Type clrType) where T : NamedTypeDefinition
+        public T? FindType<T>(Type clrType) where T : NamedTypeDefinition
         {
             Check.NotNull(clrType, nameof(clrType));
             return _types.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType);
@@ -673,8 +673,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [return: MaybeNull]
-        public T FindType<T>(TypeIdentity identity) where T : NamedTypeDefinition
+        public T? FindType<T>(TypeIdentity identity) where T : NamedTypeDefinition
         {
             Check.NotNull(identity, nameof(identity));
 
@@ -692,13 +691,13 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public NamedTypeDefinition FindType(TypeIdentity identity)
+        public NamedTypeDefinition? FindType(TypeIdentity identity)
         {
             Check.NotNull(identity, nameof(identity));
             return _types.SingleOrDefault(_ => _.Identity.Equals(identity));
         }
 
-        public NamedTypeDefinition FindType(string name)
+        public NamedTypeDefinition? FindType(string name)
         {
             return _types.SingleOrDefault(_ => _.Name == name);
         }
@@ -709,24 +708,24 @@ namespace GraphZen.TypeSystem
         public DirectiveDefinition? FindDirective(Type clrType) =>
             _directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
 
-        public NamedTypeDefinition FindType(Type clrType)
+        public NamedTypeDefinition? FindType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.ClrType == clrType);
         }
 
 
-        public NamedTypeDefinition FindOutputType(Type clrType)
+        public NamedTypeDefinition? FindOutputType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.IsOutputType() && _.ClrType == clrType);
         }
 
-        public NamedTypeDefinition FindType(Type clrType, TypeKind kind)
+        public NamedTypeDefinition? FindType(Type clrType, TypeKind kind)
         {
             return _types.Where(_ => _.Kind == kind)
                 .SingleOrDefault(_ => _.ClrType == clrType);
         }
 
-        public NamedTypeDefinition FindInputType(Type clrType)
+        public NamedTypeDefinition? FindInputType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.IsInputType() && _.ClrType == clrType);
         }

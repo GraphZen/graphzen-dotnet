@@ -27,13 +27,13 @@ namespace Microsoft.AspNetCore.Builder
     public static class GraphZenApplicationBuilderExtensions
     {
         private const int DefaultMemoryThreshold = 1024 * 30;
-        private static string? s_tempDirectory;
+        private static string? _tempDirectory;
 
         public static string TempDirectory
         {
             get
             {
-                if (s_tempDirectory == null)
+                if (_tempDirectory == null)
                 {
                     // Look for folders in the following order.
                     var temp =
@@ -43,10 +43,10 @@ namespace Microsoft.AspNetCore.Builder
 
                     if (!Directory.Exists(temp)) throw new DirectoryNotFoundException(temp);
 
-                    s_tempDirectory = temp;
+                    _tempDirectory = temp;
                 }
 
-                return s_tempDirectory;
+                return _tempDirectory;
             }
         }
 

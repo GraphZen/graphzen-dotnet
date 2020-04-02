@@ -12,7 +12,7 @@ namespace GraphZen.LanguageModel.FunctionalTests.Printer
 {
     public class PrinterTypeDefinitionTests
     {
-        private readonly IPrinter sut = new Internal.Printer();
+        private readonly IPrinter _sut = new Internal.Printer();
 
         [Fact]
         public void it_should_print_object_type_definition()
@@ -34,7 +34,7 @@ namespace GraphZen.LanguageModel.FunctionalTests.Printer
                 {
                     FieldDefinition(Name("abc"), NonNullType(NamedType(Name("String"))))
                 });
-            sut.Print(syntax).Should().Be(@"""""""
+            _sut.Print(syntax).Should().Be(@"""""""
 Description
 """"""
 type Foo implements IFoo & IBar @dir1(foo: null) @dir2 {

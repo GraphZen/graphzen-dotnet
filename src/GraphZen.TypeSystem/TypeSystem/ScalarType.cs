@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -55,19 +54,15 @@ namespace GraphZen.TypeSystem
                                                       throw new Exception(
                                                           $"Scalar {Name} does not have a {nameof(ValueParser)} not defined.");
 
-        public Maybe<object> Serialize(object value) => Serializer(value) ?? throw new InvalidOperationException();
+        public Maybe<object> Serialize(object value) => Serializer(value);
 
         public bool IsValidValue(string value) => ParseValue(value).HasValue;
 
         public bool IsValidLiteral(ValueSyntax value) => ParseLiteral(value).HasValue;
 
-        public Maybe<object> ParseValue(object value) => ValueParser(value) ?? throw new InvalidOperationException();
+        public Maybe<object> ParseValue(object value) => ValueParser(value);
 
-        public Maybe<object> ParseLiteral(ValueSyntax value)
-        {
-            Debug.Assert(value != null, nameof(value) + " != null");
-            return LiteralParser(value) ?? throw new InvalidOperationException();
-        }
+        public Maybe<object> ParseLiteral(ValueSyntax value) => LiteralParser(value);
 
         public override TypeKind Kind { get; } = TypeKind.Scalar;
 

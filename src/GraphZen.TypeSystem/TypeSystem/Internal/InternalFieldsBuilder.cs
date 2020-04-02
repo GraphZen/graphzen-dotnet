@@ -164,9 +164,9 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             if (property.TryGetDescriptionFromDataAnnotation(out var desc))
-                field?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+                field.Builder.Description(desc, ConfigurationSource.DataAnnotation);
 
-            return field?.Builder;
+            return field.Builder;
         }
 
 
@@ -210,13 +210,13 @@ namespace GraphZen.TypeSystem.Internal
 
 
             if (method.TryGetDescriptionFromDataAnnotation(out var desc))
-                field?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+                field.Builder.Description(desc, ConfigurationSource.DataAnnotation);
             foreach (var parameter in method.GetParameters())
             {
-                field?.Builder.Argument(parameter, ConfigurationSource.Convention);
+                field.Builder.Argument(parameter, ConfigurationSource.Convention);
             }
 
-            return field?.Builder;
+            return field.Builder;
         }
 
         private bool Ignore(FieldDefinition field, ConfigurationSource configurationSource)

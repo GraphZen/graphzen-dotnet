@@ -67,6 +67,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var tempServiceProvider = serviceCollection.BuildServiceProvider();
 
             var context = tempServiceProvider.GetRequiredService<TContext>();
+            // ReSharper disable once ConstantConditionalAccessQualifier
             var queryClrType = context.Schema.QueryType?.ClrType;
             if (queryClrType != null) serviceCollection.TryAddScoped(queryClrType);
 

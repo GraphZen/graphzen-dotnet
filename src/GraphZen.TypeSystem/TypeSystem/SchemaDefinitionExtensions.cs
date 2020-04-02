@@ -22,14 +22,14 @@ namespace GraphZen.TypeSystem
         public static UnionTypeDefinition GetUnion<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).GetType<UnionTypeDefinition>(typeof(TClrType));
 
-        public static UnionTypeDefinition FindUnion(this SchemaDefinition schema, string name) =>
+        public static UnionTypeDefinition? FindUnion(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).FindType<UnionTypeDefinition>(name);
 
-        public static UnionTypeDefinition FindUnion<TClrType>(this SchemaDefinition schema) =>
+        public static UnionTypeDefinition? FindUnion<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).FindType<UnionTypeDefinition>(typeof(TClrType));
 
 
-        public static UnionTypeDefinition FindUnion(this SchemaDefinition schema, Type clrType) =>
+        public static UnionTypeDefinition? FindUnion(this SchemaDefinition schema, Type clrType) =>
             Check.NotNull(schema, nameof(schema))
                 .FindType<UnionTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
@@ -69,14 +69,14 @@ namespace GraphZen.TypeSystem
         public static ScalarTypeDefinition GetScalar<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).GetType<ScalarTypeDefinition>(typeof(TClrType));
 
-        public static ScalarTypeDefinition FindScalar(this SchemaDefinition schema, string name) =>
+        public static ScalarTypeDefinition? FindScalar(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).FindType<ScalarTypeDefinition>(name);
 
-        public static ScalarTypeDefinition FindScalar<TClrType>(this SchemaDefinition schema) =>
+        public static ScalarTypeDefinition? FindScalar<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).FindType<ScalarTypeDefinition>(typeof(TClrType));
 
 
-        public static ScalarTypeDefinition FindScalar(this SchemaDefinition schema, Type clrType) =>
+        public static ScalarTypeDefinition? FindScalar(this SchemaDefinition schema, Type clrType) =>
             Check.NotNull(schema, nameof(schema))
                 .FindType<ScalarTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
@@ -118,15 +118,15 @@ namespace GraphZen.TypeSystem
         public static InterfaceTypeDefinition GetInterface<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).GetType<InterfaceTypeDefinition>(typeof(TClrType));
 
-        public static InterfaceTypeDefinition FindInterface(this SchemaDefinition schema,
+        public static InterfaceTypeDefinition? FindInterface(this SchemaDefinition schema,
             string name) =>
             Check.NotNull(schema, nameof(schema)).FindType<InterfaceTypeDefinition>(name);
 
-        public static InterfaceTypeDefinition FindInterface<TClrType>(this SchemaDefinition schema) =>
+        public static InterfaceTypeDefinition? FindInterface<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).FindType<InterfaceTypeDefinition>(typeof(TClrType));
 
 
-        public static InterfaceTypeDefinition FindInterface(this SchemaDefinition schema,
+        public static InterfaceTypeDefinition? FindInterface(this SchemaDefinition schema,
             Type clrType) =>
             Check.NotNull(schema, nameof(schema))
                 .FindType<InterfaceTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
@@ -167,14 +167,14 @@ namespace GraphZen.TypeSystem
         public static EnumTypeDefinition GetEnum<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).GetType<EnumTypeDefinition>(typeof(TClrType));
 
-        public static EnumTypeDefinition FindEnum(this SchemaDefinition schema, string name) =>
+        public static EnumTypeDefinition? FindEnum(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).FindType<EnumTypeDefinition>(name);
 
-        public static EnumTypeDefinition FindEnum<TClrType>(this SchemaDefinition schema) =>
+        public static EnumTypeDefinition? FindEnum<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).FindType<EnumTypeDefinition>(typeof(TClrType));
 
 
-        public static EnumTypeDefinition FindEnum(this SchemaDefinition schema, Type clrType) =>
+        public static EnumTypeDefinition? FindEnum(this SchemaDefinition schema, Type clrType) =>
             Check.NotNull(schema, nameof(schema))
                 .FindType<EnumTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
@@ -214,15 +214,15 @@ namespace GraphZen.TypeSystem
         public static InputObjectTypeDefinition GetInputObject<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).GetType<InputObjectTypeDefinition>(typeof(TClrType));
 
-        public static InputObjectTypeDefinition FindInputObject(this SchemaDefinition schema,
+        public static InputObjectTypeDefinition? FindInputObject(this SchemaDefinition schema,
             string name) =>
             Check.NotNull(schema, nameof(schema)).FindType<InputObjectTypeDefinition>(name);
 
-        public static InputObjectTypeDefinition FindInputObject<TClrType>(this SchemaDefinition schema) =>
+        public static InputObjectTypeDefinition? FindInputObject<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).FindType<InputObjectTypeDefinition>(typeof(TClrType));
 
 
-        public static InputObjectTypeDefinition FindInputObject(this SchemaDefinition schema,
+        public static InputObjectTypeDefinition? FindInputObject(this SchemaDefinition schema,
             Type clrType) =>
             Check.NotNull(schema, nameof(schema))
                 .FindType<InputObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
@@ -263,14 +263,14 @@ namespace GraphZen.TypeSystem
         public static ObjectTypeDefinition GetObject<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).GetType<ObjectTypeDefinition>(typeof(TClrType));
 
-        public static ObjectTypeDefinition FindObject(this SchemaDefinition schema, string name) =>
+        public static ObjectTypeDefinition? FindObject(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).FindType<ObjectTypeDefinition>(name);
 
-        public static ObjectTypeDefinition FindObject<TClrType>(this SchemaDefinition schema) =>
+        public static ObjectTypeDefinition? FindObject<TClrType>(this SchemaDefinition schema) =>
             Check.NotNull(schema, nameof(schema)).FindType<ObjectTypeDefinition>(typeof(TClrType));
 
 
-        public static ObjectTypeDefinition FindObject(this SchemaDefinition schema, Type clrType) =>
+        public static ObjectTypeDefinition? FindObject(this SchemaDefinition schema, Type clrType) =>
             Check.NotNull(schema, nameof(schema))
                 .FindType<ObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
