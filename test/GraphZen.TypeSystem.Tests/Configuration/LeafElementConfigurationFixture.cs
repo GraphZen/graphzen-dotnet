@@ -72,7 +72,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         public abstract ConfigurationSource GetElementConfigurationSource(TMutableDefMarker parent);
 
         public ConfigurationSource GetElementConfigurationSource(MemberDefinition parent) =>
-            GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition));
+            GetElementConfigurationSource((TMutableDefMarker)((parent as TParentMemberDefinition)!));
 
         public bool TryGetValue(MemberDefinition parent, [NotNullWhen(true)] out object? value)
         {

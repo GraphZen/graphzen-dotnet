@@ -10,6 +10,7 @@ namespace GraphZen.Infrastructure
 {
     internal static class StackExtensions
     {
+        [return: MaybeNull]
         public static T PeekOrDefault<T>(this Stack<T> stack) =>
             Check.NotNull(stack, nameof(stack)).Count > 0 ? stack.Peek() : default;
     }
