@@ -112,9 +112,9 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             if (parameter.TryGetDescriptionFromDataAnnotation(out var desc))
-                argument?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+                argument.Builder.Description(desc, ConfigurationSource.DataAnnotation);
 
-            return argument?.Builder;
+            return argument.Builder;
         }
 
         public bool IsArgumentIgnored(string name, ConfigurationSource configurationSource)

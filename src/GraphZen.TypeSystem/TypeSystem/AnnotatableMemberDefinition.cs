@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem
         public abstract DirectiveLocation DirectiveLocation { get; }
         public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => _directives;
 
-        public IDirectiveAnnotation FindDirectiveAnnotation(string name)
+        public IDirectiveAnnotation? FindDirectiveAnnotation(string name)
         {
             Check.NotNull(name, nameof(name));
             return _directives.SingleOrDefault(_ => _.Name == name);

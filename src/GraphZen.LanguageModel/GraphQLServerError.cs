@@ -67,7 +67,7 @@ namespace GraphZen
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((GraphQLServerError) obj);
+            return Equals((GraphQLServerError)obj);
         }
 
         public override int GetHashCode()
@@ -87,7 +87,7 @@ namespace GraphZen
             throw new GraphQLException(this);
         }
 
-        public override string ToString() => Json.SerializeObject(this) ?? Message;
+        public override string ToString() => Json.SerializeObject(this);
 
 
         public GraphQLServerError WithLocationInfo(IReadOnlyList<SyntaxNode> nodes, ResponsePath path) =>
