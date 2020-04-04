@@ -10,9 +10,12 @@ namespace BuildTargets
 {
     internal class Program
     {
-        private const string Compile = nameof(Compile);
         private const string ArtifactsDir = "build-artifacts";
-        private static string PackageDir = Path.Combine(ArtifactsDir, "packages");
+        private static readonly string PackageDir = Path.Combine(ArtifactsDir, "packages");
+        private static readonly string TestLogDir = Path.Combine(ArtifactsDir, "test-logs");
+
+        private const string Compile = nameof(Compile);
+        private const string Default = nameof(Default);
         private const string Pack = nameof(Pack);
         private const string Test = nameof(Test);
 
@@ -21,15 +24,9 @@ namespace BuildTargets
         {
             CleanDir($"./{ArtifactsDir}");
             Target(Compile, () => Run("dotnet", "build -c release"));
-            Target(Test, () => Run("dotnet", "test -c release --no-build"));
-            Target(Pack, DependsOn(Compile), () =>
-            {
-                //var project = Directory.GetFiles("./src", "*.csproj", SearchOption.TopDirectoryOnly).OrderBy(_ => _).First();
-
-                Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build");
-            });
-
-            Target("default", DependsOn(Compile, Test));
+            Target(Test, () => Run("dotnet", $"test -c release --no-build --logger trx --results-directory {TestLogDir} /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura"));
+            Target(Pack, DependsOn(Compile), () => Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build"));
+            Target(Default, DependsOn(Compile, Test, Pack));
             RunTargetsAndExit(args);
         }
 
