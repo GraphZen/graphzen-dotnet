@@ -60,10 +60,11 @@ namespace BuildTargets
 
         private static void GenerateCodeCoverageReport()
         {
-            new Generator().GenerateReport(new ReportConfiguration(new List<string> {"**/*coverage.cobertura.xml"},
-                $"./{ArtifactsDir}/test-report/", new List<string>(), null, new List<string>
+            new Generator().GenerateReport(new ReportConfiguration(
+                new List<string> {$"./{TestLogDir}/**/*coverage.cobertura.xml"},
+                $"./{ArtifactsDir}/coverage-report/", new List<string>(), null, new List<string>
                 {
-                    "HtmlInline_AzurePipelines_Dark", "Cobertura"
+                    "Cobertura"
                 },
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,
                 null));
