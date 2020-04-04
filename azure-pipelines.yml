@@ -19,7 +19,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: './build-artifacts/Cobertura.xml'
+    summaryFileLocation: './build-artifacts/test-report/Cobertura.xml'
 
 - task: PublishTestResults@2
   inputs:
