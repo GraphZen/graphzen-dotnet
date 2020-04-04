@@ -19,7 +19,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: './test-artifacts/coverage.cobertura.xml'
+    summaryFileLocation: './build-artifacts/Cobertura.xml'
 
 - task: PublishTestResults@2
   inputs:
@@ -27,9 +27,8 @@ steps:
     testResultsFiles: '**/*.trx'
     mergeTestResults: true
 
-
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: './build-artifacts'
-    ArtifactName: 'drop'
+    PathtoPublish: './build-artifacts/packages'
+    ArtifactName: 'packages'
     publishLocation: 'Container'
