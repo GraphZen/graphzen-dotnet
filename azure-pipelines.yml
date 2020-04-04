@@ -11,10 +11,10 @@ steps:
   inputs:
     packageType: 'sdk'
     useGlobalJson: true
+
 - task: PowerShell@2
   inputs:
     filePath: 'build.ps1'
-    arguments: '-ScriptArgs "-build_artifacts_dir=$(build.artifactstagingdirectory)/packages"'
 
 - task: PublishCodeCoverageResults@1
   inputs:
@@ -30,6 +30,6 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: './build-artifacts'
     ArtifactName: 'drop'
     publishLocation: 'Container'

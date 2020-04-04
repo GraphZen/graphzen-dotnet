@@ -10,4 +10,8 @@
     <ProjectReference Include="..\GraphZen.AspNetCore.Server\GraphZen.AspNetCore.Server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="minver" Version="2.2.0" PrivateAssets="All" />
+  </ItemGroup>
+
 </Project>

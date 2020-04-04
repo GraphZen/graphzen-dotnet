@@ -8,5 +8,8 @@
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="minver" Version="2.2.0" PrivateAssets="All" />
+  </ItemGroup>
 
 </Project>

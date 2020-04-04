@@ -81,11 +81,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.TypeSystem.Functio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{5659C2C2-63A1-496D-8B0A-676B4D5B4583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.DevCli.Tests", "src\GraphZen.DevCli.Tests\GraphZen.DevCli.Tests.csproj", "{023FCC01-AD4C-4E36-825A-FDEDAF781182}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.DevCli.Tests", "src\GraphZen.DevCli.Tests\GraphZen.DevCli.Tests.csproj", "{023FCC01-AD4C-4E36-825A-FDEDAF781182}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.TypeSystem.TestSubjectAssemblyA", "test\GraphZen.TypeSystem.TestSubjectAssemblyA\GraphZen.TypeSystem.TestSubjectAssemblyA.csproj", "{73B27F56-1A06-4F1D-B4FD-FB067B2DE873}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.TypeSystem.TestSubjectAssemblyA", "test\GraphZen.TypeSystem.TestSubjectAssemblyA\GraphZen.TypeSystem.TestSubjectAssemblyA.csproj", "{73B27F56-1A06-4F1D-B4FD-FB067B2DE873}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.TypeSystem.TestSubjectAssemblyB", "test\GraphZen.TypeSystem.TestSubjectAssemblyB\GraphZen.TypeSystem.TestSubjectAssemblyB.csproj", "{320393A5-233A-415D-86EA-1A91AA10C52C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.TypeSystem.TestSubjectAssemblyB", "test\GraphZen.TypeSystem.TestSubjectAssemblyB\GraphZen.TypeSystem.TestSubjectAssemblyB.csproj", "{320393A5-233A-415D-86EA-1A91AA10C52C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildTargets", "BuildTargets\BuildTargets.csproj", "{E4C5FCC7-35DD-4294-9992-C5E8F641FB2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -225,6 +227,10 @@ Global
 		{320393A5-233A-415D-86EA-1A91AA10C52C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{320393A5-233A-415D-86EA-1A91AA10C52C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{320393A5-233A-415D-86EA-1A91AA10C52C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4C5FCC7-35DD-4294-9992-C5E8F641FB2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4C5FCC7-35DD-4294-9992-C5E8F641FB2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4C5FCC7-35DD-4294-9992-C5E8F641FB2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4C5FCC7-35DD-4294-9992-C5E8F641FB2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
