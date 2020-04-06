@@ -19,6 +19,7 @@
     <ItemGroup>
       <_ResharperTools Include="$(PkgJetBrains_ReSharper_CommandLineTools)/tools/**/*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(_ResharperTools)" DestinationFolder="$(OutDir)/ReSharperTools/%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(_ResharperTools)" DestinationFolder="$(OutDir)/ReSharperTools/%(RecursiveDir)"
+          SkipUnchangedFiles="true" />
   </Target>
 </Project>

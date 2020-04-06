@@ -57,7 +57,7 @@ namespace GraphZen.QueryEngine
             }
             catch (GraphQLException publicError)
             {
-                return new ExecutionResult(null, new[] { publicError.GraphQLError });
+                return new ExecutionResult(null, new[] {publicError.GraphQLError});
             }
             catch (Exception e)
             {
@@ -66,13 +66,13 @@ namespace GraphZen.QueryEngine
                     var error = context.Options.GetExtension<CoreOptionsExtension>().RevealInternalServerErrors
                         ? new GraphQLServerError(e.Message, innerException: e)
                         : new GraphQLServerError("An unknown error occured");
-                    return new ExecutionResult(null, new[] { error });
+                    return new ExecutionResult(null, new[] {error});
                 }
 
                 throw;
             }
 
-            return new ExecutionResult(null, new[] { new GraphQLServerError("An unknown error occured.") });
+            return new ExecutionResult(null, new[] {new GraphQLServerError("An unknown error occured.")});
         }
 
 
@@ -244,7 +244,7 @@ namespace GraphZen.QueryEngine
                         maybeResult);
                     Debug.Assert(info.ParentType != null, "info.ParentType != null");
                     return completed ?? throw new GraphQLException(
-                               $"Cannot return null for non - nullable field {info.ParentType.Name}.{info.FieldName}.");
+                        $"Cannot return null for non - nullable field {info.ParentType.Name}.{info.FieldName}.");
                 }
 
                 if (result == null) return Maybe.Some<object>(null);

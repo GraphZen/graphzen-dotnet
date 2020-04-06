@@ -57,7 +57,8 @@ namespace GraphZen.TypeSystem.Tests.Nullability
             nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNonNullableParameter))]
         [InlineData(typeof(INullableTestClass),
             nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNullableParameter))]
-        [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
+        [InlineData(typeof(INullableTestClass),
+            nameof(INullableTestClass.NonNullableReferenceTypeMethodWithNullableAndNonNullableParameters))]
         [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NonNullableValueTypeProperty))]
         [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NullableValueTypeProperty))]
         [InlineData(typeof(INullableTestClass), nameof(INullableTestClass.NullableValueTypeMethod))]
@@ -74,7 +75,6 @@ namespace GraphZen.TypeSystem.Tests.Nullability
         [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NullableValueTypeProperty))]
         [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NullableValueTypeMethod))]
         [InlineData(typeof(NullableTestClassA), nameof(INullableTestClass.NonNullableValueTypeMethod))]
-
         [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NonNullableReferenceTypeProperty))]
         [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NonNullableReferenceTypeMethod))]
         [InlineData(typeof(NullableTestClassB),
@@ -87,7 +87,6 @@ namespace GraphZen.TypeSystem.Tests.Nullability
         [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NullableValueTypeProperty))]
         [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NullableValueTypeMethod))]
         [InlineData(typeof(NullableTestClassB), nameof(INullableTestClass.NonNullableValueTypeMethod))]
-
         public void members_should_not_have_nullable_reference_type(Type type, string memberName)
         {
             var member = type.GetMember(memberName).Single();
@@ -108,17 +107,11 @@ namespace GraphZen.TypeSystem.Tests.Nullability
             foreach (var parameterInfo in ctorParams)
             {
                 if (parameterInfo.Name!.Contains("nullableRef"))
-                {
                     parameterInfo.HasNullableReferenceType().Should()
-                                            .BeTrue($"{type}.ctor({parameterInfo.Name}) has a nullable reference type");
-
-                }
+                        .BeTrue($"{type}.ctor({parameterInfo.Name}) has a nullable reference type");
                 else
-                {
                     parameterInfo.HasNullableReferenceType().Should()
-                                            .BeFalse($"{type}.ctor({parameterInfo.Name}) does not have a nullable reference type");
-
-                }
+                        .BeFalse($"{type}.ctor({parameterInfo.Name}) does not have a nullable reference type");
             }
         }
 
@@ -135,16 +128,11 @@ namespace GraphZen.TypeSystem.Tests.Nullability
             foreach (var parameterInfo in ctorParams)
             {
                 if (parameterInfo.Name!.Contains("nullableRef"))
-                {
                     parameterInfo.HasNullableReferenceType().Should()
-                                            .BeTrue($"{type}.ctor({parameterInfo.Name}) has a nullable reference type");
-
-                }
+                        .BeTrue($"{type}.ctor({parameterInfo.Name}) has a nullable reference type");
                 else
-                {
                     parameterInfo.HasNullableReferenceType().Should()
                         .BeFalse($"{type}.ctor({parameterInfo.Name}) does not have a nullable reference type");
-                }
             }
         }
 
@@ -161,16 +149,11 @@ namespace GraphZen.TypeSystem.Tests.Nullability
             foreach (var parameterInfo in ctorParams)
             {
                 if (parameterInfo.Name!.Contains("nullableRef"))
-                {
                     parameterInfo.HasNullableReferenceType().Should()
-                       .BeTrue($"{type}.ctor({parameterInfo.Name}) has a nullable reference type");
-                }
+                        .BeTrue($"{type}.ctor({parameterInfo.Name}) has a nullable reference type");
                 else
-                {
                     parameterInfo.HasNullableReferenceType().Should()
-                                            .BeFalse($"{type}.ctor({parameterInfo.Name}) does not have a nullable reference type");
-
-                }
+                        .BeFalse($"{type}.ctor({parameterInfo.Name}) does not have a nullable reference type");
             }
         }
 
@@ -227,7 +210,8 @@ namespace GraphZen.TypeSystem.Tests.Nullability
             {
                 if (parameterInfo.Name!.Contains("nonNullable"))
                     parameterInfo.HasNullableReferenceType().Should()
-                        .BeFalse($"{type.Name}.{method.Name}({parameterInfo.Name}) does not have a nullable reference type");
+                        .BeFalse(
+                            $"{type.Name}.{method.Name}({parameterInfo.Name}) does not have a nullable reference type");
                 else
                     parameterInfo.HasNullableReferenceType().Should()
                         .BeTrue($"{type.Name}.{method.Name}({parameterInfo.Name}) has a nullable reference type");

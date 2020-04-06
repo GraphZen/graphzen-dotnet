@@ -26,6 +26,7 @@ namespace GraphZen.Infrastructure
         string NonNullableReferenceTypeMethodWithNullableAndNonNullableParameters(string? nullable, string nonNullable);
         string NonNullableReferenceTypeMethod();
     }
+
     public static class TestHelpers
     {
         public static IDictionary<string, object> ToDictionary(dynamic value)

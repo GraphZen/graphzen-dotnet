@@ -25,7 +25,7 @@ namespace GraphZen.AspNetCore.Playground.Tests
         [Fact]
         public void playground_html_should_contain_options_object()
         {
-            var options = new PlaygroundOptions { Endpoint = "foo" };
+            var options = new PlaygroundOptions {Endpoint = "foo"};
             var html = PlaygroundHtmlWriter.GetHtml(options);
             var optionsJson = PlaygroundHtmlWriter.GetPlaygroundOptionsJson(options);
             html.Should().Contain(optionsJson);

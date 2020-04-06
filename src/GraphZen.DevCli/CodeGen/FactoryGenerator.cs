@@ -23,7 +23,6 @@ namespace GraphZen.CodeGen
         private static IEnumerable<Assembly> GetAssemblies()
         {
             yield return typeof(SyntaxFactory).Assembly;
-
         }
 
         public static void GenerateFactoryMethods()
@@ -33,12 +32,12 @@ namespace GraphZen.CodeGen
                 _.GetConstructors().Any(ctor => ctor.GetCustomAttribute<GenFactory>() != null));
 
             var classes = types.SelectMany(GetFactoryMethods)
-                .GroupBy(_ => new { _.ClassName, _.Namespace })
+                .GroupBy(_ => new {_.ClassName, _.Namespace})
                 .Select(g => (
-                g.Key.ClassName,
-                g.Key.Namespace,
-                Methods: g.Select(_ => _.Method)
-            )).ToList();
+                    g.Key.ClassName,
+                    g.Key.Namespace,
+                    Methods: g.Select(_ => _.Method)
+                )).ToList();
             foreach (var (className, @namespace, methods) in classes)
             {
                 var csharp = CreateCSharpClass(className, @namespace, methods);
@@ -46,9 +45,8 @@ namespace GraphZen.CodeGen
             }
         }
 
-        private static string CreateCSharpClass(string className, string @namespace, IEnumerable<string> methods)
-        {
-            return @$"
+        private static string CreateCSharpClass(string className, string @namespace, IEnumerable<string> methods) =>
+            @$"
 
 using System;
 using System.Collections.Generic;
@@ -68,13 +66,13 @@ namespace {@namespace} {{
     }}
 }}
 ";
-        }
 
         public static IEnumerable<(string ClassName, string Namespace, string Method)> GetFactoryMethods(Type type)
         {
             var name = type.Name;
-            var methodName = name.EndsWith("Syntax") ?
-            name.Substring(0, name.LastIndexOf("Syntax", StringComparison.Ordinal)) : name;
+            var methodName = name.EndsWith("Syntax")
+                ? name.Substring(0, name.LastIndexOf("Syntax", StringComparison.Ordinal))
+                : name;
             foreach (var ctor in type.GetConstructors())
             {
                 var genFactory = ctor.GetCustomAttribute<GenFactory>();
@@ -82,7 +80,6 @@ namespace {@namespace} {{
                 {
                     var methodParameters = ctor.GetParameters().Select(p =>
                     {
-
                         var parameterType = p.HasNullableReferenceType()
                             ? $"{GetParameterType(p.ParameterType)}?"
                             : GetParameterType(p.ParameterType);
@@ -103,13 +100,11 @@ namespace {@namespace} {{
 
         private static string GetParameterType(Type type)
         {
-            if (!type.IsGenericType)
-            {
-                return type.FullName!;
-            }
+            if (!type.IsGenericType) return type.FullName!;
 
             var gargs = string.Join(", ", type.GetGenericArguments().Select(_ => _.FullName));
-            return $"{type.Namespace}.{type.Name.Remove(type.Name.LastIndexOf("`", StringComparison.Ordinal))}<{gargs}>";
+            return
+                $"{type.Namespace}.{type.Name.Remove(type.Name.LastIndexOf("`", StringComparison.Ordinal))}<{gargs}>";
         }
 
 

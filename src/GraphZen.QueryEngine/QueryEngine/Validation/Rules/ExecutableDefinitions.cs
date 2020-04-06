@@ -28,7 +28,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
                     definition.Kind != SyntaxKind.FragmentDefinition)
                 {
                     var defName = definition is INamedSyntax named ? named.Name.Value : "schema";
-                    ReportError(new GraphQLServerError(NonExecutableDefinitionMessage(defName), new[] { definition }));
+                    ReportError(new GraphQLServerError(NonExecutableDefinitionMessage(defName), new[] {definition}));
                 }
             }
 
