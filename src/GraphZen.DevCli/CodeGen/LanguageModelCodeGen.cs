@@ -37,23 +37,40 @@ namespace GraphZen.CodeGen
             {
                 new List<string>
                 {
-                    "GraphQLSyntaxVisitor",
-                    "GraphQLSyntaxVisitor<TResult>"
                 }.ForEach(className =>
                 {
-                    ns.AbstractPartialClass(className, @class =>
-                    {
-                        foreach (var (kind, nodeType) in NodeTypes)
+                    ns.AbstractPartialClass(
+                        "GraphQLSyntaxVisitor"
+                        , @class =>
                         {
-                            @class.AppendLine($@"
+                            foreach (var (kind, nodeType) in NodeTypes)
+                            {
+                                @class.AppendLine($@"
      /// <summary>Called when the visitor enters a <see cref=""{nodeType}""/> node.</summary>
         public virtual void Enter{kind}( {nodeType} node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref=""{nodeType}""/> node.</summary>
         public virtual void Leave{kind}( {nodeType} node) => OnLeave(node);
 ");
-                        }
-                    });
+                            }
+                        });
+
+                    ns.AbstractPartialClass(
+
+                    "GraphQLSyntaxVisitor<TResult>"
+                        , @class =>
+                        {
+                            foreach (var (kind, nodeType) in NodeTypes)
+                            {
+                                @class.AppendLine($@"
+     /// <summary>Called when the visitor enters a <see cref=""{nodeType}""/> node.</summary>
+        public virtual TResult  Enter{kind}( {nodeType} node) => OnEnter(node);
+
+        /// <summary>Called when the visitor leaves a <see cref=""{nodeType}""/> node.</summary>
+        public virtual TResult Leave{kind}( {nodeType} node) => OnLeave(node);
+");
+                            }
+                        });
                 });
             });
             csharp.WriteToFile("./src/GraphZen.LanguageModel/LanguageModel/GraphQLSyntaxVisitor.Generated.cs");
