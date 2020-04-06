@@ -7,6 +7,11 @@
 
   <ItemGroup>
     <Compile Include="..\Linked\SyntaxFactory.Generated.cs" Link="LanguageModel\Syntax\SyntaxFactory.Generated.cs" />
+    <Compile Include="..\Linked\LanguageModel\**\*.*">
+      <Link>LanguageModel\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+    <Compile Remove="..\Linked\LanguageModel\Test.Generated.cs" />
+
     <Compile Include="..\Shared\FriendAssemblies.cs" Link="FriendAssemblies.cs" />
   </ItemGroup>
 
@@ -18,5 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
   </ItemGroup>
 </Project>

@@ -67,7 +67,7 @@ namespace GraphZen.CodeGen
                         }
                     });
             });
-            csharp.WriteToFile("./src/GraphZen.LanguageModel/LanguageModel/GraphQLSyntaxVisitor.Generated.cs");
+            csharp.WriteToFile(nameof(LanguageModel), "GraphQLSyntaxVisitor");
         }
 
         private static void GenSyntaxKind()
@@ -84,7 +84,7 @@ namespace GraphZen.CodeGen
 
             var csharp = CSharpStringBuilder.Create();
             csharp.Namespace(LanguageModelNamespace, ns => { ns.Enum(schema.GetEnum("SyntaxKind")); });
-            csharp.WriteToFile("./src/GraphZen.LanguageModel/LanguageModel/Syntax/SyntaxKind.Generated.cs");
+            csharp.WriteToFile(nameof(LanguageModel), "SyntaxKind");
         }
 
         private static void GenSyntaxNodePartials()
@@ -113,7 +113,7 @@ namespace GraphZen.CodeGen
                 }
             });
 
-            csharp.WriteToFile("./src/GraphZen.LanguageModel/LanguageModel/Syntax/SyntaxNode.Generated.cs");
+            csharp.WriteToFile(nameof(LanguageModel), "SyntaxNode");
         }
     }
 }

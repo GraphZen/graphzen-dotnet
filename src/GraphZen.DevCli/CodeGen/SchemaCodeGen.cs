@@ -32,15 +32,14 @@ namespace GraphZen.CodeGen
 
                 cs.AppendLine($"{name},");
             }
+
             cs.Append("}");
         }
+
         public static void PrintEnum(EnumType @enum, string @namespace, string path)
         {
             var csharp = CSharpStringBuilder.Create();
-            csharp.Namespace(@namespace, cs =>
-            {
-
-            });
+            csharp.Namespace(@namespace, cs => { });
         }
     }
 }

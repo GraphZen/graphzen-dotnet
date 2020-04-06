@@ -18,4 +18,9 @@ namespace GraphZen.Infrastructure
             FactoryClassName = factoryClassName;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    internal class GenAccessorExtensions : Attribute
+    {
+    }
 }

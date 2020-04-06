@@ -24,9 +24,9 @@ using JetBrains.Annotations;
 
     public static class CSharpStringBuilderExtensions
     {
-        public static void WriteToFile(this StringBuilder csharp, string path)
+        public static void WriteToFile(this StringBuilder csharp, string projectName, string fileName)
         {
-            CodeGenHelpers.WriteFile(path, csharp.ToString());
+            CodeGenHelpers.WriteFile($"./src/Linked/{projectName}/{fileName}.Generated.cs", csharp.ToString());
         }
 
 
@@ -73,7 +73,11 @@ using JetBrains.Annotations;
     {
         public static void Generate()
         {
-            GenerateTypeSystemDictionaryAccessors();
+            // GenerateTypeSystemDictionaryAccessors();
+        }
+
+        public static void GenAccessors()
+        {
         }
 
 
