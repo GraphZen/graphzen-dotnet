@@ -25,6 +25,7 @@ namespace GraphZen.CodeGen
 
         public static void Generate()
         {
+            GenSyntaxVisitors();
             GenSyntaxKind();
             GenSyntaxNodePartials();
         }
