@@ -45,7 +45,11 @@ namespace BuildTargets
             Target(HtmlReport, DependsOn(Test), () => GenerateCodeCoverageReport(true));
             Target(Pack, DependsOn(Compile), () => Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build"));
             Target(CleanupCode,
-                () => { Run(GetReSharperTool("cleanupcode"), @"--config=./BuildTargets/cleanupcode.config"); });
+                () =>
+                {
+                    Run(GetReSharperTool("cleanupcode"), @"--config=./BuildTargets/cleanupcode.config --debug --verbosity=TRACE");
+                    // Run(GetReSharperTool("cleanupcode"), @"--config=./BuildTargets/cleanupcode.config");
+                });
             Target(Format, () => { Run("dotent-format"); });
             Target(Default, DependsOn(Compile, Test, Pack));
             RunTargetsAndExit(args);
