@@ -13,6 +13,7 @@ namespace BuildTargets
 {
     internal class Program
     {
+        // Paths
         private const string ArtifactsDir = "build-artifacts";
 
         private static string OutputDir { get; } =
@@ -20,6 +21,9 @@ namespace BuildTargets
 
         private static readonly string PackageDir = Path.Combine(ArtifactsDir, "packages");
         private static readonly string TestLogDir = Path.Combine(ArtifactsDir, "test-logs");
+        private static string GetReSharperTool(string name) => Path.Combine(OutputDir, "ReSharperTools", name);
+
+        // Targets
         private const string Compile = nameof(Compile);
         private const string Default = nameof(Default);
         private const string CleanupCode = nameof(CleanupCode);
@@ -27,7 +31,6 @@ namespace BuildTargets
         private const string Pack = nameof(Pack);
         private const string Test = nameof(Test);
         private const string HtmlReport = nameof(HtmlReport);
-        private static string GetReSharperTool(string name) => Path.Combine(OutputDir, "ReSharperTools", name);
 
         private static void Main(string[] args)
         {
