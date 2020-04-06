@@ -208,7 +208,7 @@ Task("Test")
         ArgumentCustomization = args => args
         .Append($"--logger trx --results-directory {testArtifactsDir}")
     };
-    
+
     var coverletSettings = new CoverletSettings
     {
         CollectCoverage = true,

@@ -23,6 +23,7 @@ namespace BuildTargets
         private const string Compile = nameof(Compile);
         private const string Default = nameof(Default);
         private const string CleanupCode = nameof(CleanupCode);
+        private const string Format = nameof(Format);
         private const string Pack = nameof(Pack);
         private const string Test = nameof(Test);
         private const string HtmlReport = nameof(HtmlReport);
@@ -31,13 +32,17 @@ namespace BuildTargets
         private static void Main(string[] args)
         {
             CleanDir($"./{ArtifactsDir}");
-            Target(Compile, () => Run("dotnet", "build -c release"));
-            Target(Test, () => GenerateCodeCoverageReport());
+            Target(Compile, () => Run("dotnet", "build -c Release"));
+            Target(Test, () =>
+            {
+                Run("dotnet", $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
+                GenerateCodeCoverageReport();
+            });
             Target(HtmlReport, () => GenerateCodeCoverageReport(true));
             Target(Pack, DependsOn(Compile), () => Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build"));
             Target(CleanupCode, () => { Run(GetReSharperTool("cleanupcode"), @"--config=./BuildTargets/cleanupcode.config"); });
+            Target(Format, () => { Run("dotent-format"); });
             Target(Default, DependsOn(Compile, Test, Pack));
-
             RunTargetsAndExit(args);
         }
 
@@ -54,10 +59,10 @@ namespace BuildTargets
             {
                 "Cobertura"
             };
-            if (html) reportTypes.Add("Html");
+            if (html) reportTypes.Add("HtmlInline");
             new Generator().GenerateReport(new ReportConfiguration(
                 new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
-                $"./{ArtifactsDir}/coverage-report/", new List<string>(), null,
+                $"./{ArtifactsDir}/coverage-reports/", new List<string>(), null,
                 reportTypes,
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,
                 null));
