@@ -47,17 +47,24 @@ using JetBrains.Annotations;
             csharp.AppendLine("}");
         }
 
-        public static void StaticClass(this StringBuilder csharp, string className, Action<StringBuilder> csharpAction)
+        public static void StaticClass(this StringBuilder csharp, string name, Action<StringBuilder> @class)
         {
-            csharp.AppendLine($"public static class {className} {{");
-            csharpAction(csharp);
+            csharp.AppendLine($"public static class {name} {{");
+            @class(csharp);
             csharp.AppendLine("}");
         }
 
-        public static void PartialClass(this StringBuilder csharp, string className, Action<StringBuilder> csharpAction)
+        public static void AbstractPartialClass(this StringBuilder csharp, string name, Action<StringBuilder> @class)
         {
-            csharp.AppendLine($"public partial class {className} {{");
-            csharpAction(csharp);
+            csharp.AppendLine($"public abstract partial class {name} {{");
+            @class(csharp);
+            csharp.AppendLine("}");
+        }
+
+        public static void PartialClass(this StringBuilder csharp, string name, Action<StringBuilder> @class)
+        {
+            csharp.AppendLine($"public partial class {name} {{");
+            @class(csharp);
             csharp.AppendLine("}");
         }
     }

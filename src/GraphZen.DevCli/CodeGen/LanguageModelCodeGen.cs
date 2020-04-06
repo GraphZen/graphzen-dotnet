@@ -13,11 +13,12 @@ namespace GraphZen.CodeGen
 {
     public static class LanguageModelCodeGen
     {
-        private static List<string> NodeTypes { get; } = typeof(SyntaxNode).Assembly.GetTypes()
+        private static List<(string kind, string type)> NodeTypes { get; } = typeof(SyntaxNode).Assembly.GetTypes()
             .Where(typeof(SyntaxNode).IsAssignableFrom)
             .Where(_ => !_.IsAbstract)
-            .Select(_ => _.Name)
-            .OrderBy(_ => _).ToList();
+            .OrderBy(_ => _.Name)
+            .Select(_ => (_.Name, _.Name.Replace("Syntax", "")))
+            .ToList();
 
         private const string LanguageModelNamespace = nameof(GraphZen) + "." + nameof(LanguageModel);
 
@@ -28,16 +29,44 @@ namespace GraphZen.CodeGen
             GenSyntaxNodePartials();
         }
 
+        private static void GenSyntaxVisitors()
+        {
+            var csharp = CSharpStringBuilder.Create();
+            csharp.Namespace(LanguageModelNamespace, ns =>
+            {
+                new List<string>
+                {
+                    "GraphQLSyntaxVisitor",
+                    "GraphQLSyntaxVisitor<TResult>"
+                }.ForEach(className =>
+                {
+                    ns.AbstractPartialClass(className, @class =>
+                    {
+                        foreach (var (kind, nodeType) in NodeTypes)
+                        {
+                            @class.AppendLine($@"
+     /// <summary>Called when the visitor enters a <see cref=""{nodeType}""/> node.</summary>
+        public virtual void Enter{kind}( {nodeType} node) => OnEnter(node);
+
+        /// <summary>Called when the visitor leaves a <see cref=""{nodeType}""/> node.</summary>
+        public virtual void Leave{kind}( {nodeType} node) => OnLeave(node);
+");
+                        }
+                    });
+                });
+            });
+            csharp.WriteToFile("./src/GraphZen.LanguageModel/LanguageModel/Syntax/SyntaxKind.Generated.cs");
+        }
+
         private static void GenSyntaxKind()
         {
             var schema = Schema.Create(sb =>
             {
                 var syntaxKind = sb.Enum("SyntaxKind");
-                foreach (var nodeType in NodeTypes)
+                foreach (var (kind, type) in NodeTypes)
                 {
-                    var kindValue = nodeType.Replace("Syntax", "");
-                    syntaxKind.Value(kindValue,
-                        v => v.Description($"Indicates an <see cref=\"{nodeType}\"/> node."));
+                    syntaxKind.Value(kind,
+                        v => v.Description($"Indicates an <see cref=\"{type}\"/> node."));
                 }
             });
 
@@ -51,21 +80,20 @@ namespace GraphZen.CodeGen
             var csharp = CSharpStringBuilder.Create();
             csharp.Namespace(LanguageModelNamespace, ns =>
             {
-                foreach (var nodeType in NodeTypes)
+                foreach (var (kind, type) in NodeTypes)
                 {
-                    var kind = nodeType.Replace("Syntax", "");
-                    ns.PartialClass(nodeType, @class =>
+                    ns.PartialClass(type, @class =>
                     {
                         @class.AppendLine($@"
-	    /// <summary>Empty, read-only list of <see cref=""{nodeType}""/> nodes.</summary>
-		public static IReadOnlyList<{nodeType}> EmptyList {{get;}} = ImmutableList<{nodeType}>.Empty; 
-		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor""/> enters a <see cref=""{nodeType}""/> node.</summary>
+	    /// <summary>Empty, read-only list of <see cref=""{type}""/> nodes.</summary>
+		public static IReadOnlyList<{type}> EmptyList {{get;}} = ImmutableList<{type}>.Empty; 
+		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor""/> enters a <see cref=""{type}""/> node.</summary>
 		public override void VisitEnter( GraphQLSyntaxVisitor visitor) => visitor.Enter{kind}(this);
-		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor""/> leaves a <see cref=""{nodeType}""/> node.</summary>
+		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor""/> leaves a <see cref=""{type}""/> node.</summary>
 		public override void VisitLeave( GraphQLSyntaxVisitor visitor) => visitor.Leave{kind}(this);
-		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor{{TResult}}""/> enters a <see cref=""{nodeType}""/> node.</summary>
+		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor{{TResult}}""/> enters a <see cref=""{type}""/> node.</summary>
 		public override TResult VisitEnter<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.Enter{kind}(this);
-		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor{{TResult}}""/> leaves a <see cref=""{nodeType}""/> node.</summary>
+		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor{{TResult}}""/> leaves a <see cref=""{type}""/> node.</summary>
 		public override TResult VisitLeave<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.Leave{kind}(this);
 		public override SyntaxKind Kind {{get;}} = SyntaxKind.{kind};	
 ");
