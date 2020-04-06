@@ -14,6 +14,8 @@ namespace GraphZen.CodeGen
     {
         public const string CommonUsings = @"
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -22,6 +24,12 @@ using JetBrains.Annotations;
 
     public static class CSharpStringBuilderExtensions
     {
+        public static void WriteToFile(this StringBuilder csharp, string path)
+        {
+            CodeGenHelpers.WriteFile(path, csharp.ToString());
+        }
+
+
         public static void AddCommonUsings(this StringBuilder csharp) =>
             csharp.AppendLine(CodeGenConstants.CommonUsings);
 

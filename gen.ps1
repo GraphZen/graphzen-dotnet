@@ -1,1 +1,1 @@
-.\build.ps1 -target Gen
+.\build.ps1 gen

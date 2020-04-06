@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
@@ -11,7 +12,7 @@ namespace GraphZen.CodeGen
 {
     public static class CodeGenHelpers
     {
-        public static void WriteFile(string path, string contents)
+             public static void WriteFile(string path, string contents)
         {
             Console.Write($"Generating file: {path} ");
             if (File.Exists(path))
