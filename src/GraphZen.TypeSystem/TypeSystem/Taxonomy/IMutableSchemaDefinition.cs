@@ -12,15 +12,11 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         internal static class Creation
         {
-
         }
 
         internal static class Discovery
         {
-
         }
-
-
     }
 
     [AttributeUsage(AttributeTargets.All)]
@@ -32,7 +28,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         }
 
         public string Subject { get; }
-
     }
 
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]

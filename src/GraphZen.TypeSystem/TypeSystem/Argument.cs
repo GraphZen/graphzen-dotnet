@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
             IReadOnlyList<IDirectiveAnnotation>? directives = null,
             ParameterInfo? clrInfo = null
         ) : this(name, description, type!, defaultValue, hasDefaultValue,
-            directives ?? DirectiveAnnotation.EmptyList, typeRef => (IGraphQLType)typeRef, declaringMember!, clrInfo)
+            directives ?? DirectiveAnnotation.EmptyList, typeRef => (IGraphQLType) typeRef, declaringMember!, clrInfo)
         {
         }
 
@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem
         }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.ArgumentDefinition;
-        public new IArguments DeclaringMember => (IArguments)base.DeclaringMember;
+        public new IArguments DeclaringMember => (IArguments) base.DeclaringMember;
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 

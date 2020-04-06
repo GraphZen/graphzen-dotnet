@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? FindIgnoredInterfaceConfigurationSource(string name)
         {
             Check.NotNull(name, nameof(name));
-            return _ignoredInterfaces.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
+            return _ignoredInterfaces.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?) null;
         }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;

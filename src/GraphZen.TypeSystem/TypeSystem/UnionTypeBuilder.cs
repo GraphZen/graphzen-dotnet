@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem
         public IUnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TUnion)value, (TContext)context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TUnion) value, (TContext) context, info));
             return this;
         }
 

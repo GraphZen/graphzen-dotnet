@@ -12,6 +12,7 @@ namespace GraphZen.Infrastructure
     internal class GenFactory : Attribute
     {
         public string FactoryClassName { get; }
+
         public GenFactory(string factoryClassName)
         {
             FactoryClassName = factoryClassName;

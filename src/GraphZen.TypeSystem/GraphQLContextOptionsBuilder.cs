@@ -21,7 +21,7 @@ namespace GraphZen
         {
         }
 
-        public new virtual GraphQLContextOptions<TContext> Options => (GraphQLContextOptions<TContext>)base.Options;
+        public new virtual GraphQLContextOptions<TContext> Options => (GraphQLContextOptions<TContext>) base.Options;
     }
 
     public class GraphQLContextOptionsBuilder : IGraphQLContextOptionsBuilderInfrastructure
@@ -67,7 +67,7 @@ namespace GraphZen
 
             var updated = withFunc(extension);
 
-            ((IGraphQLContextOptionsBuilderInfrastructure)this).AddOrUpdateExtension(updated);
+            ((IGraphQLContextOptionsBuilderInfrastructure) this).AddOrUpdateExtension(updated);
 
             return this;
         }

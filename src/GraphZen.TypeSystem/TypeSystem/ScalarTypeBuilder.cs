@@ -54,7 +54,7 @@ namespace GraphZen.TypeSystem
             Builder.LiteralParser(value =>
             {
                 Debug.Assert(value != null, nameof(value) + " != null");
-                var parsed = literalParser((TValueNode)value);
+                var parsed = literalParser((TValueNode) value);
                 Debug.Assert(parsed != null, nameof(parsed) + " != null");
                 return parsed.Cast<object>();
             });

@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem
             _memberTypes = new Lazy<IReadOnlyList<ObjectType>>(() => MemberTypesMap.Values.ToImmutableList());
             _syntax = new Lazy<UnionTypeDefinitionSyntax>(() =>
                 new UnionTypeDefinitionSyntax(SyntaxFactory.Name(Name), SyntaxHelpers.Description(Description), null,
-                    MemberTypes.Select(_ => (NamedTypeSyntax)_.ToTypeSyntax()).ToArray()));
+                    MemberTypes.Select(_ => (NamedTypeSyntax) _.ToTypeSyntax()).ToArray()));
         }
 
         public TypeResolver<object, GraphQLContext>? ResolveType { get; }

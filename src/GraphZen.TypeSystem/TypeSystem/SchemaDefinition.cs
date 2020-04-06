@@ -779,7 +779,7 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name) =>
-            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
+            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?) null;
 
         public IEnumerable<ObjectTypeDefinition> GetObjects() => _types.OfType<ObjectTypeDefinition>();
 

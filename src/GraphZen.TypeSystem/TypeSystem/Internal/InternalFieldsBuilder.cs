@@ -42,22 +42,22 @@ namespace GraphZen.TypeSystem.Internal
 
             var fieldMembers = Definition.ClrType.GetMembers(flags)
                 .Where(_ => !(_ is MethodInfo method) || method.DeclaringType != typeof(object) &&
-                            method.ReturnType != typeof(void) &&
-                            !IgnoredMethodNames.Contains(method.Name) && !method.IsSpecialName)
+                    method.ReturnType != typeof(void) &&
+                    !IgnoredMethodNames.Contains(method.Name) && !method.IsSpecialName)
                 .OrderBy(_ => _.MetadataToken);
             foreach (var fieldMember in fieldMembers)
             {
                 switch (fieldMember)
                 {
                     case MethodInfo method:
-                        {
-                            Field(method, ConfigurationSource.Convention);
-                        }
+                    {
+                        Field(method, ConfigurationSource.Convention);
+                    }
                         break;
                     case PropertyInfo property:
-                        {
-                            Field(property, ConfigurationSource.Convention);
-                        }
+                    {
+                        Field(property, ConfigurationSource.Convention);
+                    }
                         break;
                 }
             }
