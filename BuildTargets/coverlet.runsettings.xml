@@ -6,11 +6,8 @@
         <Configuration>
           <Format>cobertura</Format>
           <!-- [Assembly-Filter]Type-Filter -->
-          <Exclude>[*]JetBrains.**</Exclude>
-          <!-- <Include>[coverlet.*]*,[*]Coverlet.Core*</Include>  -->
+          <Exclude>[*Test*]*,[*]JetBrains.**</Exclude>
           <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
-          <!-- <ExcludeByFile>../dir1/class1.cs,../dir2/*.cs,../dir3/**/*.cs,</ExcludeByFile>  -->
-          <ExcludeByFile></ExcludeByFile>
           <SingleHit>false</SingleHit>
           <UseSourceLink>true</UseSourceLink>
           <IncludeTestAssembly>false</IncludeTestAssembly>

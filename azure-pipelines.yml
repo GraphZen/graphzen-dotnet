@@ -13,6 +13,7 @@ steps:
     useGlobalJson: true
 
 - task: PowerShell@2
+  displayName: "Build"
   inputs:
     filePath: 'build.ps1'
 

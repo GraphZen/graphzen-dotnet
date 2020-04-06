@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -15,11 +14,6 @@
     </PackageReference>
     <PackageReference Include="SimpleExec" Version="6.2.0" />
     <PackageReference Include="ReportGenerator.Core" Version="4.5.4" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="cleanupcode.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Target Name="CopyResharperTools" AfterTargets="Build">
     <ItemGroup>

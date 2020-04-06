@@ -1,7 +1,6 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -18,6 +17,7 @@ namespace BuildTargets
 
         private static string OutputDir { get; } =
             Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)!;
+
         private static readonly string PackageDir = Path.Combine(ArtifactsDir, "packages");
         private static readonly string TestLogDir = Path.Combine(ArtifactsDir, "test-logs");
         private const string Compile = nameof(Compile);
@@ -35,12 +35,14 @@ namespace BuildTargets
             Target(Compile, () => Run("dotnet", "build -c Release"));
             Target(Test, () =>
             {
-                Run("dotnet", $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
+                Run("dotnet",
+                    $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
                 GenerateCodeCoverageReport();
             });
-            Target(HtmlReport, () => GenerateCodeCoverageReport(true));
+            Target(HtmlReport, DependsOn(Test), () => GenerateCodeCoverageReport(true));
             Target(Pack, DependsOn(Compile), () => Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build"));
-            Target(CleanupCode, () => { Run(GetReSharperTool("cleanupcode"), @"--config=./BuildTargets/cleanupcode.config"); });
+            Target(CleanupCode,
+                () => { Run(GetReSharperTool("cleanupcode"), @"--config=./BuildTargets/cleanupcode.config"); });
             Target(Format, () => { Run("dotent-format"); });
             Target(Default, DependsOn(Compile, Test, Pack));
             RunTargetsAndExit(args);
@@ -61,7 +63,7 @@ namespace BuildTargets
             };
             if (html) reportTypes.Add("HtmlInline");
             new Generator().GenerateReport(new ReportConfiguration(
-                new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
+                new List<string> {$"./{TestLogDir}/**/*coverage.cobertura.xml"},
                 $"./{ArtifactsDir}/coverage-reports/", new List<string>(), null,
                 reportTypes,
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,
