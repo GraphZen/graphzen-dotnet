@@ -30,7 +30,7 @@ namespace GraphZen
 
         public T? GetData<T>() where T : class
         {
-            if (_typedData.TryGetValue(typeof(T), out var data)) return (T?)data;
+            if (_typedData.TryGetValue(typeof(T), out var data)) return (T?) data;
             var parsed = GraphQLJsonSerializer.ParseData<T>(_jsonResponse);
             _typedData[typeof(T)] = parsed;
             return parsed;

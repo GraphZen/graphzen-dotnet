@@ -7,8 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -21,7 +19,7 @@ namespace GraphZen.LanguageModel
     {
         [GenFactory(nameof(SyntaxFactory))]
         public ArgumentSyntax(NameSyntax name, ValueSyntax value,
-StringValueSyntax? description = null,
+            StringValueSyntax? description = null,
             SyntaxLocation? location = null) : base(location)
         {
             Check.NotNull(name, nameof(name));
@@ -69,7 +67,7 @@ StringValueSyntax? description = null,
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ArgumentSyntax && Equals((ArgumentSyntax)obj);
+            return obj is ArgumentSyntax && Equals((ArgumentSyntax) obj);
         }
 
         public override int GetHashCode()

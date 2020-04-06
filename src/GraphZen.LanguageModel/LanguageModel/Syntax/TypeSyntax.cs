@@ -6,9 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -40,7 +37,7 @@ namespace GraphZen.LanguageModel
             }
 
 
-            return (NamedTypeSyntax)GetNamedType(this);
+            return (NamedTypeSyntax) GetNamedType(this);
         }
     }
 }

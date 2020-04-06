@@ -6,9 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar
@@ -18,12 +15,12 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         private static TokenListParser<TokenKind, SchemaExtensionSyntax> SchemaExtension { get; } =
             (from extend in Keyword("extend")
-             from schema in Keyword("schema")
-             from directives in Directives.OptionalOrNull()
-             from lb in Parse.Ref(() => LeftBrace)
-             from defs in OperationTypeDefinition.Many()
-             from rb in RightBrace
-             select new SchemaExtensionSyntax(directives, defs, SyntaxLocation.FromMany(extend, rb))).Try().Or(
+                from schema in Keyword("schema")
+                from directives in Directives.OptionalOrNull()
+                from lb in Parse.Ref(() => LeftBrace)
+                from defs in OperationTypeDefinition.Many()
+                from rb in RightBrace
+                select new SchemaExtensionSyntax(directives, defs, SyntaxLocation.FromMany(extend, rb))).Try().Or(
                 from extend in Keyword("extend")
                 from schema in Keyword("schema")
                 from directives in Directives

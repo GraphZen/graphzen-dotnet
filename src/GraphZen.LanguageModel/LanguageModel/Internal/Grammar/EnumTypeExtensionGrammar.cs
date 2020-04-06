@@ -6,9 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar
@@ -18,18 +15,18 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         private static TokenListParser<TokenKind, EnumTypeExtensionSyntax> EnumTypeExtension { get; } =
             (from extend in Keyword("extend")
-             from @enum in Keyword("enum")
-             from name in Name
-             from directives in Directives.OptionalOrNull()
-             from values in EnumValuesDefinition
-             select new EnumTypeExtensionSyntax(name, directives, values,
-                 SyntaxLocation.FromMany(extend, name, directives.GetLocation(), values.GetLocation()))).Try()
+                from @enum in Keyword("enum")
+                from name in Name
+                from directives in Directives.OptionalOrNull()
+                from values in EnumValuesDefinition
+                select new EnumTypeExtensionSyntax(name, directives, values,
+                    SyntaxLocation.FromMany(extend, name, directives.GetLocation(), values.GetLocation()))).Try()
             .Or((from extend in Keyword("extend")
-                 from @enum in Keyword("enum")
-                 from name in Name
-                 from directives in Directives
-                 select new EnumTypeExtensionSyntax(name, directives, null,
-                     SyntaxLocation.FromMany(extend, name, directives.GetLocation()))).Try())
+                from @enum in Keyword("enum")
+                from name in Name
+                from directives in Directives
+                select new EnumTypeExtensionSyntax(name, directives, null,
+                    SyntaxLocation.FromMany(extend, name, directives.GetLocation()))).Try())
             .Try()
             .Named("enum type extension");
     }

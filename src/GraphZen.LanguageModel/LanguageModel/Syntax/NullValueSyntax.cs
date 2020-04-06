@@ -7,9 +7,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -18,7 +15,6 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class NullValueSyntax : ValueSyntax
     {
-
         public static NullValueSyntax Instance { get; } = new NullValueSyntax();
 
         public NullValueSyntax(SyntaxLocation? location = null) : base(location)

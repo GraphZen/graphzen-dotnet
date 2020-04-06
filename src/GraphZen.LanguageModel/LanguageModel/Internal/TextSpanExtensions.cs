@@ -6,8 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower.Model;
 
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     internal static class TextSpanExtensions

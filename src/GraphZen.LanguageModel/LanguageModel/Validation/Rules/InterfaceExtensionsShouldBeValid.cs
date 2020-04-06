@@ -7,8 +7,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class InterfaceExtensionsShouldBeValid : DocumentValidationRuleVisitor
@@ -43,7 +41,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
                             implementedFields.FirstOrDefault(_ => _.Name.Value == expectedField.Name.Value);
                         if (implementedField == null)
                         {
-                            var nodes = new List<SyntaxNode> { objectType.Name, expectedField }
+                            var nodes = new List<SyntaxNode> {objectType.Name, expectedField}
                                 .Concat(objectExts.Select(_ => _.Name)).ToList();
                             ReportError(
                                 $"Interface field {implementedInterface}.{expectedField} expected but {objectType} does not provide it.",

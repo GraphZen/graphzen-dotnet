@@ -35,7 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 optionsAction != null
                     // ReSharper disable once ConstantConditionalAccessQualifier
                     ? (p, b) => { optionsAction?.Invoke(b); }
-            : (Action<IServiceProvider, GraphQLContextOptionsBuilder>?)null;
+                    : (Action<IServiceProvider, GraphQLContextOptionsBuilder>?) null;
 
             var contextType = typeof(TContext);
             if (optionsAction != null)

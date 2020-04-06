@@ -7,9 +7,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -51,7 +48,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is SelectionSetSyntax && Equals((SelectionSetSyntax)obj);
+            return obj is SelectionSetSyntax && Equals((SelectionSetSyntax) obj);
         }
 
         public override int GetHashCode() => Selections.GetHashCode();

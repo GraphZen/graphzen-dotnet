@@ -5,8 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.LanguageModel
 {
     public abstract partial class GraphQLSyntaxVisitor

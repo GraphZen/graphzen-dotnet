@@ -6,34 +6,31 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar
     {
         private static TokenListParser<TokenKind, NamedTypeSyntax> NamedType { get; } =
             (from name in Parse.Ref(() => Name)
-             select new NamedTypeSyntax(name, name.Location))
+                select new NamedTypeSyntax(name, name.Location))
             .Named("named type");
 
         private static TokenListParser<TokenKind, ListTypeSyntax> ListType { get; } =
             (from leftBracket in Parse.Ref(() => LeftBracket)
-             from type in Type
-             from rightBracket in RightBracket
-             select new ListTypeSyntax(type, SyntaxLocation.From(leftBracket, rightBracket)))
+                from type in Type
+                from rightBracket in RightBracket
+                select new ListTypeSyntax(type, SyntaxLocation.From(leftBracket, rightBracket)))
             .Try()
             .Named("list type");
 
         internal static TokenListParser<TokenKind, TypeSyntax> Type { get; } =
             (from type in ListType
-                    .Select(n => (NullableTypeSyntax)n)
-                    .Or(NamedType.Select(n => (NullableTypeSyntax)n))
-             from bang in Bang.OptionalOrNull()
-             select bang == null
-                 ? type
-                 : new NonNullTypeSyntax(type, SyntaxLocation.FromMany(type, bang)) as TypeSyntax)
+                    .Select(n => (NullableTypeSyntax) n)
+                    .Or(NamedType.Select(n => (NullableTypeSyntax) n))
+                from bang in Bang.OptionalOrNull()
+                select bang == null
+                    ? type
+                    : new NonNullTypeSyntax(type, SyntaxLocation.FromMany(type, bang)) as TypeSyntax)
             .Try()
             .Named("type");
     }

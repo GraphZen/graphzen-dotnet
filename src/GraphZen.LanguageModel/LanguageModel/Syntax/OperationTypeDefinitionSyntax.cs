@@ -6,9 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -50,14 +47,14 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is OperationTypeDefinitionSyntax && Equals((OperationTypeDefinitionSyntax)obj);
+            return obj is OperationTypeDefinitionSyntax && Equals((OperationTypeDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return ((int)OperationType * 397) ^ Type.GetHashCode();
+                return ((int) OperationType * 397) ^ Type.GetHashCode();
             }
         }
     }

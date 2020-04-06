@@ -10,8 +10,6 @@ using Superpower.Model;
 using Superpower.Parsers;
 using Superpower.Tokenizers;
 
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     internal static class SuperPowerTokenizer

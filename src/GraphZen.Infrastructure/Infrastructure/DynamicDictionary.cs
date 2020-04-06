@@ -334,7 +334,7 @@ namespace GraphZen.Infrastructure
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary)obj);
+            return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary) obj);
         }
 
         /// <summary>

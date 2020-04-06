@@ -6,9 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -42,7 +39,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ListTypeSyntax && Equals((ListTypeSyntax)obj);
+            return obj is ListTypeSyntax && Equals((ListTypeSyntax) obj);
         }
 
         public override int GetHashCode() => OfType.GetHashCode();

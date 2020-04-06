@@ -47,7 +47,8 @@ namespace BuildTargets
             Target(CleanupCode,
                 () =>
                 {
-                    Run(GetReSharperTool("cleanupcode"), @"--config=./BuildTargets/cleanupcode.config --verbosity=WARN");
+                    Run(GetReSharperTool("cleanupcode"),
+                        @"--config=./BuildTargets/cleanupcode.config --verbosity=WARN");
                 });
             Target(Format, () => { Run("dotent-format"); });
             Target(Default, DependsOn(Compile, Test, Pack));

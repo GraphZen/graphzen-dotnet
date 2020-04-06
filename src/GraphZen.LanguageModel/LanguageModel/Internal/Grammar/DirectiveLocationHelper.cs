@@ -10,8 +10,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     internal static class DirectiveLocationHelper

@@ -6,9 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -19,7 +16,7 @@ namespace GraphZen.LanguageModel
     {
         [GenFactory(nameof(SyntaxFactory))]
         public ObjectFieldSyntax(NameSyntax name, ValueSyntax value, SyntaxLocation? location = null) :
-             base(location)
+            base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Value = Check.NotNull(value, nameof(value));
@@ -58,7 +55,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ObjectFieldSyntax && Equals((ObjectFieldSyntax)obj);
+            return obj is ObjectFieldSyntax && Equals((ObjectFieldSyntax) obj);
         }
 
         public override int GetHashCode()

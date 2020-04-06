@@ -8,9 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -19,7 +16,6 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class UnionTypeExtensionSyntax : TypeExtensionSyntax, IDirectivesSyntax
     {
-
         [GenFactory(nameof(SyntaxFactory))]
         public UnionTypeExtensionSyntax(NameSyntax name, IReadOnlyList<DirectiveSyntax>? directives = null,
             IReadOnlyList<NamedTypeSyntax>? types = null, SyntaxLocation? location = null) : base(location)
@@ -50,7 +46,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is UnionTypeExtensionSyntax && Equals((UnionTypeExtensionSyntax)obj);
+            return obj is UnionTypeExtensionSyntax && Equals((UnionTypeExtensionSyntax) obj);
         }
 
         public override int GetHashCode()

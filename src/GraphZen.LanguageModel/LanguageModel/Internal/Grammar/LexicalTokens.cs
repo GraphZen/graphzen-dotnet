@@ -9,8 +9,6 @@ using Superpower;
 using Superpower.Model;
 using Superpower.Parsers;
 
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     internal static partial class Grammar

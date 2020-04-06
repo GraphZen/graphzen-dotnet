@@ -55,7 +55,7 @@ namespace GraphZen.Infrastructure
 
             if (IsWholeNumber(value) && value <= int.MaxValue && value >= int.MinValue)
             {
-                result = (int)value;
+                result = (int) value;
                 return true;
             }
 

@@ -8,7 +8,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
 namespace GraphZen.LanguageModel.Internal
 {
     internal static class NodeExtensions
@@ -39,31 +38,23 @@ namespace GraphZen.LanguageModel.Internal
 
         internal static IEnumerable<SyntaxNode> Concat(
             this IEnumerable<SyntaxNode> nodes,
-            SyntaxNode? node) => node != null ?
-            nodes.Concat(node.ToEnumerable()) : nodes;
+            SyntaxNode? node) => node != null ? nodes.Concat(node.ToEnumerable()) : nodes;
 
         internal static IEnumerable<SyntaxNode> Concat(
-                    this SyntaxNode? node, IEnumerable<SyntaxNode> nodes) =>
+            this SyntaxNode? node, IEnumerable<SyntaxNode> nodes) =>
             node != null ? node.ToEnumerable().Concat(nodes) : nodes;
 
         internal static IEnumerable<SyntaxNode> Concat(
             this SyntaxNode? node, SyntaxNode? other)
         {
-            if (node != null)
-            {
-                yield return node;
-            }
-            if (other != null)
-            {
-                yield return other;
-            }
+            if (node != null) yield return node;
+            if (other != null) yield return other;
         }
 
 
-
         internal static bool NodesEqual<T>(
-                    this IEnumerable<T> nodes,
-                    IEnumerable<T> otherNodes) where T : SyntaxNode
+            this IEnumerable<T> nodes,
+            IEnumerable<T> otherNodes) where T : SyntaxNode
         {
             var sequenceEquals = nodes.SequenceEqual(otherNodes);
             if (sequenceEquals) return true;

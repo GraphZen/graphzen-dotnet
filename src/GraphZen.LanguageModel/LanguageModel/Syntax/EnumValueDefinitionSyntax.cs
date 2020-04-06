@@ -8,8 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -18,7 +16,6 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class EnumValueDefinitionSyntax : SyntaxNode, IDirectivesSyntax, IDescribedSyntax
     {
-
         [GenFactory(nameof(SyntaxFactory))]
         public EnumValueDefinitionSyntax(EnumValueSyntax value,
             StringValueSyntax? description = null,
@@ -57,7 +54,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is EnumValueDefinitionSyntax && Equals((EnumValueDefinitionSyntax)obj);
+            return obj is EnumValueDefinitionSyntax && Equals((EnumValueDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

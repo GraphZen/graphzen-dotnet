@@ -6,8 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower.Display;
 
-
-
 namespace GraphZen.LanguageModel.Internal
 {
     public enum TokenKind

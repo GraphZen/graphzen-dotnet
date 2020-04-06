@@ -7,9 +7,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -18,11 +15,9 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ObjectValueSyntax : ValueSyntax
     {
-
         [GenFactory(nameof(SyntaxFactory))]
         public ObjectValueSyntax(params ObjectFieldSyntax[] fields) : this(fields, null)
         {
-
         }
 
         [GenFactory(nameof(SyntaxFactory))]
@@ -49,7 +44,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ObjectValueSyntax && Equals((ObjectValueSyntax)obj);
+            return obj is ObjectValueSyntax && Equals((ObjectValueSyntax) obj);
         }
 
         public override int GetHashCode() => Fields.GetHashCode();

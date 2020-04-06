@@ -8,9 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -57,7 +54,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is InlineFragmentSyntax && Equals((InlineFragmentSyntax)obj);
+            return obj is InlineFragmentSyntax && Equals((InlineFragmentSyntax) obj);
         }
 
         public override int GetHashCode()

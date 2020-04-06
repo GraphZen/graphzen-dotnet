@@ -9,16 +9,11 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.LanguageModel
 {
     [DebuggerDisplay("Start = {Start}, End = {End}")]
     public class SyntaxLocation
     {
-
-
-
         public SyntaxLocation(SyntaxLocation start, SyntaxLocation end) :
             this(
                 Check.NotNull(start, nameof(start)).Start,
@@ -59,7 +54,7 @@ namespace GraphZen.LanguageModel
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((SyntaxLocation)obj);
+            return Equals((SyntaxLocation) obj);
         }
 
         public override int GetHashCode()
@@ -70,23 +65,21 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public static SyntaxLocation? FromMany(params ISyntaxNodeLocation?[] nodes) => FromMany(nodes.Select(_ => _?.Location).Where(_ => _ != null).Select(_ => _!));
+        public static SyntaxLocation? FromMany(params ISyntaxNodeLocation?[] nodes) =>
+            FromMany(nodes.Select(_ => _?.Location).Where(_ => _ != null).Select(_ => _!));
 
         public static SyntaxLocation From(SyntaxNode start, SyntaxNode end)
         {
             if (start.Location == null)
-            {
                 throw new ArgumentException($"start node must have a {nameof(SyntaxNode.Location)}", nameof(start));
-            }
             if (end.Location == null)
-            {
                 throw new ArgumentException($"end node must have a {nameof(SyntaxNode.Location)}", nameof(end));
-            }
 
             return new SyntaxLocation(start.Location, end.Location);
-
         }
-        public static SyntaxLocation? FromMany(params SyntaxLocation?[]? locations) => FromMany(locations?.AsEnumerable());
+
+        public static SyntaxLocation? FromMany(params SyntaxLocation?[]? locations) =>
+            FromMany(locations?.AsEnumerable());
 
         private static SyntaxLocation? FromMany(IEnumerable<SyntaxLocation?>? locations)
         {

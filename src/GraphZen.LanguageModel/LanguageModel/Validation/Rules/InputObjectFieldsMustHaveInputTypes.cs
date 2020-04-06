@@ -6,8 +6,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class InputObjectFieldsMustHaveInputTypes : ValidationRuleVisitor

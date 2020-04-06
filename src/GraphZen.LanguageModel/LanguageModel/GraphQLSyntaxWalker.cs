@@ -6,8 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.LanguageModel
 {
     public abstract class GraphQLSyntaxWalker<TResult> : GraphQLSyntaxVisitor<TResult>

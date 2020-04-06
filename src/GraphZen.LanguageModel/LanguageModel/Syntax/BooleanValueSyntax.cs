@@ -8,8 +8,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-
-
 namespace GraphZen.LanguageModel
 {
     /// <summary>
@@ -47,7 +45,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is BooleanValueSyntax && Equals((BooleanValueSyntax)obj);
+            return obj is BooleanValueSyntax && Equals((BooleanValueSyntax) obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();
