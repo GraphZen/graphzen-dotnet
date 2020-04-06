@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -17,15 +18,15 @@ namespace BuildTargets
 
         private static string OutputDir { get; } =
             Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)!;
-
         private static readonly string PackageDir = Path.Combine(ArtifactsDir, "packages");
         private static readonly string TestLogDir = Path.Combine(ArtifactsDir, "test-logs");
         private const string Compile = nameof(Compile);
         private const string Default = nameof(Default);
-        private const string Format = nameof(Format);
+        private const string CleanupCode = nameof(CleanupCode);
         private const string Pack = nameof(Pack);
         private const string Test = nameof(Test);
         private const string HtmlReport = nameof(HtmlReport);
+        private static string GetReSharperTool(string name) => Path.Combine(OutputDir, "ReSharperTools", name);
 
         private static void Main(string[] args)
         {
@@ -34,10 +35,9 @@ namespace BuildTargets
             Target(Test, () => GenerateCodeCoverageReport());
             Target(HtmlReport, () => GenerateCodeCoverageReport(true));
             Target(Pack, DependsOn(Compile), () => Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build"));
-            Target(Format,
-                () => { Run("cleanupcode", "--config=cleanupcode.config", Path.Combine(OutputDir, "ReSharperTools")); });
+            Target(CleanupCode, () => { Run(GetReSharperTool("cleanupcode"), @"--config=./BuildTargets/cleanupcode.config"); });
             Target(Default, DependsOn(Compile, Test, Pack));
-            // Target();
+
             RunTargetsAndExit(args);
         }
 
