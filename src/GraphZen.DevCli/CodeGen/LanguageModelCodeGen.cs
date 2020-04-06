@@ -55,7 +55,7 @@ namespace GraphZen.CodeGen
                     });
                 });
             });
-            csharp.WriteToFile("./src/GraphZen.LanguageModel/LanguageModel/Syntax/SyntaxKind.Generated.cs");
+            csharp.WriteToFile("./src/GraphZen.LanguageModel/LanguageModel/GraphQLSyntaxVisitor.Generated.cs");
         }
 
         private static void GenSyntaxKind()
