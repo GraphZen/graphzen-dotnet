@@ -33,8 +33,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<FieldDefinition> GetFields() => _fields.Values;
 
-        [GenAccessorExtensions]
-        public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
+        [GenAccessorExtensions] public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
 
         IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => GetFields();
 
