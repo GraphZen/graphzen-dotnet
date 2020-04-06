@@ -18,6 +18,7 @@ namespace GraphZen.CodeGen
         public static void Generate()
         {
             GenSchemaExtensions();
+            GenSchemaDefinitionExtensions();
             GenerateTypeSystemDictionaryAccessors();
         }
 
@@ -87,6 +88,74 @@ namespace GraphZen.CodeGen
             });
 
             csharp.WriteToFile("TypeSystem", "SchemaExtensions");
+        }
+
+        public static void GenSchemaDefinitionExtensions()
+        {
+            var csharp = CSharpStringBuilder.Create();
+            csharp.Namespace(TypeSystemNamespace, ns =>
+            {
+                ns.StaticClass("SchemaDefinitionExtensions", schema =>
+                {
+                    foreach (var (kind, type) in NamedTypes)
+                    {
+                        schema.Region($"{kind} type accessors", region =>
+                        {
+                            region.AppendLine($@"
+     public static {type}Definition Get{kind}(this SchemaDefinition schema, string name) =>
+            Check.NotNull(schema, nameof(schema)).GetType<{type}Definition>(name);
+
+
+        public static {type}Definition Get{kind}(this SchemaDefinition schema, Type clrType) =>
+            Check.NotNull(schema, nameof(schema))
+                .GetType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
+
+
+        public static {type}Definition Get{kind}<TClrType>(this SchemaDefinition schema) =>
+            Check.NotNull(schema, nameof(schema)).GetType<{type}Definition>(typeof(TClrType));
+
+        public static {type}Definition? Find{kind}(this SchemaDefinition schema, string name) =>
+            Check.NotNull(schema, nameof(schema)).FindType<{type}Definition>(name);
+
+        public static {type}Definition? Find{kind}<TClrType>(this SchemaDefinition schema) =>
+            Check.NotNull(schema, nameof(schema)).FindType<{type}Definition>(typeof(TClrType));
+
+
+        public static {type}Definition? Find{kind}(this SchemaDefinition schema, Type clrType) =>
+            Check.NotNull(schema, nameof(schema))
+                .FindType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
+
+        public static bool TryGet{kind}(this SchemaDefinition schema, Type clrType,
+            out {type}Definition type) =>
+            Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
+
+        public static bool TryGet{kind}<TClrType>(this SchemaDefinition schema,
+            out {type}Definition type) =>
+            Check.NotNull(schema, nameof(schema)).TryGetType(typeof(TClrType), out type);
+
+        public static bool TryGet{kind}(this SchemaDefinition schema, string name,
+            out {type}Definition type) =>
+            Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(name, nameof(name)), out type);
+
+        public static bool Has{kind}(this SchemaDefinition schema, Type clrType) =>
+            Check.NotNull(schema, nameof(schema))
+                .HasType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
+
+        public static bool Has{kind}<TClrType>(this SchemaDefinition schema) => Check.NotNull(schema, nameof(schema))
+            .HasType<{type}Definition>(typeof(TClrType));
+
+        public static bool Has{kind}(this SchemaDefinition schema, string name) =>
+            Check.NotNull(schema, nameof(schema))
+                .HasType<{type}Definition>(Check.NotNull(name, nameof(name)));
+
+
+");
+                        });
+                    }
+                });
+            });
+
+            csharp.WriteToFile("TypeSystem", "SchemaDefinitionExtensions");
         }
 
 

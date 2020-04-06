@@ -27,9 +27,9 @@ namespace GraphZen.CodeGen
 
         public static void Region(this StringBuilder csharp, string name, Action<StringBuilder> region)
         {
-            csharp.AppendLine($"namespace {name} {{");
+            csharp.AppendLine($"#region {name} ");
             region(csharp);
-            csharp.AppendLine("}");
+            csharp.AppendLine("#endregion");
         }
 
 
