@@ -5,10 +5,21 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Bullseye" Version="3.3.0" />
+    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2019.3.4" GeneratePathProperty="true">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="SimpleExec" Version="6.2.0" />
     <PackageReference Include="ReportGenerator.Core" Version="4.5.3" />
   </ItemGroup>
+  <Target Name="CopyResharperTools" AfterTargets="Build">
+    <ItemGroup>
+      <_ResharperTools Include="$(PkgJetBrains_ReSharper_CommandLineTools)/tools/*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_ResharperTools)" DestinationFolder="$(OutDir)/ReSharperTools" SkipUnchangedFiles="true"  />
+  </Target>
 </Project>
