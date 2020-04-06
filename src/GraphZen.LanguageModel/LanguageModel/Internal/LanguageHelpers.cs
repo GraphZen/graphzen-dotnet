@@ -11,24 +11,6 @@ using JetBrains.Annotations;
 
 namespace GraphZen.LanguageModel.Internal
 {
-    public static class NameTokenValidator
-    {
-        public static readonly Regex NameTokenRegex = new Regex(@"^[_A-Za-z][\w]*$");
-
-        public static bool IsValidGraphQLName(this string name) => NameTokenRegex.IsMatch(name);
-
-        public static string ThrowIfInvalidGraphQLName(this string name)
-        {
-            Check.NotNull(name, nameof(name));
-            if (!name.IsValidGraphQLName())
-                throw new Exception(
-                    $"'{name}' is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
-
-            return name;
-        }
-    }
-
-
     public static class LanguageHelpers
     {
         private static readonly Regex NewlineRegex = new Regex("\r\n?|\n");

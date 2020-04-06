@@ -10,8 +10,10 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=3C39E871_002DD013_002D4C8C_002D92EA_002D24A37AC9D111_002Fd_003ATypeSystem_002Fd_003AInternal_002Ff_003ADynamicDictionary_002Ecs/@EntryIndexedValue">ExplicitlyExcluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=CFAF10A9_002D0E60_002D43CD_002D8EF9_002DB97E58C1ED5A/@EntryIndexedValue">ExplicitlyExcluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedFileMasks/=_002A_002EGenerated_002Ecs/@EntryIndexedValue"></s:String>
+	
 	<s:Boolean x:Key="/Default/CodeInspection/GeneratedCode/GeneratedFileMasks/=_002A_002EGenerated_002Ecs/@EntryIndexRemoved">True</s:Boolean>
-	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedFileMasks/=_002A_002EGenerated_005Fignore_002Ecs/@EntryIndexedValue">*.Generated_ignore.cs</s:String>
+	<s:String x:Key="/Default/CodeInspection/GeneratedCode/GeneratedFileMasks/=_002A_002ExGenerated_002Ecs/@EntryIndexedValue">*.xGenerated.cs</s:String>
+	
 	<s:String x:Key="/Default/CodeInspection/Highlighting/AnalysisEnabled/@EntryValue">SOLUTION</s:String>
 	<s:Boolean x:Key="/Default/CodeInspection/Highlighting/IncludeWarningsInSwea/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=ConvertToCompoundAssignment/@EntryIndexedValue">DO_NOT_SHOW</s:String>

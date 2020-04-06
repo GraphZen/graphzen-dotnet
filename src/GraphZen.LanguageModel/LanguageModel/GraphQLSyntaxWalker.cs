@@ -11,8 +11,6 @@ namespace GraphZen.LanguageModel
     public abstract class GraphQLSyntaxWalker<TResult> : GraphQLSyntaxVisitor<TResult>
     {
         private readonly Stack<SyntaxNode> _ancestors = new Stack<SyntaxNode>();
-
-
         public IReadOnlyCollection<SyntaxNode> Ancestors => _ancestors;
 
         public override TResult Visit(SyntaxNode node)
