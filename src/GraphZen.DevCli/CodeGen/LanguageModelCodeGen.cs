@@ -73,8 +73,7 @@ namespace GraphZen.CodeGen
                 }
             });
 
-            CodeGenHelpers.WriteFile("./src/GraphZen.LanguageModel/LanguageModel/Syntax/SyntaxNode.Generated.cs",
-                csharp.ToString());
+            csharp.WriteToFile("./src/GraphZen.LanguageModel/LanguageModel/Syntax/SyntaxNode.Generated.cs");
         }
     }
 }
