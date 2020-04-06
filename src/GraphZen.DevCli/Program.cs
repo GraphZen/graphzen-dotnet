@@ -10,7 +10,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.CodeGen;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using static GraphZen.CodeGen.CodeGenTasks;
 
 namespace GraphZen
 {
@@ -18,12 +17,13 @@ namespace GraphZen
     {
         private static readonly Dictionary<string, Action> CodeGenTasks = new Dictionary<string, Action>
         {
-            {"typeSystem", GenerateTypeSystem},
+            { nameof(LanguageModel),LanguageModelCodeGen.Generate },
+            {"typeSystem", TypeSystemCodeGen.Generate},
             {"factories", FactoryGenerator.GenerateFactoryMethods}
         };
 
         private static Command Command(string name) => new Command(name)
-            {Handler = CommandHandler.Create(CodeGenTasks[name])};
+        { Handler = CommandHandler.Create(CodeGenTasks[name]) };
 
 
         private static void Main(string[] args)

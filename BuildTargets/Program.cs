@@ -31,11 +31,13 @@ namespace BuildTargets
         private const string Pack = nameof(Pack);
         private const string Test = nameof(Test);
         private const string HtmlReport = nameof(HtmlReport);
+        private const string Gen = nameof(Gen);
 
         private static void Main(string[] args)
         {
             CleanDir($"./{ArtifactsDir}");
             Target(Compile, () => Run("dotnet", "build -c Release"));
+            Target(Gen, () => Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen"));
             Target(Test, () =>
             {
                 Run("dotnet",

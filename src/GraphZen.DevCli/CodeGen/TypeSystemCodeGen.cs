@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -9,9 +10,35 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
-    public static class CodeGenTasks
+    public static class CodeGenConstants
     {
-        public static void GenerateTypeSystem()
+        public const string CommonUsings = @"
+using System;
+using System.Diagnostics.CodeAnalysis;
+using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+";
+
+
+    }
+
+    public static class CSharpStringBuilderExtensions
+    {
+
+        public static void AddCommonUsings(this StringBuilder csharp) =>
+            csharp.AppendLine(CodeGenConstants.CommonUsings);
+
+        public static void Namespace(this StringBuilder csharp, string @namespace, Action<StringBuilder> csharpAction)
+        {
+            csharp.AppendLine($"namespace {@namespace} {{");
+            csharpAction(csharp);
+            csharp.AppendLine("}");
+        }
+    }
+
+    public static class TypeSystemCodeGen
+    {
+        public static void Generate()
         {
             GenerateTypeSystemDictionaryAccessors();
         }
