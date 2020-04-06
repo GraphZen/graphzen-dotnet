@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Benchmarks\**" />
+    <EmbeddedResource Remove="Benchmarks\**" />
+    <None Remove="Benchmarks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.0" />
     <PackageReference Include="System.CommandLine.Experimental" Version="0.3.0-alpha.19317.1" />
   </ItemGroup>
@@ -14,11 +20,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.Client\GraphZen.Client.csproj" />
     <ProjectReference Include="..\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />
-    <ProjectReference Include="..\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Benchmarks\" />
   </ItemGroup>
 
 </Project>
