@@ -35,43 +35,37 @@ namespace GraphZen.CodeGen
             var csharp = CSharpStringBuilder.Create();
             csharp.Namespace(LanguageModelNamespace, ns =>
             {
-                new List<string>
-                {
-                }.ForEach(className =>
-                {
-                    ns.AbstractPartialClass(
-                        "GraphQLSyntaxVisitor"
-                        , @class =>
+                ns.AbstractPartialClass(
+                    "GraphQLSyntaxVisitor"
+                    , @class =>
+                    {
+                        foreach (var (kind, nodeType) in NodeTypes)
                         {
-                            foreach (var (kind, nodeType) in NodeTypes)
-                            {
-                                @class.AppendLine($@"
+                            @class.AppendLine($@"
      /// <summary>Called when the visitor enters a <see cref=""{nodeType}""/> node.</summary>
         public virtual void Enter{kind}( {nodeType} node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref=""{nodeType}""/> node.</summary>
         public virtual void Leave{kind}( {nodeType} node) => OnLeave(node);
 ");
-                            }
-                        });
+                        }
+                    });
 
-                    ns.AbstractPartialClass(
-
+                ns.AbstractPartialClass(
                     "GraphQLSyntaxVisitor<TResult>"
-                        , @class =>
+                    , @class =>
+                    {
+                        foreach (var (kind, nodeType) in NodeTypes)
                         {
-                            foreach (var (kind, nodeType) in NodeTypes)
-                            {
-                                @class.AppendLine($@"
+                            @class.AppendLine($@"
      /// <summary>Called when the visitor enters a <see cref=""{nodeType}""/> node.</summary>
         public virtual TResult  Enter{kind}( {nodeType} node) => OnEnter(node);
 
         /// <summary>Called when the visitor leaves a <see cref=""{nodeType}""/> node.</summary>
         public virtual TResult Leave{kind}( {nodeType} node) => OnLeave(node);
 ");
-                            }
-                        });
-                });
+                        }
+                    });
             });
             csharp.WriteToFile("./src/GraphZen.LanguageModel/LanguageModel/GraphQLSyntaxVisitor.Generated.cs");
         }

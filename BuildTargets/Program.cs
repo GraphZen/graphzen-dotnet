@@ -37,7 +37,11 @@ namespace BuildTargets
         {
             CleanDir($"./{ArtifactsDir}");
             Target(Compile, () => Run("dotnet", "build -c Release"));
-            Target(Gen, () => Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen"));
+            Target(Gen, () =>
+            {
+                //Run("dotnet", "build -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj");
+                Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
+            });
             Target(Test, () =>
             {
                 Run("dotnet",
