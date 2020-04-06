@@ -17,7 +17,7 @@ namespace GraphZen.CodeGen
             .Where(typeof(SyntaxNode).IsAssignableFrom)
             .Where(_ => !_.IsAbstract)
             .OrderBy(_ => _.Name)
-            .Select(_ => (_.Name, _.Name.Replace("Syntax", "")))
+            .Select(_ => (_.Name.Replace("Syntax", ""), _.Name))
             .ToList();
 
         private const string LanguageModelNamespace = nameof(GraphZen) + "." + nameof(LanguageModel);
