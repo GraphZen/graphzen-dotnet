@@ -59,7 +59,7 @@ namespace JetBrains.Annotations
     [AttributeUsage(
         AttributeTargets.Constructor | AttributeTargets.Method |
         AttributeTargets.Property | AttributeTargets.Delegate)]
-    internal sealed class StringFormatMethodAttribute : Attribute
+    internal class StringFormatMethodAttribute : Attribute
     {
         /// <param name="formatParameterName">
         ///     Specifies which parameter of an annotated method should be treated as the format string
@@ -104,7 +104,7 @@ namespace JetBrains.Annotations
     [AttributeUsage(
         AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field,
         AllowMultiple = true)]
-    internal sealed class ValueProviderAttribute : Attribute
+    internal class ValueProviderAttribute : Attribute
     {
         public ValueProviderAttribute(string name)
         {
@@ -128,7 +128,7 @@ namespace JetBrains.Annotations
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Parameter)]
-    internal sealed class InvokerParameterNameAttribute : Attribute
+    internal class InvokerParameterNameAttribute : Attribute
     {
     }
 
@@ -190,7 +190,7 @@ namespace JetBrains.Annotations
     ///     </list>
     /// </example>
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
+    internal class NotifyPropertyChangedInvocatorAttribute : Attribute
     {
         public NotifyPropertyChangedInvocatorAttribute()
         {
@@ -261,7 +261,7 @@ namespace JetBrains.Annotations
     ///     </list>
     /// </examples>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    internal sealed class ContractAnnotationAttribute : Attribute
+    internal class ContractAnnotationAttribute : Attribute
     {
         public ContractAnnotationAttribute(string contract)
             : this(contract, false)
@@ -291,7 +291,7 @@ namespace JetBrains.Annotations
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.All)]
-    internal sealed class LocalizationRequiredAttribute : Attribute
+    internal class LocalizationRequiredAttribute : Attribute
     {
         public LocalizationRequiredAttribute() : this(true)
         {
@@ -328,7 +328,7 @@ namespace JetBrains.Annotations
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct)]
-    internal sealed class CannotApplyEqualityOperatorAttribute : Attribute
+    internal class CannotApplyEqualityOperatorAttribute : Attribute
     {
     }
 
@@ -347,7 +347,7 @@ namespace JetBrains.Annotations
     /// </example>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     [BaseTypeRequired(typeof(Attribute))]
-    internal sealed class BaseTypeRequiredAttribute : Attribute
+    internal class BaseTypeRequiredAttribute : Attribute
     {
         public BaseTypeRequiredAttribute(Type baseType)
         {
@@ -362,7 +362,7 @@ namespace JetBrains.Annotations
     ///     so this symbol will not be reported as unused (as well as by other usage inspections).
     /// </summary>
     [AttributeUsage(AttributeTargets.All)]
-    internal sealed class UsedImplicitlyAttribute : Attribute
+    internal class UsedImplicitlyAttribute : Attribute
     {
         public UsedImplicitlyAttribute()
             : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default)
@@ -399,7 +399,7 @@ namespace JetBrains.Annotations
     ///     is used implicitly.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.GenericParameter | AttributeTargets.Parameter)]
-    internal sealed class MeansImplicitUseAttribute : Attribute
+    internal class MeansImplicitUseAttribute : Attribute
     {
         public MeansImplicitUseAttribute()
             : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default)
@@ -474,7 +474,7 @@ namespace JetBrains.Annotations
     ///     which should not be removed and so is treated as used.
     /// </summary>
     [MeansImplicitUse(ImplicitUseTargetFlags.WithMembers)]
-    internal sealed class PublicAPIAttribute : Attribute
+    internal class PublicAPIAttribute : Attribute
     {
         public PublicAPIAttribute()
         {
@@ -494,7 +494,7 @@ namespace JetBrains.Annotations
     ///     If the parameter is an enumerable, indicates that it is enumerated while the method is executed.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
-    internal sealed class InstantHandleAttribute : Attribute
+    internal class InstantHandleAttribute : Attribute
     {
     }
 
@@ -512,7 +512,7 @@ namespace JetBrains.Annotations
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class PureAttribute : Attribute
+    internal class PureAttribute : Attribute
     {
     }
 
@@ -528,7 +528,7 @@ namespace JetBrains.Annotations
     ///     <code>[MustUseReturnValue("Use the return value to...")]</code>.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class MustUseReturnValueAttribute : Attribute
+    internal class MustUseReturnValueAttribute : Attribute
     {
         public MustUseReturnValueAttribute()
         {
@@ -563,7 +563,7 @@ namespace JetBrains.Annotations
         AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter | AttributeTargets.Method |
         AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct |
         AttributeTargets.GenericParameter)]
-    internal sealed class ProvidesContextAttribute : Attribute
+    internal class ProvidesContextAttribute : Attribute
     {
     }
 
@@ -572,7 +572,7 @@ namespace JetBrains.Annotations
     ///     Path can be relative or absolute, starting from web root (~).
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
-    internal sealed class PathReferenceAttribute : Attribute
+    internal class PathReferenceAttribute : Attribute
     {
         public PathReferenceAttribute()
         {
@@ -610,7 +610,7 @@ namespace JetBrains.Annotations
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class SourceTemplateAttribute : Attribute
+    internal class SourceTemplateAttribute : Attribute
     {
     }
 
@@ -643,7 +643,7 @@ namespace JetBrains.Annotations
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method, AllowMultiple = true)]
-    internal sealed class MacroAttribute : Attribute
+    internal class MacroAttribute : Attribute
     {
         /// <summary>
         ///     Allows specifying a macro that will be executed for a <see cref="SourceTemplateAttribute">source template</see>
@@ -670,7 +670,7 @@ namespace JetBrains.Annotations
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    internal sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
+    internal class AspMvcAreaMasterLocationFormatAttribute : Attribute
     {
         public AspMvcAreaMasterLocationFormatAttribute(string format)
         {
@@ -682,7 +682,7 @@ namespace JetBrains.Annotations
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    internal sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
+    internal class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
     {
         public AspMvcAreaPartialViewLocationFormatAttribute(string format)
         {
@@ -694,7 +694,7 @@ namespace JetBrains.Annotations
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    internal sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
+    internal class AspMvcAreaViewLocationFormatAttribute : Attribute
     {
         public AspMvcAreaViewLocationFormatAttribute(string format)
         {
@@ -706,7 +706,7 @@ namespace JetBrains.Annotations
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    internal sealed class AspMvcMasterLocationFormatAttribute : Attribute
+    internal class AspMvcMasterLocationFormatAttribute : Attribute
     {
         public AspMvcMasterLocationFormatAttribute(string format)
         {
@@ -718,7 +718,7 @@ namespace JetBrains.Annotations
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    internal sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
+    internal class AspMvcPartialViewLocationFormatAttribute : Attribute
     {
         public AspMvcPartialViewLocationFormatAttribute(string format)
         {
@@ -730,7 +730,7 @@ namespace JetBrains.Annotations
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple =
         true)]
-    internal sealed class AspMvcViewLocationFormatAttribute : Attribute
+    internal class AspMvcViewLocationFormatAttribute : Attribute
     {
         public AspMvcViewLocationFormatAttribute(string format)
         {
@@ -748,7 +748,7 @@ namespace JetBrains.Annotations
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method | AttributeTargets.Field |
                     AttributeTargets.Property)]
-    internal sealed class AspMvcActionAttribute : Attribute
+    internal class AspMvcActionAttribute : Attribute
     {
         public AspMvcActionAttribute()
         {
@@ -768,7 +768,7 @@ namespace JetBrains.Annotations
     ///     <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    internal sealed class AspMvcAreaAttribute : Attribute
+    internal class AspMvcAreaAttribute : Attribute
     {
         public AspMvcAreaAttribute()
         {
@@ -790,7 +790,7 @@ namespace JetBrains.Annotations
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method | AttributeTargets.Field |
                     AttributeTargets.Property)]
-    internal sealed class AspMvcControllerAttribute : Attribute
+    internal class AspMvcControllerAttribute : Attribute
     {
         public AspMvcControllerAttribute()
         {
@@ -809,7 +809,7 @@ namespace JetBrains.Annotations
     ///     for custom wrappers similar to <c>System.Web.Mvc.Controller.View(String, String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    internal sealed class AspMvcMasterAttribute : Attribute
+    internal class AspMvcMasterAttribute : Attribute
     {
     }
 
@@ -818,7 +818,7 @@ namespace JetBrains.Annotations
     ///     for custom wrappers similar to <c>System.Web.Mvc.Controller.View(String, Object)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
-    internal sealed class AspMvcModelTypeAttribute : Attribute
+    internal class AspMvcModelTypeAttribute : Attribute
     {
     }
 
@@ -830,7 +830,7 @@ namespace JetBrains.Annotations
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method | AttributeTargets.Field |
                     AttributeTargets.Property)]
-    internal sealed class AspMvcPartialViewAttribute : Attribute
+    internal class AspMvcPartialViewAttribute : Attribute
     {
     }
 
@@ -838,7 +838,7 @@ namespace JetBrains.Annotations
     ///     ASP.NET MVC attribute. Allows disabling inspections for MVC views within a class or a method.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    internal sealed class AspMvcSuppressViewErrorAttribute : Attribute
+    internal class AspMvcSuppressViewErrorAttribute : Attribute
     {
     }
 
@@ -848,7 +848,7 @@ namespace JetBrains.Annotations
     ///     <c>System.Web.Mvc.Html.DisplayExtensions.DisplayForModel(HtmlHelper, String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    internal sealed class AspMvcDisplayTemplateAttribute : Attribute
+    internal class AspMvcDisplayTemplateAttribute : Attribute
     {
     }
 
@@ -858,7 +858,7 @@ namespace JetBrains.Annotations
     ///     <c>System.Web.Mvc.Html.EditorExtensions.EditorForModel(HtmlHelper, String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    internal sealed class AspMvcEditorTemplateAttribute : Attribute
+    internal class AspMvcEditorTemplateAttribute : Attribute
     {
     }
 
@@ -868,7 +868,7 @@ namespace JetBrains.Annotations
     ///     <c>System.ComponentModel.DataAnnotations.UIHintAttribute(System.String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    internal sealed class AspMvcTemplateAttribute : Attribute
+    internal class AspMvcTemplateAttribute : Attribute
     {
     }
 
@@ -880,7 +880,7 @@ namespace JetBrains.Annotations
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method | AttributeTargets.Field |
                     AttributeTargets.Property)]
-    internal sealed class AspMvcViewAttribute : Attribute
+    internal class AspMvcViewAttribute : Attribute
     {
     }
 
@@ -889,7 +889,7 @@ namespace JetBrains.Annotations
     ///     is an MVC view component name.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    internal sealed class AspMvcViewComponentAttribute : Attribute
+    internal class AspMvcViewComponentAttribute : Attribute
     {
     }
 
@@ -899,7 +899,7 @@ namespace JetBrains.Annotations
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method | AttributeTargets.Field |
                     AttributeTargets.Property)]
-    internal sealed class AspMvcViewComponentViewAttribute : Attribute
+    internal class AspMvcViewComponentViewAttribute : Attribute
     {
     }
 
@@ -917,12 +917,12 @@ namespace JetBrains.Annotations
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property)]
-    internal sealed class AspMvcActionSelectorAttribute : Attribute
+    internal class AspMvcActionSelectorAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field)]
-    internal sealed class HtmlElementAttributesAttribute : Attribute
+    internal class HtmlElementAttributesAttribute : Attribute
     {
         public HtmlElementAttributesAttribute()
         {
@@ -937,7 +937,7 @@ namespace JetBrains.Annotations
     }
 
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
-    internal sealed class HtmlAttributeValueAttribute : Attribute
+    internal class HtmlAttributeValueAttribute : Attribute
     {
         public HtmlAttributeValueAttribute(string name)
         {
@@ -953,7 +953,7 @@ namespace JetBrains.Annotations
     ///     <c>System.Web.WebPages.WebPageBase.RenderSection(String)</c>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
-    internal sealed class RazorSectionAttribute : Attribute
+    internal class RazorSectionAttribute : Attribute
     {
     }
 
@@ -987,7 +987,7 @@ namespace JetBrains.Annotations
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Property)]
-    internal sealed class CollectionAccessAttribute : Attribute
+    internal class CollectionAccessAttribute : Attribute
     {
         public CollectionAccessAttribute(CollectionAccessType collectionAccessType)
         {
@@ -1023,7 +1023,7 @@ namespace JetBrains.Annotations
     ///     <see cref="AssertionConditionAttribute" /> attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class AssertionMethodAttribute : Attribute
+    internal class AssertionMethodAttribute : Attribute
     {
     }
 
@@ -1033,7 +1033,7 @@ namespace JetBrains.Annotations
     ///     the attribute is the assertion type.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
-    internal sealed class AssertionConditionAttribute : Attribute
+    internal class AssertionConditionAttribute : Attribute
     {
         public AssertionConditionAttribute(AssertionConditionType conditionType)
         {
@@ -1068,7 +1068,7 @@ namespace JetBrains.Annotations
     /// </summary>
     [Obsolete("Use [ContractAnnotation('=> halt')] instead")]
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class TerminatesProgramAttribute : Attribute
+    internal class TerminatesProgramAttribute : Attribute
     {
     }
 
@@ -1078,7 +1078,7 @@ namespace JetBrains.Annotations
     ///     of delegate type by analyzing LINQ method chains.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class LinqTunnelAttribute : Attribute
+    internal class LinqTunnelAttribute : Attribute
     {
     }
 
@@ -1101,7 +1101,7 @@ namespace JetBrains.Annotations
     /// </code>
     /// </example>
     [AttributeUsage(AttributeTargets.Parameter)]
-    internal sealed class NoEnumerationAttribute : Attribute
+    internal class NoEnumerationAttribute : Attribute
     {
     }
 
@@ -1109,7 +1109,7 @@ namespace JetBrains.Annotations
     ///     Indicates that the marked parameter is a regular expression pattern.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
-    internal sealed class RegexPatternAttribute : Attribute
+    internal class RegexPatternAttribute : Attribute
     {
     }
 
@@ -1121,7 +1121,7 @@ namespace JetBrains.Annotations
     /// </remarks>
     [AttributeUsage(
         AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct | AttributeTargets.Enum)]
-    internal sealed class NoReorderAttribute : Attribute
+    internal class NoReorderAttribute : Attribute
     {
     }
 
@@ -1130,7 +1130,7 @@ namespace JetBrains.Annotations
     ///     as <c>ItemsControl</c>-derived type, to enable inner items <c>DataContext</c> type resolve.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    internal sealed class XamlItemsControlAttribute : Attribute
+    internal class XamlItemsControlAttribute : Attribute
     {
     }
 
@@ -1144,12 +1144,12 @@ namespace JetBrains.Annotations
     ///     marked with the <see cref="XamlItemsControlAttribute" /> attribute.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Property)]
-    internal sealed class XamlItemBindingOfItemsControlAttribute : Attribute
+    internal class XamlItemBindingOfItemsControlAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    internal sealed class AspChildControlTypeAttribute : Attribute
+    internal class AspChildControlTypeAttribute : Attribute
     {
         public AspChildControlTypeAttribute(string tagName, Type controlType)
         {
@@ -1163,22 +1163,22 @@ namespace JetBrains.Annotations
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
-    internal sealed class AspDataFieldAttribute : Attribute
+    internal class AspDataFieldAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
-    internal sealed class AspDataFieldsAttribute : Attribute
+    internal class AspDataFieldsAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Property)]
-    internal sealed class AspMethodPropertyAttribute : Attribute
+    internal class AspMethodPropertyAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    internal sealed class AspRequiredAttributeAttribute : Attribute
+    internal class AspRequiredAttributeAttribute : Attribute
     {
         public AspRequiredAttributeAttribute(string attribute)
         {
@@ -1189,7 +1189,7 @@ namespace JetBrains.Annotations
     }
 
     [AttributeUsage(AttributeTargets.Property)]
-    internal sealed class AspTypePropertyAttribute : Attribute
+    internal class AspTypePropertyAttribute : Attribute
     {
         public AspTypePropertyAttribute(bool createConstructorReferences)
         {
@@ -1200,7 +1200,7 @@ namespace JetBrains.Annotations
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    internal sealed class RazorImportNamespaceAttribute : Attribute
+    internal class RazorImportNamespaceAttribute : Attribute
     {
         public RazorImportNamespaceAttribute(string name)
         {
@@ -1211,7 +1211,7 @@ namespace JetBrains.Annotations
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    internal sealed class RazorInjectionAttribute : Attribute
+    internal class RazorInjectionAttribute : Attribute
     {
         public RazorInjectionAttribute(string type, string fieldName)
         {
@@ -1225,7 +1225,7 @@ namespace JetBrains.Annotations
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    internal sealed class RazorDirectiveAttribute : Attribute
+    internal class RazorDirectiveAttribute : Attribute
     {
         public RazorDirectiveAttribute(string directive)
         {
@@ -1236,7 +1236,7 @@ namespace JetBrains.Annotations
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    internal sealed class RazorPageBaseTypeAttribute : Attribute
+    internal class RazorPageBaseTypeAttribute : Attribute
     {
         public RazorPageBaseTypeAttribute(string baseType)
         {
@@ -1254,27 +1254,27 @@ namespace JetBrains.Annotations
     }
 
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class RazorHelperCommonAttribute : Attribute
+    internal class RazorHelperCommonAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Property)]
-    internal sealed class RazorLayoutAttribute : Attribute
+    internal class RazorLayoutAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class RazorWriteLiteralMethodAttribute : Attribute
+    internal class RazorWriteLiteralMethodAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class RazorWriteMethodAttribute : Attribute
+    internal class RazorWriteMethodAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Parameter)]
-    internal sealed class RazorWriteMethodParameterAttribute : Attribute
+    internal class RazorWriteMethodParameterAttribute : Attribute
     {
     }
 }

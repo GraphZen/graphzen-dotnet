@@ -40,7 +40,34 @@ namespace GraphZen.CodeGen
             });
 
             var csharp = CSharpStringBuilder.Create();
-            csharp.Namespace(LanguageModelNamespace, cs => { cs.AddEnum(schema.GetEnum("SyntaxNode")); });
+            csharp.Namespace(LanguageModelNamespace, ns =>
+            {
+                ns.Enum(schema.GetEnum("SyntaxNode"));
+
+                foreach (var nodeType in NodeTypes)
+                {
+                    var className = nodeType + "Syntax";
+                    ns.PartialClass(className, @class =>
+                    {
+                        @class.AppendLine($@"
+	    /// <summary>Empty, read-only list of <see cref=""{className}""/> nodes.</summary>
+		public static IReadOnlyList<{className}> EmptyList {{get;}} = new List<{className}>(0).AsReadOnly();
+		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor""/> enters a <see cref=""{className}""/> node.</summary>
+		public override void VisitEnter( GraphQLSyntaxVisitor visitor) => visitor.Enter{nodeType}(this);
+		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor""/> leaves a <see cref=""{className}""/> node.</summary>
+		public override void VisitLeave( GraphQLSyntaxVisitor visitor) => visitor.Leave{nodeType}(this);
+		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor{{TResult}}""/> enters a <see cref=""{className}""/> node.</summary>
+		public override TResult VisitEnter<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.Enter{nodeType}(this);
+		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor{{TResult}}""/> leaves a <see cref=""{className}""/> node.</summary>
+		public override TResult VisitLeave<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.Leave{nodeType}(this);
+		public override SyntaxKind Kind {{get;}} = SyntaxKind.{nodeType};	
+");
+                    });
+                }
+            });
+
+            CodeGenHelpers.WriteFile("./src/GraphZen.LanguageModel/LanguageModel/Syntax/SyntaxNode.Generated.cs",
+                csharp.ToString());
         }
     }
 }

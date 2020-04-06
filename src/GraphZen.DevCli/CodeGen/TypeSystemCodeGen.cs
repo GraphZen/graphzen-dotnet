@@ -18,19 +18,37 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 ";
-
-
     }
 
     public static class CSharpStringBuilderExtensions
     {
-
         public static void AddCommonUsings(this StringBuilder csharp) =>
             csharp.AppendLine(CodeGenConstants.CommonUsings);
 
-        public static void Namespace(this StringBuilder csharp, string @namespace, Action<StringBuilder> csharpAction)
+        public static void Namespace(this StringBuilder csharp, string name, Action<StringBuilder> @namespace)
         {
-            csharp.AppendLine($"namespace {@namespace} {{");
+            csharp.AppendLine($"namespace {name} {{");
+            @namespace(csharp);
+            csharp.AppendLine("}");
+        }
+
+        public static void Class(this StringBuilder csharp, string name, Action<StringBuilder> @class)
+        {
+            csharp.AppendLine($"public class {name} {{");
+            @class(csharp);
+            csharp.AppendLine("}");
+        }
+
+        public static void StaticClass(this StringBuilder csharp, string className, Action<StringBuilder> csharpAction)
+        {
+            csharp.AppendLine($"public static class {className} {{");
+            csharpAction(csharp);
+            csharp.AppendLine("}");
+        }
+
+        public static void PartialClass(this StringBuilder csharp, string className, Action<StringBuilder> csharpAction)
+        {
+            csharp.AppendLine($"public partial class {className} {{");
             csharpAction(csharp);
             csharp.AppendLine("}");
         }

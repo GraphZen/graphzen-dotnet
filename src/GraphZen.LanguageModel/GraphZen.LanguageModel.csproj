@@ -25,19 +25,10 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="LanguageModel\Syntax\SyntaxNode.Generated.cs">
-      <DependentUpon>SyntaxNode.Generated.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Update="LanguageModel\GraphQLSyntaxVisitor.Generated.tt">
       <LastGenOutput>GraphQLSyntaxVisitor.Generated.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="LanguageModel\Syntax\SyntaxNode.Generated.tt">
-      <LastGenOutput>SyntaxNode.Generated.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
   </ItemGroup>

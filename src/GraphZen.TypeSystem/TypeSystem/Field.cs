@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem
     [GraphQLName("__Field")]
     [Description("Object and Interface types are described by a list of Fields, each of " +
                  "which has a name, potentially a list of arguments, and a return type.")]
-    public sealed class Field : AnnotatableMember, IField
+    public class Field : AnnotatableMember, IField
     {
         private readonly Lazy<IGraphQLType> _fieldType;
         private readonly Lazy<FieldDefinitionSyntax> _syntax;
@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem
             bool isDeprecated = false, string? deprecatedReason = null,
             IReadOnlyList<IDirectiveAnnotation>? directives = null
         ) : this(name, description, declaringType, fieldType, arguments, resolver, isDeprecated, deprecatedReason,
-            directives ?? DirectiveAnnotation.EmptyList, typeRef => (IGraphQLType) typeRef, clrMember)
+            directives ?? DirectiveAnnotation.EmptyList, typeRef => (IGraphQLType)typeRef, clrMember)
         {
         }
 

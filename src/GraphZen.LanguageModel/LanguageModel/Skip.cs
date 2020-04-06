@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.LanguageModel
 {
-    public sealed class Skip : VisitAction
+    public class Skip : VisitAction
     {
     }
 }

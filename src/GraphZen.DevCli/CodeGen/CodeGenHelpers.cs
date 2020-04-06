@@ -9,19 +9,6 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
-
-
-    public static class CSharpHelpers
-    {
-    }
-
-    public class EnumModel
-    {
-
-    }
-
-
-
     public static class CodeGenHelpers
     {
         public static void WriteFile(string path, string contents)

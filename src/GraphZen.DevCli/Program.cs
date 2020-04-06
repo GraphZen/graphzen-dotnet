@@ -17,13 +17,13 @@ namespace GraphZen
     {
         private static readonly Dictionary<string, Action> CodeGenTasks = new Dictionary<string, Action>
         {
-            { nameof(LanguageModel),LanguageModelCodeGen.Generate },
+            {nameof(LanguageModel), LanguageModelCodeGen.Generate},
             {"typeSystem", TypeSystemCodeGen.Generate},
             {"factories", FactoryGenerator.GenerateFactoryMethods}
         };
 
         private static Command Command(string name) => new Command(name)
-        { Handler = CommandHandler.Create(CodeGenTasks[name]) };
+            {Handler = CommandHandler.Create(CodeGenTasks[name])};
 
 
         private static void Main(string[] args)

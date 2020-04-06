@@ -20,7 +20,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.QueryEngine
 {
-    internal sealed class ExecutionContext
+    internal class ExecutionContext
     {
         private ExecutionContext(Schema schema,
             object rootValue,

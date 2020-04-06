@@ -23,7 +23,7 @@ namespace GraphZen.CodeGen
 
     public static class SchemaCodeGen
     {
-        public static void AddEnum(this StringBuilder cs, EnumType @enum)
+        public static void Enum(this StringBuilder cs, EnumType @enum)
         {
             cs.AppendLine($"public enum {@enum.Name} {{");
             foreach (var (name, value) in @enum.Values)
