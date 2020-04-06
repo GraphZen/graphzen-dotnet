@@ -27,23 +27,23 @@ namespace GraphZen.LanguageModel.Internal
         private static TokenListParser<TokenKind, (OperationType type, SyntaxLocation location)> OperationType { get; }
             =
             (from name in Token.EqualTo(TokenKind.Name).Named("operation type")
-                let nameValue = name.ToStringValue() ?? ""
-                let isQuery = nameValue?.Equals("query", StringComparison.OrdinalIgnoreCase) ?? false
-                let isMutation = nameValue?.Equals("mutation", StringComparison.OrdinalIgnoreCase) ?? false
-                let isSubscription = nameValue?.Equals("subscription", StringComparison.OrdinalIgnoreCase) ?? false
-                where isQuery || isMutation || isSubscription
-                let type = isQuery
-                    ? LanguageModel.OperationType.Query
-                    : isMutation
-                        ? LanguageModel.OperationType.Mutation
-                        : LanguageModel.OperationType.Subscription
-                select (type, name.Span.ToLocation()))
+             let nameValue = name.ToStringValue() ?? ""
+             let isQuery = nameValue?.Equals("query", StringComparison.OrdinalIgnoreCase) ?? false
+             let isMutation = nameValue?.Equals("mutation", StringComparison.OrdinalIgnoreCase) ?? false
+             let isSubscription = nameValue?.Equals("subscription", StringComparison.OrdinalIgnoreCase) ?? false
+             where isQuery || isMutation || isSubscription
+             let type = isQuery
+                 ? LanguageModel.OperationType.Query
+                 : isMutation
+                     ? LanguageModel.OperationType.Mutation
+                     : LanguageModel.OperationType.Subscription
+             select (type, name.Span.ToLocation()))
             .Named("operation type");
 
         private static TokenListParser<TokenKind, OperationDefinitionSyntax> QueryShorthandOpeartion { get; } =
             (from selectionSet in Parse.Ref(() => SelectionSet)
-                select new OperationDefinitionSyntax(LanguageModel.OperationType.Query, selectionSet,
-                    location: selectionSet.Location))
+             select new OperationDefinitionSyntax(LanguageModel.OperationType.Query, selectionSet,
+                 location: selectionSet.Location))
             .Named("query shortand operation");
     }
 }

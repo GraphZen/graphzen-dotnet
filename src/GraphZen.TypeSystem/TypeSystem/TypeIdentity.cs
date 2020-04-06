@@ -125,7 +125,7 @@ namespace GraphZen.TypeSystem
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((TypeIdentity) obj);
+            return Equals((TypeIdentity)obj);
         }
 
         // ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode

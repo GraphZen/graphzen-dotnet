@@ -104,21 +104,21 @@ namespace GraphZen.TypeSystem
         public IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value, (TContext) context));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value, (TContext)context));
             return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, ResolveInfo, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value, (TContext) context, info));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value, (TContext)context, info));
             return this;
         }
 

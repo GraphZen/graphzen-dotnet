@@ -18,6 +18,6 @@ namespace GraphZen.Infrastructure
         /// <param name="source"></param>
         /// <returns></returns>
         public static IEnumerable<object[]> ToTestData<T>(this IEnumerable<T> source) =>
-            source.Select(_ => new object[] {_!});
+            source.Select(_ => new object[] { _! });
     }
 }

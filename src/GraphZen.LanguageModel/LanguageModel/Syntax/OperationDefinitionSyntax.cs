@@ -77,7 +77,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is OperationDefinitionSyntax && Equals((OperationDefinitionSyntax) obj);
+            return obj is OperationDefinitionSyntax && Equals((OperationDefinitionSyntax)obj);
         }
 
         public override int GetHashCode()
@@ -85,7 +85,7 @@ namespace GraphZen.LanguageModel
             unchecked
             {
                 var hashCode = SelectionSet.GetHashCode();
-                hashCode = (hashCode * 397) ^ (int) OperationType;
+                hashCode = (hashCode * 397) ^ (int)OperationType;
                 hashCode = (hashCode * 397) ^ (Name != null ? Name.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ VariableDefinitions.GetHashCode();
                 hashCode = (hashCode * 397) ^ Directives.GetHashCode();

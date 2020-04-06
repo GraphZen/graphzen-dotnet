@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((ListType) obj);
+            return Equals((ListType)obj);
         }
 
         public override int GetHashCode() => OfType.GetHashCode();

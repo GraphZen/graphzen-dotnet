@@ -33,7 +33,7 @@ namespace GraphZen.Infrastructure
             if (dictionary.TryGetValue(key, out var collection))
                 collection.Add(item);
             else
-                dictionary[key] = new List<TItem> {item};
+                dictionary[key] = new List<TItem> { item };
         }
 
 
@@ -52,7 +52,7 @@ namespace GraphZen.Infrastructure
 
         internal static TValue? FindValueOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : struct =>
-            dictionary.TryGetValue(key, out var val) ? val : (TValue?) null;
+            dictionary.TryGetValue(key, out var val) ? val : (TValue?)null;
 
 
         public static void Increment<TKey>(this IDictionary<TKey, int> dictionary, TKey key)

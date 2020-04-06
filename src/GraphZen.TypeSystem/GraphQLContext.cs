@@ -47,7 +47,7 @@ namespace GraphZen
                 if (!_optionsInitialized)
                 {
                     var optionsBuilder = new GraphQLContextOptionsBuilder(_options);
-                    ((IGraphQLContextOptionsBuilderInfrastructure) optionsBuilder).AddOrUpdateExtension(
+                    ((IGraphQLContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(
                         _options.FindExtension<CoreOptionsExtension>() ?? new CoreOptionsExtension());
                     OnConfiguring(optionsBuilder);
 

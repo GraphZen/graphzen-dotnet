@@ -72,11 +72,11 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         public abstract ConfigurationSource GetElementConfigurationSource(TMutableDefMarker parent);
 
         public ConfigurationSource GetElementConfigurationSource(MemberDefinition parent) =>
-            GetElementConfigurationSource((TMutableDefMarker) (parent as TParentMemberDefinition)!);
+            GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition)!);
 
         public bool TryGetValue(MemberDefinition parent, [NotNullWhen(true)] out object? value)
         {
-            if (TryGetValue((TParentMemberDefinition) parent, out var inner))
+            if (TryGetValue((TParentMemberDefinition)parent, out var inner))
             {
                 value = inner;
                 return true;
@@ -88,7 +88,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
 
         public bool TryGetValue(Member parent, [NotNullWhen(true)] out object? value)
         {
-            if (TryGetValue((TParentMember) parent, out var inner))
+            if (TryGetValue((TParentMember)parent, out var inner))
             {
                 value = inner;
                 return true;
@@ -100,7 +100,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
 
         public void ConfigureExplicitly(SchemaBuilder sb, string parentName, object value)
         {
-            ConfigureExplicitly(sb, parentName, (TElement) value);
+            ConfigureExplicitly(sb, parentName, (TElement)value);
         }
 
         public abstract void RemoveValue(SchemaBuilder sb, string parentName);

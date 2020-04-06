@@ -15,12 +15,12 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         private static TokenListParser<TokenKind, InputObjectTypeDefinitionSyntax> InputObjectTypeDefinition { get; } =
             (from desc in Parse.Ref(() => Description).OptionalOrNull()
-                from input in Keyword("input")
-                from name in Name
-                from directives in Directives.OptionalOrNull()
-                from fields in InputFieldsDefinition.OptionalOrNull()
-                select new InputObjectTypeDefinitionSyntax(name, desc, directives, fields,
-                    SyntaxLocation.FromMany(desc, input, name, directives.GetLocation(), fields.GetLocation())))
+             from input in Keyword("input")
+             from name in Name
+             from directives in Directives.OptionalOrNull()
+             from fields in InputFieldsDefinition.OptionalOrNull()
+             select new InputObjectTypeDefinitionSyntax(name, desc, directives, fields,
+                 SyntaxLocation.FromMany(desc, input, name, directives.GetLocation(), fields.GetLocation())))
             .Named("input object type definition");
 
         /// <summary>
@@ -28,9 +28,9 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         private static TokenListParser<TokenKind, InputValueDefinitionSyntax[]> InputFieldsDefinition { get; } =
             (from lb in Parse.Ref(() => LeftBrace)
-                from values in InputValueDefinition.Many()
-                from rb in RightBrace
-                select values)
+             from values in InputValueDefinition.Many()
+             from rb in RightBrace
+             select values)
             .Try()
             .Named("input fields definition");
     }

@@ -20,16 +20,16 @@ namespace GraphZen.Infrastructure
                          throw new Exception("Unable to convert JObject to Dictionary<string, object>");
 
             var objectEntries = (from r in result
-                where r.Value?.GetType() == typeof(JObject)
-                let objectKey = r.Key
-                let objectValue = (JObject) r.Value
-                select (objectKey, objectValue)).ToList();
+                                 where r.Value?.GetType() == typeof(JObject)
+                                 let objectKey = r.Key
+                                 let objectValue = (JObject)r.Value
+                                 select (objectKey, objectValue)).ToList();
 
             var arrayEntries = (from r in result
-                where r.Value?.GetType() == typeof(JArray)
-                let arrayKey = r.Key
-                let arrayValue = (JArray) r.Value
-                select (arrayKey, arrayValue)).ToList();
+                                where r.Value?.GetType() == typeof(JArray)
+                                let arrayKey = r.Key
+                                let arrayValue = (JArray)r.Value
+                                select (arrayKey, arrayValue)).ToList();
 
 
             foreach (var (arrayKey, arrayValue) in arrayEntries)

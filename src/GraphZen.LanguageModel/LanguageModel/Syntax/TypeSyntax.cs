@@ -37,7 +37,7 @@ namespace GraphZen.LanguageModel
             }
 
 
-            return (NamedTypeSyntax) GetNamedType(this);
+            return (NamedTypeSyntax)GetNamedType(this);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace GraphZen.TypeSystem
         }
 
         public new IMutableArgumentsDefinition DeclaringMember =>
-            (IMutableArgumentsDefinition) base.DeclaringMember;
+            (IMutableArgumentsDefinition)base.DeclaringMember;
 
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;

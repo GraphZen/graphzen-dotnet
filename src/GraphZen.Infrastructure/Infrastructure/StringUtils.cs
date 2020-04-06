@@ -43,7 +43,7 @@ namespace GraphZen.Infrastructure
 
         public static IEnumerable<string> GetSuggestionList(string input, params string[] options) =>
             GetSuggestionList(Check.NotNull(input, nameof(input)),
-                (IEnumerable<string>) Check.NotNull(options, nameof(options)));
+                (IEnumerable<string>)Check.NotNull(options, nameof(options)));
 
 
         public static IReadOnlyList<string> GetSuggestionList(string input,
@@ -84,14 +84,14 @@ namespace GraphZen.Infrastructure
             }
 
             for (var i = 1; i <= aLength; i++)
-            for (var j = 1; j <= bLength; j++)
-            {
-                var cost = b[j - 1] == a[i - 1] ? 0 : 1;
+                for (var j = 1; j <= bLength; j++)
+                {
+                    var cost = b[j - 1] == a[i - 1] ? 0 : 1;
 
-                d[i, j] = Math.Min(
-                    Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
-                    d[i - 1, j - 1] + cost);
-            }
+                    d[i, j] = Math.Min(
+                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                        d[i - 1, j - 1] + cost);
+                }
 
             return d[aLength, bLength];
         }
