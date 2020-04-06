@@ -1,20 +1,17 @@
-// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-
 #nullable enable
 
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
-{
-    public static class SchemaTypeAccessorExtensions
-    {
-        #region Enum type accessors
+namespace GraphZen.TypeSystem {
+public static class SchemaTypeAccessorExtensions {
+#region Enum type accessors 
 
-        public static EnumType GetEnum(this Schema schema, string name) =>
+    public static EnumType GetEnum(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<EnumType>(name);
 
 
@@ -53,16 +50,15 @@ namespace GraphZen.TypeSystem
         public static bool HasEnum(this Schema schema, string name) => Check.NotNull(schema, nameof(schema))
             .HasType<EnumType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #region InputObject type accessors
+#endregion
+#region InputObject type accessors 
 
-        public static InputObjectType GetInputObject(this Schema schema, string name) =>
+    public static InputObjectType GetInputObject(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<InputObjectType>(name);
 
 
-        public static InputObjectType GetInputObject(this Schema schema, Type clrType) => Check
-            .NotNull(schema, nameof(schema))
+        public static InputObjectType GetInputObject(this Schema schema, Type clrType) => Check.NotNull(schema, nameof(schema))
             .GetType<InputObjectType>(Check.NotNull(clrType, nameof(clrType)));
 
 
@@ -76,20 +72,16 @@ namespace GraphZen.TypeSystem
             Check.NotNull(schema, nameof(schema)).FindType<InputObjectType>(typeof(TClrType));
 
 
-        public static InputObjectType? FindInputObject(this Schema schema, Type clrType) => Check
-            .NotNull(schema, nameof(schema))
+        public static InputObjectType? FindInputObject(this Schema schema, Type clrType) => Check.NotNull(schema, nameof(schema))
             .FindType<InputObjectType>(Check.NotNull(clrType, nameof(clrType)));
 
-        public static bool TryGetInputObject(this Schema schema, Type clrType,
-            [NotNullWhen(true)] out InputObjectType? type) =>
+        public static bool TryGetInputObject(this Schema schema, Type clrType, [NotNullWhen(true)] out InputObjectType? type) =>
             Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public static bool TryGetInputObject<TClrType>(this Schema schema,
-            [NotNullWhen(true)] out InputObjectType? type) =>
+        public static bool TryGetInputObject<TClrType>(this Schema schema, [NotNullWhen(true)] out InputObjectType? type) =>
             Check.NotNull(schema, nameof(schema)).TryGetType(typeof(TClrType), out type);
 
-        public static bool TryGetInputObject(this Schema schema, string name,
-            [NotNullWhen(true)] out InputObjectType? type) =>
+        public static bool TryGetInputObject(this Schema schema, string name, [NotNullWhen(true)] out InputObjectType? type) =>
             Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public static bool HasInputObject(this Schema schema, Type clrType) => Check.NotNull(schema, nameof(schema))
@@ -101,16 +93,15 @@ namespace GraphZen.TypeSystem
         public static bool HasInputObject(this Schema schema, string name) => Check.NotNull(schema, nameof(schema))
             .HasType<InputObjectType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #region Interface type accessors
+#endregion
+#region Interface type accessors 
 
-        public static InterfaceType GetInterface(this Schema schema, string name) =>
+    public static InterfaceType GetInterface(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<InterfaceType>(name);
 
 
-        public static InterfaceType GetInterface(this Schema schema, Type clrType) => Check
-            .NotNull(schema, nameof(schema))
+        public static InterfaceType GetInterface(this Schema schema, Type clrType) => Check.NotNull(schema, nameof(schema))
             .GetType<InterfaceType>(Check.NotNull(clrType, nameof(clrType)));
 
 
@@ -124,19 +115,16 @@ namespace GraphZen.TypeSystem
             Check.NotNull(schema, nameof(schema)).FindType<InterfaceType>(typeof(TClrType));
 
 
-        public static InterfaceType? FindInterface(this Schema schema, Type clrType) => Check
-            .NotNull(schema, nameof(schema))
+        public static InterfaceType? FindInterface(this Schema schema, Type clrType) => Check.NotNull(schema, nameof(schema))
             .FindType<InterfaceType>(Check.NotNull(clrType, nameof(clrType)));
 
-        public static bool TryGetInterface(this Schema schema, Type clrType,
-            [NotNullWhen(true)] out InterfaceType? type) =>
+        public static bool TryGetInterface(this Schema schema, Type clrType, [NotNullWhen(true)] out InterfaceType? type) =>
             Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
         public static bool TryGetInterface<TClrType>(this Schema schema, [NotNullWhen(true)] out InterfaceType? type) =>
             Check.NotNull(schema, nameof(schema)).TryGetType(typeof(TClrType), out type);
 
-        public static bool TryGetInterface(this Schema schema, string name,
-            [NotNullWhen(true)] out InterfaceType? type) =>
+        public static bool TryGetInterface(this Schema schema, string name, [NotNullWhen(true)] out InterfaceType? type) =>
             Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public static bool HasInterface(this Schema schema, Type clrType) => Check.NotNull(schema, nameof(schema))
@@ -148,11 +136,11 @@ namespace GraphZen.TypeSystem
         public static bool HasInterface(this Schema schema, string name) => Check.NotNull(schema, nameof(schema))
             .HasType<InterfaceType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #region Object type accessors
+#endregion
+#region Object type accessors 
 
-        public static ObjectType GetObject(this Schema schema, string name) =>
+    public static ObjectType GetObject(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<ObjectType>(name);
 
 
@@ -191,11 +179,11 @@ namespace GraphZen.TypeSystem
         public static bool HasObject(this Schema schema, string name) => Check.NotNull(schema, nameof(schema))
             .HasType<ObjectType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #region Scalar type accessors
+#endregion
+#region Scalar type accessors 
 
-        public static ScalarType GetScalar(this Schema schema, string name) =>
+    public static ScalarType GetScalar(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<ScalarType>(name);
 
 
@@ -234,11 +222,11 @@ namespace GraphZen.TypeSystem
         public static bool HasScalar(this Schema schema, string name) => Check.NotNull(schema, nameof(schema))
             .HasType<ScalarType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #region Union type accessors
+#endregion
+#region Union type accessors 
 
-        public static UnionType GetUnion(this Schema schema, string name) =>
+    public static UnionType GetUnion(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<UnionType>(name);
 
 
@@ -277,6 +265,7 @@ namespace GraphZen.TypeSystem
         public static bool HasUnion(this Schema schema, string name) => Check.NotNull(schema, nameof(schema))
             .HasType<UnionType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
-    }
+
+#endregion
+}
 }
