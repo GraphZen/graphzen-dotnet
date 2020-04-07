@@ -32,7 +32,7 @@ namespace GraphZen.CodeGen
                 _.GetConstructors().Any(ctor => ctor.GetCustomAttribute<GenFactory>() != null));
 
             var classes = types.SelectMany(GetFactoryMethods)
-                .GroupBy(_ => new { _.ClassName, _.Namespace })
+                .GroupBy(_ => new {_.ClassName, _.Namespace})
                 .Select(g => (
                     g.Key.ClassName,
                     g.Key.Namespace,
@@ -110,11 +110,11 @@ namespace {@namespace} {{
 
         private static string PrintDefaultValue(object? value) =>
             value switch
-        {
-            bool bv => bv ? "true" : "false",
-            string sv => $"\"{sv}\"",
-            null => "null",
-            _ => throw new NotImplementedException($"{nameof(PrintDefaultValue)}(typeof({value.GetType()}))")
-        };
+            {
+                bool bv => bv ? "true" : "false",
+                string sv => $"\"{sv}\"",
+                null => "null",
+                _ => throw new NotImplementedException($"{nameof(PrintDefaultValue)}(typeof({value.GetType()}))")
+            };
     }
 }
