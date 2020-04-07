@@ -68,7 +68,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is FragmentDefinitionSyntax && Equals((FragmentDefinitionSyntax)obj);
+            return obj is FragmentDefinitionSyntax && Equals((FragmentDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

@@ -46,7 +46,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is UnionTypeExtensionSyntax && Equals((UnionTypeExtensionSyntax)obj);
+            return obj is UnionTypeExtensionSyntax && Equals((UnionTypeExtensionSyntax) obj);
         }
 
         public override int GetHashCode()

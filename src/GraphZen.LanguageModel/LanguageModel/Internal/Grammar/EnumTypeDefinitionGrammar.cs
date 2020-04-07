@@ -15,12 +15,12 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         private static TokenListParser<TokenKind, EnumTypeDefinitionSyntax> EnumTypeDefinition { get; } =
             (from desc in Parse.Ref(() => Description).OptionalOrNull()
-             from @enum in Keyword("enum")
-             from name in Name
-             from directives in Directives.OptionalOrNull()
-             from values in EnumValuesDefinition.OptionalOrNull()
-             select new EnumTypeDefinitionSyntax(name, desc, directives, values,
-                 SyntaxLocation.FromMany(desc, @enum, name, directives.GetLocation(), values.GetLocation())))
+                from @enum in Keyword("enum")
+                from name in Name
+                from directives in Directives.OptionalOrNull()
+                from values in EnumValuesDefinition.OptionalOrNull()
+                select new EnumTypeDefinitionSyntax(name, desc, directives, values,
+                    SyntaxLocation.FromMany(desc, @enum, name, directives.GetLocation(), values.GetLocation())))
             .Named("enum type definition");
 
         /// <summary>
@@ -28,9 +28,9 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         private static TokenListParser<TokenKind, EnumValueDefinitionSyntax[]> EnumValuesDefinition { get; } =
             (from lb in Parse.Ref(() => LeftBrace)
-             from values in EnumValueDefinition.Many()
-             from rb in RightBrace
-             select values)
+                from values in EnumValueDefinition.Many()
+                from rb in RightBrace
+                select values)
             .Try()
             .Named("enum values");
 
@@ -39,10 +39,10 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         private static TokenListParser<TokenKind, EnumValueDefinitionSyntax> EnumValueDefinition { get; } =
             (from desc in Parse.Ref(() => Description.OptionalOrNull())
-             from value in EnumValue
-             from directives in Directives.OptionalOrNull()
-             select new EnumValueDefinitionSyntax(value, desc, directives,
-                 SyntaxLocation.FromMany(desc, value, directives.GetLocation())))
+                from value in EnumValue
+                from directives in Directives.OptionalOrNull()
+                select new EnumValueDefinitionSyntax(value, desc, directives,
+                    SyntaxLocation.FromMany(desc, value, directives.GetLocation())))
             .Try()
             .Named("enum value");
     }

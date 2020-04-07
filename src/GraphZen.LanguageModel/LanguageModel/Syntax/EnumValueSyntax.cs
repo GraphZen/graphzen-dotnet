@@ -28,7 +28,7 @@ namespace GraphZen.LanguageModel
         }
 
 
-        private static string[] ProhibitedValues { get; } = { "true", "false", "null" };
+        private static string[] ProhibitedValues { get; } = {"true", "false", "null"};
 
         /// <summary>
         ///     The enum value.
@@ -54,7 +54,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is EnumValueSyntax && Equals((EnumValueSyntax)obj);
+            return obj is EnumValueSyntax && Equals((EnumValueSyntax) obj);
         }
 
         public override int GetHashCode() => Value.GetHashCode();

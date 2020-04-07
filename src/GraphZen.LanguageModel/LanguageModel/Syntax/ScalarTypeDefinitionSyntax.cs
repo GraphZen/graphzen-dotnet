@@ -59,7 +59,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ScalarTypeDefinitionSyntax && Equals((ScalarTypeDefinitionSyntax)obj);
+            return obj is ScalarTypeDefinitionSyntax && Equals((ScalarTypeDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()
