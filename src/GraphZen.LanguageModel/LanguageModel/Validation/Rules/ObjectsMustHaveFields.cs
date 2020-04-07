@@ -12,11 +12,11 @@ namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class ObjectsMustHaveFields : ValidationRuleVisitor
     {
-        private readonly Dictionary<string, ICollection<ObjectTypeDefinitionSyntax>> _objectDefs =
+        private readonly Dictionary<string, ICollection<ObjectTypeDefinitionSyntax>> _objects =
             new Dictionary<string, ICollection<ObjectTypeDefinitionSyntax>>();
 
 
-        private readonly Dictionary<string, ICollection<ObjectTypeExtensionSyntax>> _objectExts =
+        private readonly Dictionary<string, ICollection<ObjectTypeExtensionSyntax>> _extensions =
             new Dictionary<string, ICollection<ObjectTypeExtensionSyntax>>();
 
         public ObjectsMustHaveFields(ValidationContext context) : base(context)
@@ -25,25 +25,25 @@ namespace GraphZen.LanguageModel.Validation.Rules
 
         public override VisitAction EnterObjectTypeDefinition(ObjectTypeDefinitionSyntax node)
         {
-            _objectDefs.AddItem(node.Name.Value, node);
+            _objects.AddItem(node.Name.Value, node);
             return false;
         }
 
         public override VisitAction EnterObjectTypeExtension(ObjectTypeExtensionSyntax node)
         {
-            _objectExts.AddItem(node.Name.Value, node);
+            _extensions.AddItem(node.Name.Value, node);
             return false;
         }
 
         public override VisitAction LeaveDocument(DocumentSyntax node)
         {
-            foreach (var objectDef in _objectDefs)
+            foreach (var objectDef in _objects)
             {
                 var objectTypeName = objectDef.Key;
                 Debug.Assert(objectTypeName != null, nameof(objectTypeName) + " != null");
                 Debug.Assert(objectDef.Value != null, "objectDef.Value != null");
                 var objectTypeNode = objectDef.Value.First();
-                var extensionNodes = _objectExts.GetItems(objectTypeName).ToList();
+                var extensionNodes = _extensions.GetItems(objectTypeName).ToList();
                 Debug.Assert(objectTypeNode != null, nameof(objectTypeNode) + " != null");
                 if (!objectTypeNode.Fields.Any() && !extensionNodes.SelectMany(n =>
                 {

@@ -13,10 +13,10 @@ namespace GraphZen.LanguageModel.Validation.Rules
     public class InputObjectsMustHaveFields : DocumentValidationRuleVisitor
     {
         private readonly Dictionary<string, ICollection<InputObjectTypeDefinitionSyntax>>
-            _inputDefs = new Dictionary<string, ICollection<InputObjectTypeDefinitionSyntax>>();
+            _inputObjects = new Dictionary<string, ICollection<InputObjectTypeDefinitionSyntax>>();
 
 
-        private readonly Dictionary<string, ICollection<InputObjectTypeExtensionSyntax>> _inputExts =
+        private readonly Dictionary<string, ICollection<InputObjectTypeExtensionSyntax>> _extensions =
             new Dictionary<string, ICollection<InputObjectTypeExtensionSyntax>>();
 
         public InputObjectsMustHaveFields(DocumentValidationContext context) : base(context)
@@ -25,22 +25,22 @@ namespace GraphZen.LanguageModel.Validation.Rules
 
         public override VisitAction EnterInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node)
         {
-            _inputDefs.AddItem(node.Name.Value, node);
+            _inputObjects.AddItem(node.Name.Value, node);
             return false;
         }
 
         public override VisitAction EnterInputObjectTypeExtension(InputObjectTypeExtensionSyntax node)
         {
-            _inputExts.AddItem(node.Name.Value, node);
+            _extensions.AddItem(node.Name.Value, node);
             return false;
         }
 
         public override VisitAction LeaveDocument(DocumentSyntax node)
         {
             var inputTypes = node.GetInputTypeDefinitions();
-            foreach (var input in _inputDefs)
+            foreach (var input in _inputObjects)
             {
-                var inputExts = _inputExts.GetItems(input.Key);
+                var inputExts = _extensions.GetItems(input.Key);
                 Debug.Assert(input.Value != null, "input.Value != null");
                 var inputFields = input.Value
                     // ReSharper disable once PossibleNullReferenceException

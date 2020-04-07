@@ -11,11 +11,11 @@ namespace GraphZen.LanguageModel.Validation.Rules
 {
     public class EnumTypesMustBeWellDefined : DocumentValidationRuleVisitor
     {
-        private readonly Dictionary<string, ICollection<EnumTypeDefinitionSyntax>> _enumDefs =
+        private readonly Dictionary<string, ICollection<EnumTypeDefinitionSyntax>> _enums =
             new Dictionary<string, ICollection<EnumTypeDefinitionSyntax>>();
 
 
-        private readonly Dictionary<string, ICollection<EnumTypeExtensionSyntax>> _enumExts =
+        private readonly Dictionary<string, ICollection<EnumTypeExtensionSyntax>> _enumExtensions =
             new Dictionary<string, ICollection<EnumTypeExtensionSyntax>>();
 
 
@@ -25,22 +25,22 @@ namespace GraphZen.LanguageModel.Validation.Rules
 
         public override VisitAction EnterEnumTypeDefinition(EnumTypeDefinitionSyntax node)
         {
-            _enumDefs.AddItem(node.Name.Value, node);
+            _enums.AddItem(node.Name.Value, node);
             return false;
         }
 
         public override VisitAction EnterEnumTypeExtension(EnumTypeExtensionSyntax node)
         {
-            _enumExts.AddItem(node.Name.Value, node);
+            _enumExtensions.AddItem(node.Name.Value, node);
             return false;
         }
 
         public override VisitAction LeaveDocument(DocumentSyntax node)
         {
-            foreach (var enums in _enumDefs)
+            foreach (var enums in _enums)
             {
                 var enumTypeName = enums.Key;
-                var enumExts = _enumExts.GetItems(enumTypeName);
+                var enumExts = _enumExtensions.GetItems(enumTypeName);
                 // ReSharper disable once PossibleNullReferenceException
 
                 var values = enums.Value.SelectMany(_ => _.Values)

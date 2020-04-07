@@ -36,27 +36,36 @@ namespace BuildTargets
         private static void Main(string[] args)
         {
             CleanDir($"./{ArtifactsDir}");
+
             Target(Compile, () => Run("dotnet", "build -c Release"));
-            Target(Gen, () =>
-            {
-                Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
-            });
+
+            Target(Gen,
+                () =>
+                {
+                    Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
+                });
+
             Target(Test, () =>
             {
                 Run("dotnet",
                     $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
                 GenerateCodeCoverageReport();
             });
+
             Target(HtmlReport, DependsOn(Test), () => GenerateCodeCoverageReport(true));
+
             Target(Pack, DependsOn(Compile), () => Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build"));
-            Target(CleanupCode,
-                () =>
-                {
-                    Run(GetReSharperTool("cleanupcode"),
-                        @"--config=./BuildTargets/cleanupcode.config --verbosity=WARN");
-                });
+
+            Target(CleanupCode, () =>
+            {
+                Run(GetReSharperTool("cleanupcode"),
+                    @"--config=./BuildTargets/cleanupcode.config --verbosity=WARN");
+            });
+
             Target(Format, () => { Run("dotent-format"); });
+
             Target(Default, DependsOn(Compile, Test, Pack));
+
             RunTargetsAndExit(args);
         }
 
