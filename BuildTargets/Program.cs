@@ -18,6 +18,7 @@ namespace BuildTargets
         private static readonly string PackageDir = Path.Combine(ArtifactsDir, "packages");
         private static readonly string TestLogDir = Path.Combine(ArtifactsDir, "test-logs");
         private static string GetReSharperTool(string name) => Path.Combine(OutputDir, "ReSharperTools", name);
+
         private static string OutputDir { get; } =
             Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)!;
 
@@ -56,7 +57,7 @@ namespace BuildTargets
 
             Target(nameof(CleanupCode), () => CleanupCode());
 
-            Target(nameof(DotNetFormat), () => DotNetFormat());
+            Target(nameof(DotNetFormat), DotNetFormat);
 
             Target(Default, DependsOn(Compile, Test, Pack));
 
@@ -65,15 +66,12 @@ namespace BuildTargets
 
         private static void CleanupCode(string? includes = null)
         {
-            Run(GetReSharperTool("cleanupcode"), $@"--config=./BuildTargets/cleanupcode.config  {(includes != null ? $"--include=\"{includes}\"" : "")}");
-            DotNetFormat(includes);
+            Run(GetReSharperTool("cleanupcode"),
+                $@"--config=./BuildTargets/cleanupcode.config  {(includes != null ? $"--include=\"{includes}\"" : "")}");
+            DotNetFormat();
         }
 
-        private static void DotNetFormat(string? includes = null)
-        {
-            Run("dotnet dotnet-format", includes != null ? $"--include {includes}" : null);
-        }
-
+        private static void DotNetFormat() => Run("dotnet dotnet-format");
 
         private static void CleanDir(string path)
         {
@@ -89,7 +87,7 @@ namespace BuildTargets
             };
             if (html) reportTypes.Add("HtmlInline");
             new Generator().GenerateReport(new ReportConfiguration(
-                new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
+                new List<string> {$"./{TestLogDir}/**/*coverage.cobertura.xml"},
                 $"./{ArtifactsDir}/coverage-reports/", new List<string>(), null,
                 reportTypes,
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,
