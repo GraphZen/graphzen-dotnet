@@ -88,7 +88,7 @@ namespace BuildTargets
             };
             if (html) reportTypes.Add("HtmlInline");
             new Generator().GenerateReport(new ReportConfiguration(
-                new List<string> {$"./{TestLogDir}/**/*coverage.cobertura.xml"},
+                new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
                 $"./{ArtifactsDir}/coverage-reports/", new List<string>(), null,
                 reportTypes,
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,

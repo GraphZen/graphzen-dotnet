@@ -35,9 +35,9 @@ namespace GraphZen.CodeGen
         private static void Block(this StringBuilder csharp, string open, string close,
             Action<StringBuilder> content)
         {
-            csharp.Append(open);
+            csharp.AppendLine(open);
             content(csharp);
-            csharp.Append(close);
+            csharp.AppendLine(close);
         }
 
         public static void WriteToFile(this StringBuilder csharp, string project, string name) =>
