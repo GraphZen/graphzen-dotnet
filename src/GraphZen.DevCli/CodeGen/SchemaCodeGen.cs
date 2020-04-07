@@ -9,18 +9,6 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
-    public static class CSharpStringBuilder
-    {
-        public static StringBuilder Create()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine("#nullable enable");
-            sb.AddCommonUsings();
-            return sb;
-        }
-    }
-
-
     public static class SchemaCodeGen
     {
         public static void Enum(this StringBuilder cs, EnumType @enum)
