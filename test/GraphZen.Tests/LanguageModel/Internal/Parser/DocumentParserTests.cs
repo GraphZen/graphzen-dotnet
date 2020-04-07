@@ -49,7 +49,7 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
 #   Auto Complete:  Ctrl-Space (or just start typing)
 #
 
-").Should().Be(new DocumentSyntax(new DefinitionSyntax[] { }));
+").Should().Be(new DocumentSyntax());
         }
     }
 }
