@@ -110,11 +110,11 @@ namespace {@namespace} {{
 
         private static string PrintDefaultValue(object? value) =>
             value switch
-        {
-            bool bv => bv ? "true" : "false",
-            string sv => $"\"{sv}\"",
-            null => "null",
-            _ => throw new NotImplementedException($"{nameof(PrintDefaultValue)}(typeof({value.GetType()}))")
-        };
+            {
+                bool bv => bv ? "true" : "false",
+                string sv => $"\"{sv}\"",
+                null => "null",
+                _ => throw new NotImplementedException($"{nameof(PrintDefaultValue)}(typeof({value.GetType()}))")
+            };
     }
 }

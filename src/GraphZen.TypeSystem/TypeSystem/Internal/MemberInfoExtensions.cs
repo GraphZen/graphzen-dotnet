@@ -110,11 +110,11 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool HasNullableReferenceType(this MemberInfo member) =>
             member switch
-        {
-            MethodInfo method => method.HasNullableReferenceType(),
-            PropertyInfo property => property.HasNullableReferenceType(),
-            _ => throw new NotImplementedException()
-        };
+            {
+                MethodInfo method => method.HasNullableReferenceType(),
+                PropertyInfo property => property.HasNullableReferenceType(),
+                _ => throw new NotImplementedException()
+            };
 
 
         public static bool TryGetDescriptionFromDataAnnotation(this MemberInfo memberInfo,

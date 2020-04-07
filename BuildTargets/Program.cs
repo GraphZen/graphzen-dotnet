@@ -65,13 +65,13 @@ namespace BuildTargets
 
         private static void CleanupCode(string? includes = null)
         {
-            Run(GetReSharperTool("cleanupcode"), $@"--config=./BuildTargets/cleanupcode.config --verbosity=WARN {(includes != null ? $"--include=\"{includes}\"" : "")}");
+            Run(GetReSharperTool("cleanupcode"), $@"--config=./BuildTargets/cleanupcode.config  {(includes != null ? $"--include=\"{includes}\"" : "")}");
             DotNetFormat(includes);
         }
 
         private static void DotNetFormat(string? includes = null)
         {
-            Run("dotnet-format", includes != null ? $"--include {includes}" : null);
+            Run("dotnet dotnet-format", includes != null ? $"--include {includes}" : null);
         }
 
 
