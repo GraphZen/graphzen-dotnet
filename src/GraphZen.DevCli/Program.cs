@@ -23,7 +23,7 @@ namespace GraphZen
         };
 
         private static Command Command(string name) => new Command(name)
-            {Handler = CommandHandler.Create(CodeGenTasks[name])};
+        { Handler = CommandHandler.Create(CodeGenTasks[name]) };
 
 
         private static void Main(string[] args)
