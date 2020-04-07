@@ -15,19 +15,16 @@ namespace BuildTargets
     {
         // Paths
         private const string ArtifactsDir = "build-artifacts";
-
-        private static string OutputDir { get; } =
-            Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)!;
-
         private static readonly string PackageDir = Path.Combine(ArtifactsDir, "packages");
         private static readonly string TestLogDir = Path.Combine(ArtifactsDir, "test-logs");
         private static string GetReSharperTool(string name) => Path.Combine(OutputDir, "ReSharperTools", name);
+        private static string OutputDir { get; } =
+            Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)!;
+
 
         // Targets
         private const string Compile = nameof(Compile);
         private const string Default = nameof(Default);
-        private const string CleanupCode = nameof(CleanupCode);
-        private const string Format = nameof(Format);
         private const string Pack = nameof(Pack);
         private const string Test = nameof(Test);
         private const string HtmlReport = nameof(HtmlReport);
@@ -43,7 +40,7 @@ namespace BuildTargets
                 () =>
                 {
                     Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
-                    FormatCode();
+                    CleanupCode("./src/**/*.Generated.cs");
                 });
 
             Target(Test, () =>
@@ -57,21 +54,25 @@ namespace BuildTargets
 
             Target(Pack, DependsOn(Compile), () => Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build"));
 
-            Target(CleanupCode, () =>
-            {
-                Run(GetReSharperTool("cleanupcode"),
-                    @"--config=./BuildTargets/cleanupcode.config --verbosity=WARN");
-                FormatCode();
-            });
+            Target(nameof(CleanupCode), () => CleanupCode());
 
-            Target(Format, FormatCode);
+            Target(nameof(DotNetFormat), () => DotNetFormat());
 
             Target(Default, DependsOn(Compile, Test, Pack));
 
             RunTargetsAndExit(args);
         }
 
-        private static void FormatCode() => Run("dotnet-format");
+        private static void CleanupCode(string? includes = null)
+        {
+            Run(GetReSharperTool("cleanupcode"), $@"--config=./BuildTargets/cleanupcode.config --verbosity=WARN {(includes != null ? $"--include=\"{includes}\"" : "")}");
+            DotNetFormat(includes);
+        }
+
+        private static void DotNetFormat(string? includes = null)
+        {
+            Run("dotnet-format", includes != null ? $"--include {includes}" : null);
+        }
 
 
         private static void CleanDir(string path)
