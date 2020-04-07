@@ -11,7 +11,7 @@ using static SimpleExec.Command;
 
 namespace BuildTargets
 {
-    internal class Program
+    internal static class Program
     {
         // Paths
         private const string ArtifactsDir = "build-artifacts";
@@ -62,7 +62,7 @@ namespace BuildTargets
                     @"--config=./BuildTargets/cleanupcode.config --verbosity=WARN");
             });
 
-            Target(Format, () => { Run("dotent-format"); });
+            Target(Format, () => { Run("dotnet-format"); });
 
             Target(Default, DependsOn(Compile, Test, Pack));
 
@@ -84,7 +84,7 @@ namespace BuildTargets
             };
             if (html) reportTypes.Add("HtmlInline");
             new Generator().GenerateReport(new ReportConfiguration(
-                new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
+                new List<string> {$"./{TestLogDir}/**/*coverage.cobertura.xml"},
                 $"./{ArtifactsDir}/coverage-reports/", new List<string>(), null,
                 reportTypes,
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,

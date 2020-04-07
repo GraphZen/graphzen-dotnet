@@ -17,7 +17,7 @@ namespace GraphZen.CodeGen
         public static void Namespace(this StringBuilder csharp, string name, Action<StringBuilder> @namespace) =>
             csharp.Block($"namespace {name} {{", "}", @namespace);
 
-        public static void Class(this StringBuilder csharp, string qualifiers, string name,
+        private static void Class(this StringBuilder csharp, string qualifiers, string name,
             Action<StringBuilder> @class) => csharp.Block($"public {qualifiers} class {name} {{", "}", @class);
 
         public static void AbstractPartialClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>
@@ -32,7 +32,7 @@ namespace GraphZen.CodeGen
         public static void Region(this StringBuilder csharp, string name, Action<StringBuilder> region) =>
             csharp.Block($"#region {name}", "#endregion", region);
 
-        public static void Block(this StringBuilder csharp, string open, string close,
+        private static void Block(this StringBuilder csharp, string open, string close,
             Action<StringBuilder> content)
         {
             csharp.Append(open);
