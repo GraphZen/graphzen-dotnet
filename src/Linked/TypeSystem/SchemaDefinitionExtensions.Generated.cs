@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem {
 public static class SchemaDefinitionExtensions {
-#region Enum type accessors 
+#region Enum type accessors
 
      public static EnumTypeDefinition GetEnum(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<EnumTypeDefinition>(name);
@@ -60,7 +60,7 @@ public static class SchemaDefinitionExtensions {
 
 
 #endregion
-#region InputObject type accessors 
+#region InputObject type accessors
 
      public static InputObjectTypeDefinition GetInputObject(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<InputObjectTypeDefinition>(name);
@@ -111,7 +111,7 @@ public static class SchemaDefinitionExtensions {
 
 
 #endregion
-#region Interface type accessors 
+#region Interface type accessors
 
      public static InterfaceTypeDefinition GetInterface(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<InterfaceTypeDefinition>(name);
@@ -162,7 +162,7 @@ public static class SchemaDefinitionExtensions {
 
 
 #endregion
-#region Object type accessors 
+#region Object type accessors
 
      public static ObjectTypeDefinition GetObject(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<ObjectTypeDefinition>(name);
@@ -213,7 +213,7 @@ public static class SchemaDefinitionExtensions {
 
 
 #endregion
-#region Scalar type accessors 
+#region Scalar type accessors
 
      public static ScalarTypeDefinition GetScalar(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<ScalarTypeDefinition>(name);
@@ -264,7 +264,7 @@ public static class SchemaDefinitionExtensions {
 
 
 #endregion
-#region Union type accessors 
+#region Union type accessors
 
      public static UnionTypeDefinition GetUnion(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<UnionTypeDefinition>(name);

@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem {
 public static class SchemaTypeAccessorExtensions {
-#region Enum type accessors 
+#region Enum type accessors
 
     public static EnumType GetEnum(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<EnumType>(name);
@@ -52,7 +52,7 @@ public static class SchemaTypeAccessorExtensions {
 
 
 #endregion
-#region InputObject type accessors 
+#region InputObject type accessors
 
     public static InputObjectType GetInputObject(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<InputObjectType>(name);
@@ -95,7 +95,7 @@ public static class SchemaTypeAccessorExtensions {
 
 
 #endregion
-#region Interface type accessors 
+#region Interface type accessors
 
     public static InterfaceType GetInterface(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<InterfaceType>(name);
@@ -138,7 +138,7 @@ public static class SchemaTypeAccessorExtensions {
 
 
 #endregion
-#region Object type accessors 
+#region Object type accessors
 
     public static ObjectType GetObject(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<ObjectType>(name);
@@ -181,7 +181,7 @@ public static class SchemaTypeAccessorExtensions {
 
 
 #endregion
-#region Scalar type accessors 
+#region Scalar type accessors
 
     public static ScalarType GetScalar(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<ScalarType>(name);
@@ -224,7 +224,7 @@ public static class SchemaTypeAccessorExtensions {
 
 
 #endregion
-#region Union type accessors 
+#region Union type accessors
 
     public static UnionType GetUnion(this Schema schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<UnionType>(name);
