@@ -30,7 +30,7 @@ namespace GraphZen.LanguageModel
 
             if (obj.GetType() != GetType()) return false;
 
-            return Equals((Source) obj);
+            return Equals((Source)obj);
         }
 
         public override int GetHashCode() => Body.GetHashCode();

@@ -12,11 +12,11 @@ namespace GraphZen.LanguageModel.Internal
     {
         private static TokenListParser<TokenKind, ScalarTypeDefinitionSyntax> ScalarTypeDefinitionSyntax { get; } =
             (from desc in Parse.Ref(() => Description).OptionalOrNull()
-                from scalar in Keyword("scalar")
-                from name in Name
-                from directives in Directives.OptionalOrNull()
-                select new ScalarTypeDefinitionSyntax(name, desc, directives,
-                    SyntaxLocation.FromMany(desc, scalar, name, directives.GetLocation())))
+             from scalar in Keyword("scalar")
+             from name in Name
+             from directives in Directives.OptionalOrNull()
+             select new ScalarTypeDefinitionSyntax(name, desc, directives,
+                 SyntaxLocation.FromMany(desc, scalar, name, directives.GetLocation())))
             .Try()
             .Named("scalar type");
     }
