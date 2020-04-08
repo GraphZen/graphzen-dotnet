@@ -14,10 +14,19 @@ stages:
       inputs:
         packageType: 'sdk'
         useGlobalJson: true
+    - script: 'build.ps1 restore'
+      displayName: 'Restore'
     - script: 'build.ps1 DotNetFormatCheck'
       displayName: "Check source formatting"
-    - script: 'build.ps1'
-      displayName: "Restore, Compile, Test, and Package"
+      condition: eq(variables['Build.Reason'], 'PullRequest')
+    - script: 'build.ps1 compile'
+      displayName: "Compile"
+    - script: 'build.ps1 test'
+      displayName: 'Test'
+    - script: 'build.ps1 pack'
+      displayName: 'Pack'
+    - script: 'build.ps1 coveragereport'
+      displayName: 'Create code coverate report'
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'Cobertura'

@@ -31,8 +31,9 @@ namespace BuildTargets
         private const string Default = nameof(Default);
         private const string Pack = nameof(Pack);
         private const string Test = nameof(Test);
+        private const string TestQuick = nameof(TestQuick);
         private const string CoverageReport = nameof(CoverageReport);
-        private const string HtmlReport = nameof(HtmlReport);
+        private const string CoverageReportHtml = nameof(CoverageReportHtml);
         private const string Gen = nameof(Gen);
         private const string GenQuick = nameof(GenQuick);
         private const string Restore = nameof(Restore);
@@ -58,9 +59,15 @@ namespace BuildTargets
                 Run("dotnet", $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
             });
 
+            Target(TestQuick, () =>
+            {
+                CleanDir(TestLogDir);
+                Run("dotnet", $"test  -c release --no-build");
+            });
+
             Target(CoverageReport, () => GenerateCodeCoverageReport());
 
-            Target(HtmlReport, DependsOn(Test), () => GenerateCodeCoverageReport(true));
+            Target(CoverageReportHtml, DependsOn(Test), () => GenerateCodeCoverageReport(true));
 
             Target(Pack, DependsOn(Compile), () =>
             {
