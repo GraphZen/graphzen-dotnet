@@ -33,6 +33,7 @@ stages:
         ArtifactName: 'packages'
         publishLocation: 'Container' 
 - stage: DeployPreviewPackages
+  dependsOn: Build
   displayName: Deploy Preview Packages
   condition: ne(variables['Build.Reason'], 'PullRequest')
   jobs:
@@ -55,6 +56,7 @@ stages:
             nuGetFeedType: 'internal'
             publishVstsFeed: 'e8075084-15b0-483c-9179-16bebb7799da/1ad92006-33db-4ad8-8a7c-afb99cb72229'
 - stage: DeployReleasePackages
+  dependsOn: Build
   displayName: Deploy Release Packages
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   jobs:
