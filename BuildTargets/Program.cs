@@ -30,6 +30,8 @@ namespace BuildTargets
         private const string Compile = nameof(Compile);
         private const string Default = nameof(Default);
         private const string Pack = nameof(Pack);
+        private const string Push = nameof(Push);
+
         private const string Test = nameof(Test);
         private const string TestQuick = nameof(TestQuick);
         private const string CoverageReport = nameof(CoverageReport);
@@ -40,7 +42,6 @@ namespace BuildTargets
 
         private static void Main(string[] args)
         {
-
             Target(Restore, () =>
             {
                 Run("dotnet", "tool restore");
@@ -56,13 +57,14 @@ namespace BuildTargets
             Target(Test, () =>
             {
                 CleanDir(TestLogDir);
-                Run("dotnet", $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
+                Run("dotnet",
+                    $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
             });
 
             Target(TestQuick, () =>
             {
                 CleanDir(TestLogDir);
-                Run("dotnet", $"test  -c release --no-build");
+                Run("dotnet", "test  -c release --no-build");
             });
 
             Target(CoverageReport, () => GenerateCodeCoverageReport());
@@ -70,10 +72,19 @@ namespace BuildTargets
             Target(CoverageReportHtml, () => GenerateCodeCoverageReport(true));
 
             Target(Pack, () =>
-           {
-               CleanDir(PackageDir);
-               Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build");
-           });
+            {
+                CleanDir(PackageDir);
+                Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build");
+            });
+
+            Target(Push, action: () =>
+            {
+                var packages = Directory.GetFiles(PackageDir, "*.nupkg");
+                foreach (var package in packages)
+                {
+                    Run("dotnet", $"nuget push  {package} -s GraphZen-Public --api-key Local");
+                }
+            });
 
             Target(nameof(CleanupCode), () => CleanupCode());
 
@@ -101,10 +112,7 @@ namespace BuildTargets
             Run("dotnet", "build -c Release ./src/GraphZen.DevCli/GraphZen.DevCli.csproj");
             DeleteFiles("*.Generated.cs");
             Run("dotnet", "run -c Release --no-build --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
-            if (format)
-            {
-                CleanupCode("./**/*.Generated.cs");
-            }
+            if (format) CleanupCode("./**/*.Generated.cs");
         }
 
         private static void CleanDir(string path)

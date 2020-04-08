@@ -7,6 +7,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{44899843-2787-4849-B4C5-9F836ADEF892}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
+		NuGet.Config = NuGet.Config
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -88,7 +89,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.TypeSystem.TestSub
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.TypeSystem.TestSubjectAssemblyB", "test\GraphZen.TypeSystem.TestSubjectAssemblyB\GraphZen.TypeSystem.TestSubjectAssemblyB.csproj", "{320393A5-233A-415D-86EA-1A91AA10C52C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildTargets", "BuildTargets\BuildTargets.csproj", "{E4C5FCC7-35DD-4294-9992-C5E8F641FB2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildTargets", "BuildTargets\BuildTargets.csproj", "{E4C5FCC7-35DD-4294-9992-C5E8F641FB2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
