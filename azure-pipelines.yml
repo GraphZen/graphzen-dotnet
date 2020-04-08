@@ -27,8 +27,49 @@ stages:
         testResultsFormat: 'VSTest'
         testResultsFiles: '**/*.trx'
         mergeTestResults: true
-    - task: PublishBuildArtifacts@1
+    - task: PublishPipelineArtifact@1
       inputs:
-        PathtoPublish: './build-artifacts/packages'
-        ArtifactName: 'packages'
-        publishLocation: 'Container' 
+        targetPath: './build-artifacts/packages'
+        artifact: 'packages'
+        publishLocation: 'pipeline'
+- stage: DeployPreRelease
+  displayName: Deploy Pre-Release
+  condition: ne(variables['Build.Reason'], 'PullRequest')
+  jobs:
+  - deployment: AzureArtifacts
+    displayName: Azure Artifacts
+    environment: Azure Artifacts
+    strategy:
+     runOnce:
+       deploy:
+        steps:
+        - download: 'current'
+          artifact: 'packages'
+          patterns: '*.nupkg'
+        - task: NuGetCommand@2
+          inputs:
+            command: 'push'
+            packagesToPush: '$(Pipeline.Workspace)/packages/*.nupkg'
+            nuGetFeedType: 'internal'
+            publishVstsFeed: 'e8075084-15b0-483c-9179-16bebb7799da/1ad92006-33db-4ad8-8a7c-afb99cb72229'
+            allowPackageConflicts: true
+- stage: DeployRelease
+  displayName: Deploy Release
+  condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  jobs:
+  - deployment: NugetGallery
+    displayName: nuget.org
+    environment: Nuget Gallery
+    strategy:
+     runOnce:
+       deploy:
+        steps:
+        - download: 'current'
+          artifact: 'packages'
+          patterns: '*'
+        - task: NuGetCommand@2
+          inputs:
+            command: 'push'
+            packagesToPush: '$(Pipeline.Workspace)/packages/*'
+            nuGetFeedType: 'external'
+            publishFeedCredentials: 'nuget.org'
