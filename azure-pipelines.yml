@@ -5,31 +5,36 @@ trigger:
 pool:
   vmImage: 'windows-2019'
 
-steps:
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        useGlobalJson: true
 
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    useGlobalJson: true
+    - task: PowerShell@2
+      displayName: "Build"
+      inputs:
+        filePath: 'build.ps1'
 
-- task: PowerShell@2
-  displayName: "Build"
-  inputs:
-    filePath: 'build.ps1'
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: './build-artifacts/coverage-reports/Cobertura.xml'
 
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: './build-artifacts/coverage-reports/Cobertura.xml'
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'VSTest'
+        testResultsFiles: '**/*.trx'
+        mergeTestResults: true
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'VSTest'
-    testResultsFiles: '**/*.trx'
-    mergeTestResults: true
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: './build-artifacts/packages'
+        ArtifactName: 'packages'
+        publishLocation: 'Container'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: './build-artifacts/packages'
-    ArtifactName: 'packages'
-    publishLocation: 'Container'
+
