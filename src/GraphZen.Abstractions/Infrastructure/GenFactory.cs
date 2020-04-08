@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 // [assembly: InternalsVisibleTo("LINQPadQuery")]
-
 namespace GraphZen.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Constructor)]
