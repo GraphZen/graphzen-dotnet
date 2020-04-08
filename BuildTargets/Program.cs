@@ -58,6 +58,8 @@ namespace BuildTargets
 
             Target(nameof(DotNetFormat), DotNetFormat);
 
+            Target(nameof(DotNetFormatCheck), DotNetFormatCheck);
+
             Target(Default, DependsOn(Compile, Test, Pack));
 
             RunTargetsAndExit(args);
@@ -71,6 +73,7 @@ namespace BuildTargets
         }
 
         private static void DotNetFormat() => Run("dotnet dotnet-format");
+        private static void DotNetFormatCheck() => Run("dotnet dotnet-format --check");
 
         private static void RunCodeGen(bool format = true)
         {

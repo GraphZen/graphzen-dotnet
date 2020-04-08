@@ -14,10 +14,10 @@ stages:
       inputs:
         packageType: 'sdk'
         useGlobalJson: true
-    - task: PowerShell@2
+    - script: 'build.ps1 DotNetFormatCheck'
+      displayName: "Check source formatting"
+    - script: 'build.ps1'
       displayName: "Restore, Compile, Test, and Package"
-      inputs:
-        filePath: 'build.ps1'
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'Cobertura'
