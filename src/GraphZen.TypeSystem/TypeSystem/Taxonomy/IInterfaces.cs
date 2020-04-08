@@ -13,9 +13,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         IReadOnlyList<InterfaceType> Interfaces { get; }
 
-
         IReadOnlyDictionary<string, InterfaceType> InterfacesMap { get; }
-
 
         new IEnumerable<InterfaceType> GetInterfaces();
     }

@@ -8,7 +8,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 [assembly: InternalsVisibleTo("LINQPadQuery")]
-
+    
 namespace GraphZen.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Constructor)]
@@ -25,5 +25,10 @@ namespace GraphZen.Infrastructure
     [AttributeUsage(AttributeTargets.Property)]
     internal class GenAccessorExtensions : Attribute
     {
+        public string ItemName { get;  }
+        public GenAccessorExtensions(string itemName)
+        {
+            ItemName = itemName;
+        }
     }
 }

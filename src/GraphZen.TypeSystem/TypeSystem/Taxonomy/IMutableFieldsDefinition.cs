@@ -11,6 +11,8 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     public interface IMutableFieldsDefinition : IFieldsDefinition
     {
+
+        [GenAccessorExtensions("Field")]
         IReadOnlyDictionary<string, FieldDefinition> Fields { get; }
 
         ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName);

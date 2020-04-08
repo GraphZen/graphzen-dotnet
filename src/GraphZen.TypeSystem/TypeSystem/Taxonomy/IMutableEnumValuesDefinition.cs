@@ -12,6 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IMutableEnumValuesDefinition : IEnumValuesDefinition
     {
+        [GenAccessorExtensions("Value")]
         IReadOnlyDictionary<string, EnumValueDefinition> Values { get; }
         ConfigurationSource? FindIgnoredValueConfigurationSource(string name);
         EnumValueDefinition? FindValue(string name);

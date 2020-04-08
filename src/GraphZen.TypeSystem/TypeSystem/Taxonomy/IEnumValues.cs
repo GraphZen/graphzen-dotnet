@@ -11,8 +11,9 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IEnumValues : IEnumValuesDefinition
     {
-        IReadOnlyDictionary<string, EnumValue> Values { get; }
 
+        [GenAccessorExtensions("Value")]
+        IReadOnlyDictionary<string, EnumValue> Values { get; }
 
         IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
 
