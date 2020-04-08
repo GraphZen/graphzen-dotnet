@@ -14,8 +14,10 @@ stages:
       inputs:
         packageType: 'sdk'
         useGlobalJson: true
-    - powershell: 'build.ps1'
+    - task: PowerShell@2
       displayName: "Restore, Compile, Test, and Package"
+      inputs:
+        filePath: 'build.ps1'
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'Cobertura'
