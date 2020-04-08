@@ -32,8 +32,8 @@ stages:
         targetPath: './build-artifacts/packages'
         artifact: 'packages'
         publishLocation: 'pipeline'
-- stage: DeployPreviewPackages
-  displayName: Preview Deploy
+- stage: DeployPreRelease
+  displayName: Deploy Pre-Release
   condition: ne(variables['Build.Reason'], 'PullRequest')
   jobs:
   - deployment: AzureArtifacts
@@ -49,8 +49,8 @@ stages:
             packagesToPush: '$(Pipeline.Workspace)/packages/**/*.nupkg'
             nuGetFeedType: 'internal'
             publishVstsFeed: 'e8075084-15b0-483c-9179-16bebb7799da/1ad92006-33db-4ad8-8a7c-afb99cb72229'
-- stage: DeployReleasePackages
-  displayName: Release Deploy
+- stage: DeployRelease
+  displayName: Deploy Release
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   jobs:
   - deployment: NugetGallery
@@ -60,14 +60,9 @@ stages:
      runOnce:
        deploy:
         steps:
-        - task: DownloadPipelineArtifact@2
-          inputs:
-            buildType: 'current'
-            artifactName: 'packages'
-            targetPath: '$(Pipeline.Workspace)'
         - task: DotNetCoreCLI@2
           inputs:
             command: 'push'
-            packagesToPush: '$(Pipeline.Workspace)/**/*.nupkg'
+            packagesToPush: '$(Pipeline.Workspace)/packages/*'
             nuGetFeedType: 'external'
             publishFeedCredentials: 'nuget.org'
