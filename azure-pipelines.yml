@@ -43,6 +43,9 @@ stages:
      runOnce:
        deploy:
         steps:
+        - download: 'current'
+          artifact: 'packages'
+          patterns: '*.nupkg'
         - task: DotNetCoreCLI@2
           inputs:
             command: 'push'
