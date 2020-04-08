@@ -16,8 +16,10 @@ namespace BuildTargets
     {
         // Paths
         private const string ArtifactsDir = "build-artifacts";
+        private static readonly string TestArtifactsDir = Path.Combine(ArtifactsDir, "test");
+        private static readonly string TestLogDir = Path.Combine(TestArtifactsDir, "logs");
+        private static readonly string TestReportsDir = Path.Combine(TestArtifactsDir, "coverage-reports");
         private static readonly string PackageDir = Path.Combine(ArtifactsDir, "packages");
-        private static readonly string TestLogDir = Path.Combine(ArtifactsDir, "test-logs");
         private static string GetReSharperTool(string name) => Path.Combine(OutputDir, "ReSharperTools", name);
 
         private static string OutputDir { get; } =
@@ -29,15 +31,22 @@ namespace BuildTargets
         private const string Default = nameof(Default);
         private const string Pack = nameof(Pack);
         private const string Test = nameof(Test);
+        private const string CoverageReport = nameof(CoverageReport);
         private const string HtmlReport = nameof(HtmlReport);
         private const string Gen = nameof(Gen);
         private const string GenQuick = nameof(GenQuick);
+        private const string Restore = nameof(Restore);
 
         private static void Main(string[] args)
         {
-            CleanDir($"./{ArtifactsDir}");
 
-            Target(Compile, () => Run("dotnet", "build -c Release"));
+            Target(Restore, () =>
+            {
+                Run("dotnet", "tool restore");
+                Run("dotnet", "restore");
+            });
+
+            Target(Compile, () => Run("dotnet", "build -c Release --no-restore"));
 
             Target(Gen, () => RunCodeGen());
 
@@ -45,14 +54,19 @@ namespace BuildTargets
 
             Target(Test, () =>
             {
-                Run("dotnet",
-                    $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
-                GenerateCodeCoverageReport();
+                CleanDir(TestLogDir);
+                Run("dotnet", $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
             });
+
+            Target(CoverageReport, () => GenerateCodeCoverageReport());
 
             Target(HtmlReport, DependsOn(Test), () => GenerateCodeCoverageReport(true));
 
-            Target(Pack, DependsOn(Compile), () => Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build"));
+            Target(Pack, DependsOn(Compile), () =>
+            {
+                CleanDir(PackageDir);
+                Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build");
+            });
 
             Target(nameof(CleanupCode), () => CleanupCode());
 
@@ -60,7 +74,7 @@ namespace BuildTargets
 
             Target(nameof(DotNetFormatCheck), DotNetFormatCheck);
 
-            Target(Default, DependsOn(Compile, Test, Pack));
+            Target(Default, DependsOn(Restore, Compile, Test, CoverageReport, Pack));
 
             RunTargetsAndExit(args);
         }
@@ -72,8 +86,8 @@ namespace BuildTargets
             DotNetFormat();
         }
 
-        private static void DotNetFormat() => Run("dotnet dotnet-format");
-        private static void DotNetFormatCheck() => Run("dotnet dotnet-format --check");
+        private static void DotNetFormat() => Run("dotnet", "dotnet-format");
+        private static void DotNetFormatCheck() => Run("dotnet", "dotnet-format --check");
 
         private static void RunCodeGen(bool format = true)
         {
@@ -103,6 +117,7 @@ namespace BuildTargets
 
         private static void GenerateCodeCoverageReport(bool html = false)
         {
+            CleanDir(TestReportsDir);
             var reportTypes = new List<string>
             {
                 "Cobertura"
@@ -110,7 +125,7 @@ namespace BuildTargets
             if (html) reportTypes.Add("HtmlInline");
             new Generator().GenerateReport(new ReportConfiguration(
                 new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
-                $"./{ArtifactsDir}/coverage-reports/", new List<string>(), null,
+                TestReportsDir, new List<string>(), null,
                 reportTypes,
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,
                 null));

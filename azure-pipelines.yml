@@ -21,7 +21,7 @@ stages:
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'Cobertura'
-        summaryFileLocation: './build-artifacts/coverage-reports/Cobertura.xml'
+        summaryFileLocation: './build-artifacts/test/coverage-reports/Cobertura.xml'
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'VSTest'
