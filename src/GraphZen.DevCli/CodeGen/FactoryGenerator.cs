@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
@@ -42,7 +43,8 @@ namespace GraphZen.CodeGen
             {
                 var csharp = CreateCSharpClass(className, @namespace, methods);
                 var project = @namespace.Replace("GraphZen.", "");
-                CodeGenHelpers.WriteFile($"./src/Linked/{project}/Generated/{className}.Generated.cs", csharp);
+                var dir = Directory.CreateDirectory($"./src/Linked/{project}/Generated/");
+                CodeGenHelpers.WriteFile($"{dir}/{className}.Generated.cs", csharp);
             }
         }
 
