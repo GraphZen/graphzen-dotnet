@@ -67,13 +67,13 @@ namespace BuildTargets
 
             Target(CoverageReport, () => GenerateCodeCoverageReport());
 
-            Target(CoverageReportHtml, DependsOn(Test), () => GenerateCodeCoverageReport(true));
+            Target(CoverageReportHtml, () => GenerateCodeCoverageReport(true));
 
-            Target(Pack, DependsOn(Compile), () =>
-            {
-                CleanDir(PackageDir);
-                Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build");
-            });
+            Target(Pack, () =>
+           {
+               CleanDir(PackageDir);
+               Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build");
+           });
 
             Target(nameof(CleanupCode), () => CleanupCode());
 
