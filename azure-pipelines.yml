@@ -21,6 +21,7 @@ stages:
         arguments: 'Restore'
     - task: PowerShell@2
       displayName: 'Check source formatting'
+      condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['build.sourceBranch'], 'refs/heads/master'))
       inputs:
         filePath: 'build.ps1'
         arguments: 'DotNetFormatCheck'
