@@ -61,7 +61,7 @@ stages:
         publishLocation: 'pipeline'
 - stage: DeployPreRelease
   displayName: Deploy Pre-Release
-  condition: ne(variables['Build.Reason'], 'PullRequest')
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   jobs:
   - deployment: AzureArtifacts
     displayName: Azure Artifacts
@@ -83,7 +83,7 @@ stages:
             allowPackageConflicts: true
 - stage: DeployRelease
   displayName: Deploy Release
-  condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   jobs:
   - deployment: NugetGallery
     displayName: nuget.org
