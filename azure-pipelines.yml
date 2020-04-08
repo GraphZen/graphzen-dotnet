@@ -46,12 +46,13 @@ stages:
         - download: 'current'
           artifact: 'packages'
           patterns: '*.nupkg'
-        - task: DotNetCoreCLI@2
+        - task: NuGetCommand@2
           inputs:
             command: 'push'
-            packagesToPush: '$(Pipeline.Workspace)/packages/*.nupkg --skip-duplicate'
+            packagesToPush: '$(Pipeline.Workspace)/packages/*.nupkg'
             nuGetFeedType: 'internal'
             publishVstsFeed: 'e8075084-15b0-483c-9179-16bebb7799da/1ad92006-33db-4ad8-8a7c-afb99cb72229'
+            allowPackageConflicts: true
 - stage: DeployRelease
   displayName: Deploy Release
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['build.sourceBranch'], 'refs/heads/master'))
@@ -66,7 +67,7 @@ stages:
         - download: 'current'
           artifact: 'packages'
           patterns: '*'
-        - task: DotNetCoreCLI@2
+        - task: NuGetCommand@2
           inputs:
             command: 'push'
             packagesToPush: '$(Pipeline.Workspace)/packages/*'
