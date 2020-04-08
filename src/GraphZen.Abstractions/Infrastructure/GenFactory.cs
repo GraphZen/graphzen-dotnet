@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-[assembly: InternalsVisibleTo("LINQPadQuery")]
+// [assembly: InternalsVisibleTo("LINQPadQuery")]
 
 namespace GraphZen.Infrastructure
 {

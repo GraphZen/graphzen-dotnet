@@ -74,6 +74,7 @@ stages:
           artifact: 'packages'
           patterns: '*.nupkg'
         - task: NuGetCommand@2
+          displayName: 'Push NuGet packages to Azure Artifacts'
           inputs:
             command: 'push'
             packagesToPush: '$(Pipeline.Workspace)/packages/*.nupkg'
@@ -95,6 +96,7 @@ stages:
           artifact: 'packages'
           patterns: '*'
         - task: NuGetCommand@2
+          displayName: 'Push NuGet packages to NuGet.org'
           inputs:
             command: 'push'
             packagesToPush: '$(Pipeline.Workspace)/packages/*'
