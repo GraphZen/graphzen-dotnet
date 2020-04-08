@@ -14,23 +14,18 @@ stages:
       inputs:
         packageType: 'sdk'
         useGlobalJson: true
-
-    - task: PowerShell@2
-      displayName: "Build"
-      inputs:
-        filePath: 'build.ps1'
-
+    - powershell: 'build.ps1'
+      displayName: "Restore, Compile, Test, and Package"
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'Cobertura'
         summaryFileLocation: './build-artifacts/coverage-reports/Cobertura.xml'
-
+        reportDirectory: './build-artifacts/coverage-reports/'
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'VSTest'
         testResultsFiles: '**/*.trx'
         mergeTestResults: true
-
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: './build-artifacts/packages'
