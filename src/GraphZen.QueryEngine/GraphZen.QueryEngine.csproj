@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Shared\FriendAssemblies.cs" Link="FriendAssemblies.cs" />
+    <Compile Include="..\Linked\QueryEngine\**\*.*">
+      <Link>QueryEngine\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

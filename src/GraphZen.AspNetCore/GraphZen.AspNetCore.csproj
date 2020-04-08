@@ -6,11 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\Linked\AspNetCore\**\*.*">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GraphZen.AspNetCore.Playground\GraphZen.AspNetCore.Playground.csproj" />
     <ProjectReference Include="..\GraphZen.AspNetCore.Server\GraphZen.AspNetCore.Server.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="minver" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 

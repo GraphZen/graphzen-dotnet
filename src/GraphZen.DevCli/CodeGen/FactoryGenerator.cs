@@ -41,7 +41,8 @@ namespace GraphZen.CodeGen
             foreach (var (className, @namespace, methods) in classes)
             {
                 var csharp = CreateCSharpClass(className, @namespace, methods);
-                CodeGenHelpers.WriteFile($"./src/Linked/{className}.Generated.cs", csharp);
+                var project = @namespace.Replace("GraphZen.", "");
+                CodeGenHelpers.WriteFile($"./src/Linked/{project}/Generated/{className}.Generated.cs", csharp);
             }
         }
 

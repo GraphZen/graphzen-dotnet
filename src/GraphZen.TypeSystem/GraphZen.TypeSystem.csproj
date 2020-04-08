@@ -9,7 +9,6 @@
     <Compile Include="..\Linked\TypeSystem\**\*.*">
       <Link>TypeSystem\%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
-    <Compile Include="..\Shared\FriendAssemblies.cs" Link="FriendAssemblies.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,11 +3,12 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
     <Description>Infrastructure code supporting the GraphZen SDK. Not intended for direct installation or use.</Description>
-    <DefineConstants>LIBLOG_EXCLUDE_CODE_COVERAGE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Shared\FriendAssemblies.cs" Link="FriendAssemblies.cs" />
+    <Compile Include="..\Linked\Infrastructure\**\*.*">
+      <Link>Infrastructure\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

@@ -11,8 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\Shared\FriendAssemblies.cs" Link="FriendAssemblies.cs" />
-    <Compile Include="..\Shared\JetBrainsAnnotations.cs" Link="JetBrainsAnnotations.cs" />
+    <Compile Include="..\Linked\Abstractions\**\*.*">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
   </ItemGroup>
 
 </Project>

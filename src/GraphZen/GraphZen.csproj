@@ -8,10 +8,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="minver" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Linked\Common\**\*.*">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
   </ItemGroup>
 
 </Project>

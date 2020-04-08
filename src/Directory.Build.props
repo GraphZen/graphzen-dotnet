@@ -4,7 +4,7 @@
     <Product>GraphZen</Product>
     <Authors>GraphZen</Authors>
     <Company>GraphZen LLC</Company>
-    <Copyright>Copyright (c) 2017-2019 GraphZen LLC. All Rights Reserved.</Copyright>
+    <Copyright>Copyright (c) 2017-2020 GraphZen LLC. All Rights Reserved.</Copyright>
     <RepositoryUrl>https://github.com/GraphZen/graphzen-dotnet</RepositoryUrl>
     <PackageProjectUrl>https://github.com/GraphZen/graphzen-dotnet</PackageProjectUrl>
     <RepositoryType>Git</RepositoryType>
@@ -22,6 +22,9 @@
 
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+    <Compile Include="..\Linked\Common\**\*.*">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -29,7 +32,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
+
 
 </Project>

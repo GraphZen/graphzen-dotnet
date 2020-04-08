@@ -10,9 +10,6 @@
     <Compile Include="..\Linked\LanguageModel\**\*.*">
       <Link>LanguageModel\%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
-    <Compile Remove="..\Linked\LanguageModel\Test.Generated.cs" />
-
-    <Compile Include="..\Shared\FriendAssemblies.cs" Link="FriendAssemblies.cs" />
   </ItemGroup>
 
   <ItemGroup>
