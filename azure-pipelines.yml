@@ -21,7 +21,6 @@ stages:
         arguments: 'Restore'
     - task: PowerShell@2
       displayName: 'Check source formatting'
-      condition: eq(variables['Build.Reason'], 'PullRequest')
       inputs:
         filePath: 'build.ps1'
         arguments: 'DotNetFormatCheck'
@@ -35,6 +34,11 @@ stages:
       inputs:
         filePath: 'build.ps1'
         arguments: 'Test'
+    - task: PowerShell@2
+      displayName: 'Pack'
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'Pack'
     - task: PowerShell@2
       displayName: 'Create code coverate report'
       inputs:
