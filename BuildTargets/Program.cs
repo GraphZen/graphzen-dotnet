@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -30,6 +31,7 @@ namespace BuildTargets
         private const string Test = nameof(Test);
         private const string HtmlReport = nameof(HtmlReport);
         private const string Gen = nameof(Gen);
+        private const string GenQuick = nameof(GenQuick);
 
         private static void Main(string[] args)
         {
@@ -37,12 +39,9 @@ namespace BuildTargets
 
             Target(Compile, () => Run("dotnet", "build -c Release"));
 
-            Target(Gen,
-                () =>
-                {
-                    Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
-                    CleanupCode("./src/**/*.Generated.cs");
-                });
+            Target(Gen, () => RunCodeGen());
+
+            Target(GenQuick, () => RunCodeGen(false));
 
             Target(Test, () =>
             {
@@ -73,10 +72,29 @@ namespace BuildTargets
 
         private static void DotNetFormat() => Run("dotnet dotnet-format");
 
+        private static void RunCodeGen(bool format = true)
+        {
+            DeleteFiles("**/*.Generated.cs");
+            Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
+            if (format)
+            {
+                CleanupCode("./**/*.Generated.cs");
+            }
+        }
+
         private static void CleanDir(string path)
         {
             Directory.CreateDirectory(path).Delete(true);
             Directory.CreateDirectory(path);
+        }
+
+        private static void DeleteFiles(string pattern)
+        {
+            foreach (var file in Directory.GetFiles("./", pattern, SearchOption.AllDirectories))
+            {
+                Console.WriteLine($"Deleting {file}");
+                File.Delete(file);
+            }
         }
 
         private static void GenerateCodeCoverageReport(bool html = false)
@@ -87,7 +105,7 @@ namespace BuildTargets
             };
             if (html) reportTypes.Add("HtmlInline");
             new Generator().GenerateReport(new ReportConfiguration(
-                new List<string> {$"./{TestLogDir}/**/*coverage.cobertura.xml"},
+                new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
                 $"./{ArtifactsDir}/coverage-reports/", new List<string>(), null,
                 reportTypes,
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,
