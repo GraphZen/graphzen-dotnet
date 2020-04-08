@@ -74,8 +74,9 @@ namespace BuildTargets
 
         private static void RunCodeGen(bool format = true)
         {
-            DeleteFiles("**/*.Generated.cs");
-            Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
+            Run("dotnet", "build -c Release ./src/GraphZen.DevCli/GraphZen.DevCli.csproj");
+            DeleteFiles("*.Generated.cs");
+            Run("dotnet", "run -c Release --no-build --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
             if (format)
             {
                 CleanupCode("./**/*.Generated.cs");
