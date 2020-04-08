@@ -49,7 +49,7 @@ stages:
         - task: DotNetCoreCLI@2
           inputs:
             command: 'push'
-            packagesToPush: '$(Pipeline.Workspace)/packages/**/*.nupkg'
+            packagesToPush: '$(Pipeline.Workspace)/packages/*.nupkg --skip-duplicate'
             nuGetFeedType: 'internal'
             publishVstsFeed: 'e8075084-15b0-483c-9179-16bebb7799da/1ad92006-33db-4ad8-8a7c-afb99cb72229'
 - stage: DeployRelease
