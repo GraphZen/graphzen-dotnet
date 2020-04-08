@@ -33,8 +33,7 @@ stages:
         ArtifactName: 'packages'
         publishLocation: 'Container' 
 - stage: DeployPreviewPackages
-  dependsOn: Build
-  displayName: Deploy Preview Packages
+  displayName: Preview Deploy
   condition: ne(variables['Build.Reason'], 'PullRequest')
   jobs:
   - deployment: AzureArtifacts
@@ -56,29 +55,9 @@ stages:
             nuGetFeedType: 'internal'
             publishVstsFeed: 'e8075084-15b0-483c-9179-16bebb7799da/1ad92006-33db-4ad8-8a7c-afb99cb72229'
 - stage: DeployReleasePackages
-  dependsOn: Build
-  displayName: Deploy Release Packages
+  displayName: Release Deploy
   condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   jobs:
-  - deployment: AzureArtifacts
-    displayName: Azure Artifacts
-    environment: Azure Artifacts
-    strategy:
-     runOnce:
-       deploy:
-        steps:
-        - task: DownloadBuildArtifacts@0
-          inputs:
-            buildType: 'current'
-            downloadType: 'single'
-            artifactName: 'packages'
-            downloadPath: '$(System.ArtifactsDirectory)'
-        - task: DotNetCoreCLI@2
-          inputs:
-            command: 'push'
-            packagesToPush: '$(System.ArtifactsDirectory)/*.nupkg'
-            nuGetFeedType: 'internal'
-            publishVstsFeed: 'e8075084-15b0-483c-9179-16bebb7799da/1ad92006-33db-4ad8-8a7c-afb99cb72229'
   - deployment: NugetGallery
     displayName: nuget.org
     environment: Nuget Gallery
@@ -86,14 +65,14 @@ stages:
      runOnce:
        deploy:
         steps:
-        - task: DownloadBuildArtifacts@0
+        - task: DownloadPipelineArtifact@2
           inputs:
             buildType: 'current'
-            downloadType: 'specific'
-            downloadPath: '$(System.ArtifactsDirectory)'
+            artifactName: 'packages'
+            targetPath: '$(Pipeline.Workspace)'
         - task: DotNetCoreCLI@2
           inputs:
             command: 'push'
-            packagesToPush: '$(System.ArtifactsDirectory)/*.nupkg'
+            packagesToPush: '$(Pipeline.Workspace)/**/*.nupkg'
             nuGetFeedType: 'internal'
             publishVstsFeed: 'e8075084-15b0-483c-9179-16bebb7799da/1ad92006-33db-4ad8-8a7c-afb99cb72229'
