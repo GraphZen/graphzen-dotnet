@@ -22,7 +22,6 @@ stages:
       inputs:
         codeCoverageTool: 'Cobertura'
         summaryFileLocation: './build-artifacts/coverage-reports/Cobertura.xml'
-        reportDirectory: './build-artifacts/coverage-reports/'
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'VSTest'
@@ -32,6 +31,4 @@ stages:
       inputs:
         PathtoPublish: './build-artifacts/packages'
         ArtifactName: 'packages'
-        publishLocation: 'Container'
-
-
+        publishLocation: 'Container' 
