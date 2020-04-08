@@ -14,19 +14,32 @@ stages:
       inputs:
         packageType: 'sdk'
         useGlobalJson: true
-    - script: 'build.ps1 restore'
+    - task: PowerShell@2
       displayName: 'Restore'
-    - script: 'build.ps1 DotNetFormatCheck'
-      displayName: "Check source formatting"
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'Restore'
+    - task: PowerShell@2
+      displayName: 'Check source formatting'
       condition: eq(variables['Build.Reason'], 'PullRequest')
-    - script: 'build.ps1 compile'
-      displayName: "Compile"
-    - script: 'build.ps1 test'
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'DotNetFormatCheck'
+    - task: PowerShell@2
+      displayName: 'Compile'
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'Compile'
+    - task: PowerShell@2
       displayName: 'Test'
-    - script: 'build.ps1 pack'
-      displayName: 'Pack'
-    - script: 'build.ps1 coveragereport'
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'Test'
+    - task: PowerShell@2
       displayName: 'Create code coverate report'
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'CoverageReport'      
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'Cobertura'
