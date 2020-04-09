@@ -28,11 +28,11 @@ namespace BuildTargets
 
         // Targets
         private const string Compile = nameof(Compile);
-        private const string Default = nameof(Default);
+        private const string Quick = nameof(Quick);
         private const string Pack = nameof(Pack);
         private const string Push = nameof(Push);
 
-        private const string Full = nameof(Full);
+        private const string Default = nameof(Default);
         private const string Test = nameof(Test);
         private const string TestQuick = nameof(TestQuick);
         private const string CoverageReport = nameof(CoverageReport);
@@ -93,9 +93,9 @@ namespace BuildTargets
 
             Target(nameof(DotNetFormatCheck), DotNetFormatCheck);
 
-            Target(Full, DependsOn(Restore, Compile, Test, Pack, CoverageReportHtml));
+            Target(Default, DependsOn(Restore, Compile, Test, Pack, CoverageReportHtml));
 
-            Target(Default, DependsOn(Restore, Compile, TestQuick, Pack));
+            Target(Quick, DependsOn(Restore, Compile, TestQuick, Pack));
 
             RunTargetsAndExit(args);
         }
