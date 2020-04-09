@@ -93,7 +93,7 @@ namespace BuildTargets
 
             Target(nameof(DotNetFormatCheck), DotNetFormatCheck);
 
-            Target(Default, DependsOn(Restore, Compile, Test, Pack, CoverageReportHtml));
+            Target(Default, DependsOn(Restore, nameof(DotNetFormatCheck), Compile, Test, Pack, CoverageReportHtml));
 
             Target(Quick, DependsOn(Restore, Compile, TestQuick, Pack));
 
