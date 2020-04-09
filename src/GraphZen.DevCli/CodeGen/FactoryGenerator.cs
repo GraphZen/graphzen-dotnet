@@ -30,7 +30,7 @@ namespace GraphZen.CodeGen
         {
             var assemblies = GetAssemblies();
             var types = assemblies.SelectMany(_ => _.GetTypes()).Where(_ =>
-                _.GetConstructors().Any(ctor => ctor.GetCustomAttribute<GenFactory>() != null));
+                _.GetConstructors().Any(ctor => ctor.GetCustomAttribute<GenFactoryAttribute>() != null));
 
             var classes = types.SelectMany(GetFactoryMethods)
                 .GroupBy(_ => new { _.ClassName, _.Namespace })
@@ -78,7 +78,7 @@ namespace {@namespace} {{
                 : name;
             foreach (var ctor in type.GetConstructors())
             {
-                var genFactory = ctor.GetCustomAttribute<GenFactory>();
+                var genFactory = ctor.GetCustomAttribute<GenFactoryAttribute>();
                 if (genFactory != null)
                 {
                     var methodParameters = ctor.GetParameters().Select(p =>

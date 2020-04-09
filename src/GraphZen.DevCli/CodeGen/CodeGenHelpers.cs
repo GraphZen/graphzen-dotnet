@@ -11,6 +11,10 @@ namespace GraphZen.CodeGen
 {
     public static class CodeGenHelpers
     {
+
+
+
+
         public static void WriteFile(string path, string contents)
         {
             Console.Write($"Generating file: {path} ");

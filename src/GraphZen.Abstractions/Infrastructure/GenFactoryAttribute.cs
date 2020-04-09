@@ -11,21 +11,21 @@ using JetBrains.Annotations;
 namespace GraphZen.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Constructor)]
-    internal class GenFactory : Attribute
+    internal class GenFactoryAttribute : Attribute
     {
         public string FactoryClassName { get; }
 
-        public GenFactory(string factoryClassName)
+        public GenFactoryAttribute(string factoryClassName)
         {
             FactoryClassName = factoryClassName;
         }
     }
 
     [AttributeUsage(AttributeTargets.Property)]
-    internal class GenAccessorExtensions : Attribute
+    internal class GenAccessorExtensionsAttribute : Attribute
     {
         public string ItemName { get; }
-        public GenAccessorExtensions(string itemName)
+        public GenAccessorExtensionsAttribute(string itemName)
         {
             ItemName = itemName;
         }
