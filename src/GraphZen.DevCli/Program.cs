@@ -9,6 +9,7 @@ using System.CommandLine.Invocation;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.CodeGen;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
 namespace GraphZen
@@ -32,6 +33,13 @@ namespace GraphZen
             {
                 new Command("benchmark")
             };
+            var gen2 = new Command("gen2")
+            {
+                Handler = CommandHandler.Create(() =>
+                {
+                    ReflectionCodeGenTask.GenForAssemblyWithType<Schema>();
+                })
+            };
             var genCmd = new Command("gen")
             {
                 Command("typeSystem")
@@ -45,6 +53,7 @@ namespace GraphZen
                 }
             });
             root.AddCommand(genCmd);
+            root.AddCommand(gen2);
 
 
             var cliBuilder = new CommandLineBuilder(root);

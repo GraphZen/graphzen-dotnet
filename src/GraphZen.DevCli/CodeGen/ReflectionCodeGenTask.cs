@@ -45,6 +45,10 @@ namespace GraphZen.CodeGen
                 var targetPath = CSharpFiles.SingleOrDefault(_ => Path.GetFileName(_) == targetFilename);
                 if (targetPath == null)
                     throw new InvalidOperationException($"A code-gen task could not find file: {targetFilename}");
+
+
+                var genPath = targetPath;
+                Console.WriteLine(genPath);
             }
         }
 

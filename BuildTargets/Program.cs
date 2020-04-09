@@ -51,6 +51,10 @@ namespace BuildTargets
 
             Target(Compile, () => Run("dotnet", "build -c Release --no-restore"));
 
+            Target("Gen2", () =>
+            {
+                Run("dotnet", "run -c Release  --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen2");
+            });
             Target(Gen, () => RunCodeGen());
 
             Target(GenQuick, () => RunCodeGen(false));
