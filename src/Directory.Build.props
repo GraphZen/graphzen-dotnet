@@ -23,7 +23,7 @@
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
     <Compile Include="..\Linked\Common\**\*.*">
-      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <!--<Link>%(RecursiveDir)%(FileName)%(Extension)</Link>-->
     </Compile>
   </ItemGroup>
 

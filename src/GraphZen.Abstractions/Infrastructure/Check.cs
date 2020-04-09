@@ -13,8 +13,8 @@ namespace GraphZen.Infrastructure
     internal static class Check
     {
         [ContractAnnotation("value:null => halt")]
-        [return: NotNull]
-        public static T NotNull<T>([NotNull] [NoEnumeration] T value, [InvokerParameterName] string parameterName)
+        [return: System.Diagnostics.CodeAnalysis.NotNull]
+        public static T NotNull<T>([NoEnumeration] T value, [InvokerParameterName] string parameterName)
         {
             if (value is null) throw new ArgumentNullException(parameterName);
             return value;

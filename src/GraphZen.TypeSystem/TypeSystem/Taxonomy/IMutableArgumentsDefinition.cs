@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IMutableArgumentsDefinition : IArgumentsDefinition
     {
-        IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
+        [GenAccessorExtensions("Argument")] IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
 
         bool RenameArgument(ArgumentDefinition argument, string name,
             ConfigurationSource configurationSource);

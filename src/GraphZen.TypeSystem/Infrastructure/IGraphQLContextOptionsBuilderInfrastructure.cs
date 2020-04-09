@@ -9,7 +9,7 @@ namespace GraphZen.Infrastructure
 {
     public interface IGraphQLContextOptionsBuilderInfrastructure
     {
-        void AddOrUpdateExtension<TExtension>([NotNull] TExtension extension)
+        void AddOrUpdateExtension<TExtension>(TExtension extension)
             where TExtension : class, IGraphQLContextOptionsExtension;
     }
 }

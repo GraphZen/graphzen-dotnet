@@ -10,7 +10,7 @@ namespace GraphZen.Infrastructure
 {
     public interface IGraphQLContextOptionsExtension
     {
-        void ApplyServices([NotNull] IServiceCollection services);
-        void Validate([NotNull] IGraphQLContextOptions options);
+        void ApplyServices(IServiceCollection services);
+        void Validate(IGraphQLContextOptions options);
     }
 }

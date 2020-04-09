@@ -6,14 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="minver" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Compile Include="..\Linked\Abstractions\**\*.*">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
-  </ItemGroup>
+  </ItemGroup>-->
 
 </Project>

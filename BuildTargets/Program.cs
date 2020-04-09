@@ -92,7 +92,7 @@ namespace BuildTargets
 
             Target(nameof(DotNetFormatCheck), DotNetFormatCheck);
 
-            Target(Default, DependsOn(Restore, Compile, Test, CoverageReport, Pack));
+            Target(Default, DependsOn(Restore, Compile, TestQuick, Pack));
 
             RunTargetsAndExit(args);
         }

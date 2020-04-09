@@ -31,7 +31,7 @@ namespace GraphZen
             FindExtension<TExtension>() ??
             throw new InvalidOperationException($"{typeof(TExtension).Name} extension not found.");
 
-        public abstract GraphQLContextOptions WithExtension<TExtension>([NotNull] TExtension extension)
+        public abstract GraphQLContextOptions WithExtension<TExtension>(TExtension extension)
             where TExtension : class, IGraphQLContextOptionsExtension;
     }
 
