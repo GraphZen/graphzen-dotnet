@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class EnumTypeBuilder<TEnum> : IEnumTypeBuilder<TEnum>, IInfrastructure<InternalEnumTypeBuilder>
+    public class EnumTypeBuilder<TEnum> : IEnumTypeBuilder<TEnum>, IInfrastructure<InternalEnumTypeBuilder> where TEnum : notnull
     {
         public EnumTypeBuilder(InternalEnumTypeBuilder builder)
         {
@@ -63,7 +63,7 @@ namespace GraphZen.TypeSystem
             return new EnumTypeBuilder<object>(Builder);
         }
 
-        public IEnumTypeBuilder<T> ClrType<T>()
+        public IEnumTypeBuilder<T> ClrType<T>() where T : notnull
         {
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
             return new EnumTypeBuilder<T>(Builder);

@@ -26,12 +26,13 @@ namespace GraphZen.TypeSystem
             NameConfigurationSource = nameConfigurationSource;
             Name = Check.NotNull(name, nameof(name));
             Builder = new InternalInputValueBuilder(this, schema.Builder);
+            InputType = null!;
         }
 
 
         public InternalInputValueBuilder Builder { get; }
 
-        public IGraphQLTypeReference? InputType { get; set; }
+        public IGraphQLTypeReference InputType { get; set; }
 
         public bool SetDefaultValue(object value, ConfigurationSource configurationSource)
         {

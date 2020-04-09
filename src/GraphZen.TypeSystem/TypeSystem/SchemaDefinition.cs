@@ -254,7 +254,7 @@ namespace GraphZen.TypeSystem
             return ids.SingleOrDefault();
         }
 
-        public TypeReference? GetOrAddTypeReference(string type, IMemberDefinition referencingMember
+        public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember
         )
         {
             TypeSyntax typeNode;
@@ -280,7 +280,7 @@ namespace GraphZen.TypeSystem
             return new TypeReference(identity, typeNode);
         }
 
-        public TypeReference? GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
+        public TypeReference GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
         )
         {
             if (method.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
@@ -295,10 +295,10 @@ namespace GraphZen.TypeSystem
                 return new TypeReference(identity, typeNode);
             }
 
-            return null;
+            throw new NotImplementedException();
         }
 
-        public TypeReference? GetOrAddTypeReference(ParameterInfo parameter,
+        public TypeReference GetOrAddTypeReference(ParameterInfo parameter,
             IMemberDefinition referencingMember
         )
         {
@@ -314,7 +314,7 @@ namespace GraphZen.TypeSystem
                 return new TypeReference(identity, typeNode);
             }
 
-            return null;
+            throw new NotImplementedException();
         }
 
         public TypeReference? NamedTypeReference(Type clrType, TypeKind kind)
@@ -332,7 +332,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public TypeReference? GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
+        public TypeReference GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
         )
         {
             if (property.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
@@ -348,10 +348,10 @@ namespace GraphZen.TypeSystem
                 return new TypeReference(identity, typeNode);
             }
 
-            return null;
+            throw new NotImplementedException();
         }
 
-        public TypeReference? GetOrAddTypeReference(Type clrType, bool canBeNull, bool itemCanBeNull,
+        public TypeReference GetOrAddTypeReference(Type clrType, bool canBeNull, bool itemCanBeNull,
             IMemberDefinition referencingMember)
         {
             if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType, canBeNull, itemCanBeNull))
@@ -366,7 +366,7 @@ namespace GraphZen.TypeSystem
                 return new TypeReference(identity, typeNode);
             }
 
-            return null;
+            throw new NotImplementedException();
         }
 
         private TypeIdentity GetOverlappingOrAddTypeIdentity(TypeIdentity identity

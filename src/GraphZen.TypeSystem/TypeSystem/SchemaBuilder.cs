@@ -153,7 +153,7 @@ namespace GraphZen.TypeSystem
             new EnumTypeBuilder<string>(Builder.Enum(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit)!);
 
-        public IEnumTypeBuilder<TEnum> Enum<TEnum>() =>
+        public IEnumTypeBuilder<TEnum> Enum<TEnum>() where TEnum : notnull =>
             new EnumTypeBuilder<TEnum>(Builder.Enum(typeof(TEnum), ConfigurationSource.Explicit)!);
 
         public IEnumTypeBuilder<string> Enum(Type clrType) =>

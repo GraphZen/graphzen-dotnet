@@ -97,7 +97,7 @@ namespace GraphZen.TypeSystem
         IEnumTypeBuilder<string> Enum(string name);
 
 
-        IEnumTypeBuilder<TEnum> Enum<TEnum>();
+        IEnumTypeBuilder<TEnum> Enum<TEnum>() where TEnum : notnull;
 
 
         IEnumTypeBuilder<string> Enum(Type clrType);

@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     public interface IEnumTypeBuilder<in TEnumValue> : IAnnotableBuilder<IEnumTypeBuilder<TEnumValue>>
+        where TEnumValue : notnull
     {
         IEnumTypeBuilder<TEnumValue> Description(string? description);
         IEnumTypeBuilder<TEnumValue> Value(TEnumValue value, Action<IEnumValueBuilder>? configurator = null);
@@ -16,6 +17,6 @@ namespace GraphZen.TypeSystem
         IEnumTypeBuilder<TEnumValue> UnignoreValue(TEnumValue value);
         IEnumTypeBuilder<TEnumValue> Name(string name);
         IEnumTypeBuilder<object> ClrType(Type clrType);
-        IEnumTypeBuilder<T> ClrType<T>();
+        IEnumTypeBuilder<T> ClrType<T>() where T : notnull;
     }
 }

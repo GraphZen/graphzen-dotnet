@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    public abstract class TestDataFixtureRunner<T>
+    public abstract class TestDataFixtureRunner<T> where T : notnull
     {
         /// <summary>
         ///     Runs the text fixtures of the same type of the type parameter. Useful for debugging an individual fixture that has

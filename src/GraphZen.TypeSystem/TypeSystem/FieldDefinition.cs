@@ -42,6 +42,7 @@ namespace GraphZen.TypeSystem
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Builder = new InternalFieldBuilder(this, schema.Builder);
+            FieldType = null!;
         }
 
 
@@ -74,7 +75,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
 
-        public IGraphQLTypeReference? FieldType { get; set; }
+        public IGraphQLTypeReference FieldType { get; set; }
         public Resolver<object, object?>? Resolver { get; set; }
 
         IFieldsDefinition IFieldDefinition.DeclaringType => DeclaringType;
