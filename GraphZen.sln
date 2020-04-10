@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.AspNetCore.Server"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2B1883B3-BF6E-4073-9E5D-AD01961BA7D1}"
 	ProjectSection(SolutionItems) = preProject
-		src\Directory.Build.props = src\Directory.Build.props
+		src\Directory.Build.targets = src\Directory.Build.targets
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.AspNetCore.Server.Tests", "test\GraphZen.AspNetCore.Server.Tests\GraphZen.AspNetCore.Server.Tests.csproj", "{24FA0F04-34BC-4DFE-8971-45D0704BCD6A}"

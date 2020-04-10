@@ -1,3 +1,6 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -11,7 +14,7 @@ namespace GraphZen.CodeGen
 {
     internal class GenAccessorsTask : ReflectionCodeGenTask
     {
-        public GenAccessorsTask(Type targetType, MemberInfo member, GenAccessorExtensionsAttribute memberAttribute) :
+        public GenAccessorsTask(Type targetType, MemberInfo member, GenDictionaryAccessorsAttribute memberAttribute) :
             base(targetType)
         {
             Member = member;
@@ -19,7 +22,7 @@ namespace GraphZen.CodeGen
         }
 
         public MemberInfo Member { get; }
-        public GenAccessorExtensionsAttribute MemberAttribute { get; }
+        public GenDictionaryAccessorsAttribute MemberAttribute { get; }
 
         public static IEnumerable<GenAccessorsTask> FromTypes(IReadOnlyList<Type> types)
         {
@@ -27,7 +30,7 @@ namespace GraphZen.CodeGen
             {
                 foreach (var member in sourceType.GetMembers())
                 {
-                    var genAccessors = member.GetCustomAttribute<GenAccessorExtensionsAttribute>();
+                    var genAccessors = member.GetCustomAttribute<GenDictionaryAccessorsAttribute>();
                     if (genAccessors != null)
                     {
                         var targetTypes = types.Where(t => sourceType.IsAssignableFrom(t));
@@ -42,7 +45,16 @@ namespace GraphZen.CodeGen
 
         public override void Apply(StringBuilder csharp)
         {
-            csharp.AppendLine("// hello world");
+            if (Member is PropertyInfo prop)
+            {
+                csharp.AppendLine($"// MemberType: {prop.MemberType}");
+                csharp.AppendLine($"// PropertyType: {prop.PropertyType}");
+            }
+            else
+            {
+                throw new NotImplementedException(
+                    $"{nameof(GenDictionaryAccessorsAttribute)} is not supported for {Member.GetType()} member types");
+            }
         }
     }
 }

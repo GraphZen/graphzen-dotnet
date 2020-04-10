@@ -27,6 +27,9 @@
     <Compile Include="..\Linked\Common\**\*.*">
       <!--<Link>%(RecursiveDir)%(FileName)%(Extension)</Link>-->
     </Compile>
+    <Compile Update="**\*Generated.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Generated', '.cs'))</DependentUpon>
+    </Compile>
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <GenerateDocumentationFile>false</GenerateDocumentationFile>

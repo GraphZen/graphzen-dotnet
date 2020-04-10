@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IFields : IFieldsDefinition, INamedType
     {
-        [GenAccessorExtensions(nameof(Field))]
+        [GenDictionaryAccessors(nameof(Field))]
         IReadOnlyDictionary<string, Field> Fields { get; }
 
 

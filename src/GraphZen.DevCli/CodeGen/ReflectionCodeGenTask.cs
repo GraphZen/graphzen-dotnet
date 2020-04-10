@@ -53,7 +53,6 @@ namespace GraphZen.CodeGen
                 var genDirPath = Path.GetDirectoryName(targetPath) ?? throw new NotImplementedException();
                 var genFilename = Path.GetFileNameWithoutExtension(targetFilename) + ".Generated.cs";
                 var genPath = Path.Combine(genDirPath, genFilename);
-                var genDir = Directory.CreateDirectory(genDirPath);
 
                 string? namespaceLine = File.ReadLines(targetPath).SingleOrDefault(_ => _.StartsWith("namespace"));
                 if (namespaceLine == null)
@@ -75,6 +74,7 @@ namespace GraphZen.CodeGen
                     });
                 });
 
+                Directory.CreateDirectory(genDirPath);
                 csharp.WriteToFile(genPath);
             }
         }

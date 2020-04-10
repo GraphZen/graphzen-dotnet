@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IEnumValues : IEnumValuesDefinition
     {
 
-        [GenAccessorExtensions("Value")]
+        [GenDictionaryAccessors("Value")]
         IReadOnlyDictionary<string, EnumValue> Values { get; }
 
         IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }

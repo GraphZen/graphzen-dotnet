@@ -18,9 +18,9 @@
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.LanguageModel\GraphZen.LanguageModel.csproj" />
   </ItemGroup>
-  <ItemGroup>
+  <!--<ItemGroup>
     <ProjectCapability Include="DynamicDependentFile" />
     <ProjectCapability Include="DynamicFileNesting" />
-  </ItemGroup>
+  </ItemGroup>-->
 
 </Project>

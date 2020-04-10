@@ -7,6 +7,6 @@ namespace GraphZen.CodeGen.GenAccessorTaskTests
 {
     public interface InterfaceWithAnnotatedMember
     {
-        [GenAccessorExtensions("Number")] Dictionary<string, int> Numbers { get; }
+        [GenDictionaryAccessors("name", "Number")] Dictionary<string, int> Numbers { get; }
     }
 }

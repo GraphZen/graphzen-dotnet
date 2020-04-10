@@ -15,7 +15,7 @@ namespace GraphZen.CodeGen
     public static class ReflectionCodeGenerator
     {
         private static IReadOnlyList<Type> CodeGenMemberAttributes { get; } =
-            ImmutableArray.Create(typeof(GenAccessorExtensionsAttribute));
+            ImmutableArray.Create(typeof(GenDictionaryAccessorsAttribute));
 
         public static IReadOnlyList<Type> GetSourceTypes<T>() =>
             typeof(T).Assembly.GetTypes().Where(_ => _.Namespace?.Contains(nameof(GraphZen)) ?? false).ToList()

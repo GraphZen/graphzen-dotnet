@@ -11,6 +11,7 @@ namespace GraphZen.TypeSystem
 {
     public partial class Directive
     {
-// hello world
+// MemberType: Property
+// PropertyType: System.Collections.Generic.IReadOnlyDictionary`2[System.String,GraphZen.TypeSystem.Argument]
     }
 }
