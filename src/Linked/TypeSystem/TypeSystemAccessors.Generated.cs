@@ -12,69 +12,6 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem {
 
 
- public static partial class InterfaceTypeFieldsAccessorExtensions {
-
-        
-        public static Field? FindField( this InterfaceType source, string name) 
-            => source.Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var nameField) ? nameField : null;
-
-        public static bool HasField( this InterfaceType source,  string name) 
-            => source.Fields.ContainsKey(Check.NotNull(name, nameof(name)));
-
-        
-        public static Field GetField( this InterfaceType source,  string name) 
-            => source.FindField(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a field named '{name}'.");
-
-        public static bool TryGetField( this InterfaceType source,  string name, [NotNullWhen(true)] out Field? field)
-             => source.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out field);
-}
- 
-
-
-
-
- public static partial class ObjectTypeFieldsAccessorExtensions {
-
-        
-        public static Field? FindField( this ObjectType source, string name) 
-            => source.Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var nameField) ? nameField : null;
-
-        public static bool HasField( this ObjectType source,  string name) 
-            => source.Fields.ContainsKey(Check.NotNull(name, nameof(name)));
-
-        
-        public static Field GetField( this ObjectType source,  string name) 
-            => source.FindField(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a field named '{name}'.");
-
-        public static bool TryGetField( this ObjectType source,  string name, [NotNullWhen(true)] out Field? field)
-             => source.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out field);
-}
- 
-
-
-
-
- public static partial class InputObjectTypeFieldsAccessorExtensions {
-
-        
-        public static InputField? FindField( this InputObjectType source, string name) 
-            => source.Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var nameField) ? nameField : null;
-
-        public static bool HasField( this InputObjectType source,  string name) 
-            => source.Fields.ContainsKey(Check.NotNull(name, nameof(name)));
-
-        
-        public static InputField GetField( this InputObjectType source,  string name) 
-            => source.FindField(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a field named '{name}'.");
-
-        public static bool TryGetField( this InputObjectType source,  string name, [NotNullWhen(true)] out InputField? inputField)
-             => source.Fields.TryGetValue(Check.NotNull(name, nameof(name)), out inputField);
-}
- 
-
-
-
-
  public static partial class FieldDefinitionArgumentsAccessorExtensions {
 
         
