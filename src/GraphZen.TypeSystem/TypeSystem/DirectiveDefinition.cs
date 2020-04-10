@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class DirectiveDefinition : MemberDefinition, IMutableDirectiveDefinition,
+    public partial class DirectiveDefinition : MemberDefinition, IMutableDirectiveDefinition,
         IInfrastructure<InternalDirectiveBuilder>
     {
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
@@ -95,6 +95,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<IArgumentDefinition> GetArguments() => _arguments.Values;
 
+        [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
         public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
 
         IEnumerable<ArgumentDefinition> IMutableArgumentsDefinition.GetArguments() => Arguments.Values;

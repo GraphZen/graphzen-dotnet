@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
+    public partial class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
@@ -104,6 +104,7 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.FieldDefinition;
 
+        [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
         public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
 
         IMutableFieldsDefinition IMutableFieldDefinition.DeclaringType => DeclaringType;

@@ -178,41 +178,11 @@ namespace GraphZen.TypeSystem {
 ");
 
 
-            var fieldDefinitionAccessors = new List<(string containerType, string valueType)>
-            {
-                //("InterfaceTypeDefinition", "FieldDefinition"),
-                //("ObjectTypeDefinition", "FieldDefinition"),
-                //("InputObjectTypeDefinition", "InputFieldDefinition"),
-                //("FieldsDefinition", "FieldDefinition")
-            };
-
-            foreach (var (containerType, valueType) in fieldDefinitionAccessors)
-            {
-                csharp.AppendDictionaryAccessorOld(
-                    containerType, "Fields", "name", "string", "Field", valueType);
-            }
-
-            var fieldAccessors = new List<(string containerType, string valueType)>
-            {
-                //("InterfaceType", "Field"),
-                //("ObjectType", "Field"),
-                //("InputObjectType", "InputField")
-            };
-
-            foreach (var (containerType, valueType) in fieldAccessors)
-            {
-                csharp.AppendDictionaryAccessorOld(containerType, "Fields", "name", "string", "Field", valueType);
-            }
-
-            //csharp.AppendDictionaryAccessorOld("EnumTypeDefinition", "Values", "name", "string", "Value", "EnumValueDefinition");
-            //csharp.AppendDictionaryAccessorOld("EnumType", "Values", "name", "string", "Value", "EnumValue");
-            //csharp.AppendDictionaryAccessorOld("EnumType", "ValuesByValue", "value", "object", "Value", "EnumValue");
-
-
+         
             var argumentDefinitionAccessors = new List<(string containerType, string valueType)>
             {
-                ("FieldDefinition", "ArgumentDefinition"),
-                ("DirectiveDefinition", "ArgumentDefinition")
+                // ("FieldDefinition", "ArgumentDefinition"),
+                //("DirectiveDefinition", "ArgumentDefinition")
             };
 
             foreach (var (containerType, valueType) in argumentDefinitionAccessors)

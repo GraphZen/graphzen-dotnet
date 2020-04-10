@@ -70,7 +70,7 @@ namespace GraphZen.TypeSystem
             return this.FindField(fieldName);
         }
 
-        public bool RenameField(FieldDefinition field, string name,
+        internal bool RenameField(FieldDefinition field, string name,
             ConfigurationSource configurationSource)
         {
             if (this.TryGetField(name, out var existing) && existing != field)

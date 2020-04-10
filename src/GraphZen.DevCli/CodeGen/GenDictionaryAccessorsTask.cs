@@ -44,10 +44,11 @@ namespace GraphZen.CodeGen
             var valueName = Attribute.ValueName;
             var valueNameCamelized = valueName.FirstCharToLower();
             var valueTypeCamelized = valueType.FirstCharToLower();
+            var outValueVar = valueNameCamelized == keyNameCamelized ? "_" + valueNameCamelized : valueNameCamelized;
 
             csharp.AppendLine($@"
         public {valueType}? Find{valueName}({keyType} {keyNameCamelized}) 
-            => {propertyName}.TryGetValue(Check.NotNull({keyNameCamelized},nameof({keyNameCamelized})), out var {valueNameCamelized[0]}) ? {valueNameCamelized[0]} : null;
+            => {propertyName}.TryGetValue(Check.NotNull({keyNameCamelized},nameof({keyNameCamelized})), out var {outValueVar}) ? {outValueVar} : null;
 
         public bool Has{valueName}({keyType} {keyNameCamelized}) 
             => {propertyName}.ContainsKey(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized})));
