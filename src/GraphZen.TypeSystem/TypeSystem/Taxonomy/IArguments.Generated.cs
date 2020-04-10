@@ -10,21 +10,18 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy {
 public partial interface IArguments {
 
-      public Argument? FindArgument(String Name) 
-            => Arguments.TryGetValue(Check.NotNull(Name,nameof(Name)), out var NameArgument) ? NameArgument : null;
+        public Argument? FindArgument(String name) 
+            => Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var a) ? a : null;
 
-        public bool HasArgument(String Name) 
-            => Arguments.ContainsKey(Check.NotNull(Name, nameof(Name)));
-
+        public bool HasArgument(String name) 
+            => Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
         
-        public Argument GetArgument(String Name) 
-            => FindArgument(Check.NotNull(Name, nameof(Name))) ?? throw new Exception($"{this} does not contain a argument named '{Name}'.");
+        public Argument GetArgument(String name) 
+            => FindArgument(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{this} does not contain a {nameof(Argument)} with name '{name}'.");
 
 
-        public bool TryGetArgument(String Name, [NotNullWhen(true)] out Argument? argument)
-             => Arguments.TryGetValue(Check.NotNull(Name, nameof(Name)), out argument);
- 
-
+        public bool TryGetArgument(String name, [NotNullWhen(true)] out Argument? argument)
+             => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argument);
 
 }
 }

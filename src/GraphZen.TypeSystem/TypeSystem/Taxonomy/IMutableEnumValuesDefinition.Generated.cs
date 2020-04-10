@@ -10,21 +10,18 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy {
 public partial interface IMutableEnumValuesDefinition {
 
-      public EnumValueDefinition? FindValue(String Name) 
-            => Values.TryGetValue(Check.NotNull(Name,nameof(Name)), out var NameValue) ? NameValue : null;
+        public EnumValueDefinition? FindValue(String name) 
+            => Values.TryGetValue(Check.NotNull(name,nameof(name)), out var v) ? v : null;
 
-        public bool HasValue(String Name) 
-            => Values.ContainsKey(Check.NotNull(Name, nameof(Name)));
-
+        public bool HasValue(String name) 
+            => Values.ContainsKey(Check.NotNull(name, nameof(name)));
         
-        public EnumValueDefinition GetValue(String Name) 
-            => FindValue(Check.NotNull(Name, nameof(Name))) ?? throw new Exception($"{this} does not contain a value named '{Name}'.");
+        public EnumValueDefinition GetValue(String name) 
+            => FindValue(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{this} does not contain a {nameof(EnumValueDefinition)} with name '{name}'.");
 
 
-        public bool TryGetValue(String Name, [NotNullWhen(true)] out EnumValueDefinition? enumValueDefinition)
-             => Values.TryGetValue(Check.NotNull(Name, nameof(Name)), out enumValueDefinition);
- 
-
+        public bool TryGetValue(String name, [NotNullWhen(true)] out EnumValueDefinition? enumValueDefinition)
+             => Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValueDefinition);
 
 }
 }

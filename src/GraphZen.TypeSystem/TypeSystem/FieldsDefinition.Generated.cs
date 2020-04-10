@@ -10,21 +10,18 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem {
 public partial class FieldsDefinition {
 
-      public FieldDefinition? FindField(String Name) 
-            => Fields.TryGetValue(Check.NotNull(Name,nameof(Name)), out var NameField) ? NameField : null;
+        public FieldDefinition? FindField(String name) 
+            => Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var f) ? f : null;
 
-        public bool HasField(String Name) 
-            => Fields.ContainsKey(Check.NotNull(Name, nameof(Name)));
-
+        public bool HasField(String name) 
+            => Fields.ContainsKey(Check.NotNull(name, nameof(name)));
         
-        public FieldDefinition GetField(String Name) 
-            => FindField(Check.NotNull(Name, nameof(Name))) ?? throw new Exception($"{this} does not contain a field named '{Name}'.");
+        public FieldDefinition GetField(String name) 
+            => FindField(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{this} does not contain a {nameof(FieldDefinition)} with name '{name}'.");
 
 
-        public bool TryGetField(String Name, [NotNullWhen(true)] out FieldDefinition? fieldDefinition)
-             => Fields.TryGetValue(Check.NotNull(Name, nameof(Name)), out fieldDefinition);
- 
-
+        public bool TryGetField(String name, [NotNullWhen(true)] out FieldDefinition? fieldDefinition)
+             => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out fieldDefinition);
 
 }
 }

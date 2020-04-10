@@ -10,21 +10,18 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy {
 public partial interface IFields {
 
-      public Field? FindField(String Name) 
-            => Fields.TryGetValue(Check.NotNull(Name,nameof(Name)), out var NameField) ? NameField : null;
+        public Field? FindField(String name) 
+            => Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var f) ? f : null;
 
-        public bool HasField(String Name) 
-            => Fields.ContainsKey(Check.NotNull(Name, nameof(Name)));
-
+        public bool HasField(String name) 
+            => Fields.ContainsKey(Check.NotNull(name, nameof(name)));
         
-        public Field GetField(String Name) 
-            => FindField(Check.NotNull(Name, nameof(Name))) ?? throw new Exception($"{this} does not contain a field named '{Name}'.");
+        public Field GetField(String name) 
+            => FindField(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{this} does not contain a {nameof(Field)} with name '{name}'.");
 
 
-        public bool TryGetField(String Name, [NotNullWhen(true)] out Field? field)
-             => Fields.TryGetValue(Check.NotNull(Name, nameof(Name)), out field);
- 
-
+        public bool TryGetField(String name, [NotNullWhen(true)] out Field? field)
+             => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out field);
 
 }
 }

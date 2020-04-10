@@ -10,38 +10,32 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy {
 public partial interface IEnumValues {
 
-      public EnumValue? FindValue(String Name) 
-            => Values.TryGetValue(Check.NotNull(Name,nameof(Name)), out var NameValue) ? NameValue : null;
+        public EnumValue? FindValue(String name) 
+            => Values.TryGetValue(Check.NotNull(name,nameof(name)), out var v) ? v : null;
 
-        public bool HasValue(String Name) 
-            => Values.ContainsKey(Check.NotNull(Name, nameof(Name)));
-
+        public bool HasValue(String name) 
+            => Values.ContainsKey(Check.NotNull(name, nameof(name)));
         
-        public EnumValue GetValue(String Name) 
-            => FindValue(Check.NotNull(Name, nameof(Name))) ?? throw new Exception($"{this} does not contain a value named '{Name}'.");
+        public EnumValue GetValue(String name) 
+            => FindValue(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{this} does not contain a {nameof(EnumValue)} with name '{name}'.");
 
 
-        public bool TryGetValue(String Name, [NotNullWhen(true)] out EnumValue? enumValue)
-             => Values.TryGetValue(Check.NotNull(Name, nameof(Name)), out enumValue);
- 
+        public bool TryGetValue(String name, [NotNullWhen(true)] out EnumValue? enumValue)
+             => Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValue);
 
 
+        public EnumValue? FindValue(Object value) 
+            => ValuesByValue.TryGetValue(Check.NotNull(value,nameof(value)), out var v) ? v : null;
 
-      public EnumValue? FindValue(Object Value) 
-            => ValuesByValue.TryGetValue(Check.NotNull(Value,nameof(Value)), out var ValueValue) ? ValueValue : null;
-
-        public bool HasValue(Object Value) 
-            => ValuesByValue.ContainsKey(Check.NotNull(Value, nameof(Value)));
-
+        public bool HasValue(Object value) 
+            => ValuesByValue.ContainsKey(Check.NotNull(value, nameof(value)));
         
-        public EnumValue GetValue(Object Value) 
-            => FindValue(Check.NotNull(Value, nameof(Value))) ?? throw new Exception($"{this} does not contain a value named '{Value}'.");
+        public EnumValue GetValue(Object value) 
+            => FindValue(Check.NotNull(value, nameof(value))) ?? throw new Exception($"{this} does not contain a {nameof(EnumValue)} with value '{value}'.");
 
 
-        public bool TryGetValue(Object Value, [NotNullWhen(true)] out EnumValue? enumValue)
-             => ValuesByValue.TryGetValue(Check.NotNull(Value, nameof(Value)), out enumValue);
- 
-
+        public bool TryGetValue(Object value, [NotNullWhen(true)] out EnumValue? enumValue)
+             => ValuesByValue.TryGetValue(Check.NotNull(value, nameof(value)), out enumValue);
 
 }
 }
