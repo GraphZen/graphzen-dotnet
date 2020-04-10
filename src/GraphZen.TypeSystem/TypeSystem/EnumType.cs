@@ -15,7 +15,7 @@ using static GraphZen.LanguageModel.SyntaxFactory;
 
 namespace GraphZen.TypeSystem
 {
-    public class EnumType : NamedType, IEnumType
+    public partial class EnumType : NamedType, IEnumType
     {
         private readonly Lazy<EnumTypeDefinitionSyntax> _syntax;
 
@@ -83,9 +83,9 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
-        [GenDictionaryAccessors("Name", "Value")] public IReadOnlyDictionary<string, EnumValue> Values { get; }
+        [GenDictionaryAccessors(nameof(EnumValue.Name), nameof(EnumValue.Value))] public IReadOnlyDictionary<string, EnumValue> Values { get; }
 
-        [GenDictionaryAccessors("Value", "Value")]
+        [GenDictionaryAccessors(nameof(EnumValue.Value), nameof(EnumValue.Value))]
         public IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
 
         public IEnumerable<EnumValue> GetValues() => Values.Values;

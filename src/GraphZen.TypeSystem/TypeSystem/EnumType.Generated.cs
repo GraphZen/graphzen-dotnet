@@ -7,8 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy {
-public partial interface IEnumValues {
+namespace GraphZen.TypeSystem {
+public partial class EnumType {
 
       public EnumValue? FindValue(String Name) 
             => Values.TryGetValue(Check.NotNull(Name,nameof(Name)), out var NameValue) ? NameValue : null;

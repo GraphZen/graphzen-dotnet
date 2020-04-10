@@ -204,9 +204,9 @@ namespace GraphZen.TypeSystem {
                 csharp.AppendDictionaryAccessorOld(containerType, "Fields", "name", "string", "Field", valueType);
             }
 
-            csharp.AppendDictionaryAccessorOld("EnumTypeDefinition", "Values", "name", "string", "Value", "EnumValueDefinition");
-            csharp.AppendDictionaryAccessorOld("EnumType", "Values", "name", "string", "Value", "EnumValue");
-            csharp.AppendDictionaryAccessorOld("EnumType", "ValuesByValue", "value", "object", "Value", "EnumValue");
+            //csharp.AppendDictionaryAccessorOld("EnumTypeDefinition", "Values", "name", "string", "Value", "EnumValueDefinition");
+            //csharp.AppendDictionaryAccessorOld("EnumType", "Values", "name", "string", "Value", "EnumValue");
+            //csharp.AppendDictionaryAccessorOld("EnumType", "ValuesByValue", "value", "object", "Value", "EnumValue");
 
 
             var argumentDefinitionAccessors = new List<(string containerType, string valueType)>

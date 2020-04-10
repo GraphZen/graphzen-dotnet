@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
+    public partial class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
     {
         internal readonly Dictionary<string, EnumValueDefinition> InternalValues =
             new Dictionary<string, EnumValueDefinition>();
@@ -45,9 +45,7 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) =>
             _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
 
-        public EnumValueDefinition? FindValue(string name) =>
-            InternalValues.TryGetValue(name, out var value) ? value : null;
-
+        
         public bool IgnoreValue(string name, ConfigurationSource configurationSource)
         {
             var itemConfigurationSource = FindValue(name)?.GetConfigurationSource();

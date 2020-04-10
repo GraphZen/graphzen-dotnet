@@ -1,30 +1,30 @@
-// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-
 #nullable enable
 
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
-{
-    public partial interface IMutableArgumentsDefinition
-    {
-        public ArgumentDefinition? FindArgument(string name)
-            => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var nameArgument) ? nameArgument : null;
+namespace GraphZen.TypeSystem.Taxonomy {
+public partial interface IMutableArgumentsDefinition {
 
-        public bool HasArgument(string name)
-            => Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
+      public ArgumentDefinition? FindArgument(String Name) 
+            => Arguments.TryGetValue(Check.NotNull(Name,nameof(Name)), out var NameArgument) ? NameArgument : null;
 
+        public bool HasArgument(String Name) 
+            => Arguments.ContainsKey(Check.NotNull(Name, nameof(Name)));
 
-        public ArgumentDefinition GetArgument(string name)
-            => FindArgument(Check.NotNull(name, nameof(name))) ??
-               throw new Exception($"{this} does not contain a argument named '{name}'.");
+        
+        public ArgumentDefinition GetArgument(String Name) 
+            => FindArgument(Check.NotNull(Name, nameof(Name))) ?? throw new Exception($"{this} does not contain a argument named '{Name}'.");
 
 
-        public bool TryGetArgument(string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
-            => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
-    }
+        public bool TryGetArgument(String Name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
+             => Arguments.TryGetValue(Check.NotNull(Name, nameof(Name)), out argumentDefinition);
+ 
+
+
+}
 }
