@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class InterfaceTypeDefinition : FieldsDefinition, IMutableInterfaceTypeDefinition
+    public partial class InterfaceTypeDefinition : FieldsDefinition, IMutableInterfaceTypeDefinition
     {
         public InterfaceTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(
