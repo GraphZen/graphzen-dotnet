@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class InputObjectType : NamedType, IInputObjectType
+    public partial class InputObjectType : NamedType, IInputObjectType
     {
         private readonly Lazy<InputObjectTypeDefinitionSyntax> _syntax;
 
@@ -30,6 +30,8 @@ namespace GraphZen.TypeSystem
                     Fields.Values.ToSyntaxNodes<InputValueDefinitionSyntax>()));
         }
 
+
+        [GenDictionaryAccessors(nameof(InputField.Name), "Field")]
         public IReadOnlyDictionary<string, InputField> Fields { get; }
 
 

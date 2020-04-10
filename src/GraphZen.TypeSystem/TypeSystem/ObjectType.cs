@@ -14,7 +14,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLType(typeof(IGraphQLType))]
-    public class ObjectType : NamedType, IObjectType
+    public partial class ObjectType : NamedType, IObjectType
     {
         private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
         private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
@@ -77,6 +77,7 @@ namespace GraphZen.TypeSystem
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
+        [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;

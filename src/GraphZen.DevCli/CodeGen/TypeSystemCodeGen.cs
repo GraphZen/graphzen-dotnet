@@ -194,9 +194,9 @@ namespace GraphZen.TypeSystem {
 
             var fieldAccessors = new List<(string containerType, string valueType)>
             {
-                ("InterfaceType", "Field"),
-                ("ObjectType", "Field"),
-                ("InputObjectType", "InputField")
+                //("InterfaceType", "Field"),
+                //("ObjectType", "Field"),
+                //("InputObjectType", "InputField")
             };
 
             foreach (var (containerType, valueType) in fieldAccessors)

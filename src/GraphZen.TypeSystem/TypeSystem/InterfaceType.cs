@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class InterfaceType : NamedType, IInterfaceType
+    public partial class InterfaceType : NamedType, IInterfaceType
     {
         private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
         private readonly Lazy<InterfaceTypeDefinitionSyntax> _syntax;
@@ -46,6 +46,7 @@ namespace GraphZen.TypeSystem
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
+        [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
 
         public IEnumerable<Field> GetFields() => Fields.Values;
