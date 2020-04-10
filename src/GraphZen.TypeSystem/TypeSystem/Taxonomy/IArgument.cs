@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IArgument : IArgumentDefinition, IInputValue
+    public partial interface IArgument : IArgumentDefinition, IInputValue
     {
         new IArguments DeclaringMember { get; }
     }

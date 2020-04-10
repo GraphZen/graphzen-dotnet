@@ -10,12 +10,11 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableEnumValuesDefinition : IEnumValuesDefinition
+    public partial interface IMutableEnumValuesDefinition : IEnumValuesDefinition
     {
         [GenDictionaryAccessors("Value")]
         IReadOnlyDictionary<string, EnumValueDefinition> Values { get; }
         ConfigurationSource? FindIgnoredValueConfigurationSource(string name);
-        EnumValueDefinition? FindValue(string name);
         bool IgnoreValue(string name, ConfigurationSource configurationSource);
         bool UnignoreValue(string name, ConfigurationSource configurationSource);
 

@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IFields : IFieldsDefinition, INamedType
+    public partial interface IFields : IFieldsDefinition, INamedType
     {
         [GenDictionaryAccessors(nameof(Field))]
         IReadOnlyDictionary<string, Field> Fields { get; }

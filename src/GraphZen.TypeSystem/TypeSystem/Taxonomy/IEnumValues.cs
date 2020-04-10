@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IEnumValues : IEnumValuesDefinition
+    public partial interface IEnumValues : IEnumValuesDefinition
     {
 
         [GenDictionaryAccessors("Value")]

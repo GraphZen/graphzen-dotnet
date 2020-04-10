@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableArgumentsDefinition : IArgumentsDefinition
+    public partial interface IMutableArgumentsDefinition : IArgumentsDefinition
     {
         [GenDictionaryAccessors("Argument")] IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
 
