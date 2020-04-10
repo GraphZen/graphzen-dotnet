@@ -159,69 +159,6 @@ namespace GraphZen.TypeSystem {
 
 
 
- public static partial class EnumTypeDefinitionValuesAccessorExtensions {
-
-        
-        public static EnumValueDefinition? FindValue( this EnumTypeDefinition source, string name) 
-            => source.Values.TryGetValue(Check.NotNull(name,nameof(name)), out var nameValue) ? nameValue : null;
-
-        public static bool HasValue( this EnumTypeDefinition source,  string name) 
-            => source.Values.ContainsKey(Check.NotNull(name, nameof(name)));
-
-        
-        public static EnumValueDefinition GetValue( this EnumTypeDefinition source,  string name) 
-            => source.FindValue(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a value named '{name}'.");
-
-        public static bool TryGetValue( this EnumTypeDefinition source,  string name, [NotNullWhen(true)] out EnumValueDefinition? enumValueDefinition)
-             => source.Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValueDefinition);
-}
- 
-
-
-
-
- public static partial class EnumTypeValuesAccessorExtensions {
-
-        
-        public static EnumValue? FindValue( this EnumType source, string name) 
-            => source.Values.TryGetValue(Check.NotNull(name,nameof(name)), out var nameValue) ? nameValue : null;
-
-        public static bool HasValue( this EnumType source,  string name) 
-            => source.Values.ContainsKey(Check.NotNull(name, nameof(name)));
-
-        
-        public static EnumValue GetValue( this EnumType source,  string name) 
-            => source.FindValue(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a value named '{name}'.");
-
-        public static bool TryGetValue( this EnumType source,  string name, [NotNullWhen(true)] out EnumValue? enumValue)
-             => source.Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValue);
-}
- 
-
-
-
-
- public static partial class EnumTypeValuesByValueAccessorExtensions {
-
-        
-        public static EnumValue? FindValue( this EnumType source, object value) 
-            => source.ValuesByValue.TryGetValue(Check.NotNull(value,nameof(value)), out var valueValue) ? valueValue : null;
-
-        public static bool HasValue( this EnumType source,  object value) 
-            => source.ValuesByValue.ContainsKey(Check.NotNull(value, nameof(value)));
-
-        
-        public static EnumValue GetValue( this EnumType source,  object value) 
-            => source.FindValue(Check.NotNull(value, nameof(value))) ?? throw new Exception($"{source} does not contain a value named '{value}'.");
-
-        public static bool TryGetValue( this EnumType source,  object value, [NotNullWhen(true)] out EnumValue? enumValue)
-             => source.ValuesByValue.TryGetValue(Check.NotNull(value, nameof(value)), out enumValue);
-}
- 
-
-
-
-
  public static partial class FieldDefinitionArgumentsAccessorExtensions {
 
         
