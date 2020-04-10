@@ -47,7 +47,7 @@ namespace GraphZen.CodeGen
 
             csharp.AppendLine($@"
       public {valueType}? Find{valueName}({keyType} {keyNameCamelized}) 
-            => {propertyName}.TryGetValue(Check.NotNull({keyNameCamelized},nameof({keyNameCamelized})), out var {valueNameCamelized}) ? {valueNameCamelized} : null;
+            => {propertyName}.TryGetValue(Check.NotNull({keyNameCamelized},nameof({keyNameCamelized})), out var {valueNameCamelized[0]}) ? {valueNameCamelized[0]} : null;
 
         public bool Has{valueName}({keyType} {keyNameCamelized}) 
             => {propertyName}.ContainsKey(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized})));
