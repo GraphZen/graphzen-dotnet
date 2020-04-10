@@ -42,7 +42,7 @@ namespace GraphZen.CodeGen
             var tasksByTarget = GetAllFromTypes(ReflectionCodeGenerator.GetSourceTypes<T>()).GroupBy(_ => _.TargetType)
                 .Select(_ => (targetType: _.Key, tasks: _.ToReadOnlyList()));
 
-            foreach (var (targetType, tasks) in tasksByTarget.Take(1))
+            foreach (var (targetType, tasks) in tasksByTarget)
             {
                 var targetFilename = targetType.Name + ".cs";
                 var targetPath = CSharpFiles.SingleOrDefault(_ => Path.GetFileName(_) == targetFilename);

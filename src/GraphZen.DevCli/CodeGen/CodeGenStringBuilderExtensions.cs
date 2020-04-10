@@ -51,7 +51,33 @@ namespace GraphZen.CodeGen
             CodeGenHelpers.WriteFile($"./src/Linked/{project}/{name}.Generated.cs", csharp.ToString());
 
 
-        public static void AppendDictionaryAccessor(this StringBuilder csharp,
+        public static void AppendDictionaryAccessors(this StringBuilder csharp,
+            string propertyName, string keyName, string keyType,
+            string valueName, string valueType)
+        {
+            var valueNameCamelized = valueName.FirstCharToLower();
+            var valueRefName = valueType.FirstCharToLower();
+            var code = $@"
+
+        public {valueType}? Find{valueName}({keyType} {keyName}) 
+            => {propertyName}.TryGetValue(Check.NotNull({keyName},nameof({keyName})), out var {keyName}{valueName}) ? {keyName}{valueName} : null;
+
+        public bool Has{valueName}({keyType} {keyName}) 
+            => {propertyName}.ContainsKey(Check.NotNull({keyName}, nameof({keyName})));
+
+        
+        public {valueType} Get{valueName}({keyType} {keyName}) 
+            => Find{valueName}(Check.NotNull({keyName}, nameof({keyName}))) ?? throw new Exception($""{{this}} does not contain a {valueNameCamelized} named '{{{keyName}}}'."");
+
+        public bool TryGet{valueName}({keyType} {keyName}, [NotNullWhen(true)] out {valueType}? {valueRefName})
+             => {propertyName}.TryGetValue(Check.NotNull({keyName}, nameof({keyName})), out {valueRefName});
+ 
+
+
+";
+            csharp.Append(code);
+        }
+        public static void AppendDictionaryAccessorOld(this StringBuilder csharp,
             string containerType, string propertyName, string keyName, string keyType,
             string valueName, string valueType)
         {

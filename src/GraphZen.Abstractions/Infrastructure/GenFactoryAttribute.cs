@@ -25,8 +25,8 @@ namespace GraphZen.Infrastructure
     internal class GenDictionaryAccessorsAttribute : Attribute
     {
         public string ValueTypeName { get; }
-        public string KeyName { get; }
-        public GenDictionaryAccessorsAttribute(string valueTypeName, string keyName = "name")
+        public string? KeyName { get; }
+        public GenDictionaryAccessorsAttribute(string valueTypeName, string? keyName = null)
         {
             ValueTypeName = valueTypeName;
             KeyName = keyName;

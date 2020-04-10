@@ -188,7 +188,7 @@ namespace GraphZen.TypeSystem {
 
             foreach (var (containerType, valueType) in fieldDefinitionAccessors)
             {
-                csharp.AppendDictionaryAccessor(
+                csharp.AppendDictionaryAccessorOld(
                     containerType, "Fields", "name", "string", "Field", valueType);
             }
 
@@ -201,13 +201,13 @@ namespace GraphZen.TypeSystem {
 
             foreach (var (containerType, valueType) in fieldAccessors)
             {
-                csharp.AppendDictionaryAccessor(containerType, "Fields", "name", "string", "Field", valueType);
+                csharp.AppendDictionaryAccessorOld(containerType, "Fields", "name", "string", "Field", valueType);
             }
 
-            csharp.AppendDictionaryAccessor("EnumTypeDefinition", "Values", "name", "string", "Value",
+            csharp.AppendDictionaryAccessorOld("EnumTypeDefinition", "Values", "name", "string", "Value",
                 "EnumValueDefinition");
-            csharp.AppendDictionaryAccessor("EnumType", "Values", "name", "string", "Value", "EnumValue");
-            csharp.AppendDictionaryAccessor("EnumType", "ValuesByValue", "value", "object", "Value", "EnumValue");
+            csharp.AppendDictionaryAccessorOld("EnumType", "Values", "name", "string", "Value", "EnumValue");
+            csharp.AppendDictionaryAccessorOld("EnumType", "ValuesByValue", "value", "object", "Value", "EnumValue");
 
 
             var argumentDefinitionAccessors = new List<(string containerType, string valueType)>
@@ -218,7 +218,7 @@ namespace GraphZen.TypeSystem {
 
             foreach (var (containerType, valueType) in argumentDefinitionAccessors)
             {
-                csharp.AppendDictionaryAccessor(
+                csharp.AppendDictionaryAccessorOld(
                     containerType, "Arguments", "name", "string", "Argument", valueType);
             }
 
@@ -230,7 +230,7 @@ namespace GraphZen.TypeSystem {
 
             foreach (var (containerType, valueType) in argumentAccessors)
             {
-                csharp.AppendDictionaryAccessor(
+                csharp.AppendDictionaryAccessorOld(
                     containerType, "Arguments", "name", "string", "Argument", valueType);
             }
 
