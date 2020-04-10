@@ -12,8 +12,9 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public partial interface IMutableEnumValuesDefinition : IEnumValuesDefinition
     {
-        [GenDictionaryAccessors("Value")]
+        [GenDictionaryAccessors(nameof(EnumValueDefinition.Name), nameof(EnumValueDefinition.Value))]
         IReadOnlyDictionary<string, EnumValueDefinition> Values { get; }
+
         ConfigurationSource? FindIgnoredValueConfigurationSource(string name);
         bool IgnoreValue(string name, ConfigurationSource configurationSource);
         bool UnignoreValue(string name, ConfigurationSource configurationSource);

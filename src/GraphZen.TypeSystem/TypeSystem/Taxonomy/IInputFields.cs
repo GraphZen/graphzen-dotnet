@@ -10,7 +10,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     public partial interface IInputFields : IInputFieldsDefinition
     {
-        [GenDictionaryAccessors("Field")]
+        [GenDictionaryAccessors(nameof(InputField.Name), "Field")]
         IReadOnlyDictionary<string, InputField> Fields { get; }
 
 

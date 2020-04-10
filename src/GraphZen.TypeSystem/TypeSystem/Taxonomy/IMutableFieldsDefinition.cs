@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public partial interface IMutableFieldsDefinition : IFieldsDefinition
     {
 
-        [GenDictionaryAccessors("Field")]
+        [GenDictionaryAccessors(nameof(FieldDefinition.Name), "Field")]
         IReadOnlyDictionary<string, FieldDefinition> Fields { get; }
 
         ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName);

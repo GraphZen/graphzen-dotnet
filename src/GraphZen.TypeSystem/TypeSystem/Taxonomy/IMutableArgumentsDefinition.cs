@@ -12,7 +12,8 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public partial interface IMutableArgumentsDefinition : IArgumentsDefinition
     {
-        [GenDictionaryAccessors("Argument")] IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
+        [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
+        IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
 
         bool RenameArgument(ArgumentDefinition argument, string name,
             ConfigurationSource configurationSource);

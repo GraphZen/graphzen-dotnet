@@ -83,7 +83,9 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
-        [GenDictionaryAccessors("Value")] public IReadOnlyDictionary<string, EnumValue> Values { get; }
+        [GenDictionaryAccessors("Name", "Value")] public IReadOnlyDictionary<string, EnumValue> Values { get; }
+
+        [GenDictionaryAccessors("Value", "Value")]
         public IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
 
         public IEnumerable<EnumValue> GetValues() => Values.Values;

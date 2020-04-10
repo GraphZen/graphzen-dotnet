@@ -8,6 +8,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 [assembly: InternalsVisibleTo("LINQPadQuery")]
+
 namespace GraphZen.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Constructor)]
@@ -25,11 +26,12 @@ namespace GraphZen.Infrastructure
     internal class GenDictionaryAccessorsAttribute : Attribute
     {
         public string ValueTypeName { get; }
-        public string? KeyName { get; }
-        public GenDictionaryAccessorsAttribute(string valueTypeName, string? keyName = null)
+        public string KeyName { get; }
+
+        public GenDictionaryAccessorsAttribute(string keyName, string valueTypeName)
         {
-            ValueTypeName = valueTypeName;
             KeyName = keyName;
+            ValueTypeName = valueTypeName;
         }
     }
 }

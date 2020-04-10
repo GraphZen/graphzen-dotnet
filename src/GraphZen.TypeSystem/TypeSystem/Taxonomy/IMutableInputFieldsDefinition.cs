@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     public partial interface IMutableInputFieldsDefinition : IInputFieldsDefinition
     {
-        [GenDictionaryAccessors("Field")]
+        [GenDictionaryAccessors(nameof(InputFieldDefinition.Name), "Field")]
         IReadOnlyDictionary<string, InputFieldDefinition> Fields { get; }
 
         ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName);

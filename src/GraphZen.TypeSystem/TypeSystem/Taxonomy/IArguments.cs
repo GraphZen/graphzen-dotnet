@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public partial interface IArguments : IArgumentsDefinition
     {
-        [GenDictionaryAccessors(nameof(Argument))]
+        [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
         IReadOnlyDictionary<string, Argument> Arguments { get; }
 
 
