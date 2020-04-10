@@ -1,17 +1,20 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 #nullable enable
 
 using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem {
-public static class SchemaDefinitionExtensions {
-#region Enum type accessors
+namespace GraphZen.TypeSystem
+{
+    public static class SchemaDefinitionExtensions
+    {
+        #region Enum type accessors
 
-     public static EnumTypeDefinition GetEnum(this SchemaDefinition schema, string name) =>
+        public static EnumTypeDefinition GetEnum(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<EnumTypeDefinition>(name);
 
 
@@ -57,12 +60,11 @@ public static class SchemaDefinitionExtensions {
             Check.NotNull(schema, nameof(schema))
                 .HasType<EnumTypeDefinition>(Check.NotNull(name, nameof(name)));
 
+        #endregion
 
+        #region InputObject type accessors
 
-#endregion
-#region InputObject type accessors
-
-     public static InputObjectTypeDefinition GetInputObject(this SchemaDefinition schema, string name) =>
+        public static InputObjectTypeDefinition GetInputObject(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<InputObjectTypeDefinition>(name);
 
 
@@ -101,19 +103,19 @@ public static class SchemaDefinitionExtensions {
             Check.NotNull(schema, nameof(schema))
                 .HasType<InputObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public static bool HasInputObject<TClrType>(this SchemaDefinition schema) => Check.NotNull(schema, nameof(schema))
+        public static bool HasInputObject<TClrType>(this SchemaDefinition schema) => Check
+            .NotNull(schema, nameof(schema))
             .HasType<InputObjectTypeDefinition>(typeof(TClrType));
 
         public static bool HasInputObject(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema))
                 .HasType<InputObjectTypeDefinition>(Check.NotNull(name, nameof(name)));
 
+        #endregion
 
+        #region Interface type accessors
 
-#endregion
-#region Interface type accessors
-
-     public static InterfaceTypeDefinition GetInterface(this SchemaDefinition schema, string name) =>
+        public static InterfaceTypeDefinition GetInterface(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<InterfaceTypeDefinition>(name);
 
 
@@ -159,12 +161,11 @@ public static class SchemaDefinitionExtensions {
             Check.NotNull(schema, nameof(schema))
                 .HasType<InterfaceTypeDefinition>(Check.NotNull(name, nameof(name)));
 
+        #endregion
 
+        #region Object type accessors
 
-#endregion
-#region Object type accessors
-
-     public static ObjectTypeDefinition GetObject(this SchemaDefinition schema, string name) =>
+        public static ObjectTypeDefinition GetObject(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<ObjectTypeDefinition>(name);
 
 
@@ -210,12 +211,11 @@ public static class SchemaDefinitionExtensions {
             Check.NotNull(schema, nameof(schema))
                 .HasType<ObjectTypeDefinition>(Check.NotNull(name, nameof(name)));
 
+        #endregion
 
+        #region Scalar type accessors
 
-#endregion
-#region Scalar type accessors
-
-     public static ScalarTypeDefinition GetScalar(this SchemaDefinition schema, string name) =>
+        public static ScalarTypeDefinition GetScalar(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<ScalarTypeDefinition>(name);
 
 
@@ -261,12 +261,11 @@ public static class SchemaDefinitionExtensions {
             Check.NotNull(schema, nameof(schema))
                 .HasType<ScalarTypeDefinition>(Check.NotNull(name, nameof(name)));
 
+        #endregion
 
+        #region Union type accessors
 
-#endregion
-#region Union type accessors
-
-     public static UnionTypeDefinition GetUnion(this SchemaDefinition schema, string name) =>
+        public static UnionTypeDefinition GetUnion(this SchemaDefinition schema, string name) =>
             Check.NotNull(schema, nameof(schema)).GetType<UnionTypeDefinition>(name);
 
 
@@ -312,8 +311,6 @@ public static class SchemaDefinitionExtensions {
             Check.NotNull(schema, nameof(schema))
                 .HasType<UnionTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-
-
-#endregion
-}
+        #endregion
+    }
 }

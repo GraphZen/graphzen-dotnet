@@ -33,7 +33,7 @@ namespace GraphZen.CodeGen
                     var genAccessors = member.GetCustomAttribute<GenDictionaryAccessorsAttribute>();
                     if (genAccessors != null)
                     {
-                            yield return new GenAccessorsTask(sourceType, member, genAccessors);
+                        yield return new GenAccessorsTask(sourceType, member, genAccessors);
                         var targetTypes = types.Where(t => sourceType.IsAssignableFrom(t));
                         foreach (var targetType in targetTypes)
                         {
