@@ -53,7 +53,7 @@ namespace GraphZen.CodeGen
             => {propertyName}.ContainsKey(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized})));
         
         public {valueType} Get{valueName}({keyType} {keyNameCamelized}) 
-            => Find{valueName}(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized}))) ?? throw new Exception($""{{this}} does not contain a {{nameof({valueType})}} named '{{{keyName}}}'."");
+            => Find{valueName}(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized}))) ?? throw new Exception($""{{this}} does not contain a {{nameof({valueType})}} with {keyNameCamelized} '{{{keyNameCamelized}}}'."");
 
 
         public bool TryGet{valueName}({keyType} {keyNameCamelized}, [NotNullWhen(true)] out {valueType}? {valueTypeCamelized})
