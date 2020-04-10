@@ -46,15 +46,14 @@ namespace GraphZen.CodeGen
             var valueTypeCamelized = valueType.FirstCharToLower();
 
             csharp.AppendLine($@"
-      public {valueType}? Find{valueName}({keyType} {keyNameCamelized}) 
+        public {valueType}? Find{valueName}({keyType} {keyNameCamelized}) 
             => {propertyName}.TryGetValue(Check.NotNull({keyNameCamelized},nameof({keyNameCamelized})), out var {valueNameCamelized[0]}) ? {valueNameCamelized[0]} : null;
 
         public bool Has{valueName}({keyType} {keyNameCamelized}) 
             => {propertyName}.ContainsKey(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized})));
-
         
         public {valueType} Get{valueName}({keyType} {keyNameCamelized}) 
-            => Find{valueName}(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized}))) ?? throw new Exception($""{{this}} does not contain a {valueType} named '{{{keyName}}}'."");
+            => Find{valueName}(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized}))) ?? throw new Exception($""{{this}} does not contain a {{nameof({valueType})}} named '{{{keyName}}}'."");
 
 
         public bool TryGet{valueName}({keyType} {keyNameCamelized}, [NotNullWhen(true)] out {valueType}? {valueTypeCamelized})
