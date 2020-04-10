@@ -25,13 +25,13 @@ namespace GraphZen.Infrastructure
     [AttributeUsage(AttributeTargets.Property)]
     internal class GenDictionaryAccessorsAttribute : Attribute
     {
-        public string ValueTypeName { get; }
+        public string ValueName { get; }
         public string KeyName { get; }
 
-        public GenDictionaryAccessorsAttribute(string keyName, string valueTypeName)
+        public GenDictionaryAccessorsAttribute(string keyName, string valueName)
         {
             KeyName = keyName;
-            ValueTypeName = valueTypeName;
+            ValueName = valueName;
         }
     }
 }

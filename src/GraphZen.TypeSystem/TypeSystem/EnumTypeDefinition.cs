@@ -39,6 +39,7 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Enum;
 
+        [GenDictionaryAccessors(nameof(EnumValueDefinition.Name), nameof(EnumValueDefinition.Value))]
         public IReadOnlyDictionary<string, EnumValueDefinition> Values => InternalValues;
 
         public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) =>
