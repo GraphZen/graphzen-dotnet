@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy {
 public partial interface IArguments {
 
         public Argument? FindArgument(String name) 
-            => Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var a) ? a : null;
+            => Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var argument) ? argument : null;
 
         public bool HasArgument(String name) 
             => Arguments.ContainsKey(Check.NotNull(name, nameof(name)));

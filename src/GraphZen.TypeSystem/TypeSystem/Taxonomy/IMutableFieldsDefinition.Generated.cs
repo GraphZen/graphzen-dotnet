@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy {
 public partial interface IMutableFieldsDefinition {
 
         public FieldDefinition? FindField(String name) 
-            => Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var f) ? f : null;
+            => Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var field) ? field : null;
 
         public bool HasField(String name) 
             => Fields.ContainsKey(Check.NotNull(name, nameof(name)));

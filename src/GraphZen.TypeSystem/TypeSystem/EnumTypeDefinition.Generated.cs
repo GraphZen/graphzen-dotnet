@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem {
 public partial class EnumTypeDefinition {
 
         public EnumValueDefinition? FindValue(String name) 
-            => Values.TryGetValue(Check.NotNull(name,nameof(name)), out var v) ? v : null;
+            => Values.TryGetValue(Check.NotNull(name,nameof(name)), out var value) ? value : null;
 
         public bool HasValue(String name) 
             => Values.ContainsKey(Check.NotNull(name, nameof(name)));

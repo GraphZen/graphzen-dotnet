@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem {
 public partial class ObjectType {
 
         public Field? FindField(String name) 
-            => Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var f) ? f : null;
+            => Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var field) ? field : null;
 
         public bool HasField(String name) 
             => Fields.ContainsKey(Check.NotNull(name, nameof(name)));

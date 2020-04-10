@@ -7,8 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy {
-public partial interface IMutableArgumentsDefinition {
+namespace GraphZen.TypeSystem {
+public partial class FieldDefinition {
 
         public ArgumentDefinition? FindArgument(String name) 
             => Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var argument) ? argument : null;

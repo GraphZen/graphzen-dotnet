@@ -12,48 +12,6 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem {
 
 
- public static partial class FieldDefinitionArgumentsAccessorExtensions {
-
-        
-        public static ArgumentDefinition? FindArgument( this FieldDefinition source, string name) 
-            => source.Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var nameArgument) ? nameArgument : null;
-
-        public static bool HasArgument( this FieldDefinition source,  string name) 
-            => source.Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
-
-        
-        public static ArgumentDefinition GetArgument( this FieldDefinition source,  string name) 
-            => source.FindArgument(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a argument named '{name}'.");
-
-        public static bool TryGetArgument( this FieldDefinition source,  string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
-             => source.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
-}
- 
-
-
-
-
- public static partial class DirectiveDefinitionArgumentsAccessorExtensions {
-
-        
-        public static ArgumentDefinition? FindArgument( this DirectiveDefinition source, string name) 
-            => source.Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var nameArgument) ? nameArgument : null;
-
-        public static bool HasArgument( this DirectiveDefinition source,  string name) 
-            => source.Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
-
-        
-        public static ArgumentDefinition GetArgument( this DirectiveDefinition source,  string name) 
-            => source.FindArgument(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{source} does not contain a argument named '{name}'.");
-
-        public static bool TryGetArgument( this DirectiveDefinition source,  string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
-             => source.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
-}
- 
-
-
-
-
  public static partial class FieldArgumentsAccessorExtensions {
 
         

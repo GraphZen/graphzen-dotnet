@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy {
 public partial interface IEnumValues {
 
         public EnumValue? FindValue(String name) 
-            => Values.TryGetValue(Check.NotNull(name,nameof(name)), out var v) ? v : null;
+            => Values.TryGetValue(Check.NotNull(name,nameof(name)), out var value) ? value : null;
 
         public bool HasValue(String name) 
             => Values.ContainsKey(Check.NotNull(name, nameof(name)));
@@ -25,7 +25,7 @@ public partial interface IEnumValues {
 
 
         public EnumValue? FindValue(Object value) 
-            => ValuesByValue.TryGetValue(Check.NotNull(value,nameof(value)), out var v) ? v : null;
+            => ValuesByValue.TryGetValue(Check.NotNull(value,nameof(value)), out var _value) ? _value : null;
 
         public bool HasValue(Object value) 
             => ValuesByValue.ContainsKey(Check.NotNull(value, nameof(value)));
