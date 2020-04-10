@@ -47,7 +47,7 @@ namespace GraphZen.CodeGen
                     var keyName = MemberAttribute.KeyName ?? "name";
                     var keyType = prop.PropertyType.GetGenericArguments()[0].Name;
                     var valueType = prop.PropertyType.GetGenericArguments()[1].Name;
-                    var valueName = MemberAttribute.ValueTypeName;
+                    var valueName = MemberAttribute.ValueName;
                     var valueNameCamelized = valueName.FirstCharToLower();
                     var valueRefName = valueType.FirstCharToLower();
 
