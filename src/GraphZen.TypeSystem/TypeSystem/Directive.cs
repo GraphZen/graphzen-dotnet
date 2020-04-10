@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem
                  "execution behavior in ways field arguments will not suffice, such as " +
                  "conditionally including or skipping a field. Directives provide this by " +
                  "describing additional information to the executor.")]
-    public class Directive : Member, IDirective
+    public partial class Directive : Member, IDirective
     {
         private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
 

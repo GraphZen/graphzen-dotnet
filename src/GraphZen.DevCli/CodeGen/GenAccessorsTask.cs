@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
@@ -37,6 +38,11 @@ namespace GraphZen.CodeGen
                     }
                 }
             }
+        }
+
+        public override void Apply(StringBuilder csharp)
+        {
+            csharp.AppendLine("// hello world");
         }
     }
 }

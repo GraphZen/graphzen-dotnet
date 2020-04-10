@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -26,19 +27,25 @@ namespace GraphZen.CodeGen
         public static void PartialClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>
             csharp.Class("partial", name, @class);
 
+
+
         public static void StaticClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>
             csharp.Class("static", name, @class);
 
         public static void Region(this StringBuilder csharp, string name, Action<StringBuilder> region) =>
             csharp.Block($"#region {name}", "#endregion", region);
 
-        private static void Block(this StringBuilder csharp, string open, string close,
+        public static void Block(this StringBuilder csharp, string open, string close,
             Action<StringBuilder> content)
         {
             csharp.AppendLine(open);
             content(csharp);
             csharp.AppendLine(close);
         }
+
+
+
+        public static void WriteToFile(this StringBuilder csharp, string path) => CodeGenHelpers.WriteFile(path, csharp.ToString());
 
         public static void WriteToFile(this StringBuilder csharp, string project, string name) =>
             CodeGenHelpers.WriteFile($"./src/Linked/{project}/{name}.Generated.cs", csharp.ToString());

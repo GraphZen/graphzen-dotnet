@@ -31,7 +31,6 @@ namespace BuildTargets
         private const string Quick = nameof(Quick);
         private const string Pack = nameof(Pack);
         private const string Push = nameof(Push);
-
         private const string Default = nameof(Default);
         private const string Test = nameof(Test);
         private const string TestQuick = nameof(TestQuick);
@@ -51,10 +50,6 @@ namespace BuildTargets
 
             Target(Compile, () => Run("dotnet", "build -c Release --no-restore"));
 
-            Target("Gen2", () =>
-            {
-                Run("dotnet", "run -c Release  --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen2");
-            });
             Target(Gen, () => RunCodeGen());
 
             Target(GenQuick, () => RunCodeGen(false));
@@ -119,6 +114,7 @@ namespace BuildTargets
             Run("dotnet", "build -c Release ./src/GraphZen.DevCli/GraphZen.DevCli.csproj");
             DeleteFiles("*.Generated.cs");
             Run("dotnet", "run -c Release --no-build --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
+            Run("dotnet", "run -c Release --no-build --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen2");
             if (format) CleanupCode("./**/*.Generated.cs");
         }
 

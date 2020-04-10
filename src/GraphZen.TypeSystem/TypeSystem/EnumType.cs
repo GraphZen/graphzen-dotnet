@@ -15,7 +15,10 @@ using static GraphZen.LanguageModel.SyntaxFactory;
 
 namespace GraphZen.TypeSystem
 {
-    public class EnumType : NamedType, IEnumType
+
+
+
+    public partial class EnumType : NamedType, IEnumType
     {
         private readonly Lazy<EnumTypeDefinitionSyntax> _syntax;
 

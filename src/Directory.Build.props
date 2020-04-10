@@ -1,5 +1,4 @@
 <Project>
-
   <PropertyGroup>
     <Product>GraphZen</Product>
     <Authors>GraphZen</Authors>
@@ -19,22 +18,20 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
-
+  <ItemGroup>
+    <ProjectCapability Include="DynamicDependentFile" />
+    <ProjectCapability Include="DynamicFileNesting" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
     <Compile Include="..\Linked\Common\**\*.*">
       <!--<Link>%(RecursiveDir)%(FileName)%(Extension)</Link>-->
     </Compile>
   </ItemGroup>
-
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
-
-
-
 </Project>

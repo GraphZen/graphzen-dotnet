@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
@@ -21,8 +22,10 @@ namespace GraphZen.CodeGen
 
         public Type TargetType { get; }
 
+        public abstract void Apply(StringBuilder csharp);
+
         private static readonly Lazy<IReadOnlyList<string>> _csharpFiles =
-            new Lazy<IReadOnlyList<string>>(() => Directory.GetFiles("./", "*.cs", SearchOption.AllDirectories));
+            new Lazy<IReadOnlyList<string>>(() => Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories));
 
         public static IReadOnlyList<string> CSharpFiles => _csharpFiles.Value;
 
@@ -39,7 +42,7 @@ namespace GraphZen.CodeGen
             var tasksByTarget = GetAllFromTypes(ReflectionCodeGenerator.GetSourceTypes<T>()).GroupBy(_ => _.TargetType)
                 .Select(_ => (targetType: _.Key, tasks: _.ToReadOnlyList()));
 
-            foreach (var (targetType, tasks) in tasksByTarget)
+            foreach (var (targetType, tasks) in tasksByTarget.Take(1))
             {
                 var targetFilename = targetType.Name + ".cs";
                 var targetPath = CSharpFiles.SingleOrDefault(_ => Path.GetFileName(_) == targetFilename);
@@ -47,8 +50,32 @@ namespace GraphZen.CodeGen
                     throw new InvalidOperationException($"A code-gen task could not find file: {targetFilename}");
 
 
-                var genPath = targetPath;
-                Console.WriteLine(genPath);
+                var genDirPath = Path.GetDirectoryName(targetPath) ?? throw new NotImplementedException();
+                var genFilename = Path.GetFileNameWithoutExtension(targetFilename) + ".Generated.cs";
+                var genPath = Path.Combine(genDirPath, genFilename);
+                var genDir = Directory.CreateDirectory(genDirPath);
+
+                string? namespaceLine = File.ReadLines(targetPath).SingleOrDefault(_ => _.StartsWith("namespace"));
+                if (namespaceLine == null)
+                    throw new InvalidOperationException($"Expected file to contain a namespace: {targetPath}");
+                var namespaceName = namespaceLine.Split(' ')[1];
+
+                var csharp = CSharpStringBuilder.Create();
+                csharp.Namespace(namespaceName, ns =>
+                {
+                    var typeType = targetType.IsInterface ? "interface" :
+                        targetType.IsClass ? "class" :
+                        throw new NotImplementedException($"unsupported target type: {targetType}");
+                    ns.Block($"public partial {typeType} {targetType.Name} {{", "}", type =>
+                    {
+                        foreach (var task in tasks)
+                        {
+                            task.Apply(type);
+                        }
+                    });
+                });
+
+                csharp.WriteToFile(genPath);
             }
         }
 
