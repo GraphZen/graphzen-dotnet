@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem
     [GraphQLName("__Field")]
     [Description("Object and Interface types are described by a list of Fields, each of " +
                  "which has a name, potentially a list of arguments, and a return type.")]
-    public class Field : AnnotatableMember, IField
+    public partial class Field : AnnotatableMember, IField
     {
         private readonly Lazy<IGraphQLType> _fieldType;
         private readonly Lazy<FieldDefinitionSyntax> _syntax;
@@ -87,7 +87,9 @@ namespace GraphZen.TypeSystem
 
         [GraphQLCanBeNull] public string? DeprecationReason { get; }
 
-        [GraphQLIgnore] public IReadOnlyDictionary<string, Argument> Arguments { get; }
+        [GraphQLIgnore]
+        [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
+        public IReadOnlyDictionary<string, Argument> Arguments { get; }
 
         public override string? Description { get; }
 

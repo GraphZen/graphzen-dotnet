@@ -177,24 +177,10 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem {
 ");
 
-
-         
-            var argumentDefinitionAccessors = new List<(string containerType, string valueType)>
-            {
-                // ("FieldDefinition", "ArgumentDefinition"),
-                //("DirectiveDefinition", "ArgumentDefinition")
-            };
-
-            foreach (var (containerType, valueType) in argumentDefinitionAccessors)
-            {
-                csharp.AppendDictionaryAccessorOld(
-                    containerType, "Arguments", "name", "string", "Argument", valueType);
-            }
-
             var argumentAccessors = new List<(string containerType, string valueType)>
             {
-                ("Field", "Argument"),
-                ("IArguments", "Argument")
+               // ("Field", "Argument"),
+                //("IArguments", "Argument")
             };
 
             foreach (var (containerType, valueType) in argumentAccessors)
