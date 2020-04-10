@@ -31,7 +31,7 @@ namespace GraphZen.CodeGen
 
         public static IEnumerable<ReflectionCodeGenTask> GetAllFromTypes(IReadOnlyList<Type> types)
         {
-            foreach (var genAccessorsTask in GenAccessorsTask.FromTypes(types))
+            foreach (var genAccessorsTask in GenDicionaryAccessorsTask.FromTypes(types))
             {
                 yield return genAccessorsTask;
             }

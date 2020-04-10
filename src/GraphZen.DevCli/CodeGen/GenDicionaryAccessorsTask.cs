@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using GraphZen.Infrastructure;
@@ -12,9 +11,10 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
-    internal class GenAccessorsTask : ReflectionCodeGenTask
+    internal class GenDicionaryAccessorsTask : ReflectionCodeGenTask
     {
-        public GenAccessorsTask(Type targetType, MemberInfo member, GenDictionaryAccessorsAttribute memberAttribute) :
+        public GenDicionaryAccessorsTask(Type targetType, MemberInfo member,
+            GenDictionaryAccessorsAttribute memberAttribute) :
             base(targetType)
         {
             Member = member;
@@ -24,7 +24,7 @@ namespace GraphZen.CodeGen
         public MemberInfo Member { get; }
         public GenDictionaryAccessorsAttribute MemberAttribute { get; }
 
-        public static IEnumerable<GenAccessorsTask> FromTypes(IReadOnlyList<Type> types)
+        public static IEnumerable<GenDicionaryAccessorsTask> FromTypes(IReadOnlyList<Type> types)
         {
             foreach (var sourceType in types)
             {
@@ -32,30 +32,26 @@ namespace GraphZen.CodeGen
                 {
                     var genAccessors = member.GetCustomAttribute<GenDictionaryAccessorsAttribute>();
                     if (genAccessors != null)
-                    {
-                        yield return new GenAccessorsTask(sourceType, member, genAccessors);
-                        var targetTypes = types.Where(t => sourceType.IsAssignableFrom(t));
-                        foreach (var targetType in targetTypes)
-                        {
-                        }
-                    }
+                        yield return new GenDicionaryAccessorsTask(sourceType, member, genAccessors);
                 }
             }
         }
 
         public override void Apply(StringBuilder csharp)
         {
-            if (Member is PropertyInfo prop)
+            switch (Member)
             {
-                var propertyName = prop.Name;
-                var keyName = MemberAttribute.KeyName ?? "name";
-                var keyType = prop.PropertyType.GetGenericArguments()[0].Name;
-                var valueType = prop.PropertyType.GetGenericArguments()[1].Name;
-                var valueName = MemberAttribute.ValueTypeName;
-                var valueNameCamelized = valueName.FirstCharToLower();
-                var valueRefName = valueType.FirstCharToLower();
+                case PropertyInfo prop:
+                {
+                    var propertyName = prop.Name;
+                    var keyName = MemberAttribute.KeyName ?? "name";
+                    var keyType = prop.PropertyType.GetGenericArguments()[0].Name;
+                    var valueType = prop.PropertyType.GetGenericArguments()[1].Name;
+                    var valueName = MemberAttribute.ValueTypeName;
+                    var valueNameCamelized = valueName.FirstCharToLower();
+                    var valueRefName = valueType.FirstCharToLower();
 
-                csharp.AppendLine($@"
+                    csharp.AppendLine($@"
       public {valueType}? Find{valueName}({keyType} {keyName}) 
             => {propertyName}.TryGetValue(Check.NotNull({keyName},nameof({keyName})), out var {keyName}{valueName}) ? {keyName}{valueName} : null;
 
@@ -72,11 +68,11 @@ namespace GraphZen.CodeGen
  
 
 ");
-            }
-            else
-            {
-                throw new NotImplementedException(
-                    $"{nameof(GenDictionaryAccessorsAttribute)} is not supported for {Member.GetType()} member types");
+                    break;
+                }
+                default:
+                    throw new NotImplementedException(
+                        $"{nameof(GenDictionaryAccessorsAttribute)} is not supported for {Member.GetType()} member types");
             }
         }
     }
