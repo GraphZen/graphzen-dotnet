@@ -15,7 +15,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public abstract class FieldsDefinition : NamedTypeDefinition, IMutableFieldsDefinition
+    public abstract partial class FieldsDefinition : NamedTypeDefinition, IMutableFieldsDefinition
     {
         private readonly Dictionary<string, FieldDefinition> _fields =
             new Dictionary<string, FieldDefinition>();
@@ -33,6 +33,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<FieldDefinition> GetFields() => _fields.Values;
 
+        [GenDictionaryAccessors(nameof(FieldDefinition.Name), "Field")]
         public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
 
         IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => GetFields();

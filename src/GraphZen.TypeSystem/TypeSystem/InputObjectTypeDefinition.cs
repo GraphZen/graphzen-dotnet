@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjectTypeDefinition
+    public partial class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjectTypeDefinition
     {
         private readonly Dictionary<string, InputFieldDefinition> _fields =
             new Dictionary<string, InputFieldDefinition>();
@@ -45,6 +45,7 @@ namespace GraphZen.TypeSystem
         public override TypeKind Kind { get; } = TypeKind.InputObject;
 
 
+        [GenDictionaryAccessors(nameof(InputFieldDefinition.Name), "Field")]
         public IReadOnlyDictionary<string, InputFieldDefinition> Fields => _fields;
 
         public IEnumerable<InputFieldDefinition> GetFields() => _fields.Values;

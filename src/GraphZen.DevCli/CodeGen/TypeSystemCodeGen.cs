@@ -180,10 +180,10 @@ namespace GraphZen.TypeSystem {
 
             var fieldDefinitionAccessors = new List<(string containerType, string valueType)>
             {
-                ("InterfaceTypeDefinition", "FieldDefinition"),
-                ("ObjectTypeDefinition", "FieldDefinition"),
-                ("InputObjectTypeDefinition", "InputFieldDefinition"),
-                ("FieldsDefinition", "FieldDefinition")
+                //("InterfaceTypeDefinition", "FieldDefinition"),
+                //("ObjectTypeDefinition", "FieldDefinition"),
+                //("InputObjectTypeDefinition", "InputFieldDefinition"),
+                //("FieldsDefinition", "FieldDefinition")
             };
 
             foreach (var (containerType, valueType) in fieldDefinitionAccessors)
