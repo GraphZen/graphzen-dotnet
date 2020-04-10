@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
@@ -19,7 +18,6 @@ namespace GraphZen.CodeGen
         {
             GenSchemaExtensions();
             GenSchemaDefinitionExtensions();
-            GenerateTypeSystemDictionaryAccessors();
         }
 
         public static List<(string kind, string type)> NamedTypes { get; } = typeof(NamedType).Assembly.GetTypes()
@@ -156,41 +154,6 @@ namespace GraphZen.CodeGen
             });
 
             csharp.WriteToFile("TypeSystem", "SchemaDefinitionExtensions");
-        }
-
-
-        public static void GenerateTypeSystemDictionaryAccessors()
-        {
-            var csharp = new StringBuilder();
-
-            csharp.Append(@"
-using System;
-using System.Diagnostics.CodeAnalysis;
-using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Taxonomy;
-using JetBrains.Annotations;
-// ReSharper disable PartialTypeWithSinglePart
-// ReSharper disable UnusedMember.Global
-
-#nullable restore
-
-namespace GraphZen.TypeSystem {
-");
-
-            var argumentAccessors = new List<(string containerType, string valueType)>
-            {
-               // ("Field", "Argument"),
-                //("IArguments", "Argument")
-            };
-
-            foreach (var (containerType, valueType) in argumentAccessors)
-            {
-                csharp.AppendDictionaryAccessorOld(
-                    containerType, "Arguments", "name", "string", "Argument", valueType);
-            }
-
-            csharp.Append("}");
-            CodeGenHelpers.WriteFile("./src/Linked/TypeSystem/TypeSystemAccessors.Generated.cs", csharp.ToString());
         }
     }
 }

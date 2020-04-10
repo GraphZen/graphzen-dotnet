@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) =>
             _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
 
-        
+
         public bool IgnoreValue(string name, ConfigurationSource configurationSource)
         {
             var itemConfigurationSource = FindValue(name)?.GetConfigurationSource();
