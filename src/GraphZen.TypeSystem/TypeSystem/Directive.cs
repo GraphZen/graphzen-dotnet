@@ -48,7 +48,9 @@ namespace GraphZen.TypeSystem
             });
         }
 
-        [GraphQLIgnore] public IReadOnlyDictionary<string, Argument> Arguments { get; }
+        [GraphQLIgnore]
+        [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
+        public IReadOnlyDictionary<string, Argument> Arguments { get; }
 
         public string Name { get; }
 

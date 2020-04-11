@@ -44,7 +44,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is InterfaceTypeExtensionSyntax && Equals((InterfaceTypeExtensionSyntax)obj);
+            return obj is InterfaceTypeExtensionSyntax && Equals((InterfaceTypeExtensionSyntax) obj);
         }
 
         public override int GetHashCode()

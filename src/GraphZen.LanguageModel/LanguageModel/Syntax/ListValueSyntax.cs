@@ -43,7 +43,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ListValueSyntax && Equals((ListValueSyntax)obj);
+            return obj is ListValueSyntax && Equals((ListValueSyntax) obj);
         }
 
         public override int GetHashCode() => Values.GetHashCode();

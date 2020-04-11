@@ -63,7 +63,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is InterfaceTypeDefinitionSyntax && Equals((InterfaceTypeDefinitionSyntax)obj);
+            return obj is InterfaceTypeDefinitionSyntax && Equals((InterfaceTypeDefinitionSyntax) obj);
         }
 
         public override int GetHashCode()

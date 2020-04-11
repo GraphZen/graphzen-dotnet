@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 

@@ -7,7 +7,6 @@ using JetBrains.Annotations;
 
 namespace GraphZen.LanguageModel
 {
-
     public abstract partial class GraphQLSyntaxVisitor
     {
         public virtual void Visit(SyntaxNode node)

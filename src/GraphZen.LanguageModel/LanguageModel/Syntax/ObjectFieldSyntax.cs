@@ -55,7 +55,7 @@ namespace GraphZen.LanguageModel
 
             if (ReferenceEquals(this, obj)) return true;
 
-            return obj is ObjectFieldSyntax && Equals((ObjectFieldSyntax)obj);
+            return obj is ObjectFieldSyntax && Equals((ObjectFieldSyntax) obj);
         }
 
         public override int GetHashCode()

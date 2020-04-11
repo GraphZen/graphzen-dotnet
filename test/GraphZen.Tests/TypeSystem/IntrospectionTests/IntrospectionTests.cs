@@ -37,7 +37,7 @@ namespace GraphZen.Tests.TypeSystem.IntrospectionTests
         }
 
 
-        [Fact]
+        [Fact()]
         public async Task ItExecutesIntrospectionQuery()
         {
             var schema = Schema.Create(_ =>

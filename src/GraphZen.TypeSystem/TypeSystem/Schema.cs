@@ -48,7 +48,10 @@ namespace GraphZen.TypeSystem
             //    initialTypes.AddRange(SpecScalars.All);
             //}
             if (schemaDefinition.Types.All(_ => _.Name != "__Schema"))
-                initialTypes.AddRange(Introspection.IntrospectionTypes);
+            {
+                var introTypes = Introspection.IntrospectionTypes;
+                initialTypes.AddRange(introTypes);
+            }
 
 
             initialTypes.AddRange(types);

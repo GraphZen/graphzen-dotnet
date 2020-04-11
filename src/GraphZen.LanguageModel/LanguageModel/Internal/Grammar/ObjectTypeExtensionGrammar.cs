@@ -12,30 +12,30 @@ namespace GraphZen.LanguageModel.Internal
     {
         private static TokenListParser<TokenKind, ObjectTypeExtensionSyntax> ObjectTypeExtension { get; } =
             (from extend in Keyword("extend")
-             from type in Keyword("type")
-             from name in Name
-             from ifaces in ImplementsIntefaces.OptionalOrNull()
-             from directives in Directives.OptionalOrNull()
-             from fields in FieldsDefinition
-             select new ObjectTypeExtensionSyntax(name, ifaces, directives, fields,
-                 SyntaxLocation.FromMany(extend, name, ifaces?.GetLocation(), directives?.GetLocation(),
-                     fields?.GetLocation()))).Try()
+                from type in Keyword("type")
+                from name in Name
+                from ifaces in ImplementsIntefaces.OptionalOrNull()
+                from directives in Directives.OptionalOrNull()
+                from fields in FieldsDefinition
+                select new ObjectTypeExtensionSyntax(name, ifaces, directives, fields,
+                    SyntaxLocation.FromMany(extend, name, ifaces?.GetLocation(), directives?.GetLocation(),
+                        fields?.GetLocation()))).Try()
             .Or(
                 (from extend in Keyword("extend")
-                 from type in Keyword("type")
-                 from name in Name
-                 from ifaces in ImplementsIntefaces.OptionalOrNull()
-                 from directives in Directives
-                 select new ObjectTypeExtensionSyntax(name, ifaces, directives, null,
-                     SyntaxLocation.FromMany(extend, name, ifaces?.GetLocation(), directives?.GetLocation())))
+                    from type in Keyword("type")
+                    from name in Name
+                    from ifaces in ImplementsIntefaces.OptionalOrNull()
+                    from directives in Directives
+                    select new ObjectTypeExtensionSyntax(name, ifaces, directives, null,
+                        SyntaxLocation.FromMany(extend, name, ifaces?.GetLocation(), directives?.GetLocation())))
                 .Try()
             ).Or(
                 (from extend in Keyword("extend")
-                 from type in Keyword("type")
-                 from name in Name
-                 from ifaces in ImplementsIntefaces
-                 select new ObjectTypeExtensionSyntax(name, ifaces, null, null,
-                     SyntaxLocation.FromMany(extend, name, ifaces?.GetLocation()))).Try()
+                    from type in Keyword("type")
+                    from name in Name
+                    from ifaces in ImplementsIntefaces
+                    select new ObjectTypeExtensionSyntax(name, ifaces, null, null,
+                        SyntaxLocation.FromMany(extend, name, ifaces?.GetLocation()))).Try()
             )
             .Named("object type extension");
     }
