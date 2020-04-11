@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
-    public static class TypeSystemCodeGen
+    public static class CodeGenFx
     {
         public static void Generate()
         {

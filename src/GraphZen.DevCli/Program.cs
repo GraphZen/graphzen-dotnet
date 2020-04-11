@@ -19,7 +19,7 @@ namespace GraphZen
         private static readonly Dictionary<string, Action> CodeGenTasks = new Dictionary<string, Action>
         {
             {nameof(LanguageModel), LanguageModelCodeGen.Generate},
-            {"typeSystem", TypeSystemCodeGen.Generate},
+            {"new", CodeGenFx.Generate},
             {"factories", FactoryGenerator.GenerateFactoryMethods}
         };
 

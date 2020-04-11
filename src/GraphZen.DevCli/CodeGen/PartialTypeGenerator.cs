@@ -17,7 +17,7 @@ namespace GraphZen.CodeGen
     {
         public override void Apply(StringBuilder csharp)
         {
-            foreach (var (kind, type) in TypeSystemCodeGen.NamedTypes)
+            foreach (var (kind, type) in CodeGenFx.NamedTypes)
             {
                 csharp.Region($"{kind} type accessors", region =>
                 {
@@ -71,7 +71,7 @@ namespace GraphZen.CodeGen
     {
         public override void Apply(StringBuilder csharp)
         {
-            foreach (var (kind, type) in TypeSystemCodeGen.NamedTypes)
+            foreach (var (kind, type) in CodeGenFx.NamedTypes)
             {
                 csharp.Region($"{kind} type accessors", region =>
                 {
