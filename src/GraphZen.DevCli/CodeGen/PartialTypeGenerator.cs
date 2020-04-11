@@ -90,7 +90,7 @@ namespace GraphZen.CodeGen
 
         public bool Has{kind}(Type clrType) => HasType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public bool Has{kind}<TClrType>(this SchemaDefinition schema) => HasType<{type}Definition>(typeof(TClrType));
+        public bool Has{kind}<TClrType>() => HasType<{type}Definition>(typeof(TClrType));
 
         public bool Has{kind}(string name) => HasType<{type}Definition>(Check.NotNull(name, nameof(name)));
 ");
