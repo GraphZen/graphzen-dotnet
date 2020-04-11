@@ -36,6 +36,7 @@ stages:
         filePath: 'build.ps1'
         arguments: 'Test'
     - task: PublishTestResults@2
+      condition: always()
       inputs:
         testResultsFormat: 'VSTest'
         testResultsFiles: '**/*.trx'
