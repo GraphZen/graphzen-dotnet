@@ -15,10 +15,10 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         internal static TokenListParser<TokenKind, ArgumentSyntax> Argument { get; } =
             (from desc in Parse.Ref(() => Description).OptionalOrNull()
-                from name in Parse.Ref(() => Name.Named("argument name"))
-                from colon in Colon
-                from value in Value.Named("argument value")
-                select new ArgumentSyntax(name, value, desc, SyntaxLocation.FromMany(name, value))).Try()
+             from name in Parse.Ref(() => Name.Named("argument name"))
+             from colon in Colon
+             from value in Value.Named("argument value")
+             select new ArgumentSyntax(name, value, desc, SyntaxLocation.FromMany(name, value))).Try()
             .Named("argument");
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace GraphZen.LanguageModel.Internal
         /// </summary>
         internal static TokenListParser<TokenKind, ArgumentSyntax[]> Arguments { get; } =
             (from lp in Parse.Ref(() => LeftParen)
-                from args in Argument.Many()
-                from rp in RightParen
-                select args).Try()
+             from args in Argument.Many()
+             from rp in RightParen
+             select args).Try()
             .Named("arguments");
     }
 }

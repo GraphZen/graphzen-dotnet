@@ -10,20 +10,20 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public partial class FieldDefinition
+    public partial class Directive
     {
-        public ArgumentDefinition? FindArgument(string name)
+        public Argument? FindArgument(string name)
             => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument) ? argument : null;
 
         public bool HasArgument(string name)
             => Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
 
-        public ArgumentDefinition GetArgument(string name)
+        public Argument GetArgument(string name)
             => FindArgument(Check.NotNull(name, nameof(name))) ??
-               throw new Exception($"{this} does not contain a {nameof(ArgumentDefinition)} with name '{name}'.");
+               throw new Exception($"{this} does not contain a {nameof(Argument)} with name '{name}'.");
 
 
-        public bool TryGetArgument(string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
-            => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
+        public bool TryGetArgument(string name, [NotNullWhen(true)] out Argument? argument)
+            => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argument);
     }
 }

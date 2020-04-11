@@ -20,7 +20,7 @@ namespace GraphZen.LanguageModel.Internal
 
         public static string BlockStringValue(string rawString)
         {
-            var lines = rawString.Split(new[] {Environment.NewLine}, int.MaxValue, StringSplitOptions.None).ToList();
+            var lines = rawString.Split(new[] { Environment.NewLine }, int.MaxValue, StringSplitOptions.None).ToList();
             int? commonIndent = null;
             for (var index = 1; index < lines.Count; index++)
             {
