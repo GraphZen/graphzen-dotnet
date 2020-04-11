@@ -19,13 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="**\*.Generated.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-      <DesignTime>true</DesignTime>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\GraphZen.Infrastructure.Testing\GraphZen.Infrastructure.Testing.csproj" />
     <ProjectReference Include="..\..\src\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
   </ItemGroup>

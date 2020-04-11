@@ -4,12 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Description>GraphQL client for .NET</Description>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\Linked\Client\**\*.*">
-      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
-    </Compile>
-  </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
   </ItemGroup>

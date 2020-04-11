@@ -6,12 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Linked\AspNetCore\**\*.*">
-      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\GraphZen.AspNetCore.Playground\GraphZen.AspNetCore.Playground.csproj" />
     <ProjectReference Include="..\GraphZen.AspNetCore.Server\GraphZen.AspNetCore.Server.csproj" />
   </ItemGroup>

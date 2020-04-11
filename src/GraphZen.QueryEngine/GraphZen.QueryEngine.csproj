@@ -6,12 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Linked\QueryEngine\**\*.*">
-      <Link>QueryEngine\%(RecursiveDir)%(FileName)%(Extension)</Link>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="minver" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" PrivateAssets="All" />
