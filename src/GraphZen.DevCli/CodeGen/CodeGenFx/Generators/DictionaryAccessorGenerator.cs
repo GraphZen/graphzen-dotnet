@@ -9,7 +9,7 @@ using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.CodeGen
+namespace GraphZen.CodeGen.CodeGenFx.Generators
 {
     internal class DictionaryAccessorGenerator : PartialTypeGenerator
     {

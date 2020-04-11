@@ -6,20 +6,16 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.CodeGen
+namespace GraphZen.CodeGen.Generators
 {
     public class SyntaxNodeGenerator : PartialTypeGenerator
     {
-        public static IEnumerable<SyntaxNodeGenerator> GetAll() =>
-            typeof(SyntaxNode).Assembly.GetTypes()
-                .Where(typeof(SyntaxNode).IsAssignableFrom)
-                .Where(_ => !_.IsAbstract)
-                .OrderBy(_ => _.Name)
-                .Select(_ => new SyntaxNodeGenerator(_));
+        public static IEnumerable<SyntaxNodeGenerator> CreateAll() =>
+            LanguageModelCodeGen.NodeTypes.Select(_ => new SyntaxNodeGenerator(_));
 
         private SyntaxNodeGenerator(Type targetType) : base(targetType)
         {

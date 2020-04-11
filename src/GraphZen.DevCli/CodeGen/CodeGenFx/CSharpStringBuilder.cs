@@ -6,7 +6,7 @@ using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.CodeGen
+namespace GraphZen.CodeGen.CodeGenFx
 {
     public static class CSharpStringBuilder
     {

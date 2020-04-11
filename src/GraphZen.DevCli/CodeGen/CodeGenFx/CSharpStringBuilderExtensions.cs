@@ -8,9 +8,9 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.CodeGen
+namespace GraphZen.CodeGen.CodeGenFx
 {
-    public static class CodeGenStringBuilderExtensions
+    public static class CSharpStringBuilderExtensions
     {
         public static void AddCommonUsings(this StringBuilder csharp) =>
             csharp.AppendLine(
@@ -34,7 +34,6 @@ using JetBrains.Annotations;
 
         public static void PartialClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>
             csharp.Class("partial", name, @class);
-
 
         public static void StaticClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>
             csharp.Class("static", name, @class);
@@ -62,12 +61,5 @@ using JetBrains.Annotations;
                 }
             });
         }
-
-
-        public static void WriteToFile(this StringBuilder csharp, string path) =>
-            CodeGenHelpers.WriteFile(path, csharp.ToString());
-
-        public static void WriteToFile(this StringBuilder csharp, string project, string name) =>
-            CodeGenHelpers.WriteFile($"./src/Linked/{project}/{name}.Generated.cs", csharp.ToString());
     }
 }
