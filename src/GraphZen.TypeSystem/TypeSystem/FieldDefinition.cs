@@ -63,7 +63,7 @@ namespace GraphZen.TypeSystem
         {
             if (!configurationSource.Overrides(argument.GetNameConfigurationSource())) return false;
 
-            if (this.TryGetArgument(name, out var existing) && existing != argument)
+            if (TryGetArgument(name, out var existing) && existing != argument)
                 throw new InvalidOperationException(
                     $"Cannot rename {argument} to '{name}'. {this} already contains a field named '{name}'.");
 
@@ -149,7 +149,7 @@ namespace GraphZen.TypeSystem
                 configurationSource = configurationSource.Max(ignoredConfigurationSource);
 
             _ignoredArguments[name] = configurationSource;
-            var existing = this.FindArgument(name);
+            var existing = FindArgument(name);
 
             if (existing != null) return IgnoreArgument(existing, configurationSource);
 
@@ -174,7 +174,7 @@ namespace GraphZen.TypeSystem
             if (memberMatch != null) return memberMatch;
 
             var (argumentName, _) = member.GetGraphQLArgumentName();
-            return this.FindArgument(argumentName);
+            return FindArgument(argumentName);
         }
 
         public void RemoveArgument(ArgumentDefinition argument)
@@ -207,7 +207,7 @@ namespace GraphZen.TypeSystem
 
         private ArgumentDefinition AddArgument(ArgumentDefinition argument)
         {
-            if (this.HasArgument(argument.Name))
+            if (HasArgument(argument.Name))
                 throw new InvalidOperationException(
                     $"Cannot add {argument} to {this}. An argument with that name already exists.");
 

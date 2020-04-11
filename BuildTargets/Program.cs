@@ -77,7 +77,7 @@ namespace BuildTargets
                 Run("dotnet", $"pack -c Release -o ./{PackageDir} --no-build");
             });
 
-            Target(Push, action: () =>
+            Target(Push, () =>
             {
                 var packages = Directory.GetFiles(PackageDir, "*.nupkg");
                 foreach (var package in packages)
@@ -114,6 +114,7 @@ namespace BuildTargets
             Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
             if (format) CleanupCode("./**/*.Generated.cs");
         }
+
         private static void CleanDir(string path)
         {
             Directory.CreateDirectory(path).Delete(true);

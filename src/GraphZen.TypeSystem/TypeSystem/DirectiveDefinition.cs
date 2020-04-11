@@ -84,7 +84,7 @@ namespace GraphZen.TypeSystem
         {
             if (!configurationSource.Overrides(argument.GetNameConfigurationSource())) return false;
 
-            if (this.TryGetArgument(name, out var existing) && existing != argument)
+            if (TryGetArgument(name, out var existing) && existing != argument)
                 throw new InvalidOperationException(
                     $"Cannot rename {argument} to '{name}'. {this} already contains a field named '{name}'.");
 

@@ -12,7 +12,8 @@ namespace GraphZen.CodeGen.Generators
 {
     public static class TypeSystemCodeGen
     {
-        public static IReadOnlyList<(string kind, string type)> NamedTypes { get; } = typeof(NamedType).Assembly.GetTypes()
+        public static IReadOnlyList<(string kind, string type)> NamedTypes { get; } = typeof(NamedType).Assembly
+            .GetTypes()
             .Where(typeof(NamedType).IsAssignableFrom)
             .Where(_ => !_.IsAbstract)
             .OrderBy(_ => _.Name)

@@ -65,7 +65,8 @@ namespace GraphZen.CodeGen.Generators
                         }
                     });
             });
-            return new GeneratedCode("./src/GraphZen.LanguageModel/GraphQLSyntaxVisitor.Generated.cs", csharp.ToString());
+            return new GeneratedCode("./src/GraphZen.LanguageModel/GraphQLSyntaxVisitor.Generated.cs",
+                csharp.ToString());
         }
 
         public static GeneratedCode GenSyntaxKindEnum()

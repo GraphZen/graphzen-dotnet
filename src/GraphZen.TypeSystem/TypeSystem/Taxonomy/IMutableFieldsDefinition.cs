@@ -11,7 +11,6 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     public partial interface IMutableFieldsDefinition : IFieldsDefinition
     {
-
         [GenDictionaryAccessors(nameof(FieldDefinition.Name), "Field")]
         IReadOnlyDictionary<string, FieldDefinition> Fields { get; }
 

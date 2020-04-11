@@ -57,7 +57,7 @@ namespace GraphZen.TypeSystem
             if (!configurationSource.Overrides(field.GetNameConfigurationSource())) return false;
 
 
-            if (this.TryGetField(name, out var existing) && existing != field)
+            if (TryGetField(name, out var existing) && existing != field)
                 throw new InvalidOperationException(
                     $"Cannot rename {field} to '{name}'. {this} already contains a field named '{name}'.");
 
@@ -73,7 +73,7 @@ namespace GraphZen.TypeSystem
             if (memberMatch != null) return memberMatch;
 
             var (fieldName, _) = member.GetGraphQLFieldName();
-            return this.FindField(fieldName);
+            return FindField(fieldName);
         }
 
         public void UnignoreField(string fieldName)
@@ -143,7 +143,7 @@ namespace GraphZen.TypeSystem
                 configurationSource = configurationSource.Max(ignoredConfigurationSource);
 
             _ignoredFields[fieldName] = configurationSource;
-            var existing = this.FindField(fieldName);
+            var existing = FindField(fieldName);
 
             if (existing != null) return IgnoreField(existing, configurationSource);
 
@@ -168,7 +168,7 @@ namespace GraphZen.TypeSystem
             }
 
 
-            var field = this.FindField(name);
+            var field = FindField(name);
             if (field != null)
             {
                 field.UpdateConfigurationSource(configurationSource);

@@ -58,7 +58,7 @@ namespace GraphZen.TypeSystem
         {
             if (value is string str)
             {
-                var enumValue = this.FindValue(str);
+                var enumValue = FindValue(str);
                 if (enumValue != null) return Maybe.Some(enumValue.Value);
             }
 
@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem
         {
             if (value is EnumValueSyntax enumNode)
             {
-                var enumValue = this.FindValue(enumNode.Value);
+                var enumValue = FindValue(enumNode.Value);
                 if (enumValue != null) return Maybe.Some(enumValue.Value);
             }
 
@@ -83,7 +83,8 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
-        [GenDictionaryAccessors(nameof(EnumValue.Name), nameof(EnumValue.Value))] public IReadOnlyDictionary<string, EnumValue> Values { get; }
+        [GenDictionaryAccessors(nameof(EnumValue.Name), nameof(EnumValue.Value))]
+        public IReadOnlyDictionary<string, EnumValue> Values { get; }
 
         [GenDictionaryAccessors(nameof(EnumValue.Value), nameof(EnumValue.Value))]
         public IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
