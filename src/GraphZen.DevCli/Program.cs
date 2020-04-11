@@ -46,8 +46,6 @@ namespace GraphZen
                 }
             });
             root.AddCommand(genCmd);
-            root.AddCommand(gen2);
-
 
             var cliBuilder = new CommandLineBuilder(root);
             var cli = cliBuilder.Build();

@@ -157,7 +157,7 @@ namespace GraphZen.CodeGen
 
         public static IEnumerable<PartialTypeGenerator> FromType(Type type)
         {
-            foreach (var gen in DictionaryAccessorGenerator.FromType(type))
+            foreach (var gen in DictionaryAccessorGenerator.FromTypeProperties(type))
             {
                 yield return gen;
             }
