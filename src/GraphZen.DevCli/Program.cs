@@ -35,7 +35,7 @@ namespace GraphZen
             };
             var genCmd = new Command("gen")
             {
-                Command("typeSystem")
+            
             };
             genCmd.Handler = CommandHandler.Create(() =>
             {

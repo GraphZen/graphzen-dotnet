@@ -13,40 +13,6 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
-
-    public class SyntaxNodeGenerator : PartialTypeGenerator
-    {
-        public static IEnumerable<SyntaxNodeGenerator> GetAll() =>
-            typeof(SyntaxNode).Assembly.GetTypes()
-                .Where(typeof(SyntaxNode).IsAssignableFrom)
-                .Where(_ => !_.IsAbstract)
-                .OrderBy(_ => _.Name)
-                .Select(_ => new SyntaxNodeGenerator(_));
-
-        private SyntaxNodeGenerator(Type targetType) : base(targetType) { }
-
-        public override void Apply(StringBuilder @class)
-        {
-            var type = TargetType.Name;
-            var kind = type.Replace("Syntax", "");
-            @class.AppendLine($@"
-	    /// <summary>Empty, read-only list of <see cref=""{type}""/> nodes.</summary>
-		public static IReadOnlyList<{type}> EmptyList {{get;}} = ImmutableList<{type}>.Empty; 
-		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor""/> enters a <see cref=""{type}""/> node.</summary>
-		public override void VisitEnter( GraphQLSyntaxVisitor visitor) => visitor.Enter{kind}(this);
-		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor""/> leaves a <see cref=""{type}""/> node.</summary>
-		public override void VisitLeave( GraphQLSyntaxVisitor visitor) => visitor.Leave{kind}(this);
-		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor{{TResult}}""/> enters a <see cref=""{type}""/> node.</summary>
-		public override TResult VisitEnter<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.Enter{kind}(this);
-		/// <summary>Called when a <see cref=""GraphQLSyntaxVisitor{{TResult}}""/> leaves a <see cref=""{type}""/> node.</summary>
-		public override TResult VisitLeave<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.Leave{kind}(this);
-		public override SyntaxKind Kind {{get;}} = SyntaxKind.{kind};	
-");
-
-        }
-    }
-
-
     public static class LanguageModelCodeGen
     {
         private static List<(string kind, string type)> NodeTypes { get; } = typeof(SyntaxNode).Assembly.GetTypes()
