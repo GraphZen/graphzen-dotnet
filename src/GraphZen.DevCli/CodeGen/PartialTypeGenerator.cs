@@ -23,44 +23,32 @@ namespace GraphZen.CodeGen
                 csharp.Region($"{kind} type accessors", region =>
                 {
                     region.AppendLine($@"
-    public static {type} Get{kind}(this Schema schema, string name) =>
-            Check.NotNull(schema, nameof(schema)).GetType<{type}>(name);
+        public {type} Get{kind}(string name) => GetType<{type}>(name);
 
+        public {type} Get{kind}(Type clrType) => GetType<{type}>(Check.NotNull(clrType, nameof(clrType)));
+        
+        public {type} Get{kind}<TClrType>() => GetType<{type}>(typeof(TClrType));
 
-        public static {type} Get{kind}(this Schema schema, Type clrType) => Check.NotNull(schema, nameof(schema))
-            .GetType<{type}>(Check.NotNull(clrType, nameof(clrType)));
+        public {type}? Find{kind}(string name) => FindType<{type}>(name);
 
+        public {type}? Find{kind}<TClrType>() => FindType<{type}>(typeof(TClrType));
 
-        public static {type} Get{kind}<TClrType>(this Schema schema) =>
-            Check.NotNull(schema, nameof(schema)).GetType<{type}>(typeof(TClrType));
+        public {type}? Find{kind}(Type clrType) => FindType<{type}>(Check.NotNull(clrType, nameof(clrType)));
 
-        public static {type}? Find{kind}(this Schema schema, string name) =>
-            Check.NotNull(schema, nameof(schema)).FindType<{type}>(name);
+        public bool TryGet{kind}(Type clrType, [NotNullWhen(true)] out {type}? type) =>
+            TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public static {type}? Find{kind}<TClrType>(this Schema schema) =>
-            Check.NotNull(schema, nameof(schema)).FindType<{type}>(typeof(TClrType));
+        public bool TryGet{kind}<TClrType>([NotNullWhen(true)] out {type}? type) =>
+            TryGetType(typeof(TClrType), out type);
 
+        public bool TryGet{kind}(string name, [NotNullWhen(true)] out {type}? type) =>
+            TryGetType(Check.NotNull(name, nameof(name)), out type);
 
-        public static {type}? Find{kind}(this Schema schema, Type clrType) => Check.NotNull(schema, nameof(schema))
-            .FindType<{type}>(Check.NotNull(clrType, nameof(clrType)));
+        public bool Has{kind}(Type clrType) => HasType<{type}>(Check.NotNull(clrType, nameof(clrType)));
 
-        public static bool TryGet{kind}(this Schema schema, Type clrType, [NotNullWhen(true)] out {type}? type) =>
-            Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
+        public bool Has{kind}<TClrType>() => HasType<{type}>(typeof(TClrType));
 
-        public static bool TryGet{kind}<TClrType>(this Schema schema, [NotNullWhen(true)] out {type}? type) =>
-            Check.NotNull(schema, nameof(schema)).TryGetType(typeof(TClrType), out type);
-
-        public static bool TryGet{kind}(this Schema schema, string name, [NotNullWhen(true)] out {type}? type) =>
-            Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(name, nameof(name)), out type);
-
-        public static bool Has{kind}(this Schema schema, Type clrType) => Check.NotNull(schema, nameof(schema))
-            .HasType<{type}>(Check.NotNull(clrType, nameof(clrType)));
-
-        public static bool Has{kind}<TClrType>(this Schema schema) =>
-            Check.NotNull(schema, nameof(schema)).HasType<{type}>(typeof(TClrType));
-
-        public static bool Has{kind}(this Schema schema, string name) => Check.NotNull(schema, nameof(schema))
-            .HasType<{type}>(Check.NotNull(name, nameof(name)));
+        public bool Has{kind}(string name) => HasType<{type}>(Check.NotNull(name, nameof(name)));
 
 ");
                 });
@@ -77,53 +65,34 @@ namespace GraphZen.CodeGen
                 csharp.Region($"{kind} type accessors", region =>
                 {
                     region.AppendLine($@"
-     public static {type}Definition Get{kind}(this SchemaDefinition schema, string name) =>
-            Check.NotNull(schema, nameof(schema)).GetType<{type}Definition>(name);
+        public {type}Definition Get{kind}(string name) => GetType<{type}Definition>(name);
 
+        public {type}Definition Get{kind}(Type clrType) =>
+                GetType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public static {type}Definition Get{kind}(this SchemaDefinition schema, Type clrType) =>
-            Check.NotNull(schema, nameof(schema))
-                .GetType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
+        public {type}Definition Get{kind}<TClrType>() => GetType<{type}Definition>(typeof(TClrType));
 
+        public {type}Definition? Find{kind}(string name) => FindType<{type}Definition>(name);
 
-        public static {type}Definition Get{kind}<TClrType>(this SchemaDefinition schema) =>
-            Check.NotNull(schema, nameof(schema)).GetType<{type}Definition>(typeof(TClrType));
+        public {type}Definition? Find{kind}<TClrType>() => FindType<{type}Definition>(typeof(TClrType));
 
-        public static {type}Definition? Find{kind}(this SchemaDefinition schema, string name) =>
-            Check.NotNull(schema, nameof(schema)).FindType<{type}Definition>(name);
+        public {type}Definition? Find{kind}(Type clrType) => 
+            FindType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public static {type}Definition? Find{kind}<TClrType>(this SchemaDefinition schema) =>
-            Check.NotNull(schema, nameof(schema)).FindType<{type}Definition>(typeof(TClrType));
+        public bool TryGet{kind}(Type clrType, out {type}Definition type) =>
+            TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
+        public bool TryGet{kind}<TClrType>(out {type}Definition type) =>
+            TryGetType(typeof(TClrType), out type);
 
-        public static {type}Definition? Find{kind}(this SchemaDefinition schema, Type clrType) =>
-            Check.NotNull(schema, nameof(schema))
-                .FindType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
+        public bool TryGet{kind}(string name, out {type}Definition type) =>
+            TryGetType(Check.NotNull(name, nameof(name)), out type);
 
-        public static bool TryGet{kind}(this SchemaDefinition schema, Type clrType,
-            out {type}Definition type) =>
-            Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
+        public bool Has{kind}(Type clrType) => HasType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public static bool TryGet{kind}<TClrType>(this SchemaDefinition schema,
-            out {type}Definition type) =>
-            Check.NotNull(schema, nameof(schema)).TryGetType(typeof(TClrType), out type);
+        public bool Has{kind}<TClrType>(this SchemaDefinition schema) => HasType<{type}Definition>(typeof(TClrType));
 
-        public static bool TryGet{kind}(this SchemaDefinition schema, string name,
-            out {type}Definition type) =>
-            Check.NotNull(schema, nameof(schema)).TryGetType(Check.NotNull(name, nameof(name)), out type);
-
-        public static bool Has{kind}(this SchemaDefinition schema, Type clrType) =>
-            Check.NotNull(schema, nameof(schema))
-                .HasType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
-
-        public static bool Has{kind}<TClrType>(this SchemaDefinition schema) => Check.NotNull(schema, nameof(schema))
-            .HasType<{type}Definition>(typeof(TClrType));
-
-        public static bool Has{kind}(this SchemaDefinition schema, string name) =>
-            Check.NotNull(schema, nameof(schema))
-                .HasType<{type}Definition>(Check.NotNull(name, nameof(name)));
-
-
+        public bool Has{kind}(string name) => HasType<{type}Definition>(Check.NotNull(name, nameof(name)));
 ");
                 });
             }
