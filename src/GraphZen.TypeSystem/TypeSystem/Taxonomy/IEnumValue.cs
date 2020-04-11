@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public partial interface IEnumValue : IEnumValueDefinition, ISyntaxConvertable
+    public interface IEnumValue : IEnumValueDefinition, ISyntaxConvertable
     {
         new EnumType DeclaringType { get; }
     }
