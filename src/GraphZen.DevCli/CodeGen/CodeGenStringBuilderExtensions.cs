@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
@@ -47,6 +48,19 @@ using JetBrains.Annotations;
             csharp.AppendLine(open);
             content(csharp);
             csharp.AppendLine(close);
+        }
+
+        public static void Enum(this StringBuilder cs, EnumType @enum)
+        {
+            cs.Block($"public enum {@enum.Name} {{", "}", inner =>
+            {
+                foreach (var (name, value) in @enum.Values)
+                {
+                    if (value.Description != null) cs.AppendLine($"/// <summary>{value.Description}</summary>");
+
+                    inner.AppendLine($"{name},");
+                }
+            });
         }
 
 
