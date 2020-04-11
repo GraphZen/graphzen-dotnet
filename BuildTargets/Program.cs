@@ -114,7 +114,6 @@ namespace BuildTargets
             Run("dotnet", "build -c Release ./src/GraphZen.DevCli/GraphZen.DevCli.csproj");
             DeleteFiles("*.Generated.cs");
             Run("dotnet", "run -c Release --no-build --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
-            Run("dotnet", "run -c Release --no-build --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen2");
             if (format) CleanupCode("./**/*.Generated.cs");
         }
 

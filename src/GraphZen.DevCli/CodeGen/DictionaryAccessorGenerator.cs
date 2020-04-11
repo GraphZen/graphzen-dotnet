@@ -12,9 +12,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
-    internal class GenDictionaryAccessorsTask : ReflectionCodeGenTask
+    internal class GenDictionaryAccessors : PartialTypeGenerator
     {
-        public GenDictionaryAccessorsTask(PropertyInfo property,
+        public GenDictionaryAccessors(PropertyInfo property,
             GenDictionaryAccessorsAttribute attribute) :
             base(property.DeclaringType ?? throw new NotImplementedException())
         {
@@ -25,12 +25,12 @@ namespace GraphZen.CodeGen
         public PropertyInfo Property { get; }
         public GenDictionaryAccessorsAttribute Attribute { get; }
 
-        public static IEnumerable<GenDictionaryAccessorsTask> FromTypes(IReadOnlyList<Type> types)
+        public static IEnumerable<GenDictionaryAccessors> FromType(Type type)
         {
-            foreach (var property in types.SelectMany(t => t.GetProperties(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public)))
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
             {
                 var genAccessors = property.GetCustomAttribute<GenDictionaryAccessorsAttribute>();
-                if (genAccessors != null) yield return new GenDictionaryAccessorsTask(property, genAccessors);
+                if (genAccessors != null) yield return new GenDictionaryAccessors(property, genAccessors);
             }
         }
 

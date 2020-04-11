@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -28,7 +27,6 @@ namespace GraphZen.CodeGen
             csharp.Class("partial", name, @class);
 
 
-
         public static void StaticClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>
             csharp.Class("static", name, @class);
 
@@ -44,69 +42,10 @@ namespace GraphZen.CodeGen
         }
 
 
-
-        public static void WriteToFile(this StringBuilder csharp, string path) => CodeGenHelpers.WriteFile(path, csharp.ToString());
+        public static void WriteToFile(this StringBuilder csharp, string path) =>
+            CodeGenHelpers.WriteFile(path, csharp.ToString());
 
         public static void WriteToFile(this StringBuilder csharp, string project, string name) =>
             CodeGenHelpers.WriteFile($"./src/Linked/{project}/{name}.Generated.cs", csharp.ToString());
-
-
-        public static void AppendDictionaryAccessors(this StringBuilder csharp,
-            string propertyName, string keyName, string keyType,
-            string valueName, string valueType)
-        {
-            var valueNameCamelized = valueName.FirstCharToLower();
-            var valueRefName = valueType.FirstCharToLower();
-            var code = $@"
-
-        public {valueType}? Find{valueName}({keyType} {keyName}) 
-            => {propertyName}.TryGetValue(Check.NotNull({keyName},nameof({keyName})), out var {keyName}{valueName}) ? {keyName}{valueName} : null;
-
-        public bool Has{valueName}({keyType} {keyName}) 
-            => {propertyName}.ContainsKey(Check.NotNull({keyName}, nameof({keyName})));
-
-        
-        public {valueType} Get{valueName}({keyType} {keyName}) 
-            => Find{valueName}(Check.NotNull({keyName}, nameof({keyName}))) ?? throw new Exception($""{{this}} does not contain a {valueNameCamelized} named '{{{keyName}}}'."");
-
-        public bool TryGet{valueName}({keyType} {keyName}, [NotNullWhen(true)] out {valueType}? {valueRefName})
-             => {propertyName}.TryGetValue(Check.NotNull({keyName}, nameof({keyName})), out {valueRefName});
- 
-
-
-";
-            csharp.Append(code);
-        }
-        public static void AppendDictionaryAccessorOld(this StringBuilder csharp,
-            string containerType, string propertyName, string keyName, string keyType,
-            string valueName, string valueType)
-        {
-            var thisRefName = "source";
-            var valueNameCamelized = valueName.FirstCharToLower();
-            var valueRefName = valueType.FirstCharToLower();
-            var code = $@"
-
- public static partial class {containerType}{propertyName}AccessorExtensions {{
-
-        
-        public static {valueType}? Find{valueName}( this {containerType} {thisRefName}, {keyType} {keyName}) 
-            => {thisRefName}.{propertyName}.TryGetValue(Check.NotNull({keyName},nameof({keyName})), out var {keyName}{valueName}) ? {keyName}{valueName} : null;
-
-        public static bool Has{valueName}( this {containerType} {thisRefName},  {keyType} {keyName}) 
-            => {thisRefName}.{propertyName}.ContainsKey(Check.NotNull({keyName}, nameof({keyName})));
-
-        
-        public static {valueType} Get{valueName}( this {containerType} {thisRefName},  {keyType} {keyName}) 
-            => {thisRefName}.Find{valueName}(Check.NotNull({keyName}, nameof({keyName}))) ?? throw new Exception($""{{{thisRefName}}} does not contain a {valueNameCamelized} named '{{{keyName}}}'."");
-
-        public static bool TryGet{valueName}( this {containerType} {thisRefName},  {keyType} {keyName}, [NotNullWhen(true)] out {valueType}? {valueRefName})
-             => {thisRefName}.{propertyName}.TryGetValue(Check.NotNull({keyName}, nameof({keyName})), out {valueRefName});
-}}
- 
-
-
-";
-            csharp.Append(code);
-        }
     }
 }

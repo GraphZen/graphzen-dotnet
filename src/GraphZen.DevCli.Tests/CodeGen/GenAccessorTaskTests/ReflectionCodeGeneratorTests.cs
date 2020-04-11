@@ -16,7 +16,7 @@ namespace GraphZen.CodeGen.GenAccessorTaskTests
         [Fact]
         public void GetCodeGenSourceTypes_should_return_types_with_members_annotated_for_codegen()
         {
-            var result = GenDictionaryAccessorsTask.FromTypes(GetSourceTypes<ReflectionCodeGeneratorTests>());
+            var result = DictionaryAccessorGenerator.FromTypes(GetSourceTypes<ReflectionCodeGeneratorTests>());
             result.Should().HaveCount(2);
             result.Should().Contain(_ => _.TargetType == typeof(InterfaceWithAnnotatedMember));
             result.Should().Contain(_ => _.TargetType == typeof(ClassWithAnnotatedMember));

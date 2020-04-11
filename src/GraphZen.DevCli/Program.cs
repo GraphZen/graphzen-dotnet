@@ -33,13 +33,6 @@ namespace GraphZen
             {
                 new Command("benchmark")
             };
-            var gen2 = new Command("gen2")
-            {
-                Handler = CommandHandler.Create(() =>
-                {
-                    ReflectionCodeGenTask.GenForAssemblyWithType<Schema>();
-                })
-            };
             var genCmd = new Command("gen")
             {
                 Command("typeSystem")
