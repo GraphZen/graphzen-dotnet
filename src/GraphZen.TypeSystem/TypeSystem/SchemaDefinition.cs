@@ -18,7 +18,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
+    public partial class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
     {
         private readonly Dictionary<string, DirectiveDefinition> _directives =
             new Dictionary<string, DirectiveDefinition>();

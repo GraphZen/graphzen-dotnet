@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem
     [Description("A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all " +
                  "available types and directives on the server, as well as the entry points for " +
                  "query, mutation, and subscription operations.")]
-    public class Schema : AnnotatableMember, ISchema
+    public partial class Schema : AnnotatableMember, ISchema
     {
         private readonly Dictionary<string, List<ObjectType>> _implementations =
             new Dictionary<string, List<ObjectType>>();
