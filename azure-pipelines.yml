@@ -35,6 +35,12 @@ stages:
       inputs:
         filePath: 'build.ps1'
         arguments: 'Test'
+    - task: PublishTestResults@2
+      condition: always()
+      inputs:
+        testResultsFormat: 'VSTest'
+        testResultsFiles: '**/*.trx'
+        mergeTestResults: true
     - task: PowerShell@2
       displayName: 'Pack'
       inputs:
@@ -49,11 +55,6 @@ stages:
       inputs:
         codeCoverageTool: 'Cobertura'
         summaryFileLocation: './build-artifacts/test/coverage-reports/Cobertura.xml'
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'VSTest'
-        testResultsFiles: '**/*.trx'
-        mergeTestResults: true
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: './build-artifacts/packages'
