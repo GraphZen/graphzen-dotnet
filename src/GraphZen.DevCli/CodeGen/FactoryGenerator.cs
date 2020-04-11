@@ -96,7 +96,7 @@ namespace {@namespace} {{
                     var ctorParameters = string.Join(", ", ctor.GetParameters().Select(p => p.Name));
                     var method =
                         $"public static {type.Name} {methodName}({parameters}) => new {name}({ctorParameters});";
-                    yield return (genFactory.FactoryClassName, type.Namespace!, method);
+                    yield return (genFactory.FactoryType.Name, type.Namespace!, method);
                 }
             }
         }
