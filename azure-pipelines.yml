@@ -8,37 +8,6 @@ pool:
 stages:
 - stage: Build
   jobs:
-  - job: CodeGen
-    steps:
-    - task: UseDotNet@2
-      inputs:
-        packageType: 'sdk'
-        useGlobalJson: true
-    - task: PowerShell@2
-      displayName: 'Restore'
-      inputs:
-        filePath: 'build.ps1'
-        arguments: 'Restore'
-    - task: PowerShell@2
-      displayName: 'Compile'
-      inputs:
-        filePath: 'build.ps1'
-        arguments: 'Compile'
-    - task: PowerShell@2
-      displayName: 'Code Gen'
-      inputs:
-        filePath: 'build.ps1'
-        arguments: 'genquick'
-    - task: PowerShell@2
-      displayName: 'Compile'
-      inputs:
-        filePath: 'build.ps1'
-        arguments: 'Compile'
-    - task: PowerShell@2
-      displayName: 'Test'
-      inputs:
-        filePath: 'build.ps1'
-        arguments: 'Test'
   - job: Build
     steps:
     - task: UseDotNet@2
@@ -90,6 +59,39 @@ stages:
         targetPath: './build-artifacts/packages'
         artifact: 'packages'
         publishLocation: 'pipeline'
+  - job: TestCodeGen
+    displayName: 'Test Code Gen'
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        useGlobalJson: true
+    - task: PowerShell@2
+      displayName: 'Restore'
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'Restore'
+    - task: PowerShell@2
+      displayName: 'Compile'
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'Compile'
+    - task: PowerShell@2
+      displayName: 'Code Gen'
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'genquick'
+    - task: PowerShell@2
+      displayName: 'Compile'
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'Compile'
+    - task: PowerShell@2
+      displayName: 'Test'
+      inputs:
+        filePath: 'build.ps1'
+        arguments: 'Test'
+
 - stage: DeployPreRelease
   displayName: Deploy Pre-Release
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
