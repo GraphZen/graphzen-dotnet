@@ -12,7 +12,15 @@ namespace GraphZen.CodeGen
     public static class CodeGenStringBuilderExtensions
     {
         public static void AddCommonUsings(this StringBuilder csharp) =>
-            csharp.AppendLine(CodeGenConstants.CommonUsings);
+            csharp.AppendLine(
+                @"
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
+using GraphZen.Infrastructure;
+using JetBrains.Annotations;
+");
 
         public static void Namespace(this StringBuilder csharp, string name, Action<StringBuilder> @namespace) =>
             csharp.Block($"namespace {name} {{", "}", @namespace);

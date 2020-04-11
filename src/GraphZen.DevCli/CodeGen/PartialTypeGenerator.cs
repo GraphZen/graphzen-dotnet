@@ -13,6 +13,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
+
     public class SchemaTypeAccessorGenerator : PartialTypeGenerator<Schema>
     {
         public override void Apply(StringBuilder csharp)
@@ -154,6 +155,8 @@ namespace GraphZen.CodeGen
             new Lazy<IReadOnlyList<string>>(() => Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories));
 
         public static IReadOnlyList<string> CSharpFiles => _csharpFiles.Value;
+
+        public static IEnumerable<PartialTypeGenerator> FromTypes(IEnumerable<Type> types) => types.SelectMany(FromType);
 
         public static IEnumerable<PartialTypeGenerator> FromType(Type type)
         {

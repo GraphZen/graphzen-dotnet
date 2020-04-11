@@ -33,12 +33,14 @@ namespace GraphZen.CodeGen
             }.SelectMany(t =>
                 t.Assembly.GetTypes().Where(_ => _.Namespace != null && _.Namespace.StartsWith(nameof(GraphZen))));
 
-            foreach (var type in types)
+            foreach (var fromType in PartialTypeGenerator.FromTypes(types))
             {
-                foreach (var partialGen in PartialTypeGenerator.FromType(type))
-                {
-                    yield return partialGen;
-                }
+                yield return fromType;
+            }
+
+            foreach (var sng in SyntaxNodeGenerator.GetAll())
+            {
+                yield return sng;
             }
 
             yield return new SchemaDefinitionTypeAccessorGenerator();

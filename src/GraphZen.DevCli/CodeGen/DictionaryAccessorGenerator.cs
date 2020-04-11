@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using GraphZen.Infrastructure;
@@ -27,7 +26,8 @@ namespace GraphZen.CodeGen
 
         public static IEnumerable<DictionaryAccessorGenerator> FromTypeProperties(Type type)
         {
-            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.DeclaredOnly |
+                                                        BindingFlags.Public))
             {
                 var genAccessors = property.GetCustomAttribute<GenDictionaryAccessorsAttribute>();
                 if (genAccessors != null) yield return new DictionaryAccessorGenerator(property, genAccessors);
