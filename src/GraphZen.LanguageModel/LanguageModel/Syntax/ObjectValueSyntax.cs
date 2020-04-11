@@ -15,12 +15,12 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ObjectValueSyntax : ValueSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public ObjectValueSyntax(params ObjectFieldSyntax[] fields) : this(fields, null)
         {
         }
 
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public ObjectValueSyntax(IReadOnlyList<ObjectFieldSyntax> fields, SyntaxLocation? location = null) :
             base(location)
         {

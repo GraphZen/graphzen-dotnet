@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class EnumValueDefinitionSyntax : SyntaxNode, IDirectivesSyntax, IDescribedSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public EnumValueDefinitionSyntax(EnumValueSyntax value,
             StringValueSyntax? description = null,
             IReadOnlyList<DirectiveSyntax>? directives = null,

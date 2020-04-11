@@ -37,7 +37,6 @@ namespace GraphZen.CodeGen
         public override void Apply(StringBuilder csharp)
         {
             var propertyName = Property.Name;
-            var keyName = Attribute.KeyName;
             var keyNameCamelized = Attribute.KeyName.FirstCharToLower();
             var keyType = Property.PropertyType.GetGenericArguments()[0].Name;
             var valueType = Property.PropertyType.GetGenericArguments()[1].Name;

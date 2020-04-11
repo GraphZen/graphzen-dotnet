@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class InlineFragmentSyntax : SelectionSyntax, IFragmentTypeConditionSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public InlineFragmentSyntax(SelectionSetSyntax selectionSet, NamedTypeSyntax? typeCondition = null,
             IReadOnlyList<DirectiveSyntax>? directives = null, SyntaxLocation? location = null) : base(location)
         {

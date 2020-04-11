@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class UnionTypeDefinitionSyntax : TypeDefinitionSyntax, IDirectivesSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public UnionTypeDefinitionSyntax(NameSyntax name,
             StringValueSyntax? description = null,
             IReadOnlyList<DirectiveSyntax>? directives = null,

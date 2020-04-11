@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class InputObjectTypeExtensionSyntax : TypeExtensionSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public InputObjectTypeExtensionSyntax(NameSyntax name,
             IReadOnlyList<DirectiveSyntax>? directives = null,
             IReadOnlyList<InputValueDefinitionSyntax>? fields = null, SyntaxLocation? location = null) : base(location)

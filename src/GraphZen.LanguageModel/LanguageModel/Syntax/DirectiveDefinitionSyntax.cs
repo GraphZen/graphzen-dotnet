@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class DirectiveDefinitionSyntax : TypeSystemDefinitionSyntax, INamedSyntax, IDescribedSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public DirectiveDefinitionSyntax(
             NameSyntax name,
             IReadOnlyList<NameSyntax> locations,

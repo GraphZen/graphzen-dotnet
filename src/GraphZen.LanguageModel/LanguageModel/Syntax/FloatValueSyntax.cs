@@ -15,7 +15,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class FloatValueSyntax : ValueSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public FloatValueSyntax(string value, SyntaxLocation? location = null) : base(location)
         {
             Value = Check.NotNull(value, nameof(value));

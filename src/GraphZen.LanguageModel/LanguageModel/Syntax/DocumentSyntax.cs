@@ -35,12 +35,12 @@ namespace GraphZen.LanguageModel
             new Dictionary<string, IReadOnlyDictionary<string, bool>>();
 
 
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public DocumentSyntax(params DefinitionSyntax[] definitions) : this(definitions, null)
         {
         }
 
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public DocumentSyntax(IReadOnlyList<DefinitionSyntax> definitions,
             SyntaxLocation? location = null) : base(location)
         {

@@ -14,11 +14,11 @@ namespace GraphZen.Infrastructure
     [AttributeUsage(AttributeTargets.Constructor)]
     internal class GenFactoryAttribute : Attribute
     {
-        public string FactoryClassName { get; }
+        public Type FactoryType { get; }
 
-        public GenFactoryAttribute(string factoryClassName)
+        public GenFactoryAttribute(Type factoryType)
         {
-            FactoryClassName = factoryClassName;
+            FactoryType = factoryType;
         }
     }
 

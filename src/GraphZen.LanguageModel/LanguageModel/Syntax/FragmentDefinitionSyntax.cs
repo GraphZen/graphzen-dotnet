@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel
     public partial class FragmentDefinitionSyntax : ExecutableDefinitionSyntax, IFragmentTypeConditionSyntax,
         IDirectivesSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public FragmentDefinitionSyntax(NameSyntax name, NamedTypeSyntax typeCondition,
             SelectionSetSyntax selectionSet, IReadOnlyList<DirectiveSyntax>? directives = null,
             SyntaxLocation? location = null) : base(location)

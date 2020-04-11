@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class OperationDefinitionSyntax : ExecutableDefinitionSyntax, IDirectivesSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public OperationDefinitionSyntax(
             OperationType type,
             SelectionSetSyntax selectionSet,

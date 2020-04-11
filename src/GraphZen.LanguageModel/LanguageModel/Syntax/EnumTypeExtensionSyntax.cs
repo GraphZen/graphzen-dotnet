@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class EnumTypeExtensionSyntax : TypeExtensionSyntax, IDirectivesSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public EnumTypeExtensionSyntax(
             NameSyntax name, IReadOnlyList<DirectiveSyntax>? directives = null,
             IReadOnlyList<EnumValueDefinitionSyntax>? values = null, SyntaxLocation? location = null) : base(location)

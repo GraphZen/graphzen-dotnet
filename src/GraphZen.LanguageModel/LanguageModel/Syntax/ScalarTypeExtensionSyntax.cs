@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ScalarTypeExtensionSyntax : TypeExtensionSyntax, IDirectivesSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public ScalarTypeExtensionSyntax(NameSyntax name, IReadOnlyList<DirectiveSyntax> directives,
             SyntaxLocation? location = null) : base(location)
         {

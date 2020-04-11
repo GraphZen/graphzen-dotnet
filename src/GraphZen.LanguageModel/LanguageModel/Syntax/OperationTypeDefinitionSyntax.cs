@@ -14,7 +14,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class OperationTypeDefinitionSyntax : SyntaxNode
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public OperationTypeDefinitionSyntax(OperationType operationType, NamedTypeSyntax type,
             SyntaxLocation? location = null) : base(location)
         {

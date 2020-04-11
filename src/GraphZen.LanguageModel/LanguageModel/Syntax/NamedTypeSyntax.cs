@@ -14,7 +14,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class NamedTypeSyntax : NullableTypeSyntax, INamedSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public NamedTypeSyntax(NameSyntax name, SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));

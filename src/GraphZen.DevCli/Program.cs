@@ -20,7 +20,7 @@ namespace GraphZen
         {
             {nameof(LanguageModel), LanguageModelCodeGen.Generate},
             {"new", CodeGenFx.Generate},
-            {"factories", FactoryGenerator.GenerateFactoryMethods}
+            // {"factories", FactoryGenerator.GenerateFactoryMethods}
         };
 
         private static Command Command(string name) => new Command(name)

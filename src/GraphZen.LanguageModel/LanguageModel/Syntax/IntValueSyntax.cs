@@ -15,7 +15,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class IntValueSyntax : ValueSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public IntValueSyntax(int value, SyntaxLocation? location = null) : base(location)
         {
             Value = value;

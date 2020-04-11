@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class InterfaceTypeExtensionSyntax : TypeExtensionSyntax, IDirectivesSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public InterfaceTypeExtensionSyntax(NameSyntax name, IReadOnlyList<DirectiveSyntax>? directives = null,
             IReadOnlyList<FieldDefinitionSyntax>? fields = null, SyntaxLocation? location = null) : base(location)
         {

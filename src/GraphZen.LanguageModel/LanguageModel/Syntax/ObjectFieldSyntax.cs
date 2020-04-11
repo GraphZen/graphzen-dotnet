@@ -14,7 +14,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ObjectFieldSyntax : SyntaxNode
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public ObjectFieldSyntax(NameSyntax name, ValueSyntax value, SyntaxLocation? location = null) :
             base(location)
         {

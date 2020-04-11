@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class FieldDefinitionSyntax : SyntaxNode, IDirectivesSyntax, IDescribedSyntax, INamedSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public FieldDefinitionSyntax(
             NameSyntax name,
             TypeSyntax type, StringValueSyntax? description = null,

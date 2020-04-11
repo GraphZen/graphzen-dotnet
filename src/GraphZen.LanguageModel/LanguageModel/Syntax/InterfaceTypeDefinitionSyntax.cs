@@ -16,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class InterfaceTypeDefinitionSyntax : TypeDefinitionSyntax, IDirectivesSyntax, IFieldsNode
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public InterfaceTypeDefinitionSyntax(NameSyntax name,
             StringValueSyntax? description = null,
             IReadOnlyList<DirectiveSyntax>? directives = null,

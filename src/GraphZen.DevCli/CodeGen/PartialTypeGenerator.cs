@@ -6,14 +6,15 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
-
     public class SchemaTypeAccessorGenerator : PartialTypeGenerator<Schema>
     {
         public override void Apply(StringBuilder csharp)
@@ -119,6 +120,70 @@ public {type} Get{kind}(string name) => GetType<{type}>(name);
         }
     }
 
+    internal class SyntaxFactoryGenerator : PartialTypeGenerator
+    {
+        public ConstructorInfo Constructor { get; }
+
+        public GenFactoryAttribute Attribute { get; }
+
+        public SyntaxFactoryGenerator(ConstructorInfo constructor, GenFactoryAttribute attribute) :
+            base(attribute.FactoryType)
+        {
+            Constructor = constructor;
+            Attribute = attribute;
+        }
+
+        private static string GetParameterType(Type type)
+        {
+            if (!type.IsGenericType) return type.FullName!;
+
+            var gargs = string.Join(", ", type.GetGenericArguments().Select(_ => _.FullName));
+            return
+                $"{type.Namespace}.{type.Name.Remove(type.Name.LastIndexOf("`", StringComparison.Ordinal))}<{gargs}>";
+        }
+
+        private static string PrintDefaultValue(object? value) =>
+            value switch
+            {
+                bool bv => bv ? "true" : "false",
+                string sv => $"\"{sv}\"",
+                null => "null",
+                _ => throw new NotImplementedException($"{nameof(PrintDefaultValue)}(typeof({value.GetType()}))")
+            };
+
+
+        public override void Apply(StringBuilder csharp)
+        {
+            var name = Constructor.DeclaringType!.Name;
+            var methodName = name.EndsWith("Syntax")
+                ? name.Substring(0, name.LastIndexOf("Syntax", StringComparison.Ordinal))
+                : name;
+            var methodParameters = Constructor.GetParameters().Select(p =>
+            {
+                var parameterType = p.HasNullableReferenceType()
+                    ? $"{GetParameterType(p.ParameterType)}?"
+                    : GetParameterType(p.ParameterType);
+
+                var pararmsArray = p.GetCustomAttribute<ParamArrayAttribute>() != null ? "params" : "";
+                return
+                    $"{pararmsArray} {parameterType} {p.Name} {(p.HasDefaultValue ? " = " + PrintDefaultValue(p.DefaultValue) : "")}";
+            });
+
+            var parameters = string.Join(", ", methodParameters);
+            var ctorParameters = string.Join(", ", Constructor.GetParameters().Select(p => p.Name));
+            var method = $"public static {name} {methodName}({parameters}) => new {name}({ctorParameters});";
+            csharp.AppendLine(method);
+        }
+
+        public static IEnumerable<SyntaxFactoryGenerator> FromTypeConstructors(Type type)
+        {
+            foreach (var ctor in type.GetConstructors())
+            {
+                var attr = ctor.GetCustomAttribute<GenFactoryAttribute>();
+                if (attr != null) yield return new SyntaxFactoryGenerator(ctor, attr);
+            }
+        }
+    }
 
     public abstract class PartialTypeGenerator
     {
@@ -137,11 +202,17 @@ public {type} Get{kind}(string name) => GetType<{type}>(name);
 
         public static IReadOnlyList<string> CSharpFiles => _csharpFiles.Value;
 
-        public static IEnumerable<PartialTypeGenerator> FromTypes(IEnumerable<Type> types) => types.SelectMany(FromType);
+        public static IEnumerable<PartialTypeGenerator> FromTypes(IEnumerable<Type> types) =>
+            types.SelectMany(FromType);
 
         public static IEnumerable<PartialTypeGenerator> FromType(Type type)
         {
             foreach (var gen in DictionaryAccessorGenerator.FromTypeProperties(type))
+            {
+                yield return gen;
+            }
+
+            foreach (var gen in SyntaxFactoryGenerator.FromTypeConstructors(type))
             {
                 yield return gen;
             }
@@ -176,7 +247,12 @@ public {type} Get{kind}(string name) => GetType<{type}>(name);
                     var typeType = targetType.IsInterface ? "interface" :
                         targetType.IsClass ? "class" :
                         throw new NotImplementedException($"unsupported target type: {targetType}");
-                    ns.Block($"public partial {typeType} {targetType.Name} {{", "}", type =>
+
+                    var maybeStatic = targetType.IsClass && targetType.IsAbstract && targetType.IsSealed
+                        ? "static"
+                        : null;
+
+                    ns.Block($"public {maybeStatic} partial {typeType} {targetType.Name} {{", "}", type =>
                     {
                         foreach (var task in tasks)
                         {
@@ -189,10 +265,5 @@ public {type} Get{kind}(string name) => GetType<{type}>(name);
                 csharp.WriteToFile(genPath);
             }
         }
-
-        public static string GetTargetFileName(Type targetType) => $"{targetType.Name}.cs";
-
-        public static string? GetTargetPath(Type targetType) =>
-            CSharpFiles.SingleOrDefault(path => Path.GetFileName(path) == GetTargetFileName(targetType));
     }
 }

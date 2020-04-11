@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class SchemaDefinitionSyntax : TypeSystemDefinitionSyntax, IDirectivesSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public SchemaDefinitionSyntax(IReadOnlyList<OperationTypeDefinitionSyntax>? operationTypes = null,
             IReadOnlyList<DirectiveSyntax>? directives = null, SyntaxLocation? location = null) : base(location)
         {

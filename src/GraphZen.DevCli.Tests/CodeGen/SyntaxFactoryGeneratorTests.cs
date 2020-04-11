@@ -18,7 +18,7 @@ namespace GraphZen.CodeGen
 
         public class TestSyntax
         {
-            [GenFactory(nameof(SyntaxFactory))]
+            [GenFactory(typeof(SyntaxFactory))]
             public TestSyntax(List<string> hello, SyntaxLocation location, string? nullalbe = TestValue,
                 bool test = false)
             {

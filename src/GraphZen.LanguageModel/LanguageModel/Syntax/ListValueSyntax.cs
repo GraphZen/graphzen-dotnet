@@ -15,12 +15,12 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ListValueSyntax : ValueSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public ListValueSyntax(params ValueSyntax[] values) : this(values, null)
         {
         }
 
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public ListValueSyntax(IReadOnlyList<ValueSyntax> values, SyntaxLocation? location = null) : base(location)
         {
             Values = values ?? EmptyValuesCollection;

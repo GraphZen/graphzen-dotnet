@@ -17,7 +17,7 @@ namespace GraphZen.LanguageModel
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public partial class ArgumentSyntax : SyntaxNode, IDescribedSyntax
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public ArgumentSyntax(NameSyntax name, ValueSyntax value,
             StringValueSyntax? description = null,
             SyntaxLocation? location = null) : base(location)

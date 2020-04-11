@@ -15,14 +15,14 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class SelectionSetSyntax : SyntaxNode
     {
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public SelectionSetSyntax(IReadOnlyList<SelectionSyntax> selections,
             SyntaxLocation? location = null) : base(location)
         {
             Selections = Check.NotNull(selections, nameof(selections));
         }
 
-        [GenFactory(nameof(SyntaxFactory))]
+        [GenFactory(typeof(SyntaxFactory))]
         public SelectionSetSyntax(params SelectionSyntax[] selections) : this(selections, null)
         {
         }
