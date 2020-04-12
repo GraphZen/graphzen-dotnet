@@ -54,27 +54,14 @@ namespace GraphZen.TypeSystem
             value is EnumValueSyntax enumNode && Values.ContainsKey(enumNode.Value);
 
 
-        public Maybe<object> ParseValue(object value)
-        {
-            if (value is string str)
-            {
-                var enumValue = FindValue(str);
-                if (enumValue != null) return Maybe.Some(enumValue.Value);
-            }
+        public Maybe<object> ParseValue(object value) => value is string str && TryGetValue(str, out var enumValue)
+            ? Maybe.Some(enumValue.Value)
+            : Maybe.None<object>();
 
-            return Maybe.None<object>();
-        }
-
-        public Maybe<object> ParseLiteral(ValueSyntax value)
-        {
-            if (value is EnumValueSyntax enumNode)
-            {
-                var enumValue = FindValue(enumNode.Value);
-                if (enumValue != null) return Maybe.Some(enumValue.Value);
-            }
-
-            return Maybe.None<object>();
-        }
+        public Maybe<object> ParseLiteral(ValueSyntax value) =>
+            value is EnumValueSyntax enumNode && TryGetValue(enumNode.Value, out var enumValue)
+                ? Maybe.Some(enumValue.Value)
+                : Maybe.None<object>();
 
 
         public override TypeKind Kind { get; } = TypeKind.Enum;

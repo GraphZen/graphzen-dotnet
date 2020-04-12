@@ -40,8 +40,8 @@ namespace GraphZen.Infrastructure
             var deepEquals = JToken.DeepEquals(expectedToken, actualToken);
             if (!deepEquals)
             {
-                var expectedJson = Json.SerializeObject(expected);
-                var actualJson = Json.SerializeObject(actual);
+                var expectedJson = Json.SerializeObject(expectedToken);
+                var actualJson = Json.SerializeObject(actualToken);
                 var diff = actualJson.GetDiff(expectedJson, options.StringDiffOptions);
                 if (diff == null) return "a difference was detected, but there was an error calculating the difference";
                 return diff;
