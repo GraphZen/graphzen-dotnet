@@ -121,15 +121,6 @@ namespace BuildTargets
             Directory.CreateDirectory(path);
         }
 
-        private static void DeleteFiles(string pattern)
-        {
-            foreach (var file in Directory.GetFiles("./", pattern, SearchOption.AllDirectories))
-            {
-                Console.WriteLine($"Deleting {file}");
-                File.Delete(file);
-            }
-        }
-
         private static void GenerateCodeCoverageReport(bool html = false)
         {
             CleanDir(TestReportsDir);
