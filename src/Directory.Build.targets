@@ -19,16 +19,12 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectCapability Include="DynamicDependentFile" />
-    <ProjectCapability Include="DynamicFileNesting" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
-    <Compile Include="..\Linked\Common\**\*.*">
-      <!--<Link>%(RecursiveDir)%(FileName)%(Extension)</Link>-->
-    </Compile>
     <Compile Update="**\*Generated.cs">
       <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Generated', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\src\Linked\Common\**\*.*">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
