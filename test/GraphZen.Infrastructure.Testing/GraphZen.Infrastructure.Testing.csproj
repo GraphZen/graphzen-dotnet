@@ -11,7 +11,7 @@
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="DiffPlex" Version="1.6.1" />
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
-    <PackageReference Include="CompareNETObjects" Version="4.65.0" />
+    <PackageReference Include="CompareNETObjects" Version="4.66.0" />
     <PackageReference Include="JsonDiffPatch" Version="2.0.49" />
     <PackageReference Include="xunit" Version="2.4.1" />
   </ItemGroup>

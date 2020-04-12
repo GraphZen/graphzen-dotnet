@@ -39,4 +39,5 @@ using GraphZen.Infrastructure;
 [assembly: InternalsVisibleTo("GraphZen.TypeSystem.Tests")]
 [assembly: InternalsVisibleTo("GraphZen.TypeSystem.IntegrationTests")]
 [assembly: InternalsVisibleTo("GraphZen.TypeSystem.FunctionalTests")]
+[assembly: InternalsVisibleTo("SimpleBlog")]
 [assembly: InternalsVisibleTo("LINQPadQuery")]
