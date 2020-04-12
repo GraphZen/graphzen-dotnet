@@ -6,13 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace JetBrains.Annotations
-{
-    public class Hello
-    {
-    }
-}
-
 namespace GraphZen
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Parameter)]
