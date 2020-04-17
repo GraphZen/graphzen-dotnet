@@ -9,7 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Bullseye" Version="3.3.0" />
-    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2019.3.4" GeneratePathProperty="true">
+    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2020.1.0" GeneratePathProperty="true">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
