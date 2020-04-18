@@ -27,8 +27,9 @@ namespace GraphZen.SpecAudit
             {
                 using var p = suite.CreateReport();
                 var date = DateTime.Now.ToString("u").Replace(':', '.');
-                var filename = $@"C:\_data\{date} {suite.Name}.xlsx";
-                p.SaveAs(new FileInfo(filename));
+                var filename = $@"{date} {suite.Name}.xlsx";
+                var filePath = Path.Join(reportDirectory.FullName, filename);
+                p.SaveAs(new FileInfo(filePath));
             }
 
             foreach (var file in existing)
