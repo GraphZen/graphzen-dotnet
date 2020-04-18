@@ -83,7 +83,8 @@ namespace GraphZen.CodeGen.Generators
 
             var csharp = CSharpStringBuilder.Create();
             csharp.Namespace(LanguageModelNamespace, ns => { ns.Enum(schema.GetEnum("SyntaxKind")); });
-            return new GeneratedCode("./src/GraphZen.LanguageModel/LanguageModel/Syntax/SyntaxKind.Generated.cs", csharp.ToString());
+            return new GeneratedCode("./src/GraphZen.LanguageModel/LanguageModel/Syntax/SyntaxKind.Generated.cs",
+                csharp.ToString());
         }
     }
 }

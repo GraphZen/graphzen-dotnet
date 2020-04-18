@@ -7,6 +7,7 @@ using System.CommandLine.Invocation;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.CodeGen;
 using GraphZen.Infrastructure;
+using GraphZen.SpecAudit;
 using JetBrains.Annotations;
 
 namespace GraphZen
@@ -17,7 +18,8 @@ namespace GraphZen
         {
             var root = new RootCommand
             {
-                new Command("gen") {Handler = CommandHandler.Create(CodeGenerator.Generate)}
+                new Command("gen") {Handler = CommandHandler.Create(CodeGenerator.Generate)},
+                new Command("specs") {Handler = CommandHandler.Create(SpecReportGenerator.Generate)}
             };
             var cliBuilder = new CommandLineBuilder(root);
             var cli = cliBuilder.Build();

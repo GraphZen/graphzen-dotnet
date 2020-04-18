@@ -1,0 +1,40 @@
+﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using GraphZen.Infrastructure;
+using GraphZen.SpecAudit.SpecFx;
+using JetBrains.Annotations;
+
+namespace GraphZen.SpecAudit
+{
+    public static class SpecReportGenerator
+    {
+        public static void Generate()
+        {
+            var suites = new List<SpecSuite>
+            {
+                TypeSystemSuite.Create()
+            };
+
+            var reportDirectory = Directory.CreateDirectory(@"C:\_data\GraphZen");
+            var existing = reportDirectory.GetFiles();
+
+            foreach (var suite in suites)
+            {
+                using var p = suite.CreateReport();
+                var date = DateTime.Now.ToString("u").Replace(':', '.');
+                var filename = $@"C:\_data\{date} {suite.Name}.xlsx";
+                p.SaveAs(new FileInfo(filename));
+            }
+
+            foreach (var file in existing)
+            {
+                File.Delete(file.FullName);
+            }
+        }
+    }
+}

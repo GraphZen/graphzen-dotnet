@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.SpecAudit.SpecFx
 {
-    public static class ReflectionUtils
+    public static class SpecReflectionHelpers
     {
         public static IEnumerable<FieldInfo> GetConstFields(Type type) =>
             type.GetFields(BindingFlags.Public | BindingFlags.Static)

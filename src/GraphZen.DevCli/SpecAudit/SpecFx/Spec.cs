@@ -40,7 +40,7 @@ namespace GraphZen.SpecAudit.SpecFx
             var id = type.Name;
             var name = type.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
             var description = type.GetCustomAttribute<DescriptionAttribute>()?.Description;
-            var children = ReflectionUtils.GetConstFields(type).Select(_ => new Spec(_));
+            var children = SpecReflectionHelpers.GetConstFields(type).Select(_ => new Spec(_));
             return new Spec(id, name, description, children);
         }
 

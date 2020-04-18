@@ -29,7 +29,7 @@ namespace GraphZen.SpecAudit.SpecFx
         public SpecSubject WithSpecs<T>()
         {
             var type = typeof(T);
-            var specs = ReflectionUtils.GetConstFields(type).Select(_ => _.Name);
+            var specs = SpecReflectionHelpers.GetConstFields(type).Select(_ => _.Name);
             return WithSpecs(specs);
         }
 

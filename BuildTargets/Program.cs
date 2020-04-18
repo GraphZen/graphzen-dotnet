@@ -33,6 +33,7 @@ namespace BuildTargets
         private const string Default = nameof(Default);
         private const string Test = nameof(Test);
         private const string TestQuick = nameof(TestQuick);
+        private const string Specs = nameof(Specs);
         private const string CoverageReport = nameof(CoverageReport);
         private const string CoverageReportHtml = nameof(CoverageReportHtml);
         private const string Gen = nameof(Gen);
@@ -59,6 +60,8 @@ namespace BuildTargets
                 Run("dotnet",
                     $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
             });
+
+            Target(Specs, () => RunCli("specs"));
 
             Target(TestQuick, () =>
             {
@@ -110,9 +113,12 @@ namespace BuildTargets
 
         private static void RunCodeGen(bool format = true)
         {
-            Run("dotnet", "run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- gen");
+            RunCli("gen");
             if (format) CleanupCode("./**/*.Generated.cs");
         }
+
+        private static void RunCli(string task) => Run("dotnet",
+            $"run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- {task}");
 
         private static void CleanDir(string path)
         {
@@ -129,7 +135,7 @@ namespace BuildTargets
             };
             if (html) reportTypes.Add("HtmlInline");
             new Generator().GenerateReport(new ReportConfiguration(
-                new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
+                new List<string> {$"./{TestLogDir}/**/*coverage.cobertura.xml"},
                 TestReportsDir, new List<string>(), null,
                 reportTypes,
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,
