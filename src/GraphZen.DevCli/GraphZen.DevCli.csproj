@@ -16,9 +16,4 @@
     <ProjectReference Include="..\GraphZen.Client\GraphZen.Client.csproj" />
     <ProjectReference Include="..\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SpecAudit\SpecAuditFx\" />
-  </ItemGroup>
-
 </Project>

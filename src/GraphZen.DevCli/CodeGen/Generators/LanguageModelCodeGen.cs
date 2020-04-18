@@ -65,7 +65,7 @@ namespace GraphZen.CodeGen.Generators
                         }
                     });
             });
-            return new GeneratedCode("./src/GraphZen.LanguageModel/GraphQLSyntaxVisitor.Generated.cs",
+            return new GeneratedCode("./src/GraphZen.LanguageModel/LanguageModel/GraphQLSyntaxVisitor.Generated.cs",
                 csharp.ToString());
         }
 
@@ -83,7 +83,7 @@ namespace GraphZen.CodeGen.Generators
 
             var csharp = CSharpStringBuilder.Create();
             csharp.Namespace(LanguageModelNamespace, ns => { ns.Enum(schema.GetEnum("SyntaxKind")); });
-            return new GeneratedCode("./src/GraphZen.LanguageModel/Syntax/SyntaxKind.Generated.cs", csharp.ToString());
+            return new GeneratedCode("./src/GraphZen.LanguageModel/LanguageModel/Syntax/SyntaxKind.Generated.cs", csharp.ToString());
         }
     }
 }

@@ -21,17 +21,4 @@ namespace GraphZen.Infrastructure
             FactoryType = factoryType;
         }
     }
-
-    [AttributeUsage(AttributeTargets.Property)]
-    internal class GenDictionaryAccessorsAttribute : Attribute
-    {
-        public string ValueName { get; }
-        public string KeyName { get; }
-
-        public GenDictionaryAccessorsAttribute(string keyName, string valueName)
-        {
-            KeyName = keyName;
-            ValueName = valueName;
-        }
-    }
 }

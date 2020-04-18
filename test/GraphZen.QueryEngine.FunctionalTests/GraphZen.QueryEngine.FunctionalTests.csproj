@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />
+    <ProjectReference Include="..\GraphZen.Infrastructure.Testing\GraphZen.Infrastructure.Testing.csproj" />
   </ItemGroup>
 
 </Project>

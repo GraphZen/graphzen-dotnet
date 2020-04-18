@@ -94,7 +94,9 @@ namespace GraphZen.TypeSystem.Internal
                 return schemaDefinition.RootOperationTypes.ToDictionary(_ => _.OperationType, _ =>
                 {
                     var typeName = _.Type.Name.Value;
+#pragma warning disable 8601
                     if (!types.TryFindByName(typeName, out var type))
+#pragma warning restore 8601
                         throw new Exception($"Specified {_.OperationType} type \"{typeName}\" not found in document.");
 
                     return type;
