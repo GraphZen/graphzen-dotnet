@@ -185,7 +185,7 @@ namespace GraphZen.Tests.LanguageModel
         [Fact]
         public void SourceHasBody()
         {
-            var exception = Assert.Throws<ArgumentNullException>(() => new Source(null));
+            var exception = Assert.Throws<ArgumentNullException>(() => new Source(null!));
             Assert.Contains("body", exception.Message);
         }
 

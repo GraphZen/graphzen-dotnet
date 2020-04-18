@@ -48,7 +48,7 @@ namespace GraphZen
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((GraphQLDeprecatedAttribute) obj);
+            return Equals((GraphQLDeprecatedAttribute)obj);
         }
 
         public override int GetHashCode()

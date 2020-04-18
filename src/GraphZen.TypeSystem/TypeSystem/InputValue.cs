@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem
             object? defaultValue,
             bool hasDefaultValue,
             IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver, object? clrInfo, IMemberDefinition declaringMember) : base(directives)
+            TypeResolver? typeResolver, object? clrInfo, IMemberDefinition declaringMember) : base(directives)
         {
             IGraphQLType DefaultTypeResolver(IGraphQLTypeReference typeReference) =>
                 type as IGraphQLType ?? throw new InvalidOperationException(

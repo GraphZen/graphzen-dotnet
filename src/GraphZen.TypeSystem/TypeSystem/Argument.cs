@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem
             object? defaultValue,
             bool hasDefaultValue,
             IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver,
+            TypeResolver? typeResolver,
             IArguments declaringMember,
             ParameterInfo? clrInfo) :
             base(name, description, type,

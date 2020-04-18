@@ -141,6 +141,6 @@ namespace GraphZen.LanguageModel
         VariableDefinition,
 
         /// <summary>Indicates an <see cref="VariableSyntax" /> node.</summary>
-        Variable
+        Variable,
     }
 }
