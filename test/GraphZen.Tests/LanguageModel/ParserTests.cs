@@ -192,7 +192,7 @@ namespace GraphZen.Tests.LanguageModel
         [Fact]
         public void SourceIsProvided()
         {
-            var exception = Assert.Throws<ArgumentNullException>(() => { ParseDocument(null); });
+            var exception = Assert.Throws<ArgumentNullException>(() => { ParseDocument(null!); });
             Assert.Contains("document", exception.Message);
         }
     }

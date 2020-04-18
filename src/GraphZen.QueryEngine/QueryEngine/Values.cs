@@ -49,7 +49,7 @@ namespace GraphZen.QueryEngine
                 var variable = varDefNode.Variable;
                 var varName = variable.Name.Value;
                 var varType = schema.GetTypeFromAst(varDefNode.VariableType);
-                if (!varType.IsInputType())
+                if (varType == null || !varType.IsInputType())
                 {
                     errors.Add(new GraphQLServerError(
                         $"Variable \"{variable}\" expected value of type \"{varDefNode.VariableType}\" which cannot be used as an input type.",

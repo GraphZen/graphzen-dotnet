@@ -75,6 +75,9 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                 var namespaceName = namespaceLine.Split(' ')[1];
 
                 var csharp = CSharpStringBuilder.Create();
+                csharp.AppendLine(@"
+// ReSharper disable InconsistentNaming
+");
                 csharp.Namespace(namespaceName, ns =>
                 {
                     var typeType = targetType.IsInterface ? "interface" :
