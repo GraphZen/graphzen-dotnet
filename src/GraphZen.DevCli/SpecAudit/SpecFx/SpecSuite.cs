@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
@@ -93,6 +94,7 @@ namespace GraphZen.SpecAudit.SpecFx
         private void ReportUnknownTests(ExcelPackage p)
         {
             var modelSubjects = Subject.GetSelfAndDescendants().ToImmutableList();
+            var modelSubjectsByPath = modelSubjects.ToDictionary(_ => _.Path);
             var modelWs = p.Workbook.Worksheets.Add("Model");
             var pathHeader = modelWs.Cells[1, 1];
             pathHeader.Value = "Path";
@@ -119,6 +121,12 @@ namespace GraphZen.SpecAudit.SpecFx
             var specCol = 4;
             var specHeader = testWs.Cells[1, specCol];
             specHeader.Value = "Spec";
+            var subjectInModelCol = 5;
+            var subjectInModelHeader = testWs.Cells[1, subjectInModelCol];
+            subjectInModelHeader.Value = "Model Subject";
+            var specInModelCol = 6;
+            var specModelHeader = testWs.Cells[1, specInModelCol];
+            specModelHeader.Value = "Model Spec";
 
             for (int i = 0; i < coverage.Count; i++)
             {
@@ -132,7 +140,26 @@ namespace GraphZen.SpecAudit.SpecFx
                 testPathCell.Value = testInfo.SubjectPath;
                 var specCell = testWs.Cells[row, specCol];
                 specCell.Value = testInfo.SpecId;
+                var modelSubject = modelSubjectsByPath.TryGetValue(testInfo.SubjectPath, out var subj) ? subj : null;
+                var subjectInModelCell = testWs.Cells[row, subjectInModelCol];
+                var subjectInModel = modelSubject != null;
+                subjectInModelCell.Value = subjectInModel ? "✔" : "❌";
+                if (!subjectInModel)
+                {
+                    subjectInModelCell.Style.Font.Color.SetColor(Color.Crimson);
+                }
+                var specInModelCell = testWs.Cells[row, specInModelCol];
+                var specInModel = modelSubject != null && modelSubject.Specs.Contains(testInfo.SpecId);
+                specInModelCell.Value = specInModel ? "✔" : "❌";
+                if (!specInModel)
+                {
+                    specInModelCell.Style.Font.Color.SetColor(Color.Crimson);
+                }
 
+                if (!specInModel || !subjectInModel)
+                {
+                    testWs.Row(row).Style.Border.BorderAround(ExcelBorderStyle.MediumDashDot);
+                }
             }
             testWs.Cells.AutoFitColumns();
         }
