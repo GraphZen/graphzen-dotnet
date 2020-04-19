@@ -5,12 +5,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Directives
 {
-    public class DirectiveCreationTests
+    [SpecSubject(nameof(Directive.Name))]
+    public class DirectiveCreationTests : DirectiveSpecTest
     {
         [Fact(Skip = "obsolete")]
         public void it_can_create_directive_by_name()
@@ -19,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Directives
         }
 
         [Fact]
+        [Spec(nameof(ConfigurableItemSpecs.Hello), Subject = "Howdy")]
         public void it_can_create_directive_from_sdl()
         {
             var schema = Schema.Create(@"directive @foo on FIELD");
@@ -28,6 +31,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Directives
         }
 
         [Fact(Skip = "TODO")]
+        [Spec(nameof(ConfigurableItemSpecs.Hello))]
         public void it_cannot_create_directive_from_sdl_without_directive_locations()
         {
             Action act = () => Schema.Create(@"directive @foo on FIELD");

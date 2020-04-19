@@ -4,6 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit.SpecFx;
+using GraphZen.TypeSystem.FunctionalTests.Directives;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 
@@ -49,7 +50,7 @@ namespace GraphZen.SpecAudit
             );
 
 
-            return new SpecSuite("Type System", schema, specs);
+            return new SpecSuite("Type System", schema, specs, typeof(DirectiveCreationTests).Assembly);
         }
     }
 }

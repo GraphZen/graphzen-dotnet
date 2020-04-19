@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -12,6 +13,28 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
+    public class SpecSubjectAttribute : Attribute
+    {
+        public SpecSubjectAttribute(string subject, params string[] subjects)
+        {
+            Subjects = ImmutableList.Create(subject).AddRange(subjects).Reverse();
+        }
+
+        public IReadOnlyList<string> Subjects { get; }
+    }
+
+    public class SpecAttribute : Attribute
+    {
+        public SpecAttribute(string specId)
+        {
+            SpecId = specId;
+        }
+
+        public string SpecId { get; }
+        public string? Subject { get; set; }
+    }
+
+
     public static class NamedCollection
     {
         public static NamedCollection<T> ToNamedCollection<T>(this IReadOnlyDictionary<string, T> source)
@@ -38,7 +61,6 @@ namespace GraphZen.Infrastructure
             {
                 InnerEnumerable = Check.NotNull(innerEnumerable, nameof(innerEnumerable));
             }
-
 
             public IEnumerable<TInner> InnerEnumerable { get; }
 
