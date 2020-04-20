@@ -1,7 +1,6 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -49,7 +48,7 @@ namespace GraphZen.SpecAudit.SpecFx
             var modelWs = p.Workbook.Worksheets.Add("Model");
             var pathHeader = modelWs.Cells[1, 1];
             pathHeader.Value = "Path";
-            for (int i = 0; i < Subjects.Count; i++)
+            for (var i = 0; i < Subjects.Count; i++)
             {
                 var subj = Subjects[i];
                 var rowNumber = i + 2;
@@ -79,7 +78,7 @@ namespace GraphZen.SpecAudit.SpecFx
             var specModelHeader = testWs.Cells[1, specInModelCol];
             specModelHeader.Value = "Model Spec";
 
-            for (int i = 0; i < Tests.Count; i++)
+            for (var i = 0; i < Tests.Count; i++)
             {
                 var testInfo = Tests[i];
                 var row = i + 2;
@@ -117,7 +116,7 @@ namespace GraphZen.SpecAudit.SpecFx
             foreach (var spec in Specs)
             {
                 worksheet.Cells[specRowStart, 1].Value = spec.Name;
-                for (int i = 0; i < spec.Children.Count; i++)
+                for (var i = 0; i < spec.Children.Count; i++)
                 {
                     var child = spec.Children[i];
                     currentRow = specRowStart + i;
@@ -137,7 +136,7 @@ namespace GraphZen.SpecAudit.SpecFx
             {
                 subj.Name.Dump();
                 worksheet.Cells[1, currentColumn].Value = subj.Name;
-                for (int i = 0; i < subj.Children.Count; i++)
+                for (var i = 0; i < subj.Children.Count; i++)
                 {
                     var child = subj.Children[i];
                     currentColumn = columnStart + i;
@@ -155,18 +154,11 @@ namespace GraphZen.SpecAudit.SpecFx
                             var nonSkippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
                             var skippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
                             if (nonSkippedTests.Any())
-                            {
                                 statusCell.Value = "✅";
-                            }
                             else if (skippedTests.Any())
-                            {
-
                                 statusCell.Value = "❓";
-                            }
                             else
-                            {
                                 statusCell.Value = "❎";
-                            }
                         }
                         else
                         {

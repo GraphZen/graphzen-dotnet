@@ -6,15 +6,14 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema
+namespace GraphZen.TypeSystem.FunctionalTests
 {
-    [SpecSubject(nameof(TypeSystem.Schema.Description))]
+    [SpecSubject(nameof(Schema.Description))]
     public class SchemaDescriptionTests : TypeSystemSpecTests
     {
         [Spec(nameof(ConfigurableItemSpecs.Hello))]
         public void sometest()
         {
-
         }
     }
 }

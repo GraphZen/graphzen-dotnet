@@ -44,20 +44,20 @@ namespace GraphZen.TypeSystem.Tests
 
             var query = schema.GetObject("Query");
 
-            query.FindField("fooNNClr")
+            query.GetField("fooNNClr")
                 .FieldType.As<NonNullType>().OfType.As<ObjectType>().ClrType
                 .Should().Be(typeof(Foo));
-            query.FindField("fooNN")
+            query.GetField("fooNN")
                 .FieldType.As<NonNullType>().OfType.As<ObjectType>().ClrType
                 .Should().Be(typeof(Foo));
-            query.FindField("foo")
+            query.GetField("foo")
                 .FieldType.As<ObjectType>().ClrType
                 .Should().Be(typeof(Foo));
-            query.FindField("fooList")
+            query.GetField("fooList")
                 .FieldType.As<ListType>().OfType.As<ObjectType>().ClrType
                 .Should().Be(typeof(Foo));
 
-            query.FindField("fooClrList")
+            query.GetField("fooClrList")
                 .FieldType
                 .As<NonNullType>().OfType
                 .As<ListType>().OfType

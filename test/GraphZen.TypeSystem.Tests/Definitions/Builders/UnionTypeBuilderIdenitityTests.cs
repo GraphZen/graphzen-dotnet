@@ -50,12 +50,12 @@ namespace GraphZen.TypeSystem.Tests
 
         public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
         {
-            schemaBuilder.Union(name).Name(null);
+            schemaBuilder.Union(name).Name(null!);
         }
 
         public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
         {
-            schemaBuilder.Union(clrType).Name(null);
+            schemaBuilder.Union(clrType).Name(null!);
         }
     }
 }

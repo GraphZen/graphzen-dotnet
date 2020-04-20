@@ -16,6 +16,8 @@ namespace GraphZen.CodeGen.Generators
 {
     public static class LanguageModelCodeGen
     {
+        private const string LanguageModelNamespace = nameof(GraphZen) + "." + nameof(LanguageModel);
+
         public static IReadOnlyList<Type> NodeTypes { get; } =
             typeof(SyntaxNode).Assembly.GetTypes()
                 .Where(typeof(SyntaxNode).IsAssignableFrom)
@@ -25,8 +27,6 @@ namespace GraphZen.CodeGen.Generators
         private static IReadOnlyList<(string kind, string type)> NodeTypeKind { get; } = NodeTypes
             .Select(_ => (_.Name.Replace("Syntax", ""), _.Name))
             .ToList();
-
-        private const string LanguageModelNamespace = nameof(GraphZen) + "." + nameof(LanguageModel);
 
         public static GeneratedCode GenSyntaxVisitorPartials()
         {

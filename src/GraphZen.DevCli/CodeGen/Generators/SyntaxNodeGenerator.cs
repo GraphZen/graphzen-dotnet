@@ -14,12 +14,12 @@ namespace GraphZen.CodeGen.Generators
 {
     public class SyntaxNodeGenerator : PartialTypeGenerator
     {
-        public static IEnumerable<SyntaxNodeGenerator> CreateAll() =>
-            LanguageModelCodeGen.NodeTypes.Select(_ => new SyntaxNodeGenerator(_));
-
         private SyntaxNodeGenerator(Type targetType) : base(targetType)
         {
         }
+
+        public static IEnumerable<SyntaxNodeGenerator> CreateAll() =>
+            LanguageModelCodeGen.NodeTypes.Select(_ => new SyntaxNodeGenerator(_));
 
         public override void Apply(StringBuilder @class)
         {

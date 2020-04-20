@@ -23,7 +23,8 @@ namespace GraphZen.SpecAudit.SpecFx
             TheoryAttribute = testMethod.GetCustomAttribute<TheoryAttribute>();
             if (FactAttribute == null && TheoryAttribute == null)
                 throw new ArgumentException(
-                    $"Method {TestMethod} was decorated with a {nameof(SpecAttribute)}, but is missing a {nameof(FactAttribute)} or {nameof(TheoryAttribute)}", nameof(testMethod));
+                    $"Method {TestMethod} was decorated with a {nameof(SpecAttribute)}, but is missing a {nameof(FactAttribute)} or {nameof(TheoryAttribute)}",
+                    nameof(testMethod));
         }
 
         public string SubjectPath { get; }

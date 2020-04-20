@@ -36,12 +36,12 @@ namespace GraphZen.TypeSystem.Tests
         [InlineData(nameof(Foo.NullableBar), true)]
         [InlineData(nameof(Foo.BaseProperty), false)]
         [InlineData(nameof(Foo.NullableBaseProperty), true)]
-        public void PropertyNullability(string propertyName, bool excpectCanBeNull)
+        public void PropertyNullability(string propertyName, bool expectCanBeNull)
         {
-            var property = typeof(Foo).GetProperty(propertyName);
+            var property = typeof(Foo).GetProperty(propertyName)!;
             var canBeNull = property.CanBeNull();
-            canBeNull.Should().Be(excpectCanBeNull,
-                $"{propertyName} {(excpectCanBeNull ? "CAN be null" : "should NOT be null")}");
+            canBeNull.Should().Be(expectCanBeNull,
+                $"{propertyName} {(expectCanBeNull ? "CAN be null" : "should NOT be null")}");
         }
     }
 }

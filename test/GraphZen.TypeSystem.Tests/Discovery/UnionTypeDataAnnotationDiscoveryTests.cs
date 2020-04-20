@@ -47,7 +47,7 @@ namespace GraphZen.TypeSystem.Tests
             var schema = Schema.Create(_ =>
             {
                 _.Union<explicitly_created_union_type>().OfTypes<explicitly_created_union_type_explicit_member_c>();
-                var unionDef = _.GetDefinition().FindUnion<explicitly_created_union_type>();
+                var unionDef = _.GetDefinition().GetUnion<explicitly_created_union_type>();
                 unionDef.Should().NotBeNull();
                 unionDef.GetConfigurationSource().Should().Be(ConfigurationSource.Explicit);
                 unionDef.GetMemberTypes().Count().Should().Be(3);
@@ -56,7 +56,7 @@ namespace GraphZen.TypeSystem.Tests
                     .NotBeNull();
             });
 
-            var union = schema.FindUnion<explicitly_created_union_type>();
+            var union = schema.GetUnion<explicitly_created_union_type>();
             union.Should().NotBeNull();
             var a = schema.GetObject<explicitly_created_union_type_member_a>();
             var b = schema.GetObject<explicitly_created_union_type_conventional_member_b>();

@@ -31,6 +31,8 @@ namespace GraphZen.SpecAudit.SpecFx
         public ImmutableHashSet<string> Specs { get; }
         public ImmutableList<SpecSubject> Children { get; }
 
+        public SpecSubject? Parent { get; }
+
         public IEnumerable<SpecSubject> GetSelfAndDescendants()
         {
             yield return this;
@@ -40,7 +42,6 @@ namespace GraphZen.SpecAudit.SpecFx
             }
         }
 
-        public SpecSubject? Parent { get; }
         private SpecSubject WithParent(SpecSubject parent) => new SpecSubject(Name, parent, Specs, Children);
         public SpecSubject WithName(string name) => new SpecSubject(name, Parent, Specs, Children);
         public SpecSubject WithSpecs(params string[] specs) => WithSpecs(specs.AsEnumerable());

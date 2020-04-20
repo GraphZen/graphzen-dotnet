@@ -21,6 +21,9 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
     public abstract class PartialTypeGenerator
     {
+        private static readonly Lazy<IReadOnlyList<string>> CSharpFilesLazy =
+            new Lazy<IReadOnlyList<string>>(() => Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories));
+
         protected PartialTypeGenerator(Type targetType)
         {
             TargetType = targetType;
@@ -28,12 +31,9 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
         public Type TargetType { get; }
 
+        public static IReadOnlyList<string> CSharpFiles => CSharpFilesLazy.Value;
+
         public abstract void Apply(StringBuilder csharp);
-
-        private static readonly Lazy<IReadOnlyList<string>> _csharpFiles =
-            new Lazy<IReadOnlyList<string>>(() => Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories));
-
-        public static IReadOnlyList<string> CSharpFiles => _csharpFiles.Value;
 
         public static IEnumerable<PartialTypeGenerator> FromTypes(IEnumerable<Type> types) =>
             types.SelectMany(FromType);
@@ -69,7 +69,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                 var genFilename = Path.GetFileNameWithoutExtension(targetFilename) + ".Generated.cs";
                 var genPath = Path.Combine(genDirPath, genFilename);
 
-                string? namespaceLine = File.ReadLines(targetPath).SingleOrDefault(_ => _.StartsWith("namespace"));
+                var namespaceLine = File.ReadLines(targetPath).SingleOrDefault(_ => _.StartsWith("namespace"));
                 if (namespaceLine == null)
                     throw new InvalidOperationException($"Expected file to contain a namespace: {targetPath}");
                 var namespaceName = namespaceLine.Split(' ')[1];

@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.Tests
 
             schema.MutationType.Should().Be(mutationType);
 
-            var writeMutation = mutationType.FindField("writeArticle");
+            var writeMutation = mutationType.GetField("writeArticle");
             writeMutation.FieldType.Should().Be(schema.GetType("Article"));
             writeMutation.FieldType.As<ObjectType>().Name.Should().Be("Article");
             writeMutation.Name.Should().Be("writeArticle");
@@ -43,24 +43,24 @@ namespace GraphZen.TypeSystem.Tests
 
             schema.QueryType.Should().Be(queryType);
 
-            var articleField = queryType.FindField("article");
+            var articleField = queryType.GetField("article");
             var articleFieldType = (ObjectType)articleField.FieldType;
             articleFieldType.Should().Be(articleType);
             articleFieldType.Name.Should().Be("Article");
             articleField.Name.Should().Be("article");
 
-            var titleField = articleFieldType.FindField("title");
+            var titleField = articleFieldType.GetField("title");
             titleField.Name.Should().Be("title");
             titleField.FieldType.Should().Be(SpecScalars.String);
             titleField.FieldType.As<ScalarType>().Name.Should().Be("String");
 
-            var authorField = articleFieldType.FindField("author");
+            var authorField = articleFieldType.GetField("author");
             var authorFieldType = authorField.FieldType.As<ObjectType>();
-            var recentArticleField = authorFieldType.As<ObjectType>().FindField("recentArticle");
+            var recentArticleField = authorFieldType.As<ObjectType>().GetField("recentArticle");
 
             recentArticleField.FieldType.Should().Be(articleType);
 
-            var feedField = queryType.FindField("feed");
+            var feedField = queryType.GetField("feed");
             feedField.FieldType.As<ListType>().OfType.Should().Be(articleType);
             feedField.Name.Should().Be("feed");
         }

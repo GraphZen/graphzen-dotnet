@@ -15,16 +15,16 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 {
     internal class SyntaxFactoryGenerator : PartialTypeGenerator
     {
-        public ConstructorInfo Constructor { get; }
-
-        public GenFactoryAttribute Attribute { get; }
-
         public SyntaxFactoryGenerator(ConstructorInfo constructor, GenFactoryAttribute attribute) :
             base(attribute.FactoryType)
         {
             Constructor = constructor;
             Attribute = attribute;
         }
+
+        public ConstructorInfo Constructor { get; }
+
+        public GenFactoryAttribute Attribute { get; }
 
         private static string GetParameterType(Type type)
         {

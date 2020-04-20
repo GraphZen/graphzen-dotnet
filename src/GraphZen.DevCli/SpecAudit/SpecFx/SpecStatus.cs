@@ -12,6 +12,6 @@ namespace GraphZen.SpecAudit.SpecFx
         Implemented,
         Missing,
         NotRequired,
-        Skipped,
+        Skipped
     }
 }
