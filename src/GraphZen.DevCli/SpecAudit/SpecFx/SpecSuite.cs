@@ -15,72 +15,25 @@ using OfficeOpenXml.Style;
 
 namespace GraphZen.SpecAudit.SpecFx
 {
-    public class SpecTestInfo
-    {
-        private SpecTestInfo(string subjectPath, string specId, MethodInfo testMethod)
-        {
-            SubjectPath = subjectPath;
-            SpecId = specId;
-            TestMethod = testMethod;
-        }
-
-        public string SubjectPath { get; }
-        public string SpecId { get; }
-        public MethodInfo TestMethod { get; }
-
-        public static IEnumerable<SpecTestInfo> DiscoverFrom(Assembly assembly)
-        {
-            foreach (var m in assembly.GetTypes().SelectMany(_ => _.GetMethods()))
-            {
-                var specAttr = m.GetCustomAttribute<SpecAttribute>();
-                if (specAttr != null)
-                {
-                    var path = GetSubjectPath(m, specAttr);
-                    yield return new SpecTestInfo(path, specAttr.SpecId, m);
-                }
-            }
-        }
-
-
-        private static string GetSubjectPath(MethodInfo method, SpecAttribute specAttr)
-        {
-            var subjects = new List<string>();
-            if (specAttr.Subject != null) subjects.Add(specAttr.Subject);
-
-            var methodSubjAttr = method.GetCustomAttribute<SpecSubjectAttribute>();
-            if (methodSubjAttr != null) subjects.AddRange(methodSubjAttr.Subjects);
-
-
-            var type = method.DeclaringType;
-            while (type != null)
-            {
-                var typeSubjAttr = type.GetCustomAttribute<SpecSubjectAttribute>();
-                if (typeSubjAttr != null) subjects!.AddRange(typeSubjAttr.Subjects);
-                type = type.BaseType;
-            }
-
-
-            if (!subjects.Any()) return "";
-
-            subjects.Reverse();
-            return string.Join("_", subjects);
-        }
-    }
-
     public class SpecSuite
     {
-        public SpecSuite(string name, SpecSubject subject, IEnumerable<Spec> specs, Assembly testAssembly)
+        public SpecSuite(string name, SpecSubject rootSubject, IEnumerable<Spec> specs, Assembly testAssembly)
         {
             Name = name;
             Specs = specs.ToReadOnlyList();
-            Subject = subject;
+            RootSubject = rootSubject;
             TestAssembly = testAssembly;
+            Subjects = rootSubject.GetSelfAndDescendants().ToImmutableList();
+            SubjectsByPath = Subjects.ToImmutableDictionary(_ => _.Path);
+            Tests = SpecTest.DiscoverFrom(TestAssembly).ToImmutableList();
         }
 
         public string Name { get; }
         public IReadOnlyList<Spec> Specs { get; }
-        public SpecSubject Subject { get; }
-
+        public IReadOnlyList<SpecTest> Tests { get; }
+        public IReadOnlyList<SpecSubject> Subjects { get; }
+        public IReadOnlyDictionary<string, SpecSubject> SubjectsByPath { get; }
+        public SpecSubject RootSubject { get; }
         public Assembly TestAssembly { get; }
 
         public ExcelPackage CreateReport()
@@ -93,21 +46,19 @@ namespace GraphZen.SpecAudit.SpecFx
 
         private void ReportUnknownTests(ExcelPackage p)
         {
-            var modelSubjects = Subject.GetSelfAndDescendants().ToImmutableList();
-            var modelSubjectsByPath = modelSubjects.ToDictionary(_ => _.Path);
             var modelWs = p.Workbook.Worksheets.Add("Model");
             var pathHeader = modelWs.Cells[1, 1];
             pathHeader.Value = "Path";
-            for (int i = 0; i < modelSubjects.Count; i++)
+            for (int i = 0; i < Subjects.Count; i++)
             {
-                var subj = modelSubjects[i];
+                var subj = Subjects[i];
                 var rowNumber = i + 2;
                 var pathCell = modelWs.Cells[rowNumber, 1];
                 pathCell.Value = subj.Path;
             }
+
             modelWs.Cells.AutoFitColumns();
 
-            var coverage = SpecTestInfo.DiscoverFrom(TestAssembly).ToImmutableList();
             var testWs = p.Workbook.Worksheets.Add("Tests");
             var classCol = 1;
             var classHeader = testWs.Cells[1, classCol];
@@ -128,9 +79,9 @@ namespace GraphZen.SpecAudit.SpecFx
             var specModelHeader = testWs.Cells[1, specInModelCol];
             specModelHeader.Value = "Model Spec";
 
-            for (int i = 0; i < coverage.Count; i++)
+            for (int i = 0; i < Tests.Count; i++)
             {
-                var testInfo = coverage[i];
+                var testInfo = Tests[i];
                 var row = i + 2;
                 var classCell = testWs.Cells[row, classCol];
                 classCell.Value = testInfo.TestMethod.DeclaringType?.Name;
@@ -140,27 +91,20 @@ namespace GraphZen.SpecAudit.SpecFx
                 testPathCell.Value = testInfo.SubjectPath;
                 var specCell = testWs.Cells[row, specCol];
                 specCell.Value = testInfo.SpecId;
-                var modelSubject = modelSubjectsByPath.TryGetValue(testInfo.SubjectPath, out var subj) ? subj : null;
+                var modelSubject = SubjectsByPath.TryGetValue(testInfo.SubjectPath, out var subj) ? subj : null;
                 var subjectInModelCell = testWs.Cells[row, subjectInModelCol];
                 var subjectInModel = modelSubject != null;
                 subjectInModelCell.Value = subjectInModel ? "✔" : "❌";
-                if (!subjectInModel)
-                {
-                    subjectInModelCell.Style.Font.Color.SetColor(Color.Crimson);
-                }
+                if (!subjectInModel) subjectInModelCell.Style.Font.Color.SetColor(Color.Crimson);
                 var specInModelCell = testWs.Cells[row, specInModelCol];
                 var specInModel = modelSubject != null && modelSubject.Specs.Contains(testInfo.SpecId);
                 specInModelCell.Value = specInModel ? "✔" : "❌";
-                if (!specInModel)
-                {
-                    specInModelCell.Style.Font.Color.SetColor(Color.Crimson);
-                }
+                if (!specInModel) specInModelCell.Style.Font.Color.SetColor(Color.Crimson);
 
                 if (!specInModel || !subjectInModel)
-                {
                     testWs.Row(row).Style.Border.BorderAround(ExcelBorderStyle.MediumDashDot);
-                }
             }
+
             testWs.Cells.AutoFitColumns();
         }
 
@@ -201,10 +145,35 @@ namespace GraphZen.SpecAudit.SpecFx
                     childHeader.Value = child.Name;
                     childHeader.Style.TextRotation = 45;
                     worksheet.Column(currentColumn).Width = 6;
-                    foreach (var (id, row) in specRows)
+                    foreach (var (specId, row) in specRows)
                     {
                         var statusCell = worksheet.Cells[row, currentColumn];
-                        statusCell.Value = "❌";
+                        if (child.Specs.Contains(specId))
+                        {
+                            var tests = Tests.Where(_ => _.SpecId == specId && _.SubjectPath == child.Path)
+                                .ToImmutableList();
+                            var nonSkippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
+                            var skippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
+                            if (nonSkippedTests.Any())
+                            {
+                                statusCell.Value = "✅";
+                            }
+                            else if (skippedTests.Any())
+                            {
+
+                                statusCell.Value = "❓";
+                            }
+                            else
+                            {
+                                statusCell.Value = "❎";
+                            }
+                        }
+                        else
+                        {
+                            statusCell.Value = "-";
+                        }
+
+                        statusCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     }
                 }
 
@@ -228,7 +197,7 @@ namespace GraphZen.SpecAudit.SpecFx
             }
 
             var subjects = new List<SpecSubject>();
-            Add(Subject, subjects);
+            Add(RootSubject, subjects);
             return subjects.AsReadOnly();
         }
     }
