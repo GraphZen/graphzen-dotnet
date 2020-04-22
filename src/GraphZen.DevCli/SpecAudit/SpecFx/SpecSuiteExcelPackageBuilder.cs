@@ -1,7 +1,6 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -16,9 +15,10 @@ namespace GraphZen.SpecAudit.SpecFx
 {
     public static class SpecSuiteExcelPackageBuilder
     {
+        private static readonly bool Fail = true;
+
         private static IReadOnlyDictionary<(SpecCoverageStatus status, SpecPriority? prioroity), (Color background,
-            Color text)> Colors
-        { get; } =
+            Color text)> Colors { get; } =
             new Dictionary<(SpecCoverageStatus status, SpecPriority? prioroity), (Color background, Color text)>
             {
                 {(SpecCoverageStatus.Missing, SpecPriority.High), (Color.Red, Color.White)},
@@ -191,22 +191,18 @@ namespace GraphZen.SpecAudit.SpecFx
             return p;
         }
 
-        private static bool Fail = true;
         private static void AddSummarySheet(ExcelPackage p, SpecSuite suite)
         {
             var worksheet = p.Workbook.Worksheets.Add("Summary");
             var tests = suite.Subjects.SelectMany(_ => _.GetCoverage(suite)).ToImmutableList();
-            tests.Select(_ =>
-                {
-                    return _;
-                })
+            tests.Select(_ => { return _; })
                 .Dump("test", true);
             if (Fail)
             {
-
                 //throw new Exception("");
             }
-            var priorities = new[] { SpecPriority.High, SpecPriority.Medium, SpecPriority.Low };
+
+            var priorities = new[] {SpecPriority.High, SpecPriority.Medium, SpecPriority.Low};
             var statuses = new[]
                 {SpecCoverageStatus.Implemented, SpecCoverageStatus.Skipped, SpecCoverageStatus.Missing};
             var total = tests.Count;
@@ -235,7 +231,7 @@ namespace GraphZen.SpecAudit.SpecFx
                     }
 
                     var count = priorityTests.Count(_ => _.status == status);
-                    var percent = (double)count / total;
+                    var percent = (double) count / total;
                     var countCell = worksheet.Cells[priorityRow, statusCountCol];
                     countCell.Value = count;
                     var percentCell = worksheet.Cells[priorityRow, statusPercentCol];

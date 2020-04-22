@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit.SpecFx;
 using GraphZen.TypeSystem.FunctionalTests.Directives;
@@ -49,12 +48,6 @@ namespace GraphZen.SpecAudit
                 typeof(ConfigurableItemSpecs),
                 typeof(OptionalItemSpecs)
             );
-
-            specs
-                .Select(_ =>
-            {
-                return (_.Name);
-            }).Dump();
 
 
             return new SpecSuite("Type System", schema, specs, typeof(DirectiveCreationTests).Assembly);

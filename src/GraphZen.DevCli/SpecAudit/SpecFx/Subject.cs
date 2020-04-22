@@ -43,7 +43,7 @@ namespace GraphZen.SpecAudit.SpecFx
             GetCoverage(SpecSuite suite) =>
             Specs.Values.Select(_ =>
             {
-                var result =(Path,  _.SpecId,_.Priority, GetCoverageStatus(_.SpecId, suite));
+                var result = (Path, _.SpecId, _.Priority, GetCoverageStatus(_.SpecId, suite));
 
                 return result;
             });
