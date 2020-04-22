@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit.SpecFx;
 using GraphZen.TypeSystem.FunctionalTests.Directives;
@@ -20,7 +21,7 @@ namespace GraphZen.SpecAudit
             var inputField = inputValue.WithName("Input Field");
             var argument = inputValue.WithName("Argument");
             var argumentCollection = new Subject("Arguments");
-            var directiveAnnoation = new Subject("Directive Annotation");
+            var directiveAnnotation = new Subject("Directive Annotation");
             var directiveAnnotationCollection = new Subject("Directive Annotations");
             var inputOutputType = new Subject("Input or Output Type Reference");
             var inputTypeRef = inputOutputType.WithName("Input Type Reference");
@@ -37,7 +38,6 @@ namespace GraphZen.SpecAudit
                 .WithChild(objectType);
 
             var schema = new Subject("Schema")
-                .WithSpecs<ConfigurableItemSpecs>(SpecPriority.High)
                 .WithChild(description)
                 .WithChild(directiveAnnotationCollection)
                 .WithChild(new Subject("Query Type"))
@@ -49,6 +49,12 @@ namespace GraphZen.SpecAudit
                 typeof(ConfigurableItemSpecs),
                 typeof(OptionalItemSpecs)
             );
+
+            specs
+                .Select(_ =>
+            {
+                return (_.Name);
+            }).Dump();
 
 
             return new SpecSuite("Type System", schema, specs, typeof(DirectiveCreationTests).Assembly);

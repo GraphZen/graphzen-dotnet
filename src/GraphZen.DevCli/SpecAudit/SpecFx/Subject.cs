@@ -10,29 +10,6 @@ using JetBrains.Annotations;
 
 namespace GraphZen.SpecAudit.SpecFx
 {
-    public enum SpecPriority
-    {
-        Default,
-        Low,
-        Medium,
-        High
-    }
-
-
-    public class SubjectSpec
-    {
-        public SubjectSpec(string specId, SpecPriority? priority)
-        {
-            SpecId = specId;
-            Priority = priority ?? SpecPriority.Default;
-        }
-
-        public string SpecId { get; }
-        public SpecPriority Priority { get; }
-
-        public SubjectSpec WithPriority(SpecPriority priority) => new SubjectSpec(SpecId, priority);
-    }
-
     public class Subject
     {
         public Subject(string name) : this(name, null, ImmutableDictionary<string, SubjectSpec>.Empty,
@@ -56,11 +33,31 @@ namespace GraphZen.SpecAudit.SpecFx
         }
 
         public string Name { get; }
-        public string Path => Parent != null ? $"{Parent.Path}_{Name}" : Name;
+        public string Path => Parent != null ? $"{Parent.Path}.{Name.Replace(' ', '_')}" : Name.Replace(' ', '_');
         public ImmutableDictionary<string, SubjectSpec> Specs { get; }
         public ImmutableList<Subject> Children { get; }
 
         public Subject? Parent { get; }
+
+        public IEnumerable<(string path, string specId, SpecPriority priority, SpecCoverageStatus status)>
+            GetCoverage(SpecSuite suite) =>
+            Specs.Values.Select(_ =>
+            {
+                var result =(Path,  _.SpecId,_.Priority, GetCoverageStatus(_.SpecId, suite));
+
+                return result;
+            });
+
+
+        public SpecCoverageStatus GetCoverageStatus(string specId, SpecSuite suite)
+        {
+            var tests = suite.Tests.Where(_ => _.SpecId == specId && _.SubjectPath == Path)
+                .ToImmutableList();
+            var nonSkippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
+            var skippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
+            if (nonSkippedTests.Any()) return SpecCoverageStatus.Implemented;
+            return skippedTests.Any() ? SpecCoverageStatus.Skipped : SpecCoverageStatus.Missing;
+        }
 
         public IEnumerable<Subject> GetSelfAndDescendants()
         {

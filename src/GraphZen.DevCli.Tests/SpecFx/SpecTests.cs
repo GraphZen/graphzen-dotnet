@@ -13,7 +13,7 @@ namespace GraphZen
         public void can_create_type_system_subject()
         {
             var suite = TypeSystemSuite.Create();
-            var package = SpecSuiteExcelPackage.Create(suite);
+            var package = SpecSuiteExcelPackageBuilder.Create(suite);
         }
     }
 }
