@@ -11,7 +11,7 @@ using Xunit;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Directives
 {
-    [SpecSubject(nameof(Directive.Name))]
+    [Subject(nameof(Directive.Name))]
     public class DirectiveCreationTests : DirectiveSpecTest
     {
         [Fact(Skip = "obsolete")]

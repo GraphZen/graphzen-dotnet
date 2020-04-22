@@ -4,12 +4,12 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Directives
 {
-    [SpecSubject(nameof(Schema.Directives))]
+    [Subject(nameof(Schema.Directives))]
     public abstract class DirectivesSpecTests : TypeSystemSpecTests
     {
     }
 
-    [SpecSubject(nameof(Directive))]
+    [Subject(nameof(Directive))]
     public abstract class DirectiveSpecTest : DirectivesSpecTests
     {
     }

@@ -22,20 +22,25 @@ namespace GraphZen.SpecAudit.SpecFx
         {
         }
 
-        public Spec(string id, string? name = null, string? description = null, IEnumerable<Spec>? children = null)
+        private Spec(string id, string? name = null, string? description = null, IEnumerable<Spec>? children = null,
+            SpecPriority? priority = null)
         {
             Id = id;
             Name = name ?? id;
             Description = description;
             Children = children?.ToImmutableList() ?? ImmutableList<Spec>.Empty;
+            Priority = priority ?? SpecPriority.Default;
         }
 
         public string Id { get; }
         public string Name { get; }
         public string? Description { get; }
+        public SpecPriority Priority { get; }
         public ImmutableList<Spec> Children { get; }
 
-        public static Spec From(Type type)
+        public Spec WithPriority(SpecPriority priority) => new Spec(Id, Name, Description, Children, priority);
+
+        private static Spec From(Type type)
         {
             var id = type.Name;
             var name = type.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;

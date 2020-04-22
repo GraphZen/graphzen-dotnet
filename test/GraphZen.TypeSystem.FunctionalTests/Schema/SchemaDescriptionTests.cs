@@ -5,13 +5,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
+using Xunit;
 
 namespace GraphZen.TypeSystem.FunctionalTests
 {
-    [SpecSubject(nameof(Schema.Description))]
+    [Subject(nameof(Schema.Description))]
     public class SchemaDescriptionTests : TypeSystemSpecTests
     {
         [Spec(nameof(ConfigurableItemSpecs.Hello))]
+        [Fact]
         public void sometest()
         {
         }

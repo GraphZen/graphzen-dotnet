@@ -13,9 +13,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    public class SpecSubjectAttribute : Attribute
+    public class SubjectAttribute : Attribute
     {
-        public SpecSubjectAttribute(string subject, params string[] subjects)
+        public SubjectAttribute(string subject, params string[] subjects)
         {
             Subjects = ImmutableList.Create(subject).AddRange(subjects).Reverse();
         }

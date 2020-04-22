@@ -14,43 +14,46 @@ using OfficeOpenXml.Style;
 
 namespace GraphZen.SpecAudit.SpecFx
 {
-    public class SpecSuite
+    public enum SpecCoverageStatus
     {
-        public SpecSuite(string name, SpecSubject rootSubject, IEnumerable<Spec> specs, Assembly testAssembly)
-        {
-            Name = name;
-            Specs = specs.ToReadOnlyList();
-            RootSubject = rootSubject;
-            TestAssembly = testAssembly;
-            Subjects = rootSubject.GetSelfAndDescendants().ToImmutableList();
-            SubjectsByPath = Subjects.ToImmutableDictionary(_ => _.Path);
-            Tests = SpecTest.DiscoverFrom(TestAssembly).ToImmutableList();
-        }
+        Implemented,
+        Missing,
+        NotNeeded,
+        Skipped
+    }
 
-        public string Name { get; }
-        public IReadOnlyList<Spec> Specs { get; }
-        public IReadOnlyList<SpecTest> Tests { get; }
-        public IReadOnlyList<SpecSubject> Subjects { get; }
-        public IReadOnlyDictionary<string, SpecSubject> SubjectsByPath { get; }
-        public SpecSubject RootSubject { get; }
-        public Assembly TestAssembly { get; }
+    public static class SpecSuiteExcelPackage
+    {
+        private static IReadOnlyDictionary<(SpecCoverageStatus status, SpecPriority prioroity), (Color background,
+            Color text)> Colors { get; } =
+            new Dictionary<(SpecCoverageStatus status, SpecPriority prioroity), (Color background, Color text)>
+            {
+                {(SpecCoverageStatus.Missing, SpecPriority.High), (Color.Red, Color.White)},
+                {(SpecCoverageStatus.Missing, SpecPriority.Medium), (Color.IndianRed, Color.White)},
+                {(SpecCoverageStatus.Missing, SpecPriority.Low), (Color.PaleVioletRed, Color.White)},
+                {(SpecCoverageStatus.Missing, SpecPriority.Default), (Color.PaleVioletRed, Color.White)},
 
-        public ExcelPackage CreateReport()
-        {
-            var p = new ExcelPackage();
-            CreateTestMatrix(p);
-            ReportUnknownTests(p);
-            return p;
-        }
+                {(SpecCoverageStatus.Implemented, SpecPriority.High), (Color.Green, Color.White)},
+                {(SpecCoverageStatus.Implemented, SpecPriority.Medium), (Color.MediumSeaGreen, Color.White)},
+                {(SpecCoverageStatus.Implemented, SpecPriority.Low), (Color.LightSeaGreen, Color.White)},
+                {(SpecCoverageStatus.Implemented, SpecPriority.Default), (Color.LightSeaGreen, Color.White)},
 
-        private void ReportUnknownTests(ExcelPackage p)
+                {(SpecCoverageStatus.Skipped, SpecPriority.High), (Color.Yellow, Color.Black)},
+                {(SpecCoverageStatus.Skipped, SpecPriority.Medium), (Color.LightGoldenrodYellow, Color.Black)},
+                {(SpecCoverageStatus.Skipped, SpecPriority.Low), (Color.LightYellow, Color.Black)},
+                {(SpecCoverageStatus.Skipped, SpecPriority.Default), (Color.LightYellow, Color.Black)},
+
+                {(SpecCoverageStatus.NotNeeded, SpecPriority.Default), (Color.White, Color.Black)}
+            };
+
+        private static void ReportUnknownTests(ExcelPackage p, SpecSuite suite)
         {
             var modelWs = p.Workbook.Worksheets.Add("Model");
             var pathHeader = modelWs.Cells[1, 1];
             pathHeader.Value = "Path";
-            for (var i = 0; i < Subjects.Count; i++)
+            for (var i = 0; i < suite.Subjects.Count; i++)
             {
-                var subj = Subjects[i];
+                var subj = suite.Subjects[i];
                 var rowNumber = i + 2;
                 var pathCell = modelWs.Cells[rowNumber, 1];
                 pathCell.Value = subj.Path;
@@ -78,9 +81,9 @@ namespace GraphZen.SpecAudit.SpecFx
             var specModelHeader = testWs.Cells[1, specInModelCol];
             specModelHeader.Value = "Model Spec";
 
-            for (var i = 0; i < Tests.Count; i++)
+            for (var i = 0; i < suite.Tests.Count; i++)
             {
-                var testInfo = Tests[i];
+                var testInfo = suite.Tests[i];
                 var row = i + 2;
                 var classCell = testWs.Cells[row, classCol];
                 classCell.Value = testInfo.TestMethod.DeclaringType?.Name;
@@ -90,13 +93,13 @@ namespace GraphZen.SpecAudit.SpecFx
                 testPathCell.Value = testInfo.SubjectPath;
                 var specCell = testWs.Cells[row, specCol];
                 specCell.Value = testInfo.SpecId;
-                var modelSubject = SubjectsByPath.TryGetValue(testInfo.SubjectPath, out var subj) ? subj : null;
+                var modelSubject = suite.SubjectsByPath.TryGetValue(testInfo.SubjectPath, out var subj) ? subj : null;
                 var subjectInModelCell = testWs.Cells[row, subjectInModelCol];
                 var subjectInModel = modelSubject != null;
                 subjectInModelCell.Value = subjectInModel ? "✔" : "❌";
                 if (!subjectInModel) subjectInModelCell.Style.Font.Color.SetColor(Color.Crimson);
                 var specInModelCell = testWs.Cells[row, specInModelCol];
-                var specInModel = modelSubject != null && modelSubject.Specs.Contains(testInfo.SpecId);
+                var specInModel = modelSubject != null && modelSubject.Specs.ContainsKey(testInfo.SpecId);
                 specInModelCell.Value = specInModel ? "✔" : "❌";
                 if (!specInModel) specInModelCell.Style.Font.Color.SetColor(Color.Crimson);
 
@@ -107,13 +110,13 @@ namespace GraphZen.SpecAudit.SpecFx
             testWs.Cells.AutoFitColumns();
         }
 
-        private void CreateTestMatrix(ExcelPackage p)
+        private static void CreateTestMatrix(ExcelPackage p, SpecSuite suite)
         {
             var worksheet = p.Workbook.Worksheets.Add("Coverage");
             var specRows = new Dictionary<string, int>();
             var currentRow = 3;
             var specRowStart = currentRow;
-            foreach (var spec in Specs)
+            foreach (var spec in suite.Specs)
             {
                 worksheet.Cells[specRowStart, 1].Value = spec.Name;
                 for (var i = 0; i < spec.Children.Count; i++)
@@ -132,7 +135,7 @@ namespace GraphZen.SpecAudit.SpecFx
 
             var currentColumn = 3;
             var columnStart = currentColumn;
-            foreach (var subj in GetPrimarySubjects())
+            foreach (var subj in GetPrimarySubjects(suite))
             {
                 subj.Name.Dump();
                 worksheet.Cells[1, currentColumn].Value = subj.Name;
@@ -147,18 +150,37 @@ namespace GraphZen.SpecAudit.SpecFx
                     foreach (var (specId, row) in specRows)
                     {
                         var statusCell = worksheet.Cells[row, currentColumn];
-                        if (child.Specs.Contains(specId))
+                        if (child.Specs.TryGetValue(specId, out var spec))
                         {
-                            var tests = Tests.Where(_ => _.SpecId == specId && _.SubjectPath == child.Path)
+                            var tests = suite.Tests.Where(_ => _.SpecId == specId && _.SubjectPath == child.Path)
                                 .ToImmutableList();
                             var nonSkippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
                             var skippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
-                            if (nonSkippedTests.Any())
-                                statusCell.Value = "✅";
-                            else if (skippedTests.Any())
-                                statusCell.Value = "❓";
-                            else
-                                statusCell.Value = "❎";
+
+                            var status = nonSkippedTests.Any() ? SpecCoverageStatus.Implemented
+                                : skippedTests.Any() ? SpecCoverageStatus.Skipped
+                                : SpecCoverageStatus.Missing;
+
+
+                            var values = new Dictionary<SpecCoverageStatus, string>
+                            {
+                                {SpecCoverageStatus.Missing, "❌"},
+                                {SpecCoverageStatus.Implemented, "✔"},
+                                {SpecCoverageStatus.NotNeeded, "--"},
+                                {SpecCoverageStatus.Skipped, "❓"}
+                            };
+                            statusCell.Value = values[status];
+
+
+                            if (Colors.TryGetValue((status, spec.Priority), out var c) ||
+                                Colors.TryGetValue((status, SpecPriority.Default), out c)
+                            )
+                            {
+                                var (background, text) = c;
+                                statusCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                statusCell.Style.Fill.BackgroundColor.SetColor(background);
+                                statusCell.Style.Font.Color.SetColor(text);
+                            }
                         }
                         else
                         {
@@ -177,9 +199,18 @@ namespace GraphZen.SpecAudit.SpecFx
             }
         }
 
-        private IReadOnlyList<SpecSubject> GetPrimarySubjects()
+        public static ExcelPackage Create(SpecSuite suite)
         {
-            void Add(SpecSubject subj, List<SpecSubject> list)
+            var p = new ExcelPackage();
+            CreateTestMatrix(p, suite);
+            ReportUnknownTests(p, suite);
+            return p;
+        }
+
+
+        private static IReadOnlyList<Subject> GetPrimarySubjects(SpecSuite suite)
+        {
+            void Add(Subject subj, List<Subject> list)
             {
                 list.Add(subj);
                 foreach (var grandChild in subj.Children.SelectMany(c => c.Children))
@@ -188,9 +219,31 @@ namespace GraphZen.SpecAudit.SpecFx
                 }
             }
 
-            var subjects = new List<SpecSubject>();
-            Add(RootSubject, subjects);
+            var subjects = new List<Subject>();
+            Add(suite.RootSubject, subjects);
             return subjects.AsReadOnly();
         }
+    }
+
+    public class SpecSuite
+    {
+        public SpecSuite(string name, Subject rootSubject, IEnumerable<Spec> specs, Assembly testAssembly)
+        {
+            Name = name;
+            Specs = specs.ToReadOnlyList();
+            RootSubject = rootSubject;
+            TestAssembly = testAssembly;
+            Subjects = rootSubject.GetSelfAndDescendants().ToImmutableList();
+            SubjectsByPath = Subjects.ToImmutableDictionary(_ => _.Path);
+            Tests = SpecTest.DiscoverFrom(TestAssembly).ToImmutableList();
+        }
+
+        public string Name { get; }
+        public IReadOnlyList<Spec> Specs { get; }
+        public IReadOnlyList<SpecTest> Tests { get; }
+        public IReadOnlyList<Subject> Subjects { get; }
+        public IReadOnlyDictionary<string, Subject> SubjectsByPath { get; }
+        public Subject RootSubject { get; }
+        public Assembly TestAssembly { get; }
     }
 }

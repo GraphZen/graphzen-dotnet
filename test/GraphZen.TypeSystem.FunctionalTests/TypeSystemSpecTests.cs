@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.FunctionalTests
 {
-    [SpecSubject(nameof(Schema))]
+    [Subject(nameof(Schema))]
     public abstract class TypeSystemSpecTests
     {
     }

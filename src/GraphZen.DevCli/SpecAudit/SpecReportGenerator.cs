@@ -25,7 +25,8 @@ namespace GraphZen.SpecAudit
 
             foreach (var suite in suites)
             {
-                using var p = suite.CreateReport();
+
+                using var p = SpecSuiteExcelPackage.Create(suite);
                 var date = DateTime.Now.ToString("u").Replace(':', '.');
                 var filename = $@"{date} {suite.Name}.xlsx";
                 var filePath = Path.Join(reportDirectory.FullName, filename);

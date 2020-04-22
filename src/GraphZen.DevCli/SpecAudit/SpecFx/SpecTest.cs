@@ -53,14 +53,14 @@ namespace GraphZen.SpecAudit.SpecFx
             var subjects = new List<string>();
             if (specAttr.Subject != null) subjects.Add(specAttr.Subject);
 
-            var methodSubjAttr = method.GetCustomAttribute<SpecSubjectAttribute>();
+            var methodSubjAttr = method.GetCustomAttribute<SubjectAttribute>();
             if (methodSubjAttr != null) subjects.AddRange(methodSubjAttr.Subjects);
 
 
             var type = method.DeclaringType;
             while (type != null)
             {
-                var typeSubjAttr = type.GetCustomAttribute<SpecSubjectAttribute>();
+                var typeSubjAttr = type.GetCustomAttribute<SubjectAttribute>();
                 if (typeSubjAttr != null) subjects!.AddRange(typeSubjAttr.Subjects);
                 type = type.BaseType;
             }
