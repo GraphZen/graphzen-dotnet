@@ -17,27 +17,6 @@ namespace GraphZen.SpecAudit.SpecFx
     {
         private static readonly bool Fail = true;
 
-        private static IReadOnlyDictionary<(SpecCoverageStatus status, SpecPriority? prioroity), (Color background,
-            Color text)> Colors { get; } =
-            new Dictionary<(SpecCoverageStatus status, SpecPriority? prioroity), (Color background, Color text)>
-            {
-                {(SpecCoverageStatus.Missing, SpecPriority.High), (Color.Red, Color.White)},
-                {(SpecCoverageStatus.Missing, SpecPriority.Medium), (Color.IndianRed, Color.White)},
-                {(SpecCoverageStatus.Missing, SpecPriority.Low), (Color.PaleVioletRed, Color.White)},
-                {(SpecCoverageStatus.Missing, null), (Color.PaleVioletRed, Color.White)},
-
-                {(SpecCoverageStatus.Implemented, SpecPriority.High), (Color.Green, Color.White)},
-                {(SpecCoverageStatus.Implemented, SpecPriority.Medium), (Color.MediumSeaGreen, Color.White)},
-                {(SpecCoverageStatus.Implemented, SpecPriority.Low), (Color.LightSeaGreen, Color.White)},
-                {(SpecCoverageStatus.Implemented, null), (Color.LightSeaGreen, Color.White)},
-
-                {(SpecCoverageStatus.Skipped, SpecPriority.High), (Color.Yellow, Color.Black)},
-                {(SpecCoverageStatus.Skipped, SpecPriority.Medium), (Color.LightGoldenrodYellow, Color.Black)},
-                {(SpecCoverageStatus.Skipped, SpecPriority.Low), (Color.LightYellow, Color.Black)},
-                {(SpecCoverageStatus.Skipped, null), (Color.LightYellow, Color.Black)},
-
-                {(SpecCoverageStatus.NotNeeded, null), (Color.White, Color.Black)}
-            };
 
         private static void AddDiagnosticSheets(ExcelPackage p, SpecSuite suite)
         {
@@ -90,18 +69,28 @@ namespace GraphZen.SpecAudit.SpecFx
                 var subjectInModelCell = testWs.Cells[row, subjectInModelCol];
                 var subjectInModel = modelSubject != null;
                 subjectInModelCell.Value = subjectInModel ? "✔" : "❌";
-                if (!subjectInModel) subjectInModelCell.Style.Font.Color.SetColor(Color.Crimson);
+                if (!subjectInModel)
+                {
+                    subjectInModelCell.Style.Font.Color.SetColor(Color.Crimson);
+                }
+
                 var specInModelCell = testWs.Cells[row, specInModelCol];
                 var specInModel = modelSubject != null && modelSubject.Specs.ContainsKey(testInfo.SpecId);
                 specInModelCell.Value = specInModel ? "✔" : "❌";
-                if (!specInModel) specInModelCell.Style.Font.Color.SetColor(Color.Crimson);
+                if (!specInModel)
+                {
+                    specInModelCell.Style.Font.Color.SetColor(Color.Crimson);
+                }
 
                 if (!specInModel || !subjectInModel)
+                {
                     testWs.Row(row).Style.Border.BorderAround(ExcelBorderStyle.MediumDashDot);
+                }
             }
 
             testWs.Cells.AutoFitColumns();
         }
+
 
         private static void AddCoverageSheet(ExcelPackage p, SpecSuite suite)
         {
@@ -154,16 +143,7 @@ namespace GraphZen.SpecAudit.SpecFx
                             };
                             statusCell.Value = values[status];
 
-
-                            if (Colors.TryGetValue((status, spec.Priority), out var c) ||
-                                Colors.TryGetValue((status, null), out c)
-                            )
-                            {
-                                var (background, text) = c;
-                                statusCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                                statusCell.Style.Fill.BackgroundColor.SetColor(background);
-                                statusCell.Style.Font.Color.SetColor(text);
-                            }
+                            SetColors(Colors.Get(status, spec.Priority), statusCell);
                         }
                         else
                         {
@@ -202,7 +182,7 @@ namespace GraphZen.SpecAudit.SpecFx
                 //throw new Exception("");
             }
 
-            var priorities = new[] {SpecPriority.High, SpecPriority.Medium, SpecPriority.Low};
+            var priorities = new[] { SpecPriority.High, SpecPriority.Medium, SpecPriority.Low };
             var statuses = new[]
                 {SpecCoverageStatus.Implemented, SpecCoverageStatus.Skipped, SpecCoverageStatus.Missing};
             var total = tests.Count;
@@ -231,13 +211,55 @@ namespace GraphZen.SpecAudit.SpecFx
                     }
 
                     var count = priorityTests.Count(_ => _.status == status);
-                    var percent = (double) count / total;
+                    var percent = (double)count / total;
                     var countCell = worksheet.Cells[priorityRow, statusCountCol];
                     countCell.Value = count;
                     var percentCell = worksheet.Cells[priorityRow, statusPercentCol];
                     percentCell.Value = percent;
                     percentCell.Style.Numberformat.Format = "0%";
                     startingColumn = statusPercentCol + 1;
+
+
+                    (Color background, Color text)? GetPercentColors(
+                        params (double percentTheshold, (Color background, Color text) colors)[] thresholds)
+                    {
+                        foreach (var (p, cs) in thresholds)
+                        {
+                            if (percent >= p)
+                            {
+                                return cs;
+                            }
+                        }
+
+                        return default;
+                    }
+
+                    (Color background, Color text)? colors = default;
+
+                    switch (status)
+                    {
+                        case SpecCoverageStatus.Implemented:
+                            colors
+                                = GetPercentColors((1, Colors.Green), (0.9, Colors.LightGreen),
+                                    (0.8, Colors.PaleGreen), (0.7, Colors.PaleYellow), (0.6, Colors.LightYellow),
+                                    (0.5, Colors.Yellow), (0.4, Colors.PaleRed), (0.3, Colors.LightRed),
+                                    (0, Colors.Red));
+                            break;
+                        case SpecCoverageStatus.Missing:
+                        case SpecCoverageStatus.Skipped:
+                            colors
+                                = GetPercentColors((0.5, Colors.Red), (0.4, Colors.LightRed),
+                                    (0.3, Colors.PaleRed), (0.2, Colors.Yellow), (0.1, Colors.LightYellow),
+                                    (0.0001, Colors.PaleYellow));
+                            break;
+                    }
+
+
+                    if (colors != null)
+                    {
+                        SetColors(colors
+                            .Value, percentCell, countCell);
+                    }
                 }
 
 
@@ -256,6 +278,17 @@ namespace GraphZen.SpecAudit.SpecFx
             totalRowLabel.Value = "Total";
         }
 
+        private static void SetColors((Color background, Color text) colors, params ExcelRange[] ranges)
+        {
+            var (background, text) = colors;
+            foreach (var cell in ranges)
+            {
+                cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                cell.Style.Fill.BackgroundColor.SetColor(background);
+                cell.Style.Font.Color.SetColor(text);
+            }
+        }
+
 
         private static IReadOnlyList<Subject> GetPrimarySubjects(SpecSuite suite)
         {
@@ -271,6 +304,54 @@ namespace GraphZen.SpecAudit.SpecFx
             var subjects = new List<Subject>();
             Add(suite.RootSubject, subjects);
             return subjects.AsReadOnly();
+        }
+
+        private static class Colors
+        {
+            public static (Color background, Color text) Red { get; } = (Color.Red, Color.White);
+            public static (Color background, Color text) LightRed { get; } = (Color.IndianRed, Color.White);
+            public static (Color background, Color text) PaleRed { get; } = (Color.PaleVioletRed, Color.White);
+
+            public static (Color background, Color text) Green { get; } = (Color.Green, Color.White);
+            public static (Color background, Color text) LightGreen { get; } = (Color.MediumSeaGreen, Color.White);
+            public static (Color background, Color text) PaleGreen { get; } = (Color.PaleGreen, Color.White);
+
+            public static (Color background, Color text) Yellow { get; } = (Color.YellowGreen, Color.Black);
+
+            public static (Color background, Color text) LightYellow { get; } =
+                (Color.LightGoldenrodYellow, Color.Black);
+
+            public static (Color background, Color text) PaleYellow { get; } = (Color.LightYellow, Color.Black);
+
+
+            private static IReadOnlyDictionary<(SpecCoverageStatus status, SpecPriority? prioroity), (Color background,
+                Color text)> ColorsByStatusAndPriority
+            { get; } =
+                new Dictionary<(SpecCoverageStatus status, SpecPriority? prioroity), (Color background, Color text)>
+                {
+                    {(SpecCoverageStatus.Missing, SpecPriority.High), Red},
+                    {(SpecCoverageStatus.Missing, SpecPriority.Medium), LightRed},
+                    {(SpecCoverageStatus.Missing, SpecPriority.Low), PaleRed},
+                    {(SpecCoverageStatus.Missing, null), PaleRed},
+
+                    {(SpecCoverageStatus.Implemented, SpecPriority.High), Green},
+                    {(SpecCoverageStatus.Implemented, SpecPriority.Medium), LightGreen},
+                    {(SpecCoverageStatus.Implemented, SpecPriority.Low), PaleGreen},
+                    {(SpecCoverageStatus.Implemented, null), PaleGreen},
+
+                    {(SpecCoverageStatus.Skipped, SpecPriority.High), Yellow},
+                    {(SpecCoverageStatus.Skipped, SpecPriority.Medium), LightYellow},
+                    {(SpecCoverageStatus.Skipped, SpecPriority.Low), PaleYellow},
+                    {(SpecCoverageStatus.Skipped, null), PaleYellow},
+
+                    {(SpecCoverageStatus.NotNeeded, null), (Color.White, Color.Black)}
+                };
+
+            public static (Color background, Color text)
+                Get(SpecCoverageStatus status, SpecPriority? priority = null) =>
+                ColorsByStatusAndPriority.TryGetValue((status, priority), out var colors)
+                    ? colors
+                    : ColorsByStatusAndPriority[(status, null)];
         }
     }
 }
