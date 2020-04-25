@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.FunctionalTests.Directives
 {
     [Subject(nameof(Schema.Directives))]
-    public abstract class DirectivesSpecTests : TypeSystemSpecTests
+    public abstract class DirectivesSpecTests : SchemaTests
     {
     }
 

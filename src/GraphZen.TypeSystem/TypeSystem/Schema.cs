@@ -214,14 +214,14 @@ namespace GraphZen.TypeSystem
         public static Schema Create(DocumentSyntax schemaDocument)
         {
             Check.NotNull(schemaDocument, nameof(schemaDocument));
-            return Create(sb => sb.ConfigureFromSchema(schemaDocument));
+            return Create(sb => sb.FromSchema(schemaDocument));
         }
 
         [GraphQLIgnore]
         public static Schema Create(string schemaDocument)
         {
             Check.NotNull(schemaDocument, nameof(schemaDocument));
-            return Create(sb => sb.ConfigureFromSchema(schemaDocument));
+            return Create(sb => sb.FromSchema(schemaDocument));
         }
 
 

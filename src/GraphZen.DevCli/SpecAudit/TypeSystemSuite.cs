@@ -5,8 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit.SpecFx;
 using GraphZen.TypeSystem.FunctionalTests.Directives;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSytemSpecs;
 
 namespace GraphZen.SpecAudit
 {
@@ -16,39 +16,112 @@ namespace GraphZen.SpecAudit
         {
             var name = new Subject("Name").WithSpecs<ConfigurableItemSpecs>();
             var description = new Subject("Description").WithSpecs<ConfigurableItemSpecs>();
-            var inputValue = new Subject("Input Value").WithChild(name);
-            var inputField = inputValue.WithName("Input Field");
-            var argument = inputValue.WithName("Argument");
-            var argumentCollection = new Subject("Arguments");
-            var directiveAnnotation = new Subject("Directive Annotation");
-            var directiveAnnotationCollection = new Subject("Directive Annotations");
-            var inputOutputType = new Subject("Input or Output Type Reference");
-            var inputTypeRef = inputOutputType.WithName("Input Type Reference");
-            var outputTypeRef = inputOutputType.WithName("Output Type Reference");
+            var typeRef = new Subject("Type");
+            var inputTypeRef = typeRef.WithName("Input Type Reference");
+            var outputTypeRef = typeRef.WithName("Output Type Reference");
+
+            var argument = new Subject("Argument").WithChild(name).WithChild(new Subject("Value"));
+            var argumentCollection = new Subject("Arguments").WithChild(argument);
+            var directiveAnnotation = new Subject("Directive Annotation").WithChild(name).WithChild(argumentCollection);
+            var directiveAnnotations = new Subject("Directive Annotations").WithChild(directiveAnnotation);
+
+            var inputValue = new Subject("Input Value")
+                .WithChild(description)
+                .WithChild(inputTypeRef)
+                .WithChild(new Subject("Default Value"))
+                .WithChild(name)
+                .WithChild(directiveAnnotations);
+
+            var argumentDef = inputValue.WithName("Argument Definition");
+            var argumentDefCollection = new Subject("Arguments Definition").WithChild(argumentDef);
 
             var outputField = new Subject("Field")
-                .WithChildren(name, outputTypeRef.WithName("Field Type"));
+                .WithChild(name)
+                .WithChild(description)
+                .WithChild(argumentDefCollection)
+                .WithChild(directiveAnnotations)
+                .WithChildren(outputTypeRef.WithName("Field Type"));
 
             var objectType = new Subject("Object Type")
+                .WithChild(description)
+                .WithChild(name)
+                .WithChild(directiveAnnotations)
                 .WithChild(new Subject("Fields").WithChild(outputField.WithName("Object Field")))
-                .WithChild(new Subject("Implemented Interface"));
+                .WithChild(new Subject("Implemented Interfaces"));
 
-            var objectTypeCollection = new Subject("Object Types")
+            var objects = new Subject("Objects")
                 .WithChild(objectType);
+
+
+            var scalar = new Subject("Scalar Type")
+                .WithChild(description)
+                .WithChild(name)
+                .WithChild(directiveAnnotations);
+
+            var scalars = new Subject("Scalars").WithChild(scalar);
+
+            var interfaceType = new Subject("Interface Type")
+                .WithChild(description)
+                .WithChild(name)
+                .WithChild(directiveAnnotations)
+                .WithChild(new Subject("Interface Fields").WithChild(outputField.WithName("Interface Field")))
+                .WithChild(new Subject("Implemented Interfaces"));
+
+            var interfaces = new Subject("Interfaces").WithChild(interfaceType);
+
+            var unionType = new Subject("Union Type").WithChild(description).WithChild(name)
+                .WithChild(directiveAnnotations)
+                .WithChild(new Subject("Union Member Types"));
+
+            var unions = new Subject("Union").WithChild(unionType);
+
+            var enumType = new Subject("Enum Type")
+                .WithChild(name)
+                .WithChild(directiveAnnotations)
+                .WithChild(description)
+                .WithChild(
+                    new Subject("Enum Values")
+                        .WithChild(new Subject("Enum Value")
+                            .WithChild(name)
+                            .WithChild(directiveAnnotations)
+                            .WithChild(description)));
+
+            var enums = new Subject("Enums").WithChild(enumType);
+
+            var inputObjectType = new Subject("Input Object Type")
+                .WithChild(description)
+                .WithChild(name)
+                .WithChild(directiveAnnotations)
+                .WithChild(new Subject("Fields").WithChild(inputValue.WithName("Input Field")));
+
+            var inputObjects = new Subject("Input Objects").WithChild(inputObjectType);
+
+            var directive = new Subject("Directive")
+                .WithChild(name)
+                .WithChild(new Subject("Repeatable"))
+                .WithChild(new Subject("Locations"))
+                .WithChild(description);
+
+            var directives = new Subject("Directives").WithChild(directive);
 
             var schema = new Subject("Schema")
                 .WithChild(description)
-                .WithChild(directiveAnnotationCollection)
+                .WithChild(directiveAnnotations)
                 .WithChild(new Subject("Query Type"))
                 .WithChild(new Subject("Mutation Type"))
                 .WithChild(new Subject("Subscription Type"))
-                .WithChild(objectTypeCollection);
+                .WithChild(directives)
+                .WithChild(scalars)
+                .WithChild(objects)
+                .WithChild(interfaces)
+                .WithChild(unions)
+                .WithChild(enums)
+                .WithChild(inputObjects);
+
 
             var specs = Spec.From(
-                typeof(ConfigurableItemSpecs),
-                typeof(OptionalItemSpecs)
+                typeof(ConfigurableItemSpecs)
             );
-
 
             return new SpecSuite("Type System", schema, specs, typeof(DirectiveCreationTests).Assembly);
         }

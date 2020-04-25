@@ -8,10 +8,26 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Specs
 {
-    [Description("Hello")]
-    [DisplayName("Test 2")]
-    public class ConfigurableItemSpecs
+
+
+
+    public class TypeSytemSpecs
     {
-        [Description("Hello2")] public const string Hello = nameof(Hello);
+        [Description("Hello")]
+        [DisplayName("Test 2")]
+        public class ConfigurableItemSpecs
+        {
+            [Description("Hello2")] public const string Hello = nameof(Hello);
+        }
+
+        public class OptionalItemSpecs
+        {
+
+        }
+
+        public class RequiredItemSpecs
+        {
+
+        }
     }
 }

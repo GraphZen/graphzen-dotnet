@@ -72,7 +72,7 @@ namespace GraphZen.TypeSystem.Tests
             var subscriptionType = schema.GetType("Subscription");
 
             schema.SubscriptionType.Should().Be(subscriptionType);
-            var sub = subscriptionType.As<ObjectType>().FindField("articleSubscribe");
+            var sub = subscriptionType.As<ObjectType>().GetField("articleSubscribe");
             sub.FieldType.Should().Be(schema.GetType("Article"));
             sub.Name.Should().Be("articleSubscribe");
         }

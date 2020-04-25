@@ -45,6 +45,12 @@ namespace GraphZen.SpecAudit.SpecFx
             return new Spec(id, name, description, children);
         }
 
-        public static IEnumerable<Spec> From(params Type[] types) => types.Select(From);
+        public static IEnumerable<Spec> From(params Type[] types)
+        {
+            foreach (var spec in types.Select(From))
+            {
+                yield return spec;
+            }
+        }
     }
 }

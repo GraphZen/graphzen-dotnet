@@ -5,9 +5,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSytemSpecs.ConfigurableItemSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Directives
 {
@@ -21,7 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Directives
         }
 
         [Fact]
-        [Spec(nameof(ConfigurableItemSpecs.Hello), Subject = "Howdy")]
+        [Spec(nameof(Hello), Subject = "Howdy")]
         public void it_can_create_directive_from_sdl()
         {
             var schema = Schema.Create(@"directive @foo on FIELD");
@@ -31,7 +31,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Directives
         }
 
         [Fact(Skip = "TODO")]
-        [Spec(nameof(ConfigurableItemSpecs.Hello))]
+        [Spec(nameof(Hello))]
         public void it_cannot_create_directive_from_sdl_without_directive_locations()
         {
             Action act = () => Schema.Create(@"directive @foo on FIELD");

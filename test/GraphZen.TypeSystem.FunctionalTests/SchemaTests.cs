@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.FunctionalTests
 {
     [Subject(nameof(Schema))]
-    public abstract class TypeSystemSpecTests
+    public abstract class SchemaTests
     {
     }
 }

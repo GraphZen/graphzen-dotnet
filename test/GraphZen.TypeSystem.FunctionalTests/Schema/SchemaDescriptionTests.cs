@@ -3,14 +3,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSytemSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests
 {
     [Subject(nameof(Schema.Description))]
-    public class SchemaDescriptionTests : TypeSystemSpecTests
+    public class SchemaDescriptionTests : SchemaTests
     {
         [Spec(nameof(ConfigurableItemSpecs.Hello))]
         [Fact]

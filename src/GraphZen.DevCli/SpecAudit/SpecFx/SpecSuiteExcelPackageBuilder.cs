@@ -15,9 +15,6 @@ namespace GraphZen.SpecAudit.SpecFx
 {
     public static class SpecSuiteExcelPackageBuilder
     {
-        private static readonly bool Fail = true;
-
-
         private static void AddDiagnosticSheets(ExcelPackage p, SpecSuite suite)
         {
             var modelWs = p.Workbook.Worksheets.Add("Model");
@@ -164,25 +161,65 @@ namespace GraphZen.SpecAudit.SpecFx
 
         public static ExcelPackage Create(SpecSuite suite)
         {
-            var p = new ExcelPackage();
-            AddSummarySheet(p, suite);
-            AddCoverageSheet(p, suite);
-            AddDiagnosticSheets(p, suite);
-            return p;
+            var excel = new ExcelPackage();
+            AddCoverageSheet(excel, suite);
+            AddSummarySheet(excel, suite);
+            AddDiagnosticSheets(excel, suite);
+            return excel;
         }
 
-        private static void AddSummarySheet(ExcelPackage p, SpecSuite suite)
+        private static void AddSummarySheet(ExcelPackage excel, SpecSuite suite)
         {
-            var worksheet = p.Workbook.Worksheets.Add("Summary");
+            void SetPercentStatusColors(double percent, SpecCoverageStatus status, params ExcelRange[] ranges)
+            {
+                (Color background, Color text)? GetPercentColors(
+                    params (double percentTheshold, (Color background, Color text) colors)[] thresholds)
+                {
+                    foreach (var (pt, cs) in thresholds)
+                    {
+                        if (percent >= pt)
+                        {
+                            return cs;
+                        }
+                    }
+
+                    return default;
+                }
+
+                (Color background, Color text)? colors = default;
+
+                switch (status)
+                {
+                    case SpecCoverageStatus.Implemented:
+                        colors
+                            = GetPercentColors((1, Colors.Green), (0.9, Colors.LightGreen),
+                                (0.8, Colors.PaleGreen), (0.7, Colors.PaleYellow), (0.6, Colors.LightYellow),
+                                (0.5, Colors.Yellow), (0.4, Colors.PaleRed), (0.3, Colors.LightRed),
+                                (0, Colors.Red));
+                        break;
+                    case SpecCoverageStatus.Missing:
+                    case SpecCoverageStatus.Skipped:
+                        colors
+                            = GetPercentColors((0.5, Colors.Red), (0.4, Colors.LightRed),
+                                (0.3, Colors.PaleRed), (0.2, Colors.Yellow), (0.1, Colors.LightYellow),
+                                (0.0001, Colors.PaleYellow));
+                        break;
+                }
+
+
+                if (colors != null)
+                {
+                    SetColors(colors
+                        .Value, ranges);
+                }
+            }
+
+            var worksheet = excel.Workbook.Worksheets.Add("Summary");
             var tests = suite.Subjects.SelectMany(_ => _.GetCoverage(suite)).ToImmutableList();
             tests.Select(_ => { return _; })
                 .Dump("test", true);
-            if (Fail)
-            {
-                //throw new Exception("");
-            }
 
-            var priorities = new[] { SpecPriority.High, SpecPriority.Medium, SpecPriority.Low };
+            var priorities = new[] {SpecPriority.High, SpecPriority.Medium, SpecPriority.Low};
             var statuses = new[]
                 {SpecCoverageStatus.Implemented, SpecCoverageStatus.Skipped, SpecCoverageStatus.Missing};
             var total = tests.Count;
@@ -194,24 +231,30 @@ namespace GraphZen.SpecAudit.SpecFx
                 priorityLabelCell.Value = priority.ToString();
                 var startingColumn = 2;
                 var priorityTests = tests.Where(_ => _.priority == priority).ToImmutableList();
-                for (var j = 0; j < statuses.Length; j++)
+                foreach (var status in statuses)
                 {
-                    var status = statuses[j];
                     var statusCountCol = startingColumn;
                     var statusPercentCol = statusCountCol + 1;
                     if (i == 0)
                     {
-                        // Column headers
+                        // Status Header
                         var headerCell = worksheet.Cells[1, statusCountCol, 1, statusPercentCol];
                         headerCell.Merge = true;
                         headerCell.Value = status.ToString();
-                        var statusTotal = tests.Count(_ => _.status == status);
+                        var status1 = status;
+                        // Status Total
+                        var statusTotal = tests.Count(_ => _.status == status1);
                         var statusTotalCell = worksheet.Cells[2 + priorities.Length, statusCountCol];
                         statusTotalCell.Value = statusTotal;
+                        var statusPercent = (double) statusTotal / total;
+                        var statusPercentCell = worksheet.Cells[2 + priorities.Length, statusPercentCol];
+                        statusPercentCell.Value = statusPercent;
+                        statusPercentCell.Style.Numberformat.Format = "0%";
+                        SetPercentStatusColors(statusPercent, status, statusPercentCell, statusTotalCell);
                     }
 
                     var count = priorityTests.Count(_ => _.status == status);
-                    var percent = (double)count / total;
+                    var percent = (double) count / total;
                     var countCell = worksheet.Cells[priorityRow, statusCountCol];
                     countCell.Value = count;
                     var percentCell = worksheet.Cells[priorityRow, statusPercentCol];
@@ -219,47 +262,7 @@ namespace GraphZen.SpecAudit.SpecFx
                     percentCell.Style.Numberformat.Format = "0%";
                     startingColumn = statusPercentCol + 1;
 
-
-                    (Color background, Color text)? GetPercentColors(
-                        params (double percentTheshold, (Color background, Color text) colors)[] thresholds)
-                    {
-                        foreach (var (p, cs) in thresholds)
-                        {
-                            if (percent >= p)
-                            {
-                                return cs;
-                            }
-                        }
-
-                        return default;
-                    }
-
-                    (Color background, Color text)? colors = default;
-
-                    switch (status)
-                    {
-                        case SpecCoverageStatus.Implemented:
-                            colors
-                                = GetPercentColors((1, Colors.Green), (0.9, Colors.LightGreen),
-                                    (0.8, Colors.PaleGreen), (0.7, Colors.PaleYellow), (0.6, Colors.LightYellow),
-                                    (0.5, Colors.Yellow), (0.4, Colors.PaleRed), (0.3, Colors.LightRed),
-                                    (0, Colors.Red));
-                            break;
-                        case SpecCoverageStatus.Missing:
-                        case SpecCoverageStatus.Skipped:
-                            colors
-                                = GetPercentColors((0.5, Colors.Red), (0.4, Colors.LightRed),
-                                    (0.3, Colors.PaleRed), (0.2, Colors.Yellow), (0.1, Colors.LightYellow),
-                                    (0.0001, Colors.PaleYellow));
-                            break;
-                    }
-
-
-                    if (colors != null)
-                    {
-                        SetColors(colors
-                            .Value, percentCell, countCell);
-                    }
+                    SetPercentStatusColors(percent, status, percentCell, countCell);
                 }
 
 
@@ -271,11 +274,16 @@ namespace GraphZen.SpecAudit.SpecFx
                     totalHeaderCell.Value = "Total";
                     var totalCell = worksheet.Cells[priorities.Length + 2, startingColumn];
                     totalCell.Value = total;
+                    totalCell.Style.Font.Bold = true;
                 }
             }
 
             var totalRowLabel = worksheet.Cells[priorities.Length + 2, 1];
             totalRowLabel.Value = "Total";
+
+            worksheet.Cells.AutoFitColumns();
+            var inner = worksheet.Cells[2, 2, priorities.Length + 1, statuses.Length * 2 + 1];
+            inner.Style.Border.BorderAround(ExcelBorderStyle.Medium, Color.Black);
         }
 
         private static void SetColors((Color background, Color text) colors, params ExcelRange[] ranges)
@@ -325,8 +333,7 @@ namespace GraphZen.SpecAudit.SpecFx
 
 
             private static IReadOnlyDictionary<(SpecCoverageStatus status, SpecPriority? prioroity), (Color background,
-                Color text)> ColorsByStatusAndPriority
-            { get; } =
+                Color text)> ColorsByStatusAndPriority { get; } =
                 new Dictionary<(SpecCoverageStatus status, SpecPriority? prioroity), (Color background, Color text)>
                 {
                     {(SpecCoverageStatus.Missing, SpecPriority.High), Red},

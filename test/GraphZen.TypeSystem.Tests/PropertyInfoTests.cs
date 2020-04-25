@@ -38,8 +38,7 @@ namespace GraphZen.TypeSystem.Tests
         [InlineData(nameof(Foo.NullableBaseProperty), true)]
         public void PropertyNullability(string propertyName, bool expectCanBeNull)
         {
-            var property = typeof(Foo).GetProperty(propertyName)!;
-            var canBeNull = property.CanBeNull();
+            var canBeNull = typeof(Foo).GetProperty(propertyName)!.CanBeNull();
             canBeNull.Should().Be(expectCanBeNull,
                 $"{propertyName} {(expectCanBeNull ? "CAN be null" : "should NOT be null")}");
         }
