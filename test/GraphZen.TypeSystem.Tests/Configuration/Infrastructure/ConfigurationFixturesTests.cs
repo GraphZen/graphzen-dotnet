@@ -48,8 +48,10 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
                 .ToArray();
 
             if (missingTypeNames.Any())
+            {
                 throw new Exception(
                     $"The following types need to be added to {nameof(ConfigurationFixtures)}.{nameof(ConfigurationFixtures.GetAll)}:\n\n{string.Join(Environment.NewLine, missingTypeNames)} \n\n");
+            }
         }
     }
 }

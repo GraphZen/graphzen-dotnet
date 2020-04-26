@@ -26,9 +26,13 @@ namespace GraphZen.Infrastructure
             if (propertySelector.Body is UnaryExpression unExp)
             {
                 if (unExp.Operand is MemberExpression expression)
+                {
                     exp = expression;
+                }
                 else
+                {
                     throw new ArgumentException();
+                }
             }
             else if (propertySelector.Body is MemberExpression expression)
             {

@@ -35,7 +35,10 @@ namespace GraphZen.TypeSystem.Internal
             {
                 var type = nullableContextAttr.GetType();
                 var fieldInfo = type.GetField("Flag");
-                if (fieldInfo?.GetValue(nullableContextAttr) is byte value) flag = value;
+                if (fieldInfo?.GetValue(nullableContextAttr) is byte value)
+                {
+                    flag = value;
+                }
             }
 
             return flag != null;
@@ -61,35 +64,65 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool HasNullableReferenceType(this MethodInfo method)
         {
-            if (method.ReturnType.IsValueType) return false;
+            if (method.ReturnType.IsValueType)
+            {
+                return false;
+            }
 
             if (method.GetCustomAttributes().TryGetNullableContextFlag(out var flag))
             {
-                if (flag == Annotated) return true;
-                if (flag == NotAnnotated) return false;
+                if (flag == Annotated)
+                {
+                    return true;
+                }
+
+                if (flag == NotAnnotated)
+                {
+                    return false;
+                }
             }
 
             // ReSharper disable once AssignNullToNotNullAttribute
             if (method.ReturnParameter.GetCustomAttributes().TryGetNullableAttributeFlags(out var flags))
+            {
                 return flags.FirstOrDefault() == Annotated;
+            }
 
             return false;
         }
 
         public static bool HasNullableReferenceType(this ParameterInfo parameterInfo)
         {
-            if (parameterInfo.ParameterType.IsValueType) return false;
+            if (parameterInfo.ParameterType.IsValueType)
+            {
+                return false;
+            }
+
             if (parameterInfo.GetCustomAttributes().TryGetNullableAttributeFlags(out var flags))
             {
                 var flag = flags.FirstOrDefault();
-                if (flag == Annotated) return true;
-                if (flag == NotAnnotated) return false;
+                if (flag == Annotated)
+                {
+                    return true;
+                }
+
+                if (flag == NotAnnotated)
+                {
+                    return false;
+                }
             }
 
             if (parameterInfo.Member.GetCustomAttributes().TryGetNullableContextFlag(out var contextFlag))
             {
-                if (contextFlag == Annotated) return true;
-                if (contextFlag == NotAnnotated) return false;
+                if (contextFlag == Annotated)
+                {
+                    return true;
+                }
+
+                if (contextFlag == NotAnnotated)
+                {
+                    return false;
+                }
             }
 
             return false;
@@ -97,12 +130,23 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool HasNullableReferenceType(this PropertyInfo propertyInfo)
         {
-            if (propertyInfo.PropertyType.IsValueType) return false;
+            if (propertyInfo.PropertyType.IsValueType)
+            {
+                return false;
+            }
+
             if (propertyInfo.GetCustomAttributes().TryGetNullableAttributeFlags(out var flags))
             {
                 var flag = flags.FirstOrDefault();
-                if (flag == Annotated) return true;
-                if (flag == NotAnnotated) return false;
+                if (flag == Annotated)
+                {
+                    return true;
+                }
+
+                if (flag == NotAnnotated)
+                {
+                    return false;
+                }
             }
 
             return false;
@@ -216,10 +260,15 @@ namespace GraphZen.TypeSystem.Internal
             this MemberInfo member, Type fieldClrType)
         {
             var customName = member.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
-            if (customName != null) return (customName, ConfigurationSource.DataAnnotation);
+            if (customName != null)
+            {
+                return (customName, ConfigurationSource.DataAnnotation);
+            }
 
             if (fieldClrType.IsGenericType && fieldClrType.GetGenericTypeDefinition() == typeof(Task<>))
+            {
                 return (member.Name.TrimAsyncSuffix().FirstCharToLower(), ConfigurationSource.Convention);
+            }
 
             return (member.Name.FirstCharToLower(), ConfigurationSource.Convention);
         }
@@ -230,7 +279,10 @@ namespace GraphZen.TypeSystem.Internal
             Check.NotNull(member, nameof(member));
 
             var customName = member.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
-            if (customName != null) return (customName, ConfigurationSource.DataAnnotation);
+            if (customName != null)
+            {
+                return (customName, ConfigurationSource.DataAnnotation);
+            }
 
             return (member.Name, ConfigurationSource.Convention);
         }

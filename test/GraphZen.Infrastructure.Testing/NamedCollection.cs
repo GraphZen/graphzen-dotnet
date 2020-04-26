@@ -47,7 +47,10 @@ namespace GraphZen.Infrastructure
             {
                 get
                 {
-                    if (TryGetValue(key, out var value)) return value;
+                    if (TryGetValue(key, out var value))
+                    {
+                        return value;
+                    }
 
                     throw new InvalidOperationException($"Item named '{key}' does not exist in this collection");
                 }

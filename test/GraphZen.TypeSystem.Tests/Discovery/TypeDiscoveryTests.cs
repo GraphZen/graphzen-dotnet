@@ -106,8 +106,10 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     def.Should().BeNull($"because it is ignored by {ignoredConfigurationSource} configuration.");
                     if (ignoredConfigurationSource.HasValue)
+                    {
                         _.GetDefinition().FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName()).Should()
                             .Be(ignoredConfigurationSource, $"because {clrType.Name} should be ignored.");
+                    }
                 }
                 else
                 {
@@ -121,10 +123,14 @@ namespace GraphZen.TypeSystem.Tests
 
             var type = schema.GetTypes().Where(t => t.Kind == kind).SingleOrDefault(_ => _.ClrType == clrType);
             if (ignored)
+            {
                 type.Should().BeNull($"because it should be included by {configurationSource} configuration.");
+            }
             else
+            {
                 type.Should()
                     .NotBeNull($"it should be should be ignored by {ignoredConfigurationSource} configuration.");
+            }
         }
     }
 }

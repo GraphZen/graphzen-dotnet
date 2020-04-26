@@ -31,8 +31,10 @@ namespace GraphZen.QueryEngine.Validation.Rules
             {
                 var type = Context.Schema.GetTypeFromAst(typeCondition);
                 if (type != null && !(type is ICompositeType))
+                {
                     ReportError(InlineFragmentOnNonCompositeErrorMessage(typeCondition.ToSyntaxString()),
                         typeCondition);
+                }
             }
 
             return VisitAction.Continue;
@@ -43,9 +45,11 @@ namespace GraphZen.QueryEngine.Validation.Rules
             var type = Context.Schema.GetTypeFromAst(node.TypeCondition);
             {
                 if (type != null && !(type is ICompositeType))
+                {
                     ReportError(
                         FragmentOnNonCompositeErrorMessage(node.Name.Value, node.TypeCondition.ToSyntaxString()),
                         node.TypeCondition);
+                }
 
                 return VisitAction.Continue;
             }

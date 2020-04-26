@@ -80,7 +80,9 @@ namespace GraphZen.TypeSystem
                 .FirstOrDefault();
 
             if (duplicate != null)
+            {
                 throw new InvalidOperationException($"Type `{duplicate.Name}` defined twice, cannot create schema.");
+            }
 
             // ReSharper disable once PossibleNullReferenceException
             Types = initialTypes
@@ -100,25 +102,33 @@ namespace GraphZen.TypeSystem
             foreach (var type in Types.Values)
             {
                 if (type is ObjectType objectType)
+                {
                     foreach (var iface in objectType.Interfaces)
                     {
                         if (_implementations.TryGetValue(iface.Name, out var impls))
+                        {
                             impls.Add(objectType);
+                        }
                         else
+                        {
                             _implementations[iface.Name] = new List<ObjectType>
                             {
                                 objectType
                             };
+                        }
                     }
+                }
             }
 
             foreach (var type in Types.Values)
             {
                 if (type is ObjectType objectType)
+                {
                     foreach (var iface in objectType.Interfaces)
                     {
                         AssertObjectImplementsInterfaces(objectType, iface);
                     }
+                }
             }
 
             _syntax = new Lazy<SchemaDefinitionSyntax>(() =>
@@ -126,16 +136,22 @@ namespace GraphZen.TypeSystem
                 var rootOperationTypes = new List<OperationTypeDefinitionSyntax>();
                 // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                 if (QueryType != null)
+                {
                     rootOperationTypes.Add(new OperationTypeDefinitionSyntax(OperationType.Query,
                         SyntaxFactory.NamedType(SyntaxFactory.Name(QueryType.Name))));
+                }
 
                 if (MutationType != null)
+                {
                     rootOperationTypes.Add(new OperationTypeDefinitionSyntax(OperationType.Mutation,
                         SyntaxFactory.NamedType(SyntaxFactory.Name(MutationType.Name))));
+                }
 
                 if (SubscriptionType != null)
+                {
                     rootOperationTypes.Add(new OperationTypeDefinitionSyntax(OperationType.Subscription,
                         SyntaxFactory.NamedType(SyntaxFactory.Name(SubscriptionType.Name))));
+                }
 
 
                 return new SchemaDefinitionSyntax(rootOperationTypes);
@@ -145,7 +161,10 @@ namespace GraphZen.TypeSystem
             {
                 var definitions = new List<DefinitionSyntax>();
                 var schemaDef = _syntax.Value;
-                if (!schemaDef.IsSchemaOfCommonNames()) definitions.Add(schemaDef);
+                if (!schemaDef.IsSchemaOfCommonNames())
+                {
+                    definitions.Add(schemaDef);
+                }
 
                 definitions.AddRange(Directives.ToSyntaxNodes<DirectiveDefinitionSyntax>());
                 definitions.AddRange(Types.Values.ToSyntaxNodes<TypeDefinitionSyntax>());
@@ -335,11 +354,13 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             if (TryGetType(name, out var t))
+            {
                 if (t is T requestedType)
                 {
                     type = requestedType;
                     return true;
                 }
+            }
 
             type = default;
             return false;
@@ -355,11 +376,13 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(clrType, nameof(clrType));
             if (TryGetType(clrType, out var t))
+            {
                 if (t is T requestedType)
                 {
                     type = requestedType;
                     return true;
                 }
+            }
 
             type = default;
             return false;
@@ -379,7 +402,10 @@ namespace GraphZen.TypeSystem
             Check.NotNull(clrType, nameof(clrType));
             if (TryGetType(clrType, out var type))
             {
-                if (type is T requestedType) return requestedType;
+                if (type is T requestedType)
+                {
+                    return requestedType;
+                }
 
                 throw new InvalidOperationException(
                     $"Type with CLR type \"{clrType}\" already exists, but its type \"{type.GetType().Name}\" is different than the requested type of \"{typeof(T).Name}\".");
@@ -394,7 +420,10 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             if (TryGetType(name, out var type))
             {
-                if (type is T requestedType) return requestedType;
+                if (type is T requestedType)
+                {
+                    return requestedType;
+                }
 
                 throw new InvalidOperationException(
                     $"Type named \"{name}\" already exists, but its type \"{type.GetType().Name}\" is different than the requested type of \"{typeof(T).Name}\".");
@@ -407,7 +436,10 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public IEnumerable<ObjectType> GetPossibleTypes(IAbstractType abstractType)
         {
-            if (abstractType is UnionType unionType) return unionType.MemberTypes;
+            if (abstractType is UnionType unionType)
+            {
+                return unionType.MemberTypes;
+            }
 
             return abstractType is InterfaceType interfaceType
                 ? _implementations[interfaceType.Name] ?? throw new InvalidOperationException()
@@ -441,17 +473,21 @@ namespace GraphZen.TypeSystem
                 var fieldName = ifaceField.Name;
                 var objectField = objectType.FindField(ifaceField.Name);
                 if (objectField == null)
+                {
                     throw new GraphQLException(
                         $"\"{interfaceType.Name}\" expects field \"{ifaceField.Name}\" but \"{objectType.Name}\" " +
                         "does not provide it.");
+                }
 
                 // Assert interface field type is satisfied by object field type, by being
                 // a valid subtype. (covariant)
                 if (!objectField.FieldType.IsSubtypeOf(ifaceField.FieldType, this))
+                {
                     throw new GraphQLException(
                         $"{ifaceField} expects type \"{ifaceField.FieldType}\" " +
                         "but" +
                         $"{objectField} provides type \"{objectField.FieldType}\".");
+                }
 
                 // Assert each interface field arg is implemented.
                 foreach (var ifaceArg in ifaceField.GetArguments())
@@ -460,17 +496,21 @@ namespace GraphZen.TypeSystem
                     var objectArg = objectField.FindArgument(argName);
                     // Assert interface field arg exists on object field.
                     if (objectArg == null)
+                    {
                         throw new GraphQLException(
                             $"{ifaceField} expects argument \"{argName}\" " +
                             "but" +
                             $"{objectField} does not provide it.");
+                    }
 
                     // Assert interface field arg type matches object field arg type.
                     if (!ifaceArg.InputType.Equals(objectArg.InputType))
+                    {
                         throw new GraphQLException(
                             $"{ifaceField}(${argName}) expects type \"{ifaceArg.InputType}\" " +
                             "but" +
                             $"{objectField}(${argName}) provides type \"{objectArg.InputType}\".");
+                    }
                 }
 
                 foreach (var objectArg in objectField.GetArguments())
@@ -478,11 +518,15 @@ namespace GraphZen.TypeSystem
                     var argName = objectArg.Name;
                     var ifaceArg = ifaceField.FindArgument(argName);
                     if (ifaceArg == null)
+                    {
                         if (!(objectArg.InputType is NonNullType))
+                        {
                             throw new GraphQLException(
                                 $"{objectField}({argName}) is of required type " +
                                 $"\"{objectArg.InputType}\" but is not also provided by the " +
                                 $"interface {interfaceType.Name}.{fieldName}.");
+                        }
+                    }
                 }
             }
         }

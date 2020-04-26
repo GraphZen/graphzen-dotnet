@@ -48,7 +48,9 @@ namespace GraphZen.QueryEngine.Validation.Rules
 
             var candidateLocation = GetDirectiveLocationForAstPath(Context.Ancestors);
             if (candidateLocation != null && !locations.Contains(candidateLocation.Value))
+            {
                 ReportError(MisplacedDirectiveMessage(name, candidateLocation.Value.ToStringValue()), node);
+            }
 
             return VisitAction.Continue;
         }

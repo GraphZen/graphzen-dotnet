@@ -47,7 +47,10 @@ namespace GraphZen.LanguageModel
             {
                 yield return Variable;
                 yield return VariableType;
-                if (DefaultValue != null) yield return DefaultValue;
+                if (DefaultValue != null)
+                {
+                    yield return DefaultValue;
+                }
             }
         }
 
@@ -59,9 +62,15 @@ namespace GraphZen.LanguageModel
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
 
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return obj is VariableDefinitionSyntax && Equals((VariableDefinitionSyntax)obj);
         }

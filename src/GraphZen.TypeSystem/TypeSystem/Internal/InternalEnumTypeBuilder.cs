@@ -35,10 +35,16 @@ namespace GraphZen.TypeSystem.Internal
             {
                 enumMember = GetMemberInfo(value.GetType(), value.ToString()!);
                 (name, nameConfigurationSource) = enumMember.GetGraphQLNameForEnumValue();
-                if (enumMember.IsIgnoredByDataAnnotation()) IgnoreValue(name, ConfigurationSource.DataAnnotation);
+                if (enumMember.IsIgnoredByDataAnnotation())
+                {
+                    IgnoreValue(name, ConfigurationSource.DataAnnotation);
+                }
             }
 
-            if (IsValueIgnored(name, configurationSource)) return null;
+            if (IsValueIgnored(name, configurationSource))
+            {
+                return null;
+            }
 
             var enumValue = Definition.FindValue(name);
             if (enumValue is null)
@@ -56,7 +62,9 @@ namespace GraphZen.TypeSystem.Internal
             {
                 builder.CustomValue(value);
                 if (enumMember.TryGetDescriptionFromDataAnnotation(out var desc))
+                {
                     builder.Description(desc, ConfigurationSource.DataAnnotation);
+                }
             }
 
             return builder;
@@ -64,7 +72,11 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalEnumTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, configurationSource)) ConfigureEnumFromClrType();
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                ConfigureEnumFromClrType();
+            }
+
             return this;
         }
 
@@ -74,10 +86,15 @@ namespace GraphZen.TypeSystem.Internal
         public bool ConfigureEnumFromClrType()
         {
             var clrType = Definition.ClrType;
-            if (clrType == null) return false;
+            if (clrType == null)
+            {
+                return false;
+            }
 
             if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
                 Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
+            }
 
             foreach (var value in Enum.GetValues(clrType))
             {
@@ -92,7 +109,10 @@ namespace GraphZen.TypeSystem.Internal
 
         private static string GetName(object value)
         {
-            if (value is string strValue) return strValue;
+            if (value is string strValue)
+            {
+                return strValue;
+            }
 
             var enumMember = GetMemberInfo(value.GetType(), value.ToString()!);
             var (name, _) = enumMember.GetGraphQLNameForEnumValue();

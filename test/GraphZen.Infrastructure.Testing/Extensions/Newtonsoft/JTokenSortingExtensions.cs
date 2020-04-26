@@ -45,7 +45,9 @@ namespace GraphZen.Infrastructure
             foreach (var el in arr)
             {
                 if (el is JObject elObj)
+                {
                     Sort(elObj);
+                }
             }
 
 
@@ -54,10 +56,16 @@ namespace GraphZen.Infrastructure
                 if (jt is JObject jo)
                 {
                     var nameProp = jo.Properties().FirstOrDefault(_ => _.Name == "name");
-                    if (nameProp?.Value is JValue jv) return jv;
+                    if (nameProp?.Value is JValue jv)
+                    {
+                        return jv;
+                    }
                 }
 
-                if (jt is JValue jtv) return jtv;
+                if (jt is JValue jtv)
+                {
+                    return jtv;
+                }
 
                 return null;
             }

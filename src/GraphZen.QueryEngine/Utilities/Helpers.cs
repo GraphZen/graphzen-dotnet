@@ -26,16 +26,25 @@ namespace GraphZen.Utilities
             bool IsMissingVariable(ValueSyntax value, IReadOnlyDictionary<string, object> vars) =>
                 value is VariableSyntax variable && (vars == null || !vars.ContainsKey(variable.Name.Value));
 
-            if (valueSyntax == null) return Maybe.None<object>();
+            if (valueSyntax == null)
+            {
+                return Maybe.None<object>();
+            }
 
             if (type is NonNullType nonNull)
             {
-                if (valueSyntax is NullValueSyntax) return Maybe.None<object>();
+                if (valueSyntax is NullValueSyntax)
+                {
+                    return Maybe.None<object>();
+                }
 
                 return ValueFromAst(valueSyntax, nonNull.OfType, variables);
             }
 
-            if (valueSyntax is NullValueSyntax) return Maybe.Some<object>(null);
+            if (valueSyntax is NullValueSyntax)
+            {
+                return Maybe.Some<object>(null);
+            }
 
             if (valueSyntax is VariableSyntax variableNode)
             {
@@ -55,7 +64,10 @@ namespace GraphZen.Utilities
                     {
                         if (IsMissingVariable(itemNode, variables))
                         {
-                            if (itemType is NonNullType) return Maybe.None<object>();
+                            if (itemType is NonNullType)
+                            {
+                                return Maybe.None<object>();
+                            }
 
                             coercedValues.Add(null);
                         }
@@ -63,9 +75,13 @@ namespace GraphZen.Utilities
                         {
                             var itemValue = ValueFromAst(itemNode, itemType, variables);
                             if (itemValue is Some<object> some)
+                            {
                                 coercedValues.Add(some.Value);
+                            }
                             else
+                            {
                                 return itemValue;
+                            }
                         }
                     }
 
@@ -95,17 +111,26 @@ namespace GraphZen.Utilities
                             IsMissingVariable(fieldNode.Value, variables))
                         {
                             if (field.DefaultValue is Some<object> someDefaultValue)
+                            {
                                 coercedObject[field.Name] = someDefaultValue.Value;
-                            else if (field.InputType is NonNullType) return Maybe.None<object>();
+                            }
+                            else if (field.InputType is NonNullType)
+                            {
+                                return Maybe.None<object>();
+                            }
 
                             continue;
                         }
 
                         var fieldValue = ValueFromAst(fieldNode.Value, field.InputType, variables);
                         if (fieldValue is Some<object> fv)
+                        {
                             coercedObject[field.Name] = fv.Value;
+                        }
                         else
+                        {
                             return Maybe.None<object>();
+                        }
                     }
 
                     return Maybe.Some<object>(coercedObject);
@@ -115,6 +140,7 @@ namespace GraphZen.Utilities
             }
 
             if (type is ILeafType leafType)
+            {
                 try
                 {
                     return leafType.ParseLiteral(valueSyntax);
@@ -123,6 +149,7 @@ namespace GraphZen.Utilities
                 {
                     return Maybe.None<object>();
                 }
+            }
 
             throw new Exception($"Unknown type: {type}");
         }

@@ -66,7 +66,11 @@ namespace GraphZen.TypeSystem
         public bool UnignoreValue(string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredValueConfigurationSource(name);
-            if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
+
             _ignoredValues.Remove(name);
             return true;
         }

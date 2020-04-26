@@ -25,9 +25,15 @@ namespace GraphZen.LanguageModel
 
         public SyntaxLocation(int start, int end, int line, int column, Source source)
         {
-            if (start < 0) throw new ArgumentException($"Location start index ({start}) must be greater than 0.");
+            if (start < 0)
+            {
+                throw new ArgumentException($"Location start index ({start}) must be greater than 0.");
+            }
 
-            if (end < start) throw new ArgumentException($"Location start (${start}) must precede end (${end}).");
+            if (end < start)
+            {
+                throw new ArgumentException($"Location start (${start}) must precede end (${end}).");
+            }
 
             Start = start;
             End = end;
@@ -48,11 +54,20 @@ namespace GraphZen.LanguageModel
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
 
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
-            if (obj.GetType() != GetType()) return false;
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
 
             return Equals((SyntaxLocation)obj);
         }
@@ -71,9 +86,14 @@ namespace GraphZen.LanguageModel
         public static SyntaxLocation From(SyntaxNode start, SyntaxNode end)
         {
             if (start.Location == null)
+            {
                 throw new ArgumentException($"start node must have a {nameof(SyntaxNode.Location)}", nameof(start));
+            }
+
             if (end.Location == null)
+            {
                 throw new ArgumentException($"end node must have a {nameof(SyntaxNode.Location)}", nameof(end));
+            }
 
             return new SyntaxLocation(start.Location, end.Location);
         }
@@ -86,7 +106,10 @@ namespace GraphZen.LanguageModel
             Check.NotNull(locations, nameof(locations));
 
             var locs = locations.Where(l => l != null).OrderBy(_ => _!.Start).ToArray();
-            if (locs.Length == 0) return null;
+            if (locs.Length == 0)
+            {
+                return null;
+            }
 
             var min = locs[0];
             var max = locs[locs.Length - 1];

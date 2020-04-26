@@ -61,11 +61,16 @@ namespace GraphZen.TypeSystem
 
         public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(argument.GetNameConfigurationSource())) return false;
+            if (!configurationSource.Overrides(argument.GetNameConfigurationSource()))
+            {
+                return false;
+            }
 
             if (TryGetArgument(name, out var existing) && existing != argument)
+            {
                 throw new InvalidOperationException(
                     $"Cannot rename {argument} to '{name}'. {this} already contains a field named '{name}'.");
+            }
 
             _arguments.Remove(argument.Name);
             _arguments[name] = argument;
@@ -88,7 +93,10 @@ namespace GraphZen.TypeSystem
             set
             {
                 _isDeprecated = value;
-                if (!_isDeprecated) DeprecationReason = null;
+                if (!_isDeprecated)
+                {
+                    DeprecationReason = null;
+                }
             }
         }
 
@@ -98,7 +106,10 @@ namespace GraphZen.TypeSystem
             set
             {
                 _deprecationReason = value;
-                if (_deprecationReason != null) IsDeprecated = true;
+                if (_deprecationReason != null)
+                {
+                    IsDeprecated = true;
+                }
             }
         }
 
@@ -112,9 +123,15 @@ namespace GraphZen.TypeSystem
         public bool SetName(string name, ConfigurationSource configurationSource)
         {
             Check.NotNull(name, nameof(name));
-            if (!configurationSource.Overrides(_nameConfigurationSource)) return false;
+            if (!configurationSource.Overrides(_nameConfigurationSource))
+            {
+                return false;
+            }
 
-            if (Name != name) DeclaringType.RenameField(this, name, configurationSource);
+            if (Name != name)
+            {
+                DeclaringType.RenameField(this, name, configurationSource);
+            }
 
             Name = name;
             _nameConfigurationSource = configurationSource;
@@ -134,7 +151,10 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name)
         {
-            if (_ignoredArguments.TryGetValue(name, out var cs)) return cs;
+            if (_ignoredArguments.TryGetValue(name, out var cs))
+            {
+                return cs;
+            }
 
             return null;
         }
@@ -143,15 +163,23 @@ namespace GraphZen.TypeSystem
         {
             var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue &&
-                ignoredConfigurationSource.Overrides(configurationSource)) return true;
+                ignoredConfigurationSource.Overrides(configurationSource))
+            {
+                return true;
+            }
 
             if (ignoredConfigurationSource != null)
+            {
                 configurationSource = configurationSource.Max(ignoredConfigurationSource);
+            }
 
             _ignoredArguments[name] = configurationSource;
             var existing = FindArgument(name);
 
-            if (existing != null) return IgnoreArgument(existing, configurationSource);
+            if (existing != null)
+            {
+                return IgnoreArgument(existing, configurationSource);
+            }
 
             return true;
         }
@@ -171,7 +199,10 @@ namespace GraphZen.TypeSystem
         {
             // ReSharper disable once PossibleNullReferenceException
             var memberMatch = _arguments.Values.SingleOrDefault(_ => _.ClrInfo == member);
-            if (memberMatch != null) return memberMatch;
+            if (memberMatch != null)
+            {
+                return memberMatch;
+            }
 
             var (argumentName, _) = member.GetGraphQLArgumentName();
             return FindArgument(argumentName);
@@ -199,7 +230,9 @@ namespace GraphZen.TypeSystem
             argument.InputType = Schema.GetOrAddTypeReference(parameter, this);
             ab.DefaultValue(parameter, configurationSource);
             if (parameter.TryGetDescriptionFromDataAnnotation(out var description))
+            {
                 ab.Description(description, ConfigurationSource.DataAnnotation);
+            }
 
             return AddArgument(argument);
         }
@@ -208,8 +241,10 @@ namespace GraphZen.TypeSystem
         private ArgumentDefinition AddArgument(ArgumentDefinition argument)
         {
             if (HasArgument(argument.Name))
+            {
                 throw new InvalidOperationException(
                     $"Cannot add {argument} to {this}. An argument with that name already exists.");
+            }
 
             _arguments.Add(argument.Name, argument);
             return argument;

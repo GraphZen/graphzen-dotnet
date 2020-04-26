@@ -63,7 +63,9 @@ namespace GraphZen.TypeSystem
             foreach (var type in types)
             {
                 if (type != null)
+                {
                     Builder.IncludesType(type, ConfigurationSource.Explicit);
+                }
             }
 
             return this;

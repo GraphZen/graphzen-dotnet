@@ -45,7 +45,10 @@ namespace SimpleBlog.Models
         public bool DeleteComment(int id)
         {
             var commentModel = FakeBlogData.Comments.SingleOrDefault(_ => _.Id == id);
-            if (commentModel != null) FakeBlogData.Comments.Remove(commentModel);
+            if (commentModel != null)
+            {
+                FakeBlogData.Comments.Remove(commentModel);
+            }
 
             return true;
         }
@@ -53,7 +56,10 @@ namespace SimpleBlog.Models
         public bool EditPost(int id, string author, string title, string post)
         {
             var postModel = FakeBlogData.Posts.SingleOrDefault(_ => _.Id == id);
-            if (postModel == null) return false;
+            if (postModel == null)
+            {
+                return false;
+            }
 
             postModel.Author = author;
             postModel.Title = title;

@@ -42,7 +42,9 @@ namespace GraphZen.TypeSystem
         public Maybe<object> Serialize(object value)
         {
             if (ValuesByValue.TryGetValue(value ?? DBNull.Value, out var enumValue))
+            {
                 return Maybe.Some<object>(enumValue.Name);
+            }
 
             return Maybe.None<object>(
                 $"{Name} Enum: unable to find enum value that matches resolved value \"{value}\"");

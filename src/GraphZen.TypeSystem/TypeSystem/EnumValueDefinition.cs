@@ -43,7 +43,10 @@ namespace GraphZen.TypeSystem
 
         public bool SetName(string name, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(_nameConfigurationSource)) return false;
+            if (!configurationSource.Overrides(_nameConfigurationSource))
+            {
+                return false;
+            }
 
             _nameConfigurationSource = configurationSource;
             if (name != Name)

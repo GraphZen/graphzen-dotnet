@@ -17,7 +17,11 @@ namespace GraphZen.Infrastructure
         internal static StringDiffOptions? FromOptionsAction(
             Action<StringDiffOptions>? optionsAction)
         {
-            if (optionsAction == null) return null;
+            if (optionsAction == null)
+            {
+                return null;
+            }
+
             var options = new StringDiffOptions();
             optionsAction(options);
             return options;

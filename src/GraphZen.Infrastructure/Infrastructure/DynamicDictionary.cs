@@ -43,7 +43,10 @@ namespace GraphZen.Infrastructure
                     builder.AppendFormat(" {0} = {1}{2}", item.Key, item.Value, i < maxItems - 1 ? "," : string.Empty);
                 }
 
-                if (maxItems < _dictionary.Count) builder.Append("...");
+                if (maxItems < _dictionary.Count)
+                {
+                    builder.Append("...");
+                }
 
                 builder.Append(" }");
 
@@ -252,7 +255,10 @@ namespace GraphZen.Infrastructure
         /// <param name="other">An <see cref="DynamicDictionary" /> instance to compare with this instance.</param>
         public bool Equals(DynamicDictionary other)
         {
-            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
 
             return ReferenceEquals(this, other) || Equals(other._dictionary, _dictionary);
         }
@@ -330,9 +336,15 @@ namespace GraphZen.Infrastructure
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
 
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary)obj);
         }

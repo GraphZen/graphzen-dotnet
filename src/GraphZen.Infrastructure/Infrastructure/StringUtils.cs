@@ -20,7 +20,11 @@ namespace GraphZen.Infrastructure
         public static string QuotedOrList(this IReadOnlyList<string> source)
         {
             // TODO: source = Check.NotEmpty(source, nameof(source));
-            if (source.Count == 0) throw new ArgumentException("Must contain at least one value.", nameof(source));
+            if (source.Count == 0)
+            {
+                throw new ArgumentException("Must contain at least one value.", nameof(source));
+            }
+
             return OrList(source.Select(v => $"\"{v}\"").ToArray());
         }
 
@@ -34,7 +38,10 @@ namespace GraphZen.Infrastructure
                 (list, value) =>
                 {
                     var (quoted, index) = value;
-                    if (index == 0) return quoted;
+                    if (index == 0)
+                    {
+                        return quoted;
+                    }
 
                     return list + (selected.Length > 2 ? ", " : " ") +
                            (index == selected.Length - 1 ? "or " : "") + quoted;
@@ -55,7 +62,10 @@ namespace GraphZen.Infrastructure
             {
                 var distance = GetLexicalDistance(input, option);
                 var threshold = Math.Max(Math.Max(inputThreshold, option.Length / 2), 1);
-                if (distance <= threshold) optionsByDistance[option] = distance;
+                if (distance <= threshold)
+                {
+                    optionsByDistance[option] = distance;
+                }
             }
 
             return optionsByDistance.OrderBy(_ => _.Value).Select(_ => _.Key).ToArray();
@@ -71,9 +81,15 @@ namespace GraphZen.Infrastructure
             var bLength = b.Length;
             var d = new int[aLength + 1, bLength + 1];
 
-            if (aLength == 0) return bLength;
+            if (aLength == 0)
+            {
+                return bLength;
+            }
 
-            if (bLength == 0) return aLength;
+            if (bLength == 0)
+            {
+                return aLength;
+            }
 
             for (var i = 0; i <= aLength; d[i, 0] = i++)
             {

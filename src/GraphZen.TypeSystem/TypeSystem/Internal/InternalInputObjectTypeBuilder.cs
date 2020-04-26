@@ -29,13 +29,18 @@ namespace GraphZen.TypeSystem.Internal
             {
                 if (configurationSource.Overrides(ignoredConfigurationSource) &&
                     configurationSource != ignoredConfigurationSource)
+                {
                     Definition.IgnoreField(fieldName, configurationSource);
+                }
 
                 return true;
             }
 
             var field = Definition.FindField(fieldName);
-            if (field != null) return Ignore(field, configurationSource);
+            if (field != null)
+            {
+                return Ignore(field, configurationSource);
+            }
 
 
             Definition.IgnoreField(fieldName, configurationSource);
@@ -45,7 +50,10 @@ namespace GraphZen.TypeSystem.Internal
         public bool UnignoreField(string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(name);
-            if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
 
             Definition.UnignoreField(name);
             return true;
@@ -54,7 +62,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalInputObjectTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, configurationSource)) ConfigureFromClrType();
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                ConfigureFromClrType();
+            }
 
             return this;
         }
@@ -62,9 +73,15 @@ namespace GraphZen.TypeSystem.Internal
         public bool ConfigureFromClrType()
         {
             var clrType = Definition.ClrType;
-            if (clrType == null) return false;
+            if (clrType == null)
+            {
+                return false;
+            }
+
             if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
+            {
                 Definition.SetDescription(description, ConfigurationSource.DataAnnotation);
+            }
 
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
             // ReSharper disable once PossibleNullReferenceException
@@ -82,7 +99,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public bool IsFieldIgnored(string member, ConfigurationSource configurationSource)
         {
-            if (configurationSource == ConfigurationSource.Explicit) return false;
+            if (configurationSource == ConfigurationSource.Explicit)
+            {
+                return false;
+            }
 
             var ignoredMemberConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(member);
             return ignoredMemberConfigurationSource.HasValue &&
@@ -91,7 +111,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public bool IgnoreField(InputFieldDefinition field, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(field.GetConfigurationSource())) return false;
+            if (!configurationSource.Overrides(field.GetConfigurationSource()))
+            {
+                return false;
+            }
 
             Definition.IgnoreField(field.Name, configurationSource);
 
@@ -100,14 +123,20 @@ namespace GraphZen.TypeSystem.Internal
 
         private bool Ignore(InputFieldDefinition field, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(field.GetConfigurationSource())) return false;
+            if (!configurationSource.Overrides(field.GetConfigurationSource()))
+            {
+                return false;
+            }
 
             return RemoveField(field, configurationSource);
         }
 
         public bool RemoveField(InputFieldDefinition field, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(field.GetConfigurationSource())) return false;
+            if (!configurationSource.Overrides(field.GetConfigurationSource()))
+            {
+                return false;
+            }
 
             Definition.IgnoreField(field.Name, configurationSource);
 
@@ -120,15 +149,24 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInputValueBuilder? Field(PropertyInfo property, ConfigurationSource configurationSource)
         {
             var (fieldName, _) = property.GetGraphQLFieldName();
-            if (property.IsIgnoredByDataAnnotation()) IgnoreField(property, ConfigurationSource.DataAnnotation);
+            if (property.IsIgnoredByDataAnnotation())
+            {
+                IgnoreField(property, ConfigurationSource.DataAnnotation);
+            }
 
-            if (IsFieldIgnored(fieldName, configurationSource)) return null;
+            if (IsFieldIgnored(fieldName, configurationSource))
+            {
+                return null;
+            }
 
 
             if (property.TryGetGraphQLTypeInfo(out _, out var innerClrType))
             {
                 var fieldInnerType = Schema.Builder.InputType(innerClrType, configurationSource);
-                if (fieldInnerType == null) IgnoreField(property, ConfigurationSource.Convention);
+                if (fieldInnerType == null)
+                {
+                    IgnoreField(property, ConfigurationSource.Convention);
+                }
             }
             else
             {
@@ -136,7 +174,10 @@ namespace GraphZen.TypeSystem.Internal
             }
 
 
-            if (IsFieldIgnored(fieldName, configurationSource)) return null;
+            if (IsFieldIgnored(fieldName, configurationSource))
+            {
+                return null;
+            }
 
             var field = Definition.FindField(property);
             if (field == null)
@@ -150,7 +191,9 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             if (property.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
                 field.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+            }
 
             return field.Builder;
         }
@@ -160,15 +203,20 @@ namespace GraphZen.TypeSystem.Internal
             var (fieldName, _) = member.GetGraphQLFieldName();
             var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(fieldName);
             if (ignoredConfigurationSource.HasValue)
+            {
                 if (configurationSource.Overrides(ignoredConfigurationSource) &&
                     configurationSource != ignoredConfigurationSource)
                 {
                     Definition.IgnoreField(fieldName, configurationSource);
                     return true;
                 }
+            }
 
             var field = Definition.FindField(member);
-            if (field != null) return IgnoreField(field, configurationSource);
+            if (field != null)
+            {
+                return IgnoreField(field, configurationSource);
+            }
 
             Definition.IgnoreField(fieldName, configurationSource);
             return true;

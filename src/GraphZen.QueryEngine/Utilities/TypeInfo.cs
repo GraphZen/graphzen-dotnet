@@ -55,17 +55,29 @@ namespace GraphZen.Utilities
             var name = node.Name.Value;
 
             if (name == Introspection.SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
+            {
                 return Introspection.SchemaMetaFieldDef;
+            }
 
             if (name == Introspection.TypeMetaFieldDef.Name && schema.QueryType.Equals(parentType))
+            {
                 return Introspection.TypeMetaFieldDef;
+            }
 
             if (name == Introspection.TypeNameMetaFieldDef.Name && parentType is ICompositeType)
+            {
                 return Introspection.TypeNameMetaFieldDef;
+            }
 
-            if (parentType is ObjectType objectType) return objectType.FindField(name);
+            if (parentType is ObjectType objectType)
+            {
+                return objectType.FindField(name);
+            }
 
-            if (parentType is InterfaceType interfaceType) return interfaceType.FindField(name);
+            if (parentType is InterfaceType interfaceType)
+            {
+                return interfaceType.FindField(name);
+            }
 
             return null;
         }
@@ -99,7 +111,10 @@ namespace GraphZen.Utilities
                     if (parentType != null)
                     {
                         fieldDef = GetFieldDef(Schema, parentType, node);
-                        if (fieldDef != null) fieldType = fieldDef.FieldType;
+                        if (fieldDef != null)
+                        {
+                            fieldType = fieldDef.FieldType;
+                        }
                     }
 
                     _fieldDefStack.Push(fieldDef);
@@ -113,10 +128,17 @@ namespace GraphZen.Utilities
                     {
                         IGraphQLType type = null;
                         if (node.OperationType == OperationType.Query)
+                        {
                             type = Schema.QueryType;
+                        }
                         else if (node.OperationType == OperationType.Mutation)
+                        {
                             type = Schema.MutationType;
-                        else if (node.OperationType == OperationType.Subscription) type = Schema.SubscriptionType;
+                        }
+                        else if (node.OperationType == OperationType.Subscription)
+                        {
+                            type = Schema.SubscriptionType;
+                        }
 
                         _typeStack.Push(type);
                         break;

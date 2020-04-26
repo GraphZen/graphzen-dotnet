@@ -22,9 +22,11 @@ namespace GraphZen.SpecAudit.SpecFx
             FactAttribute = testMethod.GetCustomAttribute<FactAttribute>();
             TheoryAttribute = testMethod.GetCustomAttribute<TheoryAttribute>();
             if (FactAttribute == null && TheoryAttribute == null)
+            {
                 throw new ArgumentException(
                     $"Method {TestMethod} was decorated with a {nameof(SpecAttribute)}, but is missing a {nameof(FactAttribute)} or {nameof(TheoryAttribute)}",
                     nameof(testMethod));
+            }
         }
 
         public string SubjectPath { get; }
@@ -51,22 +53,35 @@ namespace GraphZen.SpecAudit.SpecFx
         private static string GetSubjectPath(MethodInfo method, SpecAttribute specAttr)
         {
             var subjects = new List<string>();
-            if (specAttr.Subject != null) subjects.Add(specAttr.Subject);
+            if (specAttr.Subject != null)
+            {
+                subjects.Add(specAttr.Subject);
+            }
 
             var methodSubjAttr = method.GetCustomAttribute<SubjectAttribute>();
-            if (methodSubjAttr != null) subjects.AddRange(methodSubjAttr.Subjects);
+            if (methodSubjAttr != null)
+            {
+                subjects.AddRange(methodSubjAttr.Subjects);
+            }
 
 
             var type = method.DeclaringType;
             while (type != null)
             {
                 var typeSubjAttr = type.GetCustomAttribute<SubjectAttribute>();
-                if (typeSubjAttr != null) subjects!.AddRange(typeSubjAttr.Subjects);
+                if (typeSubjAttr != null)
+                {
+                    subjects!.AddRange(typeSubjAttr.Subjects);
+                }
+
                 type = type.BaseType;
             }
 
 
-            if (!subjects.Any()) return "";
+            if (!subjects.Any())
+            {
+                return "";
+            }
 
             subjects.Reverse();
             return string.Join("_", subjects);

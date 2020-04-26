@@ -31,7 +31,10 @@ namespace GraphZen.QueryEngine
             if (node is IDirectivesSyntax directivesNode)
             {
                 var directiveNode = directivesNode.Directives.SingleOrDefault(_ => _.Name.Value == directive.Name);
-                if (directiveNode != null) return GetArgumentValues(directive, directiveNode, variableValues);
+                if (directiveNode != null)
+                {
+                    return GetArgumentValues(directive, directiveNode, variableValues);
+                }
             }
 
             return null;
@@ -65,7 +68,9 @@ namespace GraphZen.QueryEngine
                         // If no value was provided to a variable with a default value,
                         // use the default value.
                         if (Helpers.ValueFromAst(varDefNode.DefaultValue, varType) is Some<object> some)
+                        {
                             coercedValues[varName] = some.Value;
+                        }
                     }
                     else if ((!maybeValue.HasValue || maybeValue is Some<object> v && v.Value == null) &&
                              varType is NonNullType)
@@ -105,7 +110,10 @@ namespace GraphZen.QueryEngine
                                 errors.AddRange(coercionErrors);
                             }
 
-                            if (coerced is Some<object> some) coercedValues[varName] = some.Value;
+                            if (coerced is Some<object> some)
+                            {
+                                coercedValues[varName] = some.Value;
+                            }
                         }
                     }
                 }
@@ -128,7 +136,10 @@ namespace GraphZen.QueryEngine
                 var pathStr = p?.ToString();
                 var msg = new StringBuilder();
                 msg.Append(message);
-                if (!string.IsNullOrEmpty(pathStr)) msg.Append($" at {pathStr}");
+                if (!string.IsNullOrEmpty(pathStr))
+                {
+                    msg.Append($" at {pathStr}");
+                }
 
                 msg.Append(!string.IsNullOrEmpty(subMessage) ? $"; {subMessage}" : ".");
                 return new GraphQLServerError(msg.ToString(), new[] { blame }, null, null, null, originalError);
@@ -137,14 +148,19 @@ namespace GraphZen.QueryEngine
             if (type is NonNullType nonNull)
             {
                 if (value == null)
+                {
                     return Maybe.None<object>(CoercianError(
                         $"Expected non-nullable type {type} not to be null",
                         blameNode, path));
+                }
 
                 return CoerceValue(value, nonNull.OfType, blameNode, path);
             }
 
-            if (value == null) return Maybe.Some<object>(null);
+            if (value == null)
+            {
+                return Maybe.Some<object>(null);
+            }
 
 
             switch (type)
@@ -162,8 +178,13 @@ namespace GraphZen.QueryEngine
                             {
                                 var coerced = CoerceValue(item, itemType, blameNode, path.AddPath(index++));
                                 if (coerced is Some<object> someItem)
+                                {
                                     coercedValue.Add(someItem.Value);
-                                else if (coerced is None<object> none) errors.AddRange(none.Errors);
+                                }
+                                else if (coerced is None<object> none)
+                                {
+                                    errors.AddRange(none.Errors);
+                                }
                             }
 
                             return errors.Any() ? Maybe.None<object>(errors) : Maybe.Some<object>(coercedValue);
@@ -175,8 +196,10 @@ namespace GraphZen.QueryEngine
                 case InputObjectType inputObject:
                     {
                         if (!(value is IDictionary<string, object> values))
+                        {
                             return Maybe.None<object>(CoercianError($"Expected {type} to be an object", blameNode,
                                 path));
+                        }
 
                         var coercedValue = new Dictionary<string, object>();
                         var errors = new List<GraphQLServerError>();
@@ -189,20 +212,28 @@ namespace GraphZen.QueryEngine
                             if (fieldValue == null)
                             {
                                 if (field.DefaultValue is Some<object> someValue)
+                                {
                                     coercedValue[field.Name] = someValue.Value;
+                                }
                                 else if (field.InputType is NonNullType)
+                                {
                                     errors.Add(CoercianError(
                                         $"Field {path.AddPath(field.Name)} of required type {field.InputType} was not provided",
                                         blameNode, null));
+                                }
                             }
                             else
                             {
                                 var coercedField = CoerceValue(fieldValue, field.InputType, blameNode,
                                     path.AddPath(field.Name));
                                 if (coercedField is None<object> erred)
+                                {
                                     errors.AddRange(erred.Errors);
+                                }
                                 else if (!errors.Any() && coercedField is Some<object> some)
+                                {
                                     coercedValue[field.Name] = some.Value;
+                                }
                             }
                         }
 
@@ -238,7 +269,10 @@ namespace GraphZen.QueryEngine
                     if (value is string strValue)
                     {
                         var enumValue = enumType.FindValue(strValue);
-                        if (enumValue != null) return Maybe.Some(enumValue.Value);
+                        if (enumValue != null)
+                        {
+                            return Maybe.Some(enumValue.Value);
+                        }
                     }
 
                     // TODO: Suggestions
@@ -287,14 +321,18 @@ namespace GraphZen.QueryEngine
                 else if ((!hasValue || isNull) && argType is NonNullType)
                 {
                     if (isNull)
+                    {
                         throw new GraphQLException(
                             $"Argument \"{name}\" of non-null type \"{argType}\" must not be null.",
                             argumentNode.Value);
+                    }
 
                     if (argumentNode?.Value is VariableSyntax var)
+                    {
                         throw new GraphQLException(
                             $"Argument \"{name}\" of required type \"{argType}\" was provided the variable \"{var}\" which was not provided a runtime value.",
                             argumentNode.Value);
+                    }
 
                     throw new GraphQLException(
                         $"Argument \"{name}\" of required type \"{argType}\" was not provided.",
@@ -316,8 +354,10 @@ namespace GraphZen.QueryEngine
                         var valueNode = argumentNode.Value;
                         var maybeCoerced = Helpers.ValueFromAst(valueNode, argType, variableValues);
                         if (!(maybeCoerced is Some<object> someCoerced))
+                        {
                             throw new GraphQLException(
                                 $"Argument \"{name}\" has invalid value {valueNode.GetValue().Inspect()}.", node);
+                        }
 
                         coercedValues[name] = someCoerced.Value;
                     }

@@ -47,7 +47,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class DirectivesSpecs
         {
-
         }
     }
 }

@@ -62,7 +62,9 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                 var targetFilename = targetType.Name + ".cs";
                 var targetPath = CSharpFiles.SingleOrDefault(_ => Path.GetFileName(_) == targetFilename);
                 if (targetPath == null)
+                {
                     throw new InvalidOperationException($"A code-gen task could not find file: {targetFilename}");
+                }
 
 
                 var genDirPath = Path.GetDirectoryName(targetPath) ?? throw new NotImplementedException();
@@ -71,7 +73,10 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
                 var namespaceLine = File.ReadLines(targetPath).SingleOrDefault(_ => _.StartsWith("namespace"));
                 if (namespaceLine == null)
+                {
                     throw new InvalidOperationException($"Expected file to contain a namespace: {targetPath}");
+                }
+
                 var namespaceName = namespaceLine.Split(' ')[1];
 
                 var csharp = CSharpStringBuilder.Create();

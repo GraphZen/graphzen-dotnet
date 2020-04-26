@@ -20,7 +20,10 @@ namespace GraphZen.Infrastructure
         {
             Check.NotNull(dictionary, nameof(dictionary));
             Check.NotNull(key, nameof(key));
-            if (dictionary.TryGetValue(key, out var collection)) return collection;
+            if (dictionary.TryGetValue(key, out var collection))
+            {
+                return collection;
+            }
 
             return Enumerable.Empty<TItem>().ToList();
         }
@@ -31,9 +34,13 @@ namespace GraphZen.Infrastructure
             Check.NotNull(dictionary, nameof(dictionary));
             Check.NotNull(key, nameof(key));
             if (dictionary.TryGetValue(key, out var collection))
+            {
                 collection.Add(item);
+            }
             else
+            {
                 dictionary[key] = new List<TItem> { item };
+            }
         }
 
 
@@ -60,9 +67,13 @@ namespace GraphZen.Infrastructure
             Check.NotNull(dictionary, nameof(dictionary));
             Check.NotNull(key, nameof(key));
             if (dictionary.TryGetValue(key, out var value))
+            {
                 dictionary[key] = value + 1;
+            }
             else
+            {
                 dictionary.Add(key, 1);
+            }
         }
     }
 }

@@ -71,11 +71,20 @@ namespace GraphZen.Infrastructure
 
             var errorMessage = hasDiff ? "Differences found " : "No differences found";
             errorMessage += "\n";
-            if (options.ShowActual) errorMessage += $"=== Actual ===\n{actual}\n";
+            if (options.ShowActual)
+            {
+                errorMessage += $"=== Actual ===\n{actual}\n";
+            }
 
-            if (options.ShowExpected) errorMessage += $"=== Expected ===\n{expected}\n";
+            if (options.ShowExpected)
+            {
+                errorMessage += $"=== Expected ===\n{expected}\n";
+            }
 
-            if (options.ShowDiffs) errorMessage += $"=== Differences ===\n{diffString}\n";
+            if (options.ShowDiffs)
+            {
+                errorMessage += $"=== Differences ===\n{diffString}\n";
+            }
 
             differences = errorMessage;
             return hasDiff;

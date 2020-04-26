@@ -133,10 +133,12 @@ namespace GraphZen.TypeSystem
         {
             ImplementsInterface(name);
             if (names != null)
+            {
                 foreach (var n in names)
                 {
                     ImplementsInterface(n);
                 }
+            }
 
             return this;
         }

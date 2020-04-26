@@ -49,18 +49,22 @@ namespace GraphZen.LanguageModel.Validation.Rules
                     .Concat(inputExts.SelectMany(_ => _.Fields))
                     .ToArray();
                 if (!inputFields.Any())
+                {
                     ReportError($"Input Object type {input.Key} must define one or more fields.",
                         // ReSharper disable twice PossibleNullReferenceException
                         input.Value.Select(_ => _.Name).Concat(inputExts.Select(_ => _.Name)).ToArray<SyntaxNode>());
+                }
 
                 foreach (var inputField in inputFields)
                 {
                     var inputFieldNamedType = inputField.Type.GetNamedType();
                     var inputType = inputTypes.FirstOrDefault(_ => _.Name.Value == inputFieldNamedType.Name.Value);
                     if (inputType == null)
+                    {
                         ReportError(
                             $"The type of {input.Key}.{inputField} must be Input Type but got: {inputField.Type}.",
                             inputField.Type);
+                    }
                 }
             }
 

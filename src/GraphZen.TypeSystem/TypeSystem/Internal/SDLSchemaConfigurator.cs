@@ -33,7 +33,9 @@ namespace GraphZen.TypeSystem.Internal
                     Debug.Assert(_ != null, nameof(_) + " != null");
                     return _.Name.Value;
                 }, out var duplicateType))
+            {
                 throw new GraphQLException($"Type \"{duplicateType.Name.Value}\" was defined more than once");
+            }
 
             var operationTypes = schemaDef != null
                 ? GetOperationTypes(schemaDef)
@@ -89,7 +91,9 @@ namespace GraphZen.TypeSystem.Internal
                         return _.OperationType;
                     },
                     out var duplicateOpType))
+                {
                     throw new Exception($"Must provide only one {duplicateOpType} type in schema.");
+                }
 
                 return schemaDefinition.RootOperationTypes.ToDictionary(_ => _.OperationType, _ =>
                 {
@@ -97,7 +101,9 @@ namespace GraphZen.TypeSystem.Internal
 #pragma warning disable 8601
                     if (!types.TryFindByName(typeName, out var type))
 #pragma warning restore 8601
+                    {
                         throw new Exception($"Specified {_.OperationType} type \"{typeName}\" not found in document.");
+                    }
 
                     return type;
                 });
@@ -108,7 +114,10 @@ namespace GraphZen.TypeSystem.Internal
             DirectiveDefinitionSyntax def)
         {
             var directive = schemaBuilder.Directive(def.Name.Value);
-            if (def.Description != null) directive.Description(def.Description.Value);
+            if (def.Description != null)
+            {
+                directive.Description(def.Description.Value);
+            }
 
             foreach (var arg in def.Arguments)
             {
@@ -116,7 +125,10 @@ namespace GraphZen.TypeSystem.Internal
                 {
                     Debug.Assert(_ != null, nameof(_) + " != null");
                     // TODO - how to get default value?
-                    if (arg.Description != null) _.Description(arg.Description.Value);
+                    if (arg.Description != null)
+                    {
+                        _.Description(arg.Description.Value);
+                    }
                 });
             }
 
@@ -135,12 +147,18 @@ namespace GraphZen.TypeSystem.Internal
                 case EnumTypeDefinitionSyntax node:
                     {
                         var type = schemaBuilder.Enum(node.Name.Value);
-                        if (node.Description != null) type.Description(node.Description.Value);
+                        if (node.Description != null)
+                        {
+                            type.Description(node.Description.Value);
+                        }
 
                         foreach (var valueNode in node.Values)
                         {
                             var enumValue = type.Value(valueNode.Value.Value);
-                            if (valueNode.Description != null) enumValue.Description(valueNode.Description.Value);
+                            if (valueNode.Description != null)
+                            {
+                                enumValue.Description(valueNode.Description.Value);
+                            }
                         }
 
                         break;
@@ -149,12 +167,18 @@ namespace GraphZen.TypeSystem.Internal
                 case InputObjectTypeDefinitionSyntax node:
                     {
                         var type = schemaBuilder.InputObject(node.Name.Value);
-                        if (node.Description != null) type.Description(node.Description.Value);
+                        if (node.Description != null)
+                        {
+                            type.Description(node.Description.Value);
+                        }
 
                         foreach (var fieldNode in node.Fields)
                         {
                             var field = type.Field(fieldNode.Name.Value, fieldNode.Type.ToSyntaxString());
-                            if (fieldNode.Description != null) field.Description(fieldNode.Description.Value);
+                            if (fieldNode.Description != null)
+                            {
+                                field.Description(fieldNode.Description.Value);
+                            }
 
                             if (fieldNode.DefaultValue != null)
                             {
@@ -167,14 +191,20 @@ namespace GraphZen.TypeSystem.Internal
                 case InterfaceTypeDefinitionSyntax node:
                     {
                         var type = schemaBuilder.Interface(node.Name.Value);
-                        if (node.Description != null) type.Description(node.Description.Value);
+                        if (node.Description != null)
+                        {
+                            type.Description(node.Description.Value);
+                        }
 
                         foreach (var fieldNode in node.Fields)
                         {
                             type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                             {
                                 Debug.Assert(field != null, nameof(field) + " != null");
-                                if (fieldNode.Description != null) field.Description(fieldNode.Description.Value);
+                                if (fieldNode.Description != null)
+                                {
+                                    field.Description(fieldNode.Description.Value);
+                                }
 
 
                                 foreach (var argumentNode in fieldNode.Arguments)
@@ -182,7 +212,9 @@ namespace GraphZen.TypeSystem.Internal
                                     var argument = field.Argument(argumentNode.Name.Value,
                                         argumentNode.Type.ToSyntaxString());
                                     if (argumentNode.Description != null)
+                                    {
                                         argument.Description(argumentNode.Description.Value);
+                                    }
                                 }
                             });
                         }
@@ -193,7 +225,10 @@ namespace GraphZen.TypeSystem.Internal
                 case ObjectTypeDefinitionSyntax node:
                     {
                         var type = schemaBuilder.Object(node.Name.Value);
-                        if (node.Description != null) type.Description(node.Description.Value);
+                        if (node.Description != null)
+                        {
+                            type.Description(node.Description.Value);
+                        }
 
                         foreach (var directive in node.Directives)
                         {
@@ -209,7 +244,10 @@ namespace GraphZen.TypeSystem.Internal
                         {
                             type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                             {
-                                if (fieldNode.Description != null) field.Description(fieldNode.Description.Value);
+                                if (fieldNode.Description != null)
+                                {
+                                    field.Description(fieldNode.Description.Value);
+                                }
 
                                 foreach (var directiveNode in fieldNode.Directives)
                                 {
@@ -222,7 +260,9 @@ namespace GraphZen.TypeSystem.Internal
                                         argumentNode.Type.ToSyntaxString());
 
                                     if (argumentNode.Description != null)
+                                    {
                                         argument.Description(argumentNode.Description.Value);
+                                    }
                                 }
                             });
                         }
@@ -233,7 +273,10 @@ namespace GraphZen.TypeSystem.Internal
                 case ScalarTypeDefinitionSyntax node:
                     {
                         var type = schemaBuilder.Scalar(node.Name.Value);
-                        if (node.Description != null) type.Description(node.Description.Value);
+                        if (node.Description != null)
+                        {
+                            type.Description(node.Description.Value);
+                        }
 
                         break;
                     }
@@ -241,7 +284,10 @@ namespace GraphZen.TypeSystem.Internal
                 case UnionTypeDefinitionSyntax node:
                     {
                         var type = schemaBuilder.Union(node.Name.Value);
-                        if (node.Description != null) type.Description(node.Description.Value);
+                        if (node.Description != null)
+                        {
+                            type.Description(node.Description.Value);
+                        }
 
                         type.OfTypes(node.MemberTypes.Select(_ =>
                         {

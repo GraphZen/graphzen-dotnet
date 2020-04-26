@@ -30,9 +30,14 @@ namespace GraphZen.TypeSystem.Internal
         public bool ImplementsInterface(Type clrType, ConfigurationSource configurationSource)
         {
             if (clrType.IsIgnoredByDataAnnotation())
+            {
                 IgnoreInterface(clrType.GetGraphQLName(), ConfigurationSource.DataAnnotation);
+            }
 
-            if (IsInterfaceIgnored(clrType.GetGraphQLName(), configurationSource)) return false;
+            if (IsInterfaceIgnored(clrType.GetGraphQLName(), configurationSource))
+            {
+                return false;
+            }
 
             var existing = Schema.FindOutputType(clrType);
 
@@ -61,7 +66,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalObjectTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, configurationSource)) ConfigureObjectFromClrType();
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                ConfigureObjectFromClrType();
+            }
 
             return this;
         }
@@ -70,15 +78,22 @@ namespace GraphZen.TypeSystem.Internal
         {
             var clrType = Definition.ClrType;
 
-            if (clrType == null) return false;
+            if (clrType == null)
+            {
+                return false;
+            }
 
             if (clrType.BaseType != null && clrType.BaseType.IsAbstract)
+            {
                 SchemaBuilder.Union(clrType.BaseType, ConfigurationSource.Convention);
+            }
 
             ConfigureOutputFields();
 
             if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
                 Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
+            }
 
             var interfaces = clrType.GetInterfaces()
                 .Where(_ => !_.IsGenericType)
@@ -87,9 +102,13 @@ namespace GraphZen.TypeSystem.Internal
             foreach (var @interface in interfaces)
             {
                 if (@interface.GetCustomAttribute<GraphQLUnionAttribute>() != null)
+                {
                     Schema.Builder.Union(@interface, ConfigurationSource.DataAnnotation);
+                }
                 else
+                {
                     Definition.Builder.ImplementsInterface(@interface, ConfigurationSource.Convention);
+                }
             }
 
             return true;
@@ -100,7 +119,10 @@ namespace GraphZen.TypeSystem.Internal
             ConfigurationSource configurationSource)
         {
             var interfaceRef = SchemaBuilder.Interface(interfaceType, configurationSource)?.Definition;
-            if (interfaceRef != null) Definition.AddInterface(interfaceRef, configurationSource);
+            if (interfaceRef != null)
+            {
+                Definition.AddInterface(interfaceRef, configurationSource);
+            }
 
             return this;
         }
@@ -115,7 +137,10 @@ namespace GraphZen.TypeSystem.Internal
         public bool UnignoreInterface(string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredInterfaceConfigurationSource(name);
-            if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
 
             Definition.UnignoreInterface(name);
             return true;
@@ -123,7 +148,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public bool IsInterfaceIgnored(string interfaceName, ConfigurationSource configurationSource)
         {
-            if (configurationSource == ConfigurationSource.Explicit) return false;
+            if (configurationSource == ConfigurationSource.Explicit)
+            {
+                return false;
+            }
 
             var ignoredMemberConfigurationSource = Definition.FindIgnoredInterfaceConfigurationSource(interfaceName);
             return ignoredMemberConfigurationSource.HasValue &&

@@ -17,8 +17,11 @@ namespace GraphZen.Infrastructure
         {
             Check.NotNull(request, nameof(request));
             if (request.OperationName == null && request.Query == null)
+            {
                 throw new ArgumentException(
                     $"Cannot convert {nameof(GraphQLRequest)} to {nameof(HttpRequestMessage)}: query or operation name required.");
+            }
+
             var requestJson = JsonSerializer.Serialize(request);
             var requestJsonContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
             var message = new HttpRequestMessage

@@ -107,11 +107,15 @@ namespace GraphZen.TypeSystem.Tests.Nullability
             foreach (var parameterInfo in ctorParams)
             {
                 if (parameterInfo.Name!.Contains("nullableRef"))
+                {
                     parameterInfo.HasNullableReferenceType().Should()
                         .BeTrue($"{type}.ctor({parameterInfo.Name}) has a nullable reference type");
+                }
                 else
+                {
                     parameterInfo.HasNullableReferenceType().Should()
                         .BeFalse($"{type}.ctor({parameterInfo.Name}) does not have a nullable reference type");
+                }
             }
         }
 
@@ -128,11 +132,15 @@ namespace GraphZen.TypeSystem.Tests.Nullability
             foreach (var parameterInfo in ctorParams)
             {
                 if (parameterInfo.Name!.Contains("nullableRef"))
+                {
                     parameterInfo.HasNullableReferenceType().Should()
                         .BeTrue($"{type}.ctor({parameterInfo.Name}) has a nullable reference type");
+                }
                 else
+                {
                     parameterInfo.HasNullableReferenceType().Should()
                         .BeFalse($"{type}.ctor({parameterInfo.Name}) does not have a nullable reference type");
+                }
             }
         }
 
@@ -149,11 +157,15 @@ namespace GraphZen.TypeSystem.Tests.Nullability
             foreach (var parameterInfo in ctorParams)
             {
                 if (parameterInfo.Name!.Contains("nullableRef"))
+                {
                     parameterInfo.HasNullableReferenceType().Should()
                         .BeTrue($"{type}.ctor({parameterInfo.Name}) has a nullable reference type");
+                }
                 else
+                {
                     parameterInfo.HasNullableReferenceType().Should()
                         .BeFalse($"{type}.ctor({parameterInfo.Name}) does not have a nullable reference type");
+                }
             }
         }
 
@@ -209,12 +221,16 @@ namespace GraphZen.TypeSystem.Tests.Nullability
             foreach (var parameterInfo in ctorParams)
             {
                 if (parameterInfo.Name!.Contains("nonNullable"))
+                {
                     parameterInfo.HasNullableReferenceType().Should()
                         .BeFalse(
                             $"{type.Name}.{method.Name}({parameterInfo.Name}) does not have a nullable reference type");
+                }
                 else
+                {
                     parameterInfo.HasNullableReferenceType().Should()
                         .BeTrue($"{type.Name}.{method.Name}({parameterInfo.Name}) has a nullable reference type");
+                }
             }
         }
     }

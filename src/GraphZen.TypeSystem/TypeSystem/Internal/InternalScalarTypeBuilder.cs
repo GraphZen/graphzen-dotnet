@@ -39,7 +39,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalScalarTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, configurationSource)) ConfigureFromClrType();
+            if (Definition.SetClrType(clrType, configurationSource))
+            {
+                ConfigureFromClrType();
+            }
 
             return this;
         }
@@ -47,9 +50,16 @@ namespace GraphZen.TypeSystem.Internal
         public bool ConfigureFromClrType()
         {
             var clrType = Definition.ClrType;
-            if (clrType == null) return false;
+            if (clrType == null)
+            {
+                return false;
+            }
+
             if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
+            {
                 this.Description(description, ConfigurationSource.DataAnnotation);
+            }
+
             return true;
         }
     }

@@ -36,7 +36,10 @@ namespace GraphZen.TypeSystem
 
         public bool SetDefaultValue(object value, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(_defaultValueConfigurationSource)) return false;
+            if (!configurationSource.Overrides(_defaultValueConfigurationSource))
+            {
+                return false;
+            }
 
             DefaultValue = value;
             HasDefaultValue = true;
@@ -48,7 +51,10 @@ namespace GraphZen.TypeSystem
 
         public bool RemoveDefaultValue(ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(_defaultValueConfigurationSource)) return false;
+            if (!configurationSource.Overrides(_defaultValueConfigurationSource))
+            {
+                return false;
+            }
 
             DefaultValue = null;
             HasDefaultValue = false;

@@ -41,7 +41,10 @@ namespace Microsoft.AspNetCore.Builder
                             "ASPNETCORE_TEMP") ?? // ASPNETCORE_TEMP - User set temporary location.
                         Path.GetTempPath(); // Fall back.
 
-                    if (!Directory.Exists(temp)) throw new DirectoryNotFoundException(temp);
+                    if (!Directory.Exists(temp))
+                    {
+                        throw new DirectoryNotFoundException(temp);
+                    }
 
                     _tempDirectory = temp;
                 }
@@ -65,8 +68,10 @@ namespace Microsoft.AspNetCore.Builder
                     var memoryThreshold = DefaultMemoryThreshold;
                     var contentLength = request.ContentLength.GetValueOrDefault();
                     if (contentLength > 0 && contentLength < memoryThreshold)
-                        // If the Content-Length is known and is smaller than the default buffer size, use it.
+                    // If the Content-Length is known and is smaller than the default buffer size, use it.
+                    {
                         memoryThreshold = (int)contentLength;
+                    }
 
                     readStream = new FileBufferingReadStream(request.Body, memoryThreshold, null,
                         TempDirectoryFactory);

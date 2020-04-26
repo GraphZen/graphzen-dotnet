@@ -97,7 +97,10 @@ namespace GraphZen.QueryEngine
             catch (Exception e)
             {
                 exeContext.AddError(e);
-                if (exeContext.Options.ThrowOnError) throw;
+                if (exeContext.Options.ThrowOnError)
+                {
+                    throw;
+                }
 
                 return null;
             }
@@ -160,7 +163,10 @@ namespace GraphZen.QueryEngine
 
                 var maybeResult = await ResolveFieldAsync(exeContext, parentType, sourceValue, nodes, fieldPath);
 
-                if (maybeResult is Some<object> someResult) results[responseName] = someResult.Value;
+                if (maybeResult is Some<object> someResult)
+                {
+                    results[responseName] = someResult.Value;
+                }
             }
 
             return results;
@@ -176,7 +182,10 @@ namespace GraphZen.QueryEngine
             var fieldName = fieldNode.Name.Value;
             var fieldDef = GetFieldDef(exeContext, exeContext.Schema, parentType, fieldName);
 
-            if (fieldDef == null) return Maybe.None<object>();
+            if (fieldDef == null)
+            {
+                return Maybe.None<object>();
+            }
 
 
             var info = exeContext.Build(fieldDef, fieldNodes, parentType, path);
@@ -198,19 +207,24 @@ namespace GraphZen.QueryEngine
             try
             {
                 if (maybeResult is Some<object> someResult)
+                {
                     if (someResult.Value is Task awaitable)
                     {
                         await awaitable;
                         var result = awaitable.GetResult();
                         maybeResult = Maybe.Some(result);
                     }
+                }
 
                 var completed = await CompleteValueAsync(exeContext, returnType, fieldNodes, info, path, maybeResult);
                 return completed;
             }
             catch (GraphQLException e)
             {
-                if (exeContext.Options.ThrowOnError) throw;
+                if (exeContext.Options.ThrowOnError)
+                {
+                    throw;
+                }
 
                 exeContext.Errors.Add(e.GraphQLError.WithLocationInfo(fieldNodes, path));
                 return Maybe.Some<object>(null);
@@ -218,7 +232,10 @@ namespace GraphZen.QueryEngine
             catch (Exception e)
             {
                 exeContext.AddError(e);
-                if (exeContext.Options.ThrowOnError) throw;
+                if (exeContext.Options.ThrowOnError)
+                {
+                    throw;
+                }
 
                 return Maybe.Some<object>(null);
             }
@@ -231,7 +248,10 @@ namespace GraphZen.QueryEngine
             ResponsePath path,
             Maybe<object> maybeResult)
         {
-            if (maybeResult is None<object> none) none.ThrowFirstErrorOrDefault();
+            if (maybeResult is None<object> none)
+            {
+                none.ThrowFirstErrorOrDefault();
+            }
 
             if (maybeResult is Some<object> some)
             {
@@ -247,20 +267,32 @@ namespace GraphZen.QueryEngine
                         $"Cannot return null for non - nullable field {info.ParentType.Name}.{info.FieldName}.");
                 }
 
-                if (result == null) return Maybe.Some<object>(null);
+                if (result == null)
+                {
+                    return Maybe.Some<object>(null);
+                }
 
                 if (returnType is ListType listType)
+                {
                     return await CompleteListValueAsync(exeContext, listType, fieldNodes, info, path, result);
+                }
 
-                if (returnType is ILeafType leafType) return CompleteLeafValue(leafType, result);
+                if (returnType is ILeafType leafType)
+                {
+                    return CompleteLeafValue(leafType, result);
+                }
 
                 if (returnType is IAbstractType abstractType)
+                {
                     return await CompleteAbstractValueAsync(exeContext, abstractType, fieldNodes, info, path, result);
+                }
 
                 if (returnType is ObjectType objectReturnType)
+                {
                     return await CompleteObjectValueAsync(exeContext, objectReturnType, fieldNodes,
                         info, path,
                         result);
+                }
             }
 
             throw new GraphQLException($@"Cannot complete value of unexpected type ""{returnType?.GetType()}"".");
@@ -332,11 +364,13 @@ namespace GraphZen.QueryEngine
             }
 
             if (!exeContext.Schema.IsPossibleType(returnType, runtimeObjectType))
+            {
                 throw new GraphQLException(
                     $"Runtime Object type \"{runtimeObjectType.Name}\" is not a possible type " +
                     $"for \"{returnType.Name}\".",
                     fieldNodes
                 );
+            }
 
             return runtimeObjectType;
         }
@@ -373,8 +407,10 @@ namespace GraphZen.QueryEngine
             foreach (var fieldNode in fieldNodes)
             {
                 if (fieldNode.SelectionSet != null)
+                {
                     subFieldNodes = CollectFields(exeContext, returnType, fieldNode.SelectionSet, subFieldNodes,
                         visitedFargmentNames);
+                }
             }
 
             return ExecuteFieldsAsync(exeContext, returnType, result, path, subFieldNodes);
@@ -384,7 +420,9 @@ namespace GraphZen.QueryEngine
         {
             var serializedResult = returnType.Serialize(result);
             if (serializedResult is None<object> none)
+            {
                 none.ThrowFirstErrorOrDefault($@"Expected a value of type `{returnType}` but received: {result}");
+            }
 
             return serializedResult;
         }
@@ -396,8 +434,10 @@ namespace GraphZen.QueryEngine
             ResolveInfo info, ResponsePath path, object result)
         {
             if (result is string || !(result is IEnumerable collection))
+            {
                 throw new InvalidOperationException(
                     $"Expected IEnumerable, but did not find one for field {info.ParentType.Name}");
+            }
 
             var itemType = returnType.OfType;
             // var containsTask = false;
@@ -410,10 +450,14 @@ namespace GraphZen.QueryEngine
                 var completedItem =
                     await CompleteValueCatchingErrorAsync(exeContext, itemType, fieldNodes, info, fieldPath, itemValue);
                 if (completedItem is Some<object> some)
+                {
                     completedResults.Add(some.Value);
+                }
                 else
+                {
                     throw new InvalidOperationException(
                         $"There should always be a value produced by {nameof(CompleteValueCatchingErrorAsync)}");
+                }
 
                 index++;
             }
@@ -440,9 +484,13 @@ namespace GraphZen.QueryEngine
                 {
                     var defaultResolverResult = exeContext.FieldResolver(sourceValue, args, context, info);
                     if (defaultResolverResult is Some<object> someResult)
+                    {
                         result = someResult.Value;
+                    }
                     else
+                    {
                         Maybe.None<object>();
+                    }
                 }
 
                 if (result is Task resultTask && result.GetType() != typeof(Task))
@@ -459,7 +507,10 @@ namespace GraphZen.QueryEngine
             }
             catch (Exception e)
             {
-                if (exeContext.Options.ThrowOnError) throw;
+                if (exeContext.Options.ThrowOnError)
+                {
+                    throw;
+                }
 
                 return Maybe.None<object>(new GraphQLServerError(e.Message, fieldNodes, null,
                     null, info.Path.AsReadOnlyList(), e));
@@ -472,16 +523,25 @@ namespace GraphZen.QueryEngine
             string fieldName)
         {
             if (fieldName == Introspection.SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
+            {
                 return Introspection.SchemaMetaFieldDef;
+            }
 
             if (fieldName == Introspection.TypeMetaFieldDef.Name && schema.QueryType.Equals(parentType))
+            {
                 return Introspection.TypeMetaFieldDef;
+            }
 
-            if (fieldName == Introspection.TypeNameMetaFieldDef.Name) return Introspection.TypeNameMetaFieldDef;
+            if (fieldName == Introspection.TypeNameMetaFieldDef.Name)
+            {
+                return Introspection.TypeNameMetaFieldDef;
+            }
 
             var field = parentType.FindField(fieldName);
             if (field == null && exeContext.Options.ThrowOnError)
+            {
                 throw new Exception($"Unable to find field \"{fieldName}\" on {parentType.Name}");
+            }
 
             return field;
         }
@@ -497,17 +557,24 @@ namespace GraphZen.QueryEngine
                 switch (selection)
                 {
                     case FieldSyntax field:
-                        if (!ShouldIncludeNode(exeContext, field)) continue;
+                        if (!ShouldIncludeNode(exeContext, field))
+                        {
+                            continue;
+                        }
 
                         if (!fields.ContainsKey(field.FieldEntryKey))
+                        {
                             fields[field.FieldEntryKey] = new List<FieldSyntax>();
+                        }
 
                         fields[field.FieldEntryKey]?.Add(field);
                         break;
                     case InlineFragmentSyntax inlineFragment:
                         if (!ShouldIncludeNode(exeContext, selection) ||
                             !DoesFragmentConditionMatch(exeContext, inlineFragment, runtimeType))
+                        {
                             continue;
+                        }
 
                         CollectFields(exeContext, runtimeType, inlineFragment.SelectionSet, fields,
                             visitedFragmentNames);
@@ -516,13 +583,17 @@ namespace GraphZen.QueryEngine
                         var fragName = fragmentSpread.Name.Value;
                         if (visitedFragmentNames.ContainsKey(fragName) ||
                             !ShouldIncludeNode(exeContext, fragmentSpread))
+                        {
                             continue;
+                        }
 
                         visitedFragmentNames[fragName] = true;
 
                         if (!exeContext.Fragments.TryGetValue(fragName, out var fragment) ||
                             !DoesFragmentConditionMatch(exeContext, fragment, runtimeType))
+                        {
                             continue;
+                        }
 
                         CollectFields(exeContext, runtimeType, fragment.SelectionSet, fields, visitedFragmentNames);
 
@@ -536,13 +607,21 @@ namespace GraphZen.QueryEngine
         internal static bool DoesFragmentConditionMatch(ExecutionContext exeContext,
             IFragmentTypeConditionSyntax fragment, ObjectType type)
         {
-            if (fragment.TypeCondition == null) return true;
+            if (fragment.TypeCondition == null)
+            {
+                return true;
+            }
 
             var conditionalType = exeContext.Schema.GetTypeFromAst(fragment.TypeCondition);
-            if (type.Equals(conditionalType)) return true;
+            if (type.Equals(conditionalType))
+            {
+                return true;
+            }
 
             if (conditionalType is IAbstractType abstractType)
+            {
                 return exeContext.Schema.IsPossibleType(abstractType, type);
+            }
 
             return false;
         }
@@ -551,10 +630,16 @@ namespace GraphZen.QueryEngine
         internal static bool ShouldIncludeNode(ExecutionContext exeContext, SyntaxNode node)
         {
             var skip = Values.GetDirectiveValues(SpecDirectives.Skip, node, exeContext.VariableValues);
-            if (skip != null && skip["if"] == true) return false;
+            if (skip != null && skip["if"] == true)
+            {
+                return false;
+            }
 
             var include = Values.GetDirectiveValues(SpecDirectives.Include, node, exeContext.VariableValues);
-            if (include != null && include["if"] == false) return false;
+            if (include != null && include["if"] == false)
+            {
+                return false;
+            }
 
             return true;
         }

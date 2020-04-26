@@ -19,8 +19,10 @@ namespace GraphZen.LanguageModel.Internal
         {
             Check.NotNull(name, nameof(name));
             if (!name.IsValidGraphQLName())
+            {
                 throw new Exception(
                     $"'{name}' is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            }
 
             return name;
         }

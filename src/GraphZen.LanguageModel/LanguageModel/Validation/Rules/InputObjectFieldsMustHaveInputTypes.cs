@@ -26,8 +26,10 @@ namespace GraphZen.LanguageModel.Validation.Rules
                 var fieldNamedType = field.Type.GetNamedType();
                 var inputFieldType = inputTypes.FirstOrDefault(_ => _.Name.Equals(fieldNamedType.Name));
                 if (inputFieldType == null)
+                {
                     ReportError($"The type of {inputObject}.{field} must be Input Type but got: {field.Type}.",
                         field.Type);
+                }
             }
 
             return false;

@@ -51,7 +51,9 @@ namespace GraphZen.LanguageModel.Validation.Rules
                 // ReSharper disable once PossibleNullReferenceException
                 var types = union.MemberTypes.Concat(unionExtensions.SelectMany(_ => _.Types)).ToList();
                 if (!types.Any())
+                {
                     ReportError($"Union type {unionTypeName} must define one or more member types.", nodes);
+                }
 
                 // ReSharper disable once PossibleNullReferenceException
                 foreach (var duplicateTypes in types
@@ -71,9 +73,11 @@ namespace GraphZen.LanguageModel.Validation.Rules
                         return _.Name.Value == type.Name.Value;
                     });
                     if (objectType == null)
+                    {
                         ReportError(
                             $"Union type {unionTypeName} can only include Object types, it cannot include {type.Name.Value}.",
                             type);
+                    }
                 }
             }
 

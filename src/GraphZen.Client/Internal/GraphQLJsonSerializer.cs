@@ -43,7 +43,9 @@ namespace GraphZen.Internal
             Check.NotNull(json, nameof(json));
             var expando = JsonConvert.DeserializeObject<DynamicDictionary>(json);
             if (expando != null)
+            {
                 return ((IDictionary<string, object>)expando).TryGetValue("data", out var data) ? data : null;
+            }
 
             return null;
         }

@@ -55,7 +55,11 @@ namespace GraphZen.SpecAudit.SpecFx
                 .ToImmutableList();
             var nonSkippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
             var skippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
-            if (nonSkippedTests.Any()) return SpecCoverageStatus.Implemented;
+            if (nonSkippedTests.Any())
+            {
+                return SpecCoverageStatus.Implemented;
+            }
+
             return skippedTests.Any() ? SpecCoverageStatus.Skipped : SpecCoverageStatus.Missing;
         }
 
@@ -91,7 +95,10 @@ namespace GraphZen.SpecAudit.SpecFx
             var sb = Specs.ToBuilder();
             foreach (var specId in specs)
             {
-                if (!Specs.ContainsKey(specId) || priority != null) sb[specId] = new SubjectSpec(specId, priority);
+                if (!Specs.ContainsKey(specId) || priority != null)
+                {
+                    sb[specId] = new SubjectSpec(specId, priority);
+                }
             }
 
             return new Subject(Name, Parent, sb.ToImmutable(), Children);

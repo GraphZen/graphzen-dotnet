@@ -15,7 +15,10 @@ namespace SimpleBlog.Models
         [Description("Get the latests blog posts")]
         public List<Post> Posts(int? postId)
         {
-            if (postId != null) return FakeBlogData.Posts.Where(_ => _.Id == postId.Value).ToList();
+            if (postId != null)
+            {
+                return FakeBlogData.Posts.Where(_ => _.Id == postId.Value).ToList();
+            }
 
             return FakeBlogData.Posts;
         }

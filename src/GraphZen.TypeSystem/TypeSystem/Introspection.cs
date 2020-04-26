@@ -62,8 +62,10 @@ namespace GraphZen.TypeSystem
                     .Resolve((type, args) =>
                     {
                         if (type is EnumType enumType)
+                        {
                             return enumType.GetValues()
                                 .Where(f => args.includeDeprecated || !f.IsDeprecated).ToList();
+                        }
 
                         return null;
                     }))

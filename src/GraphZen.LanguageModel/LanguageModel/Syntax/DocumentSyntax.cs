@@ -71,16 +71,22 @@ namespace GraphZen.LanguageModel
                         {
                             if (implementations.TryGetValue(iface.Name.Value, out
                                 var impls))
+                            {
                                 ((HashSet<ObjectTypeDefinitionSyntax>)impls).Add(objectType);
+                            }
                             else
+                            {
                                 implementations[iface.Name.Value] =
                                     new HashSet<ObjectTypeDefinitionSyntax> { objectType };
+                            }
                         }
 
                     foreach (var abstractType in GetAbstractTypeMap().Values)
                     {
                         if (!implementations.ContainsKey(abstractType.Name.Value))
+                        {
                             implementations[abstractType.Name.Value] = new HashSet<ObjectTypeDefinitionSyntax>();
+                        }
                     }
 
                     return new ReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>(
@@ -114,28 +120,40 @@ namespace GraphZen.LanguageModel
         {
             Check.NotNull(maybeSubType, nameof(maybeSubType));
             Check.NotNull(superType, nameof(superType));
-            if (maybeSubType.Equals(superType)) return true;
+            if (maybeSubType.Equals(superType))
+            {
+                return true;
+            }
 
             if (superType is NonNullTypeSyntax nnSuper)
             {
                 if (maybeSubType is NonNullTypeSyntax nnMaybeSub)
+                {
                     return IsTypeSubTypeOf(nnMaybeSub.OfType, nnSuper.OfType);
+                }
 
                 return false;
             }
 
             if (maybeSubType is NonNullTypeSyntax nnMaybeSubType)
+            {
                 return IsTypeSubTypeOf(nnMaybeSubType.OfType, superType);
+            }
 
             if (superType is ListTypeSyntax listSuper)
             {
                 if (maybeSubType is ListTypeSyntax listMaybeSub)
+                {
                     return IsTypeSubTypeOf(listMaybeSub.OfType, listSuper.OfType);
+                }
 
                 return false;
             }
 
-            if (maybeSubType is ListTypeSyntax) return false;
+            if (maybeSubType is ListTypeSyntax)
+            {
+                return false;
+            }
 
             if (
                 // Is super type abstract type?
@@ -144,7 +162,9 @@ namespace GraphZen.LanguageModel
                 && GetObjectTypeMap().TryGetValue(((NamedTypeSyntax)maybeSubType).Name.Value,
                     out var maybeSubTypeObjectType)
                 && IsPossibleType(abstractSuperType, maybeSubTypeObjectType))
+            {
                 return true;
+            }
 
             return false;
         }
@@ -154,9 +174,11 @@ namespace GraphZen.LanguageModel
             TypeDefinitionSyntax abstractType)
         {
             if (abstractType is UnionTypeDefinitionSyntax unionType)
+            {
                 return unionType.MemberTypes.Select(_ =>
                         GetObjectTypeMap().TryGetValue(_.Name.Value, out var outputType) ? outputType : null)
                     .Where(_ => _ != null).Select(_ => _!).ToReadOnlyList();
+            }
 
             return GetImplementationMap().TryGetValue(abstractType.Name.Value, out var possibleTypes)
                 ? possibleTypes
@@ -167,8 +189,10 @@ namespace GraphZen.LanguageModel
             ObjectTypeDefinitionSyntax possibleType)
         {
             if (!_possibleTypeMap.ContainsKey(abstractType.Name.Value))
+            {
                 _possibleTypeMap[abstractType.Name.Value] =
                     GetPossibleTypes(abstractType).ToDictionary(_ => _.Name.Value, _ => true);
+            }
 
             return _possibleTypeMap.TryGetValue(abstractType.Name.Value, out var possibleTypesMap) &&
                    possibleTypesMap.ContainsKey(possibleType.Name.Value);
@@ -186,9 +210,15 @@ namespace GraphZen.LanguageModel
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
 
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return obj is DocumentSyntax syntax && Equals(syntax);
         }

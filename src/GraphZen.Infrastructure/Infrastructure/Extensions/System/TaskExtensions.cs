@@ -30,11 +30,16 @@ namespace GraphZen.Infrastructure
         {
             Check.NotNull(task, nameof(task));
             if (!task.IsCompleted)
+            {
                 throw new InvalidOperationException(
                     "Attempted to get result of task prior to completion, ensure you are await task prior to getting its value.");
+            }
 
             var resultProp = task.GetType().GetProperty("Result");
-            if (resultProp != null) return resultProp.GetValue(task);
+            if (resultProp != null)
+            {
+                return resultProp.GetValue(task);
+            }
 
             throw new InvalidOperationException("Unable to get result from task");
         }

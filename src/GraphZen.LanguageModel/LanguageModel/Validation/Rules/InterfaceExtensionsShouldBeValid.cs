@@ -51,9 +51,11 @@ namespace GraphZen.LanguageModel.Validation.Rules
                         {
                             // TODO: check if implemented field type is a subtype of expected field type
                             if (!implementedField.FieldType.Equals(expectedField.FieldType))
+                            {
                                 ReportError(
                                     $"Interface field {implementedInterface}.{expectedField} expects type {expectedField.FieldType} but {objectType}.{implementedField} is type {implementedField.FieldType}.",
                                     expectedField.FieldType, implementedField.FieldType);
+                            }
 
                             foreach (var expectedArg in expectedField.Arguments)
                             {
@@ -61,9 +63,11 @@ namespace GraphZen.LanguageModel.Validation.Rules
                                     // ReSharper disable once PossibleNullReferenceException
                                     _.Name.Value == expectedArg.Name.Value && _.Type.Equals(expectedArg.Type));
                                 if (implementedArg == null)
+                                {
                                     ReportError(
                                         $"Interface field argument {implementedInterface}.{expectedField}({expectedArg.Name}:) expected but {objectType}.{implementedField} does not provide it.",
                                         expectedArg, implementedField);
+                                }
                             }
                         }
                     }

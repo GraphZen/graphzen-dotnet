@@ -38,7 +38,10 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         {
             var result = input.TryGetNullableType(out var nullableClrType);
             result.Should().Be(isNullable);
-            if (result) nullableClrType.Should().Be(expectedNullableType);
+            if (result)
+            {
+                nullableClrType.Should().Be(expectedNullableType);
+            }
         }
 
         [Theory]

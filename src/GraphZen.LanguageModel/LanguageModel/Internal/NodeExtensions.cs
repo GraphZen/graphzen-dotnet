@@ -47,8 +47,15 @@ namespace GraphZen.LanguageModel.Internal
         internal static IEnumerable<SyntaxNode> Concat(
             this SyntaxNode? node, SyntaxNode? other)
         {
-            if (node != null) yield return node;
-            if (other != null) yield return other;
+            if (node != null)
+            {
+                yield return node;
+            }
+
+            if (other != null)
+            {
+                yield return other;
+            }
         }
 
 
@@ -57,7 +64,10 @@ namespace GraphZen.LanguageModel.Internal
             IEnumerable<T> otherNodes) where T : SyntaxNode
         {
             var sequenceEquals = nodes.SequenceEqual(otherNodes);
-            if (sequenceEquals) return true;
+            if (sequenceEquals)
+            {
+                return true;
+            }
 
             return false;
         }

@@ -13,7 +13,10 @@ namespace GraphZen.Infrastructure
     {
         public static void ThrowOnParserError<TKind, T>(this TokenListParserResult<TKind, T> result)
         {
-            if (!result.HasValue) throw new Exception(result.ToString());
+            if (!result.HasValue)
+            {
+                throw new Exception(result.ToString());
+            }
         }
     }
 }

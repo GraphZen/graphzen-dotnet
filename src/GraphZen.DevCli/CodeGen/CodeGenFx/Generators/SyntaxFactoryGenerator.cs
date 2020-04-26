@@ -28,7 +28,10 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
         private static string GetParameterType(Type type)
         {
-            if (!type.IsGenericType) return type.FullName!;
+            if (!type.IsGenericType)
+            {
+                return type.FullName!;
+            }
 
             var gargs = string.Join(", ", type.GetGenericArguments().Select(_ => _.FullName));
             return
@@ -73,7 +76,10 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
             foreach (var ctor in type.GetConstructors())
             {
                 var attr = ctor.GetCustomAttribute<GenFactoryAttribute>();
-                if (attr != null) yield return new SyntaxFactoryGenerator(ctor, attr);
+                if (attr != null)
+                {
+                    yield return new SyntaxFactoryGenerator(ctor, attr);
+                }
             }
         }
     }

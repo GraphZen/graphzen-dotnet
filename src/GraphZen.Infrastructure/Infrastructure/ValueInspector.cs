@@ -26,9 +26,13 @@ namespace GraphZen.Infrastructure
         public static T Dump<T>(this T value, string label = "_", bool expanded = false)
         {
             if (expanded)
+            {
                 Console.WriteLine($"= {label} =\n{value.Inspect(true)}");
+            }
             else
+            {
                 Console.WriteLine($"\t\t{label} \t\t-> {value.Inspect()}");
+            }
 
             return value;
         }

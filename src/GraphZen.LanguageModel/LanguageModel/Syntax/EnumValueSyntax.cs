@@ -22,9 +22,11 @@ namespace GraphZen.LanguageModel
             Value = value.Value;
 
             if (!IsValidValue(value.Value))
+            {
                 throw new ArgumentException(
                     $"Enum values cannot be 'true', 'false', or 'null'. Supplied value was: '{value.Value}'",
                     nameof(value));
+            }
         }
 
 
@@ -50,9 +52,15 @@ namespace GraphZen.LanguageModel
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
 
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return obj is EnumValueSyntax && Equals((EnumValueSyntax)obj);
         }

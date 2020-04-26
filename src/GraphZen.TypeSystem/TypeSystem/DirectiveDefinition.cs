@@ -69,9 +69,15 @@ namespace GraphZen.TypeSystem
         public bool SetName(string name, ConfigurationSource configurationSource)
         {
             Check.NotNull(name, nameof(name));
-            if (!configurationSource.Overrides(GetNameConfigurationSource())) return false;
+            if (!configurationSource.Overrides(GetNameConfigurationSource()))
+            {
+                return false;
+            }
 
-            if (Name != name) Builder.Schema.RenameDirective(this, name, configurationSource);
+            if (Name != name)
+            {
+                Builder.Schema.RenameDirective(this, name, configurationSource);
+            }
 
             Name = name;
             _nameConfigurationSource = configurationSource;
@@ -82,11 +88,16 @@ namespace GraphZen.TypeSystem
 
         public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(argument.GetNameConfigurationSource())) return false;
+            if (!configurationSource.Overrides(argument.GetNameConfigurationSource()))
+            {
+                return false;
+            }
 
             if (TryGetArgument(name, out var existing) && existing != argument)
+            {
                 throw new InvalidOperationException(
                     $"Cannot rename {argument} to '{name}'. {this} already contains a field named '{name}'.");
+            }
 
             _arguments.Remove(argument.Name);
             _arguments[name] = argument;

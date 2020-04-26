@@ -16,7 +16,11 @@ namespace GraphZen.Infrastructure
         internal static JsonDiffOptions? FromOptionsAction(
             Action<JsonDiffOptions>? optionsAction)
         {
-            if (optionsAction == null) return null;
+            if (optionsAction == null)
+            {
+                return null;
+            }
+
             var options = new JsonDiffOptions();
             optionsAction(options);
             return options;

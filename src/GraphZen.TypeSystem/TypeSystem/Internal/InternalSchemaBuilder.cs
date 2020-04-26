@@ -25,9 +25,15 @@ namespace GraphZen.TypeSystem.Internal
 
         public MemberDefinitionBuilder? Type(TypeIdentity identity)
         {
-            if (identity.ClrType == null) return null;
+            if (identity.ClrType == null)
+            {
+                return null;
+            }
 
-            if (identity.Kind != null) return Type(identity.ClrType, identity.Kind.Value);
+            if (identity.Kind != null)
+            {
+                return Type(identity.ClrType, identity.Kind.Value);
+            }
 
             return Type(identity.ClrType, identity.IsInputType, identity.IsOutputType);
         }
@@ -35,7 +41,9 @@ namespace GraphZen.TypeSystem.Internal
         public MemberDefinitionBuilder? Type(Type clrType, bool? isInputType, bool? isOutputType)
         {
             if (Schema.TryGetTypeKind(clrType, isInputType, isOutputType, out var kind, out _))
+            {
                 return Type(clrType, kind);
+            }
 
             return null;
         }
@@ -47,29 +55,48 @@ namespace GraphZen.TypeSystem.Internal
         public NamedTypeDefinition? OutputType(TypeIdentity id, ConfigurationSource configurationSource)
         {
             var clrType = id.ClrType;
-            if (clrType == null) return null;
+            if (clrType == null)
+            {
+                return null;
+            }
 
-            if (IsTypeIgnored(id, configurationSource)) return null;
+            if (IsTypeIgnored(id, configurationSource))
+            {
+                return null;
+            }
 
             var def = Schema.FindOutputType(clrType);
             if (def == null)
             {
-                if (clrType.IsEnum) return Enum(clrType, configurationSource)?.Definition;
+                if (clrType.IsEnum)
+                {
+                    return Enum(clrType, configurationSource)?.Definition;
+                }
 
-                if (clrType.IsValueType) return Scalar(clrType, configurationSource)?.Definition;
+                if (clrType.IsValueType)
+                {
+                    return Scalar(clrType, configurationSource)?.Definition;
+                }
 
                 if (clrType.IsInterface)
                 {
                     if (clrType.GetCustomAttribute<GraphQLUnionAttribute>() != null)
+                    {
                         return Union(clrType, configurationSource.Max(ConfigurationSource.DataAnnotation))?.Definition;
+                    }
 
                     return Interface(clrType, configurationSource)?.Definition;
                 }
 
                 if (clrType.GetCustomAttribute<GraphQLObjectAttribute>() != null)
+                {
                     return Object(id, configurationSource)?.Definition;
+                }
 
-                if (clrType.IsClass && clrType.IsAbstract) return Union(clrType, configurationSource)?.Definition;
+                if (clrType.IsClass && clrType.IsAbstract)
+                {
+                    return Union(clrType, configurationSource)?.Definition;
+                }
 
                 return Object(id, configurationSource)?.Definition;
             }
@@ -83,18 +110,33 @@ namespace GraphZen.TypeSystem.Internal
         public NamedTypeDefinition? InputType(TypeIdentity id, ConfigurationSource configurationSource)
         {
             var clrType = id.ClrType;
-            if (clrType == null) return null;
+            if (clrType == null)
+            {
+                return null;
+            }
 
-            if (IsTypeIgnored(id, configurationSource)) return null;
+            if (IsTypeIgnored(id, configurationSource))
+            {
+                return null;
+            }
 
             var def = Schema.FindInputType(clrType);
             if (def == null)
             {
-                if (clrType.IsEnum) return Enum(clrType, configurationSource)?.Definition;
+                if (clrType.IsEnum)
+                {
+                    return Enum(clrType, configurationSource)?.Definition;
+                }
 
-                if (clrType.IsValueType) return Scalar(clrType, configurationSource)?.Definition;
+                if (clrType.IsValueType)
+                {
+                    return Scalar(clrType, configurationSource)?.Definition;
+                }
 
-                if (clrType.IsClass) return InputObject(id, configurationSource)?.Definition;
+                if (clrType.IsClass)
+                {
+                    return InputObject(id, configurationSource)?.Definition;
+                }
             }
 
             return def;
@@ -145,9 +187,14 @@ namespace GraphZen.TypeSystem.Internal
         private InternalUnionTypeBuilder? Union(in TypeIdentity id, ConfigurationSource configurationSource)
         {
             if (id.ClrType != null && id.ClrType.IsIgnoredByDataAnnotation())
+            {
                 IgnoreType(id.ClrType, ConfigurationSource.DataAnnotation);
+            }
 
-            if (IsTypeIgnored(id, configurationSource)) return null;
+            if (IsTypeIgnored(id, configurationSource))
+            {
+                return null;
+            }
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
@@ -157,7 +204,10 @@ namespace GraphZen.TypeSystem.Internal
             {
                 unionType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != unionType.ClrType)
+                {
                     unionType.Builder.ClrType(id.ClrType, ConfigurationSource.Explicit);
+                }
+
                 return unionType.Builder;
             }
 
@@ -181,7 +231,10 @@ namespace GraphZen.TypeSystem.Internal
         private void OnUnionAdded(UnionTypeDefinition unionType)
         {
             var clrType = unionType.ClrType;
-            if (clrType != null) unionType.Builder.ConfigureFromClrType();
+            if (clrType != null)
+            {
+                unionType.Builder.ConfigureFromClrType();
+            }
         }
 
 
@@ -194,9 +247,14 @@ namespace GraphZen.TypeSystem.Internal
         private InternalScalarTypeBuilder? Scalar(in TypeIdentity id, ConfigurationSource configurationSource)
         {
             if (id.ClrType != null && id.ClrType.IsIgnoredByDataAnnotation())
+            {
                 IgnoreType(id.ClrType, ConfigurationSource.DataAnnotation);
+            }
 
-            if (IsTypeIgnored(id, configurationSource)) return null;
+            if (IsTypeIgnored(id, configurationSource))
+            {
+                return null;
+            }
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
@@ -206,7 +264,10 @@ namespace GraphZen.TypeSystem.Internal
             {
                 scalarType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
+                {
                     scalarType.Builder.ClrType(id.ClrType, configurationSource);
+                }
+
                 return scalarType.Builder;
             }
 
@@ -230,7 +291,10 @@ namespace GraphZen.TypeSystem.Internal
         private void OnScalarAdded(ScalarTypeDefinition scalarType)
         {
             var clrType = scalarType.ClrType;
-            if (clrType != null) scalarType.Builder.ConfigureFromClrType();
+            if (clrType != null)
+            {
+                scalarType.Builder.ConfigureFromClrType();
+            }
         }
 
 
@@ -245,9 +309,14 @@ namespace GraphZen.TypeSystem.Internal
             ConfigurationSource configurationSource)
         {
             if (id.ClrType != null && id.ClrType.IsIgnoredByDataAnnotation())
+            {
                 IgnoreType(id.ClrType, ConfigurationSource.DataAnnotation);
+            }
 
-            if (IsTypeIgnored(id, configurationSource)) return null;
+            if (IsTypeIgnored(id, configurationSource))
+            {
+                return null;
+            }
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
@@ -257,7 +326,10 @@ namespace GraphZen.TypeSystem.Internal
             {
                 interfaceType.UpdateConfigurationSource(configurationSource);
                 if (type.ClrType != id.ClrType && id.ClrType != null)
+                {
                     interfaceType.Builder.ClrType(id.ClrType, configurationSource);
+                }
+
                 return interfaceType.Builder;
             }
 
@@ -283,7 +355,10 @@ namespace GraphZen.TypeSystem.Internal
         private void OnInterfaceAdded(InterfaceTypeDefinition interfaceType)
         {
             var clrType = interfaceType.ClrType;
-            if (clrType != null) interfaceType.Builder.ConfigureInterfaceFromClrType();
+            if (clrType != null)
+            {
+                interfaceType.Builder.ConfigureInterfaceFromClrType();
+            }
         }
 
         public InternalEnumTypeBuilder? Enum(Type clrType, ConfigurationSource configurationSource) =>
@@ -296,9 +371,14 @@ namespace GraphZen.TypeSystem.Internal
         private InternalEnumTypeBuilder? Enum(in TypeIdentity id, ConfigurationSource configurationSource)
         {
             if (id.ClrType != null && id.ClrType.IsIgnoredByDataAnnotation())
+            {
                 IgnoreType(id.ClrType, ConfigurationSource.DataAnnotation);
+            }
 
-            if (IsTypeIgnored(id, configurationSource)) return null;
+            if (IsTypeIgnored(id, configurationSource))
+            {
+                return null;
+            }
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
@@ -308,7 +388,10 @@ namespace GraphZen.TypeSystem.Internal
             {
                 enumType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
+                {
                     enumType.Builder.ClrType(id.ClrType, ConfigurationSource.Explicit);
+                }
+
                 return enumType.Builder;
             }
 
@@ -331,7 +414,10 @@ namespace GraphZen.TypeSystem.Internal
         private void OnEnumAdded(EnumTypeDefinition enumType)
         {
             var clrType = enumType.ClrType;
-            if (clrType != null) enumType.Builder.ConfigureEnumFromClrType();
+            if (clrType != null)
+            {
+                enumType.Builder.ConfigureEnumFromClrType();
+            }
         }
 
 
@@ -347,11 +433,19 @@ namespace GraphZen.TypeSystem.Internal
             ConfigurationSource configurationSource)
         {
             if (id.ClrType != null && id.ClrType.IsIgnoredByDataAnnotation())
+            {
                 IgnoreType(id.ClrType, ConfigurationSource.DataAnnotation);
+            }
 
-            if (IsTypeIgnored(id, configurationSource)) return null;
+            if (IsTypeIgnored(id, configurationSource))
+            {
+                return null;
+            }
 
-            if (IsTypeIgnored(id, configurationSource)) return null;
+            if (IsTypeIgnored(id, configurationSource))
+            {
+                return null;
+            }
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
@@ -361,7 +455,10 @@ namespace GraphZen.TypeSystem.Internal
             {
                 inputType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
+                {
                     inputType.Builder.ClrType(id.ClrType, configurationSource);
+                }
+
                 return inputType.Builder;
             }
 
@@ -385,7 +482,10 @@ namespace GraphZen.TypeSystem.Internal
         private void OnInputObjectAdded(InputObjectTypeDefinition inputType)
         {
             var clrType = inputType.ClrType;
-            if (clrType != null) inputType.Builder.ConfigureFromClrType();
+            if (clrType != null)
+            {
+                inputType.Builder.ConfigureFromClrType();
+            }
         }
 
         public InternalObjectTypeBuilder? Object(Type clrType, ConfigurationSource configurationSource) =>
@@ -397,10 +497,15 @@ namespace GraphZen.TypeSystem.Internal
         private InternalObjectTypeBuilder? Object(in TypeIdentity id, ConfigurationSource configurationSource)
         {
             if (id.ClrType != null && id.ClrType.IsIgnoredByDataAnnotation())
+            {
                 IgnoreType(id.ClrType, ConfigurationSource.DataAnnotation);
+            }
 
 
-            if (IsTypeIgnored(id, configurationSource)) return null;
+            if (IsTypeIgnored(id, configurationSource))
+            {
+                return null;
+            }
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
@@ -410,7 +515,10 @@ namespace GraphZen.TypeSystem.Internal
             {
                 objectType.UpdateConfigurationSource(configurationSource);
                 if (objectType.ClrType != id.ClrType && id.ClrType != null)
+                {
                     objectType.Builder.ClrType(id.ClrType, configurationSource);
+                }
+
                 return objectType.Builder;
             }
 
@@ -433,7 +541,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalDirectiveBuilder? Directive(string name, ConfigurationSource configurationSource)
         {
-            if (IsDirectiveIgnored(name, configurationSource)) return null;
+            if (IsDirectiveIgnored(name, configurationSource))
+            {
+                return null;
+            }
 
             var directive = Definition.FindDirective(name);
 
@@ -486,13 +597,19 @@ namespace GraphZen.TypeSystem.Internal
         private void OnObjectAdded(ObjectTypeDefinition objectType)
         {
             var clrType = objectType.ClrType;
-            if (clrType != null) objectType.Builder.ConfigureObjectFromClrType();
+            if (clrType != null)
+            {
+                objectType.Builder.ConfigureObjectFromClrType();
+            }
         }
 
         public bool UnignoreType(string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredTypeConfigurationSource(name);
-            if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
 
             Definition.UnignoreType(name);
             return true;
@@ -501,7 +618,10 @@ namespace GraphZen.TypeSystem.Internal
         public bool UnignoreType(Type clrType, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = Definition.FindIgnoredTypeConfigurationSource(clrType);
-            if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return false;
+            }
 
             Definition.UnignoreType(clrType);
             return true;
@@ -518,13 +638,18 @@ namespace GraphZen.TypeSystem.Internal
             {
                 if (configurationSource.Overrides(ignoredConfigurationSource) &&
                     configurationSource != ignoredConfigurationSource)
+                {
                     Definition.IgnoreType(name, configurationSource);
+                }
 
                 return true;
             }
 
             var type = Definition.FindType(name);
-            if (type != null) return IgnoreType(type, configurationSource);
+            if (type != null)
+            {
+                return IgnoreType(type, configurationSource);
+            }
 
             Definition.IgnoreType(name, configurationSource);
             return true;
@@ -532,12 +657,19 @@ namespace GraphZen.TypeSystem.Internal
 
         public bool IgnoreType(NamedTypeDefinition type, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(type.GetConfigurationSource())) return false;
+            if (!configurationSource.Overrides(type.GetConfigurationSource()))
+            {
+                return false;
+            }
 
             if (type.ClrType != null)
+            {
                 Definition.IgnoreType(type.ClrType, configurationSource);
+            }
             else
+            {
                 Definition.IgnoreType(type.Name, configurationSource);
+            }
 
             return RemoveType(type, configurationSource);
         }
@@ -547,14 +679,21 @@ namespace GraphZen.TypeSystem.Internal
 
         private bool IsDirectiveIgnored(string name, ConfigurationSource configurationSource)
         {
-            if (configurationSource == ConfigurationSource.Explicit) return false;
+            if (configurationSource == ConfigurationSource.Explicit)
+            {
+                return false;
+            }
+
             var ignoredConfigurationSource = Definition.FindIgnoredDirectiveConfigurationSource(name);
             return !configurationSource.Overrides(ignoredConfigurationSource);
         }
 
         private bool IsTypeIgnored(in TypeIdentity identity, ConfigurationSource configurationSource)
         {
-            if (configurationSource == ConfigurationSource.Explicit) return false;
+            if (configurationSource == ConfigurationSource.Explicit)
+            {
+                return false;
+            }
 
             var ignoredConfigurationSource = Definition.FindIgnoredTypeConfigurationSource(identity.Name);
             return ignoredConfigurationSource.HasValue && ignoredConfigurationSource.Overrides(configurationSource);
@@ -601,7 +740,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public bool RemoveType(NamedTypeDefinition type, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(type.GetConfigurationSource())) return false;
+            if (!configurationSource.Overrides(type.GetConfigurationSource()))
+            {
+                return false;
+            }
 
             Schema.RemoveType(type);
 

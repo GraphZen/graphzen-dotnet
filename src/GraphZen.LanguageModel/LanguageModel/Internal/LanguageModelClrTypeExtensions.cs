@@ -30,7 +30,10 @@ namespace GraphZen.LanguageModel.Internal
         {
             if (clrType.TryGetGraphQLNameWithoutValidation(out var maybeInvalidName, source))
             {
-                if (maybeInvalidName.IsValidGraphQLName()) return maybeInvalidName;
+                if (maybeInvalidName.IsValidGraphQLName())
+                {
+                    return maybeInvalidName;
+                }
 
                 throw new Exception(
                     $"Failed to get a valid GraphQL name for CLR type '{clrType}' because it was invalid. The invalid name was '{maybeInvalidName}'.");
@@ -45,7 +48,10 @@ namespace GraphZen.LanguageModel.Internal
             Check.NotNull(clrType, nameof(clrType));
             name = default;
 
-            if (clrType.TryGetGraphQLNameFromDataAnnotation(out name)) return true;
+            if (clrType.TryGetGraphQLNameFromDataAnnotation(out name))
+            {
+                return true;
+            }
 
             if (source != null)
             {

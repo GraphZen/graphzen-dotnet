@@ -37,7 +37,10 @@ namespace GraphZen.LanguageModel.Internal
                 {
                     Debug.Assert(delimmiter != null, nameof(delimmiter) + " != null");
                     var begin = delimmiter(i);
-                    if (!begin.HasValue) return begin;
+                    if (!begin.HasValue)
+                    {
+                        return begin;
+                    }
 
                     var content = begin.Remainder;
 
@@ -46,7 +49,10 @@ namespace GraphZen.LanguageModel.Internal
                         // ReSharper disable once PossibleNullReferenceException
                         content = Span.EqualTo("\\\"\"\"").Value(Unit.Value).Try()(content).Remainder;
                         var end = delimmiter(content);
-                        if (end.HasValue) return end;
+                        if (end.HasValue)
+                        {
+                            return end;
+                        }
 
                         content = content.ConsumeChar().Remainder;
                     }

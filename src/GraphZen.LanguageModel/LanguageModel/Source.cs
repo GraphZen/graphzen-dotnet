@@ -24,11 +24,20 @@ namespace GraphZen.LanguageModel
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
 
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
-            if (obj.GetType() != GetType()) return false;
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
 
             return Equals((Source)obj);
         }
@@ -44,7 +53,10 @@ namespace GraphZen.LanguageModel
             for (var i = 0; i < matches.Count; i++)
             {
                 var match = matches[i];
-                if (match.Index >= position) break;
+                if (match.Index >= position)
+                {
+                    break;
+                }
 
                 line += 1;
                 column = position + 1 - (match.Index + match.Length);

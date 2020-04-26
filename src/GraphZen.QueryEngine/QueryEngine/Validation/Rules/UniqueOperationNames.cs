@@ -30,10 +30,14 @@ namespace GraphZen.QueryEngine.Validation.Rules
             if (operationName != null)
             {
                 if (_knownOperationNames.ContainsKey(operationName.Value))
+                {
                     ReportError(DuplicateOperationNameMessage(operationName.Value),
                         _knownOperationNames[operationName.Value], operationName);
+                }
                 else
+                {
                     _knownOperationNames.Add(operationName.Value, operationName);
+                }
             }
 
             return false;

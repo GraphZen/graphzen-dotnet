@@ -24,7 +24,9 @@ namespace GraphZen.LanguageModel
         {
             Name = Check.NotNull(name, nameof(name));
             if (Name.Value.Equals("on", StringComparison.CurrentCultureIgnoreCase))
+            {
                 throw new ArgumentException("Fragment spreads cannot use the name 'on'.");
+            }
 
             Directives = directives ?? DirectiveSyntax.EmptyList;
         }
@@ -50,9 +52,15 @@ namespace GraphZen.LanguageModel
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
 
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return obj is FragmentSpreadSyntax && Equals((FragmentSpreadSyntax)obj);
         }

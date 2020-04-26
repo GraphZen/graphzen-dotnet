@@ -30,11 +30,15 @@ namespace GraphZen
             Source = source ?? nodes?.FirstOrDefault()?.Location?.Source;
             InnerException = innerException;
             if (Positions != null && Source != null)
+            {
                 Locations = Positions.Select(Source.GetLocation).ToList();
+            }
             else if (Nodes != null && Source != null)
+            {
                 Locations = Nodes
                     .Where(_ => _?.Location != null)
                     .Select(n => Source.GetLocation(n.Location!.Start)).ToList();
+            }
         }
 
 
@@ -61,11 +65,20 @@ namespace GraphZen
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
 
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
-            if (obj.GetType() != GetType()) return false;
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
 
             return Equals((GraphQLServerError)obj);
         }

@@ -36,12 +36,16 @@ namespace GraphZen.LanguageModel.Validation.Rules
                     // ReSharper disable once PossibleNullReferenceException
                     var interfaceName = @interface.Name.Value;
                     if (!interfaces.Contains(interfaceName))
+                    {
                         ReportError(
                             $"Type {objectName} must only implement Interface types, it cannot implement {interfaceName}.",
                             @interface);
+                    }
 
                     if (interfacesByName.Count > 1)
+                    {
                         ReportError($"Type {objectName} can only implement {interfaceName} once.", interfacesByName);
+                    }
                 }
             }
 

@@ -32,7 +32,9 @@ namespace GraphZen.Infrastructure
         {
             Check.NotNull(value, nameof(value));
             if (value.EndsWith("Async") && value.Length > "Async".Length)
+            {
                 return value.Substring(0, value.Length - "Async".Length);
+            }
 
             return value;
         }
@@ -52,11 +54,20 @@ namespace GraphZen.Infrastructure
             Check.NotNull(value, nameof(value));
 
 
-            if (value.IsSnakeCase()) return value.ToUpper();
+            if (value.IsSnakeCase())
+            {
+                return value.ToUpper();
+            }
 
-            if (value.IsKebabCase()) return value.Replace('-', '_').ToUpper();
+            if (value.IsKebabCase())
+            {
+                return value.Replace('-', '_').ToUpper();
+            }
 
-            if (value.IsSpaceCase()) return value.Replace(' ', '_').ToUpper();
+            if (value.IsSpaceCase())
+            {
+                return value.Replace(' ', '_').ToUpper();
+            }
 
             var chars = value.SelectMany((c, i) =>
             {

@@ -30,7 +30,10 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                                                         BindingFlags.Public))
             {
                 var genAccessors = property.GetCustomAttribute<GenDictionaryAccessorsAttribute>();
-                if (genAccessors != null) yield return new DictionaryAccessorGenerator(property, genAccessors);
+                if (genAccessors != null)
+                {
+                    yield return new DictionaryAccessorGenerator(property, genAccessors);
+                }
             }
         }
 

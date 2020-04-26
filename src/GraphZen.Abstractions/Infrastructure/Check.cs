@@ -17,7 +17,11 @@ namespace GraphZen.Infrastructure
         public static T NotNull<T>([NoEnumeration] [System.Diagnostics.CodeAnalysis.NotNull]
             T value, [InvokerParameterName] string parameterName)
         {
-            if (value is null) throw new ArgumentNullException(parameterName);
+            if (value is null)
+            {
+                throw new ArgumentNullException(parameterName);
+            }
+
             return value;
         }
     }

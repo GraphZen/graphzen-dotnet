@@ -22,7 +22,10 @@ namespace GraphZen.QueryEngine.Validation.Rules
         public static string UnknownTypeMessage(string typeName, IReadOnlyList<string> suggestedTypes)
         {
             var message = $"Unknown type \"{typeName}\".";
-            if (suggestedTypes.Any()) return $"{message} Did you mean {suggestedTypes.QuotedOrList()}?";
+            if (suggestedTypes.Any())
+            {
+                return $"{message} Did you mean {suggestedTypes.QuotedOrList()}?";
+            }
 
             return message;
         }

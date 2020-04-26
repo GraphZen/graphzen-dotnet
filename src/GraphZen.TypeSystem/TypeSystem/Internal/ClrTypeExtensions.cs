@@ -50,7 +50,10 @@ namespace GraphZen.TypeSystem.Internal
                 if (clrType.IsGenericType)
                 {
                     var args = clrType.GetGenericArguments();
-                    if (args.Length == 1) itemType = args[0];
+                    if (args.Length == 1)
+                    {
+                        itemType = args[0];
+                    }
                 }
                 else
                 {
@@ -101,11 +104,15 @@ namespace GraphZen.TypeSystem.Internal
             bool itemCanBeNull = false)
         {
             if (clrType.TryGetTaskResultType(out var resultType))
+            {
                 return resultType.TryGetGraphQLTypeInfoRecursive(out typeNode,
                     out innerClrType, canBeNull, itemCanBeNull);
+            }
 
             if (clrType.TryGetNullableType(out var nullable))
+            {
                 return nullable.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, true);
+            }
 
             if (clrType.TryGetListItemType(out var itemType) &&
                 itemType.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, itemCanBeNull))
@@ -172,7 +179,10 @@ namespace GraphZen.TypeSystem.Internal
         public static bool TryGetOutputTypeKind(this Type clrType, [NotNullWhen(true)] out TypeKind? kind)
         {
             kind = null;
-            if (!IsValidClrType(clrType)) return false;
+            if (!IsValidClrType(clrType))
+            {
+                return false;
+            }
 
             if (clrType.IsEnum)
             {
@@ -199,7 +209,10 @@ namespace GraphZen.TypeSystem.Internal
         public static bool TryGetInputTypeKind(this Type clrType, out TypeKind? kind)
         {
             kind = null;
-            if (!IsValidClrType(clrType)) return false;
+            if (!IsValidClrType(clrType))
+            {
+                return false;
+            }
 
             if (clrType.IsEnum)
             {
@@ -220,7 +233,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public static bool IsValidClrType(this Type clrType)
         {
-            if (clrType.IsGenericType) return false;
+            if (clrType.IsGenericType)
+            {
+                return false;
+            }
 
             return clrType.HasValidGraphQLName();
         }
@@ -239,7 +255,10 @@ namespace GraphZen.TypeSystem.Internal
                         var interfaceMethod = mapping.InterfaceMethods[i];
                         Debug.Assert(interfaceMethod.DeclaringType != null, "interfaceMethod.DeclaringType != null");
                         var value = interfaceMethod.DeclaringType.GetProperty(property.Name);
-                        if (value != null) yield return value;
+                        if (value != null)
+                        {
+                            yield return value;
+                        }
                     }
                 }
             }
@@ -277,8 +296,13 @@ namespace GraphZen.TypeSystem.Internal
                     if (type != clrType)
                     {
                         if (clrType.IsInterface && clrType.IsAssignableFrom(type))
+                        {
                             yield return type;
-                        else if (clrType.IsClass && type.IsSubclassOf(clrType)) yield return type;
+                        }
+                        else if (clrType.IsClass && type.IsSubclassOf(clrType))
+                        {
+                            yield return type;
+                        }
                     }
                 }
         }

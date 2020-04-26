@@ -55,7 +55,10 @@ using JetBrains.Annotations;
             {
                 foreach (var (name, value) in @enum.Values)
                 {
-                    if (value.Description != null) cs.AppendLine($"/// <summary>{value.Description}</summary>");
+                    if (value.Description != null)
+                    {
+                        cs.AppendLine($"/// <summary>{value.Description}</summary>");
+                    }
 
                     inner.AppendLine($"{name},");
                 }

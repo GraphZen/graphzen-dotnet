@@ -23,8 +23,10 @@ namespace GraphZen.LanguageModel
         {
             Value = Check.NotNull(value, nameof(value));
             if (!value.IsValidGraphQLName())
+            {
                 throw new ArgumentException(
                     $"Error creating name '{value}': Names are limited to underscores and alpha-numeric ASCII characters.");
+            }
         }
 
         /// <summary>
@@ -44,9 +46,15 @@ namespace GraphZen.LanguageModel
 
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
 
-            if (ReferenceEquals(this, obj)) return true;
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
 
             return obj is NameSyntax syntax && Equals(syntax);
         }

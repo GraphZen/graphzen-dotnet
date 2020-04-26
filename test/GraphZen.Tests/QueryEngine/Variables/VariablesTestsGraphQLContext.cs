@@ -71,7 +71,10 @@ namespace GraphZen.Tests.QueryEngine.Variables
                         {
                             f.Argument("input", field.inputArgType, arg =>
                                 {
-                                    if (field.defaultValue != null) arg.DefaultValue(field.defaultValue);
+                                    if (field.defaultValue != null)
+                                    {
+                                        arg.DefaultValue(field.defaultValue);
+                                    }
                                 })
                                 .Resolve((source, args) =>
                                     args.ContainsKey("input")

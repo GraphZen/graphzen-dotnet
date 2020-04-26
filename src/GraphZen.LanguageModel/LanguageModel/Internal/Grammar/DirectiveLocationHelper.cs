@@ -58,7 +58,9 @@ namespace GraphZen.LanguageModel.Internal
         {
             if (ExecutableDirectiveLocations.TryGetValue(loc, out var value) ||
                 TypeSystemDirectiveLocations.TryGetValue(loc, out value))
+            {
                 return value;
+            }
 
             throw new Exception($"No string value defined for {loc}");
         }
@@ -66,9 +68,15 @@ namespace GraphZen.LanguageModel.Internal
         internal static DirectiveLocation Parse(string value)
         {
             Check.NotNull(value, nameof(value));
-            if (TypeSystemDirectiveLocationsByName.TryGetValue(value, out var result)) return result;
+            if (TypeSystemDirectiveLocationsByName.TryGetValue(value, out var result))
+            {
+                return result;
+            }
 
-            if (ExecutableDirectiveLocationsByName.TryGetValue(value, out result)) return result;
+            if (ExecutableDirectiveLocationsByName.TryGetValue(value, out result))
+            {
+                return result;
+            }
 
             throw new Exception($"Unable to find Directive Location that matches value \"{value}\".");
         }
