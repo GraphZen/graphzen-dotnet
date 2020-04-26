@@ -113,7 +113,7 @@ namespace GraphZen.SpecAudit.SpecFx
                 {
                     if (specRowStart < currentRow)
                     {
-                         specHeader.Merge = true;
+                        specHeader.Merge = true;
                     }
                 }
                 catch (Exception e)
