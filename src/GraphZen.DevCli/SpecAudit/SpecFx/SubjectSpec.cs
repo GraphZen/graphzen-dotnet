@@ -9,7 +9,7 @@ namespace GraphZen.SpecAudit.SpecFx
         public SubjectSpec(string specId, SpecPriority? priority)
         {
             SpecId = specId;
-            Priority = priority ?? SpecPriority.Medium;
+            Priority = priority ?? SpecPriority.Low;
         }
 
         public string SpecId { get; }

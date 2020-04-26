@@ -41,7 +41,7 @@ namespace GraphZen.SpecFx
             var sutWithSpec = sut.WithSpecs("spec");
             var specRef = sutWithSpec.Specs["spec"];
             specRef.SpecId.Should().Be("spec");
-            specRef.Priority.Should().Be(SpecPriority.Medium);
+            specRef.Priority.Should().Be(SpecPriority.Low);
         }
 
 
@@ -72,7 +72,7 @@ namespace GraphZen.SpecFx
             var sutWithSpec = sut.WithSpecs<SpecClass>();
             var specRef = sutWithSpec.Specs[nameof(SpecClass.FooSpec)];
             specRef.SpecId.Should().Be(nameof(SpecClass.FooSpec));
-            specRef.Priority.Should().Be(SpecPriority.Medium);
+            specRef.Priority.Should().Be(SpecPriority.Low);
         }
     }
 }

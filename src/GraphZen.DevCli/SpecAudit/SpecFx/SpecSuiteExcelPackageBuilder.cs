@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -108,7 +109,18 @@ namespace GraphZen.SpecAudit.SpecFx
                 }
 
                 var specHeader = worksheet.Cells[specRowStart, 1, currentRow, 1];
-                specHeader.Merge = true;
+                try
+                {
+                    if (specRowStart < currentRow)
+                    {
+                         specHeader.Merge = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"Error merging header for spec: {spec.Name} {specRowStart} {currentRow}", e);
+                }
+
                 specRowStart = currentRow + 1;
             }
 
@@ -219,7 +231,7 @@ namespace GraphZen.SpecAudit.SpecFx
             tests.Select(_ => { return _; })
                 .Dump("test", true);
 
-            var priorities = new[] {SpecPriority.High, SpecPriority.Medium, SpecPriority.Low};
+            var priorities = new[] { SpecPriority.High, SpecPriority.Medium, SpecPriority.Low };
             var statuses = new[]
                 {SpecCoverageStatus.Implemented, SpecCoverageStatus.Skipped, SpecCoverageStatus.Missing};
             var total = tests.Count;
@@ -246,7 +258,7 @@ namespace GraphZen.SpecAudit.SpecFx
                         var statusTotal = tests.Count(_ => _.status == status1);
                         var statusTotalCell = worksheet.Cells[2 + priorities.Length, statusCountCol];
                         statusTotalCell.Value = statusTotal;
-                        var statusPercent = (double) statusTotal / total;
+                        var statusPercent = (double)statusTotal / total;
                         var statusPercentCell = worksheet.Cells[2 + priorities.Length, statusPercentCol];
                         statusPercentCell.Value = statusPercent;
                         statusPercentCell.Style.Numberformat.Format = "0%";
@@ -254,7 +266,7 @@ namespace GraphZen.SpecAudit.SpecFx
                     }
 
                     var count = priorityTests.Count(_ => _.status == status);
-                    var percent = (double) count / total;
+                    var percent = (double)count / total;
                     var countCell = worksheet.Cells[priorityRow, statusCountCol];
                     countCell.Value = count;
                     var percentCell = worksheet.Cells[priorityRow, statusPercentCol];
@@ -333,7 +345,8 @@ namespace GraphZen.SpecAudit.SpecFx
 
 
             private static IReadOnlyDictionary<(SpecCoverageStatus status, SpecPriority? prioroity), (Color background,
-                Color text)> ColorsByStatusAndPriority { get; } =
+                Color text)> ColorsByStatusAndPriority
+            { get; } =
                 new Dictionary<(SpecCoverageStatus status, SpecPriority? prioroity), (Color background, Color text)>
                 {
                     {(SpecCoverageStatus.Missing, SpecPriority.High), Red},

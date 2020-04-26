@@ -22,12 +22,12 @@ namespace GraphZen.SpecAudit.SpecFx
         {
         }
 
-        private Spec(string id, string? name = null, string? description = null, IEnumerable<Spec>? children = null)
+        private Spec(string id, string? name = null, string? description = null, ImmutableList<Spec>? children = null)
         {
             Id = id;
             Name = name ?? id;
             Description = description;
-            Children = children?.ToImmutableList() ?? ImmutableList<Spec>.Empty;
+            Children = children ?? ImmutableList<Spec>.Empty;
         }
 
         public string Id { get; }
@@ -41,16 +41,10 @@ namespace GraphZen.SpecAudit.SpecFx
             var id = type.Name;
             var name = type.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
             var description = type.GetCustomAttribute<DescriptionAttribute>()?.Description;
-            var children = SpecReflectionHelpers.GetConstFields(type).Select(_ => new Spec(_));
+            var children = SpecReflectionHelpers.GetConstFields(type).Select(_ => new Spec(_)).ToImmutableList();
             return new Spec(id, name, description, children);
         }
 
-        public static IEnumerable<Spec> From(params Type[] types)
-        {
-            foreach (var spec in types.Select(From))
-            {
-                yield return spec;
-            }
-        }
+        public static IEnumerable<Spec> GetSpecs(Type type) => type.GetNestedTypes().Select(From);
     }
 }

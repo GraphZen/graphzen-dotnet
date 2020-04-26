@@ -12,7 +12,6 @@ namespace GraphZen.TypeSystem.FunctionalTests
     [Subject(nameof(Schema.Description))]
     public class SchemaDescriptionTests : SchemaTests
     {
-        [Spec(nameof(ConfigurableItemSpecs.Hello))]
         [Fact]
         public void sometest()
         {
