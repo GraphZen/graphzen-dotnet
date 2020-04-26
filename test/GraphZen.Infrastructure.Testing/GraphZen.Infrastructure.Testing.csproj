@@ -22,4 +22,9 @@
     <ProjectReference Include="..\..\src\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="CollectionWrappers\" />
+  </ItemGroup>
+
 </Project>

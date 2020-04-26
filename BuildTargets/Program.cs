@@ -114,7 +114,10 @@ namespace BuildTargets
         private static void RunCodeGen(bool format = true)
         {
             RunCli("gen");
-            if (format) CleanupCode("./**/*.Generated.cs");
+            if (format)
+            {
+                CleanupCode("./**/*.Generated.cs");
+            }
         }
 
         private static void RunCli(string task) => Run("dotnet",
@@ -133,7 +136,11 @@ namespace BuildTargets
             {
                 "Cobertura"
             };
-            if (html) reportTypes.Add("HtmlInline");
+            if (html)
+            {
+                reportTypes.Add("HtmlInline");
+            }
+
             new Generator().GenerateReport(new ReportConfiguration(
                 new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
                 TestReportsDir, new List<string>(), null,

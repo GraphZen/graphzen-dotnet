@@ -7,7 +7,7 @@ using GraphZen.SpecAudit.SpecFx;
 using GraphZen.TypeSystem.FunctionalTests.Directives;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSytemSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 namespace GraphZen.SpecAudit
 {
@@ -16,45 +16,45 @@ namespace GraphZen.SpecAudit
         public static SpecSuite Create()
         {
             var name = new Subject("Name")
-                .WithSpecs<Updateable>()
-                .WithSpecs<Required>();
+                .WithSpecs<UpdateableSpecs>()
+                .WithSpecs<RequiredSpecs>();
 
             var description = new Subject("Description")
-                .WithSpecs<Updateable>()
-                .WithSpecs<Optional>();
+                .WithSpecs<UpdateableSpecs>()
+                .WithSpecs<OptionalSpecs>();
 
             var typeRef = new Subject("Type")
-                .WithSpecs<Required>()
-                .WithSpecs<Updateable>();
+                .WithSpecs<RequiredSpecs>()
+                .WithSpecs<UpdateableSpecs>();
 
             var inputTypeRef = typeRef.WithName("Input Type Reference");
             var outputTypeRef = typeRef.WithName("Output Type Reference");
 
             var argument = new Subject("Argument").WithChild(name)
-                .WithChild(new Subject("Value").WithSpecs<Required>().WithSpecs<Updateable>());
+                .WithChild(new Subject("Value").WithSpecs<RequiredSpecs>().WithSpecs<UpdateableSpecs>());
 
             var argumentCollection = new Subject("Arguments")
-                .WithSpecs<NamedCollection>()
+                .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(argument);
             var directiveAnnotation = new Subject("Directive Annotation")
                 .WithChild(name)
                 .WithChild(argumentCollection);
 
             var directiveAnnotations = new Subject("Directive Annotations")
-                .WithSpecs<NamedCollection>()
+                .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(directiveAnnotation);
 
             var inputValue = new Subject("Input Value")
                 .WithChild(description)
                 .WithChild(inputTypeRef)
-                .WithChild(new Subject("Default Value").WithSpecs<Optional>())
+                .WithChild(new Subject("Default Value").WithSpecs<OptionalSpecs>())
                 .WithChild(name)
                 .WithChild(directiveAnnotations);
 
             var argumentDef = inputValue.WithName("Argument Definition");
             var argumentDefCollection = new Subject("Arguments Definition")
                 .WithChild(argumentDef)
-                .WithSpecs<NamedCollection>();
+                .WithSpecs<NamedCollectionSpecs>();
 
             var outputField = new Subject("Field")
                 .WithChild(name)
@@ -64,9 +64,9 @@ namespace GraphZen.SpecAudit
                 .WithChildren(outputTypeRef.WithName("Field Type"));
 
             var outputFields = new Subject("Fields")
-                .WithSpecs<NamedCollection>();
+                .WithSpecs<NamedCollectionSpecs>();
 
-            var implementsInterfaces = new Subject("Implements Interfaces").WithSpecs<NamedTypeSet>();
+            var implementsInterfaces = new Subject("Implements Interfaces").WithSpecs<NamedTypeSetSpecs>();
 
             var objectType = new Subject("Object Type")
                 .WithChild(description)
@@ -76,7 +76,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(implementsInterfaces);
 
             var objects = new Subject("Objects")
-                .WithSpecs<NamedCollection>()
+                .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(objectType);
 
 
@@ -86,7 +86,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(directiveAnnotations);
 
             var scalars = new Subject("Scalars")
-                .WithSpecs<NamedCollection>()
+                .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(scalar);
 
             var interfaceType = new Subject("Interface Type")
@@ -97,15 +97,15 @@ namespace GraphZen.SpecAudit
                 .WithChild(implementsInterfaces);
 
             var interfaces = new Subject("Interfaces")
-                .WithSpecs<NamedCollection>()
+                .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(interfaceType);
 
             var unionType = new Subject("Union Type").WithChild(description).WithChild(name)
                 .WithChild(directiveAnnotations)
-                .WithChild(new Subject("Union Member Types").WithSpecs<NamedTypeSet>());
+                .WithChild(new Subject("Union Member Types").WithSpecs<NamedTypeSetSpecs>());
 
             var unions = new Subject("Unions")
-                .WithSpecs<NamedCollection>()
+                .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(unionType);
 
             var enumType = new Subject("Enum Type")
@@ -114,14 +114,14 @@ namespace GraphZen.SpecAudit
                 .WithChild(description)
                 .WithChild(
                     new Subject("Enum Values")
-                        .WithSpecs<NamedCollection>()
+                        .WithSpecs<NamedCollectionSpecs>()
                         .WithChild(new Subject("Enum Value")
                             .WithChild(name)
                             .WithChild(directiveAnnotations)
                             .WithChild(description)));
 
             var enums = new Subject("Enums")
-                .WithSpecs<NamedCollection>()
+                .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(enumType);
 
             var inputObjectType = new Subject("Input Object Type")
@@ -129,20 +129,23 @@ namespace GraphZen.SpecAudit
                 .WithChild(name)
                 .WithChild(directiveAnnotations)
                 .WithChild(new Subject("Fields")
-                    .WithSpecs<NamedCollection>()
+                    .WithSpecs<NamedCollectionSpecs>()
                     .WithChild(inputValue.WithName("Input Field")));
 
             var inputObjects = new Subject("Input Objects")
-                .WithSpecs<NamedCollection>()
+                .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(inputObjectType);
 
             var directive = new Subject("Directive")
                 .WithChild(name)
-                .WithChild(new Subject("Repeatable").WithSpecs<Optional>())
-                .WithChild(new Subject("Locations").WithSpecs<NamedCollection>())
+                .WithChild(new Subject("Repeatable").WithSpecs<OptionalSpecs>())
+                .WithChild(new Subject("Locations").WithSpecs<NamedCollectionSpecs>())
                 .WithChild(description);
 
-            var directives = new Subject("Directives").WithChild(directive);
+            var directives = new Subject("Directives")
+                .WithSpecs<NamedCollectionSpecs>()
+                .WithSpecs<DirectivesSpecs>()
+                .WithChild(directive);
 
             var schema = new Subject("Schema")
                 .WithChild(description)
@@ -150,7 +153,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(new Subject("Query Type"))
                 .WithChild(new Subject("Mutation Type"))
                 .WithChild(new Subject("Subscription Type"))
-                .WithChild(directives)
+                .WithChild(directives.WithSpecPriority(SpecPriority.High, true))
                 .WithChild(scalars)
                 .WithChild(objects)
                 .WithChild(interfaces)
@@ -158,7 +161,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(enums)
                 .WithChild(inputObjects);
 
-            var specs = Spec.GetSpecs(typeof(TypeSytemSpecs));
+            var specs = Spec.GetSpecs(typeof(TypeSystemSpecs));
             return new SpecSuite("Type System", schema, specs, typeof(DirectiveCreationTests).Assembly);
         }
     }

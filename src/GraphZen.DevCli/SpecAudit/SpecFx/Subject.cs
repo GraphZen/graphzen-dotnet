@@ -73,7 +73,7 @@ namespace GraphZen.SpecAudit.SpecFx
         public Subject WithSpecs(params string[] specs) => WithSpecs(specs, null);
         public Subject WithSpecs(SpecPriority priority, params string[] specs) => WithSpecs(specs, priority);
 
-        public Subject WithSpecPriority(SpecPriority priority)
+        public Subject WithSpecPriority(SpecPriority priority, bool deep = false)
         {
             var sb = Specs.ToBuilder();
             foreach (var (specId, _) in Specs)
@@ -81,7 +81,9 @@ namespace GraphZen.SpecAudit.SpecFx
                 sb[specId] = new SubjectSpec(specId, priority);
             }
 
-            return new Subject(Name, Parent, sb.ToImmutable(), Children);
+            var children = deep ? Children.Select(_ => _.WithSpecPriority(priority, true)).ToImmutableList() : Children;
+
+            return new Subject(Name, Parent, sb.ToImmutable(), children);
         }
 
         private Subject WithSpecs(IEnumerable<string> specs, SpecPriority? priority)

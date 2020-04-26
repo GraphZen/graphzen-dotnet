@@ -13,23 +13,23 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 {
     public class TypeSystemSpecs
     {
-        public class Updateable
+        public class UpdateableSpecs
         {
             public const string it_can_be_updated = null;
         }
 
-        public class Optional
+        public class OptionalSpecs
         {
             public const string it_can_be_removed = null;
             public const string parent_can_be_created_without = null;
         }
 
-        public class Required
+        public class RequiredSpecs
         {
             public const string it_cannot_be_removed = null;
         }
 
-        public class NamedCollection
+        public class NamedCollectionSpecs
         {
             public const string item_can_be_added = null;
             public const string item_can_be_renamed = null;
@@ -38,11 +38,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string item_name_must_be_valid_name = null;
         }
 
-        public class NamedTypeSet
+        public class NamedTypeSetSpecs
         {
             public const string item_can_be_added = null;
             public const string item_can_be_removed = null;
             public const string item_must_be_valid_name = null;
+        }
+
+        public class DirectivesSpecs
+        {
+
         }
     }
 }

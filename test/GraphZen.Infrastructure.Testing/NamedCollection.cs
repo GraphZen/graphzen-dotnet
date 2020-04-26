@@ -10,7 +10,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure.CollectionWrappers
+namespace GraphZen.Infrastructure
 {
     public static class NamedCollection
     {

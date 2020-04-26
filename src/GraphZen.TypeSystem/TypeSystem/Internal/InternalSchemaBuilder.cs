@@ -454,9 +454,14 @@ namespace GraphZen.TypeSystem.Internal
         private InternalDirectiveBuilder? Directive(Type clrType, ConfigurationSource configurationSource)
         {
             if (clrType.IsIgnoredByDataAnnotation())
+            {
                 Definition.IgnoreDirective(clrType, ConfigurationSource.DataAnnotation);
+            }
 
-            if (IsDirectiveIgnored(clrType, configurationSource)) return null;
+            if (IsDirectiveIgnored(clrType, configurationSource))
+            {
+                return null;
+            }
 
             var directive = Definition.FindDirective(clrType);
 
