@@ -24,7 +24,7 @@ namespace GraphZen.CodeGen.Generators
                 var classNameSegments = path.Length == 1 ? path : path[^2..];
                 var className = string.Join("", classNameSegments);
                 var fileName = string.Join("", $"{className}.Generated.cs").Dump("fileName");
-                var filePath = Path.Combine(path).Dump("filePath");
+                var filePath = Path.Combine(pathBase, Path.Combine(path), fileName);
                 var ns = string.Join(".", path.Prepend(rootNamespace));
 
 
@@ -34,7 +34,7 @@ namespace GraphZen.CodeGen.Generators
 
                 var contents = $"/* {csharp}";
 
-                yield return new GeneratedCode(pathBase, contents);
+                yield return new GeneratedCode(filePath, contents);
             }
         }
     }

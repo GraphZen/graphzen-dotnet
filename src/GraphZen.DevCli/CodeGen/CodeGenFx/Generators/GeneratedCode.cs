@@ -23,7 +23,15 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         public void WriteToFile()
         {
             Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Path));
-            File.AppendAllText(Path, Contents);
+            try
+            {
+                File.AppendAllText(Path, Contents);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Error writing contents to file: '{Path}'. See inner exception for details.", e);
+            }
+
             Console.WriteLine($"Generated file: {Path}");
         }
     }
