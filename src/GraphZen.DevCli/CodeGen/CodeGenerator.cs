@@ -26,6 +26,7 @@ namespace GraphZen.CodeGen
                 LanguageModelCodeGen.GenSyntaxVisitorPartials()
             };
             generated.AddRange(PartialTypeGenerator.Generate(CreatePartialTypeGenerators()));
+            generated.AddRange(TypeSystemSpecCodeGenerator.ScaffoldSystemSpec());
 
             var generatedFiles = Directory.GetFiles(".", "*Generated.cs", SearchOption.AllDirectories);
             foreach (var _ in generatedFiles)

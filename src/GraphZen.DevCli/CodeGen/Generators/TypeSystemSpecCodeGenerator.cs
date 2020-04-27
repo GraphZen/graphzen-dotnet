@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.SpecAudit;
@@ -13,7 +14,14 @@ namespace GraphZen.CodeGen.Generators
             var suite = TypeSystemSuite.Get();
             foreach (var subject in suite.RootSubject.GetSelfAndDescendants())
             {
-                // var path = @"\test\GraphZen.TypeSystem.FunctionalTests";
+
+                var ns = "GraphZen.TypeSystem.FunctionalTests";
+                var pathBase = $@".\test\{ns}";
+                var path = subject.GetSelfAndDescendants().Select(_ => _.Name);
+
+
+
+                yield return new GeneratedCode(pathBase, "// TBD");
             }
 
 

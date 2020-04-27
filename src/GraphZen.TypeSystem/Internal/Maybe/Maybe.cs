@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -58,8 +59,8 @@ namespace GraphZen.Internal
 
         protected Maybe(IReadOnlyList<object?>? values, IReadOnlyList<GraphQLServerError>? errors)
         {
-            _values = values ?? Array.AsReadOnly(new object?[] { });
-            Errs = errors ?? Array.AsReadOnly(new GraphQLServerError[] { });
+            _values = values ?? ImmutableList<object?>.Empty;
+            Errs = errors ?? ImmutableList<GraphQLServerError>.Empty;
         }
 
 

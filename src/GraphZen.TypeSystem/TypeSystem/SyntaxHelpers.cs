@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -42,7 +43,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(directives, nameof(directives));
 
             var annotationConverter = new DefaultIDirectiveAnnotationSyntaxConverter();
-            return directives.Select(_ => (DirectiveSyntax)annotationConverter.ToSyntax(_)).ToList().AsReadOnly();
+            return directives.Select(_ => (DirectiveSyntax) annotationConverter.ToSyntax(_)).ToImmutableList();
         }
     }
 }

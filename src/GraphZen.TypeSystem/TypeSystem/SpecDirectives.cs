@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -59,6 +60,6 @@ namespace GraphZen.TypeSystem
             Deprecated,
             Include,
             Skip
-        }.AsReadOnly();
+        }.ToImmutableList();
     }
 }

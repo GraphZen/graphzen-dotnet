@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -35,18 +36,23 @@ namespace GraphZen.SpecAudit.SpecFx
         public string Name { get; }
         public string Path => Parent != null ? $"{Parent.Path}.{Name.Replace(' ', '_')}" : Name.Replace(' ', '_');
 
-        public IEnumerable<Subject> GetParents()
+
+
+
+        public IEnumerable<Subject> GetSelfAndAncestors()
         {
-            if (Parent == null)
+            if (Parent != null)
             {
-                yield break;
+                foreach (var grandParent in Parent.GetSelfAndAncestors())
+                {
+                    yield return grandParent;
+                }
             }
-            foreach (var grandParent in Parent.GetParents())
-            {
-                yield return grandParent;
-            }
-            yield return Parent;
+
+            yield return this;
         }
+
+
 
         public ImmutableDictionary<string, SubjectSpec> Specs { get; }
         public ImmutableList<Subject> Children { get; }

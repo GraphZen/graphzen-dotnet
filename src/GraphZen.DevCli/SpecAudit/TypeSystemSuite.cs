@@ -43,19 +43,19 @@ namespace GraphZen.SpecAudit
             var argumentCollection = new Subject("Arguments")
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(argument);
-            var directiveAnnotation = new Subject("Directive Annotation")
+            var directiveAnnotation = new Subject(nameof(DirectiveAnnotation))
                 .WithChild(name)
                 .WithChild(argumentCollection);
 
 
-            var directiveAnnotations = new Subject("Directive Annotations")
+            var directiveAnnotations = new Subject(nameof(AnnotatableMemberDefinition.DirectiveAnnotations))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(directiveAnnotation);
 
             var inputValue = new Subject("Input Value")
                 .WithChild(description)
                 .WithChild(inputTypeRef)
-                .WithChild(new Subject("Default Value").WithSpecs<OptionalSpecs>())
+                .WithChild(new Subject(nameof(InputValue.DefaultValue)).WithSpecs<OptionalSpecs>())
                 .WithChild(name)
                 .WithChild(directiveAnnotations);
 
