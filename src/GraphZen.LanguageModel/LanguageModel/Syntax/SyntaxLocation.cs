@@ -105,17 +105,14 @@ namespace GraphZen.LanguageModel
         {
             Check.NotNull(locations, nameof(locations));
 
-            var locs = locations.Where(l => l != null).OrderBy(_ => _!.Start).ToArray();
-            if (locs.Length == 0)
+            var locationsArr = locations.Where(l => l != null).OrderBy(_ => _!.Start).ToArray();
+            if (locationsArr.Length == 0)
             {
                 return null;
             }
 
-            var min = locs[0];
-            var max = locs[locs.Length - 1];
-
-            Debug.Assert(min != null, nameof(min) + " != null");
-            Debug.Assert(max != null, nameof(max) + " != null");
+            var min = locationsArr[0]!;
+            var max = locationsArr[^1]!;
             return new SyntaxLocation(min.Start, max.End, min.Line, min.Column, min.Source);
         }
     }

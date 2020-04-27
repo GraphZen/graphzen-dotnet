@@ -244,8 +244,7 @@ namespace GraphZen.TypeSystem.Internal
         public static IEnumerable<MemberInfo> GetTargetingInterfaceProperties(this PropertyInfo property)
         {
             var methodInfo = property.GetGetMethod();
-            Debug.Assert(property.DeclaringType != null, "property.DeclaringType != null");
-            foreach (var @interface in property.DeclaringType.GetInterfaces())
+            foreach (var @interface in property.DeclaringType!.GetInterfaces())
             {
                 var mapping = property.DeclaringType.GetInterfaceMap(@interface);
                 for (var i = 0; i < mapping.InterfaceMethods.Length; i++)
@@ -254,7 +253,7 @@ namespace GraphZen.TypeSystem.Internal
                     {
                         var interfaceMethod = mapping.InterfaceMethods[i];
                         Debug.Assert(interfaceMethod.DeclaringType != null, "interfaceMethod.DeclaringType != null");
-                        var value = interfaceMethod.DeclaringType.GetProperty(property.Name);
+                        var value = interfaceMethod.DeclaringType!.GetProperty(property.Name);
                         if (value != null)
                         {
                             yield return value;
@@ -269,7 +268,7 @@ namespace GraphZen.TypeSystem.Internal
         )
         {
             Debug.Assert(method.DeclaringType != null, "method.DeclaringType != null");
-            foreach (var @interface in method.DeclaringType.GetInterfaces())
+            foreach (var @interface in method.DeclaringType!.GetInterfaces())
             {
                 var mapping = method.DeclaringType.GetInterfaceMap(@interface);
                 for (var i = 0; i < mapping.InterfaceMethods.Length; i++)
