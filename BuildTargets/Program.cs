@@ -116,27 +116,10 @@ namespace BuildTargets
 
         private static void RunCodeGen(bool format = true)
         {
-            AssertChangesCommitted();
             RunCli("gen");
             if (format)
             {
                 CleanupCode("./**/*.Generated.cs");
-            }
-        }
-
-        private static void AssertChangesCommitted()
-        {
-            using var repo = new Repository("./");
-            if (repo.RetrieveStatus().IsDirty)
-            {
-                Console.WriteLine("There are uncommitted files in the repository. Save changes ([Y]/N)?");
-                var commitMessage = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(commitMessage) || commitMessage.Equals("Y", StringComparison.OrdinalIgnoreCase))
-                {
-                    Commands.Stage(repo, "*");
-                    var sig = repo.Config.BuildSignature(DateTimeOffset.Now);
-                    repo.Commit("saving changes before code-gen", sig, sig);
-                }
             }
         }
 
