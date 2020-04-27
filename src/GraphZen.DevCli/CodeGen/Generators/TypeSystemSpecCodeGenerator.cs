@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
-using System.Text;
+using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
+using GraphZen.Infrastructure;
 using GraphZen.SpecAudit;
+using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen.Generators
 {
@@ -14,18 +17,25 @@ namespace GraphZen.CodeGen.Generators
             var suite = TypeSystemSuite.Get();
             foreach (var subject in suite.RootSubject.GetSelfAndDescendants())
             {
+                var rootNamespace = "GraphZen.TypeSystem.FunctionalTests";
+                var pathBase = $@".\test\{rootNamespace}";
 
-                var ns = "GraphZen.TypeSystem.FunctionalTests";
-                var pathBase = $@".\test\{ns}";
-                var path = subject.GetSelfAndDescendants().Select(_ => _.Name);
+                var path = subject.GetSelfAndAncestors().Select(_ => _.Name).ToArray();
+                var classNameSegments = path.Length == 1 ? path : path[^2..];
+                var className = string.Join("", classNameSegments);
+                var fileName = string.Join("", $"{className}.Generated.cs").Dump("fileName");
+                var filePath = Path.Combine(path).Dump("filePath");
+                var ns = string.Join(".", path.Prepend(rootNamespace));
 
 
+                var csharp = CSharpStringBuilder.Create();
+                csharp.Namespace(ns, _ => { _.PartialClass(className, cls => { }); });
 
-                yield return new GeneratedCode(pathBase, "// TBD");
+
+                var contents = $"/* {csharp}";
+
+                yield return new GeneratedCode(pathBase, contents);
             }
-
-
-            yield break;
         }
     }
 }
