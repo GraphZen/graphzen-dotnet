@@ -30,9 +30,9 @@ namespace GraphZen.CodeGen.Generators
                 var csharp = CSharpStringBuilder.Create();
                 csharp.Namespace(ns, _ => { _.PartialClass(className, cls => { }); });
 
-                var contents = $"/* {csharp} */";
-                yield return new GeneratedCode(filePath, contents);
-                // yield return new GeneratedCode(filePath, csharp.ToString());
+                //var contents = $"/* {csharp} */";
+                //yield return new GeneratedCode(filePath, contents);
+                yield return new GeneratedCode(filePath, csharp.ToString());
             }
         }
     }

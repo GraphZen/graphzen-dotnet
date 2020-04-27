@@ -126,12 +126,16 @@ namespace BuildTargets
 
         private static void AssertChangesCommitted()
         {
-            using (var repo = new Repository("./"))
+            using var repo = new Repository("./");
+            if (repo.RetrieveStatus().IsDirty)
             {
-                if (repo.RetrieveStatus().IsDirty)
+                Console.WriteLine("There are uncommitted files in the repository. Save changes ([Y]/N)?");
+                var commitMessage = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(commitMessage) || commitMessage.Equals("Y", StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new Exception("There are uncommitted files in the repository. To continue, commit changes.");
-
+                    Commands.Stage(repo, "*");
+                    var sig = repo.Config.BuildSignature(DateTimeOffset.Now);
+                    repo.Commit("saving changes before code-gen", sig, sig);
                 }
             }
         }
