@@ -1,10 +1,13 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
+using LibGit2Sharp;
 using Palmmedia.ReportGenerator.Core;
 using static Bullseye.Targets;
 using static SimpleExec.Command;
@@ -113,10 +116,23 @@ namespace BuildTargets
 
         private static void RunCodeGen(bool format = true)
         {
+            AssertChangesCommitted();
             RunCli("gen");
             if (format)
             {
                 CleanupCode("./**/*.Generated.cs");
+            }
+        }
+
+        private static void AssertChangesCommitted()
+        {
+            using (var repo = new Repository("./"))
+            {
+                if (repo.RetrieveStatus().IsDirty)
+                {
+                    throw new Exception("There are uncommitted files in the repository. To continue, commit changes.");
+
+                }
             }
         }
 

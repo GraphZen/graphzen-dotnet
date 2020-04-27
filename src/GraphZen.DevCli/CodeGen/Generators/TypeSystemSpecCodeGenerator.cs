@@ -22,19 +22,17 @@ namespace GraphZen.CodeGen.Generators
 
                 var path = subject.GetSelfAndAncestors().Select(_ => _.Name).ToArray();
                 var classNameSegments = path.Length == 1 ? path : path[^2..];
-                var className = string.Join("", classNameSegments);
+                var className = string.Join("", classNameSegments) + "Tests";
                 var fileName = string.Join("", $"{className}.Generated.cs").Dump("fileName");
                 var filePath = Path.Combine(pathBase, Path.Combine(path), fileName);
                 var ns = string.Join(".", path.Prepend(rootNamespace));
 
-
                 var csharp = CSharpStringBuilder.Create();
                 csharp.Namespace(ns, _ => { _.PartialClass(className, cls => { }); });
 
-
                 var contents = $"/* {csharp} */";
-
                 yield return new GeneratedCode(filePath, contents);
+                // yield return new GeneratedCode(filePath, csharp.ToString());
             }
         }
     }

@@ -9,13 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
-    <PackageReference Include="EPPlus" Version="5.1.0" />
+    <PackageReference Include="EPPlus" Version="5.1.1" />
     <PackageReference Include="System.CommandLine.Experimental" Version="0.3.0-alpha.19317.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference
-      Include="..\..\test\GraphZen.TypeSystem.FunctionalTests\GraphZen.TypeSystem.FunctionalTests.csproj" />
+    <ProjectReference Include="..\..\test\GraphZen.TypeSystem.FunctionalTests\GraphZen.TypeSystem.FunctionalTests.csproj" />
     <ProjectReference Include="..\GraphZen.Client\GraphZen.Client.csproj" />
     <ProjectReference Include="..\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />
   </ItemGroup>
