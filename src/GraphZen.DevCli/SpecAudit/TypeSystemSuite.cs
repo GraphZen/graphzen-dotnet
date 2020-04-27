@@ -156,7 +156,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<DirectivesSpecs>()
                 .WithChild(directive);
 
-            var schema = new Subject(nameof(Schema))
+            var schemaBuilder = new Subject(nameof(SchemaBuilder))
                 .WithChild(description)
                 .WithChild(directiveAnnotations)
                 .WithChild(new Subject(nameof(Schema.QueryType)))
@@ -171,7 +171,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(inputObjects);
 
             var specs = Spec.GetSpecs(typeof(TypeSystemSpecs));
-            return new SpecSuite("Type System", schema, specs, typeof(DirectiveCreationTests).Assembly);
+            return new SpecSuite("Type System", schemaBuilder, specs, typeof(DirectiveCreationTests).Assembly);
         }
     }
 }
