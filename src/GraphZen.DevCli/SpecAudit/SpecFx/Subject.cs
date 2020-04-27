@@ -34,6 +34,20 @@ namespace GraphZen.SpecAudit.SpecFx
 
         public string Name { get; }
         public string Path => Parent != null ? $"{Parent.Path}.{Name.Replace(' ', '_')}" : Name.Replace(' ', '_');
+
+        public IEnumerable<Subject> GetParents()
+        {
+            if (Parent == null)
+            {
+                yield break;
+            }
+            foreach (var grandParent in Parent.GetParents())
+            {
+                yield return grandParent;
+            }
+            yield return Parent;
+        }
+
         public ImmutableDictionary<string, SubjectSpec> Specs { get; }
         public ImmutableList<Subject> Children { get; }
 

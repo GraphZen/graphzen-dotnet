@@ -1,10 +1,13 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit;
 using GraphZen.SpecAudit.SpecFx;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
@@ -15,8 +18,14 @@ namespace GraphZen
         [Fact]
         public void can_create_type_system_subject()
         {
-            var suite = TypeSystemSuite.Create();
+            var suite = TypeSystemSuite.Get();
+
+
+            suite.Subjects.SingleOrDefault(_ =>
+                _.Path == "Schema.Directive_Annotations.Directive_Annotation.Arguments.Argument.Name").GetParents().Select(_ => _.Name).Dump();
+
             var package = SpecSuiteExcelPackageBuilder.Create(suite);
+            throw new Exception();
         }
     }
 }

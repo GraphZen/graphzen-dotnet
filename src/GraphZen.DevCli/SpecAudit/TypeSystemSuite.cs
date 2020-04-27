@@ -1,11 +1,14 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit.SpecFx;
+using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.FunctionalTests.Directives;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
@@ -13,13 +16,17 @@ namespace GraphZen.SpecAudit
 {
     public static class TypeSystemSuite
     {
-        public static SpecSuite Create()
+        private static readonly Lazy<SpecSuite> SpecSuite = new Lazy<SpecSuite>(Create);
+
+        public static SpecSuite Get() => SpecSuite.Value;
+
+        private static SpecSuite Create()
         {
-            var name = new Subject("Name")
+            var name = new Subject(nameof(INamed.Name))
                 .WithSpecs<UpdateableSpecs>()
                 .WithSpecs<RequiredSpecs>();
 
-            var description = new Subject("Description")
+            var description = new Subject(nameof(IDescription.Description))
                 .WithSpecs<UpdateableSpecs>()
                 .WithSpecs<OptionalSpecs>();
 
@@ -40,6 +47,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(name)
                 .WithChild(argumentCollection);
 
+
             var directiveAnnotations = new Subject("Directive Annotations")
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(directiveAnnotation);
@@ -51,108 +59,109 @@ namespace GraphZen.SpecAudit
                 .WithChild(name)
                 .WithChild(directiveAnnotations);
 
-            var argumentDef = inputValue.WithName("Argument Definition");
-            var argumentDefCollection = new Subject("Arguments Definition")
+            var argumentDef = inputValue.WithName(nameof(ArgumentDefinition));
+            var argumentDefCollection = new Subject(nameof(IArguments.Arguments))
                 .WithChild(argumentDef)
                 .WithSpecs<NamedCollectionSpecs>();
 
-            var outputField = new Subject("Field")
+            var outputField = new Subject(nameof(Field))
                 .WithChild(name)
                 .WithChild(description)
                 .WithChild(argumentDefCollection)
                 .WithChild(directiveAnnotations)
-                .WithChildren(outputTypeRef.WithName("Field Type"));
+                .WithChildren(outputTypeRef.WithName(nameof(Field.FieldType)));
 
-            var outputFields = new Subject("Fields")
+            var outputFields = new Subject(nameof(FieldsDefinition.Fields))
                 .WithSpecs<NamedCollectionSpecs>();
 
-            var implementsInterfaces = new Subject("Implements Interfaces").WithSpecs<NamedTypeSetSpecs>();
+            var implementsInterfaces = new Subject(nameof(ObjectType.Interfaces))
+                .WithSpecs<NamedTypeSetSpecs>();
 
-            var objectType = new Subject("Object Type")
+            var objectType = new Subject(nameof(ObjectType))
                 .WithChild(description)
                 .WithChild(name)
                 .WithChild(directiveAnnotations)
-                .WithChild(outputFields.WithChild(outputField.WithName("Object Field")))
+                .WithChild(outputFields.WithChild(outputField))
                 .WithChild(implementsInterfaces);
 
-            var objects = new Subject("Objects")
+            var objects = new Subject(nameof(Schema.Objects))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(objectType);
 
 
-            var scalar = new Subject("Scalar Type")
+            var scalar = new Subject(nameof(ScalarType))
                 .WithChild(description)
                 .WithChild(name)
                 .WithChild(directiveAnnotations);
 
-            var scalars = new Subject("Scalars")
+            var scalars = new Subject(nameof(Schema.Scalars))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(scalar);
 
-            var interfaceType = new Subject("Interface Type")
+            var interfaceType = new Subject(nameof(InterfaceType))
                 .WithChild(description)
                 .WithChild(name)
                 .WithChild(directiveAnnotations)
-                .WithChild(outputFields.WithChild(outputField.WithName("Interface Field")))
+                .WithChild(outputFields.WithChild(outputField))
                 .WithChild(implementsInterfaces);
 
-            var interfaces = new Subject("Interfaces")
+            var interfaces = new Subject(nameof(Schema.Interfaces))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(interfaceType);
 
-            var unionType = new Subject("Union Type").WithChild(description).WithChild(name)
+            var unionType = new Subject(nameof(UnionType)).WithChild(description).WithChild(name)
                 .WithChild(directiveAnnotations)
-                .WithChild(new Subject("Union Member Types").WithSpecs<NamedTypeSetSpecs>());
+                .WithChild(new Subject(nameof(UnionType.MemberTypes)).WithSpecs<NamedTypeSetSpecs>());
 
-            var unions = new Subject("Unions")
+            var unions = new Subject(nameof(Schema.Unions))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(unionType);
 
-            var enumType = new Subject("Enum Type")
+            var enumType = new Subject(nameof(EnumType))
                 .WithChild(name)
                 .WithChild(directiveAnnotations)
                 .WithChild(description)
                 .WithChild(
-                    new Subject("Enum Values")
+                    new Subject(nameof(EnumType.Values))
                         .WithSpecs<NamedCollectionSpecs>()
-                        .WithChild(new Subject("Enum Value")
+                        .WithChild(new Subject(nameof(EnumValue))
                             .WithChild(name)
                             .WithChild(directiveAnnotations)
                             .WithChild(description)));
 
-            var enums = new Subject("Enums")
+            var enums = new Subject(nameof(Schema.Enums))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(enumType);
 
-            var inputObjectType = new Subject("Input Object Type")
+            var inputObjectType = new Subject(nameof(InputObjectType))
                 .WithChild(description)
                 .WithChild(name)
                 .WithChild(directiveAnnotations)
-                .WithChild(new Subject("Fields")
+                .WithChild(new Subject(nameof(InputObjectType.Fields))
                     .WithSpecs<NamedCollectionSpecs>()
-                    .WithChild(inputValue.WithName("Input Field")));
+                    .WithChild(inputValue.WithName(nameof(InputField))));
 
-            var inputObjects = new Subject("Input Objects")
+            var inputObjects = new Subject(nameof(Schema.InputObjects))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(inputObjectType);
 
-            var directive = new Subject("Directive")
+            var directive = new Subject(nameof(Directive))
                 .WithChild(name)
                 .WithChild(new Subject("Repeatable").WithSpecs<OptionalSpecs>())
-                .WithChild(new Subject("Locations").WithSpecs<NamedCollectionSpecs>())
+                .WithChild(new Subject(nameof(Directive.Locations)))
                 .WithChild(description);
 
-            var directives = new Subject("Directives")
+            var directives = new Subject(nameof(Schema.Directives))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithSpecs<DirectivesSpecs>()
                 .WithChild(directive);
 
-            var schema = new Subject("Schema")
+            var schema = new Subject(nameof(Schema))
                 .WithChild(description)
                 .WithChild(directiveAnnotations)
-                .WithChild(new Subject("Query Type"))
-                .WithChild(new Subject("Mutation Type"))
-                .WithChild(new Subject("Subscription Type"))
+                .WithChild(new Subject(nameof(Schema.QueryType)))
+                .WithChild(new Subject(nameof(Schema.MutationType)))
+                .WithChild(new Subject(nameof(Schema.SubscriptionType)))
                 .WithChild(directives.WithSpecPriority(SpecPriority.High, true))
                 .WithChild(scalars)
                 .WithChild(objects)
