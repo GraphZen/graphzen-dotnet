@@ -1,13 +1,10 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Runtime.CompilerServices;
-using LibGit2Sharp;
 using Palmmedia.ReportGenerator.Core;
 using static Bullseye.Targets;
 using static SimpleExec.Command;
@@ -18,14 +15,6 @@ namespace BuildTargets
     {
         // Paths
         private const string ArtifactsDir = "build-artifacts";
-        private static readonly string TestArtifactsDir = Path.Combine(ArtifactsDir, "test");
-        private static readonly string TestLogDir = Path.Combine(TestArtifactsDir, "logs");
-        private static readonly string TestReportsDir = Path.Combine(TestArtifactsDir, "coverage-reports");
-        private static readonly string PackageDir = Path.Combine(ArtifactsDir, "packages");
-        private static string GetReSharperTool(string name) => Path.Combine(OutputDir, "ReSharperTools", name);
-
-        private static string OutputDir { get; } =
-            Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)!;
 
 
         // Targets
@@ -42,6 +31,15 @@ namespace BuildTargets
         private const string Gen = nameof(Gen);
         private const string GenQuick = nameof(GenQuick);
         private const string Restore = nameof(Restore);
+        private static readonly string TestArtifactsDir = Path.Combine(ArtifactsDir, "test");
+        private static readonly string TestLogDir = Path.Combine(TestArtifactsDir, "logs");
+        private static readonly string TestReportsDir = Path.Combine(TestArtifactsDir, "coverage-reports");
+        private static readonly string PackageDir = Path.Combine(ArtifactsDir, "packages");
+
+        private static string OutputDir { get; } =
+            Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName)!;
+
+        private static string GetReSharperTool(string name) => Path.Combine(OutputDir, "ReSharperTools", name);
 
         private static void Main(string[] args)
         {
@@ -145,7 +143,7 @@ namespace BuildTargets
             }
 
             new Generator().GenerateReport(new ReportConfiguration(
-                new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
+                new List<string> {$"./{TestLogDir}/**/*coverage.cobertura.xml"},
                 TestReportsDir, new List<string>(), null,
                 reportTypes,
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,

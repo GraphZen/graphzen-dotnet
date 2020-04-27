@@ -50,8 +50,6 @@ using JetBrains.Annotations;
         }
 
 
-
-
         public static void Enum(this StringBuilder cs, EnumType @enum)
         {
             cs.Block($"public enum {@enum.Name} {{", "}", inner =>

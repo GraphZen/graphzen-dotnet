@@ -15,7 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\test\GraphZen.TypeSystem.FunctionalTests\GraphZen.TypeSystem.FunctionalTests.csproj" />
+    <ProjectReference
+      Include="..\..\test\GraphZen.TypeSystem.FunctionalTests\GraphZen.TypeSystem.FunctionalTests.csproj" />
     <ProjectReference Include="..\GraphZen.Client\GraphZen.Client.csproj" />
     <ProjectReference Include="..\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />
   </ItemGroup>
