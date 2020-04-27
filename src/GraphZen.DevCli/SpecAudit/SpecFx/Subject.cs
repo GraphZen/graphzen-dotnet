@@ -7,6 +7,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.SpecAudit.SpecFx
@@ -27,6 +28,12 @@ namespace GraphZen.SpecAudit.SpecFx
         private Subject(string name, Subject? parent, IEnumerable<SubjectSpec> specs,
             ImmutableList<Subject> children)
         {
+            if (!name.IsValidGraphQLName())
+            {
+                throw new ArgumentException(
+                    $"subject names must be valid C# class names. '{name}' is not a valid subject name.");
+            }
+
             Name = name;
             Parent = parent;
             Specs = specs.ToImmutableDictionary(_ => _.SpecId) ?? ImmutableDictionary<string, SubjectSpec>.Empty;
@@ -37,6 +44,10 @@ namespace GraphZen.SpecAudit.SpecFx
         public string Path => Parent != null ? $"{Parent.Path}.{Name.Replace(' ', '_')}" : Name.Replace(' ', '_');
 
 
+        public ImmutableDictionary<string, SubjectSpec> Specs { get; }
+        public ImmutableList<Subject> Children { get; }
+
+        public Subject? Parent { get; }
 
 
         public IEnumerable<Subject> GetSelfAndAncestors()
@@ -51,13 +62,6 @@ namespace GraphZen.SpecAudit.SpecFx
 
             yield return this;
         }
-
-
-
-        public ImmutableDictionary<string, SubjectSpec> Specs { get; }
-        public ImmutableList<Subject> Children { get; }
-
-        public Subject? Parent { get; }
 
         public IEnumerable<(string path, string specId, SpecPriority priority, SpecCoverageStatus status)>
             GetCoverage(SpecSuite suite) =>

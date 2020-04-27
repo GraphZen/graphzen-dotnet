@@ -34,8 +34,8 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<RequiredSpecs>()
                 .WithSpecs<UpdateableSpecs>();
 
-            var inputTypeRef = typeRef.WithName("Input Type Reference");
-            var outputTypeRef = typeRef.WithName("Output Type Reference");
+            var inputTypeRef = typeRef.WithName("InputTypeRef");
+            var outputTypeRef = typeRef.WithName("OutputTypeRef");
 
             var argument = new Subject("Argument").WithChild(name)
                 .WithChild(new Subject("Value").WithSpecs<RequiredSpecs>().WithSpecs<UpdateableSpecs>());
@@ -52,7 +52,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(directiveAnnotation);
 
-            var inputValue = new Subject("Input Value")
+            var inputValue = new Subject(nameof(InputValue))
                 .WithChild(description)
                 .WithChild(inputTypeRef)
                 .WithChild(new Subject(nameof(InputValue.DefaultValue)).WithSpecs<OptionalSpecs>())
