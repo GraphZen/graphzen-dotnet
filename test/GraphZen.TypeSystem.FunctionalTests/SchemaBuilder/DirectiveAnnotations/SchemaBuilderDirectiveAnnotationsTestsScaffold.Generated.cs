@@ -13,17 +13,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
 [NoReorder]
 public abstract class SchemaBuilderDirectiveAnnotationsTestsScaffold {
 
-[Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
-[Fact(Skip = "generated")]
-public void named_item_can_be_removed() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-
-
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
 [Fact(Skip = "generated")]
 public void named_item_can_be_renamed() {
