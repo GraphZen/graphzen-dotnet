@@ -3,12 +3,22 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
+using Xunit;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description
 {
     public partial class SchemaBuilderDescriptionTests
     {
-        // Move me into a separate file to start writing tests
+        [Spec(nameof(TypeSystemSpecs.UpdateableSpecs.it_can_be_updated))]
+        [Fact(Skip = "generated")]
+        public void it_can_be_updated()
+        {
+            var schema = Schema.Create(_ =>
+            {
+
+            });
+        }
     }
 }

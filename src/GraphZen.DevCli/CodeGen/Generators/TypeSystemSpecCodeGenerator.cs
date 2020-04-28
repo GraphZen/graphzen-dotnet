@@ -41,7 +41,7 @@ namespace GraphZen.CodeGen.Generators
                 {
                     _.PartialClass(className, cls =>
                     {
-                        cls.AppendLine("// Move me into a seperate file to start writing tests");
+                        cls.AppendLine("// Move me into a separate file to start writing tests");
                     });
                     _.PartialClass(className + "Scaffold", cls =>
                     {
