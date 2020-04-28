@@ -10,21 +10,15 @@ using Xunit;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
 {
     [NoReorder]
-    public abstract class SchemaBuilderDirectiveAnnotationsTests
+    public class SchemaBuilderDirectiveAnnotationsTests
     {
-
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added))]
-        [Fact()]
+        [Fact]
         public void named_item_can_be_added()
         {
             // Priority: Low
-            var schema = Schema.Create(_ =>
-            {
-
-            });
+            var schema = Schema.Create(_ => { });
         }
-
-
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_renamed))]
@@ -32,10 +26,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
         public void named_item_can_be_renamed()
         {
             // Priority: Low
-            var schema = Schema.Create(_ =>
-            {
-
-            });
+            var schema = Schema.Create(_ => { });
         }
     }
 }
