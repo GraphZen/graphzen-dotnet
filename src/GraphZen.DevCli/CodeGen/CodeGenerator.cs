@@ -31,17 +31,17 @@ namespace GraphZen.CodeGen
             generated.AddRange(PartialTypeGenerator.Generate(CreatePartialTypeGenerators()));
             generated.AddRange(TypeSystemSpecCodeGenerator.ScaffoldSystemSpec());
 
-            var generatedFiles = Directory.GetFiles(".", "*Generated.cs", SearchOption.AllDirectories);
-
-            foreach (var _ in generatedFiles)
-            {
-                File.Delete(_);
-                Console.Write($"Deleted {_}");
-            }
+            var existingGeneratedFiles = Directory.GetFiles(".", "*Generated.cs", SearchOption.AllDirectories);
 
             foreach (var _ in generated)
             {
                 _.WriteToFile();
+            }
+
+            foreach (var stale in existingGeneratedFiles.Where(old => generated.All(g =>
+                !Path.GetFullPath(g.Path).Equals(Path.GetFullPath(old), StringComparison.OrdinalIgnoreCase))))
+            {
+                Console.Write($"Stale {stale}");
             }
         }
 

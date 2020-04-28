@@ -25,7 +25,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
             Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Path));
             try
             {
-                File.AppendAllText(Path, Contents);
+                File.WriteAllText(Path, Contents);
             }
             catch (Exception e)
             {
