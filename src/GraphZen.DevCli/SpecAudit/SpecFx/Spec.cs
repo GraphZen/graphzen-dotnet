@@ -21,7 +21,8 @@ namespace GraphZen.SpecAudit.SpecFx
         {
         }
 
-        private Spec(string id, FieldInfo? fieldInfo, string? name = null, string? description = null, ImmutableList<Spec>? children = null)
+        private Spec(string id, FieldInfo? fieldInfo, string? name = null, string? description = null,
+            ImmutableList<Spec>? children = null)
         {
             Id = id;
             FieldInfo = fieldInfo;
@@ -35,6 +36,16 @@ namespace GraphZen.SpecAudit.SpecFx
         public string? Description { get; }
         public FieldInfo? FieldInfo { get; }
         public ImmutableList<Spec> Children { get; }
+
+        public override string ToString()
+        {
+            if (FieldInfo != null)
+            {
+                return $"{FieldInfo.DeclaringType!.Name}.{FieldInfo.Name}";
+            }
+
+            return Name;
+        }
 
         public IEnumerable<Spec> GetSelfAndDescendants()
         {

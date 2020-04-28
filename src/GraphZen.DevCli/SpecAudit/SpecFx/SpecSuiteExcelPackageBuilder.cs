@@ -96,7 +96,7 @@ namespace GraphZen.SpecAudit.SpecFx
             var specRows = new Dictionary<string, int>();
             var currentRow = 3;
             var specRowStart = currentRow;
-            foreach (var spec in suite.Specs)
+            foreach (var spec in suite.RootSpecs)
             {
                 worksheet.Cells[specRowStart, 1].Value = spec.Name;
                 for (var i = 0; i < spec.Children.Count; i++)

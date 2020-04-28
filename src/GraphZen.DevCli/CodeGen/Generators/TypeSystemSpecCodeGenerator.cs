@@ -29,16 +29,18 @@ namespace GraphZen.CodeGen.Generators
                 var fileName = string.Join("", $"{className}.Generated.cs").Dump("fileName");
                 var filePath = Path.Combine(pathBase, Path.Combine(path), fileName);
                 var ns = string.Join(".", path.Prepend(rootNamespace));
-                var suiteSpecs = suite.GetAllSpecs();
+                var suiteSpecs = suite.Specs.Values;
 
                 var generate = false;
                 var csharp = CSharpStringBuilder.Create();
                 csharp.AppendLine("using Xunit;");
-                csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;");
+                csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.RootSpecs.TypeSystemSpecs;");
                 csharp.Namespace(ns, _ =>
                 {
                     _.PartialClass(className, cls =>
                     {
+
+
 
                         var specs = suiteSpecs.Where(s => subject.Specs.ContainsKey(s.Id));
                         foreach (var spec in specs)

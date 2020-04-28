@@ -20,29 +20,29 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class OptionalSpecs
         {
-            public const string it_can_be_removed = null;
+            public const string optional_item_can_be_removed = null;
             public const string parent_can_be_created_without = null;
         }
 
         public class RequiredSpecs
         {
-            public const string it_cannot_be_removed = null;
+            public const string required_item_cannot_be_removed = null;
         }
 
         public class NamedCollectionSpecs
         {
-            public const string item_can_be_added = null;
-            public const string item_can_be_renamed = null;
-            public const string item_cannot_be_renamed_if_name_already_exists = null;
-            public const string item_can_be_removed = null;
-            public const string item_name_must_be_valid_name = null;
+            public const string named_item_can_be_added = null;
+            public const string named_item_can_be_renamed = null;
+            public const string named_item_cannot_be_renamed_if_name_already_exists = null;
+            public const string named_item_can_be_removed = null;
+            public const string named_item_name_must_be_valid_name = null;
         }
 
         public class NamedTypeSetSpecs
         {
-            public const string item_can_be_added = null;
-            public const string item_can_be_removed = null;
-            public const string item_must_be_valid_name = null;
+            public const string set_item_can_be_added = null;
+            public const string set_item_can_be_removed = null;
+            public const string set_item_must_be_valid_name = null;
         }
 
         public class DirectivesSpecs
