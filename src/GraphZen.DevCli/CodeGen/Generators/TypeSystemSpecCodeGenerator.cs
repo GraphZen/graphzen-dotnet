@@ -51,6 +51,7 @@ namespace GraphZen.CodeGen.Generators
 
                             cls.AppendLine($@"
 // Priority: {subjectSpec.Priority}
+// Subject Name: {subject.Name}
 [Spec({specRef})]
 [Fact]
 public void {spec.Id}() {{
