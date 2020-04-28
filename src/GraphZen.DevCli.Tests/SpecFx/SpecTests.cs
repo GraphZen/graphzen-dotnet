@@ -21,7 +21,6 @@ namespace GraphZen
             var suite = TypeSystemSuite.Get();
             suite.Tests.Dump();
             var package = SpecSuiteExcelPackageBuilder.Create(suite);
-             throw new Exception();
         }
     }
 }

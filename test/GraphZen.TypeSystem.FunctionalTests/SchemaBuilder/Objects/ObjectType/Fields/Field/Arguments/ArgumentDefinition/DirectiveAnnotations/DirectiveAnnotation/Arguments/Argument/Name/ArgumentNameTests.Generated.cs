@@ -11,5 +11,29 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.DirectiveAnnotations.DirectiveAnnotation.Arguments.Argument.Name {
 public partial class ArgumentNameTests {
+
+// Priority: Low
+// Subject Name: Name
+[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
+[Fact]
+public void it_can_be_updated() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
+
+// Priority: Low
+// Subject Name: Name
+[Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
+[Fact]
+public void required_item_cannot_be_removed() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
 }
 }

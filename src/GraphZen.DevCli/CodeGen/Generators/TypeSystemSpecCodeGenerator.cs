@@ -33,8 +33,10 @@ namespace GraphZen.CodeGen.Generators
 
                 var generate = false;
                 var csharp = CSharpStringBuilder.Create();
+
                 csharp.AppendLine("using Xunit;");
                 csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;");
+                csharp.AppendLine("// ReSharper disable PartialTypeWithSinglePart");
                 csharp.Namespace(ns, _ =>
                 {
                     _.PartialClass(className, cls =>

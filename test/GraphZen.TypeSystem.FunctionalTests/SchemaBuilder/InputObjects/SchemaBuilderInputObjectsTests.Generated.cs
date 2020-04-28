@@ -11,5 +11,65 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects {
 public partial class SchemaBuilderInputObjectsTests {
+
+// Priority: Low
+// Subject Name: InputObjects
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
+[Fact]
+public void named_item_can_be_added() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
+
+// Priority: Low
+// Subject Name: InputObjects
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
+[Fact]
+public void named_item_can_be_renamed() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
+
+// Priority: Low
+// Subject Name: InputObjects
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
+[Fact]
+public void named_item_cannot_be_renamed_if_name_already_exists() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
+
+// Priority: Low
+// Subject Name: InputObjects
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
+[Fact]
+public void named_item_can_be_removed() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
+
+// Priority: Low
+// Subject Name: InputObjects
+[Spec(nameof(NamedCollectionSpecs.named_item_name_must_be_valid_name))]
+[Fact]
+public void named_item_name_must_be_valid_name() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
 }
 }
