@@ -104,4 +104,5 @@ Licensed under the GraphZen Community License. See the LICENSE file in the proje
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Usings/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Xunit/@EntryIndexedValue">True</s:Boolean>
 	
+	
 	</wpf:ResourceDictionary>	

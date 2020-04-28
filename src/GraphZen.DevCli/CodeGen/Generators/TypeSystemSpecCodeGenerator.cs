@@ -57,7 +57,7 @@ namespace GraphZen.CodeGen.Generators
 // Priority: {subjectSpec.Priority}
 // Subject Name: {subject.Name}
 [Spec({specRef})]
-[Fact]
+[Fact(Skip = ""generated"")]
 public void {spec.Id}() {{
     var schema = Schema.Create(_ => {{
 

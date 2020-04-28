@@ -29,8 +29,6 @@ namespace GraphZen.SpecAudit.SpecFx
             }
         }
 
-        public bool IsGenerated => TestMethod.Name.StartsWith("generated_");
-
         public string SubjectPath { get; }
         public string SpecId { get; }
         public MethodInfo TestMethod { get; }
@@ -82,7 +80,7 @@ namespace GraphZen.SpecAudit.SpecFx
 
             if (!subjects.Any())
             {
-                return "";
+                return method.DeclaringType!.Namespace!.Replace("GraphZen.TypeSystem.FunctionalTests.", "");
             }
 
             subjects.Reverse();

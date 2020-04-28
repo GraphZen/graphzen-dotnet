@@ -77,8 +77,8 @@ namespace GraphZen.SpecAudit.SpecFx
         {
             var tests = suite.Tests.Where(_ => _.SpecId == specId && _.SubjectPath == Path)
                 .ToImmutableList();
-            var nonSkippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
-            var skippedTests = tests.Where(_ => _.SkipReason == null).ToImmutableList();
+            var nonSkippedTests = tests.Where(_ => _.SkipReason == null);
+            var skippedTests = tests.Where(_ => _.SkipReason != null);
             if (nonSkippedTests.Any())
             {
                 return SpecCoverageStatus.Implemented;

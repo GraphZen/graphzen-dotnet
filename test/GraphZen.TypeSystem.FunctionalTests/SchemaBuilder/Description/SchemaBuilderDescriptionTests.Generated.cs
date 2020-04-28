@@ -17,7 +17,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description
 // Priority: Low
 // Subject Name: Description
         [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
-        [Fact]
+        [Fact(Skip = "generated")]
         public void it_can_be_updated()
         {
             var schema = Schema.Create(_ => { });
