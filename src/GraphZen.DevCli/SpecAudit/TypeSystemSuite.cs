@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit.SpecFx;
 using GraphZen.TypeSystem;
-using GraphZen.TypeSystem.FunctionalTests.Directives;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
@@ -171,7 +170,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(inputObjects);
 
             var specs = Spec.GetSpecs(typeof(TypeSystemSpecs));
-            return new SpecSuite("Type System", schemaBuilder, specs, typeof(DirectiveCreationTests).Assembly);
+            return new SpecSuite("Type System", schemaBuilder, specs, typeof(OptionalItemSpecs).Assembly);
         }
     }
 }
