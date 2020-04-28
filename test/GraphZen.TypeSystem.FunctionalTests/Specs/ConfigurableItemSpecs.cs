@@ -13,6 +13,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 {
     public class TypeSystemSpecs
     {
+        public interface IUpdateable
+        {
+            void it_can_be_updated();
+        }
+
         public class UpdateableSpecs
         {
             public const string it_can_be_updated = null;

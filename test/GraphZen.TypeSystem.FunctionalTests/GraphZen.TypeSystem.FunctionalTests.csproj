@@ -23,4 +23,8 @@
     <ProjectReference Include="..\..\src\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SchemaBuilder\DirectiveAnnotations\DirectiveAnnotation\Name\" />
+  </ItemGroup>
+
 </Project>
