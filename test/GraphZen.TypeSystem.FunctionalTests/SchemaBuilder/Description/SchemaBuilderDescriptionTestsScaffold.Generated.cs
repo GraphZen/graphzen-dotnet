@@ -11,12 +11,8 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description {
-    [NoReorder]
+[NoReorder]
 public partial class SchemaBuilderDescriptionTestsScaffold {
-
-
-
-
 
 // Priority: Low
 // Subject Name: Description

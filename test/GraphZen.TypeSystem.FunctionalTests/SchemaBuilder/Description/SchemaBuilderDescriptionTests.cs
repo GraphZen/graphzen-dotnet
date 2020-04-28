@@ -25,5 +25,31 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description
 
             });
         }
+
+        // Priority: Low
+        // Subject Name: Description
+        [Spec(nameof(TypeSystemSpecs.OptionalSpecs.optional_item_can_be_removed))]
+        [Fact(Skip = "generated")]
+        public void optional_item_can_be_removed()
+        {
+            var schema = Schema.Create(_ =>
+            {
+
+            });
+        }
+
+
+
+        // Priority: Low
+        // Subject Name: Description
+        [Spec(nameof(TypeSystemSpecs.OptionalSpecs.parent_can_be_created_without))]
+        [Fact(Skip = "generated")]
+        public void parent_can_be_created_without()
+        {
+            var schema = Schema.Create(_ =>
+            {
+
+            });
+        }
     }
 }
