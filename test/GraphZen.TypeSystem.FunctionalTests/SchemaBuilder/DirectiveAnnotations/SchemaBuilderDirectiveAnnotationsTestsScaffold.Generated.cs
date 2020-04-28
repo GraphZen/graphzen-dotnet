@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
 public abstract  class SchemaBuilderDirectiveAnnotationsTestsScaffold {
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
-[Fact(Skip = "generated")]
+[Fact]
 public void named_item_can_be_removed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -26,7 +26,7 @@ public void named_item_can_be_removed() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
-[Fact(Skip = "generated")]
+[Fact]
 public void named_item_cannot_be_renamed_if_name_already_exists() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -38,7 +38,7 @@ public void named_item_cannot_be_renamed_if_name_already_exists() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_name_must_be_valid_name))]
-[Fact(Skip = "generated")]
+[Fact]
 public void named_item_name_must_be_valid_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {

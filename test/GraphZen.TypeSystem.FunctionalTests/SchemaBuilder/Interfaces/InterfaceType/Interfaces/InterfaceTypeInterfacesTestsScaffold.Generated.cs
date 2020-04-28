@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
 public abstract  class InterfaceTypeInterfacesTests {
 
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
-[Fact(Skip = "generated")]
+[Fact]
 public void set_item_can_be_added() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -26,7 +26,7 @@ public void set_item_can_be_added() {
 
 
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
-[Fact(Skip = "generated")]
+[Fact]
 public void set_item_can_be_removed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -38,7 +38,7 @@ public void set_item_can_be_removed() {
 
 
 [Spec(nameof(NamedTypeSetSpecs.set_item_must_be_valid_name))]
-[Fact(Skip = "generated")]
+[Fact]
 public void set_item_must_be_valid_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {

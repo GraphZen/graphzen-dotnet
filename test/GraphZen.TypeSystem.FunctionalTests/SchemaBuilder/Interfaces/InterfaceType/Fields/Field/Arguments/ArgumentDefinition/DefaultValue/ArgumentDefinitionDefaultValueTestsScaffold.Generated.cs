@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
 public abstract  class ArgumentDefinitionDefaultValueTests {
 
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
-[Fact(Skip = "generated")]
+[Fact]
 public void optional_item_can_be_removed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -26,7 +26,7 @@ public void optional_item_can_be_removed() {
 
 
 [Spec(nameof(OptionalSpecs.parent_can_be_created_without))]
-[Fact(Skip = "generated")]
+[Fact]
 public void parent_can_be_created_without() {
     // Priority: Low
     var schema = Schema.Create(_ => {

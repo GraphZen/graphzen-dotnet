@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
 public abstract  class DirectiveRepeatableTests {
 
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
-[Fact(Skip = "generated")]
+[Fact]
 public void optional_item_can_be_removed() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -26,7 +26,7 @@ public void optional_item_can_be_removed() {
 
 
 [Spec(nameof(OptionalSpecs.parent_can_be_created_without))]
-[Fact(Skip = "generated")]
+[Fact]
 public void parent_can_be_created_without() {
     // Priority: High
     var schema = Schema.Create(_ => {

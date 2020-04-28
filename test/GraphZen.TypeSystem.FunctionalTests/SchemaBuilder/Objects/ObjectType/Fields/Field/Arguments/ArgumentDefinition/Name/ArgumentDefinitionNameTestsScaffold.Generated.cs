@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
 public abstract  class ArgumentDefinitionNameTests {
 
 [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
-[Fact(Skip = "generated")]
+[Fact]
 public void it_can_be_updated() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -26,7 +26,7 @@ public void it_can_be_updated() {
 
 
 [Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
-[Fact(Skip = "generated")]
+[Fact]
 public void required_item_cannot_be_removed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
