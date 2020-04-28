@@ -32,9 +32,9 @@ public void set_item_can_be_added() {
 
 // Priority: Low
 // Subject Name: Interfaces
-[Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
+[Spec(nameof(NamedTypeSetSpecs.set_item_must_be_valid_name))]
 [Fact(Skip = "generated")]
-public void set_item_can_be_removed() {
+public void set_item_must_be_valid_name() {
     var schema = Schema.Create(_ => {
 
     });
@@ -44,9 +44,9 @@ public void set_item_can_be_removed() {
 
 // Priority: Low
 // Subject Name: Interfaces
-[Spec(nameof(NamedTypeSetSpecs.set_item_must_be_valid_name))]
+[Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
 [Fact(Skip = "generated")]
-public void set_item_must_be_valid_name() {
+public void set_item_can_be_removed() {
     var schema = Schema.Create(_ => {
 
     });
