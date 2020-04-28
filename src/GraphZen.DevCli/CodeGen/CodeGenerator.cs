@@ -32,6 +32,7 @@ namespace GraphZen.CodeGen
             generated.AddRange(TypeSystemSpecCodeGenerator.ScaffoldSystemSpec());
 
             var generatedFiles = Directory.GetFiles(".", "*Generated.cs", SearchOption.AllDirectories);
+
             foreach (var _ in generatedFiles)
             {
                 File.Delete(_);

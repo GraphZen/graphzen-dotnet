@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -28,7 +31,21 @@ namespace GraphZen.CodeGen.Generators
                 var ns = string.Join(".", path.Prepend(rootNamespace));
 
                 var csharp = CSharpStringBuilder.Create();
-                csharp.Namespace(ns, _ => { _.PartialClass(className, cls => { }); });
+                csharp.Namespace(ns, _ =>
+                {
+                    _.PartialClass(className, cls =>
+                    {
+                        foreach (var subjectSpec in subject.Specs.Values)
+                        {
+                            cls.AppendLine($@"
+// SpecId: {subjectSpec.SpecId}
+// Priority: {subjectSpec.Priority}
+
+
+");
+                        }
+                    });
+                });
 
                 //var contents = $"/* {csharp} */";
                 //yield return new GeneratedCode(filePath, contents);

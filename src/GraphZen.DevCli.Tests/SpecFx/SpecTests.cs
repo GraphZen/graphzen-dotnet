@@ -1,16 +1,12 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit;
 using GraphZen.SpecAudit.SpecFx;
-using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
