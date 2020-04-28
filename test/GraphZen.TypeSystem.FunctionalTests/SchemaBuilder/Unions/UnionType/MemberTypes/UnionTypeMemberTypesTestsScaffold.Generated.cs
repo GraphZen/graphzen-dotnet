@@ -20,9 +20,9 @@ public partial class UnionTypeMemberTypesTestsScaffold {
 
 // Priority: Low
 // Subject Name: MemberTypes
-[Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
+[Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
 [Fact(Skip = "generated")]
-public void set_item_can_be_added() {
+public void set_item_can_be_removed() {
     var schema = Schema.Create(_ => {
 
     });
@@ -32,9 +32,9 @@ public void set_item_can_be_added() {
 
 // Priority: Low
 // Subject Name: MemberTypes
-[Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
+[Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
 [Fact(Skip = "generated")]
-public void set_item_can_be_removed() {
+public void set_item_can_be_added() {
     var schema = Schema.Create(_ => {
 
     });
