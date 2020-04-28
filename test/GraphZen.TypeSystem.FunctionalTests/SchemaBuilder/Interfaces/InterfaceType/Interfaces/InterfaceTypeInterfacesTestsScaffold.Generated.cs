@@ -20,6 +20,18 @@ public partial class InterfaceTypeInterfacesTestsScaffold {
 
 // Priority: Low
 // Subject Name: Interfaces
+[Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
+[Fact(Skip = "generated")]
+public void set_item_can_be_removed() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
+
+// Priority: Low
+// Subject Name: Interfaces
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
 [Fact(Skip = "generated")]
 public void set_item_can_be_added() {
@@ -35,18 +47,6 @@ public void set_item_can_be_added() {
 [Spec(nameof(NamedTypeSetSpecs.set_item_must_be_valid_name))]
 [Fact(Skip = "generated")]
 public void set_item_must_be_valid_name() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-
-
-// Priority: Low
-// Subject Name: Interfaces
-[Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
-[Fact(Skip = "generated")]
-public void set_item_can_be_removed() {
     var schema = Schema.Create(_ => {
 
     });

@@ -20,9 +20,9 @@ public partial class ArgumentDefinitionNameTestsScaffold {
 
 // Priority: Low
 // Subject Name: Name
-[Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
+[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]
-public void required_item_cannot_be_removed() {
+public void it_can_be_updated() {
     var schema = Schema.Create(_ => {
 
     });
@@ -32,9 +32,9 @@ public void required_item_cannot_be_removed() {
 
 // Priority: Low
 // Subject Name: Name
-[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
+[Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
 [Fact(Skip = "generated")]
-public void it_can_be_updated() {
+public void required_item_cannot_be_removed() {
     var schema = Schema.Create(_ => {
 
     });
