@@ -3,9 +3,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
 {
@@ -14,13 +14,22 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
 
 // Priority: Low
 // Subject Name: DirectiveAnnotations
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
         [Fact(Skip = "generated")]
         public void named_item_can_be_added() {
             var schema = Schema.Create(_ => {
 
             });
         }
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
+[Fact(Skip = "generated")]
+public void named_item_can_be_removed() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
 
 
 
