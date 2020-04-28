@@ -39,10 +39,12 @@ namespace GraphZen.CodeGen.Generators
                 csharp.AppendLine("// ReSharper disable PartialTypeWithSinglePart");
                 csharp.Namespace(ns, _ =>
                 {
+                    _.AppendLine("[NoReorder]");
                     _.PartialClass(className, cls =>
                     {
                         cls.AppendLine("// Move me into a separate file to start writing tests");
                     });
+                    _.AppendLine("[NoReorder]");
                     _.PartialClass(className + "Scaffold", cls =>
                     {
                         var specs = suiteSpecs.Where(s => subject.Specs.ContainsKey(s.Id));

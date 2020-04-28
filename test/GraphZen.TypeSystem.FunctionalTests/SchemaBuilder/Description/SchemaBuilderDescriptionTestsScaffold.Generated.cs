@@ -11,11 +11,21 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description
 {
     public partial class SchemaBuilderDescriptionTests
     {
-// Move me into a seperate file to start writing tests
+// Move me into a separate file to start writing tests
     }
 
     public partial class SchemaBuilderDescriptionTestsScaffold
     {
+// Priority: Low
+// Subject Name: Description
+        [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
+        [Fact(Skip = "generated")]
+        public void it_can_be_updated()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
 // Priority: Low
 // Subject Name: Description
         [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]

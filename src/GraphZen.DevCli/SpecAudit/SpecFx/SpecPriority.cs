@@ -9,8 +9,8 @@ namespace GraphZen.SpecAudit.SpecFx
 {
     public enum SpecPriority
     {
-        Low,
-        Medium,
-        High
+        Low = 100,
+        Medium = 200,
+        High = 300
     }
 }
