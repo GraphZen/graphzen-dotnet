@@ -31,6 +31,7 @@ namespace GraphZen.CodeGen.Generators
                 var ns = string.Join(".", path.Prepend(rootNamespace));
 
                 var csharp = CSharpStringBuilder.Create();
+                csharp.AppendLine("using Xunit;");
                 csharp.Namespace(ns, _ =>
                 {
                     _.PartialClass(className, cls =>
@@ -38,6 +39,14 @@ namespace GraphZen.CodeGen.Generators
                         foreach (var subjectSpec in subject.Specs.Values)
                         {
                             cls.AppendLine($@"
+[Spec(""{subjectSpec.SpecId}"")]
+[Fact]
+public void {subjectSpec.SpecId}() {{
+    var schema = Schema.Create(_ => {{
+
+    }});
+}}
+
 // SpecId: {subjectSpec.SpecId}
 // Priority: {subjectSpec.Priority}
 

@@ -1,16 +1,43 @@
-// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-
 #nullable enable
 
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.Fields.InputField.
-    DirectiveAnnotations.DirectiveAnnotation.Arguments
-{
-    public class DirectiveAnnotationArgumentsTests
-    {
-    }
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.Fields.InputField.DirectiveAnnotations.DirectiveAnnotation.Arguments {
+public partial class DirectiveAnnotationArgumentsTests {
+
+// SpecId: item_can_be_added
+// Priority: Low
+
+
+
+
+// SpecId: item_can_be_renamed
+// Priority: Low
+
+
+
+
+// SpecId: item_can_be_removed
+// Priority: Low
+
+
+
+
+// SpecId: item_name_must_be_valid_name
+// Priority: Low
+
+
+
+
+// SpecId: item_cannot_be_renamed_if_name_already_exists
+// Priority: Low
+
+
+
+}
 }

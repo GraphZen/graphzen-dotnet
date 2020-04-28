@@ -1,15 +1,25 @@
-// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-
 #nullable enable
 
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Repeatable
-{
-    public class DirectiveRepeatableTests
-    {
-    }
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Repeatable {
+public partial class DirectiveRepeatableTests {
+
+// SpecId: parent_can_be_created_without
+// Priority: High
+
+
+
+
+// SpecId: it_can_be_removed
+// Priority: High
+
+
+
+}
 }
