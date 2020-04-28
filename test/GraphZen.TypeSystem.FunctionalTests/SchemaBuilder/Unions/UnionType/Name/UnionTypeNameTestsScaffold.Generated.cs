@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Name {
 [NoReorder]
-public  class UnionTypeNameTests {
+public abstract  class UnionTypeNameTests {
 
 [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]

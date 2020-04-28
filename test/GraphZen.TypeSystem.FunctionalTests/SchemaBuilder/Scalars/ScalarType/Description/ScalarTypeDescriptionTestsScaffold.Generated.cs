@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.Description {
 [NoReorder]
-public  class ScalarTypeDescriptionTests {
+public abstract  class ScalarTypeDescriptionTests {
 
 [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]

@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.DefaultValue {
 [NoReorder]
-public  class ArgumentDefinitionDefaultValueTests {
+public abstract  class ArgumentDefinitionDefaultValueTests {
 
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
 [Fact(Skip = "generated")]

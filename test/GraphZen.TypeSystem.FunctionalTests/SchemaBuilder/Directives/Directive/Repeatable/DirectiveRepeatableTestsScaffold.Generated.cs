@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Repeatable {
 [NoReorder]
-public  class DirectiveRepeatableTests {
+public abstract  class DirectiveRepeatableTests {
 
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
 [Fact(Skip = "generated")]

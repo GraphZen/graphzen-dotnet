@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums {
 [NoReorder]
-public  class SchemaBuilderEnumsTests {
+public abstract  class SchemaBuilderEnumsTests {
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
 [Fact(Skip = "generated")]

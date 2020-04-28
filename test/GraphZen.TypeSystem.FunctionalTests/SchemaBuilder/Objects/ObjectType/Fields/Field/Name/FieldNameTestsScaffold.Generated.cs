@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Name {
 [NoReorder]
-public  class FieldNameTests {
+public abstract  class FieldNameTests {
 
 [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]

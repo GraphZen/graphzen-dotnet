@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.Fields.InputField.InputTypeRef {
 [NoReorder]
-public  class InputFieldInputTypeRefTests {
+public abstract  class InputFieldInputTypeRefTests {
 
 [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]

@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.DirectiveAnnotations.DirectiveAnnotation.Name {
 [NoReorder]
-public  class DirectiveAnnotationNameTests {
+public abstract  class DirectiveAnnotationNameTests {
 
 [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]

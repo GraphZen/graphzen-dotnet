@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.DirectiveAnnotations {
 [NoReorder]
-public  class FieldDirectiveAnnotationsTests {
+public abstract  class FieldDirectiveAnnotationsTests {
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
 [Fact(Skip = "generated")]

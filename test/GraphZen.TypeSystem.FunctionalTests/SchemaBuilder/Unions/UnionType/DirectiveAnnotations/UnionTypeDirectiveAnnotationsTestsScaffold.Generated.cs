@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.DirectiveAnnotations {
 [NoReorder]
-public  class UnionTypeDirectiveAnnotationsTests {
+public abstract  class UnionTypeDirectiveAnnotationsTests {
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
 [Fact(Skip = "generated")]

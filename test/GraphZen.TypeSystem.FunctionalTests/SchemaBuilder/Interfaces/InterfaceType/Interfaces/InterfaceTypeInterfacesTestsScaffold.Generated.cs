@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfaceType.Interfaces {
 [NoReorder]
-public  class InterfaceTypeInterfacesTests {
+public abstract  class InterfaceTypeInterfacesTests {
 
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
 [Fact(Skip = "generated")]
