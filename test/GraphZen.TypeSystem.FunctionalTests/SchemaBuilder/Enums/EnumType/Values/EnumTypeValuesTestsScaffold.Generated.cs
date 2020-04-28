@@ -13,11 +13,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
 [NoReorder]
 public  class EnumTypeValuesTests {
 
-// Priority: Low
-// Subject Name: Values
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
 [Fact(Skip = "generated")]
 public void named_item_can_be_added() {
+    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
@@ -25,11 +24,10 @@ public void named_item_can_be_added() {
 
 
 
-// Priority: Low
-// Subject Name: Values
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
 [Fact(Skip = "generated")]
 public void named_item_can_be_removed() {
+    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
@@ -37,11 +35,10 @@ public void named_item_can_be_removed() {
 
 
 
-// Priority: Low
-// Subject Name: Values
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
 [Fact(Skip = "generated")]
 public void named_item_can_be_renamed() {
+    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
@@ -49,11 +46,10 @@ public void named_item_can_be_renamed() {
 
 
 
-// Priority: Low
-// Subject Name: Values
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
 [Fact(Skip = "generated")]
 public void named_item_cannot_be_renamed_if_name_already_exists() {
+    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
@@ -61,11 +57,10 @@ public void named_item_cannot_be_renamed_if_name_already_exists() {
 
 
 
-// Priority: Low
-// Subject Name: Values
 [Spec(nameof(NamedCollectionSpecs.named_item_name_must_be_valid_name))]
 [Fact(Skip = "generated")]
 public void named_item_name_must_be_valid_name() {
+    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });

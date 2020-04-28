@@ -13,11 +13,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
 [NoReorder]
 public  class DirectiveAnnotationNameTests {
 
-// Priority: Low
-// Subject Name: Name
 [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]
 public void it_can_be_updated() {
+    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
@@ -25,11 +24,10 @@ public void it_can_be_updated() {
 
 
 
-// Priority: Low
-// Subject Name: Name
 [Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
 [Fact(Skip = "generated")]
 public void required_item_cannot_be_removed() {
+    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });

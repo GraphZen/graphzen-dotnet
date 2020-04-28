@@ -13,11 +13,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
 [NoReorder]
 public  class DirectiveNameTests {
 
-// Priority: High
-// Subject Name: Name
 [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]
 public void it_can_be_updated() {
+    // Priority: High
     var schema = Schema.Create(_ => {
 
     });
@@ -25,11 +24,10 @@ public void it_can_be_updated() {
 
 
 
-// Priority: High
-// Subject Name: Name
 [Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
 [Fact(Skip = "generated")]
 public void required_item_cannot_be_removed() {
+    // Priority: High
     var schema = Schema.Create(_ => {
 
     });

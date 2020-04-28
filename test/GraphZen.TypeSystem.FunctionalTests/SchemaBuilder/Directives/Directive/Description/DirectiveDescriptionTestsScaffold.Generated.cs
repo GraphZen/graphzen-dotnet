@@ -13,11 +13,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
 [NoReorder]
 public  class DirectiveDescriptionTests {
 
-// Priority: High
-// Subject Name: Description
 [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]
 public void it_can_be_updated() {
+    // Priority: High
     var schema = Schema.Create(_ => {
 
     });
@@ -25,11 +24,10 @@ public void it_can_be_updated() {
 
 
 
-// Priority: High
-// Subject Name: Description
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
 [Fact(Skip = "generated")]
 public void optional_item_can_be_removed() {
+    // Priority: High
     var schema = Schema.Create(_ => {
 
     });
@@ -37,11 +35,10 @@ public void optional_item_can_be_removed() {
 
 
 
-// Priority: High
-// Subject Name: Description
 [Spec(nameof(OptionalSpecs.parent_can_be_created_without))]
 [Fact(Skip = "generated")]
 public void parent_can_be_created_without() {
+    // Priority: High
     var schema = Schema.Create(_ => {
 
     });
