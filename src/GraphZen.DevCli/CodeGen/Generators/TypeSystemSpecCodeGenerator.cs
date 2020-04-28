@@ -40,25 +40,21 @@ namespace GraphZen.CodeGen.Generators
                 csharp.Namespace(ns, _ =>
                 {
                     _.AppendLine("[NoReorder]");
-                    _.PartialClass(className, cls =>
-                    {
-                        cls.AppendLine("// Move me into a separate file to start writing tests");
-                    });
+                    _.PartialClass(className,
+                        cls => { cls.AppendLine("// Move me into a separate file to start writing tests"); });
                     _.AppendLine("[NoReorder]");
                     _.PartialClass(className + "Scaffold", cls =>
                     {
-                        var specs = suiteSpecs.Where(s => subject.Specs.ContainsKey(s.Id));
-                        foreach (var spec in specs)
+                        foreach (var (specId, subjectSpec) in subject.Specs)
                         {
-                            generate = true;
-                            var subjectSpec = subject.Specs[spec.Id];
 
-
-                            var specRef = spec.FieldInfo != null
-                                ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
-                                : $"\"{spec.Id}\"";
-
-                            cls.AppendLine($@"
+                            if (suite.Specs.TryGetValue(specId, out var spec) && suite.Tests.Any(_ => _.SubjectPath == subject.Path && _.SpecId == specId && _.TestMethod.DeclaringType!.Name.Contains("Scaffold")))
+                            {
+                                generate = true;
+                                var specRef = spec.FieldInfo != null
+                                    ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
+                                    : $"\"{spec.Id}\"";
+                                cls.AppendLine($@"
 // Priority: {subjectSpec.Priority}
 // Subject Name: {subject.Name}
 [Spec({specRef})]
@@ -70,6 +66,7 @@ public void {spec.Id}() {{
 }}
 
 ");
+                            }
                         }
                     });
                 });
