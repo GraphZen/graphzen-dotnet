@@ -50,7 +50,7 @@ namespace GraphZen.CodeGen.Generators
                     _.AppendLine("[NoReorder]");
                     _.PartialClass(className + "Scaffold", cls =>
                     {
-                        foreach (var (specId, subjectSpec) in subject.Specs)
+                        foreach (var (specId, subjectSpec) in subject.Specs.OrderBy(_ => _.Key))
                         {
                             if (suite.Specs.TryGetValue(specId, out var spec) && !suite.Tests.Any(_ =>
                                 _.SubjectPath == subject.Path && _.SpecId == specId &&

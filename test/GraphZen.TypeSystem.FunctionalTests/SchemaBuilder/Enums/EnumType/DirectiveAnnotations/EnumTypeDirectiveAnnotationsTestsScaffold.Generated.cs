@@ -20,21 +20,9 @@ public partial class EnumTypeDirectiveAnnotationsTestsScaffold {
 
 // Priority: Low
 // Subject Name: DirectiveAnnotations
-[Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
 [Fact(Skip = "generated")]
-public void named_item_can_be_renamed() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-
-
-// Priority: Low
-// Subject Name: DirectiveAnnotations
-[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
-[Fact(Skip = "generated")]
-public void named_item_can_be_added() {
+public void named_item_cannot_be_renamed_if_name_already_exists() {
     var schema = Schema.Create(_ => {
 
     });
@@ -56,9 +44,9 @@ public void named_item_name_must_be_valid_name() {
 
 // Priority: Low
 // Subject Name: DirectiveAnnotations
-[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
 [Fact(Skip = "generated")]
-public void named_item_cannot_be_renamed_if_name_already_exists() {
+public void named_item_can_be_renamed() {
     var schema = Schema.Create(_ => {
 
     });
@@ -71,6 +59,18 @@ public void named_item_cannot_be_renamed_if_name_already_exists() {
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
 [Fact(Skip = "generated")]
 public void named_item_can_be_removed() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
+
+// Priority: Low
+// Subject Name: DirectiveAnnotations
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
+[Fact(Skip = "generated")]
+public void named_item_can_be_added() {
     var schema = Schema.Create(_ => {
 
     });

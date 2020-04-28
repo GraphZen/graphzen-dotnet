@@ -32,9 +32,9 @@ public void optional_item_can_be_removed() {
 
 // Priority: Low
 // Subject Name: Description
-[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
+[Spec(nameof(OptionalSpecs.parent_can_be_created_without))]
 [Fact(Skip = "generated")]
-public void it_can_be_updated() {
+public void parent_can_be_created_without() {
     var schema = Schema.Create(_ => {
 
     });
@@ -44,9 +44,9 @@ public void it_can_be_updated() {
 
 // Priority: Low
 // Subject Name: Description
-[Spec(nameof(OptionalSpecs.parent_can_be_created_without))]
+[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]
-public void parent_can_be_created_without() {
+public void it_can_be_updated() {
     var schema = Schema.Create(_ => {
 
     });
