@@ -11,8 +11,12 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfaceType.Fields.Field.FieldType {
+// Move FieldFieldTypeTests into a separate file to start writing tests
+[NoReorder] 
+public  class FieldFieldTypeTestsScaffold {
+}
 [NoReorder]
-public partial class FieldFieldTypeTestsScaffold {
+public partial class FieldFieldTypeTests {
 
 // Priority: Low
 // Subject Name: FieldType

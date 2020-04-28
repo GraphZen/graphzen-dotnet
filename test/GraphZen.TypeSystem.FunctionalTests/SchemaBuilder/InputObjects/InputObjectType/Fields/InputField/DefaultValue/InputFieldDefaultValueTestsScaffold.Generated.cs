@@ -11,8 +11,12 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.Fields.InputField.DefaultValue {
+// Move InputFieldDefaultValueTests into a separate file to start writing tests
+[NoReorder] 
+public  class InputFieldDefaultValueTestsScaffold {
+}
 [NoReorder]
-public partial class InputFieldDefaultValueTestsScaffold {
+public partial class InputFieldDefaultValueTests {
 
 // Priority: Low
 // Subject Name: DefaultValue

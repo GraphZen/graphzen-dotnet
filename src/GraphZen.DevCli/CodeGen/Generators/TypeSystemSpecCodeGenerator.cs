@@ -41,17 +41,9 @@ namespace GraphZen.CodeGen.Generators
                 csharp.Namespace(ns, _ =>
                 {
                     var testFileExists = File.Exists(Path.Combine(fileDir, $"{className}.cs"));
-                    if (!testFileExists)
-                    {
-                        _.AppendLine($"// Move {className} into a separate file to start writing tests");
-                        _.AppendLine("[NoReorder] ");
-                        _.Class(className + "Scaffold",
-                            cls => { });
-                    }
-
 
                     _.AppendLine("[NoReorder]");
-                    _.PartialClass(testFileExists ? className + "Scaffold" : className, cls =>
+                    _.Class(testFileExists ? "abstract" : "", testFileExists ? className + "Scaffold" : className, cls =>
                     {
                         foreach (var (specId, subjectSpec) in subject.Specs.OrderBy(_ => _.Key))
                         {
@@ -78,6 +70,14 @@ public void {spec.Id}() {{
                             }
                         }
                     });
+
+                    if (!testFileExists)
+                    {
+                        _.AppendLine($"// Move {className} into a separate file to start writing tests");
+                        _.AppendLine("[NoReorder] ");
+                        _.Class(className + "Scaffold",
+                            cls => { });
+                    }
                 });
 
                 //var contents = $"/* {csharp} */";

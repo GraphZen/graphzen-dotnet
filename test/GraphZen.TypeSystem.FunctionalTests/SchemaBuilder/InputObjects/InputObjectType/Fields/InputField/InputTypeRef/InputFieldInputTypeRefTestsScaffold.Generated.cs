@@ -11,8 +11,12 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.Fields.InputField.InputTypeRef {
+// Move InputFieldInputTypeRefTests into a separate file to start writing tests
+[NoReorder] 
+public  class InputFieldInputTypeRefTestsScaffold {
+}
 [NoReorder]
-public partial class InputFieldInputTypeRefTestsScaffold {
+public partial class InputFieldInputTypeRefTests {
 
 // Priority: Low
 // Subject Name: InputTypeRef

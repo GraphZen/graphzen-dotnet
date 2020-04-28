@@ -11,8 +11,12 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.Name {
+// Move ScalarTypeNameTests into a separate file to start writing tests
+[NoReorder] 
+public  class ScalarTypeNameTestsScaffold {
+}
 [NoReorder]
-public partial class ScalarTypeNameTestsScaffold {
+public partial class ScalarTypeNameTests {
 
 // Priority: Low
 // Subject Name: Name

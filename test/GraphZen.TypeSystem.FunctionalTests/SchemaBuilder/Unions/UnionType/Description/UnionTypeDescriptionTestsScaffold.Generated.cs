@@ -11,8 +11,12 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Description {
+// Move UnionTypeDescriptionTests into a separate file to start writing tests
+[NoReorder] 
+public  class UnionTypeDescriptionTestsScaffold {
+}
 [NoReorder]
-public partial class UnionTypeDescriptionTestsScaffold {
+public partial class UnionTypeDescriptionTests {
 
 // Priority: Low
 // Subject Name: Description

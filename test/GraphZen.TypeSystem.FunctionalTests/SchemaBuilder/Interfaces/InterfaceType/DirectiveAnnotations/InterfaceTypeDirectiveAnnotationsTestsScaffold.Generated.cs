@@ -11,8 +11,12 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfaceType.DirectiveAnnotations {
+// Move InterfaceTypeDirectiveAnnotationsTests into a separate file to start writing tests
+[NoReorder] 
+public  class InterfaceTypeDirectiveAnnotationsTestsScaffold {
+}
 [NoReorder]
-public partial class InterfaceTypeDirectiveAnnotationsTestsScaffold {
+public partial class InterfaceTypeDirectiveAnnotationsTests {
 
 // Priority: Low
 // Subject Name: DirectiveAnnotations

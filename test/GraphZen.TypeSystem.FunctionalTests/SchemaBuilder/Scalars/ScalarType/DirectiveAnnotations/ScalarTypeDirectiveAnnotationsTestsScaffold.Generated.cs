@@ -11,8 +11,12 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.DirectiveAnnotations {
+// Move ScalarTypeDirectiveAnnotationsTests into a separate file to start writing tests
+[NoReorder] 
+public  class ScalarTypeDirectiveAnnotationsTestsScaffold {
+}
 [NoReorder]
-public partial class ScalarTypeDirectiveAnnotationsTestsScaffold {
+public partial class ScalarTypeDirectiveAnnotationsTests {
 
 // Priority: Low
 // Subject Name: DirectiveAnnotations

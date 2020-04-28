@@ -11,8 +11,12 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.DirectiveAnnotations {
+// Move ArgumentDefinitionDirectiveAnnotationsTests into a separate file to start writing tests
+[NoReorder] 
+public  class ArgumentDefinitionDirectiveAnnotationsTestsScaffold {
+}
 [NoReorder]
-public partial class ArgumentDefinitionDirectiveAnnotationsTestsScaffold {
+public partial class ArgumentDefinitionDirectiveAnnotationsTests {
 
 // Priority: Low
 // Subject Name: DirectiveAnnotations

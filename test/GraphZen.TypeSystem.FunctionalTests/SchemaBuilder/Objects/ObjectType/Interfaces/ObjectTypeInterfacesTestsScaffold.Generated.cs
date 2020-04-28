@@ -11,8 +11,12 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Interfaces {
+// Move ObjectTypeInterfacesTests into a separate file to start writing tests
+[NoReorder] 
+public  class ObjectTypeInterfacesTestsScaffold {
+}
 [NoReorder]
-public partial class ObjectTypeInterfacesTestsScaffold {
+public partial class ObjectTypeInterfacesTests {
 
 // Priority: Low
 // Subject Name: Interfaces
