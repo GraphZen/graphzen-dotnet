@@ -11,10 +11,6 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition.DefaultValue {
-// Move ArgumentDefinitionDefaultValueTests into a separate file to start writing tests
-[NoReorder] 
-public  class ArgumentDefinitionDefaultValueTests {
-}
 [NoReorder]
 public partial class ArgumentDefinitionDefaultValueTestsScaffold {
 

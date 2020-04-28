@@ -11,10 +11,6 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.DirectiveAnnotations {
-// Move InputObjectTypeDirectiveAnnotationsTests into a separate file to start writing tests
-[NoReorder] 
-public  class InputObjectTypeDirectiveAnnotationsTests {
-}
 [NoReorder]
 public partial class InputObjectTypeDirectiveAnnotationsTestsScaffold {
 

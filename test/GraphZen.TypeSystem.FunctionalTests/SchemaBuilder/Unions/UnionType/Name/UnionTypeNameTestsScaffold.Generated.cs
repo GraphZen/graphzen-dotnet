@@ -11,10 +11,6 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Name {
-// Move UnionTypeNameTests into a separate file to start writing tests
-[NoReorder] 
-public  class UnionTypeNameTests {
-}
 [NoReorder]
 public partial class UnionTypeNameTestsScaffold {
 

@@ -11,10 +11,6 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Name {
-// Move EnumTypeNameTests into a separate file to start writing tests
-[NoReorder] 
-public  class EnumTypeNameTests {
-}
 [NoReorder]
 public partial class EnumTypeNameTestsScaffold {
 

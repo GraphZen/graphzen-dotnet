@@ -11,10 +11,6 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives {
-// Move SchemaBuilderDirectivesTests into a separate file to start writing tests
-[NoReorder] 
-public  class SchemaBuilderDirectivesTests {
-}
 [NoReorder]
 public partial class SchemaBuilderDirectivesTestsScaffold {
 
