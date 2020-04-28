@@ -20,9 +20,9 @@ public partial class SchemaBuilderObjectsTestsScaffold {
 
 // Priority: Low
 // Subject Name: Objects
-[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
 [Fact(Skip = "generated")]
-public void named_item_can_be_added() {
+public void named_item_can_be_renamed() {
     var schema = Schema.Create(_ => {
 
     });
@@ -32,9 +32,9 @@ public void named_item_can_be_added() {
 
 // Priority: Low
 // Subject Name: Objects
-[Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
 [Fact(Skip = "generated")]
-public void named_item_can_be_renamed() {
+public void named_item_can_be_added() {
     var schema = Schema.Create(_ => {
 
     });
