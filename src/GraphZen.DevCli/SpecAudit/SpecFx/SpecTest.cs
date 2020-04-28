@@ -38,7 +38,7 @@ namespace GraphZen.SpecAudit.SpecFx
 
         public static IEnumerable<SpecTest> DiscoverFrom(Assembly assembly)
         {
-            foreach (var m in assembly.GetTypes().SelectMany(_ => _.GetMethods()))
+            foreach (var m in assembly.GetTypes().Where(_ => _.IsClass && !_.IsAbstract).SelectMany(_ => _.GetMethods()))
             {
                 var specAttr = m.GetCustomAttribute<SpecAttribute>();
                 if (specAttr != null)
