@@ -12,7 +12,7 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.DefaultValue {
 [NoReorder]
-public partial class ArgumentDefinitionDefaultValueTests {
+public  class ArgumentDefinitionDefaultValueTests {
 // Move me into a separate file to start writing tests
 }
 [NoReorder]
@@ -20,9 +20,9 @@ public partial class ArgumentDefinitionDefaultValueTestsScaffold {
 
 // Priority: Low
 // Subject Name: DefaultValue
-[Spec(nameof(OptionalSpecs.parent_can_be_created_without))]
+[Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
 [Fact(Skip = "generated")]
-public void parent_can_be_created_without() {
+public void optional_item_can_be_removed() {
     var schema = Schema.Create(_ => {
 
     });
@@ -32,9 +32,9 @@ public void parent_can_be_created_without() {
 
 // Priority: Low
 // Subject Name: DefaultValue
-[Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
+[Spec(nameof(OptionalSpecs.parent_can_be_created_without))]
 [Fact(Skip = "generated")]
-public void optional_item_can_be_removed() {
+public void parent_can_be_created_without() {
     var schema = Schema.Create(_ => {
 
     });

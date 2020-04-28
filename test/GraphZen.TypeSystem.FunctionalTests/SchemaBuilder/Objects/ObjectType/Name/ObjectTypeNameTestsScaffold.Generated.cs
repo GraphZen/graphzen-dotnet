@@ -12,7 +12,7 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Name {
 [NoReorder]
-public partial class ObjectTypeNameTests {
+public  class ObjectTypeNameTests {
 // Move me into a separate file to start writing tests
 }
 [NoReorder]
