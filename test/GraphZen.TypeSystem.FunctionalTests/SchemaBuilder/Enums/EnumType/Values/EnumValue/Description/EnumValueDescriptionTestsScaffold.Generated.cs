@@ -12,6 +12,9 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Values.EnumValue.Description {
 public partial class EnumValueDescriptionTests {
+// Move me into a seperate file to start writing tests
+}
+public partial class EnumValueDescriptionTestsScaffold {
 
 // Priority: Low
 // Subject Name: Description

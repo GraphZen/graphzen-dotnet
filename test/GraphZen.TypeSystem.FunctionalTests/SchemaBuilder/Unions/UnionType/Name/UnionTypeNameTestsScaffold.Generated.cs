@@ -12,6 +12,9 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Name {
 public partial class UnionTypeNameTests {
+// Move me into a seperate file to start writing tests
+}
+public partial class UnionTypeNameTestsScaffold {
 
 // Priority: Low
 // Subject Name: Name

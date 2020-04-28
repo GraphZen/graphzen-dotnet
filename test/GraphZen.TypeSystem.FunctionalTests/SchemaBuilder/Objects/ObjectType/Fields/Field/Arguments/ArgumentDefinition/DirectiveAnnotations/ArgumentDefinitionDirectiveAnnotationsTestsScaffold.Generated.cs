@@ -12,6 +12,9 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.DirectiveAnnotations {
 public partial class ArgumentDefinitionDirectiveAnnotationsTests {
+// Move me into a seperate file to start writing tests
+}
+public partial class ArgumentDefinitionDirectiveAnnotationsTestsScaffold {
 
 // Priority: Low
 // Subject Name: DirectiveAnnotations

@@ -12,6 +12,9 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars {
 public partial class SchemaBuilderScalarsTests {
+// Move me into a seperate file to start writing tests
+}
+public partial class SchemaBuilderScalarsTestsScaffold {
 
 // Priority: Low
 // Subject Name: Scalars

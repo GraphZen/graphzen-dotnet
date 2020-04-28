@@ -12,6 +12,9 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfaceType.Fields {
 public partial class InterfaceTypeFieldsTests {
+// Move me into a seperate file to start writing tests
+}
+public partial class InterfaceTypeFieldsTestsScaffold {
 
 // Priority: Low
 // Subject Name: Fields

@@ -12,6 +12,9 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Name {
 public partial class DirectiveNameTests {
+// Move me into a seperate file to start writing tests
+}
+public partial class DirectiveNameTestsScaffold {
 
 // Priority: High
 // Subject Name: Name

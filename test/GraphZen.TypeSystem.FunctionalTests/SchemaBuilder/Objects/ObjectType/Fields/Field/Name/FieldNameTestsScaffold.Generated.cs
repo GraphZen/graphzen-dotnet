@@ -12,6 +12,9 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Name {
 public partial class FieldNameTests {
+// Move me into a seperate file to start writing tests
+}
+public partial class FieldNameTestsScaffold {
 
 // Priority: Low
 // Subject Name: Name
