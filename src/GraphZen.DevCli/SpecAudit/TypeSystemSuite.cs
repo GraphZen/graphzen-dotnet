@@ -38,11 +38,11 @@ namespace GraphZen.SpecAudit
             var outputTypeRef = typeRef.WithName("OutputTypeRef");
 
             var argument = new Subject("Argument").WithChild(name)
-                .WithChild(new Subject("Value").WithSpecs<RequiredSpecs>().WithSpecs<UpdateableSpecs>());
+                .WithChild(new Subject("Value"));
 
-            var argumentCollection = new Subject("Arguments")
-                .WithSpecs<NamedCollectionSpecs>()
-                .WithChild(argument);
+            var argumentCollection = new Subject("Arguments");
+            // .WithSpecs<NamedCollectionSpecs>();
+            //.WithChild(argument);
             var directiveAnnotation = new Subject(nameof(DirectiveAnnotation))
                 .WithChild(name)
                 .WithChild(argumentCollection);
