@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.Name {
-[NoReorder]
+[NoReorder] //
 public  class ScalarTypeNameTests {
 // Move me into a separate file to start writing tests
 }

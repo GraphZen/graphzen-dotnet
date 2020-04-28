@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Values.EnumValue.Description {
-[NoReorder]
+[NoReorder] //
 public  class EnumValueDescriptionTests {
 // Move me into a separate file to start writing tests
 }

@@ -24,7 +24,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         {
             try
             {
-                var writeFile = !File.Exists(Path) || !File.ReadAllText(Path).Equals(Contents);
+                var writeFile = true;// || !File.Exists(Path) || !File.ReadAllText(Path).Equals(Contents);
 
 
                 if (writeFile)

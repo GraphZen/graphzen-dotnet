@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.InputTypeRef {
-[NoReorder]
+[NoReorder] //
 public  class ArgumentDefinitionInputTypeRefTests {
 // Move me into a separate file to start writing tests
 }
