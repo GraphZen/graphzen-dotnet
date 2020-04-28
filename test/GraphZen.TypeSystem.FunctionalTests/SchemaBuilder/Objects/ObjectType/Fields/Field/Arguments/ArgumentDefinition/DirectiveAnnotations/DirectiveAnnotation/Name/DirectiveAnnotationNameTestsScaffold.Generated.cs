@@ -9,7 +9,6 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-// ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.DirectiveAnnotations.DirectiveAnnotation.Name {
 [NoReorder]
 public  class DirectiveAnnotationNameTests {

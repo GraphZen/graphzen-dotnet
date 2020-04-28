@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.DirectiveAnnotations.DirectiveAnnotation.Name {
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations.DirectiveAnnotation.Name {
 [NoReorder]
 public  class DirectiveAnnotationNameTests {
 
