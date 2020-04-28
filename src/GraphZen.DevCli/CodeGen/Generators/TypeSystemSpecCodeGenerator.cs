@@ -32,24 +32,31 @@ namespace GraphZen.CodeGen.Generators
 
                 var csharp = CSharpStringBuilder.Create();
                 csharp.AppendLine("using Xunit;");
+                csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;");
                 csharp.Namespace(ns, _ =>
                 {
                     _.PartialClass(className, cls =>
                     {
-                        foreach (var subjectSpec in subject.Specs.Values)
+
+
+
+                        var specs = suite.Specs.Where(_ => subject.Specs.ContainsKey(_.Id));
+                        foreach (var spec in specs)
                         {
+                            var subjectSpec = subject.Specs[spec.Id];
+
+
+                            var specRef = spec.FieldInfo != null ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})" : $"\"{spec.Id}\"";
+
                             cls.AppendLine($@"
-[Spec(""{subjectSpec.SpecId}"")]
+// Priority: {subjectSpec.Priority}
+[Spec({specRef})]
 [Fact]
-public void {subjectSpec.SpecId}() {{
+public void {spec.Id}() {{
     var schema = Schema.Create(_ => {{
 
     }});
 }}
-
-// SpecId: {subjectSpec.SpecId}
-// Priority: {subjectSpec.Priority}
-
 
 ");
                         }

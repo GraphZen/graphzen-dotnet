@@ -16,15 +16,15 @@ namespace GraphZen.SpecAudit.SpecFx
     public class Spec
     {
         private Spec(FieldInfo field) :
-            this(field.Name,
-                field.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName,
+            this(field.Name, field, field.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName,
                 field.GetCustomAttribute<DescriptionAttribute>()?.Description)
         {
         }
 
-        private Spec(string id, string? name = null, string? description = null, ImmutableList<Spec>? children = null)
+        private Spec(string id, FieldInfo? fieldInfo, string? name = null, string? description = null, ImmutableList<Spec>? children = null)
         {
             Id = id;
+            FieldInfo = fieldInfo;
             Name = name ?? id;
             Description = description;
             Children = children ?? ImmutableList<Spec>.Empty;
@@ -33,6 +33,7 @@ namespace GraphZen.SpecAudit.SpecFx
         public string Id { get; }
         public string Name { get; }
         public string? Description { get; }
+        public FieldInfo? FieldInfo { get; }
         public ImmutableList<Spec> Children { get; }
 
 
@@ -42,7 +43,7 @@ namespace GraphZen.SpecAudit.SpecFx
             var name = type.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
             var description = type.GetCustomAttribute<DescriptionAttribute>()?.Description;
             var children = SpecReflectionHelpers.GetConstFields(type).Select(_ => new Spec(_)).ToImmutableList();
-            return new Spec(id, name, description, children);
+            return new Spec(id, null, name, description, children);
         }
 
         public static IEnumerable<Spec> GetSpecs(Type type) => type.GetNestedTypes().Select(From);

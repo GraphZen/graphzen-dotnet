@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+using Xunit;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.MutationType {
 public partial class SchemaBuilderMutationTypeTests {
 }

@@ -7,20 +7,17 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+using Xunit;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.Fields {
 public partial class InputObjectTypeFieldsTests {
 
-// SpecId: item_can_be_added
-// Priority: Low
+[Spec("item_can_be_removed")]
+[Fact]
+public void item_can_be_removed() {
+    var schema = Schema.Create(_ => {
 
-
-
-
-// SpecId: item_can_be_renamed
-// Priority: Low
-
-
-
+    });
+}
 
 // SpecId: item_can_be_removed
 // Priority: Low
@@ -28,13 +25,57 @@ public partial class InputObjectTypeFieldsTests {
 
 
 
+[Spec("item_can_be_added")]
+[Fact]
+public void item_can_be_added() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+// SpecId: item_can_be_added
+// Priority: Low
+
+
+
+
+[Spec("item_cannot_be_renamed_if_name_already_exists")]
+[Fact]
+public void item_cannot_be_renamed_if_name_already_exists() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+// SpecId: item_cannot_be_renamed_if_name_already_exists
+// Priority: Low
+
+
+
+
+[Spec("item_name_must_be_valid_name")]
+[Fact]
+public void item_name_must_be_valid_name() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
 // SpecId: item_name_must_be_valid_name
 // Priority: Low
 
 
 
 
-// SpecId: item_cannot_be_renamed_if_name_already_exists
+[Spec("item_can_be_renamed")]
+[Fact]
+public void item_can_be_renamed() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+// SpecId: item_can_be_renamed
 // Priority: Low
 
 
