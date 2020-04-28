@@ -20,6 +20,7 @@ public void set_item_can_be_added() {
     var schema = Schema.Create(_ => {
 
     });
+    throw new NotImplementedException();
 }
 
 
@@ -31,6 +32,7 @@ public void set_item_can_be_removed() {
     var schema = Schema.Create(_ => {
 
     });
+    throw new NotImplementedException();
 }
 
 
@@ -42,6 +44,7 @@ public void set_item_must_be_valid_name() {
     var schema = Schema.Create(_ => {
 
     });
+    throw new NotImplementedException();
 }
 
 

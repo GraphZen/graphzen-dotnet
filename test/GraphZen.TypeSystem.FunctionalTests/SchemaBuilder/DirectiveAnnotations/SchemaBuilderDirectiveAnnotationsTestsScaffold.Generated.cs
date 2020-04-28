@@ -20,6 +20,7 @@ public void named_item_can_be_removed() {
     var schema = Schema.Create(_ => {
 
     });
+    throw new NotImplementedException();
 }
 
 
@@ -31,6 +32,7 @@ public void named_item_cannot_be_renamed_if_name_already_exists() {
     var schema = Schema.Create(_ => {
 
     });
+    throw new NotImplementedException();
 }
 
 
@@ -42,6 +44,7 @@ public void named_item_name_must_be_valid_name() {
     var schema = Schema.Create(_ => {
 
     });
+    throw new NotImplementedException();
 }
 
 
