@@ -20,6 +20,18 @@ public partial class ScalarTypeDescriptionTestsScaffold {
 
 // Priority: Low
 // Subject Name: Description
+[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
+[Fact(Skip = "generated")]
+public void it_can_be_updated() {
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
+
+// Priority: Low
+// Subject Name: Description
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
 [Fact(Skip = "generated")]
 public void optional_item_can_be_removed() {
@@ -35,18 +47,6 @@ public void optional_item_can_be_removed() {
 [Spec(nameof(OptionalSpecs.parent_can_be_created_without))]
 [Fact(Skip = "generated")]
 public void parent_can_be_created_without() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-
-
-// Priority: Low
-// Subject Name: Description
-[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
-[Fact(Skip = "generated")]
-public void it_can_be_updated() {
     var schema = Schema.Create(_ => {
 
     });
