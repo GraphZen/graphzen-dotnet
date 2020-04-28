@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -28,7 +29,7 @@ namespace GraphZen.TypeSystem.Tests
         public void EnumCreatedWithClrTypeInfersValues()
         {
             var schema = Schema.Create(sb => sb.Enum<FooEnum>());
-            var values = schema.GetEnum<FooEnum>().GetValues().ToReadOnlyList();
+            var values = schema.GetEnum<FooEnum>().GetValues().ToImmutableList();
             values.Count.Should().Be(2);
             values[0].Name.Should().Be(nameof(FooEnum.Bar));
             values[0].Description.Should().Be("bar desc");

@@ -17,10 +17,6 @@ namespace GraphZen.Infrastructure
 {
     internal static class EnumerableExtensions
     {
-        public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(this IEnumerable<TSource> source) =>
-            source.ToList().AsReadOnly();
-
-
         public static bool TryGetDuplicateValueBy<TSource, TValue>(this IEnumerable<TSource> source,
             Func<TSource, TValue> selector, [NotNullWhen(true)] out TSource duplicate) where TSource : class
         {

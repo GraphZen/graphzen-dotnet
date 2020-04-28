@@ -8,49 +8,8 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.MemberTypes {
 public partial class UnionTypeMemberTypesTests {
-
-[Spec("item_can_be_removed")]
-[Fact]
-public void item_can_be_removed() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-// SpecId: item_can_be_removed
-// Priority: Low
-
-
-
-
-[Spec("item_can_be_added")]
-[Fact]
-public void item_can_be_added() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-// SpecId: item_can_be_added
-// Priority: Low
-
-
-
-
-[Spec("item_must_be_valid_name")]
-[Fact]
-public void item_must_be_valid_name() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-// SpecId: item_must_be_valid_name
-// Priority: Low
-
-
-
 }
 }

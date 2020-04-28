@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -128,7 +129,7 @@ namespace GraphZen.LanguageModel
                 });
 
 
-            return new DocumentSyntax(sorted.ToReadOnlyList());
+            return new DocumentSyntax(sorted.ToImmutableList());
         }
     }
 }

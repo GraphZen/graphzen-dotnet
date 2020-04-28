@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         {
             var tasksByTarget = generators
                 .GroupBy(_ => _.TargetType)
-                .Select(_ => (targetType: _.Key, tasks: _.ToReadOnlyList()));
+                .Select(_ => (targetType: _.Key, tasks: _.ToImmutableList()));
 
             foreach (var (targetType, tasks) in tasksByTarget)
             {

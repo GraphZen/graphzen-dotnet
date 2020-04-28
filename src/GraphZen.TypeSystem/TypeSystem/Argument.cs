@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using GraphZen.Infrastructure;
@@ -58,7 +59,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition.InputType, nameof(definition.InputType));
             return new Argument(definition.Name, definition.Description, definition.InputType,
                 definition.DefaultValue, definition.HasDefaultValue,
-                definition.GetDirectiveAnnotations().ToReadOnlyList(),
+                definition.GetDirectiveAnnotations().ToImmutableList(),
                 typeResolver, declaringMember, definition.ClrInfo);
         }
     }

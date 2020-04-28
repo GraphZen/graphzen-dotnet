@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -47,10 +48,10 @@ namespace GraphZen.LanguageModel
             Definitions = Check.NotNull(definitions, nameof(definitions));
             _inputTypeDefinitions = new Lazy<IReadOnlyList<TypeDefinitionSyntax>>(() => Definitions
                 .OfType<TypeDefinitionSyntax>().Where(_ => _.IsInputType)
-                .ToReadOnlyList());
+                .ToImmutableList());
 
             _outputTypeDefinitions = new Lazy<IReadOnlyList<TypeDefinitionSyntax>>(() =>
-                Definitions.OfType<TypeDefinitionSyntax>().Where(_ => _.IsOutputType).ToReadOnlyList());
+                Definitions.OfType<TypeDefinitionSyntax>().Where(_ => _.IsOutputType).ToImmutableList());
 
             _abstractTypeMap = new Lazy<IReadOnlyDictionary<string, TypeDefinitionSyntax>>(() =>
                 Definitions.Where(_ => _ is UnionTypeDefinitionSyntax || _ is InterfaceTypeDefinitionSyntax)
@@ -177,7 +178,7 @@ namespace GraphZen.LanguageModel
             {
                 return unionType.MemberTypes.Select(_ =>
                         GetObjectTypeMap().TryGetValue(_.Name.Value, out var outputType) ? outputType : null)
-                    .Where(_ => _ != null).Select(_ => _!).ToReadOnlyList();
+                    .Where(_ => _ != null).Select(_ => _!).ToImmutableList();
             }
 
             return GetImplementationMap().TryGetValue(abstractType.Name.Value, out var possibleTypes)

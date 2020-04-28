@@ -8,6 +8,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.DirectiveAnnotations.DirectiveAnnotation.Arguments.Argument {
 public partial class ArgumentsArgumentTests {
 }

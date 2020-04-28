@@ -15,7 +15,7 @@ namespace GraphZen.SpecAudit.SpecFx
         public SpecSuite(string name, Subject rootSubject, IEnumerable<Spec> specs, Assembly testAssembly)
         {
             Name = name;
-            Specs = specs.ToReadOnlyList();
+            Specs = specs.ToImmutableList();
             RootSubject = rootSubject;
             TestAssembly = testAssembly;
             Subjects = rootSubject.GetSelfAndDescendants().ToImmutableList();

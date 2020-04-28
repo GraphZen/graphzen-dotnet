@@ -8,49 +8,8 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Description {
 public partial class DirectiveDescriptionTests {
-
-[Spec("parent_can_be_created_without")]
-[Fact]
-public void parent_can_be_created_without() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-// SpecId: parent_can_be_created_without
-// Priority: High
-
-
-
-
-[Spec("it_can_be_removed")]
-[Fact]
-public void it_can_be_removed() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-// SpecId: it_can_be_removed
-// Priority: High
-
-
-
-
-[Spec("it_can_be_updated")]
-[Fact]
-public void it_can_be_updated() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-// SpecId: it_can_be_updated
-// Priority: High
-
-
-
 }
 }
