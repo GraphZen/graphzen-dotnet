@@ -47,15 +47,20 @@ namespace GraphZen.CodeGen.Generators
                     {
                         foreach (var (specId, subjectSpec) in subject.Specs.OrderBy(_ => _.Key))
                         {
-                            if (suite.Specs.TryGetValue(specId, out var spec) && !suite.Tests.Any(_ =>
-                                _.SubjectPath == subject.Path && _.SpecId == specId &&
-                                !_.TestMethod.DeclaringType!.Name.Contains("Scaffold")))
+                            if (suite.Specs.TryGetValue(specId, out var spec))
                             {
-                                generate = true;
-                                var specRef = spec.FieldInfo != null
-                                    ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
-                                    : $"\"{spec.Id}\"";
-                                cls.AppendLine($@"
+                                var isTestImplemented = suite.Tests.Any(_ =>
+                                                                _.SubjectPath == subject.Path && _.SpecId == specId &&
+                                                                !_.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
+                                if (!isTestImplemented)
+                                {
+
+
+                                    generate = true;
+                                    var specRef = spec.FieldInfo != null
+                                        ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
+                                        : $"\"{spec.Id}\"";
+                                    cls.AppendLine($@"
 // Priority: {subjectSpec.Priority}
 // Subject Name: {subject.Name}
 [Spec({specRef})]
@@ -67,6 +72,7 @@ public void {spec.Id}() {{
 }}
 
 ");
+                                }
                             }
                         }
                     });
