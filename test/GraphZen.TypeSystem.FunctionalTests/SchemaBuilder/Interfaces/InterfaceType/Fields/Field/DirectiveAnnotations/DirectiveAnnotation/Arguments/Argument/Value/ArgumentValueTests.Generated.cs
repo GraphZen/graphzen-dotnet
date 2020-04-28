@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfaceType.Fields.Field.DirectiveAnnotations.DirectiveAnnotation.Arguments.Argument.Value {
 public partial class ArgumentValueTests {
 
