@@ -10,7 +10,6 @@ using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit;
 using JetBrains.Annotations;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace GraphZen.CodeGen.Generators
 {
@@ -55,7 +54,7 @@ namespace GraphZen.CodeGen.Generators
                         {
                             if (suite.Specs.TryGetValue(specId, out var spec) && !suite.Tests.Any(_ =>
                                 _.SubjectPath == subject.Path && _.SpecId == specId &&
-                                _.TestMethod.DeclaringType!.Name.Contains("Scaffold")))
+                                !_.TestMethod.DeclaringType!.Name.Contains("Scaffold")))
                             {
                                 generate = true;
                                 var specRef = spec.FieldInfo != null
