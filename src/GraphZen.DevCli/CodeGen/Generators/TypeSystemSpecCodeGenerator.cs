@@ -26,7 +26,7 @@ namespace GraphZen.CodeGen.Generators
                 var path = subject.GetSelfAndAncestors().Select(_ => _.Name).ToArray();
                 var classNameSegments = path.Length == 1 ? path : path[^2..];
                 var className = string.Join("", classNameSegments) + "Tests";
-                var fileName = string.Join("", $"{className}.Generated.cs").Dump("fileName");
+                var fileName = string.Join("", $"{className}Scaffold.Generated.cs");
                 var filePath = Path.Combine(pathBase, Path.Combine(path), fileName);
                 var ns = string.Join(".", path.Prepend(rootNamespace));
                 var suiteSpecs = suite.Specs.Values;
@@ -41,9 +41,6 @@ namespace GraphZen.CodeGen.Generators
                 {
                     _.PartialClass(className, cls =>
                     {
-
-
-
                         var specs = suiteSpecs.Where(s => subject.Specs.ContainsKey(s.Id));
                         foreach (var spec in specs)
                         {
@@ -51,7 +48,9 @@ namespace GraphZen.CodeGen.Generators
                             var subjectSpec = subject.Specs[spec.Id];
 
 
-                            var specRef = spec.FieldInfo != null ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})" : $"\"{spec.Id}\"";
+                            var specRef = spec.FieldInfo != null
+                                ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
+                                : $"\"{spec.Id}\"";
 
                             cls.AppendLine($@"
 // Priority: {subjectSpec.Priority}
@@ -73,7 +72,6 @@ public void {spec.Id}() {{
                 //yield return new GeneratedCode(filePath, contents);
                 if (generate)
                 {
-
                     yield return new GeneratedCode(filePath, csharp.ToString());
                 }
             }

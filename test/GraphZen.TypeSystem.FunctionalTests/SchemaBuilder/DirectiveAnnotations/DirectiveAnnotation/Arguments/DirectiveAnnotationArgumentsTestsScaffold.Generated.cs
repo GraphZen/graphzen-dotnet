@@ -1,6 +1,3 @@
-// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-
 #nullable enable
 
 using System.Diagnostics.CodeAnalysis;
@@ -17,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
 // Priority: Low
 // Subject Name: Arguments
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
-        [Fact]
+        [Fact(Skip = "generated")]
         public void named_item_can_be_added()
         {
             var schema = Schema.Create(_ => { });
@@ -26,8 +23,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
 
 // Priority: Low
 // Subject Name: Arguments
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
+        [Fact(Skip = "generated")]
+        public void named_item_can_be_removed()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+// Priority: Low
+// Subject Name: Arguments
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
-        [Fact]
+        [Fact(Skip = "generated")]
         public void named_item_can_be_renamed()
         {
             var schema = Schema.Create(_ => { });
@@ -37,7 +44,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
 // Priority: Low
 // Subject Name: Arguments
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
-        [Fact]
+        [Fact(Skip = "generated")]
         public void named_item_cannot_be_renamed_if_name_already_exists()
         {
             var schema = Schema.Create(_ => { });
@@ -46,18 +53,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
 
 // Priority: Low
 // Subject Name: Arguments
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
-        [Fact]
-        public void named_item_can_be_removed()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-// Priority: Low
-// Subject Name: Arguments
         [Spec(nameof(NamedCollectionSpecs.named_item_name_must_be_valid_name))]
-        [Fact]
+        [Fact(Skip = "generated")]
         public void named_item_name_must_be_valid_name()
         {
             var schema = Schema.Create(_ => { });
