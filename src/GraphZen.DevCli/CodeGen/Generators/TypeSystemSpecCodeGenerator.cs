@@ -42,7 +42,7 @@ namespace GraphZen.CodeGen.Generators
                 {
                     if (!File.Exists(Path.Combine(fileDir, $"{className}.cs")))
                     {
-                        _.AppendLine("[NoReorder]");
+                        _.AppendLine("[NoReorder] //");
                         _.Class(className,
                             cls => { cls.AppendLine("// Move me into a separate file to start writing tests"); });
                     }
