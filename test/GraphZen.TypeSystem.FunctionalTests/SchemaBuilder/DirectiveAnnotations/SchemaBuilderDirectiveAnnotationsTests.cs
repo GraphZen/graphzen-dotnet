@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_renamed))]
-        [Fact()]
+        [Fact(Skip = "generated")]
         public void named_item_can_be_renamed()
         {
             // Priority: Low

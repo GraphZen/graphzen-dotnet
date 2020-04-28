@@ -30,8 +30,6 @@ namespace GraphZen.CodeGen.Generators
                 var fileDir = Path.Combine(pathBase, Path.Combine(path));
                 var filePath = Path.Combine(fileDir, fileName);
                 var ns = string.Join(".", path.Prepend(rootNamespace));
-                var suiteSpecs = suite.Specs.Values;
-
                 var generate = false;
                 var csharp = CSharpStringBuilder.Create();
 
@@ -60,7 +58,7 @@ namespace GraphZen.CodeGen.Generators
                                         : $"\"{spec.Id}\"";
                                     cls.AppendLine($@"
 [Spec({specRef})]
-[Fact(Skip = ""generated"")]
+[Fact]
 public void {spec.Id}() {{
     // Priority: {subjectSpec.Priority}
     var schema = Schema.Create(_ => {{
