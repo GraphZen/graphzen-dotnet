@@ -41,6 +41,10 @@ namespace GraphZen.CodeGen.Generators
                 {
                     _.PartialClass(className, cls =>
                     {
+                        cls.AppendLine("// Move me into a seperate file to start writing tests");
+                    });
+                    _.PartialClass(className + "Scaffold", cls =>
+                    {
                         var specs = suiteSpecs.Where(s => subject.Specs.ContainsKey(s.Id));
                         foreach (var spec in specs)
                         {
