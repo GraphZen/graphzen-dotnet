@@ -22,17 +22,28 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
         public void WriteToFile()
         {
-            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Path));
             try
             {
-                File.WriteAllText(Path, Contents);
+                var writeFile = !File.Exists(Path) || !File.ReadAllText(Path).Equals(Contents);
+
+
+                if (writeFile)
+                {
+                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Path));
+                    File.WriteAllText(Path, Contents);
+                    Console.WriteLine($"Generated file: {Path}");
+                }
+                else
+                {
+
+                    Console.WriteLine($"Generated file already exists: {Path}");
+                }
             }
             catch (Exception e)
             {
                 throw new Exception($"Error writing contents to file: '{Path}'. See inner exception for details.", e);
             }
 
-            Console.WriteLine($"Generated file: {Path}");
         }
     }
 }
