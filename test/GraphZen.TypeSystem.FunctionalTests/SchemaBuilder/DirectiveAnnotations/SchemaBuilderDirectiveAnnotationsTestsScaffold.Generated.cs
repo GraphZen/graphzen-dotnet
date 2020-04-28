@@ -11,7 +11,29 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotations {
 [NoReorder]
-public abstract class SchemaBuilderDirectiveAnnotationsTestsScaffold {
+public  class SchemaBuilderDirectiveAnnotationsTests {
+
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
+[Fact(Skip = "generated")]
+public void named_item_can_be_added() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
+
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
+[Fact(Skip = "generated")]
+public void named_item_can_be_removed() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+}
+
+
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
 [Fact(Skip = "generated")]
@@ -45,5 +67,9 @@ public void named_item_name_must_be_valid_name() {
 }
 
 
+}
+// Move SchemaBuilderDirectiveAnnotationsTests into a separate file to start writing tests
+[NoReorder] 
+public  class SchemaBuilderDirectiveAnnotationsTestsScaffold {
 }
 }

@@ -43,7 +43,7 @@ namespace GraphZen.CodeGen.Generators
                     var testFileExists = File.Exists(Path.Combine(fileDir, $"{className}.cs"));
 
                     _.AppendLine("[NoReorder]");
-                    _.Class(testFileExists ? "abstract" : "", testFileExists ? className + "Scaffold" : className, cls =>
+                    _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
                     {
                         foreach (var (specId, subjectSpec) in subject.Specs.OrderBy(_ => _.Key))
                         {

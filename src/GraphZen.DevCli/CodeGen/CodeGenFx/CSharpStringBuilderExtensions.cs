@@ -26,6 +26,7 @@ using JetBrains.Annotations;
         public static void Namespace(this StringBuilder csharp, string name, Action<StringBuilder> @namespace) =>
             csharp.Block($"namespace {name} {{", "}", @namespace);
 
+
         public static void Class(this StringBuilder csharp, string? qualifiers, string name,
             Action<StringBuilder> @class) => csharp.Block($"public {qualifiers} class {name} {{", "}", @class);
 
@@ -35,6 +36,10 @@ using JetBrains.Annotations;
 
         public static void AbstractPartialClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>
             csharp.Class("abstract partial", name, @class);
+
+        public static void AbstractClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>
+                    csharp.Class("abstract ", name, @class);
+
 
         public static void PartialClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>
             csharp.Class("partial", name, @class);
