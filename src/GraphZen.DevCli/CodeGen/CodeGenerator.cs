@@ -41,7 +41,8 @@ namespace GraphZen.CodeGen
             foreach (var stale in existingGeneratedFiles.Where(old => generated.All(g =>
                 !Path.GetFullPath(g.Path).Equals(Path.GetFullPath(old), StringComparison.OrdinalIgnoreCase))))
             {
-                Console.Write($"Stale {stale}");
+                Console.Write($"Deleting stale generated file: {stale}");
+                File.Delete(stale);
             }
         }
 
