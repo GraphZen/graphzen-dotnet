@@ -11,22 +11,10 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description {
-[NoReorder] //
-public  class SchemaBuilderDescriptionTests {
-// Move me into a separate file to start writing tests
-}
-[NoReorder]
+    [NoReorder]
 public partial class SchemaBuilderDescriptionTestsScaffold {
 
-// Priority: Low
-// Subject Name: Description
-[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
-[Fact(Skip = "generated")]
-public void it_can_be_updated() {
-    var schema = Schema.Create(_ => {
 
-    });
-}
 
 
 
