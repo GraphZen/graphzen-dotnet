@@ -10,15 +10,11 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Description {
-// Move DirectiveDescriptionTests into a separate file to start writing tests
-[NoReorder] 
-public  class DirectiveDescriptionTests {
-}
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description {
 [NoReorder]
-public partial class DirectiveDescriptionTestsScaffold {
+public partial class SchemaBuilderDescriptionTestsScaffold {
 
-// Priority: High
+// Priority: Low
 // Subject Name: Description
 [Spec(nameof(UpdateableSpecs.it_can_be_updated))]
 [Fact(Skip = "generated")]
@@ -30,7 +26,7 @@ public void it_can_be_updated() {
 
 
 
-// Priority: High
+// Priority: Low
 // Subject Name: Description
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
 [Fact(Skip = "generated")]
@@ -42,7 +38,7 @@ public void optional_item_can_be_removed() {
 
 
 
-// Priority: High
+// Priority: Low
 // Subject Name: Description
 [Spec(nameof(OptionalSpecs.parent_can_be_created_without))]
 [Fact(Skip = "generated")]
