@@ -54,18 +54,15 @@ namespace GraphZen.CodeGen.Generators
                                                                 !_.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
                                 if (!isTestImplemented)
                                 {
-
-
                                     generate = true;
                                     var specRef = spec.FieldInfo != null
                                         ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
                                         : $"\"{spec.Id}\"";
                                     cls.AppendLine($@"
-// Priority: {subjectSpec.Priority}
-// Subject Name: {subject.Name}
 [Spec({specRef})]
 [Fact(Skip = ""generated"")]
 public void {spec.Id}() {{
+    // Priority: {subjectSpec.Priority}
     var schema = Schema.Create(_ => {{
 
     }});
