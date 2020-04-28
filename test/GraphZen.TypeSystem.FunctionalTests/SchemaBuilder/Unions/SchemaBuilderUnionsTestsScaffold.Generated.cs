@@ -11,9 +11,11 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions {
+[NoReorder]
 public partial class SchemaBuilderUnionsTests {
 // Move me into a separate file to start writing tests
 }
+[NoReorder]
 public partial class SchemaBuilderUnionsTestsScaffold {
 
 // Priority: Low

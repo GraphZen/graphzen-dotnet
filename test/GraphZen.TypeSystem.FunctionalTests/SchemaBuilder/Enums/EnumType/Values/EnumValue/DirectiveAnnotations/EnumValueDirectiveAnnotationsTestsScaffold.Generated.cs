@@ -11,9 +11,11 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable PartialTypeWithSinglePart
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Values.EnumValue.DirectiveAnnotations {
+[NoReorder]
 public partial class EnumValueDirectiveAnnotationsTests {
 // Move me into a separate file to start writing tests
 }
+[NoReorder]
 public partial class EnumValueDirectiveAnnotationsTestsScaffold {
 
 // Priority: Low
