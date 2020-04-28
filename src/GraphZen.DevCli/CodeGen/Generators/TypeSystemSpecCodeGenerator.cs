@@ -40,7 +40,7 @@ namespace GraphZen.CodeGen.Generators
                 csharp.AppendLine("// ReSharper disable PartialTypeWithSinglePart");
                 csharp.Namespace(ns, _ =>
                 {
-                    var testFileExists = !File.Exists(Path.Combine(fileDir, $"{className}.cs"));
+                    var testFileExists = File.Exists(Path.Combine(fileDir, $"{className}.cs"));
                     if (!testFileExists)
                     {
                         _.AppendLine($"// Move {className} into a separate file to start writing tests");
