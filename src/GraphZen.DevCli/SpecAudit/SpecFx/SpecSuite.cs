@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -25,6 +26,7 @@ namespace GraphZen.SpecAudit.SpecFx
 
         public string Name { get; }
         public IReadOnlyList<Spec> Specs { get; }
+        public IEnumerable<Spec> GetAllSpecs() => Specs.SelectMany(_ => _.GetSelfAndDescendants());
         public IReadOnlyList<SpecTest> Tests { get; }
         public IReadOnlyList<Subject> Subjects { get; }
         public IReadOnlyDictionary<string, Subject> SubjectsByPath { get; }

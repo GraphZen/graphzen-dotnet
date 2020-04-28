@@ -36,6 +36,15 @@ namespace GraphZen.SpecAudit.SpecFx
         public FieldInfo? FieldInfo { get; }
         public ImmutableList<Spec> Children { get; }
 
+        public IEnumerable<Spec> GetSelfAndDescendants()
+        {
+            yield return this;
+            foreach (var desc in Children.SelectMany(_ => _.GetSelfAndDescendants()))
+            {
+                yield return desc;
+            }
+        }
+
 
         private static Spec From(Type type)
         {

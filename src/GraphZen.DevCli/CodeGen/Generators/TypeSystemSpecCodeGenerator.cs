@@ -29,7 +29,9 @@ namespace GraphZen.CodeGen.Generators
                 var fileName = string.Join("", $"{className}.Generated.cs").Dump("fileName");
                 var filePath = Path.Combine(pathBase, Path.Combine(path), fileName);
                 var ns = string.Join(".", path.Prepend(rootNamespace));
+                var suiteSpecs = suite.GetAllSpecs();
 
+                var generate = false;
                 var csharp = CSharpStringBuilder.Create();
                 csharp.AppendLine("using Xunit;");
                 csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;");
@@ -38,11 +40,10 @@ namespace GraphZen.CodeGen.Generators
                     _.PartialClass(className, cls =>
                     {
 
-
-
-                        var specs = suite.Specs.Where(_ => subject.Specs.ContainsKey(_.Id));
+                        var specs = suiteSpecs.Where(s => subject.Specs.ContainsKey(s.Id));
                         foreach (var spec in specs)
                         {
+                            generate = true;
                             var subjectSpec = subject.Specs[spec.Id];
 
 
@@ -65,7 +66,11 @@ public void {spec.Id}() {{
 
                 //var contents = $"/* {csharp} */";
                 //yield return new GeneratedCode(filePath, contents);
-                yield return new GeneratedCode(filePath, csharp.ToString());
+                if (generate)
+                {
+
+                    yield return new GeneratedCode(filePath, csharp.ToString());
+                }
             }
         }
     }
