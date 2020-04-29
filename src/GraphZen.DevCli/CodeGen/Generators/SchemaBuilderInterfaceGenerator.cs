@@ -40,7 +40,7 @@ namespace GraphZen.CodeGen.Generators
                 },
                 {
                     nameof(Scalar),
-                    new KindConfig {TypeName = nameof(ScalarType), SimpleBuilder = false, ContextBuilder = false}
+                    new KindConfig {TypeName = nameof(ScalarType) }
                 },
                 {
                     nameof(Enum),
@@ -48,11 +48,11 @@ namespace GraphZen.CodeGen.Generators
                 },
                 {
                     nameof(Interface),
-                    new KindConfig {TypeName = nameof(InterfaceType), SimpleBuilder = false, ContextBuilder = false}
+                    new KindConfig {TypeName = nameof(InterfaceType),  ContextBuilder = true}
                 },
                 {
                     nameof(InputObject),
-                    new KindConfig {TypeName = nameof(InputObjectType), SimpleBuilder = false, ContextBuilder = false}
+                    new KindConfig {TypeName = nameof(InputObjectType), SimpleBuilder = false }
                 }
             };
 
