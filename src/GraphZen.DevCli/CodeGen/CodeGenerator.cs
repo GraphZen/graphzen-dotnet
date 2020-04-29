@@ -51,7 +51,7 @@ namespace GraphZen.CodeGen
             using var repo = new Repository("./");
             if (repo.RetrieveStatus().IsDirty)
             {
-                Console.WriteLine("There are uncommitted files in the repository. Save changes ([Y]/N)?");
+                Console.WriteLine("There are uncommitted files in the repository. Save changes? [Y]/N");
                 var commitMessage = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(commitMessage) ||
                     commitMessage.Equals("Y", StringComparison.OrdinalIgnoreCase))
