@@ -21,7 +21,6 @@ namespace GraphZen.CodeGen.Generators
         public override void Apply(StringBuilder csharp)
         {
             foreach (var (kind, type) in TypeSystemCodeGen.NamedTypes
-                .Where(_ => _.kind == "Object")
                 .Where(_ => _.kind != "Scalar" && _.kind != "Enum"))
             {
                 csharp.Region($"{kind} type accessors", region =>
@@ -30,7 +29,9 @@ namespace GraphZen.CodeGen.Generators
 
 
          ISchemaBuilder<TContext> Ignore{kind}(Type clrType);
+
          ISchemaBuilder<TContext> Ignore{kind}(string name);
+
         I{type}Builder<object, TContext> {kind}(Type clrType);
 
 

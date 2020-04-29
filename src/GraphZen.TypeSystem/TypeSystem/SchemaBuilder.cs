@@ -46,6 +46,10 @@ namespace GraphZen.TypeSystem
             new ScalarTypeBuilder<TScalar, TValueNode>(Builder.Scalar(typeof(TScalar),
                 ConfigurationSource.Explicit)!);
 
+        public ISchemaBuilder<GraphQLContext> IgnoreObject(Type clrType) => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> IgnoreObject(string name) => throw new NotImplementedException();
+
         public IObjectTypeBuilder<object, GraphQLContext> Object(Type clrType) =>
             new ObjectTypeBuilder<object, GraphQLContext>(Builder.Object(Check.NotNull(clrType, nameof(clrType)),
                 ConfigurationSource.Explicit
@@ -241,6 +245,10 @@ namespace GraphZen.TypeSystem
         {
         }
 
+
+        public new ISchemaBuilder<TContext> IgnoreObject(Type clrType) => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> IgnoreObject(string name) => throw new NotImplementedException();
 
         public new IObjectTypeBuilder<object, TContext> Object(Type clrType) =>
             new ObjectTypeBuilder<object, TContext>(Builder.Object(Check.NotNull(clrType, nameof(clrType)),

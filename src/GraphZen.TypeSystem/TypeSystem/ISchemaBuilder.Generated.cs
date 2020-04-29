@@ -16,6 +16,8 @@ public  partial interface ISchemaBuilder<TContext> {
 
 
 
+         ISchemaBuilder<TContext> IgnoreObject(Type clrType);
+         ISchemaBuilder<TContext> IgnoreObject(string name);
         IObjectTypeBuilder<object, TContext> Object(Type clrType);
 
 
