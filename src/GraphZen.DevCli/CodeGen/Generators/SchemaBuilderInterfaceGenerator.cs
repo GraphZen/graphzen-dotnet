@@ -32,7 +32,7 @@ namespace GraphZen.CodeGen.Generators
                 },
                 {
                     nameof(Object),
-                    new KindConfig {TypeName = nameof(ObjectType), ContextBuilder = false}
+                    new KindConfig {TypeName = nameof(ObjectType), ContextBuilder = true}
                 },
                 {
                     nameof(Union),
