@@ -23,7 +23,7 @@ namespace GraphZen.CodeGen
         public override void Apply(StringBuilder csharp)
         {
 
-            foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds.Take(3))
+            foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds)
             {
                 csharp.Region(kind + "s", region =>
                 {
