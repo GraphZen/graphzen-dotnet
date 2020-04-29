@@ -23,7 +23,7 @@ namespace GraphZen.CodeGen
         public override void Apply(StringBuilder csharp)
         {
 
-            foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds.Take(1))
+            foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds.Take(2))
             {
                 csharp.Region(kind + "s", region =>
                 {
@@ -118,13 +118,7 @@ public ISchemaBuilder<GraphQLContext> Ignore{kind}(string name) {{
 }}
    
 
-      //   ISchemaBuilder<GraphQLContext> Ignore{kind}<{typeParam}>() where {typeParam}: notnull;
-
-      //   ISchemaBuilder<GraphQLContext> Ignore{kind}(Type clrType);
-
-      //   ISchemaBuilder<GraphQLContext> Ignore{kind}(string name);
-
-");
+   ");
                 });
             }
         }
