@@ -539,6 +539,7 @@ namespace GraphZen.TypeSystem.Internal
             return objectType.Builder;
         }
 
+
         public InternalDirectiveBuilder? Directive(string name, ConfigurationSource configurationSource)
         {
             if (IsDirectiveIgnored(name, configurationSource))
@@ -562,7 +563,7 @@ namespace GraphZen.TypeSystem.Internal
             return directive.Builder;
         }
 
-        private InternalDirectiveBuilder? Directive(Type clrType, ConfigurationSource configurationSource)
+        public InternalDirectiveBuilder? Directive(Type clrType, ConfigurationSource configurationSource)
         {
             if (clrType.IsIgnoredByDataAnnotation())
             {

@@ -42,7 +42,13 @@ public I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(string name) {
 }} 
 
 
-      //  I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {typeParam} : notnull;
+/*
+public  I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {typeParam} : notnull {{
+    var internalBuilder = Builder.{kind}(typeof({typeParam}), ConfigurationSource.Explicit);
+    var builder = new {kind}Builder<{config.DefaultTypeName}>(internalBuilder);
+    return builder;
+}}
+*/
 
 
      //   I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType); 
