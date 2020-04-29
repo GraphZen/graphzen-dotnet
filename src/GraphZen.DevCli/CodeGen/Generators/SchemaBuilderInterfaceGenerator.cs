@@ -48,7 +48,7 @@ namespace GraphZen.CodeGen.Generators
                 },
                 {
                     nameof(Union),
-                    new KindConfig {TypeName = nameof(UnionType), ContextBuilder = false}
+                    new KindConfig {TypeName = nameof(UnionType), ContextBuilder = true}
                 },
                 {
                     nameof(Scalar),
@@ -90,6 +90,28 @@ namespace GraphZen.CodeGen.Generators
 
 
 ");
+                    }
+                    else if (config.ContextBuilder)
+                    {
+                        region.AppendLine($@"
+
+       
+        I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(string name);
+
+
+        I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>() where {typeParam} : notnull;
+
+
+        I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType); 
+
+
+   
+
+
+");
+
+
+
                     }
 
 
