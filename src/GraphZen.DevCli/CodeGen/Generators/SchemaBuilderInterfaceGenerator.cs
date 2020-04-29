@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -37,13 +36,13 @@ namespace GraphZen.CodeGen.Generators
                 {
                     nameof(Directive),
 
-                    new KindConfig {TypeName = nameof(Directive), SimpleBuilder = true }
+                    new KindConfig {TypeName = nameof(Directive), SimpleBuilder = true}
                 },
                 {
                     "Type", new KindConfig {TypeParamName = "ClrType"}
                 },
                 {
-                    nameof(TypeKind.Object),
+                    nameof(Object),
                     new KindConfig {TypeName = nameof(ObjectType), ContextBuilder = false}
                 },
                 {
@@ -55,7 +54,7 @@ namespace GraphZen.CodeGen.Generators
                     new KindConfig {TypeName = nameof(ScalarType), SimpleBuilder = false, ContextBuilder = false}
                 },
                 {
-                    nameof(TypeKind.Enum),
+                    nameof(Enum),
                     new KindConfig {TypeName = nameof(EnumType), SimpleBuilder = true, DefaultTypeName = "string"}
                 },
                 {
@@ -70,13 +69,12 @@ namespace GraphZen.CodeGen.Generators
 
             foreach (var (kind, config) in kinds)
             {
-                csharp.Region(kind, region =>
+                csharp.Region(kind + "s", region =>
                 {
                     var typeParam = "T" + (config.TypeParamName ?? kind);
 
                     if (config.SimpleBuilder)
                     {
-
                         region.AppendLine($@"
 
        
@@ -109,9 +107,6 @@ namespace GraphZen.CodeGen.Generators
 
 
 ");
-
-
-
                     }
 
 
@@ -132,30 +127,6 @@ namespace GraphZen.CodeGen.Generators
          ISchemaBuilder<TContext> Ignore{kind}(string name);
 
 ");
-                });
-            }
-
-
-            foreach (var (kind, type) in TypeSystemCodeGen.NamedTypes
-                .Where(_ => _.kind != "Scalar" && _.kind != "Enum"))
-            {
-                csharp.Region($"{kind} type accessors", region =>
-                {
-                    if (!IsInputKind(kind))
-                    {
-                        region.AppendLine($@"
-
-
-         
-        I{type}Builder<object, TContext> {kind}(Type clrType);
-
-
-        I{type}Builder<object, TContext> {kind}(string name);
-
-
-        I{type}Builder<T{kind}, TContext> {kind}<T{kind}>() where T{kind} : notnull;
-");
-                    }
                 });
             }
         }
