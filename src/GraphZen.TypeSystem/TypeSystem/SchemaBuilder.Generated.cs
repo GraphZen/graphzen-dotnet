@@ -179,14 +179,12 @@ public  IUnionTypeBuilder<TUnion, GraphQLContext> Union<TUnion>() where TUnion :
     var builder = new UnionTypeBuilder<TUnion, GraphQLContext>(internalBuilder);
     return builder;
 }
-/*
-public  IUnionTypeBuilder<object> Union(Type clrType)  {
+public  IUnionTypeBuilder<object, GraphQLContext> Union(Type clrType)  {
             Check.NotNull(clrType, nameof(clrType));
     var internalBuilder = Builder.Union(clrType, ConfigurationSource.Explicit)!;
-    var builder = new UnionTypeBuilder<object>(internalBuilder);
+    var builder = new UnionTypeBuilder<object, GraphQLContext>(internalBuilder);
     return builder;
 }
-*/
 
        
      //   IUnionTypeBuilder<object, GraphQLContext> Union(string name);

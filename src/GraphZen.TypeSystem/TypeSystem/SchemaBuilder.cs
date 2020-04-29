@@ -76,11 +76,7 @@ namespace GraphZen.TypeSystem
                 ConfigurationSource.Explicit)!);
 
       
-       
-        public IUnionTypeBuilder<object, GraphQLContext> Union(Type clrType) =>
-            new UnionTypeBuilder<object, GraphQLContext>(Builder.Union(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit)!);
-
+      
    
         public ISchemaBuilder<GraphQLContext> QueryType(string type)
         {
