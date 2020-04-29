@@ -10,19 +10,21 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen.TypeSystem {
-public  partial class EnumType {
+namespace GraphZen.TypeSystem
+{
+    public partial class EnumType
+    {
 
         [GraphQLIgnore]
-        public EnumValue? FindValue(String name) 
-            => Values.TryGetValue(Check.NotNull(name,nameof(name)), out var value) ? value : null;
+        public EnumValue? FindValue(String name)
+            => Values.TryGetValue(Check.NotNull(name, nameof(name)), out var value) ? value : null;
 
         [GraphQLIgnore]
-        public bool HasValue(String name) 
+        public bool HasValue(String name)
             => Values.ContainsKey(Check.NotNull(name, nameof(name)));
-        
+
         [GraphQLIgnore]
-        public EnumValue GetValue(String name) 
+        public EnumValue GetValue(String name)
             => FindValue(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{this} does not contain a {nameof(EnumValue)} with name '{name}'.");
 
         [GraphQLIgnore]
@@ -31,20 +33,20 @@ public  partial class EnumType {
 
 
         [GraphQLIgnore]
-        public EnumValue? FindValue(Object value) 
-            => ValuesByValue.TryGetValue(Check.NotNull(value,nameof(value)), out var _value) ? _value : null;
+        public EnumValue? FindValue(Object value)
+            => ValuesByValue.TryGetValue(Check.NotNull(value, nameof(value)), out var _value) ? _value : null;
 
         [GraphQLIgnore]
-        public bool HasValue(Object value) 
+        public bool HasValue(Object value)
             => ValuesByValue.ContainsKey(Check.NotNull(value, nameof(value)));
-        
+
         [GraphQLIgnore]
-        public EnumValue GetValue(Object value) 
+        public EnumValue GetValue(Object value)
             => FindValue(Check.NotNull(value, nameof(value))) ?? throw new Exception($"{this} does not contain a {nameof(EnumValue)} with value '{value}'.");
 
         [GraphQLIgnore]
         public bool TryGetValue(Object value, [NotNullWhen(true)] out EnumValue? enumValue)
              => ValuesByValue.TryGetValue(Check.NotNull(value, nameof(value)), out enumValue);
 
-}
+    }
 }

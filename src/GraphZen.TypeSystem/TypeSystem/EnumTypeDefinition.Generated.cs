@@ -10,24 +10,26 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen.TypeSystem {
-public  partial class EnumTypeDefinition {
+namespace GraphZen.TypeSystem
+{
+    public partial class EnumTypeDefinition
+    {
 
         [GraphQLIgnore]
-        public EnumValueDefinition? FindValue(String name) 
-            => Values.TryGetValue(Check.NotNull(name,nameof(name)), out var value) ? value : null;
+        public EnumValueDefinition? FindValue(String name)
+            => Values.TryGetValue(Check.NotNull(name, nameof(name)), out var value) ? value : null;
 
         [GraphQLIgnore]
-        public bool HasValue(String name) 
+        public bool HasValue(String name)
             => Values.ContainsKey(Check.NotNull(name, nameof(name)));
-        
+
         [GraphQLIgnore]
-        public EnumValueDefinition GetValue(String name) 
+        public EnumValueDefinition GetValue(String name)
             => FindValue(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{this} does not contain a {nameof(EnumValueDefinition)} with name '{name}'.");
 
         [GraphQLIgnore]
         public bool TryGetValue(String name, [NotNullWhen(true)] out EnumValueDefinition? enumValueDefinition)
              => Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValueDefinition);
 
-}
+    }
 }

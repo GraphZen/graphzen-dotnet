@@ -10,20 +10,22 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen.LanguageModel {
-public  partial class EnumTypeExtensionSyntax {
+namespace GraphZen.LanguageModel
+{
+    public partial class EnumTypeExtensionSyntax
+    {
 
-	    /// <summary>Empty, read-only list of <see cref="EnumTypeExtensionSyntax"/> nodes.</summary>
-		public static IReadOnlyList<EnumTypeExtensionSyntax> EmptyList {get;} = ImmutableList<EnumTypeExtensionSyntax>.Empty; 
-		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor"/> enters a <see cref="EnumTypeExtensionSyntax"/> node.</summary>
-		public override void VisitEnter( GraphQLSyntaxVisitor visitor) => visitor.EnterEnumTypeExtension(this);
-		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor"/> leaves a <see cref="EnumTypeExtensionSyntax"/> node.</summary>
-		public override void VisitLeave( GraphQLSyntaxVisitor visitor) => visitor.LeaveEnumTypeExtension(this);
-		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor{TResult}"/> enters a <see cref="EnumTypeExtensionSyntax"/> node.</summary>
-		public override TResult VisitEnter<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.EnterEnumTypeExtension(this);
-		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor{TResult}"/> leaves a <see cref="EnumTypeExtensionSyntax"/> node.</summary>
-		public override TResult VisitLeave<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.LeaveEnumTypeExtension(this);
-		public override SyntaxKind Kind {get;} = SyntaxKind.EnumTypeExtension;	
+        /// <summary>Empty, read-only list of <see cref="EnumTypeExtensionSyntax"/> nodes.</summary>
+        public static IReadOnlyList<EnumTypeExtensionSyntax> EmptyList { get; } = ImmutableList<EnumTypeExtensionSyntax>.Empty;
+        /// <summary>Called when a <see cref="GraphQLSyntaxVisitor"/> enters a <see cref="EnumTypeExtensionSyntax"/> node.</summary>
+        public override void VisitEnter(GraphQLSyntaxVisitor visitor) => visitor.EnterEnumTypeExtension(this);
+        /// <summary>Called when a <see cref="GraphQLSyntaxVisitor"/> leaves a <see cref="EnumTypeExtensionSyntax"/> node.</summary>
+        public override void VisitLeave(GraphQLSyntaxVisitor visitor) => visitor.LeaveEnumTypeExtension(this);
+        /// <summary>Called when a <see cref="GraphQLSyntaxVisitor{TResult}"/> enters a <see cref="EnumTypeExtensionSyntax"/> node.</summary>
+        public override TResult VisitEnter<TResult>(GraphQLSyntaxVisitor<TResult> visitor) => visitor.EnterEnumTypeExtension(this);
+        /// <summary>Called when a <see cref="GraphQLSyntaxVisitor{TResult}"/> leaves a <see cref="EnumTypeExtensionSyntax"/> node.</summary>
+        public override TResult VisitLeave<TResult>(GraphQLSyntaxVisitor<TResult> visitor) => visitor.LeaveEnumTypeExtension(this);
+        public override SyntaxKind Kind { get; } = SyntaxKind.EnumTypeExtension;
 
-}
+    }
 }

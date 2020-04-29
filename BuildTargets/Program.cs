@@ -2,9 +2,12 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
+using LibGit2Sharp;
 using Palmmedia.ReportGenerator.Core;
 using static Bullseye.Targets;
 using static SimpleExec.Command;
@@ -104,10 +107,15 @@ namespace BuildTargets
             RunTargetsAndExit(args);
         }
 
-        private static void CleanupCode(string? includes = null)
+        private static void CleanupCode(params string[] includes) => CleanupCode(includes.AsEnumerable());
+
+
+        private static void CleanupCode(IEnumerable<string> includes)
         {
+            var incls = includes.ToImmutableList();
+            var include = incls.Any() ? string.Join(";", incls) : null;
             Run(GetReSharperTool("cleanupcode"),
-                $@"--config=./BuildTargets/cleanupcode.config  {(includes != null ? $"--include=\"{includes}\"" : "")}");
+                $@"--config=./BuildTargets/cleanupcode.config  {(include != null ? $"--include=\"{include}\"" : "")}");
             DotNetFormat();
         }
 
@@ -119,7 +127,16 @@ namespace BuildTargets
             RunCli("gen");
             if (format)
             {
-                CleanupCode("./**/*.Generated.cs");
+                using var repo = new Repository("./");
+                var modified = repo.RetrieveStatus()
+                    .Where(_ => _.State == FileStatus.ModifiedInWorkdir || _.State == FileStatus.NewInWorkdir)
+                    .Where(_ => _.FilePath.EndsWith("Generated.cs")).Select(_ => "./" + _.FilePath).ToImmutableList();
+                if (modified.Any())
+                {
+                    var includes = string.Join(";", modified);
+
+                    CleanupCode(includes);
+                }
             }
         }
         private static void BuildCli()

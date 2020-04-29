@@ -10,9 +10,11 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen.TypeSystem {
-public  partial class SchemaDefinition {
-#region Enum type accessors
+namespace GraphZen.TypeSystem
+{
+    public partial class SchemaDefinition
+    {
+        #region Enum type accessors
 
         public EnumTypeDefinition GetEnum(string name) => GetType<EnumTypeDefinition>(name);
 
@@ -25,7 +27,7 @@ public  partial class SchemaDefinition {
 
         public EnumTypeDefinition? FindEnum<TClrType>() => FindType<EnumTypeDefinition>(typeof(TClrType));
 
-        public EnumTypeDefinition? FindEnum(Type clrType) => 
+        public EnumTypeDefinition? FindEnum(Type clrType) =>
             FindType<EnumTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetEnum(Type clrType, out EnumTypeDefinition type) =>
@@ -43,8 +45,8 @@ public  partial class SchemaDefinition {
 
         public bool HasEnum(string name) => HasType<EnumTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-#endregion
-#region InputObject type accessors
+        #endregion
+        #region InputObject type accessors
 
         public InputObjectTypeDefinition GetInputObject(string name) => GetType<InputObjectTypeDefinition>(name);
 
@@ -57,7 +59,7 @@ public  partial class SchemaDefinition {
 
         public InputObjectTypeDefinition? FindInputObject<TClrType>() => FindType<InputObjectTypeDefinition>(typeof(TClrType));
 
-        public InputObjectTypeDefinition? FindInputObject(Type clrType) => 
+        public InputObjectTypeDefinition? FindInputObject(Type clrType) =>
             FindType<InputObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetInputObject(Type clrType, out InputObjectTypeDefinition type) =>
@@ -75,8 +77,8 @@ public  partial class SchemaDefinition {
 
         public bool HasInputObject(string name) => HasType<InputObjectTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-#endregion
-#region Interface type accessors
+        #endregion
+        #region Interface type accessors
 
         public InterfaceTypeDefinition GetInterface(string name) => GetType<InterfaceTypeDefinition>(name);
 
@@ -89,7 +91,7 @@ public  partial class SchemaDefinition {
 
         public InterfaceTypeDefinition? FindInterface<TClrType>() => FindType<InterfaceTypeDefinition>(typeof(TClrType));
 
-        public InterfaceTypeDefinition? FindInterface(Type clrType) => 
+        public InterfaceTypeDefinition? FindInterface(Type clrType) =>
             FindType<InterfaceTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetInterface(Type clrType, out InterfaceTypeDefinition type) =>
@@ -107,8 +109,8 @@ public  partial class SchemaDefinition {
 
         public bool HasInterface(string name) => HasType<InterfaceTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-#endregion
-#region Object type accessors
+        #endregion
+        #region Object type accessors
 
         public ObjectTypeDefinition GetObject(string name) => GetType<ObjectTypeDefinition>(name);
 
@@ -121,7 +123,7 @@ public  partial class SchemaDefinition {
 
         public ObjectTypeDefinition? FindObject<TClrType>() => FindType<ObjectTypeDefinition>(typeof(TClrType));
 
-        public ObjectTypeDefinition? FindObject(Type clrType) => 
+        public ObjectTypeDefinition? FindObject(Type clrType) =>
             FindType<ObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetObject(Type clrType, out ObjectTypeDefinition type) =>
@@ -139,8 +141,8 @@ public  partial class SchemaDefinition {
 
         public bool HasObject(string name) => HasType<ObjectTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-#endregion
-#region Scalar type accessors
+        #endregion
+        #region Scalar type accessors
 
         public ScalarTypeDefinition GetScalar(string name) => GetType<ScalarTypeDefinition>(name);
 
@@ -153,7 +155,7 @@ public  partial class SchemaDefinition {
 
         public ScalarTypeDefinition? FindScalar<TClrType>() => FindType<ScalarTypeDefinition>(typeof(TClrType));
 
-        public ScalarTypeDefinition? FindScalar(Type clrType) => 
+        public ScalarTypeDefinition? FindScalar(Type clrType) =>
             FindType<ScalarTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetScalar(Type clrType, out ScalarTypeDefinition type) =>
@@ -171,8 +173,8 @@ public  partial class SchemaDefinition {
 
         public bool HasScalar(string name) => HasType<ScalarTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-#endregion
-#region Union type accessors
+        #endregion
+        #region Union type accessors
 
         public UnionTypeDefinition GetUnion(string name) => GetType<UnionTypeDefinition>(name);
 
@@ -185,7 +187,7 @@ public  partial class SchemaDefinition {
 
         public UnionTypeDefinition? FindUnion<TClrType>() => FindType<UnionTypeDefinition>(typeof(TClrType));
 
-        public UnionTypeDefinition? FindUnion(Type clrType) => 
+        public UnionTypeDefinition? FindUnion(Type clrType) =>
             FindType<UnionTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetUnion(Type clrType, out UnionTypeDefinition type) =>
@@ -203,6 +205,6 @@ public  partial class SchemaDefinition {
 
         public bool HasUnion(string name) => HasType<UnionTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-#endregion
-}
+        #endregion
+    }
 }

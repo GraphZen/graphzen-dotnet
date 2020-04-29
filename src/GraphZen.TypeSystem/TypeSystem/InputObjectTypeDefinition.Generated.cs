@@ -10,24 +10,26 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen.TypeSystem {
-public  partial class InputObjectTypeDefinition {
+namespace GraphZen.TypeSystem
+{
+    public partial class InputObjectTypeDefinition
+    {
 
         [GraphQLIgnore]
-        public InputFieldDefinition? FindField(String name) 
-            => Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var field) ? field : null;
+        public InputFieldDefinition? FindField(String name)
+            => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out var field) ? field : null;
 
         [GraphQLIgnore]
-        public bool HasField(String name) 
+        public bool HasField(String name)
             => Fields.ContainsKey(Check.NotNull(name, nameof(name)));
-        
+
         [GraphQLIgnore]
-        public InputFieldDefinition GetField(String name) 
+        public InputFieldDefinition GetField(String name)
             => FindField(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{this} does not contain a {nameof(InputFieldDefinition)} with name '{name}'.");
 
         [GraphQLIgnore]
         public bool TryGetField(String name, [NotNullWhen(true)] out InputFieldDefinition? inputFieldDefinition)
              => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out inputFieldDefinition);
 
-}
+    }
 }

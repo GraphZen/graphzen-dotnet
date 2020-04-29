@@ -9,36 +9,43 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Repeatable {
-[NoReorder]
-public abstract  class DirectiveRepeatableTests {
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Repeatable
+{
+    [NoReorder]
+    public abstract class DirectiveRepeatableTests
+    {
 
-[Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
-[Fact]
-public void optional_item_can_be_removed() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
+        [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
+        [Fact]
+        public void optional_item_can_be_removed()
+        {
+            // Priority: Low
+            var schema = Schema.Create(_ =>
+            {
 
-    });
-    throw new NotImplementedException();
-}
-
-
-
-[Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
-[Fact]
-public void parent_can_be_created_without_optional_item() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
+            });
+            throw new NotImplementedException();
+        }
 
 
-}
-// Move DirectiveRepeatableTests into a separate file to start writing tests
-[NoReorder] 
-public  class DirectiveRepeatableTestsScaffold {
-}
+
+        [Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
+        [Fact]
+        public void parent_can_be_created_without_optional_item()
+        {
+            // Priority: Low
+            var schema = Schema.Create(_ =>
+            {
+
+            });
+            throw new NotImplementedException();
+        }
+
+
+    }
+    // Move DirectiveRepeatableTests into a separate file to start writing tests
+    [NoReorder]
+    public class DirectiveRepeatableTestsScaffold
+    {
+    }
 }
