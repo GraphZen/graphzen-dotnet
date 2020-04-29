@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Microsoft.Diagnostics.Tracing.Parsers.FrameworkEventSource;
 
 namespace GraphZen.CodeGen.CodeGenFx.Generators
 {
@@ -29,11 +28,26 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         protected PartialTypeGenerator(Type targetType)
         {
             TargetType = targetType;
+            TypeShortName = GetShortName(targetType);
         }
+
+
+        public string TypeShortName { get; }
+
 
         public Type TargetType { get; }
 
         public static IReadOnlyList<string> CSharpFiles => CSharpFilesLazy.Value;
+
+        private static string GetShortName(Type type) => type.IsGenericType ? type.Name.Split("`")[0] : type.Name;
+
+        private static string GetDisplayName(Type type)
+        {
+            var gType = type.GetGenericTypeDefinition();
+            var gArgs = string.Join(",", gType.GetGenericArguments().Select(_ => _.Name));
+            var name = gType.Name.Split("`")[0];
+            return $"{name}<{gArgs}>";
+        }
 
         public abstract void Apply(StringBuilder csharp);
 
@@ -55,31 +69,16 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
         public static IEnumerable<GeneratedCode> Generate(IEnumerable<PartialTypeGenerator> generators)
         {
-            var tasksByTarget = generators
-                .GroupBy(_ => _.TargetType)
-                .Select(_ => (targetType: _.Key, tasks: _.ToImmutableList()));
+            var tasksByShortName = generators
+                .GroupBy(_ => _.TypeShortName)
+                .Select(_ => (fileName: _.Key, tasks: _.ToImmutableList()));
 
-            foreach (var (targetType, tasks) in tasksByTarget)
+            foreach (var (typeShortName, fileTasks) in tasksByShortName)
             {
+                var targetFilename = typeShortName + ".cs";
+                var tasksByType = fileTasks.GroupBy(_ => _.TargetType)
+                    .Select(_ => (targetType: _.Key, tasks: _.ToImmutableList()));
 
-                (string shortName, string fullName) GetTypeName(Type type)
-                {
-                    if (!type.IsGenericType)
-                    {
-                        return (type.Name, type.Name);
-                    }
-
-                    var gType = type.GetGenericTypeDefinition();
-
-                    var gArgs = string.Join(",", gType.GetGenericArguments().Select(_ => _.Name));
-
-                    var name = gType.Name.Split("`")[0];
-
-                    return (name, $"{name}<{gArgs}>");
-                }
-
-                var (shortName, fullName) = GetTypeName(targetType);
-                var targetFilename = shortName + ".cs";
                 var targetPath = CSharpFiles.SingleOrDefault(_ => Path.GetFileName(_) == targetFilename);
                 if (targetPath == null)
                 {
@@ -90,7 +89,6 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                 var genDirPath = Path.GetDirectoryName(targetPath) ?? throw new NotImplementedException();
                 var genFilename = Path.GetFileNameWithoutExtension(targetFilename) + ".Generated.cs";
                 var genPath = Path.Combine(genDirPath, genFilename);
-
                 var namespaceLine = File.ReadLines(targetPath).SingleOrDefault(_ => _.StartsWith("namespace"));
                 if (namespaceLine == null)
                 {
@@ -103,23 +101,30 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                 csharp.AppendLine(@"
 // ReSharper disable InconsistentNaming
 ");
+
+
                 csharp.Namespace(namespaceName, ns =>
                 {
-                    var typeType = targetType.IsInterface ? "interface" :
-                        targetType.IsClass ? "class" :
-                        throw new NotImplementedException($"unsupported target type: {targetType}");
-
-                    var maybeStatic = targetType.IsClass && targetType.IsAbstract && targetType.IsSealed
-                        ? "static"
-                        : null;
-
-                    ns.Block($"public {maybeStatic} partial {typeType} {fullName} {{", "}", type =>
+                    foreach (var (targetType, tasks) in tasksByType)
                     {
-                        foreach (var task in tasks)
+                        var typeType = targetType.IsInterface ? "interface" :
+                            targetType.IsClass ? "class" :
+                            throw new NotImplementedException($"unsupported target type: {targetType}");
+
+                        var maybeStatic = targetType.IsClass && targetType.IsAbstract && targetType.IsSealed
+                            ? "static"
+                            : null;
+
+                        var fullName = GetDisplayName(targetType);
+
+                        ns.Block($"public {maybeStatic} partial {typeType} {fullName} {{", "}", type =>
                         {
-                            task.Apply(type);
-                        }
-                    });
+                            foreach (var task in tasks)
+                            {
+                                task.Apply(type);
+                            }
+                        });
+                    }
                 });
 
                 yield return new GeneratedCode(genPath, csharp.ToString());
