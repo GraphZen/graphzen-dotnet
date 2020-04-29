@@ -61,39 +61,24 @@ public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)
                     else if (config.ContextBuilder)
                     {
                         region.AppendLine($@"
-/*
 public I{config.TypeName}Builder<{config.DefaultTypeName}, GraphQLContext> {kind}(string name) {{
     Check.NotNull(name, nameof(name));
     var internalBuilder = Builder.{kind}(name, ConfigurationSource.Explicit)!;
     var builder = new {config.TypeName}Builder<{config.DefaultTypeName}, GraphQLContext>(internalBuilder);
     return builder;
 }} 
-*/
 
-/*
-public  I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {typeParam} : notnull {{
+public  I{config.TypeName}Builder<{typeParam}, GraphQLContext> {kind}<{typeParam}>() where {typeParam} : notnull {{
     var internalBuilder = Builder.{kind}(typeof({typeParam}), ConfigurationSource.Explicit)!;
-    var builder = new {config.TypeName}Builder<{typeParam}>(internalBuilder);
+    var builder = new {config.TypeName}Builder<{typeParam}, GraphQLContext>(internalBuilder);
     return builder;
 }}
-*/
-/*
-public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)  {{
+public  I{config.TypeName}Builder<{config.DefaultTypeName}, GraphQLContext> {kind}(Type clrType)  {{
             Check.NotNull(clrType, nameof(clrType));
     var internalBuilder = Builder.{kind}(clrType, ConfigurationSource.Explicit)!;
-    var builder = new {config.TypeName}Builder<{config.DefaultTypeName}>(internalBuilder);
+    var builder = new {config.TypeName}Builder<{config.DefaultTypeName}, GraphQLContext>(internalBuilder);
     return builder;
 }}
-*/
-
-       
-     //   I{config.TypeName}Builder<{config.DefaultTypeName}, GraphQLContext> {kind}(string name);
-
-
-      //  I{config.TypeName}Builder<{typeParam}, GraphQLContext> {kind}<{typeParam}>() where {typeParam} : notnull;
-
-
-     //   I{config.TypeName}Builder<{config.DefaultTypeName}, GraphQLContext> {kind}(Type clrType); 
 
 
    

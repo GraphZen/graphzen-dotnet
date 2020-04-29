@@ -167,6 +167,26 @@ public ISchemaBuilder<GraphQLContext> IgnoreObject(string name) {
 #endregion
 #region Unions
 
+public IUnionTypeBuilder<object, GraphQLContext> Union(string name) {
+    Check.NotNull(name, nameof(name));
+    var internalBuilder = Builder.Union(name, ConfigurationSource.Explicit)!;
+    var builder = new UnionTypeBuilder<object, GraphQLContext>(internalBuilder);
+    return builder;
+} 
+
+public  IUnionTypeBuilder<TUnion, GraphQLContext> Union<TUnion>() where TUnion : notnull {
+    var internalBuilder = Builder.Union(typeof(TUnion), ConfigurationSource.Explicit)!;
+    var builder = new UnionTypeBuilder<TUnion, GraphQLContext>(internalBuilder);
+    return builder;
+}
+/*
+public  IUnionTypeBuilder<object> Union(Type clrType)  {
+            Check.NotNull(clrType, nameof(clrType));
+    var internalBuilder = Builder.Union(clrType, ConfigurationSource.Explicit)!;
+    var builder = new UnionTypeBuilder<object>(internalBuilder);
+    return builder;
+}
+*/
 
        
      //   IUnionTypeBuilder<object, GraphQLContext> Union(string name);

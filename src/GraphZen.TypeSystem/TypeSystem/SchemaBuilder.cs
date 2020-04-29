@@ -75,14 +75,8 @@ namespace GraphZen.TypeSystem
             new InterfaceTypeBuilder<TInterface, GraphQLContext>(Builder.Interface(typeof(TInterface),
                 ConfigurationSource.Explicit)!);
 
-             public IUnionTypeBuilder<object, GraphQLContext> Union(string name) =>
-            new UnionTypeBuilder<object, GraphQLContext>(Builder.Union(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit)!);
-
-        public IUnionTypeBuilder<TUnion, GraphQLContext> Union<TUnion>() where TUnion : notnull =>
-            new UnionTypeBuilder<TUnion, GraphQLContext>(Builder.Union(typeof(TUnion),
-                ConfigurationSource.Explicit)!);
-
+      
+       
         public IUnionTypeBuilder<object, GraphQLContext> Union(Type clrType) =>
             new UnionTypeBuilder<object, GraphQLContext>(Builder.Union(Check.NotNull(clrType, nameof(clrType)),
                 ConfigurationSource.Explicit)!);
