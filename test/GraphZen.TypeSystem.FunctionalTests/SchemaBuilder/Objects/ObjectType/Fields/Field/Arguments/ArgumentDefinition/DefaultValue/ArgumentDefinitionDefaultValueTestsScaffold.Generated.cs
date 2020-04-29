@@ -27,7 +27,7 @@ public void optional_item_can_be_removed() {
 
 [Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
 [Fact]
-public void parent_can_be_created_without() {
+public void parent_can_be_created_without_optional_item() {
     // Priority: High
     var schema = Schema.Create(_ => {
 

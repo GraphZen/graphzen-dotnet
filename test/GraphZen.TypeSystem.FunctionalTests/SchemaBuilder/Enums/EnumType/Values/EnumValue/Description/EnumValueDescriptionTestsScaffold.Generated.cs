@@ -13,18 +13,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
 [NoReorder]
 public abstract  class EnumValueDescriptionTests {
 
-[Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
-[Fact]
-public void it_can_be_updated() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
-
-
-
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
 [Fact]
 public void optional_item_can_be_removed() {
@@ -39,7 +27,19 @@ public void optional_item_can_be_removed() {
 
 [Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
 [Fact]
-public void parent_can_be_created_without() {
+public void parent_can_be_created_without_optional_item() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
+[Fact]
+public void updateable_item_can_be_updated() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
