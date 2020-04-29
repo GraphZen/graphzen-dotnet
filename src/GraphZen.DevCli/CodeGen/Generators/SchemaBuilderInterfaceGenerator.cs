@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -18,6 +19,7 @@ namespace GraphZen.CodeGen.Generators
     public class SchemaBuilderInterfaceGenerator : PartialTypeGenerator
     {
         private IReadOnlyList<string> _ignorableKinds;
+
         public SchemaBuilderInterfaceGenerator() : base(typeof(ISchemaBuilder<>))
         {
             _ignorableKinds = TypeSystemCodeGen.NamedTypes.Select(_ => _.kind).Append("Directive").Append("Type")
@@ -28,32 +30,70 @@ namespace GraphZen.CodeGen.Generators
         private bool IsOutputKind(string kind) => kind != "InputObject";
 
 
-        private class KindConfig
-        {
-            public bool SimpleBuilder { get; set; }
-            public bool ContextBuilder { get; set; }
-            public string? TypeParamName { get; set; }
-        }
-
-
         public override void Apply(StringBuilder csharp)
         {
-            var kinds = new Dictionary<string, KindConfig>()
+            var kinds = new Dictionary<string, KindConfig>
             {
-                {nameof(Directive), new KindConfig {SimpleBuilder = true, ContextBuilder = false}},
-                {"Type", new KindConfig {SimpleBuilder = false, ContextBuilder = false, TypeParamName = "ClrType"}},
-                {nameof(Object), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
-                {nameof(Union), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
-                {nameof(Scalar), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
-                {nameof(Enum), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
-                {nameof(Interface), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
-                {nameof(InputObject), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
+                {
+                    nameof(Directive),
+
+                    new KindConfig {TypeName = nameof(Directive), SimpleBuilder = true }
+                },
+                {
+                    "Type", new KindConfig {TypeParamName = "ClrType"}
+                },
+                {
+                    nameof(TypeKind.Object),
+                    new KindConfig {TypeName = nameof(ObjectType), ContextBuilder = false}
+                },
+                {
+                    nameof(Union),
+                    new KindConfig {TypeName = nameof(UnionType), ContextBuilder = false}
+                },
+                {
+                    nameof(Scalar),
+                    new KindConfig {TypeName = nameof(ScalarType), SimpleBuilder = false, ContextBuilder = false}
+                },
+                {
+                    nameof(TypeKind.Enum),
+                    new KindConfig {TypeName = nameof(EnumType), SimpleBuilder = true, DefaultTypeName = "string"}
+                },
+                {
+                    nameof(Interface),
+                    new KindConfig {TypeName = nameof(InterfaceType), SimpleBuilder = false, ContextBuilder = false}
+                },
+                {
+                    nameof(InputObject),
+                    new KindConfig {TypeName = nameof(InputObjectType), SimpleBuilder = false, ContextBuilder = false}
+                }
             };
 
             foreach (var (kind, config) in kinds)
             {
-                var typeParam = "T" + config.TypeParamName ?? kind;
-                csharp.AppendLine($@"
+                csharp.Region(kind, region =>
+                {
+                    var typeParam = "T" + config.TypeParamName ?? kind;
+
+                    if (config.SimpleBuilder)
+                    {
+
+                        region.AppendLine($@"
+
+       
+        I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(string name);
+
+
+        I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {typeParam} : notnull;
+
+
+        I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType); 
+
+
+");
+                    }
+
+
+                    region.AppendLine($@"
 
 
         ISchemaBuilder<TContext> Unignore{kind}<{typeParam}>() where {typeParam}: notnull;
@@ -70,8 +110,8 @@ namespace GraphZen.CodeGen.Generators
          ISchemaBuilder<TContext> Ignore{kind}(string name);
 
 ");
+                });
             }
-
 
 
             foreach (var (kind, type) in TypeSystemCodeGen.NamedTypes
@@ -94,11 +134,18 @@ namespace GraphZen.CodeGen.Generators
         I{type}Builder<T{kind}, TContext> {kind}<T{kind}>() where T{kind} : notnull;
 ");
                     }
-                    else
-                    {
-                    }
                 });
             }
+        }
+
+
+        private class KindConfig
+        {
+            public string? TypeName { get; set; }
+            public bool SimpleBuilder { get; set; }
+            public string DefaultTypeName { get; set; } = "object";
+            public bool ContextBuilder { get; set; }
+            public string? TypeParamName { get; set; }
         }
     }
 }
