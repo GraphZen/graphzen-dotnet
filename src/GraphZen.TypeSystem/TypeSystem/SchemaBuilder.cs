@@ -63,6 +63,10 @@ namespace GraphZen.TypeSystem
             new ObjectTypeBuilder<TObject, GraphQLContext>(
                 Builder.Object(typeof(TObject), ConfigurationSource.Explicit)!);
 
+        public ISchemaBuilder<GraphQLContext> IgnoreUnion(Type clrType) => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> IgnoreUnion(string name) => throw new NotImplementedException();
+
         public ISchemaBuilder<GraphQLContext> IgnoreType<TClrType>() => IgnoreType(typeof(TClrType));
 
         public ISchemaBuilder<GraphQLContext> IgnoreType(Type clrType)
@@ -131,6 +135,8 @@ namespace GraphZen.TypeSystem
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit)!);
 
+        public ISchemaBuilder<GraphQLContext> IgnoreInterface(string name) => throw new NotImplementedException();
+
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(Type clrType) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(
                 Check.NotNull(clrType, nameof(clrType)),
@@ -162,18 +168,6 @@ namespace GraphZen.TypeSystem
 
         public IEnumTypeBuilder<string> Enum(Type clrType) =>
             new EnumTypeBuilder<string>(Builder.Enum(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit)!);
-
-        public IInputObjectTypeBuilder<object> InputObject(string name) =>
-            new InputObjectTypeBuilder<object>(Builder.InputObject(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit)!);
-
-        public IInputObjectTypeBuilder<TInput> InputObject<TInput>() =>
-            new InputObjectTypeBuilder<TInput>(
-                Builder.InputObject(typeof(TInput), ConfigurationSource.Explicit)!);
-
-        public IInputObjectTypeBuilder<object> InputObject(Type clrType) =>
-            new InputObjectTypeBuilder<object>(Builder.InputObject(Check.NotNull(clrType, nameof(clrType)),
                 ConfigurationSource.Explicit)!);
 
         public ISchemaBuilder<GraphQLContext> QueryType(string type)
@@ -211,10 +205,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
 
-        public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(object directive) =>
-            throw new NotImplementedException();
+        public ISchemaBuilder<GraphQLContext> IgnoreInterface(Type clrType) => throw new NotImplementedException();
 
         public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(string name, object? value)
         {
@@ -225,15 +217,32 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<GraphQLContext> IgnoreDirectiveAnnotation(string name) =>
             throw new NotImplementedException();
 
+        InternalSchemaBuilder IInfrastructure<InternalSchemaBuilder>.Instance => Builder;
+
+        SchemaDefinition IInfrastructure<SchemaDefinition>.Instance => Builder.Definition;
+
+        public IInputObjectTypeBuilder<object> InputObject(string name) =>
+            new InputObjectTypeBuilder<object>(Builder.InputObject(Check.NotNull(name, nameof(name)),
+                ConfigurationSource.Explicit)!);
+
+        public IInputObjectTypeBuilder<TInput> InputObject<TInput>() =>
+            new InputObjectTypeBuilder<TInput>(
+                Builder.InputObject(typeof(TInput), ConfigurationSource.Explicit)!);
+
+        public IInputObjectTypeBuilder<object> InputObject(Type clrType) =>
+            new InputObjectTypeBuilder<object>(Builder.InputObject(Check.NotNull(clrType, nameof(clrType)),
+                ConfigurationSource.Explicit)!);
+
+        public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
+
+        public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(object directive) =>
+            throw new NotImplementedException();
+
         public ISchemaBuilder<GraphQLContext> RemoveDirectiveAnnotation(string name)
         {
             Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
             return this;
         }
-
-        InternalSchemaBuilder IInfrastructure<InternalSchemaBuilder>.Instance => Builder;
-
-        SchemaDefinition IInfrastructure<SchemaDefinition>.Instance => Builder.Definition;
     }
 
 
@@ -261,6 +270,10 @@ namespace GraphZen.TypeSystem
         public new IObjectTypeBuilder<TObject, TContext> Object<TObject>() =>
             new ObjectTypeBuilder<TObject, TContext>(Builder.Object(typeof(TObject),
                 ConfigurationSource.Explicit)!);
+
+        public new ISchemaBuilder<TContext> IgnoreUnion(Type clrType) => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> IgnoreUnion(string name) => throw new NotImplementedException();
 
         public new ISchemaBuilder<TContext> IgnoreType<TObject>() =>
             (ISchemaBuilder<TContext>)base.IgnoreType<TObject>();
@@ -300,6 +313,10 @@ namespace GraphZen.TypeSystem
         public new IInterfaceTypeBuilder<object, TContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit)!);
+
+        public new ISchemaBuilder<TContext> IgnoreInterface(Type clrType) => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> IgnoreInterface(string name) => throw new NotImplementedException();
 
         public new IInterfaceTypeBuilder<object, TContext> Interface(Type clrType) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(clrType, nameof(clrType)),

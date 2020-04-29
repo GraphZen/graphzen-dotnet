@@ -10,14 +10,37 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen.TypeSystem {
-public  partial interface ISchemaBuilder<TContext> {
-#region Object type accessors
+namespace GraphZen.TypeSystem
+{
+    public partial interface ISchemaBuilder<TContext>
+    {
+        #region InputObject type accessors
+        #endregion
+        #region Interface type accessors
 
 
 
-         ISchemaBuilder<TContext> IgnoreObject(Type clrType);
-         ISchemaBuilder<TContext> IgnoreObject(string name);
+        ISchemaBuilder<TContext> IgnoreInterface(Type clrType);
+
+        ISchemaBuilder<TContext> IgnoreInterface(string name);
+
+        IInterfaceTypeBuilder<object, TContext> Interface(Type clrType);
+
+
+        IInterfaceTypeBuilder<object, TContext> Interface(string name);
+
+
+        IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>();
+
+        #endregion
+        #region Object type accessors
+
+
+
+        ISchemaBuilder<TContext> IgnoreObject(Type clrType);
+
+        ISchemaBuilder<TContext> IgnoreObject(string name);
+
         IObjectTypeBuilder<object, TContext> Object(Type clrType);
 
 
@@ -26,6 +49,23 @@ public  partial interface ISchemaBuilder<TContext> {
 
         IObjectTypeBuilder<TObject, TContext> Object<TObject>();
 
-#endregion
-}
+        #endregion
+        #region Union type accessors
+
+
+
+        ISchemaBuilder<TContext> IgnoreUnion(Type clrType);
+
+        ISchemaBuilder<TContext> IgnoreUnion(string name);
+
+        IUnionTypeBuilder<object, TContext> Union(Type clrType);
+
+
+        IUnionTypeBuilder<object, TContext> Union(string name);
+
+
+        IUnionTypeBuilder<TUnion, TContext> Union<TUnion>();
+
+        #endregion
+    }
 }

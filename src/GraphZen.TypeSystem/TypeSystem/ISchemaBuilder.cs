@@ -68,23 +68,9 @@ namespace GraphZen.TypeSystem
         ISchemaBuilder<TContext> UnignoreDirective(string name);
 
 
-        IInterfaceTypeBuilder<object, TContext> Interface(string name);
+        
 
-
-        IInterfaceTypeBuilder<object, TContext> Interface(Type clrType);
-
-
-        IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>();
-
-
-        IUnionTypeBuilder<object, TContext> Union(string name);
-
-
-        IUnionTypeBuilder<TUnion, TContext> Union<TUnion>();
-
-
-        IUnionTypeBuilder<object, TContext> Union(Type clrType);
-
+   
 
         IEnumTypeBuilder<string> Enum(string name);
 
@@ -94,14 +80,7 @@ namespace GraphZen.TypeSystem
 
         IEnumTypeBuilder<string> Enum(Type clrType);
 
-        IInputObjectTypeBuilder<object> InputObject(string name);
-
-
-        IInputObjectTypeBuilder<TInput> InputObject<TInput>();
-
-
-        IInputObjectTypeBuilder<object> InputObject(Type clrType);
-
+     
 
         ISchemaBuilder<TContext> QueryType(string type);
 

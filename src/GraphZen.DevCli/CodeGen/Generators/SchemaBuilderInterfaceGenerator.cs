@@ -29,6 +29,13 @@ namespace GraphZen.CodeGen.Generators
                 csharp.Region($"{kind} type accessors", region =>
                 {
 
+                    region.AppendLine($@"
+         ISchemaBuilder<TContext> Ignore{kind}<{type}>();
+         ISchemaBuilder<TContext> Ignore{kind}(Type clrType);
+
+         ISchemaBuilder<TContext> Ignore{kind}(string name);
+
+");
                     if (IsInputKind(kind))
                     {
 
@@ -38,10 +45,7 @@ namespace GraphZen.CodeGen.Generators
                         region.AppendLine($@"
 
 
-         ISchemaBuilder<TContext> Ignore{kind}(Type clrType);
-
-         ISchemaBuilder<TContext> Ignore{kind}(string name);
-
+         
         I{type}Builder<object, TContext> {kind}(Type clrType);
 
 
