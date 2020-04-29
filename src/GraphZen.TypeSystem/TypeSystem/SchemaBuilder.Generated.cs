@@ -123,6 +123,48 @@ public ISchemaBuilder<GraphQLContext> IgnoreType(string name) {
 
    
 #endregion
+#region Objects
+
+
+
+public ISchemaBuilder<GraphQLContext> UnignoreObject<TObject>() where TObject: notnull {
+    Builder.UnignoreObject(typeof(TObject), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> UnignoreObject(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.UnignoreObject(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> UnignoreObject(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.UnignoreObject(name, ConfigurationSource.Explicit);
+    return this;
+}
+
+
+public ISchemaBuilder<GraphQLContext> IgnoreObject<TObject>() where TObject: notnull {
+    Builder.IgnoreObject(typeof(TObject), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> IgnoreObject(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.IgnoreObject(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> IgnoreObject(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.IgnoreObject(name, ConfigurationSource.Explicit);
+    return this;
+}
+   
+
+   
+#endregion
 }
 public  partial class SchemaBuilder<TContext> {
 // hello GraphZen.TypeSystem.SchemaBuilder`1[TContext] 

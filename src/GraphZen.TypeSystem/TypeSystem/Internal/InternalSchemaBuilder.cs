@@ -770,5 +770,25 @@ namespace GraphZen.TypeSystem.Internal
         {
             Definition.UnignoreDirective(name, configurationSource);
         }
+
+        public void UnignoreObject(Type type, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreObject(string name, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreObject(Type type, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+public void IgnoreObject(string name, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

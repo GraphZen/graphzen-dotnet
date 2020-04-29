@@ -43,15 +43,7 @@ namespace GraphZen.TypeSystem
             new ScalarTypeBuilder<TScalar, TValueNode>(Builder.Scalar(typeof(TScalar),
                 ConfigurationSource.Explicit)!);
 
-        public ISchemaBuilder<GraphQLContext> UnignoreObject(string name) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreObject<TObject>() where TObject : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreObject(Type clrType) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreObject(string name) => throw new NotImplementedException();
-
+  
         public ISchemaBuilder<GraphQLContext> UnignoreScalar<TScalar>() where TScalar : notnull =>
             throw new NotImplementedException();
 
@@ -111,12 +103,7 @@ namespace GraphZen.TypeSystem
             new InterfaceTypeBuilder<TInterface, GraphQLContext>(Builder.Interface(typeof(TInterface),
                 ConfigurationSource.Explicit)!);
 
-        public ISchemaBuilder<GraphQLContext> UnignoreObject<TObject>() where TObject : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreObject(Type clrType) => throw new NotImplementedException();
-
-        public IUnionTypeBuilder<object, GraphQLContext> Union(string name) =>
+             public IUnionTypeBuilder<object, GraphQLContext> Union(string name) =>
             new UnionTypeBuilder<object, GraphQLContext>(Builder.Union(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit)!);
 
