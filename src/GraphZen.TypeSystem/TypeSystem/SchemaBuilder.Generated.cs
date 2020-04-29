@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 
@@ -16,8 +17,13 @@ public  partial class SchemaBuilder {
 #region Directives
 
 
-       
-        //public IDirectiveBuilder<object> Directive(string name) => throw new NotFiniteNumberException();
+      /* 
+public IDirectiveBuilder<object> Directive(string name) {
+    Check.NotNull(name, nameof(name));
+    var internalBuilder = Builder.Directive(name, ConfigurationSource.Explicit)
+    var builder = new DirectiveBuilder<object>(internalBuilder);
+    return builder;
+} */
 
 
       //  IDirectiveBuilder<TDirective> Directive<TDirective>() where TDirective : notnull;

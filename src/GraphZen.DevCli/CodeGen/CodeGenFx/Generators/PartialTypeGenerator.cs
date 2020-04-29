@@ -56,6 +56,8 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
         public abstract void Apply(StringBuilder csharp);
 
+        public virtual IReadOnlyList<string> Usings { get; } = ImmutableList<string>.Empty;
+
         public static IEnumerable<PartialTypeGenerator> FromTypes(IEnumerable<Type> types) =>
             types.SelectMany(FromType);
 
@@ -99,10 +101,15 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                 {
                     throw new InvalidOperationException($"Expected file to contain a namespace: {targetPath}");
                 }
-
                 var namespaceName = namespaceLine.Split(' ')[1];
 
                 var csharp = CSharpStringBuilder.Create();
+
+                foreach (var use in fileTasks.SelectMany(_ => _.Usings).Distinct())
+                {
+                    csharp.AppendLine(use);
+                }
+
                 csharp.AppendLine(@"
 // ReSharper disable InconsistentNaming
 ");

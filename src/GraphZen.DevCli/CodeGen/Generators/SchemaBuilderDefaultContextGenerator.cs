@@ -1,6 +1,8 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,9 @@ namespace GraphZen.CodeGen
 {
     public class SchemaBuilderDefaultContextGenerator : PartialTypeGenerator<SchemaBuilder>
     {
+        public override IReadOnlyList<string> Usings { get; } =
+            ImmutableList.Create("using GraphZen.TypeSystem.Internal");
+
         public override void Apply(StringBuilder csharp)
         {
             csharp.AppendLine($"// hello {TargetType} ");
@@ -33,7 +38,7 @@ namespace GraphZen.CodeGen
       /*
 public I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(string name) {{
     Check.NotNull(name, nameof(name));
-    var internalBuilder = Builder.{kind}(name, ConfigurationSource.Explicit)
+    var internalBuilder = Builder.{kind}(name, ConfigurationSource.Explicit);
     var builder = new {kind}Builder<{config.DefaultTypeName}>(internalBuilder);
     return builder;
 }} 
