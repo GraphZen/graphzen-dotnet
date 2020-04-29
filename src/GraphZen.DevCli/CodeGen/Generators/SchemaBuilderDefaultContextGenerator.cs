@@ -22,7 +22,6 @@ namespace GraphZen.CodeGen
 
         public override void Apply(StringBuilder csharp)
         {
-            csharp.AppendLine($"// hello {TargetType} ");
 
             foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds.Take(1))
             {
@@ -85,6 +84,18 @@ public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)
 
 public ISchemaBuilder<GraphQLContext> Unignore{kind}<{typeParam}>() where {typeParam}: notnull {{
     Builder.Unignore{kind}(typeof({typeParam}), ConfigurationSource.Explicit);
+    return this;
+}}
+
+public ISchemaBuilder<GraphQLContext> Unignore{kind}(Type clrType) {{
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.Unignore{kind}(clrType, ConfigurationSource.Explicit);
+    return this;
+}}
+
+public ISchemaBuilder<GraphQLContext> Unignore{kind}(string name) {{
+    Check.NotNull(name, nameof(name));
+    Builder.Unignore{kind}(name, ConfigurationSource.Explicit);
     return this;
 }}
 
