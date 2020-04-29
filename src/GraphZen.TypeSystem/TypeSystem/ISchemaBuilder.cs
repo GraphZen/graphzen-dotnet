@@ -11,10 +11,10 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface ISchemaBuilder<TContext> :
-        IInfrastructure<InternalSchemaBuilder>,
-        IAnnotableBuilder<ISchemaBuilder<TContext>>, IInfrastructure<SchemaDefinition>
-        where TContext : GraphQLContext
+    public interface ISchemaBuilder<TContext> : 
+        IInfrastructure<InternalSchemaBuilder>, 
+        IAnnotableBuilder<ISchemaBuilder<TContext>>, 
+        IInfrastructure<SchemaDefinition> where TContext : GraphQLContext
     {
         IDirectiveBuilder<object> Directive(string name);
 
