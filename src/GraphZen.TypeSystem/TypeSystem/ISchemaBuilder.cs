@@ -22,19 +22,17 @@ namespace GraphZen.TypeSystem
         IScalarTypeBuilder<object, ValueSyntax> Scalar(string name);
 
 
-        IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>();
+        IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>() where TScalar : notnull;
 
 
         IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType);
 
 
         IScalarTypeBuilder<TScalar, TValueNode> Scalar<TScalar, TValueNode>()
-            where TValueNode : ValueSyntax;
+            where TValueNode : ValueSyntax
+            where TScalar : notnull;
 
 
-     
-
-   
 
         IEnumTypeBuilder<string> Enum(string name);
 

@@ -11,6 +11,7 @@ using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
+using static GraphZen.TypeSystem.TypeKind;
 
 namespace GraphZen.CodeGen.Generators
 {
@@ -24,46 +25,61 @@ namespace GraphZen.CodeGen.Generators
         }
 
         private bool IsInputKind(string kind) => new[] { "Enum", "Scalar", "InputObject" }.Contains(kind);
+        private bool IsOutputKind(string kind) => kind != "InputObject";
 
 
+        private class KindConfig
+        {
+            public bool SimpleBuilder { get; set; }
+            public bool ContextBuilder { get; set; }
+            public string? TypeParamName { get; set; }
+        }
 
 
         public override void Apply(StringBuilder csharp)
         {
-
-            foreach (var kind in _ignorableKinds)
+            var kinds = new Dictionary<string, KindConfig>()
             {
+                {nameof(Directive), new KindConfig {SimpleBuilder = true, ContextBuilder = false}},
+                {"Type", new KindConfig {SimpleBuilder = false, ContextBuilder = false, TypeParamName = "ClrType"}},
+                {nameof(Object), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
+                {nameof(Union), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
+                {nameof(Scalar), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
+                {nameof(Enum), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
+                {nameof(Interface), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
+                {nameof(InputObject), new KindConfig {SimpleBuilder = false, ContextBuilder = false}},
+            };
+
+            foreach (var (kind, config) in kinds)
+            {
+                var typeParam = "T" + config.TypeParamName ?? kind;
                 csharp.AppendLine($@"
 
 
-        ISchemaBuilder<TContext> Unignore{kind}<T{kind}>() where T{kind}: notnull;
+        ISchemaBuilder<TContext> Unignore{kind}<{typeParam}>() where {typeParam}: notnull;
 
          ISchemaBuilder<TContext> Unignore{kind}(Type clrType);
 
          ISchemaBuilder<TContext> Unignore{kind}(string name);
 
 
-         ISchemaBuilder<TContext> Ignore{kind}<T{kind}>() where T{kind}: notnull;
+         ISchemaBuilder<TContext> Ignore{kind}<{typeParam}>() where {typeParam}: notnull;
 
          ISchemaBuilder<TContext> Ignore{kind}(Type clrType);
 
          ISchemaBuilder<TContext> Ignore{kind}(string name);
 
 ");
-
             }
+
+
 
             foreach (var (kind, type) in TypeSystemCodeGen.NamedTypes
                 .Where(_ => _.kind != "Scalar" && _.kind != "Enum"))
             {
                 csharp.Region($"{kind} type accessors", region =>
                 {
-
-                    if (IsInputKind(kind))
-                    {
-
-                    }
-                    else
+                    if (!IsInputKind(kind))
                     {
                         region.AppendLine($@"
 
@@ -77,11 +93,10 @@ namespace GraphZen.CodeGen.Generators
 
         I{type}Builder<T{kind}, TContext> {kind}<T{kind}>() where T{kind} : notnull;
 ");
-
                     }
-
-
-
+                    else
+                    {
+                    }
                 });
             }
         }
