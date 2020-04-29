@@ -11,8 +11,6 @@ using JetBrains.Annotations;
 // ReSharper disable PossibleInterfaceMemberAmbiguity
 namespace GraphZen.TypeSystem
 {
-    public partial interface ISchemaBuilder<TContext> { }
-
     public partial interface ISchemaBuilder<TContext> :
         IInfrastructure<InternalSchemaBuilder>,
         IAnnotableBuilder<ISchemaBuilder<TContext>>,
