@@ -18,7 +18,7 @@ namespace GraphZen.CodeGen.Generators
         {
         }
 
-        private bool IsInputKind(string kind) => new[] { "Enum", "Scalar" }.Contains(kind);
+        private bool IsInputKind(string kind) => new[] { "Enum", "Scalar", "InputObject" }.Contains(kind);
 
 
         public override void Apply(StringBuilder csharp)
@@ -48,7 +48,7 @@ namespace GraphZen.CodeGen.Generators
         I{type}Builder<object, TContext> {kind}(string name);
 
 
-        I{type}Builder<TObject, TContext> {kind}<T{kind}>();
+        I{type}Builder<T{kind}, TContext> {kind}<T{kind}>();
 ");
 
                     }
