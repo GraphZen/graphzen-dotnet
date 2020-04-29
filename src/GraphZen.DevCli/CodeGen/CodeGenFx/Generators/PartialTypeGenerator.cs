@@ -43,6 +43,11 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
         private static string GetDisplayName(Type type)
         {
+            if (!type.IsGenericType)
+            {
+                return type.Name;
+            }
+
             var gType = type.GetGenericTypeDefinition();
             var gArgs = string.Join(",", gType.GetGenericArguments().Select(_ => _.Name));
             var name = gType.Name.Split("`")[0];
