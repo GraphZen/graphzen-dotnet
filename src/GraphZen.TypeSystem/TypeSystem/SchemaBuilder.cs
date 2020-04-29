@@ -44,19 +44,7 @@ namespace GraphZen.TypeSystem
                 ConfigurationSource.Explicit)!);
 
  
-        public IObjectTypeBuilder<object, GraphQLContext> Object(Type clrType) =>
-            new ObjectTypeBuilder<object, GraphQLContext>(Builder.Object(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit
-            )!);
-
-        public IObjectTypeBuilder<object, GraphQLContext> Object(string name) =>
-            new ObjectTypeBuilder<object, GraphQLContext>(Builder.Object(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit)!);
-
-        public IObjectTypeBuilder<TObject, GraphQLContext> Object<TObject>() where TObject : notnull =>
-            new ObjectTypeBuilder<TObject, GraphQLContext>(
-                Builder.Object(typeof(TObject), ConfigurationSource.Explicit)!);
-
+       
      
                
       

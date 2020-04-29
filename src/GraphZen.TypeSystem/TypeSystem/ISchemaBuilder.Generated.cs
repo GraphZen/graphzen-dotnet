@@ -66,6 +66,22 @@ public  partial interface ISchemaBuilder<TContext> {
 #region Objects
 
 
+       
+        IObjectTypeBuilder<object, TContext> Object(string name);
+
+
+        IObjectTypeBuilder<TObject, TContext> Object<TObject>() where TObject : notnull;
+
+
+        IObjectTypeBuilder<object, TContext> Object(Type clrType); 
+
+
+   
+
+
+
+
+
 
         ISchemaBuilder<TContext> UnignoreObject<TObject>() where TObject: notnull;
 

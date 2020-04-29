@@ -125,6 +125,31 @@ public ISchemaBuilder<GraphQLContext> IgnoreType(string name) {
 #endregion
 #region Objects
 
+public IObjectTypeBuilder<object, GraphQLContext> Object(string name) {
+    Check.NotNull(name, nameof(name));
+    var internalBuilder = Builder.Object(name, ConfigurationSource.Explicit)!;
+    var builder = new ObjectTypeBuilder<object, GraphQLContext>(internalBuilder);
+    return builder;
+} 
+
+public  IObjectTypeBuilder<TObject, GraphQLContext> Object<TObject>() where TObject : notnull {
+    var internalBuilder = Builder.Object(typeof(TObject), ConfigurationSource.Explicit)!;
+    var builder = new ObjectTypeBuilder<TObject, GraphQLContext>(internalBuilder);
+    return builder;
+}
+public  IObjectTypeBuilder<object, GraphQLContext> Object(Type clrType)  {
+            Check.NotNull(clrType, nameof(clrType));
+    var internalBuilder = Builder.Object(clrType, ConfigurationSource.Explicit)!;
+    var builder = new ObjectTypeBuilder<object, GraphQLContext>(internalBuilder);
+    return builder;
+}
+
+
+   
+
+
+
+
 
 
 public ISchemaBuilder<GraphQLContext> UnignoreObject<TObject>() where TObject: notnull {
