@@ -671,7 +671,6 @@ namespace GraphZen.TypeSystem.Internal
             {
                 Definition.IgnoreType(type.Name, configurationSource);
             }
-
             return RemoveType(type, configurationSource);
         }
 

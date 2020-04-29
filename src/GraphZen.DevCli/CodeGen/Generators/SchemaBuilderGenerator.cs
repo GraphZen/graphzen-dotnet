@@ -127,6 +127,24 @@ public ISchemaBuilder<TContext> Ignore{kind}(string name) {{
     Builder.Ignore{kind}(name, ConfigurationSource.Explicit);
     return this;
 }}
+
+public ISchemaBuilder<TContext> Remove{kind}<{typeParam}>() where {typeParam}: notnull {{
+    Builder.Remove{kind}(typeof({typeParam}), ConfigurationSource.Explicit);
+    return this;
+}}
+
+public ISchemaBuilder<TContext> Remove{kind}(Type clrType) {{
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.Remove{kind}(clrType, ConfigurationSource.Explicit);
+    return this;
+}}
+
+public ISchemaBuilder<TContext> Remove{kind}(string name) {{
+    Check.NotNull(name, nameof(name));
+    Builder.Remove{kind}(name, ConfigurationSource.Explicit);
+    return this;
+}}
+
    
 
    ");
