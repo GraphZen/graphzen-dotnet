@@ -52,7 +52,7 @@ namespace GraphZen.CodeGen.Generators
                 },
                 {
                     nameof(InputObject),
-                    new KindConfig {TypeName = nameof(InputObjectType), SimpleBuilder = false }
+                    new KindConfig {TypeName = nameof(InputObjectType), SimpleBuilder = true}
                 }
             };
 
