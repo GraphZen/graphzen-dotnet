@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem {
 public  partial interface ISchemaBuilder<TContext> {
-#region Directive
+#region Directives
 
 
        
@@ -44,7 +44,7 @@ public  partial interface ISchemaBuilder<TContext> {
 
 
 #endregion
-#region Type
+#region Types
 
 
 
@@ -63,7 +63,7 @@ public  partial interface ISchemaBuilder<TContext> {
 
 
 #endregion
-#region Object
+#region Objects
 
 
 
@@ -82,7 +82,23 @@ public  partial interface ISchemaBuilder<TContext> {
 
 
 #endregion
-#region Union
+#region Unions
+
+
+       
+        IUnionTypeBuilder<object, TContext> Union(string name);
+
+
+        IUnionTypeBuilder<TUnion, TContext> Union<TUnion>() where TUnion : notnull;
+
+
+        IUnionTypeBuilder<object, TContext> Union(Type clrType); 
+
+
+   
+
+
+
 
 
 
@@ -101,7 +117,7 @@ public  partial interface ISchemaBuilder<TContext> {
 
 
 #endregion
-#region Scalar
+#region Scalars
 
 
 
@@ -120,7 +136,7 @@ public  partial interface ISchemaBuilder<TContext> {
 
 
 #endregion
-#region Enum
+#region Enums
 
 
        
@@ -152,7 +168,7 @@ public  partial interface ISchemaBuilder<TContext> {
 
 
 #endregion
-#region Interface
+#region Interfaces
 
 
 
@@ -171,7 +187,7 @@ public  partial interface ISchemaBuilder<TContext> {
 
 
 #endregion
-#region InputObject
+#region InputObjects
 
 
 
@@ -188,50 +204,6 @@ public  partial interface ISchemaBuilder<TContext> {
 
          ISchemaBuilder<TContext> IgnoreInputObject(string name);
 
-
-#endregion
-#region InputObject type accessors
-#endregion
-#region Interface type accessors
-
-
-
-         
-        IInterfaceTypeBuilder<object, TContext> Interface(Type clrType);
-
-
-        IInterfaceTypeBuilder<object, TContext> Interface(string name);
-
-
-        IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>() where TInterface : notnull;
-
-#endregion
-#region Object type accessors
-
-
-
-         
-        IObjectTypeBuilder<object, TContext> Object(Type clrType);
-
-
-        IObjectTypeBuilder<object, TContext> Object(string name);
-
-
-        IObjectTypeBuilder<TObject, TContext> Object<TObject>() where TObject : notnull;
-
-#endregion
-#region Union type accessors
-
-
-
-         
-        IUnionTypeBuilder<object, TContext> Union(Type clrType);
-
-
-        IUnionTypeBuilder<object, TContext> Union(string name);
-
-
-        IUnionTypeBuilder<TUnion, TContext> Union<TUnion>() where TUnion : notnull;
 
 #endregion
 }
