@@ -19,7 +19,6 @@ namespace GraphZen.CodeGen.Generators
 
         public override void Apply(StringBuilder csharp)
         {
-            throw new NotImplementedException();
         }
     }
 }
