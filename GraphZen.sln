@@ -60,7 +60,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.Infrastructure.Tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0B6910A4-EF91-4DF9-8E75-7C6F86BB56E8}"
 	ProjectSection(SolutionItems) = preProject
-		test\Directory.Build.props = test\Directory.Build.props
+		test\Directory.Build.targets = test\Directory.Build.targets
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphZen.AspNetCore.Playground.IntegrationTests", "test\GraphZen.AspNetCore.Playground.IntegrationTests\GraphZen.AspNetCore.Playground.IntegrationTests.csproj", "{E9A6C473-36DF-406D-9925-50C38D62600D}"
