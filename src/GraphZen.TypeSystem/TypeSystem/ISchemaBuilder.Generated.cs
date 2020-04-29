@@ -14,6 +14,15 @@ namespace GraphZen.TypeSystem {
 public  partial interface ISchemaBuilder<TContext> {
 #region InputObject type accessors
 
+
+
+        ISchemaBuilder<TContext> UnignoreInputObject<TInputObject>() where TInputObject: notnull;
+
+         ISchemaBuilder<TContext> UnignoreInputObject(Type clrType);
+
+         ISchemaBuilder<TContext> UnignoreInputObject(string name);
+
+
          ISchemaBuilder<TContext> IgnoreInputObject<TInputObject>() where TInputObject: notnull;
 
          ISchemaBuilder<TContext> IgnoreInputObject(Type clrType);
@@ -23,6 +32,15 @@ public  partial interface ISchemaBuilder<TContext> {
 
 #endregion
 #region Interface type accessors
+
+
+
+        ISchemaBuilder<TContext> UnignoreInterface<TInterface>() where TInterface: notnull;
+
+         ISchemaBuilder<TContext> UnignoreInterface(Type clrType);
+
+         ISchemaBuilder<TContext> UnignoreInterface(string name);
+
 
          ISchemaBuilder<TContext> IgnoreInterface<TInterface>() where TInterface: notnull;
 
@@ -46,6 +64,15 @@ public  partial interface ISchemaBuilder<TContext> {
 #endregion
 #region Object type accessors
 
+
+
+        ISchemaBuilder<TContext> UnignoreObject<TObject>() where TObject: notnull;
+
+         ISchemaBuilder<TContext> UnignoreObject(Type clrType);
+
+         ISchemaBuilder<TContext> UnignoreObject(string name);
+
+
          ISchemaBuilder<TContext> IgnoreObject<TObject>() where TObject: notnull;
 
          ISchemaBuilder<TContext> IgnoreObject(Type clrType);
@@ -67,6 +94,15 @@ public  partial interface ISchemaBuilder<TContext> {
 
 #endregion
 #region Union type accessors
+
+
+
+        ISchemaBuilder<TContext> UnignoreUnion<TUnion>() where TUnion: notnull;
+
+         ISchemaBuilder<TContext> UnignoreUnion(Type clrType);
+
+         ISchemaBuilder<TContext> UnignoreUnion(string name);
+
 
          ISchemaBuilder<TContext> IgnoreUnion<TUnion>() where TUnion: notnull;
 

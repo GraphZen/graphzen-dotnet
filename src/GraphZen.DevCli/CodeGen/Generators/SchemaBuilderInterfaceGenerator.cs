@@ -1,6 +1,8 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -14,22 +16,24 @@ namespace GraphZen.CodeGen.Generators
 {
     public class SchemaBuilderInterfaceGenerator : PartialTypeGenerator
     {
+        private IReadOnlyList<string> _ignorableKinds;
         public SchemaBuilderInterfaceGenerator() : base(typeof(ISchemaBuilder<>))
         {
+            _ignorableKinds = TypeSystemCodeGen.NamedTypes.Select(_ => _.kind).Append("Directive").Append("Type")
+                .ToImmutableList();
         }
 
         private bool IsInputKind(string kind) => new[] { "Enum", "Scalar", "InputObject" }.Contains(kind);
 
 
+
+
         public override void Apply(StringBuilder csharp)
         {
-            foreach (var (kind, type) in TypeSystemCodeGen.NamedTypes
-                .Where(_ => _.kind != "Scalar" && _.kind != "Enum"))
-            {
-                csharp.Region($"{kind} type accessors", region =>
-                {
 
-                    region.AppendLine($@"
+            foreach (var kind in _ignorableKinds)
+            {
+                csharp.AppendLine($@"
 
 
         ISchemaBuilder<TContext> Unignore{kind}<T{kind}>() where T{kind}: notnull;
@@ -46,6 +50,15 @@ namespace GraphZen.CodeGen.Generators
          ISchemaBuilder<TContext> Ignore{kind}(string name);
 
 ");
+
+            }
+
+            foreach (var (kind, type) in TypeSystemCodeGen.NamedTypes
+                .Where(_ => _.kind != "Scalar" && _.kind != "Enum"))
+            {
+                csharp.Region($"{kind} type accessors", region =>
+                {
+
                     if (IsInputKind(kind))
                     {
 
