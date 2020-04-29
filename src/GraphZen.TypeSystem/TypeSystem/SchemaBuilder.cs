@@ -24,9 +24,12 @@ namespace GraphZen.TypeSystem
 
 
         [DebuggerStepThrough]
-        public IDirectiveBuilder<object> Directive(string name) =>
-            new DirectiveBuilder<object>(Builder.Directive(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit));
+        public IDirectiveBuilder<object> Directive(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            var builder = Builder.Directive(name, ConfigurationSource.Explicit);
+            return new DirectiveBuilder<object>(builder);
+        }
 
         public IDirectiveBuilder<T> Directive<T>() where T : notnull => throw new NotImplementedException();
 

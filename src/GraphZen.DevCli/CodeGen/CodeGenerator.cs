@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Text;
-using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.CodeGen.Generators;
 using GraphZen.Infrastructure;
@@ -90,89 +88,6 @@ namespace GraphZen.CodeGen
             generators.AddRange(PartialTypeGenerator.FromTypes(types));
             generators.AddRange(SyntaxNodeGenerator.CreateAll());
             return generators;
-        }
-    }
-
-    public class SchemaBuilderDefaultContextGenerator : PartialTypeGenerator<SchemaBuilder>
-    {
-        public override void Apply(StringBuilder csharp)
-        {
-            csharp.AppendLine($"// hello {TargetType} ");
-
-            foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds.Take(1))
-            {
-                csharp.Region(kind + "s", region =>
-                {
-                    var typeParam = "T" + (config.TypeParamName ?? kind);
-
-                    if (config.SimpleBuilder)
-                    {
-                        region.AppendLine($@"
-
-       
-      //  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(string name);
-
-
-      //  I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {typeParam} : notnull;
-
-
-     //   I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType); 
-
-
-");
-                    }
-                    else if (config.ContextBuilder)
-                    {
-                        region.AppendLine($@"
-
-       
-     //   I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(string name);
-
-
-      //  I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>() where {typeParam} : notnull;
-
-
-     //   I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType); 
-
-
-   
-
-
-");
-                    }
-
-
-                    region.AppendLine($@"
-
-
-      //  ISchemaBuilder<TContext> Unignore{kind}<{typeParam}>() where {typeParam}: notnull;
-
-      //   ISchemaBuilder<TContext> Unignore{kind}(Type clrType);
-
-      //   ISchemaBuilder<TContext> Unignore{kind}(string name);
-
-
-      //   ISchemaBuilder<TContext> Ignore{kind}<{typeParam}>() where {typeParam}: notnull;
-
-      //   ISchemaBuilder<TContext> Ignore{kind}(Type clrType);
-
-      //   ISchemaBuilder<TContext> Ignore{kind}(string name);
-
-");
-                });
-            }
-        }
-    }
-
-    public class SchemaBuilderCustomContextGenerator : PartialTypeGenerator
-    {
-        public SchemaBuilderCustomContextGenerator() : base(typeof(SchemaBuilder<>))
-        {
-        }
-
-        public override void Apply(StringBuilder csharp)
-        {
-            csharp.AppendLine($"// hello {TargetType} ");
         }
     }
 }
