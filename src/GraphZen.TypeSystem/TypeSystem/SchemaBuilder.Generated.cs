@@ -437,6 +437,32 @@ public ISchemaBuilder<GraphQLContext> IgnoreInterface(string name) {
 #region InputObjects
 
 
+public IInputObjectTypeBuilder<object> InputObject(string name) {
+    Check.NotNull(name, nameof(name));
+    var internalBuilder = Builder.InputObject(name, ConfigurationSource.Explicit)!;
+    var builder = new InputObjectTypeBuilder<object>(internalBuilder);
+    return builder;
+} 
+
+
+public  IInputObjectTypeBuilder<TInputObject> InputObject<TInputObject>() where TInputObject : notnull {
+    var internalBuilder = Builder.InputObject(typeof(TInputObject), ConfigurationSource.Explicit)!;
+    var builder = new InputObjectTypeBuilder<TInputObject>(internalBuilder);
+    return builder;
+}
+
+public  IInputObjectTypeBuilder<object> InputObject(Type clrType)  {
+            Check.NotNull(clrType, nameof(clrType));
+    var internalBuilder = Builder.InputObject(clrType, ConfigurationSource.Explicit)!;
+    var builder = new InputObjectTypeBuilder<object>(internalBuilder);
+    return builder;
+}
+
+
+
+
+
+
 
 public ISchemaBuilder<GraphQLContext> UnignoreInputObject<TInputObject>() where TInputObject: notnull {
     Builder.UnignoreInputObject(typeof(TInputObject), ConfigurationSource.Explicit);

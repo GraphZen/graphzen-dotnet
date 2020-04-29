@@ -222,6 +222,19 @@ public  partial interface ISchemaBuilder<TContext> {
 #region InputObjects
 
 
+       
+        IInputObjectTypeBuilder<object> InputObject(string name);
+
+
+        IInputObjectTypeBuilder<TInputObject> InputObject<TInputObject>() where TInputObject : notnull;
+
+
+        IInputObjectTypeBuilder<object> InputObject(Type clrType); 
+
+
+
+
+
 
         ISchemaBuilder<TContext> UnignoreInputObject<TInputObject>() where TInputObject: notnull;
 

@@ -22,9 +22,6 @@ namespace GraphZen.TypeSystem
 
         protected InternalSchemaBuilder Builder { get; }
 
-
-        
-
         public IScalarTypeBuilder<object, ValueSyntax> Scalar(string name) =>
             new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit)!);
@@ -43,15 +40,6 @@ namespace GraphZen.TypeSystem
             new ScalarTypeBuilder<TScalar, TValueNode>(Builder.Scalar(typeof(TScalar),
                 ConfigurationSource.Explicit)!);
 
- 
-       
-     
-               
-      
-     
-      
-      
-   
         public ISchemaBuilder<GraphQLContext> QueryType(string type)
         {
             Check.NotNull(type, nameof(type));
@@ -103,18 +91,7 @@ namespace GraphZen.TypeSystem
 
         SchemaDefinition IInfrastructure<SchemaDefinition>.Instance => Builder.Definition;
 
-        public IInputObjectTypeBuilder<object> InputObject(string name) =>
-            new InputObjectTypeBuilder<object>(Builder.InputObject(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit)!);
-
-        public IInputObjectTypeBuilder<TInput> InputObject<TInput>() =>
-            new InputObjectTypeBuilder<TInput>(
-                Builder.InputObject(typeof(TInput), ConfigurationSource.Explicit)!);
-
-        public IInputObjectTypeBuilder<object> InputObject(Type clrType) =>
-            new InputObjectTypeBuilder<object>(Builder.InputObject(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit)!);
-
+     
         public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
 
         public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(object directive) =>
@@ -137,7 +114,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public new ISchemaBuilder<TContext> UnignoreObject(string name) => throw new NotImplementedException();
+        public new ISchemaBuilder<TContext> UnignoreObject(string name) => (ISchemaBuilder<TContext>) (base.UnignoreObject(name));
 
         public new ISchemaBuilder<TContext> IgnoreObject<TObject>() where TObject : notnull =>
             throw new NotImplementedException();

@@ -14,6 +14,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
+
     [NoReorder]
     public static class Introspection
     {
