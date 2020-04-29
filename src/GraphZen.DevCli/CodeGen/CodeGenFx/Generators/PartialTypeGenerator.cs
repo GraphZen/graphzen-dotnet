@@ -60,7 +60,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
             foreach (var (targetType, tasks) in tasksByTarget)
             {
-                var targetFilename = targetType.Name + ".cs";
+                var targetFilename = targetType.Name.Split("`")[0] + ".cs";
                 var targetPath = CSharpFiles.SingleOrDefault(_ => Path.GetFileName(_) == targetFilename);
                 if (targetPath == null)
                 {
