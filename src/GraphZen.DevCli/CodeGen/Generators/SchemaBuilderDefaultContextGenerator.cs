@@ -24,7 +24,7 @@ namespace GraphZen.CodeGen
         {
             csharp.AppendLine($"// hello {TargetType} ");
 
-            foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds.Take(2))
+            foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds.Take(1))
             {
                 csharp.Region(kind + "s", region =>
                 {
@@ -64,13 +64,13 @@ public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)
                         region.AppendLine($@"
 
        
-     //   I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(string name);
+     //   I{config.TypeName}Builder<{config.DefaultTypeName}, GraphQLContext> {kind}(string name);
 
 
-      //  I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>() where {typeParam} : notnull;
+      //  I{config.TypeName}Builder<{typeParam}, GraphQLContext> {kind}<{typeParam}>() where {typeParam} : notnull;
 
 
-     //   I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType); 
+     //   I{config.TypeName}Builder<{config.DefaultTypeName}, GraphQLContext> {kind}(Type clrType); 
 
 
    
@@ -83,18 +83,18 @@ public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)
                     region.AppendLine($@"
 
 
-      //  ISchemaBuilder<TContext> Unignore{kind}<{typeParam}>() where {typeParam}: notnull;
+      //  ISchemaBuilder<GraphQLContext> Unignore{kind}<{typeParam}>() where {typeParam}: notnull;
 
-      //   ISchemaBuilder<TContext> Unignore{kind}(Type clrType);
+      //   ISchemaBuilder<GraphQLContext> Unignore{kind}(Type clrType);
 
-      //   ISchemaBuilder<TContext> Unignore{kind}(string name);
+      //   ISchemaBuilder<GraphQLContext> Unignore{kind}(string name);
 
 
-      //   ISchemaBuilder<TContext> Ignore{kind}<{typeParam}>() where {typeParam}: notnull;
+      //   ISchemaBuilder<GraphQLContext> Ignore{kind}<{typeParam}>() where {typeParam}: notnull;
 
-      //   ISchemaBuilder<TContext> Ignore{kind}(Type clrType);
+      //   ISchemaBuilder<GraphQLContext> Ignore{kind}(Type clrType);
 
-      //   ISchemaBuilder<TContext> Ignore{kind}(string name);
+      //   ISchemaBuilder<GraphQLContext> Ignore{kind}(string name);
 
 ");
                 });

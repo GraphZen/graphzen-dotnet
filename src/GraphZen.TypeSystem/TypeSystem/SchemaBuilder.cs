@@ -143,10 +143,7 @@ namespace GraphZen.TypeSystem
             Builder.IgnoreDirective(name, ConfigurationSource.Explicit);
             return this;
         }
-
-        public ISchemaBuilder<GraphQLContext> UnignoreDirective<TDirective>() where TDirective : notnull =>
-            UnignoreDirective(typeof(TDirective));
-
+     
         public ISchemaBuilder<GraphQLContext> UnignoreDirective(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));

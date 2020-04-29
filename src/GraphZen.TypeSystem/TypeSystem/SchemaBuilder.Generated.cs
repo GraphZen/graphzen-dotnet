@@ -11,76 +11,85 @@ using GraphZen.TypeSystem.Internal;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen.TypeSystem {
-public  partial class SchemaBuilder {
-// hello GraphZen.TypeSystem.SchemaBuilder 
-#region Directives
+namespace GraphZen.TypeSystem
+{
+    public partial class SchemaBuilder
+    {
+        // hello GraphZen.TypeSystem.SchemaBuilder 
+        #region Directives
 
 
-public IDirectiveBuilder<object> Directive(string name) {
-    Check.NotNull(name, nameof(name));
-    var internalBuilder = Builder.Directive(name, ConfigurationSource.Explicit);
-    var builder = new DirectiveBuilder<object>(internalBuilder);
-    return builder;
-} 
+        public IDirectiveBuilder<object> Directive(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            var internalBuilder = Builder.Directive(name, ConfigurationSource.Explicit);
+            var builder = new DirectiveBuilder<object>(internalBuilder);
+            return builder;
+        }
 
 
-public  IDirectiveBuilder<TDirective> Directive<TDirective>() where TDirective : notnull {
-    var internalBuilder = Builder.Directive(typeof(TDirective), ConfigurationSource.Explicit);
-    var builder = new DirectiveBuilder<TDirective>(internalBuilder);
-    return builder;
-}
+        public IDirectiveBuilder<TDirective> Directive<TDirective>() where TDirective : notnull
+        {
+            var internalBuilder = Builder.Directive(typeof(TDirective), ConfigurationSource.Explicit);
+            var builder = new DirectiveBuilder<TDirective>(internalBuilder);
+            return builder;
+        }
 
-public  IDirectiveBuilder<object> Directive(Type clrType)  {
+        public IDirectiveBuilder<object> Directive(Type clrType)
+        {
             Check.NotNull(clrType, nameof(clrType));
-    var internalBuilder = Builder.Directive(clrType, ConfigurationSource.Explicit);
-    var builder = new DirectiveBuilder<object>(internalBuilder);
-    return builder;
-}
-
-     //   IDirectiveBuilder<object> Directive(Type clrType); 
+            var internalBuilder = Builder.Directive(clrType, ConfigurationSource.Explicit);
+            var builder = new DirectiveBuilder<object>(internalBuilder);
+            return builder;
+        }
 
 
 
 
 
 
-      //  ISchemaBuilder<TContext> UnignoreDirective<TDirective>() where TDirective: notnull;
 
-      //   ISchemaBuilder<TContext> UnignoreDirective(Type clrType);
+        public ISchemaBuilder<GraphQLContext> UnignoreDirective<TDirective>() where TDirective : notnull
+        {
+            Builder.UnignoreDirective(typeof(TDirective), ConfigurationSource.Explicit);
+            return this;
+        }
 
-      //   ISchemaBuilder<TContext> UnignoreDirective(string name);
+        //   ISchemaBuilder<TContext> UnignoreDirective(Type clrType);
 
-
-      //   ISchemaBuilder<TContext> IgnoreDirective<TDirective>() where TDirective: notnull;
-
-      //   ISchemaBuilder<TContext> IgnoreDirective(Type clrType);
-
-      //   ISchemaBuilder<TContext> IgnoreDirective(string name);
+        //   ISchemaBuilder<TContext> UnignoreDirective(string name);
 
 
-#endregion
-#region Types
+        //   ISchemaBuilder<TContext> IgnoreDirective<TDirective>() where TDirective: notnull;
+
+        //   ISchemaBuilder<TContext> IgnoreDirective(Type clrType);
+
+        //   ISchemaBuilder<TContext> IgnoreDirective(string name);
+
+
+        #endregion
+        #region Types
 
 
 
-      //  ISchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType: notnull;
+        //  ISchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType: notnull;
 
-      //   ISchemaBuilder<TContext> UnignoreType(Type clrType);
+        //   ISchemaBuilder<TContext> UnignoreType(Type clrType);
 
-      //   ISchemaBuilder<TContext> UnignoreType(string name);
-
-
-      //   ISchemaBuilder<TContext> IgnoreType<TClrType>() where TClrType: notnull;
-
-      //   ISchemaBuilder<TContext> IgnoreType(Type clrType);
-
-      //   ISchemaBuilder<TContext> IgnoreType(string name);
+        //   ISchemaBuilder<TContext> UnignoreType(string name);
 
 
-#endregion
-}
-public  partial class SchemaBuilder<TContext> {
-// hello GraphZen.TypeSystem.SchemaBuilder`1[TContext] 
-}
+        //   ISchemaBuilder<TContext> IgnoreType<TClrType>() where TClrType: notnull;
+
+        //   ISchemaBuilder<TContext> IgnoreType(Type clrType);
+
+        //   ISchemaBuilder<TContext> IgnoreType(string name);
+
+
+        #endregion
+    }
+    public partial class SchemaBuilder<TContext>
+    {
+        // hello GraphZen.TypeSystem.SchemaBuilder`1[TContext] 
+    }
 }
