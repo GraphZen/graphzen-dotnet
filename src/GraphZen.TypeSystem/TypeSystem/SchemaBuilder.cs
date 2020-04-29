@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class SchemaBuilder : ISchemaBuilder<GraphQLContext>
+    public partial class SchemaBuilder : ISchemaBuilder<GraphQLContext>
     {
         public SchemaBuilder(SchemaDefinition schemaDefinition)
         {
@@ -385,39 +385,39 @@ namespace GraphZen.TypeSystem
         public new ISchemaBuilder<TContext> IgnoreUnion(string name) => throw new NotImplementedException();
 
         public new ISchemaBuilder<TContext> IgnoreType<TClrType>() where TClrType : notnull =>
-            (ISchemaBuilder<TContext>) base.IgnoreType<TClrType>();
+            (ISchemaBuilder<TContext>)base.IgnoreType<TClrType>();
 
         public new ISchemaBuilder<TContext> IgnoreType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.IgnoreType(clrType);
+            (ISchemaBuilder<TContext>)base.IgnoreType(clrType);
 
-        public new ISchemaBuilder<TContext> IgnoreType(string name) => (ISchemaBuilder<TContext>) base.IgnoreType(name);
+        public new ISchemaBuilder<TContext> IgnoreType(string name) => (ISchemaBuilder<TContext>)base.IgnoreType(name);
 
         public new ISchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull =>
-            (ISchemaBuilder<TContext>) base.UnignoreType(typeof(TClrType));
+            (ISchemaBuilder<TContext>)base.UnignoreType(typeof(TClrType));
 
         public new ISchemaBuilder<TContext> UnignoreType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.UnignoreType(clrType);
+            (ISchemaBuilder<TContext>)base.UnignoreType(clrType);
 
         public new ISchemaBuilder<TContext> UnignoreType(string name) =>
-            (ISchemaBuilder<TContext>) base.UnignoreType(name);
+            (ISchemaBuilder<TContext>)base.UnignoreType(name);
 
         public new ISchemaBuilder<TContext> IgnoreDirective<TDirective>() where TDirective : notnull =>
-            (ISchemaBuilder<TContext>) base.IgnoreDirective<TDirective>();
+            (ISchemaBuilder<TContext>)base.IgnoreDirective<TDirective>();
 
         public new ISchemaBuilder<TContext> IgnoreDirective(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.IgnoreDirective(clrType);
+            (ISchemaBuilder<TContext>)base.IgnoreDirective(clrType);
 
         public new ISchemaBuilder<TContext> IgnoreDirective(string name) =>
-            (ISchemaBuilder<TContext>) base.IgnoreDirective(name);
+            (ISchemaBuilder<TContext>)base.IgnoreDirective(name);
 
         public new ISchemaBuilder<TContext> UnignoreDirective<TDirective>() where TDirective : notnull =>
-            (ISchemaBuilder<TContext>) base.UnignoreDirective<TDirective>();
+            (ISchemaBuilder<TContext>)base.UnignoreDirective<TDirective>();
 
         public new ISchemaBuilder<TContext> UnignoreDirective(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.UnignoreDirective(clrType);
+            (ISchemaBuilder<TContext>)base.UnignoreDirective(clrType);
 
         public new ISchemaBuilder<TContext> UnignoreDirective(string name) =>
-            (ISchemaBuilder<TContext>) base.UnignoreDirective(name);
+            (ISchemaBuilder<TContext>)base.UnignoreDirective(name);
 
         public new IInterfaceTypeBuilder<object, TContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
@@ -485,7 +485,7 @@ namespace GraphZen.TypeSystem
         }
 
         public new ISchemaBuilder<TContext> QueryType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.QueryType(clrType);
+            (ISchemaBuilder<TContext>)base.QueryType(clrType);
 
         public new ISchemaBuilder<TContext> MutationType(string type)
         {
@@ -494,7 +494,7 @@ namespace GraphZen.TypeSystem
         }
 
         public new ISchemaBuilder<TContext> MutationType(Type clrType) =>
-            (ISchemaBuilder<TContext>) base.MutationType(clrType);
+            (ISchemaBuilder<TContext>)base.MutationType(clrType);
 
         public new ISchemaBuilder<TContext> SubscriptionType(string type)
         {
@@ -522,6 +522,6 @@ namespace GraphZen.TypeSystem
         }
 
         public new ISchemaBuilder<TContext> IgnoreDirectiveAnnotation(string name) =>
-            (ISchemaBuilder<TContext>) base.IgnoreDirectiveAnnotation(name);
+            (ISchemaBuilder<TContext>)base.IgnoreDirectiveAnnotation(name);
     }
 }

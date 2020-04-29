@@ -83,8 +83,8 @@ namespace GraphZen.CodeGen
                 new SchemaDefinitionTypeAccessorGenerator(),
                 new SchemaTypeAccessorGenerator(),
                 new SchemaBuilderInterfaceGenerator(),
+                new SchemaBuilderDefaultContext(),
                 new SchemaBuilderCustomContext(),
-                new SchemaBuilderDefaultContext()
             };
             generators.AddRange(PartialTypeGenerator.FromTypes(types));
             generators.AddRange(SyntaxNodeGenerator.CreateAll());
