@@ -2,9 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text;
 using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
@@ -17,21 +15,12 @@ namespace GraphZen.CodeGen.Generators
 {
     public class SchemaBuilderInterfaceGenerator : PartialTypeGenerator
     {
-        private IReadOnlyList<string> _ignorableKinds;
-
         public SchemaBuilderInterfaceGenerator() : base(typeof(ISchemaBuilder<>))
         {
-            _ignorableKinds = TypeSystemCodeGen.NamedTypes.Select(_ => _.kind).Append("Directive").Append("Type")
-                .ToImmutableList();
         }
 
-        private bool IsInputKind(string kind) => new[] { "Enum", "Scalar", "InputObject" }.Contains(kind);
-        private bool IsOutputKind(string kind) => kind != "InputObject";
-
-
-        public override void Apply(StringBuilder csharp)
-        {
-            var kinds = new Dictionary<string, KindConfig>
+        public static IReadOnlyDictionary<string, KindConfig> Kinds { get; } =
+            new Dictionary<string, KindConfig>
             {
                 {
                     nameof(Directive),
@@ -67,7 +56,10 @@ namespace GraphZen.CodeGen.Generators
                 }
             };
 
-            foreach (var (kind, config) in kinds)
+
+        public override void Apply(StringBuilder csharp)
+        {
+            foreach (var (kind, config) in Kinds)
             {
                 csharp.Region(kind + "s", region =>
                 {
@@ -132,7 +124,7 @@ namespace GraphZen.CodeGen.Generators
         }
 
 
-        private class KindConfig
+        public class KindConfig
         {
             public string? TypeName { get; set; }
             public bool SimpleBuilder { get; set; }
