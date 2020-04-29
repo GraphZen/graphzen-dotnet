@@ -79,13 +79,49 @@ public ISchemaBuilder<GraphQLContext> IgnoreDirective(string name) {
 }
    
 
-      //   ISchemaBuilder<GraphQLContext> IgnoreDirective<TDirective>() where TDirective: notnull;
-
-      //   ISchemaBuilder<GraphQLContext> IgnoreDirective(Type clrType);
-
-      //   ISchemaBuilder<GraphQLContext> IgnoreDirective(string name);
+   
+#endregion
+#region Types
 
 
+
+public ISchemaBuilder<GraphQLContext> UnignoreType<TClrType>() where TClrType: notnull {
+    Builder.UnignoreType(typeof(TClrType), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> UnignoreType(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.UnignoreType(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> UnignoreType(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.UnignoreType(name, ConfigurationSource.Explicit);
+    return this;
+}
+
+
+public ISchemaBuilder<GraphQLContext> IgnoreType<TClrType>() where TClrType: notnull {
+    Builder.IgnoreType(typeof(TClrType), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> IgnoreType(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.IgnoreType(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> IgnoreType(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.IgnoreType(name, ConfigurationSource.Explicit);
+    return this;
+}
+   
+
+   
 #endregion
 }
 public  partial class SchemaBuilder<TContext> {

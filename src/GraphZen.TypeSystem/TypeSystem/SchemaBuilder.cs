@@ -93,41 +93,7 @@ namespace GraphZen.TypeSystem
 
         public ISchemaBuilder<GraphQLContext> IgnoreUnion(string name) => throw new NotImplementedException();
 
-        public ISchemaBuilder<GraphQLContext> IgnoreType<TClrType>() where TClrType : notnull =>
-            IgnoreType(typeof(TClrType));
-
-        public ISchemaBuilder<GraphQLContext> IgnoreType(Type clrType)
-        {
-            Check.NotNull(clrType, nameof(clrType));
-            Builder.IgnoreType(clrType, ConfigurationSource.Explicit);
-            return this;
-        }
-
-        public ISchemaBuilder<GraphQLContext> IgnoreType(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            Builder.IgnoreType(name, ConfigurationSource.Explicit);
-            return this;
-        }
-
-        public ISchemaBuilder<GraphQLContext> UnignoreType<TClrType>() where TClrType : notnull =>
-            IgnoreType(typeof(TClrType));
-
-        public ISchemaBuilder<GraphQLContext> UnignoreType(Type clrType)
-        {
-            Check.NotNull(clrType, nameof(clrType));
-            Builder.IgnoreType(clrType, ConfigurationSource.Explicit);
-            return this;
-        }
-
-        public ISchemaBuilder<GraphQLContext> UnignoreType(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            Builder.UnignoreType(name, ConfigurationSource.Explicit);
-            return this;
-        }
-
-            
+               
       
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
