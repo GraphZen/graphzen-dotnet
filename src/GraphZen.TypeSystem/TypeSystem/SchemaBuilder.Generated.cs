@@ -17,7 +17,6 @@ public  partial class SchemaBuilder {
 #region Directives
 
 
-       
 public IDirectiveBuilder<object> Directive(string name) {
     Check.NotNull(name, nameof(name));
     var internalBuilder = Builder.Directive(name, ConfigurationSource.Explicit);
