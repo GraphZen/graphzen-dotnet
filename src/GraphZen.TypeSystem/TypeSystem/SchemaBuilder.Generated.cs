@@ -306,24 +306,24 @@ namespace GraphZen.TypeSystem
         public IEnumTypeBuilder<string> Enum(string name)
         {
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Enum(name, ConfigurationSource.Explicit);
-            var builder = new EnumTypeBuilder<string>(internalBuilder!);
+            var internalBuilder = Builder.Enum(name, ConfigurationSource.Explicit)!;
+            var builder = new EnumTypeBuilder<string>(internalBuilder);
             return builder;
         }
 
 
         public IEnumTypeBuilder<TEnum> Enum<TEnum>() where TEnum : notnull
         {
-            var internalBuilder = Builder.Enum(typeof(TEnum), ConfigurationSource.Explicit);
-            var builder = new EnumTypeBuilder<TEnum>(internalBuilder!);
+            var internalBuilder = Builder.Enum(typeof(TEnum), ConfigurationSource.Explicit)!;
+            var builder = new EnumTypeBuilder<TEnum>(internalBuilder);
             return builder;
         }
 
         public IEnumTypeBuilder<string> Enum(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
-            var internalBuilder = Builder.Enum(clrType, ConfigurationSource.Explicit);
-            var builder = new EnumTypeBuilder<string>(internalBuilder!);
+            var internalBuilder = Builder.Enum(clrType, ConfigurationSource.Explicit)!;
+            var builder = new EnumTypeBuilder<string>(internalBuilder);
             return builder;
         }
 
