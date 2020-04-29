@@ -99,10 +99,24 @@ public ISchemaBuilder<GraphQLContext> Unignore{kind}(string name) {{
     return this;
 }}
 
-      //   ISchemaBuilder<GraphQLContext> Unignore{kind}(Type clrType);
 
-      //   ISchemaBuilder<GraphQLContext> Unignore{kind}(string name);
+public ISchemaBuilder<GraphQLContext> Ignore{kind}<{typeParam}>() where {typeParam}: notnull {{
+    Builder.Ignore{kind}(typeof({typeParam}), ConfigurationSource.Explicit);
+    return this;
+}}
 
+public ISchemaBuilder<GraphQLContext> Ignore{kind}(Type clrType) {{
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.Ignore{kind}(clrType, ConfigurationSource.Explicit);
+    return this;
+}}
+
+public ISchemaBuilder<GraphQLContext> Ignore{kind}(string name) {{
+    Check.NotNull(name, nameof(name));
+    Builder.Ignore{kind}(name, ConfigurationSource.Explicit);
+    return this;
+}}
+   
 
       //   ISchemaBuilder<GraphQLContext> Ignore{kind}<{typeParam}>() where {typeParam}: notnull;
 
