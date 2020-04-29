@@ -42,6 +42,13 @@ public  partial interface ISchemaBuilder<TContext> {
 
          ISchemaBuilder<TContext> IgnoreDirective(string name);
 
+        ISchemaBuilder<TContext> RemoveDirective<TDirective>() where TDirective: notnull;
+
+         ISchemaBuilder<TContext> RemoveDirective(Type clrType);
+
+         ISchemaBuilder<TContext> RemoveDirective(string name);
+
+
 
 #endregion
 #region Types
@@ -60,6 +67,13 @@ public  partial interface ISchemaBuilder<TContext> {
          ISchemaBuilder<TContext> IgnoreType(Type clrType);
 
          ISchemaBuilder<TContext> IgnoreType(string name);
+
+        ISchemaBuilder<TContext> RemoveType<TClrType>() where TClrType: notnull;
+
+         ISchemaBuilder<TContext> RemoveType(Type clrType);
+
+         ISchemaBuilder<TContext> RemoveType(string name);
+
 
 
 #endregion
@@ -96,6 +110,13 @@ public  partial interface ISchemaBuilder<TContext> {
 
          ISchemaBuilder<TContext> IgnoreObject(string name);
 
+        ISchemaBuilder<TContext> RemoveObject<TObject>() where TObject: notnull;
+
+         ISchemaBuilder<TContext> RemoveObject(Type clrType);
+
+         ISchemaBuilder<TContext> RemoveObject(string name);
+
+
 
 #endregion
 #region Unions
@@ -131,6 +152,13 @@ public  partial interface ISchemaBuilder<TContext> {
 
          ISchemaBuilder<TContext> IgnoreUnion(string name);
 
+        ISchemaBuilder<TContext> RemoveUnion<TUnion>() where TUnion: notnull;
+
+         ISchemaBuilder<TContext> RemoveUnion(Type clrType);
+
+         ISchemaBuilder<TContext> RemoveUnion(string name);
+
+
 
 #endregion
 #region Scalars
@@ -149,6 +177,13 @@ public  partial interface ISchemaBuilder<TContext> {
          ISchemaBuilder<TContext> IgnoreScalar(Type clrType);
 
          ISchemaBuilder<TContext> IgnoreScalar(string name);
+
+        ISchemaBuilder<TContext> RemoveScalar<TScalar>() where TScalar: notnull;
+
+         ISchemaBuilder<TContext> RemoveScalar(Type clrType);
+
+         ISchemaBuilder<TContext> RemoveScalar(string name);
+
 
 
 #endregion
@@ -181,6 +216,13 @@ public  partial interface ISchemaBuilder<TContext> {
          ISchemaBuilder<TContext> IgnoreEnum(Type clrType);
 
          ISchemaBuilder<TContext> IgnoreEnum(string name);
+
+        ISchemaBuilder<TContext> RemoveEnum<TEnum>() where TEnum: notnull;
+
+         ISchemaBuilder<TContext> RemoveEnum(Type clrType);
+
+         ISchemaBuilder<TContext> RemoveEnum(string name);
+
 
 
 #endregion
@@ -217,6 +259,13 @@ public  partial interface ISchemaBuilder<TContext> {
 
          ISchemaBuilder<TContext> IgnoreInterface(string name);
 
+        ISchemaBuilder<TContext> RemoveInterface<TInterface>() where TInterface: notnull;
+
+         ISchemaBuilder<TContext> RemoveInterface(Type clrType);
+
+         ISchemaBuilder<TContext> RemoveInterface(string name);
+
+
 
 #endregion
 #region InputObjects
@@ -248,6 +297,13 @@ public  partial interface ISchemaBuilder<TContext> {
          ISchemaBuilder<TContext> IgnoreInputObject(Type clrType);
 
          ISchemaBuilder<TContext> IgnoreInputObject(string name);
+
+        ISchemaBuilder<TContext> RemoveInputObject<TInputObject>() where TInputObject: notnull;
+
+         ISchemaBuilder<TContext> RemoveInputObject(Type clrType);
+
+         ISchemaBuilder<TContext> RemoveInputObject(string name);
+
 
 
 #endregion
