@@ -186,15 +186,6 @@ public  IUnionTypeBuilder<object, GraphQLContext> Union(Type clrType)  {
     return builder;
 }
 
-       
-     //   IUnionTypeBuilder<object, GraphQLContext> Union(string name);
-
-
-      //  IUnionTypeBuilder<TUnion, GraphQLContext> Union<TUnion>() where TUnion : notnull;
-
-
-     //   IUnionTypeBuilder<object, GraphQLContext> Union(Type clrType); 
-
 
    
 
