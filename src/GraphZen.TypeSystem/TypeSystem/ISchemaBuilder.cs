@@ -8,12 +8,14 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
+// ReSharper disable PossibleInterfaceMemberAmbiguity
 namespace GraphZen.TypeSystem
 {
-    // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface ISchemaBuilder<TContext> : 
-        IInfrastructure<InternalSchemaBuilder>, 
-        IAnnotableBuilder<ISchemaBuilder<TContext>>, 
+    public partial interface ISchemaBuilder<TContext> { }
+
+    public partial interface ISchemaBuilder<TContext> :
+        IInfrastructure<InternalSchemaBuilder>,
+        IAnnotableBuilder<ISchemaBuilder<TContext>>,
         IInfrastructure<SchemaDefinition> where TContext : GraphQLContext
     {
         IDirectiveBuilder<object> Directive(string name);

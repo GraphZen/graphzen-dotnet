@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using Microsoft.Diagnostics.Tracing.Parsers.FrameworkEventSource;
 
 namespace GraphZen.CodeGen.CodeGenFx.Generators
 {
@@ -60,7 +61,25 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
             foreach (var (targetType, tasks) in tasksByTarget)
             {
-                var targetFilename = targetType.Name.Split("`")[0] + ".cs";
+
+                (string shortName, string fullName) GetTypeName(Type type)
+                {
+                    if (!type.IsGenericType)
+                    {
+                        return (type.Name, type.Name);
+                    }
+
+                    var gType = type.GetGenericTypeDefinition();
+
+                    var gArgs = string.Join(",", gType.GetGenericArguments().Select(_ => _.Name));
+
+                    var name = gType.Name.Split("`")[0];
+
+                    return (name, $"{name}<{gArgs}>");
+                }
+
+                var (shortName, fullName) = GetTypeName(targetType);
+                var targetFilename = shortName + ".cs";
                 var targetPath = CSharpFiles.SingleOrDefault(_ => Path.GetFileName(_) == targetFilename);
                 if (targetPath == null)
                 {
@@ -94,7 +113,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                         ? "static"
                         : null;
 
-                    ns.Block($"public {maybeStatic} partial {typeType} {targetType.Name} {{", "}", type =>
+                    ns.Block($"public {maybeStatic} partial {typeType} {fullName} {{", "}", type =>
                     {
                         foreach (var task in tasks)
                         {
