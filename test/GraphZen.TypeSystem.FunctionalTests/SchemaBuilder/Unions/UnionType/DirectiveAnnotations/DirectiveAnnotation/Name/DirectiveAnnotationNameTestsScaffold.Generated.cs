@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Dir
 [NoReorder]
 public abstract  class DirectiveAnnotationNameTests {
 
-[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
+[Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
 [Fact]
 public void it_can_be_updated() {
     // Priority: Low

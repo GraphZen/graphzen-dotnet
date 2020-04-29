@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.D
 [NoReorder]
 public abstract  class ScalarTypeDescriptionTests {
 
-[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
+[Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
 [Fact]
 public void it_can_be_updated() {
     // Priority: Low
@@ -37,7 +37,7 @@ public void optional_item_can_be_removed() {
 
 
 
-[Spec(nameof(OptionalSpecs.parent_can_be_created_without))]
+[Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
 [Fact]
 public void parent_can_be_created_without() {
     // Priority: Low

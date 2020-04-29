@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Nam
 [NoReorder]
 public abstract  class UnionTypeNameTests {
 
-[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
+[Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
 [Fact]
 public void it_can_be_updated() {
     // Priority: Low

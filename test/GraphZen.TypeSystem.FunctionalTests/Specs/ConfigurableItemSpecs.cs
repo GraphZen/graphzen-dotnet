@@ -15,18 +15,19 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
     {
         public class UpdateableSpecs
         {
-            public const string it_can_be_updated = null;
+            public const string updateable_item_can_be_updated = null;
         }
 
         public class OptionalSpecs
         {
             public const string optional_item_can_be_removed = null;
-            public const string parent_can_be_created_without = null;
+            public const string parent_can_be_created_without_optional_item = null;
         }
 
         public class RequiredSpecs
         {
             public const string required_item_cannot_be_removed = null;
+            public const string parent_cannot_be_created_without_required_item = null;
         }
 
         public class NamedCollectionSpecs

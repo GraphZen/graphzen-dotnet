@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Direc
 [NoReorder]
 public abstract  class DirectiveAnnotationNameTests {
 
-[Spec(nameof(UpdateableSpecs.it_can_be_updated))]
+[Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
 [Fact]
 public void it_can_be_updated() {
     // Priority: Low
