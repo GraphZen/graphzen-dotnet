@@ -1,11 +1,9 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text;
 using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
@@ -16,18 +14,17 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen
 {
-    public class SchemaBuilderDefaultContextGenerator : PartialTypeGenerator
+    public class SchemaBuilderGenerator : PartialTypeGenerator
     {
-        public override IReadOnlyList<string> Usings { get; } =
-            ImmutableList.Create("GraphZen.TypeSystem.Internal");
-
-        public SchemaBuilderDefaultContextGenerator() : base(typeof(SchemaBuilder<>))
+        public SchemaBuilderGenerator() : base(typeof(SchemaBuilder<>))
         {
         }
 
+        public override IReadOnlyList<string> Usings { get; } =
+            ImmutableList.Create("GraphZen.TypeSystem.Internal");
+
         public override void Apply(StringBuilder csharp)
         {
-
             foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds)
             {
                 csharp.Region(kind + "s", region =>
@@ -136,7 +133,5 @@ public ISchemaBuilder<TContext> Ignore{kind}(string name) {{
                 });
             }
         }
-
-
     }
 }
