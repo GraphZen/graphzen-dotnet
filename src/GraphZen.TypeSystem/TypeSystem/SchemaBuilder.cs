@@ -144,20 +144,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
      
-        public ISchemaBuilder<GraphQLContext> UnignoreDirective(Type clrType)
-        {
-            Check.NotNull(clrType, nameof(clrType));
-            Builder.UnignoreDirective(clrType, ConfigurationSource.Explicit);
-            return this;
-        }
-
-        public ISchemaBuilder<GraphQLContext> UnignoreDirective(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            Builder.UnignoreDirective(name, ConfigurationSource.Explicit);
-            return this;
-        }
-
+      
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit)!);

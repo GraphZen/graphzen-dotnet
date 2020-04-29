@@ -13,7 +13,6 @@ using GraphZen.TypeSystem.Internal;
 
 namespace GraphZen.TypeSystem {
 public  partial class SchemaBuilder {
-// hello GraphZen.TypeSystem.SchemaBuilder 
 #region Directives
 
 
@@ -46,6 +45,18 @@ public  IDirectiveBuilder<object> Directive(Type clrType)  {
 
 public ISchemaBuilder<GraphQLContext> UnignoreDirective<TDirective>() where TDirective: notnull {
     Builder.UnignoreDirective(typeof(TDirective), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> UnignoreDirective(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.UnignoreDirective(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> UnignoreDirective(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.UnignoreDirective(name, ConfigurationSource.Explicit);
     return this;
 }
 
