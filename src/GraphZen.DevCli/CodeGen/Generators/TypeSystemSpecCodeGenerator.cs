@@ -82,8 +82,6 @@ public void {spec.Id}() {{
                     }
                 });
 
-                //var contents = $"/* {csharp} */";
-                //yield return new GeneratedCode(filePath, contents);
                 if (generate)
                 {
                     yield return new GeneratedCode(filePath, csharp.ToString());
