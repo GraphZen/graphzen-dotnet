@@ -55,7 +55,6 @@ public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)
     return builder;
 }}
 
-     //   I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType); 
 
 
 ");
