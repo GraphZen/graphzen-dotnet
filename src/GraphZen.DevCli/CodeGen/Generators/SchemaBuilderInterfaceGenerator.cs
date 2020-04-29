@@ -118,6 +118,13 @@ namespace GraphZen.CodeGen.Generators
 
          ISchemaBuilder<TContext> Ignore{kind}(string name);
 
+        ISchemaBuilder<TContext> Remove{kind}<{typeParam}>() where {typeParam}: notnull;
+
+         ISchemaBuilder<TContext> Remove{kind}(Type clrType);
+
+         ISchemaBuilder<TContext> Remove{kind}(string name);
+
+
 ");
                 });
             }

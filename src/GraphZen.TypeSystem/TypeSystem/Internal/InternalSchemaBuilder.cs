@@ -738,6 +738,16 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
+        public bool RemoveType(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveType(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool RemoveType(NamedTypeDefinition type, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(type.GetConfigurationSource()))
@@ -884,6 +894,76 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public void IgnoreInputObject(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveDirective(Type type, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveDirective(string name, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveObject(Type type, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveObject(string name, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveUnion(Type type, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveUnion(string name, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveScalar(Type type, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveScalar(string name, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveEnum(Type type, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveEnum(string name, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveInterface(Type type, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveInterface(string name, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveInputObject(Type type, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveInputObject(string name, ConfigurationSource @explicit)
         {
             throw new NotImplementedException();
         }

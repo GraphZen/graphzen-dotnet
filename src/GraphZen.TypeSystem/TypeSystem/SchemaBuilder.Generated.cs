@@ -77,6 +77,24 @@ public ISchemaBuilder<TContext> IgnoreDirective(string name) {
     Builder.IgnoreDirective(name, ConfigurationSource.Explicit);
     return this;
 }
+
+public ISchemaBuilder<TContext> RemoveDirective<TDirective>() where TDirective: notnull {
+    Builder.RemoveDirective(typeof(TDirective), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveDirective(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.RemoveDirective(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveDirective(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.RemoveDirective(name, ConfigurationSource.Explicit);
+    return this;
+}
+
    
 
    
@@ -119,6 +137,24 @@ public ISchemaBuilder<TContext> IgnoreType(string name) {
     Builder.IgnoreType(name, ConfigurationSource.Explicit);
     return this;
 }
+
+public ISchemaBuilder<TContext> RemoveType<TClrType>() where TClrType: notnull {
+    Builder.RemoveType(typeof(TClrType), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveType(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.RemoveType(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveType(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.RemoveType(name, ConfigurationSource.Explicit);
+    return this;
+}
+
    
 
    
@@ -186,6 +222,24 @@ public ISchemaBuilder<TContext> IgnoreObject(string name) {
     Builder.IgnoreObject(name, ConfigurationSource.Explicit);
     return this;
 }
+
+public ISchemaBuilder<TContext> RemoveObject<TObject>() where TObject: notnull {
+    Builder.RemoveObject(typeof(TObject), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveObject(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.RemoveObject(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveObject(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.RemoveObject(name, ConfigurationSource.Explicit);
+    return this;
+}
+
    
 
    
@@ -253,6 +307,24 @@ public ISchemaBuilder<TContext> IgnoreUnion(string name) {
     Builder.IgnoreUnion(name, ConfigurationSource.Explicit);
     return this;
 }
+
+public ISchemaBuilder<TContext> RemoveUnion<TUnion>() where TUnion: notnull {
+    Builder.RemoveUnion(typeof(TUnion), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveUnion(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.RemoveUnion(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveUnion(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.RemoveUnion(name, ConfigurationSource.Explicit);
+    return this;
+}
+
    
 
    
@@ -295,6 +367,24 @@ public ISchemaBuilder<TContext> IgnoreScalar(string name) {
     Builder.IgnoreScalar(name, ConfigurationSource.Explicit);
     return this;
 }
+
+public ISchemaBuilder<TContext> RemoveScalar<TScalar>() where TScalar: notnull {
+    Builder.RemoveScalar(typeof(TScalar), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveScalar(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.RemoveScalar(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveScalar(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.RemoveScalar(name, ConfigurationSource.Explicit);
+    return this;
+}
+
    
 
    
@@ -363,6 +453,24 @@ public ISchemaBuilder<TContext> IgnoreEnum(string name) {
     Builder.IgnoreEnum(name, ConfigurationSource.Explicit);
     return this;
 }
+
+public ISchemaBuilder<TContext> RemoveEnum<TEnum>() where TEnum: notnull {
+    Builder.RemoveEnum(typeof(TEnum), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveEnum(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.RemoveEnum(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveEnum(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.RemoveEnum(name, ConfigurationSource.Explicit);
+    return this;
+}
+
    
 
    
@@ -430,6 +538,24 @@ public ISchemaBuilder<TContext> IgnoreInterface(string name) {
     Builder.IgnoreInterface(name, ConfigurationSource.Explicit);
     return this;
 }
+
+public ISchemaBuilder<TContext> RemoveInterface<TInterface>() where TInterface: notnull {
+    Builder.RemoveInterface(typeof(TInterface), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveInterface(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.RemoveInterface(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveInterface(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.RemoveInterface(name, ConfigurationSource.Explicit);
+    return this;
+}
+
    
 
    
@@ -498,6 +624,24 @@ public ISchemaBuilder<TContext> IgnoreInputObject(string name) {
     Builder.IgnoreInputObject(name, ConfigurationSource.Explicit);
     return this;
 }
+
+public ISchemaBuilder<TContext> RemoveInputObject<TInputObject>() where TInputObject: notnull {
+    Builder.RemoveInputObject(typeof(TInputObject), ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveInputObject(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.RemoveInputObject(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<TContext> RemoveInputObject(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.RemoveInputObject(name, ConfigurationSource.Explicit);
+    return this;
+}
+
    
 
    
