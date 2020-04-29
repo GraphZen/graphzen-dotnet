@@ -127,23 +127,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ISchemaBuilder<GraphQLContext> IgnoreDirective<TDirective>() where TDirective : notnull =>
-            IgnoreDirective(typeof(TDirective));
-
-        public ISchemaBuilder<GraphQLContext> IgnoreDirective(Type clrType)
-        {
-            Check.NotNull(clrType, nameof(clrType));
-            Builder.IgnoreDirective(clrType, ConfigurationSource.Explicit);
-            return this;
-        }
-
-        public ISchemaBuilder<GraphQLContext> IgnoreDirective(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            Builder.IgnoreDirective(name, ConfigurationSource.Explicit);
-            return this;
-        }
-     
+            
       
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(name, nameof(name)),

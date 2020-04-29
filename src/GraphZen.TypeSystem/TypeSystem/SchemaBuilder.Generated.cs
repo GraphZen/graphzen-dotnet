@@ -60,10 +60,24 @@ public ISchemaBuilder<GraphQLContext> UnignoreDirective(string name) {
     return this;
 }
 
-      //   ISchemaBuilder<GraphQLContext> UnignoreDirective(Type clrType);
 
-      //   ISchemaBuilder<GraphQLContext> UnignoreDirective(string name);
+public ISchemaBuilder<GraphQLContext> IgnoreDirective<TDirective>() where TDirective: notnull {
+    Builder.IgnoreDirective(typeof(TDirective), ConfigurationSource.Explicit);
+    return this;
+}
 
+public ISchemaBuilder<GraphQLContext> IgnoreDirective(Type clrType) {
+    Check.NotNull(clrType, nameof(clrType));
+    Builder.IgnoreDirective(clrType, ConfigurationSource.Explicit);
+    return this;
+}
+
+public ISchemaBuilder<GraphQLContext> IgnoreDirective(string name) {
+    Check.NotNull(name, nameof(name));
+    Builder.IgnoreDirective(name, ConfigurationSource.Explicit);
+    return this;
+}
+   
 
       //   ISchemaBuilder<GraphQLContext> IgnoreDirective<TDirective>() where TDirective: notnull;
 
