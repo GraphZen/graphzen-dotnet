@@ -18,6 +18,9 @@ namespace GraphZen.CodeGen.Generators
         {
         }
 
+        private bool IsInputKind(string kind) => new[] { "Enum", "Scalar" }.Contains(kind);
+
+
         public override void Apply(StringBuilder csharp)
         {
             foreach (var (kind, type) in TypeSystemCodeGen.NamedTypes
@@ -25,7 +28,14 @@ namespace GraphZen.CodeGen.Generators
             {
                 csharp.Region($"{kind} type accessors", region =>
                 {
-                    region.AppendLine($@"
+
+                    if (IsInputKind(kind))
+                    {
+
+                    }
+                    else
+                    {
+                        region.AppendLine($@"
 
 
          ISchemaBuilder<TContext> Ignore{kind}(Type clrType);
@@ -40,6 +50,11 @@ namespace GraphZen.CodeGen.Generators
 
         I{type}Builder<TObject, TContext> {kind}<T{kind}>();
 ");
+
+                    }
+
+
+
                 });
             }
         }

@@ -94,7 +94,6 @@ namespace GraphZen.TypeSystem
 
         IEnumTypeBuilder<string> Enum(Type clrType);
 
-
         IInputObjectTypeBuilder<object> InputObject(string name);
 
 
