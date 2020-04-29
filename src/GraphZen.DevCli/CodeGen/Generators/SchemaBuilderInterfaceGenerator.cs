@@ -30,6 +30,15 @@ namespace GraphZen.CodeGen.Generators
                 {
 
                     region.AppendLine($@"
+
+
+        ISchemaBuilder<TContext> Unignore{kind}<T{kind}>() where T{kind}: notnull;
+
+         ISchemaBuilder<TContext> Unignore{kind}(Type clrType);
+
+         ISchemaBuilder<TContext> Unignore{kind}(string name);
+
+
          ISchemaBuilder<TContext> Ignore{kind}<T{kind}>() where T{kind}: notnull;
 
          ISchemaBuilder<TContext> Ignore{kind}(Type clrType);
