@@ -244,8 +244,14 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public static Schema Create(Action<SchemaBuilder<GraphQLContext>> schemaConfiguration) =>
-            Create<GraphQLContext>(schemaConfiguration);
+        public static Schema Create(Action<SchemaBuilder> schemaConfiguration)
+        {
+            Check.NotNull(schemaConfiguration, nameof(schemaConfiguration));
+            var schemaBuilder = new SchemaBuilder(new SchemaDefinition(SpecScalars.All));
+            schemaConfiguration(schemaBuilder);
+            var schemaDef = schemaBuilder.GetInfrastructure<SchemaDefinition>();
+            return schemaDef.ToSchema();
+        }
 
 
         [GraphQLIgnore]

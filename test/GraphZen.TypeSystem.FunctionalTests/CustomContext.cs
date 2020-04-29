@@ -22,11 +22,7 @@ namespace GraphZen.TypeSystem.FunctionalTests
         {
             var context = new CustomContext();
             context.Schema.GetObject("Foo").Should().NotBeNull();
-            var schema = Schema.Create<CustomContext>(_ =>
-            {
-
-
-            });
+            var schema = Schema.Create<CustomContext>(_ => { });
             schema.GetType("Foo");
         }
     }
