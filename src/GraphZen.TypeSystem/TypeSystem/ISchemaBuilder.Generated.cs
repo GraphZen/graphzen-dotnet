@@ -171,6 +171,22 @@ public  partial interface ISchemaBuilder<TContext> {
 #region Interfaces
 
 
+       
+        IInterfaceTypeBuilder<object, TContext> Interface(string name);
+
+
+        IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>() where TInterface : notnull;
+
+
+        IInterfaceTypeBuilder<object, TContext> Interface(Type clrType); 
+
+
+   
+
+
+
+
+
 
         ISchemaBuilder<TContext> UnignoreInterface<TInterface>() where TInterface: notnull;
 

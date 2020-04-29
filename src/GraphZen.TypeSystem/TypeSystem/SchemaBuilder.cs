@@ -60,21 +60,7 @@ namespace GraphZen.TypeSystem
      
                
       
-        public IInterfaceTypeBuilder<object, GraphQLContext> Interface(string name) =>
-            new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit)!);
-
-
-        public IInterfaceTypeBuilder<object, GraphQLContext> Interface(Type clrType) =>
-            new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(
-                Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit
-            )!);
-
-        public IInterfaceTypeBuilder<TInterface, GraphQLContext> Interface<TInterface>() where TInterface : notnull =>
-            new InterfaceTypeBuilder<TInterface, GraphQLContext>(Builder.Interface(typeof(TInterface),
-                ConfigurationSource.Explicit)!);
-
+     
       
       
    

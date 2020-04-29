@@ -344,6 +344,31 @@ public ISchemaBuilder<GraphQLContext> IgnoreEnum(string name) {
 #endregion
 #region Interfaces
 
+public IInterfaceTypeBuilder<object, GraphQLContext> Interface(string name) {
+    Check.NotNull(name, nameof(name));
+    var internalBuilder = Builder.Interface(name, ConfigurationSource.Explicit)!;
+    var builder = new InterfaceTypeBuilder<object, GraphQLContext>(internalBuilder);
+    return builder;
+} 
+
+public  IInterfaceTypeBuilder<TInterface, GraphQLContext> Interface<TInterface>() where TInterface : notnull {
+    var internalBuilder = Builder.Interface(typeof(TInterface), ConfigurationSource.Explicit)!;
+    var builder = new InterfaceTypeBuilder<TInterface, GraphQLContext>(internalBuilder);
+    return builder;
+}
+public  IInterfaceTypeBuilder<object, GraphQLContext> Interface(Type clrType)  {
+            Check.NotNull(clrType, nameof(clrType));
+    var internalBuilder = Builder.Interface(clrType, ConfigurationSource.Explicit)!;
+    var builder = new InterfaceTypeBuilder<object, GraphQLContext>(internalBuilder);
+    return builder;
+}
+
+
+   
+
+
+
+
 
 
 public ISchemaBuilder<GraphQLContext> UnignoreInterface<TInterface>() where TInterface: notnull {
