@@ -1,13 +1,10 @@
 #nullable enable
 
 using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
-
 using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
@@ -15,9 +12,9 @@ namespace GraphZen.TypeSystem
 {
     public partial class SchemaBuilder
     {
-        // hello GraphZen.TypeSystem.SchemaBuilder 
-        #region Directives
+// hello GraphZen.TypeSystem.SchemaBuilder 
 
+        #region Directives
 
         public IDirectiveBuilder<object> Directive(string name)
         {
@@ -35,7 +32,6 @@ namespace GraphZen.TypeSystem
             return builder;
         }
 
-
         public IDirectiveBuilder<object> Directive(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
@@ -44,9 +40,7 @@ namespace GraphZen.TypeSystem
             return builder;
         }
 
-
-
-
+        //   IDirectiveBuilder<object> Directive(Type clrType); 
 
 
         //  ISchemaBuilder<TContext> UnignoreDirective<TDirective>() where TDirective: notnull;
@@ -62,11 +56,11 @@ namespace GraphZen.TypeSystem
 
         //   ISchemaBuilder<TContext> IgnoreDirective(string name);
 
-
         #endregion
     }
+
     public partial class SchemaBuilder<TContext>
     {
-        // hello GraphZen.TypeSystem.SchemaBuilder`1[TContext] 
+// hello GraphZen.TypeSystem.SchemaBuilder`1[TContext] 
     }
 }
