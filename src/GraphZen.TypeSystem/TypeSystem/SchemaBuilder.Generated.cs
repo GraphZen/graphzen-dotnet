@@ -10,10 +10,8 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen.TypeSystem
-{
-    public partial class SchemaBuilder
-    {
-        // hello GraphZen.TypeSystem.SchemaBuilder 
-    }
+namespace GraphZen.TypeSystem {
+public  partial class SchemaBuilder<TContext> {
+// hello GraphZen.TypeSystem.SchemaBuilder`1[TContext] 
+}
 }

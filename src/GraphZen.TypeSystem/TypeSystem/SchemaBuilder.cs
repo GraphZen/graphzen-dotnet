@@ -327,7 +327,7 @@ namespace GraphZen.TypeSystem
 
 
     [DebuggerStepThrough]
-    public class SchemaBuilder<TContext> : SchemaBuilder, ISchemaBuilder<TContext> where TContext : GraphQLContext
+    public partial class SchemaBuilder<TContext> : SchemaBuilder, ISchemaBuilder<TContext> where TContext : GraphQLContext
 
     {
         public SchemaBuilder(SchemaDefinition schemaDefinition) : base(schemaDefinition)
