@@ -83,7 +83,10 @@ public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)
                     region.AppendLine($@"
 
 
-      //  ISchemaBuilder<GraphQLContext> Unignore{kind}<{typeParam}>() where {typeParam}: notnull;
+public ISchemaBuilder<GraphQLContext> Unignore{kind}<{typeParam}>() where {typeParam}: notnull {{
+    Builder.Unignore{kind}(typeof({typeParam}), ConfigurationSource.Explicit);
+    return this;
+}}
 
       //   ISchemaBuilder<GraphQLContext> Unignore{kind}(Type clrType);
 
