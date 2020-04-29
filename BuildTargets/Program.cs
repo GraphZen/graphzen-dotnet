@@ -51,9 +51,11 @@ namespace BuildTargets
 
             Target(Compile, () => Run("dotnet", "build -c Release --no-restore"));
 
-            Target(Gen, () => RunCodeGen());
+            Target(nameof(BuildCli), BuildCli);
 
-            Target(GenQuick, () => RunCodeGen(false));
+            Target(Gen, DependsOn(nameof(BuildCli)), () => RunCodeGen());
+
+            Target(GenQuick, DependsOn(nameof(BuildCli)), () => RunCodeGen(false));
 
             Target(Test, () =>
             {
@@ -62,7 +64,7 @@ namespace BuildTargets
                     $"test  -c release --no-build --logger trx --results-directory {TestLogDir} --collect:\"XPlat Code Coverage\" --settings:./BuildTargets/coverlet.runsettings.xml");
             });
 
-            Target(Specs, () => RunCli("specs"));
+            Target(Specs, DependsOn(nameof(BuildCli)), () => RunCli("specs"));
 
             Target(TestQuick, () =>
             {
@@ -120,9 +122,13 @@ namespace BuildTargets
                 CleanupCode("./**/*.Generated.cs");
             }
         }
+        private static void BuildCli()
+        {
+            //Run("dotnet", $"build -c Release --no-restore ./src/GraphZen.DevCli/GraphZen.DevCli.csproj ");
+        }
 
         private static void RunCli(string task) => Run("dotnet",
-            $"run -c Release --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- {task}");
+            $"run -c Release  --no-build --no-restore --project ./src/GraphZen.DevCli/GraphZen.DevCli.csproj -- {task}");
 
         private static void CleanDir(string path)
         {
