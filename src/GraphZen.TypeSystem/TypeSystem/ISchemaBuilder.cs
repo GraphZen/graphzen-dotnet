@@ -32,15 +32,7 @@ namespace GraphZen.TypeSystem
             where TValueNode : ValueSyntax;
 
 
-        IObjectTypeBuilder<object, TContext> Object(Type clrType);
-
-
-        IObjectTypeBuilder<object, TContext> Object(string name);
-
-
-        IObjectTypeBuilder<TObject, TContext> Object<TObject>();
-
-
+     
         ISchemaBuilder<TContext> IgnoreType<TObject>();
 
 

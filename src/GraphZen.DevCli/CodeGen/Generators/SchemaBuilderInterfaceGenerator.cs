@@ -29,6 +29,8 @@ namespace GraphZen.CodeGen.Generators
                     region.AppendLine($@"
 
 
+         ISchemaBuilder<TContext> Ignore{kind}(Type clrType);
+         ISchemaBuilder<TContext> Ignore{kind}(string name);
         I{type}Builder<object, TContext> {kind}(Type clrType);
 
 

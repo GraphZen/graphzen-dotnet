@@ -53,7 +53,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             {
 
             });
-            throw new NotImplementedException();
         }
 
 
@@ -67,7 +66,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             {
 
             });
-            throw new NotImplementedException();
         }
 
 
@@ -81,7 +79,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             {
 
             });
-            throw new NotImplementedException();
         }
 
 
