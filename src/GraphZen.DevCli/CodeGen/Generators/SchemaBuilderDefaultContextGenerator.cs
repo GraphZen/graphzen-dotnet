@@ -48,6 +48,14 @@ public  I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {type
     return builder;
 }}
 
+/*
+public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)  {{
+            Check.NotNull(clrType, nameof(clrType));
+    var internalBuilder = Builder.{kind}(clrType, ConfigurationSource.Explicit);
+    var builder = new {kind}Builder<{config.DefaultTypeName}>(internalBuilder);
+    return builder;
+}}
+*/
 
      //   I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType); 
 

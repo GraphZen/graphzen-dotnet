@@ -24,7 +24,6 @@ namespace GraphZen.TypeSystem
 
 
         
-        public IDirectiveBuilder<object> Directive(Type clrType) => throw new NotImplementedException();
 
         public IScalarTypeBuilder<object, ValueSyntax> Scalar(string name) =>
             new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(name, nameof(name)),

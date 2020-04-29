@@ -36,7 +36,13 @@ namespace GraphZen.TypeSystem
         }
 
 
-        //   IDirectiveBuilder<object> Directive(Type clrType); 
+        public IDirectiveBuilder<object> Directive(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            var internalBuilder = Builder.Directive(clrType, ConfigurationSource.Explicit);
+            var builder = new DirectiveBuilder<object>(internalBuilder);
+            return builder;
+        }
 
 
 
