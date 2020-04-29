@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Text;
 using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.CodeGen.Generators;
 using GraphZen.Infrastructure;
@@ -81,11 +82,33 @@ namespace GraphZen.CodeGen
             {
                 new SchemaDefinitionTypeAccessorGenerator(),
                 new SchemaTypeAccessorGenerator(),
-                new SchemaBuilderInterfaceGenerator()
+                new SchemaBuilderInterfaceGenerator(),
+                new SchemaBuilderCustomContext(),
+                new SchemaBuilderDefaultContext()
             };
             generators.AddRange(PartialTypeGenerator.FromTypes(types));
             generators.AddRange(SyntaxNodeGenerator.CreateAll());
             return generators;
+        }
+    }
+
+    public class SchemaBuilderDefaultContext : PartialTypeGenerator<SchemaBuilder>
+    {
+        public override void Apply(StringBuilder csharp)
+        {
+            csharp.AppendLine($"// hello {TargetType} ");
+        }
+    }
+
+    public class SchemaBuilderCustomContext : PartialTypeGenerator
+    {
+        public SchemaBuilderCustomContext() : base(typeof(SchemaBuilder<>))
+        {
+        }
+
+        public override void Apply(StringBuilder csharp)
+        {
+            csharp.AppendLine($"// hello {TargetType} ");
         }
     }
 }
