@@ -18,7 +18,7 @@ namespace GraphZen.CodeGen
     public class SchemaBuilderDefaultContextGenerator : PartialTypeGenerator<SchemaBuilder>
     {
         public override IReadOnlyList<string> Usings { get; } =
-            ImmutableList.Create("using GraphZen.TypeSystem.Internal");
+            ImmutableList.Create("GraphZen.TypeSystem.Internal");
 
         public override void Apply(StringBuilder csharp)
         {
@@ -34,15 +34,12 @@ namespace GraphZen.CodeGen
                     {
                         region.AppendLine($@"
 
-       
-      /*
 public I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(string name) {{
     Check.NotNull(name, nameof(name));
     var internalBuilder = Builder.{kind}(name, ConfigurationSource.Explicit);
     var builder = new {kind}Builder<{config.DefaultTypeName}>(internalBuilder);
     return builder;
 }} 
-*/
 
 
       //  I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {typeParam} : notnull;

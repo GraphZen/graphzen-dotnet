@@ -107,7 +107,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
                 foreach (var use in fileTasks.SelectMany(_ => _.Usings).Distinct())
                 {
-                    csharp.AppendLine(use);
+                    csharp.AppendLine($"using {use};");
                 }
 
                 csharp.AppendLine(@"

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
+using GraphZen.TypeSystem.Internal;
 
 // ReSharper disable InconsistentNaming
 
@@ -17,13 +17,13 @@ public  partial class SchemaBuilder {
 #region Directives
 
 
-      /* 
+       
 public IDirectiveBuilder<object> Directive(string name) {
     Check.NotNull(name, nameof(name));
-    var internalBuilder = Builder.Directive(name, ConfigurationSource.Explicit)
+    var internalBuilder = Builder.Directive(name, ConfigurationSource.Explicit);
     var builder = new DirectiveBuilder<object>(internalBuilder);
     return builder;
-} */
+} 
 
 
       //  IDirectiveBuilder<TDirective> Directive<TDirective>() where TDirective : notnull;

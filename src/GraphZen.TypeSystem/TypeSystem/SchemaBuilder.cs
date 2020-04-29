@@ -23,15 +23,7 @@ namespace GraphZen.TypeSystem
         protected InternalSchemaBuilder Builder { get; }
 
 
-        [DebuggerStepThrough]
-        public IDirectiveBuilder<object> Directive(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            var builder = Builder.Directive(name, ConfigurationSource.Explicit);
-            return new DirectiveBuilder<object>(builder);
-        }
-
-        public IDirectiveBuilder<T> Directive<T>() where T : notnull => throw new NotImplementedException();
+              public IDirectiveBuilder<T> Directive<T>() where T : notnull => throw new NotImplementedException();
 
         public IDirectiveBuilder<object> Directive(Type clrType) => throw new NotImplementedException();
 
