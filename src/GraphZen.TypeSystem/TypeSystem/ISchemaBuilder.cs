@@ -33,42 +33,6 @@ namespace GraphZen.TypeSystem
 
 
      
-        ISchemaBuilder<TContext> IgnoreType<TObject>();
-
-
-        ISchemaBuilder<TContext> IgnoreType(Type clrType);
-
-
-        ISchemaBuilder<TContext> IgnoreType(string name);
-
-
-        ISchemaBuilder<TContext> UnignoreType<TObject>();
-
-
-        ISchemaBuilder<TContext> UnignoreType(Type clrType);
-
-
-        ISchemaBuilder<TContext> UnignoreType(string name);
-
-        ISchemaBuilder<TContext> IgnoreDirective<TDirective>();
-
-
-        ISchemaBuilder<TContext> IgnoreDirective(Type clrType);
-
-
-        ISchemaBuilder<TContext> IgnoreDirective(string name);
-
-
-        ISchemaBuilder<TContext> UnignoreDirective<TObject>();
-
-
-        ISchemaBuilder<TContext> UnignoreDirective(Type clrType);
-
-
-        ISchemaBuilder<TContext> UnignoreDirective(string name);
-
-
-        
 
    
 
@@ -80,7 +44,6 @@ namespace GraphZen.TypeSystem
 
         IEnumTypeBuilder<string> Enum(Type clrType);
 
-     
 
         ISchemaBuilder<TContext> QueryType(string type);
 

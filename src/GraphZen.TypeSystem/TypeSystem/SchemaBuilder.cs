@@ -54,6 +54,17 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<GraphQLContext> IgnoreObject(Type clrType) => throw new NotImplementedException();
 
         public ISchemaBuilder<GraphQLContext> IgnoreObject(string name) => throw new NotImplementedException();
+        public ISchemaBuilder<GraphQLContext> UnignoreScalar<TScalar>() where TScalar : notnull => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> UnignoreScalar(Type clrType) => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> UnignoreScalar(string name) => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> IgnoreScalar<TScalar>() where TScalar : notnull => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> IgnoreScalar(Type clrType) => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> IgnoreScalar(string name) => throw new NotImplementedException();
 
         public IObjectTypeBuilder<object, GraphQLContext> Object(Type clrType) =>
             new ObjectTypeBuilder<object, GraphQLContext>(Builder.Object(Check.NotNull(clrType, nameof(clrType)),
@@ -81,7 +92,7 @@ namespace GraphZen.TypeSystem
 
         public ISchemaBuilder<GraphQLContext> IgnoreUnion(string name) => throw new NotImplementedException();
 
-        public ISchemaBuilder<GraphQLContext> IgnoreType<TClrType>() => IgnoreType(typeof(TClrType));
+        public ISchemaBuilder<GraphQLContext> IgnoreType<TClrType>() where TClrType : notnull => IgnoreType(typeof(TClrType));
 
         public ISchemaBuilder<GraphQLContext> IgnoreType(Type clrType)
         {
@@ -97,7 +108,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ISchemaBuilder<GraphQLContext> UnignoreType<TObject>() => IgnoreType(typeof(TObject));
+        public ISchemaBuilder<GraphQLContext> UnignoreType<TClrType>() where TClrType : notnull => IgnoreType(typeof(TClrType));
 
         public ISchemaBuilder<GraphQLContext> UnignoreType(Type clrType)
         {
@@ -113,7 +124,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ISchemaBuilder<GraphQLContext> IgnoreDirective<TDirective>() => IgnoreDirective(typeof(TDirective));
+        public ISchemaBuilder<GraphQLContext> IgnoreDirective<TDirective>() where TDirective : notnull => IgnoreDirective(typeof(TDirective));
 
         public ISchemaBuilder<GraphQLContext> IgnoreDirective(Type clrType)
         {
@@ -129,7 +140,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ISchemaBuilder<GraphQLContext> UnignoreDirective<TObject>() => UnignoreDirective(typeof(TObject));
+        public ISchemaBuilder<GraphQLContext> UnignoreDirective<TDirective>() where TDirective : notnull => UnignoreDirective(typeof(TDirective));
 
         public ISchemaBuilder<GraphQLContext> UnignoreDirective(Type clrType)
         {
@@ -223,6 +234,18 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public ISchemaBuilder<GraphQLContext> UnignoreEnum<TEnum>() where TEnum : notnull => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> UnignoreEnum(Type clrType) => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> UnignoreEnum(string name) => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> IgnoreEnum<TEnum>() where TEnum : notnull => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> IgnoreEnum(Type clrType) => throw new NotImplementedException();
+
+        public ISchemaBuilder<GraphQLContext> IgnoreEnum(string name) => throw new NotImplementedException();
+
 
         public ISchemaBuilder<GraphQLContext> UnignoreInputObject<TInputObject>() where TInputObject : notnull => throw new NotImplementedException();
 
@@ -302,6 +325,17 @@ namespace GraphZen.TypeSystem
         public new ISchemaBuilder<TContext> IgnoreObject(Type clrType) => throw new NotImplementedException();
 
         public new ISchemaBuilder<TContext> IgnoreObject(string name) => throw new NotImplementedException();
+        public new ISchemaBuilder<TContext> UnignoreScalar<TScalar>() where TScalar : notnull => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> UnignoreScalar(Type clrType) => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> UnignoreScalar(string name) => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> IgnoreScalar<TScalar>() where TScalar : notnull => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> IgnoreScalar(Type clrType) => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> IgnoreScalar(string name) => throw new NotImplementedException();
 
         public new IObjectTypeBuilder<object, TContext> Object(Type clrType) =>
             new ObjectTypeBuilder<object, TContext>(Builder.Object(Check.NotNull(clrType, nameof(clrType)),
@@ -328,16 +362,16 @@ namespace GraphZen.TypeSystem
 
         public new ISchemaBuilder<TContext> IgnoreUnion(string name) => throw new NotImplementedException();
 
-        public new ISchemaBuilder<TContext> IgnoreType<TObject>() =>
-            (ISchemaBuilder<TContext>)base.IgnoreType<TObject>();
+        public new ISchemaBuilder<TContext> IgnoreType<TClrType>() where TClrType : notnull =>
+            (ISchemaBuilder<TContext>)base.IgnoreType<TClrType>();
 
         public new ISchemaBuilder<TContext> IgnoreType(Type clrType) =>
             (ISchemaBuilder<TContext>)base.IgnoreType(clrType);
 
         public new ISchemaBuilder<TContext> IgnoreType(string name) => (ISchemaBuilder<TContext>)base.IgnoreType(name);
 
-        public new ISchemaBuilder<TContext> UnignoreType<TObject>() =>
-            (ISchemaBuilder<TContext>)base.UnignoreType(typeof(TObject));
+        public new ISchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull =>
+            (ISchemaBuilder<TContext>)base.UnignoreType(typeof(TClrType));
 
         public new ISchemaBuilder<TContext> UnignoreType(Type clrType) =>
             (ISchemaBuilder<TContext>)base.UnignoreType(clrType);
@@ -345,7 +379,7 @@ namespace GraphZen.TypeSystem
         public new ISchemaBuilder<TContext> UnignoreType(string name) =>
             (ISchemaBuilder<TContext>)base.UnignoreType(name);
 
-        public new ISchemaBuilder<TContext> IgnoreDirective<TDirective>() =>
+        public new ISchemaBuilder<TContext> IgnoreDirective<TDirective>() where TDirective : notnull =>
             (ISchemaBuilder<TContext>)base.IgnoreDirective<TDirective>();
 
         public new ISchemaBuilder<TContext> IgnoreDirective(Type clrType) =>
@@ -354,8 +388,8 @@ namespace GraphZen.TypeSystem
         public new ISchemaBuilder<TContext> IgnoreDirective(string name) =>
             (ISchemaBuilder<TContext>)base.IgnoreDirective(name);
 
-        public new ISchemaBuilder<TContext> UnignoreDirective<TObject>() =>
-            (ISchemaBuilder<TContext>)base.UnignoreDirective<TObject>();
+        public new ISchemaBuilder<TContext> UnignoreDirective<TDirective>() where TDirective : notnull =>
+            (ISchemaBuilder<TContext>)base.UnignoreDirective<TDirective>();
 
         public new ISchemaBuilder<TContext> UnignoreDirective(Type clrType) =>
             (ISchemaBuilder<TContext>)base.UnignoreDirective(clrType);
@@ -366,6 +400,8 @@ namespace GraphZen.TypeSystem
         public new IInterfaceTypeBuilder<object, TContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, TContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit)!);
+
+        public new ISchemaBuilder<TContext> IgnoreEnum(string name) => throw new NotImplementedException();
 
         public new ISchemaBuilder<TContext> UnignoreInputObject<TInputObject>() where TInputObject : notnull => throw new NotImplementedException();
 
@@ -439,6 +475,16 @@ namespace GraphZen.TypeSystem
             base.SubscriptionType(type);
             return this;
         }
+
+        public new ISchemaBuilder<TContext> UnignoreEnum<TEnum>() where TEnum : notnull => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> UnignoreEnum(Type clrType) => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> UnignoreEnum(string name) => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> IgnoreEnum<TEnum>() where TEnum : notnull => throw new NotImplementedException();
+
+        public new ISchemaBuilder<TContext> IgnoreEnum(Type clrType) => throw new NotImplementedException();
 
 
         public new ISchemaBuilder<TContext> DirectiveAnnotation(string name, object? value = null)
