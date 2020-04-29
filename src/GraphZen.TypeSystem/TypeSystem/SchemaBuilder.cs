@@ -43,21 +43,7 @@ namespace GraphZen.TypeSystem
             new ScalarTypeBuilder<TScalar, TValueNode>(Builder.Scalar(typeof(TScalar),
                 ConfigurationSource.Explicit)!);
 
-  
-        public ISchemaBuilder<GraphQLContext> UnignoreScalar<TScalar>() where TScalar : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreScalar(Type clrType) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreScalar(string name) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreScalar<TScalar>() where TScalar : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreScalar(Type clrType) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreScalar(string name) => throw new NotImplementedException();
-
+ 
         public IObjectTypeBuilder<object, GraphQLContext> Object(Type clrType) =>
             new ObjectTypeBuilder<object, GraphQLContext>(Builder.Object(Check.NotNull(clrType, nameof(clrType)),
                 ConfigurationSource.Explicit
@@ -71,27 +57,13 @@ namespace GraphZen.TypeSystem
             new ObjectTypeBuilder<TObject, GraphQLContext>(
                 Builder.Object(typeof(TObject), ConfigurationSource.Explicit)!);
 
-        public ISchemaBuilder<GraphQLContext> UnignoreUnion<TUnion>() where TUnion : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreUnion(Type clrType) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreUnion(string name) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreUnion<TUnion>() where TUnion : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreUnion(Type clrType) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreUnion(string name) => throw new NotImplementedException();
-
+     
                
       
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(string name) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit)!);
 
-        public ISchemaBuilder<GraphQLContext> IgnoreInterface(string name) => throw new NotImplementedException();
 
         public IInterfaceTypeBuilder<object, GraphQLContext> Interface(Type clrType) =>
             new InterfaceTypeBuilder<object, GraphQLContext>(Builder.Interface(
@@ -115,17 +87,7 @@ namespace GraphZen.TypeSystem
             new UnionTypeBuilder<object, GraphQLContext>(Builder.Union(Check.NotNull(clrType, nameof(clrType)),
                 ConfigurationSource.Explicit)!);
 
-        public IEnumTypeBuilder<string> Enum(string name) =>
-            new EnumTypeBuilder<string>(Builder.Enum(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit)!);
-
-        public IEnumTypeBuilder<TEnum> Enum<TEnum>() where TEnum : notnull =>
-            new EnumTypeBuilder<TEnum>(Builder.Enum(typeof(TEnum), ConfigurationSource.Explicit)!);
-
-        public IEnumTypeBuilder<string> Enum(Type clrType) =>
-            new EnumTypeBuilder<string>(Builder.Enum(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit)!);
-
+   
         public ISchemaBuilder<GraphQLContext> QueryType(string type)
         {
             Check.NotNull(type, nameof(type));
@@ -161,46 +123,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ISchemaBuilder<GraphQLContext> UnignoreEnum<TEnum>() where TEnum : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreEnum(Type clrType) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreEnum(string name) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreEnum<TEnum>() where TEnum : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreEnum(Type clrType) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreEnum(string name) => throw new NotImplementedException();
-
-
-        public ISchemaBuilder<GraphQLContext> UnignoreInputObject<TInputObject>() where TInputObject : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreInputObject(Type clrType) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreInputObject(string name) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreInputObject<TInputObject>() where TInputObject : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreInputObject(Type clrType) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreInputObject(string name) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreInterface<TInterface>() where TInterface : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreInterface(Type clrType) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> UnignoreInterface(string name) => throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreInterface<TInterface>() where TInterface : notnull =>
-            throw new NotImplementedException();
-
-        public ISchemaBuilder<GraphQLContext> IgnoreInterface(Type clrType) => throw new NotImplementedException();
+      
+        
 
         public ISchemaBuilder<GraphQLContext> DirectiveAnnotation(string name, object? value)
         {

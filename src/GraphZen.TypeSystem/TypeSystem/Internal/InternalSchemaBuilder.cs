@@ -771,22 +771,120 @@ namespace GraphZen.TypeSystem.Internal
             Definition.UnignoreDirective(name, configurationSource);
         }
 
-        public void UnignoreObject(Type type, ConfigurationSource @explicit)
+        public void UnignoreObject(Type clrType, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void UnignoreObject(string name, ConfigurationSource @explicit)
+        public void UnignoreObject(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void IgnoreObject(Type type, ConfigurationSource @explicit)
+        public void IgnoreObject(Type clrType, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-public void IgnoreObject(string name, ConfigurationSource @explicit)
+        public void IgnoreObject(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreUnion(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+        public void UnignoreUnion(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreUnion(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+        public void IgnoreUnion(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreScalar(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreScalar(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreScalar(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreScalar(Type clrTYpe, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreEnum(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreEnum(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreEnum(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreEnum(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreInterface(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreInterface(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreInterface(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreInterface(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreInputObject(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnignoreInputObject(string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreInputObject(Type clrType, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IgnoreInputObject(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
