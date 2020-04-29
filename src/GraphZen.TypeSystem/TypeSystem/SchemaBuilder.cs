@@ -28,6 +28,10 @@ namespace GraphZen.TypeSystem
             new DirectiveBuilder<object>(Builder.Directive(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit));
 
+        public IDirectiveBuilder<T> Directive<T>() where T : notnull => throw new NotImplementedException();
+
+        public IDirectiveBuilder<object> Directive(Type clrType) => throw new NotImplementedException();
+
         public IScalarTypeBuilder<object, ValueSyntax> Scalar(string name) =>
             new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit)!);

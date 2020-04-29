@@ -16,7 +16,6 @@ namespace GraphZen.TypeSystem
         IAnnotableBuilder<ISchemaBuilder<TContext>>,
         IInfrastructure<SchemaDefinition> where TContext : GraphQLContext
     {
-        IDirectiveBuilder<object> Directive(string name);
 
 
         IScalarTypeBuilder<object, ValueSyntax> Scalar(string name);
@@ -34,14 +33,7 @@ namespace GraphZen.TypeSystem
 
 
 
-        IEnumTypeBuilder<string> Enum(string name);
-
-
-        IEnumTypeBuilder<TEnum> Enum<TEnum>() where TEnum : notnull;
-
-
-        IEnumTypeBuilder<string> Enum(Type clrType);
-
+  
 
         ISchemaBuilder<TContext> QueryType(string type);
 

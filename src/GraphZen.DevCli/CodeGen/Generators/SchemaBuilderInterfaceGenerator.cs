@@ -72,7 +72,7 @@ namespace GraphZen.CodeGen.Generators
             {
                 csharp.Region(kind, region =>
                 {
-                    var typeParam = "T" + config.TypeParamName ?? kind;
+                    var typeParam = "T" + (config.TypeParamName ?? kind);
 
                     if (config.SimpleBuilder)
                     {
