@@ -139,9 +139,10 @@ namespace BuildTargets
                 }
             }
         }
+
         private static void BuildCli()
         {
-            Run("dotnet", $"build -c Release --no-restore ./src/GraphZen.DevCli/GraphZen.DevCli.csproj ");
+            Run("dotnet", "build -c Release --no-restore ./src/GraphZen.DevCli/GraphZen.DevCli.csproj ");
         }
 
         private static void RunCli(string task) => Run("dotnet",

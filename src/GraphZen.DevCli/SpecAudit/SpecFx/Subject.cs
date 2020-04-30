@@ -7,7 +7,6 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.SpecAudit.SpecFx

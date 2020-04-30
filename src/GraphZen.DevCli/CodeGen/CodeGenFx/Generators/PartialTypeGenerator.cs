@@ -101,6 +101,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                 {
                     throw new InvalidOperationException($"Expected file to contain a namespace: {targetPath}");
                 }
+
                 var namespaceName = namespaceLine.Split(' ')[1];
 
                 var csharp = CSharpStringBuilder.Create();

@@ -35,7 +35,6 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                 }
                 else
                 {
-
                     Console.WriteLine($"Generated file already exists: {Path}");
                 }
             }
@@ -43,7 +42,6 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
             {
                 throw new Exception($"Error writing contents to file: '{Path}'. See inner exception for details.", e);
             }
-
         }
     }
 }

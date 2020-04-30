@@ -48,8 +48,8 @@ namespace GraphZen.CodeGen.Generators
                             if (suite.Specs.TryGetValue(specId, out var spec))
                             {
                                 var isTestImplemented = testFileExists && suite.Tests.Any(_ =>
-                                                                _.SubjectPath == subject.Path && _.SpecId == specId &&
-                                                                !_.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
+                                    _.SubjectPath == subject.Path && _.SpecId == specId &&
+                                    !_.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
                                 if (!isTestImplemented)
                                 {
                                     generate = true;

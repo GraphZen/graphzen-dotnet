@@ -34,8 +34,8 @@ namespace GraphZen.TypeSystem
         internal static SchemaDefinition GetDefinition(this SchemaBuilder schemaBuilder) =>
             Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<SchemaDefinition>();
 
-        internal static SchemaDefinition GetDefinition<T>(this SchemaBuilder<T> schemaBuilder) where T : GraphQLContext =>
-                    Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<SchemaDefinition>();
-
+        internal static SchemaDefinition GetDefinition<T>(this SchemaBuilder<T> schemaBuilder)
+            where T : GraphQLContext =>
+            Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<SchemaDefinition>();
     }
 }

@@ -671,6 +671,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 Definition.IgnoreType(type.Name, configurationSource);
             }
+
             return RemoveType(type, configurationSource);
         }
 
@@ -738,15 +739,11 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public bool RemoveType(Type clrType, ConfigurationSource configurationSource)
-        {
+        public bool RemoveType(Type clrType, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
-        }
 
-        public bool RemoveType(string name, ConfigurationSource configurationSource)
-        {
+        public bool RemoveType(string name, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
-        }
 
         public bool RemoveType(NamedTypeDefinition type, ConfigurationSource configurationSource)
         {
@@ -804,6 +801,7 @@ namespace GraphZen.TypeSystem.Internal
         {
             throw new NotImplementedException();
         }
+
         public void UnignoreUnion(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
@@ -813,6 +811,7 @@ namespace GraphZen.TypeSystem.Internal
         {
             throw new NotImplementedException();
         }
+
         public void IgnoreUnion(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();

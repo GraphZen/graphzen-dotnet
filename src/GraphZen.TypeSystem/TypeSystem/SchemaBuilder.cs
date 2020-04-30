@@ -104,7 +104,5 @@ namespace GraphZen.TypeSystem
             Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
             return this;
         }
-
-
     }
 }

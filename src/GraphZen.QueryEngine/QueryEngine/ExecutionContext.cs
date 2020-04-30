@@ -194,12 +194,14 @@ namespace GraphZen.QueryEngine
                     return Schema.QueryType ??
                            throw new InvalidOperationException("Query type is not configured for this schema");
                 case OperationType.Mutation:
-                    return Schema.MutationType ?? throw new GraphQLLanguageModelException("Schema not configured for mutations.");
+                    return Schema.MutationType ??
+                           throw new GraphQLLanguageModelException("Schema not configured for mutations.");
                 case OperationType.Subscription:
                     return Schema.SubscriptionType ??
                            throw new GraphQLLanguageModelException("Schema not configured for subscriptions.");
                 default:
-                    throw new GraphQLLanguageModelException("Can only execute queries, mutations, and subscriptions", operation);
+                    throw new GraphQLLanguageModelException("Can only execute queries, mutations, and subscriptions",
+                        operation);
             }
         }
 

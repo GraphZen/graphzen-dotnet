@@ -38,7 +38,7 @@ using JetBrains.Annotations;
             csharp.Class("abstract partial", name, @class);
 
         public static void AbstractClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>
-                    csharp.Class("abstract ", name, @class);
+            csharp.Class("abstract ", name, @class);
 
 
         public static void PartialClass(this StringBuilder csharp, string name, Action<StringBuilder> @class) =>

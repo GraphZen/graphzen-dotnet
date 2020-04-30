@@ -27,7 +27,8 @@ namespace GraphZen.SpecAudit.SpecFx
             var allSpecs = RootSpecs.SelectMany(_ => _.GetSelfAndDescendants()).ToImmutableList();
 
 
-            var duplicateSpecs = allSpecs.GroupBy(_ => _.Name).FirstOrDefault(_ => _.Count() > 1)?.ToImmutableList() ?? ImmutableList<Spec>.Empty;
+            var duplicateSpecs = allSpecs.GroupBy(_ => _.Name).FirstOrDefault(_ => _.Count() > 1)?.ToImmutableList() ??
+                                 ImmutableList<Spec>.Empty;
             if (duplicateSpecs.Any())
             {
                 var dups = string.Join(",\n", duplicateSpecs.Select(_ => "- " + _));

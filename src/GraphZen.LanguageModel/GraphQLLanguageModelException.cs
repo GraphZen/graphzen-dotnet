@@ -28,7 +28,8 @@ namespace GraphZen
         }
 
 
-        internal GraphQLLanguageModelException(GraphQLServerError error) : base(Check.NotNull(error, nameof(error)).Message,
+        internal GraphQLLanguageModelException(GraphQLServerError error) : base(
+            Check.NotNull(error, nameof(error)).Message,
             error.InnerException)
         {
             GraphQLError = error;

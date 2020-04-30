@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using FluentAssertions.Specialized;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -21,9 +20,8 @@ namespace GraphZen.TypeSystem.FunctionalTests
                 .WithMessage(GraphQLName.GetInvalidNameErrorMessage(name), reason);
 
 
-        public static ExceptionAssertions<ArgumentNullException> ThrowArgumentNullException(this ActionAssertions actionAssertions, string paramName)
-        {
-            return actionAssertions.Throw<ArgumentNullException>().WithMessage($"*Parameter '{paramName}'*");
-        }
+        public static ExceptionAssertions<ArgumentNullException>
+            ThrowArgumentNullException(this ActionAssertions actionAssertions, string paramName) => actionAssertions
+            .Throw<ArgumentNullException>().WithMessage($"*Parameter '{paramName}'*");
     }
 }

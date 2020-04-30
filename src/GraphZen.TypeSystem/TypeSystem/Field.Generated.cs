@@ -1,8 +1,9 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 #nullable enable
 
 using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -10,24 +11,25 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace GraphZen.TypeSystem {
-public  partial class Field {
+namespace GraphZen.TypeSystem
+{
+    public partial class Field
+    {
+        [GraphQLIgnore]
+        public Argument? FindArgument(string name)
+            => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument) ? argument : null;
 
         [GraphQLIgnore]
-        public Argument? FindArgument(String name) 
-            => Arguments.TryGetValue(Check.NotNull(name,nameof(name)), out var argument) ? argument : null;
-
-        [GraphQLIgnore]
-        public bool HasArgument(String name) 
+        public bool HasArgument(string name)
             => Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
-        
-        [GraphQLIgnore]
-        public Argument GetArgument(String name) 
-            => FindArgument(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{this} does not contain a {nameof(Argument)} with name '{name}'.");
 
         [GraphQLIgnore]
-        public bool TryGetArgument(String name, [NotNullWhen(true)] out Argument? argument)
-             => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argument);
+        public Argument GetArgument(string name)
+            => FindArgument(Check.NotNull(name, nameof(name))) ??
+               throw new Exception($"{this} does not contain a {nameof(Argument)} with name '{name}'.");
 
-}
+        [GraphQLIgnore]
+        public bool TryGetArgument(string name, [NotNullWhen(true)] out Argument? argument)
+            => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argument);
+    }
 }

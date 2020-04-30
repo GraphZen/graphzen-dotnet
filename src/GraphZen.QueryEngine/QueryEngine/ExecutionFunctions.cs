@@ -295,7 +295,8 @@ namespace GraphZen.QueryEngine
                 }
             }
 
-            throw new GraphQLLanguageModelException($@"Cannot complete value of unexpected type ""{returnType?.GetType()}"".");
+            throw new GraphQLLanguageModelException(
+                $@"Cannot complete value of unexpected type ""{returnType?.GetType()}"".");
         }
 
 
