@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -11,13 +10,13 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-
     public class SchemaBuilder : SchemaBuilder<GraphQLContext>
     {
         public SchemaBuilder(SchemaDefinition schemaDefinition) : base(schemaDefinition)
         {
         }
     }
+
     public partial class SchemaBuilder<TContext> : ISchemaBuilder<TContext> where TContext : GraphQLContext
     {
         public SchemaBuilder(SchemaDefinition schemaDefinition)

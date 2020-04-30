@@ -126,7 +126,7 @@ namespace Microsoft.AspNetCore.Builder
                             });
                     }
                 }
-                catch (GraphQLException gqlException)
+                catch (GraphQLLanguageModelException gqlException)
                 {
                     logger.LogError(gqlException, gqlException.Message);
                     result = new ExecutionResult(null, new[] { gqlException.GraphQLError });

@@ -382,12 +382,11 @@ namespace GraphZen.TypeSystem.Tests
             {
                 CreateTypeWithName(sb, TypeName);
                 CreateTypeWithName(sb, NewTypeName);
-                var ex = Assert.Throws<InvalidOperationException>(
+                var ex = Assert.Throws<DuplicateNameException>(
                     () => { ChangeNameByName(sb, TypeName, NewTypeName); });
 
                 ex.Message.Should()
-                    .Be(
-                        $"Cannot rename type \"{TypeName}\" to \"{NewTypeName}\", type named \"{NewTypeName}\" already exists.");
+                    .Be(TypeIdentity.GetDuplicateTypeNameErrorMessage(TypeName, NewTypeName));
             });
         }
 

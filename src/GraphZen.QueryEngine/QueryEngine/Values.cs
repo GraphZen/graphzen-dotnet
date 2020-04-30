@@ -279,7 +279,7 @@ namespace GraphZen.QueryEngine
                     var didYouMean = "did you mean some other enum value?";
                     return Maybe.None<object>(CoercianError($"Expected type {type}", blameNode, path, didYouMean));
                 default:
-                    throw new GraphQLException($"Provided type \"{type}\" must be an input type. ");
+                    throw new GraphQLLanguageModelException($"Provided type \"{type}\" must be an input type. ");
             }
         }
 
@@ -322,19 +322,19 @@ namespace GraphZen.QueryEngine
                 {
                     if (isNull)
                     {
-                        throw new GraphQLException(
+                        throw new GraphQLLanguageModelException(
                             $"Argument \"{name}\" of non-null type \"{argType}\" must not be null.",
                             argumentNode.Value);
                     }
 
                     if (argumentNode?.Value is VariableSyntax var)
                     {
-                        throw new GraphQLException(
+                        throw new GraphQLLanguageModelException(
                             $"Argument \"{name}\" of required type \"{argType}\" was provided the variable \"{var}\" which was not provided a runtime value.",
                             argumentNode.Value);
                     }
 
-                    throw new GraphQLException(
+                    throw new GraphQLLanguageModelException(
                         $"Argument \"{name}\" of required type \"{argType}\" was not provided.",
                         node);
                 }
@@ -355,7 +355,7 @@ namespace GraphZen.QueryEngine
                         var maybeCoerced = Helpers.ValueFromAst(valueNode, argType, variableValues);
                         if (!(maybeCoerced is Some<object> someCoerced))
                         {
-                            throw new GraphQLException(
+                            throw new GraphQLLanguageModelException(
                                 $"Argument \"{name}\" has invalid value {valueNode.GetValue().Inspect()}.", node);
                         }
 

@@ -13,6 +13,8 @@ namespace GraphZen.TypeSystem
 {
     public class TypeIdentity
     {
+        internal static string GetDuplicateTypeNameErrorMessage(string oldName, string newName) => $"Cannot rename type \"{oldName}\" to \"{newName}\", type named \"{newName}\" already exists.";
+
         private readonly TypeKind? _kind;
         private readonly SchemaDefinition _schema;
 
@@ -93,8 +95,7 @@ namespace GraphZen.TypeSystem
                 var existing = _schema.FindTypeIdentity(newId);
                 if (existing != null && !existing.Equals(this))
                 {
-                    throw new InvalidOperationException(
-                        $"Cannot rename type \"{Name}\" to \"{newName}\", type named \"{newName}\" already exists.");
+                    throw new DuplicateNameException(GetDuplicateTypeNameErrorMessage(Name, newName));
                 }
 
                 _name = newName;

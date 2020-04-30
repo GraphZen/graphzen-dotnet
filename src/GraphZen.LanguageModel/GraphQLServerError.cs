@@ -97,7 +97,7 @@ namespace GraphZen
 
         public void Throw()
         {
-            throw new GraphQLException(this);
+            throw new GraphQLLanguageModelException(this);
         }
 
         public override string ToString() => Json.SerializeObject(this);

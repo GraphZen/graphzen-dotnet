@@ -10,13 +10,13 @@ using JetBrains.Annotations;
 
 namespace GraphZen
 {
-    public class GraphQLException : Exception
+    public class GraphQLLanguageModelException : GraphQLException
     {
-        public GraphQLException(string message, params SyntaxNode[] nodes) : this(message, nodes, null)
+        public GraphQLLanguageModelException(string message, params SyntaxNode[] nodes) : this(message, nodes, null)
         {
         }
 
-        public GraphQLException(
+        public GraphQLLanguageModelException(
             string message,
             IReadOnlyList<SyntaxNode>? nodes = null,
             Source? source = null,
@@ -28,7 +28,7 @@ namespace GraphZen
         }
 
 
-        internal GraphQLException(GraphQLServerError error) : base(Check.NotNull(error, nameof(error)).Message,
+        internal GraphQLLanguageModelException(GraphQLServerError error) : base(Check.NotNull(error, nameof(error)).Message,
             error.InnerException)
         {
             GraphQLError = error;

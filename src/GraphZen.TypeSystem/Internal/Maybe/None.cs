@@ -28,7 +28,7 @@ namespace GraphZen.Internal
         public void ThrowFirstErrorOrDefault(string defaultError = "Unkown error")
         {
             Errors.SingleOrDefault()?.Throw();
-            throw new GraphQLException(defaultError);
+            throw new GraphQLLanguageModelException(defaultError);
         }
     }
 }

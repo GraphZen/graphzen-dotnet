@@ -449,7 +449,7 @@ namespace GraphZen.TypeSystem
 
             return abstractType is InterfaceType interfaceType
                 ? _implementations[interfaceType.Name] ?? throw new InvalidOperationException()
-                : throw new GraphQLException("Expected interface type");
+                : throw new GraphQLLanguageModelException("Expected interface type");
         }
 
         [GraphQLIgnore]
@@ -480,7 +480,7 @@ namespace GraphZen.TypeSystem
                 var objectField = objectType.FindField(ifaceField.Name);
                 if (objectField == null)
                 {
-                    throw new GraphQLException(
+                    throw new GraphQLLanguageModelException(
                         $"\"{interfaceType.Name}\" expects field \"{ifaceField.Name}\" but \"{objectType.Name}\" " +
                         "does not provide it.");
                 }
@@ -489,7 +489,7 @@ namespace GraphZen.TypeSystem
                 // a valid subtype. (covariant)
                 if (!objectField.FieldType.IsSubtypeOf(ifaceField.FieldType, this))
                 {
-                    throw new GraphQLException(
+                    throw new GraphQLLanguageModelException(
                         $"{ifaceField} expects type \"{ifaceField.FieldType}\" " +
                         "but" +
                         $"{objectField} provides type \"{objectField.FieldType}\".");
@@ -503,7 +503,7 @@ namespace GraphZen.TypeSystem
                     // Assert interface field arg exists on object field.
                     if (objectArg == null)
                     {
-                        throw new GraphQLException(
+                        throw new GraphQLLanguageModelException(
                             $"{ifaceField} expects argument \"{argName}\" " +
                             "but" +
                             $"{objectField} does not provide it.");
@@ -512,7 +512,7 @@ namespace GraphZen.TypeSystem
                     // Assert interface field arg type matches object field arg type.
                     if (!ifaceArg.InputType.Equals(objectArg.InputType))
                     {
-                        throw new GraphQLException(
+                        throw new GraphQLLanguageModelException(
                             $"{ifaceField}(${argName}) expects type \"{ifaceArg.InputType}\" " +
                             "but" +
                             $"{objectField}(${argName}) provides type \"{objectArg.InputType}\".");
@@ -527,7 +527,7 @@ namespace GraphZen.TypeSystem
                     {
                         if (!(objectArg.InputType is NonNullType))
                         {
-                            throw new GraphQLException(
+                            throw new GraphQLLanguageModelException(
                                 $"{objectField}({argName}) is of required type " +
                                 $"\"{objectArg.InputType}\" but is not also provided by the " +
                                 $"interface {interfaceType.Name}.{fieldName}.");

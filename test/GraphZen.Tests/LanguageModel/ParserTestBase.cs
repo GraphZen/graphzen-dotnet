@@ -34,7 +34,7 @@ namespace GraphZen.Tests.LanguageModel
         protected void AssertSyntaxError(string document, string expectedMessage,
             params (int line, int column)[] locations)
         {
-            var ex = Assert.Throws<GraphQLException>(() => ParseDocument(document));
+            var ex = Assert.Throws<GraphQLLanguageModelException>(() => ParseDocument(document));
             ex.GraphQLError.Should().BeEquivalentToJsonFromObject(new
             {
                 message = expectedMessage,

@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem.Internal
                     return _.Name.Value;
                 }, out var duplicateType))
             {
-                throw new GraphQLException($"Type \"{duplicateType.Name.Value}\" was defined more than once");
+                throw new GraphQLLanguageModelException($"Type \"{duplicateType.Name.Value}\" was defined more than once");
             }
 
             var operationTypes = schemaDef != null

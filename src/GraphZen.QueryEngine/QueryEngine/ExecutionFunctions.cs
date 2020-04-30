@@ -55,7 +55,7 @@ namespace GraphZen.QueryEngine
                     return result;
                 }
             }
-            catch (GraphQLException publicError)
+            catch (GraphQLLanguageModelException publicError)
             {
                 return new ExecutionResult(null, new[] { publicError.GraphQLError });
             }
@@ -219,7 +219,7 @@ namespace GraphZen.QueryEngine
                 var completed = await CompleteValueAsync(exeContext, returnType, fieldNodes, info, path, maybeResult);
                 return completed;
             }
-            catch (GraphQLException e)
+            catch (GraphQLLanguageModelException e)
             {
                 if (exeContext.Options.ThrowOnError)
                 {
@@ -263,7 +263,7 @@ namespace GraphZen.QueryEngine
                     var completed = await CompleteValueAsync(exeContext, nonNull.OfType, fieldNodes, info, path,
                         maybeResult);
                     Debug.Assert(info.ParentType != null, "info.ParentType != null");
-                    return completed ?? throw new GraphQLException(
+                    return completed ?? throw new GraphQLLanguageModelException(
                         $"Cannot return null for non - nullable field {info.ParentType.Name}.{info.FieldName}.");
                 }
 
@@ -295,7 +295,7 @@ namespace GraphZen.QueryEngine
                 }
             }
 
-            throw new GraphQLException($@"Cannot complete value of unexpected type ""{returnType?.GetType()}"".");
+            throw new GraphQLLanguageModelException($@"Cannot complete value of unexpected type ""{returnType?.GetType()}"".");
         }
 
 
@@ -360,12 +360,12 @@ namespace GraphZen.QueryEngine
                               $"Either the {returnType.Name} type should provide a \"resolveType\" " +
                               "function or each possible types should provide an " +
                               $"\"{nameof(IObjectType.IsTypeOf)}\" function.";
-                throw new GraphQLException(message, fieldNodes);
+                throw new GraphQLLanguageModelException(message, fieldNodes);
             }
 
             if (!exeContext.Schema.IsPossibleType(returnType, runtimeObjectType))
             {
-                throw new GraphQLException(
+                throw new GraphQLLanguageModelException(
                     $"Runtime Object type \"{runtimeObjectType.Name}\" is not a possible type " +
                     $"for \"{returnType.Name}\".",
                     fieldNodes
@@ -386,7 +386,7 @@ namespace GraphZen.QueryEngine
                 if (!isTypeOf)
                 {
                     var inspectable = Json.CreateJObject(result);
-                    throw new GraphQLException(
+                    throw new GraphQLLanguageModelException(
                         $"Expected value of type \"{returnType}\" but got: {inspectable.Inspect()}.", fieldNodes);
                 }
             }
@@ -501,7 +501,7 @@ namespace GraphZen.QueryEngine
 
                 return Maybe.Some(result);
             }
-            catch (GraphQLException gqlE)
+            catch (GraphQLLanguageModelException gqlE)
             {
                 return Maybe.None<object>(gqlE.GraphQLError.WithLocationInfo(fieldNodes, info.Path));
             }
