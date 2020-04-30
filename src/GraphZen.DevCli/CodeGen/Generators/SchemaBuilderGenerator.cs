@@ -79,7 +79,6 @@ public  I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>() w
 }}
 public  I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType)  {{
     Check.NotNull(clrType, nameof(clrType));
-    name.AssertValidNameArgument(nameof(name));
     var internalBuilder = Builder.{kind}(clrType, ConfigurationSource.Explicit)!;
     var builder = new {config.TypeName}Builder<{config.DefaultTypeName}, TContext>(internalBuilder);
     return builder;
