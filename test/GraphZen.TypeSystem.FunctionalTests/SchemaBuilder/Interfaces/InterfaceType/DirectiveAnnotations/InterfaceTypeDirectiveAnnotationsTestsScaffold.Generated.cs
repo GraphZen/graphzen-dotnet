@@ -49,6 +49,54 @@ public void named_item_can_be_renamed() {
 
 
 
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
+[Fact]
+public void named_item_cannot_be_added_with_invalid_name() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
+[Fact]
+public void named_item_cannot_be_added_with_null_value() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
+[Fact]
+public void named_item_cannot_be_removed_with_invalid_name() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
+[Fact]
+public void named_item_cannot_be_removed_with_null_value() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
 [Fact]
 public void named_item_cannot_be_renamed_if_name_already_exists() {
@@ -61,9 +109,21 @@ public void named_item_cannot_be_renamed_if_name_already_exists() {
 
 
 
-[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
 [Fact]
-public void named_item_name_must_be_valid_name() {
+public void named_item_cannot_be_renamed_with_an_invalid_name() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
+[Fact]
+public void named_item_cannot_be_renamed_with_null_value() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
