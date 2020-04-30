@@ -4,17 +4,18 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using FluentAssertions.Specialized;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 {
     [NoReorder]
     public class SchemaBuilderObjectsTests
     {
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added))]
+        [Spec(nameof(named_item_can_be_added))]
         [Fact]
         public void object_can_be_added_to_schema()
         {
@@ -23,8 +24,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_removed))]
-        [Fact]
+        [Spec(nameof(named_item_can_be_removed))]
+        [Fact(Skip = "todo")]
         public void object_can_be_removed_from_schema()
         {
             var schema = Schema.Create(_ =>
@@ -36,9 +37,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_renamed))]
+        [Spec(nameof(named_item_can_be_renamed))]
         [Fact]
-        public void named_item_can_be_renamed()
+        public void object_can_be_renamed()
         {
             // Priority: High
             var schema = Schema.Create(_ =>
@@ -51,35 +52,99 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
+        [Spec(nameof(named_item_cannot_be_renamed_if_name_already_exists))]
         [Fact]
-        public void named_item_cannot_be_renamed_if_name_already_exists()
+        public void object_cannot_be_renamed_if_name_already_exists()
         {
             Schema.Create(_ =>
             {
                 _.Object("Foo");
                 Action rename = () => { _.Object("Bar").Name("Foo"); };
+                ActionAssertions test = rename.Should();
                 rename.Should().Throw<DuplicateNameException>()
                     .WithMessage(TypeIdentity.GetDuplicateTypeNameErrorMessage("Bar", "Foo"));
             });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
+        [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
         [Fact]
-        public void named_item_cannot_be_added_with_invalid_name()
+        public void object_cannot_be_added_with_invalid_name()
         {
             foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
             {
                 Schema.Create(_ =>
                 {
                     Action add = () => _.Object(name);
-                    add.Should().Throw<ArgumentException>()
-                        .WithMessage(GraphQLName.GetInvalidNameErrorMessage(name) + " (Parameter 'name')", reason)
-                        .WithInnerException<InvalidNameException>()
-                        .WithMessage(GraphQLName.GetInvalidNameErrorMessage(name), reason);
+                    add.Should().ThrowInvalidNameArgument(name, reason);
                 });
             }
+        }
+
+
+        [Spec(nameof(named_item_cannot_be_added_with_null_value))]
+        [Fact]
+        public void object_cannot_be_added_with_null_value()
+        {
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Object((string)null!);
+                add.Should().ThrowArgumentNullException("name");
+            });
+        }
+
+
+        [Spec(nameof(named_item_cannot_be_removed_with_invalid_name))]
+        [Fact]
+        public void object_cannot_be_removed_with_invalid_name()
+        {
+            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            {
+                Schema.Create(_ =>
+                {
+                    Action remove = () => _.RemoveObject(name);
+                    remove.Should().ThrowInvalidNameArgument(name, reason);
+                });
+            }
+        }
+
+
+        [Spec(nameof(named_item_cannot_be_removed_with_null_value))]
+        [Fact]
+        public void object_cannot_be_removed_with_null_value()
+        {
+            Schema.Create(_ =>
+            {
+                Action remove = () => _.RemoveObject((string)null!);
+                remove.Should().ThrowArgumentNullException("name");
+            });
+        }
+
+
+        [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
+        [Fact]
+        public void object_cannot_be_renamed_with_an_invalid_name()
+        {
+            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            {
+                Schema.Create(_ =>
+                {
+                    Action rename = () => _.Object("Foo").Name(name);
+                    rename.Should().ThrowInvalidNameArgument(name, reason);
+                });
+            }
+        }
+
+
+        [Spec(nameof(named_item_cannot_be_renamed_with_null_value))]
+        [Fact]
+        public void object_cannot_be_renamed_with_null_value()
+        {
+            Schema.Create(_ =>
+            {
+                Action rename = () => _.Object("Foo").Name(null!);
+                rename.Should().ThrowArgumentNullException("name");
+            });
         }
     }
 }

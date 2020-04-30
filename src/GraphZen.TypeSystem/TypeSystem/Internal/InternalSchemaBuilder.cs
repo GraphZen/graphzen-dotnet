@@ -915,7 +915,6 @@ namespace GraphZen.TypeSystem.Internal
 
         public void RemoveObject(string name, ConfigurationSource @explicit)
         {
-            throw new NotImplementedException();
         }
 
         public void RemoveUnion(Type type, ConfigurationSource @explicit)

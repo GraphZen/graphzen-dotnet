@@ -28,6 +28,7 @@ namespace GraphZen.TypeSystem
         public IObjectTypeBuilder<TObject, TContext> Name(string name)
         {
             Check.NotNull(name, nameof(name));
+            name.AssertValidNameArgument(nameof(name));
             Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }
