@@ -1,10 +1,13 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
+
+using GraphZen.TypeSystem.Internal;
 
 // ReSharper disable InconsistentNaming
 
@@ -13,6 +16,7 @@ namespace GraphZen.TypeSystem
     public partial class SchemaBuilder<TContext>
     {
         #region Directives
+
 
         public IDirectiveBuilder<object> Directive(string name)
         {
@@ -37,6 +41,11 @@ namespace GraphZen.TypeSystem
             var builder = new DirectiveBuilder<object>(internalBuilder);
             return builder;
         }
+
+
+
+
+
 
 
         public ISchemaBuilder<TContext> UnignoreDirective<TDirective>() where TDirective : notnull
@@ -100,9 +109,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        #endregion
 
+
+
+        #endregion
         #region Types
+
+
 
         public ISchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull
         {
@@ -165,13 +178,16 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        #endregion
 
+
+
+        #endregion
         #region Objects
 
         public IObjectTypeBuilder<object, TContext> Object(string name)
         {
             Check.NotNull(name, nameof(name));
+            name.AssertValidNameArgument(nameof(name));
             var internalBuilder = Builder.Object(name, ConfigurationSource.Explicit)!;
             var builder = new ObjectTypeBuilder<object, TContext>(internalBuilder);
             return builder;
@@ -183,7 +199,6 @@ namespace GraphZen.TypeSystem
             var builder = new ObjectTypeBuilder<TObject, TContext>(internalBuilder);
             return builder;
         }
-
         public IObjectTypeBuilder<object, TContext> Object(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
@@ -191,6 +206,13 @@ namespace GraphZen.TypeSystem
             var builder = new ObjectTypeBuilder<object, TContext>(internalBuilder);
             return builder;
         }
+
+
+
+
+
+
+
 
 
         public ISchemaBuilder<TContext> UnignoreObject<TObject>() where TObject : notnull
@@ -254,8 +276,10 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        #endregion
 
+
+
+        #endregion
         #region Unions
 
         public IUnionTypeBuilder<object, TContext> Union(string name)
@@ -272,7 +296,6 @@ namespace GraphZen.TypeSystem
             var builder = new UnionTypeBuilder<TUnion, TContext>(internalBuilder);
             return builder;
         }
-
         public IUnionTypeBuilder<object, TContext> Union(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
@@ -280,6 +303,13 @@ namespace GraphZen.TypeSystem
             var builder = new UnionTypeBuilder<object, TContext>(internalBuilder);
             return builder;
         }
+
+
+
+
+
+
+
 
 
         public ISchemaBuilder<TContext> UnignoreUnion<TUnion>() where TUnion : notnull
@@ -343,9 +373,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        #endregion
 
+
+
+        #endregion
         #region Scalars
+
+
 
         public ISchemaBuilder<TContext> UnignoreScalar<TScalar>() where TScalar : notnull
         {
@@ -408,9 +442,12 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        #endregion
 
+
+
+        #endregion
         #region Enums
+
 
         public IEnumTypeBuilder<string> Enum(string name)
         {
@@ -435,6 +472,11 @@ namespace GraphZen.TypeSystem
             var builder = new EnumTypeBuilder<string>(internalBuilder);
             return builder;
         }
+
+
+
+
+
 
 
         public ISchemaBuilder<TContext> UnignoreEnum<TEnum>() where TEnum : notnull
@@ -498,8 +540,10 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        #endregion
 
+
+
+        #endregion
         #region Interfaces
 
         public IInterfaceTypeBuilder<object, TContext> Interface(string name)
@@ -516,7 +560,6 @@ namespace GraphZen.TypeSystem
             var builder = new InterfaceTypeBuilder<TInterface, TContext>(internalBuilder);
             return builder;
         }
-
         public IInterfaceTypeBuilder<object, TContext> Interface(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
@@ -524,6 +567,13 @@ namespace GraphZen.TypeSystem
             var builder = new InterfaceTypeBuilder<object, TContext>(internalBuilder);
             return builder;
         }
+
+
+
+
+
+
+
 
 
         public ISchemaBuilder<TContext> UnignoreInterface<TInterface>() where TInterface : notnull
@@ -587,9 +637,12 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        #endregion
 
+
+
+        #endregion
         #region InputObjects
+
 
         public IInputObjectTypeBuilder<object> InputObject(string name)
         {
@@ -614,6 +667,11 @@ namespace GraphZen.TypeSystem
             var builder = new InputObjectTypeBuilder<object>(internalBuilder);
             return builder;
         }
+
+
+
+
+
 
 
         public ISchemaBuilder<TContext> UnignoreInputObject<TInputObject>() where TInputObject : notnull
@@ -676,6 +734,9 @@ namespace GraphZen.TypeSystem
             Builder.RemoveInputObject(name, ConfigurationSource.Explicit);
             return this;
         }
+
+
+
 
         #endregion
     }

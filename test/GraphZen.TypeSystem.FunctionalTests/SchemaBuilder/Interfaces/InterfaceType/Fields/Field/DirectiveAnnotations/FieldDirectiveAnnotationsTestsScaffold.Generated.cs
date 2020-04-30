@@ -61,7 +61,7 @@ public void named_item_cannot_be_renamed_if_name_already_exists() {
 
 
 
-[Spec(nameof(NamedCollectionSpecs.named_item_name_must_be_valid_name))]
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
 [Fact]
 public void named_item_name_must_be_valid_name() {
     // Priority: Low

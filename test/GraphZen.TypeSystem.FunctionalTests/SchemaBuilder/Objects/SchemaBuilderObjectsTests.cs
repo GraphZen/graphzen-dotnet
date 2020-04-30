@@ -65,11 +65,21 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_name_must_be_valid_name))]
+        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
         [Fact]
-        public void named_item_name_must_be_valid_name()
+        public void named_item_cannot_be_added_with_invalid_name()
         {
-            var schema = Schema.Create(_ => { });
+            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            {
+                Schema.Create(_ =>
+                {
+                    Action add = () => _.Object(name);
+                    add.Should().Throw<ArgumentException>()
+                        .WithMessage(GraphQLName.GetInvalidNameErrorMessage(name) + " (Parameter 'name')", reason)
+                        .WithInnerException<InvalidNameException>()
+                        .WithMessage(GraphQLName.GetInvalidNameErrorMessage(name), reason);
+                });
+            }
         }
     }
 }

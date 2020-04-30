@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="CollectionWrappers\**" />
+    <EmbeddedResource Remove="CollectionWrappers\**" />
+    <None Remove="CollectionWrappers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="DiffPlex" Version="1.6.1" />
@@ -20,11 +26,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="CollectionWrappers\" />
   </ItemGroup>
 
 </Project>

@@ -13,8 +13,6 @@ namespace GraphZen.TypeSystem
 {
     public class TypeIdentity
     {
-        internal static string GetDuplicateTypeNameErrorMessage(string oldName, string newName) => $"Cannot rename type \"{oldName}\" to \"{newName}\", type named \"{newName}\" already exists.";
-
         private readonly TypeKind? _kind;
         private readonly SchemaDefinition _schema;
 
@@ -28,11 +26,10 @@ namespace GraphZen.TypeSystem
         public TypeIdentity(string name, SchemaDefinition schema, TypeKind? kind = null)
         {
             _schema = Check.NotNull(schema, nameof(schema));
-            _name = Check.NotNull(name, nameof(name)).ThrowIfInvalidGraphQLName();
+            _name = Check.NotNull(name, nameof(name)).AssertValidNameArgument(nameof(name));
 
             // TODO: validate name
             _kind = kind;
-            Name.ThrowIfInvalidGraphQLName();
         }
 
         public TypeIdentity(Type clrType, SchemaDefinition schema, TypeKind? kind = null)
@@ -134,6 +131,9 @@ namespace GraphZen.TypeSystem
                 _isOutputType = value;
             }
         }
+
+        internal static string GetDuplicateTypeNameErrorMessage(string oldName, string newName) =>
+            $"Cannot rename type \"{oldName}\" to \"{newName}\", type named \"{newName}\" already exists.";
 
         private bool Equals(TypeIdentity other) => Overlaps(other);
 

@@ -33,10 +33,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         public class NamedCollectionSpecs
         {
             public const string named_item_can_be_added = null;
+            public const string named_item_cannot_be_added_with_null_value = null;
+            public const string named_item_cannot_be_added_with_invalid_name = null;
             public const string named_item_can_be_renamed = null;
+            public const string named_item_cannot_be_renamed_with_null_value = null;
+            public const string named_item_cannot_be_renamed_with_an_invalid_name = null;
             public const string named_item_cannot_be_renamed_if_name_already_exists = null;
             public const string named_item_can_be_removed = null;
-            public const string named_item_name_must_be_valid_name = null;
+            public const string named_item_cannot_be_removed_with_null_value = null;
+            public const string named_item_cannot_be_removed_with_invalid_name = null;
         }
 
         public class NamedTypeSetSpecs

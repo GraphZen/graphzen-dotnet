@@ -37,6 +37,7 @@ namespace GraphZen.CodeGen
 
 public I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(string name) {{
     Check.NotNull(name, nameof(name));
+    name.AssertValidNameArgument(nameof(name));
     var internalBuilder = Builder.{kind}(name, ConfigurationSource.Explicit)!;
     var builder = new {config.TypeName}Builder<{config.DefaultTypeName}>(internalBuilder);
     return builder;
@@ -65,6 +66,7 @@ public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)
                         region.AppendLine($@"
 public I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(string name) {{
     Check.NotNull(name, nameof(name));
+    name.AssertValidNameArgument(nameof(name));
     var internalBuilder = Builder.{kind}(name, ConfigurationSource.Explicit)!;
     var builder = new {config.TypeName}Builder<{config.DefaultTypeName}, TContext>(internalBuilder);
     return builder;
@@ -76,7 +78,8 @@ public  I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>() w
     return builder;
 }}
 public  I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType)  {{
-            Check.NotNull(clrType, nameof(clrType));
+    Check.NotNull(clrType, nameof(clrType));
+    name.AssertValidNameArgument(nameof(name));
     var internalBuilder = Builder.{kind}(clrType, ConfigurationSource.Explicit)!;
     var builder = new {config.TypeName}Builder<{config.DefaultTypeName}, TContext>(internalBuilder);
     return builder;
@@ -106,6 +109,7 @@ public ISchemaBuilder<TContext> Unignore{kind}(Type clrType) {{
 
 public ISchemaBuilder<TContext> Unignore{kind}(string name) {{
     Check.NotNull(name, nameof(name));
+    name.AssertValidNameArgument(nameof(name));
     Builder.Unignore{kind}(name, ConfigurationSource.Explicit);
     return this;
 }}
@@ -124,6 +128,7 @@ public ISchemaBuilder<TContext> Ignore{kind}(Type clrType) {{
 
 public ISchemaBuilder<TContext> Ignore{kind}(string name) {{
     Check.NotNull(name, nameof(name));
+    name.AssertValidNameArgument(nameof(name));
     Builder.Ignore{kind}(name, ConfigurationSource.Explicit);
     return this;
 }}
@@ -141,6 +146,7 @@ public ISchemaBuilder<TContext> Remove{kind}(Type clrType) {{
 
 public ISchemaBuilder<TContext> Remove{kind}(string name) {{
     Check.NotNull(name, nameof(name));
+    name.AssertValidNameArgument(nameof(name));
     Builder.Remove{kind}(name, ConfigurationSource.Explicit);
     return this;
 }}
