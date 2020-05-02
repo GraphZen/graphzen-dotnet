@@ -24,6 +24,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string directive_annotations_can_be_removed = null;
             public const string directive_annotations_can_be_removed_by_name = null;
             public const string directive_annotations_cannot_be_removed_by_name_with_null_name = null;
+            public const string directive_annotations_are_removed_when_directive_is_removed = null;
         }
         public class UpdateableSpecs
         {
