@@ -9,7 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Bullseye" Version="3.3.0" />
-    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2020.1.0" GeneratePathProperty="true">
+    <PackageReference Include="JetBrains.ReSharper.CommandLineTools" Version="2020.1.1" GeneratePathProperty="true">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -21,7 +21,6 @@
     <ItemGroup>
       <_ResharperTools Include="$(PkgJetBrains_ReSharper_CommandLineTools)/tools/**/*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(_ResharperTools)" DestinationFolder="$(OutDir)/ReSharperTools/%(RecursiveDir)"
-          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(_ResharperTools)" DestinationFolder="$(OutDir)/ReSharperTools/%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
 </Project>
