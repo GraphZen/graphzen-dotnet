@@ -13,10 +13,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Direc
 [NoReorder]
 public abstract  class DirectiveAnnotationNameTests {
 
-
-
-
-
 [Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
 [Fact]
 public void required_item_cannot_be_removed() {

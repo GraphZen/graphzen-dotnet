@@ -9,47 +9,36 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.DirectiveAnnotations.DirectiveAnnotation.Name
-{
-    [NoReorder]
-    public abstract class DirectiveAnnotationNameTests
-    {
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.DirectiveAnnotations.DirectiveAnnotation.Name {
+[NoReorder]
+public abstract  class DirectiveAnnotationNameTests {
+
+[Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
+[Fact]
+public void required_item_cannot_be_removed() {
+    // Priority: High
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
 
 
 
+[Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
+[Fact]
+public void updateable_item_can_be_updated() {
+    // Priority: High
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
 
 
-        [Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
-        [Fact]
-        public void required_item_cannot_be_removed()
-        {
-            // Priority: High
-            var schema = Schema.Create(_ =>
-            {
-
-            });
-            throw new NotImplementedException();
-        }
-
-
-
-        [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
-        [Fact]
-        public void updateable_item_can_be_updated()
-        {
-            // Priority: High
-            var schema = Schema.Create(_ =>
-            {
-
-            });
-            throw new NotImplementedException();
-        }
-
-
-    }
-    // Move DirectiveAnnotationNameTests into a separate file to start writing tests
-    [NoReorder]
-    public class DirectiveAnnotationNameTestsScaffold
-    {
-    }
+}
+// Move DirectiveAnnotationNameTests into a separate file to start writing tests
+[NoReorder] 
+public  class DirectiveAnnotationNameTestsScaffold {
+}
 }
