@@ -71,13 +71,16 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IEnumTypeBuilder<TEnum> DirectiveAnnotation(string name, object? value = null)
+        public IEnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
+
+        public IEnumTypeBuilder<TEnum> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumTypeBuilder<TEnum> IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public IEnumTypeBuilder<TEnum> RemoveDirectiveAnnotations(string name) => throw new NotImplementedException();
+        public IEnumTypeBuilder<TEnum> RemoveDirectiveAnnotations() => throw new NotImplementedException();
 
 
         InternalEnumTypeBuilder IInfrastructure<InternalEnumTypeBuilder>.Instance => Builder;

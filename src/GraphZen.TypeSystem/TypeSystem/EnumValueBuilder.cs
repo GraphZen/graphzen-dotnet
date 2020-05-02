@@ -44,13 +44,16 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IEnumValueBuilder DirectiveAnnotation(string name, object? value = null)
+        public IEnumValueBuilder AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
+
+        public IEnumValueBuilder UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumValueBuilder IgnoreDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public IEnumValueBuilder RemoveDirectiveAnnotations(string name) => throw new NotImplementedException();
+        public IEnumValueBuilder RemoveDirectiveAnnotations() => throw new NotImplementedException();
 
 
         InternalEnumValueBuilder IInfrastructure<InternalEnumValueBuilder>.Instance => Builder;

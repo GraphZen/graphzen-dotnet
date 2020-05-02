@@ -80,21 +80,25 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ISchemaBuilder<TContext> DirectiveAnnotation(string name, object? value)
+        public ISchemaBuilder<TContext> AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
+
+        public ISchemaBuilder<TContext> UpdateOrAddDirectiveAnnotation(string name, object? value)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public ISchemaBuilder<TContext> IgnoreDirectiveAnnotation(string name) =>
+        public ISchemaBuilder<TContext> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
+
+        public ISchemaBuilder<TContext> RemoveDirectiveAnnotations() => throw new NotImplementedException();
 
         InternalSchemaBuilder IInfrastructure<InternalSchemaBuilder>.Instance => Builder;
 
         SchemaDefinition IInfrastructure<SchemaDefinition>.Instance => Builder.Definition;
 
 
-        public ISchemaBuilder<TContext> DirectiveAnnotation(string name) => DirectiveAnnotation(name, null);
+        public ISchemaBuilder<TContext> DirectiveAnnotation(string name) => UpdateOrAddDirectiveAnnotation(name, null);
 
         public ISchemaBuilder<TContext> DirectiveAnnotation(object directive) =>
             throw new NotImplementedException();

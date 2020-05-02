@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem.Tests
             schema.DirectiveAnnotation("onSchema");
 
             schema.Interface("Interface")
-                .DirectiveAnnotation("onInterface")
+                .UpdateOrAddDirectiveAnnotation("onInterface")
                 .Description("interface description")
                 .Field("field", "String", _ => _.Description("field description"))
                 .Field("nn", "String!")

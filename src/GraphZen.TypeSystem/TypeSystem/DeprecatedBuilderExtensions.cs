@@ -15,6 +15,6 @@ namespace GraphZen.TypeSystem
             this TBuilder builder,
             string reason = null) where TBuilder : IAnnotableBuilder<TBuilder> =>
             Check.NotNull(builder, nameof(builder))
-                .DirectiveAnnotation("deprecated", new GraphQLDeprecatedAttribute(reason));
+                .UpdateOrAddDirectiveAnnotation("deprecated", new GraphQLDeprecatedAttribute(reason));
     }
 }

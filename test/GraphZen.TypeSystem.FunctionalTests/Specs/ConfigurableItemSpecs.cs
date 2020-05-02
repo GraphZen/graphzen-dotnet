@@ -13,6 +13,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 {
     public class TypeSystemSpecs
     {
+
+        public class DirectiveAnnotationSpecs
+        {
+            public const string directive_annotation_can_be_added = null;
+            public const string directive_annotation_cannot_be_added_with_null_name = null;
+            public const string directive_annotation_cannot_be_upserted_with_null_name = null;
+            public const string directive_annotation_cannot_be_added_with_invalid_name = null;
+            public const string directive_annotation_cannot_be_upserted_with_invalid_name = null;
+            public const string directive_annotations_can_be_removed = null;
+            public const string directive_annotations_can_be_removed_by_name = null;
+            public const string directive_annotations_cannot_be_removed_by_name_with_null_name = null;
+        }
         public class UpdateableSpecs
         {
             public const string updateable_item_can_be_updated = null;
@@ -42,6 +54,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string named_item_can_be_removed = null;
             public const string named_item_cannot_be_removed_with_null_value = null;
             public const string named_item_cannot_be_removed_with_invalid_name = null;
+        }
+
+        public class ClrTypeSpecs
+        {
+
         }
 
         public class TypedCollectionSpecs
