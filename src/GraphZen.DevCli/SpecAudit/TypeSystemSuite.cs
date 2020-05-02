@@ -158,7 +158,6 @@ namespace GraphZen.SpecAudit
             var directives = new Subject(nameof(Schema.Directives))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithSpecs<TypedCollectionSpecs>()
-                .WithSpecs<DirectivesSpecs>()
                 .WithChild(directive);
 
             var schemaBuilder = new Subject(nameof(SchemaBuilder))

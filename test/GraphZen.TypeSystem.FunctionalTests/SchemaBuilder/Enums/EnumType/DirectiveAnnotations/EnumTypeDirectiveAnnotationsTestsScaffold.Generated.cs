@@ -73,6 +73,18 @@ public void directive_annotation_cannot_be_upserted_with_null_name() {
 
 
 
+[Spec(nameof(DirectiveAnnotationSpecs.directive_annotations_are_removed_when_directive_is_removed))]
+[Fact]
+public void directive_annotations_are_removed_when_directive_is_removed() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
 [Spec(nameof(DirectiveAnnotationSpecs.directive_annotations_can_be_removed))]
 [Fact]
 public void directive_annotations_can_be_removed() {
