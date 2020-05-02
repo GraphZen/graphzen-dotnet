@@ -9,48 +9,47 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Values.EnumValue.DirectiveAnnotations.DirectiveAnnotation.Name {
-[NoReorder]
-public abstract  class DirectiveAnnotationNameTests {
-
-[Spec(nameof(RequiredSpecs.parent_cannot_be_created_without_required_item))]
-[Fact]
-public void parent_cannot_be_created_without_required_item() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Values.EnumValue.DirectiveAnnotations.DirectiveAnnotation.Name
+{
+    [NoReorder]
+    public abstract class DirectiveAnnotationNameTests
+    {
 
 
 
-[Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
-[Fact]
-public void required_item_cannot_be_removed() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
 
 
+        [Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
+        [Fact]
+        public void required_item_cannot_be_removed()
+        {
+            // Priority: Low
+            var schema = Schema.Create(_ =>
+            {
 
-[Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
-[Fact]
-public void updateable_item_can_be_updated() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
+            });
+            throw new NotImplementedException();
+        }
 
 
-}
-// Move DirectiveAnnotationNameTests into a separate file to start writing tests
-[NoReorder] 
-public  class DirectiveAnnotationNameTestsScaffold {
-}
+
+        [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
+        [Fact]
+        public void updateable_item_can_be_updated()
+        {
+            // Priority: Low
+            var schema = Schema.Create(_ =>
+            {
+
+            });
+            throw new NotImplementedException();
+        }
+
+
+    }
+    // Move DirectiveAnnotationNameTests into a separate file to start writing tests
+    [NoReorder]
+    public class DirectiveAnnotationNameTestsScaffold
+    {
+    }
 }

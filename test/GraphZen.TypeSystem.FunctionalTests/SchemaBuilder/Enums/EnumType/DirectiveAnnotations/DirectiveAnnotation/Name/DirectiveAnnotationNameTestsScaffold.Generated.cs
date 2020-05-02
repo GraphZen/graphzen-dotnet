@@ -13,15 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Direc
 [NoReorder]
 public abstract  class DirectiveAnnotationNameTests {
 
-[Spec(nameof(RequiredSpecs.parent_cannot_be_created_without_required_item))]
-[Fact]
-public void parent_cannot_be_created_without_required_item() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
 
-    });
-    throw new NotImplementedException();
-}
 
 
 

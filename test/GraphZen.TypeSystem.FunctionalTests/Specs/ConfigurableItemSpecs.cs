@@ -45,7 +45,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         public class RequiredSpecs
         {
             public const string required_item_cannot_be_removed = null;
-            public const string parent_cannot_be_created_without_required_item = null;
         }
 
         public class NamedCollectionSpecs
