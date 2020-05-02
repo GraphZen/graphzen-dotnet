@@ -25,6 +25,30 @@ public void directive_annotation_can_be_added() {
 
 
 
+[Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_added_unless_directive_is_defined))]
+[Fact]
+public void directive_annotation_cannot_be_added_unless_directive_is_defined() {
+    // Priority: High
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_added_unless_location_is_valid))]
+[Fact]
+public void directive_annotation_cannot_be_added_unless_location_is_valid() {
+    // Priority: High
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
 [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_added_with_invalid_name))]
 [Fact]
 public void directive_annotation_cannot_be_added_with_invalid_name() {
@@ -40,6 +64,30 @@ public void directive_annotation_cannot_be_added_with_invalid_name() {
 [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_added_with_null_name))]
 [Fact]
 public void directive_annotation_cannot_be_added_with_null_name() {
+    // Priority: High
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_upserted_unless_directive_is_defined))]
+[Fact]
+public void directive_annotation_cannot_be_upserted_unless_directive_is_defined() {
+    // Priority: High
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_upserted_unless_location_is_valid))]
+[Fact]
+public void directive_annotation_cannot_be_upserted_unless_location_is_valid() {
     // Priority: High
     var schema = Schema.Create(_ => {
 
