@@ -6,9 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.LanguageModel.Internal
-{
-}
 
 namespace GraphZen.Infrastructure
 {
@@ -19,20 +16,6 @@ namespace GraphZen.Infrastructure
         }
 
         protected GraphQLException(string message, Exception? innerException) : base(message, innerException)
-        {
-        }
-    }
-
-    public class DuplicateNameException : GraphQLException
-    {
-        public DuplicateNameException(string message) : base(message)
-        {
-        }
-    }
-
-    public class InvalidNameException : GraphQLException
-    {
-        public InvalidNameException(string message) : base(message)
         {
         }
     }

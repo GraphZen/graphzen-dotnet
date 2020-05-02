@@ -897,71 +897,69 @@ namespace GraphZen.TypeSystem.Internal
             throw new NotImplementedException();
         }
 
-        public void RemoveDirective(Type type, ConfigurationSource @explicit)
+        public void RemoveDirective(Type clrType, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveDirective(string name, ConfigurationSource @explicit)
+        public void RemoveDirective(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveObject(Type type, ConfigurationSource @explicit)
+        public void RemoveObject(Type clrType, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveObject(string name, ConfigurationSource @explicit)
-        {
-        }
+        public bool RemoveObject(string name, ConfigurationSource configurationSource) => Definition.TryGetObject(name, out var obje) && RemoveType(obje, configurationSource);
 
-        public void RemoveUnion(Type type, ConfigurationSource @explicit)
+        public void RemoveUnion(Type clrType, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveUnion(string name, ConfigurationSource @explicit)
+        public void RemoveUnion(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveScalar(Type type, ConfigurationSource @explicit)
+        public void RemoveScalar(Type clrType, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveScalar(string name, ConfigurationSource @explicit)
+        public void RemoveScalar(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveEnum(Type type, ConfigurationSource @explicit)
+        public void RemoveEnum(Type clrType, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveEnum(string name, ConfigurationSource @explicit)
+        public void RemoveEnum(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveInterface(Type type, ConfigurationSource @explicit)
+        public void RemoveInterface(Type clrType, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveInterface(string name, ConfigurationSource @explicit)
+        public void RemoveInterface(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveInputObject(Type type, ConfigurationSource @explicit)
+        public void RemoveInputObject(Type clrType, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveInputObject(string name, ConfigurationSource @explicit)
+        public void RemoveInputObject(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
         }

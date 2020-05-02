@@ -23,9 +23,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             schema.HasObject("Foo").Should().BeTrue();
         }
 
-
         [Spec(nameof(named_item_can_be_removed))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void object_can_be_removed_from_schema()
         {
             var schema = Schema.Create(_ =>

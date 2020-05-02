@@ -85,8 +85,8 @@ namespace GraphZen.SpecAudit
 
             var objects = new Subject(nameof(Schema.Objects))
                 .WithSpecs<NamedCollectionSpecs>()
+                .WithSpecs<TypedCollectionSpecs>()
                 .WithChild(objectType);
-
 
             var scalar = new Subject(nameof(ScalarType))
                 .WithChild(description)
@@ -95,6 +95,7 @@ namespace GraphZen.SpecAudit
 
             var scalars = new Subject(nameof(Schema.Scalars))
                 .WithSpecs<NamedCollectionSpecs>()
+                .WithSpecs<TypedCollectionSpecs>()
                 .WithChild(scalar);
 
             var interfaceType = new Subject(nameof(InterfaceType))
@@ -106,6 +107,7 @@ namespace GraphZen.SpecAudit
 
             var interfaces = new Subject(nameof(Schema.Interfaces))
                 .WithSpecs<NamedCollectionSpecs>()
+                .WithSpecs<TypedCollectionSpecs>()
                 .WithChild(interfaceType);
 
             var unionType = new Subject(nameof(UnionType)).WithChild(description).WithChild(name)
@@ -114,6 +116,7 @@ namespace GraphZen.SpecAudit
 
             var unions = new Subject(nameof(Schema.Unions))
                 .WithSpecs<NamedCollectionSpecs>()
+                .WithSpecs<TypedCollectionSpecs>()
                 .WithChild(unionType);
 
             var enumType = new Subject(nameof(EnumType))
@@ -130,6 +133,7 @@ namespace GraphZen.SpecAudit
 
             var enums = new Subject(nameof(Schema.Enums))
                 .WithSpecs<NamedCollectionSpecs>()
+                .WithSpecs<TypedCollectionSpecs>()
                 .WithChild(enumType);
 
             var inputObjectType = new Subject(nameof(InputObjectType))
@@ -142,6 +146,7 @@ namespace GraphZen.SpecAudit
 
             var inputObjects = new Subject(nameof(Schema.InputObjects))
                 .WithSpecs<NamedCollectionSpecs>()
+                .WithSpecs<TypedCollectionSpecs>()
                 .WithChild(inputObjectType);
 
             var directive = new Subject(nameof(Directive))
@@ -152,6 +157,7 @@ namespace GraphZen.SpecAudit
 
             var directives = new Subject(nameof(Schema.Directives))
                 .WithSpecs<NamedCollectionSpecs>()
+                .WithSpecs<TypedCollectionSpecs>()
                 .WithSpecs<DirectivesSpecs>()
                 .WithChild(directive);
 
