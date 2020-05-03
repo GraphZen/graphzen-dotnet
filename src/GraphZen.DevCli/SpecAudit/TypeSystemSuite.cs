@@ -22,29 +22,35 @@ namespace GraphZen.SpecAudit
         private static SpecSuite Create()
         {
             var name = new Subject(nameof(INamed.Name))
+                .WithSpecs<SdlSpec>()
                 .WithSpecs<UpdateableSpecs>()
                 .WithSpecs<RequiredSpecs>();
 
             var description = new Subject(nameof(IDescription.Description))
+                .WithSpecs<SdlSpec>()
                 .WithSpecs<UpdateableSpecs>()
                 .WithSpecs<OptionalSpecs>();
 
             var typeRef = new Subject("Type")
+                .WithSpecs<SdlSpec>()
                 .WithSpecs<RequiredSpecs>()
                 .WithSpecs<UpdateableSpecs>();
 
             var inputTypeRef = typeRef.WithName("InputTypeRef");
             var outputTypeRef = typeRef.WithName("OutputTypeRef");
 
-            var argument = new Subject("Argument").WithChild(name)
+            var argument = new Subject("Argument")
+                .WithSpecs<SdlSpec>()
+                .WithChild(name)
                 .WithChild(new Subject("Value"));
 
-            var argumentCollection = new Subject("Arguments");
-            // .WithSpecs<NamedCollectionSpecs>();
-            //.WithChild(argument);
+            var argumentCollection = new Subject("Arguments")
+                .WithSpecs<NamedCollectionSpecs>()
+                .WithChild(argument);
             var directiveAnnotation = new Subject(nameof(DirectiveAnnotation))
                 .WithChild(name)
-                .WithChild(argumentCollection);
+                .WithSpecs<SdlSpec>();
+            // .WithChild(argumentCollection);
 
 
             var directiveAnnotations = new Subject(nameof(AnnotatableMemberDefinition.DirectiveAnnotations))
@@ -52,9 +58,12 @@ namespace GraphZen.SpecAudit
                 .WithChild(directiveAnnotation);
 
             var inputValue = new Subject(nameof(InputValue))
+                .WithSpecs<SdlSpec>()
                 .WithChild(description)
                 .WithChild(inputTypeRef)
-                .WithChild(new Subject(nameof(InputValue.DefaultValue)).WithSpecs<OptionalSpecs>())
+                .WithChild(new Subject(nameof(InputValue.DefaultValue))
+                    .WithSpecs<SdlSpec>()
+                    .WithSpecs<OptionalSpecs>())
                 .WithChild(name)
                 .WithChild(directiveAnnotations);
 
@@ -64,19 +73,23 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<NamedCollectionSpecs>();
 
             var outputField = new Subject(nameof(Field))
-                .WithChild(name)
-                .WithChild(description)
-                .WithChild(argumentDefCollection)
-                .WithChild(directiveAnnotations)
-                .WithChildren(outputTypeRef.WithName(nameof(Field.FieldType)));
+                    .WithChild(name)
+                    .WithChild(description)
+                    .WithChild(argumentDefCollection)
+                    .WithChild(directiveAnnotations)
+                    .WithChildren(outputTypeRef.WithName(nameof(Field.FieldType)))
+                    .WithSpecs<SdlSpec>()
+                ;
 
             var outputFields = new Subject(nameof(FieldsDefinition.Fields))
                 .WithSpecs<NamedCollectionSpecs>();
 
             var implementsInterfaces = new Subject(nameof(ObjectType.Interfaces))
+                .WithSpecs<SdlSpec>()
                 .WithSpecs<NamedTypeSetSpecs>();
 
             var objectType = new Subject(nameof(ObjectType))
+                .WithSpecs<SdlSpec>()
                 .WithChild(description)
                 .WithChild(name)
                 .WithChild(directiveAnnotations)
@@ -89,6 +102,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(objectType);
 
             var scalar = new Subject(nameof(ScalarType))
+                .WithSpecs<SdlSpec>()
                 .WithChild(description)
                 .WithChild(name)
                 .WithChild(directiveAnnotations);
@@ -99,6 +113,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(scalar);
 
             var interfaceType = new Subject(nameof(InterfaceType))
+                .WithSpecs<SdlSpec>()
                 .WithChild(description)
                 .WithChild(name)
                 .WithChild(directiveAnnotations)
@@ -111,8 +126,11 @@ namespace GraphZen.SpecAudit
                 .WithChild(interfaceType);
 
             var unionType = new Subject(nameof(UnionType)).WithChild(description).WithChild(name)
+                .WithSpecs<SdlSpec>()
                 .WithChild(directiveAnnotations)
-                .WithChild(new Subject(nameof(UnionType.MemberTypes)).WithSpecs<NamedTypeSetSpecs>());
+                .WithChild(new Subject(nameof(UnionType.MemberTypes))
+                    .WithSpecs<SdlSpec>()
+                    .WithSpecs<NamedTypeSetSpecs>());
 
             var unions = new Subject(nameof(Schema.Unions))
                 .WithSpecs<NamedCollectionSpecs>()
@@ -121,12 +139,14 @@ namespace GraphZen.SpecAudit
 
             var enumType = new Subject(nameof(EnumType))
                 .WithChild(name)
+                .WithSpecs<SdlSpec>()
                 .WithChild(directiveAnnotations)
                 .WithChild(description)
                 .WithChild(
                     new Subject(nameof(EnumType.Values))
                         .WithSpecs<NamedCollectionSpecs>()
                         .WithChild(new Subject(nameof(EnumValue))
+                            .WithSpecs<SdlSpec>()
                             .WithChild(name)
                             .WithChild(directiveAnnotations)
                             .WithChild(description)));
@@ -137,6 +157,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(enumType);
 
             var inputObjectType = new Subject(nameof(InputObjectType))
+                .WithSpecs<SdlSpec>()
                 .WithChild(description)
                 .WithChild(name)
                 .WithChild(directiveAnnotations)
@@ -151,7 +172,9 @@ namespace GraphZen.SpecAudit
 
             var directive = new Subject(nameof(Directive))
                 .WithChild(name)
-                .WithChild(new Subject("Repeatable").WithSpecs<OptionalSpecs>())
+                .WithChild(new Subject("Repeatable")
+                    .WithSpecs<SdlSpec>()
+                    .WithSpecs<OptionalSpecs>())
                 .WithChild(new Subject(nameof(Directive.Locations)))
                 .WithChild(description);
 
@@ -163,9 +186,15 @@ namespace GraphZen.SpecAudit
             var schemaBuilder = new Subject(nameof(SchemaBuilder))
                 .WithChild(description)
                 .WithChild(directiveAnnotations)
-                .WithChild(new Subject(nameof(Schema.QueryType)))
-                .WithChild(new Subject(nameof(Schema.MutationType)))
-                .WithChild(new Subject(nameof(Schema.SubscriptionType)))
+                .WithChild(new Subject(nameof(Schema.QueryType))
+                    .WithSpecs<SdlSpec>()
+                )
+                .WithChild(new Subject(nameof(Schema.MutationType))
+                    .WithSpecs<SdlSpec>()
+                )
+                .WithChild(new Subject(nameof(Schema.SubscriptionType))
+                    .WithSpecs<SdlSpec>()
+                )
                 .WithChild(directives)
                 .WithChild(scalars)
                 .WithChild(objects.WithSpecPriority(SpecPriority.High, true))

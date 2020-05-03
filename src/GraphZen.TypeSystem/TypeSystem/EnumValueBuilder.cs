@@ -44,7 +44,8 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IEnumValueBuilder AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
+        public IEnumValueBuilder AddDirectiveAnnotation(string name, object? value = null) =>
+            throw new NotImplementedException();
 
         public IEnumValueBuilder UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {

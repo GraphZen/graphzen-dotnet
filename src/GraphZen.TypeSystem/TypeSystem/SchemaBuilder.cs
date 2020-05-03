@@ -80,7 +80,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ISchemaBuilder<TContext> AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
+        public ISchemaBuilder<TContext> AddDirectiveAnnotation(string name, object? value = null) =>
+            throw new NotImplementedException();
 
         public ISchemaBuilder<TContext> UpdateOrAddDirectiveAnnotation(string name, object? value)
         {

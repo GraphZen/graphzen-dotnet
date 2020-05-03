@@ -191,7 +191,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
+        public IObjectTypeBuilder<TObject, TContext> AddDirectiveAnnotation(string name, object? value = null) =>
+            throw new NotImplementedException();
 
         public IObjectTypeBuilder<TObject, TContext> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
@@ -202,7 +203,8 @@ namespace GraphZen.TypeSystem
         public IObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
 
-        public IObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public IObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotations() =>
+            throw new NotImplementedException();
 
         public IObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector) =>
             throw new NotImplementedException();

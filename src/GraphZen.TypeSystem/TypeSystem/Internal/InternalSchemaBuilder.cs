@@ -912,7 +912,8 @@ namespace GraphZen.TypeSystem.Internal
             throw new NotImplementedException();
         }
 
-        public bool RemoveObject(string name, ConfigurationSource configurationSource) => Definition.TryGetObject(name, out var obje) && RemoveType(obje, configurationSource);
+        public bool RemoveObject(string name, ConfigurationSource configurationSource) =>
+            Definition.TryGetObject(name, out var obje) && RemoveType(obje, configurationSource);
 
         public void RemoveUnion(Type clrType, ConfigurationSource configurationSource)
         {

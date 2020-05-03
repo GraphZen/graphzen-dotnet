@@ -109,7 +109,8 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IInputObjectTypeBuilder<TInputObject> AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
+        public IInputObjectTypeBuilder<TInputObject> AddDirectiveAnnotation(string name, object? value = null) =>
+            throw new NotImplementedException();
 
         public IInputObjectTypeBuilder<TInputObject> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
@@ -120,6 +121,7 @@ namespace GraphZen.TypeSystem
         public IInputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
 
-        public IInputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public IInputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations() =>
+            throw new NotImplementedException();
     }
 }

@@ -13,6 +13,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 {
     public class TypeSystemSpecs
     {
+        public class SdlSpec
+        {
+            public const string item_can_be_defined_via_sdl = null;
+        }
+
+
         public class DirectiveAnnotationSpecs
         {
             public const string directive_annotation_can_be_added = null;

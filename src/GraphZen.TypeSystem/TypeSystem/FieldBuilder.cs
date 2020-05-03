@@ -152,9 +152,11 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
+        public IFieldBuilder<TDeclaringType, TField, TContext>
+            AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public IFieldBuilder<TDeclaringType, TField, TContext> UpdateOrAddDirectiveAnnotation(string name,
+            object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
@@ -163,7 +165,8 @@ namespace GraphZen.TypeSystem
         public IFieldBuilder<TDeclaringType, TField, TContext> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveDirectiveAnnotations() =>
+            throw new NotImplementedException();
 
         InternalFieldBuilder IInfrastructure<InternalFieldBuilder>.Instance => Builder;
 

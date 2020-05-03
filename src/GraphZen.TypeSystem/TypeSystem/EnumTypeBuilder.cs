@@ -71,7 +71,8 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IEnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
+        public IEnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object? value = null) =>
+            throw new NotImplementedException();
 
         public IEnumTypeBuilder<TEnum> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {

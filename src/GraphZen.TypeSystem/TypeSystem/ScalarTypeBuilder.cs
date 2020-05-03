@@ -84,7 +84,8 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IScalarTypeBuilder<TScalar, TValueNode> AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
+        public IScalarTypeBuilder<TScalar, TValueNode> AddDirectiveAnnotation(string name, object? value = null) =>
+            throw new NotImplementedException();
 
         public IScalarTypeBuilder<TScalar, TValueNode> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
@@ -95,6 +96,7 @@ namespace GraphZen.TypeSystem
         public IScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
 
-        public IScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public IScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotations() =>
+            throw new NotImplementedException();
     }
 }
