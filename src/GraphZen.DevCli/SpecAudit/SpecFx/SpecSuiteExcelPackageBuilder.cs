@@ -170,7 +170,7 @@ namespace GraphZen.SpecAudit.SpecFx
                 columnStart = currentColumn + 1;
             }
 
-            worksheet.Cells[1,1,1,2].AutoFitColumns();
+            worksheet.Cells[1,1,9999,2].AutoFitColumns();
         }
 
         public static ExcelPackage Create(SpecSuite suite)
