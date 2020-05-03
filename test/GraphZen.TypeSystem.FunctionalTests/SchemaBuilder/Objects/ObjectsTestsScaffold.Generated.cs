@@ -11,7 +11,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects {
 [NoReorder]
-public abstract  class ObjectsTests {
+public abstract  class ObjectsTests2 {
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
 [Fact]
@@ -277,7 +277,7 @@ public void typed_item_with_name_attribute_can_be_renamed() {
 
 
 }
-// Move ObjectsTests into a separate file to start writing tests
+// Move ObjectsTests2 into a separate file to start writing tests
 [NoReorder] 
 public  class ObjectsTestsScaffold {
 }

@@ -13,7 +13,7 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedColl
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 {
     [NoReorder]
-    public class SchemaBuilderObjectsTests
+    public class ObjectsTests
     {
         [Spec(nameof(named_item_can_be_added))]
         [Fact]
