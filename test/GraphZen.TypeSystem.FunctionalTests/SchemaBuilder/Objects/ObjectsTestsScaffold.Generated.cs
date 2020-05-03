@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects {
 [NoReorder]
 public abstract  class ObjectsTestsScaffold {
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_can_be_added))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
 [Fact]
 public void typed_item_can_be_added() {
     // Priority: High
@@ -25,7 +25,7 @@ public void typed_item_can_be_added() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_can_be_added_via_type_param))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
 [Fact]
 public void typed_item_can_be_added_via_type_param() {
     // Priority: High
@@ -37,7 +37,7 @@ public void typed_item_can_be_added_via_type_param() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_can_be_removed))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_removed))]
 [Fact]
 public void typed_item_can_be_removed() {
     // Priority: High
@@ -49,7 +49,7 @@ public void typed_item_can_be_removed() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_can_be_removed_via_type_param))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_removed_via_type_param))]
 [Fact]
 public void typed_item_can_be_removed_via_type_param() {
     // Priority: High
@@ -61,7 +61,7 @@ public void typed_item_can_be_removed_via_type_param() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_can_be_renamed))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_renamed))]
 [Fact]
 public void typed_item_can_be_renamed() {
     // Priority: High
@@ -73,7 +73,7 @@ public void typed_item_can_be_renamed() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_cannot_be_added_with_invalid_name_attribute))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
 [Fact]
 public void typed_item_cannot_be_added_with_invalid_name_attribute() {
     // Priority: High
@@ -85,7 +85,7 @@ public void typed_item_cannot_be_added_with_invalid_name_attribute() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_cannot_be_added_with_null_value))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
 [Fact]
 public void typed_item_cannot_be_added_with_null_value() {
     // Priority: High
@@ -97,7 +97,7 @@ public void typed_item_cannot_be_added_with_null_value() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_cannot_be_removed_with_null_value))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_removed_with_null_value))]
 [Fact]
 public void typed_item_cannot_be_removed_with_null_value() {
     // Priority: High
@@ -109,7 +109,7 @@ public void typed_item_cannot_be_removed_with_null_value() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_cannot_be_renamed_if_name_already_exists))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_if_name_already_exists))]
 [Fact]
 public void typed_item_cannot_be_renamed_if_name_already_exists() {
     // Priority: High
@@ -121,7 +121,7 @@ public void typed_item_cannot_be_renamed_if_name_already_exists() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_cannot_be_renamed_with_an_invalid_name))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
 [Fact]
 public void typed_item_cannot_be_renamed_with_an_invalid_name() {
     // Priority: High
@@ -133,7 +133,7 @@ public void typed_item_cannot_be_renamed_with_an_invalid_name() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_cannot_be_renamed_with_null_value))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_null_value))]
 [Fact]
 public void typed_item_cannot_be_renamed_with_null_value() {
     // Priority: High
@@ -145,7 +145,7 @@ public void typed_item_cannot_be_renamed_with_null_value() {
 
 
 
-[Spec(nameof(TypedCollectionSpecs.typed_item_with_name_attribute_can_be_renamed))]
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_name_attribute_can_be_renamed))]
 [Fact]
 public void typed_item_with_name_attribute_can_be_renamed() {
     // Priority: High

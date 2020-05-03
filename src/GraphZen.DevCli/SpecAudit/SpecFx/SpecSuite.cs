@@ -14,12 +14,14 @@ namespace GraphZen.SpecAudit.SpecFx
 {
     public class SpecSuite
     {
-        public SpecSuite(string name, Subject rootSubject, IEnumerable<Spec> rootSpecs, Assembly testAssembly)
+        public SpecSuite(string name, Subject rootSubject, Type specsType)
         {
+
+            var specs = Spec.GetSpecs(specsType);
             Name = name;
-            RootSpecs = rootSpecs.ToImmutableList();
+            RootSpecs = specs.ToImmutableList();
             RootSubject = rootSubject;
-            TestAssembly = testAssembly;
+            TestAssembly = specsType.Assembly;
             Subjects = rootSubject.GetSelfAndDescendants().ToImmutableList();
             SubjectsByPath = Subjects.ToImmutableDictionary(_ => _.Path);
             Tests = SpecTest.DiscoverFrom(TestAssembly).ToImmutableList();

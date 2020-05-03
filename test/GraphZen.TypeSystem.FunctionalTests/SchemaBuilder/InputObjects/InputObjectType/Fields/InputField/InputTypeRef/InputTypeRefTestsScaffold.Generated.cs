@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
 [NoReorder]
 public abstract  class InputTypeRefTests {
 
-[Spec(nameof(SdlSpec.item_can_be_defined_via_sdl))]
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact]
 public void item_can_be_defined_via_sdl() {
     // Priority: Low

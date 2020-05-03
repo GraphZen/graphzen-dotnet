@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
 [NoReorder]
 public abstract  class DefaultValueTests {
 
-[Spec(nameof(SdlSpec.item_can_be_defined_via_sdl))]
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact]
 public void item_can_be_defined_via_sdl() {
     // Priority: High

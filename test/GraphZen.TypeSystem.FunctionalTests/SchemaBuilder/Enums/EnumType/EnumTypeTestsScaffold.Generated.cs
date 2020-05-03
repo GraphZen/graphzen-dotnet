@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType {
 [NoReorder]
 public abstract  class EnumTypeTests {
 
-[Spec(nameof(SdlSpec.item_can_be_defined_via_sdl))]
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact]
 public void item_can_be_defined_via_sdl() {
     // Priority: Low
