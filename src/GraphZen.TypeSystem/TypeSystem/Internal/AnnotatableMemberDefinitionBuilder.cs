@@ -60,6 +60,7 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private void DirectiveAnnotation(DirectiveSyntax directive, ConfigurationSource configurationSource)
         {
             Definition.AddDirectiveAnnotation(directive.Name.Value, directive);

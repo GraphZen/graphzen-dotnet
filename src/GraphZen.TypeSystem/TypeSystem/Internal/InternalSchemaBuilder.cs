@@ -591,6 +591,7 @@ namespace GraphZen.TypeSystem.Internal
             return directive.Builder;
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private void OnDirectiveAdded(DirectiveDefinition directive)
         {
         }
