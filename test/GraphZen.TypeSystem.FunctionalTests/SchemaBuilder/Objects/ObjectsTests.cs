@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using FluentAssertions.Specialized;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -59,7 +58,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             {
                 _.Object("Foo");
                 Action rename = () => { _.Object("Bar").Name("Foo"); };
-                ActionAssertions test = rename.Should();
                 rename.Should().Throw<DuplicateNameException>()
                     .WithMessage(TypeIdentity.GetDuplicateTypeNameErrorMessage("Bar", "Foo"));
             });

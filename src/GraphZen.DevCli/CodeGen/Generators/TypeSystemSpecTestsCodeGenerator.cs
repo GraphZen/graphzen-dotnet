@@ -43,13 +43,13 @@ namespace GraphZen.CodeGen.Generators
                     _.AppendLine("[NoReorder]");
                     _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
                     {
-                        foreach (var (specId, subjectSpec) in subject.Specs.OrderBy(_ => _.Key))
+                        foreach (var (specId, subjectSpec) in subject.Specs.OrderBy(s => s.Key))
                         {
                             if (suite.Specs.TryGetValue(specId, out var spec))
                             {
-                                var isTestImplemented = testFileExists && suite.Tests.Any(_ =>
-                                    _.SubjectPath == subject.Path && _.SpecId == specId &&
-                                    !_.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
+                                var isTestImplemented = testFileExists && suite.Tests.Any(t =>
+                                    t.SubjectPath == subject.Path && t.SpecId == specId &&
+                                    !t.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
                                 if (!isTestImplemented)
                                 {
                                     generate = true;

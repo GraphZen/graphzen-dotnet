@@ -7,12 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
-using GraphZen.CodeGen.Generators;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.CodeGen
+namespace GraphZen.CodeGen.Generators
 {
     public class SchemaBuilderGenerator : PartialTypeGenerator
     {

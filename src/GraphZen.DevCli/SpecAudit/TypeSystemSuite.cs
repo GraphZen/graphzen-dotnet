@@ -44,6 +44,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(name)
                 .WithChild(new Subject("Value"));
 
+            // ReSharper disable once UnusedVariable
             var argumentCollection = new Subject("Arguments")
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(argument);
