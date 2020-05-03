@@ -169,6 +169,8 @@ namespace GraphZen.SpecAudit.SpecFx
                 subjectHeader.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 columnStart = currentColumn + 1;
             }
+
+            worksheet.Cells[1,1,1,2].AutoFitColumns();
         }
 
         public static ExcelPackage Create(SpecSuite suite)
