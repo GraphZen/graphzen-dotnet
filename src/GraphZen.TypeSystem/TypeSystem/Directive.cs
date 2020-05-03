@@ -27,10 +27,11 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
 
         public Directive(string name, string? description, IReadOnlyCollection<DirectiveLocation> locations,
-            IEnumerable<IArgumentDefinition>? arguments, TypeResolver typeResolver)
+            IEnumerable<IArgumentDefinition>? arguments, TypeResolver typeResolver, Type? clrType)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
+            ClrType = clrType;
             Locations = Check.NotNull(locations, nameof(locations));
 
             // arguments = arguments != null ? Enumerable.Empty<IArgumentDefinition>();
@@ -71,7 +72,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(definition, nameof(definition));
             return new Directive(definition.Name, definition.Description, definition.Locations,
-                definition.GetArguments(), typeResolver);
+                definition.GetArguments(), typeResolver, definition.ClrType);
         }
 
         public IReadOnlyCollection<DirectiveLocation> Locations { get; }
