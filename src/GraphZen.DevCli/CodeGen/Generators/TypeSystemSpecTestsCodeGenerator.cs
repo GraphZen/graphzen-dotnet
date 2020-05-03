@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen.Generators
 {
-    public class TypeSystemSpecCodeGenerator
+    public class TypeSystemSpecTestsCodeGenerator
     {
         public static IEnumerable<GeneratedCode> ScaffoldSystemSpec()
         {
@@ -35,6 +35,7 @@ namespace GraphZen.CodeGen.Generators
                 csharp.AppendLine("using Xunit;");
                 csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;");
                 // csharp.AppendLine("// ReSharper disable PartialTypeWithSinglePart");
+                csharp.AppendLine("// ReSharper disable All");
                 csharp.Namespace(ns, _ =>
                 {
                     var testFileExists = File.Exists(Path.Combine(fileDir, $"{className}.cs"));

@@ -29,7 +29,7 @@ namespace GraphZen.CodeGen
                 LanguageModelCodeGen.GenSyntaxVisitorPartials()
             };
             generated.AddRange(PartialTypeGenerator.Generate(CreatePartialTypeGenerators()));
-            generated.AddRange(TypeSystemSpecCodeGenerator.ScaffoldSystemSpec());
+            generated.AddRange(TypeSystemSpecTestsCodeGenerator.ScaffoldSystemSpec());
 
             var existingGeneratedFiles = Directory.GetFiles(".", "*Generated.cs", SearchOption.AllDirectories);
 

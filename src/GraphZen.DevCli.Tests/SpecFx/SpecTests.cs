@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit;
 using GraphZen.SpecAudit.SpecFx;
@@ -18,6 +19,7 @@ namespace GraphZen.SpecFx
             var suite = TypeSystemSuite.Get();
             suite.Tests.Dump();
             var package = SpecSuiteExcelPackageBuilder.Create(suite);
+            package.Should().NotBeNull();
         }
     }
 }

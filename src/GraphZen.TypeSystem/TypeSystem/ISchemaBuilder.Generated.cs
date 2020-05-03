@@ -13,6 +13,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
     public partial interface ISchemaBuilder<TContext>
     {
         #region Directives

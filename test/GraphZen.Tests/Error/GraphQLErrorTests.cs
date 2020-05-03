@@ -34,7 +34,7 @@ namespace GraphZen.Tests.Error
             Assert.IsType<FieldSyntax>(fieldNode);
             var e = new GraphQLServerError("msg", new[] { fieldNode });
             Assert.Equal(new[] { fieldNode }, e.Nodes);
-            Assert.Equal(gql, e.Source.Body);
+            Assert.Equal(gql, e.Source?.Body);
             Assert.Equal(new[] { 2 }, e.Positions);
             Assert.Equal(new[] { new SourceLocation(1, 3) }, e.Locations);
         }
@@ -47,7 +47,7 @@ namespace GraphZen.Tests.Error
             var operationNode = (OperationDefinitionSyntax)ast.Definitions.First();
             var e = new GraphQLServerError("msg", new[] { operationNode });
             Assert.Equal(new[] { operationNode }, e.Nodes);
-            Assert.Equal(gql, e.Source.Body);
+            Assert.Equal(gql, e.Source?.Body);
             Assert.Equal(new[] { 0 }, e.Positions);
             Assert.Equal(new[] { new SourceLocation(1, 1) }, e.Locations);
         }
