@@ -16,7 +16,6 @@ namespace GraphZen.SpecAudit.SpecFx
     {
         public SpecSuite(string name, Subject rootSubject, Type specsType)
         {
-
             var specs = Spec.GetSpecs(specsType);
             Name = name;
             RootSpecs = specs.ToImmutableList();
