@@ -24,7 +24,6 @@ namespace GraphZen.CodeGen.Generators
                 var pathBase = $@".\test\{rootNamespace}";
 
                 var path = subject.GetSelfAndAncestors().Select(_ => _.Name).ToArray();
-                var classNameSegments = path.Length == 1 ? path : path[^1..];
                 var className = path[^1] + "Tests";
                 var fileName = string.Join("", $"{className}Scaffold.Generated.cs");
                 var fileDir = Path.Combine(pathBase, Path.Combine(path));
