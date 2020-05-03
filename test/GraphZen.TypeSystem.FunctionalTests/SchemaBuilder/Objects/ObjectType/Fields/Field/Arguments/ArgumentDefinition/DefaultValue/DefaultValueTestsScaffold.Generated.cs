@@ -15,7 +15,19 @@ public abstract  class DefaultValueTests {
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact]
-public void item_can_be_defined_via_sdl() {
+public void element_can_be_defined_via_sdl() {
+    // Priority: High
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
+[Fact]
+public void element_can_be_defined_via_sdl_extension() {
     // Priority: High
     var schema = Schema.Create(_ => {
 

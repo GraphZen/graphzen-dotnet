@@ -25,6 +25,30 @@ public void named_item_can_be_added() {
 
 
 
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
+[Fact]
+public void named_item_can_be_added_via_sdl() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
+[Fact]
+public void named_item_can_be_added_via_sdl_extension() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
 [Fact]
 public void named_item_can_be_removed() {

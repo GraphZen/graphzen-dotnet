@@ -13,18 +13,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.I
 [NoReorder]
 public abstract  class InterfacesTests {
 
-[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
-[Fact]
-public void item_can_be_defined_via_sdl() {
-    // Priority: High
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
-
-
-
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
 [Fact]
 public void set_item_can_be_added() {
