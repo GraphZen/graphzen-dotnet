@@ -588,7 +588,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore] public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
 
         [GraphQLIgnore]
-        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects() => GetObjects();
+        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeIntrospectionTypes) => GetObjects(includeIntrospectionTypes);
 
 
         [GraphQLIgnore]
@@ -609,10 +609,16 @@ namespace GraphZen.TypeSystem
 
         private readonly Lazy<IReadOnlyList<ObjectType>> _objects;
 
-        [GraphQLIgnore] public IReadOnlyList<ObjectType> Objects => _objects.Value;
 
         [GraphQLIgnore]
-        public IEnumerable<ObjectType> GetObjects() => Objects;
+        public IEnumerable<ObjectType> GetObjects(bool includeIntrospectionTypes = false)
+        {
+            if (includeIntrospectionTypes)
+            {
+                return _objects.Value;
+            }
+            return _objects.Value.Where(_ => _.IsIntrospection == false);
+        }
 
         [GraphQLIgnore]
         public IEnumerable<Directive> GetDirectives() => Directives;

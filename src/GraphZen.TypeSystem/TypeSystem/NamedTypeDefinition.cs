@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
@@ -40,6 +41,7 @@ namespace GraphZen.TypeSystem
             {
                 _nameConfigurationSource = ConfigurationSource.Explicit;
             }
+            IsIntrospection = SpecReservedNames.IntrospectionTypeNames.Contains(Name);
         }
 
 
@@ -50,6 +52,7 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => ClrType != null ? $"{Kind}: {Name} ({ClrType.Name})" : $"{Kind}: {Name}";
 
         public abstract TypeKind Kind { get; }
+        public bool IsIntrospection { get; }
 
         public string Name => Identity.Name;
 

@@ -12,9 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IObjectTypes : IObjectTypesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<ObjectType> GetObjects();
-
-
-        [GraphQLIgnore] IReadOnlyList<ObjectType> Objects { get; }
+        new IEnumerable<ObjectType> GetObjects(bool includeIntrospectionTypes = false);
     }
 }

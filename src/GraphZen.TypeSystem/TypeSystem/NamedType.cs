@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
@@ -18,9 +19,11 @@ namespace GraphZen.TypeSystem
             Name = name;
             Description = description;
             ClrType = clrType;
+            IsIntrospection = SpecReservedNames.IntrospectionTypeNames.Contains(name);
         }
 
         public abstract TypeKind Kind { get; }
+        public bool IsIntrospection { get; }
         public string Name { get; }
         public override string? Description { get; }
 

@@ -14,16 +14,16 @@ namespace GraphZen.Infrastructure
 {
     internal static class SpecReservedNames
     {
-        public static IReadOnlyList<string> ScalarTypeNames { get; } =
-            ImmutableArray.Create("String", "Int", "Float", "Boolean", "ID");
+        public static IReadOnlyCollection<string> ScalarTypeNames { get; } =
+            ImmutableHashSet.Create("String", "Int", "Float", "Boolean", "ID");
 
 
-        public static IReadOnlyList<string> DirectiveNames { get; } =
-            ImmutableArray.Create("deprecated", "include", "skip");
+        public static IReadOnlyCollection<string> DirectiveNames { get; } =
+            ImmutableHashSet.Create("deprecated", "include", "skip");
 
 
-        public static IReadOnlyList<string> IntrospectionTypeNames { get; } =
-            ImmutableArray.Create("__Type", "__Field", "__Schema", "__Directive", "__InputValue", "__EnumValue",
+        public static IReadOnlyCollection<string> IntrospectionTypeNames { get; } =
+            ImmutableHashSet.Create("__Type", "__Field", "__Schema", "__Directive", "__InputValue", "__EnumValue",
                 "__DirectiveLocation",
                 "__TypeKind");
     }

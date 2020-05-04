@@ -92,7 +92,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(outputFields.WithChild(outputField))
                 .WithChild(implementsInterfaces);
 
-            var objects = new Subject(nameof(Schema.Objects))
+            var objects = new Subject(nameof(Schema.GetObjects))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithSpecs<ClrTypedCollectionSpecs>()
                 .WithChild(objectType);
@@ -195,7 +195,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(inputObjects);
 
 
-            return new SpecSuite("Type System", schemaBuilder, typeof(TypeSystemSpecs));
+            return new SpecSuite(nameof(TypeSystem), schemaBuilder, typeof(TypeSystemSpecs));
         }
     }
 }

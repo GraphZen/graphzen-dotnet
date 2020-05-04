@@ -16,5 +16,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IClrType
     {
         TypeKind Kind { get; }
+        bool IsIntrospection { get; }
     }
 }

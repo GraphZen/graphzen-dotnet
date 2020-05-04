@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IObjectTypesDefinition
     {
         [GraphQLIgnore]
-        IEnumerable<IObjectTypeDefinition> GetObjects();
+        IEnumerable<IObjectTypeDefinition> GetObjects(bool includeIntrospectionTypes = false);
     }
 }
