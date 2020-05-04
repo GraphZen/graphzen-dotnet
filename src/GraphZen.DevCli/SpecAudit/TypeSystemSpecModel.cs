@@ -13,7 +13,7 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 namespace GraphZen.SpecAudit
 {
-    public static class TypeSystemSuite
+    public static class TypeSystemSpecModel
     {
         private static readonly Lazy<SpecSuite> SpecSuite = new Lazy<SpecSuite>(Create);
 

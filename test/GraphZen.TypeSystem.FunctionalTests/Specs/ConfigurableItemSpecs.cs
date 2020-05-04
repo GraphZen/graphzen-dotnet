@@ -92,7 +92,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string adding_clr_type_to_item_does_not_change_name = null;
             public const string adding_clr_type_with_name_annotation_to_item_does_not_change_name = null;
             public const string untyped_item_cannot_have_clr_type_added_that_is_already_in_use = null;
-            public const string typed_item_can_have_type_removed = null;
+            public const string clr_typed_item_can_have_type_removed = null;
         }
 
         public class NamedTypeSetSpecs

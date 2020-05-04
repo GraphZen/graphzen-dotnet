@@ -17,7 +17,7 @@ namespace GraphZen.SpecAudit
         {
             var suites = new List<SpecSuite>
             {
-                TypeSystemSuite.Get()
+                TypeSystemSpecModel.Get()
             };
 
             var reportDirectory = Directory.CreateDirectory(@"C:\_data\GraphZen");

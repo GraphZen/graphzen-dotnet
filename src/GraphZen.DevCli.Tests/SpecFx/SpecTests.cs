@@ -16,7 +16,7 @@ namespace GraphZen.SpecFx
         [Fact]
         public void can_create_type_system_subject()
         {
-            var suite = TypeSystemSuite.Get();
+            var suite = TypeSystemSpecModel.Get();
             suite.Tests.Dump();
             var package = SpecSuiteExcelPackageBuilder.Create(suite);
             package.Should().NotBeNull();

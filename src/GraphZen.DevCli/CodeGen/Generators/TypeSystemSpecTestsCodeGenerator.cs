@@ -17,7 +17,7 @@ namespace GraphZen.CodeGen.Generators
     {
         public static IEnumerable<GeneratedCode> ScaffoldSystemSpec()
         {
-            var suite = TypeSystemSuite.Get();
+            var suite = TypeSystemSpecModel.Get();
             foreach (var subject in suite.RootSubject.GetSelfAndDescendants())
             {
                 var rootNamespace = "GraphZen.TypeSystem.FunctionalTests";

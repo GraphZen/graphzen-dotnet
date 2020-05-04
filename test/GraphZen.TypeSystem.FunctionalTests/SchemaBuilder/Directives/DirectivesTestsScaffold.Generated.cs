@@ -276,7 +276,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.typed_item_can_have_type_removed))]
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_type_removed))]
         [Fact]
         public void typed_item_can_have_type_removed()
         {
