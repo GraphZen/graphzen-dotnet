@@ -69,7 +69,14 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
-        public bool RemoveName(ConfigurationSource configurationSource) => throw new NotImplementedException();
+        public bool RemoveName(ConfigurationSource configurationSource)
+        {
+            if (ClrType == null)
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRemove(this));
+            }
+            throw new NotImplementedException();
+        }
 
         public Type? ClrType => Identity.ClrType;
 
@@ -88,10 +95,6 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
 
 
-        public TypeReference GetTypeReference() =>
-            new TypeReference(Identity,
-                ClrType != null ? NamedType(ClrType) : NamedType(Name(Name)));
-
-        public override string ToString() => Name;
+        public override string ToString() => $"{Kind.ToDisplayStringLower()} {Name}";
     }
 }

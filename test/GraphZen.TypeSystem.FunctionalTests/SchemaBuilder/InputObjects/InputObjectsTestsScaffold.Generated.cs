@@ -182,15 +182,6 @@ public void clr_typed_item_cannot_be_renamed_with_an_invalid_name() {
 
 
 
-[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_null_value))]
-[Fact(Skip="TODO")]
-public void clr_typed_item_cannot_be_renamed_with_null_value() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
 
 
 

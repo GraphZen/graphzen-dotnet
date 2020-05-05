@@ -15,8 +15,11 @@ namespace GraphZen.Infrastructure
 
         public static bool IsValidGraphQLName(this string name) => NameTokenRegex.IsMatch(name);
 
+        internal const string NameSpecDescription =
+            "Names are limited to underscores and alpha-numeric ASCII characters.";
+
         internal static string GetInvalidNameErrorMessage(string name) =>
-            $"Invalid GraphQL Name: '{name}' is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.";
+            $"Invalid GraphQL Name: '{name}' is not a valid GraphQL name. {NameSpecDescription}.";
 
         internal static string AssertValidNameArgument(this string name, string paramName)
         {

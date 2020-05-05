@@ -490,11 +490,23 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalObjectTypeBuilder? Object(Type clrType, ConfigurationSource configurationSource)
         {
-            if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated) && !annotated.IsValidGraphQLName())
-            {
-                throw new InvalidNameException($"Cannot create {TypeKind.Object.ToDisplayString()} type with CLR type '{clrType}'. It is annotated with the name \"{annotated}\", which is not a valid GraphQL {TypeKind.Object} type name.");
-            }
+            ValidateCanCreate(clrType, TypeKind.Object);
             return Object(new TypeIdentity(clrType, Definition), configurationSource);
+        }
+
+        private static void ValidateCanCreate(Type clrType, TypeKind kind)
+        {
+            if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated))
+            {
+                if (!annotated.IsValidGraphQLName())
+                {
+                    throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateAnnotatedType(clrType, annotated, kind));
+                }
+            }
+            else if (!clrType.Name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateType(clrType, kind));
+            }
         }
 
         public InternalObjectTypeBuilder? Object(string name, ConfigurationSource configurationSource) =>

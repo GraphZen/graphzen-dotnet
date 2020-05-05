@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem
 
         public IObjectTypeBuilder<TObject, TContext> Name(string? name)
         {
-            Builder.Name(name!, ConfigurationSource.Explicit);
+            Builder.RenameOrRemove(name, ConfigurationSource.Explicit);
             return this;
         }
 

@@ -87,7 +87,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((string)null!);
+                Action add = () => _.Object((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -114,35 +114,42 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((string)null!);
+                Action remove = () => _.RemoveObject((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
 
 
         [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void object_cannot_be_renamed_with_an_invalid_name()
         {
             foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
             {
                 Schema.Create(_ =>
                 {
+                    _.Object("Foo");
                     Action rename = () => _.Object("Foo").Name(name);
-                    rename.Should().ThrowInvalidNameArgument(name, reason);
+                    var def = _.GetDefinition().GetObject("Foo");
+                    rename.Should()
+                        .Throw<InvalidNameException>()
+                        .WithMessage(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, def), reason);
                 });
             }
         }
 
 
         [Spec(nameof(named_item_cannot_be_renamed_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void object_cannot_be_renamed_with_null_value()
         {
             Schema.Create(_ =>
             {
+                _.Object("Foo");
+                var foo = _.GetDefinition().GetObject("Foo");
                 Action rename = () => _.Object("Foo").Name(null!);
-                rename.Should().ThrowArgumentNullException("name");
+                rename.Should().Throw<InvalidNameException>()
+                    .WithMessage(TypeSystemExceptionMessages.InvalidNameException.CannotRemove(foo));
             });
         }
 
@@ -178,27 +185,27 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
+        [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
-        public void clr_typed_item_can_be_added()
+        public void clr_typed_object_can_be_added()
         {
             var schema = Schema.Create(_ => { _.Object<PocoNameAnnotated>(); });
             schema.HasObject<PocoNameAnnotated>().Should().BeTrue();
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
+        [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
         [Fact]
-        public void clr_typed_item_can_be_added_via_type_param()
+        public void clr_typed_object_can_be_added_via_type_param()
         {
             var schema = Schema.Create(_ => { _.Object("Poco").ClrType<PocoNameAnnotated>(); });
             schema.GetObject<PocoNameAnnotated>().Name.Should().Be("Poco");
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_removed))]
+        [Spec(nameof(clr_typed_item_can_be_removed))]
         [Fact]
-        public void clr_typed_item_can_be_removed()
+        public void clr_typed_object_can_be_removed()
         {
             var schema = Schema.Create(_ =>
             {
@@ -209,9 +216,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_removed_via_type_param))]
+        [Spec(nameof(clr_typed_item_can_be_removed_via_type_param))]
         [Fact]
-        public void clr_typed_item_can_be_removed_via_type_param()
+        public void clr_typed_object_can_be_removed_via_type_param()
         {
             var schema = Schema.Create(_ =>
             {
@@ -222,65 +229,61 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_renamed))]
+        [Spec(nameof(clr_typed_item_can_be_renamed))]
         [Fact]
-        public void clr_typed_item_can_be_renamed()
+        public void clr_typed_object_can_be_renamed()
         {
             var schema = Schema.Create(_ => { _.Object<PocoNameAnnotated>().Name("Baz"); });
             schema.GetObject<PocoNameAnnotated>().Name.Should().Be("Baz");
         }
 
-
-        [GraphQLName("abc @#$%^")]
-        public class PocoBadNameAnnotation
+        [GraphQLName(InvalidName)]
+        public class PocoInvalidNameAnnotation
         {
+            public const string InvalidName = "abc @#$%^";
         }
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
         [Fact]
-        public void clr_typed_item_cannot_be_added_with_invalid_name_attribute()
+        public void clr_typed_object_cannot_be_added_with_invalid_name_attribute()
         {
             Schema.Create(_ =>
             {
-                Action add = () =>
-                {
-                    _.Object<PocoBadNameAnnotation>();
-                };
-                // TODO: meaningful exception message
-                add.Should().Throw<InvalidNameException>();
+                Action add = () => _.Object<PocoInvalidNameAnnotation>();
+                add.Should().Throw<InvalidNameException>().WithMessage(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotCreateAnnotatedType(
+                        typeof(PocoInvalidNameAnnotation), PocoInvalidNameAnnotation.InvalidName, TypeKind.Object));
             });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
-        [Fact(Skip = "wip")]
-        public void clr_typed_item_cannot_be_added_with_null_value()
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_null_value))]
+        [Fact]
+        public void clr_typed_object_cannot_be_added_with_null_value()
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((Type)null!);
-                add();
+                Action add = () => _.Object((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_removed_with_null_value))]
-        [Fact(Skip = "wip")]
-        public void clr_typed_item_cannot_be_removed_with_null_value()
+        [Spec(nameof(clr_typed_item_cannot_be_removed_with_null_value))]
+        [Fact]
+        public void clr_typed_object_cannot_be_removed_with_null_value()
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((Type)null!);
+                Action remove = () => _.RemoveObject((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
         [Fact]
-        public void clr_typed_item_cannot_be_renamed_if_name_already_exists()
+        public void clr_typed_object_cannot_be_renamed_if_name_already_exists()
         {
             Schema.Create(_ =>
             {
@@ -292,9 +295,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
         [Fact]
-        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name()
+        public void clr_typed_object_cannot_be_renamed_with_an_invalid_name()
         {
             foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
             {
@@ -302,29 +305,30 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
                 {
                     _.Object<PocoNameAnnotated>();
                     Action rename = () => _.Object<PocoNameAnnotated>().Name(name);
-                    rename.Should().ThrowInvalidNameArgument(name, reason);
+                    var type = _.GetDefinition().GetObject<PocoNameAnnotated>();
+                    rename.Should().Throw<InvalidNameException>()
+                        .WithMessage(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, type), reason);
                 });
             }
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_null_value))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_cannot_be_renamed_with_null_value()
+        [Spec(nameof(clr_typed_item_can_be_renamed_with_null_value))]
+        [Fact]
+        public void clr_typed_object_can_be_renamed_with_null_value()
         {
             Schema.Create(_ =>
             {
                 _.Object<PocoNameAnnotated>();
                 Action rename = () => _.Object<PocoNameAnnotated>().Name(null);
-                // Consider helpful exception message here
-                rename.Should().ThrowArgumentNullException("name");
+                rename.Should().NotThrow();
             });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_with_name_attribute_can_be_renamed))]
+        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
         [Fact]
-        public void clr_typed_item_with_name_attribute_can_be_renamed()
+        public void clr_typed_object_with_name_attribute_can_be_renamed()
         {
             var schema = Schema.Create(_ => { _.Object<PocoNameAnnotated>().Name("Foo"); });
             schema.GetObject<PocoNameAnnotated>().Name.Should().Be("Foo");
@@ -383,9 +387,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
+        [Spec(nameof(clr_typed_item_can_have_clr_type_changed))]
         [Fact]
-        public void clr_typed_item_can_have_clr_type_changed()
+        public void clr_typed_object_can_have_clr_type_changed()
         {
             // Priority: High
             var schema = Schema.Create(_ => { _.Object<Poco>().ClrType<PocoNameAnnotated>(); });
@@ -394,10 +398,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
+        [Spec(nameof(clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
         [Fact(Skip = "TODO")]
-        public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name()
+        public void clr_typed_object_with_name_annotation_type_removed_should_retain_annotated_name()
         {
             // Priority: High
             var schema = Schema.Create(_ => { _.Object<PocoNameAnnotated>().ClrType(null); });
@@ -405,10 +408,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_typed_item_with_type_removed_should_retain_clr_type_name))]
+        [Spec(nameof(clr_typed_item_with_type_removed_should_retain_clr_type_name))]
         [Fact(Skip = "TODO")]
-        public void clr_typed_item_with_type_removed_should_retain_clr_type_name()
+        public void clr_typed_object_with_type_removed_should_retain_clr_type_name()
         {
             // Priority: High
             var schema = Schema.Create(_ => { _.Object<Poco>().ClrType(null); });
