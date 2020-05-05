@@ -378,48 +378,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.adding_clr_type_to_item_via_type_param_does_not_change_name))]
-        [Fact]
-        public void adding_clr_type_to_item_via_type_param_does_not_change_name()
-        {
-            // Priority: High
-            var schema = Schema.Create(_ => {
-
-            });
-            throw new NotImplementedException();
-        }
-
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name))]
-        [Fact]
-        public void adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name()
-        {
-            // Priority: High
-            var schema = Schema.Create(_ => {
-
-            });
-            throw new NotImplementedException();
-        }
-
-
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed()
-        {
-            // Priority: High
-            var schema = Schema.Create(_ => {
-
-            });
-            throw new NotImplementedException();
-        }
-
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed_via_type_param))]
-        [Fact]
-        public void clr_typed_item_can_have_clr_type_changed_via_type_param()
         {
             // Priority: High
             var schema = Schema.Create(_ => {
@@ -493,18 +455,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             throw new NotImplementedException();
         }
 
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.untyped_item_can_have_clr_type_added_via_type_param))]
-        [Fact]
-        public void untyped_item_can_have_clr_type_added_via_type_param()
-        {
-            // Priority: High
-            var schema = Schema.Create(_ => {
-
-            });
-            throw new NotImplementedException();
-        }
 
     }
 }

@@ -89,9 +89,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_can_be_removed_via_type_param = null;
             public const string clr_typed_item_cannot_be_removed_with_null_value = null;
             public const string clr_typed_item_can_have_clr_type_changed = null;
-            public const string clr_typed_item_can_have_clr_type_changed_via_type_param = null;
             public const string untyped_item_can_have_clr_type_added = null;
-            public const string untyped_item_can_have_clr_type_added_via_type_param = null;
             public const string subsequently_clr_typed_item_can_have_custom_named_removed = null;
 
             public const string subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts
@@ -102,9 +100,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
                     null;
 
             public const string adding_clr_type_to_item_does_not_change_name = null;
-            public const string adding_clr_type_to_item_via_type_param_does_not_change_name = null;
             public const string adding_clr_type_with_name_annotation_to_item_does_not_change_name = null;
-            public const string adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name = null;
             public const string untyped_item_cannot_have_clr_type_added_that_is_already_in_use = null;
             public const string clr_typed_item_can_have_type_removed = null;
             public const string clr_typed_item_with_type_removed_should_retain_clr_type_name = null;

@@ -26,33 +26,10 @@ public void adding_clr_type_to_item_does_not_change_name() {
 
 
 
-[Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_via_type_param_does_not_change_name))]
-[Fact]
-public void adding_clr_type_to_item_via_type_param_does_not_change_name() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
-
-
 
 [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
 [Fact]
 public void adding_clr_type_with_name_annotation_to_item_does_not_change_name() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
-
-
-
-[Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name))]
-[Fact]
-public void adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -132,17 +109,6 @@ public void clr_typed_item_can_have_clr_type_changed() {
     throw new NotImplementedException();
 }
 
-
-
-[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed_via_type_param))]
-[Fact]
-public void clr_typed_item_can_have_clr_type_changed_via_type_param() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
 
 
 
@@ -456,17 +422,6 @@ public void untyped_item_can_have_clr_type_added() {
     throw new NotImplementedException();
 }
 
-
-
-[Spec(nameof(ClrTypedCollectionSpecs.untyped_item_can_have_clr_type_added_via_type_param))]
-[Fact]
-public void untyped_item_can_have_clr_type_added_via_type_param() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
 
 
 
