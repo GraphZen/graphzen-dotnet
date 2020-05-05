@@ -39,7 +39,7 @@ namespace GraphZen.LanguageModel.Internal
                     $"Failed to get a valid GraphQL name for CLR type '{clrType}' because it was invalid. The invalid name was '{maybeInvalidName}'.");
             }
 
-            throw new InvalidOperationException($"Failed to get a valid GraphQL name for CLR type '{clrType}'.");
+            throw new Exception($"Failed to get a valid GraphQL name for CLR type '{clrType}'.");
         }
 
         private static bool TryGetGraphQLNameWithoutValidation(this Type clrType, [NotNullWhen(true)] out string? name,
@@ -78,6 +78,7 @@ namespace GraphZen.LanguageModel.Internal
         public static bool HasValidGraphQLName(this Type clrType, object? source = null) =>
             clrType.TryGetGraphQLName(out _, source);
 
+        
 
         public static bool TryGetGraphQLNameFromDataAnnotation(this Type clrType, [NotNullWhen(true)] out string? name)
         {

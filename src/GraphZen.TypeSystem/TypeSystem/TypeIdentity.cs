@@ -38,7 +38,8 @@ namespace GraphZen.TypeSystem
             _schema = Check.NotNull(schema, nameof(schema));
             ClrType = clrType.GetEffectiveClrType();
             _kind = kind;
-            Name.ThrowIfInvalidGraphQLName();
+
+
         }
 
 
@@ -80,7 +81,6 @@ namespace GraphZen.TypeSystem
                 {
                     return ClrType.GetGraphQLName();
                 }
-
 
                 throw new InvalidOperationException();
             }

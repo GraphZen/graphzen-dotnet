@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem.Internal
             catch (InvalidTypeReferenceException e)
             {
                 throw new InvalidOperationException(
-                    $"Invalid type reference: '{type}' is not a valid type reference for {Definition.DeclaringType.Kind.ToDisplayString()} field '{Definition.DeclaringType.Name}.{Definition.Name}'.",
+                    $"Invalid type reference: '{type}' is not a valid type reference for {Definition.DeclaringType.Kind.ToDisplayStringLower()} field '{Definition.DeclaringType.Name}.{Definition.Name}'.",
                     e);
             }
 

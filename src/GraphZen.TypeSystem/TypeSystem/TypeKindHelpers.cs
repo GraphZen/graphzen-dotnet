@@ -13,7 +13,24 @@ namespace GraphZen.TypeSystem
 {
     public static class TypeKindHelpers
     {
-        private static ImmutableDictionary<Type, TypeKind> KindByType { get; } = new Dictionary<Type, TypeKind>
+        private static IReadOnlyDictionary<TypeKind, string> TypeKindDisplayStrings { get; } =
+            new Dictionary<TypeKind, string>
+            {
+                {TypeKind.Scalar, nameof(TypeKind.Scalar)},
+                {TypeKind.Object, nameof(TypeKind.Object)},
+                {TypeKind.Interface, nameof(TypeKind.Interface)},
+                {TypeKind.Union, nameof(TypeKind.Union)},
+                {TypeKind.Enum, nameof(TypeKind.Enum)},
+                {TypeKind.InputObject, "Input Object"},
+                {TypeKind.List, nameof(TypeKind.List)},
+                {TypeKind.NonNull, "Non-Null"}
+            }.ToImmutableDictionary();
+
+        private static IReadOnlyDictionary<TypeKind, string> TypeKindDisplayStringsLower { get; } =
+            TypeKindDisplayStrings.ToImmutableDictionary(_ => _.Key, _ => _.Value.ToLower());
+
+
+        private static IReadOnlyDictionary<Type, TypeKind> KindByType { get; } = new Dictionary<Type, TypeKind>
         {
             {typeof(ScalarTypeDefinition), TypeKind.Scalar},
             {typeof(ScalarType), TypeKind.Scalar},
@@ -54,6 +71,9 @@ namespace GraphZen.TypeSystem
             {typeof(NonNullType), TypeKind.NonNull}
         }.ToImmutableDictionary();
 
+        public static string ToDisplayStringLower(this TypeKind kind) => TypeKindDisplayStringsLower[kind];
+        public static string ToDisplayString(this TypeKind kind) => TypeKindDisplayStrings[kind];
+
 
         public static bool TryGetTypeKindFromDefinition<TGraphQLType>(out TypeKind kind)
             where TGraphQLType : NamedTypeDefinition =>
@@ -62,32 +82,6 @@ namespace GraphZen.TypeSystem
         public static bool TryGetTypeKindFromType<TGraphQLType>(out TypeKind kind)
             where TGraphQLType : NamedType =>
             KindByType.TryGetValue(typeof(TGraphQLType), out kind);
-
-
-        public static string ToDisplayString(this TypeKind kind)
-        {
-            switch (kind)
-            {
-                case TypeKind.Scalar:
-                    return "scalar";
-                case TypeKind.Object:
-                    return "object";
-                case TypeKind.Interface:
-                    return "interface";
-                case TypeKind.Union:
-                    return "union";
-                case TypeKind.Enum:
-                    return "enum";
-                case TypeKind.InputObject:
-                    return "input object";
-                case TypeKind.List:
-                    return "list";
-                case TypeKind.NonNull:
-                    return "non-null";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
-            }
-        }
 
 
         public static bool IsInputType(this TypeKind kind)

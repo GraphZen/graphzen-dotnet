@@ -58,7 +58,7 @@ namespace GraphZen.CodeGen.Generators
                                         : $"\"{spec.Id}\"";
                                     cls.AppendLine($@"
 [Spec({specRef})]
-[Fact]
+[Fact(Skip=""TODO"")]
 public void {spec.Id}() {{
     // Priority: {subjectSpec.Priority}
     var schema = Schema.Create(_ => {{

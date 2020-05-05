@@ -173,8 +173,8 @@ namespace GraphZen.TypeSystem.Internal
         {
             var clrType = identity.ClrType;
             return clrType != null && clrType == existingType.ClrType
-                ? $"Cannot add {kind.ToDisplayString()} using CLR type '{clrType}', an existing {existingType.Kind.ToDisplayString()} already exists with that CLR type."
-                : $"Cannot add {kind.ToDisplayString()} named '{identity.Name}', an existing {existingType.Kind.ToDisplayString()} already exists with that name.";
+                ? $"Cannot add {kind.ToDisplayStringLower()} using CLR type '{clrType}', an existing {existingType.Kind.ToDisplayStringLower()} already exists with that CLR type."
+                : $"Cannot add {kind.ToDisplayStringLower()} named '{identity.Name}', an existing {existingType.Kind.ToDisplayStringLower()} already exists with that name.";
         }
 
 
@@ -488,8 +488,14 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        public InternalObjectTypeBuilder? Object(Type clrType, ConfigurationSource configurationSource) =>
-            Object(new TypeIdentity(clrType, Definition), configurationSource);
+        public InternalObjectTypeBuilder? Object(Type clrType, ConfigurationSource configurationSource)
+        {
+            if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated) && !annotated.IsValidGraphQLName())
+            {
+                throw new InvalidNameException($"Cannot create {TypeKind.Object.ToDisplayString()} type with CLR type '{clrType}'. It is annotated with the name \"{annotated}\", which is not a valid GraphQL {TypeKind.Object} type name.");
+            }
+            return Object(new TypeIdentity(clrType, Definition), configurationSource);
+        }
 
         public InternalObjectTypeBuilder? Object(string name, ConfigurationSource configurationSource) =>
             Object(new TypeIdentity(name, Definition), configurationSource);
@@ -910,7 +916,10 @@ namespace GraphZen.TypeSystem.Internal
 
         public void RemoveObject(Type clrType, ConfigurationSource configurationSource)
         {
-            throw new NotImplementedException();
+            if (Definition.TryGetObject(clrType, out var ot))
+            {
+                RemoveType(ot, configurationSource);
+            }
         }
 
         public bool RemoveObject(string name, ConfigurationSource configurationSource) =>

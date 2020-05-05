@@ -87,7 +87,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((string) null!);
+                Action add = () => _.Object((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -114,14 +114,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((string) null!);
+                Action remove = () => _.RemoveObject((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
 
 
         [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void object_cannot_be_renamed_with_an_invalid_name()
         {
             foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
@@ -136,7 +136,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(named_item_cannot_be_renamed_with_null_value))]
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void object_cannot_be_renamed_with_null_value()
         {
             Schema.Create(_ =>
@@ -243,31 +243,36 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object<PocoBadNameAnnotation>();
+                Action add = () =>
+                {
+                    _.Object<PocoBadNameAnnotation>();
+                };
+                // TODO: meaningful exception message
                 add.Should().Throw<InvalidNameException>();
             });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
-        [Fact]
+        [Fact(Skip = "wip")]
         public void clr_typed_item_cannot_be_added_with_null_value()
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((Type) null!);
+                Action add = () => _.Object((Type)null!);
+                add();
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_removed_with_null_value))]
-        [Fact]
+        [Fact(Skip = "wip")]
         public void clr_typed_item_cannot_be_removed_with_null_value()
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((Type) null!);
+                Action remove = () => _.RemoveObject((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -304,7 +309,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_null_value))]
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void clr_typed_item_cannot_be_renamed_with_null_value()
         {
             Schema.Create(_ =>
@@ -336,7 +341,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_extension()
         {
             var schema = Schema.Create(_ => { _.FromSchema(@"extend type Foo"); });
@@ -345,7 +350,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(clr_typed_item_can_have_type_removed))]
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void typed_item_can_have_type_removed()
         {
             var schema = Schema.Create(_ => { _.Object<Poco>().ClrType(null); });
@@ -365,7 +370,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use()
         {
             Schema.Create(_ =>
@@ -391,7 +396,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name()
         {
             // Priority: High
@@ -402,7 +407,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_with_type_removed_should_retain_clr_type_name))]
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name()
         {
             // Priority: High
@@ -424,7 +429,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts))]
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts()
         {
             Schema.Create(_ =>
@@ -439,7 +444,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
-        [Fact]
+        [Fact(Skip = "TODO")]
         public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts()
         {
             Schema.Create(_ =>

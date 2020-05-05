@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createObjectWithConflictingName = () => { _.Object(TypeName); };
                     createObjectWithConflictingName.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add object named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add object named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -66,7 +66,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createObjectWithConflictingName = () => { _.Object(ClrType); };
                     createObjectWithConflictingName.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add object named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add object named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -82,7 +82,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createObject = () => { _.Object(ClrType); };
                     createObject.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add object using CLR type '{ClrType}', an existing {ThisKind.ToDisplayString()} already exists with that CLR type.");
+                        $"Cannot add object using CLR type '{ClrType}', an existing {ThisKind.ToDisplayStringLower()} already exists with that CLR type.");
                 }
             });
         }
@@ -101,7 +101,7 @@ namespace GraphZen.TypeSystem.Tests
                     Action createInterfaceWithConflictingName = () => { _.Interface(TypeName); };
                     createInterfaceWithConflictingName.Should().ThrowExactly<InvalidOperationException>()
                         .WithMessage(
-                            $"Cannot add interface named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                            $"Cannot add interface named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -118,7 +118,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createInterface = () => { _.Interface(ClrType); };
                     createInterface.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add interface named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add interface named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -134,7 +134,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createInterface = () => { _.Interface(ClrType); };
                     createInterface.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add interface using CLR type '{ClrType}', an existing {ThisKind.ToDisplayString()} already exists with that CLR type.");
+                        $"Cannot add interface using CLR type '{ClrType}', an existing {ThisKind.ToDisplayStringLower()} already exists with that CLR type.");
                 }
             });
         }
@@ -151,7 +151,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createScalarWithConflictingName = () => { _.Scalar(TypeName); };
                     createScalarWithConflictingName.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add scalar named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add scalar named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -168,7 +168,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createScalar = () => { _.Scalar(ClrType); };
                     createScalar.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add scalar named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add scalar named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -184,7 +184,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createScalar = () => { _.Scalar(ClrType); };
                     createScalar.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add scalar using CLR type '{ClrType}', an existing {ThisKind.ToDisplayString()} already exists with that CLR type.");
+                        $"Cannot add scalar using CLR type '{ClrType}', an existing {ThisKind.ToDisplayStringLower()} already exists with that CLR type.");
                 }
             });
         }
@@ -201,7 +201,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createUnionWithConflictingName = () => { _.Union(TypeName); };
                     createUnionWithConflictingName.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add union named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add union named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -218,7 +218,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createUnion = () => { _.Union(ClrType); };
                     createUnion.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add union named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add union named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -234,7 +234,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createUnion = () => { _.Union(ClrType); };
                     createUnion.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add union using CLR type '{ClrType}', an existing {ThisKind.ToDisplayString()} already exists with that CLR type.");
+                        $"Cannot add union using CLR type '{ClrType}', an existing {ThisKind.ToDisplayStringLower()} already exists with that CLR type.");
                 }
             });
         }
@@ -251,7 +251,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createEnumWithConflictingName = () => { _.Enum(TypeName); };
                     createEnumWithConflictingName.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add enum named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add enum named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -268,7 +268,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createEnum = () => { _.Enum(ClrType); };
                     createEnum.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add enum named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add enum named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -284,7 +284,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createEnum = () => { _.Enum(ClrType); };
                     createEnum.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add enum using CLR type '{ClrType}', an existing {ThisKind.ToDisplayString()} already exists with that CLR type.");
+                        $"Cannot add enum using CLR type '{ClrType}', an existing {ThisKind.ToDisplayStringLower()} already exists with that CLR type.");
                 }
             });
         }
@@ -302,7 +302,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createInputObjectWithConflictingName = () => { _.InputObject(TypeName); };
                     createInputObjectWithConflictingName.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add input object named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add input object named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -319,7 +319,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createInputObject = () => { _.InputObject(ClrType); };
                     createInputObject.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add input object named '{TypeName}', an existing {ThisKind.ToDisplayString()} already exists with that name.");
+                        $"Cannot add input object named '{TypeName}', an existing {ThisKind.ToDisplayStringLower()} already exists with that name.");
                 }
             });
         }
@@ -335,7 +335,7 @@ namespace GraphZen.TypeSystem.Tests
                 {
                     Action createInputObject = () => { _.InputObject(ClrType); };
                     createInputObject.Should().ThrowExactly<InvalidOperationException>().WithMessage(
-                        $"Cannot add input object using CLR type '{ClrType}', an existing {ThisKind.ToDisplayString()} already exists with that CLR type.");
+                        $"Cannot add input object using CLR type '{ClrType}', an existing {ThisKind.ToDisplayStringLower()} already exists with that CLR type.");
                 }
             });
         }
