@@ -14,4 +14,9 @@ namespace GraphZen.TypeSystem.Taxonomy
         bool SetName(string name, ConfigurationSource configurationSource);
         ConfigurationSource GetNameConfigurationSource();
     }
+
+    public interface IMutableRemovableNamed : IMutableNamed
+    {
+        bool RemoveName(ConfigurationSource configurationSource);
+    }
 }

@@ -298,6 +298,9 @@ namespace GraphZen.TypeSystem.Internal
 
                         break;
                     }
+
+                default:
+                    throw new NotImplementedException();
             }
         }
     }

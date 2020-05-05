@@ -25,17 +25,14 @@ namespace GraphZen.TypeSystem
 
         InternalObjectTypeBuilder IInfrastructure<InternalObjectTypeBuilder>.Instance => Builder;
 
-        public IObjectTypeBuilder<TObject, TContext> Name(string name)
+        public IObjectTypeBuilder<TObject, TContext> Name(string? name)
         {
-            Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
-            Builder.Name(name, ConfigurationSource.Explicit);
+            Builder.Name(name!, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IObjectTypeBuilder<object, TContext> ClrType(Type clrType)
+        public IObjectTypeBuilder<object, TContext> ClrType(Type? clrType)
         {
-            Check.NotNull(clrType, nameof(ClrType));
             Builder.ClrType(clrType, ConfigurationSource.Explicit);
             return new ObjectTypeBuilder<object, TContext>(Builder);
         }

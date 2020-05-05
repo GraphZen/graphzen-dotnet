@@ -31,9 +31,9 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"interface {Name}";
 
-        public override bool SetClrType(Type clrType, ConfigurationSource configurationSource)
+        public override bool SetClrType(Type? clrType, ConfigurationSource configurationSource)
         {
-            if (!clrType.IsInterface)
+            if (clrType != null && !clrType.IsInterface)
             {
                 throw new InvalidOperationException(
                     $"Cannot set CLR type for GraphQL interface '{Name}'. '{clrType}' is not an interface type.");

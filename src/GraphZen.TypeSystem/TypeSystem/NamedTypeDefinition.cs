@@ -69,10 +69,11 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
+        public bool RemoveName(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
         public Type? ClrType => Identity.ClrType;
 
-        public virtual bool SetClrType(Type clrType, ConfigurationSource configurationSource)
+        public virtual bool SetClrType(Type? clrType, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(_clrTypeConfigurationSource))
             {

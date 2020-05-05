@@ -175,7 +175,7 @@ namespace GraphZen.TypeSystem
 
         public Type? ClrType { get; }
 
-        public bool SetClrType(Type clrType, ConfigurationSource configurationSource) =>
+        public bool SetClrType(Type? clrType, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => throw new NotImplementedException();

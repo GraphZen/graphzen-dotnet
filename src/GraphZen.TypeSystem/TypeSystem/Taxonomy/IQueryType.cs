@@ -10,6 +10,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IQueryType : IQueryTypeDefinition
     {
-        new ObjectType QueryType { get; }
+        new ObjectType? QueryType { get; }
     }
 }
