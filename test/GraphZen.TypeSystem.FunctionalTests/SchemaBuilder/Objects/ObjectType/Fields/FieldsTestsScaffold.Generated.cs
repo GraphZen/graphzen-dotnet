@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
 public abstract  class FieldsTests {
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_can_be_added() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -27,7 +27,7 @@ public void named_item_can_be_added() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_can_be_added_via_sdl() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -39,7 +39,7 @@ public void named_item_can_be_added_via_sdl() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_can_be_added_via_sdl_extension() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -51,7 +51,7 @@ public void named_item_can_be_added_via_sdl_extension() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_can_be_removed() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -63,7 +63,7 @@ public void named_item_can_be_removed() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_can_be_renamed() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -75,7 +75,7 @@ public void named_item_can_be_renamed() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_added_with_invalid_name() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -87,7 +87,7 @@ public void named_item_cannot_be_added_with_invalid_name() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_added_with_null_value() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -99,7 +99,7 @@ public void named_item_cannot_be_added_with_null_value() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_removed_with_invalid_name() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -111,7 +111,7 @@ public void named_item_cannot_be_removed_with_invalid_name() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_removed_with_null_value() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -123,7 +123,7 @@ public void named_item_cannot_be_removed_with_null_value() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_if_name_already_exists() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -135,7 +135,7 @@ public void named_item_cannot_be_renamed_if_name_already_exists() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_with_an_invalid_name() {
     // Priority: High
     var schema = Schema.Create(_ => {
@@ -147,7 +147,7 @@ public void named_item_cannot_be_renamed_with_an_invalid_name() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_with_null_value() {
     // Priority: High
     var schema = Schema.Create(_ => {

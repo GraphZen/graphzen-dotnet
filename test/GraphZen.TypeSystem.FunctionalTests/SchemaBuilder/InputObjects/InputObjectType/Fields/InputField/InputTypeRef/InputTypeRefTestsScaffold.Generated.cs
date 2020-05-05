@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
 public abstract  class InputTypeRefTests {
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
-[Fact]
+[Fact(Skip="TODO")]
 public void element_can_be_defined_via_sdl() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -27,7 +27,7 @@ public void element_can_be_defined_via_sdl() {
 
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
-[Fact]
+[Fact(Skip="TODO")]
 public void element_can_be_defined_via_sdl_extension() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -39,7 +39,7 @@ public void element_can_be_defined_via_sdl_extension() {
 
 
 [Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void required_item_cannot_be_removed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -51,7 +51,7 @@ public void required_item_cannot_be_removed() {
 
 
 [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
-[Fact]
+[Fact(Skip="TODO")]
 public void updateable_item_can_be_updated() {
     // Priority: Low
     var schema = Schema.Create(_ => {

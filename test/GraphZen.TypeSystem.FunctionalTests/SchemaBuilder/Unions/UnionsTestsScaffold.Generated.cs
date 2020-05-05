@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions {
 public abstract  class UnionsTests {
 
 [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_does_not_change_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void adding_clr_type_to_item_does_not_change_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -27,7 +27,7 @@ public void adding_clr_type_to_item_does_not_change_name() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void adding_clr_type_with_name_annotation_to_item_does_not_change_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -39,7 +39,7 @@ public void adding_clr_type_with_name_annotation_to_item_does_not_change_name() 
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_can_be_added() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -51,7 +51,7 @@ public void clr_typed_item_can_be_added() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_can_be_added_via_type_param() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -63,7 +63,7 @@ public void clr_typed_item_can_be_added_via_type_param() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_removed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_can_be_removed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -75,7 +75,7 @@ public void clr_typed_item_can_be_removed() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_removed_via_type_param))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_can_be_removed_via_type_param() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -87,7 +87,7 @@ public void clr_typed_item_can_be_removed_via_type_param() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_renamed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_can_be_renamed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -99,7 +99,7 @@ public void clr_typed_item_can_be_renamed() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_can_have_clr_type_changed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -111,7 +111,7 @@ public void clr_typed_item_can_have_clr_type_changed() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_type_removed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_can_have_type_removed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -123,7 +123,7 @@ public void clr_typed_item_can_have_type_removed() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_added_with_invalid_name_attribute() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -135,7 +135,7 @@ public void clr_typed_item_cannot_be_added_with_invalid_name_attribute() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_added_with_null_value() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -147,7 +147,7 @@ public void clr_typed_item_cannot_be_added_with_null_value() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_removed_with_null_value))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_removed_with_null_value() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -159,7 +159,7 @@ public void clr_typed_item_cannot_be_removed_with_null_value() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_if_name_already_exists))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_renamed_if_name_already_exists() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -171,7 +171,7 @@ public void clr_typed_item_cannot_be_renamed_if_name_already_exists() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_renamed_with_an_invalid_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -183,7 +183,7 @@ public void clr_typed_item_cannot_be_renamed_with_an_invalid_name() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_null_value))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_renamed_with_null_value() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -195,7 +195,7 @@ public void clr_typed_item_cannot_be_renamed_with_null_value() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -207,7 +207,7 @@ public void clr_typed_item_with_name_annotation_type_removed_should_retain_annot
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_name_attribute_can_be_renamed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_with_name_attribute_can_be_renamed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -219,7 +219,7 @@ public void clr_typed_item_with_name_attribute_can_be_renamed() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_type_removed_should_retain_clr_type_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void clr_typed_item_with_type_removed_should_retain_clr_type_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -231,7 +231,7 @@ public void clr_typed_item_with_type_removed_should_retain_clr_type_name() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_can_be_added() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -243,7 +243,7 @@ public void named_item_can_be_added() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_can_be_added_via_sdl() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -255,7 +255,7 @@ public void named_item_can_be_added_via_sdl() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_can_be_added_via_sdl_extension() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -267,7 +267,7 @@ public void named_item_can_be_added_via_sdl_extension() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_can_be_removed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -279,7 +279,7 @@ public void named_item_can_be_removed() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_can_be_renamed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -291,7 +291,7 @@ public void named_item_can_be_renamed() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_added_with_invalid_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -303,7 +303,7 @@ public void named_item_cannot_be_added_with_invalid_name() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_added_with_null_value() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -315,7 +315,7 @@ public void named_item_cannot_be_added_with_null_value() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_removed_with_invalid_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -327,7 +327,7 @@ public void named_item_cannot_be_removed_with_invalid_name() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_removed_with_null_value() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -339,7 +339,7 @@ public void named_item_cannot_be_removed_with_null_value() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_if_name_already_exists() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -351,7 +351,7 @@ public void named_item_cannot_be_renamed_if_name_already_exists() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_with_an_invalid_name() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -363,7 +363,7 @@ public void named_item_cannot_be_renamed_with_an_invalid_name() {
 
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
-[Fact]
+[Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_with_null_value() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -375,7 +375,7 @@ public void named_item_cannot_be_renamed_with_null_value() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.subsequently_clr_typed_item_can_have_custom_named_removed))]
-[Fact]
+[Fact(Skip="TODO")]
 public void subsequently_clr_typed_item_can_have_custom_named_removed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -387,7 +387,7 @@ public void subsequently_clr_typed_item_can_have_custom_named_removed() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts))]
-[Fact]
+[Fact(Skip="TODO")]
 public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -399,7 +399,7 @@ public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
-[Fact]
+[Fact(Skip="TODO")]
 public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -411,7 +411,7 @@ public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.untyped_item_can_have_clr_type_added))]
-[Fact]
+[Fact(Skip="TODO")]
 public void untyped_item_can_have_clr_type_added() {
     // Priority: Low
     var schema = Schema.Create(_ => {
@@ -423,7 +423,7 @@ public void untyped_item_can_have_clr_type_added() {
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
-[Fact]
+[Fact(Skip="TODO")]
 public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use() {
     // Priority: Low
     var schema = Schema.Create(_ => {
