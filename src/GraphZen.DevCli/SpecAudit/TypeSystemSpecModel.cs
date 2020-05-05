@@ -92,7 +92,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(outputFields.WithChild(outputField))
                 .WithChild(implementsInterfaces);
 
-            var objects = new Subject(nameof(Schema.GetObjects))
+            var objects = new Subject(nameof(Schema.Objects))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithSpecs<ClrTypedCollectionSpecs>()
                 .WithChild(objectType);
