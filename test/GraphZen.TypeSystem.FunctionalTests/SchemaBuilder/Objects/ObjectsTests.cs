@@ -87,7 +87,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((string)null!);
+                Action add = () => _.Object((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -114,7 +114,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((string)null!);
+                Action remove = () => _.RemoveObject((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -255,7 +255,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((Type)null!);
+                Action add = () => _.Object((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -267,7 +267,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((Type)null!);
+                Action remove = () => _.RemoveObject((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -378,83 +378,77 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed()
         {
             // Priority: High
-            var schema = Schema.Create(_ => {
-
-            });
-            throw new NotImplementedException();
+            var schema = Schema.Create(_ => { _.Object<Poco>().ClrType<PocoNameAnnotated>(); });
+            schema.HasObject<Poco>().Should().BeFalse();
+            schema.HasObject<PocoNameAnnotated>().Should().BeTrue();
         }
 
 
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
+        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+            .clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
         [Fact]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name()
         {
             // Priority: High
-            var schema = Schema.Create(_ => {
-
-            });
-            throw new NotImplementedException();
+            var schema = Schema.Create(_ => { _.Object<PocoNameAnnotated>().ClrType(null); });
+            schema.GetObject(nameof(PocoNameAnnotated.AnnotatedName)).ClrType.Should().BeNull();
         }
 
 
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_with_type_removed_should_retain_clr_type_name))]
+        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+            .clr_typed_item_with_type_removed_should_retain_clr_type_name))]
         [Fact]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name()
         {
             // Priority: High
-            var schema = Schema.Create(_ => {
-
-            });
-            throw new NotImplementedException();
+            var schema = Schema.Create(_ => { _.Object<Poco>().ClrType(null); });
+            schema.GetObject(nameof(Poco)).ClrType.Should().BeNull();
         }
 
 
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.subsequently_clr_typed_item_can_have_custom_named_removed))]
+        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+            .subsequently_clr_typed_item_can_have_custom_named_removed))]
         [Fact]
         public void subsequently_clr_typed_item_can_have_custom_named_removed()
         {
             // Priority: High
-            var schema = Schema.Create(_ => {
-
-            });
-            throw new NotImplementedException();
+            var schema = Schema.Create(_ => { _.Object("Foo").ClrType<Poco>().ClrType(null); });
+            schema.GetObject("Foo").ClrType.Should().BeNull();
         }
 
 
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts))]
+        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+            .subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts))]
         [Fact]
         public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts()
         {
-            // Priority: High
-            var schema = Schema.Create(_ => {
-
+            Schema.Create(_ =>
+            {
+                _.Object(nameof(PocoNameAnnotated.AnnotatedName));
+                Action removeCustomName = () => _.Object("Foo").ClrType<PocoNameAnnotated>().Name(null);
+                // TODO: ensure meaningful exception message
+                removeCustomName.Should().Throw<InvalidNameException>();
             });
-            throw new NotImplementedException();
         }
 
 
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
+        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+            .subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
         [Fact]
         public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts()
         {
-            // Priority: High
-            var schema = Schema.Create(_ => {
-
+            Schema.Create(_ =>
+            {
+                _.Object(nameof(Poco));
+                Action removeCustomName = () => _.Object("Foo").ClrType<Poco>().Name(null);
+                // TODO: ensure meaningful exception message
+                removeCustomName.Should().Throw<InvalidNameException>();
             });
-            throw new NotImplementedException();
         }
-
-
     }
 }

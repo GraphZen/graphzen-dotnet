@@ -26,9 +26,6 @@ public void adding_clr_type_to_item_does_not_change_name() {
 
 
 
-
-
-
 [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
 [Fact]
 public void adding_clr_type_with_name_annotation_to_item_does_not_change_name() {
@@ -110,7 +107,6 @@ public void clr_typed_item_can_have_clr_type_changed() {
     });
     throw new NotImplementedException();
 }
-
 
 
 
@@ -423,7 +419,6 @@ public void untyped_item_can_have_clr_type_added() {
     });
     throw new NotImplementedException();
 }
-
 
 
 
