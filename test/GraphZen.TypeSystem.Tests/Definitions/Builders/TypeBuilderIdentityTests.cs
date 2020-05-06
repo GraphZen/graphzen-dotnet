@@ -385,9 +385,9 @@ namespace GraphZen.TypeSystem.Tests
                 var ex = Assert.Throws<DuplicateNameException>(
                     () => { ChangeNameByName(sb, TypeName, NewTypeName); });
 
-                var typeDef =  sb.GetDefinition().GetType<NamedTypeDefinition>(TypeName);
-                var newTypeDef =  sb.GetDefinition().GetType<NamedTypeDefinition>(NewTypeName);
-                
+                var typeDef = sb.GetDefinition().GetType<NamedTypeDefinition>(TypeName);
+                var newTypeDef = sb.GetDefinition().GetType<NamedTypeDefinition>(NewTypeName);
+
                 ex.Message.Should()
                     .Be(TypeSystemExceptionMessages.DuplicateNameException.DuplicateType(typeDef.Identity, NewTypeName, newTypeDef.Identity));
             });

@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem
 
             IsIntrospection = SpecReservedNames.IntrospectionTypeNames.Contains(Name);
         }
-            
+
         public TypeIdentity Identity { get; }
 
         public SchemaDefinition Schema { get; }
