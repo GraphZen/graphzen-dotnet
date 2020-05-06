@@ -17,11 +17,9 @@ public abstract  class ScalarsTests {
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
 [Fact(Skip="TODO")]
 public void named_item_can_be_added_via_sdl_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -29,11 +27,9 @@ public void named_item_can_be_added_via_sdl_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
 [Fact(Skip="TODO")]
 public void named_item_can_be_added_via_sdl_extension_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -41,11 +37,9 @@ public void named_item_can_be_added_via_sdl_extension_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
 [Fact(Skip="TODO")]
 public void named_item_can_be_added_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -53,11 +47,9 @@ public void named_item_can_be_added_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_added_with_null_value_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -65,11 +57,9 @@ public void named_item_cannot_be_added_with_null_value_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_added_with_invalid_name_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -77,11 +67,9 @@ public void named_item_cannot_be_added_with_invalid_name_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
 [Fact(Skip="TODO")]
 public void named_item_can_be_renamed_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -89,11 +77,9 @@ public void named_item_can_be_renamed_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_with_null_value_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -101,11 +87,9 @@ public void named_item_cannot_be_renamed_with_null_value_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_with_an_invalid_name_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -113,11 +97,9 @@ public void named_item_cannot_be_renamed_with_an_invalid_name_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_if_name_already_exists_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -125,11 +107,9 @@ public void named_item_cannot_be_renamed_if_name_already_exists_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
 [Fact(Skip="TODO")]
 public void named_item_can_be_removed_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -137,11 +117,9 @@ public void named_item_can_be_removed_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_removed_with_null_value_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -149,11 +127,9 @@ public void named_item_cannot_be_removed_with_null_value_() {
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_removed_with_invalid_name_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -161,11 +137,9 @@ public void named_item_cannot_be_removed_with_invalid_name_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_can_be_added_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -173,11 +147,9 @@ public void clr_typed_item_can_be_added_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_can_be_added_via_type_param_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -185,11 +157,9 @@ public void clr_typed_item_can_be_added_via_type_param_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_added_with_null_value_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -197,11 +167,9 @@ public void clr_typed_item_cannot_be_added_with_null_value_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_added_with_invalid_name_attribute_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -209,11 +177,9 @@ public void clr_typed_item_cannot_be_added_with_invalid_name_attribute_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_removed))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_can_be_removed_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -221,11 +187,9 @@ public void clr_typed_item_can_be_removed_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_removed_via_type_param))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_can_be_removed_via_type_param_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -233,11 +197,9 @@ public void clr_typed_item_can_be_removed_via_type_param_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_removed_with_null_value))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_removed_with_null_value_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -245,11 +207,9 @@ public void clr_typed_item_cannot_be_removed_with_null_value_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_can_have_clr_type_changed_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -257,11 +217,9 @@ public void clr_typed_item_can_have_clr_type_changed_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -269,11 +227,9 @@ public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_removed))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_can_have_clr_type_removed_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -281,11 +237,9 @@ public void clr_typed_item_can_have_clr_type_removed_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_type_removed_should_retain_clr_type_name))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_with_type_removed_should_retain_clr_type_name_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -293,11 +247,9 @@ public void clr_typed_item_with_type_removed_should_retain_clr_type_name_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -305,11 +257,9 @@ public void clr_typed_item_with_name_annotation_type_removed_should_retain_annot
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_renamed))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_can_be_renamed_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -317,11 +267,9 @@ public void clr_typed_item_can_be_renamed_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_name_attribute_can_be_renamed))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_with_name_attribute_can_be_renamed_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -329,11 +277,9 @@ public void clr_typed_item_with_name_attribute_can_be_renamed_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -341,11 +287,9 @@ public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_() {
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_if_name_already_exists))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_renamed_if_name_already_exists_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -353,11 +297,9 @@ public void clr_typed_item_cannot_be_renamed_if_name_already_exists_() {
 [Spec(nameof(ClrTypedCollectionSpecs.untyped_item_can_have_clr_type_added))]
 [Fact(Skip="TODO")]
 public void untyped_item_can_have_clr_type_added_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -365,11 +307,9 @@ public void untyped_item_can_have_clr_type_added_() {
 [Spec(nameof(ClrTypedCollectionSpecs.untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
 [Fact(Skip="TODO")]
 public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -377,11 +317,9 @@ public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_() {
 [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_does_not_change_name))]
 [Fact(Skip="TODO")]
 public void adding_clr_type_to_item_does_not_change_name_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -389,11 +327,9 @@ public void adding_clr_type_to_item_does_not_change_name_() {
 [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
 [Fact(Skip="TODO")]
 public void adding_clr_type_with_name_annotation_to_item_does_not_change_name_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -401,11 +337,9 @@ public void adding_clr_type_with_name_annotation_to_item_does_not_change_name_()
 [Spec(nameof(ClrTypedCollectionSpecs.subsequently_clr_typed_item_can_have_custom_named_removed))]
 [Fact(Skip="TODO")]
 public void subsequently_clr_typed_item_can_have_custom_named_removed_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -413,11 +347,9 @@ public void subsequently_clr_typed_item_can_have_custom_named_removed_() {
 [Spec(nameof(ClrTypedCollectionSpecs.subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
 [Fact(Skip="TODO")]
 public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -425,11 +357,9 @@ public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_
 [Spec(nameof(ClrTypedCollectionSpecs.subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts))]
 [Fact(Skip="TODO")]
 public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts_() {
-    // Priority: Low
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 

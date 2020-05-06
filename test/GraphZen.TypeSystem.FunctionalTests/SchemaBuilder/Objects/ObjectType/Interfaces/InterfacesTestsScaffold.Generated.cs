@@ -17,11 +17,9 @@ public abstract  class InterfacesTests {
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
 [Fact(Skip="TODO")]
 public void set_item_can_be_added_() {
-    // Priority: High
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -29,11 +27,9 @@ public void set_item_can_be_added_() {
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
 [Fact(Skip="TODO")]
 public void set_item_can_be_removed_() {
-    // Priority: High
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
@@ -41,11 +37,9 @@ public void set_item_can_be_removed_() {
 [Spec(nameof(NamedTypeSetSpecs.set_item_must_be_valid_name))]
 [Fact(Skip="TODO")]
 public void set_item_must_be_valid_name_() {
-    // Priority: High
     var schema = Schema.Create(_ => {
 
     });
-    throw new NotImplementedException();
 }
 
 
