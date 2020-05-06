@@ -63,11 +63,9 @@ namespace GraphZen.CodeGen.Generators
 [Spec({specRef})]
 [Fact(Skip=""TODO"")]
 public void {spec.Id}_() {{
-    // Priority: {subjectSpec.Priority}
     var schema = Schema.Create(_ => {{
 
     }});
-    throw new NotImplementedException();
 }}
 
 ");
