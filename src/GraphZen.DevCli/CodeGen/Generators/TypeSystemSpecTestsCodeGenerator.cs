@@ -56,15 +56,10 @@ namespace GraphZen.CodeGen.Generators
                                     var specRef = spec.FieldInfo != null
                                         ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
                                         : $"\"{spec.Id}\"";
-                                    var splitBySubject = spec.Id.Split("__");
-                                    var methodName = splitBySubject.Length == 3
-                                        ? $"{splitBySubject[0]}_{subject.Name.ToLower()}_{splitBySubject[2]}"
-                                        : $"{subject.Name.ToLower()}__{spec.Id}";
-
                                     cls.AppendLine($@"
 [Spec({specRef})]
 [Fact(Skip=""TODO"")]
-public void {methodName}() {{
+public void _{spec.Id}() {{
     // Priority: {subjectSpec.Priority}
     var schema = Schema.Create(_ => {{
 

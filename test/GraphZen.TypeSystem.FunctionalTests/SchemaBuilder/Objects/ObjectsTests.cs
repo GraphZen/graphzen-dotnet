@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
     {
         [Spec(nameof(named_item_can_be_added))]
         [Fact]
-        public void object_can_be_added_to_schema()
+        public void _object_can_be_added_to_schema()
         {
             var schema = Schema.Create(_ => { _.Object("Foo"); });
             schema.HasObject("Foo").Should().BeTrue();
