@@ -16,7 +16,7 @@ public abstract  class MutationTypeTests {
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact(Skip="TODO")]
-public void mutationtype__element_can_be_defined_via_sdl() {
+public void _element_can_be_defined_via_sdl() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -28,7 +28,7 @@ public void mutationtype__element_can_be_defined_via_sdl() {
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
 [Fact(Skip="TODO")]
-public void mutationtype__element_can_be_defined_via_sdl_extension() {
+public void _element_can_be_defined_via_sdl_extension() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -40,7 +40,7 @@ public void mutationtype__element_can_be_defined_via_sdl_extension() {
 
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
 [Fact(Skip="TODO")]
-public void mutationtype__optional_item_can_be_removed() {
+public void _optional_item_can_be_removed() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -52,7 +52,7 @@ public void mutationtype__optional_item_can_be_removed() {
 
 [Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
 [Fact(Skip="TODO")]
-public void mutationtype__parent_can_be_created_without_optional_item() {
+public void _parent_can_be_created_without_optional_item() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -64,7 +64,7 @@ public void mutationtype__parent_can_be_created_without_optional_item() {
 
 [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
 [Fact(Skip="TODO")]
-public void mutationtype__updateable_item_can_be_updated() {
+public void _updateable_item_can_be_updated() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
