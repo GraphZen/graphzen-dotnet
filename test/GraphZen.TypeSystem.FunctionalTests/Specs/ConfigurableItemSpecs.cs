@@ -76,34 +76,45 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class ClrTypedCollectionSpecs
         {
+            // Adding to collection with CLR Type
             public const string clr_typed_item_can_be_added = null;
             public const string clr_typed_item_can_be_added_via_type_param = null;
             public const string clr_typed_item_cannot_be_added_with_null_value = null;
             public const string clr_typed_item_cannot_be_added_with_invalid_name_attribute = null;
-            public const string clr_typed_item_can_be_renamed = null;
-            public const string clr_typed_item_with_name_attribute_can_be_renamed = null;
-            public const string clr_typed_item_can_be_renamed_with_null_value = null;
-            public const string clr_typed_item_cannot_be_renamed_with_an_invalid_name = null;
-            public const string clr_typed_item_cannot_be_renamed_if_name_already_exists = null;
+
+            // Removing from collection with CLR Type
             public const string clr_typed_item_can_be_removed = null;
             public const string clr_typed_item_can_be_removed_via_type_param = null;
             public const string clr_typed_item_cannot_be_removed_with_null_value = null;
+
+            // Changing CLR Type
             public const string clr_typed_item_can_have_clr_type_changed = null;
+            public const string clr_typed_item_cannot_have_clr_type_changed_with_null_value = null;
+
+            // Removing CLR Type
+            public const string clr_typed_item_can_have_clr_type_removed = null;
+            public const string clr_typed_item_with_type_removed_should_retain_clr_type_name = null;
+            public const string clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name = null;
+
+            // Renaming CLR Type
+            public const string clr_typed_item_can_be_renamed = null;
+            public const string clr_typed_item_with_name_attribute_can_be_renamed = null;
+            public const string clr_typed_item_cannot_be_renamed_with_an_invalid_name = null;
+            public const string clr_typed_item_cannot_be_renamed_if_name_already_exists = null;
+
+            // Adding CLR type to existing type
             public const string untyped_item_can_have_clr_type_added = null;
+            public const string untyped_item_cannot_have_clr_type_added_that_is_already_in_use = null;
+            public const string adding_clr_type_to_item_does_not_change_name = null;
+            public const string adding_clr_type_with_name_annotation_to_item_does_not_change_name = null;
+
+            // Initially untyped objects
             public const string subsequently_clr_typed_item_can_have_custom_named_removed = null;
             public const string subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts
                 = null;
-
             public const string
                 subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts =
                     null;
-
-            public const string adding_clr_type_to_item_does_not_change_name = null;
-            public const string adding_clr_type_with_name_annotation_to_item_does_not_change_name = null;
-            public const string untyped_item_cannot_have_clr_type_added_that_is_already_in_use = null;
-            public const string clr_typed_item_can_have_type_removed = null;
-            public const string clr_typed_item_with_type_removed_should_retain_clr_type_name = null;
-            public const string clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name = null;
         }
 
         public class NamedTypeSetSpecs

@@ -123,8 +123,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        //public IInterfaceTypeBuilder<object, TContext> ClrType(Type clrType) =>
-        //    new InterfaceTypeBuilder<object, TContext>(Builder.ClrType(clrType));
+        //public IInterfaceTypeBuilder<object, TContext> SetClrType(Type clrType) =>
+        //    new InterfaceTypeBuilder<object, TContext>(Builder.SetClrType(clrType));
 
         public IInterfaceTypeBuilder<TInterface, TContext> Name(string newName)
         {

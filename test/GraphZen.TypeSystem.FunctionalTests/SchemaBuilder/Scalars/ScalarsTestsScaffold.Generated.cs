@@ -98,16 +98,6 @@ public void clr_typed_item_can_be_renamed() {
 
 
 
-[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_renamed_with_null_value))]
-[Fact(Skip="TODO")]
-public void clr_typed_item_can_be_renamed_with_null_value() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
-
 
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
@@ -122,15 +112,7 @@ public void clr_typed_item_can_have_clr_type_changed() {
 
 
 
-[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_type_removed))]
-[Fact(Skip="TODO")]
-public void clr_typed_item_can_have_type_removed() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
 
-    });
-    throw new NotImplementedException();
-}
 
 
 

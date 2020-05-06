@@ -33,12 +33,14 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Description
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {
-            sb.Object(parentName).Description(value);
+
+            sb.Object(parentName).SetDescription(value!);
+            
         }
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            sb.Object(parentName).Description(null);
+            sb.Object(parentName).SetDescription(null!);
         }
 
         public override bool TryGetValue(ObjectType parent, out string? value)

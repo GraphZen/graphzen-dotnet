@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem
             var initialTypes = new List<NamedType>();
             // initialTypes.AddRange(SpecScalars.All);
             // ReSharper disable once PossibleNullReferenceException
-            //if (schemaDefinition.Types.All(_ => _.Name != "String"))
+            //if (schemaDefinition.Types.All(_ => _.SetName != "String"))
             //{
             //    initialTypes.AddRange(SpecScalars.All);
             //}

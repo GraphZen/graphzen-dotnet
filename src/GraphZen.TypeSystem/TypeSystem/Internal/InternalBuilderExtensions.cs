@@ -10,28 +10,20 @@ namespace GraphZen.TypeSystem.Internal
 {
     public static class InternalBuilderExtensions
     {
-        public static void RenameOrRemove<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder,
-                    string? name, ConfigurationSource configurationSource)
-                    where TDefinition : MemberDefinition, IMutableRemovableNamed, IMutableClrType
+        public static void RemoveName<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder, ConfigurationSource configurationSource)
+                    where TDefinition : MemberDefinition, IMutableRemovableNamed
         {
-            if (name != null)
-            {
-                if (!name.IsValidGraphQLName())
-                {
-                    throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, builder.Definition));
-                }
-                builder.Definition.SetName(name, configurationSource);
-            }
-            else
-            {
-                builder.Definition.RemoveName(configurationSource);
-            }
+            builder.Definition.RemoveName(configurationSource);
         }
 
         public static void Name<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder,
             string name, ConfigurationSource configurationSource)
             where TDefinition : MemberDefinition, IMutableNamed
         {
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, builder.Definition));
+            }
             builder.Definition.SetName(name, configurationSource);
         }
 

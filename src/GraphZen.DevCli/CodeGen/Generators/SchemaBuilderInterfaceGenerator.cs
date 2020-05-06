@@ -28,7 +28,7 @@ namespace GraphZen.CodeGen.Generators
                     new KindConfig {TypeName = nameof(Directive), SimpleBuilder = true}
                 },
                 {
-                    "Type", new KindConfig {TypeParamName = "ClrType"}
+                    "Type", new KindConfig {TypeParamName = "SetClrType"}
                 },
                 {
                     nameof(Object),

@@ -75,7 +75,9 @@ namespace GraphZen.TypeSystem
             {
                 throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRemove(this));
             }
-            throw new NotImplementedException();
+
+            Identity.Name = null!;
+            return true;
         }
 
         public Type? ClrType => Identity.ClrType;
@@ -91,6 +93,8 @@ namespace GraphZen.TypeSystem
             Identity.ClrType = clrType;
             return true;
         }
+
+        public bool RemoveClrType(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
 

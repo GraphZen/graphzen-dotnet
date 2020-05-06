@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields
 
         public void ConfigureClrContext(SchemaBuilder sb, string parentName)
         {
-            sb.Object(parentName).ClrType<ExampleObject>();
+            sb.Object(parentName).SetClrType<ExampleObject>();
         }
 
 

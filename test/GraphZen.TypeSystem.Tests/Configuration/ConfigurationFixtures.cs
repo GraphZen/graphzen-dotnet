@@ -78,12 +78,12 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 // Mutation Type (Leaf)
                 // TODO: Schema_MutationType_Explicit
                 // TODO: Schema_MutationType_ViaClassName
-                // Description (Leaf)
+                // SetDescription (Leaf)
                 // TODO: Schema_Description_Explicit
                 // TODO: Schema_Description_ViaGraphQLContextAttribute
 
                 // OBJECT
-                // Description (Leaf)
+                // SetDescription (Leaf)
                 new Object_Explicit_Description(),
                 new Object_ViaClrClass_Description(),
                 // Fields (Collection)
@@ -99,7 +99,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 // TODO: Object_DirectiveAnnotations_ViaClrInterfaceAttributes
 
                 // OBJECT FIELD
-                // Description (Leaf)
+                // SetDescription (Leaf)
                 new Object_Field_Explicit_Description(),
                 new Object_Field_ViaClrMethod_Description(),
                 new Object_Field_ViaClrProperty_Description(),
@@ -123,7 +123,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 new Object_Field_Argument_Explicit_Description(),
 
                 // INTERFACE
-                // Description (Leaf)
+                // SetDescription (Leaf)
 
                 new Interface_ViaClrClass_Description(),
                 new Interface_Explicit_Description(),
@@ -139,7 +139,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 // TODO: Interface_DirectiveAnnotations_ViaClrInterfaceAttributes
 
                 // INTERFACE FIELD
-                // Description (Leaf)
+                // SetDescription (Leaf)
                 new Interface_Field_Explicit_Description(),
                 new Interface_Field_ViaClrProperty_Description(),
                 // Arguments (Collection)
@@ -159,13 +159,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 // TODO: Interface_Field_DirectiveAnnotations_ViaClrMethodAttributes
 
                 // INTERFACE FIELD ARGUMENT
-                // Description (Leaf)
+                // SetDescription (Leaf)
                 new Interface_Field_Argument_Explicit_Description(),
                 new Interface_Field_Argument_ViaClrMethod_Description(),
 
 
                 // Union
-                // Description (Leaf)
+                // SetDescription (Leaf)
                 new Union_Explicit_Description(),
                 new Union_ViaClrClass_Description(),
                 new Union_ViaClrMarkerInterface_Description(),
@@ -179,7 +179,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 // TODO: Union_DirectiveAnnotations_ViaClrMarkerInterfaceAttributes
 
                 // INPUT OBJECT
-                // Description (Leaf)
+                // SetDescription (Leaf)
                 new InputObject_Explicit_Description(),
                 new InputObject_ViaClrClass_Description(),
                 // Fields (Collection)
@@ -200,7 +200,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 new Scalar_Explicit_Description(),
 
                 // ENUM
-                // Description (Leaf)
+                // SetDescription (Leaf)
                 new Enum_Explicit_Description(),
                 new Enum_ViaClrEnum_Description(),
                 // Values (Collection)

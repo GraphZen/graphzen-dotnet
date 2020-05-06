@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         where TMarker : TDefMarker
     {
         //public virtual TElement ConventionalValue =>
-        //    throw new NotImplementedException($"implement '{nameof(ConventionalValue)}' in type '{GetType().Name}'");
+        //    throw new NotImplementedException($"implement '{nameof(ConventionalValue)}' in type '{GetType().SetName}'");
 
         //public virtual TElement DataAnnotationValue =>
         //    throw new NotImplementedException(NotImplementedMessage(nameof(DataAnnotationValue), false));

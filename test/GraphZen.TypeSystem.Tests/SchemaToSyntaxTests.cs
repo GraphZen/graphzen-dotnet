@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem.Tests
                 .Field("nnList", "[String]!")
                 .Field("nnListOfnn", "[String!]!");
             schema.Object("Object")
-                .Description("object description").ImplementsInterface("Interface")
+                .SetDescription("object description").ImplementsInterface("Interface")
                 .Field("field", "String", _ => _.Description("field description"))
                 .Field("nn", "String!")
                 .Field("list", "[String]")

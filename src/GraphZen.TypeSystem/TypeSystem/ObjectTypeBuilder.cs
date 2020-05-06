@@ -25,29 +25,36 @@ namespace GraphZen.TypeSystem
 
         InternalObjectTypeBuilder IInfrastructure<InternalObjectTypeBuilder>.Instance => Builder;
 
-        public IObjectTypeBuilder<TObject, TContext> Name(string? name)
+        public IObjectTypeBuilder<TObject, TContext> SetName(string name)
         {
-            Builder.RenameOrRemove(name, ConfigurationSource.Explicit);
+            Check.NotNull(name, nameof(name));
+            Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IObjectTypeBuilder<object, TContext> ClrType(Type? clrType)
+        public IObjectTypeBuilder<TObject, TContext> RemoveName() => throw new NotImplementedException();
+
+        public IObjectTypeBuilder<object, TContext> SetClrType(Type? clrType)
         {
             Builder.ClrType(clrType, ConfigurationSource.Explicit);
             return new ObjectTypeBuilder<object, TContext>(Builder);
         }
 
-        public IObjectTypeBuilder<T, TContext> ClrType<T>()
+        public IObjectTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
+
+        public IObjectTypeBuilder<T, TContext> SetClrType<T>()
         {
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
             return new ObjectTypeBuilder<T, TContext>(Builder);
         }
 
-        public IObjectTypeBuilder<TObject, TContext> Description(string? description)
+        public IObjectTypeBuilder<TObject, TContext> SetDescription(string? description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
+
+        public IObjectTypeBuilder<TObject, TContext> RemoveDescription() => throw new NotImplementedException();
 
 
         public IObjectTypeBuilder<TObject, TContext> Field(string name,
@@ -59,7 +66,6 @@ namespace GraphZen.TypeSystem
             configurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
             return this;
         }
-
         public IFieldBuilder<TObject, object, TContext> Field(string name)
         {
             Check.NotNull(name, nameof(name));

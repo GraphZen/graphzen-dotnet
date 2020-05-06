@@ -11,7 +11,8 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     public interface IMutableClrType : IClrType
     {
-        bool SetClrType(Type? clrType, ConfigurationSource configurationSource);
+        bool SetClrType(Type clrType, ConfigurationSource configurationSource);
+        bool RemoveClrType(ConfigurationSource configurationSource);
         ConfigurationSource? GetClrTypeConfigurationSource();
     }
 }

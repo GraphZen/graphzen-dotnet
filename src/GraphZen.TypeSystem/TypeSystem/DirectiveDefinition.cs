@@ -22,10 +22,10 @@ namespace GraphZen.TypeSystem
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
-        private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _locations =
+        private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _ignoredLocations =
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
-        private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _ignoredLocations =
+        private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _locations =
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
         private ConfigurationSource _nameConfigurationSource;
@@ -111,18 +111,6 @@ namespace GraphZen.TypeSystem
 
         IEnumerable<ArgumentDefinition> IMutableArgumentsDefinition.GetArguments() => Arguments.Values;
 
-        public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
-        {
-            if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))
-            {
-                argument = new ArgumentDefinition(name, ConfigurationSource.Convention, Builder.Schema,
-                    configurationSource, this, null);
-                _arguments[name] = argument;
-            }
-
-            return argument;
-        }
-
         public bool AddLocation(DirectiveLocation location, ConfigurationSource configurationSource)
         {
             var locationConfigurationSource = FindDirectiveLocationConfigurationSource(location);
@@ -164,20 +152,34 @@ namespace GraphZen.TypeSystem
 
 
         public ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
-            _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+            _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?) null;
 
         public ConfigurationSource?
             FindIgnoredDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
-            _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+            _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?) null;
 
         public IReadOnlyCollection<DirectiveLocation> Locations =>
-            (IReadOnlyCollection<DirectiveLocation>)_locations.Keys;
+            (IReadOnlyCollection<DirectiveLocation>) _locations.Keys;
 
         public Type? ClrType { get; }
 
         public bool SetClrType(Type? clrType, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
 
+        public bool RemoveClrType(ConfigurationSource configurationSource) => throw new NotImplementedException();
+
         public ConfigurationSource? GetClrTypeConfigurationSource() => throw new NotImplementedException();
+
+        public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
+        {
+            if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))
+            {
+                argument = new ArgumentDefinition(name, ConfigurationSource.Convention, Builder.Schema,
+                    configurationSource, this, null);
+                _arguments[name] = argument;
+            }
+
+            return argument;
+        }
     }
 }

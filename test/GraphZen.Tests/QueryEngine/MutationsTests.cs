@@ -65,7 +65,7 @@ namespace GraphZen.Tests.QueryEngine
         {
             sb.Object<NumberHolder>().Field(_ => _.TheNumber, _ => _.FieldType("Int"));
             sb.Object<Root>()
-                .Name("Mutation")
+                .SetName("Mutation")
                 .Field("immediatelyChangeTheNumber", "NumberHolder", _ => _.Argument("newNumber", "Int").Resolve(
                     (root, args) => root.ImmediatelyChangeTheNumber(args.newNumber)))
                 .Field("promiseToChangeTheNumber", "NumberHolder", _ => _.Argument("newNumber", "Int").Resolve(
