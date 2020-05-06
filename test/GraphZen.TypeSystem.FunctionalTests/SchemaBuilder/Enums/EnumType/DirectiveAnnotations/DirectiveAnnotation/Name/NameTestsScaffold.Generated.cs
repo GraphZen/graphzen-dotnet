@@ -14,9 +14,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Direc
 [NoReorder]
 public abstract  class NameTests {
 
-[Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact(Skip="TODO")]
-public void required_item_cannot_be_removed_() {
+public void element_can_be_defined_via_sdl_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -50,9 +50,9 @@ public void updateable_item_can_be_updated_() {
 
 
 
-[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
+[Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
 [Fact(Skip="TODO")]
-public void element_can_be_defined_via_sdl_() {
+public void required_item_cannot_be_removed_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 

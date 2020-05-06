@@ -14,21 +14,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Mem
 [NoReorder]
 public abstract  class MemberTypesTests {
 
-[Spec(nameof(NamedTypeSetSpecs.set_item_must_be_valid_name))]
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact(Skip="TODO")]
-public void set_item_must_be_valid_name_() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
-
-
-
-[Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
-[Fact(Skip="TODO")]
-public void set_item_can_be_added_() {
+public void element_can_be_defined_via_sdl_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -50,6 +38,18 @@ public void element_can_be_defined_via_sdl_extension_() {
 
 
 
+[Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
+[Fact(Skip="TODO")]
+public void set_item_can_be_added_() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
 [Fact(Skip="TODO")]
 public void set_item_can_be_removed_() {
@@ -62,9 +62,9 @@ public void set_item_can_be_removed_() {
 
 
 
-[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
+[Spec(nameof(NamedTypeSetSpecs.set_item_must_be_valid_name))]
 [Fact(Skip="TODO")]
-public void element_can_be_defined_via_sdl_() {
+public void set_item_must_be_valid_name_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 

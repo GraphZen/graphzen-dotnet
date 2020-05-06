@@ -14,9 +14,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
 [NoReorder]
 public abstract  class DefaultValueTests {
 
-[Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact(Skip="TODO")]
-public void parent_can_be_created_without_optional_item_() {
+public void element_can_be_defined_via_sdl_() {
     // Priority: High
     var schema = Schema.Create(_ => {
 
@@ -50,9 +50,9 @@ public void optional_item_can_be_removed_() {
 
 
 
-[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
+[Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
 [Fact(Skip="TODO")]
-public void element_can_be_defined_via_sdl_() {
+public void parent_can_be_created_without_optional_item_() {
     // Priority: High
     var schema = Schema.Create(_ => {
 
