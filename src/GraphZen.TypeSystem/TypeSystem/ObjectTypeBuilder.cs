@@ -34,9 +34,10 @@ namespace GraphZen.TypeSystem
 
         public IObjectTypeBuilder<TObject, TContext> RemoveName() => throw new NotImplementedException();
 
-        public IObjectTypeBuilder<object, TContext> SetClrType(Type? clrType)
+        public IObjectTypeBuilder<object, TContext> SetClrType(Type clrType)
         {
-            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            Check.NotNull(clrType, nameof(clrType));
+            Builder.SetClrType(clrType, ConfigurationSource.Explicit);
             return new ObjectTypeBuilder<object, TContext>(Builder);
         }
 
@@ -44,7 +45,7 @@ namespace GraphZen.TypeSystem
 
         public IObjectTypeBuilder<T, TContext> SetClrType<T>()
         {
-            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            Builder.SetClrType(typeof(T), ConfigurationSource.Explicit);
             return new ObjectTypeBuilder<T, TContext>(Builder);
         }
 

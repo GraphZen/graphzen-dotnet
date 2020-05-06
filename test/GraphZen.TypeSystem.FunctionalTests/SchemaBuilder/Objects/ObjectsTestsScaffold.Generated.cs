@@ -14,27 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects {
 [NoReorder]
 public abstract  class ObjectsTestsScaffold {
 
-[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_removed))]
-[Fact(Skip="TODO")]
-public void clr_typed_item_can_have_clr_type_removed_() {
-    // Priority: High
-    var schema = Schema.Create(_ => {
 
-    });
-    throw new NotImplementedException();
-}
-
-
-
-[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
-[Fact(Skip="TODO")]
-public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_() {
-    // Priority: High
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
 
 
 }

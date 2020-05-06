@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
@@ -158,9 +157,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.adding_clr_type_to_item_does_not_change_name))]
+        [Spec(nameof(adding_clr_type_to_item_does_not_change_name))]
         [Fact]
-        public void adding_clr_type_to_item_does_not_change_name()
+        public void adding_clr_type_to_item_does_not_change_name_()
         {
             var schema = Schema.Create(_ => { _.Object("Foo").SetClrType<Poco>(); });
             schema.GetObject("Foo").ClrType.Should().Be<Poco>();
@@ -174,10 +173,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
+        [Spec(nameof(adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
         [Fact]
-        public void adding_clr_type_with_name_annotation_to_item_does_not_change_name()
+        public void adding_clr_type_with_name_annotation_to_item_does_not_change_name_()
         {
             var schema = Schema.Create(_ => { _.Object("Foo").SetClrType<PocoNameAnnotated>(); });
             schema.GetObject<PocoNameAnnotated>().Name.Should().Be("Foo");
@@ -312,9 +310,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-
-
-
         [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
         [Fact]
         public void clr_typed_object_with_name_attribute_can_be_renamed()
@@ -324,38 +319,36 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
+        [Spec(nameof(named_item_can_be_added_via_sdl))]
         [Fact]
-        public void named_item_can_be_added_via_sdl()
+        public void named_item_can_be_added_via_sdl_()
         {
             var schema = Schema.Create(_ => { _.FromSchema(@"type Foo"); });
             schema.HasObject("Foo").Should().BeTrue();
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
+        [Spec(nameof(named_item_can_be_added_via_sdl_extension))]
         [Fact(Skip = "TODO")]
-        public void named_item_can_be_added_via_sdl_extension()
+        public void named_item_can_be_added_via_sdl_extension_()
         {
             var schema = Schema.Create(_ => { _.FromSchema(@"extend type Foo"); });
             schema.HasObject("Foo").Should().BeTrue();
         }
 
 
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.untyped_item_can_have_clr_type_added))]
+        [Spec(nameof(untyped_item_can_have_clr_type_added))]
         [Fact]
-        public void untyped_item_can_have_clr_type_added()
+        public void untyped_item_can_have_clr_type_added_()
         {
             var schema = Schema.Create(_ => { _.Object("Foo").SetClrType(typeof(Poco)); });
             schema.GetObject("Foo").ClrType.Should().Be<Poco>();
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
+        [Spec(nameof(untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
         [Fact(Skip = "TODO")]
-        public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use()
+        public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
         {
             Schema.Create(_ =>
             {
@@ -398,10 +391,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .subsequently_clr_typed_item_can_have_custom_named_removed))]
+        [Spec(nameof(subsequently_clr_typed_item_can_have_custom_named_removed))]
         [Fact(Skip = "Needs design")]
-        public void subsequently_clr_typed_item_can_have_custom_named_removed()
+        public void subsequently_clr_typed_item_can_have_custom_named_removed_()
         {
             // Priority: High
             var schema = Schema.Create(_ => { _.Object("Foo").SetClrType<Poco>().RemoveName(); });
@@ -409,10 +401,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts))]
+        [Spec(nameof(subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts
+        ))]
         [Fact(Skip = "TODO")]
-        public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts()
+        public void
+            subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts_()
         {
             Schema.Create(_ =>
             {
@@ -424,10 +417,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
+        [Spec(nameof(subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
         [Fact(Skip = "needs design")]
-        public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts()
+        public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts_()
         {
             Schema.Create(_ =>
             {
@@ -435,6 +427,33 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
                 Action removeCustomName = () => _.Object("Foo").SetClrType<Poco>().RemoveName();
                 // TODO: ensure meaningful exception message
                 removeCustomName.Should().Throw<DuplicateNameException>();
+            });
+        }
+
+        [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
+        [Fact(Skip = "needs design")]
+        public void clr_typed_item_can_have_clr_type_removed_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.Object<Poco>().RemoveClrType();
+                _.Object<PocoNameAnnotated>().RemoveClrType();
+            });
+            schema.HasObject(nameof(Poco)).Should().BeTrue();
+            schema.HasObject(PocoNameAnnotated.AnnotatedName).Should().BeTrue();
+
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
+        [Fact]
+        public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_()
+        {
+            Schema.Create(_ =>
+            {
+                _.Object<Poco>();
+                Action change = () => _.Object<Poco>().SetClrType(null!);
+                change.Should().ThrowArgumentNullException("clrType");
             });
         }
     }
