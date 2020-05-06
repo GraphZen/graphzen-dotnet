@@ -101,10 +101,11 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IInputObjectTypeBuilder<TInputObject> Name(string name)
+        public IInputObjectTypeBuilder<TInputObject> SetName(string name)
         {
             Check.NotNull(name, nameof(name));
-            Builder.Name(name, ConfigurationSource.Explicit);
+            name.AssertValidNameArgument(nameof(name));
+            Builder.SetName(name, ConfigurationSource.Explicit);
             return this;
         }
 

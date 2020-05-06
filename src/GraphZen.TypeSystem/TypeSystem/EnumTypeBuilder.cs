@@ -53,7 +53,7 @@ namespace GraphZen.TypeSystem
         public IEnumTypeBuilder<TEnum> Name(string name)
         {
             Check.NotNull(name, nameof(name));
-            Builder.Name(name, ConfigurationSource.Explicit);
+            Builder.SetName(name, ConfigurationSource.Explicit);
             return this;
         }
 

@@ -16,14 +16,11 @@ namespace GraphZen.TypeSystem.Internal
             builder.Definition.RemoveName(configurationSource);
         }
 
-        public static void Name<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder,
+        public static void SetName<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder,
             string name, ConfigurationSource configurationSource)
             where TDefinition : MemberDefinition, IMutableNamed
         {
-            if (!name.IsValidGraphQLName())
-            {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, builder.Definition));
-            }
+            
             builder.Definition.SetName(name, configurationSource);
         }
 

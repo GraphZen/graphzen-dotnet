@@ -1,10 +1,10 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
         [Spec(nameof(named_item_can_be_added_via_sdl_extension))]
-        [Fact(Skip = "todo")]
+        [Fact(Skip = "needs implementation")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
             var schema = Schema.Create("extend input Foo");
@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(named_item_can_be_added))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_can_be_added_()
         {
             var schema = Schema.Create(_ => { _.InputObject("Foo"); });
@@ -42,42 +42,68 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(named_item_cannot_be_added_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_cannot_be_added_with_null_value_()
         {
-            var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action add = () => _.InputObject((string)null!);
+                add.Should().ThrowArgumentNullException("name");
+            });
         }
 
 
         [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_cannot_be_added_with_invalid_name_()
         {
-            var schema = Schema.Create(_ => { });
+            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            {
+                Schema.Create(_ =>
+                {
+                    Action add = () => _.InputObject(name);
+                    add.Should().ThrowArgumentExceptionForName(name, reason);
+                });
+            }
         }
 
 
         [Spec(nameof(named_item_can_be_renamed))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.InputObject("Foo").SetName("Bar"); });
+            schema.HasInputObject("Foo").Should().BeFalse();
+            schema.HasInputObject("Bar").Should().BeTrue();
         }
 
 
         [Spec(nameof(named_item_cannot_be_renamed_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact()]
         public void named_item_cannot_be_renamed_with_null_value_()
         {
-            var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+           {
+               var foo = _.InputObject("Foo");
+               Action rename = () => foo.SetName(null!);
+               rename.Should().ThrowArgumentNullException("name");
+           });
         }
 
 
         [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_cannot_be_renamed_with_an_invalid_name_()
         {
-            var schema = Schema.Create(_ => { });
+            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            {
+                Schema.Create(_ =>
+                {
+                    var foo = _.InputObject("Foo");
+                    Action rename = () => foo.SetName(name);
+                    rename.Should().ThrowArgumentExceptionForName(name, reason);
+                });
+            }
         }
 
 
@@ -105,7 +131,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(named_item_cannot_be_removed_with_invalid_name))]
+        [Spec(nameof(named_item_can_be_removed_with_invalid_name))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_removed_with_invalid_name_()
         {
@@ -289,7 +315,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts))]
+        [Spec(nameof(subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts
+        ))]
         [Fact(Skip = "TODO")]
         public void
             subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts_()

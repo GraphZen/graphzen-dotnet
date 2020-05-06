@@ -26,7 +26,8 @@ namespace GraphZen.TypeSystem
         public TypeIdentity(string name, SchemaDefinition schema, TypeKind? kind = null)
         {
             _schema = Check.NotNull(schema, nameof(schema));
-            _name = Check.NotNull(name, nameof(name)).AssertValidNameArgument(nameof(name));
+            _name = Check.NotNull(name, nameof(name));
+            _name.ThrowIfInvalidGraphQLName();
 
             // TODO: validate name
             _kind = kind;

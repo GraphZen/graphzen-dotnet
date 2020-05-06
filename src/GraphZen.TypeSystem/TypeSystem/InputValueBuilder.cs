@@ -37,7 +37,7 @@ namespace GraphZen.TypeSystem
 
         public InputValueBuilder Name(string name)
         {
-            Builder.Name(name, ConfigurationSource.Explicit);
+            Builder.SetName(name, ConfigurationSource.Explicit);
             return this;
         }
 

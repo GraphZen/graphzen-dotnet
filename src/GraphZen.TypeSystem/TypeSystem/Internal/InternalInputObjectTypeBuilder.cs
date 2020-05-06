@@ -221,12 +221,5 @@ namespace GraphZen.TypeSystem.Internal
             Definition.IgnoreField(fieldName, configurationSource);
             return true;
         }
-
-
-        public InternalInputObjectTypeBuilder Name(string name, ConfigurationSource configurationSource)
-        {
-            Definition.SetName(name, configurationSource);
-            return this;
-        }
     }
 }

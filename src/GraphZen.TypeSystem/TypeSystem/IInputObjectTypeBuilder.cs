@@ -45,6 +45,6 @@ namespace GraphZen.TypeSystem
         IInputObjectTypeBuilder<TInputObject> UnignoreField(string name);
 
 
-        IInputObjectTypeBuilder<TInputObject> Name(string name);
+        IInputObjectTypeBuilder<TInputObject> SetName(string name);
     }
 }

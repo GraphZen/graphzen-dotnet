@@ -124,7 +124,7 @@ public void named_item_cannot_be_removed_with_null_value_() {
 
 
 
-[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed_with_invalid_name))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_removed_with_invalid_name_() {
     var schema = Schema.Create(_ => {

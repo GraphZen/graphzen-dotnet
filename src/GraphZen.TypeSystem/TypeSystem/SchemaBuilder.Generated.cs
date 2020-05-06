@@ -246,7 +246,6 @@ public ISchemaBuilder<TContext> RemoveObject(Type clrType) {
 
 public ISchemaBuilder<TContext> RemoveObject(string name) {
     Check.NotNull(name, nameof(name));
-    name.AssertValidNameArgument(nameof(name));
     Builder.RemoveObject(name, ConfigurationSource.Explicit);
     return this;
 }

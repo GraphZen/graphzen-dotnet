@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem
         public IFieldBuilder<TDeclaringType, TField, TContext> Name(string name)
         {
             Check.NotNull(name, nameof(name));
-            Builder.Name(name, ConfigurationSource.Explicit);
+            Builder.SetName(name, ConfigurationSource.Explicit);
             return this;
         }
 

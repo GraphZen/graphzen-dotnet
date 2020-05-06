@@ -74,7 +74,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
                 Schema.Create(_ =>
                 {
                     Action add = () => _.Object(name);
-                    add.Should().ThrowInvalidNameArgument(name, reason);
+                    add.Should().ThrowArgumentExceptionForName(name, reason);
                 });
             }
         }
@@ -92,7 +92,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(named_item_cannot_be_removed_with_invalid_name))]
+        [Spec(nameof(named_item_can_be_removed_with_invalid_name))]
         [Fact]
         public void object_cannot_be_removed_with_invalid_name()
         {
@@ -101,7 +101,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
                 Schema.Create(_ =>
                 {
                     Action remove = () => _.RemoveObject(name);
-                    remove.Should().ThrowInvalidNameArgument(name, reason);
+                    remove.Should().NotThrow();
                 });
             }
         }
