@@ -16,7 +16,7 @@ public abstract  class DescriptionTests {
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact(Skip="TODO")]
-public void element_can_be_defined_via_sdl() {
+public void description__element_can_be_defined_via_sdl() {
     // Priority: High
     var schema = Schema.Create(_ => {
 
@@ -28,7 +28,7 @@ public void element_can_be_defined_via_sdl() {
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
 [Fact(Skip="TODO")]
-public void element_can_be_defined_via_sdl_extension() {
+public void description__element_can_be_defined_via_sdl_extension() {
     // Priority: High
     var schema = Schema.Create(_ => {
 
@@ -40,7 +40,7 @@ public void element_can_be_defined_via_sdl_extension() {
 
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
 [Fact(Skip="TODO")]
-public void optional_item_can_be_removed() {
+public void description__optional_item_can_be_removed() {
     // Priority: High
     var schema = Schema.Create(_ => {
 
@@ -52,7 +52,7 @@ public void optional_item_can_be_removed() {
 
 [Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
 [Fact(Skip="TODO")]
-public void parent_can_be_created_without_optional_item() {
+public void description__parent_can_be_created_without_optional_item() {
     // Priority: High
     var schema = Schema.Create(_ => {
 
@@ -64,7 +64,7 @@ public void parent_can_be_created_without_optional_item() {
 
 [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
 [Fact(Skip="TODO")]
-public void updateable_item_can_be_updated() {
+public void description__updateable_item_can_be_updated() {
     // Priority: High
     var schema = Schema.Create(_ => {
 

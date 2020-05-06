@@ -16,7 +16,7 @@ public abstract  class ObjectsTestsScaffold {
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_removed))]
 [Fact(Skip="TODO")]
-public void clr_typed_item_can_have_clr_type_removed() {
+public void objects__clr_typed_item_can_have_clr_type_removed() {
     // Priority: High
     var schema = Schema.Create(_ => {
 
@@ -28,7 +28,7 @@ public void clr_typed_item_can_have_clr_type_removed() {
 
 [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
 [Fact(Skip="TODO")]
-public void clr_typed_item_cannot_have_clr_type_changed_with_null_value() {
+public void objects__clr_typed_item_cannot_have_clr_type_changed_with_null_value() {
     // Priority: High
     var schema = Schema.Create(_ => {
 
