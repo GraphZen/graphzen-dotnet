@@ -16,7 +16,7 @@ public abstract  class MemberTypesTests {
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact(Skip="TODO")]
-public void _element_can_be_defined_via_sdl() {
+public void element_can_be_defined_via_sdl_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -28,7 +28,7 @@ public void _element_can_be_defined_via_sdl() {
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
 [Fact(Skip="TODO")]
-public void _element_can_be_defined_via_sdl_extension() {
+public void element_can_be_defined_via_sdl_extension_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -40,7 +40,7 @@ public void _element_can_be_defined_via_sdl_extension() {
 
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
 [Fact(Skip="TODO")]
-public void _set_item_can_be_added() {
+public void set_item_can_be_added_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -52,7 +52,7 @@ public void _set_item_can_be_added() {
 
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
 [Fact(Skip="TODO")]
-public void _set_item_can_be_removed() {
+public void set_item_can_be_removed_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -64,7 +64,7 @@ public void _set_item_can_be_removed() {
 
 [Spec(nameof(NamedTypeSetSpecs.set_item_must_be_valid_name))]
 [Fact(Skip="TODO")]
-public void _set_item_must_be_valid_name() {
+public void set_item_must_be_valid_name_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 

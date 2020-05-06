@@ -16,7 +16,7 @@ public abstract  class InterfacesTests {
 
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_added))]
 [Fact(Skip="TODO")]
-public void _set_item_can_be_added() {
+public void set_item_can_be_added_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -28,7 +28,7 @@ public void _set_item_can_be_added() {
 
 [Spec(nameof(NamedTypeSetSpecs.set_item_can_be_removed))]
 [Fact(Skip="TODO")]
-public void _set_item_can_be_removed() {
+public void set_item_can_be_removed_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -40,7 +40,7 @@ public void _set_item_can_be_removed() {
 
 [Spec(nameof(NamedTypeSetSpecs.set_item_must_be_valid_name))]
 [Fact(Skip="TODO")]
-public void _set_item_must_be_valid_name() {
+public void set_item_must_be_valid_name_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 

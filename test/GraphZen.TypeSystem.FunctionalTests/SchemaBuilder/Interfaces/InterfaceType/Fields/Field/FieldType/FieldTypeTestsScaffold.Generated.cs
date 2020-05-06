@@ -16,7 +16,7 @@ public abstract  class FieldTypeTests {
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact(Skip="TODO")]
-public void _element_can_be_defined_via_sdl() {
+public void element_can_be_defined_via_sdl_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -28,7 +28,7 @@ public void _element_can_be_defined_via_sdl() {
 
 [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
 [Fact(Skip="TODO")]
-public void _element_can_be_defined_via_sdl_extension() {
+public void element_can_be_defined_via_sdl_extension_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -40,7 +40,7 @@ public void _element_can_be_defined_via_sdl_extension() {
 
 [Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
 [Fact(Skip="TODO")]
-public void _required_item_cannot_be_removed() {
+public void required_item_cannot_be_removed_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -52,7 +52,7 @@ public void _required_item_cannot_be_removed() {
 
 [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
 [Fact(Skip="TODO")]
-public void _updateable_item_can_be_updated() {
+public void updateable_item_can_be_updated_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
