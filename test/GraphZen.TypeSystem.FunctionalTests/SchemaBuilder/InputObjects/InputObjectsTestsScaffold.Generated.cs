@@ -10,9 +10,9 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives {
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects {
 [NoReorder]
-public abstract  class DirectivesTests {
+public abstract  class InputObjectsTests {
 
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
 [Fact(Skip="TODO")]
@@ -434,8 +434,8 @@ public void named_item_can_be_added_via_sdl_() {
 
 
 }
-// Move DirectivesTests into a separate file to start writing tests
+// Move InputObjectsTests into a separate file to start writing tests
 [NoReorder] 
-public  class DirectivesTestsScaffold {
+public  class InputObjectsTestsScaffold {
 }
 }

@@ -14,9 +14,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
 [NoReorder]
 public abstract  class FieldTypeTests {
 
-[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
 [Fact(Skip="TODO")]
-public void element_can_be_defined_via_sdl_() {
+public void element_can_be_defined_via_sdl_extension_() {
     // Priority: High
     var schema = Schema.Create(_ => {
 
@@ -26,9 +26,9 @@ public void element_can_be_defined_via_sdl_() {
 
 
 
-[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
 [Fact(Skip="TODO")]
-public void element_can_be_defined_via_sdl_extension_() {
+public void element_can_be_defined_via_sdl_() {
     // Priority: High
     var schema = Schema.Create(_ => {
 

@@ -14,9 +14,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
 [NoReorder]
 public abstract  class FieldsTests {
 
-[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
 [Fact(Skip="TODO")]
-public void named_item_can_be_added_() {
+public void named_item_cannot_be_removed_with_null_value_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -26,21 +26,9 @@ public void named_item_can_be_added_() {
 
 
 
-[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
 [Fact(Skip="TODO")]
-public void named_item_can_be_added_via_sdl_() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
-
-
-
-[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
-[Fact(Skip="TODO")]
-public void named_item_can_be_added_via_sdl_extension_() {
+public void named_item_cannot_be_renamed_with_null_value_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -62,21 +50,9 @@ public void named_item_can_be_removed_() {
 
 
 
-[Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
 [Fact(Skip="TODO")]
-public void named_item_can_be_renamed_() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
-
-
-
-[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
-[Fact(Skip="TODO")]
-public void named_item_cannot_be_added_with_invalid_name_() {
+public void named_item_cannot_be_removed_with_invalid_name_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -98,9 +74,9 @@ public void named_item_cannot_be_added_with_null_value_() {
 
 
 
-[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
 [Fact(Skip="TODO")]
-public void named_item_cannot_be_removed_with_invalid_name_() {
+public void named_item_can_be_added_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -110,9 +86,9 @@ public void named_item_cannot_be_removed_with_invalid_name_() {
 
 
 
-[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
 [Fact(Skip="TODO")]
-public void named_item_cannot_be_removed_with_null_value_() {
+public void named_item_can_be_added_via_sdl_extension_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -134,6 +110,18 @@ public void named_item_cannot_be_renamed_if_name_already_exists_() {
 
 
 
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
+[Fact(Skip="TODO")]
+public void named_item_can_be_renamed_() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
 [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_with_an_invalid_name_() {
@@ -146,9 +134,21 @@ public void named_item_cannot_be_renamed_with_an_invalid_name_() {
 
 
 
-[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
+[Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
 [Fact(Skip="TODO")]
-public void named_item_cannot_be_renamed_with_null_value_() {
+public void named_item_cannot_be_added_with_invalid_name_() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
+[Fact(Skip="TODO")]
+public void named_item_can_be_added_via_sdl_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
