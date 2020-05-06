@@ -11,6 +11,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
     public interface INamedType : INamedTypeDefinition, INullableType
     {
-        // new string SetName { get; }
+        // new string Name { get; }
     }
 }

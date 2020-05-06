@@ -53,6 +53,28 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string required_item_cannot_be_removed = null;
         }
 
+
+        public class UniquelyInputOutputTypeCollectionSpecs
+        {
+            public const string named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io = null;
+            public const string named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io = null;
+            public const string clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io = null;
+            public const string clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io = null;
+
+        }
+        public class InputAndOutputTypeCollectionSpecs
+        {
+            public const string named_item_can_be_added_if_name_matches_input_type_identity = null;
+            public const string named_item_can_be_added_if_name_matches_output_type_identity = null;
+            public const string named_item_can_be_renamed_to_name_with_input_type_identity = null;
+            public const string named_item_can_be_renamed_to_name_with_output_type_identity = null;
+            public const string clr_typed_item_can_be_renamed_if_name_matches_input_type_identity = null;
+            public const string clr_typed_item_can_be_renamed_if_name_matches_output_type_identity = null;
+            public const string clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity = null;
+            public const string clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity = null;
+
+        }
+
         public class NamedCollectionSpecs
         {
             public const string named_item_can_be_added_via_sdl = null;
@@ -66,7 +88,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string named_item_cannot_be_renamed_if_name_already_exists = null;
             public const string named_item_can_be_removed = null;
             public const string named_item_cannot_be_removed_with_null_value = null;
-            public const string named_item_can_be_removed_with_invalid_name = null;
+            public const string named_item_cannot_be_removed_with_invalid_name = null;
         }
 
         public class ClrTypeSpecs
@@ -110,8 +132,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
             // Initially untyped objects
             public const string subsequently_clr_typed_item_can_have_custom_named_removed = null;
+
             public const string subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts
                 = null;
+
             public const string
                 subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts =
                     null;

@@ -178,8 +178,11 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalUnionTypeBuilder? Union(Type clrType, ConfigurationSource configurationSource) =>
-            Union(new TypeIdentity(clrType, Definition), configurationSource);
+        public InternalUnionTypeBuilder? Union(Type clrType, ConfigurationSource configurationSource)
+        {
+            AssertCanCreateForType(clrType, TypeKind.Union);
+            return Union(new TypeIdentity(clrType, Definition), configurationSource);
+        }
 
         public InternalUnionTypeBuilder? Union(string name, ConfigurationSource configurationSource) =>
             Union(new TypeIdentity(name, Definition), configurationSource);
@@ -361,8 +364,11 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        public InternalEnumTypeBuilder? Enum(Type clrType, ConfigurationSource configurationSource) =>
-            Enum(new TypeIdentity(clrType, Definition), configurationSource);
+        public InternalEnumTypeBuilder? Enum(Type clrType, ConfigurationSource configurationSource)
+        {
+            AssertCanCreateForType(clrType, TypeKind.Enum);
+            return Enum(new TypeIdentity(clrType, Definition), configurationSource);
+        }
 
         public InternalEnumTypeBuilder? Enum(string name, ConfigurationSource configurationSource) =>
             Enum(new TypeIdentity(name, Definition), configurationSource);
@@ -422,8 +428,11 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public InternalInputObjectTypeBuilder? InputObject(Type clrType,
-            ConfigurationSource configurationSource) =>
-            InputObject(new TypeIdentity(clrType, Definition), configurationSource);
+            ConfigurationSource configurationSource)
+        {
+            AssertCanCreateForType(clrType, TypeKind.InputObject);
+            return InputObject(new TypeIdentity(clrType, Definition), configurationSource);
+        }
 
         public InternalInputObjectTypeBuilder? InputObject(string name,
             ConfigurationSource configurationSource) =>
@@ -490,22 +499,25 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalObjectTypeBuilder? Object(Type clrType, ConfigurationSource configurationSource)
         {
-            ValidateCanCreate(clrType, TypeKind.Object);
+            AssertCanCreateForType(clrType, TypeKind.Object);
             return Object(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
-        private static void ValidateCanCreate(Type clrType, TypeKind kind)
+        private static void AssertCanCreateForType(Type clrType, TypeKind kind)
         {
             if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated))
             {
                 if (!annotated.IsValidGraphQLName())
                 {
-                    throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateAnnotatedType(clrType, annotated, kind));
+                    throw new InvalidNameException(
+                        TypeSystemExceptionMessages.InvalidNameException.CannotCreateDefinitionForTypeWithInvalidNameAttribute(clrType, annotated,
+                            kind));
                 }
             }
             else if (!clrType.Name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateType(clrType, kind));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotCreateDefinitionForTypeWithInvalidName(clrType, kind));
             }
         }
 

@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit;

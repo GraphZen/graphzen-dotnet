@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem.Tests
         public abstract void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType);
 
 
-        // Change SetName
+        // Change Name
         public abstract void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName);
         public abstract void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName);
 
@@ -385,8 +385,11 @@ namespace GraphZen.TypeSystem.Tests
                 var ex = Assert.Throws<DuplicateNameException>(
                     () => { ChangeNameByName(sb, TypeName, NewTypeName); });
 
+                var typeDef =  sb.GetDefinition().GetType<NamedTypeDefinition>(TypeName);
+                var newTypeDef =  sb.GetDefinition().GetType<NamedTypeDefinition>(NewTypeName);
+                
                 ex.Message.Should()
-                    .Be(TypeIdentity.GetDuplicateTypeNameErrorMessage(TypeName, NewTypeName));
+                    .Be(TypeSystemExceptionMessages.DuplicateNameException.DuplicateType(typeDef.Identity, NewTypeName, newTypeDef.Identity));
             });
         }
 

@@ -42,7 +42,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects
 
         public override void RenameItem(SchemaBuilder sb, string parentName, string itemName, string newName)
         {
-            sb.InputObject(itemName).SetName(newName);
+            sb.InputObject(itemName).Name(newName);
         }
 
         public override NamedCollection<InputObjectTypeDefinition> GetCollection(SchemaDefinition parent) =>

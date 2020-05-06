@@ -11,7 +11,6 @@ namespace GraphZen.TypeSystem.FunctionalTests
 {
     public static class ActionAssertionExtensions
     {
-
         public static ExceptionAssertions<InvalidNameException> ThrowInvalidNameException(
             this ActionAssertions actionAssertions,
             string name, string reason) =>

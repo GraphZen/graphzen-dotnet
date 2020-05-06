@@ -10,8 +10,9 @@ namespace GraphZen.TypeSystem.Internal
 {
     public static class InternalBuilderExtensions
     {
-        public static void RemoveName<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder, ConfigurationSource configurationSource)
-                    where TDefinition : MemberDefinition, IMutableRemovableNamed
+        public static void RemoveName<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder,
+            ConfigurationSource configurationSource)
+            where TDefinition : MemberDefinition, IMutableRemovableNamed
         {
             builder.Definition.RemoveName(configurationSource);
         }
@@ -20,7 +21,6 @@ namespace GraphZen.TypeSystem.Internal
             string name, ConfigurationSource configurationSource)
             where TDefinition : MemberDefinition, IMutableNamed
         {
-            
             builder.Definition.SetName(name, configurationSource);
         }
 

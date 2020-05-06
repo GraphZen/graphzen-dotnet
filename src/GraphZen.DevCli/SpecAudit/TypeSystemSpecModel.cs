@@ -95,6 +95,7 @@ namespace GraphZen.SpecAudit
             var objects = new Subject(nameof(Schema.Objects))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithSpecs<ClrTypedCollectionSpecs>()
+                .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
                 .WithChild(objectType);
 
             var scalar = new Subject(nameof(ScalarType))
@@ -105,6 +106,7 @@ namespace GraphZen.SpecAudit
             var scalars = new Subject(nameof(Schema.Scalars))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithSpecs<ClrTypedCollectionSpecs>()
+                .WithSpecs<InputAndOutputTypeCollectionSpecs>()
                 .WithChild(scalar);
 
             var interfaceType = new Subject(nameof(InterfaceType))
@@ -117,6 +119,7 @@ namespace GraphZen.SpecAudit
             var interfaces = new Subject(nameof(Schema.Interfaces))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithSpecs<ClrTypedCollectionSpecs>()
+                .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
                 .WithChild(interfaceType);
 
             var unionType = new Subject(nameof(UnionType)).WithChild(description).WithChild(name)
@@ -128,6 +131,7 @@ namespace GraphZen.SpecAudit
             var unions = new Subject(nameof(Schema.Unions))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithSpecs<ClrTypedCollectionSpecs>()
+                .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
                 .WithChild(unionType);
 
             var enumType = new Subject(nameof(EnumType))
@@ -145,6 +149,7 @@ namespace GraphZen.SpecAudit
             var enums = new Subject(nameof(Schema.Enums))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithSpecs<ClrTypedCollectionSpecs>()
+                .WithSpecs<InputAndOutputTypeCollectionSpecs>()
                 .WithChild(enumType);
 
             var inputObjectType = new Subject(nameof(InputObjectType))
@@ -158,6 +163,7 @@ namespace GraphZen.SpecAudit
             var inputObjects = new Subject(nameof(Schema.InputObjects))
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithSpecs<ClrTypedCollectionSpecs>()
+                .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
                 .WithChild(inputObjectType);
 
             var directive = new Subject(nameof(Directive))

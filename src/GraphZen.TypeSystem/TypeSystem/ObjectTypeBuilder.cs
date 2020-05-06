@@ -67,6 +67,7 @@ namespace GraphZen.TypeSystem
             configurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
             return this;
         }
+
         public IFieldBuilder<TObject, object, TContext> Field(string name)
         {
             Check.NotNull(name, nameof(name));

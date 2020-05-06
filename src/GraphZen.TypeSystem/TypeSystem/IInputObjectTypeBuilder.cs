@@ -15,6 +15,7 @@ namespace GraphZen.TypeSystem
 
 
         IInputObjectTypeBuilder<object> ClrType(Type clrType);
+        IInputObjectTypeBuilder<object> RemoveClrType();
 
 
         IInputObjectTypeBuilder<T> ClrType<T>();
@@ -45,6 +46,6 @@ namespace GraphZen.TypeSystem
         IInputObjectTypeBuilder<TInputObject> UnignoreField(string name);
 
 
-        IInputObjectTypeBuilder<TInputObject> SetName(string name);
+        IInputObjectTypeBuilder<TInputObject> Name(string name);
     }
 }

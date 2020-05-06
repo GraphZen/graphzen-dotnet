@@ -823,7 +823,8 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name) =>
             _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
 
-        public IEnumerable<ObjectTypeDefinition> GetObjects(bool includeSpecTypes = false) => _types.OfType<ObjectTypeDefinition>();
+        public IEnumerable<ObjectTypeDefinition> GetObjects(bool includeSpecTypes = false) =>
+            _types.OfType<ObjectTypeDefinition>();
 
         public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _types.OfType<InterfaceTypeDefinition>();
 
@@ -835,7 +836,8 @@ namespace GraphZen.TypeSystem
 
         IEnumerable<IDirectiveDefinition> IDirectivesDefinition.GetDirectives() => GetDirectives();
 
-        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecTypes) => GetObjects(includeSpecTypes);
+        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecTypes) =>
+            GetObjects(includeSpecTypes);
 
         IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces() => GetInterfaces();
 

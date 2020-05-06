@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
@@ -11,6 +12,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
+    [DebuggerDisplay(nameof(DebuggerDisplay))]
     public class TypeIdentity
     {
         private readonly TypeKind? _kind;
@@ -39,8 +41,6 @@ namespace GraphZen.TypeSystem
             _schema = Check.NotNull(schema, nameof(schema));
             ClrType = clrType.GetEffectiveClrType();
             _kind = kind;
-
-
         }
 
 
@@ -93,7 +93,8 @@ namespace GraphZen.TypeSystem
                 var existing = _schema.FindTypeIdentity(newId);
                 if (existing != null && !existing.Equals(this))
                 {
-                    throw new DuplicateNameException(GetDuplicateTypeNameErrorMessage(Name, newName));
+                    throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException
+                        .DuplicateType(this, newName, existing));
                 }
 
                 _name = newName;
@@ -133,8 +134,9 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        internal static string GetDuplicateTypeNameErrorMessage(string oldName, string newName) =>
-            $"Cannot rename type \"{oldName}\" to \"{newName}\", type named \"{newName}\" already exists.";
+        internal string DebuggerDisplay =>
+            $"Identity:{(name: Name, clrType: ClrType, Kind, IsInputType, IsOutputType)}";
+
 
         private bool Equals(TypeIdentity other) => Overlaps(other);
 
@@ -155,7 +157,7 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
-            return Equals((TypeIdentity)obj);
+            return Equals((TypeIdentity) obj);
         }
 
         // ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
@@ -178,7 +180,6 @@ namespace GraphZen.TypeSystem
             return string.Equals(Name, identity.Name);
         }
 
-        public override string ToString() =>
-            $"Identity:{(name: Name, clrType: ClrType, Kind, IsInputType, IsOutputType)}";
+        public override string ToString() => $"type {Name}";
     }
 }

@@ -10,7 +10,6 @@ using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-using static GraphZen.LanguageModel.SyntaxFactory;
 
 namespace GraphZen.TypeSystem
 {
@@ -25,9 +24,11 @@ namespace GraphZen.TypeSystem
         {
             Identity = identity;
             Schema = schema;
-            if (identity.ClrType != null)
+            var clrType = identity.ClrType;
+            if (clrType != null)
             {
-                if (identity.ClrType.TryGetGraphQLNameFromDataAnnotation(out var customName) &&
+
+                if (clrType.TryGetGraphQLNameFromDataAnnotation(out var customName) &&
                     customName == identity.Name)
                 {
                     _nameConfigurationSource = ConfigurationSource.DataAnnotation;
@@ -41,10 +42,10 @@ namespace GraphZen.TypeSystem
             {
                 _nameConfigurationSource = ConfigurationSource.Explicit;
             }
+
             IsIntrospection = SpecReservedNames.IntrospectionTypeNames.Contains(Name);
         }
-
-
+            
         public TypeIdentity Identity { get; }
 
         public SchemaDefinition Schema { get; }
@@ -60,7 +61,8 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this));
             }
 
             if (!configurationSource.Overrides(_nameConfigurationSource))
@@ -74,6 +76,7 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
+
         public bool RemoveName(ConfigurationSource configurationSource)
         {
             if (ClrType == null)

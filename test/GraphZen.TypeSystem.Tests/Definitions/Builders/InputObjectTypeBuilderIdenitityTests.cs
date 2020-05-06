@@ -39,22 +39,22 @@ namespace GraphZen.TypeSystem.Tests
 
         public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
         {
-            schemaBuilder.InputObject(name).SetName(newName);
+            schemaBuilder.InputObject(name).Name(newName);
         }
 
         public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
         {
-            schemaBuilder.InputObject(clrType).SetName(newName);
+            schemaBuilder.InputObject(clrType).Name(newName);
         }
 
         public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
         {
-            schemaBuilder.InputObject(name).SetName(null!);
+            schemaBuilder.InputObject(name).Name(null!);
         }
 
         public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
         {
-            schemaBuilder.InputObject(clrType).SetName(null!);
+            schemaBuilder.InputObject(clrType).Name(null!);
         }
     }
 }

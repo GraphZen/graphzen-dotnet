@@ -33,9 +33,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Description
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {
-
             sb.Object(parentName).SetDescription(value!);
-            
         }
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)

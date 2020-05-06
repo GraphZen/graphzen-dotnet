@@ -15,7 +15,5 @@ namespace GraphZen.Infrastructure
         public DuplicateClrTypeException(string message) : base(message)
         {
         }
-
-
     }
 }

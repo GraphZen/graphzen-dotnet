@@ -113,6 +113,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
                 csharp.AppendLine(@"
 // ReSharper disable InconsistentNaming
+// ReSharper disable once PossibleInterfaceMemberAmbiguity
 ");
 
 

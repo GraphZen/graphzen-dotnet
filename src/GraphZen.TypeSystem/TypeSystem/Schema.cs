@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem
             var initialTypes = new List<NamedType>();
             // initialTypes.AddRange(SpecScalars.All);
             // ReSharper disable once PossibleNullReferenceException
-            //if (schemaDefinition.Types.All(_ => _.SetName != "String"))
+            //if (schemaDefinition.Types.All(_ => _.Name != "String"))
             //{
             //    initialTypes.AddRange(SpecScalars.All);
             //}
@@ -585,8 +585,10 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
         [GraphQLIgnore] public IReadOnlyList<ObjectType> Objects => _objects.Value;
         [GraphQLIgnore] public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
+
         [GraphQLIgnore]
-        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecTypes) => GetObjects(includeSpecTypes);
+        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecTypes) =>
+            GetObjects(includeSpecTypes);
 
 
         [GraphQLIgnore]
@@ -615,6 +617,7 @@ namespace GraphZen.TypeSystem
             {
                 return _objects.Value;
             }
+
             return _objects.Value.Where(_ => _.IsIntrospection == false);
         }
 

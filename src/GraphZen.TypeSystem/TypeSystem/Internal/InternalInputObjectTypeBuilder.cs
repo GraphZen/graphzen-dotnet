@@ -221,5 +221,10 @@ namespace GraphZen.TypeSystem.Internal
             Definition.IgnoreField(fieldName, configurationSource);
             return true;
         }
+
+        public void RemoveClrType(ConfigurationSource configurationSource)
+        {
+            Definition.RemoveClrType(configurationSource);
+        }
     }
 }

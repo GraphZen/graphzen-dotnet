@@ -37,6 +37,14 @@ namespace GraphZen.TypeSystem
             return new InputObjectTypeBuilder<object>(Builder);
         }
 
+        public IInputObjectTypeBuilder<object> RemoveClrType()
+        {
+            Builder.RemoveClrType(ConfigurationSource.Explicit);
+
+
+            return new InputObjectTypeBuilder<object>(Builder);
+        }
+
         public IInputObjectTypeBuilder<T> ClrType<T>()
         {
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
@@ -101,7 +109,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IInputObjectTypeBuilder<TInputObject> SetName(string name)
+        public IInputObjectTypeBuilder<TInputObject> Name(string name)
         {
             Check.NotNull(name, nameof(name));
             name.AssertValidNameArgument(nameof(name));

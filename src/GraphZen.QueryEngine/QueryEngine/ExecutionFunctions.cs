@@ -318,7 +318,7 @@ namespace GraphZen.QueryEngine
                                 var result = type.IsTypeOf(value, context, info);
                                 if (result)
                                 {
-                                    return type.SetName;
+                                    return type.Name;
                                 }
                             }
                         }*/

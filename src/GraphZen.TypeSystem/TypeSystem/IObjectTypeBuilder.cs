@@ -16,7 +16,6 @@ namespace GraphZen.TypeSystem
             IObjectTypeBuilder<TObject, TContext>, TObject, TContext> where TContext : GraphQLContext
     {
         IObjectTypeBuilder<TObject, TContext> SetName(string name);
-        IObjectTypeBuilder<TObject, TContext> RemoveName();
 
         IObjectTypeBuilder<object, TContext> SetClrType(Type clrType);
         IObjectTypeBuilder<object, TContext> RemoveClrType();
