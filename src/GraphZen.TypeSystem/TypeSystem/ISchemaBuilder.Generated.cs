@@ -55,20 +55,20 @@ public  partial interface ISchemaBuilder<TContext> {
 
 
 
-        ISchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType: notnull;
+        ISchemaBuilder<TContext> UnignoreType<TSetClrType>() where TSetClrType: notnull;
 
          ISchemaBuilder<TContext> UnignoreType(Type clrType);
 
          ISchemaBuilder<TContext> UnignoreType(string name);
 
 
-         ISchemaBuilder<TContext> IgnoreType<TClrType>() where TClrType: notnull;
+         ISchemaBuilder<TContext> IgnoreType<TSetClrType>() where TSetClrType: notnull;
 
          ISchemaBuilder<TContext> IgnoreType(Type clrType);
 
          ISchemaBuilder<TContext> IgnoreType(string name);
 
-        ISchemaBuilder<TContext> RemoveType<TClrType>() where TClrType: notnull;
+        ISchemaBuilder<TContext> RemoveType<TSetClrType>() where TSetClrType: notnull;
 
          ISchemaBuilder<TContext> RemoveType(Type clrType);
 

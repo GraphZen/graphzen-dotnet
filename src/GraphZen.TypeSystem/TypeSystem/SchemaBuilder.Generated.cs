@@ -107,8 +107,8 @@ public ISchemaBuilder<TContext> RemoveDirective(string name) {
 
 
 
-public ISchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType: notnull {
-    Builder.UnignoreType(typeof(TClrType), ConfigurationSource.Explicit);
+public ISchemaBuilder<TContext> UnignoreType<TSetClrType>() where TSetClrType: notnull {
+    Builder.UnignoreType(typeof(TSetClrType), ConfigurationSource.Explicit);
     return this;
 }
 
@@ -126,8 +126,8 @@ public ISchemaBuilder<TContext> UnignoreType(string name) {
 }
 
 
-public ISchemaBuilder<TContext> IgnoreType<TClrType>() where TClrType: notnull {
-    Builder.IgnoreType(typeof(TClrType), ConfigurationSource.Explicit);
+public ISchemaBuilder<TContext> IgnoreType<TSetClrType>() where TSetClrType: notnull {
+    Builder.IgnoreType(typeof(TSetClrType), ConfigurationSource.Explicit);
     return this;
 }
 
@@ -144,8 +144,8 @@ public ISchemaBuilder<TContext> IgnoreType(string name) {
     return this;
 }
 
-public ISchemaBuilder<TContext> RemoveType<TClrType>() where TClrType: notnull {
-    Builder.RemoveType(typeof(TClrType), ConfigurationSource.Explicit);
+public ISchemaBuilder<TContext> RemoveType<TSetClrType>() where TSetClrType: notnull {
+    Builder.RemoveType(typeof(TSetClrType), ConfigurationSource.Explicit);
     return this;
 }
 
