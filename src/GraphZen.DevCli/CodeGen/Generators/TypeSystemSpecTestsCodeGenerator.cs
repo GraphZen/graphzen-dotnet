@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Net.Security;
+using System.Runtime.InteropServices.ComTypes;
 using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.Infrastructure;
@@ -44,16 +46,9 @@ namespace GraphZen.CodeGen.Generators
                     _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
                     {
 
-                        foreach (var test in suite.Tests.Where(t =>
-                            t.SubjectPath == subject.Path && !t.TestMethod.DeclaringType!.Name.Contains("Scaffold")))
+                        foreach (var (specId,spec) in suite.Specs)
                         {
-
-                        }
-
-
-                        foreach (var (specId, subjectSpec) in subject.Specs)
-                        {
-                            if (suite.Specs.TryGetValue(specId, out var spec))
+                            if (subject.Specs.TryGetValue(specId, out var subjectSpec))
                             {
                                 var isTestImplemented = testFileExists && suite.Tests.Any(t =>
                                     t.SubjectPath == subject.Path && t.SpecId == specId &&
@@ -77,6 +72,18 @@ public void {spec.Id}_() {{
 
 ");
                                 }
+                            }
+
+                        }
+
+
+
+
+                        foreach (var (specId, subjectSpec) in subject.Specs)
+                        {
+                            if (suite.Specs.TryGetValue(specId, out var spec))
+                            {
+                               
                             }
                         }
                     });

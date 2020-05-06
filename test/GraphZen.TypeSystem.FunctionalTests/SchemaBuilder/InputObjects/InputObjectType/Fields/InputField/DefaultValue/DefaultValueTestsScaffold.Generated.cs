@@ -14,18 +14,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
 [NoReorder]
 public abstract  class DefaultValueTests {
 
-[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
-[Fact(Skip="TODO")]
-public void element_can_be_defined_via_sdl_extension_() {
-    // Priority: Low
-    var schema = Schema.Create(_ => {
-
-    });
-    throw new NotImplementedException();
-}
-
-
-
 [Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
 [Fact(Skip="TODO")]
 public void parent_can_be_created_without_optional_item_() {
@@ -38,9 +26,9 @@ public void parent_can_be_created_without_optional_item_() {
 
 
 
-[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
 [Fact(Skip="TODO")]
-public void element_can_be_defined_via_sdl_() {
+public void element_can_be_defined_via_sdl_extension_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
@@ -53,6 +41,18 @@ public void element_can_be_defined_via_sdl_() {
 [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
 [Fact(Skip="TODO")]
 public void optional_item_can_be_removed_() {
+    // Priority: Low
+    var schema = Schema.Create(_ => {
+
+    });
+    throw new NotImplementedException();
+}
+
+
+
+[Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
+[Fact(Skip="TODO")]
+public void element_can_be_defined_via_sdl_() {
     // Priority: Low
     var schema = Schema.Create(_ => {
 
