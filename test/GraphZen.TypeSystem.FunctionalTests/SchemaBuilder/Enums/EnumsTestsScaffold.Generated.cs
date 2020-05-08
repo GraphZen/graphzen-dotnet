@@ -10,29 +10,9 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces {
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums {
 [NoReorder]
-public abstract  class InterfacesTestsScaffold {
-
-[Spec(nameof(UniquelyInputOutputTypeCollectionSpecs.subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io))]
-[Fact(Skip="TODO")]
-public void subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io_() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-
-
-[Spec(nameof(UniquelyInputOutputTypeCollectionSpecs.subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io))]
-[Fact(Skip="TODO")]
-public void subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io_() {
-    var schema = Schema.Create(_ => {
-
-    });
-}
-
-
+public abstract  class EnumsTestsScaffold {
 
 [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_changes_name))]
 [Fact(Skip="TODO")]
@@ -85,4 +65,4 @@ public void adding_clr_type_with_custom_name_null_value_will_use_clr_name_() {
 
 }
 }
-// Source Hash Code: 10253467832879920548
+// Source Hash Code: 17457338112018833930
