@@ -59,6 +59,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io = null;
             public const string named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io = null;
             public const string clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io = null;
+            public const string subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io = null;
+            public const string subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io = null;
             public const string clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io = null;
 
         }
@@ -129,6 +131,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string untyped_item_cannot_have_clr_type_added_that_is_already_in_use = null;
             public const string adding_clr_type_to_item_does_not_change_name = null;
             public const string adding_clr_type_with_name_annotation_to_item_does_not_change_name = null;
+
 
             // Initially untyped objects
             public const string subsequently_clr_typed_item_can_have_custom_named_removed = null;

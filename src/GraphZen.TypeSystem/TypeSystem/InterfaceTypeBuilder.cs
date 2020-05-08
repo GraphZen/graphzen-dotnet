@@ -38,6 +38,8 @@ namespace GraphZen.TypeSystem
             return new InterfaceTypeBuilder<object, TContext>(Builder);
         }
 
+        public IInterfaceTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
+
         public IInterfaceTypeBuilder<TNewInterfaceType, TContext> ClrType<TNewInterfaceType>()
         {
             Builder.ClrType(typeof(TNewInterfaceType), ConfigurationSource.Explicit);
@@ -126,9 +128,10 @@ namespace GraphZen.TypeSystem
         //public IInterfaceTypeBuilder<object, TContext> SetClrType(Type clrType) =>
         //    new InterfaceTypeBuilder<object, TContext>(Builder.SetClrType(clrType));
 
-        public IInterfaceTypeBuilder<TInterface, TContext> Name(string newName)
+        public IInterfaceTypeBuilder<TInterface, TContext> Name(string name)
         {
-            Builder.Name(newName, ConfigurationSource.Explicit);
+            Check.NotNull(name, nameof(name));
+            Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }
 

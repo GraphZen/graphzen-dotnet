@@ -353,7 +353,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
         {
             Schema.Create(_ =>

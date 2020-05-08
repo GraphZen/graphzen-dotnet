@@ -17,6 +17,7 @@ namespace GraphZen.TypeSystem
 
 
         IInterfaceTypeBuilder<object, TContext> ClrType(Type clrType);
+        IInterfaceTypeBuilder<object, TContext> RemoveClrType();
 
 
         IInterfaceTypeBuilder<TNewInterfaceType, TContext> ClrType<TNewInterfaceType>();
@@ -26,6 +27,6 @@ namespace GraphZen.TypeSystem
             ResolveType(TypeResolver<TInterface, TContext> resolveTypeFn);
 
 
-        IInterfaceTypeBuilder<TInterface, TContext> Name(string newName);
+        IInterfaceTypeBuilder<TInterface, TContext> Name(string name);
     }
 }

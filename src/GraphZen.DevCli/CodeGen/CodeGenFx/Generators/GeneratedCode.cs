@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
@@ -24,19 +25,19 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         {
             try
             {
-                var writeFile = !File.Exists(Path) || !File.ReadAllText(Path).Equals(Contents);
-
-
-                if (writeFile)
+                var hashMark = $"// Source Hash Code: {Contents.GetHashCode()}";
+                if (File.Exists(Path))
                 {
-                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Path));
-                    File.WriteAllText(Path, Contents);
-                    Console.WriteLine($"Generated file: {Path}");
+                    if (File.ReadAllText(Path).Contains(hashMark))
+                    {
+                        Console.WriteLine($"{Path}: detected identical output, skipping");
+                        return;
+                    }
                 }
-                else
-                {
-                    Console.WriteLine($"Generated file already exists: {Path}");
-                }
+                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Path));
+                File.WriteAllText(Path, Contents);
+                Console.WriteLine($"{Path}: generated");
+
             }
             catch (Exception e)
             {

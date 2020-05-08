@@ -7,6 +7,7 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 
@@ -425,6 +426,63 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts_()
         {
             // var schema = Schema.Create(_ => { });
+        }
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "needs design")]
+        public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.Object("Foo")
+                    .Field("outputField", "OutputType");
+
+                Action add = () => _.InputObject("OutputType");
+                add.Should().Throw<Exception>().WithMessage("Cannot add input object OutputType because OutputType is already identified as an output type.");
+            });
+        }
+
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "needs impl")]
+        public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            Schema.Create(_ =>
+            {
+                _.Object("Foo").Field("outputField", "OutputType");
+                var bar = _.InputObject("Bar");
+                Action rename = () => bar.Name("OutputType");
+                rename.Should().Throw<Exception>().WithMessage(@"Cannot rename input object Bar to ""OutputTYpe"" because OutputType is already identified as an output type.");
+            });
+        }
+
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            Schema.Create(_ =>
+            {
+                _.Object("Foo").Field("outputField", "OutputType");
+                var poco = _.InputObject<Poco>();
+                Action rename = () => poco.Name("OutputType");
+                rename.Should().Throw<Exception>().WithMessage(@"Cannot rename input object Bar to ""OutputTYpe"" because OutputType is already identified as an output type.");
+            });
+
+        }
+
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
+        ))]
+        [Fact(Skip = "TODO")]
+        public void
+            clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io_()
+        {
+            var schema = Schema.Create(_ => { });
         }
     }
 }

@@ -302,8 +302,11 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public InternalInterfaceTypeBuilder?
-            Interface(Type clrType, ConfigurationSource configurationSource) =>
-            Interface(new TypeIdentity(clrType, Definition), configurationSource);
+            Interface(Type clrType, ConfigurationSource configurationSource)
+        {
+            AssertCanCreateForType(clrType, TypeKind.Interface);
+            return Interface(new TypeIdentity(clrType, Definition), configurationSource);
+        }
 
         public InternalInterfaceTypeBuilder? Interface(string name, ConfigurationSource configurationSource) =>
             Interface(new TypeIdentity(name, Definition), configurationSource);
