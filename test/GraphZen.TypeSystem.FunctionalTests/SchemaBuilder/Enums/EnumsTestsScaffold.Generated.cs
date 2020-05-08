@@ -449,4 +449,4 @@ public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_
 public  class EnumsTestsScaffold {
 }
 }
-// Source Hash Code: -1110115571
+// Source Hash Code: 8762128340584621188

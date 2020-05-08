@@ -28,4 +28,4 @@ public  partial class EnumTypeExtensionSyntax {
 
 }
 }
-// Source Hash Code: -681025008
+// Source Hash Code: 13061845454144635832

@@ -273,4 +273,4 @@ public UnionType GetUnion(string name) => GetType<UnionType>(name);
 #endregion
 }
 }
-// Source Hash Code: -179209942
+// Source Hash Code: 3304468670377215125

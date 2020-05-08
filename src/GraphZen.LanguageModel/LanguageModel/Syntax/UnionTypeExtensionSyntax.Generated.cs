@@ -28,4 +28,4 @@ public  partial class UnionTypeExtensionSyntax {
 
 }
 }
-// Source Hash Code: 1911145297
+// Source Hash Code: 5474505083953594652

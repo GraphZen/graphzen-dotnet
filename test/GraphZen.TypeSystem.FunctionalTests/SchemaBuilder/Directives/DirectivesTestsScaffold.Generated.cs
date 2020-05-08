@@ -369,4 +369,4 @@ public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_
 public  class DirectivesTestsScaffold {
 }
 }
-// Source Hash Code: 754534891
+// Source Hash Code: 8496678076862621154

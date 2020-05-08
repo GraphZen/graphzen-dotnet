@@ -69,4 +69,4 @@ public void set_item_must_be_valid_name_() {
 public  class MemberTypesTestsScaffold {
 }
 }
-// Source Hash Code: 137963123
+// Source Hash Code: 3735338925937189431
