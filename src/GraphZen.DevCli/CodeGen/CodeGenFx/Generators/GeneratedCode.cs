@@ -35,7 +35,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                     }
                 }
                 Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Path));
-                File.WriteAllText(Path, Contents);
+                File.WriteAllText(Path, Contents + hashMark);
                 Console.WriteLine($"{Path}: generated");
 
             }
