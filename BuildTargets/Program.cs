@@ -138,7 +138,7 @@ namespace BuildTargets
                 {
                     CleanupCode(modified);
                 }
-                
+
             }
         }
 
