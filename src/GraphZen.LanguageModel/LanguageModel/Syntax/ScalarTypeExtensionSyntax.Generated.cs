@@ -28,4 +28,4 @@ public  partial class ScalarTypeExtensionSyntax {
 
 }
 }
-// Source Hash Code: 1351175626
+// Source Hash Code: -1762762026

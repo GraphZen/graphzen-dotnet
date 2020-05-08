@@ -25,7 +25,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         {
             try
             {
-                var hashMark = $"// Source Hash Code: {Contents.GetHashCode()}";
+                var hashMark = $"// Source Hash Code: {CalculateHash(Contents)}";
                 if (File.Exists(Path))
                 {
                     if (File.ReadAllText(Path).Contains(hashMark))
@@ -43,6 +43,18 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
             {
                 throw new Exception($"Error writing contents to file: '{Path}'. See inner exception for details.", e);
             }
+        }
+
+
+        static UInt64 CalculateHash(string read)
+        {
+            UInt64 hashedValue = 3074457345618258791ul;
+            for (int i = 0; i < read.Length; i++)
+            {
+                hashedValue += read[i];
+                hashedValue *= 3074457345618258799ul;
+            }
+            return hashedValue;
         }
     }
 }
