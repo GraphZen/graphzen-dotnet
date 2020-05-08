@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using LibGit2Sharp;
 using Palmmedia.ReportGenerator.Core;
 using static Bullseye.Targets;
 using static SimpleExec.Command;
@@ -126,18 +127,19 @@ namespace BuildTargets
             RunCli("gen");
             if (format)
             {
-                CleanupCode("**/*Generated.cs");
-                //using var repo = new Repository("./");
-                //var modified = repo.RetrieveStatus()
-                //    .Where(_ => _.State == FileStatus.ModifiedInWorkdir || _.State == FileStatus.NewInWorkdir)
-                //    .Where(_ => _.FilePath.EndsWith("Generated.cs")).Select(_ => "./" + _.FilePath).ToImmutableList();
-                //if (modified.Any())
-                //{
-                //    var includes = string.Join(";", modified);
+                // CleanupCode("**/*Generated.cs");
+                using var repo = new Repository("./");
+                var modified = repo.RetrieveStatus()
+                    .Where(_ => _.State == FileStatus.ModifiedInWorkdir || _.State == FileStatus.NewInWorkdir)
+                    .Where(_ => _.FilePath.EndsWith("Generated.cs")).Select(_ => "./" + _.FilePath).ToImmutableList();
 
-                //}
+                if (modified.Any())
+                {
+                    CleanupCode(modified);
+                }
             }
         }
+
 
 
         private static void BuildCli()
