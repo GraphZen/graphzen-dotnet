@@ -32,3 +32,4 @@ public  partial interface IMutableEnumValuesDefinition {
 
 }
 }
+// Source Hash Code: -393808908

@@ -61,3 +61,4 @@ public static VariableDefinitionSyntax VariableDefinition( GraphZen.LanguageMode
 public static VariableSyntax Variable( GraphZen.LanguageModel.NameSyntax name ,  GraphZen.LanguageModel.SyntaxLocation? location  = null) => new VariableSyntax(name, location);
 }
 }
+// Source Hash Code: 386544140

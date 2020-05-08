@@ -429,3 +429,4 @@ public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_
 public  class UnionsTestsScaffold {
 }
 }
+// Source Hash Code: 1536538102

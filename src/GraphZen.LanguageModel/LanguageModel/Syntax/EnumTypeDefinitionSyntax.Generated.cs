@@ -28,3 +28,4 @@ public  partial class EnumTypeDefinitionSyntax {
 
 }
 }
+// Source Hash Code: -1021980250

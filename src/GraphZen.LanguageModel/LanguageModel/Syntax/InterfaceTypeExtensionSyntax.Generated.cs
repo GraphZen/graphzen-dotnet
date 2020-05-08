@@ -28,3 +28,4 @@ public  partial class InterfaceTypeExtensionSyntax {
 
 }
 }
+// Source Hash Code: -277132837

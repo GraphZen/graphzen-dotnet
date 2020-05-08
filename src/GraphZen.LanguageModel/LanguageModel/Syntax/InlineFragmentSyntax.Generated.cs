@@ -28,3 +28,4 @@ public  partial class InlineFragmentSyntax {
 
 }
 }
+// Source Hash Code: -1361408320

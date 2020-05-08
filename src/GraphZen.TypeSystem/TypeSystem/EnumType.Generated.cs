@@ -49,3 +49,4 @@ public  partial class EnumType {
 
 }
 }
+// Source Hash Code: -901286452

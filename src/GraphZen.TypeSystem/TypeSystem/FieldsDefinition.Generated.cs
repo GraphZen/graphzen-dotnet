@@ -32,3 +32,4 @@ public  partial class FieldsDefinition {
 
 }
 }
+// Source Hash Code: -935549112
