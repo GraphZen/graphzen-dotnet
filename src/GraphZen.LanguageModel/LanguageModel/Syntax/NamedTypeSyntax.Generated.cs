@@ -28,4 +28,4 @@ public  partial class NamedTypeSyntax {
 
 }
 }
-// Source Hash Code: 705414835
+// Source Hash Code: -2076140472

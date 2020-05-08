@@ -69,4 +69,4 @@ public void parent_can_be_created_without_optional_item_() {
 public  class SubscriptionTypeTestsScaffold {
 }
 }
-// Source Hash Code: -1464965803
+// Source Hash Code: -1814562340
