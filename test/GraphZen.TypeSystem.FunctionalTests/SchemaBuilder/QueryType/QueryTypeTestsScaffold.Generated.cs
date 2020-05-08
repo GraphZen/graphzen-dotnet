@@ -69,4 +69,4 @@ public void parent_can_be_created_without_optional_item_() {
 public  class QueryTypeTestsScaffold {
 }
 }
-// Source Hash Code: -1870918066
+// Source Hash Code: 674159140

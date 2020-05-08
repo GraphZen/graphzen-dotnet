@@ -28,4 +28,4 @@ public  partial class ScalarTypeDefinitionSyntax {
 
 }
 }
-// Source Hash Code: 560240840
+// Source Hash Code: 186675573

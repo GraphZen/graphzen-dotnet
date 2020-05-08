@@ -28,4 +28,4 @@ public  partial class SchemaExtensionSyntax {
 
 }
 }
-// Source Hash Code: -774463492
+// Source Hash Code: 1106110965
