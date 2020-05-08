@@ -11,8 +11,8 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IEnumTypeDefinition :
         IEnumValuesDefinition,
         ILeafTypeDefinition,
-        IInputDefinition,
-        IOutputDefinition
+        IInputTypeDefinition,
+        IOutputTypeDefinition
     {
     }
 }

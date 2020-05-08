@@ -316,7 +316,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_does_not_change_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_to_item_does_not_change_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_to_item_does_not_change_name_()
         {
@@ -324,7 +324,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_does_not_change_name_()
         {

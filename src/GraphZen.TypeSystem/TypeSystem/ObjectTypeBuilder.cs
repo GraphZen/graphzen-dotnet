@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem
 
         InternalObjectTypeBuilder IInfrastructure<InternalObjectTypeBuilder>.Instance => Builder;
 
-        public IObjectTypeBuilder<TObject, TContext> SetName(string name)
+        public IObjectTypeBuilder<TObject, TContext> Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem
 
         public IObjectTypeBuilder<TObject, TContext> RemoveName() => throw new NotImplementedException();
 
-        public IObjectTypeBuilder<object, TContext> SetClrType(Type clrType)
+        public IObjectTypeBuilder<object, TContext> ClrType(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
             Builder.SetClrType(clrType, ConfigurationSource.Explicit);
@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem
 
         public IObjectTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
 
-        public IObjectTypeBuilder<T, TContext> SetClrType<T>()
+        public IObjectTypeBuilder<T, TContext> ClrType<T>()
         {
             Builder.SetClrType(typeof(T), ConfigurationSource.Explicit);
             return new ObjectTypeBuilder<T, TContext>(Builder);

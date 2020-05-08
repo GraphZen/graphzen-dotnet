@@ -11,5 +11,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IWrappingType : IGraphQLType
     {
         IGraphQLType OfType { get; }
+        IGraphQLType InnerType { get; }
     }
 }

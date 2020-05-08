@@ -70,6 +70,8 @@ namespace GraphZen.TypeSystem
             return new EnumTypeBuilder<T>(Builder);
         }
 
+        public IEnumTypeBuilder<object> RemoveClrType() => throw new NotImplementedException();
+
 
         public IEnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();

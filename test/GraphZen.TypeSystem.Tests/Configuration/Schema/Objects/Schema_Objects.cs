@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects
 
         public override void RenameItem(SchemaBuilder sb, string parentName, string itemName, string newName)
         {
-            sb.Object(itemName).SetName(newName);
+            sb.Object(itemName).Name(newName);
         }
 
         public override NamedCollection<ObjectTypeDefinition> GetCollection(SchemaDefinition parent) =>

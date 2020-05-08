@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IUnionTypeDefinition :
         ICompositeTypeDefinition,
         IAbstractTypeDefinition,
-        IOutputDefinition,
+        IOutputTypeDefinition,
         IMemberTypesDefinition
     {
     }

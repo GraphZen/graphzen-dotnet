@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
@@ -34,10 +33,10 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                         return;
                     }
                 }
+
                 Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Path));
                 File.WriteAllText(Path, Contents + hashMark);
                 Console.WriteLine($"{Path}: generated");
-
             }
             catch (Exception e)
             {
@@ -46,14 +45,15 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         }
 
 
-        static UInt64 CalculateHash(string read)
+        private static ulong CalculateHash(string read)
         {
-            UInt64 hashedValue = 3074457345618258791ul;
-            for (int i = 0; i < read.Length; i++)
+            var hashedValue = 3074457345618258791ul;
+            for (var i = 0; i < read.Length; i++)
             {
                 hashedValue += read[i];
                 hashedValue *= 3074457345618258799ul;
             }
+
             return hashedValue;
         }
     }

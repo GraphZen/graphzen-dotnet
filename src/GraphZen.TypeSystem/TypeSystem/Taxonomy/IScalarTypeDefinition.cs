@@ -13,8 +13,8 @@ namespace GraphZen.TypeSystem.Taxonomy
         ISerializerDefinition,
         ILiteralParserDefinition,
         IValueParserDefinition,
-        IInputDefinition,
-        IOutputDefinition
+        IOutputTypeDefinition,
+        IInputTypeDefinition
     {
     }
 }

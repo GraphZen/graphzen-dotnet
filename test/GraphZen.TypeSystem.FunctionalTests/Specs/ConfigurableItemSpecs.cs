@@ -129,8 +129,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             // Adding CLR type to existing type
             public const string untyped_item_can_have_clr_type_added = null;
             public const string untyped_item_cannot_have_clr_type_added_that_is_already_in_use = null;
-            public const string adding_clr_type_to_item_does_not_change_name = null;
-            public const string adding_clr_type_with_name_annotation_to_item_does_not_change_name = null;
+            public const string DEPRECATED_adding_clr_type_to_item_does_not_change_name = null;
+            public const string DEPRECATED_adding_clr_type_with_name_annotation_to_item_does_not_change_name = null;
+            public const string adding_clr_type_to_item_changes_name = null;
+            public const string adding_clr_type_to_item_with_name_changes_name_from_param = null;
+            public const string adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param = null;
+
+
+            public const string adding_clr_type_with_custom_name_will_change_name = null;
+            public const string adding_clr_type_with_custom_name_null_value_will_use_clr_name = null;
 
 
             // Initially untyped objects

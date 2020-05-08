@@ -107,7 +107,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             }
         }
 
-
         [Spec(nameof(named_item_cannot_be_renamed_if_name_already_exists))]
         [Fact]
         public void named_item_cannot_be_renamed_if_name_already_exists_()
@@ -385,7 +384,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(adding_clr_type_to_item_does_not_change_name))]
+        [Spec(nameof(DEPRECATED_adding_clr_type_to_item_does_not_change_name))]
         [Fact]
         public void adding_clr_type_to_item_does_not_change_name_()
         {
@@ -394,7 +393,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
+        [Spec(nameof(DEPRECATED_adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
         [Fact]
         public void adding_clr_type_with_name_annotation_to_item_does_not_change_name_()
         {
@@ -433,7 +432,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Fact(Skip = "needs design")]
         public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
-            var schema = Schema.Create(_ =>
+            Schema.Create(_ =>
             {
                 _.Object("Foo")
                     .Field("outputField", "OutputType");
@@ -482,7 +481,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         public void
             clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io_()
         {
-            var schema = Schema.Create(_ => { });
+            Schema.Create(_ => { });
         }
     }
 }

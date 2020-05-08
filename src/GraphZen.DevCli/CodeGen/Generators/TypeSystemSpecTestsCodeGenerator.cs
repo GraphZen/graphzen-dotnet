@@ -1,6 +1,7 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -48,9 +49,9 @@ namespace GraphZen.CodeGen.Generators
                             if (subject.Specs.TryGetValue(specId, out var _))
                             {
                                 var isTestImplemented = testFileExists && suite.Tests.Any(t =>
-                                    t.SubjectPath == subject.Path && t.SpecId == specId &&
+                                    t.SubjectPath == subject.Path && t.SpecId == specId && 
                                     !t.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
-                                if (!isTestImplemented)
+                                if (!isTestImplemented && !specId.Contains("deprecated",StringComparison.OrdinalIgnoreCase))
                                 {
                                     generate = true;
                                     var specRef = spec.FieldInfo != null

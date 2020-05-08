@@ -15,12 +15,12 @@ namespace GraphZen.TypeSystem
         IFieldsDefinitionBuilder<
             IObjectTypeBuilder<TObject, TContext>, TObject, TContext> where TContext : GraphQLContext
     {
-        IObjectTypeBuilder<TObject, TContext> SetName(string name);
+        IObjectTypeBuilder<TObject, TContext> Name(string name);
 
-        IObjectTypeBuilder<object, TContext> SetClrType(Type clrType);
+        IObjectTypeBuilder<object, TContext> ClrType(Type clrType);
+        IObjectTypeBuilder<T, TContext> ClrType<T>();
         IObjectTypeBuilder<object, TContext> RemoveClrType();
 
-        IObjectTypeBuilder<T, TContext> SetClrType<T>();
 
         IObjectTypeBuilder<TObject, TContext> SetDescription(string description);
         IObjectTypeBuilder<TObject, TContext> RemoveDescription();

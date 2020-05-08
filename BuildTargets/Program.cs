@@ -1,7 +1,6 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
@@ -138,10 +137,8 @@ namespace BuildTargets
                 {
                     CleanupCode(modified);
                 }
-
             }
         }
-
 
 
         private static void BuildCli()
@@ -171,7 +168,7 @@ namespace BuildTargets
             }
 
             new Generator().GenerateReport(new ReportConfiguration(
-                new List<string> { $"./{TestLogDir}/**/*coverage.cobertura.xml" },
+                new List<string> {$"./{TestLogDir}/**/*coverage.cobertura.xml"},
                 TestReportsDir, new List<string>(), null,
                 reportTypes,
                 new List<string>(), new List<string>(), new List<string>(), new List<string>(), null,

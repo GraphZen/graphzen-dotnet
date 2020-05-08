@@ -18,5 +18,6 @@ namespace GraphZen.TypeSystem
         IEnumTypeBuilder<TEnumValue> Name(string name);
         IEnumTypeBuilder<object> ClrType(Type clrType);
         IEnumTypeBuilder<T> ClrType<T>() where T : notnull;
+        IEnumTypeBuilder<object> RemoveClrType();
     }
 }
