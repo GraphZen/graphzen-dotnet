@@ -55,17 +55,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
-        [Fact]
-        public void named_item_cannot_be_added_with_invalid_name_()
+        [Theory]
+        [InlineData("")]
+        public void named_item_cannot_be_added_with_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    Action add = () => _.InputObject(name);
-                    add.Should().ThrowArgumentExceptionForName(name, reason);
-                });
-            }
+                Action add = () => _.InputObject(name);
+                add.Should().Throw<InvalidNameException>().WithMessage("x");
+            });
         }
 
 
@@ -93,18 +92,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact]
-        public void named_item_cannot_be_renamed_with_an_invalid_name_()
+        [Theory]
+        [InlineData("")]
+
+        public void named_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    var foo = _.InputObject("Foo");
-                    Action rename = () => foo.Name(name);
-                    rename.Should().ThrowArgumentExceptionForName(name, reason);
-                });
-            }
+                var foo = _.InputObject("Foo");
+                Action rename = () => foo.Name(name);
+                rename.Should().Throw<InvalidNameException>().WithMessage("x;;");
+            });
         }
 
         [Spec(nameof(named_item_cannot_be_renamed_if_name_already_exists))]
@@ -149,17 +148,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(named_item_cannot_be_removed_with_invalid_name))]
-        [Fact]
-        public void named_item_cant_be_removed_with_invalid_name_()
+        [Theory]
+        [InlineData("")]
+ 
+        public void named_item_cant_be_removed_with_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
-            {
+            
                 Schema.Create(_ =>
                 {
                     Action remove = () => _.RemoveInputObject(name);
-                    remove.Should().ThrowArgumentExceptionForName(name, reason);
+                    remove.Should().Throw<InvalidNameException>().WithMessage("x");
                 });
-            }
         }
 
 
@@ -331,18 +330,19 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact]
-        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_()
+[Theory]
+        [InlineData("  xy")]
+        [InlineData("")]
+
+        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
-            {
+            
                 Schema.Create(_ =>
                 {
                     var poco = _.InputObject<Poco>();
                     Action rename = () => poco.Name(name);
-                    rename.Should().ThrowArgumentExceptionForName(name, reason);
+                    rename.Should().Throw<InvalidNameException>().WithMessage("x");
                 });
-            }
         }
 
 

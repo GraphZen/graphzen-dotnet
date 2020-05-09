@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
@@ -107,67 +108,84 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
 
         [Spec(nameof(InputAndOutputTypeCollectionSpecs
             .clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity))]
-        [Fact(Skip = "TODO")]
+        [Fact()]
         public void
             clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity_()
         {
-var schema = Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", PocsNameAnnotated.AnnotatedName);
-                _.Scalar<PocsNameAnnotated>().Name("Bar");
-            });
-            schema.GetScalar<Pocs>().Name.Should().Be("Bar");
-
+            var schema = Schema.Create(_ =>
+                        {
+                            _.InputObject("Foo").Field("inputField", PocsNameAnnotated.AnnotatedName);
+                            _.Scalar<PocsNameAnnotated>().Name("Bar");
+                        });
+            schema.HasScalar<PocsNameAnnotated>().Should().BeTrue();
         }
 
 
         [Spec(nameof(InputAndOutputTypeCollectionSpecs
             .clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void
             clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+                                    {
+                                        _.Object("Foo").Field("outputField", PocsNameAnnotated.AnnotatedName);
+                                        _.Scalar<PocsNameAnnotated>().Name("Bar");
+                                    });
+            schema.HasScalar<PocsNameAnnotated>().Should().BeTrue();
+
         }
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.FromSchema(@"scalar Foo"); });
+            schema.HasScalar("Foo").Should().BeTrue();
         }
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.FromSchema(@"extend scalar Foo"); });
+            schema.HasScalar("Foo").Should().BeTrue();
         }
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_can_be_added_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Scalar("Foo");});
+            schema.HasScalar("Foo").Should().BeTrue();
         }
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_cannot_be_added_with_null_value_()
         {
-            var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Scalar((string) null!);
+                add.Should().ThrowArgumentNullException("name");
+            });
         }
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_added_with_invalid_name_()
+        [Theory]
+        [InlineData("xx 09880")]
+        public void named_item_cannot_be_added_with_invalid_name_(string name)
         {
-            var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Scalar(name);
+                add.Should().Throw<InvalidNameException>().WithMessage($"Cannot get or create GraphQL scalar type builder for type '{name}'. 'xx 09880' is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
         }
 
 

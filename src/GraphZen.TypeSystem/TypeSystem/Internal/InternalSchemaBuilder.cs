@@ -177,15 +177,17 @@ namespace GraphZen.TypeSystem.Internal
                 : $"Cannot add {kind.ToDisplayStringLower()} named '{identity.Name}', an existing {existingType.Kind.ToDisplayStringLower()} already exists with that name.";
         }
 
-
         public InternalUnionTypeBuilder? Union(Type clrType, ConfigurationSource configurationSource)
         {
-            AssertCanCreateForType(clrType, TypeKind.Union);
+            AssertValidName(clrType, TypeKind.Union);
             return Union(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
-        public InternalUnionTypeBuilder? Union(string name, ConfigurationSource configurationSource) =>
-            Union(new TypeIdentity(name, Definition), configurationSource);
+        public InternalUnionTypeBuilder? Union(string name, ConfigurationSource configurationSource)
+        {
+            AssertValidName(name, TypeKind.Union);
+            return Union(new TypeIdentity(name, Definition), configurationSource);
+        }
 
         private InternalUnionTypeBuilder? Union(in TypeIdentity id, ConfigurationSource configurationSource)
         {
@@ -241,11 +243,17 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalScalarTypeBuilder? Scalar(Type clrType, ConfigurationSource configurationSource) =>
-            Scalar(new TypeIdentity(clrType, Definition), configurationSource);
+        public InternalScalarTypeBuilder? Scalar(Type clrType, ConfigurationSource configurationSource)
+        {
+            AssertValidName(clrType, TypeKind.Scalar);
+            return Scalar(new TypeIdentity(clrType, Definition), configurationSource);
+        }
 
-        public InternalScalarTypeBuilder? Scalar(string name, ConfigurationSource configurationSource) =>
-            Scalar(new TypeIdentity(name, Definition), configurationSource);
+        public InternalScalarTypeBuilder? Scalar(string name, ConfigurationSource configurationSource)
+        {
+            AssertValidName(name, TypeKind.Scalar);
+            return Scalar(new TypeIdentity(name, Definition), configurationSource);
+        }
 
         private InternalScalarTypeBuilder? Scalar(in TypeIdentity id, ConfigurationSource configurationSource)
         {
@@ -304,12 +312,15 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInterfaceTypeBuilder?
             Interface(Type clrType, ConfigurationSource configurationSource)
         {
-            AssertCanCreateForType(clrType, TypeKind.Interface);
+            AssertValidName(clrType, TypeKind.Interface);
             return Interface(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
-        public InternalInterfaceTypeBuilder? Interface(string name, ConfigurationSource configurationSource) =>
-            Interface(new TypeIdentity(name, Definition), configurationSource);
+        public InternalInterfaceTypeBuilder? Interface(string name, ConfigurationSource configurationSource)
+        {
+            AssertValidName(name, TypeKind.Interface);
+            return Interface(new TypeIdentity(name, Definition), configurationSource);
+        }
 
         private InternalInterfaceTypeBuilder? Interface(in TypeIdentity id,
             ConfigurationSource configurationSource)
@@ -369,12 +380,15 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalEnumTypeBuilder? Enum(Type clrType, ConfigurationSource configurationSource)
         {
-            AssertCanCreateForType(clrType, TypeKind.Enum);
+            AssertValidName(clrType, TypeKind.Enum);
             return Enum(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
-        public InternalEnumTypeBuilder? Enum(string name, ConfigurationSource configurationSource) =>
-            Enum(new TypeIdentity(name, Definition), configurationSource);
+        public InternalEnumTypeBuilder? Enum(string name, ConfigurationSource configurationSource)
+        {
+            AssertValidName(name, TypeKind.Enum);
+            return Enum(new TypeIdentity(name, Definition), configurationSource);
+        }
 
 
         private InternalEnumTypeBuilder? Enum(in TypeIdentity id, ConfigurationSource configurationSource)
@@ -433,13 +447,16 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInputObjectTypeBuilder? InputObject(Type clrType,
             ConfigurationSource configurationSource)
         {
-            AssertCanCreateForType(clrType, TypeKind.InputObject);
+            AssertValidName(clrType, TypeKind.InputObject);
             return InputObject(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
         public InternalInputObjectTypeBuilder? InputObject(string name,
-            ConfigurationSource configurationSource) =>
-            InputObject(new TypeIdentity(name, Definition), configurationSource);
+            ConfigurationSource configurationSource)
+        {
+            AssertValidName(name, TypeKind.InputObject);
+            return InputObject(new TypeIdentity(name, Definition), configurationSource);
+        }
 
         private InternalInputObjectTypeBuilder? InputObject(in TypeIdentity id,
             ConfigurationSource configurationSource)
@@ -502,30 +519,43 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalObjectTypeBuilder? Object(Type clrType, ConfigurationSource configurationSource)
         {
-            AssertCanCreateForType(clrType, TypeKind.Object);
+            AssertValidName(clrType, TypeKind.Object);
             return Object(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
-        private static void AssertCanCreateForType(Type clrType, TypeKind kind)
+
+        private static void AssertValidName(string name, TypeKind kind)
+        {
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(
+                                        TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateOrCreateBuilderForTypeWithInvalidName(name,
+                                            kind));
+            }
+        }
+        private static void AssertValidName(Type clrType, TypeKind kind)
         {
             if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated))
             {
                 if (!annotated.IsValidGraphQLName())
                 {
                     throw new InvalidNameException(
-                        TypeSystemExceptionMessages.InvalidNameException.CannotCreateDefinitionForTypeWithInvalidNameAttribute(clrType, annotated,
+                        TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateBuilderForClrTypeWithInvalidNameAttribute(clrType, annotated,
                             kind));
                 }
             }
             else if (!clrType.Name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotCreateDefinitionForTypeWithInvalidName(clrType, kind));
+                    TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateBuilderForClrTypeWithInvalidName(clrType, kind));
             }
         }
 
-        public InternalObjectTypeBuilder? Object(string name, ConfigurationSource configurationSource) =>
-            Object(new TypeIdentity(name, Definition), configurationSource);
+        public InternalObjectTypeBuilder? Object(string name, ConfigurationSource configurationSource)
+        {
+            AssertValidName(name, TypeKind.Object);
+            return Object(new TypeIdentity(name, Definition), configurationSource);
+        }
 
         private InternalObjectTypeBuilder? Object(in TypeIdentity id, ConfigurationSource configurationSource)
         {

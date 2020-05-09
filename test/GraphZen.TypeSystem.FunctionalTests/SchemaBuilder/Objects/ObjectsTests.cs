@@ -74,17 +74,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
-        [Fact]
-        public void object_cannot_be_added_with_invalid_name()
+        [Theory]
+        [InlineData(")(&(*#")]
+        public void object_cannot_be_added_with_invalid_name(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    Action add = () => _.Object(name);
-                    add.Should().ThrowArgumentExceptionForName(name, reason);
-                });
-            }
+                Action add = () => _.Object(name);
+                add.Should().Throw<InvalidNameException>().WithMessage(
+                    $@"Cannot create GraphQL union with invalid name '{name}'. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
         }
 
 
@@ -101,17 +100,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(named_item_cannot_be_removed_with_invalid_name))]
-        [Fact]
-        public void object_cannot_be_removed_with_invalid_name()
+        [Theory]
+        [InlineData("  xy")]
+        [InlineData("")]
+        public void object_cannot_be_removed_with_invalid_name(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    Action remove = () => _.RemoveObject(name);
-                    remove.Should().ThrowArgumentExceptionForName(name, reason);
-                });
-            }
+                Action remove = () => _.RemoveObject(name);
+                remove.Should().Throw<InvalidNameException>().WithMessage("x");
+            });
         }
 
 
@@ -128,21 +126,19 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact]
-        public void object_cannot_be_renamed_with_an_invalid_name()
+        [Theory]
+        [InlineData("  xy")]
+        [InlineData("")]
+        public void object_cannot_be_renamed_with_an_invalid_name(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    _.Object("Foo");
-                    Action rename = () => _.Object("Foo").Name(name);
-                    var def = _.GetDefinition().GetObject("Foo");
-                    rename.Should()
-                        .Throw<InvalidNameException>()
-                        .WithMessage(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, def), reason);
-                });
-            }
+                _.Object("Foo");
+                Action rename = () => _.Object("Foo").Name(name);
+                rename.Should()
+                    .Throw<InvalidNameException>()
+                    .WithMessage("x");
+            });
         }
 
 
@@ -174,8 +170,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             public const string InvalidName = "abc @#$%^";
         }
-
-
 
 
         [Spec(nameof(clr_typed_item_can_be_added))]
@@ -239,7 +233,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             {
                 Action add = () => _.Object<PocoInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                        @"Cannot create GraphQL object with CLR class 'GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectsTests+PocoInvalidNameAnnotation'. The name specified in the GraphQLNameAttribute (""abc @#$%^"") on the PocoInvalidNameAnnotation class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    @"Cannot create GraphQL object with CLR class 'GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectsTests+PocoInvalidNameAnnotation'. The name specified in the GraphQLNameAttribute (""abc @#$%^"") on the PocoInvalidNameAnnotation class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -283,20 +277,21 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact]
-        public void clr_typed_object_cannot_be_renamed_with_an_invalid_name()
+        [Theory]
+        [InlineData("  xy")]
+        [InlineData("")]
+
+        public void clr_typed_object_cannot_be_renamed_with_an_invalid_name(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    _.Object<PocoNameAnnotated>();
-                    Action rename = () => _.Object<PocoNameAnnotated>().Name(name);
-                    var type = _.GetDefinition().GetObject<PocoNameAnnotated>();
-                    rename.Should().Throw<InvalidNameException>()
-                        .WithMessage(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, type), reason);
-                });
-            }
+                _.Object<PocoNameAnnotated>();
+                Action rename = () => _.Object<PocoNameAnnotated>().Name(name);
+                var type = _.GetDefinition().GetObject<PocoNameAnnotated>();
+                rename.Should().Throw<InvalidNameException>()
+                    .WithMessage("x");
+            });
         }
 
 
@@ -379,7 +374,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             var schema = Schema.Create(_ => { _.Object<Poco>().RemoveClrType(); });
             schema.GetObject(nameof(Poco)).ClrType.Should().BeNull();
         }
-
 
 
         [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]

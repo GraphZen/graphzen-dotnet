@@ -134,17 +134,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
-        [Fact]
-        public void named_item_cannot_be_added_with_invalid_name_()
+        [Theory]
+        [InlineData("  xy")]
+        [InlineData("")]
+
+        public void named_item_cannot_be_added_with_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    Action add = () => _.Interface(name);
-                    add.Should().ThrowArgumentExceptionForName(name, reason);
-                });
-            }
+                Action add = () => _.Interface(name);
+                add.Should().Throw<InvalidNameException>("x");
+            });
         }
 
 
@@ -171,21 +171,23 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact]
-        public void named_item_cannot_be_renamed_with_an_invalid_name_()
+        [Theory]
+        [InlineData("  xy")]
+        [InlineData("")]
+
+
+        public void named_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    var foo = _.Interface("Foo");
-                    Action rename = () => foo.Name(name);
-                    var def = _.GetDefinition().GetInterface("Foo");
-                    rename.Should()
-                        .Throw<InvalidNameException>()
-                        .WithMessage(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, def), reason);
-                });
-            }
+                var foo = _.Interface("Foo");
+                Action rename = () => foo.Name(name);
+                var def = _.GetDefinition().GetInterface("Foo");
+                rename.Should()
+                    .Throw<InvalidNameException>()
+                    .WithMessage("x");
+            });
         }
 
 
@@ -231,17 +233,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
-        [Fact]
-        public void named_item_cannot_be_removed_with_invalid_name_()
+        [Theory]
+        [InlineData("  xy")]
+        [InlineData("")]
+
+        public void named_item_cannot_be_removed_with_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    Action remove = () => _.RemoveInterface(name);
-                    remove.Should().ThrowArgumentExceptionForName(name, reason);
-                });
-            }
+                Action remove = () => _.RemoveInterface(name);
+                remove.Should().Throw<InvalidNameException>().WithMessage("x");
+            });
         }
 
 
@@ -399,20 +402,20 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact]
-        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_()
+        [Theory]
+        [InlineData("  xy")]
+        [InlineData("")]
+
+        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    var poci = _.Interface<IPoci>();
-                    Action rename = () => poci.Name(name);
-                    var def = _.GetDefinition().GetInterface<IPoci>();
-                    rename.Should().Throw<InvalidNameException>()
-                        .WithMessage(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, def), reason);
-                });
-            }
+                var poci = _.Interface<IPoci>();
+                Action rename = () => poci.Name(name);
+                rename.Should().Throw<InvalidNameException>()
+                    .WithMessage("x");
+            });
         }
 
 

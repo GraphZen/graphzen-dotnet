@@ -16,7 +16,7 @@ namespace GraphZen.Infrastructure
         public static class DuplicateNameException
         {
             internal static string DuplicateType(TypeIdentity identity, string newName, TypeIdentity existing) =>
-                        $"Cannot rename {identity.Definition?.ToString() ?? identity.Name} to \"{newName}\", {existing.Definition?.ToString() ?? existing.ToString()} already exists. All GraphQL type names must be unique.";
+                        $"Cannot rename {identity.Definition?.ToString() ?? identity.Name} to '{newName}', {existing.Definition?.ToString() ?? existing.ToString()} already exists. All GraphQL type names must be unique.";
 
         }
         public static class InvalidNameException
@@ -26,11 +26,14 @@ namespace GraphZen.Infrastructure
                                 clrType.IsEnum ? "enum" : "type";
 
 
-            public static string CannotCreateDefinitionForTypeWithInvalidNameAttribute(Type clrType, string annotatedName, TypeKind kind)
-                => $"Cannot create GraphQL {kind.ToDisplayStringLower()} with CLR {GetClrTypeDisplay(clrType)} '{clrType}'. The name specified in the {nameof(GraphQLNameAttribute)} (\"{annotatedName}\") on the {clrType.Name} {GetClrTypeDisplay(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
+            public static string CannotGetOrCreateBuilderForClrTypeWithInvalidNameAttribute(Type clrType, string annotatedName, TypeKind kind)
+                => $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeDisplay(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
 
-            public static string CannotCreateDefinitionForTypeWithInvalidName(Type clrType, TypeKind kind)
-                => $"Cannot create GraphQL {kind.ToDisplayStringLower()} with CLR {GetClrTypeDisplay(clrType)} '{clrType}'. The {GetClrTypeDisplay(clrType)} name '{clrType.Name}' is not a valid GraphQL name. {NameSpecDescription}";
+            public static string CannotGetOrCreateOrCreateBuilderForTypeWithInvalidName(string name, TypeKind kind)
+                    => $"Cannot get or create GraphQL type builder for {kind.ToDisplayStringLower()} named \"{name}\". \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+
+            public static string CannotGetOrCreateBuilderForClrTypeWithInvalidName(Type clrType, TypeKind kind)
+                => $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}'. The CLR {GetClrTypeDisplay(clrType)} name '{clrType.Name}' is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotRename(string name, INamed named) =>
                 $"Cannot rename {named}. \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";

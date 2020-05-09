@@ -434,7 +434,6 @@ namespace GraphZen.TypeSystem
         public IEnumTypeBuilder<string> Enum(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             var internalBuilder = Builder.Enum(name, ConfigurationSource.Explicit)!;
             var builder = new EnumTypeBuilder<string>(internalBuilder);
             return builder;

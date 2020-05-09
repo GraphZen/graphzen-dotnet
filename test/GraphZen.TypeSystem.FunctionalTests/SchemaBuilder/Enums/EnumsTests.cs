@@ -30,6 +30,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [GraphQLName("abc ()(*322*&%^")]
         private enum PoceInvalidNameAnnotation
         {
+
         }
 
 
@@ -184,17 +185,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
-        [Fact]
-        public void named_item_cannot_be_added_with_invalid_name_()
+        [Theory]
+        [InlineData("")]
+        [InlineData(")(*#$")]
+        public void named_item_cannot_be_added_with_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    Action add = () => _.Enum(name);
-                    add.Should().ThrowArgumentExceptionForName(name, reason);
-                });
-            }
+                Action add = () => _.Enum(name);
+                add.Should().Throw<InvalidNameException>()
+                    .WithMessage(@$"Cannot get or create GraphQL type builder for enum named ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
         }
 
 
@@ -206,8 +207,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             schema.HasEnum("Foo").Should().BeFalse();
             schema.HasEnum("Bar").Should().BeTrue();
         }
-
-
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
         [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
@@ -222,21 +221,21 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact]
-        public void named_item_cannot_be_renamed_with_an_invalid_name_()
+        [Theory]
+        [InlineData("")]
+        [InlineData("  ")]
+        [InlineData("  ()(#$")]
+        public void named_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    var foo = _.Enum("Foo");
-                    Action rename = () => foo.Name(name);
-                    var def = _.GetDefinition().GetEnum("Foo");
-                    rename.Should()
-                        .Throw<InvalidNameException>()
-                        .WithMessage(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, def), reason);
-                });
-            }
+                var foo = _.Enum("Foo");
+                Action rename = () => foo.Name(name);
+                rename.Should()
+                    .Throw<InvalidNameException>()
+                    .WithMessage("x");
+            });
         }
 
 
@@ -281,17 +280,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
-        [Fact]
-        public void named_item_cannot_be_removed_with_invalid_name_()
+        [Theory]
+        [InlineData("x")]
+        public void named_item_cannot_be_removed_with_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    Action remove = () => _.RemoveEnum(name);
-                    remove.Should().ThrowArgumentExceptionForName(name, reason);
-                });
-            }
+                Action remove = () => _.RemoveEnum(name);
+                remove.Should().Throw<InvalidNameException>().WithMessage("x");
+            });
         }
 
 
@@ -333,7 +330,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             {
                 Action add = () => _.Enum<PoceInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    @"Cannot create GraphQL enum with CLR enum 'GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumsTests+PoceInvalidNameAnnotation'. The name specified in the GraphQLNameAttribute (""abc ()(*322*&%^"") on the PoceInvalidNameAnnotation enum is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $@"Cannot get or create GraphQL enum type builder with CLR enum 'PoceInvalidNameAnnotation'. The name ""abc ()(*322*&%^"" specified in the GraphQLNameAttribute on the PoceInvalidNameAnnotation CLR enum is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -447,20 +444,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact]
-        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_()
+        [Theory]
+        [InlineData("  xy")]
+        [InlineData("")]
+        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-            foreach (var (name, reason) in GraphQLNameTestHelpers.InvalidGraphQLNames)
+            Schema.Create(_ =>
             {
-                Schema.Create(_ =>
-                {
-                    var poce = _.Enum<Poce>();
-                    Action rename = () => poce.Name(name);
-                    var def = _.GetDefinition().GetEnum<Poce>();
-                    rename.Should().Throw<InvalidNameException>()
-                        .WithMessage(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, def), reason);
-                });
-            }
+                var poce = _.Enum<Poce>();
+                Action rename = () => poce.Name(name);
+                rename.Should().Throw<InvalidNameException>()
+                    .WithMessage(@$"Cannot rename enum Poce. ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
         }
 
 
@@ -474,7 +469,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
                 var poce = _.Enum<Poce>();
                 Action rename = () => poce.Name("Foo");
                 rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename enum Poce to ""Foo"", enum Foo already exists. All GraphQL type names must be unique.");
+                    @"Cannot rename enum Poce to 'Foo', enum Foo already exists. All GraphQL type names must be unique.");
             });
         }
 

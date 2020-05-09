@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
         INamedTypeDefinition,
         IMutableAnnotatableDefinition,
         IMutableClrType,
-        IMutableRemovableNamed,
+        IMutableNamed,
         IMutableDescription
     {
     }

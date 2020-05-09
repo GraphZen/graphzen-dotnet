@@ -77,17 +77,6 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
-        public bool RemoveName(ConfigurationSource configurationSource)
-        {
-            if (ClrType == null)
-            {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRemove(this));
-            }
-
-            Identity.Name = null!;
-            return true;
-        }
-
         public Type? ClrType => Identity.ClrType;
 
         public virtual bool SetClrType(Type? clrType, ConfigurationSource configurationSource)
