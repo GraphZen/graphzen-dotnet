@@ -59,7 +59,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_custom_name_will_change_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_with_custom_name_will_change_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_custom_name_will_change_name_()
         {
@@ -67,7 +67,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_custom_name_null_value_will_use_clr_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_with_custom_name_null_value_will_use_clr_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_custom_name_null_value_will_use_clr_name_()
         {

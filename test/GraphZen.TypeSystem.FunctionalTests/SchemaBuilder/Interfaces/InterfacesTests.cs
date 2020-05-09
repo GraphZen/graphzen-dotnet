@@ -455,44 +455,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_to_item_does_not_change_name))]
-        [Fact]
-        public void adding_clr_type_to_item_does_not_change_name_()
-        {
-            var schema = Schema.Create(_ => { _.Interface("Foo").ClrType<IPoci>(); });
-            var byName = schema.GetInterface("Foo");
-            var byType = schema.GetInterface<IPoci>();
-            byName.Should().Be(byType);
-            byName.ClrType.Should().Be<IPoci>();
-            byType.Name.Should().Be("Foo");
-        }
-
+      
 
         [Spec(nameof(ClrTypedCollectionSpecs
-            .DEPRECATED_adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
-        [Fact]
-        public void adding_clr_type_with_name_annotation_to_item_does_not_change_name_()
-        {
-            var schema = Schema.Create(_ => { _.Interface("Foo").ClrType<IPociAnnotatedName>(); });
-            var byName = schema.GetInterface("Foo");
-            var byType = schema.GetInterface<IPociAnnotatedName>();
-            byName.Should().Be(byType);
-            byName.ClrType.Should().Be<IPociAnnotatedName>();
-            byType.Name.Should().Be("Foo");
-        }
-
-
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .DEPRECATED_subsequently_clr_typed_item_can_have_custom_named_removed))]
-        [Fact(Skip = "needs design")]
-        public void subsequently_clr_typed_item_can_have_custom_named_removed_()
-        {
-            //var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
+            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
         [Fact(Skip = "needs design")]
         public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts_()
         {
@@ -501,7 +467,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
-            .subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts))]
+            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts))]
         [Fact(Skip = "needs design")]
         public void
             subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts_()

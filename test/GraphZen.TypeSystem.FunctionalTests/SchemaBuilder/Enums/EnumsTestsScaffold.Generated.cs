@@ -44,7 +44,7 @@ public void adding_clr_type_with_name_annotation_to_item_with_name_param_changes
 
 
 
-[Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_custom_name_will_change_name))]
+[Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_with_custom_name_will_change_name))]
 [Fact(Skip="TODO")]
 public void adding_clr_type_with_custom_name_will_change_name_() {
     var schema = Schema.Create(_ => {
@@ -54,7 +54,7 @@ public void adding_clr_type_with_custom_name_will_change_name_() {
 
 
 
-[Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_custom_name_null_value_will_use_clr_name))]
+[Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_with_custom_name_null_value_will_use_clr_name))]
 [Fact(Skip="TODO")]
 public void adding_clr_type_with_custom_name_null_value_will_use_clr_name_() {
     var schema = Schema.Create(_ => {

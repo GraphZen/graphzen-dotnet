@@ -177,14 +177,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
 
-        [Spec(nameof(DEPRECATED_adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
-        [Fact]
-        public void adding_clr_type_with_name_annotation_to_item_does_not_change_name_()
-        {
-            var schema = Schema.Create(_ => { _.Object("Foo").ClrType<PocoNameAnnotated>(); });
-            schema.GetObject<PocoNameAnnotated>().Name.Should().Be("Foo");
-        }
-
 
         [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
@@ -389,17 +381,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(DEPRECATED_subsequently_clr_typed_item_can_have_custom_named_removed))]
-        [Fact(Skip = "Needs design")]
-        public void subsequently_clr_typed_item_can_have_custom_named_removed_()
-        {
-            // Priority: High
-            //var schema = Schema.Create(_ => { _.Object("Foo").ClrType<Poco>().RemoveName(); });
-            //schema.GetObject("Foo").ClrType.Should().BeNull();
-        }
-
-
-        [Spec(nameof(subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts
+        [Spec(nameof(DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts
         ))]
         [Fact(Skip = "Needs design")]
         public void
@@ -418,7 +400,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
+        [Spec(nameof(DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
         [Fact(Skip = "needs design")]
         public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts_()
         {
