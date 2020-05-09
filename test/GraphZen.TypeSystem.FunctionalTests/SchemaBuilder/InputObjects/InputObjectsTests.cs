@@ -384,31 +384,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(DEPRECATED_adding_clr_type_to_item_does_not_change_name))]
-        [Fact]
-        public void adding_clr_type_to_item_does_not_change_name_()
-        {
-            var schema = Schema.Create(_ => { _.InputObject("Foo").ClrType<Poco>(); });
-            schema.GetInputObject<Poco>().Name.Should().Be("Foo");
-        }
-
-
-        [Spec(nameof(DEPRECATED_adding_clr_type_with_name_annotation_to_item_does_not_change_name))]
-        [Fact]
-        public void adding_clr_type_with_name_annotation_to_item_does_not_change_name_()
-        {
-            var schema = Schema.Create(_ => { _.InputObject("Foo").ClrType<PocoNameAnnotated>(); });
-            schema.GetInputObject<PocoNameAnnotated>().Name.Should().Be("Foo");
-        }
-
-
-        [Spec(nameof(DEPRECATED_subsequently_clr_typed_item_can_have_custom_named_removed))]
-        [Fact(Skip = "needs design")]
-        public void subsequently_clr_typed_item_can_have_custom_named_removed_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
+     
 
         [Spec(nameof(subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
         [Fact(Skip = "needs design")]

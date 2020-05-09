@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IInterfaceTypeDefinition :
         IFieldsDefinition,
         ICompositeTypeDefinition,
-        IAbstractTypeDefinition, 
+        IAbstractTypeDefinition,
         IOutputTypeDefinition
     {
     }

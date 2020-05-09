@@ -1,3 +1,6 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 #nullable enable
 
 using System.Diagnostics.CodeAnalysis;
@@ -354,14 +357,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_subsequently_clr_typed_item_can_have_custom_named_removed))]
-        [Fact(Skip = "TODO")]
-        public void subsequently_clr_typed_item_can_have_custom_named_removed_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(ClrTypedCollectionSpecs
             .subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
         [Fact(Skip = "TODO")]
@@ -387,4 +382,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
     {
     }
 }
-// Source Hash Code: 12338534025987206684
+// Source Hash Code: 13022278412378490804

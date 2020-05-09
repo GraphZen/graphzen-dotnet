@@ -49,9 +49,9 @@ namespace GraphZen.CodeGen.Generators
                             if (subject.Specs.TryGetValue(specId, out var _))
                             {
                                 var isTestImplemented = testFileExists && suite.Tests.Any(t =>
-                                    t.SubjectPath == subject.Path && t.SpecId == specId && 
+                                    t.SubjectPath == subject.Path && t.SpecId == specId &&
                                     !t.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
-                                if (!isTestImplemented && !specId.Contains("deprecated",StringComparison.OrdinalIgnoreCase))
+                                if (!isTestImplemented && !specId.Contains("deprecated", StringComparison.OrdinalIgnoreCase))
                                 {
                                     generate = true;
                                     var specRef = spec.FieldInfo != null
