@@ -60,7 +60,8 @@ namespace BuildTargets
             Target(Gen, DependsOn(nameof(BuildCli)), () =>
             {
                 RunCli(Gen);
-                CleanupChangedFiles();
+                var generatedFiles = Directory.GetFiles("./", "**/*.Generated.cs", SearchOption.AllDirectories);
+                CleanupCode(generatedFiles);
             });
 
             Target(GenChanged, DependsOn(nameof(BuildCli)), () =>
