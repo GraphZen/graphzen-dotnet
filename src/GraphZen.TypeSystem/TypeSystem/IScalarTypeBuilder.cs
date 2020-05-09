@@ -13,11 +13,8 @@ namespace GraphZen.TypeSystem
         IScalarTypeBuilder<TScalar, out TValueNode> : IAnnotableBuilder<IScalarTypeBuilder<TScalar, TValueNode>>
         where TValueNode : ValueSyntax
     {
-        IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType);
-
-
-        IScalarTypeBuilder<T, TValueNode> ClrType<T>();
-
+        IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, bool updateName = false);
+        IScalarTypeBuilder<T, TValueNode> ClrType<T>(bool updateName = false);
         IScalarTypeBuilder<object, TValueNode> RemoveClrType();
 
 
