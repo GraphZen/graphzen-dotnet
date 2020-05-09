@@ -81,7 +81,7 @@ stages:
       displayName: 'Code Gen'
       inputs:
         filePath: 'build.ps1'
-        arguments: 'genquick'
+        arguments: 'genfullquick'
     - task: PowerShell@2
       displayName: 'Compile'
       inputs:

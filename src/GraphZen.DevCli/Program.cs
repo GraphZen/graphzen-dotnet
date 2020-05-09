@@ -18,7 +18,8 @@ namespace GraphZen
         {
             var root = new RootCommand
             {
-                new Command("gen") {Handler = CommandHandler.Create(CodeGenerator.Generate)},
+                new Command("Gen") {Handler = CommandHandler.Create(() => CodeGenerator.Generate(true))},
+                new Command("GenFull") {Handler = CommandHandler.Create(() => CodeGenerator.Generate(false))},
                 new Command("specs") {Handler = CommandHandler.Create(SpecReportGenerator.Generate)}
             };
             var cliBuilder = new CommandLineBuilder(root);

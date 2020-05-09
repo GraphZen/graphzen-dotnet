@@ -20,12 +20,13 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         public string Path { get; }
         public string Contents { get; }
 
-        public void WriteToFile()
+        public void WriteToFile(bool quick)
         {
             try
             {
                 var hashMark = $"// Source Hash Code: {CalculateHash(Contents)}";
-                if (File.Exists(Path))
+
+                if (quick && File.Exists(Path))
                 {
                     if (File.ReadAllText(Path).Contains(hashMark))
                     {

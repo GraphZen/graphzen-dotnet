@@ -31,8 +31,9 @@ namespace BuildTargets
         private const string Specs = nameof(Specs);
         private const string CoverageReport = nameof(CoverageReport);
         private const string CoverageReportHtml = nameof(CoverageReportHtml);
+        private const string GenFull = nameof(GenFull);
+        private const string GenFullQuick = nameof(GenFullQuick);
         private const string Gen = nameof(Gen);
-        private const string GenQuick = nameof(GenQuick);
         private const string Restore = nameof(Restore);
         private static readonly string TestArtifactsDir = Path.Combine(ArtifactsDir, "test");
         private static readonly string TestLogDir = Path.Combine(TestArtifactsDir, "logs");
@@ -56,9 +57,19 @@ namespace BuildTargets
 
             Target(nameof(BuildCli), BuildCli);
 
-            Target(Gen, DependsOn(nameof(BuildCli)), () => RunCodeGen());
+            Target(GenFull, DependsOn(nameof(BuildCli)), () =>
+            {
+                RunCli(GenFull);
+                CleanupChangedFiles();
+            });
 
-            Target(GenQuick, DependsOn(nameof(BuildCli)), () => RunCodeGen(false));
+            Target(Gen, DependsOn(nameof(BuildCli)), () =>
+            {
+                RunCli(Gen);
+                CleanupChangedFiles();
+            });
+
+            Target(GenFullQuick, DependsOn(nameof(BuildCli)), () => RunCli(GenFull));
 
             Target(Test, () =>
             {
@@ -122,10 +133,10 @@ namespace BuildTargets
         private static void DotNetFormat() => Run("dotnet", "dotnet-format");
         private static void DotNetFormatCheck() => Run("dotnet", "dotnet-format --check");
 
-        private static void RunCodeGen(bool format = true)
+
+        private static void CleanupChangedFiles()
         {
-            RunCli("gen");
-            if (format && TryGetChangedFiles(out var changed))
+            if (TryGetChangedFiles(out var changed))
             {
                 CleanupCode(changed);
             }

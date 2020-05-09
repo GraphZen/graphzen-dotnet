@@ -19,7 +19,7 @@ namespace GraphZen.CodeGen
 {
     public static class CodeGenerator
     {
-        public static void Generate()
+        public static void Generate(bool quick)
         {
             AssertChangesCommitted();
 
@@ -35,7 +35,7 @@ namespace GraphZen.CodeGen
 
             foreach (var _ in generated)
             {
-                _.WriteToFile();
+                _.WriteToFile(quick);
             }
 
             foreach (var stale in existingGeneratedFiles.Where(old => generated.All(g =>
