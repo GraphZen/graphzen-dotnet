@@ -76,6 +76,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed_via_type_param))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_have_clr_type_changed_via_type_param_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(ClrTypedCollectionSpecs.custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
         [Fact(Skip = "TODO")]
         public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
@@ -185,4 +193,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
     }
 }
-// Source Hash Code: 15957619484602955018
+// Source Hash Code: 15754368953993758662

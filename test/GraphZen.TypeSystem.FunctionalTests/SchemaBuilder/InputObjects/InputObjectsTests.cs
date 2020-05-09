@@ -450,7 +450,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_with_custom_name_()
         {
-            
+
         }
 
 

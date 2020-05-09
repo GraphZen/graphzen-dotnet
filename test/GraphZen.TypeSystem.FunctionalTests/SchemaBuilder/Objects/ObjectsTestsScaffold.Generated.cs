@@ -133,6 +133,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed_via_type_param))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_have_clr_type_changed_via_type_param_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(ClrTypedCollectionSpecs.custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
         [Fact(Skip = "TODO")]
         public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
@@ -242,4 +250,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
     }
 }
-// Source Hash Code: 11435498622914416844
+// Source Hash Code: 1787557611517403172
