@@ -90,6 +90,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
+            .clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name_()
@@ -207,4 +216,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
     }
 }
-// Source Hash Code: 18195949517713209156
+// Source Hash Code: 8634140423643344540

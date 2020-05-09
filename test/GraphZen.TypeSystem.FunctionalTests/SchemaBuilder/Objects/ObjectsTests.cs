@@ -181,14 +181,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(DEPRECATED_clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
-        [Fact]
-        public void clr_typed_object_can_be_added_via_type_param()
-        {
-            var schema = Schema.Create(_ => { _.Object("Poco").ClrType<PocoNameAnnotated>(); });
-            schema.GetObject<PocoNameAnnotated>().Name.Should().Be("Poco");
-        }
-
+        
 
         [Spec(nameof(clr_typed_item_can_be_removed))]
         [Fact]

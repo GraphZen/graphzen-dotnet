@@ -256,15 +256,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
-        [Fact]
-        public void clr_typed_item_can_be_added_via_type_param_()
-        {
-            var schema = Schema.Create(_ => { _.Interface<IPoci>(); });
-            schema.HasInterface<IPoci>().Should().BeTrue();
-        }
-
-
+        
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
         [Fact]
         public void clr_typed_item_cannot_be_added_with_null_value_()

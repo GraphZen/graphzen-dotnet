@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
         [GraphQLName("#$%^")]
-        private struct PocsInvalidNameAnnotation {}
+        private struct PocsInvalidNameAnnotation { }
 
 
         [Spec(nameof(InputAndOutputTypeCollectionSpecs.named_item_can_be_added_if_name_matches_input_type_identity))]
@@ -302,18 +302,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
-        [Fact]
-        public void clr_typed_item_can_be_added_via_type_param_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Scalar<Pocs>();
-            });
-            schema.HasScalar<Pocs>();
-        }
-
-
+        
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_added_via_type_param_with_custom_name_()
