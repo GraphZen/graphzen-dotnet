@@ -25,6 +25,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
             public const string AnnotatedName = nameof(AnnotatedName);
         }
 
+        [GraphQLName("#$%^")]
+        private struct PocsInvalidNameAnnotation {}
+
 
         [Spec(nameof(InputAndOutputTypeCollectionSpecs.named_item_can_be_added_if_name_matches_input_type_identity))]
         [Fact]
@@ -299,7 +302,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
+        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
         [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
@@ -312,7 +315,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
-        [Fact()]
+        [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_added_via_type_param_with_custom_name_()
         {
             var schema = Schema.Create(_ =>
@@ -324,18 +327,25 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_cannot_be_added_with_null_value_()
         {
-            var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Scalar((Type)null!);
+                add.Should().ThrowArgumentNullException("clrType");
+            });
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
-        [Fact(Skip = "TODO")]
+        [Fact()]
         public void clr_typed_item_cannot_be_added_with_invalid_name_attribute_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar<PocsInvalidNameAnnotation>();
+            });
         }
 
 
@@ -476,7 +486,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-        
+
 
         [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts))]
         [Fact(Skip = "TODO")]

@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class SDLSchemaConfigurator<T> where T: GraphQLContext
+    public class SDLSchemaConfigurator<T> where T : GraphQLContext
     {
         private readonly DocumentSyntax _document;
 
@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.Internal
             _document = Check.NotNull(document, nameof(document));
         }
 
-        public void Configure(ISchemaBuilder<T> schemaBuilder) 
+        public void Configure(ISchemaBuilder<T> schemaBuilder)
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
             var schemaDef = _document.Definitions.OfType<SchemaDefinitionSyntax>().FirstOrDefault();

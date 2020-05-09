@@ -181,7 +181,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
+        [Spec(nameof(DEPRECATED_clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
         [Fact]
         public void clr_typed_object_can_be_added_via_type_param()
         {

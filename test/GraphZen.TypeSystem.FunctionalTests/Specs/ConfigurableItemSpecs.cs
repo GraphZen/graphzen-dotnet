@@ -105,9 +105,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_cannot_be_added_with_invalid_name_attribute = null;
 
             public const string clr_typed_item_with_conflicting_name_can_be_added_with_custom_name = null;
-            public const string clr_typed_item_with_conflicting_name_can_be_added_via_type_param = null;
+            public const string DEPRECATED_clr_typed_item_with_conflicting_name_can_be_added_via_type_param = null;
             public const string clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name = null;
+            public const string clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name = null;
             public const string clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name = null;
+
+
 
 
             // Removing from collection with CLR Type
