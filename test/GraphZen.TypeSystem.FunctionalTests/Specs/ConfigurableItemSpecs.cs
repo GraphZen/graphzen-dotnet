@@ -166,7 +166,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             // Adding CLR type to existing type
             public const string untyped_item_can_have_clr_type_added = null;
             public const string untyped_item_cannot_have_clr_type_added_that_is_already_in_use = null;
-            
+
 
             public const string adding_clr_type_to_item_changes_name = null;
             public const string adding_clr_type_to_item_via_type_param_changes_name = null;

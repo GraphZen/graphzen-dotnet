@@ -357,70 +357,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_clr_type_with_cannot_be_added_with_invalid_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_cannot_be_added_with_invalid_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .DEPRECATED_clr_type_with_conflicting_name_annotation_cannot_be_added_with_invalid_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_cannot_be_added_with_invalid_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_clr_type_with_conflicting_name_cannot_be_added_with_null_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_cannot_be_added_with_null_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .DEPRECATED_clr_type_with_conflicting_name_annotation_cannot_be_added_with_null_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_cannot_be_added_with_null_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .DEPRECATED_clr_type_with_conflicting_name_cannot_be_added_with_conflicting_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_cannot_be_added_with_conflicting_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .DEPRECATED_clr_type_with_conflicting_name_annotation_cannot_be_added_with_conflicting_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_cannot_be_added_with_conflicting_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -489,4 +437,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
     {
     }
 }
-// Source Hash Code: 11941599331063541784
+// Source Hash Code: 14737862681181373080
