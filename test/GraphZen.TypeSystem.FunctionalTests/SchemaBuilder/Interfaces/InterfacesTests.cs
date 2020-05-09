@@ -256,7 +256,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        
+
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
         [Fact]
         public void clr_typed_item_cannot_be_added_with_null_value_()

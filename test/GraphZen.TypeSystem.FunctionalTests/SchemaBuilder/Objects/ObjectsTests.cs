@@ -181,7 +181,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        
+
 
         [Spec(nameof(clr_typed_item_can_be_removed))]
         [Fact]

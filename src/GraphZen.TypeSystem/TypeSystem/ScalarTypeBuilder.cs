@@ -27,6 +27,8 @@ namespace GraphZen.TypeSystem
         public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType) =>
             new ScalarTypeBuilder<object, TValueNode>(Builder);
 
+        public IScalarTypeBuilder<object, TValueNode> RemoveClrType() => throw new NotImplementedException();
+
         public IScalarTypeBuilder<T, TValueNode> ClrType<T>()
         {
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);

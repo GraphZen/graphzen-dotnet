@@ -26,7 +26,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
         [GraphQLName("#$%^")]
-        private struct PocsInvalidNameAnnotation { }
+        private struct PocsInvalidNameAnnotation
+        {
+        }
 
 
         [Spec(nameof(InputAndOutputTypeCollectionSpecs.named_item_can_be_added_if_name_matches_input_type_identity))]
@@ -302,15 +304,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-        
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs
+            .clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_added_via_type_param_with_custom_name_()
         {
-            var schema = Schema.Create(_ =>
-                        {
-                            _.Scalar<Pocs>("Foo");
-                        });
+            var schema = Schema.Create(_ => { _.Scalar<Pocs>("Foo"); });
             schema.HasScalar<Pocs>();
         }
 
@@ -328,45 +327,67 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
-        [Fact()]
+        [Fact]
         public void clr_typed_item_cannot_be_added_with_invalid_name_attribute_()
         {
-            var schema = Schema.Create(_ =>
+            Schema.Create(_ =>
             {
-                _.Scalar<PocsInvalidNameAnnotation>();
+                Action add = () => _.Scalar<PocsInvalidNameAnnotation>();
+                add.Should().Throw<InvalidNameException>().WithMessage(
+                    "Cannot get or create GraphQL scalar type builder with CLR type 'PocsInvalidNameAnnotation'. The name \"#$%^\" specified in the GraphQLNameAttribute on the PocsInvalidNameAnnotation CLR type is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_removed))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_removed_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar<Pocs>();
+                _.RemoveScalar(typeof(Pocs));
+            });
+            schema.HasScalar<Pocs>().Should().BeFalse();
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_removed_via_type_param))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_removed_via_type_param_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar<Pocs>();
+                _.RemoveScalar(typeof(Pocs));
+            });
+            schema.HasScalar<Pocs>().Should().BeFalse();
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_removed_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_cannot_be_removed_with_null_value_()
         {
-            var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Scalar<Pocs>();
+                Action remove = () => _.RemoveScalar((Type)null!);
+                remove.Should().ThrowArgumentNullException("clrType");
+            });
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar<Pocs>().ClrType(typeof(PocsNameAnnotated));
+            });
+            schema.HasScalar<Pocs>().Should().BeFalse();
+            schema.HasScalar<PocsNameAnnotated>().Should().BeTrue();
         }
 
 
@@ -374,32 +395,51 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "TODO")]
         public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_()
         {
-            var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+           {
+               var pocs = _.Scalar<Pocs>();
+               Action change = () => pocs.ClrType(null!);
+               change.Should().ThrowArgumentNullException("clrType");
+           });
+
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_removed))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar<Pocs>().RemoveClrType();
+            });
+            schema.GetEnum(nameof(Pocs)).ClrType.Should().BeNull();
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_type_removed_should_retain_clr_type_name))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+                        {
+                            _.Scalar<Pocs>().RemoveClrType();
+                        });
+            schema.HasScalar(nameof(Pocs)).Should().BeTrue();
+
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar<PocsNameAnnotated>().RemoveClrType();
+            });
+            schema.HasScalar(PocsNameAnnotated.AnnotatedName).Should().BeTrue();
         }
 
 
@@ -473,8 +513,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             var schema = Schema.Create(_ => { });
         }
-
-
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts))]

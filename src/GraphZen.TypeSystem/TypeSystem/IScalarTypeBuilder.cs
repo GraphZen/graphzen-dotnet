@@ -18,6 +18,8 @@ namespace GraphZen.TypeSystem
 
         IScalarTypeBuilder<T, TValueNode> ClrType<T>();
 
+        IScalarTypeBuilder<object, TValueNode> RemoveClrType();
+
 
         IScalarTypeBuilder<TScalar, TValueNode> Description(string? description);
 

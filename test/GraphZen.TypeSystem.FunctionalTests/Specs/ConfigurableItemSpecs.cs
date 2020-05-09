@@ -121,6 +121,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
             // Changing CLR Type
             public const string clr_typed_item_can_have_clr_type_changed = null;
+            public const string clr_typed_item_can_have_clr_type_changed_via_type_param = null;
             public const string clr_typed_item_cannot_have_clr_type_changed_with_null_value = null;
 
             // Removing CLR Type
