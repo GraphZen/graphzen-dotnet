@@ -531,7 +531,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts))]
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_conflicting_custom_name))]
         [Fact(Skip = "needs impl")]
         public void cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts_()
         {

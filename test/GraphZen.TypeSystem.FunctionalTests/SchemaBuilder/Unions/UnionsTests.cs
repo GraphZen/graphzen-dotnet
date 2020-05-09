@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel.Validation.Rules;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
@@ -418,7 +417,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
-            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().ClrType(typeof(PlainAbstractClassAnnotatedName)); });
+            var schema = Schema.Create(_ =>
+            {
+                _.Union<PlainAbstractClass>().ClrType(typeof(PlainAbstractClassAnnotatedName));
+            });
             schema.HasUnion<PlainAbstractClass>().Should().BeFalse();
             schema.HasUnion<PlainAbstractClassAnnotatedName>().Should().BeTrue();
         }
@@ -428,7 +430,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_changed_via_type_param_()
         {
-            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().ClrType<PlainAbstractClassAnnotatedName>(); });
+            var schema = Schema.Create(_ =>
+            {
+                _.Union<PlainAbstractClass>().ClrType<PlainAbstractClassAnnotatedName>();
+            });
             schema.HasUnion<PlainAbstractClass>().Should().BeFalse();
             schema.HasUnion<PlainAbstractClassAnnotatedName>().Should().BeTrue();
         }
@@ -436,7 +441,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
-        [Fact()]
+        [Fact]
         public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_()
         {
             Schema.Create(_ =>
@@ -452,10 +457,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
-            var schema = Schema.Create(_ =>
-              {
-                  _.Union<PlainAbstractClass>().RemoveClrType();
-              });
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().RemoveClrType(); });
             schema.HasUnion<PlainAbstractClass>().Should().BeFalse();
             schema.GetUnion(nameof(PlainAbstractClass)).ClrType.Should().BeNull();
         }
@@ -466,10 +468,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "todo")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
         {
-            var schema = Schema.Create(_ =>
-                          {
-                              _.Union<PlainAbstractClass>().RemoveClrType();
-                          });
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().RemoveClrType(); });
             schema.HasUnion(nameof(PlainAbstractClass)).Should().BeTrue();
         }
 
@@ -479,11 +478,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Union<PlainAbstractClassAnnotatedName>().RemoveClrType();
-
-            });
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClassAnnotatedName>().RemoveClrType(); });
             schema.HasUnion(PlainAbstractClassAnnotatedName.AnnotatedName).Should().BeTrue();
         }
 
@@ -493,10 +488,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Union<PlainAbstractClass>().Name("Foo").RemoveClrType();
-            });
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().Name("Foo").RemoveClrType(); });
             schema.HasUnion("Foo").Should().BeTrue();
         }
 
@@ -505,10 +497,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact]
         public void clr_typed_item_can_be_renamed_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Union<PlainAbstractClass>().Name("Foo");
-            });
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().Name("Foo"); });
             schema.GetUnion<PlainAbstractClass>().Name.Should().Be("Foo");
         }
 
@@ -517,10 +506,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact]
         public void clr_typed_item_with_name_attribute_can_be_renamed_()
         {
-            var schema = Schema.Create(_ =>
-                         {
-                             _.Union<PlainAbstractClassAnnotatedName>().Name("Foo");
-                         });
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClassAnnotatedName>().Name("Foo"); });
             schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should().Be("Foo");
         }
 
@@ -536,7 +522,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
             {
                 var union = _.Union<PlainAbstractClassAnnotatedName>();
                 Action rename = () => union.Name(name);
-                rename.Should().Throw<InvalidNameException>().WithMessage($"Cannot rename union AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                rename.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot rename union AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -550,25 +537,33 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
                 _.Union("Foo");
                 var union = _.Union<PlainAbstractClassAnnotatedName>();
                 Action rename = () => union.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage("x");
+                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot rename union AnnotatedName to \"Foo\", union Foo already exists. All GraphQL type names must be unique.");
             });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.untyped_item_can_have_clr_type_added))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "todo")]
         public void untyped_item_can_have_clr_type_added_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Union("Foo").ClrType<PlainAbstractClass>(); });
+            schema.GetUnion("Foo").ClrType.Should().Be<PlainAbstractClass>();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "todo")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+           {
+               _.Union<PlainAbstractClass>();
+               var foo = _.Union("Foo");
+               Action add = () => foo.ClrType<PlainAbstractClass>();
+               add.Should().Throw<DuplicateClrTypeException>().WithMessage("x");
+           });
         }
 
 
@@ -651,7 +646,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_null))]
+            .clr_type_with_conflicting_name_cannot_be_added_with_invalid_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_null_()
         {
@@ -660,7 +655,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_null))]
+            .clr_type_with_conflicting_name_annotation_cannot_be_added_with_invalid_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_null_()
         {
@@ -669,7 +664,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_invalid))]
+            .clr_type_with_conflicting_name_cannot_be_added_with_null_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_invalid_()
         {
@@ -678,7 +673,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_invalid))]
+            .clr_type_with_conflicting_name_annotation_cannot_be_added_with_null_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_invalid_()
         {
@@ -687,7 +682,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_conflicting))]
+            .clr_type_with_conflicting_name_cannot_be_added_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_conflicting_()
         {
@@ -696,7 +691,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_conflicting))]
+            .clr_type_with_conflicting_name_annotation_cannot_be_added_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_conflicting_()
         {
@@ -723,7 +718,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts))]
+            .cannot_add_clr_type_to_item_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
         public void cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts_()
         {
@@ -732,7 +727,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_conflicts))]
+            .cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
         public void cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_conflicts_()
         {
@@ -741,7 +736,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_with_custom_name_if_name_invalid))]
+            .cannot_add_clr_type_to_item_with_invalid_custom_name))]
         [Fact(Skip = "TODO")]
         public void cannot_add_clr_type_to_item_with_custom_name_if_name_invalid_()
         {
@@ -750,7 +745,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_invalid))]
+            .cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name))]
         [Fact(Skip = "TODO")]
         public void cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_invalid_()
         {
@@ -759,7 +754,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_with_custom_name_if_name_null))]
+            .cannot_add_clr_type_to_item_with_null_custom_name))]
         [Fact(Skip = "TODO")]
         public void cannot_add_clr_type_to_item_with_custom_name_if_name_null_()
         {
@@ -768,7 +763,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_null))]
+            .cannot_add_clr_type_to_item_via_type_param_with_null_custom_name))]
         [Fact(Skip = "TODO")]
         public void cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_null_()
         {
