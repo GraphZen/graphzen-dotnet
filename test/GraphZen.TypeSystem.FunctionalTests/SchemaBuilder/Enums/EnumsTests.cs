@@ -177,7 +177,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Enum((string) null!);
+                Action add = () => _.Enum((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -274,7 +274,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveEnum((string) null!);
+                Action remove = () => _.RemoveEnum((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -319,7 +319,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Enum((Type) null!);
+                Action add = () => _.Enum((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -371,7 +371,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             Schema.Create(_ =>
             {
                 _.Enum<Poce>();
-                Action remove = () => _.RemoveEnum((Type) null!);
+                Action remove = () => _.RemoveEnum((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

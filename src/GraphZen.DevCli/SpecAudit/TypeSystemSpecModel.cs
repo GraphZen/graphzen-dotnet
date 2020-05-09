@@ -192,13 +192,13 @@ namespace GraphZen.SpecAudit
                 .WithChild(new Subject(nameof(Schema.SubscriptionType))
                     .WithSpecs<SdlSpec>().WithSpecs<UpdateableSpecs>().WithSpecs<OptionalSpecs>()
                 )
-                .WithChild(directives)
+                .WithChild(directives.WithSpecPriority(SpecPriority.High, true))
+                .WithChild(inputObjects)
                 .WithChild(scalars)
+                .WithChild(unions)
                 .WithChild(objects.WithSpecPriority(SpecPriority.High, true))
                 .WithChild(interfaces)
-                .WithChild(unions)
-                .WithChild(enums)
-                .WithChild(inputObjects);
+                .WithChild(enums);
 
 
             return new SpecSuite(nameof(TypeSystem), schemaBuilder, typeof(TypeSystemSpecs));

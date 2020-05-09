@@ -381,7 +381,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        
+
         [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
         [Fact(Skip = "needs design")]
         public void clr_typed_item_can_have_clr_type_removed_()
