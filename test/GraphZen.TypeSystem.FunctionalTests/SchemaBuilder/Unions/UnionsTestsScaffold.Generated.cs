@@ -53,6 +53,25 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void
+            clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_()
@@ -357,4 +376,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
     {
     }
 }
-// Source Hash Code: 6336462846690811400
+// Source Hash Code: 17390847642142657640

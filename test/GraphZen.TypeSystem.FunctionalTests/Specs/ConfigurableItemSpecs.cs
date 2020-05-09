@@ -62,9 +62,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io = null;
             public const string clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io = null;
             public const string clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io = null;
-            public const string DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io = null;
-            public const string DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io = null;
-
         }
         public class InputAndOutputTypeCollectionSpecs
         {
@@ -135,6 +132,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string untyped_item_can_have_clr_type_added = null;
             public const string untyped_item_cannot_have_clr_type_added_that_is_already_in_use = null;
             public const string adding_clr_type_to_item_changes_name = null;
+            public const string adding_clr_type_with_name_annotation_to_item_changes_name = null;
 
             public const string adding_clr_type_to_item_with_name_changes_name_from_param = null;
             public const string adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param = null;

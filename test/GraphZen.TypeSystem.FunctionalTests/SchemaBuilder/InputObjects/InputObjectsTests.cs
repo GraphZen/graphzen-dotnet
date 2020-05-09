@@ -48,7 +48,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((string)null!);
+                Action add = () => _.InputObject((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -142,7 +142,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((string)null!);
+                Action add = () => _.InputObject((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -204,7 +204,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((Type)null!);
+                Action add = () => _.InputObject((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -255,7 +255,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveInputObject((Type)null!);
+                Action remove = () => _.RemoveInputObject((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -451,27 +451,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
                     .WithMessage(
                         @"Cannot create input object AnnotatedName because because AnnotatedName is already identified as an output type.");
             });
-        }
-
-        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
-            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
-            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io_()
-        {
-            var schema = Schema.Create(_ => { });
         }
 
 
