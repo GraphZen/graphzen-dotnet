@@ -1,3 +1,6 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 #nullable enable
 
 using System.Diagnostics.CodeAnalysis;
@@ -72,6 +75,30 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_be_added_with_custom_name_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_be_added_via_type_param_with_custom_name_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_changes_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_to_item_changes_name_()
@@ -97,20 +124,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_with_custom_name_will_change_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts))]
         [Fact(Skip = "TODO")]
-        public void adding_clr_type_with_custom_name_will_change_name_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_with_custom_name_null_value_will_use_clr_name))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_type_with_custom_name_null_value_will_use_clr_name_()
+        public void cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts_()
         {
             var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 4555639921256653738
+// Source Hash Code: 1710815592573858258
