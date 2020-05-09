@@ -567,45 +567,32 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_to_item_does_not_change_name))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_type_to_item_does_not_change_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .DEPRECATED_adding_clr_type_to_item_via_type_param_does_not_change_name))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_type_to_item_via_type_param_does_not_change_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .DEPRECATED_adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.adding_clr_type_to_item_changes_name))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "todo")]
         public void adding_clr_type_to_item_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Union("Foo").ClrType(typeof(PlainAbstractClass));
+            });
+            schema.HasUnion("Foo").Should().BeFalse();
+            schema.GetUnion<PlainAbstractClass>().Name.Should().Be(nameof(PlainAbstractClass));
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.adding_clr_type_to_item_via_type_param_changes_name))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "todo")]
         public void adding_clr_type_to_item_via_type_param_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+
+            var schema = Schema.Create(_ =>
+                        {
+                            _.Union("Foo").ClrType<PlainAbstractClass>();
+                        });
+            schema.HasUnion("Foo").Should().BeFalse();
+            schema.GetUnion<PlainAbstractClass>().Name.Should().Be(nameof(PlainAbstractClass));
+
         }
 
 
@@ -614,7 +601,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+                        {
+                            _.Union("Foo").ClrType(typeof(PlainAbstractClassAnnotatedName));
+                        });
+            schema.HasUnion("Foo").Should().BeFalse();
+            schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should().Be(PlainAbstractClassAnnotatedName.AnnotatedName);
+
         }
 
 
@@ -623,7 +616,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_via_type_pram_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+                                    {
+                                        _.Union("Foo").ClrType<PlainAbstractClassAnnotatedName>();
+                                    });
+            schema.HasUnion("Foo").Should().BeFalse();
+            schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should().Be(PlainAbstractClassAnnotatedName.AnnotatedName);
+
         }
 
 
@@ -632,7 +631,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Union(nameof(PlainAbstractClass));
+                _.Union("Foo").ClrType<PlainAbstractClass>("Bar");
+            });
+            schema.GetUnion(nameof(PlainAbstractClass)).ClrType.Should().BeNull();
+            schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClass>();
         }
 
 
@@ -641,7 +646,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+                        {
+                            _.Union(PlainAbstractClassAnnotatedName.AnnotatedName);
+                            _.Union("Foo").ClrType<PlainAbstractClassAnnotatedName>("Bar");
+                        });
+            schema.GetUnion(PlainAbstractClassAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
+            schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClassAnnotatedName>();
+
         }
 
 

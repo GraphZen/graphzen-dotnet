@@ -179,7 +179,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_type_with_conflicting_name_cannot_be_added_with_invalid_custom_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_clr_type_with_cannot_be_added_with_invalid_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_cannot_be_added_with_invalid_custom_name_()
         {
@@ -188,7 +188,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_annotation_cannot_be_added_with_invalid_custom_name))]
+            .DEPRECATED_clr_type_with_conflicting_name_annotation_cannot_be_added_with_invalid_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_cannot_be_added_with_invalid_custom_name_()
         {
@@ -196,7 +196,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_type_with_conflicting_name_cannot_be_added_with_null_custom_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_clr_type_with_conflicting_name_cannot_be_added_with_null_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_cannot_be_added_with_null_custom_name_()
         {
@@ -205,7 +205,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_annotation_cannot_be_added_with_null_custom_name))]
+            .DEPRECATED_clr_type_with_conflicting_name_annotation_cannot_be_added_with_null_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_cannot_be_added_with_null_custom_name_()
         {
@@ -214,7 +214,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_cannot_be_added_with_conflicting_custom_name))]
+            .DEPRECATED_clr_type_with_conflicting_name_cannot_be_added_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_cannot_be_added_with_conflicting_custom_name_()
         {
@@ -223,7 +223,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_annotation_cannot_be_added_with_conflicting_custom_name))]
+            .DEPRECATED_clr_type_with_conflicting_name_annotation_cannot_be_added_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_cannot_be_added_with_conflicting_custom_name_()
         {

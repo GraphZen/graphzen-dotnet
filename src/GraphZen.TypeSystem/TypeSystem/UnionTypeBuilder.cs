@@ -43,9 +43,12 @@ namespace GraphZen.TypeSystem
             return new UnionTypeBuilder<object, TContext>(Builder);
         }
 
+        public IUnionTypeBuilder<object, TContext> ClrType(Type clrType, string name) => throw new NotImplementedException();
+
         public IUnionTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
 
         public IUnionTypeBuilder<T, TContext> ClrType<T>() => throw new NotImplementedException();
+        public IUnionTypeBuilder<T, TContext> ClrType<T>(string name) => throw new NotImplementedException();
 
         public IUnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes)
         {
