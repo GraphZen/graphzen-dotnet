@@ -279,7 +279,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
+        [Spec(nameof(NamedCollectionSpecs.DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
         [Theory(Skip = "needs impl")]
         [InlineData("x")]
         public void named_item_cannot_be_removed_with_invalid_name_(string name)

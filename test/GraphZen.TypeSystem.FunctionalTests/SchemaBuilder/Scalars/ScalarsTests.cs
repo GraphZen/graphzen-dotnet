@@ -272,7 +272,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
+        [Spec(nameof(NamedCollectionSpecs.DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
         [Theory(Skip = "needs impl")]
         [InlineData("")]
         [InlineData("xas )(*")]

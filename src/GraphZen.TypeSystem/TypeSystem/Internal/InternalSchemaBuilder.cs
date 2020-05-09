@@ -327,6 +327,11 @@ namespace GraphZen.TypeSystem.Internal
             return Interface(new TypeIdentity(name, Definition), configurationSource);
         }
 
+        public InternalInterfaceTypeBuilder? Interface(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
         private InternalInterfaceTypeBuilder? Interface(in TypeIdentity id,
             ConfigurationSource configurationSource)
         {
@@ -388,6 +393,14 @@ namespace GraphZen.TypeSystem.Internal
             AssertValidName(clrType, TypeKind.Enum);
             return Enum(new TypeIdentity(clrType, Definition), configurationSource);
         }
+
+        public InternalEnumTypeBuilder? Enum(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+
+            throw new NotImplementedException();
+        }
+
+
 
         public InternalEnumTypeBuilder? Enum(string name, ConfigurationSource configurationSource)
         {
@@ -456,6 +469,12 @@ namespace GraphZen.TypeSystem.Internal
             return InputObject(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
+public InternalInputObjectTypeBuilder? InputObject(Type clrType, string name,
+            ConfigurationSource configurationSource)
+        {
+           throw new NotImplementedException(); 
+        }
+
         public InternalInputObjectTypeBuilder? InputObject(string name,
             ConfigurationSource configurationSource)
         {
@@ -522,11 +541,7 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        public InternalObjectTypeBuilder? Object(Type clrType, ConfigurationSource configurationSource)
-        {
-            AssertValidName(clrType, TypeKind.Object);
-            return Object(new TypeIdentity(clrType, Definition), configurationSource);
-        }
+
 
 
         private static void AssertValidName(string name, TypeKind kind)
@@ -555,11 +570,22 @@ namespace GraphZen.TypeSystem.Internal
                     TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateBuilderForClrTypeWithInvalidName(clrType, kind));
             }
         }
+        public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
 
         public InternalObjectTypeBuilder? Object(string name, ConfigurationSource configurationSource)
         {
             AssertValidName(name, TypeKind.Object);
             return Object(new TypeIdentity(name, Definition), configurationSource);
+        }
+
+        public InternalObjectTypeBuilder? Object(Type clrType, ConfigurationSource configurationSource)
+        {
+            AssertValidName(clrType, TypeKind.Object);
+            return Object(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
         private InternalObjectTypeBuilder? Object(in TypeIdentity id, ConfigurationSource configurationSource)
@@ -607,6 +633,10 @@ namespace GraphZen.TypeSystem.Internal
             return objectType.Builder;
         }
 
+        public InternalDirectiveBuilder? Directive(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
 
         public InternalDirectiveBuilder? Directive(string name, ConfigurationSource configurationSource)
         {

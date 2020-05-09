@@ -99,7 +99,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(named_item_cannot_be_removed_with_invalid_name))]
+        [Spec(nameof(DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
         [Theory(Skip = "needs impl")]
         [InlineData("  xy")]
         [InlineData("")]

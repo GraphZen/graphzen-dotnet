@@ -147,7 +147,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(named_item_cannot_be_removed_with_invalid_name))]
+        [Spec(nameof(DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
         [Theory(Skip = "needs impl")]
         [InlineData("")]
         public void named_item_cant_be_removed_with_invalid_name_(string name)

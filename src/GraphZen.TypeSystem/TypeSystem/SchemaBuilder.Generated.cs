@@ -37,7 +37,7 @@ namespace GraphZen.TypeSystem
         public IDirectiveBuilder<TDirective> Directive<TDirective>(string name) where TDirective : notnull
         {
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Directive(typeof(TDirective), ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.Directive(typeof(TDirective), name, ConfigurationSource.Explicit)!;
             var builder = new DirectiveBuilder<TDirective>(internalBuilder);
             return builder;
         }
@@ -55,7 +55,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Directive(clrType, ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.Directive(clrType, name, ConfigurationSource.Explicit)!;
             var builder = new DirectiveBuilder<object>(internalBuilder);
             return builder;
         }
@@ -209,7 +209,7 @@ namespace GraphZen.TypeSystem
         public IObjectTypeBuilder<TObject, TContext> Object<TObject>(string name) where TObject : notnull
         {
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Object(typeof(TObject), ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.Object(typeof(TObject), name, ConfigurationSource.Explicit)!;
             var builder = new ObjectTypeBuilder<TObject, TContext>(internalBuilder);
             return builder;
         }
@@ -226,7 +226,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Object(clrType, ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.Object(clrType, name, ConfigurationSource.Explicit)!;
             var builder = new ObjectTypeBuilder<object, TContext>(internalBuilder);
             return builder;
         }
@@ -315,7 +315,7 @@ namespace GraphZen.TypeSystem
         public IUnionTypeBuilder<TUnion, TContext> Union<TUnion>(string name) where TUnion : notnull
         {
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Union(typeof(TUnion), ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.Union(typeof(TUnion), name, ConfigurationSource.Explicit)!;
             var builder = new UnionTypeBuilder<TUnion, TContext>(internalBuilder);
             return builder;
         }
@@ -332,7 +332,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Union(clrType, ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.Union(clrType, name, ConfigurationSource.Explicit)!;
             var builder = new UnionTypeBuilder<object, TContext>(internalBuilder);
             return builder;
         }
@@ -487,7 +487,7 @@ namespace GraphZen.TypeSystem
         public IEnumTypeBuilder<TEnum> Enum<TEnum>(string name) where TEnum : notnull
         {
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Enum(typeof(TEnum), ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.Enum(typeof(TEnum), name, ConfigurationSource.Explicit)!;
             var builder = new EnumTypeBuilder<TEnum>(internalBuilder);
             return builder;
         }
@@ -505,7 +505,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Enum(clrType, ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.Enum(clrType, name, ConfigurationSource.Explicit)!;
             var builder = new EnumTypeBuilder<string>(internalBuilder);
             return builder;
         }
@@ -594,7 +594,7 @@ namespace GraphZen.TypeSystem
         public IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>(string name) where TInterface : notnull
         {
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Interface(typeof(TInterface), ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.Interface(typeof(TInterface), name, ConfigurationSource.Explicit)!;
             var builder = new InterfaceTypeBuilder<TInterface, TContext>(internalBuilder);
             return builder;
         }
@@ -611,7 +611,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.Interface(clrType, ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.Interface(clrType, name, ConfigurationSource.Explicit)!;
             var builder = new InterfaceTypeBuilder<object, TContext>(internalBuilder);
             return builder;
         }
@@ -701,7 +701,7 @@ namespace GraphZen.TypeSystem
         public IInputObjectTypeBuilder<TInputObject> InputObject<TInputObject>(string name) where TInputObject : notnull
         {
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.InputObject(typeof(TInputObject), ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.InputObject(typeof(TInputObject), name, ConfigurationSource.Explicit)!;
             var builder = new InputObjectTypeBuilder<TInputObject>(internalBuilder);
             return builder;
         }
@@ -719,7 +719,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(name, nameof(name));
-            var internalBuilder = Builder.InputObject(clrType, ConfigurationSource.Explicit)!;
+            var internalBuilder = Builder.InputObject(clrType, name, ConfigurationSource.Explicit)!;
             var builder = new InputObjectTypeBuilder<object>(internalBuilder);
             return builder;
         }
@@ -789,4 +789,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 11535787941903216281
+// Source Hash Code: 8232450033716789021

@@ -103,7 +103,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
+        [Spec(nameof(NamedCollectionSpecs.DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_removed_with_invalid_name_()
         {

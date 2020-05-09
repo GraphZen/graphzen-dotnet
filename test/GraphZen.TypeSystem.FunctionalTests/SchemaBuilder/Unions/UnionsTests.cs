@@ -14,7 +14,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
     [NoReorder]
     public class UnionsTests
     {
-        public abstract class Union { }
+        public abstract class Union
+        {
+        }
 
         [GraphQLName(AnnotatedName)]
         public abstract class UnionAnnotatedName
@@ -23,7 +25,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
         [GraphQLName("@)(*#")]
-        public abstract class UnionInvalidNameAnnotation { }
+        public abstract class UnionInvalidNameAnnotation
+        {
+        }
 
 
         [Spec(nameof(TypeSystemSpecs.UniquelyInputOutputTypeCollectionSpecs
@@ -93,12 +97,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
             clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             Schema.Create(_ =>
-                        {
-                            _.InputObject("Foo").Field("inputField", "Bar");
-                            Action add = () => _.Union<UnionAnnotatedName>("Bar");
-                            add.Should().Throw<Exception>("x");
-                        });
-
+            {
+                _.InputObject("Foo").Field("inputField", "Bar");
+                Action add = () => _.Union<UnionAnnotatedName>("Bar");
+                add.Should().Throw<Exception>("x");
+            });
         }
 
 
@@ -112,10 +115,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.FromSchema(@"union Foo"); });
+            schema.HasUnion("Foo").Should().BeTrue();
         }
 
 
@@ -123,63 +127,100 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.FromSchema(@"extend union Foo"); });
+            schema.HasUnion("Foo").Should().BeTrue();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_can_be_added_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Union("Foo"); });
+            schema.HasUnion("Foo").Should().BeTrue();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_cannot_be_added_with_null_value_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Union((string) null!);
+                add.Should().ThrowArgumentNullException("name");
+            });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_added_with_invalid_name_()
+        [Theory]
+        [InlineData("  ")]
+        [InlineData(" #)(* ")]
+        public void named_item_cannot_be_added_with_invalid_name_(string name)
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Union(name);
+                add.Should().Throw<InvalidNameException>()
+                    .WithMessage(
+                        $"Cannot get or create GraphQL type builder for union named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_renamed))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_can_be_renamed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Union("Foo").Name("Bar"); });
+            schema.HasUnion("Foo").Should().BeFalse();
+            schema.HasUnion("Bar").Should().BeTrue();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                var foo = _.Union("Foo");
+                Action rename = () => foo.Name(null!);
+                rename.Should().ThrowArgumentNullException("name");
+            });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_renamed_with_an_invalid_name_()
+        [Theory]
+        [InlineData(" 323")]
+        [InlineData(" 32#()*3")]
+        [InlineData("")]
+        public void named_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                var foo = _.Union("Foo");
+                Action rename = () => foo.Name(name);
+                rename.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot rename union Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_cannot_be_renamed_if_name_already_exists_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Union("Foo");
+                var bar = _.Union("Bar");
+                Action rename = () => bar.Name("Foo");
+                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot rename union Bar to \"Foo\", union Foo already exists. All GraphQL type names must be unique.");
+            });
         }
 
 
@@ -187,24 +228,29 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void named_item_can_be_removed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Union("Foo");
+                _.RemoveUnion("Foo");
+            });
+            schema.HasUnion("Foo").Should().BeFalse();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_cannot_be_removed_with_null_value_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Union("Foo");
+                Action remove = () => _.RemoveUnion("Foo");
+                remove.Should().ThrowArgumentNullException("name");
+            });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_removed_with_invalid_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
+        
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
