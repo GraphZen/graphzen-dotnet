@@ -6,23 +6,24 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     public static class SchemaBuilderExtensions
     {
-        public static SchemaBuilder FromSchema(this SchemaBuilder schemaBuilder, DocumentSyntax schema)
+        public static ISchemaBuilder<T> FromSchema<T>(this ISchemaBuilder<T> schemaBuilder, DocumentSyntax schema) where T : GraphQLContext
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
             Check.NotNull(schema, nameof(schema));
-            var sdlConfig = new SDLSchemaConfigurator(schema);
+            var sdlConfig = new SDLSchemaConfigurator<T>(schema);
             sdlConfig.Configure(schemaBuilder);
             return schemaBuilder;
         }
 
 
-        public static SchemaBuilder FromSchema(this SchemaBuilder schemaBuilder, string schema)
+        public static ISchemaBuilder<T> FromSchema<T>(this ISchemaBuilder<T> schemaBuilder, string schema) where T : GraphQLContext
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
             Check.NotNull(schema, nameof(schema));
@@ -31,11 +32,11 @@ namespace GraphZen.TypeSystem
         }
 
 
-        internal static SchemaDefinition GetDefinition(this SchemaBuilder schemaBuilder) =>
+        internal static SchemaDefinition GetDefinition(this ISchemaBuilder<GraphQLContext> schemaBuilder)   =>
             Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<SchemaDefinition>();
 
-        internal static SchemaDefinition GetDefinition<T>(this SchemaBuilder<T> schemaBuilder)
+        internal static ISchemaDefinition GetDefinition<T>(this ISchemaBuilder<T> schemaBuilder)
             where T : GraphQLContext =>
-            Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<SchemaDefinition>();
+            Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<ISchemaDefinition>();
     }
 }

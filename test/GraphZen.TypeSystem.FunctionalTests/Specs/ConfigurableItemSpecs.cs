@@ -101,11 +101,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         {
             // Adding to collection with CLR Type
             public const string clr_typed_item_can_be_added = null;
-            public const string clr_typed_item_can_be_added_with_custom_name = null;
-            public const string clr_typed_item_can_be_added_via_type_param = null;
-            public const string clr_typed_item_can_be_added_via_type_param_with_custom_name = null;
             public const string clr_typed_item_cannot_be_added_with_null_value = null;
             public const string clr_typed_item_cannot_be_added_with_invalid_name_attribute = null;
+
+            public const string clr_typed_item_with_conflicting_name_can_be_added_with_custom_name = null;
+            public const string clr_typed_item_with_conflicting_name_can_be_added_via_type_param = null;
+            public const string clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name = null;
+            public const string clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name = null;
+
 
             // Removing from collection with CLR Type
             public const string clr_typed_item_can_be_removed = null;
@@ -134,11 +137,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string adding_clr_type_to_item_changes_name = null;
             public const string adding_clr_type_with_name_annotation_to_item_changes_name = null;
 
-            public const string adding_clr_type_to_item_with_name_changes_name_from_param = null;
-            public const string adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param = null;
+            public const string clr_type_with_conflicting_name_can_be_added_with_custom_name = null;
+            public const string clr_type_with_conflicting_name_annotation_can_be_added_with_custom_name = null;
+            public const string clr_type_with_conflicting_name_can_be_added_via_type_param_with_custom_name = null;
+            public const string clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name = null;
+
             public const string cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts = null;
             public const string cannot_add_clr_type_to_item_with_custom_name_if_name_is_null = null;
             public const string cannot_add_clr_type_to_item_with_custom_name_if_name_is_invalid = null;
+
+            public const string cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_conflicts = null;
+            public const string cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_is_null = null;
+            public const string cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_is_invalid = null;
         }
 
         public class NamedTypeSetSpecs

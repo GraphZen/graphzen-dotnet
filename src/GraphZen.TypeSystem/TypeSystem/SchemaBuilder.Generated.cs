@@ -180,7 +180,6 @@ namespace GraphZen.TypeSystem
         public IObjectTypeBuilder<object, TContext> Object(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             var internalBuilder = Builder.Object(name, ConfigurationSource.Explicit)!;
             var builder = new ObjectTypeBuilder<object, TContext>(internalBuilder);
             return builder;
@@ -527,7 +526,6 @@ namespace GraphZen.TypeSystem
         public IInterfaceTypeBuilder<object, TContext> Interface(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             var internalBuilder = Builder.Interface(name, ConfigurationSource.Explicit)!;
             var builder = new InterfaceTypeBuilder<object, TContext>(internalBuilder);
             return builder;
@@ -620,7 +618,6 @@ namespace GraphZen.TypeSystem
         public IInputObjectTypeBuilder<object> InputObject(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             var internalBuilder = Builder.InputObject(name, ConfigurationSource.Explicit)!;
             var builder = new InputObjectTypeBuilder<object>(internalBuilder);
             return builder;

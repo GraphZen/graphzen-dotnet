@@ -13,7 +13,5 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
         void ConfigureContextConventionally(SchemaBuilder sb);
 
         void ConfigureClrContext(SchemaBuilder sb, string parentName);
-
-        //void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb);
     }
 }

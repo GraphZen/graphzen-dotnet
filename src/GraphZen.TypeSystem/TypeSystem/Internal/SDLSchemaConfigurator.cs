@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class SDLSchemaConfigurator
+    public class SDLSchemaConfigurator<T> where T: GraphQLContext
     {
         private readonly DocumentSyntax _document;
 
@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.Internal
             _document = Check.NotNull(document, nameof(document));
         }
 
-        public void Configure(SchemaBuilder schemaBuilder)
+        public void Configure(ISchemaBuilder<T> schemaBuilder) 
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
             var schemaDef = _document.Definitions.OfType<SchemaDefinitionSyntax>().FirstOrDefault();
@@ -111,7 +111,7 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        private static void ConfigureDirective(SchemaBuilder schemaBuilder,
+        private static void ConfigureDirective(ISchemaBuilder<T> schemaBuilder,
             DirectiveDefinitionSyntax def)
         {
             var directive = schemaBuilder.Directive(def.Name.Value);
@@ -141,7 +141,7 @@ namespace GraphZen.TypeSystem.Internal
             directive.Locations(locations);
         }
 
-        private static void ConfigureType(SchemaBuilder schemaBuilder, TypeDefinitionSyntax def)
+        private static void ConfigureType(ISchemaBuilder<T> schemaBuilder, TypeDefinitionSyntax def)
         {
             switch (def)
             {

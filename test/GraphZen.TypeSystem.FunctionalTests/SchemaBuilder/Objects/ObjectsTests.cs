@@ -82,7 +82,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             {
                 Action add = () => _.Object(name);
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    $@"Cannot create GraphQL union with invalid name '{name}'. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Cannot get or create GraphQL type builder for object named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -100,7 +100,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(named_item_cannot_be_removed_with_invalid_name))]
-        [Theory]
+        [Theory(Skip = "needs impl")]
         [InlineData("  xy")]
         [InlineData("")]
         public void object_cannot_be_removed_with_invalid_name(string name)
@@ -137,7 +137,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
                 Action rename = () => _.Object("Foo").Name(name);
                 rename.Should()
                     .Throw<InvalidNameException>()
-                    .WithMessage("x");
+                    .WithMessage($"Cannot rename object Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -181,7 +181,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
+        [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
         [Fact]
         public void clr_typed_object_can_be_added_via_type_param()
         {
@@ -233,7 +233,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             {
                 Action add = () => _.Object<PocoInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    @"Cannot create GraphQL object with CLR class 'GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectsTests+PocoInvalidNameAnnotation'. The name specified in the GraphQLNameAttribute (""abc @#$%^"") on the PocoInvalidNameAnnotation class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    @"Cannot get or create GraphQL object type builder with CLR class 'PocoInvalidNameAnnotation'. The name ""abc @#$%^"" specified in the GraphQLNameAttribute on the PocoInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -290,7 +290,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
                 Action rename = () => _.Object<PocoNameAnnotated>().Name(name);
                 var type = _.GetDefinition().GetObject<PocoNameAnnotated>();
                 rename.Should().Throw<InvalidNameException>()
-                    .WithMessage("x");
+                    .WithMessage($"Cannot rename object AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

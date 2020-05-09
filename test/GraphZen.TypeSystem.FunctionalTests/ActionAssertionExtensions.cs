@@ -11,20 +11,6 @@ namespace GraphZen.TypeSystem.FunctionalTests
 {
     public static class ActionAssertionExtensions
     {
-        public static ExceptionAssertions<InvalidNameException> ThrowInvalidNameException(
-            this ActionAssertions actionAssertions,
-            string name, string reason) =>
-            actionAssertions.Throw<InvalidNameException>()
-                .WithMessage(GraphQLName.GetInvalidNameErrorMessage(name), reason);
-
-        public static ExceptionAssertions<InvalidNameException> ThrowArgumentExceptionForName(
-            this ActionAssertions actionAssertions,
-            string name, string reason) =>
-            actionAssertions.Throw<ArgumentException>()
-                .WithMessage(GraphQLName.GetInvalidNameErrorMessage(name) + " (Parameter 'name')", reason)
-                .WithInnerException<InvalidNameException>()
-                .WithMessage(GraphQLName.GetInvalidNameErrorMessage(name), reason);
-
 
         public static ExceptionAssertions<ArgumentNullException>
             ThrowArgumentNullException(this ActionAssertions actionAssertions, string paramName) => actionAssertions

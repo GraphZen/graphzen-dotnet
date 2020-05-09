@@ -194,7 +194,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             {
                 Action add = () => _.Enum(name);
                 add.Should().Throw<InvalidNameException>()
-                    .WithMessage(@$"Cannot get or create GraphQL type builder for enum named ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    .WithMessage(@$"Cannot get or create GraphQL type builder for enum named ""{name}"". The type name ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -234,7 +234,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
                 Action rename = () => foo.Name(name);
                 rename.Should()
                     .Throw<InvalidNameException>()
-                    .WithMessage("x");
+                    .WithMessage(@$"Cannot rename enum Foo. ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -280,7 +280,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
-        [Theory]
+        [Theory(Skip = "needs impl")]
         [InlineData("x")]
         public void named_item_cannot_be_removed_with_invalid_name_(string name)
         {
@@ -301,7 +301,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
         [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
@@ -469,7 +469,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
                 var poce = _.Enum<Poce>();
                 Action rename = () => poce.Name("Foo");
                 rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename enum Poce to 'Foo', enum Foo already exists. All GraphQL type names must be unique.");
+                    @"Cannot rename enum Poce to ""Foo"", enum Foo already exists. All GraphQL type names must be unique.");
             });
         }
 

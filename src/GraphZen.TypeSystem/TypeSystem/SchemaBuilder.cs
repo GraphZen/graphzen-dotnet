@@ -36,9 +36,13 @@ namespace GraphZen.TypeSystem
             new ScalarTypeBuilder<TScalar, ValueSyntax>(Builder.Scalar(typeof(TScalar),
                 ConfigurationSource.Explicit)!);
 
+        public IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>(string name) where TScalar : notnull => throw new NotImplementedException();
+
         public IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType) =>
             new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(clrType, nameof(clrType)),
                 ConfigurationSource.Explicit)!);
+
+        public IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType, string name) => throw new NotImplementedException();
 
         public IScalarTypeBuilder<TScalar, TValueNode> Scalar<TScalar, TValueNode>()
             where TValueNode : ValueSyntax where TScalar : notnull =>

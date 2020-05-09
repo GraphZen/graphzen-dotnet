@@ -183,10 +183,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
             {
                 var foo = _.Interface("Foo");
                 Action rename = () => foo.Name(name);
-                var def = _.GetDefinition().GetInterface("Foo");
                 rename.Should()
                     .Throw<InvalidNameException>()
-                    .WithMessage("x");
+                    .WithMessage($"Cannot rename interface Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -233,7 +232,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
 
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_invalid_name))]
-        [Theory]
+        [Theory(Skip = "needs impl")]
         [InlineData("  xy")]
         [InlineData("")]
 
@@ -257,7 +256,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
         [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
@@ -287,7 +286,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
             {
                 Action add = () => _.Interface<IPociInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    @"Cannot create GraphQL interface with CLR interface 'GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfacesTests+IPociInvalidNameAnnotation'. The name specified in the GraphQLNameAttribute (""abc &*("") on the IPociInvalidNameAnnotation interface is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    @"Cannot get or create GraphQL interface type builder with CLR interface 'IPociInvalidNameAnnotation'. The name ""abc &*("" specified in the GraphQLNameAttribute on the IPociInvalidNameAnnotation CLR interface is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -414,7 +413,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
                 var poci = _.Interface<IPoci>();
                 Action rename = () => poci.Name(name);
                 rename.Should().Throw<InvalidNameException>()
-                    .WithMessage("x");
+                    .WithMessage($"Cannot rename interface IPoci. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

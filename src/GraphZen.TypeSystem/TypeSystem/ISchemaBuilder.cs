@@ -19,8 +19,10 @@ namespace GraphZen.TypeSystem
         IScalarTypeBuilder<object, ValueSyntax> Scalar(string name);
 
         IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>() where TScalar : notnull;
+        IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>(string name) where TScalar : notnull;
 
         IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType);
+        IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType, string name);
 
         IScalarTypeBuilder<TScalar, TValueNode> Scalar<TScalar, TValueNode>()
             where TValueNode : ValueSyntax

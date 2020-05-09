@@ -63,7 +63,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             Schema.Create(_ =>
             {
                 Action add = () => _.InputObject(name);
-                add.Should().Throw<InvalidNameException>().WithMessage("x");
+                add.Should().Throw<InvalidNameException>().WithMessage($"Cannot get or create GraphQL type builder for input object named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -102,7 +102,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             {
                 var foo = _.InputObject("Foo");
                 Action rename = () => foo.Name(name);
-                rename.Should().Throw<InvalidNameException>().WithMessage("x;;");
+                rename.Should().Throw<InvalidNameException>().WithMessage($"Cannot rename input object Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -148,17 +148,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(named_item_cannot_be_removed_with_invalid_name))]
-        [Theory]
+        [Theory(Skip = "needs impl")]
         [InlineData("")]
- 
         public void named_item_cant_be_removed_with_invalid_name_(string name)
         {
-            
-                Schema.Create(_ =>
-                {
-                    Action remove = () => _.RemoveInputObject(name);
-                    remove.Should().Throw<InvalidNameException>().WithMessage("x");
-                });
+
+            Schema.Create(_ =>
+            {
+                Action remove = () => _.RemoveInputObject(name);
+                remove.Should().Throw<InvalidNameException>().WithMessage("x");
+            });
         }
 
 
@@ -188,7 +187,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
+        [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
         [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
@@ -217,7 +216,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             {
                 Action add = () => _.InputObject<PocoInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    @"Cannot create GraphQL input object with CLR class 'GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectsTests+PocoInvalidNameAnnotation'. The name specified in the GraphQLNameAttribute (""abc @#$%^"") on the PocoInvalidNameAnnotation class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $@"Cannot get or create GraphQL input object type builder with CLR class 'PocoInvalidNameAnnotation'. The name ""abc @#$%^"" specified in the GraphQLNameAttribute on the PocoInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -330,19 +329,19 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
         [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
-[Theory]
+        [Theory]
         [InlineData("  xy")]
         [InlineData("")]
 
         public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-            
-                Schema.Create(_ =>
-                {
-                    var poco = _.InputObject<Poco>();
-                    Action rename = () => poco.Name(name);
-                    rename.Should().Throw<InvalidNameException>().WithMessage("x");
-                });
+
+            Schema.Create(_ =>
+            {
+                var poco = _.InputObject<Poco>();
+                Action rename = () => poco.Name(name);
+                rename.Should().Throw<InvalidNameException>().WithMessage($"Cannot rename input object Poco. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
         }
 
 
@@ -454,7 +453,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(clr_typed_item_can_be_added_with_custom_name))]
+        [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_with_custom_name_()
         {
@@ -462,7 +461,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(clr_typed_item_can_be_added_via_type_param_with_custom_name))]
+        [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_via_type_param_with_custom_name_()
         {
@@ -486,7 +485,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(adding_clr_type_to_item_with_name_changes_name_from_param))]
+        [Spec(nameof(clr_type_with_conflicting_name_can_be_added_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_to_item_with_name_changes_name_from_param_()
         {
@@ -494,13 +493,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
+        
 
         [Spec(nameof(cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts))]
         [Fact(Skip = "TODO")]

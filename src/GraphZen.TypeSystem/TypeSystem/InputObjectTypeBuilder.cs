@@ -112,7 +112,6 @@ namespace GraphZen.TypeSystem
         public IInputObjectTypeBuilder<TInputObject> Name(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
             return this;
         }

@@ -176,7 +176,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_with_custom_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_with_custom_name_()
         {
@@ -184,7 +184,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_via_type_param))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
@@ -192,7 +192,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param_with_custom_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_via_type_param_with_custom_name_()
         {
@@ -353,7 +353,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_with_name_changes_name_from_param))]
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_type_with_conflicting_name_can_be_added_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_to_item_with_name_changes_name_from_param_()
         {
@@ -361,14 +361,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
+        
 
         [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts))]
         [Fact(Skip = "TODO")]
