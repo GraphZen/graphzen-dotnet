@@ -44,10 +44,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             var schema = Schema.Create(_ =>
             {
                 _.Object("Foo");
-                _.Object("Foo").Name("Poco");
+                _.Object("Foo").Name("PlainClass");
             });
             schema.HasObject("Foo").Should().BeFalse();
-            schema.HasObject("Poco").Should().BeTrue();
+            schema.HasObject("PlainClass").Should().BeTrue();
         }
 
 
@@ -58,11 +58,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             Schema.Create(_ =>
             {
                 _.Object("Foo");
-                var poco = _.Object("Poco");
+                var poco = _.Object("PlainClass");
 
                 Action rename = () => { poco.Name("Foo"); };
 
-                var pocoDef = _.GetDefinition().GetObject("Poco");
+                var pocoDef = _.GetDefinition().GetObject("PlainClass");
                 var fooDef = _.GetDefinition().GetObject("Foo");
 
                 rename.Should().Throw<DuplicateNameException>()
@@ -155,18 +155,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        public class Poco
+        public class PlainClass
         {
         }
 
         [GraphQLName(AnnotatedName)]
-        public class PocoNameAnnotated
+        public class PlainClassNameAnnotated
         {
             public const string AnnotatedName = nameof(AnnotatedName);
         }
 
         [GraphQLName(InvalidName)]
-        public class PocoInvalidNameAnnotation
+        public class PlainClassInvalidNameAnnotation
         {
             public const string InvalidName = "abc @#$%^";
         }
@@ -176,8 +176,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         [Fact]
         public void clr_typed_object_can_be_added()
         {
-            var schema = Schema.Create(_ => { _.Object<PocoNameAnnotated>(); });
-            schema.HasObject<PocoNameAnnotated>().Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Object<PlainClassNameAnnotated>(); });
+            schema.HasObject<PlainClassNameAnnotated>().Should().BeTrue();
         }
 
 
@@ -189,10 +189,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             var schema = Schema.Create(_ =>
             {
-                _.Object<PocoNameAnnotated>();
-                _.RemoveObject(typeof(PocoNameAnnotated));
+                _.Object<PlainClassNameAnnotated>();
+                _.RemoveObject(typeof(PlainClassNameAnnotated));
             });
-            schema.HasObject<PocoNameAnnotated>().Should().BeFalse();
+            schema.HasObject<PlainClassNameAnnotated>().Should().BeFalse();
         }
 
 
@@ -202,10 +202,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             var schema = Schema.Create(_ =>
             {
-                _.Object<PocoNameAnnotated>();
-                _.RemoveObject<PocoNameAnnotated>();
+                _.Object<PlainClassNameAnnotated>();
+                _.RemoveObject<PlainClassNameAnnotated>();
             });
-            schema.HasObject<PocoNameAnnotated>().Should().BeFalse();
+            schema.HasObject<PlainClassNameAnnotated>().Should().BeFalse();
         }
 
 
@@ -213,8 +213,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         [Fact]
         public void clr_typed_object_can_be_renamed()
         {
-            var schema = Schema.Create(_ => { _.Object<PocoNameAnnotated>().Name("Baz"); });
-            schema.GetObject<PocoNameAnnotated>().Name.Should().Be("Baz");
+            var schema = Schema.Create(_ => { _.Object<PlainClassNameAnnotated>().Name("Baz"); });
+            schema.GetObject<PlainClassNameAnnotated>().Name.Should().Be("Baz");
         }
 
 
@@ -224,9 +224,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object<PocoInvalidNameAnnotation>();
+                Action add = () => _.Object<PlainClassInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    @"Cannot get or create GraphQL object type builder with CLR class 'PocoInvalidNameAnnotation'. The name ""abc @#$%^"" specified in the GraphQLNameAttribute on the PocoInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    @"Cannot get or create GraphQL object type builder with CLR class 'PlainClassInvalidNameAnnotation'. The name ""abc @#$%^"" specified in the GraphQLNameAttribute on the PlainClassInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -262,7 +262,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             Schema.Create(_ =>
             {
                 _.Object("Foo");
-                Action rename = () => _.Object<Poco>().Name("Foo");
+                Action rename = () => _.Object<PlainClass>().Name("Foo");
                 // TODO: test exception message
                 rename.Should().Throw<DuplicateNameException>();
             });
@@ -279,8 +279,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
             Schema.Create(_ =>
             {
-                _.Object<PocoNameAnnotated>();
-                Action rename = () => _.Object<PocoNameAnnotated>().Name(name);
+                _.Object<PlainClassNameAnnotated>();
+                Action rename = () => _.Object<PlainClassNameAnnotated>().Name(name);
                 rename.Should().Throw<InvalidNameException>()
                     .WithMessage($"Cannot rename object AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
@@ -291,8 +291,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         [Fact]
         public void clr_typed_object_with_name_attribute_can_be_renamed()
         {
-            var schema = Schema.Create(_ => { _.Object<PocoNameAnnotated>().Name("Foo"); });
-            schema.GetObject<PocoNameAnnotated>().Name.Should().Be("Foo");
+            var schema = Schema.Create(_ => { _.Object<PlainClassNameAnnotated>().Name("Foo"); });
+            schema.GetObject<PlainClassNameAnnotated>().Name.Should().Be("Foo");
         }
 
 
@@ -318,8 +318,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         [Fact]
         public void untyped_item_can_have_clr_type_added_()
         {
-            var schema = Schema.Create(_ => { _.Object("Foo").ClrType(typeof(Poco)); });
-            schema.GetObject("Foo").ClrType.Should().Be<Poco>();
+            var schema = Schema.Create(_ => { _.Object("Foo").ClrType(typeof(PlainClass)); });
+            schema.GetObject("Foo").ClrType.Should().Be<PlainClass>();
         }
 
 
@@ -329,9 +329,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                _.Object<Poco>();
+                _.Object<PlainClass>();
                 _.Object("Foo");
-                Action action = () => _.Object("Foo").ClrType<Poco>();
+                Action action = () => _.Object("Foo").ClrType<PlainClass>();
                 action.Should().Throw<DuplicateClrTypeException>();
             });
         }
@@ -342,9 +342,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         public void clr_typed_object_can_have_clr_type_changed()
         {
             // Priority: High
-            var schema = Schema.Create(_ => { _.Object<Poco>().ClrType<PocoNameAnnotated>(); });
-            schema.HasObject<Poco>().Should().BeFalse();
-            schema.HasObject<PocoNameAnnotated>().Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Object<PlainClass>().ClrType<PlainClassNameAnnotated>(); });
+            schema.HasObject<PlainClass>().Should().BeFalse();
+            schema.HasObject<PlainClassNameAnnotated>().Should().BeTrue();
         }
 
 
@@ -353,8 +353,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         public void clr_typed_object_with_name_annotation_type_removed_should_retain_annotated_name()
         {
             // Priority: High
-            var schema = Schema.Create(_ => { _.Object<PocoNameAnnotated>().RemoveClrType(); });
-            schema.GetObject(nameof(PocoNameAnnotated.AnnotatedName)).ClrType.Should().BeNull();
+            var schema = Schema.Create(_ => { _.Object<PlainClassNameAnnotated>().RemoveClrType(); });
+            schema.GetObject(nameof(PlainClassNameAnnotated.AnnotatedName)).ClrType.Should().BeNull();
         }
 
 
@@ -363,8 +363,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         public void clr_typed_object_with_type_removed_should_retain_clr_type_name()
         {
             // Priority: High
-            var schema = Schema.Create(_ => { _.Object<Poco>().RemoveClrType(); });
-            schema.GetObject(nameof(Poco)).ClrType.Should().BeNull();
+            var schema = Schema.Create(_ => { _.Object<PlainClass>().RemoveClrType(); });
+            schema.GetObject(nameof(PlainClass)).ClrType.Should().BeNull();
         }
 
 
@@ -374,11 +374,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             var schema = Schema.Create(_ =>
             {
-                _.Object<Poco>().RemoveClrType();
-                _.Object<PocoNameAnnotated>().RemoveClrType();
+                _.Object<PlainClass>().RemoveClrType();
+                _.Object<PlainClassNameAnnotated>().RemoveClrType();
             });
-            schema.HasObject(nameof(Poco)).Should().BeTrue();
-            schema.HasObject(PocoNameAnnotated.AnnotatedName).Should().BeTrue();
+            schema.HasObject(nameof(PlainClass)).Should().BeTrue();
+            schema.HasObject(PlainClassNameAnnotated.AnnotatedName).Should().BeTrue();
         }
 
 
@@ -388,8 +388,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                _.Object<Poco>();
-                Action change = () => _.Object<Poco>().ClrType(null!);
+                _.Object<PlainClass>();
+                Action change = () => _.Object<PlainClass>().ClrType(null!);
                 change.Should().ThrowArgumentNullException("clrType");
             });
         }

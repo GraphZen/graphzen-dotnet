@@ -101,14 +101,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         {
             // var schema = Schema.Create(_ => { });
         }
-
-
-        [Spec(nameof(NamedCollectionSpecs.DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_removed_with_invalid_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
     }
 
 // Move FieldsTests into a separate file to start writing tests
@@ -117,4 +109,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
     {
     }
 }
-// Source Hash Code: 2224241758458941277
+// Source Hash Code: 13279697483712665035

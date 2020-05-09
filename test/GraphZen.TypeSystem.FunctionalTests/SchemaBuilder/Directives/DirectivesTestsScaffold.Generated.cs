@@ -103,14 +103,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_removed_with_invalid_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_()
@@ -526,4 +518,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
     {
     }
 }
-// Source Hash Code: 8968411711032081590
+// Source Hash Code: 16453050286091668104

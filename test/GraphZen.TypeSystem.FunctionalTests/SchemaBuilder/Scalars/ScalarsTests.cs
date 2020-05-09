@@ -15,18 +15,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
     [NoReorder]
     public class ScalarsTests
     {
-        private struct Pocs
+        private struct PlainStruct
         {
         }
 
         [GraphQLName(AnnotatedName)]
-        private struct PocsNameAnnotated
+        private struct PlainStructAnnotatedName
         {
             public const string AnnotatedName = nameof(AnnotatedName);
         }
 
         [GraphQLName("#$%^")]
-        private struct PocsInvalidNameAnnotation
+        private struct PlainStructInvalidNameAnnotation
         {
         }
 
@@ -91,9 +91,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
             var schema = Schema.Create(_ =>
             {
                 _.InputObject("Foo").Field("inputField", "Bar");
-                _.Scalar<Pocs>().Name("Bar");
+                _.Scalar<PlainStruct>().Name("Bar");
             });
-            schema.GetScalar<Pocs>().Name.Should().Be("Bar");
+            schema.GetScalar<PlainStruct>().Name.Should().Be("Bar");
         }
 
 
@@ -105,9 +105,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
             var schema = Schema.Create(_ =>
             {
                 _.Object("Foo").Field("outputField", "Bar");
-                _.Scalar<Pocs>().Name("Bar");
+                _.Scalar<PlainStruct>().Name("Bar");
             });
-            schema.GetScalar<Pocs>().Name.Should().Be("Bar");
+            schema.GetScalar<PlainStruct>().Name.Should().Be("Bar");
         }
 
 
@@ -119,10 +119,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             var schema = Schema.Create(_ =>
             {
-                _.InputObject("Foo").Field("inputField", PocsNameAnnotated.AnnotatedName);
-                _.Scalar<PocsNameAnnotated>().Name("Bar");
+                _.InputObject("Foo").Field("inputField", PlainStructAnnotatedName.AnnotatedName);
+                _.Scalar<PlainStructAnnotatedName>().Name("Bar");
             });
-            schema.HasScalar<PocsNameAnnotated>().Should().BeTrue();
+            schema.HasScalar<PlainStructAnnotatedName>().Should().BeTrue();
         }
 
 
@@ -134,10 +134,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             var schema = Schema.Create(_ =>
             {
-                _.Object("Foo").Field("outputField", PocsNameAnnotated.AnnotatedName);
-                _.Scalar<PocsNameAnnotated>().Name("Bar");
+                _.Object("Foo").Field("outputField", PlainStructAnnotatedName.AnnotatedName);
+                _.Scalar<PlainStructAnnotatedName>().Name("Bar");
             });
-            schema.HasScalar<PocsNameAnnotated>().Should().BeTrue();
+            schema.HasScalar<PlainStructAnnotatedName>().Should().BeTrue();
         }
 
 
@@ -290,8 +290,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact]
         public void clr_typed_item_can_be_added_()
         {
-            var schema = Schema.Create(_ => { _.Scalar(typeof(Pocs)); });
-            schema.HasScalar<Pocs>().Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Scalar(typeof(PlainStruct)); });
+            schema.HasScalar<PlainStruct>().Should().BeTrue();
         }
 
 
@@ -299,8 +299,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_added_with_custom_name_()
         {
-            var schema = Schema.Create(_ => { _.Scalar(typeof(Pocs), "Foo"); });
-            schema.GetScalar<Pocs>().Name.Should().Be("Foo");
+            var schema = Schema.Create(_ => { _.Scalar(typeof(PlainStruct), "Foo"); });
+            schema.GetScalar<PlainStruct>().Name.Should().Be("Foo");
         }
 
 
@@ -309,8 +309,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_added_via_type_param_with_custom_name_()
         {
-            var schema = Schema.Create(_ => { _.Scalar<Pocs>("Foo"); });
-            schema.HasScalar<Pocs>();
+            var schema = Schema.Create(_ => { _.Scalar<PlainStruct>("Foo"); });
+            schema.HasScalar<PlainStruct>();
         }
 
 
@@ -332,9 +332,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar<PocsInvalidNameAnnotation>();
+                Action add = () => _.Scalar<PlainStructInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    "Cannot get or create GraphQL scalar type builder with CLR type 'PocsInvalidNameAnnotation'. The name \"#$%^\" specified in the GraphQLNameAttribute on the PocsInvalidNameAnnotation CLR type is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    "Cannot get or create GraphQL scalar type builder with CLR type 'PlainStructInvalidNameAnnotation'. The name \"#$%^\" specified in the GraphQLNameAttribute on the PlainStructInvalidNameAnnotation CLR type is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -345,10 +345,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             var schema = Schema.Create(_ =>
             {
-                _.Scalar<Pocs>();
-                _.RemoveScalar(typeof(Pocs));
+                _.Scalar<PlainStruct>();
+                _.RemoveScalar(typeof(PlainStruct));
             });
-            schema.HasScalar<Pocs>().Should().BeFalse();
+            schema.HasScalar<PlainStruct>().Should().BeFalse();
         }
 
 
@@ -358,10 +358,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             var schema = Schema.Create(_ =>
             {
-                _.Scalar<Pocs>();
-                _.RemoveScalar(typeof(Pocs));
+                _.Scalar<PlainStruct>();
+                _.RemoveScalar(typeof(PlainStruct));
             });
-            schema.HasScalar<Pocs>().Should().BeFalse();
+            schema.HasScalar<PlainStruct>().Should().BeFalse();
         }
 
 
@@ -371,7 +371,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                _.Scalar<Pocs>();
+                _.Scalar<PlainStruct>();
                 Action remove = () => _.RemoveScalar((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
@@ -382,9 +382,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
-            var schema = Schema.Create(_ => { _.Scalar<Pocs>().ClrType(typeof(PocsNameAnnotated)); });
-            schema.HasScalar<Pocs>().Should().BeFalse();
-            schema.HasScalar<PocsNameAnnotated>().Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Scalar<PlainStruct>().ClrType(typeof(PlainStructAnnotatedName)); });
+            schema.HasScalar<PlainStruct>().Should().BeFalse();
+            schema.HasScalar<PlainStructAnnotatedName>().Should().BeTrue();
         }
 
 
@@ -394,7 +394,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                var pocs = _.Scalar<Pocs>();
+                var pocs = _.Scalar<PlainStruct>();
                 Action change = () => pocs.ClrType(null!);
                 change.Should().ThrowArgumentNullException("clrType");
             });
@@ -405,8 +405,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
-            var schema = Schema.Create(_ => { _.Scalar<Pocs>().RemoveClrType(); });
-            schema.GetEnum(nameof(Pocs)).ClrType.Should().BeNull();
+            var schema = Schema.Create(_ => { _.Scalar<PlainStruct>().RemoveClrType(); });
+            schema.GetEnum(nameof(PlainStruct)).ClrType.Should().BeNull();
         }
 
 
@@ -414,8 +414,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
         {
-            var schema = Schema.Create(_ => { _.Scalar<Pocs>().RemoveClrType(); });
-            schema.HasScalar(nameof(Pocs)).Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Scalar<PlainStruct>().RemoveClrType(); });
+            schema.HasScalar(nameof(PlainStruct)).Should().BeTrue();
         }
 
 
@@ -424,8 +424,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
         {
-            var schema = Schema.Create(_ => { _.Scalar<PocsNameAnnotated>().RemoveClrType(); });
-            schema.HasScalar(PocsNameAnnotated.AnnotatedName).Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Scalar<PlainStructAnnotatedName>().RemoveClrType(); });
+            schema.HasScalar(PlainStructAnnotatedName.AnnotatedName).Should().BeTrue();
         }
 
 
@@ -433,7 +433,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
         {
-            var schema = Schema.Create(_ => { _.Scalar<Pocs>().Name("Foo").RemoveClrType(); });
+            var schema = Schema.Create(_ => { _.Scalar<PlainStruct>().Name("Foo").RemoveClrType(); });
             schema.HasScalar("Foo").Should().BeTrue();
         }
 
@@ -442,9 +442,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact]
         public void clr_typed_item_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.Scalar<Pocs>().Name("Foo"); }
+            var schema = Schema.Create(_ => { _.Scalar<PlainStruct>().Name("Foo"); }
             );
-            schema.GetScalar<Pocs>().Name.Should().Be("Foo");
+            schema.GetScalar<PlainStruct>().Name.Should().Be("Foo");
         }
 
 
@@ -452,8 +452,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact]
         public void clr_typed_item_with_name_attribute_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.Scalar<PocsNameAnnotated>().Name("Foo"); });
-            schema.GetScalar<PocsNameAnnotated>().Name.Should().Be("Foo");
+            var schema = Schema.Create(_ => { _.Scalar<PlainStructAnnotatedName>().Name("Foo"); });
+            schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be("Foo");
         }
 
 
@@ -465,10 +465,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                var pocs = _.Scalar<Pocs>();
+                var pocs = _.Scalar<PlainStruct>();
                 Action rename = () => pocs.Name(name);
                 rename.Should().Throw<InvalidNameException>().WithMessage(
-                    $"Cannot rename scalar Pocs. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Cannot rename scalar PlainStruct. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -480,10 +480,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
             Schema.Create(_ =>
             {
                 _.Scalar("Foo");
-                var pocs = _.Scalar<Pocs>();
+                var pocs = _.Scalar<PlainStruct>();
                 Action rename = () => pocs.Name("Foo");
                 rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot rename scalar Pocs to \"Foo\", scalar Foo already exists. All GraphQL type names must be unique.");
+                    "Cannot rename scalar PlainStruct to \"Foo\", scalar Foo already exists. All GraphQL type names must be unique.");
             });
         }
 
@@ -492,8 +492,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void untyped_item_can_have_clr_type_added_()
         {
-            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType(typeof(Pocs)); });
-            schema.HasScalar<Pocs>().Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType(typeof(PlainStruct)); });
+            schema.HasScalar<PlainStruct>().Should().BeTrue();
         }
 
 
@@ -503,9 +503,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                _.Scalar<Pocs>();
+                _.Scalar<PlainStruct>();
                 var foo = _.Scalar("Foo");
-                Action add = () => foo.ClrType(typeof(Pocs));
+                Action add = () => foo.ClrType(typeof(PlainStruct));
                 add.Should().Throw<DuplicateClrTypeException>().WithMessage("x");
             });
         }
@@ -515,9 +515,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void adding_clr_type_to_item_changes_name_()
         {
-            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType<Pocs>(); });
+            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType<PlainStruct>(); });
             schema.HasScalar("Foo").Should().BeFalse();
-            schema.HasScalar<Pocs>().Should().BeTrue();
+            schema.HasScalar<PlainStruct>().Should().BeTrue();
         }
 
 
@@ -525,9 +525,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void adding_clr_type_to_item_with_name_changes_name_from_param_()
         {
-            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType<Pocs>("Bar"); });
+            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType<PlainStruct>("Bar"); });
             schema.HasScalar("Foo").Should().BeFalse();
-            schema.GetScalar<Pocs>().Name.Should().Be("Bar");
+            schema.GetScalar<PlainStruct>().Name.Should().Be("Bar");
         }
 
 
@@ -539,7 +539,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
             {
                 _.Scalar("Foo");
                 var bar = _.Scalar("Bar");
-                Action add = () => bar.ClrType<Pocs>("Foo");
+                Action add = () => bar.ClrType<PlainStruct>("Foo");
                 add.Should().Throw<DuplicateNameException>().WithMessage("x");
             });
         }

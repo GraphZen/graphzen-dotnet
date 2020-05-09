@@ -18,17 +18,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
     {
         public const string AnnotatedName = nameof(AnnotatedName);
 
-        private enum Poce
+        private enum PlainEnum
         {
         }
 
         [GraphQLName(AnnotatedName)]
-        private enum PoceAnnotatedName
+        private enum PlainEnumAnnotatedName
         {
         }
 
         [GraphQLName("abc ()(*322*&%^")]
-        private enum PoceInvalidNameAnnotation
+        private enum PlainEnumInvalidNameAnnotation
         {
 
         }
@@ -94,7 +94,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             var schema = Schema.Create(_ =>
             {
                 _.InputObject("Foo").Field("inputField", "Bar");
-                _.Enum<Poce>().Name("Bar");
+                _.Enum<PlainEnum>().Name("Bar");
             });
             schema.HasEnum("Bar").Should().BeTrue();
         }
@@ -108,7 +108,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             var schema = Schema.Create(_ =>
             {
                 _.Object("Foo").Field("outputField", "Bar");
-                _.Enum<Poce>().Name("Bar");
+                _.Enum<PlainEnum>().Name("Bar");
             });
             schema.HasEnum("Bar").Should().BeTrue();
         }
@@ -123,7 +123,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             var schema = Schema.Create(_ =>
             {
                 _.InputObject("Foo").Field("inputField", AnnotatedName);
-                _.Enum<PoceAnnotatedName>();
+                _.Enum<PlainEnumAnnotatedName>();
             });
             schema.HasEnum(AnnotatedName).Should().BeTrue();
         }
@@ -138,7 +138,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             var schema = Schema.Create(_ =>
             {
                 _.Object("Foo").Field("outputField", AnnotatedName);
-                _.Enum<PoceAnnotatedName>();
+                _.Enum<PlainEnumAnnotatedName>();
             });
             schema.HasEnum(AnnotatedName).Should().BeTrue();
         }
@@ -296,8 +296,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [Fact]
         public void clr_typed_item_can_be_added_()
         {
-            var schema = Schema.Create(_ => { _.Enum(typeof(Poce)); });
-            schema.HasEnum<Poce>();
+            var schema = Schema.Create(_ => { _.Enum(typeof(PlainEnum)); });
+            schema.HasEnum<PlainEnum>();
         }
 
 
@@ -320,9 +320,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Enum<PoceInvalidNameAnnotation>();
+                Action add = () => _.Enum<PlainEnumInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    $@"Cannot get or create GraphQL enum type builder with CLR enum 'PoceInvalidNameAnnotation'. The name ""abc ()(*322*&%^"" specified in the GraphQLNameAttribute on the PoceInvalidNameAnnotation CLR enum is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $@"Cannot get or create GraphQL enum type builder with CLR enum 'PlainEnumInvalidNameAnnotation'. The name ""abc ()(*322*&%^"" specified in the GraphQLNameAttribute on the PlainEnumInvalidNameAnnotation CLR enum is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -333,10 +333,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             var schema = Schema.Create(_ =>
             {
-                _.Enum<Poce>();
-                _.RemoveEnum(typeof(Poce));
+                _.Enum<PlainEnum>();
+                _.RemoveEnum(typeof(PlainEnum));
             });
-            schema.HasEnum<Poce>().Should().BeFalse();
+            schema.HasEnum<PlainEnum>().Should().BeFalse();
         }
 
 
@@ -346,10 +346,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             var schema = Schema.Create(_ =>
             {
-                _.Enum<Poce>();
-                _.RemoveEnum<Poce>();
+                _.Enum<PlainEnum>();
+                _.RemoveEnum<PlainEnum>();
             });
-            schema.HasEnum<Poce>().Should().BeFalse();
+            schema.HasEnum<PlainEnum>().Should().BeFalse();
         }
 
 
@@ -359,7 +359,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                _.Enum<Poce>();
+                _.Enum<PlainEnum>();
                 Action remove = () => _.RemoveEnum((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
@@ -370,9 +370,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
-            var schema = Schema.Create(_ => { _.Enum<Poce>().ClrType<PoceAnnotatedName>(); });
-            schema.HasEnum<Poce>().Should().BeFalse();
-            schema.HasEnum<PoceAnnotatedName>().Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Enum<PlainEnum>().ClrType<PlainEnumAnnotatedName>(); });
+            schema.HasEnum<PlainEnum>().Should().BeFalse();
+            schema.HasEnum<PlainEnumAnnotatedName>().Should().BeTrue();
         }
 
 
@@ -382,7 +382,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                var poce = _.Enum<Poce>();
+                var poce = _.Enum<PlainEnum>();
                 Action change = () => poce.ClrType(null!);
                 change.Should().ThrowArgumentNullException("clrType");
             });
@@ -393,8 +393,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
-            var schema = Schema.Create(_ => { _.Enum<Poce>().RemoveClrType(); });
-            schema.GetEnum(nameof(Poce)).ClrType.Should().BeNull();
+            var schema = Schema.Create(_ => { _.Enum<PlainEnum>().RemoveClrType(); });
+            schema.GetEnum(nameof(PlainEnum)).ClrType.Should().BeNull();
         }
 
 
@@ -402,8 +402,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [Fact(Skip = "nees impl")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
         {
-            var schema = Schema.Create(_ => { _.Enum<Poce>().RemoveClrType(); });
-            schema.HasEnum(nameof(Poce)).Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Enum<PlainEnum>().RemoveClrType(); });
+            schema.HasEnum(nameof(PlainEnum)).Should().BeTrue();
         }
 
 
@@ -412,7 +412,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
         {
-            var schema = Schema.Create(_ => { _.Enum<PoceAnnotatedName>().RemoveClrType(); });
+            var schema = Schema.Create(_ => { _.Enum<PlainEnumAnnotatedName>().RemoveClrType(); });
             schema.HasEnum(AnnotatedName).Should().BeTrue();
         }
 
@@ -421,8 +421,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [Fact]
         public void clr_typed_item_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.Enum<Poce>().Name("Foo"); });
-            schema.GetEnum<Poce>().Name.Should().Be("Foo");
+            var schema = Schema.Create(_ => { _.Enum<PlainEnum>().Name("Foo"); });
+            schema.GetEnum<PlainEnum>().Name.Should().Be("Foo");
         }
 
 
@@ -430,8 +430,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [Fact]
         public void clr_typed_item_with_name_attribute_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.Enum<PoceAnnotatedName>().Name("Foo"); });
-            schema.GetEnum<PoceAnnotatedName>().Name.Should().Be("Foo");
+            var schema = Schema.Create(_ => { _.Enum<PlainEnumAnnotatedName>().Name("Foo"); });
+            schema.GetEnum<PlainEnumAnnotatedName>().Name.Should().Be("Foo");
         }
 
 
@@ -443,10 +443,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                var poce = _.Enum<Poce>();
+                var poce = _.Enum<PlainEnum>();
                 Action rename = () => poce.Name(name);
                 rename.Should().Throw<InvalidNameException>()
-                    .WithMessage(@$"Cannot rename enum Poce. ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    .WithMessage(@$"Cannot rename enum PlainEnum. ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -458,10 +458,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             Schema.Create(_ =>
             {
                 _.Enum("Foo");
-                var poce = _.Enum<Poce>();
+                var poce = _.Enum<PlainEnum>();
                 Action rename = () => poce.Name("Foo");
                 rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename enum Poce to ""Foo"", enum Foo already exists. All GraphQL type names must be unique.");
+                    @"Cannot rename enum PlainEnum to ""Foo"", enum Foo already exists. All GraphQL type names must be unique.");
             });
         }
 
@@ -470,8 +470,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [Fact]
         public void untyped_item_can_have_clr_type_added_()
         {
-            var schema = Schema.Create(_ => { _.Enum("Foo").ClrType<Poce>(); });
-            schema.GetEnum("Foo").ClrType.Should().Be<Poce>();
+            var schema = Schema.Create(_ => { _.Enum("Foo").ClrType<PlainEnum>(); });
+            schema.GetEnum("Foo").ClrType.Should().Be<PlainEnum>();
         }
 
 
@@ -481,9 +481,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                _.Enum<Poce>();
+                _.Enum<PlainEnum>();
                 var foo = _.Enum("Foo");
-                Action add = () => foo.ClrType<Poce>();
+                Action add = () => foo.ClrType<PlainEnum>();
                 add.Should().Throw<DuplicateClrTypeException>();
             });
         }

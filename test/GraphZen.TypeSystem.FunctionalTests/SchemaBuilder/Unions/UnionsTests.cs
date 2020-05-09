@@ -147,7 +147,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Union((string) null!);
+                Action add = () => _.Union((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -244,99 +244,133 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
             Schema.Create(_ =>
             {
                 _.Union("Foo");
-                Action remove = () => _.RemoveUnion("Foo");
+                Action remove = () => _.RemoveUnion((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
 
 
-        
-
-
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_can_be_added_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Union(typeof(Union)); });
+            schema.HasUnion<Union>().Should().BeTrue();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Union<Union>(); });
+            schema.HasUnion<Union>().Should().BeTrue();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_cannot_be_added_with_null_value_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Union((Type)null!);
+                add.Should().ThrowArgumentNullException("clrType");
+            });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_cannot_be_added_with_invalid_name_attribute_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Union(typeof(UnionInvalidNameAnnotation));
+                add.Should().Throw<InvalidNameException>().WithMessage(
+                    "Cannot get or create GraphQL union type builder with CLR class 'UnionInvalidNameAnnotation'. The name \"@)(*#\" specified in the GraphQLNameAttribute on the UnionInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_with_conflicting_name_can_be_added_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_conflicting_name_can_be_added_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Union(nameof(Union));
+                _.Union(typeof(Union), "Foo");
+            });
+            schema.GetUnion(nameof(Union)).ClrType.Should().BeNull();
+            schema.GetUnion("Foo").ClrType.Should().Be<Union>();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Union(nameof(Union));
+                _.Union<Union>("Foo");
+            });
+            schema.GetUnion(nameof(Union)).ClrType.Should().BeNull();
+            schema.GetUnion("Foo").ClrType.Should().Be<Union>();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Union(UnionAnnotatedName.AnnotatedName);
+                _.Union(typeof(UnionAnnotatedName), "Foo");
+            });
+            schema.GetUnion(UnionAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
+            schema.GetUnion("Foo").ClrType.Should().Be<UnionAnnotatedName>();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Union(UnionAnnotatedName.AnnotatedName);
+                _.Union<UnionAnnotatedName>("Foo");
+            });
+            schema.GetUnion(UnionAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
+            schema.GetUnion("Foo").ClrType.Should().Be<UnionAnnotatedName>();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Union(typeof(UnionInvalidNameAnnotation), "Foo"); });
+            schema.GetUnion<UnionInvalidNameAnnotation>().Name.Should().Be("Foo");
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Union<UnionInvalidNameAnnotation>("Foo"); });
+            schema.GetUnion<UnionInvalidNameAnnotation>().Name.Should().Be("Foo");
         }
 
 
@@ -344,7 +378,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_removed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Union<Union>();
+                _.RemoveUnion<Union>();
+            });
+            schema.HasUnion<Union>().Should().BeFalse();
         }
 
 

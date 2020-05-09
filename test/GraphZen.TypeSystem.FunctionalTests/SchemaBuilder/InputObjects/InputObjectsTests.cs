@@ -161,18 +161,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        private class Poco
+        private class PlainClass
         {
         }
 
         [GraphQLName(AnnotatedName)]
-        private class PocoNameAnnotated
+        private class PlainClassAnnotatedName
         {
             public const string AnnotatedName = nameof(AnnotatedName);
         }
 
         [GraphQLName(InvalidName)]
-        private class PocoInvalidNameAnnotation
+        private class PlainClassInvalidNameAnnotation
         {
             public const string InvalidName = "abc @#$%^";
         }
@@ -182,8 +182,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Fact]
         public void clr_typed_item_can_be_added_()
         {
-            var schema = Schema.Create(_ => { _.InputObject(typeof(Poco)); });
-            schema.HasInputObject<Poco>().Should().BeTrue();
+            var schema = Schema.Create(_ => { _.InputObject(typeof(PlainClass)); });
+            schema.HasInputObject<PlainClass>().Should().BeTrue();
         }
 
 
@@ -207,9 +207,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject<PocoInvalidNameAnnotation>();
+                Action add = () => _.InputObject<PlainClassInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    $@"Cannot get or create GraphQL input object type builder with CLR class 'PocoInvalidNameAnnotation'. The name ""abc @#$%^"" specified in the GraphQLNameAttribute on the PocoInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $@"Cannot get or create GraphQL input object type builder with CLR class 'PlainClassInvalidNameAnnotation'. The name ""abc @#$%^"" specified in the GraphQLNameAttribute on the PlainClassInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -220,10 +220,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             var schema = Schema.Create(_ =>
             {
-                _.InputObject<Poco>();
-                _.RemoveInputObject(typeof(Poco));
+                _.InputObject<PlainClass>();
+                _.RemoveInputObject(typeof(PlainClass));
             });
-            schema.HasInputObject<Poco>().Should().BeFalse();
+            schema.HasInputObject<PlainClass>().Should().BeFalse();
         }
 
 
@@ -233,10 +233,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             var schema = Schema.Create(_ =>
             {
-                _.InputObject<Poco>();
-                _.RemoveInputObject<Poco>();
+                _.InputObject<PlainClass>();
+                _.RemoveInputObject<PlainClass>();
             });
-            schema.HasInputObject<Poco>().Should().BeFalse();
+            schema.HasInputObject<PlainClass>().Should().BeFalse();
         }
 
 
@@ -256,9 +256,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
-            var schema = Schema.Create(_ => { _.InputObject<Poco>().ClrType<PocoNameAnnotated>(); });
-            schema.HasInputObject<PocoNameAnnotated>().Should().BeTrue();
-            schema.HasInputObject<Poco>().Should().BeFalse();
+            var schema = Schema.Create(_ => { _.InputObject<PlainClass>().ClrType<PlainClassAnnotatedName>(); });
+            schema.HasInputObject<PlainClassAnnotatedName>().Should().BeTrue();
+            schema.HasInputObject<PlainClass>().Should().BeFalse();
         }
 
 
@@ -268,7 +268,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                var poco = _.InputObject<Poco>();
+                var poco = _.InputObject<PlainClass>();
                 Action remove = () => poco.ClrType(null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
@@ -279,9 +279,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Fact(Skip = "needs implementation")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
-            var schema = Schema.Create(_ => { _.InputObject<Poco>().RemoveClrType(); });
-            schema.HasInputObject<Poco>().Should().BeFalse();
-            schema.GetInputObject(nameof(Poco)).ClrType.Should().BeNull();
+            var schema = Schema.Create(_ => { _.InputObject<PlainClass>().RemoveClrType(); });
+            schema.HasInputObject<PlainClass>().Should().BeFalse();
+            schema.GetInputObject(nameof(PlainClass)).ClrType.Should().BeNull();
         }
 
 
@@ -289,8 +289,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Fact(Skip = "needs implementation")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
         {
-            var schema = Schema.Create(_ => { _.InputObject<Poco>().RemoveClrType(); });
-            schema.HasInputObject(nameof(Poco)).Should().BeTrue();
+            var schema = Schema.Create(_ => { _.InputObject<PlainClass>().RemoveClrType(); });
+            schema.HasInputObject(nameof(PlainClass)).Should().BeTrue();
         }
 
 
@@ -298,8 +298,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Fact(Skip = "needs implementation")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
         {
-            var schema = Schema.Create(_ => { _.InputObject<PocoNameAnnotated>().RemoveClrType(); });
-            schema.HasInputObject(PocoNameAnnotated.AnnotatedName).Should().BeTrue();
+            var schema = Schema.Create(_ => { _.InputObject<PlainClassAnnotatedName>().RemoveClrType(); });
+            schema.HasInputObject(PlainClassAnnotatedName.AnnotatedName).Should().BeTrue();
         }
 
 
@@ -307,8 +307,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Fact]
         public void clr_typed_item_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.InputObject<Poco>().Name("Foo"); });
-            schema.GetInputObject<Poco>().Name.Should().Be("Foo");
+            var schema = Schema.Create(_ => { _.InputObject<PlainClass>().Name("Foo"); });
+            schema.GetInputObject<PlainClass>().Name.Should().Be("Foo");
         }
 
 
@@ -316,8 +316,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Fact]
         public void clr_typed_item_with_name_attribute_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.InputObject<PocoNameAnnotated>().Name("Foo"); });
-            schema.GetInputObject<PocoNameAnnotated>().Name.Should().Be("Foo");
+            var schema = Schema.Create(_ => { _.InputObject<PlainClassAnnotatedName>().Name("Foo"); });
+            schema.GetInputObject<PlainClassAnnotatedName>().Name.Should().Be("Foo");
         }
 
 
@@ -331,9 +331,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
             Schema.Create(_ =>
             {
-                var poco = _.InputObject<Poco>();
+                var poco = _.InputObject<PlainClass>();
                 Action rename = () => poco.Name(name);
-                rename.Should().Throw<InvalidNameException>().WithMessage($"Cannot rename input object Poco. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                rename.Should().Throw<InvalidNameException>().WithMessage($"Cannot rename input object PlainClass. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -345,10 +345,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             Schema.Create(_ =>
             {
                 _.InputObject("Foo");
-                var poco = _.InputObject<Poco>();
+                var poco = _.InputObject<PlainClass>();
                 Action rename = () => poco.Name("Foo");
                 rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename input object Poco to ""Foo"", input object Foo already exists. All GraphQL type names must be unique.");
+                    @"Cannot rename input object PlainClass to ""Foo"", input object Foo already exists. All GraphQL type names must be unique.");
             });
         }
 
@@ -357,8 +357,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Fact]
         public void untyped_item_can_have_clr_type_added_()
         {
-            var schema = Schema.Create(_ => { _.InputObject("Foo").ClrType<Poco>(); });
-            schema.HasInputObject<Poco>().Should().BeTrue();
+            var schema = Schema.Create(_ => { _.InputObject("Foo").ClrType<PlainClass>(); });
+            schema.HasInputObject<PlainClass>().Should().BeTrue();
         }
 
 
@@ -368,9 +368,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                _.InputObject<Poco>();
+                _.InputObject<PlainClass>();
                 var foo = _.InputObject("Foo");
-                Action add = () => foo.ClrType<Poco>();
+                Action add = () => foo.ClrType<PlainClass>();
                 add.Should().Throw<DuplicateClrTypeException>();
             });
         }
@@ -419,7 +419,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             Schema.Create(_ =>
             {
                 _.Object("Foo").Field("outputField", "OutputType");
-                var poco = _.InputObject<Poco>();
+                var poco = _.InputObject<PlainClass>();
                 Action rename = () => poco.Name("OutputType");
                 rename.Should().Throw<Exception>()
                     .WithMessage(
@@ -437,8 +437,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo").Field("outputField", PocoNameAnnotated.AnnotatedName);
-                Action add = () => _.InputObject<PocoNameAnnotated>();
+                _.Object("Foo").Field("outputField", PlainClassAnnotatedName.AnnotatedName);
+                Action add = () => _.InputObject<PlainClassAnnotatedName>();
                 add.Should().Throw<Exception>()
                     .WithMessage(
                         @"Cannot create input object AnnotatedName because because AnnotatedName is already identified as an output type.");

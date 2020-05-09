@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem
 
 
         IUnionTypeBuilder<object, TContext> ClrType(Type clrType);
-
+        IUnionTypeBuilder<object, TContext> RemoveClrType();
 
         IUnionTypeBuilder<T, TContext> ClrType<T>();
 

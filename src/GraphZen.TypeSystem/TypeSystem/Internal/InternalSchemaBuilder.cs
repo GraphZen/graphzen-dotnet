@@ -179,7 +179,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalUnionTypeBuilder? Union(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            throw new NotImplementedException();
+            return Union(name, configurationSource)?.ClrType(clrType, configurationSource);
         }
 
         public InternalUnionTypeBuilder? Union(Type clrType, ConfigurationSource configurationSource)
@@ -469,10 +469,10 @@ namespace GraphZen.TypeSystem.Internal
             return InputObject(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
-public InternalInputObjectTypeBuilder? InputObject(Type clrType, string name,
-            ConfigurationSource configurationSource)
+        public InternalInputObjectTypeBuilder? InputObject(Type clrType, string name,
+                    ConfigurationSource configurationSource)
         {
-           throw new NotImplementedException(); 
+            throw new NotImplementedException();
         }
 
         public InternalInputObjectTypeBuilder? InputObject(string name,

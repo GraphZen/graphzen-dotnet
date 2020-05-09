@@ -15,20 +15,20 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
     public class InterfacesTests
     {
         // ReSharper disable once InconsistentNaming
-        private interface IPoci
+        private interface PlainInterface
         {
         }
 
         [GraphQLName(AnnotatedName)]
         // ReSharper disable once InconsistentNaming
-        private interface IPociAnnotatedName
+        private interface PlainInterfaceAnnotatedName
         {
             public const string AnnotatedName = nameof(AnnotatedName);
         }
 
         [GraphQLName("abc &*(")]
         // ReSharper disable once InconsistentNaming
-        private interface IPociInvalidNameAnnotation
+        private interface PlainInterfaceInvalidNameAnnotation
         {
         }
 
@@ -71,7 +71,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
             Schema.Create(_ =>
             {
                 _.InputObject("Foo").Field("input", "Bar");
-                var poci = _.Interface<IPoci>();
+                var poci = _.Interface<PlainInterface>();
                 Action rename = () => poci.Name("Bar");
                 rename.Should().Throw<Exception>().WithMessage("something about input/output type");
             });
@@ -87,8 +87,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             Schema.Create(_ =>
             {
-                _.InputObject("Foo").Field("input", IPociAnnotatedName.AnnotatedName);
-                Action add = () => _.Interface<IPociAnnotatedName>();
+                _.InputObject("Foo").Field("input", PlainInterfaceAnnotatedName.AnnotatedName);
+                Action add = () => _.Interface<PlainInterfaceAnnotatedName>();
                 add.Should().Throw<Exception>().WithMessage("something about input/output type");
             });
         }
@@ -127,7 +127,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Interface((string)null!);
+                Action add = () => _.Interface((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -137,7 +137,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Theory]
         [InlineData("  xy")]
         [InlineData("")]
-
         public void named_item_cannot_be_added_with_invalid_name_(string name)
         {
             Schema.Create(_ =>
@@ -174,18 +173,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Theory]
         [InlineData("  xy")]
         [InlineData("")]
-
-
         public void named_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-
             Schema.Create(_ =>
             {
                 var foo = _.Interface("Foo");
                 Action rename = () => foo.Name(name);
                 rename.Should()
                     .Throw<InvalidNameException>()
-                    .WithMessage($"Cannot rename interface Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    .WithMessage(
+                        $"Cannot rename interface Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -225,7 +222,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
             Schema.Create(_ =>
             {
                 _.Interface("Foo");
-                Action remove = () => _.RemoveInterface((string)null!);
+                Action remove = () => _.RemoveInterface((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -235,10 +232,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Theory(Skip = "needs impl")]
         [InlineData("  xy")]
         [InlineData("")]
-
         public void named_item_cannot_be_removed_with_invalid_name_(string name)
         {
-
             Schema.Create(_ =>
             {
                 Action remove = () => _.RemoveInterface(name);
@@ -251,10 +246,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact]
         public void clr_typed_item_can_be_added_()
         {
-            var schema = Schema.Create(_ => { _.Interface(typeof(IPoci)); });
-            schema.HasInterface<IPoci>().Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Interface(typeof(PlainInterface)); });
+            schema.HasInterface<PlainInterface>().Should().BeTrue();
         }
-
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
@@ -263,7 +257,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Interface((Type)null!);
+                Action add = () => _.Interface((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -276,9 +270,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Interface<IPociInvalidNameAnnotation>();
+                Action add = () => _.Interface<PlainInterfaceInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    @"Cannot get or create GraphQL interface type builder with CLR interface 'IPociInvalidNameAnnotation'. The name ""abc &*("" specified in the GraphQLNameAttribute on the IPociInvalidNameAnnotation CLR interface is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    @"Cannot get or create GraphQL interface type builder with CLR interface 'PlainInterfaceInvalidNameAnnotation'. The name ""abc &*("" specified in the GraphQLNameAttribute on the PlainInterfaceInvalidNameAnnotation CLR interface is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -289,10 +283,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             var schema = Schema.Create(_ =>
             {
-                _.Interface<IPoci>();
-                _.RemoveInterface(typeof(IPoci));
+                _.Interface<PlainInterface>();
+                _.RemoveInterface(typeof(PlainInterface));
             });
-            schema.HasInterface<IPoci>().Should().BeFalse();
+            schema.HasInterface<PlainInterface>().Should().BeFalse();
         }
 
 
@@ -302,10 +296,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             var schema = Schema.Create(_ =>
             {
-                _.Interface<IPoci>();
-                _.RemoveInterface<IPoci>();
+                _.Interface<PlainInterface>();
+                _.RemoveInterface<PlainInterface>();
             });
-            schema.HasInterface<IPoci>().Should().BeFalse();
+            schema.HasInterface<PlainInterface>().Should().BeFalse();
         }
 
 
@@ -315,7 +309,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveInterface((Type)null!);
+                Action remove = () => _.RemoveInterface((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -325,9 +319,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
-            var schema = Schema.Create(_ => { _.Interface<IPoci>().ClrType(typeof(IPociAnnotatedName)); });
-            schema.HasInterface<IPoci>().Should().BeFalse();
-            schema.HasInterface<IPociAnnotatedName>().Should().BeTrue();
+            var schema = Schema.Create(_ =>
+            {
+                _.Interface<PlainInterface>().ClrType(typeof(PlainInterfaceAnnotatedName));
+            });
+            schema.HasInterface<PlainInterface>().Should().BeFalse();
+            schema.HasInterface<PlainInterfaceAnnotatedName>().Should().BeTrue();
         }
 
 
@@ -338,7 +335,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             Schema.Create(_ =>
             {
-                var poci = _.Interface<IPoci>();
+                var poci = _.Interface<PlainInterface>();
                 Action remove = () => poci.ClrType(null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
@@ -349,8 +346,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "needs design/impl")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
-            var schema = Schema.Create(_ => { _.Interface<IPoci>().RemoveClrType(); });
-            schema.GetInterface(nameof(IPoci)).ClrType.Should().BeNull();
+            var schema = Schema.Create(_ => { _.Interface<PlainInterface>().RemoveClrType(); });
+            schema.GetInterface(nameof(PlainInterface)).ClrType.Should().BeNull();
         }
 
 
@@ -359,8 +356,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "needs design/impl")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
         {
-            var schema = Schema.Create(_ => { _.Interface<IPoci>().RemoveClrType(); });
-            schema.HasInterface(nameof(IPoci)).Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Interface<PlainInterface>().RemoveClrType(); });
+            schema.HasInterface(nameof(PlainInterface)).Should().BeTrue();
         }
 
 
@@ -369,8 +366,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "needs design/impl")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
         {
-            var schema = Schema.Create(_ => { _.Interface<IPociAnnotatedName>().RemoveClrType(); });
-            schema.HasInterface(IPociAnnotatedName.AnnotatedName).Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Interface<PlainInterfaceAnnotatedName>().RemoveClrType(); });
+            schema.HasInterface(PlainInterfaceAnnotatedName.AnnotatedName).Should().BeTrue();
         }
 
 
@@ -378,8 +375,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact]
         public void clr_typed_item_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.Interface<IPoci>().Name("Foo"); });
-            schema.GetInterface<IPoci>().Name.Should().Be("Foo");
+            var schema = Schema.Create(_ => { _.Interface<PlainInterface>().Name("Foo"); });
+            schema.GetInterface<PlainInterface>().Name.Should().Be("Foo");
         }
 
 
@@ -387,8 +384,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact]
         public void clr_typed_item_with_name_attribute_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.Interface<IPociAnnotatedName>().Name("Foo"); });
-            schema.GetInterface<IPociAnnotatedName>().Name.Should().Be("Foo");
+            var schema = Schema.Create(_ => { _.Interface<PlainInterfaceAnnotatedName>().Name("Foo"); });
+            schema.GetInterface<PlainInterfaceAnnotatedName>().Name.Should().Be("Foo");
         }
 
 
@@ -396,16 +393,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Theory]
         [InlineData("  xy")]
         [InlineData("")]
-
         public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-
             Schema.Create(_ =>
             {
-                var poci = _.Interface<IPoci>();
+                var poci = _.Interface<PlainInterface>();
                 Action rename = () => poci.Name(name);
                 rename.Should().Throw<InvalidNameException>()
-                    .WithMessage($"Cannot rename interface IPoci. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    .WithMessage(
+                        $"Cannot rename interface PlainInterface. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -417,10 +413,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
             Schema.Create(_ =>
             {
                 _.Interface("Foo");
-                var poci = _.Interface<IPoci>();
+                var poci = _.Interface<PlainInterface>();
                 Action rename = () => poci.Name("Foo");
                 rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename interface IPoci to ""Foo"", interface Foo already exists. All GraphQL type names must be unique.");
+                    @"Cannot rename interface PlainInterface to ""Foo"", interface Foo already exists. All GraphQL type names must be unique.");
             });
         }
 
@@ -429,8 +425,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact]
         public void untyped_item_can_have_clr_type_added_()
         {
-            var schema = Schema.Create(_ => { _.Interface("Foo").ClrType<IPoci>(); });
-            schema.GetInterface("Foo").ClrType.Should().Be<IPoci>();
+            var schema = Schema.Create(_ => { _.Interface("Foo").ClrType<PlainInterface>(); });
+            schema.GetInterface("Foo").ClrType.Should().Be<PlainInterface>();
         }
 
 
@@ -441,15 +437,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             Schema.Create(_ =>
             {
-                _.Interface<IPoci>();
+                _.Interface<PlainInterface>();
                 var foo = _.Interface("Foo");
-                Action add = () => foo.ClrType<IPoci>();
+                Action add = () => foo.ClrType<PlainInterface>();
                 add.Should().Throw<DuplicateClrTypeException>().WithMessage("x");
             });
         }
-
-
-
-
     }
 }
