@@ -24,12 +24,16 @@ namespace GraphZen.TypeSystem
 
         InternalScalarTypeBuilder IInfrastructure<InternalScalarTypeBuilder>.Instance => Builder;
 
-        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, bool updateName = false) =>
+        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType) =>
             new ScalarTypeBuilder<object, TValueNode>(Builder);
+
+        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, string name) => throw new NotImplementedException();
+
+        public IScalarTypeBuilder<T, TValueNode> ClrType<T>(string name) => throw new NotImplementedException();
 
         public IScalarTypeBuilder<object, TValueNode> RemoveClrType() => throw new NotImplementedException();
 
-        public IScalarTypeBuilder<T, TValueNode> ClrType<T>(bool updateName = false)
+        public IScalarTypeBuilder<T, TValueNode> ClrType<T>()
         {
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
 

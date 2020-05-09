@@ -174,7 +174,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((string)null!);
+                Action add = () => _.Scalar((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -266,7 +266,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveScalar((string)null!);
+                Action remove = () => _.RemoveScalar((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -320,7 +320,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((Type)null!);
+                Action add = () => _.Scalar((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -372,7 +372,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
             Schema.Create(_ =>
             {
                 _.Scalar<Pocs>();
-                Action remove = () => _.RemoveScalar((Type)null!);
+                Action remove = () => _.RemoveScalar((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -452,8 +452,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact]
         public void clr_typed_item_with_name_attribute_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.Scalar<PocsNameAnnotated>().Name("Foo"); }
-            );
+            var schema = Schema.Create(_ => { _.Scalar<PocsNameAnnotated>().Name("Foo"); });
             schema.GetScalar<PocsNameAnnotated>().Name.Should().Be("Foo");
         }
 
@@ -465,11 +464,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
             Schema.Create(_ =>
-           {
-               var pocs = _.Scalar<Pocs>();
-               Action rename = () => pocs.Name(name);
-               rename.Should().Throw<InvalidNameException>().WithMessage($"Cannot rename scalar Pocs. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
-           });
+            {
+                var pocs = _.Scalar<Pocs>();
+                Action rename = () => pocs.Name(name);
+                rename.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot rename scalar Pocs. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
         }
 
 
@@ -482,9 +482,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
                 _.Scalar("Foo");
                 var pocs = _.Scalar<Pocs>();
                 Action rename = () => pocs.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage($"Cannot rename scalar Pocs to \"Foo\", scalar Foo already exists. All GraphQL type names must be unique.");
+                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot rename scalar Pocs to \"Foo\", scalar Foo already exists. All GraphQL type names must be unique.");
             });
-
         }
 
 
@@ -492,10 +492,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void untyped_item_can_have_clr_type_added_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Scalar("Foo").ClrType(typeof(Pocs));
-            });
+            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType(typeof(Pocs)); });
             schema.HasScalar<Pocs>().Should().BeTrue();
         }
 
@@ -509,9 +506,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
                 _.Scalar<Pocs>();
                 var foo = _.Scalar("Foo");
                 Action add = () => foo.ClrType(typeof(Pocs));
-                add.Should().Throw<DuplicateClrTypeException>().WithMessage($"x");
+                add.Should().Throw<DuplicateClrTypeException>().WithMessage("x");
             });
-
         }
 
 
@@ -519,28 +515,33 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "needs impl")]
         public void adding_clr_type_to_item_changes_name_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Scalar("Foo").ClrType<Pocs>();
-            });
+            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType<Pocs>(); });
             schema.HasScalar("Foo").Should().BeFalse();
             schema.HasScalar<Pocs>().Should().BeTrue();
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_type_with_conflicting_name_can_be_added_using_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void adding_clr_type_to_item_with_name_changes_name_from_param_()
         {
-            var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType<Pocs>("Bar"); });
+            schema.HasScalar("Foo").Should().BeFalse();
+            schema.GetScalar<Pocs>().Name.Should().Be("Bar");
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts_()
         {
-            var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Scalar("Foo");
+                var bar = _.Scalar("Bar");
+                Action add = () => bar.ClrType<Pocs>("Foo");
+                add.Should().Throw<DuplicateNameException>().WithMessage("x");
+            });
         }
     }
 }
