@@ -634,7 +634,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
             var schema = Schema.Create(_ =>
             {
                 _.Union(nameof(PlainAbstractClass));
-                _.Union("Foo").ClrType<PlainAbstractClass>("Bar");
+                _.Union("Foo").ClrType(typeof(PlainAbstractClass), "Bar");
             });
             schema.GetUnion(nameof(PlainAbstractClass)).ClrType.Should().BeNull();
             schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClass>();
@@ -649,7 +649,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
             var schema = Schema.Create(_ =>
                         {
                             _.Union(PlainAbstractClassAnnotatedName.AnnotatedName);
-                            _.Union("Foo").ClrType<PlainAbstractClassAnnotatedName>("Bar");
+                            _.Union("Foo").ClrType(typeof(PlainAbstractClassAnnotatedName), "Bar");
                         });
             schema.GetUnion(PlainAbstractClassAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
             schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClassAnnotatedName>();
@@ -658,65 +658,19 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .DEPRECATED_clr_type_with_cannot_be_added_with_invalid_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_null_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .DEPRECATED_clr_type_with_conflicting_name_annotation_cannot_be_added_with_invalid_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_null_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .DEPRECATED_clr_type_with_conflicting_name_cannot_be_added_with_null_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_invalid_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .DEPRECATED_clr_type_with_conflicting_name_annotation_cannot_be_added_with_null_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_invalid_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .DEPRECATED_clr_type_with_conflicting_name_cannot_be_added_with_conflicting_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_conflicting_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .DEPRECATED_clr_type_with_conflicting_name_annotation_cannot_be_added_with_conflicting_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_conflicting_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+
+            var schema = Schema.Create(_ =>
+                        {
+                            _.Union(nameof(PlainAbstractClass));
+                            _.Union("Foo").ClrType<PlainAbstractClass>("Bar");
+                        });
+            schema.GetUnion(nameof(PlainAbstractClass)).ClrType.Should().BeNull();
+            schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClass>();
+
         }
 
 
@@ -725,61 +679,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
-        }
+            var schema = Schema.Create(_ =>
+                                    {
+                                        _.Union(PlainAbstractClassAnnotatedName.AnnotatedName);
+                                        _.Union("Foo").ClrType<PlainAbstractClassAnnotatedName>("Bar");
+                                    });
+            schema.GetUnion(PlainAbstractClassAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
+            schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClassAnnotatedName>();
 
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_with_conflicting_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_conflicts_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_with_invalid_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_with_custom_name_if_name_invalid_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_invalid_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_with_null_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_with_custom_name_if_name_null_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_via_type_param_with_null_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_null_()
-        {
-            // var schema = Schema.Create(_ => { });
         }
     }
 }
