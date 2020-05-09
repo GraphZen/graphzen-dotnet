@@ -175,17 +175,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_null = null;
 
 
-            public const string DEPRECATED_cannot_add_clr_type_to_item_with_custom_name_if_name_annotation_conflicts = null;
-            public const string DEPRECATED_cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_annotation_conflicts = null;
-            public const string DEPRECATED_cannot_add_clr_type_to_item_with_custom_name_if_name_annotation_invalid = null;
-            public const string DEPRECATED_cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_annotation_invalid = null;
-
-            public const string DEPRECATED_cannot_add_clr_type_to_item_with_custom_name_if_name_is_null = null;
-            public const string DEPRECATED_cannot_add_clr_type_to_item_with_custom_name_if_name_is_invalid = null;
-            public const string DEPRECATED_cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_conflicts = null;
-            public const string DEPRECATED_cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_is_null = null;
-            public const string DEPRECATED_cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_is_invalid = null;
-        }
+                    }
 
         public class NamedTypeSetSpecs
         {
