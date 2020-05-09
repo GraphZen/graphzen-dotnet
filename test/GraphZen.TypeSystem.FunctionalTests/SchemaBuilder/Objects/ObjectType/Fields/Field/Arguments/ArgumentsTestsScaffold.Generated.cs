@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_added_with_null_value_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -51,7 +51,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_added_with_invalid_name_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -59,7 +59,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -67,7 +67,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_renamed_with_null_value_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -75,7 +75,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_renamed_with_an_invalid_name_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -83,7 +83,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_renamed_if_name_already_exists_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -91,7 +91,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_can_be_removed_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -99,7 +99,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_removed_with_null_value_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -107,7 +107,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_removed_with_invalid_name_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 
@@ -117,4 +117,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
     {
     }
 }
-// Source Hash Code: 2654582467400191866
+// Source Hash Code: 13833268101173194570

@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Name
         [Fact(Skip = "TODO")]
         public void element_can_be_defined_via_sdl_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Name
         [Fact(Skip = "TODO")]
         public void element_can_be_defined_via_sdl_extension_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Name
         [Fact(Skip = "TODO")]
         public void updateable_item_can_be_updated_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Name
         [Fact(Skip = "TODO")]
         public void required_item_cannot_be_removed_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 
@@ -53,4 +53,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Name
     {
     }
 }
-// Source Hash Code: 2625123212295785839
+// Source Hash Code: 8589910172993281583

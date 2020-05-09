@@ -21,7 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         public void
             clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -30,7 +30,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_with_custom_name_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -46,7 +46,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_via_type_param_with_custom_name_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -54,7 +54,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -62,7 +62,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void adding_clr_type_to_item_changes_name_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -70,7 +70,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_changes_name_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -78,7 +78,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void adding_clr_type_to_item_with_name_changes_name_from_param_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -87,7 +87,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -95,7 +95,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -103,7 +103,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void cannot_add_clr_type_to_item_with_custom_name_if_name_is_null_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -111,8 +111,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         [Fact(Skip = "TODO")]
         public void cannot_add_clr_type_to_item_with_custom_name_if_name_is_invalid_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 13924324614378561716
+// Source Hash Code: 17717001831181316348

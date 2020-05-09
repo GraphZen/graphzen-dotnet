@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Mem
         [Fact(Skip = "TODO")]
         public void element_can_be_defined_via_sdl_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Mem
         [Fact(Skip = "TODO")]
         public void element_can_be_defined_via_sdl_extension_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Mem
         [Fact(Skip = "TODO")]
         public void set_item_can_be_added_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Mem
         [Fact(Skip = "TODO")]
         public void set_item_can_be_removed_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -51,7 +51,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Mem
         [Fact(Skip = "TODO")]
         public void set_item_must_be_valid_name_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 
@@ -61,4 +61,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Mem
     {
     }
 }
-// Source Hash Code: 3735338925937189431
+// Source Hash Code: 5059307089447794419

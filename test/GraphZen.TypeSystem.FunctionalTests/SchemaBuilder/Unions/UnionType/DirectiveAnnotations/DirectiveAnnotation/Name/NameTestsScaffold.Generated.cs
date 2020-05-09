@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Dir
         [Fact(Skip = "TODO")]
         public void element_can_be_defined_via_sdl_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Dir
         [Fact(Skip = "TODO")]
         public void element_can_be_defined_via_sdl_extension_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -36,7 +36,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Dir
         [Fact(Skip = "TODO")]
         public void updateable_item_can_be_updated_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -44,7 +44,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Dir
         [Fact(Skip = "TODO")]
         public void required_item_cannot_be_removed_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 
@@ -54,4 +54,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Dir
     {
     }
 }
-// Source Hash Code: 8106109872775589674
+// Source Hash Code: 4068226666928112874

@@ -93,7 +93,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
 
         [Spec(nameof(InputAndOutputTypeCollectionSpecs
             .clr_typed_item_can_be_renamed_if_name_matches_output_type_identity))]
-        [Fact]
+        [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_renamed_if_name_matches_output_type_identity_()
         {
             var schema = Schema.Create(_ =>
@@ -111,7 +111,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         public void
             clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity_()
         {
-            var schema = Schema.Create(_ => { });
+var schema = Schema.Create(_ =>
+            {
+                _.InputObject("Foo").Field("inputField", PocsNameAnnotated.AnnotatedName);
+                _.Scalar<PocsNameAnnotated>().Name("Bar");
+            });
+            schema.GetScalar<Pocs>().Name.Should().Be("Bar");
+
         }
 
 

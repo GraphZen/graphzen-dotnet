@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.I
         [Fact(Skip = "TODO")]
         public void set_item_can_be_added_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.I
         [Fact(Skip = "TODO")]
         public void set_item_can_be_removed_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.I
         [Fact(Skip = "TODO")]
         public void set_item_must_be_valid_name_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 
@@ -45,4 +45,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.I
     {
     }
 }
-// Source Hash Code: 10454971706438589489
+// Source Hash Code: 4158286886618024301

@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.N
         [Fact(Skip = "TODO")]
         public void element_can_be_defined_via_sdl_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.N
         [Fact(Skip = "TODO")]
         public void element_can_be_defined_via_sdl_extension_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.N
         [Fact(Skip = "TODO")]
         public void updateable_item_can_be_updated_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.N
         [Fact(Skip = "TODO")]
         public void required_item_cannot_be_removed_()
         {
-            var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 
@@ -53,4 +53,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.N
     {
     }
 }
-// Source Hash Code: 11985547841525577445
+// Source Hash Code: 14666289676651958693
