@@ -49,12 +49,27 @@ public  I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {type
     return builder;
 }}
 
+public  I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>(string name) where {typeParam} : notnull {{
+    var internalBuilder = Builder.{kind}(typeof({typeParam}), ConfigurationSource.Explicit)!;
+    var builder = new {config.TypeName}Builder<{typeParam}>(internalBuilder);
+    return builder;
+}}
+
+
 public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)  {{
             Check.NotNull(clrType, nameof(clrType));
     var internalBuilder = Builder.{kind}(clrType, ConfigurationSource.Explicit)!;
     var builder = new {config.TypeName}Builder<{config.DefaultTypeName}>(internalBuilder);
     return builder;
 }}
+
+public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType, string name)  {{
+            Check.NotNull(clrType, nameof(clrType));
+    var internalBuilder = Builder.{kind}(clrType, ConfigurationSource.Explicit)!;
+    var builder = new {config.TypeName}Builder<{config.DefaultTypeName}>(internalBuilder);
+    return builder;
+}}
+
 
 
 
@@ -76,12 +91,27 @@ public  I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>() w
     var builder = new {config.TypeName}Builder<{typeParam}, TContext>(internalBuilder);
     return builder;
 }}
+
+public  I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>(string name) where {typeParam} : notnull {{
+    var internalBuilder = Builder.{kind}(typeof({typeParam}), ConfigurationSource.Explicit)!;
+    var builder = new {config.TypeName}Builder<{typeParam}, TContext>(internalBuilder);
+    return builder;
+}}
+
 public  I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType)  {{
     Check.NotNull(clrType, nameof(clrType));
     var internalBuilder = Builder.{kind}(clrType, ConfigurationSource.Explicit)!;
     var builder = new {config.TypeName}Builder<{config.DefaultTypeName}, TContext>(internalBuilder);
     return builder;
 }}
+
+public  I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType, string name)  {{
+    Check.NotNull(clrType, nameof(clrType));
+    var internalBuilder = Builder.{kind}(clrType, ConfigurationSource.Explicit)!;
+    var builder = new {config.TypeName}Builder<{config.DefaultTypeName}, TContext>(internalBuilder);
+    return builder;
+}}
+
 
 
    

@@ -208,7 +208,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
         {
-            var schema = Schema.Create(_ =>
+             Schema.Create(_ =>
             {
                 var foo = _.Scalar("Foo");
                 Action rename = () => foo.Name(null!);

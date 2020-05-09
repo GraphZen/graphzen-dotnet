@@ -281,7 +281,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             {
                 _.Object<PocoNameAnnotated>();
                 Action rename = () => _.Object<PocoNameAnnotated>().Name(name);
-                var type = _.GetDefinition().GetObject<PocoNameAnnotated>();
                 rename.Should().Throw<InvalidNameException>()
                     .WithMessage($"Cannot rename object AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });

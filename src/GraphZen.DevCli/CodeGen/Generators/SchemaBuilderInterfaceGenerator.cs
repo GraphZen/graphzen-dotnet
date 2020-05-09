@@ -74,9 +74,11 @@ namespace GraphZen.CodeGen.Generators
 
 
         I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {typeParam} : notnull;
+        I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>(string name) where {typeParam} : notnull;
 
 
         I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType); 
+        I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType, string name); 
 
 
 ");
@@ -90,9 +92,11 @@ namespace GraphZen.CodeGen.Generators
 
 
         I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>() where {typeParam} : notnull;
+        I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>(string name) where {typeParam} : notnull;
 
 
         I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType); 
+        I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType, string name); 
 
 
    

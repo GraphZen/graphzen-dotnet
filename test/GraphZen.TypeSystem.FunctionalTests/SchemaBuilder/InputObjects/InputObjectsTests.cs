@@ -446,53 +446,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_with_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_can_be_added_with_custom_name_()
-        {
-
-        }
-
-
-        [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_can_be_added_via_type_param_with_custom_name_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(adding_clr_type_to_item_changes_name))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_type_to_item_changes_name_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(clr_type_with_conflicting_name_can_be_added_using_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_type_to_item_with_name_changes_name_from_param_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-
-
-        [Spec(nameof(cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-    }
+          }
 }
