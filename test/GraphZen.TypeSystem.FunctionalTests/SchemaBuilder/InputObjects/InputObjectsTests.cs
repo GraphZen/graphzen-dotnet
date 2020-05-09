@@ -445,15 +445,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             });
         }
 
-[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
         [Fact()]
         void clr_typed_item_can_be_added_via_type_param_()
         {
-             var schema = Schema.Create(_ =>
-             {
-                 _.InputObject<PlainClass>();
-             });
-             schema.HasInputObject<PlainClass>().Should().BeTrue();
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject<PlainClass>();
+            });
+            schema.HasInputObject<PlainClass>().Should().BeTrue();
         }
 
 

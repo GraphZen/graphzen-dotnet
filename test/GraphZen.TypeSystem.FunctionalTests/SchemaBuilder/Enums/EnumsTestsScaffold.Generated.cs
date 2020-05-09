@@ -15,9 +15,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
     [NoReorder]
     public abstract class EnumsTestsScaffold
     {
-        
-
-
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_with_conflicting_name_can_be_added_with_custom_name_()
@@ -201,4 +198,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
     }
 }
-// Source Hash Code: 7252716771112509384
+// Source Hash Code: 17525570718473189234

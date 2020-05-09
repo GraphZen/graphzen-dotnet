@@ -15,12 +15,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
     [NoReorder]
     public abstract class ScalarsTestsScaffold
     {
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_can_be_added_via_type_param_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
+        
 
 
         [Spec(nameof(ClrTypedCollectionSpecs

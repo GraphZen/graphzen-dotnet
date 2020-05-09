@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
@@ -93,7 +94,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((string)null!);
+                Action add = () => _.Object((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -119,7 +120,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((string)null!);
+                Action remove = () => _.RemoveObject((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -137,7 +138,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
                 Action rename = () => _.Object("Foo").Name(name);
                 rename.Should()
                     .Throw<InvalidNameException>()
-                    .WithMessage($"Cannot rename object Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    .WithMessage(
+                        $"Cannot rename object Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -237,7 +239,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((Type)null!);
+                Action add = () => _.Object((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -249,7 +251,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((Type)null!);
+                Action remove = () => _.RemoveObject((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -282,7 +284,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
                 _.Object<PlainClassNameAnnotated>();
                 Action rename = () => _.Object<PlainClassNameAnnotated>().Name(name);
                 rename.Should().Throw<InvalidNameException>()
-                    .WithMessage($"Cannot rename object AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    .WithMessage(
+                        $"Cannot rename object AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -392,6 +395,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
                 Action change = () => _.Object<PlainClass>().ClrType(null!);
                 change.Should().ThrowArgumentNullException("clrType");
             });
+        }
+
+        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
+        [Fact()]
+        public void clr_typed_item_can_be_added_via_type_param_()
+        {
+            var schema = Schema.Create(_ => { _.Object<PlainClass>(); });
+            schema.HasObject<PlainClass>();
         }
     }
 }

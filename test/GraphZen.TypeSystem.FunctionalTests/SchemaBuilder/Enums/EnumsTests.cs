@@ -492,8 +492,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [Fact()]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
-             var schema = Schema.Create(_ => { _.Enum<PlainEnum>();});
-             schema.HasEnum<PlainEnum>().Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Enum<PlainEnum>(); });
+            schema.HasEnum<PlainEnum>().Should().BeTrue();
         }
     }
 }
