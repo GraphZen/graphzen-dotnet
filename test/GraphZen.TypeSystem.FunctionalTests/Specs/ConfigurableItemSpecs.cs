@@ -166,9 +166,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             // Adding CLR type to existing type
             public const string untyped_item_can_have_clr_type_added = null;
             public const string untyped_item_cannot_have_clr_type_added_that_is_already_in_use = null;
-            public const string adding_clr_type_to_item_does_not_change_name = null;
-            public const string adding_clr_type_to_item_via_type_param_does_not_change_name = null;
-            public const string adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name = null;
+            public const string DEPRECATED_adding_clr_type_to_item_does_not_change_name = null;
+            public const string DEPRECATED_adding_clr_type_to_item_via_type_param_does_not_change_name = null;
+            public const string DEPRECATED_adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name = null;
 
 
             public const string adding_clr_type_to_item_changes_name = null;
@@ -188,7 +188,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_type_with_conflicting_name_annotation_cannot_be_added_with_conflicting_custom_name = null;
 
 
-            public const string clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name = null; 
+            public const string clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name = null;
             public const string clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name = null;
             public const string cannot_add_clr_type_to_item_with_conflicting_custom_name = null;
             public const string cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name = null;

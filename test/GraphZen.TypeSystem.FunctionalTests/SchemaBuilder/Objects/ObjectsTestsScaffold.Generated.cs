@@ -169,7 +169,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_does_not_change_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_to_item_does_not_change_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_to_item_does_not_change_name_()
         {
@@ -177,7 +177,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_via_type_param_does_not_change_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_adding_clr_type_to_item_via_type_param_does_not_change_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_to_item_via_type_param_does_not_change_name_()
         {
@@ -186,7 +186,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
-            .adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name))]
+            .DEPRECATED_adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_via_type_param_does_not_change_name_()
         {
@@ -242,10 +242,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_cannot_be_added_with_invalid_custom_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_type_with_conflicting_name_cannot_be_added_with_invalid_custom_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_null_()
+        public void clr_type_with_conflicting_name_cannot_be_added_with_invalid_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -254,16 +253,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_type_with_conflicting_name_annotation_cannot_be_added_with_invalid_custom_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_null_()
+        public void clr_type_with_conflicting_name_annotation_cannot_be_added_with_invalid_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_cannot_be_added_with_null_custom_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_type_with_conflicting_name_cannot_be_added_with_null_custom_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_invalid_()
+        public void clr_type_with_conflicting_name_cannot_be_added_with_null_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -272,7 +270,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_type_with_conflicting_name_annotation_cannot_be_added_with_null_custom_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_invalid_()
+        public void clr_type_with_conflicting_name_annotation_cannot_be_added_with_null_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -281,7 +279,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_type_with_conflicting_name_cannot_be_added_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_cannot_be_added_using_custom_name_if_name_conflicting_()
+        public void clr_type_with_conflicting_name_cannot_be_added_with_conflicting_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -290,7 +288,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_type_with_conflicting_name_annotation_cannot_be_added_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_cannot_be_added_using_custom_name_if_name_conflicting_()
+        public void clr_type_with_conflicting_name_annotation_cannot_be_added_with_conflicting_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -316,16 +314,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
         [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts_()
+        public void cannot_add_clr_type_to_item_with_conflicting_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_conflicts_()
+        public void cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -333,16 +330,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
         [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_invalid_custom_name))]
         [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_with_custom_name_if_name_invalid_()
+        public void cannot_add_clr_type_to_item_with_invalid_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name))]
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name))]
         [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_invalid_()
+        public void cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -350,7 +346,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
         [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_null_custom_name))]
         [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_with_custom_name_if_name_null_()
+        public void cannot_add_clr_type_to_item_with_null_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -358,10 +354,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
         [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_via_type_param_with_null_custom_name))]
         [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_via_type_param_with_custom_name_if_name_null_()
+        public void cannot_add_clr_type_to_item_via_type_param_with_null_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 16041106424614200528
+// Source Hash Code: 2357525253927986390
