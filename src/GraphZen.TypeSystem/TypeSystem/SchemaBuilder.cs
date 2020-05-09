@@ -32,22 +32,41 @@ namespace GraphZen.TypeSystem
                 ConfigurationSource.Explicit)!);
 
 
-        public IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>() where TScalar : notnull =>
-            new ScalarTypeBuilder<TScalar, ValueSyntax>(Builder.Scalar(typeof(TScalar),
-                ConfigurationSource.Explicit)!);
+        public IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>() where TScalar : notnull
+        {
+            var internalBuilder = Builder.Scalar(typeof(TScalar),
+                ConfigurationSource.Explicit)!;
+            return new ScalarTypeBuilder<TScalar, ValueSyntax>(internalBuilder);
+        }
 
-        public IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>(string name) where TScalar : notnull => throw new NotImplementedException();
+        public IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>(string name) where TScalar : notnull
+        {
+            Check.NotNull(name, nameof(name));
+            var internalBuilder = Builder.Scalar(typeof(TScalar), name, ConfigurationSource.Explicit)!;
+            return new ScalarTypeBuilder<TScalar, ValueSyntax>(internalBuilder);
+        }
 
-        public IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType) =>
-            new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(clrType, nameof(clrType)),
-                ConfigurationSource.Explicit)!);
+        public IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            var internalBuilder = Builder.Scalar(clrType, ConfigurationSource.Explicit)!;
+            return new ScalarTypeBuilder<object, ValueSyntax>(internalBuilder);
+        }
 
-        public IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType, string name) => throw new NotImplementedException();
+        public IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType, string name)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Check.NotNull(name, nameof(name));
+            var internalBuilder = Builder.Scalar(clrType, name, ConfigurationSource.Explicit)!;
+            return new ScalarTypeBuilder<object, ValueSyntax>(internalBuilder);
+        }
 
         public IScalarTypeBuilder<TScalar, TValueNode> Scalar<TScalar, TValueNode>()
-            where TValueNode : ValueSyntax where TScalar : notnull =>
-            new ScalarTypeBuilder<TScalar, TValueNode>(Builder.Scalar(typeof(TScalar),
-                ConfigurationSource.Explicit)!);
+            where TValueNode : ValueSyntax where TScalar : notnull
+        {
+            var internalBuilder = Builder.Scalar(typeof(TScalar), ConfigurationSource.Explicit)!;
+            return new ScalarTypeBuilder<TScalar, TValueNode>(internalBuilder);
+        }
 
         public ISchemaBuilder<TContext> QueryType(string type)
         {

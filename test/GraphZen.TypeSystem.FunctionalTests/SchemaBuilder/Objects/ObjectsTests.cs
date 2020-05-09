@@ -94,24 +94,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((string) null!);
+                Action add = () => _.Object((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
 
 
-        [Spec(nameof(DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
-        [Theory(Skip = "needs impl")]
-        [InlineData("  xy")]
-        [InlineData("")]
-        public void object_cannot_be_removed_with_invalid_name(string name)
-        {
-            Schema.Create(_ =>
-            {
-                Action remove = () => _.RemoveObject(name);
-                remove.Should().Throw<InvalidNameException>().WithMessage("x");
-            });
-        }
+        
 
 
         [Spec(nameof(named_item_cannot_be_removed_with_null_value))]
@@ -120,7 +109,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((string) null!);
+                Action remove = () => _.RemoveObject((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -239,7 +228,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((Type) null!);
+                Action add = () => _.Object((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -251,7 +240,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((Type) null!);
+                Action remove = () => _.RemoveObject((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

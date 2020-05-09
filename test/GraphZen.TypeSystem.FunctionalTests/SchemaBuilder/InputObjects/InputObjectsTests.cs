@@ -147,20 +147,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
-        [Theory(Skip = "needs impl")]
-        [InlineData("")]
-        public void named_item_cant_be_removed_with_invalid_name_(string name)
-        {
-
-            Schema.Create(_ =>
-            {
-                Action remove = () => _.RemoveInputObject(name);
-                remove.Should().Throw<InvalidNameException>().WithMessage("x");
-            });
-        }
-
-
         private class PlainClass
         {
         }

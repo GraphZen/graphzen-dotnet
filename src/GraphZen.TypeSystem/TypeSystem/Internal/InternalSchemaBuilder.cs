@@ -254,6 +254,12 @@ namespace GraphZen.TypeSystem.Internal
             return Scalar(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
+        public InternalScalarTypeBuilder? Scalar(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            AssertValidName(name, TypeKind.Scalar);
+            return Scalar(new TypeIdentity(name, Definition), configurationSource)?.ClrType(clrType, configurationSource);
+        }
+
         public InternalScalarTypeBuilder? Scalar(string name, ConfigurationSource configurationSource)
         {
             AssertValidName(name, TypeKind.Scalar);

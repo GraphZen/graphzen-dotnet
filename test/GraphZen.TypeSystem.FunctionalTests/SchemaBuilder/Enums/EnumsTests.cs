@@ -279,17 +279,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
-        [Theory(Skip = "needs impl")]
-        [InlineData("x")]
-        public void named_item_cannot_be_removed_with_invalid_name_(string name)
-        {
-            Schema.Create(_ =>
-            {
-                Action remove = () => _.RemoveEnum(name);
-                remove.Should().Throw<InvalidNameException>().WithMessage("x");
-            });
-        }
+        
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]

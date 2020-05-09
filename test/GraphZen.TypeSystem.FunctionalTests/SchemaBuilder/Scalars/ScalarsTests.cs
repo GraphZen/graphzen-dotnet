@@ -174,7 +174,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((string)null!);
+                Action add = () => _.Scalar((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -209,11 +209,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         public void named_item_cannot_be_renamed_with_null_value_()
         {
             Schema.Create(_ =>
-           {
-               var foo = _.Scalar("Foo");
-               Action rename = () => foo.Name(null!);
-               rename.Should().ThrowArgumentNullException("name");
-           });
+            {
+                var foo = _.Scalar("Foo");
+                Action rename = () => foo.Name(null!);
+                rename.Should().ThrowArgumentNullException("name");
+            });
         }
 
 
@@ -266,22 +266,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveScalar((string)null!);
+                Action remove = () => _.RemoveScalar((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
-            });
-        }
-
-
-        [Spec(nameof(NamedCollectionSpecs.DEPRECATED_named_item_cannot_be_removed_with_invalid_name))]
-        [Theory(Skip = "needs impl")]
-        [InlineData("")]
-        [InlineData("xas )(*")]
-        public void named_item_cannot_be_removed_with_invalid_name_(string name)
-        {
-            Schema.Create(_ =>
-            {
-                Action remove = () => _.RemoveScalar(name);
-                remove.Should().Throw<InvalidNameException>().WithMessage("x");
             });
         }
 
@@ -320,7 +306,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((Type)null!);
+                Action add = () => _.Scalar((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -372,14 +358,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
             Schema.Create(_ =>
             {
                 _.Scalar<PlainStruct>();
-                Action remove = () => _.RemoveScalar((Type)null!);
+                Action remove = () => _.RemoveScalar((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
-        [Fact(Skip = "needs impl")]
+        [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
             var schema = Schema.Create(_ => { _.Scalar<PlainStruct>().ClrType(typeof(PlainStructAnnotatedName)); });
@@ -542,6 +528,149 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
                 Action add = () => bar.ClrType<PlainStruct>("Foo");
                 add.Should().Throw<DuplicateNameException>().WithMessage("x");
             });
+        }
+
+        [Spec(nameof(ClrTypedCollectionSpecs
+            .clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name))]
+        [Fact]
+        public void clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar(PlainStructAnnotatedName.AnnotatedName);
+                _.Scalar(typeof(PlainStructAnnotatedName), "Foo");
+            });
+            schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs
+            .clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name))]
+        [Fact]
+        public void clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar(PlainStructAnnotatedName.AnnotatedName);
+                _.Scalar<PlainStructAnnotatedName>("Foo");
+            });
+            schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs
+            .clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs
+            .clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed_via_type_param))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_have_clr_type_changed_via_type_param_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_via_type_param_changes_name))]
+        [Fact(Skip = "TODO")]
+        public void adding_clr_type_to_item_via_type_param_changes_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_name_annotation_to_item_changes_name))]
+        [Fact(Skip = "TODO")]
+        public void adding_clr_type_with_name_annotation_to_item_changes_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_name_annotation_to_item_via_type_pram_changes_name))]
+        [Fact(Skip = "TODO")]
+        public void adding_clr_type_with_name_annotation_to_item_via_type_pram_changes_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs
+            .clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs
+            .clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_invalid_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_with_invalid_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_null_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_with_null_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_via_type_param_with_null_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_via_type_param_with_null_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
         }
     }
 }
