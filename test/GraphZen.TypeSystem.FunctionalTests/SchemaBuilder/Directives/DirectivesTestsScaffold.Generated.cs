@@ -288,6 +288,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         }
 
 
+        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_with_name_annotation_to_item_changes_name))]
+        [Fact(Skip = "TODO")]
+        public void adding_clr_type_with_name_annotation_to_item_changes_name_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_with_name_changes_name_from_param))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_to_item_with_name_changes_name_from_param_()
@@ -311,6 +319,22 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             var schema = Schema.Create(_ => { });
         }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_custom_name_if_name_is_null))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_with_custom_name_if_name_is_null_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_custom_name_if_name_is_invalid))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_with_custom_name_if_name_is_invalid_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
     }
 
 // Move DirectivesTests into a separate file to start writing tests
@@ -319,4 +343,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
     {
     }
 }
-// Source Hash Code: 18382705085987414270
+// Source Hash Code: 7159942656683342168

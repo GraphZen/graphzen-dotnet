@@ -61,9 +61,7 @@ namespace GraphZen.CodeGen.Generators
 [Spec({specRef})]
 [Fact(Skip=""TODO"")]
 public void {spec.Id}_() {{
-    var schema = Schema.Create(_ => {{
-
-    }});
+    // var schema = Schema.Create(_ => {{ }});
 }}
 
 ");
