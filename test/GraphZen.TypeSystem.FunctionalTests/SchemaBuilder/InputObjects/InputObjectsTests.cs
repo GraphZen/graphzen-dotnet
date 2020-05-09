@@ -384,9 +384,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-
-
-        
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "needs design")]
@@ -398,7 +395,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
                     .Field("outputField", "OutputType");
 
                 Action add = () => _.InputObject("OutputType");
-                add.Should().Throw<Exception>().WithMessage("Cannot add input object OutputType because OutputType is already identified as an output type.");
+                add.Should().Throw<Exception>()
+                    .WithMessage(
+                        "Cannot add input object OutputType because OutputType is already identified as an output type.");
             });
         }
 
@@ -413,14 +412,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
                 _.Object("Foo").Field("outputField", "OutputType");
                 var bar = _.InputObject("Bar");
                 Action rename = () => bar.Name("OutputType");
-                rename.Should().Throw<Exception>().WithMessage(@"Cannot rename input object Bar to ""OutputTYpe"" because OutputType is already identified as an output type.");
+                rename.Should().Throw<Exception>()
+                    .WithMessage(
+                        @"Cannot rename input object Bar to ""OutputTYpe"" because OutputType is already identified as an output type.");
             });
         }
 
 
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             Schema.Create(_ =>
@@ -428,20 +429,105 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
                 _.Object("Foo").Field("outputField", "OutputType");
                 var poco = _.InputObject<Poco>();
                 Action rename = () => poco.Name("OutputType");
-                rename.Should().Throw<Exception>().WithMessage(@"Cannot rename input object Bar to ""OutputTYpe"" because OutputType is already identified as an output type.");
+                rename.Should().Throw<Exception>()
+                    .WithMessage(
+                        @"Cannot rename input object Bar to ""OutputTYpe"" because OutputType is already identified as an output type.");
             });
-
         }
 
 
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
         ))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "needs impl")]
         public void
             clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io_()
         {
-            Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Object("Foo").Field("outputField", PocoNameAnnotated.AnnotatedName);
+                Action add = () => _.InputObject<PocoNameAnnotated>();
+                add.Should().Throw<Exception>()
+                    .WithMessage(
+                        @"Cannot create input object AnnotatedName because because AnnotatedName is already identified as an output type.");
+            });
+        }
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io
+        ))]
+        [Fact(Skip = "TODO")]
+        public void
+            subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io
+        ))]
+        [Fact(Skip = "TODO")]
+        public void
+            subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_typed_item_can_be_added_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_be_added_with_custom_name_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_typed_item_can_be_added_via_type_param_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_be_added_via_type_param_with_custom_name_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(adding_clr_type_to_item_changes_name))]
+        [Fact(Skip = "TODO")]
+        public void adding_clr_type_to_item_changes_name_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(adding_clr_type_to_item_with_name_changes_name_from_param))]
+        [Fact(Skip = "TODO")]
+        public void adding_clr_type_to_item_with_name_changes_name_from_param_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param))]
+        [Fact(Skip = "TODO")]
+        public void adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param_()
+        {
+            var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts_()
+        {
+            var schema = Schema.Create(_ => { });
         }
     }
 }

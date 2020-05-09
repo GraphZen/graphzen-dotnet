@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
         [GraphQLName("abc ()(*322*&%^")]
-        private enum PoceInvalidNameAnnoation
+        private enum PoceInvalidNameAnnotation
         {
         }
 
@@ -177,7 +177,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Enum((string)null!);
+                Action add = () => _.Enum((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -274,7 +274,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveEnum((string)null!);
+                Action remove = () => _.RemoveEnum((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -319,7 +319,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Enum((Type)null!);
+                Action add = () => _.Enum((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -331,9 +331,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Enum<PoceInvalidNameAnnoation>();
+                Action add = () => _.Enum<PoceInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    @"Cannot create GraphQL enum with CLR enum 'GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumsTests+PoceInvalidNameAnnoation'. The name specified in the GraphQLNameAttribute (""abc ()(*322*&%^"") on the PoceInvalidNameAnnoation enum is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    @"Cannot create GraphQL enum with CLR enum 'GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumsTests+PoceInvalidNameAnnotation'. The name specified in the GraphQLNameAttribute (""abc ()(*322*&%^"") on the PoceInvalidNameAnnotation enum is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -371,7 +371,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             Schema.Create(_ =>
             {
                 _.Enum<Poce>();
-                Action remove = () => _.RemoveEnum((Type)null!);
+                Action remove = () => _.RemoveEnum((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -500,10 +500,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
                 add.Should().Throw<DuplicateClrTypeException>();
             });
         }
-
-
     }
-
-    // Move EnumsTests into a separate file to start writing tests
 }
-// Source Hash Code: 8762128340584621188
