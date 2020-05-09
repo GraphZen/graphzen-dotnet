@@ -521,7 +521,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.subsequently_clr_typed_item_can_have_custom_named_removed))]
+        [Spec(nameof(ClrTypedCollectionSpecs.DEPRECATED_subsequently_clr_typed_item_can_have_custom_named_removed))]
         [Fact(Skip = "TODO")]
         public void subsequently_clr_typed_item_can_have_custom_named_removed_()
         {

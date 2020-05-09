@@ -483,7 +483,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
-            .subsequently_clr_typed_item_can_have_custom_named_removed))]
+            .DEPRECATED_subsequently_clr_typed_item_can_have_custom_named_removed))]
         [Fact(Skip = "needs design")]
         public void subsequently_clr_typed_item_can_have_custom_named_removed_()
         {

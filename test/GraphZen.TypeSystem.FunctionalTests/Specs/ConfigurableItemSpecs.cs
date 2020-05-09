@@ -141,7 +141,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
 
             // Initially untyped objects
-            public const string subsequently_clr_typed_item_can_have_custom_named_removed = null;
+            public const string DEPRECATED_subsequently_clr_typed_item_can_have_custom_named_removed = null;
 
             public const string subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts
                 = null;

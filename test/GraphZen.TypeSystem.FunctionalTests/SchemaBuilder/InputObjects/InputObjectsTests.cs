@@ -402,7 +402,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-        [Spec(nameof(subsequently_clr_typed_item_can_have_custom_named_removed))]
+        [Spec(nameof(DEPRECATED_subsequently_clr_typed_item_can_have_custom_named_removed))]
         [Fact(Skip = "needs design")]
         public void subsequently_clr_typed_item_can_have_custom_named_removed_()
         {
