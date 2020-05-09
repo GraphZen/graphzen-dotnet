@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
-            .subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io
+            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io
         ))]
         [Fact(Skip = "TODO")]
         public void
@@ -54,7 +54,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
-            .subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io
+            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io
         ))]
         [Fact(Skip = "TODO")]
         public void
