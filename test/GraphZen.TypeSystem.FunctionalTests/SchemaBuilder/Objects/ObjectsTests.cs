@@ -100,7 +100,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        
+
 
 
         [Spec(nameof(named_item_cannot_be_removed_with_null_value))]

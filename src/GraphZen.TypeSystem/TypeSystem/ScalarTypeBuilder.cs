@@ -30,9 +30,22 @@ namespace GraphZen.TypeSystem
             return new ScalarTypeBuilder<object, TValueNode>(internalBuilder);
         }
 
-        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, string name) => throw new NotImplementedException();
+        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, string name)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Check.NotNull(name, name);
+            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            Builder.SetName(name, ConfigurationSource.Explicit);
+            return new ScalarTypeBuilder<object, TValueNode>(Builder);
+        }
 
-        public IScalarTypeBuilder<T, TValueNode> ClrType<T>(string name) => throw new NotImplementedException();
+        public IScalarTypeBuilder<T, TValueNode> ClrType<T>(string name)
+        {
+            Check.NotNull(name, name);
+            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            Builder.SetName(name, ConfigurationSource.Explicit);
+            return new ScalarTypeBuilder<T, TValueNode>(Builder);
+        }
 
         public IScalarTypeBuilder<object, TValueNode> RemoveClrType() => throw new NotImplementedException();
 

@@ -560,35 +560,41 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
 
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Scalar(typeof(PlainStructInvalidNameAnnotation), "Foo"); });
+            schema.HasScalar<PlainStructInvalidNameAnnotation>();
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Scalar<PlainStructInvalidNameAnnotation>("Foo"); });
+            schema.HasScalar<PlainStructInvalidNameAnnotation>();
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed_via_type_param))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_can_have_clr_type_changed_via_type_param_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Scalar<PlainStruct>().ClrType<PlainStructAnnotatedName>(); });
+            schema.HasScalar<PlainStruct>().Should().BeFalse();
+            schema.HasScalar<PlainStructAnnotatedName>().Should().BeTrue();
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_type_to_item_via_type_param_changes_name))]
-        [Fact(Skip = "TODO")]
+        [Fact(Skip = "todo")]
         public void adding_clr_type_to_item_via_type_param_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType<PlainStruct>(); });
+            schema.HasScalar("Foo").Should().BeFalse();
+            schema.HasScalar<PlainStruct>().Should().BeTrue();
         }
 
 
@@ -596,7 +602,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType(typeof(PlainStructAnnotatedName)); });
+            schema.HasScalar("Foo").Should().BeFalse();
+            schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be(PlainStructAnnotatedName.AnnotatedName);
         }
 
 
@@ -604,33 +612,53 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_via_type_pram_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType<PlainStructAnnotatedName>(); });
+            schema.HasScalar("Foo").Should().BeFalse();
+            schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be(PlainStructAnnotatedName.AnnotatedName);
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar(nameof(PlainStruct));
+                _.Scalar("Foo").ClrType<PlainStruct>("Bar");
+            });
+            schema.HasScalar(nameof(PlainStruct)).Should().BeTrue();
+            schema.GetScalar<PlainStruct>().Name.Should().Be("Bar");
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar(PlainStructAnnotatedName.AnnotatedName);
+                _.Scalar("Foo").ClrType(typeof(PlainStructAnnotatedName), "Bar");
+            });
+            schema.GetScalar(PlainStructAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
+            schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be("Bar");
         }
 
 
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Scalar(PlainStructAnnotatedName.AnnotatedName);
+                _.Scalar("Foo").ClrType<PlainStructAnnotatedName>("Bar");
+            });
+            schema.GetScalar(PlainStructAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
+            schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be("Bar");
         }
 
 

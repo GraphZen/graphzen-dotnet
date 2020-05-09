@@ -279,7 +279,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        
+
 
 
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
