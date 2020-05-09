@@ -177,6 +177,11 @@ namespace GraphZen.TypeSystem.Internal
                 : $"Cannot add {kind.ToDisplayStringLower()} named '{identity.Name}', an existing {existingType.Kind.ToDisplayStringLower()} already exists with that name.";
         }
 
+        public InternalUnionTypeBuilder? Union(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            throw new NotImplementedException();
+        }
+
         public InternalUnionTypeBuilder? Union(Type clrType, ConfigurationSource configurationSource)
         {
             AssertValidName(clrType, TypeKind.Union);

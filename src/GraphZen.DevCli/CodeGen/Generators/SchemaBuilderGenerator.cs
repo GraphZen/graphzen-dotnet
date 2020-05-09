@@ -50,7 +50,7 @@ public  I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {type
 
 public  I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>(string name) where {typeParam} : notnull {{
     Check.NotNull(name, nameof(name));
-    var internalBuilder = Builder.{kind}(typeof({typeParam}), ConfigurationSource.Explicit)!;
+    var internalBuilder = Builder.{kind}(typeof({typeParam}), name, ConfigurationSource.Explicit)!;
     var builder = new {config.TypeName}Builder<{typeParam}>(internalBuilder);
     return builder;
 }}
@@ -66,7 +66,7 @@ public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType)
 public  I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType, string name)  {{
             Check.NotNull(clrType, nameof(clrType));
     Check.NotNull(name, nameof(name));
-    var internalBuilder = Builder.{kind}(clrType, ConfigurationSource.Explicit)!;
+    var internalBuilder = Builder.{kind}(clrType, name, ConfigurationSource.Explicit)!;
     var builder = new {config.TypeName}Builder<{config.DefaultTypeName}>(internalBuilder);
     return builder;
 }}
@@ -101,7 +101,7 @@ public  I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>(str
 
 public  I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType)  {{
     Check.NotNull(clrType, nameof(clrType));
-    var internalBuilder = Builder.{kind}(name, ConfigurationSource.Explicit)!.ClrType(clrType, name, ConfigurationSource.Explicit);
+    var internalBuilder = Builder.{kind}(clrType, ConfigurationSource.Explicit)!;
     var builder = new {config.TypeName}Builder<{config.DefaultTypeName}, TContext>(internalBuilder);
     return builder;
 }}
