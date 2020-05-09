@@ -487,5 +487,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
                 add.Should().Throw<DuplicateClrTypeException>();
             });
         }
+
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
+        [Fact()]
+        public void clr_typed_item_can_be_added_via_type_param_()
+        {
+             var schema = Schema.Create(_ => { _.Enum<PlainEnum>();});
+             schema.HasEnum<PlainEnum>().Should().BeTrue();
+        }
     }
 }

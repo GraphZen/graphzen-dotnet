@@ -33,6 +33,54 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         {
             // var schema = Schema.Create(_ => { });
         }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_conflicting_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_with_conflicting_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_invalid_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_with_invalid_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_with_null_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_with_null_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.cannot_add_clr_type_to_item_via_type_param_with_null_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_via_type_param_with_null_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 }
-// Source Hash Code: 10540497535879341202
+// Source Hash Code: 17167569043064733964

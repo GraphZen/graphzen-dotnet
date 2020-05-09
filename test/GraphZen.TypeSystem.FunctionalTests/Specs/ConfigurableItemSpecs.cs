@@ -180,7 +180,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name = null;
 
 
-            
+
 
 
             public const string cannot_add_clr_type_to_item_with_conflicting_custom_name = null;

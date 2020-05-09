@@ -443,5 +443,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
                 add.Should().Throw<DuplicateClrTypeException>().WithMessage("x");
             });
         }
+[Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
+        [Fact()]
+        public void clr_typed_item_can_be_added_via_type_param_()
+        {
+             var schema = Schema.Create(_ =>
+             {
+                 _.Interface<PlainInterface>();
+             });
+             schema.HasInterface<PlainInterface>().Should().BeTrue();
+        }
     }
 }
