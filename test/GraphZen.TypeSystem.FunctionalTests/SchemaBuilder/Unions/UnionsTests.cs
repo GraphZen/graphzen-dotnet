@@ -95,9 +95,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
             Schema.Create(_ =>
                         {
                             _.InputObject("Foo").Field("inputField", "Bar");
-                 Action add = () => _.Union<UnionAnnotatedName>("Bar");
-                 add.Should().Throw<Exception>("x");
-            });
+                            Action add = () => _.Union<UnionAnnotatedName>("Bar");
+                            add.Should().Throw<Exception>("x");
+                        });
 
         }
 

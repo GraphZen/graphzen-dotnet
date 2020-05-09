@@ -21,7 +21,6 @@ namespace GraphZen.TypeSystem
         public IDirectiveBuilder<object> Directive(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             var internalBuilder = Builder.Directive(name, ConfigurationSource.Explicit)!;
             var builder = new DirectiveBuilder<object>(internalBuilder);
             return builder;
@@ -76,7 +75,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> UnignoreDirective(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.UnignoreDirective(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -98,7 +96,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> IgnoreDirective(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.IgnoreDirective(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -119,7 +116,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> RemoveDirective(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.RemoveDirective(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -144,7 +140,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> UnignoreType(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.UnignoreType(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -166,7 +161,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> IgnoreType(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.IgnoreType(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -187,7 +181,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> RemoveType(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.RemoveType(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -251,7 +244,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> UnignoreObject(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.UnignoreObject(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -273,7 +265,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> IgnoreObject(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.IgnoreObject(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -294,7 +285,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> RemoveObject(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.RemoveObject(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -306,7 +296,6 @@ namespace GraphZen.TypeSystem
         public IUnionTypeBuilder<object, TContext> Union(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             var internalBuilder = Builder.Union(name, ConfigurationSource.Explicit)!;
             var builder = new UnionTypeBuilder<object, TContext>(internalBuilder);
             return builder;
@@ -359,7 +348,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> UnignoreUnion(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.UnignoreUnion(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -381,7 +369,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> IgnoreUnion(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.IgnoreUnion(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -402,7 +389,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> RemoveUnion(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.RemoveUnion(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -427,7 +413,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> UnignoreScalar(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.UnignoreScalar(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -449,7 +434,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> IgnoreScalar(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.IgnoreScalar(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -470,7 +454,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> RemoveScalar(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.RemoveScalar(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -536,7 +519,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> UnignoreEnum(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.UnignoreEnum(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -558,7 +540,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> IgnoreEnum(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.IgnoreEnum(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -579,7 +560,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> RemoveEnum(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.RemoveEnum(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -643,7 +623,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> UnignoreInterface(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.UnignoreInterface(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -665,7 +644,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> IgnoreInterface(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.IgnoreInterface(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -686,7 +664,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> RemoveInterface(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.RemoveInterface(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -752,7 +729,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> UnignoreInputObject(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.UnignoreInputObject(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -774,7 +750,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> IgnoreInputObject(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.IgnoreInputObject(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -795,7 +770,6 @@ namespace GraphZen.TypeSystem
         public ISchemaBuilder<TContext> RemoveInputObject(string name)
         {
             Check.NotNull(name, nameof(name));
-            name.AssertValidNameArgument(nameof(name));
             Builder.RemoveInputObject(name, ConfigurationSource.Explicit);
             return this;
         }
@@ -803,4 +777,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 13124509935681378519
+// Source Hash Code: 1431492791064274305
