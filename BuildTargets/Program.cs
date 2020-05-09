@@ -125,19 +125,25 @@ namespace BuildTargets
         private static void RunCodeGen(bool format = true)
         {
             RunCli("gen");
-            if (format)
+            if (format && TryGetChangedFiles(out var changed))
             {
-                // CleanupCode("**/*Generated.cs");
-                using var repo = new Repository("./");
-                var modified = repo.RetrieveStatus()
-                    .Where(_ => _.State == FileStatus.ModifiedInWorkdir || _.State == FileStatus.NewInWorkdir)
-                    .Where(_ => _.FilePath.EndsWith("Generated.cs")).Select(_ => "./" + _.FilePath).ToImmutableList();
-
-                if (modified.Any())
-                {
-                    CleanupCode(modified);
-                }
+                CleanupCode(changed);
             }
+        }
+
+        private static IReadOnlyList<string> GetChangedFiles()
+        {
+            using var repo = new Repository("./");
+            var modified = repo.RetrieveStatus()
+                .Where(_ => _.State == FileStatus.ModifiedInWorkdir || _.State == FileStatus.NewInWorkdir)
+                .Select(_ => "./" + _.FilePath).ToImmutableList();
+            return modified;
+        }
+
+        private static bool TryGetChangedFiles(out IEnumerable<string> changed)
+        {
+            changed = GetChangedFiles();
+            return changed.Any();
         }
 
 
