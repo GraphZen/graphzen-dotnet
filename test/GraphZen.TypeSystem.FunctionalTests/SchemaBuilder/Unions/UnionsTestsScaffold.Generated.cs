@@ -6,14 +6,33 @@
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 {
-    // Move UnionsTests into a separate file to start writing tests
     [NoReorder]
-    public class UnionsTestsScaffold
+    public abstract class UnionsTestsScaffold
     {
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io
+        ))]
+        [Fact(Skip = "TODO")]
+        public void
+            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 }
-// Source Hash Code: 1591837298792257976
+// Source Hash Code: 10540497535879341202

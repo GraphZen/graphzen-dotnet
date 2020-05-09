@@ -34,6 +34,26 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io
+        ))]
+        [Fact(Skip = "TODO")]
+        public void
+            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
@@ -344,4 +364,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
     }
 }
-// Source Hash Code: 15948778847732413158
+// Source Hash Code: 16041106424614200528

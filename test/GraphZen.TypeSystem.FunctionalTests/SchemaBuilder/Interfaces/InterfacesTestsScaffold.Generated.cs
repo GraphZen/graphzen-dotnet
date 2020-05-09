@@ -16,6 +16,26 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
     public abstract class InterfacesTestsScaffold
     {
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
+            .clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io
+        ))]
+        [Fact(Skip = "TODO")]
+        public void
+            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
         public void
@@ -306,4 +326,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
     }
 }
-// Source Hash Code: 158660240265698428
+// Source Hash Code: 2544252814998589158

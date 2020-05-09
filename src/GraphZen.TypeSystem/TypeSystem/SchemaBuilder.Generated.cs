@@ -1,3 +1,6 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 #nullable enable
 
 using System;
@@ -32,7 +35,23 @@ namespace GraphZen.TypeSystem
             return builder;
         }
 
+        public IDirectiveBuilder<TDirective> Directive<TDirective>(string name) where TDirective : notnull
+        {
+            var internalBuilder = Builder.Directive(typeof(TDirective), ConfigurationSource.Explicit)!;
+            var builder = new DirectiveBuilder<TDirective>(internalBuilder);
+            return builder;
+        }
+
+
         public IDirectiveBuilder<object> Directive(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            var internalBuilder = Builder.Directive(clrType, ConfigurationSource.Explicit)!;
+            var builder = new DirectiveBuilder<object>(internalBuilder);
+            return builder;
+        }
+
+        public IDirectiveBuilder<object> Directive(Type clrType, string name)
         {
             Check.NotNull(clrType, nameof(clrType));
             var internalBuilder = Builder.Directive(clrType, ConfigurationSource.Explicit)!;
@@ -192,7 +211,22 @@ namespace GraphZen.TypeSystem
             return builder;
         }
 
+        public IObjectTypeBuilder<TObject, TContext> Object<TObject>(string name) where TObject : notnull
+        {
+            var internalBuilder = Builder.Object(typeof(TObject), ConfigurationSource.Explicit)!;
+            var builder = new ObjectTypeBuilder<TObject, TContext>(internalBuilder);
+            return builder;
+        }
+
         public IObjectTypeBuilder<object, TContext> Object(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            var internalBuilder = Builder.Object(clrType, ConfigurationSource.Explicit)!;
+            var builder = new ObjectTypeBuilder<object, TContext>(internalBuilder);
+            return builder;
+        }
+
+        public IObjectTypeBuilder<object, TContext> Object(Type clrType, string name)
         {
             Check.NotNull(clrType, nameof(clrType));
             var internalBuilder = Builder.Object(clrType, ConfigurationSource.Explicit)!;
@@ -285,7 +319,22 @@ namespace GraphZen.TypeSystem
             return builder;
         }
 
+        public IUnionTypeBuilder<TUnion, TContext> Union<TUnion>(string name) where TUnion : notnull
+        {
+            var internalBuilder = Builder.Union(typeof(TUnion), ConfigurationSource.Explicit)!;
+            var builder = new UnionTypeBuilder<TUnion, TContext>(internalBuilder);
+            return builder;
+        }
+
         public IUnionTypeBuilder<object, TContext> Union(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            var internalBuilder = Builder.Union(clrType, ConfigurationSource.Explicit)!;
+            var builder = new UnionTypeBuilder<object, TContext>(internalBuilder);
+            return builder;
+        }
+
+        public IUnionTypeBuilder<object, TContext> Union(Type clrType, string name)
         {
             Check.NotNull(clrType, nameof(clrType));
             var internalBuilder = Builder.Union(clrType, ConfigurationSource.Explicit)!;
@@ -446,7 +495,23 @@ namespace GraphZen.TypeSystem
             return builder;
         }
 
+        public IEnumTypeBuilder<TEnum> Enum<TEnum>(string name) where TEnum : notnull
+        {
+            var internalBuilder = Builder.Enum(typeof(TEnum), ConfigurationSource.Explicit)!;
+            var builder = new EnumTypeBuilder<TEnum>(internalBuilder);
+            return builder;
+        }
+
+
         public IEnumTypeBuilder<string> Enum(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            var internalBuilder = Builder.Enum(clrType, ConfigurationSource.Explicit)!;
+            var builder = new EnumTypeBuilder<string>(internalBuilder);
+            return builder;
+        }
+
+        public IEnumTypeBuilder<string> Enum(Type clrType, string name)
         {
             Check.NotNull(clrType, nameof(clrType));
             var internalBuilder = Builder.Enum(clrType, ConfigurationSource.Explicit)!;
@@ -538,7 +603,22 @@ namespace GraphZen.TypeSystem
             return builder;
         }
 
+        public IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>(string name) where TInterface : notnull
+        {
+            var internalBuilder = Builder.Interface(typeof(TInterface), ConfigurationSource.Explicit)!;
+            var builder = new InterfaceTypeBuilder<TInterface, TContext>(internalBuilder);
+            return builder;
+        }
+
         public IInterfaceTypeBuilder<object, TContext> Interface(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            var internalBuilder = Builder.Interface(clrType, ConfigurationSource.Explicit)!;
+            var builder = new InterfaceTypeBuilder<object, TContext>(internalBuilder);
+            return builder;
+        }
+
+        public IInterfaceTypeBuilder<object, TContext> Interface(Type clrType, string name)
         {
             Check.NotNull(clrType, nameof(clrType));
             var internalBuilder = Builder.Interface(clrType, ConfigurationSource.Explicit)!;
@@ -631,7 +711,23 @@ namespace GraphZen.TypeSystem
             return builder;
         }
 
+        public IInputObjectTypeBuilder<TInputObject> InputObject<TInputObject>(string name) where TInputObject : notnull
+        {
+            var internalBuilder = Builder.InputObject(typeof(TInputObject), ConfigurationSource.Explicit)!;
+            var builder = new InputObjectTypeBuilder<TInputObject>(internalBuilder);
+            return builder;
+        }
+
+
         public IInputObjectTypeBuilder<object> InputObject(Type clrType)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            var internalBuilder = Builder.InputObject(clrType, ConfigurationSource.Explicit)!;
+            var builder = new InputObjectTypeBuilder<object>(internalBuilder);
+            return builder;
+        }
+
+        public IInputObjectTypeBuilder<object> InputObject(Type clrType, string name)
         {
             Check.NotNull(clrType, nameof(clrType));
             var internalBuilder = Builder.InputObject(clrType, ConfigurationSource.Explicit)!;
@@ -707,4 +803,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 12056203023732778951
+// Source Hash Code: 13124509935681378519

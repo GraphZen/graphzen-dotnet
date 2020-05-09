@@ -1,3 +1,6 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 #nullable enable
 
 using System;
@@ -19,9 +22,11 @@ namespace GraphZen.TypeSystem
 
 
         IDirectiveBuilder<TDirective> Directive<TDirective>() where TDirective : notnull;
+        IDirectiveBuilder<TDirective> Directive<TDirective>(string name) where TDirective : notnull;
 
 
         IDirectiveBuilder<object> Directive(Type clrType);
+        IDirectiveBuilder<object> Directive(Type clrType, string name);
 
 
         ISchemaBuilder<TContext> UnignoreDirective<TDirective>() where TDirective : notnull;
@@ -74,9 +79,11 @@ namespace GraphZen.TypeSystem
 
 
         IObjectTypeBuilder<TObject, TContext> Object<TObject>() where TObject : notnull;
+        IObjectTypeBuilder<TObject, TContext> Object<TObject>(string name) where TObject : notnull;
 
 
         IObjectTypeBuilder<object, TContext> Object(Type clrType);
+        IObjectTypeBuilder<object, TContext> Object(Type clrType, string name);
 
 
         ISchemaBuilder<TContext> UnignoreObject<TObject>() where TObject : notnull;
@@ -106,9 +113,11 @@ namespace GraphZen.TypeSystem
 
 
         IUnionTypeBuilder<TUnion, TContext> Union<TUnion>() where TUnion : notnull;
+        IUnionTypeBuilder<TUnion, TContext> Union<TUnion>(string name) where TUnion : notnull;
 
 
         IUnionTypeBuilder<object, TContext> Union(Type clrType);
+        IUnionTypeBuilder<object, TContext> Union(Type clrType, string name);
 
 
         ISchemaBuilder<TContext> UnignoreUnion<TUnion>() where TUnion : notnull;
@@ -161,9 +170,11 @@ namespace GraphZen.TypeSystem
 
 
         IEnumTypeBuilder<TEnum> Enum<TEnum>() where TEnum : notnull;
+        IEnumTypeBuilder<TEnum> Enum<TEnum>(string name) where TEnum : notnull;
 
 
         IEnumTypeBuilder<string> Enum(Type clrType);
+        IEnumTypeBuilder<string> Enum(Type clrType, string name);
 
 
         ISchemaBuilder<TContext> UnignoreEnum<TEnum>() where TEnum : notnull;
@@ -193,9 +204,11 @@ namespace GraphZen.TypeSystem
 
 
         IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>() where TInterface : notnull;
+        IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>(string name) where TInterface : notnull;
 
 
         IInterfaceTypeBuilder<object, TContext> Interface(Type clrType);
+        IInterfaceTypeBuilder<object, TContext> Interface(Type clrType, string name);
 
 
         ISchemaBuilder<TContext> UnignoreInterface<TInterface>() where TInterface : notnull;
@@ -225,9 +238,11 @@ namespace GraphZen.TypeSystem
 
 
         IInputObjectTypeBuilder<TInputObject> InputObject<TInputObject>() where TInputObject : notnull;
+        IInputObjectTypeBuilder<TInputObject> InputObject<TInputObject>(string name) where TInputObject : notnull;
 
 
         IInputObjectTypeBuilder<object> InputObject(Type clrType);
+        IInputObjectTypeBuilder<object> InputObject(Type clrType, string name);
 
 
         ISchemaBuilder<TContext> UnignoreInputObject<TInputObject>() where TInputObject : notnull;
@@ -252,4 +267,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 11334223095421192098
+// Source Hash Code: 532535175313152028

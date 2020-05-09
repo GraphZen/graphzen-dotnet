@@ -92,11 +92,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         public void
             clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
-Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                // Action add = () => _.Union<UnionAnnotatedName>("Bar");
-                // add.Should().Throw<Exception>("x");
+            Schema.Create(_ =>
+                        {
+                            _.InputObject("Foo").Field("inputField", "Bar");
+                 Action add = () => _.Union<UnionAnnotatedName>("Bar");
+                 add.Should().Throw<Exception>("x");
             });
 
         }
