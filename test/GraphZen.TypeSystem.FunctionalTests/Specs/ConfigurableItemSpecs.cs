@@ -137,14 +137,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string adding_clr_type_to_item_with_name_changes_name_from_param = null;
             public const string adding_clr_type_with_name_annotation_to_item_with_name_param_changes_name_from_param = null;
             public const string cannot_add_clr_type_to_item_with_custom_name_if_name_conflicts = null;
-
-            public const string DEPRECATED_adding_clr_type_with_custom_name_will_change_name = null;
-            public const string DEPRECATED_adding_clr_type_with_custom_name_null_value_will_use_clr_name = null;
-            public const string DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts
-                = null;
-            public const string
-                DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts =
-                    null;
         }
 
         public class NamedTypeSetSpecs

@@ -381,41 +381,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts
-        ))]
-        [Fact(Skip = "Needs design")]
-        public void
-            subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts_()
-        {
-            Schema.Create(_ =>
-            {
-                _.Object(nameof(PocoNameAnnotated.AnnotatedName));
-                Action removeCustomName = () =>
-                {
-                    // _.Object("Foo").ClrType<PocoNameAnnotated>().RemoveName();
-                };
-                // TODO: ensure meaningful exception message
-                removeCustomName.Should().Throw<InvalidNameException>();
-            });
-        }
-
-
-        [Spec(nameof(DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
-        [Fact(Skip = "needs design")]
-        public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts_()
-        {
-            Schema.Create(_ =>
-            {
-                _.Object(nameof(Poco));
-                Action removeCustomName = () =>
-                {
-                    //_.Object("Foo").ClrType<Poco>().RemoveName();
-                };
-                // TODO: ensure meaningful exception message
-                removeCustomName.Should().Throw<DuplicateNameException>();
-            });
-        }
-
+        
         [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
         [Fact(Skip = "needs design")]
         public void clr_typed_item_can_have_clr_type_removed_()

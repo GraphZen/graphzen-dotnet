@@ -502,23 +502,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
-        [Fact(Skip = "TODO")]
-        public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts))]
-        [Fact(Skip = "TODO")]
-        public void
-            subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
     }
 
     // Move EnumsTests into a separate file to start writing tests

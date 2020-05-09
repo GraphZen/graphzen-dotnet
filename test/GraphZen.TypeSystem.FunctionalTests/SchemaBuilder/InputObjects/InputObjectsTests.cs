@@ -386,23 +386,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
 
-        [Spec(nameof(DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts))]
-        [Fact(Skip = "needs design")]
-        public void subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_conflicts_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts
-        ))]
-        [Fact(Skip = "needs design")]
-        public void
-            subsequently_clr_typed_item_cannot_have_custom_named_removed_if_clr_type_name_annotation_conflicts_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
+        
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "needs design")]
