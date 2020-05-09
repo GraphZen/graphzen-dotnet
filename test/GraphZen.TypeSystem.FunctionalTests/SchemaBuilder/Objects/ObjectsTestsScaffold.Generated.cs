@@ -43,28 +43,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
-            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
-            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
         ))]
         [Fact(Skip = "TODO")]
@@ -132,4 +110,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
     }
 }
-// Source Hash Code: 1710815592573858258
+// Source Hash Code: 15657369454389534920

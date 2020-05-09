@@ -15,28 +15,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
     [NoReorder]
     public abstract class InterfacesTestsScaffold
     {
-        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
-            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
-            .DEPRECATED_subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            subsequently_clr_typed_item_cannot_have_custom_name_removed_if_clr_type_name_annotation_conflicts_with_type_identity_of_opposite_io_()
-        {
-            var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_with_custom_name_()
@@ -94,4 +72,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
     }
 }
-// Source Hash Code: 10485575518245232524
+// Source Hash Code: 5433951845806174338
