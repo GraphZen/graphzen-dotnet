@@ -121,7 +121,7 @@ namespace GraphZen.TypeSystem
             TypeResolver<TInterface, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface)value, (TContext)context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface) value, (TContext) context, info));
             return this;
         }
 
