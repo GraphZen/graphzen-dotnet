@@ -555,7 +555,7 @@ namespace GraphZen.TypeSystem.Internal
             if (!name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
-                                        TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateOrCreateBuilderForTypeWithInvalidName(name,
+                                        TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateTypeBuilderWithInvalidName(name,
                                             kind));
             }
         }

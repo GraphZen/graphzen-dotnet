@@ -30,8 +30,14 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalFieldBuilder? Field(string name,
             ConfigurationSource nameConfigurationSource,
-            ConfigurationSource configurationSource) =>
-            Definition.GetOrAddField(name, nameConfigurationSource, configurationSource)?.Builder;
+            ConfigurationSource configurationSource)
+        {
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateFieldBuilderWithInvalidName(name, Definition));
+            }
+            return Definition.GetOrAddField(name, nameConfigurationSource, configurationSource)?.Builder;
+        }
 
         protected void ConfigureOutputFields()
         {
@@ -41,8 +47,6 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
-            // ReSharper disable once PossibleNullReferenceException
-
 
             var fieldMembers = Definition.ClrType.GetMembers(flags)
                 .Where(_ => !(_ is MethodInfo method) || method.DeclaringType != typeof(object) &&
@@ -286,6 +290,9 @@ namespace GraphZen.TypeSystem.Internal
 
             return RemoveField(field, configurationSource);
         }
+
+        public bool RemoveField(string name, ConfigurationSource configurationSource) => 
+            Definition.TryGetField(name, out var field) && RemoveField(field, configurationSource);
 
         public bool RemoveField(FieldDefinition field, ConfigurationSource configurationSource)
         {

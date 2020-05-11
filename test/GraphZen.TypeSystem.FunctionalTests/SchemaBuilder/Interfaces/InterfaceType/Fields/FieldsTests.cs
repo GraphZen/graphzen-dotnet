@@ -9,7 +9,7 @@ using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfaceType.Fields
 {
     [NoReorder]
     public class FieldsTests
@@ -18,8 +18,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
-            var schema = Schema.Create(_ => _.FromSchema(@"type Foo { bar: String }"));
-            schema.GetObject("Foo").HasField("bar").Should().BeTrue();
+            var schema = Schema.Create(_ => _.FromSchema(@"interface Foo { bar: String }"));
+            schema.GetInterface("Foo").HasField("bar").Should().BeTrue();
         }
 
 
@@ -27,8 +27,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
-            var schema = Schema.Create(_ => _.FromSchema(@"extend type Foo { bar: String }"));
-            schema.GetObject("Foo").HasField("bar").Should().BeTrue();
+            var schema = Schema.Create(_ => _.FromSchema(@"extend interface Foo { bar: String }"));
+            schema.GetInterface("Foo").HasField("bar").Should().BeTrue();
         }
 
 
@@ -36,8 +36,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact]
         public void named_item_can_be_added_()
         {
-            var schema = Schema.Create(_ => { _.Object("Foo").Field("foo", "String"); });
-            schema.GetObject("Foo").HasField("foo").Should().BeTrue();
+            var schema = Schema.Create(_ => { _.Interface("Foo").Field("foo", "String"); });
+            schema.GetInterface("Foo").HasField("foo").Should().BeTrue();
         }
 
 
@@ -47,7 +47,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         {
             Schema.Create(_ =>
             {
-                var foo = _.Object("Foo");
+                var foo = _.Interface("Foo");
                 Action add = () => foo.Field(null!);
                 add.Should().ThrowArgumentNullException("name");
             });
@@ -63,10 +63,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         {
             Schema.Create(_ =>
             {
-                var foo = _.Object("Foo");
+                var foo = _.Interface("Foo");
                 Action add = () => foo.Field(name);
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    $"Cannot get or create GraphQL field builder for field \"{name}\" on object Foo. The field name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Cannot get or create GraphQL field builder for field \"{name}\" on interface Foo. The field name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -75,8 +75,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact]
         public void named_item_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.Object("Foo").Field("foo", "String", f => f.Name("bar")); });
-            var foo = schema.GetObject("Foo");
+            var schema = Schema.Create(_ => { _.Interface("Foo").Field("foo", "String", f => f.Name("bar")); });
+            var foo = schema.GetInterface("Foo");
             foo.HasField("foo").Should().BeFalse();
             foo.HasField("bar").Should().BeTrue();
         }
@@ -88,7 +88,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo").Field("bar", "String", f =>
+                _.Interface("Foo").Field("bar", "String", f =>
                 {
                     Action rename = () => f.Name(null!);
                     rename.Should().ThrowArgumentNullException("name");
@@ -106,11 +106,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo").Field("bar", "String", f =>
+                _.Interface("Foo").Field("bar", "String", f =>
                 {
                     Action rename = () => f.Name(name);
                     rename.Should().Throw<InvalidNameException>().WithMessage(
-                        $"Cannot rename field bar on object Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                        $"Cannot rename field bar on interface Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
                 });
             });
         }
@@ -122,13 +122,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo")
+                _.Interface("Foo")
                     .Field("bar", "String")
                     .Field("baz", "String", f =>
                     {
                         Action rename = () => f.Name("bar");
                         rename.Should().Throw<DuplicateNameException>().WithMessage(
-                            "Cannot rename field baz to \"bar\": Object Foo already contains a field named \"bar\".");
+                            "Cannot rename field baz to \"bar\": Interface Foo already contains a field named \"bar\".");
                     });
             });
         }
@@ -138,8 +138,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         [Fact]
         public void named_item_can_be_removed_()
         {
-            var schema = Schema.Create(_ => { _.Object("Foo").Field("field", "String").RemoveField("field"); });
-            schema.GetObject("Foo").HasField("field").Should().BeFalse();
+            var schema = Schema.Create(_ => { _.Interface("Foo").Field("field", "String").RemoveField("field"); });
+            schema.GetInterface("Foo").HasField("field").Should().BeFalse();
         }
 
 
@@ -149,7 +149,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         {
             Schema.Create(_ =>
             {
-                var foo = _.Object("Foo").Field("field", "String");
+                var foo = _.Interface("Foo").Field("field", "String");
                 Action remove = () => foo.RemoveField(null!);
                 remove.Should().ThrowArgumentNullException("name");
             });

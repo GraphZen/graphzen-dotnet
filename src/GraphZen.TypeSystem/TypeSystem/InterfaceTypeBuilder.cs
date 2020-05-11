@@ -99,7 +99,13 @@ namespace GraphZen.TypeSystem
             Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?
                 .FieldType(typeof(TField));
             return this;
+        }
 
+        public IInterfaceTypeBuilder<TInterface, TContext> RemoveField(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.RemoveField(name, ConfigurationSource.Explicit);
+            return this;
         }
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(string name,
@@ -147,7 +153,7 @@ namespace GraphZen.TypeSystem
             TypeResolver<TInterface, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface)value, (TContext)context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface) value, (TContext) context, info));
             return this;
         }
 

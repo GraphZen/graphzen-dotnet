@@ -123,6 +123,10 @@ namespace GraphZen.TypeSystem
         public bool SetName(string name, ConfigurationSource configurationSource)
         {
             Check.NotNull(name, nameof(name));
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, this.DeclaringType));
+            }
             if (!configurationSource.Overrides(_nameConfigurationSource))
             {
                 return false;

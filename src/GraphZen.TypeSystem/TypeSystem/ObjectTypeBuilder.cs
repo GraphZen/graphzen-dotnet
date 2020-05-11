@@ -111,6 +111,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IObjectTypeBuilder<TObject, TContext> RemoveField(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.RemoveField(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(string name,
             Action<IFieldBuilder<TObject, TField, TContext>> configurator)
         {
