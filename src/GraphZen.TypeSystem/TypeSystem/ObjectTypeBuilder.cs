@@ -68,6 +68,15 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IObjectTypeBuilder<TObject, TContext> Field(string name, string type)
+        {
+            Check.NotNull(name, nameof(name));
+            Check.NotNull(type, nameof(type));
+            Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type);
+            return this;
+
+        }
+
         public IFieldBuilder<TObject, object, TContext> Field(string name)
         {
             Check.NotNull(name, nameof(name));
@@ -76,13 +85,19 @@ namespace GraphZen.TypeSystem
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field(string name, string type,
-            Action<IFieldBuilder<TObject, object?, TContext>>? configurator = null)
+            Action<IFieldBuilder<TObject, object?, TContext>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
+            Check.NotNull(configurator, nameof(configurator));
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
             configurator?.Invoke(new FieldBuilder<TObject, object?, TContext>(ib));
             return this;
+        }
+
+        public IObjectTypeBuilder<TObject, TContext> Field<TField>(Expression<Func<TObject, TField>> selector)
+        {
+            throw new NotImplementedException();
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(string name)
@@ -105,12 +120,13 @@ namespace GraphZen.TypeSystem
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(Expression<Func<TObject, TField>> selector,
-            Action<IFieldBuilder<TObject, TField, TContext>>? configurator = null)
+            Action<IFieldBuilder<TObject, TField, TContext>> configurator)
         {
             Check.NotNull(selector, nameof(selector));
+            Check.NotNull(configurator, nameof(configurator));
             var property = selector.GetPropertyInfoFromExpression();
             var fb = Builder.Field(property, ConfigurationSource.Explicit)!;
-            configurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(fb));
+            configurator(new FieldBuilder<TObject, TField, TContext>(fb));
             return this;
         }
 

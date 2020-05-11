@@ -57,6 +57,14 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IInterfaceTypeBuilder<TInterface, TContext> Field(string name, string type)
+        {
+            Check.NotNull(name, nameof(name));
+            Check.NotNull(type, nameof(type));
+            Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type);
+            return this;
+        }
+
         public IFieldBuilder<TInterface, object, TContext> Field(string name)
         {
             Check.NotNull(name, nameof(name));
@@ -65,14 +73,22 @@ namespace GraphZen.TypeSystem
         }
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field(string name, string type,
-            Action<IFieldBuilder<TInterface, object?, TContext>>? configurator = null)
+            Action<IFieldBuilder<TInterface, object?, TContext>> configurator)
 
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
-            // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
+            Check.NotNull(configurator, nameof(configurator));
             var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
-            configurator?.Invoke(new FieldBuilder<TInterface, object?, TContext>(fb));
+            configurator(new FieldBuilder<TInterface, object?, TContext>(fb));
+            return this;
+        }
+
+        public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(Expression<Func<TInterface, TField>> selector)
+        {
+            Check.NotNull(selector, nameof(selector));
+            var fieldProp = selector.GetPropertyInfoFromExpression();
+            Builder.Field(fieldProp, ConfigurationSource.Explicit);
             return this;
         }
 
@@ -99,12 +115,13 @@ namespace GraphZen.TypeSystem
 
         public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(
             Expression<Func<TInterface, TField>> selector,
-            Action<IFieldBuilder<TInterface, TField, TContext>>? configurator = null)
+            Action<IFieldBuilder<TInterface, TField, TContext>> configurator)
         {
             Check.NotNull(selector, nameof(selector));
+            Check.NotNull(configurator, nameof(configurator));
             var fieldProp = selector.GetPropertyInfoFromExpression();
             var fb = Builder.Field(fieldProp, ConfigurationSource.Explicit)!;
-            configurator?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
+            configurator(new FieldBuilder<TInterface, TField, TContext>(fb));
             return this;
         }
 
