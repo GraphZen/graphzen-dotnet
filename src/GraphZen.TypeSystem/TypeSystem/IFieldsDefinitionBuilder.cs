@@ -11,7 +11,8 @@ namespace GraphZen.TypeSystem
 {
     public interface IFieldsDefinitionBuilder<out TBuilder, TSource, TContext> where TContext : GraphQLContext
     {
-        TBuilder Field<TField>(string name, Action<IFieldBuilder<TSource, TField, TContext>>? configurator = null);
+        TBuilder Field<TField>(string name);
+        TBuilder Field<TField>(string name, Action<IFieldBuilder<TSource, TField, TContext>> configurator);
 
         TBuilder Field(string name, Action<IFieldBuilder<TSource, object, TContext>> configurator);
 

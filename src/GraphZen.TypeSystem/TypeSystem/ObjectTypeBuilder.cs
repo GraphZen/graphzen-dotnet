@@ -80,20 +80,27 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
-            // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
             configurator?.Invoke(new FieldBuilder<TObject, object?, TContext>(ib));
             return this;
         }
 
-        public IObjectTypeBuilder<TObject, TContext> Field<TField>(string name,
-            Action<IFieldBuilder<TObject, TField, TContext>>? configurator = null)
+        public IObjectTypeBuilder<TObject, TContext> Field<TField>(string name)
         {
             Check.NotNull(name, nameof(name));
-            // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
+            Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)
+               ?.FieldType(typeof(TField));
+            return this;
+        }
+
+        public IObjectTypeBuilder<TObject, TContext> Field<TField>(string name,
+            Action<IFieldBuilder<TObject, TField, TContext>> configurator)
+        {
+            Check.NotNull(name, nameof(name));
+            Check.NotNull(configurator, nameof(configurator));
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)
                 ?.FieldType(typeof(TField))!;
-            configurator?.Invoke(new FieldBuilder<TObject, TField, TContext>(ib));
+            configurator(new FieldBuilder<TObject, TField, TContext>(ib));
             return this;
         }
 

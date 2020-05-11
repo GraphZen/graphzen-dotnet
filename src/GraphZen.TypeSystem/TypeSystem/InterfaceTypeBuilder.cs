@@ -77,14 +77,23 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(string name,
-            Action<IFieldBuilder<TInterface, TField, TContext>>? configurator = null)
+        public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(string name)
         {
             Check.NotNull(name, nameof(name));
-            // ReSharper disable once PossibleNullReferenceException -- because this is explicitly configured, should always return a value
+            Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?
+                .FieldType(typeof(TField));
+            return this;
+
+        }
+
+        public IInterfaceTypeBuilder<TInterface, TContext> Field<TField>(string name,
+            Action<IFieldBuilder<TInterface, TField, TContext>> configurator)
+        {
+            Check.NotNull(name, nameof(name));
+            Check.NotNull(configurator, nameof(configurator));
             var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?
                 .FieldType(typeof(TField))!;
-            configurator?.Invoke(new FieldBuilder<TInterface, TField, TContext>(fb));
+            configurator(new FieldBuilder<TInterface, TField, TContext>(fb));
             return this;
         }
 
@@ -121,7 +130,7 @@ namespace GraphZen.TypeSystem
             TypeResolver<TInterface, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface) value, (TContext) context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface)value, (TContext)context, info));
             return this;
         }
 
