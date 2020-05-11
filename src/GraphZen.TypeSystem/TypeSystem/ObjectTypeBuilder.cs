@@ -97,7 +97,10 @@ namespace GraphZen.TypeSystem
 
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(Expression<Func<TObject, TField>> selector)
         {
-            throw new NotImplementedException();
+            Check.NotNull(selector, nameof(selector));
+            var property = selector.GetPropertyInfoFromExpression();
+            Builder.Field(property, ConfigurationSource.Explicit);
+            return this;
         }
 
         public IObjectTypeBuilder<TObject, TContext> Field<TField>(string name)
