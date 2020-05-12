@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class InlineFragmentSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="InlineFragmentSyntax" /> nodes.</summary>
         public static IReadOnlyList<InlineFragmentSyntax> EmptyList { get; } =
             ImmutableList<InlineFragmentSyntax>.Empty;
@@ -36,6 +38,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveInlineFragment(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.InlineFragment;
+
+        #endregion
     }
 }
-// Source Hash Code: 14680320238481969411
+// Source Hash Code: 8013318486126305282

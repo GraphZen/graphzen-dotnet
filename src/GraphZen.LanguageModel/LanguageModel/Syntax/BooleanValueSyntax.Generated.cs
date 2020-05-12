@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class BooleanValueSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="BooleanValueSyntax" /> nodes.</summary>
         public static IReadOnlyList<BooleanValueSyntax> EmptyList { get; } = ImmutableList<BooleanValueSyntax>.Empty;
 
@@ -35,6 +37,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveBooleanValue(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.BooleanValue;
+
+        #endregion
     }
 }
-// Source Hash Code: 3310990908173356531
+// Source Hash Code: 10274682354687713746

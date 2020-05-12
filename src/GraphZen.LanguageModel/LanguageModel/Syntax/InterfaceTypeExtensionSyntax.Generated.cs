@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class InterfaceTypeExtensionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="InterfaceTypeExtensionSyntax" /> nodes.</summary>
         public static IReadOnlyList<InterfaceTypeExtensionSyntax> EmptyList { get; } =
             ImmutableList<InterfaceTypeExtensionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveInterfaceTypeExtension(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.InterfaceTypeExtension;
+
+        #endregion
     }
 }
-// Source Hash Code: 17527325691730639434
+// Source Hash Code: 2037038023318481023

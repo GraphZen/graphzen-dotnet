@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class NamedTypeSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="NamedTypeSyntax" /> nodes.</summary>
         public static IReadOnlyList<NamedTypeSyntax> EmptyList { get; } = ImmutableList<NamedTypeSyntax>.Empty;
 
@@ -35,6 +37,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveNamedType(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.NamedType;
+
+        #endregion
     }
 }
-// Source Hash Code: 12143621640462138763
+// Source Hash Code: 17444776496748685786

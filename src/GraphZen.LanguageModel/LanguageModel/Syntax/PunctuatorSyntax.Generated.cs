@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class PunctuatorSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="PunctuatorSyntax" /> nodes.</summary>
         public static IReadOnlyList<PunctuatorSyntax> EmptyList { get; } = ImmutableList<PunctuatorSyntax>.Empty;
 
@@ -35,6 +37,8 @@ namespace GraphZen.LanguageModel
             visitor.LeavePunctuator(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.Punctuator;
+
+        #endregion
     }
 }
-// Source Hash Code: 314486440673187483
+// Source Hash Code: 4988826476931858442

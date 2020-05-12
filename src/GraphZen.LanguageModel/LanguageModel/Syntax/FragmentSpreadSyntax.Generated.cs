@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class FragmentSpreadSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="FragmentSpreadSyntax" /> nodes.</summary>
         public static IReadOnlyList<FragmentSpreadSyntax> EmptyList { get; } =
             ImmutableList<FragmentSpreadSyntax>.Empty;
@@ -36,6 +38,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveFragmentSpread(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.FragmentSpread;
+
+        #endregion
     }
 }
-// Source Hash Code: 7242417447170022245
+// Source Hash Code: 866853411223021656

@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class ArgumentSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="ArgumentSyntax" /> nodes.</summary>
         public static IReadOnlyList<ArgumentSyntax> EmptyList { get; } = ImmutableList<ArgumentSyntax>.Empty;
 
@@ -35,6 +37,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveArgument(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.Argument;
+
+        #endregion
     }
 }
-// Source Hash Code: 8090764240680806311
+// Source Hash Code: 5250124607286683854

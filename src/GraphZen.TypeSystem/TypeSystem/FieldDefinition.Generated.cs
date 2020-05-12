@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem
 {
     public partial class FieldDefinition
     {
+        #region DictionaryAccessorGenerator
+
         [GraphQLIgnore]
         public ArgumentDefinition? FindArgument(string name)
             => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument) ? argument : null;
@@ -32,6 +34,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool TryGetArgument(string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
             => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
+
+        #endregion
     }
 }
-// Source Hash Code: 13903629181586050033
+// Source Hash Code: 575091896125264455

@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class DirectiveDefinitionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="DirectiveDefinitionSyntax" /> nodes.</summary>
         public static IReadOnlyList<DirectiveDefinitionSyntax> EmptyList { get; } =
             ImmutableList<DirectiveDefinitionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveDirectiveDefinition(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.DirectiveDefinition;
+
+        #endregion
     }
 }
-// Source Hash Code: 2045681909651308558
+// Source Hash Code: 3117641069492848491

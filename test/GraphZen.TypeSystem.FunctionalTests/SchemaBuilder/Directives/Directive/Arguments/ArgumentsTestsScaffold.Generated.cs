@@ -6,200 +6,101 @@
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Arguments
 {
-    // Move ArgumentsTests into a separate file to start writing tests
     [NoReorder]
-    public class ArgumentsTestsScaffold
+    public abstract class ArgumentsTestsScaffold
     {
-/*
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
-        [Fact]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
+        [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_()
         {
-            var schema = Schema.Create(_ => _.FromSchema(@"directive Foo { foo(foo: String): String }"));
-            schema.GetDirective("Foo").GetField("foo").HasArgument("foo").Should().BeTrue();
+            // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
-        [Fact(Skip = "needs impl")]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
+        [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
-            var schema = Schema.Create(_ => _.FromSchema(@"extend directive Foo { foo(foo: String): String }"));
-            schema.GetDirective("Foo").GetField("foo").HasArgument("foo").Should().BeTrue();
+            // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added))]
-        [Fact]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
+        [Fact(Skip = "TODO")]
         public void named_item_can_be_added_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Directive("Foo").Field("foo", "String", f => { f.Argument("foo", "String"); });
-            });
-            schema.GetDirective("Foo").GetField("foo").HasArgument("foo").Should().BeTrue();
+            // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
-        [Fact]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
+        [Fact(Skip = "TODO")]
         public void named_item_cannot_be_added_with_null_value_()
         {
-            Schema.Create(_ =>
-            {
-                _.Directive("Foo").Field("foo", "String", f =>
-                {
-                    new List<Action>
-                    {
-                        () => f.Argument(null!),
-                        () => f.Argument(null!, a => { }),
-                        () => f.Argument(null!, "String"),
-                        () => f.Argument(null!, "String", a => { }),
-                        () => f.Argument<string>(null!),
-                        () => f.Argument<string>(null!, a => { })
-                    }.ForEach(a => a.Should().ThrowArgumentNullException("name"));
-                });
-            });
+            // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
-        [Theory]
-        [InlineData("{name}")]
-        [InlineData("sdfa asf")]
-        [InlineData("sdf*(#&aasf")]
-        public void named_item_cannot_be_added_with_invalid_name_(string name)
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_added_with_invalid_name_()
         {
-            Schema.Create(_ =>
-            {
-                _.Directive("Foo").Field("foo", "String", f =>
-                {
-                    var foo = f.GetInfrastructure<IFieldDefinition>();
-                    new List<Action>
-                    {
-                        () => f.Argument(name),
-                        () => f.Argument(name, a => { }),
-                        () => f.Argument(name, "String"),
-                        () => f.Argument(name, "String", a => { }),
-                        () => f.Argument<string>(name),
-                        () => f.Argument<string>(name, a => { })
-                    }.ForEach(a => a.Should().Throw<InvalidNameException>()
-                        .WithMessage(
-                            $"Cannot create argument named \"{name}\" for {foo}: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.")
-                    );
-                });
-            });
+            // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_renamed))]
-        [Fact]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
+        [Fact(Skip = "TODO")]
         public void named_item_can_be_renamed_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Directive("Foo").Field("foo", "String",
-                    f => { f.Argument("foo", "String", a => { a.Name("bar"); }); });
-            });
-            var foo = schema.GetDirective("Foo").GetField("foo");
-            foo.HasArgument("foo").Should().BeFalse();
-            foo.HasArgument("bar").Should().BeTrue();
+            // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
-        [Fact]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
+        [Fact(Skip = "TODO")]
         public void named_item_cannot_be_renamed_with_null_value_()
         {
-            Schema.Create(_ =>
-            {
-                _.Directive("Foo").Field("bar", "String", f =>
-                {
-                    f.Argument("foo", "String", a =>
-                    {
-                        Action rename = () => a.Name(null!);
-                        rename.Should().ThrowArgumentNullException("name");
-                    });
-                });
-            });
+            // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Theory]
-        [InlineData("{name}")]
-        [InlineData("sdfa asf")]
-        [InlineData("sdf*(#&aasf")]
-        public void named_item_cannot_be_renamed_with_an_invalid_name_(string name)
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_renamed_with_an_invalid_name_()
         {
-            Schema.Create(_ =>
-            {
-                _.Directive("Foo").Field("bar", "String", f =>
-                {
-                    f.Argument("foo", "String", a =>
-                    {
-                        Action rename = () => a.Name(name);
-                        rename.Should().Throw<InvalidNameException>().WithMessage(
-                            $"Cannot rename argument foo on field bar on directive Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
-                    });
-                });
-            });
+            // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
-        [Fact]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
+        [Fact(Skip = "TODO")]
         public void named_item_cannot_be_renamed_if_name_already_exists_()
         {
-            Schema.Create(_ =>
-            {
-                _.Directive("Foo")
-                    .Field("foo", "String", f =>
-                    {
-                        f.Argument("foo", "String")
-                            .Argument("bar", "String", a =>
-                            {
-                                Action rename = () => a.Name("foo");
-                                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                                    "Cannot rename argument bar to \"foo\": Field foo on directive Foo already contains an argument named \"foo\".");
-                            });
-                    });
-            });
+            // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_removed))]
-        [Fact]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
+        [Fact(Skip = "TODO")]
         public void named_item_can_be_removed_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Directive("Foo")
-                    .Field("foo", "String", f => { f.Argument("foo", "String").RemoveArgument("foo"); });
-            });
-            schema.GetDirective("Foo").GetField("foo").HasArgument("foo").Should().BeFalse();
+            // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
-        [Fact]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
+        [Fact(Skip = "TODO")]
         public void named_item_cannot_be_removed_with_null_value_()
         {
-            Schema.Create(_ =>
-            {
-                _.Directive("Foo")
-                    .Field("foo", "String", f =>
-                    {
-                        f.Argument("foo", "String");
-                        Action remove = () => f.RemoveArgument(null!);
-                        remove.Should().ThrowArgumentNullException("name");
-                    });
-            });
+            // var schema = Schema.Create(_ => { });
         }
-*/
     }
 }
+// Source Hash Code: 13066595265148068545

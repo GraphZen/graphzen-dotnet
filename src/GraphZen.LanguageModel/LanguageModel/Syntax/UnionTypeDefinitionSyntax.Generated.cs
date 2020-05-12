@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class UnionTypeDefinitionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="UnionTypeDefinitionSyntax" /> nodes.</summary>
         public static IReadOnlyList<UnionTypeDefinitionSyntax> EmptyList { get; } =
             ImmutableList<UnionTypeDefinitionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveUnionTypeDefinition(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.UnionTypeDefinition;
+
+        #endregion
     }
 }
-// Source Hash Code: 12134052668063682064
+// Source Hash Code: 1747263443989169441

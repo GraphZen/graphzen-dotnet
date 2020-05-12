@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class DocumentSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="DocumentSyntax" /> nodes.</summary>
         public static IReadOnlyList<DocumentSyntax> EmptyList { get; } = ImmutableList<DocumentSyntax>.Empty;
 
@@ -35,6 +37,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveDocument(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.Document;
+
+        #endregion
     }
 }
-// Source Hash Code: 10454068453709949629
+// Source Hash Code: 14337528941514573856

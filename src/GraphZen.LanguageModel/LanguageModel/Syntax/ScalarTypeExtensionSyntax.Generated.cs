@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class ScalarTypeExtensionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="ScalarTypeExtensionSyntax" /> nodes.</summary>
         public static IReadOnlyList<ScalarTypeExtensionSyntax> EmptyList { get; } =
             ImmutableList<ScalarTypeExtensionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveScalarTypeExtension(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.ScalarTypeExtension;
+
+        #endregion
     }
 }
-// Source Hash Code: 14446346221429169881
+// Source Hash Code: 479490168980916756

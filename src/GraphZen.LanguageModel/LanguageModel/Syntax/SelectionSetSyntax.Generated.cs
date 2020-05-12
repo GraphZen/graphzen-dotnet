@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class SelectionSetSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="SelectionSetSyntax" /> nodes.</summary>
         public static IReadOnlyList<SelectionSetSyntax> EmptyList { get; } = ImmutableList<SelectionSetSyntax>.Empty;
 
@@ -35,6 +37,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveSelectionSet(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.SelectionSet;
+
+        #endregion
     }
 }
-// Source Hash Code: 14711244494505734860
+// Source Hash Code: 15602797527506733749

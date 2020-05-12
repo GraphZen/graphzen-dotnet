@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class VariableDefinitionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="VariableDefinitionSyntax" /> nodes.</summary>
         public static IReadOnlyList<VariableDefinitionSyntax> EmptyList { get; } =
             ImmutableList<VariableDefinitionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveVariableDefinition(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.VariableDefinition;
+
+        #endregion
     }
 }
-// Source Hash Code: 14968642693858348449
+// Source Hash Code: 15498494074050782124

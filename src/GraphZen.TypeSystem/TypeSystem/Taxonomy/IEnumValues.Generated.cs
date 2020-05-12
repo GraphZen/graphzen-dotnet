@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     public partial interface IEnumValues
     {
+        #region DictionaryAccessorGenerator
+
         [GraphQLIgnore]
         public EnumValue? FindValue(string name)
             => Values.TryGetValue(Check.NotNull(name, nameof(name)), out var value) ? value : null;
@@ -33,6 +35,9 @@ namespace GraphZen.TypeSystem.Taxonomy
         public bool TryGetValue(string name, [NotNullWhen(true)] out EnumValue? enumValue)
             => Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValue);
 
+        #endregion
+
+        #region DictionaryAccessorGenerator
 
         [GraphQLIgnore]
         public EnumValue? FindValue(object value)
@@ -50,6 +55,8 @@ namespace GraphZen.TypeSystem.Taxonomy
         [GraphQLIgnore]
         public bool TryGetValue(object value, [NotNullWhen(true)] out EnumValue? enumValue)
             => ValuesByValue.TryGetValue(Check.NotNull(value, nameof(value)), out enumValue);
+
+        #endregion
     }
 }
-// Source Hash Code: 3861102797183904239
+// Source Hash Code: 3666536348756886405

@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class FragmentDefinitionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="FragmentDefinitionSyntax" /> nodes.</summary>
         public static IReadOnlyList<FragmentDefinitionSyntax> EmptyList { get; } =
             ImmutableList<FragmentDefinitionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveFragmentDefinition(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.FragmentDefinition;
+
+        #endregion
     }
 }
-// Source Hash Code: 592493201392138357
+// Source Hash Code: 8499033139324409864

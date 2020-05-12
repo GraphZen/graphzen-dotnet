@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     public partial interface IInputFields
     {
+        #region DictionaryAccessorGenerator
+
         [GraphQLIgnore]
         public InputField? FindField(string name)
             => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out var field) ? field : null;
@@ -32,6 +34,8 @@ namespace GraphZen.TypeSystem.Taxonomy
         [GraphQLIgnore]
         public bool TryGetField(string name, [NotNullWhen(true)] out InputField? inputField)
             => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out inputField);
+
+        #endregion
     }
 }
-// Source Hash Code: 16329084266555694288
+// Source Hash Code: 8189360075445082336

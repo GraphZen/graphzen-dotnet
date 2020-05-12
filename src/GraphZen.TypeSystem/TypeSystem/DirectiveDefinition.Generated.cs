@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem
 {
     public partial class DirectiveDefinition
     {
+        #region DictionaryAccessorGenerator
+
         [GraphQLIgnore]
         public ArgumentDefinition? FindArgument(string name)
             => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument) ? argument : null;
@@ -32,6 +34,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool TryGetArgument(string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
             => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
+
+        #endregion
     }
 }
-// Source Hash Code: 13485011116237751542
+// Source Hash Code: 12492850903361786258

@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class FloatValueSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="FloatValueSyntax" /> nodes.</summary>
         public static IReadOnlyList<FloatValueSyntax> EmptyList { get; } = ImmutableList<FloatValueSyntax>.Empty;
 
@@ -35,6 +37,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveFloatValue(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.FloatValue;
+
+        #endregion
     }
 }
-// Source Hash Code: 13519715674869940831
+// Source Hash Code: 2221039615386693046

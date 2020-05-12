@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class ObjectFieldSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="ObjectFieldSyntax" /> nodes.</summary>
         public static IReadOnlyList<ObjectFieldSyntax> EmptyList { get; } = ImmutableList<ObjectFieldSyntax>.Empty;
 
@@ -35,6 +37,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveObjectField(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.ObjectField;
+
+        #endregion
     }
 }
-// Source Hash Code: 14448444830230752147
+// Source Hash Code: 2539027021630086450

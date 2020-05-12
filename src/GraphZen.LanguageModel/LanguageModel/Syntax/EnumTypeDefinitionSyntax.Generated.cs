@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class EnumTypeDefinitionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="EnumTypeDefinitionSyntax" /> nodes.</summary>
         public static IReadOnlyList<EnumTypeDefinitionSyntax> EmptyList { get; } =
             ImmutableList<EnumTypeDefinitionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveEnumTypeDefinition(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.EnumTypeDefinition;
+
+        #endregion
     }
 }
-// Source Hash Code: 15561264500292135156
+// Source Hash Code: 16599869137095596397

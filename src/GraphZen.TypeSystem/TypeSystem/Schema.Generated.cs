@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem
 {
     public partial class Schema
     {
+        #region SchemaTypeAccessorGenerator
+
         #region Enum type accessors
 
         [GraphQLIgnore]
@@ -277,6 +279,8 @@ namespace GraphZen.TypeSystem
         public bool HasUnion(string name) => HasType<UnionType>(Check.NotNull(name, nameof(name)));
 
         #endregion
+
+        #endregion
     }
 }
-// Source Hash Code: 3304468670377215125
+// Source Hash Code: 914166401815228749

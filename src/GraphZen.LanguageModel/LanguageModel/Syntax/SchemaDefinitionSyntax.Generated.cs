@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class SchemaDefinitionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="SchemaDefinitionSyntax" /> nodes.</summary>
         public static IReadOnlyList<SchemaDefinitionSyntax> EmptyList { get; } =
             ImmutableList<SchemaDefinitionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveSchemaDefinition(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.SchemaDefinition;
+
+        #endregion
     }
 }
-// Source Hash Code: 14692428173569863682
+// Source Hash Code: 12157336904156878439

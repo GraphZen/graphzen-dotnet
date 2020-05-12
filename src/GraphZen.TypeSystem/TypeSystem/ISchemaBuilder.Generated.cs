@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem
 {
     public partial interface ISchemaBuilder<TContext>
     {
+        #region SchemaBuilderInterfaceGenerator
+
         #region Directives
 
         IDirectiveBuilder<object> Directive(string name);
@@ -265,6 +267,8 @@ namespace GraphZen.TypeSystem
         ISchemaBuilder<TContext> RemoveInputObject(string name);
 
         #endregion
+
+        #endregion
     }
 }
-// Source Hash Code: 532535175313152028
+// Source Hash Code: 12760069989791575851

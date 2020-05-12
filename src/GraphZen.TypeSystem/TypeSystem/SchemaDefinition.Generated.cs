@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem
 {
     public partial class SchemaDefinition
     {
+        #region SchemaDefinitionTypeAccessorGenerator
+
         #region Enum type accessors
 
         public EnumTypeDefinition GetEnum(string name) => GetType<EnumTypeDefinition>(name);
@@ -219,6 +221,8 @@ namespace GraphZen.TypeSystem
         public bool HasUnion(string name) => HasType<UnionTypeDefinition>(Check.NotNull(name, nameof(name)));
 
         #endregion
+
+        #endregion
     }
 }
-// Source Hash Code: 9534903628448181254
+// Source Hash Code: 1642292703608712821

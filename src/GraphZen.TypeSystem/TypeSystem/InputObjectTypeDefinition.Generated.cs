@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem
 {
     public partial class InputObjectTypeDefinition
     {
+        #region DictionaryAccessorGenerator
+
         [GraphQLIgnore]
         public InputFieldDefinition? FindField(string name)
             => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out var field) ? field : null;
@@ -32,6 +34,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool TryGetField(string name, [NotNullWhen(true)] out InputFieldDefinition? inputFieldDefinition)
             => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out inputFieldDefinition);
+
+        #endregion
     }
 }
-// Source Hash Code: 16988459979255832750
+// Source Hash Code: 4791407932118527682

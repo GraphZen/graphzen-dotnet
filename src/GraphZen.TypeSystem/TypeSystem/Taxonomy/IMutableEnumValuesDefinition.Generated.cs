@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     public partial interface IMutableEnumValuesDefinition
     {
+        #region DictionaryAccessorGenerator
+
         [GraphQLIgnore]
         public EnumValueDefinition? FindValue(string name)
             => Values.TryGetValue(Check.NotNull(name, nameof(name)), out var value) ? value : null;
@@ -32,6 +34,8 @@ namespace GraphZen.TypeSystem.Taxonomy
         [GraphQLIgnore]
         public bool TryGetValue(string name, [NotNullWhen(true)] out EnumValueDefinition? enumValueDefinition)
             => Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValueDefinition);
+
+        #endregion
     }
 }
-// Source Hash Code: 17849246194405082003
+// Source Hash Code: 10019741925656070017

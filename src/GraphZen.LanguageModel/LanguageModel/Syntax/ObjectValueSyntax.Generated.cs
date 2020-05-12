@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class ObjectValueSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="ObjectValueSyntax" /> nodes.</summary>
         public static IReadOnlyList<ObjectValueSyntax> EmptyList { get; } = ImmutableList<ObjectValueSyntax>.Empty;
 
@@ -35,6 +37,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveObjectValue(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.ObjectValue;
+
+        #endregion
     }
 }
-// Source Hash Code: 12340551846865995902
+// Source Hash Code: 6141470460635066683

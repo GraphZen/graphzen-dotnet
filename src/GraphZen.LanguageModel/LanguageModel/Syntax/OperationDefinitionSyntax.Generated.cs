@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class OperationDefinitionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="OperationDefinitionSyntax" /> nodes.</summary>
         public static IReadOnlyList<OperationDefinitionSyntax> EmptyList { get; } =
             ImmutableList<OperationDefinitionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveOperationDefinition(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.OperationDefinition;
+
+        #endregion
     }
 }
-// Source Hash Code: 7024363426860240214
+// Source Hash Code: 1134590336068971523

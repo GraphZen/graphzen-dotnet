@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class ObjectTypeExtensionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="ObjectTypeExtensionSyntax" /> nodes.</summary>
         public static IReadOnlyList<ObjectTypeExtensionSyntax> EmptyList { get; } =
             ImmutableList<ObjectTypeExtensionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveObjectTypeExtension(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.ObjectTypeExtension;
+
+        #endregion
     }
 }
-// Source Hash Code: 7183770601499482962
+// Source Hash Code: 13756148523351973527

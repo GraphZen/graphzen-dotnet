@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     public partial interface IArguments
     {
+        #region DictionaryAccessorGenerator
+
         [GraphQLIgnore]
         public Argument? FindArgument(string name)
             => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument) ? argument : null;
@@ -32,6 +34,8 @@ namespace GraphZen.TypeSystem.Taxonomy
         [GraphQLIgnore]
         public bool TryGetArgument(string name, [NotNullWhen(true)] out Argument? argument)
             => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argument);
+
+        #endregion
     }
 }
-// Source Hash Code: 12291023640760127643
+// Source Hash Code: 12705553750028283125

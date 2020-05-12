@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class NonNullTypeSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="NonNullTypeSyntax" /> nodes.</summary>
         public static IReadOnlyList<NonNullTypeSyntax> EmptyList { get; } = ImmutableList<NonNullTypeSyntax>.Empty;
 
@@ -35,6 +37,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveNonNullType(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.NonNullType;
+
+        #endregion
     }
 }
-// Source Hash Code: 5934296307661625386
+// Source Hash Code: 4882949517960525151

@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem
 {
     public partial class EnumTypeDefinition
     {
+        #region DictionaryAccessorGenerator
+
         [GraphQLIgnore]
         public EnumValueDefinition? FindValue(string name)
             => Values.TryGetValue(Check.NotNull(name, nameof(name)), out var value) ? value : null;
@@ -32,6 +34,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool TryGetValue(string name, [NotNullWhen(true)] out EnumValueDefinition? enumValueDefinition)
             => Values.TryGetValue(Check.NotNull(name, nameof(name)), out enumValueDefinition);
+
+        #endregion
     }
 }
-// Source Hash Code: 10577438267092678930
+// Source Hash Code: 3309979234034442738

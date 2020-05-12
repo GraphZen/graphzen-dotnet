@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class ScalarTypeDefinitionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="ScalarTypeDefinitionSyntax" /> nodes.</summary>
         public static IReadOnlyList<ScalarTypeDefinitionSyntax> EmptyList { get; } =
             ImmutableList<ScalarTypeDefinitionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveScalarTypeDefinition(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.ScalarTypeDefinition;
+
+        #endregion
     }
 }
-// Source Hash Code: 10447623581801323683
+// Source Hash Code: 9627149467739323490

@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem
 {
     public partial class SchemaBuilder<TContext>
     {
+        #region SchemaBuilderGenerator
+
         #region Directives
 
         public IDirectiveBuilder<object> Directive(string name)
@@ -787,6 +789,8 @@ namespace GraphZen.TypeSystem
         }
 
         #endregion
+
+        #endregion
     }
 }
-// Source Hash Code: 8232450033716789021
+// Source Hash Code: 2238467807893346149

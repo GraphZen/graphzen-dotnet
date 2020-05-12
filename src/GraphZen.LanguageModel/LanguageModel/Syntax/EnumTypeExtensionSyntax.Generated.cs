@@ -17,6 +17,8 @@ namespace GraphZen.LanguageModel
 {
     public partial class EnumTypeExtensionSyntax
     {
+        #region SyntaxNodeGenerator
+
         /// <summary>Empty, read-only list of <see cref="EnumTypeExtensionSyntax" /> nodes.</summary>
         public static IReadOnlyList<EnumTypeExtensionSyntax> EmptyList { get; } =
             ImmutableList<EnumTypeExtensionSyntax>.Empty;
@@ -42,6 +44,8 @@ namespace GraphZen.LanguageModel
             visitor.LeaveEnumTypeExtension(this);
 
         public override SyntaxKind Kind { get; } = SyntaxKind.EnumTypeExtension;
+
+        #endregion
     }
 }
-// Source Hash Code: 13061845454144635832
+// Source Hash Code: 7182955556738891353
