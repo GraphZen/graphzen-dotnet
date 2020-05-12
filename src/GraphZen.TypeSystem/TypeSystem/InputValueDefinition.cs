@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem
             Builder = new InternalInputValueBuilder(this, schema.Builder);
             InputType = null!;
 
-            
+
         }
 
 
