@@ -261,6 +261,7 @@ namespace GraphZen.TypeSystem
         {
             if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))
             {
+
                 argument = new ArgumentDefinition(name, configurationSource, Builder.Schema,
                     configurationSource, this, null);
                 _arguments[name] = argument;

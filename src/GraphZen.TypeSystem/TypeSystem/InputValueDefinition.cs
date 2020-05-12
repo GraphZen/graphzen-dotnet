@@ -24,9 +24,11 @@ namespace GraphZen.TypeSystem
             ClrInfo = clrInfo;
             DeclaringMember = declaringMember;
             NameConfigurationSource = nameConfigurationSource;
-            Name = Check.NotNull(name, nameof(name));
+            Name = name;
             Builder = new InternalInputValueBuilder(this, schema.Builder);
             InputType = null!;
+
+            
         }
 
 

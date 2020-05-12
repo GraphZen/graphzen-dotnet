@@ -6,12 +6,12 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class FieldBuilder<TDeclaringType, TField, TContext> : IFieldBuilder<TDeclaringType, TField, TContext>,
-        IInfrastructure<InternalFieldBuilder>
+    public class FieldBuilder<TDeclaringType, TField, TContext> : IFieldBuilder<TDeclaringType, TField, TContext>
         where TContext : GraphQLContext
     {
         public FieldBuilder(InternalFieldBuilder builder)
@@ -97,15 +97,34 @@ namespace GraphZen.TypeSystem
             return new InputValueBuilder(ib);
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type,
-            Action<InputValueBuilder>? configurator = null)
+        public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
-            var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(type);
-            configurator?.Invoke(new InputValueBuilder(argBuilder));
+            Builder.Argument(name, ConfigurationSource.Explicit).Type(type);
             return this;
         }
+
+        public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type,
+            Action<InputValueBuilder> configurator)
+        {
+            Check.NotNull(name, nameof(name));
+            Check.NotNull(type, nameof(type));
+            Check.NotNull(configurator, nameof(configurator));
+            var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(type);
+            configurator(new InputValueBuilder(argBuilder));
+            return this;
+        }
+
+        public IFieldBuilder<TDeclaringType, TField, TContext> Argument<TArgument>(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArgument));
+            return this;
+
+        }
+
+        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveArgument(string name) => throw new NotImplementedException();
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
             Action<InputValueBuilder> configurator)
@@ -117,11 +136,11 @@ namespace GraphZen.TypeSystem
         }
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument<TArg>(string name,
-            Action<InputValueBuilder>? configurator = null)
+            Action<InputValueBuilder> configurator)
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArg));
-            configurator?.Invoke(new InputValueBuilder(argBuilder));
+            configurator(new InputValueBuilder(argBuilder));
             return this;
         }
 
@@ -169,6 +188,7 @@ namespace GraphZen.TypeSystem
             throw new NotImplementedException();
 
         InternalFieldBuilder IInfrastructure<InternalFieldBuilder>.Instance => Builder;
+        IFieldDefinition IInfrastructure<IFieldDefinition>.Instance => Builder.Definition;
 
         public IFieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false)
         {

@@ -6,14 +6,17 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public interface
-        IFieldBuilder<out TDeclaringType, in TField, TContext> : IAnnotableBuilder<
-                IFieldBuilder<TDeclaringType, TField, TContext>>,
-            IArgumentsDefinitionBuilder<IFieldBuilder<TDeclaringType, TField, TContext>>
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
+    public interface IFieldBuilder<out TDeclaringType, in TField, TContext> :
+        IAnnotableBuilder<IFieldBuilder<TDeclaringType, TField, TContext>>,
+        IArgumentsDefinitionBuilder<IFieldBuilder<TDeclaringType, TField, TContext>>,
+        IInfrastructure<IFieldDefinition>,
+        IInfrastructure<InternalFieldBuilder>
         where TContext : GraphQLContext
     {
         IFieldBuilder<TDeclaringType, object, TContext> FieldType(string type);
@@ -43,7 +46,6 @@ namespace GraphZen.TypeSystem
 
         IFieldBuilder<TDeclaringType, TField, TContext> Resolve(
             Func<TDeclaringType, dynamic, GraphQLContext, TField> resolver);
-
 
         IFieldBuilder<TDeclaringType, TField, TContext> Resolve(
             Func<TDeclaringType, dynamic, GraphQLContext, ResolveInfo, TField> resolver);
