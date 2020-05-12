@@ -30,8 +30,9 @@ namespace GraphZen.TypeSystem
 
         private readonly Lazy<DocumentSyntax> _sdlSyntax;
         private readonly Lazy<SchemaDefinitionSyntax> _syntax;
+
         [GenDictionaryAccessors("name", nameof(Directive))]
-        private ImmutableDictionary<string, Directive> DirectivesMap { get; }
+        private readonly ImmutableDictionary<string, Directive> _directives;
 
 
         public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType>? types = null) : base(Check
@@ -63,8 +64,8 @@ namespace GraphZen.TypeSystem
             var definedDirectives = schemaDefinition.GetDirectives()
                 .ToImmutableDictionary(_ => _.Name, _ => Directive.From(_, ResolveType));
 
-            DirectivesMap = SpecDirectives.All.RemoveAll(d => definedDirectives.ContainsKey(d.Name)).AddRange(definedDirectives.Values).ToImmutableDictionary(_ => _.Name);
-            Directives = DirectivesMap.Values.ToImmutableList();
+            _directives = SpecDirectives.All.RemoveAll(d => definedDirectives.ContainsKey(d.Name)).AddRange(definedDirectives.Values).ToImmutableDictionary(_ => _.Name);
+            Directives = _directives.Values.ToImmutableList();
 
             var definedTypes = schemaDefinition.Types
                 .Select(CreateType);

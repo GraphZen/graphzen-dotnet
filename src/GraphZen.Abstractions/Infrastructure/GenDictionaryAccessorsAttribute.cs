@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     internal class GenDictionaryAccessorsAttribute : Attribute
     {
         public string ValueName { get; }

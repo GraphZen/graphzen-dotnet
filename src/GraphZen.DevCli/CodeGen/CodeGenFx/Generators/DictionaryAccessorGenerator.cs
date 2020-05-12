@@ -13,21 +13,21 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 {
     internal class DictionaryAccessorGenerator : PartialTypeGenerator
     {
-        public DictionaryAccessorGenerator(PropertyInfo property,
+        public DictionaryAccessorGenerator(PropertyInfo member,
             GenDictionaryAccessorsAttribute attribute) :
-            base(property.DeclaringType ?? throw new NotImplementedException())
+            base(member.DeclaringType ?? throw new NotImplementedException())
         {
-            Property = property;
+            Member = member;
             Attribute = attribute;
         }
 
-        public PropertyInfo Property { get; }
+        public MemberInfo Member { get; }
+
         public GenDictionaryAccessorsAttribute Attribute { get; }
 
         public static IEnumerable<DictionaryAccessorGenerator> FromTypeProperties(Type type)
         {
-            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.DeclaredOnly |
-                                                        BindingFlags.Public))
+            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
                 var genAccessors = property.GetCustomAttribute<GenDictionaryAccessorsAttribute>();
                 if (genAccessors != null)
@@ -39,10 +39,12 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
         public override void Apply(StringBuilder csharp)
         {
-            var propertyName = Property.Name;
+            var propertyName = Member.Name;
             var keyNameCamelized = Attribute.KeyName.FirstCharToLower();
-            var keyType = Property.PropertyType.GetGenericArguments()[0].Name;
-            var valueType = Property.PropertyType.GetGenericArguments()[1].Name;
+            var memberType = Member is PropertyInfo p ? p.PropertyType :
+                Member is FieldInfo f ? f.FieldType : throw new NotImplementedException();
+            var keyType = memberType.GetGenericArguments()[0].Name;
+            var valueType = memberType.GetGenericArguments()[1].Name;
             var valueName = Attribute.ValueName;
             var valueNameCamelized = valueName.FirstCharToLower();
             var valueTypeCamelized = valueType.FirstCharToLower();
