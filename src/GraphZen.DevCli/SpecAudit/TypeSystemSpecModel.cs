@@ -168,6 +168,7 @@ namespace GraphZen.SpecAudit
 
             var directive = new Subject(nameof(Directive))
                 .WithChild(name)
+                .WithChild(argumentDefCollection)
                 .WithChild(new Subject("Repeatable")
                     .WithSpecs<UpdateableSpecs>()
                     .WithSpecs<SdlSpec>()
