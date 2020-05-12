@@ -56,7 +56,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
-            InternalInputValueBuilder fb = Builder.Field(name, ConfigurationSource.Explicit)?.Type(type)!;
+            InternalInputValueBuilder fb = Builder.Field(name, ConfigurationSource.Explicit)?.Type(type, ConfigurationSource.Explicit)!;
             inputFieldConfigurator?.Invoke(new InputValueBuilder(fb));
             return this;
         }
@@ -75,7 +75,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             var fb = Builder.Field(name, ConfigurationSource.Explicit)?
-                .Type(typeof(TField))!;
+                .Type(typeof(TField), ConfigurationSource.Explicit)!;
             inputFieldConfigurator?.Invoke(new InputValueBuilder(fb));
             return this;
         }

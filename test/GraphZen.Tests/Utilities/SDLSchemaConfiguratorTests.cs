@@ -714,7 +714,7 @@ namespace GraphZen.Tests.Utilities
             var testInterface = schema.GetInterface("TestInterface");
             var testType = schema.GetObject("TestType");
             var testScalar = schema.GetScalar("TestScalar");
-            var testDirective = schema.FindDirective("test");
+            var testDirective = schema.GetDirective("test");
 
 
             var restoredSchemaAST = Document(

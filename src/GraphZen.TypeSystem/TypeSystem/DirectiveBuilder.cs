@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 #nullable disable
@@ -40,18 +41,74 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> Argument(string name, string type,
-            Action<InputValueBuilder> configurator = null)
+        public IDirectiveBuilder<TDirective> RemoveArgument(string name)
         {
             Check.NotNull(name, nameof(name));
-            Check.NotNull(type, nameof(type));
-            var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(type);
-            configurator?.Invoke(new InputValueBuilder(argBuilder));
+            Builder.RemoveArgument(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder<TDirective>
-            Argument<TArg>(string name, Action<InputValueBuilder> configurator = null) =>
-            throw new NotImplementedException();
+        public IDirectiveBuilder<TDirective> Argument(string name, Action<InputValueBuilder> configurator)
+        {
+            Check.NotNull(name, nameof(name));
+            Check.NotNull(configurator, nameof(configurator));
+            var ib = Builder.Argument(name, ConfigurationSource.Explicit);
+            var b = new InputValueBuilder(ib);
+            configurator(b);
+            return this;
+        }
+
+        public InputValueBuilder Argument(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            var ab = Builder.Argument(name, ConfigurationSource.Explicit);
+            return new InputValueBuilder(ab);
+        }
+
+        public IDirectiveBuilder<TDirective> Argument(string name, string type)
+        {
+            Check.NotNull(name, nameof(name));
+            Check.NotNull(type, nameof(type));
+            Builder.Argument(name, ConfigurationSource.Explicit).Type(type, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder<TDirective> Argument(string name, string type, Action<InputValueBuilder> configurator)
+        {
+            Check.NotNull(name, nameof(name));
+            Check.NotNull(type, nameof(type));
+            Check.NotNull(configurator, nameof(configurator));
+            var ib = Builder.Argument(name, ConfigurationSource.Explicit).Type(type, ConfigurationSource.Explicit);
+            var builder = new InputValueBuilder(ib);
+            configurator(builder);
+            return this;
+        }
+
+        public IDirectiveBuilder<TDirective> Argument<TArgument>(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArgument), ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder<TDirective> Argument<TArgument>(string name, Action<InputValueBuilder> configurator)
+        {
+            Check.NotNull(name, nameof(name));
+            Check.NotNull(configurator, nameof(configurator));
+            var ib = Builder.Argument(name, ConfigurationSource.Explicit)
+                .Type(typeof(TArgument), ConfigurationSource.Explicit);
+            var b = new InputValueBuilder(ib);
+            configurator(b);
+            return this;
+        }
+
+
+        public IDirectiveBuilder<TDirective> IgnoreArgument(string name) => throw new NotImplementedException();
+
+        public IDirectiveBuilder<TDirective> UnignoreArgument(string name) => throw new NotImplementedException();
+
+        IDirectiveDefinition IInfrastructure<IDirectiveDefinition>.Instance => Builder.Definition;
+
+        InternalDirectiveBuilder IInfrastructure<InternalDirectiveBuilder>.Instance => Builder;
     }
 }

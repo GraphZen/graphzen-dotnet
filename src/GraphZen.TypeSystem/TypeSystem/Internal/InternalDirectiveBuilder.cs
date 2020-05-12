@@ -41,5 +41,10 @@ namespace GraphZen.TypeSystem.Internal
         {
             throw new NotImplementedException();
         }
+
+        public bool RemoveArgument(string name, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
