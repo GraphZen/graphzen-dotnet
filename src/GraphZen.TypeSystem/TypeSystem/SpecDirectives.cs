@@ -55,11 +55,6 @@ namespace GraphZen.TypeSystem
             }, null!, null);
 
 
-        public static IReadOnlyList<Directive> All { get; } = new List<Directive>
-        {
-            Deprecated,
-            Include,
-            Skip
-        }.ToImmutableList();
+        public static ImmutableList<Directive> All { get; } = ImmutableList.Create(Deprecated, Include, Skip);
     }
 }
