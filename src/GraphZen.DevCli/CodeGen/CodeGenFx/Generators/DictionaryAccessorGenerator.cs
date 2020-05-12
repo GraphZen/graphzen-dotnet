@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using GraphZen.Infrastructure;
@@ -13,7 +14,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 {
     internal class DictionaryAccessorGenerator : PartialTypeGenerator
     {
-        public DictionaryAccessorGenerator(PropertyInfo member,
+        private DictionaryAccessorGenerator(MemberInfo member,
             GenDictionaryAccessorsAttribute attribute) :
             base(member.DeclaringType ?? throw new NotImplementedException())
         {
@@ -27,12 +28,12 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
         public static IEnumerable<DictionaryAccessorGenerator> FromTypeProperties(Type type)
         {
-            foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
+            foreach (var member in type.GetMembers(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic).Where(_ => _ is PropertyInfo || _ is FieldInfo))
             {
-                var genAccessors = property.GetCustomAttribute<GenDictionaryAccessorsAttribute>();
+                var genAccessors = member.GetCustomAttribute<GenDictionaryAccessorsAttribute>();
                 if (genAccessors != null)
                 {
-                    yield return new DictionaryAccessorGenerator(property, genAccessors);
+                    yield return new DictionaryAccessorGenerator(member, genAccessors);
                 }
             }
         }
