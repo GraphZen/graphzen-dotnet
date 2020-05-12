@@ -583,7 +583,9 @@ namespace GraphZen.TypeSystem
 
 
         private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
+
         [GraphQLIgnore] public IReadOnlyList<ObjectType> Objects => _objects.Value;
+
         [GraphQLIgnore] public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
 
         [GraphQLIgnore]

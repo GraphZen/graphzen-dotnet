@@ -135,7 +135,10 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                         {
                             foreach (var task in tasks)
                             {
-                                task.Apply(type);
+                                type.Region(task.GetType().Name, r =>
+                                {
+                                    task.Apply(r);
+                                });
                             }
                         });
                     }
