@@ -18,7 +18,11 @@ namespace GraphZen.Infrastructure
             internal static string DuplicateType(TypeIdentity identity, string newName, TypeIdentity existing) =>
                 $"Cannot rename {identity.Definition?.ToString() ?? identity.Name} to \"{newName}\", {existing.Definition?.ToString() ?? existing.ToString()} already exists. All GraphQL type names must be unique.";
             internal static string DuplicateField(IFieldDefinition field, string name) => $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
-
+            internal static string DuplicateArgument(IArgumentDefinition argument, string name)
+            {
+                var parent = argument.DeclaringMember is IFieldDefinition fd ? $"{fd} on {fd.DeclaringType}" : argument.DeclaringMember.ToString();
+                return $"Cannot rename {argument} to \"{name}\": {parent?.FirstCharToUpper()} already contains an argument named \"{name}\".";
+            }
         }
 
         public static class InvalidNameException
@@ -59,6 +63,15 @@ namespace GraphZen.Infrastructure
 
             public static string CannotRename(string name, INamed named, INamed parentDef) =>
                 $"Cannot rename {named} on {parentDef}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+
+            public static string CannotRenameArgument(IArgumentDefinition argument, string name)
+            {
+                var parent = argument.DeclaringMember is IFieldDefinition fd
+                    ? $"{fd} on {fd.DeclaringType}"
+                    : argument.DeclaringMember.ToString();
+                return
+                    $"Cannot rename {argument} on {parent}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+            }
 
 
             public static string CannotRemove(IMutableNamedTypeDefinition named) =>

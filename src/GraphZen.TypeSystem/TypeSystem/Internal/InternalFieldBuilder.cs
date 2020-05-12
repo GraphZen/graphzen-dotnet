@@ -218,6 +218,10 @@ namespace GraphZen.TypeSystem.Internal
             return RemoveArgument(argument, configurationSource);
         }
 
+
+        public bool RemoveArgument(string name, ConfigurationSource configurationSource) =>
+            Definition.TryGetArgument(name, out var arg) && RemoveArgument(arg, configurationSource);
+
         public bool RemoveArgument(ArgumentDefinition argument, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(argument.GetConfigurationSource()))

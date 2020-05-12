@@ -124,7 +124,13 @@ namespace GraphZen.TypeSystem
 
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveArgument(string name) => throw new NotImplementedException();
+        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveArgument(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.RemoveArgument(name, ConfigurationSource.Explicit);
+
+            return this;
+        }
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
             Action<InputValueBuilder> configurator)

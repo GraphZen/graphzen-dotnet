@@ -68,8 +68,7 @@ namespace GraphZen.TypeSystem
 
             if (TryGetArgument(name, out var existing) && existing != argument)
             {
-                throw new InvalidOperationException(
-                    $"Cannot rename {argument} to '{name}'. {this} already contains a field named '{name}'.");
+                throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.DuplicateArgument(argument, name));
             }
 
             _arguments.Remove(argument.Name);

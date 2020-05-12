@@ -98,33 +98,40 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_renamed))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void named_item_can_be_renamed_()
         {
-            var schema = Schema.Create(_ => { _.Interface("Foo").Field("foo", "String", f => f.Name("bar")); });
-            var foo = schema.GetInterface("Foo");
-            foo.HasField("foo").Should().BeFalse();
-            foo.HasField("bar").Should().BeTrue();
+            var schema = Schema.Create(_ =>
+            {
+                _.Interface("Foo").Field("foo", "String",
+                    f => { f.Argument("foo", "String", a => { a.Name("bar"); }); });
+            });
+            var foo = schema.GetInterface("Foo").GetField("foo");
+            foo.HasArgument("foo").Should().BeFalse();
+            foo.HasArgument("bar").Should().BeTrue();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
         {
             Schema.Create(_ =>
             {
                 _.Interface("Foo").Field("bar", "String", f =>
                 {
-                    Action rename = () => f.Name(null!);
-                    rename.Should().ThrowArgumentNullException("name");
+                    f.Argument("foo", "String", a =>
+                    {
+                        Action rename = () => a.Name(null!);
+                        rename.Should().ThrowArgumentNullException("name");
+                    });
                 });
             });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Theory(Skip = "todo")]
+        [Theory]
         [InlineData("{name}")]
         [InlineData("sdfa asf")]
         [InlineData("sdf*(#&aasf")]
@@ -134,50 +141,64 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
             {
                 _.Interface("Foo").Field("bar", "String", f =>
                 {
-                    Action rename = () => f.Name(name);
-                    rename.Should().Throw<InvalidNameException>().WithMessage(
-                        $"Cannot rename field bar on interface Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    f.Argument("foo", "String", a =>
+                    {
+                        Action rename = () => a.Name(name);
+                        rename.Should().Throw<InvalidNameException>().WithMessage(
+                            $"Cannot rename argument foo on field bar on interface Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    });
                 });
             });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void named_item_cannot_be_renamed_if_name_already_exists_()
         {
             Schema.Create(_ =>
             {
                 _.Interface("Foo")
-                    .Field("bar", "String")
-                    .Field("baz", "String", f =>
+                    .Field("foo", "String", f =>
                     {
-                        Action rename = () => f.Name("bar");
-                        rename.Should().Throw<DuplicateNameException>().WithMessage(
-                            "Cannot rename field baz to \"bar\": Interface Foo already contains a field named \"bar\".");
+                        f.Argument("foo", "String")
+                            .Argument("bar", "String", a =>
+                            {
+                                Action rename = () => a.Name("foo");
+                                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                                    "Cannot rename argument bar to \"foo\": Field foo on interface Foo already contains an argument named \"foo\".");
+                            });
                     });
             });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_removed))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void named_item_can_be_removed_()
         {
-            var schema = Schema.Create(_ => { _.Interface("Foo").Field("field", "String").RemoveField("field"); });
-            schema.GetInterface("Foo").HasField("field").Should().BeFalse();
+            var schema = Schema.Create(_ =>
+            {
+                _.Interface("Foo")
+                    .Field("foo", "String", f => { f.Argument("foo", "String").RemoveArgument("foo"); });
+            });
+            schema.GetInterface("Foo").GetField("foo").HasArgument("foo").Should().BeFalse();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void named_item_cannot_be_removed_with_null_value_()
         {
             Schema.Create(_ =>
             {
-                var foo = _.Interface("Foo").Field("field", "String");
-                Action remove = () => foo.RemoveField(null!);
-                remove.Should().ThrowArgumentNullException("name");
+                _.Interface("Foo")
+                    .Field("foo", "String", f =>
+                    {
+                        f.Argument("foo", "String");
+                        Action remove = () => f.RemoveArgument(null!);
+                        remove.Should().ThrowArgumentNullException("name");
+                    });
             });
         }
     }
