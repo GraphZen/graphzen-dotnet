@@ -23,6 +23,10 @@ namespace GraphZen.TypeSystem
         [GenDictionaryAccessors("name", nameof(Directive))]
         private readonly ImmutableDictionary<string, Directive> _directives;
 
+        [GenDictionaryAccessors("clrType", nameof(Directive))]
+        private readonly ImmutableDictionary<Type, Directive> _directivesByType;
+
+
 
         private readonly Lazy<IReadOnlyList<EnumType>> _enums;
 
@@ -83,6 +87,7 @@ namespace GraphZen.TypeSystem
             _directives = SpecDirectives.All.RemoveAll(d => definedDirectives.ContainsKey(d.Name))
                 .AddRange(definedDirectives.Values).ToImmutableDictionary(_ => _.Name);
             Directives = _directives.Values.ToImmutableList();
+            _directivesByType = Directives.Where(_ => _.ClrType != null).ToImmutableDictionary(_ => _.ClrType!);
 
             var definedTypes = schemaDefinition.Types
                 .Select(CreateType);

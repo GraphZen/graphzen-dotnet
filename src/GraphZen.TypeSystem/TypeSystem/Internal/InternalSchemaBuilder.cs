@@ -850,6 +850,7 @@ namespace GraphZen.TypeSystem.Internal
         public bool RemoveType(string name, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
 
+
         public bool RemoveType(NamedTypeDefinition type, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(type.GetConfigurationSource()))
@@ -858,6 +859,18 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             Schema.RemoveType(type);
+
+            return true;
+        }
+
+        public bool RemoveDirective(DirectiveDefinition definition, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(definition.GetConfigurationSource()))
+            {
+                return false;
+            }
+
+            Definition.RemoveDirective(definition);
 
             return true;
         }
@@ -1007,10 +1020,9 @@ namespace GraphZen.TypeSystem.Internal
             throw new NotImplementedException();
         }
 
-        public void RemoveDirective(string name, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveDirective(string name, ConfigurationSource configurationSource) =>
+            Definition.TryGetDirective(name, out var directive) && RemoveDirective(directive, configurationSource);
+        
 
         public void RemoveObject(Type clrType, ConfigurationSource configurationSource)
         {

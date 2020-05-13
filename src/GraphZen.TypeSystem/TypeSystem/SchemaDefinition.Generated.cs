@@ -223,6 +223,27 @@ namespace GraphZen.TypeSystem
         #endregion
 
         #endregion
+
+        #region DictionaryAccessorGenerator
+
+        [GraphQLIgnore]
+        public DirectiveDefinition? FindDirective(string name)
+            => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out var directive) ? directive : null;
+
+        [GraphQLIgnore]
+        public bool HasDirective(string name)
+            => _directives.ContainsKey(Check.NotNull(name, nameof(name)));
+
+        [GraphQLIgnore]
+        public DirectiveDefinition GetDirective(string name)
+            => FindDirective(Check.NotNull(name, nameof(name))) ??
+               throw new Exception($"{this} does not contain a {nameof(DirectiveDefinition)} with name '{name}'.");
+
+        [GraphQLIgnore]
+        public bool TryGetDirective(string name, [NotNullWhen(true)] out DirectiveDefinition? directiveDefinition)
+            => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out directiveDefinition);
+
+        #endregion
     }
 }
-// Source Hash Code: 1642292703608712821
+// Source Hash Code: 9880771895087418789

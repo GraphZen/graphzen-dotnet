@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
             name, nameConfigurationSource,
             schema, configurationSource, clrInfo, declaringMember)
         {
-            
+
         }
 
         private string DebuggerDisplay => $"argument {Name}";

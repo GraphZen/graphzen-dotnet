@@ -18,6 +18,7 @@ namespace GraphZen.Infrastructure
             internal static string DuplicateType(TypeIdentity identity, string newName, TypeIdentity existing) =>
                 $"Cannot rename {identity.Definition?.ToString() ?? identity.Name} to \"{newName}\", {existing.Definition?.ToString() ?? existing.ToString()} already exists. All GraphQL type names must be unique.";
             internal static string DuplicateField(IFieldDefinition field, string name) => $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
+            internal static string DuplicateDirective(IDirectiveDefinition directive, string name) => $"Cannot rename {directive} to \"{name}\": a directive named \"{name}\" already exists.";
             internal static string DuplicateInputField(IInputFieldDefinition field, string name) => $"Cannot rename {field} to \"{name}\": {field.DeclaringMember?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
             internal static string DuplicateArgument(IArgumentDefinition argument, string name)
             {

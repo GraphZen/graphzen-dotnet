@@ -740,9 +740,6 @@ namespace GraphZen.TypeSystem
             return _types.SingleOrDefault(_ => _.Name == name);
         }
 
-        public DirectiveDefinition? FindDirective(string name) =>
-            _directives.TryGetValue(name, out var directive) ? directive : null;
-
         public DirectiveDefinition? FindDirective(Type clrType) =>
             _directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
 
@@ -810,11 +807,9 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
-
-            if (_directives.TryGetValue(directive.Name, out var existing) && existing != directive)
+            if (TryGetDirective(name, out var existing) && !existing.Equals(directive))
             {
-                throw new InvalidOperationException(
-                    $"Cannot rename {directive} to '{name}'. {this} already contains a directive named '{name}'.");
+                throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.DuplicateDirective(directive, name));
             }
 
             _directives.Remove(directive.Name);
@@ -877,5 +872,13 @@ namespace GraphZen.TypeSystem
             _directives[directive.Name] = directive;
             return directive;
         }
+
+        public bool RemoveDirective(DirectiveDefinition definition)
+        {
+            _directives.Remove(definition.Name);
+            return true;
+        }
+
+
     }
 }

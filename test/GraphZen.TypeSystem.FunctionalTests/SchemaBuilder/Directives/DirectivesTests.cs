@@ -14,6 +14,21 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
     [NoReorder]
     public class DirectivesTests
     {
+        public class PlainClass {}
+
+        [GraphQLName(AnnotatedName)]
+        public class PlainClassNameAnnotated
+        {
+            public const string AnnotatedName = nameof(AnnotatedName);
+        }
+
+        [GraphQLName("(*&#")]
+        public class PlainClassInvalidNameAnnotation
+        {
+
+        }
+
+
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_()
@@ -118,34 +133,46 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
                 _.Directive("Bar");
                 var foo = _.Directive("Foo");
                 Action rename = () => foo.Name("Bar");
-                rename();
                 rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    "x");
+                    "Cannot rename directive Foo to \"Bar\": a directive named \"Bar\" already exists.");
             });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_removed))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_can_be_removed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive("Bar");
+                _.RemoveDirective("Bar");
+            });
+            schema.HasDirective("Bar").Should().BeFalse();
         }
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_cannot_be_removed_with_null_value_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action remove = () =>_.RemoveDirective((string)null!);
+                remove.Should().ThrowArgumentNullException("name");
+            });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
-        [Fact(Skip = "TODO")]
+        [Fact()]
         public void clr_typed_item_can_be_added_()
         {
-            // var schema = Schema.Create(_ => { });
+             var schema = Schema.Create(_ =>
+             {
+                 _.Directive(typeof(PlainClass));
+                 
+             });
         }
 
 

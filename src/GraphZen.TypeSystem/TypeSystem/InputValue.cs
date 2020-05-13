@@ -52,7 +52,7 @@ namespace GraphZen.TypeSystem
                         InputType)));
             DeclaringMember = declaringMember;
 
-            
+
         }
 
         [GraphQLName("type")]
