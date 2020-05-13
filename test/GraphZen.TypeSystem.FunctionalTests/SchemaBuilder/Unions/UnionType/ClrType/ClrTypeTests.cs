@@ -31,7 +31,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         {
         }
 
-        [Spec(nameof(clr_typed_item_can_have_clr_type_changed))]
+        [Spec(nameof(clr_type_can_be_changed))]
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
@@ -44,7 +44,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-        [Spec(nameof(clr_typed_item_can_have_clr_type_changed_via_type_param))]
+        [Spec(nameof(clr_type_can_be_changed_via_type_param))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_changed_via_type_param_()
         {
@@ -57,7 +57,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-        [Spec(nameof(clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
+        [Spec(nameof(clr_type_cannot_be_null))]
         [Fact]
         public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_()
         {
@@ -69,16 +69,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
             });
         }
 
-        [Spec(nameof(untyped_item_can_have_clr_type_added))]
-        [Fact(Skip = "todo")]
-        public void untyped_item_can_have_clr_type_added_()
-        {
-            var schema = Schema.Create(_ => { _.Union("Foo").ClrType<PlainAbstractClass>(); });
-            schema.GetUnion("Foo").ClrType.Should().Be<PlainAbstractClass>();
-        }
+        
 
 
-        [Spec(nameof(untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
+        [Spec(nameof(clr_type_should_be_unique))]
         [Fact(Skip = "todo")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
         {
@@ -92,7 +86,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-        [Spec(nameof(adding_clr_type_to_item_changes_name))]
+        [Spec(nameof(changing_clr_type_changes_name))]
         [Fact(Skip = "todo")]
         public void adding_clr_type_to_item_changes_name_()
         {
@@ -102,17 +96,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-        [Spec(nameof(adding_clr_type_to_item_via_type_param_changes_name))]
-        [Fact(Skip = "todo")]
-        public void adding_clr_type_to_item_via_type_param_changes_name_()
-        {
-            var schema = Schema.Create(_ => { _.Union("Foo").ClrType<PlainAbstractClass>(); });
-            schema.HasUnion("Foo").Should().BeFalse();
-            schema.GetUnion<PlainAbstractClass>().Name.Should().Be(nameof(PlainAbstractClass));
-        }
-
-
-        [Spec(nameof(adding_clr_type_with_name_annotation_to_item_changes_name))]
+                [Spec(nameof(changing_clr_type_with_name_annotation_changes_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_changes_name_()
         {
@@ -123,15 +107,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-        [Spec(nameof(adding_clr_type_with_name_annotation_to_item_via_type_pram_changes_name))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_type_with_name_annotation_to_item_via_type_pram_changes_name_()
-        {
-            var schema = Schema.Create(_ => { _.Union("Foo").ClrType<PlainAbstractClassAnnotatedName>(); });
-            schema.HasUnion("Foo").Should().BeFalse();
-            schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should()
-                .Be(PlainAbstractClassAnnotatedName.AnnotatedName);
-        }
+        
 
 
         [Spec(nameof(clr_type_with_conflicting_name_can_be_added_using_custom_name))]
@@ -162,34 +138,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-        [Spec(nameof(clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Union(nameof(PlainAbstractClass));
-                _.Union("Foo").ClrType<PlainAbstractClass>("Bar");
-            });
-            schema.GetUnion(nameof(PlainAbstractClass)).ClrType.Should().BeNull();
-            schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClass>();
-        }
-
-
-        [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Union(PlainAbstractClassAnnotatedName.AnnotatedName);
-                _.Union("Foo").ClrType<PlainAbstractClassAnnotatedName>("Bar");
-            });
-            schema.GetUnion(PlainAbstractClassAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
-            schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClassAnnotatedName>();
-        }
-
-        [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
+        
+                [Spec(nameof(clr_type_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
@@ -199,7 +149,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-        [Spec(nameof(clr_typed_item_with_type_removed_should_retain_clr_type_name))]
+        [Spec(nameof(clr_typed_item_when_type_removed_should_retain_name))]
         [Fact(Skip = "todo")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
         {
@@ -208,7 +158,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-        [Spec(nameof(clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
+        [Spec(nameof(clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
         {
@@ -217,7 +167,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-        [Spec(nameof(custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
+        [Spec(nameof(custom_named_clr_typed_item_when_type_removed_should_retain_custom_name))]
         [Fact(Skip = "TODO")]
         public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
         {

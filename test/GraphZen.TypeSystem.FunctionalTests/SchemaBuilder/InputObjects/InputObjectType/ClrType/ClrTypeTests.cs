@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
             public const string InvalidName = "abc @#$%^";
         }
 
-        [Spec(nameof(clr_typed_item_can_have_clr_type_changed))]
+        [Spec(nameof(clr_type_can_be_changed))]
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
@@ -42,7 +42,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
+        [Spec(nameof(clr_type_cannot_be_null))]
         [Fact]
         public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_()
         {
@@ -55,16 +55,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(untyped_item_can_have_clr_type_added))]
-        [Fact]
-        public void untyped_item_can_have_clr_type_added_()
-        {
-            var schema = Schema.Create(_ => { _.InputObject("Foo").ClrType<PlainClass>(); });
-            schema.HasInputObject<PlainClass>().Should().BeTrue();
-        }
-
-
-        [Spec(nameof(untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
+        
+        [Spec(nameof(clr_type_should_be_unique))]
         [Fact(Skip = "needs implementation")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
         {
@@ -77,7 +69,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
             });
         }
 
-        [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
+        [Spec(nameof(clr_type_can_be_removed))]
         [Fact(Skip = "needs implementation")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
@@ -87,7 +79,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(clr_typed_item_with_type_removed_should_retain_clr_type_name))]
+        [Spec(nameof(clr_typed_item_when_type_removed_should_retain_name))]
         [Fact(Skip = "needs implementation")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
         {
@@ -96,7 +88,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
+        [Spec(nameof(clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name))]
         [Fact(Skip = "needs implementation")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
         {
