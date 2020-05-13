@@ -15,6 +15,30 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
     [NoReorder]
     public abstract class DirectivesTestsScaffold
     {
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_cannot_be_added_with_null_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_invalid_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_cannot_be_added_with_invalid_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_duplicate_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_cannot_be_added_with_duplicate_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_renamed))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_renamed_()
@@ -47,4 +71,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         }
     }
 }
-// Source Hash Code: 8880951770302684440
+// Source Hash Code: 8823435487479449050
