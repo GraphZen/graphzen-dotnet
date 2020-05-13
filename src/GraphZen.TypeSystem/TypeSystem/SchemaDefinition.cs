@@ -740,10 +740,7 @@ namespace GraphZen.TypeSystem
             return _types.SingleOrDefault(_ => _.Name == name);
         }
 
-        public DirectiveDefinition? FindDirective(Type clrType) =>
-            _directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
-
-        public NamedTypeDefinition? FindType(Type clrType)
+            public NamedTypeDefinition? FindType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.ClrType == clrType);
         }
@@ -879,6 +876,38 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
+        [GraphQLIgnore]
+        public DirectiveDefinition? FindDirective<TDirective>() where TDirective : notnull
+                    => FindDirective(typeof(TDirective));
 
+        [GraphQLIgnore]
+        public bool HasDirective<TDirective>() where TDirective : notnull => HasDirective(typeof(TDirective));
+
+        [GraphQLIgnore]
+        public DirectiveDefinition GetDirective<TDirective>() where TDirective : notnull => GetDirective(typeof(TDirective));
+
+        [GraphQLIgnore]
+        public bool TryGetDirective<TDirective>([NotNullWhen(true)] out DirectiveDefinition? directive) => TryGetDirective(typeof(TDirective), out directive);
+
+
+        [GraphQLIgnore]
+        public DirectiveDefinition? FindDirective(Type clrType)
+            => this._directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
+
+        [GraphQLIgnore]
+        public bool HasDirective(Type clrType)
+            => TryGetDirective(clrType, out _);
+
+        [GraphQLIgnore]
+        public DirectiveDefinition GetDirective(Type clrType)
+            => FindDirective(Check.NotNull(clrType, nameof(clrType))) ??
+               throw new Exception($"{this} does not contain a {nameof(Directive)} with clrType '{clrType}'.");
+
+        [GraphQLIgnore]
+        public bool TryGetDirective(Type clrType, [NotNullWhen(true)] out DirectiveDefinition? directive)
+        {
+            directive = FindDirective(clrType);
+            return directive != null;
+        }
     }
 }

@@ -307,7 +307,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_removed_via_type_param))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_can_be_removed_via_type_param_()
         {
             var schema = Schema.Create(_ =>
@@ -320,18 +320,27 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_removed_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_cannot_be_removed_with_null_value_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action remove = () => _.RemoveDirective((Type)null!);
+                remove.Should().ThrowArgumentNullException("clrType");
+            });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
-        [Fact(Skip = "TODO")]
+        [Fact()]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive<PlainClass>().ClrType(typeof(PlainClassNameAnnotated));
+            });
+            schema.HasDirective<PlainClass>().Should().BeFalse();
+            schema.HasDirective<PlainClassNameAnnotated>().Should().BeTrue();
         }
 
 

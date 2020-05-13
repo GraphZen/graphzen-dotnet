@@ -38,6 +38,8 @@ namespace GraphZen.TypeSystem
             return new InputObjectTypeBuilder<object>(Builder);
         }
 
+        public IInputObjectTypeBuilder<object> ClrType(Type clrType, string name) => throw new NotImplementedException();
+
         public IInputObjectTypeBuilder<object> RemoveClrType()
         {
             Builder.RemoveClrType(ConfigurationSource.Explicit);
@@ -51,6 +53,8 @@ namespace GraphZen.TypeSystem
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
             return new InputObjectTypeBuilder<T>(Builder);
         }
+
+        public IInputObjectTypeBuilder<T> ClrType<T>(string name) => throw new NotImplementedException();
 
 
         public IInputObjectTypeBuilder<TInputObject> Field(string name, string type)

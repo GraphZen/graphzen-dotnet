@@ -11,14 +11,21 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
+
+
+
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
+
+
     public interface IInputObjectTypeBuilder<TInputObject> : IAnnotableBuilder<IInputObjectTypeBuilder<TInputObject>>,
         IInfrastructure<InternalInputObjectTypeBuilder>, IInfrastructure<IInputObjectTypeDefinition>
     {
         IInputObjectTypeBuilder<TInputObject> Description(string? description);
         IInputObjectTypeBuilder<object> ClrType(Type clrType);
+        IInputObjectTypeBuilder<object> ClrType(Type clrType, string name);
         IInputObjectTypeBuilder<object> RemoveClrType();
         IInputObjectTypeBuilder<T> ClrType<T>();
+        IInputObjectTypeBuilder<T> ClrType<T>(string name);
         IInputObjectTypeBuilder<TInputObject> Field(string name, string type);
         IInputObjectTypeBuilder<TInputObject> RemoveField(string name);
 

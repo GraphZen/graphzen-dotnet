@@ -20,10 +20,10 @@ namespace GraphZen.TypeSystem
 
         IUnionTypeBuilder<object, TContext> ClrType(Type clrType);
         IUnionTypeBuilder<object, TContext> ClrType(Type clrType, string name);
-        IUnionTypeBuilder<object, TContext> RemoveClrType();
-
         IUnionTypeBuilder<T, TContext> ClrType<T>();
         IUnionTypeBuilder<T, TContext> ClrType<T>(string name);
+        IUnionTypeBuilder<object, TContext> RemoveClrType();
+
 
 
         IUnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes);

@@ -1021,10 +1021,8 @@ namespace GraphZen.TypeSystem.Internal
             throw new NotImplementedException();
         }
 
-        public void RemoveDirective(Type clrType, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveDirective(Type clrType, ConfigurationSource configurationSource) =>
+            Definition.TryGetDirective(clrType, out var directive) && RemoveDirective(directive, configurationSource);
 
         public bool RemoveDirective(string name, ConfigurationSource configurationSource) =>
             Definition.TryGetDirective(name, out var directive) && RemoveDirective(directive, configurationSource);
