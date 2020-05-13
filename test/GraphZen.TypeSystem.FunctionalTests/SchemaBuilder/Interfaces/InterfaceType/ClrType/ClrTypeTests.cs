@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
         }
 
 
-        
+
 
 
         [Spec(nameof(clr_type_should_be_unique))]

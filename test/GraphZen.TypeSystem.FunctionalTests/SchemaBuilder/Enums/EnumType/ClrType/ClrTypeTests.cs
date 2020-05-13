@@ -53,7 +53,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.ClrTy
             });
         }
 
-        
+
 
 
         [Spec(nameof(clr_type_should_be_unique))]

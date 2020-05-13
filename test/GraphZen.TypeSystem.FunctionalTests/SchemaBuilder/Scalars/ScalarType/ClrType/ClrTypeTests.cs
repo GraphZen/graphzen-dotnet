@@ -54,7 +54,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
             });
         }
 
-        
+
 
 
         [Spec(nameof(clr_type_should_be_unique))]
@@ -114,7 +114,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
         }
 
 
-        
+
 
 
         [Spec(nameof(changing_clr_type_with_name_annotation_changes_name))]
@@ -127,10 +127,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
         }
 
 
-        
 
 
-        
+
+
 
 
         [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
@@ -147,7 +147,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
         }
 
 
-        
+
 
         [Spec(nameof(clr_type_can_be_removed))]
         [Fact(Skip = "needs impl")]

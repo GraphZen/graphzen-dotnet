@@ -69,8 +69,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
             });
         }
 
-        
-
 
         [Spec(nameof(clr_type_should_be_unique))]
         [Fact(Skip = "todo")]
@@ -96,7 +94,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-                [Spec(nameof(changing_clr_type_with_name_annotation_changes_name))]
+        [Spec(nameof(changing_clr_type_with_name_annotation_changes_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_changes_name_()
         {
@@ -105,9 +103,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
             schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should()
                 .Be(PlainAbstractClassAnnotatedName.AnnotatedName);
         }
-
-
-        
 
 
         [Spec(nameof(clr_type_with_conflicting_name_can_be_added_using_custom_name))]
@@ -138,8 +133,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-        
-                [Spec(nameof(clr_type_can_be_removed))]
+        [Spec(nameof(clr_type_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
@@ -175,6 +169,100 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
             schema.HasUnion("Foo").Should().BeTrue();
         }
 
+        [Spec(nameof(clr_type_can_be_added))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_can_be_added_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_type_can_be_added_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_can_be_added_with_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_type_can_be_added_via_type_param))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_can_be_added_via_type_param_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_type_can_be_added_via_type_param_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_can_be_added_via_type_param_with_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_type_can_be_changed_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_can_be_changed_with_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_type_can_be_changed_via_type_param_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_can_be_changed_via_type_param_with_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_type_name_should_be_unique))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_name_should_be_unique_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_type_name_annotation_should_be_unique))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_name_annotation_should_be_unique_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_type_name_annotation_should_be_valid))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_name_annotation_should_be_valid_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(custom_name_should_be_unique))]
+        [Fact(Skip = "TODO")]
+        public void custom_name_should_be_unique_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(custom_name_should_be_valid))]
+        [Fact(Skip = "TODO")]
+        public void custom_name_should_be_valid_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(custom_name_cannot_be_null))]
+        [Fact(Skip = "TODO")]
+        public void custom_name_cannot_be_null_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
 
     }
 }

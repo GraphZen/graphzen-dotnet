@@ -55,7 +55,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        
+
         [Spec(nameof(clr_type_should_be_unique))]
         [Fact(Skip = "needs implementation")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()

@@ -141,7 +141,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name = null;
             public const string clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name = null;
             public const string clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name = null;
-
+            public const string clr_typed_item_cannot_be_added_with_null_custom_name = null;
+            public const string clr_typed_item_cannot_be_added_with_invalid_custom_name = null;
+            public const string clr_typed_item_cannot_be_added_with_duplicate_custom_name = null;
+            // TODO: What about adding w/ custom name if CLR type has already been added? Should set custom name and/or throw appropriate errors, errors should reflect name update, not add 
 
             // Removing from collection with CLR Type
             public const string clr_typed_item_can_be_removed = null;
@@ -153,9 +156,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_with_name_attribute_can_be_renamed = null;
             public const string clr_typed_item_cannot_be_renamed_with_an_invalid_name = null;
             public const string clr_typed_item_cannot_be_renamed_if_name_already_exists = null;
-
-
-
         }
 
         public class ClrTypeSpecs
