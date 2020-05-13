@@ -669,6 +669,12 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalDirectiveBuilder? Directive(Type clrType, ConfigurationSource configurationSource)
         {
+            if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotatedName) &&
+                !annotatedName.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(clrType, annotatedName));
+            }
+
             if (clrType.IsIgnoredByDataAnnotation())
             {
                 Definition.IgnoreDirective(clrType, ConfigurationSource.DataAnnotation);
