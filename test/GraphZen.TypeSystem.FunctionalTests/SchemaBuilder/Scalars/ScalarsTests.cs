@@ -175,7 +175,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((string) null!);
+                Action add = () => _.Scalar((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -267,7 +267,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveScalar((string) null!);
+                Action remove = () => _.RemoveScalar((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -306,7 +306,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((Type) null!);
+                Action add = () => _.Scalar((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -358,7 +358,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
             Schema.Create(_ =>
             {
                 _.Scalar<PlainStruct>();
-                Action remove = () => _.RemoveScalar((Type) null!);
+                Action remove = () => _.RemoveScalar((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

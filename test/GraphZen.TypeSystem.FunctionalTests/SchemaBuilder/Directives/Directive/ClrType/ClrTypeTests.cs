@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
     [NoReorder]
     public class ClrTypeTests
     {
-        
+
     }
 }

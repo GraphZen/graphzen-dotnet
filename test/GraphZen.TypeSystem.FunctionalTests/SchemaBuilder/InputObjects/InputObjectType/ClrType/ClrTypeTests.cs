@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
     [NoReorder]
     public class ClrTypeTests
     {
-        
+
     }
 }

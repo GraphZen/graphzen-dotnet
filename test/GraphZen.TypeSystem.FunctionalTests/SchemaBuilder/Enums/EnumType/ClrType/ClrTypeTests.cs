@@ -10,6 +10,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.ClrTy
     [NoReorder]
     public class ClrTypeTests
     {
-        
+
     }
 }
