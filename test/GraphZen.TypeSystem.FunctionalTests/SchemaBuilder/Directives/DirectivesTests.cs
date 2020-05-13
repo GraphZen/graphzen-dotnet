@@ -63,7 +63,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((string) null!);
+                Action add = () => _.Directive((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -161,7 +161,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((string) null!);
+                Action remove = () => _.RemoveDirective((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -191,7 +191,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((Type) null!);
+                Action add = () => _.Directive((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -320,7 +320,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((Type) null!);
+                Action remove = () => _.RemoveDirective((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

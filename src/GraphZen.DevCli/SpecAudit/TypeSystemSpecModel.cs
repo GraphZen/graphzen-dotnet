@@ -85,9 +85,13 @@ namespace GraphZen.SpecAudit
             var implementsInterfaces = new Subject(nameof(ObjectType.Interfaces))
                 .WithSpecs<NamedTypeSetSpecs>();
 
+            var clrType = new Subject(nameof(IClrType.ClrType))
+                .WithSpecs<ClrTypeSpecs>();
+
             var objectType = new Subject(nameof(ObjectType))
                 .WithChild(description)
                 .WithChild(name)
+                .WithChild(clrType)
                 .WithChild(directiveAnnotations)
                 .WithChild(outputFields.WithChild(outputField))
                 .WithChild(implementsInterfaces);
@@ -101,6 +105,7 @@ namespace GraphZen.SpecAudit
             var scalar = new Subject(nameof(ScalarType))
                 .WithChild(description)
                 .WithChild(name)
+                .WithChild(clrType)
                 .WithChild(directiveAnnotations);
 
             var scalars = new Subject(nameof(Schema.Scalars))
@@ -112,6 +117,7 @@ namespace GraphZen.SpecAudit
             var interfaceType = new Subject(nameof(InterfaceType))
                 .WithChild(description)
                 .WithChild(name)
+                .WithChild(clrType)
                 .WithChild(directiveAnnotations)
                 .WithChild(outputFields.WithChild(outputField))
                 .WithChild(implementsInterfaces);
@@ -123,6 +129,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(interfaceType);
 
             var unionType = new Subject(nameof(UnionType)).WithChild(description).WithChild(name)
+                .WithChild(clrType)
                 .WithChild(directiveAnnotations)
                 .WithChild(new Subject(nameof(UnionType.MemberTypes))
                     .WithSpecs<SdlSpec>()
@@ -136,6 +143,7 @@ namespace GraphZen.SpecAudit
 
             var enumType = new Subject(nameof(EnumType))
                 .WithChild(name)
+                .WithChild(clrType)
                 .WithChild(directiveAnnotations)
                 .WithChild(description)
                 .WithChild(
@@ -155,6 +163,7 @@ namespace GraphZen.SpecAudit
             var inputObjectType = new Subject(nameof(InputObjectType))
                 .WithChild(description)
                 .WithChild(name)
+                .WithChild(clrType)
                 .WithChild(directiveAnnotations)
                 .WithChild(new Subject(nameof(InputObjectType.Fields))
                     .WithSpecs<NamedCollectionSpecs>()
@@ -168,6 +177,7 @@ namespace GraphZen.SpecAudit
 
             var directive = new Subject(nameof(Directive))
                 .WithChild(name)
+                .WithChild(clrType)
                 .WithChild(argumentDefCollection)
                 .WithChild(new Subject("Repeatable")
                     .WithSpecs<UpdateableSpecs>()
