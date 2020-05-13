@@ -10,6 +10,8 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
 {
@@ -282,7 +284,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
 
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
+        [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
         public void clr_typed_item_can_be_added_()
         {
@@ -292,7 +294,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
 
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_null_value))]
         [Fact]
         public void clr_typed_item_cannot_be_added_with_null_value_()
         {
@@ -304,7 +306,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
         [Fact]
         public void clr_typed_item_cannot_be_added_with_invalid_name_attribute_()
         {
@@ -312,12 +314,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             {
                 Action add = () => _.Enum<PlainEnumInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    $@"Cannot get or create GraphQL enum type builder with CLR enum 'PlainEnumInvalidNameAnnotation'. The name ""abc ()(*322*&%^"" specified in the GraphQLNameAttribute on the PlainEnumInvalidNameAnnotation CLR enum is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    @"Cannot get or create GraphQL enum type builder with CLR enum 'PlainEnumInvalidNameAnnotation'. The name ""abc ()(*322*&%^"" specified in the GraphQLNameAttribute on the PlainEnumInvalidNameAnnotation CLR enum is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_removed))]
+        [Spec(nameof(clr_typed_item_can_be_removed))]
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_removed_()
         {
@@ -330,7 +332,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_removed_via_type_param))]
+        [Spec(nameof(clr_typed_item_can_be_removed_via_type_param))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_removed_via_type_param_()
         {
@@ -343,7 +345,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_removed_with_null_value))]
+        [Spec(nameof(clr_typed_item_cannot_be_removed_with_null_value))]
         [Fact]
         public void clr_typed_item_cannot_be_removed_with_null_value_()
         {
@@ -356,7 +358,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
+        [Spec(nameof(clr_typed_item_can_have_clr_type_changed))]
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
@@ -366,7 +368,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
+        [Spec(nameof(clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
         [Fact]
         public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_()
         {
@@ -379,7 +381,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_removed))]
+        [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
@@ -388,7 +390,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_type_removed_should_retain_clr_type_name))]
+        [Spec(nameof(clr_typed_item_with_type_removed_should_retain_clr_type_name))]
         [Fact(Skip = "nees impl")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
         {
@@ -397,8 +399,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
+        [Spec(nameof(clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
         {
@@ -407,7 +408,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_renamed))]
+        [Spec(nameof(clr_typed_item_can_be_renamed))]
         [Fact]
         public void clr_typed_item_can_be_renamed_()
         {
@@ -416,7 +417,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_name_attribute_can_be_renamed))]
+        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
         [Fact]
         public void clr_typed_item_with_name_attribute_can_be_renamed_()
         {
@@ -425,7 +426,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
         [Theory]
         [InlineData("  xy")]
         [InlineData("")]
@@ -441,7 +442,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
         [Fact]
         public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
         {
@@ -456,7 +457,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.untyped_item_can_have_clr_type_added))]
+        [Spec(nameof(untyped_item_can_have_clr_type_added))]
         [Fact]
         public void untyped_item_can_have_clr_type_added_()
         {
@@ -465,7 +466,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
+        [Spec(nameof(untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
         [Fact(Skip = "needs impl")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
         {
@@ -478,8 +479,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             });
         }
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
-        [Fact()]
+        [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
+        [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
             var schema = Schema.Create(_ => { _.Enum<PlainEnum>(); });

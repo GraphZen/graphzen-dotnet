@@ -5,9 +5,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 {
@@ -30,7 +32,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.UniquelyInputOutputTypeCollectionSpecs
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "needs impl")]
         public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
@@ -44,7 +46,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.UniquelyInputOutputTypeCollectionSpecs
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
@@ -59,7 +61,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.UniquelyInputOutputTypeCollectionSpecs
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "todo")]
         public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
@@ -74,7 +76,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.UniquelyInputOutputTypeCollectionSpecs
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
         ))]
         [Fact(Skip = "TODO")]
@@ -90,7 +92,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.UniquelyInputOutputTypeCollectionSpecs
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
         public void
@@ -105,7 +107,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.UniquelyInputOutputTypeCollectionSpecs
+        [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
             .clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
         public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
@@ -114,7 +116,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -123,7 +125,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
@@ -132,7 +134,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
         [Fact]
         public void named_item_can_be_added_()
         {
@@ -141,7 +143,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
         [Fact]
         public void named_item_cannot_be_added_with_null_value_()
         {
@@ -153,7 +155,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
         [Theory]
         [InlineData("  ")]
         [InlineData(" #)(* ")]
@@ -169,7 +171,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_renamed))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
         [Fact]
         public void named_item_can_be_renamed_()
         {
@@ -179,7 +181,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
         [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
         {
@@ -192,7 +194,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
         [Theory]
         [InlineData(" 323")]
         [InlineData(" 32#()*3")]
@@ -209,7 +211,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
         [Fact]
         public void named_item_cannot_be_renamed_if_name_already_exists_()
         {
@@ -224,7 +226,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_removed))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_removed_()
         {
@@ -237,7 +239,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
         [Fact]
         public void named_item_cannot_be_removed_with_null_value_()
         {
@@ -250,7 +252,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added))]
+        [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
         public void clr_typed_item_can_be_added_()
         {
@@ -259,7 +261,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
+        [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
         [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
@@ -268,7 +270,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_null_value))]
         [Fact]
         public void clr_typed_item_cannot_be_added_with_null_value_()
         {
@@ -280,7 +282,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+        [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
         [Fact]
         public void clr_typed_item_cannot_be_added_with_invalid_name_attribute_()
@@ -294,7 +296,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+        [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_conflicting_name_can_be_added_with_custom_name))]
         [Fact]
         public void clr_typed_item_with_conflicting_name_can_be_added_with_custom_name_()
@@ -309,7 +311,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+        [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
         [Fact]
         public void clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name_()
@@ -324,7 +326,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+        [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name))]
         [Fact]
         public void clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name_()
@@ -339,7 +341,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+        [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name))]
         [Fact]
         public void clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name_()
@@ -354,7 +356,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+        [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name))]
         [Fact]
         public void clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name_()
@@ -364,7 +366,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+        [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name))]
         [Fact]
         public void clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name_()
@@ -374,7 +376,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_removed))]
+        [Spec(nameof(clr_typed_item_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_removed_()
         {
@@ -387,7 +389,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_removed_via_type_param))]
+        [Spec(nameof(clr_typed_item_can_be_removed_via_type_param))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_removed_via_type_param_()
         {
@@ -400,7 +402,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_removed_with_null_value))]
+        [Spec(nameof(clr_typed_item_cannot_be_removed_with_null_value))]
         [Fact]
         public void clr_typed_item_cannot_be_removed_with_null_value_()
         {
@@ -413,7 +415,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
+        [Spec(nameof(clr_typed_item_can_have_clr_type_changed))]
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
@@ -426,7 +428,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed_via_type_param))]
+        [Spec(nameof(clr_typed_item_can_have_clr_type_changed_via_type_param))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_changed_via_type_param_()
         {
@@ -439,8 +441,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
+        [Spec(nameof(clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
         [Fact]
         public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_()
         {
@@ -453,7 +454,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_removed))]
+        [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_removed_()
         {
@@ -463,7 +464,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+        [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_type_removed_should_retain_clr_type_name))]
         [Fact(Skip = "todo")]
         public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
@@ -473,7 +474,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+        [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
@@ -483,7 +484,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
+        [Spec(nameof(ClrTypedCollectionSpecs
             .custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
         [Fact(Skip = "TODO")]
         public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
@@ -493,7 +494,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_renamed))]
+        [Spec(nameof(clr_typed_item_can_be_renamed))]
         [Fact]
         public void clr_typed_item_can_be_renamed_()
         {
@@ -502,7 +503,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_with_name_attribute_can_be_renamed))]
+        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
         [Fact]
         public void clr_typed_item_with_name_attribute_can_be_renamed_()
         {
@@ -511,7 +512,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
         [Theory]
         [InlineData(" ")]
         [InlineData("")]
@@ -528,7 +529,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
         [Fact]
         public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
         {
@@ -543,7 +544,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.untyped_item_can_have_clr_type_added))]
+        [Spec(nameof(untyped_item_can_have_clr_type_added))]
         [Fact(Skip = "todo")]
         public void untyped_item_can_have_clr_type_added_()
         {
@@ -552,8 +553,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
+        [Spec(nameof(untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
         [Fact(Skip = "todo")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
         {
@@ -568,7 +568,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.adding_clr_type_to_item_changes_name))]
+        [Spec(nameof(adding_clr_type_to_item_changes_name))]
         [Fact(Skip = "todo")]
         public void adding_clr_type_to_item_changes_name_()
         {
@@ -581,7 +581,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.adding_clr_type_to_item_via_type_param_changes_name))]
+        [Spec(nameof(adding_clr_type_to_item_via_type_param_changes_name))]
         [Fact(Skip = "todo")]
         public void adding_clr_type_to_item_via_type_param_changes_name_()
         {
@@ -596,8 +596,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .adding_clr_type_with_name_annotation_to_item_changes_name))]
+        [Spec(nameof(adding_clr_type_with_name_annotation_to_item_changes_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_changes_name_()
         {
@@ -611,8 +610,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .adding_clr_type_with_name_annotation_to_item_via_type_pram_changes_name))]
+        [Spec(nameof(adding_clr_type_with_name_annotation_to_item_via_type_pram_changes_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_via_type_pram_changes_name_()
         {
@@ -626,8 +624,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_can_be_added_using_custom_name))]
+        [Spec(nameof(clr_type_with_conflicting_name_can_be_added_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
         {
@@ -641,8 +638,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
+        [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
         {
@@ -657,8 +653,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name))]
+        [Spec(nameof(clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_can_be_added_via_type_param_using_custom_name_()
         {
@@ -674,8 +669,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
-            .clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name))]
+        [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_can_be_added_via_type_param_using_custom_name_()
         {

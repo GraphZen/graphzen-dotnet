@@ -8,6 +8,8 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
 {
@@ -303,7 +305,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
+        [Spec(nameof(clr_typed_item_can_have_clr_type_changed))]
         [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
@@ -316,8 +318,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
+        [Spec(nameof(clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
         [Fact]
         public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_()
         {
@@ -409,7 +410,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.untyped_item_can_have_clr_type_added))]
+        [Spec(nameof(untyped_item_can_have_clr_type_added))]
         [Fact]
         public void untyped_item_can_have_clr_type_added_()
         {
@@ -418,8 +419,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
+        [Spec(nameof(untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
         [Fact(Skip = "needs impl")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
         {

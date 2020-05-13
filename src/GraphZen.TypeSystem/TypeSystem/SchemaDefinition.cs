@@ -21,15 +21,9 @@ namespace GraphZen.TypeSystem
     public partial class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
     {
         [GenDictionaryAccessors("name", nameof(Directive))]
-        private readonly Dictionary<string, DirectiveDefinition> _directives =
-            new Dictionary<string, DirectiveDefinition>();
-
-        private readonly Dictionary<string, ConfigurationSource> _ignoredDirectives =
-            new Dictionary<string, ConfigurationSource>();
-
-        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
-            new Dictionary<string, ConfigurationSource>();
-
+        private readonly Dictionary<string, DirectiveDefinition> _directives = new Dictionary<string, DirectiveDefinition>();
+        private readonly Dictionary<string, ConfigurationSource> _ignoredDirectives = new Dictionary<string, ConfigurationSource>();
+        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes = new Dictionary<string, ConfigurationSource>();
         private readonly List<TypeIdentity> _typeIdentities;
         private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
         private ConfigurationSource? _queryTypeConfigurationSource;
@@ -65,14 +59,8 @@ namespace GraphZen.TypeSystem
         }
 
         private string DebuggerDisplay { [UsedImplicitly] get; } = "schema";
-
-
         public InternalSchemaBuilder Builder { get; }
-
-
         public IReadOnlyList<NamedTypeDefinition> Types => _types;
-
-
         public ObjectTypeDefinition? QueryType { get; private set; }
 
         public bool SetQueryType(ObjectTypeDefinition? type, ConfigurationSource configurationSource)
@@ -740,7 +728,7 @@ namespace GraphZen.TypeSystem
             return _types.SingleOrDefault(_ => _.Name == name);
         }
 
-            public NamedTypeDefinition? FindType(Type clrType)
+        public NamedTypeDefinition? FindType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.ClrType == clrType);
         }
