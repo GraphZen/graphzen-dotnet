@@ -1022,7 +1022,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public bool RemoveDirective(string name, ConfigurationSource configurationSource) =>
             Definition.TryGetDirective(name, out var directive) && RemoveDirective(directive, configurationSource);
-        
+
 
         public void RemoveObject(Type clrType, ConfigurationSource configurationSource)
         {

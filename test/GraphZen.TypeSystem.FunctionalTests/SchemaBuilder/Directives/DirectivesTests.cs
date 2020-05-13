@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
     [NoReorder]
     public class DirectivesTests
     {
-        public class PlainClass {}
+        public class PlainClass { }
 
         [GraphQLName(AnnotatedName)]
         public class PlainClassNameAnnotated
@@ -158,7 +158,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () =>_.RemoveDirective((string)null!);
+                Action remove = () => _.RemoveDirective((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -168,11 +168,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         [Fact()]
         public void clr_typed_item_can_be_added_()
         {
-             var schema = Schema.Create(_ =>
-             {
-                 _.Directive(typeof(PlainClass));
-                 
-             });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive(typeof(PlainClass));
+
+            });
+            schema.HasDirective<PlainClass>().Should().BeTrue();
         }
 
 
@@ -180,7 +181,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive<PlainClass>();
+
+            });
+            schema.HasDirective<PlainClass>().Should().BeTrue();
+
         }
 
 

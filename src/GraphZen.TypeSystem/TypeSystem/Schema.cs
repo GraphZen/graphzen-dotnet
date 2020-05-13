@@ -57,7 +57,7 @@ namespace GraphZen.TypeSystem
 
 
         public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType>? types = null) : base(Check
-            .NotNull(schemaDefinition, nameof(schemaDefinition)).DirectiveAnnotations)
+            .NotNull(schemaDefinition, nameof(schemaDefinition)).DirectiveAnnotationAnnotations)
         {
             Check.NotNull(schemaDefinition, nameof(schemaDefinition));
 
@@ -618,6 +618,19 @@ namespace GraphZen.TypeSystem
                 }
             }
         }
+
+        [GraphQLIgnore]
+        public Directive? FindDirective<TDirective>() where TDirective : notnull
+            => FindDirective(typeof(TDirective));
+
+        [GraphQLIgnore]
+        public bool HasDirective<TDirective>() where TDirective : notnull => HasDirective(typeof(Directive));
+
+        [GraphQLIgnore]
+        public Directive GetDirective<TDirective>() where TDirective : notnull => GetDirective(typeof(TDirective));
+
+        [GraphQLIgnore]
+        public bool TryGetDirective<TDirective>([NotNullWhen(true)] out Directive? directive) => TryGetDirective(typeof(TDirective), out directive);
 
         public override string ToString() => "Schema";
     }
