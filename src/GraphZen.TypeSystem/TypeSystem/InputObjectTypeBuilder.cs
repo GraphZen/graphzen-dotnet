@@ -51,39 +51,73 @@ namespace GraphZen.TypeSystem
             return new InputObjectTypeBuilder<T>(Builder);
         }
 
-        public IInputObjectTypeBuilder<TInputObject> Field(string name, string type,
-            Action<InputValueBuilder>? inputFieldConfigurator = null)
+
+        public IInputObjectTypeBuilder<TInputObject> Field(string name, string type)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
-            InternalInputValueBuilder fb = Builder.Field(name, ConfigurationSource.Explicit)?.Type(type, ConfigurationSource.Explicit)!;
+            Builder.Field(name, ConfigurationSource.Explicit)?.Type(type, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IInputObjectTypeBuilder<TInputObject> Field(string name, string type,
+            Action<InputValueBuilder> inputFieldConfigurator)
+        {
+            Check.NotNull(name, nameof(name));
+            Check.NotNull(type, nameof(type));
+            var fb = Builder.Field(name, ConfigurationSource.Explicit)?.Type(type, ConfigurationSource.Explicit)!;
             inputFieldConfigurator?.Invoke(new InputValueBuilder(fb));
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> Field(string name,
-            Action<InputValueBuilder>? inputFieldConfigurator = null)
+        public InputValueBuilder Field(string name)
         {
             Check.NotNull(name, nameof(name));
             var fb = Builder.Field(name, ConfigurationSource.Explicit)!;
-            inputFieldConfigurator?.Invoke(new InputValueBuilder(fb));
+            return new InputValueBuilder(fb);
+        }
+
+        public IInputObjectTypeBuilder<TInputObject> Field(string name,
+            Action<InputValueBuilder> inputFieldConfigurator)
+        {
+            Check.NotNull(name, nameof(name));
+            var fb = Builder.Field(name, ConfigurationSource.Explicit)!;
+            inputFieldConfigurator(new InputValueBuilder(fb));
+            return this;
+        }
+
+        public IInputObjectTypeBuilder<TInputObject> Field<TField>(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.Field(name, ConfigurationSource.Explicit)?
+                .Type(typeof(TField), ConfigurationSource.Explicit);
             return this;
         }
 
         public IInputObjectTypeBuilder<TInputObject> Field<TField>(string name,
-            Action<InputValueBuilder>? inputFieldConfigurator = null)
+            Action<InputValueBuilder> inputFieldConfigurator)
         {
             Check.NotNull(name, nameof(name));
+            Check.NotNull(inputFieldConfigurator, nameof(inputFieldConfigurator));
             var fb = Builder.Field(name, ConfigurationSource.Explicit)?
                 .Type(typeof(TField), ConfigurationSource.Explicit)!;
-            inputFieldConfigurator?.Invoke(new InputValueBuilder(fb));
+            inputFieldConfigurator(new InputValueBuilder(fb));
+            return this;
+        }
+
+        public IInputObjectTypeBuilder<TInputObject>
+            Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector)
+        {
+            var property = fieldSelector.GetPropertyInfoFromExpression();
+            Builder.Field(property, ConfigurationSource.Explicit);
             return this;
         }
 
         public IInputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector,
-            Action<InputValueBuilder>? fieldBuilder = null)
+            Action<InputValueBuilder> fieldBuilder)
         {
             Check.NotNull(fieldSelector, nameof(fieldSelector));
+            Check.NotNull(fieldBuilder, nameof(fieldBuilder));
             var property = fieldSelector.GetPropertyInfoFromExpression();
             var fb = Builder.Field(property, ConfigurationSource.Explicit)!;
             fieldBuilder?.Invoke(new InputValueBuilder(fb));

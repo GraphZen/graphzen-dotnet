@@ -21,20 +21,20 @@ namespace GraphZen.TypeSystem
         IInputObjectTypeBuilder<T> ClrType<T>();
 
 
-        IInputObjectTypeBuilder<TInputObject> Field(string name, string type,
-            Action<InputValueBuilder>? inputFieldConfigurator = null);
+        IInputObjectTypeBuilder<TInputObject> Field(string name, string type);
+        IInputObjectTypeBuilder<TInputObject> Field(string name, string type, Action<InputValueBuilder> inputFieldConfigurator);
 
 
-        IInputObjectTypeBuilder<TInputObject> Field(string name,
-            Action<InputValueBuilder>? inputFieldConfigurator = null);
+
+        InputValueBuilder Field(string name);
+        IInputObjectTypeBuilder<TInputObject> Field(string name, Action<InputValueBuilder> inputFieldConfigurator);
+
+        IInputObjectTypeBuilder<TInputObject> Field<TField>(string name);
+        IInputObjectTypeBuilder<TInputObject> Field<TField>(string name, Action<InputValueBuilder> inputFieldConfigurator);
 
 
-        IInputObjectTypeBuilder<TInputObject> Field<TField>(string name,
-            Action<InputValueBuilder>? inputFieldConfigurator = null);
-
-
-        IInputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector,
-            Action<InputValueBuilder>? fieldBuilder = null);
+        IInputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector);
+        IInputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector, Action<InputValueBuilder> fieldBuilder);
 
 
         IInputObjectTypeBuilder<TInputObject> IgnoreField<TField>(Expression<Func<TInputObject, TField>> fieldSelector);
