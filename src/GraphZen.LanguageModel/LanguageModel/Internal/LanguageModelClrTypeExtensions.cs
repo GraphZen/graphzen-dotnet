@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
@@ -63,7 +62,7 @@ namespace GraphZen.LanguageModel.Internal
 
                     if (typename != null)
                     {
-                        name = (string)typename;
+                        name = (string) typename;
                         return true;
                     }
 

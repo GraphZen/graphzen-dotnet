@@ -22,7 +22,10 @@ namespace GraphZen.TypeSystem
 
         private InternalDirectiveBuilder Builder { get; }
 
-        public IDirectiveBuilder<object> ClrType(Type clrType) => throw new NotImplementedException();
+        public IDirectiveBuilder<object> ClrType(Type clrType)
+        {
+            throw new NotImplementedException();
+        }
 
         public IDirectiveBuilder<object> ClrType(Type clrType, string name) => throw new NotImplementedException();
 

@@ -61,7 +61,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((string)null!);
+                Action add = () => _.Directive((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -159,7 +159,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((string)null!);
+                Action remove = () => _.RemoveDirective((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -187,9 +187,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         [Fact]
         public void clr_typed_item_cannot_be_added_with_null_value_()
         {
-            var schema = Schema.Create(_ =>
+            Schema.Create(_ =>
             {
-                Action add = () => _.Directive((Type)null!);
+                Action add = () => _.Directive((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -325,20 +325,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((Type)null!);
+                Action remove = () => _.RemoveDirective((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_have_clr_type_changed))]
-        [Fact()]
+        [Fact]
         public void clr_typed_item_can_have_clr_type_changed_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Directive<PlainClass>().ClrType(typeof(PlainClassNameAnnotated));
-            });
+            var schema = Schema.Create(_ => { _.Directive<PlainClass>().ClrType(typeof(PlainClassNameAnnotated)); });
             schema.HasDirective<PlainClass>().Should().BeFalse();
             schema.HasDirective<PlainClassNameAnnotated>().Should().BeTrue();
         }
