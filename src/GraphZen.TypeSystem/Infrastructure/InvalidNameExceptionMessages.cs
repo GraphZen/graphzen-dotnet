@@ -18,6 +18,7 @@ namespace GraphZen.Infrastructure
             internal static string DuplicateType(TypeIdentity identity, string newName, TypeIdentity existing) =>
                 $"Cannot rename {identity.Definition?.ToString() ?? identity.Name} to \"{newName}\", {existing.Definition?.ToString() ?? existing.ToString()} already exists. All GraphQL type names must be unique.";
             internal static string DuplicateField(IFieldDefinition field, string name) => $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
+            internal static string DuplicateInputField(IInputFieldDefinition field, string name) => $"Cannot rename {field} to \"{name}\": {field.DeclaringMember?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
             internal static string DuplicateArgument(IArgumentDefinition argument, string name)
             {
                 var parent = argument.DeclaringMember is IFieldDefinition fd ? $"{fd} on {fd.DeclaringType}" : argument.DeclaringMember.ToString();
@@ -51,11 +52,10 @@ namespace GraphZen.Infrastructure
                 =>
                     $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}'. The CLR {GetClrTypeDisplay(clrType)} name '{clrType.Name}' is not a valid GraphQL name. {NameSpecDescription}";
 
-            public static string CannotCreateArgumentWithInvalidName(string name,
-                IMutableArgumentsDefinition declaringMember)
+            public static string CannotCreateInputValueWithInvalidName(IInputValueDefinition def, string name)
             {
-                return
-                    $"Cannot create argument named \"{name}\" for {declaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+                var type = def is IArgumentDefinition ? "argument" : def is IInputFieldDefinition ? "field" : throw new NotImplementedException();
+                return $"Cannot create {type} named \"{name}\" for {def.DeclaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
             }
 
             public static string CannotRename(string name, INamed named) =>

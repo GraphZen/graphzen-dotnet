@@ -6,18 +6,18 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.Fields
 {
     [NoReorder]
     public class FieldsTests
     {
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
-        [Fact()]
+        [Spec(nameof(named_item_can_be_added_via_sdl))]
+        [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
             var schema = Schema.Create(_ => _.FromSchema(@"input Foo {foo: String } "));
@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
+        [Spec(nameof(named_item_can_be_added_via_sdl_extension))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added))]
+        [Spec(nameof(named_item_can_be_added))]
         [Fact]
         public void named_item_can_be_added_()
         {
@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
+        [Spec(nameof(named_item_cannot_be_added_with_null_value))]
         [Fact]
         public void named_item_cannot_be_added_with_null_value_()
         {
@@ -63,7 +63,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
+        [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
         [Theory]
         [InlineData("{name}")]
         [InlineData("sdfa asf")]
@@ -84,13 +84,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
                     () => d.Field<string>(name, a => { })
                 }.ForEach(a => a.Should().Throw<InvalidNameException>()
                     .WithMessage(
-                        $"Cannot create argument named \"{name}\" for {foo}: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.")
+                        $"Cannot create field named \"{name}\" for {foo}: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.")
                 );
             });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_renamed))]
+        [Spec(nameof(named_item_can_be_renamed))]
         [Fact]
         public void named_item_can_be_renamed_()
         {
@@ -101,7 +101,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
+        [Spec(nameof(named_item_cannot_be_renamed_with_null_value))]
         [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
         {
@@ -116,7 +116,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
+        [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
         [Theory]
         [InlineData("{name}")]
         [InlineData("sdfa asf")]
@@ -129,13 +129,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
                 {
                     Action rename = () => a.Name(name);
                     rename.Should().Throw<InvalidNameException>().WithMessage(
-                        $"Cannot rename argument foo on directive Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                        $"Cannot rename input field foo on input object Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
                 });
             });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
+        [Spec(nameof(named_item_cannot_be_renamed_if_name_already_exists))]
         [Fact]
         public void named_item_cannot_be_renamed_if_name_already_exists_()
         {
@@ -147,13 +147,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
                     {
                         Action rename = () => a.Name("foo");
                         rename.Should().Throw<DuplicateNameException>().WithMessage(
-                            "Cannot rename argument bar to \"foo\": InputObject foo already contains an argument named \"foo\".");
+                            "Cannot rename input field bar to \"foo\": Input object foo already contains a field named \"foo\".");
                     });
             });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_removed))]
+        [Spec(nameof(named_item_can_be_removed))]
         [Fact(Skip = "todo")]
         public void named_item_can_be_removed_()
         {
@@ -166,7 +166,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
+        [Spec(nameof(named_item_cannot_be_removed_with_null_value))]
         [Fact]
         public void named_item_cannot_be_removed_with_null_value_()
         {

@@ -23,10 +23,7 @@ namespace GraphZen.TypeSystem
             name, nameConfigurationSource,
             schema, configurationSource, clrInfo, declaringMember)
         {
-            if (!name.IsValidGraphQLName())
-            {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateArgumentWithInvalidName(name, declaringMember));
-            }
+            
         }
 
         private string DebuggerDisplay => $"argument {Name}";
