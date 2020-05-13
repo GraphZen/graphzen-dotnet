@@ -367,6 +367,54 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
             });
         }
 
+        [Spec(nameof(clr_typed_item_can_be_renamed))]
+        [Fact]
+        public void clr_typed_item_can_be_renamed_()
+        {
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().Name("Foo"); });
+            schema.GetUnion<PlainAbstractClass>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
+        [Fact]
+        public void clr_typed_item_with_name_attribute_can_be_renamed_()
+        {
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClassAnnotatedName>().Name("Foo"); });
+            schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
+        [Theory]
+        [InlineData(" ")]
+        [InlineData("")]
+        [InlineData(")(*# ")]
+        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
+        {
+            Schema.Create(_ =>
+            {
+                var union = _.Union<PlainAbstractClassAnnotatedName>();
+                Action rename = () => union.Name(name);
+                rename.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot rename union AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+        [Fact]
+        public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
+        {
+            Schema.Create(_ =>
+            {
+                _.Union("Foo");
+                var union = _.Union<PlainAbstractClassAnnotatedName>();
+                Action rename = () => union.Name("Foo");
+                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot rename union AnnotatedName to \"Foo\", union Foo already exists. All GraphQL type names must be unique.");
+            });
+        }
 
 
     }

@@ -411,5 +411,54 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
             var schema = Schema.Create(_ => { _.Scalar<PlainStructInvalidNameAnnotation>("Foo"); });
             schema.HasScalar<PlainStructInvalidNameAnnotation>();
         }
+
+        [Spec(nameof(clr_typed_item_can_be_renamed))]
+        [Fact]
+        public void clr_typed_item_can_be_renamed_()
+        {
+            var schema = Schema.Create(_ => { _.Scalar<PlainStruct>().Name("Foo"); }
+            );
+            schema.GetScalar<PlainStruct>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
+        [Fact]
+        public void clr_typed_item_with_name_attribute_can_be_renamed_()
+        {
+            var schema = Schema.Create(_ => { _.Scalar<PlainStructAnnotatedName>().Name("Foo"); });
+            schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
+        [Theory]
+        [InlineData("")]
+        [InlineData("()#&$")]
+        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
+        {
+            Schema.Create(_ =>
+            {
+                var pocs = _.Scalar<PlainStruct>();
+                Action rename = () => pocs.Name(name);
+                rename.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot rename scalar PlainStruct. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+        [Fact]
+        public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
+        {
+            Schema.Create(_ =>
+            {
+                _.Scalar("Foo");
+                var pocs = _.Scalar<PlainStruct>();
+                Action rename = () => pocs.Name("Foo");
+                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot rename scalar PlainStruct to \"Foo\", scalar Foo already exists. All GraphQL type names must be unique.");
+            });
+        }
     }
 }
