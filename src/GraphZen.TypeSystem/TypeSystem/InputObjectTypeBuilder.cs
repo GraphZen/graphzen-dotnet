@@ -6,12 +6,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class InputObjectTypeBuilder<TInputObject> : IInputObjectTypeBuilder<TInputObject>,
-        IInfrastructure<InternalInputObjectTypeBuilder>
+    public class InputObjectTypeBuilder<TInputObject> : IInputObjectTypeBuilder<TInputObject>
     {
         public InputObjectTypeBuilder(InternalInputObjectTypeBuilder builder)
         {
@@ -23,6 +23,7 @@ namespace GraphZen.TypeSystem
         private InternalInputObjectTypeBuilder Builder { get; }
 
         InternalInputObjectTypeBuilder IInfrastructure<InternalInputObjectTypeBuilder>.Instance => Builder;
+        IInputObjectTypeDefinition IInfrastructure<IInputObjectTypeDefinition>.Instance => Builder.Definition;
 
         public IInputObjectTypeBuilder<TInputObject> Description(string? description)
         {
@@ -57,6 +58,13 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Builder.Field(name, ConfigurationSource.Explicit)?.Type(type, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IInputObjectTypeBuilder<TInputObject> RemoveField(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.RemoveField(name, ConfigurationSource.Explicit);
             return this;
         }
 
@@ -165,5 +173,6 @@ namespace GraphZen.TypeSystem
 
         public IInputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations() =>
             throw new NotImplementedException();
+
     }
 }

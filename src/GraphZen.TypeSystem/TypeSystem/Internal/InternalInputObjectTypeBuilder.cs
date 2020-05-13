@@ -131,6 +131,10 @@ namespace GraphZen.TypeSystem.Internal
             return RemoveField(field, configurationSource);
         }
 
+
+        public bool RemoveField(string name, ConfigurationSource configurationSource) =>
+            Definition.TryGetField(name, out var f) && RemoveField(f, configurationSource);
+
         public bool RemoveField(InputFieldDefinition field, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetConfigurationSource()))
