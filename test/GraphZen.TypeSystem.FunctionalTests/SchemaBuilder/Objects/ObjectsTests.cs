@@ -152,7 +152,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        
+
 
         [Spec(nameof(clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
         [Fact]
@@ -190,7 +190,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             });
         }
 
-        
+
 
         [Spec(nameof(named_item_can_be_added_via_sdl))]
         [Fact]
@@ -213,7 +213,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
 
-        
+
 
 
 

@@ -201,7 +201,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
 
 
 
-        
+
 
 
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs

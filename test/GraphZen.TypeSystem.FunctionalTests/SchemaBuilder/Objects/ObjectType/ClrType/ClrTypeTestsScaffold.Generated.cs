@@ -15,6 +15,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.C
     [NoReorder]
     public abstract class ClrTypeTestsScaffold
     {
+        [Spec(nameof(ClrTypeSpecs.custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(ClrTypeSpecs.clr_typed_item_can_have_clr_type_changed_via_type_param))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_changed_via_type_param_()
@@ -136,4 +144,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.C
         }
     }
 }
-// Source Hash Code: 5330020761446609963
+// Source Hash Code: 8303902871302544177

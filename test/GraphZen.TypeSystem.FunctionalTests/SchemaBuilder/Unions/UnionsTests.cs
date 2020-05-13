@@ -368,6 +368,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-    
+
     }
 }
