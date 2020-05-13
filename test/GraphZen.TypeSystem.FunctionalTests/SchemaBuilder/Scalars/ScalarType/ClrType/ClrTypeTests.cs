@@ -227,6 +227,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
         }
 
 
-        
+
     }
 }

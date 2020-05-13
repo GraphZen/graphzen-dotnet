@@ -274,6 +274,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             var schema = Schema.Create(_ => { _.Object<PlainClassNameAnnotated>().Name("Foo"); });
             schema.GetObject<PlainClassNameAnnotated>().Name.Should().Be("Foo");
         }
-        
+
     }
 }

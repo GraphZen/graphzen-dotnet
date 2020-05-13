@@ -102,7 +102,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.ClrTy
         }
 
 
-        
+
 
     }
 }

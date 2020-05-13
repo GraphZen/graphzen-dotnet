@@ -226,5 +226,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
         }
 
 
-            }
+    }
 }

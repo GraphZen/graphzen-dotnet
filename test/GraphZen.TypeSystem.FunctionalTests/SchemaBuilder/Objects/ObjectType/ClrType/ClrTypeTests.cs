@@ -75,7 +75,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.C
             });
         }
 
-        
+
 
 
         [Spec(nameof(clr_typed_item_with_type_removed_should_retain_clr_type_name))]

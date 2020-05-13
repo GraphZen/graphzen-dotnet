@@ -105,6 +105,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-        
+
     }
 }

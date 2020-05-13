@@ -15,9 +15,49 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.ClrTy
     [NoReorder]
     public abstract class ClrTypeTestsScaffold
     {
-        [Spec(nameof(ClrTypeSpecs.custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
+        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_with_conflicting_custom_name))]
         [Fact(Skip = "TODO")]
-        public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
+        public void cannot_add_clr_type_to_item_with_conflicting_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_with_invalid_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_with_invalid_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_with_null_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_with_null_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_via_type_param_with_null_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void cannot_add_clr_type_to_item_via_type_param_with_null_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -96,52 +136,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.ClrTy
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_with_conflicting_custom_name))]
+        [Spec(nameof(ClrTypeSpecs.custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
         [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_with_conflicting_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_via_type_param_with_conflicting_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_with_invalid_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_with_invalid_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_via_type_param_with_invalid_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_with_null_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_with_null_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.cannot_add_clr_type_to_item_via_type_param_with_null_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void cannot_add_clr_type_to_item_via_type_param_with_null_custom_name_()
+        public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 5465131703056056045
+// Source Hash Code: 483469682100004525

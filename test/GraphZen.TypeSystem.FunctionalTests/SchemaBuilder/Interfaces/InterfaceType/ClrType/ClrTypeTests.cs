@@ -110,6 +110,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
         }
 
 
-        
+
     }
 }
