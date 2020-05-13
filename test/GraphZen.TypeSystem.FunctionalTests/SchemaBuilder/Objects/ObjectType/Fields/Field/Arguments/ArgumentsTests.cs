@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
@@ -111,8 +110,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
             foo.HasArgument("foo").Should().BeFalse();
             foo.HasArgument("bar").Should().BeTrue();
         }
-
-
 
 
         [Spec(nameof(named_item_can_be_removed))]

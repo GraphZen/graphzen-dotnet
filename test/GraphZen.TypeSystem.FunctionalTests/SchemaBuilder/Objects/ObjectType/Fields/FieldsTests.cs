@@ -7,7 +7,6 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields
@@ -81,9 +80,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
             foo.HasField("foo").Should().BeFalse();
             foo.HasField("bar").Should().BeTrue();
         }
-
-
-
 
 
         [Spec(nameof(named_item_can_be_removed))]

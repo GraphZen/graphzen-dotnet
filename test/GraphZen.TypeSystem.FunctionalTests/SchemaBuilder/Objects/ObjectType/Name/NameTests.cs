@@ -6,11 +6,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
 
 
@@ -19,7 +16,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.N
     [NoReorder]
     public class NameTests
     {
-
         [Spec(nameof(named_item_cannot_be_renamed_if_name_already_exists))]
         [Fact]
         public void object_cannot_be_renamed_if_name_already_exists()
@@ -40,7 +36,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.N
                             fooDef.Identity));
             });
         }
-
 
 
         [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
@@ -72,6 +67,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.N
                 rename.Should().ThrowArgumentNullException("name");
             });
         }
-
     }
 }
