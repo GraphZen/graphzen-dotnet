@@ -171,7 +171,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
             var schema = Schema.Create(_ =>
             {
                 _.Directive(typeof(PlainClass));
-
             });
             schema.HasDirective<PlainClass>().Should().BeTrue();
         }

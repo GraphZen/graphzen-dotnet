@@ -624,7 +624,7 @@ namespace GraphZen.TypeSystem
             => FindDirective(typeof(TDirective));
 
         [GraphQLIgnore]
-        public bool HasDirective<TDirective>() where TDirective : notnull => HasDirective(typeof(Directive));
+        public bool HasDirective<TDirective>() where TDirective : notnull => HasDirective(typeof(TDirective));
 
         [GraphQLIgnore]
         public Directive GetDirective<TDirective>() where TDirective : notnull => GetDirective(typeof(TDirective));
