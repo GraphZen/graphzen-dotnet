@@ -188,5 +188,91 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Clr
             schema.GetUnion(PlainAbstractClassAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
             schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClassAnnotatedName>();
         }
+
+        [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_have_clr_type_removed_()
+        {
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().RemoveClrType(); });
+            schema.HasUnion<PlainAbstractClass>().Should().BeFalse();
+            schema.GetUnion(nameof(PlainAbstractClass)).ClrType.Should().BeNull();
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_type_removed_should_retain_clr_type_name))]
+        [Fact(Skip = "todo")]
+        public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
+        {
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().RemoveClrType(); });
+            schema.HasUnion(nameof(PlainAbstractClass)).Should().BeTrue();
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
+        {
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClassAnnotatedName>().RemoveClrType(); });
+            schema.HasUnion(PlainAbstractClassAnnotatedName.AnnotatedName).Should().BeTrue();
+        }
+
+
+        [Spec(nameof(custom_named_clr_typed_item_with_type_removed_should_retain_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void custom_named_clr_typed_item_with_type_removed_should_retain_custom_name_()
+        {
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().Name("Foo").RemoveClrType(); });
+            schema.HasUnion("Foo").Should().BeTrue();
+        }
+
+
+        [Spec(nameof(clr_typed_item_can_be_renamed))]
+        [Fact]
+        public void clr_typed_item_can_be_renamed_()
+        {
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClass>().Name("Foo"); });
+            schema.GetUnion<PlainAbstractClass>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
+        [Fact]
+        public void clr_typed_item_with_name_attribute_can_be_renamed_()
+        {
+            var schema = Schema.Create(_ => { _.Union<PlainAbstractClassAnnotatedName>().Name("Foo"); });
+            schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
+        [Theory]
+        [InlineData(" ")]
+        [InlineData("")]
+        [InlineData(")(*# ")]
+        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
+        {
+            Schema.Create(_ =>
+            {
+                var union = _.Union<PlainAbstractClassAnnotatedName>();
+                Action rename = () => union.Name(name);
+                rename.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot rename union AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+        [Fact]
+        public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
+        {
+            Schema.Create(_ =>
+            {
+                _.Union("Foo");
+                var union = _.Union<PlainAbstractClassAnnotatedName>();
+                Action rename = () => union.Name("Foo");
+                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot rename union AnnotatedName to \"Foo\", union Foo already exists. All GraphQL type names must be unique.");
+            });
+        }
     }
 }

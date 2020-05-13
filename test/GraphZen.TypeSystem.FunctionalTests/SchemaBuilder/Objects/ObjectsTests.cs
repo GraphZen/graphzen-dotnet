@@ -152,14 +152,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(clr_typed_item_can_be_renamed))]
-        [Fact]
-        public void clr_typed_object_can_be_renamed()
-        {
-            var schema = Schema.Create(_ => { _.Object<PlainClassNameAnnotated>().Name("Baz"); });
-            schema.GetObject<PlainClassNameAnnotated>().Name.Should().Be("Baz");
-        }
-
+        
 
         [Spec(nameof(clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
         [Fact]
@@ -197,48 +190,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             });
         }
 
-
-        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
-        [Fact]
-        public void clr_typed_object_cannot_be_renamed_if_name_already_exists()
-        {
-            Schema.Create(_ =>
-            {
-                _.Object("Foo");
-                Action rename = () => _.Object<PlainClass>().Name("Foo");
-                // TODO: test exception message
-                rename.Should().Throw<DuplicateNameException>();
-            });
-        }
-
-
-        [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
-        [Theory]
-        [InlineData("  xy")]
-        [InlineData("")]
-
-        public void clr_typed_object_cannot_be_renamed_with_an_invalid_name(string name)
-        {
-
-            Schema.Create(_ =>
-            {
-                _.Object<PlainClassNameAnnotated>();
-                Action rename = () => _.Object<PlainClassNameAnnotated>().Name(name);
-                rename.Should().Throw<InvalidNameException>()
-                    .WithMessage(
-                        $"Cannot rename object AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
-            });
-        }
-
-
-        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
-        [Fact]
-        public void clr_typed_object_with_name_attribute_can_be_renamed()
-        {
-            var schema = Schema.Create(_ => { _.Object<PlainClassNameAnnotated>().Name("Foo"); });
-            schema.GetObject<PlainClassNameAnnotated>().Name.Should().Be("Foo");
-        }
-
+        
 
         [Spec(nameof(named_item_can_be_added_via_sdl))]
         [Fact]
@@ -261,38 +213,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
 
 
 
-        [Spec(nameof(clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_object_with_name_annotation_type_removed_should_retain_annotated_name()
-        {
-            // Priority: High
-            var schema = Schema.Create(_ => { _.Object<PlainClassNameAnnotated>().RemoveClrType(); });
-            schema.GetObject(nameof(PlainClassNameAnnotated.AnnotatedName)).ClrType.Should().BeNull();
-        }
-
-
-        [Spec(nameof(clr_typed_item_with_type_removed_should_retain_clr_type_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_object_with_type_removed_should_retain_clr_type_name()
-        {
-            // Priority: High
-            var schema = Schema.Create(_ => { _.Object<PlainClass>().RemoveClrType(); });
-            schema.GetObject(nameof(PlainClass)).ClrType.Should().BeNull();
-        }
-
-
-        [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
-        [Fact(Skip = "needs design")]
-        public void clr_typed_item_can_have_clr_type_removed_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object<PlainClass>().RemoveClrType();
-                _.Object<PlainClassNameAnnotated>().RemoveClrType();
-            });
-            schema.HasObject(nameof(PlainClass)).Should().BeTrue();
-            schema.HasObject(PlainClassNameAnnotated.AnnotatedName).Should().BeTrue();
-        }
+        
 
 
 

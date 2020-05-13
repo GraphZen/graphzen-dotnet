@@ -76,5 +76,82 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
                 add.Should().Throw<DuplicateClrTypeException>();
             });
         }
+
+        [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
+        [Fact(Skip = "needs implementation")]
+        public void clr_typed_item_can_have_clr_type_removed_()
+        {
+            var schema = Schema.Create(_ => { _.InputObject<PlainClass>().RemoveClrType(); });
+            schema.HasInputObject<PlainClass>().Should().BeFalse();
+            schema.GetInputObject(nameof(PlainClass)).ClrType.Should().BeNull();
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_type_removed_should_retain_clr_type_name))]
+        [Fact(Skip = "needs implementation")]
+        public void clr_typed_item_with_type_removed_should_retain_clr_type_name_()
+        {
+            var schema = Schema.Create(_ => { _.InputObject<PlainClass>().RemoveClrType(); });
+            schema.HasInputObject(nameof(PlainClass)).Should().BeTrue();
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
+        [Fact(Skip = "needs implementation")]
+        public void clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name_()
+        {
+            var schema = Schema.Create(_ => { _.InputObject<PlainClassAnnotatedName>().RemoveClrType(); });
+            schema.HasInputObject(PlainClassAnnotatedName.AnnotatedName).Should().BeTrue();
+        }
+
+
+        [Spec(nameof(clr_typed_item_can_be_renamed))]
+        [Fact]
+        public void clr_typed_item_can_be_renamed_()
+        {
+            var schema = Schema.Create(_ => { _.InputObject<PlainClass>().Name("Foo"); });
+            schema.GetInputObject<PlainClass>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
+        [Fact]
+        public void clr_typed_item_with_name_attribute_can_be_renamed_()
+        {
+            var schema = Schema.Create(_ => { _.InputObject<PlainClassAnnotatedName>().Name("Foo"); });
+            schema.GetInputObject<PlainClassAnnotatedName>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
+        [Theory]
+        [InlineData("  xy")]
+        [InlineData("")]
+
+        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
+        {
+
+            Schema.Create(_ =>
+            {
+                var poco = _.InputObject<PlainClass>();
+                Action rename = () => poco.Name(name);
+                rename.Should().Throw<InvalidNameException>().WithMessage($"Cannot rename input object PlainClass. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+        [Fact]
+        public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
+        {
+            Schema.Create(_ =>
+            {
+                _.InputObject("Foo");
+                var poco = _.InputObject<PlainClass>();
+                Action rename = () => poco.Name("Foo");
+                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                    @"Cannot rename input object PlainClass to ""Foo"", input object Foo already exists. All GraphQL type names must be unique.");
+            });
+        }
     }
 }
