@@ -356,7 +356,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-       
+
 
 
         [Spec(nameof(clr_typed_item_can_have_clr_type_removed))]
@@ -435,7 +435,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-     
+
 
         [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
         [Fact]

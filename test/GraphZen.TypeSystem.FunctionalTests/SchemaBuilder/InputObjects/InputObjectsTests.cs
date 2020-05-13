@@ -164,7 +164,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-    
+
 
 
         [Spec(nameof(clr_typed_item_can_be_added))]

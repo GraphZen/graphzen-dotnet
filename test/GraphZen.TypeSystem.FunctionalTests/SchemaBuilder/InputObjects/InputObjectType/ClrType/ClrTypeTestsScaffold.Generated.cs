@@ -15,41 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
     [NoReorder]
     public abstract class ClrTypeTestsScaffold
     {
-        [Spec(nameof(ClrTypeSpecs.untyped_item_can_have_clr_type_added))]
-        [Fact(Skip = "TODO")]
-        public void untyped_item_can_have_clr_type_added_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
-        [Fact(Skip = "TODO")]
-        public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.clr_typed_item_can_have_clr_type_changed))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_can_have_clr_type_changed_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(ClrTypeSpecs.clr_typed_item_can_have_clr_type_changed_via_type_param))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_changed_via_type_param_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -168,4 +136,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
     }
 }
-// Source Hash Code: 8367321027763390043
+// Source Hash Code: 1112948496486445791

@@ -309,7 +309,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-     
+
 
 
         [Spec(nameof(clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
@@ -346,7 +346,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-   
+
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
         [Fact()]
