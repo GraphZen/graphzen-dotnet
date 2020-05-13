@@ -177,13 +177,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
             var schema = Schema.Create(_ =>
             {
                 _.Directive<PlainClass>();
-
             });
             schema.HasDirective<PlainClass>().Should().BeTrue();
 
@@ -191,19 +190,28 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_cannot_be_added_with_null_value_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                Action add = () => _.Directive((Type)null!);
+                add.Should().ThrowArgumentNullException("clrType");
+            });
         }
 
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs
             .clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_cannot_be_added_with_invalid_name_attribute_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Directive<PlainClassInvalidNameAnnotation>();
+                add();
+                add.Should().Throw<InvalidNameException>().WithMessage("x");
+            });
         }
 
 

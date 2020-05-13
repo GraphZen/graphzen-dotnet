@@ -33,6 +33,10 @@ namespace GraphZen.Infrastructure
                 clrType.IsClass ? "class" :
                 clrType.IsEnum ? "enum" : "type";
 
+public static string CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(Type clrType,
+                string annotatedName)
+                =>
+                    $"Cannot create directive with CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeDisplay(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotGetOrCreateBuilderForClrTypeWithInvalidNameAttribute(Type clrType,
                 string annotatedName, TypeKind kind)

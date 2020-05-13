@@ -39,6 +39,11 @@ namespace GraphZen.TypeSystem
             {
                 if (clrType.TryGetGraphQLNameFromDataAnnotation(out var n))
                 {
+                    if (!n.IsValidGraphQLName())
+                    {
+                        throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(clrType, n));
+                    }
+
                     Name = n;
                     _nameConfigurationSource = ConfigurationSource.DataAnnotation;
                 }
