@@ -58,6 +58,9 @@ namespace GraphZen.Infrastructure
                 return $"Cannot create {type} named \"{name}\" for {def.DeclaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
             }
 
+            public static string CannotCreateDirectiveWithInvalidName(string name) => $"Cannot create directive named \"{name}\": \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+
+
             public static string CannotRename(string name, INamed named) =>
                 $"Cannot rename {named}. \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 

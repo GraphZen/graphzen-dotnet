@@ -50,9 +50,13 @@ namespace GraphZen.TypeSystem
             }
             else
             {
-                Name = Check.NotNull(name, nameof(name));
+                Name = Check.NotNull(name, nameof(name)).IsValidGraphQLName()
+                    ? name
+                    : throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
+                        .CannotCreateDirectiveWithInvalidName(name));
                 _nameConfigurationSource = ConfigurationSource.Explicit;
             }
+
 
             Builder = new InternalDirectiveBuilder(this, Check.NotNull(schema, nameof(schema)).Builder);
         }
@@ -68,7 +72,11 @@ namespace GraphZen.TypeSystem
 
         public bool SetName(string name, ConfigurationSource configurationSource)
         {
-            Check.NotNull(name, nameof(name));
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this));
+            }
+
             if (!configurationSource.Overrides(GetNameConfigurationSource()))
             {
                 return false;
@@ -95,7 +103,8 @@ namespace GraphZen.TypeSystem
 
             if (TryGetArgument(name, out var existing) && existing != argument)
             {
-                throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.DuplicateArgument(argument, name));
+                throw new DuplicateNameException(
+                    TypeSystemExceptionMessages.DuplicateNameException.DuplicateArgument(argument, name));
             }
 
             _arguments.Remove(argument.Name);
@@ -180,6 +189,7 @@ namespace GraphZen.TypeSystem
 
             return argument;
         }
+
         public override string ToString() => $"directive {Name}";
     }
 }

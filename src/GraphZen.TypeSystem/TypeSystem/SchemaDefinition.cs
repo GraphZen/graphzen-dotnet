@@ -20,6 +20,7 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public partial class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
     {
+        [GenDictionaryAccessors("name", nameof(Directive))]
         private readonly Dictionary<string, DirectiveDefinition> _directives =
             new Dictionary<string, DirectiveDefinition>();
 
@@ -808,6 +809,7 @@ namespace GraphZen.TypeSystem
             {
                 return false;
             }
+
 
             if (_directives.TryGetValue(directive.Name, out var existing) && existing != directive)
             {
