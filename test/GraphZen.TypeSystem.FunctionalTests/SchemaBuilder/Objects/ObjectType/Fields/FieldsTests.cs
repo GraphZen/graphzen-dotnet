@@ -83,7 +83,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
         }
 
 
-      
+
 
 
         [Spec(nameof(named_item_can_be_removed))]

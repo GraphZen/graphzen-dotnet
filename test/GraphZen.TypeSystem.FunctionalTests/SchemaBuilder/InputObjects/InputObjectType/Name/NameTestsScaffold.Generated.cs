@@ -3,24 +3,32 @@
 
 #nullable enable
 
-using System;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.Name
 {
-    // Move NameTests into a separate file to start writing tests
     [NoReorder]
-    public class NameTestsScaffold
+    public abstract class NameTestsScaffold
     {
+        [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
+        [Fact(Skip = "TODO")]
+        public void updateable_item_can_be_updated_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(RequiredSpecs.required_item_cannot_be_set_with_null_value))]
+        [Fact(Skip = "TODO")]
+        public void required_item_cannot_be_set_with_null_value_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 }
-// Source Hash Code: 734800241571125943
+// Source Hash Code: 14914585430313317129

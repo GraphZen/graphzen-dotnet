@@ -6,15 +6,30 @@
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition
     .Name
 {
-    // Move NameTests into a separate file to start writing tests
     [NoReorder]
-    public class NameTestsScaffold
+    public abstract class NameTestsScaffold
     {
+        [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
+        [Fact(Skip = "TODO")]
+        public void updateable_item_can_be_updated_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(RequiredSpecs.required_item_cannot_be_set_with_null_value))]
+        [Fact(Skip = "TODO")]
+        public void required_item_cannot_be_set_with_null_value_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 }
-// Source Hash Code: 2586568091329729374
+// Source Hash Code: 4166042888488073298

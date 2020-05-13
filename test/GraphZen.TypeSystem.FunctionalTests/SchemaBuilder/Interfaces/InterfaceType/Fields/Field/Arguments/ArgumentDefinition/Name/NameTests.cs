@@ -3,24 +3,19 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition.Name
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfaceType.Fields.Field.Arguments.
+    ArgumentDefinition.Name
 {
     [NoReorder]
     public class NameTests
     {
-
-
         [Spec(nameof(named_item_cannot_be_renamed_with_null_value))]
         [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()

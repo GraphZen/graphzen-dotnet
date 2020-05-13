@@ -19,6 +19,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.N
     public abstract class NameTests
     {
 
-        
+
     }
 }

@@ -183,7 +183,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-     
+
 
 
         [Spec(nameof(named_item_can_be_removed))]

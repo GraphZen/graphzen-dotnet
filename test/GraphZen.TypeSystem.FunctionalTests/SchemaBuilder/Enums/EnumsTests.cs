@@ -208,7 +208,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             schema.HasEnum("Foo").Should().BeFalse();
             schema.HasEnum("Bar").Should().BeTrue();
         }
-     
+
 
 
         [Spec(nameof(named_item_can_be_removed))]
