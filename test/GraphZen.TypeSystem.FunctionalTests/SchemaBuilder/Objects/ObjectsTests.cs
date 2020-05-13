@@ -69,26 +69,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(named_item_cannot_be_renamed_if_name_already_exists))]
-        [Fact]
-        public void object_cannot_be_renamed_if_name_already_exists()
-        {
-            Schema.Create(_ =>
-            {
-                _.Object("Foo");
-                var poco = _.Object("PlainClass");
-
-                Action rename = () => { poco.Name("Foo"); };
-
-                var pocoDef = _.GetDefinition().GetObject("PlainClass");
-                var fooDef = _.GetDefinition().GetObject("Foo");
-
-                rename.Should().Throw<DuplicateNameException>()
-                    .WithMessage(
-                        TypeSystemExceptionMessages.DuplicateNameException.DuplicateType(pocoDef.Identity, "Foo",
-                            fooDef.Identity));
-            });
-        }
 
 
         [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
@@ -128,37 +108,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             {
                 Action remove = () => _.RemoveObject((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
-            });
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Theory]
-        [InlineData("  xy")]
-        [InlineData("")]
-        public void object_cannot_be_renamed_with_an_invalid_name(string name)
-        {
-            Schema.Create(_ =>
-            {
-                _.Object("Foo");
-                Action rename = () => _.Object("Foo").Name(name);
-                rename.Should()
-                    .Throw<InvalidNameException>()
-                    .WithMessage(
-                        $"Cannot rename object Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
-            });
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_renamed_with_null_value))]
-        [Fact]
-        public void object_cannot_be_renamed_with_null_value()
-        {
-            Schema.Create(_ =>
-            {
-                var foo = _.Object("Foo");
-                Action rename = () => foo.Name(null!);
-                rename.Should().ThrowArgumentNullException("name");
             });
         }
 

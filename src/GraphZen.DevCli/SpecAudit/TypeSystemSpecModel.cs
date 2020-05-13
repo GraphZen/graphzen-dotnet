@@ -22,8 +22,8 @@ namespace GraphZen.SpecAudit
         private static SpecSuite Create()
         {
             var name = new Subject(nameof(INamed.Name))
-                .WithSpecs<SdlSpec>()
                 .WithSpecs<UpdateableSpecs>()
+                .WithSpecs<NameSpecs>()
                 .WithSpecs<RequiredSpecs>();
 
             var description = new Subject(nameof(IDescription.Description))
@@ -32,7 +32,6 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<OptionalSpecs>();
 
             var typeRef = new Subject("Type")
-                .WithSpecs<SdlSpec>()
                 .WithSpecs<RequiredSpecs>()
                 .WithSpecs<UpdateableSpecs>();
 

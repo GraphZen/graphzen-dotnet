@@ -39,7 +39,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         }
 
 
-        [Spec(nameof(RequiredSpecs.required_item_cannot_be_removed))]
+        [Spec(nameof(RequiredSpecs.required_item_cannot_be_set_with_null_value))]
         [Fact(Skip = "TODO")]
         public void required_item_cannot_be_removed_()
         {

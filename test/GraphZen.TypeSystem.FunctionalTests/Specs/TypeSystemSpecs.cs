@@ -50,8 +50,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class RequiredSpecs
         {
-            public const string required_item_cannot_be_removed = null;
+            public const string required_item_cannot_be_set_with_null_value = null;
         }
+
+
 
 
         public class UniquelyInputOutputTypeCollectionSpecs
@@ -107,12 +109,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string named_item_cannot_be_added_with_null_value = null;
             public const string named_item_cannot_be_added_with_invalid_name = null;
             public const string named_item_can_be_renamed = null;
-            public const string named_item_cannot_be_renamed_with_null_value = null;
-            public const string named_item_cannot_be_renamed_with_an_invalid_name = null;
-            public const string named_item_cannot_be_renamed_if_name_already_exists = null;
             public const string named_item_can_be_removed = null;
             public const string named_item_cannot_be_removed_with_null_value = null;
             // public const string named_item_cannot_be_removed_with_invalid_name = null; TODO: can or cannot?
+        }
+
+        public class NameSpecs
+        {
+            public const string named_item_cannot_be_renamed_with_null_value = null;
+            public const string named_item_cannot_be_renamed_with_an_invalid_name = null;
+            public const string named_item_cannot_be_renamed_if_name_already_exists = null;
+
         }
 
         public class OutputFieldsDefinitionSpecs

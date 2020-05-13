@@ -8,6 +8,7 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
 {
@@ -94,7 +95,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
+        [Spec(nameof(named_item_can_be_added_via_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -103,7 +104,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
+        [Spec(nameof(named_item_can_be_added_via_sdl_extension))]
         [Fact(Skip = "needs design/impl")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
@@ -112,7 +113,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
+        [Spec(nameof(named_item_can_be_added))]
         [Fact]
         public void named_item_can_be_added_()
         {
@@ -121,7 +122,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
+        [Spec(nameof(named_item_cannot_be_added_with_null_value))]
         [Fact]
         public void named_item_cannot_be_added_with_null_value_()
         {
@@ -133,7 +134,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
+        [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
         [Theory]
         [InlineData("  xy")]
         [InlineData("")]
@@ -147,7 +148,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
+        [Spec(nameof(named_item_can_be_renamed))]
         [Fact]
         public void named_item_can_be_renamed_()
         {
@@ -156,53 +157,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_null_value))]
-        [Fact]
-        public void named_item_cannot_be_renamed_with_null_value_()
-        {
-            Schema.Create(_ =>
-            {
-                var foo = _.Interface("Foo");
-                Action rename = () => foo.Name(null!);
-                rename.Should().ThrowArgumentNullException("name");
-            });
-        }
 
-
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Theory]
-        [InlineData("  xy")]
-        [InlineData("")]
-        public void named_item_cannot_be_renamed_with_an_invalid_name_(string name)
-        {
-            Schema.Create(_ =>
-            {
-                var foo = _.Interface("Foo");
-                Action rename = () => foo.Name(name);
-                rename.Should()
-                    .Throw<InvalidNameException>()
-                    .WithMessage(
-                        $"Cannot rename interface Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
-            });
-        }
-
-
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
-        [Fact]
-        public void named_item_cannot_be_renamed_if_name_already_exists_()
-        {
-            Schema.Create(_ =>
-            {
-                _.Interface("Foo");
-                var bar = _.Interface("Bar");
-                Action rename = () => bar.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename interface Bar to ""Foo"", interface Foo already exists. All GraphQL type names must be unique.");
-            });
-        }
-
-
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
+        [Spec(nameof(named_item_can_be_removed))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_removed_()
         {
@@ -215,7 +171,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
+        [Spec(nameof(named_item_cannot_be_removed_with_null_value))]
         [Fact]
         public void named_item_cannot_be_removed_with_null_value_()
         {
