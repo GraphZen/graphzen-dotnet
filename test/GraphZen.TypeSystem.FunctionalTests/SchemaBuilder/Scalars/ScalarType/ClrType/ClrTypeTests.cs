@@ -27,6 +27,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
         }
 
         [GraphQLName("#$%^")]
+        // ReSharper disable once UnusedType.Local
         private struct PlainStructInvalidNameAnnotation
         {
         }

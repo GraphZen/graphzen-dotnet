@@ -9,7 +9,6 @@ using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
@@ -17,6 +16,23 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
     [NoReorder]
     public class ObjectsTests
     {
+
+        public class PlainClass
+        {
+        }
+
+        [GraphQLName(AnnotatedName)]
+        public class PlainClassNameAnnotated
+        {
+            public const string AnnotatedName = nameof(AnnotatedName);
+        }
+
+        [GraphQLName(InvalidName)]
+        public class PlainClassInvalidNameAnnotation
+        {
+            public const string InvalidName = "abc @#$%^";
+        }
+
         [Spec(nameof(named_item_can_be_added))]
         [Fact]
         public void _object_can_be_added_to_schema()
@@ -147,21 +163,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        public class PlainClass
-        {
-        }
 
-        [GraphQLName(AnnotatedName)]
-        public class PlainClassNameAnnotated
-        {
-            public const string AnnotatedName = nameof(AnnotatedName);
-        }
-
-        [GraphQLName(InvalidName)]
-        public class PlainClassInvalidNameAnnotation
-        {
-            public const string InvalidName = "abc @#$%^";
-        }
 
 
         [Spec(nameof(clr_typed_item_can_be_added))]
@@ -307,38 +309,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(untyped_item_can_have_clr_type_added))]
-        [Fact]
-        public void untyped_item_can_have_clr_type_added_()
-        {
-            var schema = Schema.Create(_ => { _.Object("Foo").ClrType(typeof(PlainClass)); });
-            schema.GetObject("Foo").ClrType.Should().Be<PlainClass>();
-        }
-
-
-        [Spec(nameof(untyped_item_cannot_have_clr_type_added_that_is_already_in_use))]
-        [Fact(Skip = "needs impl")]
-        public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
-        {
-            Schema.Create(_ =>
-            {
-                _.Object<PlainClass>();
-                _.Object("Foo");
-                Action action = () => _.Object("Foo").ClrType<PlainClass>();
-                action.Should().Throw<DuplicateClrTypeException>();
-            });
-        }
-
-
-        [Spec(nameof(clr_typed_item_can_have_clr_type_changed))]
-        [Fact]
-        public void clr_typed_object_can_have_clr_type_changed()
-        {
-            // Priority: High
-            var schema = Schema.Create(_ => { _.Object<PlainClass>().ClrType<PlainClassNameAnnotated>(); });
-            schema.HasObject<PlainClass>().Should().BeFalse();
-            schema.HasObject<PlainClassNameAnnotated>().Should().BeTrue();
-        }
+     
 
 
         [Spec(nameof(clr_typed_item_with_name_annotation_type_removed_should_retain_annotated_name))]
@@ -375,17 +346,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-        [Spec(nameof(clr_typed_item_cannot_have_clr_type_changed_with_null_value))]
-        [Fact]
-        public void clr_typed_item_cannot_have_clr_type_changed_with_null_value_()
-        {
-            Schema.Create(_ =>
-            {
-                _.Object<PlainClass>();
-                Action change = () => _.Object<PlainClass>().ClrType(null!);
-                change.Should().ThrowArgumentNullException("clrType");
-            });
-        }
+   
 
         [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
         [Fact()]

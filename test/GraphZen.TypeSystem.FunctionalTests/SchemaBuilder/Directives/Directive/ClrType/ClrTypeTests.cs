@@ -3,15 +3,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
-using Xunit;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.ClrType
 {
     [NoReorder]
     public class ClrTypeTests
     {
-
     }
 }
