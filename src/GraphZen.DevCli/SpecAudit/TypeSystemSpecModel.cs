@@ -40,13 +40,11 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<NamedCollectionSpecs>()
                 .WithChild(argument);
 
-            var directiveAnnotation = new Subject(nameof(DirectiveAnnotation))
-                .WithChild(name);
-
+            // ReSharper disable once UnusedVariable
+            var directiveAnnotation = new Subject(nameof(DirectiveAnnotation));
 
             var directiveAnnotations = new Subject(nameof(AnnotatableMemberDefinition.DirectiveAnnotations))
-                .WithSpecs<DirectiveAnnotationSpecs>()
-                .WithChild(directiveAnnotation);
+                .WithSpecs<DirectiveAnnotationSpecs>();
 
             var inputValue = new Subject(nameof(InputValue))
                 .WithChild(description)
