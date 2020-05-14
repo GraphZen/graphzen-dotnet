@@ -16,12 +16,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
     [NoReorder]
     public abstract class NameTestsScaffold
     {
-        [Spec(nameof(NameSpecs.can_be_renamed))]
-        [Fact(Skip = "TODO")]
-        public void can_be_renamed_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
+        
     }
 }
 // Source Hash Code: 7221121178972572552
