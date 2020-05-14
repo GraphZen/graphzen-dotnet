@@ -131,7 +131,8 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
                         var fullName = GetDisplayName(targetType);
 
-                        ns.Block($"public {maybeStatic} partial {typeType} {fullName} {{", "}", type =>
+                        var visibility = targetType.IsPublic ? "public" : "internal";
+                        ns.Block($"{visibility} {maybeStatic} partial {typeType} {fullName} {{", "}", type =>
                         {
                             foreach (var task in tasks)
                             {

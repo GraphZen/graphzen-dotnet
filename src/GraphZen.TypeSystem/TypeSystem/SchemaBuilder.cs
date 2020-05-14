@@ -27,33 +27,33 @@ namespace GraphZen.TypeSystem
 
         private InternalSchemaBuilder Builder { get; }
 
-        public IScalarTypeBuilder<object, ValueSyntax> Scalar(string name) =>
+        public ScalarTypeBuilder<object, ValueSyntax> Scalar(string name) =>
             new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(name, nameof(name)),
                 ConfigurationSource.Explicit)!);
 
 
-        public IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>() where TScalar : notnull
+        public ScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>() where TScalar : notnull
         {
             var internalBuilder = Builder.Scalar(typeof(TScalar),
                 ConfigurationSource.Explicit)!;
             return new ScalarTypeBuilder<TScalar, ValueSyntax>(internalBuilder);
         }
 
-        public IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>(string name) where TScalar : notnull
+        public ScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>(string name) where TScalar : notnull
         {
             Check.NotNull(name, nameof(name));
             var internalBuilder = Builder.Scalar(typeof(TScalar), name, ConfigurationSource.Explicit)!;
             return new ScalarTypeBuilder<TScalar, ValueSyntax>(internalBuilder);
         }
 
-        public IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType)
+        public ScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
             var internalBuilder = Builder.Scalar(clrType, ConfigurationSource.Explicit)!;
             return new ScalarTypeBuilder<object, ValueSyntax>(internalBuilder);
         }
 
-        public IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType, string name)
+        public ScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType, string name)
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(name, nameof(name));
@@ -61,86 +61,86 @@ namespace GraphZen.TypeSystem
             return new ScalarTypeBuilder<object, ValueSyntax>(internalBuilder);
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> Scalar<TScalar, TValueNode>()
+        public ScalarTypeBuilder<TScalar, TValueNode> Scalar<TScalar, TValueNode>()
             where TValueNode : ValueSyntax where TScalar : notnull
         {
             var internalBuilder = Builder.Scalar(typeof(TScalar), ConfigurationSource.Explicit)!;
             return new ScalarTypeBuilder<TScalar, TValueNode>(internalBuilder);
         }
 
-        public ISchemaBuilder<TContext> Description(string description)
+        public SchemaBuilder<TContext> Description(string description)
         {
             Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public ISchemaBuilder<TContext> RemoveDescription()
+        public SchemaBuilder<TContext> RemoveDescription()
         {
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 
-        public ISchemaBuilder<TContext> QueryType(string type)
+        public SchemaBuilder<TContext> QueryType(string type)
         {
             Check.NotNull(type, nameof(type));
             Builder.QueryType(type, ConfigurationSource.Explicit);
             return this;
         }
 
-        public ISchemaBuilder<TContext> QueryType(Type clrType)
+        public SchemaBuilder<TContext> QueryType(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
             Builder.QueryType(clrType, ConfigurationSource.Explicit);
             return this;
         }
 
-        public ISchemaBuilder<TContext> MutationType(string type)
+        public SchemaBuilder<TContext> MutationType(string type)
         {
             Check.NotNull(type, nameof(type));
             Builder.MutationType(type, ConfigurationSource.Explicit);
             return this;
         }
 
-        public ISchemaBuilder<TContext> MutationType(Type clrType)
+        public SchemaBuilder<TContext> MutationType(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
             Builder.MutationType(clrType, ConfigurationSource.Explicit);
             return this;
         }
 
-        public ISchemaBuilder<TContext> SubscriptionType(string type)
+        public SchemaBuilder<TContext> SubscriptionType(string type)
         {
             Check.NotNull(type, nameof(type));
             Builder.SubscriptionType(type, ConfigurationSource.Explicit);
             return this;
         }
 
-        public ISchemaBuilder<TContext> AddDirectiveAnnotation(string name, object? value = null) =>
+        public SchemaBuilder<TContext> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public ISchemaBuilder<TContext> UpdateOrAddDirectiveAnnotation(string name, object? value)
+        public SchemaBuilder<TContext> UpdateOrAddDirectiveAnnotation(string name, object? value)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public ISchemaBuilder<TContext> RemoveDirectiveAnnotations(string name) =>
+        public SchemaBuilder<TContext> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
 
-        public ISchemaBuilder<TContext> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public SchemaBuilder<TContext> RemoveDirectiveAnnotations() => throw new NotImplementedException();
 
         InternalSchemaBuilder IInfrastructure<InternalSchemaBuilder>.Instance => Builder;
 
         SchemaDefinition IInfrastructure<SchemaDefinition>.Instance => Builder.Definition;
 
 
-        public ISchemaBuilder<TContext> DirectiveAnnotation(string name) => UpdateOrAddDirectiveAnnotation(name, null);
+        public SchemaBuilder<TContext> DirectiveAnnotation(string name) => UpdateOrAddDirectiveAnnotation(name, null);
 
-        public ISchemaBuilder<TContext> DirectiveAnnotation(object directive) =>
+        public SchemaBuilder<TContext> DirectiveAnnotation(object directive) =>
             throw new NotImplementedException();
 
-        public ISchemaBuilder<TContext> RemoveDirectiveAnnotation(string name)
+        public SchemaBuilder<TContext> RemoveDirectiveAnnotation(string name)
         {
             Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
             return this;

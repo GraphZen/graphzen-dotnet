@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.Internal
             _document = Check.NotNull(document, nameof(document));
         }
 
-        public void Configure(ISchemaBuilder<T> schemaBuilder)
+        public void Configure(SchemaBuilder<T> schemaBuilder)
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
             var schemaDef = _document.Definitions.OfType<SchemaDefinitionSyntax>().FirstOrDefault();

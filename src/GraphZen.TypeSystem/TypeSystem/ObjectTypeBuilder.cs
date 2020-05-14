@@ -55,11 +55,16 @@ namespace GraphZen.TypeSystem
 
         public ObjectTypeBuilder<TObject, TContext> Description(string description)
         {
+            Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public ObjectTypeBuilder<TObject, TContext> RemoveDescription() => throw new NotImplementedException();
+        public ObjectTypeBuilder<TObject, TContext> RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
+            return this;
+        }
 
 
         public ObjectTypeBuilder<TObject, TContext> Field(string name,

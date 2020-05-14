@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem
         TUntypedBuilder RemoveClrType();
     }
 
-    public interface IObjectTypeBuilder<TObject, TContext> :
+    internal interface IObjectTypeBuilder<TObject, TContext> :
         IImplementsInterfacesBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IInfrastructure<InternalObjectTypeBuilder>,
         IDescriptionBuilder<ObjectTypeBuilder<TObject, TContext>>,

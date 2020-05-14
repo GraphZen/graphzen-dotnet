@@ -14,261 +14,261 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public partial interface ISchemaBuilder<TContext>
+    internal partial interface ISchemaBuilder<TContext>
     {
         #region SchemaBuilderInterfaceGenerator
 
         #region Directives
 
-        IDirectiveBuilder<object> Directive(string name);
+        DirectiveBuilder<object> Directive(string name);
 
 
-        IDirectiveBuilder<TDirective> Directive<TDirective>() where TDirective : notnull;
-        IDirectiveBuilder<TDirective> Directive<TDirective>(string name) where TDirective : notnull;
+        DirectiveBuilder<TDirective> Directive<TDirective>() where TDirective : notnull;
+        DirectiveBuilder<TDirective> Directive<TDirective>(string name) where TDirective : notnull;
 
 
-        IDirectiveBuilder<object> Directive(Type clrType);
-        IDirectiveBuilder<object> Directive(Type clrType, string name);
+        DirectiveBuilder<object> Directive(Type clrType);
+        DirectiveBuilder<object> Directive(Type clrType, string name);
 
 
-        ISchemaBuilder<TContext> UnignoreDirective<TDirective>() where TDirective : notnull;
+        SchemaBuilder<TContext> UnignoreDirective<TDirective>() where TDirective : notnull;
 
-        ISchemaBuilder<TContext> UnignoreDirective(Type clrType);
+        SchemaBuilder<TContext> UnignoreDirective(Type clrType);
 
-        ISchemaBuilder<TContext> UnignoreDirective(string name);
+        SchemaBuilder<TContext> UnignoreDirective(string name);
 
 
-        ISchemaBuilder<TContext> IgnoreDirective<TDirective>() where TDirective : notnull;
+        SchemaBuilder<TContext> IgnoreDirective<TDirective>() where TDirective : notnull;
 
-        ISchemaBuilder<TContext> IgnoreDirective(Type clrType);
+        SchemaBuilder<TContext> IgnoreDirective(Type clrType);
 
-        ISchemaBuilder<TContext> IgnoreDirective(string name);
+        SchemaBuilder<TContext> IgnoreDirective(string name);
 
-        ISchemaBuilder<TContext> RemoveDirective<TDirective>() where TDirective : notnull;
+        SchemaBuilder<TContext> RemoveDirective<TDirective>() where TDirective : notnull;
 
-        ISchemaBuilder<TContext> RemoveDirective(Type clrType);
+        SchemaBuilder<TContext> RemoveDirective(Type clrType);
 
-        ISchemaBuilder<TContext> RemoveDirective(string name);
+        SchemaBuilder<TContext> RemoveDirective(string name);
 
         #endregion
 
         #region Types
 
-        ISchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull;
+        SchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull;
 
-        ISchemaBuilder<TContext> UnignoreType(Type clrType);
+        SchemaBuilder<TContext> UnignoreType(Type clrType);
 
-        ISchemaBuilder<TContext> UnignoreType(string name);
+        SchemaBuilder<TContext> UnignoreType(string name);
 
 
-        ISchemaBuilder<TContext> IgnoreType<TClrType>() where TClrType : notnull;
+        SchemaBuilder<TContext> IgnoreType<TClrType>() where TClrType : notnull;
 
-        ISchemaBuilder<TContext> IgnoreType(Type clrType);
+        SchemaBuilder<TContext> IgnoreType(Type clrType);
 
-        ISchemaBuilder<TContext> IgnoreType(string name);
+        SchemaBuilder<TContext> IgnoreType(string name);
 
-        ISchemaBuilder<TContext> RemoveType<TClrType>() where TClrType : notnull;
+        SchemaBuilder<TContext> RemoveType<TClrType>() where TClrType : notnull;
 
-        ISchemaBuilder<TContext> RemoveType(Type clrType);
+        SchemaBuilder<TContext> RemoveType(Type clrType);
 
-        ISchemaBuilder<TContext> RemoveType(string name);
+        SchemaBuilder<TContext> RemoveType(string name);
 
         #endregion
 
         #region Objects
 
-        IObjectTypeBuilder<object, TContext> Object(string name);
+        ObjectTypeBuilder<object, TContext> Object(string name);
 
 
-        IObjectTypeBuilder<TObject, TContext> Object<TObject>() where TObject : notnull;
-        IObjectTypeBuilder<TObject, TContext> Object<TObject>(string name) where TObject : notnull;
+        ObjectTypeBuilder<TObject, TContext> Object<TObject>() where TObject : notnull;
+        ObjectTypeBuilder<TObject, TContext> Object<TObject>(string name) where TObject : notnull;
 
 
-        IObjectTypeBuilder<object, TContext> Object(Type clrType);
-        IObjectTypeBuilder<object, TContext> Object(Type clrType, string name);
+        ObjectTypeBuilder<object, TContext> Object(Type clrType);
+        ObjectTypeBuilder<object, TContext> Object(Type clrType, string name);
 
 
-        ISchemaBuilder<TContext> UnignoreObject<TObject>() where TObject : notnull;
+        SchemaBuilder<TContext> UnignoreObject<TObject>() where TObject : notnull;
 
-        ISchemaBuilder<TContext> UnignoreObject(Type clrType);
+        SchemaBuilder<TContext> UnignoreObject(Type clrType);
 
-        ISchemaBuilder<TContext> UnignoreObject(string name);
+        SchemaBuilder<TContext> UnignoreObject(string name);
 
 
-        ISchemaBuilder<TContext> IgnoreObject<TObject>() where TObject : notnull;
+        SchemaBuilder<TContext> IgnoreObject<TObject>() where TObject : notnull;
 
-        ISchemaBuilder<TContext> IgnoreObject(Type clrType);
+        SchemaBuilder<TContext> IgnoreObject(Type clrType);
 
-        ISchemaBuilder<TContext> IgnoreObject(string name);
+        SchemaBuilder<TContext> IgnoreObject(string name);
 
-        ISchemaBuilder<TContext> RemoveObject<TObject>() where TObject : notnull;
+        SchemaBuilder<TContext> RemoveObject<TObject>() where TObject : notnull;
 
-        ISchemaBuilder<TContext> RemoveObject(Type clrType);
+        SchemaBuilder<TContext> RemoveObject(Type clrType);
 
-        ISchemaBuilder<TContext> RemoveObject(string name);
+        SchemaBuilder<TContext> RemoveObject(string name);
 
         #endregion
 
         #region Unions
 
-        IUnionTypeBuilder<object, TContext> Union(string name);
+        UnionTypeBuilder<object, TContext> Union(string name);
 
 
-        IUnionTypeBuilder<TUnion, TContext> Union<TUnion>() where TUnion : notnull;
-        IUnionTypeBuilder<TUnion, TContext> Union<TUnion>(string name) where TUnion : notnull;
+        UnionTypeBuilder<TUnion, TContext> Union<TUnion>() where TUnion : notnull;
+        UnionTypeBuilder<TUnion, TContext> Union<TUnion>(string name) where TUnion : notnull;
 
 
-        IUnionTypeBuilder<object, TContext> Union(Type clrType);
-        IUnionTypeBuilder<object, TContext> Union(Type clrType, string name);
+        UnionTypeBuilder<object, TContext> Union(Type clrType);
+        UnionTypeBuilder<object, TContext> Union(Type clrType, string name);
 
 
-        ISchemaBuilder<TContext> UnignoreUnion<TUnion>() where TUnion : notnull;
+        SchemaBuilder<TContext> UnignoreUnion<TUnion>() where TUnion : notnull;
 
-        ISchemaBuilder<TContext> UnignoreUnion(Type clrType);
+        SchemaBuilder<TContext> UnignoreUnion(Type clrType);
 
-        ISchemaBuilder<TContext> UnignoreUnion(string name);
+        SchemaBuilder<TContext> UnignoreUnion(string name);
 
 
-        ISchemaBuilder<TContext> IgnoreUnion<TUnion>() where TUnion : notnull;
+        SchemaBuilder<TContext> IgnoreUnion<TUnion>() where TUnion : notnull;
 
-        ISchemaBuilder<TContext> IgnoreUnion(Type clrType);
+        SchemaBuilder<TContext> IgnoreUnion(Type clrType);
 
-        ISchemaBuilder<TContext> IgnoreUnion(string name);
+        SchemaBuilder<TContext> IgnoreUnion(string name);
 
-        ISchemaBuilder<TContext> RemoveUnion<TUnion>() where TUnion : notnull;
+        SchemaBuilder<TContext> RemoveUnion<TUnion>() where TUnion : notnull;
 
-        ISchemaBuilder<TContext> RemoveUnion(Type clrType);
+        SchemaBuilder<TContext> RemoveUnion(Type clrType);
 
-        ISchemaBuilder<TContext> RemoveUnion(string name);
+        SchemaBuilder<TContext> RemoveUnion(string name);
 
         #endregion
 
         #region Scalars
 
-        ISchemaBuilder<TContext> UnignoreScalar<TScalar>() where TScalar : notnull;
+        SchemaBuilder<TContext> UnignoreScalar<TScalar>() where TScalar : notnull;
 
-        ISchemaBuilder<TContext> UnignoreScalar(Type clrType);
+        SchemaBuilder<TContext> UnignoreScalar(Type clrType);
 
-        ISchemaBuilder<TContext> UnignoreScalar(string name);
+        SchemaBuilder<TContext> UnignoreScalar(string name);
 
 
-        ISchemaBuilder<TContext> IgnoreScalar<TScalar>() where TScalar : notnull;
+        SchemaBuilder<TContext> IgnoreScalar<TScalar>() where TScalar : notnull;
 
-        ISchemaBuilder<TContext> IgnoreScalar(Type clrType);
+        SchemaBuilder<TContext> IgnoreScalar(Type clrType);
 
-        ISchemaBuilder<TContext> IgnoreScalar(string name);
+        SchemaBuilder<TContext> IgnoreScalar(string name);
 
-        ISchemaBuilder<TContext> RemoveScalar<TScalar>() where TScalar : notnull;
+        SchemaBuilder<TContext> RemoveScalar<TScalar>() where TScalar : notnull;
 
-        ISchemaBuilder<TContext> RemoveScalar(Type clrType);
+        SchemaBuilder<TContext> RemoveScalar(Type clrType);
 
-        ISchemaBuilder<TContext> RemoveScalar(string name);
+        SchemaBuilder<TContext> RemoveScalar(string name);
 
         #endregion
 
         #region Enums
 
-        IEnumTypeBuilder<string> Enum(string name);
+        EnumTypeBuilder<string> Enum(string name);
 
 
-        IEnumTypeBuilder<TEnum> Enum<TEnum>() where TEnum : notnull;
-        IEnumTypeBuilder<TEnum> Enum<TEnum>(string name) where TEnum : notnull;
+        EnumTypeBuilder<TEnum> Enum<TEnum>() where TEnum : notnull;
+        EnumTypeBuilder<TEnum> Enum<TEnum>(string name) where TEnum : notnull;
 
 
-        IEnumTypeBuilder<string> Enum(Type clrType);
-        IEnumTypeBuilder<string> Enum(Type clrType, string name);
+        EnumTypeBuilder<string> Enum(Type clrType);
+        EnumTypeBuilder<string> Enum(Type clrType, string name);
 
 
-        ISchemaBuilder<TContext> UnignoreEnum<TEnum>() where TEnum : notnull;
+        SchemaBuilder<TContext> UnignoreEnum<TEnum>() where TEnum : notnull;
 
-        ISchemaBuilder<TContext> UnignoreEnum(Type clrType);
+        SchemaBuilder<TContext> UnignoreEnum(Type clrType);
 
-        ISchemaBuilder<TContext> UnignoreEnum(string name);
+        SchemaBuilder<TContext> UnignoreEnum(string name);
 
 
-        ISchemaBuilder<TContext> IgnoreEnum<TEnum>() where TEnum : notnull;
+        SchemaBuilder<TContext> IgnoreEnum<TEnum>() where TEnum : notnull;
 
-        ISchemaBuilder<TContext> IgnoreEnum(Type clrType);
+        SchemaBuilder<TContext> IgnoreEnum(Type clrType);
 
-        ISchemaBuilder<TContext> IgnoreEnum(string name);
+        SchemaBuilder<TContext> IgnoreEnum(string name);
 
-        ISchemaBuilder<TContext> RemoveEnum<TEnum>() where TEnum : notnull;
+        SchemaBuilder<TContext> RemoveEnum<TEnum>() where TEnum : notnull;
 
-        ISchemaBuilder<TContext> RemoveEnum(Type clrType);
+        SchemaBuilder<TContext> RemoveEnum(Type clrType);
 
-        ISchemaBuilder<TContext> RemoveEnum(string name);
+        SchemaBuilder<TContext> RemoveEnum(string name);
 
         #endregion
 
         #region Interfaces
 
-        IInterfaceTypeBuilder<object, TContext> Interface(string name);
+        InterfaceTypeBuilder<object, TContext> Interface(string name);
 
 
-        IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>() where TInterface : notnull;
-        IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>(string name) where TInterface : notnull;
+        InterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>() where TInterface : notnull;
+        InterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>(string name) where TInterface : notnull;
 
 
-        IInterfaceTypeBuilder<object, TContext> Interface(Type clrType);
-        IInterfaceTypeBuilder<object, TContext> Interface(Type clrType, string name);
+        InterfaceTypeBuilder<object, TContext> Interface(Type clrType);
+        InterfaceTypeBuilder<object, TContext> Interface(Type clrType, string name);
 
 
-        ISchemaBuilder<TContext> UnignoreInterface<TInterface>() where TInterface : notnull;
+        SchemaBuilder<TContext> UnignoreInterface<TInterface>() where TInterface : notnull;
 
-        ISchemaBuilder<TContext> UnignoreInterface(Type clrType);
+        SchemaBuilder<TContext> UnignoreInterface(Type clrType);
 
-        ISchemaBuilder<TContext> UnignoreInterface(string name);
+        SchemaBuilder<TContext> UnignoreInterface(string name);
 
 
-        ISchemaBuilder<TContext> IgnoreInterface<TInterface>() where TInterface : notnull;
+        SchemaBuilder<TContext> IgnoreInterface<TInterface>() where TInterface : notnull;
 
-        ISchemaBuilder<TContext> IgnoreInterface(Type clrType);
+        SchemaBuilder<TContext> IgnoreInterface(Type clrType);
 
-        ISchemaBuilder<TContext> IgnoreInterface(string name);
+        SchemaBuilder<TContext> IgnoreInterface(string name);
 
-        ISchemaBuilder<TContext> RemoveInterface<TInterface>() where TInterface : notnull;
+        SchemaBuilder<TContext> RemoveInterface<TInterface>() where TInterface : notnull;
 
-        ISchemaBuilder<TContext> RemoveInterface(Type clrType);
+        SchemaBuilder<TContext> RemoveInterface(Type clrType);
 
-        ISchemaBuilder<TContext> RemoveInterface(string name);
+        SchemaBuilder<TContext> RemoveInterface(string name);
 
         #endregion
 
         #region InputObjects
 
-        IInputObjectTypeBuilder<object> InputObject(string name);
+        InputObjectTypeBuilder<object> InputObject(string name);
 
 
-        IInputObjectTypeBuilder<TInputObject> InputObject<TInputObject>() where TInputObject : notnull;
-        IInputObjectTypeBuilder<TInputObject> InputObject<TInputObject>(string name) where TInputObject : notnull;
+        InputObjectTypeBuilder<TInputObject> InputObject<TInputObject>() where TInputObject : notnull;
+        InputObjectTypeBuilder<TInputObject> InputObject<TInputObject>(string name) where TInputObject : notnull;
 
 
-        IInputObjectTypeBuilder<object> InputObject(Type clrType);
-        IInputObjectTypeBuilder<object> InputObject(Type clrType, string name);
+        InputObjectTypeBuilder<object> InputObject(Type clrType);
+        InputObjectTypeBuilder<object> InputObject(Type clrType, string name);
 
 
-        ISchemaBuilder<TContext> UnignoreInputObject<TInputObject>() where TInputObject : notnull;
+        SchemaBuilder<TContext> UnignoreInputObject<TInputObject>() where TInputObject : notnull;
 
-        ISchemaBuilder<TContext> UnignoreInputObject(Type clrType);
+        SchemaBuilder<TContext> UnignoreInputObject(Type clrType);
 
-        ISchemaBuilder<TContext> UnignoreInputObject(string name);
+        SchemaBuilder<TContext> UnignoreInputObject(string name);
 
 
-        ISchemaBuilder<TContext> IgnoreInputObject<TInputObject>() where TInputObject : notnull;
+        SchemaBuilder<TContext> IgnoreInputObject<TInputObject>() where TInputObject : notnull;
 
-        ISchemaBuilder<TContext> IgnoreInputObject(Type clrType);
+        SchemaBuilder<TContext> IgnoreInputObject(Type clrType);
 
-        ISchemaBuilder<TContext> IgnoreInputObject(string name);
+        SchemaBuilder<TContext> IgnoreInputObject(string name);
 
-        ISchemaBuilder<TContext> RemoveInputObject<TInputObject>() where TInputObject : notnull;
+        SchemaBuilder<TContext> RemoveInputObject<TInputObject>() where TInputObject : notnull;
 
-        ISchemaBuilder<TContext> RemoveInputObject(Type clrType);
+        SchemaBuilder<TContext> RemoveInputObject(Type clrType);
 
-        ISchemaBuilder<TContext> RemoveInputObject(string name);
+        SchemaBuilder<TContext> RemoveInputObject(string name);
 
         #endregion
 
         #endregion
     }
 }
-// Source Hash Code: 12760069989791575851
+// Source Hash Code: 15805616542580811803
