@@ -17,6 +17,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
     [NoReorder]
     public class NameTests
     {
+
+        [Spec(nameof(TypeSystemSpecs.UpdateableSpecs.updateable_item_can_be_updated))]
+        [Fact]
+        public void updateable_item_can_be_updated_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive("Foo").Name("Bar");
+            });
+            schema.HasDirective("Foo").Should().BeFalse();
+            schema.HasDirective("Bar").Should().BeTrue();
+        }
         [Spec(nameof(TypeSystemSpecs.RequiredSpecs.required_item_cannot_be_set_with_null_value))]
         [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()

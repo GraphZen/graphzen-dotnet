@@ -21,14 +21,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Name
         {
             // var schema = Schema.Create(_ => { });
         }
-
-
-        [Spec(nameof(RequiredSpecs.required_item_cannot_be_set_with_null_value))]
-        [Fact(Skip = "TODO")]
-        public void required_item_cannot_be_set_with_null_value_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
     }
 }
-// Source Hash Code: 15762034501338014481
+// Source Hash Code: 11732175903080649499

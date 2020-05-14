@@ -32,16 +32,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Dir
         }
 
 
-        [Fact]
-        public void named_item_cannot_be_renamed_with_null_value_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(NameSpecs.name_must_be_valid_name))]
         [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_renamed_with_an_invalid_name_()
+        public void name_must_be_valid_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -49,16 +42,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Dir
 
         [Spec(nameof(NameSpecs.name_cannot_be_duplicate))]
         [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_renamed_if_name_already_exists_()
+        public void name_cannot_be_duplicate_()
         {
             // var schema = Schema.Create(_ => { });
         }
     }
 
-    // Move NameTests into a separate file to start writing tests
+// Move NameTests into a separate file to start writing tests
     [NoReorder]
     public class NameTestsScaffold
     {
     }
 }
-// Source Hash Code: 14587891295293558749
+// Source Hash Code: 9095089580248635247

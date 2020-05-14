@@ -10,8 +10,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 // ReSharper disable All
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.Fields.Field.
-    DirectiveAnnotationAnnotations.DirectiveAnnotation.Name
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.DirectiveAnnotationAnnotations.DirectiveAnnotation.Name
 {
     [NoReorder]
     public abstract class NameTests
@@ -54,4 +53,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
     {
     }
 }
-// Source Hash Code: 2950692705297802720
+// Source Hash Code: 9125358726403857970

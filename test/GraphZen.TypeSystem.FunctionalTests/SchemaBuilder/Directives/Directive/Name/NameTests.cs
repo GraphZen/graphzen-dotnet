@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         }
 
 
-        
+
 
 
         [Spec(nameof(name_must_be_valid_name))]

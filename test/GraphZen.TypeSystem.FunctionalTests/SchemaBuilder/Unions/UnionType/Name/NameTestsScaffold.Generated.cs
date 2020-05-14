@@ -21,14 +21,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Nam
         {
             // var schema = Schema.Create(_ => { });
         }
-
-
-        [Spec(nameof(RequiredSpecs.required_item_cannot_be_set_with_null_value))]
-        [Fact(Skip = "TODO")]
-        public void required_item_cannot_be_set_with_null_value_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
     }
 }
-// Source Hash Code: 5394182411576751593
+// Source Hash Code: 9661418599429582787
