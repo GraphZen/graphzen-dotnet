@@ -42,10 +42,9 @@ namespace GraphZen.SpecAudit
 
             var directiveAnnotation = new Subject(nameof(DirectiveAnnotation))
                 .WithChild(name);
-            // .WithChild(argumentCollection);
 
 
-            var directiveAnnotations = new Subject(nameof(AnnotatableMemberDefinition.DirectiveAnnotationAnnotations))
+            var directiveAnnotations = new Subject(nameof(AnnotatableMemberDefinition.DirectiveAnnotations))
                 .WithSpecs<DirectiveAnnotationSpecs>()
                 .WithChild(directiveAnnotation);
 

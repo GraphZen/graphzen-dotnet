@@ -15,27 +15,27 @@ namespace GraphZen.TypeSystem
 {
     public abstract class AnnotatableMemberDefinition : MemberDefinition, IMutableAnnotatableDefinition
     {
-        private readonly List<IDirectiveAnnotation> _directiveAnnotations = new List<IDirectiveAnnotation>();
+        private readonly List<IDirectiveAnnotation> _directive = new List<IDirectiveAnnotation>();
 
         protected AnnotatableMemberDefinition(ConfigurationSource configurationSource) : base(configurationSource)
         {
         }
 
         public abstract DirectiveLocation DirectiveLocation { get; }
-        public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => _directiveAnnotations;
+        public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => _directive;
 
         public IDirectiveAnnotation? FindDirectiveAnnotation(string name)
         {
             Check.NotNull(name, nameof(name));
-            return _directiveAnnotations.SingleOrDefault(_ => _.Name == name);
+            return _directive.SingleOrDefault(_ => _.Name == name);
         }
 
-        public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotationAnnotations => _directiveAnnotations;
+        public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations => _directive;
 
         public IDirectiveAnnotation AddDirectiveAnnotation(string name, object? value)
         {
             var directive = new DirectiveAnnotation(name, value);
-            _directiveAnnotations.Add(directive);
+            _directive.Add(directive);
             return directive;
         }
 
@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem
         public void RemoveDirectiveAnnotation(string name)
         {
             Check.NotNull(name, nameof(name));
-            _directiveAnnotations.RemoveAll(_ =>
+            _directive.RemoveAll(_ =>
             {
                 Debug.Assert(_ != null, nameof(_) + " != null");
                 return _.Name == name;

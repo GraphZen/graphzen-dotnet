@@ -56,7 +56,7 @@ namespace GraphZen.TypeSystem
 
 
         public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType>? types = null) : base(schemaDefinition
-            .DirectiveAnnotationAnnotations)
+            .DirectiveAnnotations)
         {
             Check.NotNull(schemaDefinition, nameof(schemaDefinition));
             Description = schemaDefinition.Description;
