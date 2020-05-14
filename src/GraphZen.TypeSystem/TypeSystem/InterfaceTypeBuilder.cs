@@ -27,6 +27,7 @@ namespace GraphZen.TypeSystem
 
         public IInterfaceTypeBuilder<TInterface, TContext> Description(string description)
         {
+            Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
