@@ -23,20 +23,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         }
 
 
-        [Spec(nameof(DescriptionSpecs.description_cannot_be_null))]
-        [Fact(Skip = "TODO")]
-        public void description_cannot_be_null_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(DescriptionSpecs.description_can_be_removed))]
-        [Fact(Skip = "TODO")]
-        public void description_can_be_removed_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
+      
     }
 }
 // Source Hash Code: 2298237080778801926

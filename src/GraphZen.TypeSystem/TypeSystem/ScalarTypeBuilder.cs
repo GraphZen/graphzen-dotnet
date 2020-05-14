@@ -56,7 +56,7 @@ namespace GraphZen.TypeSystem
             return new ScalarTypeBuilder<T, TValueNode>(Builder);
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> Description(string? description)
+        public IScalarTypeBuilder<TScalar, TValueNode> Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;

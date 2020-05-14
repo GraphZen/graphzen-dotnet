@@ -12,6 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableDescription : IDescription
     {
         bool SetDescription(string description, ConfigurationSource configurationSource);
+        bool RemoveDescription(ConfigurationSource configurationSource);
         ConfigurationSource GetDescriptionConfigurationSource();
     }
 }

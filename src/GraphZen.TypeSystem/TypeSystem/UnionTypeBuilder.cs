@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
         InternalUnionTypeBuilder IInfrastructure<InternalUnionTypeBuilder>.Instance => Builder;
 
 
-        public IUnionTypeBuilder<TUnion, TContext> Description(string? description)
+        public IUnionTypeBuilder<TUnion, TContext> Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;

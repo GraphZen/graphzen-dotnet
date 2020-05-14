@@ -34,7 +34,14 @@ namespace GraphZen.TypeSystem
 
         public IDirectiveBuilder<TDirective> Description(string description)
         {
+            Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder<TDirective> RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 

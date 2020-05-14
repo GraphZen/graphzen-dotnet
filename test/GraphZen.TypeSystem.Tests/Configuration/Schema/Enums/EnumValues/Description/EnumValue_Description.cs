@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
@@ -34,12 +35,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues.Description
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {
-            sb.Enum(Grandparent).Value(parentName, v => v.Description(value));
+            sb.Enum(Grandparent).Value(parentName, v => v.Description(value!));
         }
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            sb.Enum(Grandparent).Value(parentName, v => v.Description(null));
+            throw new NotImplementedException();
+            //sb.Enum(Grandparent).Value(parentName, v => v.Description(null));
         }
 
         public override bool TryGetValue(EnumValue parent, out string? value)

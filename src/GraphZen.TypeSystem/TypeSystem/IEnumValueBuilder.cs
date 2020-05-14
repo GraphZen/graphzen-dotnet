@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem
     {
         IEnumValueBuilder Name(string name);
 
-        IEnumValueBuilder Description(string? description);
+        IEnumValueBuilder Description(string description);
 
         IEnumValueBuilder CustomValue(object value);
 

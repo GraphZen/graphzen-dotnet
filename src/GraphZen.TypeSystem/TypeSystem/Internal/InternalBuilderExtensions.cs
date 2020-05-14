@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public static void Description<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder,
-            string? description, ConfigurationSource configurationSource)
+            string description, ConfigurationSource configurationSource)
             where TDefinition : MemberDefinition, IMutableDescription
         {
             builder.Definition.SetDescription(description, configurationSource);

@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem
             return new ObjectTypeBuilder<T, TContext>(Builder);
         }
 
-        public IObjectTypeBuilder<TObject, TContext> SetDescription(string? description)
+        public IObjectTypeBuilder<TObject, TContext> SetDescription(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;

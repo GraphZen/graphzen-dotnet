@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem
     public interface IEnumTypeBuilder<in TEnumValue> : IAnnotableBuilder<IEnumTypeBuilder<TEnumValue>>
         where TEnumValue : notnull
     {
-        IEnumTypeBuilder<TEnumValue> Description(string? description);
+        IEnumTypeBuilder<TEnumValue> Description(string description);
         IEnumTypeBuilder<TEnumValue> Value(TEnumValue value, Action<IEnumValueBuilder>? configurator = null);
         IEnumTypeBuilder<TEnumValue> IgnoreValue(TEnumValue value);
         IEnumTypeBuilder<TEnumValue> UnignoreValue(TEnumValue value);

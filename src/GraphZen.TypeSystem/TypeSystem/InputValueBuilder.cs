@@ -50,7 +50,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public InputValueBuilder Description(string? description)
+        public InputValueBuilder Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;

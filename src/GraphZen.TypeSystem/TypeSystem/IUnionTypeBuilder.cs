@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem
         IUnionTypeBuilder<out TUnion, out TContext> : IAnnotableBuilder<IUnionTypeBuilder<TUnion, TContext>>
         where TContext : GraphQLContext
     {
-        IUnionTypeBuilder<TUnion, TContext> Description(string? description);
+        IUnionTypeBuilder<TUnion, TContext> Description(string description);
 
 
         IUnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn);

@@ -37,7 +37,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumValueBuilder Description(string? description)
+        public IEnumValueBuilder Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;

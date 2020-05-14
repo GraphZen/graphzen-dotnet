@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem
         InternalInterfaceTypeBuilder IInfrastructure<InternalInterfaceTypeBuilder>.Instance => Builder;
 
 
-        public IInterfaceTypeBuilder<TInterface, TContext> Description(string? description)
+        public IInterfaceTypeBuilder<TInterface, TContext> Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;

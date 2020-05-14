@@ -21,7 +21,7 @@ namespace GraphZen.TypeSystem
 
         private InternalEnumTypeBuilder Builder { get; }
 
-        public IEnumTypeBuilder<TEnum> Description(string? description)
+        public IEnumTypeBuilder<TEnum> Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;

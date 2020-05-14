@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
@@ -33,12 +34,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {
-            sb.Union(parentName).Description(value);
+            sb.Union(parentName).Description(value!);
         }
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            sb.Union(parentName).Description(null);
+            throw new NotImplementedException();
+            // sb.Union(parentName).Description(null);
         }
 
         public override bool TryGetValue(UnionType parent, out string? value)

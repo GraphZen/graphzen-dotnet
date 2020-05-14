@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem
         InternalInputObjectTypeBuilder IInfrastructure<InternalInputObjectTypeBuilder>.Instance => Builder;
         IInputObjectTypeDefinition IInfrastructure<IInputObjectTypeDefinition>.Instance => Builder.Definition;
 
-        public IInputObjectTypeBuilder<TInputObject> Description(string? description)
+        public IInputObjectTypeBuilder<TInputObject> Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;

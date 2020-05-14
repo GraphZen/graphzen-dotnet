@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem
         IScalarTypeBuilder<object, TValueNode> RemoveClrType();
 
 
-        IScalarTypeBuilder<TScalar, TValueNode> Description(string? description);
+        IScalarTypeBuilder<TScalar, TValueNode> Description(string description);
 
 
         IScalarTypeBuilder<TScalar, TValueNode> Serializer(LeafSerializer serializer);

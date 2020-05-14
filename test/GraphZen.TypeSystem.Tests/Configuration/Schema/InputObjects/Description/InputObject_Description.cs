@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
@@ -34,12 +35,12 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Description
 
         public override void ConfigureExplicitly(SchemaBuilder sb, string parentName, string? value)
         {
-            sb.InputObject(parentName).Description(value);
+            sb.InputObject(parentName).Description(value!);
         }
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            sb.InputObject(parentName).Description(null);
+            throw new NotImplementedException();
         }
 
         public override bool TryGetValue(InputObjectType parent, out string? value)
