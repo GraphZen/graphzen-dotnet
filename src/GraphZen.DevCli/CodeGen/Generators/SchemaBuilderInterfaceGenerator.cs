@@ -15,7 +15,7 @@ namespace GraphZen.CodeGen.Generators
 {
     public class SchemaBuilderInterfaceGenerator : PartialTypeGenerator
     {
-        public SchemaBuilderInterfaceGenerator() : base(typeof(SchemaBuilder<>))
+        public SchemaBuilderInterfaceGenerator() : base(typeof(ISchemaBuilder<>))
         {
         }
 
