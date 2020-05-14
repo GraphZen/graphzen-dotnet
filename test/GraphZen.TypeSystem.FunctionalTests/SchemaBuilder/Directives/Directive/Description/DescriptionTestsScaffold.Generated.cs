@@ -21,9 +21,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         {
             // var schema = Schema.Create(_ => { });
         }
-
-
-      
     }
 }
-// Source Hash Code: 2298237080778801926
+// Source Hash Code: 18308894334145579928
