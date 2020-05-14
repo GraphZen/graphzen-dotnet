@@ -19,13 +19,13 @@ namespace GraphZen.TypeSystem
             Name = name;
             Description = description;
             ClrType = clrType;
+            Description = description;
             IsIntrospection = SpecReservedNames.IntrospectionTypeNames.Contains(name);
         }
 
         public abstract TypeKind Kind { get; }
         public bool IsIntrospection { get; }
         public string Name { get; }
-        public override string? Description { get; }
 
         [GraphQLIgnore] public Type? ClrType { get; }
 
@@ -52,5 +52,6 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => Name;
+        public string? Description { get; }
     }
 }

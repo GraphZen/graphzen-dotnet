@@ -55,11 +55,10 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<IReadOnlyList<UnionType>> _unions;
 
 
-        public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType>? types = null) : base(Check
-            .NotNull(schemaDefinition, nameof(schemaDefinition)).DirectiveAnnotationAnnotations)
+        public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType>? types = null) : base(schemaDefinition.DirectiveAnnotationAnnotations)
         {
             Check.NotNull(schemaDefinition, nameof(schemaDefinition));
-
+            Description = schemaDefinition.Description;
             Definition = schemaDefinition;
             types = types ?? Enumerable.Empty<NamedType>();
 
@@ -224,8 +223,6 @@ namespace GraphZen.TypeSystem
         [Description("If this server support subscription, the type that subscription operations will be rooted at.")]
         [GraphQLCanBeNull]
         public ObjectType? SubscriptionType { get; }
-
-        public override string Description { get; } = "Schema";
 
         [GraphQLIgnore]
         IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.GetInputObjects() =>
@@ -633,5 +630,6 @@ namespace GraphZen.TypeSystem
             TryGetDirective(typeof(TDirective), out directive);
 
         public override string ToString() => "Schema";
+        public string? Description { get; }
     }
 }

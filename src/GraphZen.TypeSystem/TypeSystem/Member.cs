@@ -12,8 +12,6 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public abstract class Member : ISyntaxConvertable
     {
-        [GraphQLCanBeNull] public abstract string? Description { get; }
-
         [GraphQLIgnore]
         public abstract SyntaxNode ToSyntaxNode();
     }

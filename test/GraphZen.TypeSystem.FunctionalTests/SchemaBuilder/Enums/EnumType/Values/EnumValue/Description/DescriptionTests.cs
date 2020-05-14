@@ -31,11 +31,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
         {
             Schema.Create(_ =>
             {
-                _.Enum("foo").Value("foo",  v =>
-                {
-                    Action add = () => v.Description(null!);
-                    add.Should().ThrowArgumentNullException("description");
-                });
+                _.Enum("foo").Value("foo", v =>
+               {
+                   Action add = () => v.Description(null!);
+                   add.Should().ThrowArgumentNullException("description");
+               });
             });
         }
 

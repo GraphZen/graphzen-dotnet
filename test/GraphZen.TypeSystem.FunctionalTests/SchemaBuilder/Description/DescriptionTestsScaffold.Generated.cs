@@ -6,14 +6,21 @@
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description
 {
-    // Move DescriptionTests into a separate file to start writing tests
     [NoReorder]
-    public class DescriptionTestsScaffold
+    public abstract class DescriptionTestsScaffold
     {
+        [Spec(nameof(DescriptionSpecs.description_can_be_defined_by_sdl))]
+        [Fact(Skip = "TODO")]
+        public void description_can_be_defined_by_sdl_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 }
-// Source Hash Code: 8908800266098279192
+// Source Hash Code: 17460603132930642209

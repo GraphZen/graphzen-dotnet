@@ -36,7 +36,7 @@ namespace GraphZen.TypeSystem
             IEnumerable<IArgumentDefinition>? arguments, Resolver<object, object?>? resolver,
             bool isDeprecated, string? deprecatedReason,
             IReadOnlyList<IDirectiveAnnotation>? directives,
-            TypeResolver typeResolver, MemberInfo? clrInfo) : base(directives)
+            TypeResolver typeResolver, MemberInfo? clrInfo) : base(directives )
         {
             Check.NotNull(typeResolver, nameof(typeResolver));
             Name = Check.NotNull(name, nameof(name));
@@ -91,7 +91,6 @@ namespace GraphZen.TypeSystem
         [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
         public IReadOnlyDictionary<string, Argument> Arguments { get; }
 
-        public override string? Description { get; }
 
         public string Name { get; }
 
@@ -123,5 +122,6 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"{DeclaringType}.{Name}";
+        public string? Description { get; }
     }
 }

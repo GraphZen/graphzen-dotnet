@@ -43,11 +43,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description
         [Fact()]
         public void description_can_be_removed_()
         {
-             var schema = Schema.Create(_ =>
-             {
-                 _.Description("desc").RemoveDescription();
-             });
-             schema.Description.Should().BeNull();
+            var schema = Schema.Create(_ =>
+            {
+                _.Description("desc").RemoveDescription();
+                _.GetDefinition().Description.Should().BeNull();
+            });
+            schema.Description.Should().BeNull();
         }
     }
 }

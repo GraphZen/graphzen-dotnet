@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem
 
         public InputObjectType(string name, string? description, Type? clrType,
             IEnumerable<IInputFieldDefinition> fields,
-            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(Check.NotNull(name, nameof(name)),
+            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(name,
             description, clrType, Check.NotNull(directives, nameof(directives)))
         {
             Check.NotNull(fields, nameof(fields));

@@ -55,7 +55,6 @@ namespace GraphZen.TypeSystem
 
         public string Name { get; }
 
-        public override string? Description { get; }
 
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
@@ -77,5 +76,6 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyCollection<DirectiveLocation> Locations { get; }
         [GraphQLIgnore] public Type? ClrType { get; }
+        public string? Description { get; }
     }
 }

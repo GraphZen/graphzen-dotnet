@@ -13,7 +13,7 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Values.EnumValue.Description
 {
     [NoReorder]
-    public abstract class DescriptionTestsX
+    public abstract class DescriptionTestsScaffold
     {
         [Spec(nameof(DescriptionSpecs.description_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
@@ -21,36 +21,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
         {
             // var schema = Schema.Create(_ => { });
         }
-
-
-        [Spec(nameof(DescriptionSpecs.description_can_be_updated))]
-        [Fact(Skip = "TODO")]
-        public void description_can_be_updated_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(DescriptionSpecs.description_cannot_be_null))]
-        [Fact(Skip = "TODO")]
-        public void description_cannot_be_null_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(DescriptionSpecs.description_can_be_removed))]
-        [Fact(Skip = "TODO")]
-        public void description_can_be_removed_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-    }
-
-// Move DescriptionTests into a separate file to start writing tests
-    [NoReorder]
-    public class DescriptionTestsScaffold
-    {
     }
 }
-// Source Hash Code: 2802772185177794661
+// Source Hash Code: 7302121793839394628

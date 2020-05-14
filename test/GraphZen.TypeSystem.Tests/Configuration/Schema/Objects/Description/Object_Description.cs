@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Description
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            sb.Object(parentName).SetDescription(null!);
+            sb.Object(parentName).RemoveDescription();
         }
 
         public override bool TryGetValue(ObjectType parent, out string? value)

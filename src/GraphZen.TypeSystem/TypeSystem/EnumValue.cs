@@ -22,12 +22,11 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
 
         public EnumValue(string name, string? description, object value, bool isDeprecated, string? deprecatedReason,
-            IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(Check.NotNull(directives,
-            nameof(directives)))
+            IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(directives )
         {
             Name = Check.NotNull(name, nameof(name));
-            DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Description = description;
+            DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Value = value;
             IsDeprecated = isDeprecated;
             DeprecationReason = deprecatedReason;
@@ -47,7 +46,6 @@ namespace GraphZen.TypeSystem
 
         [GraphQLCanBeNull] public string? DeprecationReason { get; }
 
-        public override string? Description { get; }
 
         public string Name { get; }
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.EnumValue;
@@ -64,5 +62,6 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"{Name} ({Value.Inspect()})";
+        public string? Description { get; }
     }
 }
