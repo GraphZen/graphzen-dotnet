@@ -55,7 +55,8 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<IReadOnlyList<UnionType>> _unions;
 
 
-        public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType>? types = null) : base(schemaDefinition.DirectiveAnnotationAnnotations)
+        public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType>? types = null) : base(schemaDefinition
+            .DirectiveAnnotationAnnotations)
         {
             Check.NotNull(schemaDefinition, nameof(schemaDefinition));
             Description = schemaDefinition.Description;

@@ -14,15 +14,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description
     [NoReorder]
     public class DescriptionTests
     {
-
         [Spec(nameof(TypeSystemSpecs.DescriptionSpecs.description_can_be_updated))]
-        [Fact()]
+        [Fact]
         public void description_can_be_updated_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Description("desc");
-            });
+            var schema = Schema.Create(_ => { _.Description("desc"); });
             schema.Description.Should().Be("desc");
         }
 
@@ -40,7 +36,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Description
 
 
         [Spec(nameof(TypeSystemSpecs.DescriptionSpecs.description_can_be_removed))]
-        [Fact()]
+        [Fact]
         public void description_can_be_removed_()
         {
             var schema = Schema.Create(_ =>

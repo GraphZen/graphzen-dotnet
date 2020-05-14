@@ -17,10 +17,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
         [Fact]
         public void description_can_be_updated_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Enum("foo").Value("foo", v => v.Description("desc"));
-            });
+            var schema = Schema.Create(_ => { _.Enum("foo").Value("foo", v => v.Description("desc")); });
             schema.GetEnum("foo").GetValue("foo").Description.Should().Be("desc");
         }
 
@@ -32,10 +29,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
             Schema.Create(_ =>
             {
                 _.Enum("foo").Value("foo", v =>
-               {
-                   Action add = () => v.Description(null!);
-                   add.Should().ThrowArgumentNullException("description");
-               });
+                {
+                    Action add = () => v.Description(null!);
+                    add.Should().ThrowArgumentNullException("description");
+                });
             });
         }
 

@@ -92,6 +92,5 @@ namespace GraphZen.TypeSystem.Internal
             Definition.RemoveDefaultValue(configurationSource);
             return this;
         }
-
     }
 }

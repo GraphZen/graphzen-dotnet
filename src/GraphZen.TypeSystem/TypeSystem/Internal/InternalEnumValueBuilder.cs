@@ -34,6 +34,5 @@ namespace GraphZen.TypeSystem.Internal
 
             return this;
         }
-
     }
 }

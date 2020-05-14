@@ -33,12 +33,14 @@ namespace GraphZen.TypeSystem
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
+
         public EnumTypeBuilder<TEnum> Value(TEnum value)
         {
             Check.NotNull(value, nameof(value));
             Builder.Value(value, ConfigurationSource.Explicit);
             return this;
         }
+
         public EnumTypeBuilder<TEnum> Value(TEnum value, Action<EnumValueBuilder> configurator)
         {
             Check.NotNull(value, nameof(value));

@@ -7,7 +7,6 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
-using GraphZen.TypeSystem.Tests.Configuration.Objects.Description;
 using JetBrains.Annotations;
 using Xunit;
 
@@ -112,22 +111,22 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         public void initial_value_then_reconfigured_explicitly_then_removed(ILeafExplicitConfigurationFixture fixture)
         {
             RunFixture(fixture, () =>
-           {
-               var parentName = "parent";
-               var schema = Schema.Create(sb =>
-               {
-                   fixture.ConfigureParentExplicitly(sb, parentName);
-                   var parentDef = fixture.GetParent(sb, parentName);
-                   fixture.ConfigureExplicitly(sb, parentName, fixture.ValueA);
-                   fixture.GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
-                   fixture.TryGetValue(parentDef, out _).Should().BeTrue();
-                   fixture.RemoveValue(sb, parentName);
-                   fixture.TryGetValue(parentDef, out _).Should().BeFalse();
-               });
+            {
+                var parentName = "parent";
+                var schema = Schema.Create(sb =>
+                {
+                    fixture.ConfigureParentExplicitly(sb, parentName);
+                    var parentDef = fixture.GetParent(sb, parentName);
+                    fixture.ConfigureExplicitly(sb, parentName, fixture.ValueA);
+                    fixture.GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
+                    fixture.TryGetValue(parentDef, out _).Should().BeTrue();
+                    fixture.RemoveValue(sb, parentName);
+                    fixture.TryGetValue(parentDef, out _).Should().BeFalse();
+                });
 
-               var parent = fixture.GetParent(schema, parentName);
-               fixture.TryGetValue(parent, out _).Should().BeFalse();
-           });
+                var parent = fixture.GetParent(schema, parentName);
+                fixture.TryGetValue(parent, out _).Should().BeFalse();
+            });
         }
     }
 }

@@ -49,7 +49,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.F
             });
             schema.GetObject("foo").GetField("foo").Description.Should().BeNull();
         }
-
-
     }
 }

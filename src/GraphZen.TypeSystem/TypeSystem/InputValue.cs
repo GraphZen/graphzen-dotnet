@@ -37,6 +37,7 @@ namespace GraphZen.TypeSystem
             IGraphQLType DefaultTypeResolver(IGraphQLTypeReference typeReference) =>
                 type as IGraphQLType ?? throw new InvalidOperationException(
                     $"{typeReference} is not a valid GraphQL type. Provide a type resolver to correctly resolve.");
+
             Description = description;
             typeResolver ??= DefaultTypeResolver;
             Name = name;

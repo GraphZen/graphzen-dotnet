@@ -233,7 +233,5 @@ namespace GraphZen.TypeSystem.Internal
 
             return true;
         }
-
-
     }
 }

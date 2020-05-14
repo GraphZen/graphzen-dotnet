@@ -9,14 +9,11 @@ using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 
-
-
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.InterfaceType.Fields.Field.Description
 {
     [NoReorder]
     public class DescriptionTests
     {
-
         [Spec(nameof(TypeSystemSpecs.DescriptionSpecs.description_can_be_updated))]
         [Fact]
         public void description_can_be_updated_()

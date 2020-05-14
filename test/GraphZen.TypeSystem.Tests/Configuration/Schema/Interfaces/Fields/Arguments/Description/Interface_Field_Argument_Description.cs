@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
@@ -41,7 +40,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Arguments.De
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            sb.Interface(GreatGrandparent) .Field(Grandparent, field => field.Argument(parentName, v => v.RemoveDescription()));
+            sb.Interface(GreatGrandparent)
+                .Field(Grandparent, field => field.Argument(parentName, v => v.RemoveDescription()));
         }
 
         public override bool TryGetValue(Argument parent, out string? value)

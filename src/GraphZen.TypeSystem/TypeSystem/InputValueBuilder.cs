@@ -52,7 +52,6 @@ namespace GraphZen.TypeSystem
 
         public InputValueBuilder RemoveDescription()
         {
-
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }

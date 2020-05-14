@@ -56,7 +56,6 @@ namespace GraphZen.TypeSystem
         public string Name { get; }
 
 
-
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         [GraphQLName("args")]
