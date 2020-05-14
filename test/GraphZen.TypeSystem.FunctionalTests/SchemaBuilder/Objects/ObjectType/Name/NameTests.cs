@@ -56,7 +56,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.N
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.RequiredSpecs.required_item_cannot_be_set_with_null_value))]
+        [Spec(nameof(name_cannot_be_null))]
         [Fact]
         public void object_cannot_be_renamed_with_null_value()
         {

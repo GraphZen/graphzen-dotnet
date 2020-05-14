@@ -6,7 +6,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
@@ -17,21 +16,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
     [NoReorder]
     public class NameTests
     {
-        [Spec(nameof(TypeSystemSpecs.UpdateableSpecs.updateable_item_can_be_updated))]
+        [Spec(nameof(can_be_renamed))]
         [Fact]
-        public void updateable_item_can_be_updated_()
+        public void can_be_renamed_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Directive("Foo").Name("Bar");
-            });
+            var schema = Schema.Create(_ => { _.Directive("Foo").Name("Bar"); });
             schema.HasDirective("Foo").Should().BeFalse();
             schema.HasDirective("Bar").Should().BeTrue();
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.RequiredSpecs.required_item_cannot_be_set_with_null_value))]
-        [Fact()]
+        [Spec(nameof(name_cannot_be_null))]
+        [Fact]
         public void required_item_cannot_be_set_with_null_value_()
         {
             Schema.Create(_ =>
@@ -41,9 +37,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
                 rename.Should().ThrowArgumentNullException("name");
             });
         }
-
-
-
 
 
         [Spec(nameof(name_must_be_valid_name))]

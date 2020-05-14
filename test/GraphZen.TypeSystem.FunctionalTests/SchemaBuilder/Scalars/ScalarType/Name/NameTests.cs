@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.N
     [NoReorder]
     public class NameTests
     {
-        [Spec(nameof(TypeSystemSpecs.RequiredSpecs.required_item_cannot_be_set_with_null_value))]
+        [Spec(nameof(name_cannot_be_null))]
         [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
         {

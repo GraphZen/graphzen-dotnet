@@ -42,6 +42,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string updateable_item_can_be_updated = null;
         }
 
+        public class DescriptionSpecs
+        {
+            public const string description_can_be_defined_by_sdl = null;
+            // support sdl extension?
+            public const string description_can_be_updated = null;
+            public const string description_cannot_be_null = null;
+            public const string description_can_be_removed = null;
+        }
+
         public class OptionalSpecs
         {
             public const string optional_item_can_be_removed = null;
@@ -115,7 +124,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class NameSpecs
         {
+            public const string can_be_renamed = null;
             public const string name_must_be_valid_name = null;
+            public const string name_cannot_be_null = null;
             public const string name_cannot_be_duplicate = null;
         }
 

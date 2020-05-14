@@ -23,7 +23,6 @@ namespace GraphZen.TypeSystem
         IDirectiveBuilder<object> RemoveClrType();
         IDirectiveBuilder<T> ClrType<T>();
         IDirectiveBuilder<T> ClrType<T>(string name);
-
         IDirectiveBuilder<TDirective> Description(string description);
         IDirectiveBuilder<TDirective> Name(string name);
         IDirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations);
