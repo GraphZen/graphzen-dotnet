@@ -21,12 +21,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         [Fact]
         public void can_be_renamed_()
         {
-             var schema = Schema.Create(_ =>
-             {
-                 _.InputObject("Foo").Name("Bar");
-             });
-             schema.HasInputObject("Foo").Should().BeFalse();
-             schema.HasInputObject("Bar").Should().BeTrue();
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject("Foo").Name("Bar");
+            });
+            schema.HasInputObject("Foo").Should().BeFalse();
+            schema.HasInputObject("Bar").Should().BeTrue();
         }
 
         [Spec(nameof(name_cannot_be_null))]
