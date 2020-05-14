@@ -183,9 +183,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-
-
-
         [Spec(nameof(named_item_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_removed_()
@@ -415,7 +412,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
                     "Cannot rename union AnnotatedName to \"Foo\", union Foo already exists. All GraphQL type names must be unique.");
             });
         }
-
-
     }
 }

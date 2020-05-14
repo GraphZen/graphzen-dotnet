@@ -41,7 +41,8 @@ namespace GraphZen.TypeSystem
                 {
                     if (!n.IsValidGraphQLName())
                     {
-                        throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(clrType, n));
+                        throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
+                            .CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(clrType, n));
                     }
 
                     Name = n;
@@ -79,7 +80,8 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this));
             }
 
             if (!configurationSource.Overrides(GetNameConfigurationSource()))

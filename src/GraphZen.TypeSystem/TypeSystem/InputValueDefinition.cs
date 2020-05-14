@@ -24,11 +24,12 @@ namespace GraphZen.TypeSystem
             ClrInfo = clrInfo;
             DeclaringMember = declaringMember;
             NameConfigurationSource = nameConfigurationSource;
-            Name = name.IsValidGraphQLName() ? name : throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateInputValueWithInvalidName(this, name));
+            Name = name.IsValidGraphQLName()
+                ? name
+                : throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
+                    .CannotCreateInputValueWithInvalidName(this, name));
             Builder = new InternalInputValueBuilder(this, schema.Builder);
             InputType = null!;
-
-
         }
 
 

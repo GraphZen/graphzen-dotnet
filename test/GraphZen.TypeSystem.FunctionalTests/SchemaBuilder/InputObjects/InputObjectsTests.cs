@@ -16,7 +16,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
     [NoReorder]
     public class InputObjectsTests
     {
-
         private class PlainClass
         {
         }
@@ -76,11 +75,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [InlineData("")]
         public void named_item_cannot_be_added_with_invalid_name_(string name)
         {
-
             Schema.Create(_ =>
             {
                 Action add = () => _.InputObject(name);
-                add.Should().Throw<InvalidNameException>().WithMessage($"Cannot get or create GraphQL type builder for input object named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                add.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot get or create GraphQL type builder for input object named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -93,8 +92,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             schema.HasInputObject("Foo").Should().BeFalse();
             schema.HasInputObject("Bar").Should().BeTrue();
         }
-
-
 
 
         [Spec(nameof(named_item_can_be_removed))]
@@ -122,9 +119,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
-
-
-
         [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
         public void clr_typed_item_can_be_added_()
@@ -132,8 +126,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             var schema = Schema.Create(_ => { _.InputObject(typeof(PlainClass)); });
             schema.HasInputObject<PlainClass>().Should().BeTrue();
         }
-
-
 
 
         [Spec(nameof(clr_typed_item_cannot_be_added_with_null_value))]
@@ -156,7 +148,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             {
                 Action add = () => _.InputObject<PlainClassInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    $@"Cannot get or create GraphQL input object type builder with CLR class 'PlainClassInvalidNameAnnotation'. The name ""abc @#$%^"" specified in the GraphQLNameAttribute on the PlainClassInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    @"Cannot get or create GraphQL input object type builder with CLR class 'PlainClassInvalidNameAnnotation'. The name ""abc @#$%^"" specified in the GraphQLNameAttribute on the PlainClassInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -197,11 +189,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
-
-
-
-
-
 
 
         [Spec(nameof(UniquelyInputOutputTypeCollectionSpecs
@@ -273,16 +260,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             });
         }
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
-        [Fact()]
+        [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
+        [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.InputObject<PlainClass>();
-            });
+            var schema = Schema.Create(_ => { _.InputObject<PlainClass>(); });
             schema.HasInputObject<PlainClass>().Should().BeTrue();
         }
+
         [Spec(nameof(clr_typed_item_can_be_renamed))]
         [Fact]
         public void clr_typed_item_can_be_renamed_()
@@ -305,15 +290,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         [Theory]
         [InlineData("  xy")]
         [InlineData("")]
-
         public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
-
             Schema.Create(_ =>
             {
                 var poco = _.InputObject<PlainClass>();
                 Action rename = () => poco.Name(name);
-                rename.Should().Throw<InvalidNameException>().WithMessage($"Cannot rename input object PlainClass. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                rename.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot rename input object PlainClass. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -331,6 +315,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
                     @"Cannot rename input object PlainClass to ""Foo"", input object Foo already exists. All GraphQL type names must be unique.");
             });
         }
-
     }
 }

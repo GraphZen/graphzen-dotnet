@@ -27,7 +27,6 @@ namespace GraphZen.TypeSystem
             var clrType = identity.ClrType;
             if (clrType != null)
             {
-
                 if (clrType.TryGetGraphQLNameFromDataAnnotation(out var customName) &&
                     customName == identity.Name)
                 {

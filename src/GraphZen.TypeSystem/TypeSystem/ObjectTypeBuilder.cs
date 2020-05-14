@@ -74,7 +74,6 @@ namespace GraphZen.TypeSystem
             Check.NotNull(type, nameof(type));
             Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type);
             return this;
-
         }
 
         public IFieldBuilder<TObject, object, TContext> Field(string name)
@@ -107,7 +106,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)
-               ?.FieldType(typeof(TField));
+                ?.FieldType(typeof(TField));
             return this;
         }
 

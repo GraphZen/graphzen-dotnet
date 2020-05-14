@@ -34,8 +34,10 @@ namespace GraphZen.TypeSystem.Internal
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateFieldBuilderWithInvalidName(name, Definition));
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
+                    .CannotGetOrCreateFieldBuilderWithInvalidName(name, Definition));
             }
+
             return Definition.GetOrAddField(name, nameConfigurationSource, configurationSource)?.Builder;
         }
 

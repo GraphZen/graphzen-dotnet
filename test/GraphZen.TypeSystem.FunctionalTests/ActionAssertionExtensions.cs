@@ -11,7 +11,6 @@ namespace GraphZen.TypeSystem.FunctionalTests
 {
     public static class ActionAssertionExtensions
     {
-
         public static ExceptionAssertions<ArgumentNullException>
             ThrowArgumentNullException(this ActionAssertions actionAssertions, string paramName) => actionAssertions
             .Throw<ArgumentNullException>().WithMessage($"*Parameter '{paramName}'*");

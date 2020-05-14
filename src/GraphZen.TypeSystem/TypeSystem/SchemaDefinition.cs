@@ -21,9 +21,15 @@ namespace GraphZen.TypeSystem
     public partial class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
     {
         [GenDictionaryAccessors("name", nameof(Directive))]
-        private readonly Dictionary<string, DirectiveDefinition> _directives = new Dictionary<string, DirectiveDefinition>();
-        private readonly Dictionary<string, ConfigurationSource> _ignoredDirectives = new Dictionary<string, ConfigurationSource>();
-        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes = new Dictionary<string, ConfigurationSource>();
+        private readonly Dictionary<string, DirectiveDefinition> _directives =
+            new Dictionary<string, DirectiveDefinition>();
+
+        private readonly Dictionary<string, ConfigurationSource> _ignoredDirectives =
+            new Dictionary<string, ConfigurationSource>();
+
+        private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
+            new Dictionary<string, ConfigurationSource>();
+
         private readonly List<TypeIdentity> _typeIdentities;
         private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
         private ConfigurationSource? _queryTypeConfigurationSource;
@@ -794,7 +800,8 @@ namespace GraphZen.TypeSystem
 
             if (TryGetDirective(name, out var existing) && !existing.Equals(directive))
             {
-                throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.DuplicateDirective(directive, name));
+                throw new DuplicateNameException(
+                    TypeSystemExceptionMessages.DuplicateNameException.DuplicateDirective(directive, name));
             }
 
             _directives.Remove(directive.Name);
@@ -866,21 +873,23 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public DirectiveDefinition? FindDirective<TDirective>() where TDirective : notnull
-                    => FindDirective(typeof(TDirective));
+            => FindDirective(typeof(TDirective));
 
         [GraphQLIgnore]
         public bool HasDirective<TDirective>() where TDirective : notnull => HasDirective(typeof(TDirective));
 
         [GraphQLIgnore]
-        public DirectiveDefinition GetDirective<TDirective>() where TDirective : notnull => GetDirective(typeof(TDirective));
+        public DirectiveDefinition GetDirective<TDirective>() where TDirective : notnull =>
+            GetDirective(typeof(TDirective));
 
         [GraphQLIgnore]
-        public bool TryGetDirective<TDirective>([NotNullWhen(true)] out DirectiveDefinition? directive) => TryGetDirective(typeof(TDirective), out directive);
+        public bool TryGetDirective<TDirective>([NotNullWhen(true)] out DirectiveDefinition? directive) =>
+            TryGetDirective(typeof(TDirective), out directive);
 
 
         [GraphQLIgnore]
         public DirectiveDefinition? FindDirective(Type clrType)
-            => this._directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
+            => _directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
 
         [GraphQLIgnore]
         public bool HasDirective(Type clrType)

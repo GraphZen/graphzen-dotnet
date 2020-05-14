@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
@@ -16,7 +15,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
     [NoReorder]
     public class ObjectsTests
     {
-
         public class PlainClass
         {
         }
@@ -69,8 +67,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-
-
         [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
         [Theory]
         [InlineData(")(&(*#")]
@@ -97,9 +93,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-
-
-
         [Spec(nameof(named_item_cannot_be_removed_with_null_value))]
         [Fact]
         public void object_cannot_be_removed_with_null_value()
@@ -112,9 +105,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-
-
-
         [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
         public void clr_typed_object_can_be_added()
@@ -122,8 +112,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             var schema = Schema.Create(_ => { _.Object<PlainClassNameAnnotated>(); });
             schema.HasObject<PlainClassNameAnnotated>().Should().BeTrue();
         }
-
-
 
 
         [Spec(nameof(clr_typed_item_can_be_removed))]
@@ -150,8 +138,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             });
             schema.HasObject<PlainClassNameAnnotated>().Should().BeFalse();
         }
-
-
 
 
         [Spec(nameof(clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
@@ -191,7 +177,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-
         [Spec(nameof(named_item_can_be_added_via_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
@@ -210,16 +195,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         }
 
 
-
-
-
-
-
-
-
-
-        [Spec(nameof(TypeSystemSpecs.ClrTypedCollectionSpecs.clr_typed_item_can_be_added_via_type_param))]
-        [Fact()]
+        [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
+        [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
             var schema = Schema.Create(_ => { _.Object<PlainClass>(); });
@@ -252,10 +229,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
         [Theory]
         [InlineData("  xy")]
         [InlineData("")]
-
         public void clr_typed_object_cannot_be_renamed_with_an_invalid_name(string name)
         {
-
             Schema.Create(_ =>
             {
                 _.Object<PlainClassNameAnnotated>();
@@ -274,6 +249,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects
             var schema = Schema.Create(_ => { _.Object<PlainClassNameAnnotated>().Name("Foo"); });
             schema.GetObject<PlainClassNameAnnotated>().Name.Should().Be("Foo");
         }
-
     }
 }

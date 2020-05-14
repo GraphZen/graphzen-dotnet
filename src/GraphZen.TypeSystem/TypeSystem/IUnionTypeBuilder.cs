@@ -25,7 +25,6 @@ namespace GraphZen.TypeSystem
         IUnionTypeBuilder<object, TContext> RemoveClrType();
 
 
-
         IUnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes);
 
 

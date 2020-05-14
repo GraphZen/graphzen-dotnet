@@ -54,8 +54,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         }
 
 
-
-
         public class UniquelyInputOutputTypeCollectionSpecs
         {
             public const string named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io = null;
@@ -110,6 +108,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string named_item_cannot_be_added_with_invalid_name = null;
             public const string named_item_can_be_renamed = null;
             public const string named_item_can_be_removed = null;
+
             public const string named_item_cannot_be_removed_with_null_value = null;
             // public const string named_item_cannot_be_removed_with_invalid_name = null; TODO: can or cannot?
         }
@@ -119,7 +118,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string named_item_cannot_be_renamed_with_null_value = null;
             public const string named_item_cannot_be_renamed_with_an_invalid_name = null;
             public const string named_item_cannot_be_renamed_if_name_already_exists = null;
-
         }
 
         public class OutputFieldsDefinitionSpecs
@@ -136,13 +134,23 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_cannot_be_added_with_null_value = null;
             public const string clr_typed_item_cannot_be_added_with_invalid_name_attribute = null;
             public const string clr_typed_item_with_conflicting_name_can_be_added_with_custom_name = null;
-            public const string clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name = null;
+
+            public const string clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name =
+                null;
+
             public const string clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name = null;
-            public const string clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name = null;
+
+            public const string
+                clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name = null;
+
             public const string clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name = null;
-            public const string clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name = null;
+
+            public const string clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name
+                = null;
+
             public const string clr_typed_item_cannot_be_added_with_null_custom_name = null;
             public const string clr_typed_item_cannot_be_added_with_invalid_custom_name = null;
+
             public const string clr_typed_item_cannot_be_added_with_duplicate_custom_name = null;
             // TODO: What about adding w/ custom name if CLR type has already been added? Should set custom name and/or throw appropriate errors, errors should reflect name update, not add 
 
@@ -188,7 +196,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             // Removing CLR Type
             public const string clr_type_can_be_removed = null;
             public const string clr_typed_item_when_type_removed_should_retain_name = null;
-            public const string clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name = null;
+
+            public const string clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name =
+                null;
+
             public const string custom_named_clr_typed_item_when_type_removed_should_retain_custom_name = null;
         }
 

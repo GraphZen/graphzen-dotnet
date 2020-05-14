@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -53,8 +52,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
                 change.Should().ThrowArgumentNullException("clrType");
             });
         }
-
-
 
 
         [Spec(nameof(clr_type_should_be_unique))]
@@ -114,9 +111,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
         }
 
 
-
-
-
         [Spec(nameof(changing_clr_type_with_name_annotation_changes_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_changes_name_()
@@ -125,12 +119,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
             schema.HasScalar("Foo").Should().BeFalse();
             schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be(PlainStructAnnotatedName.AnnotatedName);
         }
-
-
-
-
-
-
 
 
         [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
@@ -145,8 +133,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
             schema.GetScalar(PlainStructAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
             schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be("Bar");
         }
-
-
 
 
         [Spec(nameof(clr_type_can_be_removed))]
@@ -183,8 +169,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.C
             var schema = Schema.Create(_ => { _.Scalar<PlainStruct>().Name("Foo").RemoveClrType(); });
             schema.HasScalar("Foo").Should().BeTrue();
         }
-
-
-
     }
 }

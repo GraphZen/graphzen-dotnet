@@ -38,7 +38,8 @@ namespace GraphZen.TypeSystem
             return new InputObjectTypeBuilder<object>(Builder);
         }
 
-        public IInputObjectTypeBuilder<object> ClrType(Type clrType, string name) => throw new NotImplementedException();
+        public IInputObjectTypeBuilder<object> ClrType(Type clrType, string name) =>
+            throw new NotImplementedException();
 
         public IInputObjectTypeBuilder<object> RemoveClrType()
         {
@@ -177,6 +178,5 @@ namespace GraphZen.TypeSystem
 
         public IInputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations() =>
             throw new NotImplementedException();
-
     }
 }

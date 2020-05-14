@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -364,9 +363,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
-
-
-
 
 
         [Spec(nameof(clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name))]

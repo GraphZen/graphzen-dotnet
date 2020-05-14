@@ -23,7 +23,6 @@ namespace GraphZen.TypeSystem
             name, nameConfigurationSource,
             schema, configurationSource, clrInfo, declaringMember)
         {
-
         }
 
         private string DebuggerDisplay => $"argument {Name}";
@@ -36,8 +35,10 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRenameArgument(this, name));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotRenameArgument(this, name));
             }
+
             if (!configurationSource.Overrides(GetNameConfigurationSource()))
             {
                 return false;

@@ -13,7 +13,8 @@ namespace GraphZen.TypeSystem
 {
     public static class SchemaBuilderExtensions
     {
-        public static ISchemaBuilder<T> FromSchema<T>(this ISchemaBuilder<T> schemaBuilder, DocumentSyntax schema) where T : GraphQLContext
+        public static ISchemaBuilder<T> FromSchema<T>(this ISchemaBuilder<T> schemaBuilder, DocumentSyntax schema)
+            where T : GraphQLContext
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
             Check.NotNull(schema, nameof(schema));
@@ -23,7 +24,8 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public static ISchemaBuilder<T> FromSchema<T>(this ISchemaBuilder<T> schemaBuilder, string schema) where T : GraphQLContext
+        public static ISchemaBuilder<T> FromSchema<T>(this ISchemaBuilder<T> schemaBuilder, string schema)
+            where T : GraphQLContext
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
             Check.NotNull(schema, nameof(schema));

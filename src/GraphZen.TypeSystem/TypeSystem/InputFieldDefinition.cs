@@ -30,8 +30,10 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, DeclaringMember));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, DeclaringMember));
             }
+
             if (!configurationSource.Overrides(GetNameConfigurationSource()))
             {
                 return false;

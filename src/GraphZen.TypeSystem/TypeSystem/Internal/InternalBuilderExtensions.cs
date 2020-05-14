@@ -14,7 +14,6 @@ namespace GraphZen.TypeSystem.Internal
             string name, ConfigurationSource configurationSource)
             where TDefinition : MemberDefinition, IMutableNamed
         {
-
             builder.Definition.SetName(name, configurationSource);
         }
 

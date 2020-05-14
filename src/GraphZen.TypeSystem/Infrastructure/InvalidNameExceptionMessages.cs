@@ -17,13 +17,23 @@ namespace GraphZen.Infrastructure
         {
             internal static string DuplicateType(TypeIdentity identity, string newName, TypeIdentity existing) =>
                 $"Cannot rename {identity.Definition?.ToString() ?? identity.Name} to \"{newName}\", {existing.Definition?.ToString() ?? existing.ToString()} already exists. All GraphQL type names must be unique.";
-            internal static string DuplicateField(IFieldDefinition field, string name) => $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
-            internal static string DuplicateDirective(IDirectiveDefinition directive, string name) => $"Cannot rename {directive} to \"{name}\": a directive named \"{name}\" already exists.";
-            internal static string DuplicateInputField(IInputFieldDefinition field, string name) => $"Cannot rename {field} to \"{name}\": {field.DeclaringMember?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
+
+            internal static string DuplicateField(IFieldDefinition field, string name) =>
+                $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
+
+            internal static string DuplicateDirective(IDirectiveDefinition directive, string name) =>
+                $"Cannot rename {directive} to \"{name}\": a directive named \"{name}\" already exists.";
+
+            internal static string DuplicateInputField(IInputFieldDefinition field, string name) =>
+                $"Cannot rename {field} to \"{name}\": {field.DeclaringMember?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
+
             internal static string DuplicateArgument(IArgumentDefinition argument, string name)
             {
-                var parent = argument.DeclaringMember is IFieldDefinition fd ? $"{fd} on {fd.DeclaringType}" : argument.DeclaringMember.ToString();
-                return $"Cannot rename {argument} to \"{name}\": {parent?.FirstCharToUpper()} already contains an argument named \"{name}\".";
+                var parent = argument.DeclaringMember is IFieldDefinition fd
+                    ? $"{fd} on {fd.DeclaringType}"
+                    : argument.DeclaringMember.ToString();
+                return
+                    $"Cannot rename {argument} to \"{name}\": {parent?.FirstCharToUpper()} already contains an argument named \"{name}\".";
             }
         }
 
@@ -34,9 +44,9 @@ namespace GraphZen.Infrastructure
                 clrType.IsEnum ? "enum" : "type";
 
             public static string CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(Type clrType,
-                            string annotatedName)
-                            =>
-                                $"Cannot create directive with CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeDisplay(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
+                string annotatedName)
+                =>
+                    $"Cannot create directive with CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeDisplay(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotGetOrCreateBuilderForClrTypeWithInvalidNameAttribute(Type clrType,
                 string annotatedName, TypeKind kind)
@@ -59,11 +69,14 @@ namespace GraphZen.Infrastructure
 
             public static string CannotCreateInputValueWithInvalidName(IInputValueDefinition def, string name)
             {
-                var type = def is IArgumentDefinition ? "argument" : def is IInputFieldDefinition ? "field" : throw new NotImplementedException();
-                return $"Cannot create {type} named \"{name}\" for {def.DeclaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+                var type = def is IArgumentDefinition ? "argument" :
+                    def is IInputFieldDefinition ? "field" : throw new NotImplementedException();
+                return
+                    $"Cannot create {type} named \"{name}\" for {def.DeclaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
             }
 
-            public static string CannotCreateDirectiveWithInvalidName(string name) => $"Cannot create directive named \"{name}\": \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+            public static string CannotCreateDirectiveWithInvalidName(string name) =>
+                $"Cannot create directive named \"{name}\": \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
 
             public static string CannotRename(string name, INamed named) =>

@@ -54,8 +54,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.ClrTy
         }
 
 
-
-
         [Spec(nameof(clr_type_should_be_unique))]
         [Fact(Skip = "needs impl")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
@@ -94,9 +92,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.ClrTy
             var schema = Schema.Create(_ => { _.Enum<PlainEnumAnnotatedName>().RemoveClrType(); });
             schema.HasEnum(AnnotatedName).Should().BeTrue();
         }
-
-
-
-
     }
 }

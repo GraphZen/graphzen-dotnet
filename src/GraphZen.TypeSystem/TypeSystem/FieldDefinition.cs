@@ -68,7 +68,8 @@ namespace GraphZen.TypeSystem
 
             if (TryGetArgument(name, out var existing) && existing != argument)
             {
-                throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.DuplicateArgument(argument, name));
+                throw new DuplicateNameException(
+                    TypeSystemExceptionMessages.DuplicateNameException.DuplicateArgument(argument, name));
             }
 
             _arguments.Remove(argument.Name);
@@ -124,8 +125,10 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, this.DeclaringType));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, DeclaringType));
             }
+
             if (!configurationSource.Overrides(_nameConfigurationSource))
             {
                 return false;
@@ -260,7 +263,6 @@ namespace GraphZen.TypeSystem
         {
             if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))
             {
-
                 argument = new ArgumentDefinition(name, configurationSource, Builder.Schema,
                     configurationSource, this, null);
                 _arguments[name] = argument;

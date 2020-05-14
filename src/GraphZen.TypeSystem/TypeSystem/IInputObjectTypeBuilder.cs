@@ -11,9 +11,6 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-
-
-
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
 
 

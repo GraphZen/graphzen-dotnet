@@ -27,7 +27,6 @@ namespace GraphZen.TypeSystem
         private readonly ImmutableDictionary<Type, Directive> _directivesByType;
 
 
-
         private readonly Lazy<IReadOnlyList<EnumType>> _enums;
 
         private readonly Dictionary<string, List<ObjectType>> _implementations =
@@ -630,7 +629,8 @@ namespace GraphZen.TypeSystem
         public Directive GetDirective<TDirective>() where TDirective : notnull => GetDirective(typeof(TDirective));
 
         [GraphQLIgnore]
-        public bool TryGetDirective<TDirective>([NotNullWhen(true)] out Directive? directive) => TryGetDirective(typeof(TDirective), out directive);
+        public bool TryGetDirective<TDirective>([NotNullWhen(true)] out Directive? directive) =>
+            TryGetDirective(typeof(TDirective), out directive);
 
         public override string ToString() => "Schema";
     }

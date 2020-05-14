@@ -60,9 +60,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
         }
 
 
-
-
-
         [Spec(nameof(clr_type_should_be_unique))]
         [Fact(Skip = "needs impl")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
@@ -102,8 +99,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
             var schema = Schema.Create(_ => { _.Interface<PlainInterfaceAnnotatedName>().RemoveClrType(); });
             schema.HasInterface(PlainInterfaceAnnotatedName.AnnotatedName).Should().BeTrue();
         }
-
-
-
     }
 }

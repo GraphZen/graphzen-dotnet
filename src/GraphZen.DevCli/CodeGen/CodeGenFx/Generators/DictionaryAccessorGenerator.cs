@@ -28,7 +28,9 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
 
         public static IEnumerable<DictionaryAccessorGenerator> FromTypeProperties(Type type)
         {
-            foreach (var member in type.GetMembers(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic).Where(_ => _ is PropertyInfo || _ is FieldInfo))
+            foreach (var member in type
+                .GetMembers(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public |
+                            BindingFlags.NonPublic).Where(_ => _ is PropertyInfo || _ is FieldInfo))
             {
                 var genAccessors = member.GetCustomAttribute<GenDictionaryAccessorsAttribute>();
                 if (genAccessors != null)

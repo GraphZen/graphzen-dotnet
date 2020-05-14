@@ -177,10 +177,8 @@ namespace GraphZen.TypeSystem.Internal
                 : $"Cannot add {kind.ToDisplayStringLower()} named '{identity.Name}', an existing {existingType.Kind.ToDisplayStringLower()} already exists with that name.";
         }
 
-        public InternalUnionTypeBuilder? Union(Type clrType, string name, ConfigurationSource configurationSource)
-        {
-            return Union(name, configurationSource)?.ClrType(clrType, configurationSource);
-        }
+        public InternalUnionTypeBuilder? Union(Type clrType, string name, ConfigurationSource configurationSource) =>
+            Union(name, configurationSource)?.ClrType(clrType, configurationSource);
 
         public InternalUnionTypeBuilder? Union(Type clrType, ConfigurationSource configurationSource)
         {
@@ -257,7 +255,8 @@ namespace GraphZen.TypeSystem.Internal
         public InternalScalarTypeBuilder? Scalar(Type clrType, string name, ConfigurationSource configurationSource)
         {
             AssertValidName(name, TypeKind.Scalar);
-            return Scalar(new TypeIdentity(name, Definition), configurationSource)?.ClrType(clrType, configurationSource);
+            return Scalar(new TypeIdentity(name, Definition), configurationSource)
+                ?.ClrType(clrType, configurationSource);
         }
 
         public InternalScalarTypeBuilder? Scalar(string name, ConfigurationSource configurationSource)
@@ -333,10 +332,8 @@ namespace GraphZen.TypeSystem.Internal
             return Interface(new TypeIdentity(name, Definition), configurationSource);
         }
 
-        public InternalInterfaceTypeBuilder? Interface(Type clrType, string name, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public InternalInterfaceTypeBuilder? Interface(Type clrType, string name,
+            ConfigurationSource configurationSource) => throw new NotImplementedException();
 
         private InternalInterfaceTypeBuilder? Interface(in TypeIdentity id,
             ConfigurationSource configurationSource)
@@ -400,12 +397,8 @@ namespace GraphZen.TypeSystem.Internal
             return Enum(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
-        public InternalEnumTypeBuilder? Enum(Type clrType, string name, ConfigurationSource configurationSource)
-        {
-
+        public InternalEnumTypeBuilder? Enum(Type clrType, string name, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
-        }
-
 
 
         public InternalEnumTypeBuilder? Enum(string name, ConfigurationSource configurationSource)
@@ -476,10 +469,8 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalInputObjectTypeBuilder? InputObject(Type clrType, string name,
-                    ConfigurationSource configurationSource)
-        {
+            ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
-        }
 
         public InternalInputObjectTypeBuilder? InputObject(string name,
             ConfigurationSource configurationSource)
@@ -548,17 +539,16 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-
-
         private static void AssertValidName(string name, TypeKind kind)
         {
             if (!name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
-                                        TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateTypeBuilderWithInvalidName(name,
-                                            kind));
+                    TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateTypeBuilderWithInvalidName(name,
+                        kind));
             }
         }
+
         private static void AssertValidName(Type clrType, TypeKind kind)
         {
             if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated))
@@ -566,20 +556,21 @@ namespace GraphZen.TypeSystem.Internal
                 if (!annotated.IsValidGraphQLName())
                 {
                     throw new InvalidNameException(
-                        TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateBuilderForClrTypeWithInvalidNameAttribute(clrType, annotated,
-                            kind));
+                        TypeSystemExceptionMessages.InvalidNameException
+                            .CannotGetOrCreateBuilderForClrTypeWithInvalidNameAttribute(clrType, annotated,
+                                kind));
                 }
             }
             else if (!clrType.Name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateBuilderForClrTypeWithInvalidName(clrType, kind));
+                    TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateBuilderForClrTypeWithInvalidName(
+                        clrType, kind));
             }
         }
-        public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource)
-        {
+
+        public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
-        }
 
 
         public InternalObjectTypeBuilder? Object(string name, ConfigurationSource configurationSource)
@@ -639,10 +630,9 @@ namespace GraphZen.TypeSystem.Internal
             return objectType.Builder;
         }
 
-        public InternalDirectiveBuilder? Directive(Type clrType, string name, ConfigurationSource configurationSource)
-        {
+        public InternalDirectiveBuilder?
+            Directive(Type clrType, string name, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
-        }
 
         public InternalDirectiveBuilder? Directive(string name, ConfigurationSource configurationSource)
         {
@@ -672,7 +662,9 @@ namespace GraphZen.TypeSystem.Internal
             if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotatedName) &&
                 !annotatedName.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(clrType, annotatedName));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException
+                        .CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(clrType, annotatedName));
             }
 
             if (clrType.IsIgnoredByDataAnnotation())

@@ -111,7 +111,8 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Check.NotNull(configurator, nameof(configurator));
-            var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(type, ConfigurationSource.Explicit);
+            var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit)
+                .Type(type, ConfigurationSource.Explicit);
             configurator(new InputValueBuilder(argBuilder));
             return this;
         }
@@ -121,7 +122,6 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArgument), ConfigurationSource.Explicit);
             return this;
-
         }
 
         public IFieldBuilder<TDeclaringType, TField, TContext> RemoveArgument(string name)
@@ -145,7 +145,8 @@ namespace GraphZen.TypeSystem
             Action<InputValueBuilder> configurator)
         {
             Check.NotNull(name, nameof(name));
-            var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArg), ConfigurationSource.Explicit);
+            var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit)
+                .Type(typeof(TArg), ConfigurationSource.Explicit);
             configurator(new InputValueBuilder(argBuilder));
             return this;
         }

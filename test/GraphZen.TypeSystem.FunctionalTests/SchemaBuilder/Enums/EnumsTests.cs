@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -31,7 +30,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         [GraphQLName("abc ()(*322*&%^")]
         private enum PlainEnumInvalidNameAnnotation
         {
-
         }
 
 
@@ -195,7 +193,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             {
                 Action add = () => _.Enum(name);
                 add.Should().Throw<InvalidNameException>()
-                    .WithMessage(@$"Cannot get or create GraphQL type builder for enum named ""{name}"". The type name ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    .WithMessage(
+                        @$"Cannot get or create GraphQL type builder for enum named ""{name}"". The type name ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -208,7 +207,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             schema.HasEnum("Foo").Should().BeFalse();
             schema.HasEnum("Bar").Should().BeTrue();
         }
-
 
 
         [Spec(nameof(named_item_can_be_removed))]
@@ -236,9 +234,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-
-
-
         [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
         public void clr_typed_item_can_be_added_()
@@ -246,7 +241,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
             var schema = Schema.Create(_ => { _.Enum(typeof(PlainEnum)); });
             schema.HasEnum<PlainEnum>();
         }
-
 
 
         [Spec(nameof(clr_typed_item_cannot_be_added_with_null_value))]
@@ -313,13 +307,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-
-
-
-
-
-
-
         [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
         [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
@@ -357,7 +344,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
                 var poce = _.Enum<PlainEnum>();
                 Action rename = () => poce.Name(name);
                 rename.Should().Throw<InvalidNameException>()
-                    .WithMessage(@$"Cannot rename enum PlainEnum. ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    .WithMessage(
+                        @$"Cannot rename enum PlainEnum. ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

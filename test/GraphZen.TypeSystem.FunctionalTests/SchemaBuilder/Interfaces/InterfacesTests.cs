@@ -158,7 +158,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-
         [Spec(nameof(named_item_can_be_removed))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_removed_()
@@ -185,8 +184,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-
-
         [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
         public void clr_typed_item_can_be_added_()
@@ -208,8 +205,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs
-            .clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
         [Fact]
         public void clr_typed_item_cannot_be_added_with_invalid_name_attribute_()
         {
@@ -260,16 +256,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         }
 
 
-
-
         [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
-        [Fact()]
+        [Fact]
         public void clr_typed_item_can_be_added_via_type_param_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Interface<PlainInterface>();
-            });
+            var schema = Schema.Create(_ => { _.Interface<PlainInterface>(); });
             schema.HasInterface<PlainInterface>().Should().BeTrue();
         }
 

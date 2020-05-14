@@ -101,8 +101,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-
-
         [Spec(nameof(named_item_can_be_removed))]
         [Fact(Skip = "todo")]
         public void named_item_can_be_removed_()

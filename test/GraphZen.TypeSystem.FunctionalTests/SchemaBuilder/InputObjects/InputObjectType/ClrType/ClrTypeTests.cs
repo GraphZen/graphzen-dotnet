@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -55,7 +54,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
         }
 
 
-
         [Spec(nameof(clr_type_should_be_unique))]
         [Fact(Skip = "needs implementation")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
@@ -95,8 +93,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
             var schema = Schema.Create(_ => { _.InputObject<PlainClassAnnotatedName>().RemoveClrType(); });
             schema.HasInputObject(PlainClassAnnotatedName.AnnotatedName).Should().BeTrue();
         }
-
-
-
     }
 }

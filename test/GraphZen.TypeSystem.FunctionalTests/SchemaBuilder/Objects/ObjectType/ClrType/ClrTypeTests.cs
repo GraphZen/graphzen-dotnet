@@ -31,7 +31,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.C
         }
 
 
-
         [Spec(nameof(clr_type_should_be_unique))]
         [Fact(Skip = "needs impl")]
         public void untyped_item_cannot_have_clr_type_added_that_is_already_in_use_()
@@ -67,8 +66,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.C
                 change.Should().ThrowArgumentNullException("clrType");
             });
         }
-
-
 
 
         [Spec(nameof(clr_typed_item_when_type_removed_should_retain_name))]

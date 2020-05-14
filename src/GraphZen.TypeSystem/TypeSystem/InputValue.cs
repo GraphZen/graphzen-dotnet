@@ -51,8 +51,6 @@ namespace GraphZen.TypeSystem
                     AstFromValue.Get(hasDefaultValue ? Maybe.Some(defaultValue!) : Maybe.None<object>(),
                         InputType)));
             DeclaringMember = declaringMember;
-
-
         }
 
         [GraphQLName("type")]
