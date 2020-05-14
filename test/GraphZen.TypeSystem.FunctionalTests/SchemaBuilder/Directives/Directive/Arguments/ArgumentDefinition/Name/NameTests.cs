@@ -24,10 +24,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("Foo").Name("Bar");
+                _.Directive("Foo").Argument("Foo", "String", a => a.Name("Bar"));
             });
-            schema.HasDirective("Foo").Should().BeFalse();
-            schema.HasDirective("Bar").Should().BeTrue();
+            schema.GetDirective("Foo").HasArgument("Foo").Should().BeFalse();
+            schema.GetDirective("Foo").HasArgument("Bar").Should().BeTrue();
         }
         [Spec(nameof(TypeSystemSpecs.RequiredSpecs.required_item_cannot_be_set_with_null_value))]
         [Fact]
