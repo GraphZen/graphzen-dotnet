@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DescriptionSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Description
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Description
 {
     [NoReorder]
     public class DescriptionTests
@@ -18,8 +18,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         [Fact]
         public void updateable_item_can_be_updated_()
         {
-            var schema = Schema.Create(_ => { _.Directive("Foo").Description("desc"); });
-            schema.GetDirective("Foo").Description.Should().Be("desc");
+            var schema = Schema.Create(_ => { _.Enum("Foo").Description("desc"); });
+            schema.GetEnum("Foo").Description.Should().Be("desc");
         }
 
         [Spec(nameof(description_cannot_be_null))]
@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         {
             Schema.Create(_ =>
             {
-                var foo = _.Directive("Foo");
+                var foo = _.Enum("Foo");
                 Action add = () => foo.Description(null!);
                 add.Should().ThrowArgumentNullException("description");
             });
@@ -39,8 +39,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         [Fact]
         public void description_can_be_removed_()
         {
-            var schema = Schema.Create(_ => { _.Directive("Foo").Description("desc").RemoveDescription(); });
-            schema.GetDirective("Foo").Description.Should().BeNull();
+            var schema = Schema.Create(_ => { _.Enum("Foo").Description("desc").RemoveDescription(); });
+            schema.GetEnum("Foo").Description.Should().BeNull();
         }
     }
 }

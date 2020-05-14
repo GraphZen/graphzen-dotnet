@@ -23,7 +23,14 @@ namespace GraphZen.TypeSystem
 
         public IEnumTypeBuilder<TEnum> Description(string description)
         {
+            Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IEnumTypeBuilder<TEnum> RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 

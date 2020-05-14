@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -9,7 +10,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DescriptionSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Description
+namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.Description
 {
     [NoReorder]
     public class DescriptionTests
@@ -18,8 +19,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         [Fact]
         public void updateable_item_can_be_updated_()
         {
-            var schema = Schema.Create(_ => { _.Directive("Foo").Description("desc"); });
-            schema.GetDirective("Foo").Description.Should().Be("desc");
+            var schema = Schema.Create(_ => { _.InputObject("Foo").Description("desc"); });
+            schema.GetInputObject("Foo").Description.Should().Be("desc");
         }
 
         [Spec(nameof(description_cannot_be_null))]
@@ -28,7 +29,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         {
             Schema.Create(_ =>
             {
-                var foo = _.Directive("Foo");
+                var foo = _.InputObject("Foo");
                 Action add = () => foo.Description(null!);
                 add.Should().ThrowArgumentNullException("description");
             });
@@ -39,8 +40,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         [Fact]
         public void description_can_be_removed_()
         {
-            var schema = Schema.Create(_ => { _.Directive("Foo").Description("desc").RemoveDescription(); });
-            schema.GetDirective("Foo").Description.Should().BeNull();
+            var schema = Schema.Create(_ => { _.InputObject("Foo").Description("desc").RemoveDescription(); });
+            schema.GetInputObject("Foo").Description.Should().BeNull();
         }
     }
 }
+// Source Hash Code: 4682778770459980779

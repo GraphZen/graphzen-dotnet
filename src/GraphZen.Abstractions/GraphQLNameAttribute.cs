@@ -9,16 +9,15 @@ using JetBrains.Annotations;
 namespace GraphZen
 {
     [AttributeUsage(AttributeTargets.Class
-                        | AttributeTargets.Struct
-                        | AttributeTargets.Enum
-                        | AttributeTargets.Field
-                        | AttributeTargets.Method
-                        | AttributeTargets.Property
-                        | AttributeTargets.Parameter
-                        | AttributeTargets.Interface)]
+                    | AttributeTargets.Struct
+                    | AttributeTargets.Enum
+                    | AttributeTargets.Field
+                    | AttributeTargets.Method
+                    | AttributeTargets.Property
+                    | AttributeTargets.Parameter
+                    | AttributeTargets.Interface)]
     public class GraphQLDescriptionAttribute : Attribute
     {
-
     }
 
 

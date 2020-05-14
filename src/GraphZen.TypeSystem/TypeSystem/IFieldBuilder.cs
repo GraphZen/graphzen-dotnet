@@ -30,6 +30,7 @@ namespace GraphZen.TypeSystem
 
 
         IFieldBuilder<TDeclaringType, TField, TContext> Description(string description);
+        IFieldBuilder<TDeclaringType, TField, TContext> RemoveDescription();
 
 
         IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TField> resolver);

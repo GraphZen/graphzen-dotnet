@@ -13,7 +13,7 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputObjectType.Fields.InputField.Description
 {
     [NoReorder]
-    public abstract class DescriptionTests
+    public abstract class DescriptionTestssx
     {
         [Spec(nameof(DescriptionSpecs.description_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]

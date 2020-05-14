@@ -58,7 +58,14 @@ namespace GraphZen.TypeSystem
 
         public IScalarTypeBuilder<TScalar, TValueNode> Description(string description)
         {
+            Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IScalarTypeBuilder<TScalar, TValueNode> RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 

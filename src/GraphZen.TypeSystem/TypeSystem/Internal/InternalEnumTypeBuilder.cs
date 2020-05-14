@@ -133,5 +133,6 @@ namespace GraphZen.TypeSystem.Internal
             Definition.UnignoreValue(name, configurationSource);
             return this;
         }
+
     }
 }

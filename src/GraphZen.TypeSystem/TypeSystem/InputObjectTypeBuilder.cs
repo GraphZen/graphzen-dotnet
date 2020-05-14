@@ -27,7 +27,14 @@ namespace GraphZen.TypeSystem
 
         public IInputObjectTypeBuilder<TInputObject> Description(string description)
         {
+            Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IInputObjectTypeBuilder<TInputObject> RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 

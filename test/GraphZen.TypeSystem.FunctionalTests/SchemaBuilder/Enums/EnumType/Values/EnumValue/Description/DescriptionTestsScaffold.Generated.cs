@@ -13,7 +13,7 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Values.EnumValue.Description
 {
     [NoReorder]
-    public abstract class DescriptionTests
+    public abstract class DescriptionTestsX
     {
         [Spec(nameof(DescriptionSpecs.description_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]

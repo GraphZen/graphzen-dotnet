@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem
 
 
         IScalarTypeBuilder<TScalar, TValueNode> Description(string description);
+        IScalarTypeBuilder<TScalar, TValueNode> RemoveDescription();
 
 
         IScalarTypeBuilder<TScalar, TValueNode> Serializer(LeafSerializer serializer);

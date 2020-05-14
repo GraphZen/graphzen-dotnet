@@ -46,7 +46,14 @@ namespace GraphZen.TypeSystem
 
         public IFieldBuilder<TDeclaringType, TField, TContext> Description(string description)
         {
+            Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 

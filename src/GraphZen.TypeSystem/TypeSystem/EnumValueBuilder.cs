@@ -20,6 +20,12 @@ namespace GraphZen.TypeSystem
 
         private InternalEnumValueBuilder Builder { get; }
 
+        public IEnumValueBuilder RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
+            return this;
+        }
+
         public IEnumValueBuilder CustomValue(object value)
         {
             Builder.CustomValue(value);
@@ -39,6 +45,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumValueBuilder Description(string description)
         {
+            Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }

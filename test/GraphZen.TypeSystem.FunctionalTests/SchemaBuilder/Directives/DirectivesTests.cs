@@ -95,9 +95,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         }
 
 
-
-
-
         [Spec(nameof(named_item_can_be_removed))]
         [Fact]
         public void named_item_can_be_removed_()

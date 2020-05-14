@@ -37,6 +37,8 @@ namespace GraphZen.TypeSystem.Internal
         public virtual InternalSchemaBuilder SchemaBuilder { get; }
 
 
+        public bool RemoveDescription(ConfigurationSource configurationSource) => Definition.RemoveDescription(configurationSource);
+
         public SchemaDefinition Schema => SchemaBuilder.Definition;
     }
 }

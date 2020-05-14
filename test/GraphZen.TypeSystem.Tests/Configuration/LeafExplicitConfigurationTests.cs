@@ -109,7 +109,6 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         [Theory]
         [MemberData(nameof(FixtureData))]
         public void initial_value_then_reconfigured_explicitly_then_removed(ILeafExplicitConfigurationFixture fixture)
-
         {
             RunFixture(fixture, () =>
             {

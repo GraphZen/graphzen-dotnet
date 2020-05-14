@@ -28,6 +28,8 @@ namespace GraphZen.TypeSystem
             where TValueNode : ValueSyntax
             where TScalar : notnull;
 
+        ISchemaBuilder<TContext> Description(string description);
+        ISchemaBuilder<TContext> RemoveDescription();
         ISchemaBuilder<TContext> QueryType(string type);
 
         ISchemaBuilder<TContext> QueryType(Type clrType);

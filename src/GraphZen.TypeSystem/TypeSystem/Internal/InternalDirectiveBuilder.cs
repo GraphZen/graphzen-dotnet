@@ -44,6 +44,5 @@ namespace GraphZen.TypeSystem.Internal
 
         public bool RemoveArgument(string name, ConfigurationSource @explicit) => throw new NotImplementedException();
 
-        public bool RemoveDescription(ConfigurationSource configurationSource) => Definition.RemoveDescription(configurationSource);
     }
 }

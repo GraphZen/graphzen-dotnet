@@ -205,8 +205,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-
-
         [Spec(nameof(named_item_can_be_removed))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_removed_()

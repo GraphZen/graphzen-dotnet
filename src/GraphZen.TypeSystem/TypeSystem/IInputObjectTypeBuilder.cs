@@ -17,7 +17,9 @@ namespace GraphZen.TypeSystem
     public interface IInputObjectTypeBuilder<TInputObject> : IAnnotableBuilder<IInputObjectTypeBuilder<TInputObject>>,
         IInfrastructure<InternalInputObjectTypeBuilder>, IInfrastructure<IInputObjectTypeDefinition>
     {
+
         IInputObjectTypeBuilder<TInputObject> Description(string description);
+        IInputObjectTypeBuilder<TInputObject> RemoveDescription();
         IInputObjectTypeBuilder<object> ClrType(Type clrType);
         IInputObjectTypeBuilder<object> ClrType(Type clrType, string name);
         IInputObjectTypeBuilder<object> RemoveClrType();

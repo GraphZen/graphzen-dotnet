@@ -50,8 +50,16 @@ namespace GraphZen.TypeSystem
         }
 
 
+        public InputValueBuilder RemoveDescription()
+        {
+
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
+            return this;
+        }
+
         public InputValueBuilder Description(string description)
         {
+            Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }

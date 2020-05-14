@@ -68,6 +68,19 @@ namespace GraphZen.TypeSystem
             return new ScalarTypeBuilder<TScalar, TValueNode>(internalBuilder);
         }
 
+        public ISchemaBuilder<TContext> Description(string description)
+        {
+            Check.NotNull(description, nameof(description));
+            Builder.Description(description, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public ISchemaBuilder<TContext> RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
+            return this;
+        }
+
         public ISchemaBuilder<TContext> QueryType(string type)
         {
             Check.NotNull(type, nameof(type));

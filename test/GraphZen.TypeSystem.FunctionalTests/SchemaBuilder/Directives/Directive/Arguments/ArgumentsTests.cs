@@ -101,9 +101,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         }
 
 
-
-
-
         [Spec(nameof(named_item_can_be_removed))]
         [Fact(Skip = "todo")]
         public void named_item_can_be_removed_()
