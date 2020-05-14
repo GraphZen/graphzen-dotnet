@@ -40,8 +40,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues.Description
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            throw new NotImplementedException();
-            //sb.Enum(Grandparent).Value(parentName, v => v.Description(null));
+            sb.Enum(Grandparent).Value(parentName, v => v.RemoveDescription());
         }
 
         public override bool TryGetValue(EnumValue parent, out string? value)

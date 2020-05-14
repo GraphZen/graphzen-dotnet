@@ -111,7 +111,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         [MemberData(nameof(FixtureData))]
         public void initial_value_then_reconfigured_explicitly_then_removed(ILeafExplicitConfigurationFixture fixture)
         {
-            RunFixture<Object_Explicit_Description>(fixture, () =>
+            RunFixture(fixture, () =>
            {
                var parentName = "parent";
                var schema = Schema.Create(sb =>

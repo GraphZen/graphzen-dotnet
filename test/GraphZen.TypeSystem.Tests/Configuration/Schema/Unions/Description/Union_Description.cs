@@ -39,8 +39,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            throw new NotImplementedException();
-            // sb.Union(parentName).Description(null);
+            sb.Union(parentName).RemoveDescription();
         }
 
         public override bool TryGetValue(UnionType parent, out string? value)

@@ -40,8 +40,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Description
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            throw new NotImplementedException();
-            // sb.Object(Grandparent).Field(parentName, v => v.Description(null));
+             sb.Object(Grandparent).Field(parentName, v => v.RemoveDescription());
         }
 
         public override bool TryGetValue(Field parent, out string? value)

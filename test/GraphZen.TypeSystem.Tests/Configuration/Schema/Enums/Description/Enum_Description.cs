@@ -39,7 +39,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            throw new NotImplementedException();
+            sb.Enum(parentName).RemoveDescription();
         }
 
         public override bool TryGetValue(EnumType parent, out string? value)

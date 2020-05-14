@@ -25,11 +25,16 @@ namespace GraphZen.TypeSystem
 
         public UnionTypeBuilder<TUnion, TContext> Description(string description)
         {
+            Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public UnionTypeBuilder<TUnion, TContext> RemoveDescription() => throw new NotImplementedException();
+        public UnionTypeBuilder<TUnion, TContext> RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
+            return this;
+        }
 
         public UnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn)
         {

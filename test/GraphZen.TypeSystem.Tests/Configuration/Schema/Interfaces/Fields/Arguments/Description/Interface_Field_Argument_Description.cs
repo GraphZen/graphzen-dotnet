@@ -41,8 +41,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Arguments.De
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            throw new NotImplementedException();
-            //sb.Interface(GreatGrandparent) .Field(Grandparent, field => field.Argument(parentName, v => v.Description(null)));
+            sb.Interface(GreatGrandparent) .Field(Grandparent, field => field.Argument(parentName, v => v.RemoveDescription()));
         }
 
         public override bool TryGetValue(Argument parent, out string? value)

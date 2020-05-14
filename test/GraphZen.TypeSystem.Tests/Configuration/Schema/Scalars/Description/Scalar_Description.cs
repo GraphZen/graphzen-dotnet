@@ -39,8 +39,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            throw new NotImplementedException();
-            // sb.Scalar(parentName).Description(null);
+            sb.Scalar(parentName).RemoveDescription();
         }
 
         public override bool TryGetValue(ScalarType parent, out string? value)

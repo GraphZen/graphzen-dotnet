@@ -18,8 +18,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Des
         [Fact]
         public void updateable_item_can_be_updated_()
         {
-            var schema = Schema.Create(_ => { _.Object("Foo").Description("desc"); });
-            schema.GetObject("Foo").Description.Should().Be("desc");
+            var schema = Schema.Create(_ => { _.Union("Foo").Description("desc"); });
+            schema.GetUnion("Foo").Description.Should().Be("desc");
         }
 
         [Spec(nameof(description_cannot_be_null))]
@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Des
         {
             Schema.Create(_ =>
             {
-                var foo = _.Object("Foo");
+                var foo = _.Union("Foo");
                 Action add = () => foo.Description(null!);
                 add.Should().ThrowArgumentNullException("description");
             });
@@ -39,8 +39,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions.UnionType.Des
         [Fact]
         public void description_can_be_removed_()
         {
-            var schema = Schema.Create(_ => { _.Object("Foo").Description("desc").RemoveDescription(); });
-            schema.GetObject("Foo").Description.Should().BeNull();
+            var schema = Schema.Create(_ => { _.Union("Foo").Description("desc").RemoveDescription(); });
+            schema.GetUnion("Foo").Description.Should().BeNull();
         }
     }
 }

@@ -39,8 +39,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Description
 
         public override void RemoveValue(SchemaBuilder sb, string parentName)
         {
-            throw new NotImplementedException();
-            // sb.Interface(parentName).Description(null);
+            sb.Interface(parentName).RemoveDescription();
         }
 
         public override bool TryGetValue(InterfaceType parent, out string? value)
