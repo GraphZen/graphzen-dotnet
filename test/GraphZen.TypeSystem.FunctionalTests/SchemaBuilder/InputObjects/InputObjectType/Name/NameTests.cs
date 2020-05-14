@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
@@ -15,6 +16,19 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
     [NoReorder]
     public class NameTests
     {
+
+        [Spec(nameof(TypeSystemSpecs.NameSpecs.can_be_renamed))]
+        [Fact]
+        public void can_be_renamed_()
+        {
+             var schema = Schema.Create(_ =>
+             {
+                 _.InputObject("Foo").Name("Bar");
+             });
+             schema.HasInputObject("Foo").Should().BeFalse();
+             schema.HasInputObject("Bar").Should().BeTrue();
+        }
+
         [Spec(nameof(name_cannot_be_null))]
         [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
