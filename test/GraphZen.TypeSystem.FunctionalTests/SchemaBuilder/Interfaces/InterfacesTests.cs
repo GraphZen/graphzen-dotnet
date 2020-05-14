@@ -294,7 +294,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
                 Action rename = () => poci.Name(name);
                 rename.Should().Throw<InvalidNameException>()
                     .WithMessage(
-                        $"Cannot rename interface PlainInterface. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                        $"Cannot rename interface PlainInterface: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

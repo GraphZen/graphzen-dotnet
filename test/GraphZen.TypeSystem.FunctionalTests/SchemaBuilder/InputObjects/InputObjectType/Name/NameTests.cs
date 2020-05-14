@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
                 var foo = _.InputObject("Foo");
                 Action rename = () => foo.Name(name);
                 rename.Should().Throw<InvalidNameException>().WithMessage(
-                    $"Cannot rename input object Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Cannot rename input object Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

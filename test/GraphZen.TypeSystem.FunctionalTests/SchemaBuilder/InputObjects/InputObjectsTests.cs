@@ -297,7 +297,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
                 var poco = _.InputObject<PlainClass>();
                 Action rename = () => poco.Name(name);
                 rename.Should().Throw<InvalidNameException>().WithMessage(
-                    $"Cannot rename input object PlainClass. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Cannot rename input object PlainClass: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

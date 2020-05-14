@@ -37,7 +37,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.N
                 var foo = _.Scalar("Foo");
                 Action rename = () => foo.Name(name);
                 rename.Should().Throw<InvalidNameException>().WithMessage(
-                    $"Cannot rename scalar Foo. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Cannot rename scalar Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

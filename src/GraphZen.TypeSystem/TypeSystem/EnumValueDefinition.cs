@@ -43,6 +43,16 @@ namespace GraphZen.TypeSystem
 
         public bool SetName(string name, ConfigurationSource configurationSource)
         {
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, this.DeclaringType));
+            }
+
+            if (DeclaringType.TryGetValue(name, out var v) && !v.Equals(this))
+            {
+                throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.DuplicateEnumValue(this, name));
+            }
+
             if (!configurationSource.Overrides(_nameConfigurationSource))
             {
                 return false;
@@ -70,5 +80,7 @@ namespace GraphZen.TypeSystem
 
         // ReSharper disable once UnassignedGetOnlyAutoProperty
         public string? DeprecationReason { get; }
+
+        public override string ToString() => $"enum value {Name}";
     }
 }

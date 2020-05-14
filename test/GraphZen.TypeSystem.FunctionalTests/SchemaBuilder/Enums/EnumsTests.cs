@@ -341,27 +341,27 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         {
             Schema.Create(_ =>
             {
-                var poce = _.Enum<PlainEnum>();
-                Action rename = () => poce.Name(name);
-                rename.Should().Throw<InvalidNameException>()
-                    .WithMessage(
-                        @$"Cannot rename enum PlainEnum. ""{name}"" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
-            });
+            var poce = _.Enum<PlainEnum>();
+            Action rename = () => poce.Name(name);
+            rename.Should().Throw<InvalidNameException>()
+                .WithMessage(
+                    $"Cannot rename enum PlainEnum: \"{ name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+        });
         }
 
 
-        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
-        [Fact]
-        public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
+    [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+    [Fact]
+    public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
+    {
+        Schema.Create(_ =>
         {
-            Schema.Create(_ =>
-            {
-                _.Enum("Foo");
-                var poce = _.Enum<PlainEnum>();
-                Action rename = () => poce.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename enum PlainEnum to ""Foo"", enum Foo already exists. All GraphQL type names must be unique.");
-            });
-        }
+            _.Enum("Foo");
+            var poce = _.Enum<PlainEnum>();
+            Action rename = () => poce.Name("Foo");
+            rename.Should().Throw<DuplicateNameException>().WithMessage(
+                @"Cannot rename enum PlainEnum to ""Foo"", enum Foo already exists. All GraphQL type names must be unique.");
+        });
     }
+}
 }

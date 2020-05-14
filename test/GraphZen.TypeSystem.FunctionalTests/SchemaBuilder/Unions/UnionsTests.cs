@@ -393,7 +393,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
                 var union = _.Union<PlainAbstractClassAnnotatedName>();
                 Action rename = () => union.Name(name);
                 rename.Should().Throw<InvalidNameException>().WithMessage(
-                    $"Cannot rename union AnnotatedName. \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Cannot rename union AnnotatedName: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
