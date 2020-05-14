@@ -15,12 +15,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
     [NoReorder]
     public abstract class NameTestsScaffold
     {
-        [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
+        [Spec(nameof(NameSpecs.can_be_renamed))]
         [Fact(Skip = "TODO")]
-        public void updateable_item_can_be_updated_()
+        public void can_be_renamed_()
         {
             // var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 13794527519320628387
+// Source Hash Code: 18107972737757196117

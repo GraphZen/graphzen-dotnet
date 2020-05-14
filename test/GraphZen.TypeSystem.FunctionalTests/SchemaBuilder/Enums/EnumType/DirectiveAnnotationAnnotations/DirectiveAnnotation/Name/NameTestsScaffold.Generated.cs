@@ -16,17 +16,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Direc
     [NoReorder]
     public abstract class NameTests
     {
-        [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
+        [Spec(nameof(NameSpecs.can_be_renamed))]
         [Fact(Skip = "TODO")]
-        public void updateable_item_can_be_updated_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(RequiredSpecs.required_item_cannot_be_set_with_null_value))]
-        [Fact(Skip = "TODO")]
-        public void required_item_cannot_be_set_with_null_value_()
+        public void can_be_renamed_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -35,6 +27,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Direc
         [Spec(nameof(NameSpecs.name_must_be_valid_name))]
         [Fact(Skip = "TODO")]
         public void name_must_be_valid_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(NameSpecs.name_cannot_be_null))]
+        [Fact(Skip = "TODO")]
+        public void name_cannot_be_null_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -54,4 +54,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Direc
     {
     }
 }
-// Source Hash Code: 13357642458242093463
+// Source Hash Code: 16580256100427215413

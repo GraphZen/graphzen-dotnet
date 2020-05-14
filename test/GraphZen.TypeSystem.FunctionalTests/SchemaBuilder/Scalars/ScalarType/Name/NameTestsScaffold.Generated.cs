@@ -15,12 +15,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.N
     [NoReorder]
     public abstract class NameTestsScaffold
     {
-        [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
+        [Spec(nameof(NameSpecs.can_be_renamed))]
         [Fact(Skip = "TODO")]
-        public void updateable_item_can_be_updated_()
+        public void can_be_renamed_()
         {
             // var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 12568241441081031249
+// Source Hash Code: 12753966313916455875

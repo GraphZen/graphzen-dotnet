@@ -28,6 +28,8 @@
     <Folder Include="SchemaBuilder\DirectiveAnnotations\DirectiveAnnotation\Name\" />
     <Folder Include="SchemaBuilder\Directives\Directive\Arguments\ArgumentDefinition\DirectiveAnnotationAnnotations\DirectiveAnnotation\Name\" />
     <Folder Include="SchemaBuilder\Interfaces\InterfaceType\DirectiveAnnotationAnnotations\DirectiveAnnotation\Name\" />
+    <Folder Include="SchemaBuilder\Interfaces\InterfaceType\Interfaces\" />
+    <Folder Include="SchemaBuilder\Objects\ObjectType\Interfaces\" />
   </ItemGroup>
 
 </Project>

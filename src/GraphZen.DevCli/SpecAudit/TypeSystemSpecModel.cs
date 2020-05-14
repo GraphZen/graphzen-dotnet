@@ -72,8 +72,7 @@ namespace GraphZen.SpecAudit
             var outputFields = new Subject(nameof(FieldsDefinition.Fields))
                 .WithSpecs<NamedCollectionSpecs>();
 
-            var implementsInterfaces = new Subject(nameof(ObjectType.Interfaces))
-                .WithSpecs<NamedTypeSetSpecs>();
+            var implementsInterfaces = new Subject(nameof(ObjectType.Interfaces));
 
             var clrType = new Subject(nameof(IClrType.ClrType))
                 .WithSpecs<ClrTypeSpecs>();

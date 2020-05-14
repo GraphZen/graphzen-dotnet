@@ -16,41 +16,33 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
     [NoReorder]
     public abstract class DescriptionTests
     {
-        [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl))]
+        [Spec(nameof(DescriptionSpecs.description_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
-        public void element_can_be_defined_via_sdl_()
+        public void description_can_be_defined_by_sdl_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(SdlSpec.element_can_be_defined_via_sdl_extension))]
+        [Spec(nameof(DescriptionSpecs.description_can_be_updated))]
         [Fact(Skip = "TODO")]
-        public void element_can_be_defined_via_sdl_extension_()
+        public void description_can_be_updated_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
+        [Spec(nameof(DescriptionSpecs.description_cannot_be_null))]
         [Fact(Skip = "TODO")]
-        public void updateable_item_can_be_updated_()
+        public void description_cannot_be_null_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(OptionalSpecs.optional_item_can_be_removed))]
+        [Spec(nameof(DescriptionSpecs.description_can_be_removed))]
         [Fact(Skip = "TODO")]
-        public void optional_item_can_be_removed_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(OptionalSpecs.parent_can_be_created_without_optional_item))]
-        [Fact(Skip = "TODO")]
-        public void parent_can_be_created_without_optional_item_()
+        public void description_can_be_removed_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -62,4 +54,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces.Interface
     {
     }
 }
-// Source Hash Code: 9084043234271718506
+// Source Hash Code: 9419233902044006462

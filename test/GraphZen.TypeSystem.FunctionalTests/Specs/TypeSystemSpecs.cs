@@ -13,12 +13,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 {
     public class TypeSystemSpecs
     {
-        public class SdlSpec
-        {
-            public const string element_can_be_defined_via_sdl = null;
-            public const string element_can_be_defined_via_sdl_extension = null;
-        }
-
         public class DirectiveAnnotationSpecs
         {
             public const string directive_annotation_can_be_added = null;
@@ -37,29 +31,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string directive_annotations_are_removed_when_directive_is_ignored = null;
         }
 
-        public class UpdateableSpecs
-        {
-            public const string updateable_item_can_be_updated = null;
-        }
 
         public class DescriptionSpecs
         {
             public const string description_can_be_defined_by_sdl = null;
+
             // support sdl extension?
             public const string description_can_be_updated = null;
             public const string description_cannot_be_null = null;
             public const string description_can_be_removed = null;
-        }
-
-        public class OptionalSpecs
-        {
-            public const string optional_item_can_be_removed = null;
-            public const string parent_can_be_created_without_optional_item = null;
-        }
-
-        public class RequiredSpecs
-        {
-            public const string required_item_cannot_be_set_with_null_value = null;
         }
 
 
@@ -211,13 +191,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
                 null;
 
             public const string custom_named_clr_typed_item_when_type_removed_should_retain_custom_name = null;
-        }
-
-        public class NamedTypeSetSpecs
-        {
-            public const string set_item_can_be_added = null;
-            public const string set_item_can_be_removed = null;
-            public const string set_item_must_be_valid_name = null;
         }
     }
 }
