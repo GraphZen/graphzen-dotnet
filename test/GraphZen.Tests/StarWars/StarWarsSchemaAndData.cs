@@ -233,7 +233,7 @@ namespace GraphZen.Tests.StarWars
                 .Field("secretBackstory", "String", _ => _
                     .Description("All secrets about their past."));
 
-            sb.Object("Human").SetDescription("A humanoid creature in the Star Wars universe.")
+            sb.Object("Human").Description("A humanoid creature in the Star Wars universe.")
                 .ImplementsInterface("Character")
                 .Field("id", "String!", _ => _.Description("The id of the human."))
                 .Field("name", "String", _ => _.Description("The name of the human."))
@@ -249,7 +249,7 @@ namespace GraphZen.Tests.StarWars
                     .Resolve(() => throw new Exception("secretBackstory is secret")));
 
             sb.Object("Droid")
-                .SetDescription("A mechanical creature in the Star Wars universe.")
+                .Description("A mechanical creature in the Star Wars universe.")
                 .ImplementsInterface("Character")
                 .Field("id", "String!", _ => _
                     .Description("The id of the droid."))

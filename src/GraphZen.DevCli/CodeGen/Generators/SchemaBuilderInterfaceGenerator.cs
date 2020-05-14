@@ -15,7 +15,7 @@ namespace GraphZen.CodeGen.Generators
 {
     public class SchemaBuilderInterfaceGenerator : PartialTypeGenerator
     {
-        public SchemaBuilderInterfaceGenerator() : base(typeof(ISchemaBuilder<>))
+        public SchemaBuilderInterfaceGenerator() : base(typeof(SchemaBuilder<>))
         {
         }
 
@@ -70,17 +70,15 @@ namespace GraphZen.CodeGen.Generators
                         region.AppendLine($@"
 
        
-        I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(string name);
+        {config.TypeName}Builder<{config.DefaultTypeName}> {kind}(string name);
 
 
-        I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {typeParam} : notnull;
-        I{config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>(string name) where {typeParam} : notnull;
+        {config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>() where {typeParam} : notnull;
+        {config.TypeName}Builder<{typeParam}> {kind}<{typeParam}>(string name) where {typeParam} : notnull;
 
 
-        I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType); 
-        I{config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType, string name); 
-
-
+        {config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType); 
+        {config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType, string name); 
 ");
                     }
                     else if (config.ContextBuilder)
@@ -88,15 +86,15 @@ namespace GraphZen.CodeGen.Generators
                         region.AppendLine($@"
 
        
-        I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(string name);
+        {config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(string name);
 
 
-        I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>() where {typeParam} : notnull;
-        I{config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>(string name) where {typeParam} : notnull;
+        {config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>() where {typeParam} : notnull;
+        {config.TypeName}Builder<{typeParam}, TContext> {kind}<{typeParam}>(string name) where {typeParam} : notnull;
 
 
-        I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType); 
-        I{config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType, string name); 
+        {config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType); 
+        {config.TypeName}Builder<{config.DefaultTypeName}, TContext> {kind}(Type clrType, string name); 
 
 
    
@@ -109,24 +107,24 @@ namespace GraphZen.CodeGen.Generators
                     region.AppendLine($@"
 
 
-        ISchemaBuilder<TContext> Unignore{kind}<{typeParam}>() where {typeParam}: notnull;
+        SchemaBuilder<TContext> Unignore{kind}<{typeParam}>() where {typeParam}: notnull;
 
-         ISchemaBuilder<TContext> Unignore{kind}(Type clrType);
+         SchemaBuilder<TContext> Unignore{kind}(Type clrType);
 
-         ISchemaBuilder<TContext> Unignore{kind}(string name);
+         SchemaBuilder<TContext> Unignore{kind}(string name);
 
 
-         ISchemaBuilder<TContext> Ignore{kind}<{typeParam}>() where {typeParam}: notnull;
+         SchemaBuilder<TContext> Ignore{kind}<{typeParam}>() where {typeParam}: notnull;
 
-         ISchemaBuilder<TContext> Ignore{kind}(Type clrType);
+         SchemaBuilder<TContext> Ignore{kind}(Type clrType);
 
-         ISchemaBuilder<TContext> Ignore{kind}(string name);
+         SchemaBuilder<TContext> Ignore{kind}(string name);
 
-        ISchemaBuilder<TContext> Remove{kind}<{typeParam}>() where {typeParam}: notnull;
+        SchemaBuilder<TContext> Remove{kind}<{typeParam}>() where {typeParam}: notnull;
 
-         ISchemaBuilder<TContext> Remove{kind}(Type clrType);
+         SchemaBuilder<TContext> Remove{kind}(Type clrType);
 
-         ISchemaBuilder<TContext> Remove{kind}(string name);
+         SchemaBuilder<TContext> Remove{kind}(string name);
 
 
 ");

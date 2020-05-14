@@ -228,7 +228,7 @@ namespace GraphZen.TypeSystem.Internal
                         var type = schemaBuilder.Object(node.Name.Value);
                         if (node.Description != null)
                         {
-                            type.SetDescription(node.Description.Value);
+                            type.Description(node.Description.Value);
                         }
 
                         foreach (var directive in node.Directives)

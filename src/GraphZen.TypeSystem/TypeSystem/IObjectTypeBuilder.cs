@@ -9,46 +9,38 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public interface IObjectTypeBuilder<TObject, TContext> :
-        IInfrastructure<InternalObjectTypeBuilder>,
-        IAnnotableBuilder<IObjectTypeBuilder<TObject, TContext>>,
-        IFieldsDefinitionBuilder<
-            IObjectTypeBuilder<TObject, TContext>, TObject, TContext> where TContext : GraphQLContext
+    public interface IImplementsInterfacesBuilder<out TBuilder>
     {
-        IObjectTypeBuilder<TObject, TContext> Name(string name);
+        TBuilder ImplementsInterface(string name);
 
-        IObjectTypeBuilder<object, TContext> ClrType(Type clrType);
-        IObjectTypeBuilder<T, TContext> ClrType<T>();
-        IObjectTypeBuilder<object, TContext> RemoveClrType();
+        TBuilder ImplementsInterfaces(string name, params string[] names);
+        TBuilder IgnoreInterface<T>();
+        TBuilder IgnoreInterface(Type clrType);
+        TBuilder IgnoreInterface(string name);
+        TBuilder UnignoreInterface(string name);
+    }
 
+    public interface IClrTypeBuilder<out TUntypedBuilder>
+    {
+        TUntypedBuilder ClrType(Type clrType);
+        TUntypedBuilder ClrType(Type clrType, string name);
+        TUntypedBuilder RemoveClrType();
+    }
 
-        IObjectTypeBuilder<TObject, TContext> SetDescription(string description);
-        IObjectTypeBuilder<TObject, TContext> RemoveDescription();
-
-
-        IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn);
-
-
-        IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, bool> isTypeOfFn);
-
-
-        IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, ResolveInfo, bool> isTypeOfFn);
-
-
-        IObjectTypeBuilder<TObject, TContext> ImplementsInterface(string name);
-
-        IObjectTypeBuilder<TObject, TContext> ImplementsInterfaces(string name, params string[] names);
-
-
-        IObjectTypeBuilder<TObject, TContext> IgnoreInterface<T>();
-
-
-        IObjectTypeBuilder<TObject, TContext> IgnoreInterface(Type clrType);
-
-
-        IObjectTypeBuilder<TObject, TContext> IgnoreInterface(string name);
-
-
-        IObjectTypeBuilder<TObject, TContext> UnignoreInterface(string name);
+    public interface IObjectTypeBuilder<TObject, TContext> :
+        IImplementsInterfacesBuilder<ObjectTypeBuilder<TObject, TContext>>,
+        IInfrastructure<InternalObjectTypeBuilder>,
+        IDescriptionBuilder<ObjectTypeBuilder<TObject, TContext>>,
+        IAnnotableBuilder<ObjectTypeBuilder<TObject, TContext>>,
+        IClrTypeBuilder<ObjectTypeBuilder<object, TContext>>,
+        INameBuilder<ObjectTypeBuilder<TObject, TContext>>,
+        IFieldsDefinitionBuilder<ObjectTypeBuilder<TObject, TContext>, TObject, TContext>
+        where TContext : GraphQLContext
+    {
+        ObjectTypeBuilder<T, TContext> ClrType<T>();
+        ObjectTypeBuilder<T, TContext> ClrType<T>(string name);
+        ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn);
+        ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, bool> isTypeOfFn);
+        ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, ResolveInfo, bool> isTypeOfFn);
     }
 }

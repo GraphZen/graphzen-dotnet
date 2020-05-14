@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem
         public static Schema Schema { get; } = Schema.Create(sb =>
         {
             sb.Object<IGraphQLType>()
-                .SetDescription("The fundamental unit of any GraphQL Schema is the type. There are " +
+                .Description("The fundamental unit of any GraphQL Schema is the type. There are " +
                                 "many kinds of types in GraphQL as represented by the `__TypeKind` enum." +
                                 "\n\nDepending on the kind of a type, certain fields describe " +
                                 "information about that type. Scalar types provide no information " +
