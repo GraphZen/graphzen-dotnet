@@ -70,6 +70,9 @@ namespace GraphZen.TypeSystem
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         [GraphQLIgnore] public object? ClrInfo { get; }
+
+
+        [GraphQLCanBeNull]
         public string? Description { get; }
     }
 }

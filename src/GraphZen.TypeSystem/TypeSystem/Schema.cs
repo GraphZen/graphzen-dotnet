@@ -631,6 +631,7 @@ namespace GraphZen.TypeSystem
             TryGetDirective(typeof(TDirective), out directive);
 
         public override string ToString() => "Schema";
+        [GraphQLCanBeNull]
         public string? Description { get; }
     }
 }

@@ -122,6 +122,8 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"{DeclaringType}.{Name}";
+
+        [GraphQLCanBeNull]
         public string? Description { get; }
     }
 }
