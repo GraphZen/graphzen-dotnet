@@ -29,30 +29,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars.ScalarType.N
         {
             // var schema = Schema.Create(_ => { });
         }
-
-
-        [Spec(nameof(NameSpecs.named_item_cannot_be_renamed_with_null_value))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_renamed_with_null_value_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(NameSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_renamed_with_an_invalid_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(NameSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_renamed_if_name_already_exists_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
     }
 }
-// Source Hash Code: 9995617295874727849
+// Source Hash Code: 8018854845748978171
