@@ -6,14 +6,53 @@
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Arguments.ArgumentDefinition.Name
 {
-    // Move NameTests into a separate file to start writing tests
     [NoReorder]
-    public class NameTestsScaffold
+    public abstract class NameTestsScaffold
     {
+        [Spec(nameof(UpdateableSpecs.updateable_item_can_be_updated))]
+        [Fact(Skip = "TODO")]
+        public void updateable_item_can_be_updated_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(RequiredSpecs.required_item_cannot_be_set_with_null_value))]
+        [Fact(Skip = "TODO")]
+        public void required_item_cannot_be_set_with_null_value_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(NameSpecs.named_item_cannot_be_renamed_with_null_value))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_renamed_with_null_value_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(NameSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_renamed_with_an_invalid_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(NameSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_renamed_if_name_already_exists_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 }
-// Source Hash Code: 10167232426768312289
+// Source Hash Code: 12229460298421746635

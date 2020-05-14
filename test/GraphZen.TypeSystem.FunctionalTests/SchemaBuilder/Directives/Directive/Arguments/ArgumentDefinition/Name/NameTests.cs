@@ -2,23 +2,19 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 
-
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
 
 
-
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive.Arguments.ArgumentDefinition.Name
 {
     [NoReorder]
-    public abstract class NameTests
+    public class NameTests
     {
         [Spec(nameof(named_item_cannot_be_renamed_with_null_value))]
         [Fact]

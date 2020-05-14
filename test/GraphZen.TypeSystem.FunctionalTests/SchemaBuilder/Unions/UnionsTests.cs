@@ -11,7 +11,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
 
-//using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
 {
