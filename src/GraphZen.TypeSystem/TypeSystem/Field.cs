@@ -36,7 +36,7 @@ namespace GraphZen.TypeSystem
             IEnumerable<IArgumentDefinition>? arguments, Resolver<object, object?>? resolver,
             bool isDeprecated, string? deprecatedReason,
             IReadOnlyList<IDirectiveAnnotation>? directives,
-            TypeResolver typeResolver, MemberInfo? clrInfo) : base(directives )
+            TypeResolver typeResolver, MemberInfo? clrInfo) : base(directives)
         {
             Check.NotNull(typeResolver, nameof(typeResolver));
             Name = Check.NotNull(name, nameof(name));

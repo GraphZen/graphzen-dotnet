@@ -31,6 +31,12 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IInterfaceTypeBuilder<TInterface, TContext> RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
+            return this;
+        }
+
         public IInterfaceTypeBuilder<object, TContext> ClrType(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));

@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
 
         public EnumValue(string name, string? description, object value, bool isDeprecated, string? deprecatedReason,
-            IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(directives )
+            IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(directives)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
