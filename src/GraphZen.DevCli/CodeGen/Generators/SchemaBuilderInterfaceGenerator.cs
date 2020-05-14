@@ -8,6 +8,7 @@ using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using static GraphZen.TypeSystem.TypeKind;
 

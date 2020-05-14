@@ -22,14 +22,14 @@ namespace GraphZen.TypeSystem
         private InternalFieldBuilder Builder { get; }
 
 
-        public IFieldBuilder<TDeclaringType, object, TContext> FieldType(string type)
+        public FieldBuilder<TDeclaringType, object, TContext> FieldType(string type)
         {
             Check.NotNull(type, nameof(type));
             Builder.FieldType(type);
             return new FieldBuilder<TDeclaringType, object, TContext>(Builder);
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Name(string name)
+        public FieldBuilder<TDeclaringType, TField, TContext> Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
@@ -37,51 +37,51 @@ namespace GraphZen.TypeSystem
         }
 
         [SuppressMessage("ReSharper", "MethodOverloadWithOptionalParameter")]
-        public IFieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false,
+        public FieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false,
             bool itemCanBeNull = false) where TFieldNew : IEnumerable
         {
             Builder.FieldType(typeof(TFieldNew));
             return new FieldBuilder<TDeclaringType, TFieldNew, TContext>(Builder);
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Description(string description)
+        public FieldBuilder<TDeclaringType, TField, TContext> Description(string description)
         {
             Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveDescription()
+        public FieldBuilder<TDeclaringType, TField, TContext> RemoveDescription()
         {
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TField> resolver)
+        public FieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
             Builder.Resolve((source, args, context, info) => resolver());
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, TField> resolver)
+        public FieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
             Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source));
             return this;
         }
 
-        public IFieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver) =>
+        public FieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver) =>
             new FieldBuilder<TSource, TField, TContext>(Builder).Resolve(resolver);
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, dynamic, TField> resolver)
+        public FieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, dynamic, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
             Builder.Resolve((source, args, context, info) => resolver((TDeclaringType)source, args));
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(
+        public FieldBuilder<TDeclaringType, TField, TContext> Resolve(
             Func<TDeclaringType, dynamic, GraphQLContext, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
@@ -89,7 +89,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Resolve(
+        public FieldBuilder<TDeclaringType, TField, TContext> Resolve(
             Func<TDeclaringType, dynamic, GraphQLContext, ResolveInfo, TField> resolver)
         {
             Check.NotNull(resolver, nameof(resolver));
@@ -104,7 +104,7 @@ namespace GraphZen.TypeSystem
             return new InputValueBuilder(ib);
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type)
+        public FieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
@@ -112,7 +112,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type,
+        public FieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type,
             Action<InputValueBuilder> configurator)
         {
             Check.NotNull(name, nameof(name));
@@ -124,14 +124,14 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Argument<TArgument>(string name)
+        public FieldBuilder<TDeclaringType, TField, TContext> Argument<TArgument>(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArgument), ConfigurationSource.Explicit);
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveArgument(string name)
+        public FieldBuilder<TDeclaringType, TField, TContext> RemoveArgument(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.RemoveArgument(name, ConfigurationSource.Explicit);
@@ -139,7 +139,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
+        public FieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
             Action<InputValueBuilder> configurator)
         {
             Check.NotNull(name, nameof(name));
@@ -148,7 +148,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Argument<TArg>(string name,
+        public FieldBuilder<TDeclaringType, TField, TContext> Argument<TArg>(string name,
             Action<InputValueBuilder> configurator)
         {
             Check.NotNull(name, nameof(name));
@@ -158,53 +158,53 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> IgnoreArgument(string name)
+        public FieldBuilder<TDeclaringType, TField, TContext> IgnoreArgument(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.IgnoreArgument(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> UnignoreArgument(string name)
+        public FieldBuilder<TDeclaringType, TField, TContext> UnignoreArgument(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.UnignoreArgument(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Deprecated(string reason)
+        public FieldBuilder<TDeclaringType, TField, TContext> Deprecated(string reason)
         {
             Check.NotNull(reason, nameof(reason));
             Builder.Deprecated(reason);
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> Deprecated(bool deprecated = true)
+        public FieldBuilder<TDeclaringType, TField, TContext> Deprecated(bool deprecated = true)
         {
             Builder.Deprecated(deprecated);
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext>
+        public FieldBuilder<TDeclaringType, TField, TContext>
             AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> UpdateOrAddDirectiveAnnotation(string name,
+        public FieldBuilder<TDeclaringType, TField, TContext> UpdateOrAddDirectiveAnnotation(string name,
             object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveDirectiveAnnotations(string name) =>
+        public FieldBuilder<TDeclaringType, TField, TContext> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
 
-        public IFieldBuilder<TDeclaringType, TField, TContext> RemoveDirectiveAnnotations() =>
+        public FieldBuilder<TDeclaringType, TField, TContext> RemoveDirectiveAnnotations() =>
             throw new NotImplementedException();
 
         InternalFieldBuilder IInfrastructure<InternalFieldBuilder>.Instance => Builder;
         IFieldDefinition IInfrastructure<IFieldDefinition>.Instance => Builder.Definition;
 
-        public IFieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false)
+        public FieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false)
         {
             Builder.FieldType(typeof(TFieldNew));
             return new FieldBuilder<TDeclaringType, TFieldNew, TContext>(Builder);

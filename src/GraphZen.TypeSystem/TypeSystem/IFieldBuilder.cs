@@ -12,49 +12,38 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface IFieldBuilder<out TDeclaringType, in TField, TContext> :
-        IAnnotableBuilder<IFieldBuilder<TDeclaringType, TField, TContext>>,
-        IArgumentsDefinitionBuilder<IFieldBuilder<TDeclaringType, TField, TContext>>,
+    public interface IFieldBuilder<TDeclaringType, TField, TContext> :
+        IAnnotableBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
+        IArgumentsDefinitionBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
+        INameBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
+        IDescriptionBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
         IInfrastructure<IFieldDefinition>,
         IInfrastructure<InternalFieldBuilder>
         where TContext : GraphQLContext
     {
-        IFieldBuilder<TDeclaringType, object, TContext> FieldType(string type);
+        FieldBuilder<TDeclaringType, object, TContext> FieldType(string type);
 
 
-        IFieldBuilder<TDeclaringType, TField, TContext> Name(string name);
-
-
-        IFieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false,
+        FieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false,
             bool itemCanBeNull = false) where TFieldNew : IEnumerable;
 
 
-        IFieldBuilder<TDeclaringType, TField, TContext> Description(string description);
-        IFieldBuilder<TDeclaringType, TField, TContext> RemoveDescription();
+        FieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TField> resolver);
 
 
-        IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TField> resolver);
+        FieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, TField> resolver);
 
 
-        IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, TField> resolver);
+        FieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver);
 
 
-        IFieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver);
+        FieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, dynamic, TField> resolver);
 
 
-        IFieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, dynamic, TField> resolver);
-
-
-        IFieldBuilder<TDeclaringType, TField, TContext> Resolve(
+        FieldBuilder<TDeclaringType, TField, TContext> Resolve(
             Func<TDeclaringType, dynamic, GraphQLContext, TField> resolver);
 
-        IFieldBuilder<TDeclaringType, TField, TContext> Resolve(
+        FieldBuilder<TDeclaringType, TField, TContext> Resolve(
             Func<TDeclaringType, dynamic, GraphQLContext, ResolveInfo, TField> resolver);
-
-
-        IFieldBuilder<TDeclaringType, TField, TContext> Deprecated(string reason);
-
-
-        IFieldBuilder<TDeclaringType, TField, TContext> Deprecated(bool deprecated = true);
     }
 }

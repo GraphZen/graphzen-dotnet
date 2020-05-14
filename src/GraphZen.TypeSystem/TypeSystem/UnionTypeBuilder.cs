@@ -23,35 +23,37 @@ namespace GraphZen.TypeSystem
         InternalUnionTypeBuilder IInfrastructure<InternalUnionTypeBuilder>.Instance => Builder;
 
 
-        public IUnionTypeBuilder<TUnion, TContext> Description(string description)
+        public UnionTypeBuilder<TUnion, TContext> Description(string description)
         {
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IUnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn)
+        public UnionTypeBuilder<TUnion, TContext> RemoveDescription() => throw new NotImplementedException();
+
+        public UnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
             Builder.ResolveType((value, context, info) => resolveTypeFn((TUnion)value, (TContext)context, info));
             return this;
         }
 
-        public IUnionTypeBuilder<object, TContext> ClrType(Type clrType)
+        public UnionTypeBuilder<object, TContext> ClrType(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
             Builder.ClrType(clrType, ConfigurationSource.Explicit);
             return new UnionTypeBuilder<object, TContext>(Builder);
         }
 
-        public IUnionTypeBuilder<object, TContext> ClrType(Type clrType, string name) =>
+        public UnionTypeBuilder<object, TContext> ClrType(Type clrType, string name) =>
             throw new NotImplementedException();
 
-        public IUnionTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
+        public UnionTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
 
-        public IUnionTypeBuilder<T, TContext> ClrType<T>() => throw new NotImplementedException();
-        public IUnionTypeBuilder<T, TContext> ClrType<T>(string name) => throw new NotImplementedException();
+        public UnionTypeBuilder<T, TContext> ClrType<T>() => throw new NotImplementedException();
+        public UnionTypeBuilder<T, TContext> ClrType<T>(string name) => throw new NotImplementedException();
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes)
+        public UnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes)
         {
             Check.NotNull(objectTypes, nameof(objectTypes));
             foreach (var type in objectTypes)
@@ -63,7 +65,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes(params Type[] types)
+        public UnionTypeBuilder<TUnion, TContext> OfTypes(params Type[] types)
         {
             // TODO: Check.NotEmpty(types, nameof(types));
             foreach (var type in types)
@@ -77,39 +79,39 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<TObject>()
+        public UnionTypeBuilder<TUnion, TContext> OfTypes<TObject>()
         {
             Builder.IncludesType(typeof(TObject), ConfigurationSource.Explicit);
             return this;
         }
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2>() => OfTypes(typeof(T1), typeof(T2));
+        public UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2>() => OfTypes(typeof(T1), typeof(T2));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3>() => OfTypes(typeof(T1), typeof(T2), typeof(T3));
+        public UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3>() => OfTypes(typeof(T1), typeof(T2), typeof(T3));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4>() =>
+        public UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4>() =>
             OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5>() =>
+        public UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5>() =>
             OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6>() => OfTypes(typeof(T1), typeof(T2),
+        public UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6>() => OfTypes(typeof(T1), typeof(T2),
             typeof(T3), typeof(T4), typeof(T5), typeof(T6));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7>() => OfTypes(typeof(T1),
+        public UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7>() => OfTypes(typeof(T1),
             typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>() =>
+        public UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>() =>
             OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7),
                 typeof(T8),
                 typeof(T9));
 
-        public IUnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>() =>
+        public UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>() =>
             OfTypes(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7),
                 typeof(T8),
                 typeof(T9), typeof(T10));
 
-        public IUnionTypeBuilder<TUnion, TContext> Name(string name)
+        public UnionTypeBuilder<TUnion, TContext> Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
@@ -117,19 +119,19 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IUnionTypeBuilder<TUnion, TContext> AddDirectiveAnnotation(string name, object? value = null) =>
+        public UnionTypeBuilder<TUnion, TContext> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public IUnionTypeBuilder<TUnion, TContext> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public UnionTypeBuilder<TUnion, TContext> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
             Check.NotNull(name, nameof(name));
             Builder.DirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IUnionTypeBuilder<TUnion, TContext> RemoveDirectiveAnnotations(string name) =>
+        public UnionTypeBuilder<TUnion, TContext> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
 
-        public IUnionTypeBuilder<TUnion, TContext> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public UnionTypeBuilder<TUnion, TContext> RemoveDirectiveAnnotations() => throw new NotImplementedException();
     }
 }

@@ -24,13 +24,13 @@ namespace GraphZen.TypeSystem
 
         InternalScalarTypeBuilder IInfrastructure<InternalScalarTypeBuilder>.Instance => Builder;
 
-        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType)
+        public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType)
         {
             var internalBuilder = Builder.ClrType(clrType, ConfigurationSource.Explicit);
             return new ScalarTypeBuilder<object, TValueNode>(internalBuilder);
         }
 
-        public IScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, string name)
+        public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, string name)
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(name, name);
@@ -39,7 +39,7 @@ namespace GraphZen.TypeSystem
             return new ScalarTypeBuilder<object, TValueNode>(Builder);
         }
 
-        public IScalarTypeBuilder<T, TValueNode> ClrType<T>(string name)
+        public ScalarTypeBuilder<T, TValueNode> ClrType<T>(string name)
         {
             Check.NotNull(name, name);
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
@@ -47,50 +47,50 @@ namespace GraphZen.TypeSystem
             return new ScalarTypeBuilder<T, TValueNode>(Builder);
         }
 
-        public IScalarTypeBuilder<object, TValueNode> RemoveClrType() => throw new NotImplementedException();
+        public ScalarTypeBuilder<object, TValueNode> RemoveClrType() => throw new NotImplementedException();
 
-        public IScalarTypeBuilder<T, TValueNode> ClrType<T>()
+        public ScalarTypeBuilder<T, TValueNode> ClrType<T>()
         {
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
 
             return new ScalarTypeBuilder<T, TValueNode>(Builder);
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> Description(string description)
+        public ScalarTypeBuilder<TScalar, TValueNode> Description(string description)
         {
             Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> RemoveDescription()
+        public ScalarTypeBuilder<TScalar, TValueNode> RemoveDescription()
         {
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> Serializer(LeafSerializer serializer)
+        public ScalarTypeBuilder<TScalar, TValueNode> Serializer(LeafSerializer serializer)
         {
             Check.NotNull(serializer, nameof(serializer));
             Builder.Serializer(value => serializer(value));
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> LiteralParser(
+        public ScalarTypeBuilder<TScalar, TValueNode> LiteralParser(
             LeafLiteralParser<object, TValueNode> literalParser)
         {
             Check.NotNull(literalParser, nameof(literalParser));
             Builder.LiteralParser(value =>
             {
                 Debug.Assert(value != null, nameof(value) + " != null");
-                var parsed = literalParser((TValueNode)value);
+                var parsed = literalParser((TValueNode) value);
                 Debug.Assert(parsed != null, nameof(parsed) + " != null");
                 return parsed.Cast<object>();
             });
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> ValueParser(LeafValueParser<object> valueParser)
+        public ScalarTypeBuilder<TScalar, TValueNode> ValueParser(LeafValueParser<object> valueParser)
         {
             Check.NotNull(valueParser, nameof(valueParser));
 
@@ -105,7 +105,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IScalarTypeBuilder<TScalar, TValueNode> Name(string name)
+        public ScalarTypeBuilder<TScalar, TValueNode> Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
@@ -113,19 +113,19 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IScalarTypeBuilder<TScalar, TValueNode> AddDirectiveAnnotation(string name, object? value = null) =>
+        public ScalarTypeBuilder<TScalar, TValueNode> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public IScalarTypeBuilder<TScalar, TValueNode> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public ScalarTypeBuilder<TScalar, TValueNode> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotations(string name) =>
+        public ScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
 
-        public IScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotations() =>
+        public ScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotations() =>
             throw new NotImplementedException();
     }
 }

@@ -21,35 +21,41 @@ namespace GraphZen.TypeSystem
 
         private InternalEnumTypeBuilder Builder { get; }
 
-        public IEnumTypeBuilder<TEnum> Description(string description)
+        public EnumTypeBuilder<TEnum> Description(string description)
         {
             Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumTypeBuilder<TEnum> RemoveDescription()
+        public EnumTypeBuilder<TEnum> RemoveDescription()
         {
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
-
-        public IEnumTypeBuilder<TEnum> Value(TEnum value, Action<IEnumValueBuilder>? configurator = null)
+        public EnumTypeBuilder<TEnum> Value(TEnum value)
         {
             Check.NotNull(value, nameof(value));
+            Builder.Value(value, ConfigurationSource.Explicit);
+            return this;
+        }
+        public EnumTypeBuilder<TEnum> Value(TEnum value, Action<EnumValueBuilder> configurator)
+        {
+            Check.NotNull(value, nameof(value));
+            Check.NotNull(configurator, nameof(configurator));
             var vb = new EnumValueBuilder(Builder.Value(value, ConfigurationSource.Explicit)!);
-            configurator?.Invoke(vb);
+            configurator(vb);
             return this;
         }
 
-        public IEnumTypeBuilder<TEnum> IgnoreValue(TEnum value)
+        public EnumTypeBuilder<TEnum> IgnoreValue(TEnum value)
         {
             Check.NotNull(value, nameof(value));
             Builder.IgnoreValue(value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumTypeBuilder<TEnum> UnignoreValue(TEnum value)
+        public EnumTypeBuilder<TEnum> UnignoreValue(TEnum value)
         {
             Check.NotNull(value, nameof(value));
             Builder.UnignoreValue(value, ConfigurationSource.Explicit);
@@ -57,40 +63,44 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IEnumTypeBuilder<TEnum> Name(string name)
+        public EnumTypeBuilder<TEnum> Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumTypeBuilder<object> ClrType(Type clrType)
+        public EnumTypeBuilder<object> ClrType(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
             Builder.ClrType(clrType, ConfigurationSource.Explicit);
             return new EnumTypeBuilder<object>(Builder);
         }
 
-        public IEnumTypeBuilder<T> ClrType<T>() where T : notnull
+        public EnumTypeBuilder<object> ClrType(Type clrType, string name) => throw new NotImplementedException();
+
+        public EnumTypeBuilder<T> ClrType<T>() where T : notnull
         {
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
             return new EnumTypeBuilder<T>(Builder);
         }
 
-        public IEnumTypeBuilder<object> RemoveClrType() => throw new NotImplementedException();
+        public EnumTypeBuilder<T> ClrType<T>(string name) where T : notnull => throw new NotImplementedException();
+
+        public EnumTypeBuilder<object> RemoveClrType() => throw new NotImplementedException();
 
 
-        public IEnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object? value = null) =>
+        public EnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public IEnumTypeBuilder<TEnum> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public EnumTypeBuilder<TEnum> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumTypeBuilder<TEnum> RemoveDirectiveAnnotations(string name) => throw new NotImplementedException();
-        public IEnumTypeBuilder<TEnum> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public EnumTypeBuilder<TEnum> RemoveDirectiveAnnotations(string name) => throw new NotImplementedException();
+        public EnumTypeBuilder<TEnum> RemoveDirectiveAnnotations() => throw new NotImplementedException();
 
 
         InternalEnumTypeBuilder IInfrastructure<InternalEnumTypeBuilder>.Instance => Builder;

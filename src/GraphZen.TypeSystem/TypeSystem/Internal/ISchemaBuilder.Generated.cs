@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 // ReSharper disable InconsistentNaming
 // ReSharper disable once PossibleInterfaceMemberAmbiguity
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Internal
 {
     internal partial interface ISchemaBuilder<TContext>
     {
@@ -271,4 +271,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 15805616542580811803
+// Source Hash Code: 8400576393048999543

@@ -5,11 +5,10 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 // ReSharper disable PossibleInterfaceMemberAmbiguity
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Internal
 {
     internal partial interface ISchemaBuilder<TContext> :
         IInfrastructure<InternalSchemaBuilder>,

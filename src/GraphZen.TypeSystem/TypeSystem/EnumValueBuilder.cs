@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class EnumValueBuilder : IInfrastructure<InternalEnumValueBuilder>, IEnumValueBuilder
+    public class EnumValueBuilder : IEnumValueBuilder
     {
         public EnumValueBuilder(InternalEnumValueBuilder builder)
         {
@@ -20,30 +20,28 @@ namespace GraphZen.TypeSystem
 
         private InternalEnumValueBuilder Builder { get; }
 
-        public IEnumValueBuilder RemoveDescription()
+        public EnumValueBuilder RemoveDescription()
         {
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumValueBuilder CustomValue(object value)
+        public EnumValueBuilder CustomValue(object value)
         {
             Builder.CustomValue(value);
             return this;
         }
 
-        public IEnumValueBuilder Deprecated(bool deprecated = true) => throw new NotImplementedException();
+        public EnumValueBuilder RemoveCustomValue() => throw new NotImplementedException();
 
-        public IEnumValueBuilder Deprecated(string? reason) => throw new NotImplementedException();
-
-        public IEnumValueBuilder Name(string name)
+        public EnumValueBuilder Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumValueBuilder Description(string description)
+        public EnumValueBuilder Description(string description)
         {
             Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
@@ -51,17 +49,17 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IEnumValueBuilder AddDirectiveAnnotation(string name, object? value = null) =>
+        public EnumValueBuilder AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public IEnumValueBuilder UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public EnumValueBuilder UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IEnumValueBuilder RemoveDirectiveAnnotations(string name) => throw new NotImplementedException();
-        public IEnumValueBuilder RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public EnumValueBuilder RemoveDirectiveAnnotations(string name) => throw new NotImplementedException();
+        public EnumValueBuilder RemoveDirectiveAnnotations() => throw new NotImplementedException();
 
 
         InternalEnumValueBuilder IInfrastructure<InternalEnumValueBuilder>.Instance => Builder;
