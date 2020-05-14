@@ -24,7 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="SchemaBuilder\DirectiveAnnotationAnnotations\DirectiveAnnotation\Name\" />
     <Folder Include="SchemaBuilder\DirectiveAnnotations\DirectiveAnnotation\Name\" />
+    <Folder Include="SchemaBuilder\Directives\Directive\Arguments\ArgumentDefinition\DirectiveAnnotationAnnotations\DirectiveAnnotation\Name\" />
+    <Folder Include="SchemaBuilder\Interfaces\InterfaceType\DirectiveAnnotationAnnotations\DirectiveAnnotation\Name\" />
   </ItemGroup>
 
 </Project>

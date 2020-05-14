@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
@@ -13,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Name
 {
     public class NameTests
     {
-        [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
+        [Spec(nameof(name_must_be_valid_name))]
         [Theory]
         [InlineData("")]
         [InlineData("  ")]
@@ -32,7 +33,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Name
         }
 
 
-        [Spec(nameof(named_item_cannot_be_renamed_if_name_already_exists))]
+        [Spec(nameof(name_cannot_be_duplicate))]
         [Fact]
         public void named_item_cannot_be_renamed_if_name_already_exists_()
         {
@@ -46,7 +47,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Name
             });
         }
 
-        [Spec(nameof(named_item_cannot_be_renamed_with_null_value))]
+        [Spec(nameof(TypeSystemSpecs.RequiredSpecs.required_item_cannot_be_set_with_null_value))]
         [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
         {

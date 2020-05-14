@@ -115,9 +115,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class NameSpecs
         {
-            public const string named_item_cannot_be_renamed_with_null_value = null;
-            public const string named_item_cannot_be_renamed_with_an_invalid_name = null;
-            public const string named_item_cannot_be_renamed_if_name_already_exists = null;
+            public const string name_must_be_valid_name = null;
+            public const string name_cannot_be_duplicate = null;
         }
 
         public class OutputFieldsDefinitionSpecs

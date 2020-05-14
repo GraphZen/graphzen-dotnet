@@ -32,15 +32,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
         }
 
 
-        [Spec(nameof(NameSpecs.named_item_cannot_be_renamed_with_null_value))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(NameSpecs.named_item_cannot_be_renamed_with_an_invalid_name))]
+        [Spec(nameof(NameSpecs.name_must_be_valid_name))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_renamed_with_an_invalid_name_()
         {
@@ -48,7 +47,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
         }
 
 
-        [Spec(nameof(NameSpecs.named_item_cannot_be_renamed_if_name_already_exists))]
+        [Spec(nameof(NameSpecs.name_cannot_be_duplicate))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_renamed_if_name_already_exists_()
         {
@@ -56,7 +55,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
         }
     }
 
-// Move NameTests into a separate file to start writing tests
+    // Move NameTests into a separate file to start writing tests
     [NoReorder]
     public class NameTestsScaffold
     {

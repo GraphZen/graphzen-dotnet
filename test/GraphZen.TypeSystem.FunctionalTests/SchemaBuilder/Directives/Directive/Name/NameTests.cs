@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
@@ -16,9 +17,22 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
     [NoReorder]
     public class NameTests
     {
-        [Spec(nameof(named_item_cannot_be_renamed_with_null_value))]
+        [Spec(nameof(TypeSystemSpecs.UpdateableSpecs.updateable_item_can_be_updated))]
         [Fact]
-        public void named_item_cannot_be_renamed_with_null_value_()
+        public void updateable_item_can_be_updated_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive("Foo").Name("Bar");
+            });
+            schema.HasDirective("Foo").Should().BeFalse();
+            schema.HasDirective("Bar").Should().BeTrue();
+        }
+
+
+        [Spec(nameof(TypeSystemSpecs.RequiredSpecs.required_item_cannot_be_set_with_null_value))]
+        [Fact()]
+        public void required_item_cannot_be_set_with_null_value_()
         {
             Schema.Create(_ =>
             {
@@ -29,7 +43,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         }
 
 
-        [Spec(nameof(named_item_cannot_be_renamed_with_an_invalid_name))]
+        
+
+
+        [Spec(nameof(name_must_be_valid_name))]
         [Theory]
         [InlineData("{name}")]
         [InlineData("LKSJ ((")]
@@ -47,7 +64,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives.Directive
         }
 
 
-        [Spec(nameof(named_item_cannot_be_renamed_if_name_already_exists))]
+        [Spec(nameof(name_cannot_be_duplicate))]
         [Fact]
         public void named_item_cannot_be_renamed_if_name_already_exists_()
         {
