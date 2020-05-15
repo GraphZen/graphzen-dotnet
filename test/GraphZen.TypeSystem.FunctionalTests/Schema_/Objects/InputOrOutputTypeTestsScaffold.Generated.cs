@@ -16,19 +16,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
     public abstract class InputOrOutputTypeTests
     {
         [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+            .clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io
+        ))]
         [Fact(Skip = "TODO")]
         public void
-            clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -46,20 +38,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
 
 
         [Spec(nameof(InputOrOutputTypeSpecs
-            .named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
+            .clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -75,9 +56,28 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
 
 
         [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
+            .clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
+        public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(InputOrOutputTypeSpecs
+            .named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(InputOrOutputTypeSpecs
+            .clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void
+            clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -98,4 +98,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
     {
     }
 }
-// Source Hash Code: 5815486283142311900
+// Source Hash Code: 4538558936008406716

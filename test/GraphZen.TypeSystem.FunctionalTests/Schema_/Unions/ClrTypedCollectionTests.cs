@@ -7,18 +7,12 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
-
-//using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
-
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 {
     [NoReorder]
-    public class UnionsTests
+    public abstract class ClrTypedCollectionTests
     {
         public abstract class PlainAbstractClass
         {
@@ -33,99 +27,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         [GraphQLName("@)(*#")]
         public abstract class PlainAbstractClassInvalidNameAnnotation
         {
-        }
-
-
-
-
-        [Spec(nameof(item_can_be_defined_by_sdl))]
-        [Fact]
-        public void named_item_can_be_added_via_sdl_()
-        {
-            var schema = Schema.Create(_ => { _.FromSchema(@"union Foo"); });
-            schema.HasUnion("Foo").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(item_can_be_defined_by_sdl_extension))]
-        [Fact(Skip = "TODO")]
-        public void named_item_can_be_added_via_sdl_extension_()
-        {
-            var schema = Schema.Create(_ => { _.FromSchema(@"extend union Foo"); });
-            schema.HasUnion("Foo").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(named_item_can_be_added))]
-        [Fact]
-        public void named_item_can_be_added_()
-        {
-            var schema = Schema.Create(_ => { _.Union("Foo"); });
-            schema.HasUnion("Foo").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_added_with_null_value))]
-        [Fact]
-        public void named_item_cannot_be_added_with_null_value_()
-        {
-            Schema.Create(_ =>
-            {
-                Action add = () => _.Union((string)null!);
-                add.Should().ThrowArgumentNullException("name");
-            });
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
-        [Theory]
-        [InlineData("  ")]
-        [InlineData(" #)(* ")]
-        public void named_item_cannot_be_added_with_invalid_name_(string name)
-        {
-            Schema.Create(_ =>
-            {
-                Action add = () => _.Union(name);
-                add.Should().Throw<InvalidNameException>()
-                    .WithMessage(
-                        $"Cannot get or create GraphQL type builder for union named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
-            });
-        }
-
-
-        [Spec(nameof(named_item_can_be_renamed))]
-        [Fact]
-        public void named_item_can_be_renamed_()
-        {
-            var schema = Schema.Create(_ => { _.Union("Foo").Name("Bar"); });
-            schema.HasUnion("Foo").Should().BeFalse();
-            schema.HasUnion("Bar").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(named_item_can_be_removed))]
-        [Fact(Skip = "TODO")]
-        public void named_item_can_be_removed_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Union("Foo");
-                _.RemoveUnion("Foo");
-            });
-            schema.HasUnion("Foo").Should().BeFalse();
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_removed_with_null_value))]
-        [Fact]
-        public void named_item_cannot_be_removed_with_null_value_()
-        {
-            Schema.Create(_ =>
-            {
-                _.Union("Foo");
-                Action remove = () => _.RemoveUnion((string)null!);
-                remove.Should().ThrowArgumentNullException("name");
-            });
         }
 
 
@@ -153,7 +54,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Union((Type)null!);
+                Action add = () => _.Union((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -279,7 +180,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
             Schema.Create(_ =>
             {
                 _.Union<PlainAbstractClass>();
-                Action remove = () => _.RemoveUnion((Type)null!);
+                Action remove = () => _.RemoveUnion((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

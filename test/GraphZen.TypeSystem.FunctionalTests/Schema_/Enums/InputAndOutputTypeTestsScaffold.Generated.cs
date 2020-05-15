@@ -15,9 +15,19 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
     [NoReorder]
     public abstract class InputAndOutputTypeTests
     {
-        [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_added_if_name_matches_input_type_identity))]
+        [Spec(nameof(InputAndOutputTypeSpecs
+            .clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity))]
         [Fact(Skip = "TODO")]
-        public void named_item_can_be_added_if_name_matches_input_type_identity_()
+        public void
+            clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(InputAndOutputTypeSpecs.clr_typed_item_can_be_renamed_if_name_matches_input_type_identity))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_be_renamed_if_name_matches_input_type_identity_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -31,35 +41,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs.clr_typed_item_can_be_renamed_if_name_matches_output_type_identity))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_can_be_renamed_if_name_matches_output_type_identity_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(InputAndOutputTypeSpecs
-            .clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity))]
-        [Fact(Skip = "TODO")]
-        public void
-            clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_renamed_to_name_with_input_type_identity))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_renamed_to_name_with_input_type_identity_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_added_if_name_matches_output_type_identity))]
-        [Fact(Skip = "TODO")]
-        public void named_item_can_be_added_if_name_matches_output_type_identity_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -75,9 +59,25 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs.clr_typed_item_can_be_renamed_if_name_matches_input_type_identity))]
+        [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_added_if_name_matches_output_type_identity))]
         [Fact(Skip = "TODO")]
-        public void clr_typed_item_can_be_renamed_if_name_matches_input_type_identity_()
+        public void named_item_can_be_added_if_name_matches_output_type_identity_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(InputAndOutputTypeSpecs.clr_typed_item_can_be_renamed_if_name_matches_output_type_identity))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_be_renamed_if_name_matches_output_type_identity_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_added_if_name_matches_input_type_identity))]
+        [Fact(Skip = "TODO")]
+        public void named_item_can_be_added_if_name_matches_input_type_identity_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -89,4 +89,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
     {
     }
 }
-// Source Hash Code: 9687829601883555402
+// Source Hash Code: 9751210902510709418

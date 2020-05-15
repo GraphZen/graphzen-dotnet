@@ -7,9 +7,11 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputAndOutputTypeSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
 {
@@ -32,7 +34,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_added_if_name_matches_input_type_identity))]
+        [Spec(nameof(named_item_can_be_added_if_name_matches_input_type_identity))]
         [Fact]
         public void named_item_can_be_added_if_name_matches_input_type_identity_()
         {
@@ -45,7 +47,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_added_if_name_matches_output_type_identity))]
+        [Spec(nameof(named_item_can_be_added_if_name_matches_output_type_identity))]
         [Fact]
         public void named_item_can_be_added_if_name_matches_output_type_identity_()
         {
@@ -58,7 +60,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_renamed_to_name_with_input_type_identity))]
+        [Spec(nameof(named_item_can_be_renamed_to_name_with_input_type_identity))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_renamed_to_name_with_input_type_identity_()
         {
@@ -71,7 +73,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_renamed_to_name_with_output_type_identity))]
+        [Spec(nameof(named_item_can_be_renamed_to_name_with_output_type_identity))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_renamed_to_name_with_output_type_identity_()
         {
@@ -84,8 +86,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs
-            .clr_typed_item_can_be_renamed_if_name_matches_input_type_identity))]
+        [Spec(nameof(clr_typed_item_can_be_renamed_if_name_matches_input_type_identity))]
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_renamed_if_name_matches_input_type_identity_()
         {
@@ -98,8 +99,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs
-            .clr_typed_item_can_be_renamed_if_name_matches_output_type_identity))]
+        [Spec(nameof(clr_typed_item_can_be_renamed_if_name_matches_output_type_identity))]
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_can_be_renamed_if_name_matches_output_type_identity_()
         {
@@ -112,8 +112,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs
-            .clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity))]
+        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity))]
         [Fact]
         public void
             clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity_()
@@ -127,8 +126,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs
-            .clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity))]
+        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity))]
         [Fact]
         public void
             clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity_()
@@ -142,7 +140,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
+        [Spec(nameof(item_can_be_defined_by_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -151,7 +149,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
+        [Spec(nameof(item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
