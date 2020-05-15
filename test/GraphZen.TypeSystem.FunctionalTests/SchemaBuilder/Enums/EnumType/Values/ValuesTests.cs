@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
     [NoReorder]
     public class ValuesTests
     {
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl))]
+        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.DEPRECATED_named_item_can_be_added_via_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -30,7 +30,7 @@ enum Foo {
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added_via_sdl_extension))]
+        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.DEPRECATED_named_item_can_be_added_via_sdl_extension))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_extension_()
         {

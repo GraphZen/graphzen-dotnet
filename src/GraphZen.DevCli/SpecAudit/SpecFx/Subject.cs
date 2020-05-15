@@ -127,6 +127,19 @@ namespace GraphZen.SpecAudit.SpecFx
             return new Subject(Name, Parent, sb.ToImmutable(), Children);
         }
 
+
+        public Subject WithoutSpecs<T>(bool deep = false) => WithoutSpecs(SpecReflectionHelpers.GetConstFields(typeof(T)).Select(_ => _.Name), deep);
+
+        private Subject WithoutSpecs(IEnumerable<string> specs, bool deep)
+        {
+            var children = deep ? Children.Select(c => c.WithoutSpecs(specs, deep)).ToImmutableList() : Children;
+            return new Subject(Name, Parent, Specs.RemoveRange(specs), children);
+        }
+
+        public Subject WithSpecs<T, T2>() => WithSpecs<T>().WithSpecs<T2>();
+        public Subject WithSpecs<T, T2, T3>() => WithSpecs<T, T2>().WithSpecs<T3>();
+        public Subject WithSpecs<T, T2, T3, T4>() => WithSpecs<T, T2, T4>().WithSpecs<T3, T4>();
+
         public Subject WithSpecs<T>(SpecPriority? priority = null) =>
             WithSpecs(SpecReflectionHelpers.GetConstFields(typeof(T)).Select(_ => _.Name), priority);
 

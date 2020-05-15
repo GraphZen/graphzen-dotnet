@@ -142,7 +142,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-        [Spec(nameof(named_item_can_be_added_via_sdl))]
+        [Spec(nameof(DEPRECATED_named_item_can_be_added_via_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -151,7 +151,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-        [Spec(nameof(named_item_can_be_added_via_sdl_extension))]
+        [Spec(nameof(DEPRECATED_named_item_can_be_added_via_sdl_extension))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_added_via_sdl_extension_()
         {

@@ -25,6 +25,7 @@ namespace GraphZen.SpecAudit
 
             var description = new Subject(nameof(IDescription.Description))
                 .WithSpecs<DescriptionSpecs>();
+            // .WithSpecs<SdlSpec>();
 
             var typeRef = new Subject("Type");
 
@@ -33,6 +34,7 @@ namespace GraphZen.SpecAudit
 
             var argument = new Subject("Argument")
                 .WithChild(name)
+                //.WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(new Subject("Value"));
 
             // ReSharper disable once UnusedVariable
@@ -47,6 +49,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<DirectiveAnnotationSpecs>();
 
             var inputValue = new Subject(nameof(InputValue))
+                // .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(description)
                 .WithChild(inputTypeRef)
                 .WithChild(new Subject(nameof(InputValue.DefaultValue)))
@@ -59,6 +62,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<NamedCollectionSpecs>();
 
             var outputField = new Subject(nameof(Field))
+                    // .WithSpecs<SdlSpec, SdlExtensionSpec>()
                     .WithChild(name)
                     .WithChild(description)
                     .WithChild(argumentDefCollection)
@@ -74,86 +78,71 @@ namespace GraphZen.SpecAudit
             var clrType = new Subject(nameof(IClrType.ClrType))
                 .WithSpecs<ClrTypeSpecs>();
 
-            var objectType = new Subject(nameof(ObjectType))
-                .WithChild(description)
+            var graphQLType = new Subject(nameof(NamedType))
+                // .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(name)
-                .WithChild(clrType)
-                .WithChild(directiveAnnotations)
-                .WithChild(outputFields.WithChild(outputField))
-                .WithChild(implementsInterfaces);
-
-            var objects = new Subject(nameof(Schema.Objects))
-                .WithSpecs<NamedCollectionSpecs>()
-                .WithSpecs<ClrTypedCollectionSpecs>()
-                .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
-                .WithChild(objectType);
-
-            var scalar = new Subject(nameof(ScalarType))
                 .WithChild(description)
-                .WithChild(name)
                 .WithChild(clrType)
                 .WithChild(directiveAnnotations);
 
-            var scalars = new Subject(nameof(Schema.Scalars))
+            var graphQLTypes = new Subject("types")
                 .WithSpecs<NamedCollectionSpecs>()
-                .WithSpecs<ClrTypedCollectionSpecs>()
-                .WithSpecs<InputAndOutputTypeCollectionSpecs>()
-                .WithChild(scalar);
+                .WithSpecs<ClrTypedCollectionSpecs>();
 
-            var interfaceType = new Subject(nameof(InterfaceType))
-                .WithChild(description)
-                .WithChild(name)
-                .WithChild(clrType)
-                .WithChild(directiveAnnotations)
+            var objectType = graphQLType.WithName(nameof(ObjectType))
                 .WithChild(outputFields.WithChild(outputField))
                 .WithChild(implementsInterfaces);
 
-            var interfaces = new Subject(nameof(Schema.Interfaces))
-                .WithSpecs<NamedCollectionSpecs>()
-                .WithSpecs<ClrTypedCollectionSpecs>()
+            var objects = graphQLTypes.WithName(nameof(Schema.Objects))
+                .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
+                .WithChild(objectType);
+
+            var scalar = graphQLType.WithName(nameof(ScalarType));
+
+            var scalars = graphQLTypes.WithName(nameof(Schema.Scalars))
+                .WithSpecs<InputAndOutputTypeCollectionSpecs>()
+                .WithChild(scalar);
+
+            var interfaceType = graphQLType.WithName(nameof(InterfaceType))
+                .WithChild(outputFields.WithChild(outputField))
+                .WithChild(implementsInterfaces);
+
+            var interfaces = graphQLTypes.WithName(nameof(Schema.Interfaces))
                 .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
                 .WithChild(interfaceType);
 
-            var unionType = new Subject(nameof(UnionType)).WithChild(description).WithChild(name)
-                .WithChild(clrType)
-                .WithChild(directiveAnnotations)
+            var unionType = graphQLType.WithName(nameof(UnionType))
                 .WithChild(new Subject(nameof(UnionType.MemberTypes)));
 
-            var unions = new Subject(nameof(Schema.Unions)).WithSpecs<NamedCollectionSpecs>()
-                .WithSpecs<ClrTypedCollectionSpecs>()
+            var unions = graphQLTypes.WithName(nameof(Schema.Unions))
                 .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
                 .WithChild(unionType);
 
-            var enumType = new Subject(nameof(EnumType))
-                .WithChild(name)
-                .WithChild(clrType)
-                .WithChild(directiveAnnotations)
-                .WithChild(description)
-                .WithChild(
-                    new Subject(nameof(EnumType.Values)).WithSpecs<NamedCollectionSpecs>()
-                        .WithChild(new Subject(nameof(EnumValue))
-                            .WithChild(name)
-                            .WithChild(directiveAnnotations)
-                            .WithChild(description)));
 
-            var enums = new Subject(nameof(Schema.Enums))
+            var enumValue = new Subject(nameof(EnumValue))
+                .WithSpecs<SdlSpec, SdlExtensionSpec>()
+                .WithChild(name)
+                .WithChild(directiveAnnotations)
+                .WithChild(description);
+
+            var enumValues = new Subject(nameof(EnumType.Values))
                 .WithSpecs<NamedCollectionSpecs>()
-                .WithSpecs<ClrTypedCollectionSpecs>()
+                .WithChild(enumValue);
+
+
+            var enumType = graphQLType.WithName(nameof(EnumType))
+                .WithChild(enumValues);
+
+            var enums = graphQLTypes.WithName(nameof(Schema.Enums))
                 .WithSpecs<InputAndOutputTypeCollectionSpecs>()
                 .WithChild(enumType);
 
-            var inputObjectType = new Subject(nameof(InputObjectType))
-                .WithChild(description)
-                .WithChild(name)
-                .WithChild(clrType)
-                .WithChild(directiveAnnotations)
+            var inputObjectType = graphQLType.WithName(nameof(InputObjectType))
                 .WithChild(new Subject(nameof(InputObjectType.Fields))
                     .WithSpecs<NamedCollectionSpecs>()
                     .WithChild(inputValue.WithName(nameof(InputField))));
 
-            var inputObjects = new Subject(nameof(Schema.InputObjects))
-                .WithSpecs<NamedCollectionSpecs>()
-                .WithSpecs<ClrTypedCollectionSpecs>()
+            var inputObjects = graphQLTypes.WithName(nameof(Schema.InputObjects))
                 .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
                 .WithChild(inputObjectType);
 
@@ -163,7 +152,9 @@ namespace GraphZen.SpecAudit
                 .WithChild(argumentDefCollection)
                 .WithChild(new Subject("Repeatable"))
                 .WithChild(new Subject(nameof(Directive.Locations)))
-                .WithChild(description);
+                .WithChild(description)
+                .WithSpecs<SdlSpec>()
+                .WithoutSpecs<SdlExtensionSpec>(true);
 
             var directives = new Subject(nameof(Schema.Directives))
                 .WithSpecs<NamedCollectionSpecs>()

@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit.SpecFx;
@@ -76,6 +77,26 @@ namespace GraphZen.SpecFx
             var specRef = sutWithSpec.Specs[nameof(SpecClass.FooSpec)];
             specRef.SpecId.Should().Be(nameof(SpecClass.FooSpec));
             specRef.Priority.Should().Be(SpecPriority.Low);
+        }
+
+        [Fact]
+        public void WithoutSpecs_should_remove_specs()
+        {
+            var sut = new Subject("sut").WithSpecs<SpecClass>();
+            sut.Specs.ContainsKey(SpecClass.FooSpec).Should().BeTrue();
+            var withoutSpecs = sut.WithoutSpecs<SpecClass>();
+            withoutSpecs.Specs.ContainsKey(SpecClass.FooSpec).Should().BeFalse();
+
+        }
+
+
+        [Fact]
+        public void WithoutSpecs_deep_should_remove_specs_deep()
+        {
+            var sut = new Subject("sut").WithChild(new Subject("child").WithSpecs<SpecClass>());
+            sut.Children.Any(_ => _.Specs.ContainsKey(SpecClass.FooSpec)).Should().BeTrue();
+            var withoutSpecs = sut.WithoutSpecs<SpecClass>(true);
+            withoutSpecs.Children.Any(_ => _.Specs.ContainsKey(SpecClass.FooSpec)).Should().BeFalse();
         }
     }
 }

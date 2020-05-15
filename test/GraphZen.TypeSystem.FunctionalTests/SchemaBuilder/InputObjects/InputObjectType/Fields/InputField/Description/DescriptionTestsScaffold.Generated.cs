@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects.InputOb
     [NoReorder]
     public abstract class DescriptionTestsScaffold
     {
-        [Spec(nameof(DescriptionSpecs.description_can_be_defined_by_sdl))]
+        [Spec(nameof(DescriptionSpecs.DEPRECATED_description_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
         public void description_can_be_defined_by_sdl_()
         {

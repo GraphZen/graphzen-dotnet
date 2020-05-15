@@ -13,6 +13,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 {
     public class TypeSystemSpecs
     {
+        public class SdlSpec
+        {
+            public const string item_can_be_defined_by_sdl = null;
+        }
+        public class SdlExtensionSpec
+        {
+            public const string item_can_be_defined_by_sdl_extension = null;
+        }
+
+
         public class DirectiveAnnotationSpecs
         {
             public const string directive_annotation_can_be_added = null;
@@ -34,7 +44,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class DescriptionSpecs
         {
-            public const string description_can_be_defined_by_sdl = null;
+            public const string DEPRECATED_description_can_be_defined_by_sdl = null;
 
             // support sdl extension?
             public const string description_can_be_updated = null;
@@ -90,8 +100,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class NamedCollectionSpecs
         {
-            public const string named_item_can_be_added_via_sdl = null;
-            public const string named_item_can_be_added_via_sdl_extension = null;
+            public const string DEPRECATED_named_item_can_be_added_via_sdl = null;
+            public const string DEPRECATED_named_item_can_be_added_via_sdl_extension = null;
             public const string named_item_can_be_added = null;
             public const string named_item_cannot_be_added_with_null_value = null;
             public const string named_item_cannot_be_added_with_invalid_name = null;
