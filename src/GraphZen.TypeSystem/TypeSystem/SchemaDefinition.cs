@@ -801,7 +801,7 @@ namespace GraphZen.TypeSystem
             if (TryGetDirective(name, out var existing) && !existing.Equals(directive))
             {
                 throw new DuplicateNameException(
-                    TypeSystemExceptionMessages.DuplicateNameException.DuplicateDirective(directive, name));
+                    TypeSystemExceptionMessages.DuplicateNameException.CannotRenameDirective(directive, name));
             }
 
             _directives.Remove(directive.Name);

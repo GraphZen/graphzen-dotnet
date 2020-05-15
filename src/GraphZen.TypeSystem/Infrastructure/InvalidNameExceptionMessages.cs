@@ -15,19 +15,19 @@ namespace GraphZen.Infrastructure
     {
         public static class DuplicateNameException
         {
-            internal static string DuplicateType(TypeIdentity identity, string newName, TypeIdentity existing) =>
+            internal static string CannotRenameType(TypeIdentity identity, string newName, TypeIdentity existing) =>
                 $"Cannot rename {identity.Definition?.ToString() ?? identity.Name} to \"{newName}\", {existing.Definition?.ToString() ?? existing.ToString()} already exists. All GraphQL type names must be unique.";
 
-            internal static string DuplicateField(IFieldDefinition field, string name) =>
+            internal static string CannotRenameField(IFieldDefinition field, string name) =>
                 $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
 
-            internal static string DuplicateDirective(IDirectiveDefinition directive, string name) =>
+            internal static string CannotRenameDirective(IDirectiveDefinition directive, string name) =>
                 $"Cannot rename {directive} to \"{name}\": a directive named \"{name}\" already exists.";
 
-            internal static string DuplicateInputField(IInputFieldDefinition field, string name) =>
+            internal static string CannotRenameInputField(IInputFieldDefinition field, string name) =>
                 $"Cannot rename {field} to \"{name}\": {field.DeclaringMember?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
 
-            internal static string DuplicateArgument(IArgumentDefinition argument, string name)
+            internal static string CannotRenameArgument(IArgumentDefinition argument, string name)
             {
                 var parent = argument.DeclaringMember is IFieldDefinition fd
                     ? $"{fd} on {fd.DeclaringType}"

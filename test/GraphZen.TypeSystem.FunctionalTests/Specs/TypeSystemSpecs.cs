@@ -120,6 +120,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         {
             // Adding to collection with CLR Type
             public const string clr_typed_item_can_be_added = null;
+            public const string adding_clr_typed_item_updates_matching_named_items_clr_type = null;
             public const string clr_typed_item_can_be_added_via_type_param = null;
             public const string clr_typed_item_uses_clr_type_name = null;
             public const string clr_typed_item_with_name_annotation_uses_clr_type_name_annotation = null;
@@ -146,8 +147,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string named_item_subsequently_added_with_type_and_custom_name_sets_clr_type = null;
             public const string clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist = null;
 
-
-            // TODO: What about adding w/ custom name if CLR type has already been added? Should set custom name and/or throw appropriate errors, errors should reflect name update, not add 
 
             // Removing from collection with CLR Type
             public const string clr_typed_item_can_be_removed = null;

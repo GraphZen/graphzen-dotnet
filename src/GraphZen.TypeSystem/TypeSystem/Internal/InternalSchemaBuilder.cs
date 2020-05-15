@@ -639,10 +639,10 @@ namespace GraphZen.TypeSystem.Internal
             }
             var clrDirective = Definition.FindDirective(clrType);
             var nameDirective = Definition.FindDirective(name);
-            if (clrDirective != null && nameDirective != null && !clrDirective.Equals(nameDirective))
-            {
-                throw new InvalidOperationException("todo");
-            }
+            //if (clrDirective != null && nameDirective != null && !clrDirective.Equals(nameDirective))
+            //{
+            //    throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.CannotRenameDirective());
+            //}
 
             if (clrDirective != null)
             {

@@ -31,7 +31,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Objects.ObjectType.N
 
                 rename.Should().Throw<DuplicateNameException>()
                     .WithMessage(
-                        TypeSystemExceptionMessages.DuplicateNameException.DuplicateType(pocoDef.Identity, "Foo",
+                        TypeSystemExceptionMessages.DuplicateNameException.CannotRenameType(pocoDef.Identity, "Foo",
                             fooDef.Identity));
             });
         }

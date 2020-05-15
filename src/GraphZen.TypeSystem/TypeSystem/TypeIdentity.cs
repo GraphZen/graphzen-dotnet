@@ -94,7 +94,7 @@ namespace GraphZen.TypeSystem
                 if (existing != null && !existing.Equals(this))
                 {
                     throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException
-                        .DuplicateType(this, newName, existing));
+                        .CannotRenameType(this, newName, existing));
                 }
 
                 _name = newName;
