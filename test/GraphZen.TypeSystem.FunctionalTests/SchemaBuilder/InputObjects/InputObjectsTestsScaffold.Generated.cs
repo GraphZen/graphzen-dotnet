@@ -54,6 +54,22 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
 
 
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_uses_clr_type_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_uses_clr_type_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_name_annotation_uses_clr_type_name_annotation))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_with_name_annotation_uses_clr_type_name_annotation_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_with_conflicting_name_can_be_added_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_with_conflicting_name_can_be_added_with_custom_name_()
@@ -131,4 +147,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         }
     }
 }
-// Source Hash Code: 4157137122170661770
+// Source Hash Code: 1354738832320117306
