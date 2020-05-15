@@ -10,7 +10,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 // ReSharper disable All
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 {
     [NoReorder]
     public abstract class InputOrOutputTypeTests
@@ -98,4 +98,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     {
     }
 }
-// Source Hash Code: 7832369470672312172
+// Source Hash Code: 4089576721082929638

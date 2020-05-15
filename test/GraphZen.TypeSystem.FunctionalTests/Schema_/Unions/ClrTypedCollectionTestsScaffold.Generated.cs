@@ -10,10 +10,10 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 // ReSharper disable All
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 {
     [NoReorder]
-    public abstract class ClrTypedCollectionTests
+    public abstract class ClrTypedCollectionTestsScaffold
     {
         [Spec(nameof(ClrTypedCollectionSpecs
             .clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist))]
@@ -240,11 +240,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
             // var schema = Schema.Create(_ => { });
         }
     }
-
-// Move ClrTypedCollectionTests into a separate file to start writing tests
-    [NoReorder]
-    public class ClrTypedCollectionTestsScaffold
-    {
-    }
 }
-// Source Hash Code: 5902981253866748029
+// Source Hash Code: 3258098302650268483

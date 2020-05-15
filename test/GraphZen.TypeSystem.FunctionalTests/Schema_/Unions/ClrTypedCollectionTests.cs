@@ -54,7 +54,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Union((Type) null!);
+                Action add = () => _.Union((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -180,7 +180,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
             Schema.Create(_ =>
             {
                 _.Union<PlainAbstractClass>();
-                Action remove = () => _.RemoveUnion((Type) null!);
+                Action remove = () => _.RemoveUnion((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

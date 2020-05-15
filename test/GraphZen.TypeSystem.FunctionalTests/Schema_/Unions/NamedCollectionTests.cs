@@ -30,7 +30,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Union((string) null!);
+                Action add = () => _.Union((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -82,7 +82,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
             Schema.Create(_ =>
             {
                 _.Union("Foo");
-                Action remove = () => _.RemoveUnion((string) null!);
+                Action remove = () => _.RemoveUnion((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }

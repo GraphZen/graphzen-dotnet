@@ -15,25 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
     [NoReorder]
     public abstract class NamedCollectionTests
     {
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_added_with_null_value_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_added_with_invalid_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -47,9 +31,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
         [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_removed_with_null_value_()
+        public void named_item_cannot_be_added_with_null_value_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -61,6 +45,22 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         {
             // var schema = Schema.Create(_ => { });
         }
+
+
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_removed_with_null_value_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_added_with_invalid_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 
 // Move NamedCollectionTests into a separate file to start writing tests
@@ -69,4 +69,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
     {
     }
 }
-// Source Hash Code: 17275048493369258021
+// Source Hash Code: 16900255925486164837
