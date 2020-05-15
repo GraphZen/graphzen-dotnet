@@ -10,6 +10,7 @@ using System.Linq;
 using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.SpecAudit;
 using GraphZen.SpecAudit.SpecFx;
 using JetBrains.Annotations;
@@ -21,7 +22,7 @@ namespace GraphZen.CodeGen.Generators
 
         public static string GetClassName(Subject subject, Spec parentSpec)
         {
-            var spec = parentSpec.Id.Replace("Specs", "Tests");
+            var spec = parentSpec.Id.TrimEnd("Spec").TrimEnd("Specs") + "Tests";
             if (parentSpec.Id.StartsWith(subject.Name))
             {
                 return spec;
