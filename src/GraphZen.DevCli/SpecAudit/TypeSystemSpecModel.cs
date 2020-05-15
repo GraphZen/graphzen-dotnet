@@ -49,7 +49,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<DirectiveAnnotationSpecs>();
 
             var inputValue = new Subject(nameof(InputValue))
-                // .WithSpecs<SdlSpec, SdlExtensionSpec>()
+                .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(description)
                 .WithChild(inputTypeRef)
                 .WithChild(new Subject(nameof(InputValue.DefaultValue)))
@@ -67,8 +67,7 @@ namespace GraphZen.SpecAudit
                     .WithChild(description)
                     .WithChild(argumentDefCollection)
                     .WithChild(directiveAnnotations)
-                    .WithChildren(outputTypeRef.WithName(nameof(Field.FieldType)))
-                ;
+                    .WithChildren(outputTypeRef.WithName(nameof(Field.FieldType)));
 
             var outputFields = new Subject(nameof(FieldsDefinition.Fields))
                 .WithSpecs<NamedCollectionSpecs>();
@@ -79,7 +78,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<ClrTypeSpecs>();
 
             var graphQLType = new Subject(nameof(NamedType))
-                // .WithSpecs<SdlSpec, SdlExtensionSpec>()
+                .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(name)
                 .WithChild(description)
                 .WithChild(clrType)
