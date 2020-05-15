@@ -24,8 +24,8 @@ namespace GraphZen.SpecAudit
             var name = new Subject(nameof(INamed.Name)).WithSpecs<NameSpecs>();
 
             var description = new Subject(nameof(IDescription.Description))
-                .WithSpecs<DescriptionSpecs>();
-            // .WithSpecs<SdlSpec>();
+                .WithSpecs<DescriptionSpecs>()
+                .WithSpecs<SdlSpec>();
 
             var typeRef = new Subject("Type");
 
