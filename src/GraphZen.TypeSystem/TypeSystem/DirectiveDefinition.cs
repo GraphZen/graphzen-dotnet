@@ -29,13 +29,27 @@ namespace GraphZen.TypeSystem
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
         private ConfigurationSource _nameConfigurationSource;
+        private ConfigurationSource? _clrTypeConfigurationSource;
 
         public DirectiveDefinition(string? name, Type? clrType, SchemaDefinition schema,
             ConfigurationSource configurationSource) :
             base(configurationSource)
         {
-            ClrType = clrType;
             if (clrType != null)
+            {
+                ClrType = clrType;
+                _clrTypeConfigurationSource = configurationSource;
+            }
+
+            if (name != null)
+            {
+                name = name.IsValidGraphQLName()
+                    ? name
+                    : throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
+                        .CannotCreateDirectiveWithInvalidName(name));
+                _nameConfigurationSource = ConfigurationSource.Explicit;
+            }
+            else if (clrType != null)
             {
                 if (clrType.TryGetGraphQLNameFromDataAnnotation(out var n))
                 {
@@ -45,25 +59,19 @@ namespace GraphZen.TypeSystem
                             .CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(clrType, n));
                     }
 
-                    Name = n;
+
+                    name = n;
                     _nameConfigurationSource = ConfigurationSource.DataAnnotation;
+
                 }
                 else
                 {
-                    Name = clrType.GetGraphQLName();
+                    name = clrType.GetGraphQLName();
                     _nameConfigurationSource = ConfigurationSource.Convention;
                 }
             }
-            else
-            {
-                Name = Check.NotNull(name, nameof(name)).IsValidGraphQLName()
-                    ? name
-                    : throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
-                        .CannotCreateDirectiveWithInvalidName(name));
-                _nameConfigurationSource = ConfigurationSource.Explicit;
-            }
 
-
+            Name = Check.NotNull(name, nameof(name));
             Builder = new InternalDirectiveBuilder(this, Check.NotNull(schema, nameof(schema)).Builder);
         }
 
@@ -176,14 +184,24 @@ namespace GraphZen.TypeSystem
         public IReadOnlyCollection<DirectiveLocation> Locations =>
             (IReadOnlyCollection<DirectiveLocation>)_locations.Keys;
 
-        public Type? ClrType { get; }
+        public Type? ClrType { get; private set; }
 
-        public bool SetClrType(Type? clrType, ConfigurationSource configurationSource) =>
-            throw new NotImplementedException();
+        public bool SetClrType(Type clrType, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetClrTypeConfigurationSource()))
+            {
+                return false;
+            }
+            ClrType = clrType;
+            _clrTypeConfigurationSource = configurationSource;
+            return true;
+        }
 
         public bool RemoveClrType(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
-        public ConfigurationSource? GetClrTypeConfigurationSource() => throw new NotImplementedException();
+
+        public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
+
 
         public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
         {

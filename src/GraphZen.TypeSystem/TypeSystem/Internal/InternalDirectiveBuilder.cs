@@ -37,9 +37,10 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public void ClrType(Type idClrType, ConfigurationSource configurationSource)
+        public InternalDirectiveBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            throw new NotImplementedException();
+            Definition.SetClrType(clrType, configurationSource);
+            return this;
         }
 
         public bool RemoveArgument(string name, ConfigurationSource @explicit) => throw new NotImplementedException();

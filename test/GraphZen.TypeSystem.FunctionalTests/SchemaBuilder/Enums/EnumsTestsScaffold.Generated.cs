@@ -100,12 +100,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_duplicate_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_cannot_be_added_with_duplicate_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-    }
+            }
 }
 // Source Hash Code: 4494901304714496156

@@ -67,12 +67,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         }
 
 
-        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_cannot_be_added_with_duplicate_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_cannot_be_added_with_duplicate_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-    }
+            }
 }
 // Source Hash Code: 18050145281909464848

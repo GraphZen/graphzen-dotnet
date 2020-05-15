@@ -256,7 +256,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
                 Action add = () => _.InputObject<PlainClassAnnotatedName>();
                 add.Should().Throw<Exception>()
                     .WithMessage(
-                        @"Cannot create input object AnnotatedName because because AnnotatedName is already identified as an output type.");
+                        @"Cannot create input object AnnotatedNameValue because because AnnotatedNameValue is already identified as an output type.");
             });
         }
 

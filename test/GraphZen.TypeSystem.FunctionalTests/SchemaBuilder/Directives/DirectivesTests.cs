@@ -19,10 +19,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
         }
 
-        [GraphQLName(AnnotatedName)]
-        public class PlainClassNameAnnotated
+        [GraphQLName(AnnotatedNameValue)]
+        public class PlainClassAnnotatedName
         {
-            public const string AnnotatedName = nameof(AnnotatedName);
+            public const string AnnotatedNameValue = nameof(AnnotatedNameValue);
         }
 
         [GraphQLName("(*&#")]
@@ -164,7 +164,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
 
 
         [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_with_custom_name))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void clr_typed_item_with_conflicting_name_can_be_added_with_custom_name_()
         {
             var schema = Schema.Create(_ =>
@@ -179,7 +179,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
 
 
         [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name_()
         {
             var schema = Schema.Create(_ =>
@@ -194,37 +194,39 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
 
 
         [Spec(nameof(clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name_()
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive(PlainClassNameAnnotated.AnnotatedName);
-                _.Directive(typeof(PlainClassNameAnnotated), "Foo");
+                _.Directive(PlainClassAnnotatedName.AnnotatedNameValue);
+                _.Directive(typeof(PlainClassAnnotatedName), "Foo");
             });
-            schema.GetDirective<PlainClassNameAnnotated>().Name.Should().Be("Foo");
-            schema.GetDirective(PlainClassNameAnnotated.AnnotatedName).Name.Should().Be(nameof(PlainClass));
-            schema.GetDirective(nameof(PlainClass)).ClrType.Should().BeNull();
+            schema.GetDirective<PlainClassAnnotatedName>().Name.Should().Be("Foo");
+            schema.GetDirective(PlainClassAnnotatedName.AnnotatedNameValue).Name.Should()
+                .Be(PlainClassAnnotatedName.AnnotatedNameValue);
+            schema.GetDirective(PlainClassAnnotatedName.AnnotatedNameValue).ClrType.Should().BeNull();
         }
 
 
         [Spec(nameof(clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name_()
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive(PlainClassNameAnnotated.AnnotatedName);
-                _.Directive<PlainClassNameAnnotated>("Foo");
+                _.Directive(PlainClassAnnotatedName.AnnotatedNameValue);
+                _.Directive<PlainClassAnnotatedName>("Foo");
             });
-            schema.GetDirective<PlainClassNameAnnotated>().Name.Should().Be("Foo");
-            schema.GetDirective(PlainClassNameAnnotated.AnnotatedName).Name.Should().Be(nameof(PlainClass));
-            schema.GetDirective(nameof(PlainClass)).ClrType.Should().BeNull();
+            schema.GetDirective<PlainClassAnnotatedName>().Name.Should().Be("Foo");
+            schema.GetDirective(PlainClassAnnotatedName.AnnotatedNameValue).Name.Should()
+                .Be(PlainClassAnnotatedName.AnnotatedNameValue);
+            schema.GetDirective(PlainClassAnnotatedName.AnnotatedNameValue).ClrType.Should().BeNull();
         }
 
 
         [Spec(nameof(clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name_()
         {
             var schema = Schema.Create(_ => { _.Directive(typeof(PlainClassInvalidNameAnnotation), "Foo"); });
@@ -233,7 +235,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
 
 
         [Spec(nameof(clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name_()
         {
             var schema = Schema.Create(_ => { _.Directive<PlainClassInvalidNameAnnotation>("Foo"); });
@@ -276,6 +278,84 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
                 Action remove = () => _.RemoveDirective((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
+        }
+
+        [Spec(nameof(clr_typed_item_uses_clr_type_name))]
+        [Fact]
+        public void clr_typed_item_uses_clr_type_name_()
+        {
+            var schema = Schema.Create(_ => { _.Directive<PlainClass>(); });
+            schema.GetDirective<PlainClass>().Name.Should().Be(nameof(PlainClass));
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_name_annotation_uses_clr_type_name_annotation))]
+        [Fact]
+        public void clr_typed_item_with_name_annotation_uses_clr_type_name_annotation_()
+        {
+            var schema = Schema.Create(_ => { _.Directive<PlainClassAnnotatedName>(); });
+            schema.GetDirective<PlainClassAnnotatedName>().Name.Should().Be(PlainClassAnnotatedName.AnnotatedNameValue);
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_null_custom_name))]
+        [Fact]
+        public void clr_typed_item_cannot_be_added_with_null_custom_name_()
+        {
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Directive<PlainClass>(null!);
+                add.Should().ThrowArgumentNullException("name");
+            });
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_invalid_custom_name))]
+        [Theory]
+        [InlineData("{name}")]
+        [InlineData("LKSJ ((")]
+        [InlineData("   ")]
+        [InlineData(" )*(#&  ")]
+        public void clr_typed_item_cannot_be_added_with_invalid_custom_name_(string name)
+        {
+            Schema.Create(_ =>
+            {
+                Action add = () => _.Directive<PlainClass>(name);
+                add.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot create directive named \"{name}\": \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
+        }
+
+
+        [Spec(nameof(clr_typed_item_can_be_renamed))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_can_be_renamed_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_with_name_attribute_can_be_renamed_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
+        {
+            // var schema = Schema.Create(_ => { });
         }
     }
 }

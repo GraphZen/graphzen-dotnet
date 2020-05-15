@@ -631,8 +631,29 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalDirectiveBuilder?
-            Directive(Type clrType, string name, ConfigurationSource configurationSource) =>
-            throw new NotImplementedException();
+            Directive(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            if (IsDirectiveIgnored(clrType, configurationSource) || IsDirectiveIgnored(name, configurationSource))
+            {
+                return null;
+            }
+            var clrDirective = Definition.FindDirective(clrType);
+            var nameDirective = Definition.FindDirective(name);
+            if (clrDirective != null && nameDirective != null && !clrDirective.Equals(nameDirective))
+            {
+                throw new InvalidOperationException("todo");
+            }
+
+            if (clrDirective != null)
+            {
+                var clrB = Directive(clrType, configurationSource);
+                clrB?.SetName(name, configurationSource);
+                return clrB;
+            }
+            var ib = Directive(name, configurationSource);
+            ib?.ClrType(clrType, configurationSource);
+            return ib;
+        }
 
         public InternalDirectiveBuilder? Directive(string name, ConfigurationSource configurationSource)
         {
@@ -778,8 +799,11 @@ namespace GraphZen.TypeSystem.Internal
             return RemoveType(type, configurationSource);
         }
 
-        private bool IsDirectiveIgnored(Type clrType, ConfigurationSource configurationSource) =>
-            IsDirectiveIgnored(clrType.GetGraphQLName(), configurationSource);
+        private bool IsDirectiveIgnored(Type clrType, ConfigurationSource configurationSource)
+        {
+            var name = clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated) ? annotated : clrType.Name;
+            return IsDirectiveIgnored(name, configurationSource);
+        }
 
         private bool IsDirectiveIgnored(string name, ConfigurationSource configurationSource)
         {
