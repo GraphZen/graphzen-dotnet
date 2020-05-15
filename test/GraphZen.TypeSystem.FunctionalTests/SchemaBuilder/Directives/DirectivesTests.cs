@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
@@ -31,7 +32,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         }
 
 
-        [Spec(nameof(DEPRECATED_named_item_can_be_added_via_sdl))]
+        [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -62,7 +63,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((string) null!);
+                Action add = () => _.Directive((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -114,7 +115,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((string) null!);
+                Action remove = () => _.RemoveDirective((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -144,7 +145,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((Type) null!);
+                Action add = () => _.Directive((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -275,7 +276,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((Type) null!);
+                Action remove = () => _.RemoveDirective((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

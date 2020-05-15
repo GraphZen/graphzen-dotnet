@@ -100,7 +100,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class NamedCollectionSpecs
         {
-            public const string DEPRECATED_named_item_can_be_added_via_sdl = null;
             public const string DEPRECATED_named_item_can_be_added_via_sdl_extension = null;
             public const string named_item_can_be_added = null;
             public const string named_item_cannot_be_added_with_null_value = null;

@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums.EnumType.Value
     [NoReorder]
     public class ValuesTests
     {
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.DEPRECATED_named_item_can_be_added_via_sdl))]
+        [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
