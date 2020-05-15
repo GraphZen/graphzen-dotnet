@@ -87,7 +87,7 @@ namespace GraphZen.Internal
                 $"Cannot create directive named \"{name}\": \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotCreateEnumValue(string name, IEnumTypeDefinition parent) =>
-                            $"Cannot create enum value named \"{name}\" on {parent}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+                            $"Cannot add enum value \"{name}\" to {parent}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
 
             public static string CannotRename(string name, string namedDescription) =>

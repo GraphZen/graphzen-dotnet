@@ -80,7 +80,7 @@ extend enum Foo {
             {
                 var foo = _.Enum("Foo");
                 Action add = () => foo.Value(name);
-                add.Should().Throw<InvalidNameException>().WithMessage($"Cannot add enum value named \"{name}\" to enum Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                add.Should().Throw<InvalidNameException>().WithMessage($"Cannot add enum value \"{name}\" to enum Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
