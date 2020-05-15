@@ -9,9 +9,9 @@ using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using static GraphZen.Infrastructure.GraphQLName;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Internal
 {
-    public static class TypeSystemExceptionMessages
+    internal static class TypeSystemExceptionMessages
     {
         public static class DuplicateNameException
         {
@@ -85,6 +85,10 @@ namespace GraphZen.Infrastructure
 
             public static string CannotCreateDirectiveWithInvalidName(string name) =>
                 $"Cannot create directive named \"{name}\": \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+
+            public static string CannotCreateEnumValue(string name, IEnumTypeDefinition parent) =>
+                            $"Cannot create enum value named \"{name}\" on {parent}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+
 
             public static string CannotRename(string name, string namedDescription) =>
                 $"Cannot rename {namedDescription}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";

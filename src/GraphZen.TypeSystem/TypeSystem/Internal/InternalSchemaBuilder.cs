@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;

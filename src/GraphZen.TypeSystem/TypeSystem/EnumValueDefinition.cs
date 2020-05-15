@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
@@ -22,6 +23,10 @@ namespace GraphZen.TypeSystem
             SchemaDefinition schema, ConfigurationSource configurationSource) :
             base(configurationSource)
         {
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateEnumValue(name, declaringType));
+            }
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Value = Name = Check.NotNull(name, nameof(name));

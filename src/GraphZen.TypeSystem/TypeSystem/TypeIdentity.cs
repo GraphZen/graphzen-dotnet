@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;

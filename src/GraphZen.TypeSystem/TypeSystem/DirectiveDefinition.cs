@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;

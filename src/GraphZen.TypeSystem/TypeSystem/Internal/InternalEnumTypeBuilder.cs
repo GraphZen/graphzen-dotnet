@@ -24,6 +24,7 @@ namespace GraphZen.TypeSystem.Internal
             MemberInfo? enumMember = default;
             if (value is string strValue)
             {
+                
                 name = strValue;
             }
             else if (!value.GetType().IsEnum)
