@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
@@ -33,7 +32,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             public const string InvalidName = "abc @#$%^";
         }
 
-        [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
+        [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -41,7 +40,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
             schema.HasInputObject("Foo").Should().BeTrue();
         }
 
-        [Spec(nameof(DEPRECATED_named_item_can_be_added_via_sdl_extension))]
+        [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "needs implementation")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
@@ -65,7 +64,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((string)null!);
+                Action add = () => _.InputObject((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -114,7 +113,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((string)null!);
+                Action add = () => _.InputObject((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -135,7 +134,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((Type)null!);
+                Action add = () => _.InputObject((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -186,7 +185,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveInputObject((Type)null!);
+                Action remove = () => _.RemoveInputObject((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

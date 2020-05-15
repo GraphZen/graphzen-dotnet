@@ -30,7 +30,7 @@ enum Foo {
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.DEPRECATED_named_item_can_be_added_via_sdl_extension))]
+        [Spec(nameof(TypeSystemSpecs.SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_extension_()
         {

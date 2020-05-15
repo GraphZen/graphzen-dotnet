@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
@@ -143,7 +142,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
+        [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -152,7 +151,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         }
 
 
-        [Spec(nameof(DEPRECATED_named_item_can_be_added_via_sdl_extension))]
+        [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
@@ -176,7 +175,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((string)null!);
+                Action add = () => _.Scalar((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -225,7 +224,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveScalar((string)null!);
+                Action remove = () => _.RemoveScalar((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -264,7 +263,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((Type)null!);
+                Action add = () => _.Scalar((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -316,7 +315,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Scalars
             Schema.Create(_ =>
             {
                 _.Scalar<PlainStruct>();
-                Action remove = () => _.RemoveScalar((Type)null!);
+                Action remove = () => _.RemoveScalar((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

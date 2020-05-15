@@ -44,9 +44,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class DescriptionSpecs
         {
-            public const string DEPRECATED_description_can_be_defined_by_sdl = null;
-
-            // support sdl extension?
             public const string description_can_be_updated = null;
             public const string description_cannot_be_null = null;
             public const string description_can_be_removed = null;
@@ -100,7 +97,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class NamedCollectionSpecs
         {
-            public const string DEPRECATED_named_item_can_be_added_via_sdl_extension = null;
             public const string named_item_can_be_added = null;
             public const string named_item_cannot_be_added_with_null_value = null;
             public const string named_item_cannot_be_added_with_invalid_name = null;
