@@ -64,7 +64,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((string) null!);
+                Action add = () => _.InputObject((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -113,7 +113,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((string) null!);
+                Action add = () => _.InputObject((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -134,7 +134,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((Type) null!);
+                Action add = () => _.InputObject((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -185,7 +185,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveInputObject((Type) null!);
+                Action remove = () => _.RemoveInputObject((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

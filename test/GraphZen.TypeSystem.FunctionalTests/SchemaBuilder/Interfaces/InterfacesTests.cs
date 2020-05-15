@@ -129,7 +129,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Interface((string) null!);
+                Action add = () => _.Interface((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -178,7 +178,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
             Schema.Create(_ =>
             {
                 _.Interface("Foo");
-                Action remove = () => _.RemoveInterface((string) null!);
+                Action remove = () => _.RemoveInterface((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -199,7 +199,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Interface((Type) null!);
+                Action add = () => _.Interface((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -250,7 +250,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveInterface((Type) null!);
+                Action remove = () => _.RemoveInterface((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
