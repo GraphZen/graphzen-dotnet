@@ -17,6 +17,8 @@ namespace GraphZen.CodeGen.Generators
 {
     public class TypeSystemSpecTestsCodeGenerator
     {
+
+
         public static IEnumerable<GeneratedCode> ScaffoldSystemSpec()
         {
             var suite = TypeSystemSpecModel.Get();
@@ -28,7 +30,7 @@ namespace GraphZen.CodeGen.Generators
                 foreach (var rootSpec in suite.RootSpecs)
                 {
                     var path = subject.GetSelfAndAncestors().Select(_ => _.Name).ToArray();
-                    var className = subject.Name + rootSpec.Id + "Tests";
+                    var className = subject.Name + rootSpec.Id.Replace("Specs", "Tests");
                     var fileName = string.Join("", $"{className}Scaffold.Generated.cs");
                     var fileDir = Path.Combine(pathBase, Path.Combine(path));
                     var filePath = Path.Combine(fileDir, fileName);

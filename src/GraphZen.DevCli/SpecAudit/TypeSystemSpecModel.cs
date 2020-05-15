@@ -94,13 +94,13 @@ namespace GraphZen.SpecAudit
                 .WithChild(implementsInterfaces);
 
             var objects = graphQLTypes.WithName(nameof(Schema.Objects))
-                .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
+                .WithSpecs<InputOrOutputTypeSpecs>()
                 .WithChild(objectType);
 
             var scalar = graphQLType.WithName(nameof(ScalarType));
 
             var scalars = graphQLTypes.WithName(nameof(Schema.Scalars))
-                .WithSpecs<InputAndOutputTypeCollectionSpecs>()
+                .WithSpecs<InputAndOutputTypeSpecs>()
                 .WithChild(scalar);
 
             var interfaceType = graphQLType.WithName(nameof(InterfaceType))
@@ -108,14 +108,14 @@ namespace GraphZen.SpecAudit
                 .WithChild(implementsInterfaces);
 
             var interfaces = graphQLTypes.WithName(nameof(Schema.Interfaces))
-                .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
+                .WithSpecs<InputOrOutputTypeSpecs>()
                 .WithChild(interfaceType);
 
             var unionType = graphQLType.WithName(nameof(UnionType))
                 .WithChild(new Subject(nameof(UnionType.MemberTypes)));
 
             var unions = graphQLTypes.WithName(nameof(Schema.Unions))
-                .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
+                .WithSpecs<InputOrOutputTypeSpecs>()
                 .WithChild(unionType);
 
 
@@ -134,7 +134,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(enumValues);
 
             var enums = graphQLTypes.WithName(nameof(Schema.Enums))
-                .WithSpecs<InputAndOutputTypeCollectionSpecs>()
+                .WithSpecs<InputAndOutputTypeSpecs>()
                 .WithChild(enumType);
 
             var inputObjectType = graphQLType.WithName(nameof(InputObjectType))
@@ -143,7 +143,7 @@ namespace GraphZen.SpecAudit
                     .WithChild(inputValue.WithName(nameof(InputField))));
 
             var inputObjects = graphQLTypes.WithName(nameof(Schema.InputObjects))
-                .WithSpecs<UniquelyInputOutputTypeCollectionSpecs>()
+                .WithSpecs<InputOrOutputTypeSpecs>()
                 .WithChild(inputObjectType);
 
             var directive = new Subject(nameof(Directive))
