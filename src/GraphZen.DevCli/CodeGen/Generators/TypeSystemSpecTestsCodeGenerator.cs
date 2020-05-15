@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -24,41 +25,43 @@ namespace GraphZen.CodeGen.Generators
                 var rootNamespace = "GraphZen.TypeSystem.FunctionalTests";
                 var pathBase = $@".\test\{rootNamespace}";
 
-                var path = subject.GetSelfAndAncestors().Select(_ => _.Name).ToArray();
-                var className = path[^1] + "Tests";
-                var fileName = string.Join("", $"{className}Scaffold.Generated.cs");
-                var fileDir = Path.Combine(pathBase, Path.Combine(path));
-                var filePath = Path.Combine(fileDir, fileName);
-                var ns = string.Join(".", path.Prepend(rootNamespace));
-                var generate = false;
-                var csharp = CSharpStringBuilder.Create();
-
-                csharp.AppendLine("using Xunit;");
-                csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;");
-                // csharp.AppendLine("// ReSharper disable PartialTypeWithSinglePart");
-                csharp.AppendLine("// ReSharper disable All");
-                csharp.Namespace(ns, _ =>
+                foreach (var rootSpec in suite.RootSpecs)
                 {
-                    var testFileExists = File.Exists(Path.Combine(fileDir, $"{className}.cs"));
+                    var path = subject.GetSelfAndAncestors().Select(_ => _.Name).ToArray();
+                    var className = subject.Name + rootSpec.Id + "Tests";
+                    var fileName = string.Join("", $"{className}Scaffold.Generated.cs");
+                    var fileDir = Path.Combine(pathBase, Path.Combine(path));
+                    var filePath = Path.Combine(fileDir, fileName);
+                    var ns = string.Join(".", path.Prepend(rootNamespace));
+                    var generate = false;
+                    var csharp = CSharpStringBuilder.Create();
 
-                    _.AppendLine("[NoReorder]");
-                    _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
+                    csharp.AppendLine("using Xunit;");
+                    csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;");
+                    // csharp.AppendLine("// ReSharper disable PartialTypeWithSinglePart");
+                    csharp.AppendLine("// ReSharper disable All");
+                    csharp.Namespace(ns, _ =>
                     {
-                        foreach (var (specId, spec) in suite.Specs)
+                        var testFileExists = File.Exists(Path.Combine(fileDir, $"{className}.cs"));
+
+                        _.AppendLine("[NoReorder]");
+                        _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
                         {
-                            if (subject.Specs.TryGetValue(specId, out var _))
+                            foreach (var (specId, spec) in rootSpec.Children.ToImmutableDictionary(_ => _.Id))
                             {
-                                var isTestImplemented = testFileExists && suite.Tests.Any(t =>
-                                    t.SubjectPath == subject.Path && t.SpecId == specId &&
-                                    !t.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
-                                if (!isTestImplemented &&
-                                    !specId.Contains("deprecated", StringComparison.OrdinalIgnoreCase))
+                                if (subject.Specs.TryGetValue(specId, out var _))
                                 {
-                                    generate = true;
-                                    var specRef = spec.FieldInfo != null
-                                        ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
-                                        : $"\"{spec.Id}\"";
-                                    cls.AppendLine($@"
+                                    var isTestImplemented = testFileExists && suite.Tests.Any(t =>
+                                        t.SubjectPath == subject.Path && t.SpecId == specId &&
+                                        !t.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
+                                    if (!isTestImplemented &&
+                                        !specId.Contains("deprecated", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        generate = true;
+                                        var specRef = spec.FieldInfo != null
+                                            ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
+                                            : $"\"{spec.Id}\"";
+                                        cls.AppendLine($@"
 [Spec({specRef})]
 [Fact(Skip=""TODO"")]
 public void {spec.Id}_() {{
@@ -66,23 +69,24 @@ public void {spec.Id}_() {{
 }}
 
 ");
+                                    }
                                 }
                             }
+                        });
+
+                        if (!testFileExists)
+                        {
+                            _.AppendLine($"// Move {className} into a separate file to start writing tests");
+                            _.AppendLine("[NoReorder] ");
+                            _.Class(className + "Scaffold",
+                                cls => { });
                         }
                     });
 
-                    if (!testFileExists)
+                    if (generate)
                     {
-                        _.AppendLine($"// Move {className} into a separate file to start writing tests");
-                        _.AppendLine("[NoReorder] ");
-                        _.Class(className + "Scaffold",
-                            cls => { });
+                        yield return new GeneratedCode(filePath, csharp.ToString());
                     }
-                });
-
-                if (generate)
-                {
-                    yield return new GeneratedCode(filePath, csharp.ToString());
                 }
             }
         }
