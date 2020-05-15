@@ -15,11 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
     [NoReorder]
     public abstract class ScalarsInputAndOutputTypeTests
     {
-        [Spec(nameof(InputAndOutputTypeSpecs
-            .clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity))]
+        [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_added_if_name_matches_output_type_identity))]
         [Fact(Skip = "TODO")]
-        public void
-            clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity_()
+        public void named_item_can_be_added_if_name_matches_output_type_identity_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -34,10 +32,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
 
 
         [Spec(nameof(InputAndOutputTypeSpecs
-            .clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity))]
+            .clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity))]
         [Fact(Skip = "TODO")]
         public void
-            clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity_()
+            clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -51,9 +49,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs.named_item_can_be_added_if_name_matches_output_type_identity))]
+        [Spec(nameof(InputAndOutputTypeSpecs.clr_typed_item_can_be_renamed_if_name_matches_output_type_identity))]
         [Fact(Skip = "TODO")]
-        public void named_item_can_be_added_if_name_matches_output_type_identity_()
+        public void clr_typed_item_can_be_renamed_if_name_matches_output_type_identity_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -75,9 +73,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
 
 
-        [Spec(nameof(InputAndOutputTypeSpecs.clr_typed_item_can_be_renamed_if_name_matches_output_type_identity))]
+        [Spec(nameof(InputAndOutputTypeSpecs
+            .clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity))]
         [Fact(Skip = "TODO")]
-        public void clr_typed_item_can_be_renamed_if_name_matches_output_type_identity_()
+        public void
+            clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -89,4 +89,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
     {
     }
 }
-// Source Hash Code: 8727884438788527500
+// Source Hash Code: 8491257635112329472

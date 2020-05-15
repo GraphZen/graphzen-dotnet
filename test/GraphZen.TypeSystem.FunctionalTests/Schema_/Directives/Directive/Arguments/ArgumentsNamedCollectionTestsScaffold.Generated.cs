@@ -15,17 +15,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
     [NoReorder]
     public abstract class ArgumentsNamedCollectionTests
     {
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
         [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_added_with_null_value_()
+        public void named_item_can_be_renamed_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
         [Fact(Skip = "TODO")]
-        public void named_item_can_be_added_()
+        public void named_item_cannot_be_added_with_null_value_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -39,14 +39,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
-        [Fact(Skip = "TODO")]
-        public void named_item_can_be_removed_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_added_with_invalid_name_()
@@ -55,9 +47,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
         }
 
 
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
         [Fact(Skip = "TODO")]
-        public void named_item_can_be_renamed_()
+        public void named_item_can_be_removed_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
+        [Fact(Skip = "TODO")]
+        public void named_item_can_be_added_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -69,4 +69,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
     {
     }
 }
-// Source Hash Code: 2713425853651157102
+// Source Hash Code: 5273382212831289326

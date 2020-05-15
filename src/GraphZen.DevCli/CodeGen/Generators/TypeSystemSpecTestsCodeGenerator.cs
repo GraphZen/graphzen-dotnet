@@ -20,15 +20,7 @@ namespace GraphZen.CodeGen.Generators
     public class TypeSystemSpecTestsCodeGenerator
     {
 
-        public static string GetClassName(Subject subject, Spec parentSpec)
-        {
-            var spec = parentSpec.Id.TrimEnd("Spec").TrimEnd("Specs") + "Tests";
-            if (parentSpec.Id.StartsWith(subject.Name))
-            {
-                return spec;
-            }
-            return subject.Name + spec;
-        }
+        public static string GetClassName(Subject subject, Spec parentSpec) => parentSpec.Id.TrimEnd("Spec").TrimEnd("Specs") + "Tests";
 
         public static IEnumerable<GeneratedCode> ScaffoldSystemSpec()
         {
