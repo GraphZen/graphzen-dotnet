@@ -121,6 +121,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             // Adding to collection with CLR Type
             public const string clr_typed_item_can_be_added = null;
             public const string clr_typed_item_can_be_added_via_type_param = null;
+            public const string clr_typed_item_uses_clr_type_name = null;
+            public const string clr_typed_item_with_name_annotation_uses_clr_type_name_annotation = null;
             public const string clr_typed_item_cannot_be_added_with_null_value = null;
             public const string clr_typed_item_cannot_be_added_with_invalid_name_attribute = null;
             public const string clr_typed_item_with_conflicting_name_can_be_added_with_custom_name = null;
