@@ -62,7 +62,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((string)null!);
+                Action add = () => _.Directive((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -114,7 +114,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((string)null!);
+                Action remove = () => _.RemoveDirective((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -144,7 +144,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((Type)null!);
+                Action add = () => _.Directive((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -275,7 +275,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((Type)null!);
+                Action remove = () => _.RemoveDirective((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -328,32 +328,74 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
 
 
         [Spec(nameof(clr_typed_item_can_be_renamed))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_can_be_renamed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive<PlainClass>().Name("Foo"); });
+            schema.GetDirective<PlainClass>().Name.Should().Be("Foo");
         }
 
 
         [Spec(nameof(clr_typed_item_with_name_attribute_can_be_renamed))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_name_attribute_can_be_renamed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive<PlainClassAnnotatedName>().Name("Foo"); });
+            schema.GetDirective<PlainClassAnnotatedName>().Name.Should().Be("Foo");
         }
 
 
         [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
+        [Theory]
+        [InlineData("{name}")]
+        [InlineData("LKSJ ((")]
+        [InlineData("   ")]
+        [InlineData(" )*(#&  ")]
+        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
+        {
+            Schema.Create(_ =>
+            {
+                var b = _.Directive<PlainClass>();
+                Action rename = () => b.Name(name);
+                rename.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot rename directive PlainClass: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+        [Fact]
+        public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
+        {
+            Schema.Create(_ =>
+            {
+                _.Directive("Foo");
+                var b = _.Directive<PlainClass>();
+                Action rename = () => b.Name("Foo");
+                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot rename directive PlainClass to \"Foo\": a directive named \"Foo\" already exists.");
+            });
+        }
+
+        [Spec(nameof(clr_typed_item_subsequently_added_with_custom_name_sets_name))]
         [Fact(Skip = "TODO")]
-        public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_()
+        public void clr_typed_item_subsequently_added_with_custom_name_sets_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
+        [Spec(nameof(named_item_subsequently_added_with_type_and_custom_name_sets_clr_type))]
         [Fact(Skip = "TODO")]
-        public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
+        public void named_item_subsequently_added_with_type_and_custom_name_sets_clr_type_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
         {
             // var schema = Schema.Create(_ => { });
         }
