@@ -107,6 +107,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Unions
         {
             // var schema = Schema.Create(_ => { });
         }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs
+            .clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
+        ))]
+        [Fact(Skip = "TODO")]
+        public void
+            clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 }
-// Source Hash Code: 3092221164062318890
+// Source Hash Code: 15204952018612114546

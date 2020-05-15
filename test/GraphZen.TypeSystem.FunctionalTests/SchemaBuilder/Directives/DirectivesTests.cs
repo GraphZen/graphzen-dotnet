@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -63,7 +62,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((string)null!);
+                Action add = () => _.Directive((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -115,7 +114,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((string)null!);
+                Action remove = () => _.RemoveDirective((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }
@@ -145,7 +144,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((Type)null!);
+                Action add = () => _.Directive((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -276,7 +275,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((Type)null!);
+                Action remove = () => _.RemoveDirective((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -432,13 +431,30 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         [Fact]
         public void clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
         {
-            var schema = Schema.Create(_ =>
+            Schema.Create(_ =>
             {
                 _.Directive("Foo");
                 _.Directive<PlainClass>();
                 Action add = () => _.Directive<PlainClass>("Foo");
                 add.Should().Throw<DuplicateNameException>().WithMessage(
                     "Cannot create directive Foo with CLR type 'PlainClass': both directive Foo and directive PlainClass (with CLR type PlainClass) already exist.");
+            });
+        }
+
+        [Spec(nameof(
+            clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
+        ))]
+        [Fact]
+        public void
+            clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
+        {
+            Schema.Create(_ =>
+            {
+                _.Directive("Foo");
+                _.Directive<PlainClassAnnotatedName>();
+                Action add = () => _.Directive<PlainClassAnnotatedName>("Foo");
+                add.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot create directive Foo with CLR type 'PlainClassAnnotatedName': both directive Foo and directive AnnotatedNameValue (with CLR type PlainClassAnnotatedName) already exist.");
             });
         }
     }
