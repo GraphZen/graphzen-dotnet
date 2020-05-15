@@ -36,7 +36,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         }
 
 
-      
+
 
         [Spec(nameof(item_can_be_defined_by_sdl))]
         [Fact]
