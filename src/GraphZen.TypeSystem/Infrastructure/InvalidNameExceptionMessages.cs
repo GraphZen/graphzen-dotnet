@@ -24,6 +24,11 @@ namespace GraphZen.Infrastructure
             internal static string CannotRenameDirective(IDirectiveDefinition directive, string name) =>
                 $"Cannot rename {directive} to \"{name}\": a directive named \"{name}\" already exists.";
 
+            internal static string CannotCreateDirectiveWithConflictingNameAndType(string name, Type clrType,
+                IDirectiveDefinition existingNamed, IDirectiveDefinition existingTyped) =>
+                $"Cannot create directive {name} with CLR type '{clrType.Name}': both {existingNamed} and {existingTyped} (with CLR type {existingTyped.ClrType?.Name}) already exist.";
+
+
             internal static string CannotRenameInputField(IInputFieldDefinition field, string name) =>
                 $"Cannot rename {field} to \"{name}\": {field.DeclaringMember?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
 
@@ -36,10 +41,8 @@ namespace GraphZen.Infrastructure
                     $"Cannot rename {argument} to \"{name}\": {parent?.FirstCharToUpper()} already contains an argument named \"{name}\".";
             }
 
-            internal static string DuplicateEnumValue(IEnumValueDefinition enumValue, string name)
-            {
-                return $"Cannot rename enum value {enumValue.DeclaringType.Name}.{enumValue.Name} to \"{name}\": {enumValue.DeclaringType.ToString()?.FirstCharToUpper()} already contains a value named \"{name}\".";
-            }
+            internal static string DuplicateEnumValue(IEnumValueDefinition enumValue, string name) =>
+                $"Cannot rename enum value {enumValue.DeclaringType.Name}.{enumValue.Name} to \"{name}\": {enumValue.DeclaringType.ToString()?.FirstCharToUpper()} already contains a value named \"{name}\".";
         }
 
         public static class InvalidNameException
@@ -83,11 +86,13 @@ namespace GraphZen.Infrastructure
             public static string CannotCreateDirectiveWithInvalidName(string name) =>
                 $"Cannot create directive named \"{name}\": \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
-            public static string CannotRename(string name, string namedDescription) => $"Cannot rename {namedDescription}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+            public static string CannotRename(string name, string namedDescription) =>
+                $"Cannot rename {namedDescription}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotRename(string name, INamed named) => CannotRename(name, named.ToString()!);
 
-            public static string CannotRename(string name, INamed named, INamed parentDef) => CannotRename(name, $"{named} on {parentDef}");
+            public static string CannotRename(string name, INamed named, INamed parentDef) =>
+                CannotRename(name, $"{named} on {parentDef}");
 
             public static string CannotRenameArgument(IArgumentDefinition argument, string name)
             {

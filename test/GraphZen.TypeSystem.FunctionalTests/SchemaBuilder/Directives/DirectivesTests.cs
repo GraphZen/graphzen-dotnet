@@ -434,26 +434,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive(PlainClassAnnotatedName.AnnotatedNameValue);
-                _.Directive<PlainClassAnnotatedName>();
-                //Action add = () => _.Directive<PlainClass>("Foo");
-                //add.Should().Throw<DuplicateNameException>().WithMessage("Cannot add directive Foo with CLR type PlainClass: Directive Foo already exists and directive PlainClass already exists.");
+                _.Directive("Foo");
+                _.Directive<PlainClass>();
+                Action add = () => _.Directive<PlainClass>("Foo");
+                add.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot create directive Foo with CLR type 'PlainClass': both directive Foo and directive PlainClass (with CLR type PlainClass) already exist.");
             });
-            schema.GetDirectives().Count(_ => _.Name == PlainClassAnnotatedName.AnnotatedNameValue).Should()
-                .Be(1);
-            var typed = schema.GetDirective<PlainClassAnnotatedName>();
-            var untyped = schema.GetDirective(PlainClassAnnotatedName.AnnotatedNameValue);
-            typed.Should().NotBe(untyped);
-
-
-            /*
-                        var schema = Schema.Create(_ =>
-                        {
-                            _.Directive("Foo");
-                            _.Directive<PlainClassAnnotatedName>();
-                            Action add = () => _.Directive<PlainClass>(PlainClassAnnotatedName.AnnotatedNameValue);
-                            add.Should().Throw<Exception>().WithMessage("x");
-                        });*/
         }
     }
 }

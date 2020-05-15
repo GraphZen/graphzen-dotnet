@@ -637,14 +637,14 @@ namespace GraphZen.TypeSystem.Internal
             {
                 return null;
             }
-            var clrDirective = Definition.FindDirective(clrType);
-            var nameDirective = Definition.FindDirective(name);
-            //if (clrDirective != null && nameDirective != null && !clrDirective.Equals(nameDirective))
-            //{
-            //    throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.CannotRenameDirective());
-            //}
+            var typed = Definition.FindDirective(clrType);
+            var named = Definition.FindDirective(name);
+            if (typed != null && named != null && !typed.Equals(named))
+            {
+                throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.CannotCreateDirectiveWithConflictingNameAndType(name, clrType, named, typed));
+            }
 
-            if (clrDirective != null)
+            if (typed != null)
             {
                 var clrB = Directive(clrType, configurationSource);
                 clrB?.SetName(name, configurationSource);
