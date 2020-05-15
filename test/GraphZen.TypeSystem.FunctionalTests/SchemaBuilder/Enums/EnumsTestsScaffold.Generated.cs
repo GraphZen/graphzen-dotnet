@@ -100,6 +100,29 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
 
 
-            }
+        [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_subsequently_added_with_custom_name_sets_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_subsequently_added_with_custom_name_sets_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs.named_item_subsequently_added_with_type_and_custom_name_sets_clr_type))]
+        [Fact(Skip = "TODO")]
+        public void named_item_subsequently_added_with_type_and_custom_name_sets_clr_type_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypedCollectionSpecs
+            .clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+    }
 }
-// Source Hash Code: 4494901304714496156
+// Source Hash Code: 14987069730519761616
