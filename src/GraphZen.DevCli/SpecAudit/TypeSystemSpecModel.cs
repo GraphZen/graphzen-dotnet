@@ -62,7 +62,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<NamedCollectionSpecs>();
 
             var outputField = new Subject(nameof(Field))
-                    // .WithSpecs<SdlSpec, SdlExtensionSpec>()
+                    .WithSpecs<SdlSpec, SdlExtensionSpec>()
                     .WithChild(name)
                     .WithChild(description)
                     .WithChild(argumentDefCollection)
@@ -161,7 +161,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<ClrTypedCollectionSpecs>()
                 .WithChild(directive);
 
-            var schemaBuilder = new Subject(nameof(SchemaBuilder))
+            var schemaBuilder = new Subject("Schema_")
                 .WithChild(description)
                 .WithChild(directiveAnnotations)
                 .WithChild(new Subject(nameof(Schema.QueryType)))

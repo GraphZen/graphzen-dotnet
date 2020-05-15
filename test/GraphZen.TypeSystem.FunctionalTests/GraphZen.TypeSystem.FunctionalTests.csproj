@@ -24,10 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SchemaBuilder\Directives\Directive\Arguments\ArgumentDefinition\DirectiveAnnotationAnnotations\DirectiveAnnotation\Name\" />
-    <Folder Include="SchemaBuilder\Interfaces\InterfaceType\DirectiveAnnotationAnnotations\DirectiveAnnotation\Name\" />
-    <Folder Include="SchemaBuilder\Interfaces\InterfaceType\Interfaces\" />
-    <Folder Include="SchemaBuilder\Objects\ObjectType\Interfaces\" />
+    <Folder Include="Schema_\Directives\Directive\Arguments\ArgumentDefinition\DirectiveAnnotationAnnotations\DirectiveAnnotation\Name\" />
+    <Folder Include="Schema_\Interfaces\InterfaceType\DirectiveAnnotationAnnotations\DirectiveAnnotation\Name\" />
+    <Folder Include="Schema_\Interfaces\InterfaceType\Interfaces\" />
+    <Folder Include="Schema_\Objects\ObjectType\Interfaces\" />
   </ItemGroup>
 
 </Project>
