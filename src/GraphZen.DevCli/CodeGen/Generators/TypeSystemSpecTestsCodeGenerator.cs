@@ -11,6 +11,7 @@ using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.Infrastructure;
 using GraphZen.SpecAudit;
+using GraphZen.SpecAudit.SpecFx;
 using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen.Generators
@@ -18,6 +19,15 @@ namespace GraphZen.CodeGen.Generators
     public class TypeSystemSpecTestsCodeGenerator
     {
 
+        public static string GetClassName(Subject subject, Spec parentSpec)
+        {
+            var spec = parentSpec.Id.Replace("Specs", "Tests");
+            if (parentSpec.Id.StartsWith(subject.Name))
+            {
+                return spec;
+            }
+            return subject.Name + spec;
+        }
 
         public static IEnumerable<GeneratedCode> ScaffoldSystemSpec()
         {
@@ -30,7 +40,7 @@ namespace GraphZen.CodeGen.Generators
                 foreach (var rootSpec in suite.RootSpecs)
                 {
                     var path = subject.GetSelfAndAncestors().Select(_ => _.Name).ToArray();
-                    var className = subject.Name + rootSpec.Id.Replace("Specs", "Tests");
+                    var className = GetClassName(subject, rootSpec);
                     var fileName = string.Join("", $"{className}Scaffold.Generated.cs");
                     var fileDir = Path.Combine(pathBase, Path.Combine(path));
                     var filePath = Path.Combine(fileDir, fileName);

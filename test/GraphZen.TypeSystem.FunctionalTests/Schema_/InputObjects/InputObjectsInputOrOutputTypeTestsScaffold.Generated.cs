@@ -16,38 +16,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     public abstract class InputObjectsInputOrOutputTypeTests
     {
         [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(InputOrOutputTypeSpecs
             .clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
         public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -65,18 +36,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 
 
         [Spec(nameof(InputOrOutputTypeSpecs
-            .named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
+            .clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io
+        ))]
         [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
+        public void
+            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -90,6 +54,42 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         {
             // var schema = Schema.Create(_ => { });
         }
+
+
+        [Spec(nameof(InputOrOutputTypeSpecs
+            .named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(InputOrOutputTypeSpecs
+            .clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(InputOrOutputTypeSpecs
+            .clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(InputOrOutputTypeSpecs
+            .named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 
 // Move InputObjectsInputOrOutputTypeTests into a separate file to start writing tests
@@ -98,4 +98,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     {
     }
 }
-// Source Hash Code: 14701395619253520706
+// Source Hash Code: 2169972437226339458

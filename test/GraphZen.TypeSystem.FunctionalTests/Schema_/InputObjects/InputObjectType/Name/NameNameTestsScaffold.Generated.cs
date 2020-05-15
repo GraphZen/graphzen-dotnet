@@ -15,17 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     [NoReorder]
     public abstract class NameNameTests
     {
-        [Spec(nameof(NameSpecs.name_cannot_be_null))]
+        [Spec(nameof(NameSpecs.can_be_renamed))]
         [Fact(Skip = "TODO")]
-        public void name_cannot_be_null_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(NameSpecs.name_cannot_be_duplicate))]
-        [Fact(Skip = "TODO")]
-        public void name_cannot_be_duplicate_()
+        public void can_be_renamed_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -39,9 +31,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(NameSpecs.can_be_renamed))]
+        [Spec(nameof(NameSpecs.name_cannot_be_duplicate))]
         [Fact(Skip = "TODO")]
-        public void can_be_renamed_()
+        public void name_cannot_be_duplicate_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(NameSpecs.name_cannot_be_null))]
+        [Fact(Skip = "TODO")]
+        public void name_cannot_be_null_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -53,4 +53,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     {
     }
 }
-// Source Hash Code: 1648760209814923498
+// Source Hash Code: 10206620748182136050

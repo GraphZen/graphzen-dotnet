@@ -23,17 +23,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
         }
 
 
-        [Spec(nameof(DescriptionSpecs.description_cannot_be_null))]
+        [Spec(nameof(DescriptionSpecs.description_can_be_removed))]
         [Fact(Skip = "TODO")]
-        public void description_cannot_be_null_()
+        public void description_can_be_removed_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(DescriptionSpecs.description_can_be_removed))]
+        [Spec(nameof(DescriptionSpecs.description_cannot_be_null))]
         [Fact(Skip = "TODO")]
-        public void description_can_be_removed_()
+        public void description_cannot_be_null_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -45,4 +45,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
     {
     }
 }
-// Source Hash Code: 1055490617719995597
+// Source Hash Code: 8238269036989274573

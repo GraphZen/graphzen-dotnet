@@ -24,17 +24,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-        [Spec(nameof(DescriptionSpecs.description_cannot_be_null))]
+        [Spec(nameof(DescriptionSpecs.description_can_be_removed))]
         [Fact(Skip = "TODO")]
-        public void description_cannot_be_null_()
+        public void description_can_be_removed_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(DescriptionSpecs.description_can_be_removed))]
+        [Spec(nameof(DescriptionSpecs.description_cannot_be_null))]
         [Fact(Skip = "TODO")]
-        public void description_can_be_removed_()
+        public void description_cannot_be_null_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -46,4 +46,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     {
     }
 }
-// Source Hash Code: 11806932026140599073
+// Source Hash Code: 542966371700326433

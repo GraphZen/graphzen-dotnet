@@ -15,9 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields
     [NoReorder]
     public abstract class FieldsNamedCollectionTests
     {
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
         [Fact(Skip = "TODO")]
-        public void named_item_can_be_removed_()
+        public void named_item_cannot_be_removed_with_null_value_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -26,14 +26,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_removed_with_null_value_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -55,6 +47,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields
         }
 
 
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
+        [Fact(Skip = "TODO")]
+        public void named_item_can_be_removed_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_added_with_null_value_()
@@ -69,4 +69,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields
     {
     }
 }
-// Source Hash Code: 14443186346980261150
+// Source Hash Code: 7108719698472543582

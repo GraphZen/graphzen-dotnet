@@ -15,17 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Name
     [NoReorder]
     public abstract class NameNameTests
     {
-        [Spec(nameof(NameSpecs.name_cannot_be_null))]
+        [Spec(nameof(NameSpecs.can_be_renamed))]
         [Fact(Skip = "TODO")]
-        public void name_cannot_be_null_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(NameSpecs.name_cannot_be_duplicate))]
-        [Fact(Skip = "TODO")]
-        public void name_cannot_be_duplicate_()
+        public void can_be_renamed_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -39,9 +31,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Name
         }
 
 
-        [Spec(nameof(NameSpecs.can_be_renamed))]
+        [Spec(nameof(NameSpecs.name_cannot_be_duplicate))]
         [Fact(Skip = "TODO")]
-        public void can_be_renamed_()
+        public void name_cannot_be_duplicate_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(NameSpecs.name_cannot_be_null))]
+        [Fact(Skip = "TODO")]
+        public void name_cannot_be_null_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -53,4 +53,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Name
     {
     }
 }
-// Source Hash Code: 4901194299038311312
+// Source Hash Code: 13459054837405523864

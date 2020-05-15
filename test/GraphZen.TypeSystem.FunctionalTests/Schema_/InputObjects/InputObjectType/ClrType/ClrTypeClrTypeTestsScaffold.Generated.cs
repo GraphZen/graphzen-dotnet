@@ -15,9 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     [NoReorder]
     public abstract class ClrTypeClrTypeTests
     {
-        [Spec(nameof(ClrTypeSpecs.clr_type_cannot_be_null))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed))]
         [Fact(Skip = "TODO")]
-        public void clr_type_cannot_be_null_()
+        public void clr_type_can_be_changed_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -31,17 +31,25 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param))]
         [Fact(Skip = "TODO")]
-        public void clr_type_can_be_added_()
+        public void clr_type_can_be_changed_via_type_param_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_with_custom_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_can_be_changed_()
+        public void clr_type_can_be_changed_with_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypeSpecs.clr_type_should_be_unique))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_should_be_unique_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -63,33 +71,57 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param_with_custom_name))]
+        [Spec(nameof(ClrTypeSpecs.changing_clr_type_changes_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_can_be_changed_via_type_param_with_custom_name_()
+        public void changing_clr_type_changes_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_name_should_be_unique))]
+        [Spec(nameof(ClrTypeSpecs.changing_clr_type_with_name_annotation_changes_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_name_should_be_unique_()
+        public void changing_clr_type_with_name_annotation_changes_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_with_custom_name))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param))]
         [Fact(Skip = "TODO")]
-        public void clr_type_can_be_changed_with_custom_name_()
+        public void clr_type_can_be_added_via_type_param_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_with_custom_name))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_name_annotation_should_be_unique))]
         [Fact(Skip = "TODO")]
-        public void clr_type_can_be_added_with_custom_name_()
+        public void clr_type_name_annotation_should_be_unique_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypeSpecs.custom_name_cannot_be_null))]
+        [Fact(Skip = "TODO")]
+        public void custom_name_cannot_be_null_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypeSpecs.clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(ClrTypeSpecs.clr_typed_item_when_type_removed_should_retain_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_typed_item_when_type_removed_should_retain_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -104,25 +136,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_with_custom_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
+        public void clr_type_can_be_added_with_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.custom_name_cannot_be_null))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param_with_custom_name))]
         [Fact(Skip = "TODO")]
-        public void custom_name_cannot_be_null_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_can_be_changed_via_type_param_()
+        public void clr_type_can_be_added_via_type_param_with_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -136,30 +160,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_with_conflicting_name_can_be_added_using_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.clr_typed_item_when_type_removed_should_retain_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_typed_item_when_type_removed_should_retain_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(ClrTypeSpecs.changing_clr_type_changes_name))]
-        [Fact(Skip = "TODO")]
-        public void changing_clr_type_changes_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(ClrTypeSpecs.custom_name_should_be_valid))]
         [Fact(Skip = "TODO")]
         public void custom_name_should_be_valid_()
@@ -168,41 +168,41 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.changing_clr_type_with_name_annotation_changes_name))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_with_conflicting_name_can_be_added_using_custom_name))]
         [Fact(Skip = "TODO")]
-        public void changing_clr_type_with_name_annotation_changes_name_()
+        public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_should_be_unique))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_name_should_be_unique))]
         [Fact(Skip = "TODO")]
-        public void clr_type_should_be_unique_()
+        public void clr_type_name_should_be_unique_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_name_annotation_should_be_unique))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_cannot_be_null))]
         [Fact(Skip = "TODO")]
-        public void clr_type_name_annotation_should_be_unique_()
+        public void clr_type_cannot_be_null_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added))]
         [Fact(Skip = "TODO")]
-        public void clr_type_can_be_added_via_type_param_()
+        public void clr_type_can_be_added_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param_with_custom_name))]
+        [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param_with_custom_name))]
         [Fact(Skip = "TODO")]
-        public void clr_type_can_be_added_via_type_param_with_custom_name_()
+        public void clr_type_can_be_changed_via_type_param_with_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -214,4 +214,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     {
     }
 }
-// Source Hash Code: 15863051946992927924
+// Source Hash Code: 15723086776898685876
