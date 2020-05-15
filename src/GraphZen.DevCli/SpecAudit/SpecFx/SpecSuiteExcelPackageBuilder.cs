@@ -129,9 +129,10 @@ namespace GraphZen.SpecAudit.SpecFx
             foreach (var subj in GetPrimarySubjects(suite))
             {
                 worksheet.Cells[1, currentColumn].Value = subj.Name;
-                for (var i = 0; i < subj.Children.Count; i++)
+                var subjects = ImmutableList.Create(subj).AddRange(subj.Children);
+                for (var i = 0; i < subjects.Count; i++)
                 {
-                    var child = subj.Children[i];
+                    var child = subjects[i];
                     currentColumn = columnStart + i;
                     var childHeader = worksheet.Cells[2, currentColumn];
                     childHeader.Value = child.Name;

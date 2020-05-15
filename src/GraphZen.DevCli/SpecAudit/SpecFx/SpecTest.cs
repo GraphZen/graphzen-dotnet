@@ -28,7 +28,6 @@ namespace GraphZen.SpecAudit.SpecFx
                     nameof(testMethod));
             }
         }
-
         public string SubjectPath { get; }
         public string SpecId { get; }
         public MethodInfo TestMethod { get; }
