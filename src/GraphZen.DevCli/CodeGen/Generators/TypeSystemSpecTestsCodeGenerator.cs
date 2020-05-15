@@ -10,7 +10,6 @@ using System.Linq;
 using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 using GraphZen.SpecAudit;
 using GraphZen.SpecAudit.SpecFx;
 using JetBrains.Annotations;
@@ -19,8 +18,8 @@ namespace GraphZen.CodeGen.Generators
 {
     public class TypeSystemSpecTestsCodeGenerator
     {
-
-        public static string GetClassName(Subject subject, Spec parentSpec) => parentSpec.Id.TrimEnd("Spec").TrimEnd("Specs") + "Tests";
+        public static string GetClassName(Subject subject, Spec parentSpec) =>
+            parentSpec.Id.TrimEnd("Spec").TrimEnd("Specs") + "Tests";
 
         public static IEnumerable<GeneratedCode> ScaffoldSystemSpec()
         {
@@ -52,7 +51,7 @@ namespace GraphZen.CodeGen.Generators
                         _.AppendLine("[NoReorder]");
                         _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
                         {
-                            foreach (var (specId, spec) in rootSpec.Children.ToImmutableDictionary(_ => _.Id))
+                            foreach (var (specId, spec) in rootSpec.Children.ToImmutableDictionary(c => c.Id))
                             {
                                 if (subject.Specs.TryGetValue(specId, out var _))
                                 {

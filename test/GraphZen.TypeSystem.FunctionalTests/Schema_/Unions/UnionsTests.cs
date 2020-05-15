@@ -7,9 +7,12 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
+
+//using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
 
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
@@ -33,91 +36,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         }
 
 
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "needs impl")]
-        public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                Action add = () => _.Union("Bar");
-                add.Should().Throw<Exception>().WithMessage("x");
-            });
-        }
+      
 
-
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                var baz = _.Union("Baz");
-                Action rename = () => baz.Name("Bar");
-                rename.Should().Throw<Exception>().WithMessage("x");
-            });
-        }
-
-
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "todo")]
-        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                var union = _.Union<PlainAbstractClass>();
-                Action rename = () => union.Name("Bar");
-                rename.Should().Throw<Exception>().WithMessage("TODO: error message specific to input/output error");
-            });
-        }
-
-
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", PlainAbstractClassAnnotatedName.AnnotatedName);
-                Action add = () => _.Union<PlainAbstractClassAnnotatedName>();
-                add.Should().Throw<Exception>("x");
-            });
-        }
-
-
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void
-            clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                Action add = () => _.Union<PlainAbstractClassAnnotatedName>("Bar");
-                add.Should().Throw<Exception>("x");
-            });
-        }
-
-
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
+        [Spec(nameof(item_can_be_defined_by_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -126,7 +47,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         }
 
 
-        [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
+        [Spec(nameof(item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_extension_()
         {

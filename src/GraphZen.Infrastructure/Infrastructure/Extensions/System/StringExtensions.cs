@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -13,6 +14,12 @@ namespace GraphZen.Infrastructure
 {
     internal static class StringExtensions
     {
+
+        public static string TrimEnd(this string source, string value) => !source.EndsWith(value) ? source : source.Remove(source.LastIndexOf(value, StringComparison.Ordinal));
+
+        public static string TrimStart(this string source, string value) =>
+            !source.StartsWith(value) ? source : source.Remove(0, value.Length);
+
         public static string FirstCharToUpper(this string value)
         {
             Check.NotNull(value, nameof(value));
