@@ -402,7 +402,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
             });
             schema.GetDirective("Foo").ClrType.Should().Be<PlainClass>();
         }
-
+        [Spec(nameof(adding_clr_typed_item_updates_matching_named_items_clr_type))]
+        [Fact()]
+        public void adding_clr_typed_item_updates_matching_named_items_clr_type_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive(nameof(PlainClass)).Description("foo");
+                _.Directive<PlainClass>();
+            });
+            schema.GetDirective<PlainClass>().Description.Should().Be("foo");
+        }
 
         [Spec(nameof(clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist))]
         [Fact]

@@ -698,11 +698,15 @@ namespace GraphZen.TypeSystem.Internal
                 return null;
             }
 
-            var directive = Definition.FindDirective(clrType);
+            var directive = Definition.FindDirective(clrType) ?? Definition.FindDirective(clrType.GetGraphQLName());
 
             if (directive != null)
             {
                 directive.UpdateConfigurationSource(configurationSource);
+                if (directive.ClrType == null)
+                {
+                    directive.SetClrType(clrType, configurationSource);
+                }
                 return directive.Builder;
             }
 

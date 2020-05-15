@@ -15,6 +15,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
     [NoReorder]
     public abstract class EnumsTestsScaffold
     {
+        [Spec(nameof(ClrTypedCollectionSpecs.adding_clr_typed_item_updates_matching_named_items_clr_type))]
+        [Fact(Skip = "TODO")]
+        public void adding_clr_typed_item_updates_matching_named_items_clr_type_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(ClrTypedCollectionSpecs.clr_typed_item_uses_clr_type_name))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_uses_clr_type_name_()
@@ -125,4 +133,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Enums
         }
     }
 }
-// Source Hash Code: 14987069730519761616
+// Source Hash Code: 1450421192907581164
