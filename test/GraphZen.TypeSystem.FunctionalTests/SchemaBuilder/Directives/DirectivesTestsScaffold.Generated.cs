@@ -15,7 +15,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.SchemaBuilder.Directives
     [NoReorder]
     public abstract class DirectivesTestsScaffold
     {
-       
+        [Spec(nameof(ClrTypedCollectionSpecs
+            .adding_clr_typed_item_with_name_annotation_updates_matching_named_items_clr_type))]
+        [Fact(Skip = "TODO")]
+        public void adding_clr_typed_item_with_name_annotation_updates_matching_named_items_clr_type_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 }
-// Source Hash Code: 7517814261452296740
+// Source Hash Code: 7228465489695183390
