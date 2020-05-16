@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
@@ -32,10 +31,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         }
 
 
-
-
-
-
         [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
         public void clr_typed_item_can_be_added_()
@@ -51,7 +46,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Enum((Type)null!);
+                Action add = () => _.Enum((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -103,7 +98,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
             Schema.Create(_ =>
             {
                 _.Enum<PlainEnum>();
-                Action remove = () => _.RemoveEnum((Type)null!);
+                Action remove = () => _.RemoveEnum((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

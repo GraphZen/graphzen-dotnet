@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
@@ -15,7 +14,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
     [NoReorder]
     public class NamedCollectionTests
     {
-
         [Spec(nameof(named_item_can_be_added))]
         [Fact]
         public void named_item_can_be_added_()
@@ -31,7 +29,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((string)null!);
+                Action add = () => _.Directive((string) null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -83,7 +81,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((string)null!);
+                Action remove = () => _.RemoveDirective((string) null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }

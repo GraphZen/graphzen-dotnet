@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
@@ -47,7 +46,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((Type)null!);
+                Action add = () => _.InputObject((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -98,7 +97,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveInputObject((Type)null!);
+                Action remove = () => _.RemoveInputObject((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

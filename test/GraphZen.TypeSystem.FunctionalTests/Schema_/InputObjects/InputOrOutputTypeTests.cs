@@ -5,15 +5,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputXorOutputTypeSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 {
     [NoReorder]
-    public class InputOrOutputTypeTests
+    public class InputXorOutputTypeTests
     {
         private class PlainClass
         {
@@ -26,6 +25,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
 
         [GraphQLName(InvalidName)]
+        // ReSharper disable once UnusedType.Local
         private class PlainClassInvalidNameAnnotation
         {
             public const string InvalidName = "abc @#$%^";
@@ -81,7 +81,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
 
 
-        [Spec(nameof(clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
+        [Spec(nameof(
+            clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
         ))]
         [Fact(Skip = "needs impl")]
         public void

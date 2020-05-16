@@ -9,12 +9,12 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputXorOutputTypeSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 {
     [NoReorder]
-    public abstract class InputOrOutputTypeTestsScaffold
+    public abstract class InputXorOutputTypeTestsScaffold
     {
         [Spec(nameof(clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]

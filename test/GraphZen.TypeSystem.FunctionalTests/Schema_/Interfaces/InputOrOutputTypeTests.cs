@@ -7,12 +7,12 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputXorOutputTypeSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
 {
     [NoReorder]
-    public class InputOrOutputTypeTests
+    public class InputXorOutputTypeTests
     {
         // ReSharper disable once InconsistentNaming
         private interface PlainInterface
@@ -28,6 +28,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
 
         [GraphQLName("abc &*(")]
         // ReSharper disable once InconsistentNaming
+        // ReSharper disable once UnusedType.Local
         private interface PlainInterfaceInvalidNameAnnotation
         {
         }
@@ -75,7 +76,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         }
 
 
-        [Spec(nameof(clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
+        [Spec(nameof(
+            clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
         ))]
         [Fact(Skip = "needs design/impl")]
         public void
