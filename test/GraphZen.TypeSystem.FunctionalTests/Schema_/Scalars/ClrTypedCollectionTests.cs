@@ -7,16 +7,12 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputAndOutputTypeSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
 {
     [NoReorder]
-    public class ScalarsTests
+    public class ClrTypedCollectionTests
     {
         private struct PlainStruct
         {
@@ -31,200 +27,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         [GraphQLName("#$%^")]
         private struct PlainStructInvalidNameAnnotation
         {
-        }
-
-
-        [Spec(nameof(named_item_can_be_added_if_name_matches_input_type_identity))]
-        [Fact]
-        public void named_item_can_be_added_if_name_matches_input_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                _.Scalar("Bar");
-            });
-            schema.HasScalar("Bar");
-        }
-
-
-        [Spec(nameof(named_item_can_be_added_if_name_matches_output_type_identity))]
-        [Fact]
-        public void named_item_can_be_added_if_name_matches_output_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Foo").Field("outputField", "Bar");
-                _.Scalar("Bar");
-            });
-            schema.HasScalar("Bar");
-        }
-
-
-        [Spec(nameof(named_item_can_be_renamed_to_name_with_input_type_identity))]
-        [Fact(Skip = "needs impl")]
-        public void named_item_can_be_renamed_to_name_with_input_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                _.Scalar("Baz").Name("Bar");
-            });
-            schema.HasScalar("Bar");
-        }
-
-
-        [Spec(nameof(named_item_can_be_renamed_to_name_with_output_type_identity))]
-        [Fact(Skip = "needs impl")]
-        public void named_item_can_be_renamed_to_name_with_output_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Foo").Field("outputField", "Bar");
-                _.Scalar("Baz").Name("Bar");
-            });
-            schema.HasScalar("Bar");
-        }
-
-
-        [Spec(nameof(clr_typed_item_can_be_renamed_if_name_matches_input_type_identity))]
-        [Fact(Skip = "needs impl")]
-        public void clr_typed_item_can_be_renamed_if_name_matches_input_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                _.Scalar<PlainStruct>().Name("Bar");
-            });
-            schema.GetScalar<PlainStruct>().Name.Should().Be("Bar");
-        }
-
-
-        [Spec(nameof(clr_typed_item_can_be_renamed_if_name_matches_output_type_identity))]
-        [Fact(Skip = "needs impl")]
-        public void clr_typed_item_can_be_renamed_if_name_matches_output_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Foo").Field("outputField", "Bar");
-                _.Scalar<PlainStruct>().Name("Bar");
-            });
-            schema.GetScalar<PlainStruct>().Name.Should().Be("Bar");
-        }
-
-
-        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity))]
-        [Fact]
-        public void
-            clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", PlainStructAnnotatedName.AnnotatedName);
-                _.Scalar<PlainStructAnnotatedName>().Name("Bar");
-            });
-            schema.HasScalar<PlainStructAnnotatedName>().Should().BeTrue();
-        }
-
-
-        [Spec(nameof(clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity))]
-        [Fact]
-        public void
-            clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Foo").Field("outputField", PlainStructAnnotatedName.AnnotatedName);
-                _.Scalar<PlainStructAnnotatedName>().Name("Bar");
-            });
-            schema.HasScalar<PlainStructAnnotatedName>().Should().BeTrue();
-        }
-
-
-        [Spec(nameof(item_can_be_defined_by_sdl))]
-        [Fact]
-        public void named_item_can_be_added_via_sdl_()
-        {
-            var schema = Schema.Create(_ => { _.FromSchema(@"scalar Foo"); });
-            schema.HasScalar("Foo").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(item_can_be_defined_by_sdl_extension))]
-        [Fact(Skip = "needs impl")]
-        public void named_item_can_be_added_via_sdl_extension_()
-        {
-            var schema = Schema.Create(_ => { _.FromSchema(@"extend scalar Foo"); });
-            schema.HasScalar("Foo").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(named_item_can_be_added))]
-        [Fact]
-        public void named_item_can_be_added_()
-        {
-            var schema = Schema.Create(_ => { _.Scalar("Foo"); });
-            schema.HasScalar("Foo").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_added_with_null_value))]
-        [Fact]
-        public void named_item_cannot_be_added_with_null_value_()
-        {
-            Schema.Create(_ =>
-            {
-                Action add = () => _.Scalar((string)null!);
-                add.Should().ThrowArgumentNullException("name");
-            });
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
-        [Theory]
-        [InlineData("xx 09880")]
-        public void named_item_cannot_be_added_with_invalid_name_(string name)
-        {
-            Schema.Create(_ =>
-            {
-                Action add = () => _.Scalar(name);
-                add.Should().Throw<InvalidNameException>().WithMessage(
-                    $"Cannot get or create GraphQL type builder for scalar named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
-            });
-        }
-
-
-        [Spec(nameof(named_item_can_be_renamed))]
-        [Fact]
-        public void named_item_can_be_renamed_()
-        {
-            var schema = Schema.Create(_ => { _.Scalar("Foo").Name("Bar"); });
-            schema.HasScalar("Foo").Should().BeFalse();
-            schema.HasScalar("Bar").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(named_item_can_be_removed))]
-        [Fact(Skip = "needs impl")]
-        public void named_item_can_be_removed_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Scalar("Foo");
-                _.RemoveScalar("Foo");
-            });
-            schema.HasScalar("Foo").Should().BeFalse();
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_removed_with_null_value))]
-        [Fact]
-        public void named_item_cannot_be_removed_with_null_value_()
-        {
-            Schema.Create(_ =>
-            {
-                Action remove = () => _.RemoveScalar((string)null!);
-                remove.Should().ThrowArgumentNullException("name");
-            });
         }
 
 
@@ -261,7 +63,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((Type)null!);
+                Action add = () => _.Scalar((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -313,7 +115,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
             Schema.Create(_ =>
             {
                 _.Scalar<PlainStruct>();
-                Action remove = () => _.RemoveScalar((Type)null!);
+                Action remove = () => _.RemoveScalar((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
