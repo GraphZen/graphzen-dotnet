@@ -8,21 +8,27 @@ using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.EnumValue
 {
     [NoReorder]
     public class SdlExtensionTests
     {
+         
 
 
         [Spec(nameof(TypeSystemSpecs.SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
-        [Fact(Skip = "needs impl")]
+        [Fact(Skip = "TODO")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
-            var schema = Schema.Create(_ => { _.FromSchema("extend enum Foo"); });
-
-            schema.HasEnum("Foo").Should().BeTrue();
+            var schema = Schema.Create(_ =>
+            {
+                _.FromSchema(@"
+extend enum Foo {
+    Bar
+}
+");
+            });
+            schema.GetEnum("Foo").HasValue("Bar").Should().BeTrue();
         }
-
     }
 }

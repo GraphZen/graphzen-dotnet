@@ -32,8 +32,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         }
 
 
-       
-     
+
+
 
 
         [Spec(nameof(clr_typed_item_can_be_added))]

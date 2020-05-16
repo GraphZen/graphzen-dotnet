@@ -8,45 +8,17 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
 {
     [NoReorder]
-    public class ValuesTests
+    public class NamedCollectionTests
     {
-        [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
-        [Fact]
-        public void named_item_can_be_added_via_sdl_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.FromSchema(@"
-enum Foo {
-    Bar
-}
-");
-            });
-            schema.GetEnum("Foo").HasValue("Bar").Should().BeTrue();
-        }
+     
 
 
-        [Spec(nameof(TypeSystemSpecs.SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
-        [Fact(Skip = "TODO")]
-        public void named_item_can_be_added_via_sdl_extension_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.FromSchema(@"
-extend enum Foo {
-    Bar
-}
-");
-            });
-            schema.GetEnum("Foo").HasValue("Bar").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_added))]
+        [Spec(nameof(named_item_can_be_added))]
         [Fact]
         public void named_item_can_be_added_()
         {
@@ -55,7 +27,7 @@ extend enum Foo {
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
+        [Spec(nameof(named_item_cannot_be_added_with_null_value))]
         [Fact]
         public void named_item_cannot_be_added_with_null_value_()
         {
@@ -68,7 +40,7 @@ extend enum Foo {
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
+        [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
         [Theory]
         [InlineData("{name}")]
         [InlineData("LKSJ ((")]
@@ -86,7 +58,7 @@ extend enum Foo {
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_renamed))]
+        [Spec(nameof(named_item_can_be_renamed))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_renamed_()
         {
@@ -94,7 +66,7 @@ extend enum Foo {
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_removed))]
+        [Spec(nameof(named_item_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_removed_()
         {
@@ -102,7 +74,7 @@ extend enum Foo {
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
+        [Spec(nameof(named_item_cannot_be_removed_with_null_value))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_removed_with_null_value_()
         {
