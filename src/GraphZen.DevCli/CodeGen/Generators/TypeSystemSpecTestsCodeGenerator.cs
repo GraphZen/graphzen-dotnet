@@ -61,9 +61,9 @@ namespace GraphZen.CodeGen.Generators
                             {
                                 if (subject.Specs.TryGetValue(specId, out var _))
                                 {
-                                    var isTestImplemented = testFileExists && suite.Tests.Any(t =>
-                                        t.SubjectPath == subject.Path && t.SpecId == specId &&
-                                        !t.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
+                                    var implementingTest = suite.Tests.FirstOrDefault(t =>
+                                        t.SubjectPath == subject.Path && t.SpecId == specId);
+                                    var isTestImplemented = testFileExists && implementingTest != null && !implementingTest.TestMethod.DeclaringType!.Name.Contains("Scaffold");
                                     if (!isTestImplemented &&
                                         !specId.Contains("deprecated", StringComparison.OrdinalIgnoreCase))
                                     {
@@ -75,6 +75,7 @@ namespace GraphZen.CodeGen.Generators
 
 // SpecId: {specId}
 // isTestImplemented: {isTestImplemented}
+// subject.Path: {subject.Path}
 [Spec({specRef})]
 [Fact(Skip=""TODO"")]
 public void {spec.Id}_() {{
