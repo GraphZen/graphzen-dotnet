@@ -74,11 +74,16 @@ namespace GraphZen.CodeGen.Generators
                                         var specRef = spec.FieldInfo != null
                                             ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
                                             : $"\"{spec.Id}\"";
-                                        cls.AppendLine($@"
 
+/*                                        cls.AppendLine(@"
 // SpecId: {specId}
 // isTestImplemented: {isTestImplemented}
 // subject.Path: {subject.Path}
+
+
+");*/
+                                        cls.AppendLine($@"
+
 [Spec({specRef})]
 [Fact(Skip=""TODO"")]
 public void {spec.Id}_() {{
