@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputXorOutputTypeSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 {
     [NoReorder]
     public abstract class InputXorOutputTypeTests
@@ -88,10 +88,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         }
     }
 
-    // Move InputXorOutputTypeTests into a separate file to start writing tests
+// Move InputXorOutputTypeTests into a separate file to start writing tests
     [NoReorder]
     public class InputXorOutputTypeTestsScaffold
     {
     }
 }
-// Source Hash Code: 16122198304474518712
+// Source Hash Code: 6440825095300384678
