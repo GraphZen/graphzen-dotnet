@@ -12,10 +12,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 {
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\InputObjects\NamedCollectionTests.cs
-// testFileExists: False
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\InputObjects
-
     [NoReorder]
     public abstract class NamedCollectionTests
     {
@@ -91,4 +87,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     {
     }
 }
-// Source Hash Code: 14786023398000548564
+// Source Hash Code: 6813897481490673579

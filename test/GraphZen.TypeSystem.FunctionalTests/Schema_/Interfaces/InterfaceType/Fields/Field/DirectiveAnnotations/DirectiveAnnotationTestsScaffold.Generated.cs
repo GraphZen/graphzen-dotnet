@@ -12,10 +12,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.DirectiveAnnotations
 {
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InterfaceType\Fields\Field\DirectiveAnnotations\DirectiveAnnotationTests.cs
-// testFileExists: False
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InterfaceType\Fields\Field\DirectiveAnnotations
-
     [NoReorder]
     public abstract class DirectiveAnnotationTests
     {
@@ -179,4 +175,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     {
     }
 }
-// Source Hash Code: 7576380053123401502
+// Source Hash Code: 12611780674666755604

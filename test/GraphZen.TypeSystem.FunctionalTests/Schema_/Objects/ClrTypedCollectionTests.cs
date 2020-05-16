@@ -85,7 +85,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((Type) null!);
+                Action add = () => _.Object((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -97,7 +97,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((Type) null!);
+                Action remove = () => _.RemoveObject((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

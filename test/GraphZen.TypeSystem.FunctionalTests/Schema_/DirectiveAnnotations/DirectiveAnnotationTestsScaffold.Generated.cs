@@ -12,10 +12,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations
 {
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\DirectiveAnnotations\DirectiveAnnotationTests.cs
-// testFileExists: False
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\DirectiveAnnotations
-
     [NoReorder]
     public abstract class DirectiveAnnotationTests
     {
@@ -179,4 +175,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations
     {
     }
 }
-// Source Hash Code: 5278088893704189392
+// Source Hash Code: 11423361593703988346

@@ -12,10 +12,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Arguments.ArgumentDefinition.Description
 {
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Directives\Directive\Arguments\ArgumentDefinition\Description\SdlTests.cs
-// testFileExists: True
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Directives\Directive\Arguments\ArgumentDefinition\Description
-
     [NoReorder]
     public abstract class SdlTestsScaffold
     {
@@ -30,4 +26,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
         }
     }
 }
-// Source Hash Code: 15810280986263937260
+// Source Hash Code: 16962931722060867360

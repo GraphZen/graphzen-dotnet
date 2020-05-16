@@ -12,10 +12,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
 {
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\ClrTypedCollectionTests.cs
-// testFileExists: False
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces
-
     [NoReorder]
     public abstract class ClrTypedCollectionTests
     {
@@ -332,4 +328,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
     {
     }
 }
-// Source Hash Code: 11799398668784615978
+// Source Hash Code: 6588533440026159239

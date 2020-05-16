@@ -10,26 +10,20 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 
 // ReSharper disable All
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.EnumValue
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType
 {
     [NoReorder]
-    public abstract class SdlExtensionTests
+    public abstract class SdlTestsScaffold
     {
-// SpecId: item_can_be_defined_by_sdl_extension
+// SpecId: item_can_be_defined_by_sdl
 // isTestImplemented: False
-// subject.Path: Schema_.Enums.EnumType.Values.EnumValue
-        [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
+// subject.Path: Schema_.Objects.ObjectType
+        [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
-        public void item_can_be_defined_by_sdl_extension_()
+        public void item_can_be_defined_by_sdl_()
         {
             // var schema = Schema.Create(_ => { });
         }
     }
-
-// Move SdlExtensionTests into a separate file to start writing tests
-    [NoReorder]
-    public class SdlExtensionTestsScaffold
-    {
-    }
 }
-// Source Hash Code: 4792350880446060738
+// Source Hash Code: 12313797819348067602

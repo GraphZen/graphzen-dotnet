@@ -13,10 +13,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType.Fields.InputField.
     DirectiveAnnotations
 {
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\InputObjects\InputObjectType\Fields\InputField\DirectiveAnnotations\DirectiveAnnotationTests.cs
-// testFileExists: False
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\InputObjects\InputObjectType\Fields\InputField\DirectiveAnnotations
-
     [NoReorder]
     public abstract class DirectiveAnnotationTests
     {
@@ -180,4 +176,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     {
     }
 }
-// Source Hash Code: 6448147744161021618
+// Source Hash Code: 4303596443201965968

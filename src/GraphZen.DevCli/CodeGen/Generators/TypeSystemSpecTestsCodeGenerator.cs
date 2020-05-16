@@ -15,7 +15,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen.Generators
 {
-    public class TypeSystemSpecTestsCodeGenerator
+    public static class TypeSystemSpecTestsCodeGenerator
     {
         public static string GetClassName(Subject subject, Spec parentSpec) =>
             parentSpec.Id.TrimEnd("Spec").TrimEnd("Specs") + "Tests";

@@ -12,10 +12,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
 {
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars\ClrTypedCollectionTests.cs
-// testFileExists: True
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars
-
     [NoReorder]
     public abstract class ClrTypedCollectionTestsScaffold
     {
@@ -145,4 +141,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         }
     }
 }
-// Source Hash Code: 7011652247525264995
+// Source Hash Code: 9811769706889672579

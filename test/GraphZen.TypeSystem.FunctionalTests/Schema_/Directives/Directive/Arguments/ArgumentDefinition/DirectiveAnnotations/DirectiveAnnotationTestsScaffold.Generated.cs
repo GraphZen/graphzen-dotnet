@@ -13,10 +13,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Arguments.ArgumentDefinition.
     DirectiveAnnotations
 {
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Directives\Directive\Arguments\ArgumentDefinition\DirectiveAnnotations\DirectiveAnnotationTests.cs
-// testFileExists: False
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Directives\Directive\Arguments\ArgumentDefinition\DirectiveAnnotations
-
     [NoReorder]
     public abstract class DirectiveAnnotationTests
     {
@@ -180,4 +176,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
     {
     }
 }
-// Source Hash Code: 18141606782518262183
+// Source Hash Code: 13018702577016713399

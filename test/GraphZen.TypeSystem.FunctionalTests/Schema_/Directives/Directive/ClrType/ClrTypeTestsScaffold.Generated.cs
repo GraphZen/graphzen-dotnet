@@ -12,10 +12,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrType
 {
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Directives\Directive\ClrType\ClrTypeTests.cs
-// testFileExists: True
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Directives\Directive\ClrType
-
     [NoReorder]
     public abstract class ClrTypeTestsScaffold
     {
@@ -284,4 +280,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
     }
 }
-// Source Hash Code: 17555079215599040554
+// Source Hash Code: 8474709943158478660

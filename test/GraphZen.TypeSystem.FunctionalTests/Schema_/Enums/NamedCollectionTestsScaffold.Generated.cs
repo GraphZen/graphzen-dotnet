@@ -12,10 +12,6 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
 {
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\NamedCollectionTests.cs
-// testFileExists: False
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums
-
     [NoReorder]
     public abstract class NamedCollectionTests
     {
@@ -91,4 +87,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
     {
     }
 }
-// Source Hash Code: 14137566119132490280
+// Source Hash Code: 14657594986659227671
