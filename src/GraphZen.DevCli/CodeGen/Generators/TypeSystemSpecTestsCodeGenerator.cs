@@ -51,7 +51,9 @@ namespace GraphZen.CodeGen.Generators
                         _.AppendLine("[NoReorder]");
                         _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
                         {
-                            foreach (var (specId, spec) in rootSpec.Children.ToImmutableDictionary(c => c.Id))
+
+                            // TODO: ordering is off here
+                            foreach (var (specId, spec) in rootSpec.Children.Select(c => (c.Id, c)))
                             {
                                 if (subject.Specs.TryGetValue(specId, out var _))
                                 {
