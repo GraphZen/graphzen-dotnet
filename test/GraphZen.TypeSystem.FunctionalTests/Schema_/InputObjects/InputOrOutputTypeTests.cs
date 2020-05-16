@@ -31,7 +31,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
             public const string InvalidName = "abc @#$%^";
         }
 
-        
+
         [Spec(nameof(named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "needs design")]
         public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()

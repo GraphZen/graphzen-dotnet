@@ -22,6 +22,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
             schema.GetInterface("Foo").GetField("foo").HasArgument("foo").Should().BeTrue();
         }
 
-     
+
     }
 }
