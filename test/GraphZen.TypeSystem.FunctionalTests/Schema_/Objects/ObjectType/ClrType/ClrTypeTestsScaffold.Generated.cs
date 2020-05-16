@@ -15,6 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
     [NoReorder]
     public abstract class ClrTypeTestsScaffold
     {
+// SpecId: clr_type_can_be_added
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
+
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_added_()
@@ -22,6 +25,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: clr_type_can_be_added_with_custom_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
 
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_with_custom_name))]
         [Fact(Skip = "TODO")]
@@ -31,6 +37,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
+// SpecId: clr_type_can_be_added_via_type_param
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
+
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_added_via_type_param_()
@@ -38,6 +47,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: clr_type_can_be_added_via_type_param_with_custom_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
 
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param_with_custom_name))]
         [Fact(Skip = "TODO")]
@@ -47,6 +59,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
+// SpecId: clr_type_can_be_changed_with_custom_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
+
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_changed_with_custom_name_()
@@ -54,6 +69,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: clr_type_can_be_changed_via_type_param
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
 
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param))]
         [Fact(Skip = "TODO")]
@@ -63,6 +81,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
+// SpecId: clr_type_can_be_changed_via_type_param_with_custom_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
+
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_changed_via_type_param_with_custom_name_()
@@ -70,6 +91,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: clr_type_name_should_be_unique
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
 
         [Spec(nameof(ClrTypeSpecs.clr_type_name_should_be_unique))]
         [Fact(Skip = "TODO")]
@@ -79,6 +103,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
+// SpecId: clr_type_name_annotation_should_be_unique
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
+
         [Spec(nameof(ClrTypeSpecs.clr_type_name_annotation_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_unique_()
@@ -86,6 +113,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: clr_type_name_annotation_should_be_valid
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
 
         [Spec(nameof(ClrTypeSpecs.clr_type_name_annotation_should_be_valid))]
         [Fact(Skip = "TODO")]
@@ -95,6 +125,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
+// SpecId: custom_name_should_be_unique
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
+
         [Spec(nameof(ClrTypeSpecs.custom_name_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void custom_name_should_be_unique_()
@@ -102,6 +135,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: custom_name_should_be_valid
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
 
         [Spec(nameof(ClrTypeSpecs.custom_name_should_be_valid))]
         [Fact(Skip = "TODO")]
@@ -111,6 +147,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
+// SpecId: custom_name_cannot_be_null
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
+
         [Spec(nameof(ClrTypeSpecs.custom_name_cannot_be_null))]
         [Fact(Skip = "TODO")]
         public void custom_name_cannot_be_null_()
@@ -118,6 +157,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: changing_clr_type_changes_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
 
         [Spec(nameof(ClrTypeSpecs.changing_clr_type_changes_name))]
         [Fact(Skip = "TODO")]
@@ -127,6 +169,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
+// SpecId: changing_clr_type_with_name_annotation_changes_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
+
         [Spec(nameof(ClrTypeSpecs.changing_clr_type_with_name_annotation_changes_name))]
         [Fact(Skip = "TODO")]
         public void changing_clr_type_with_name_annotation_changes_name_()
@@ -134,6 +179,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: clr_type_with_conflicting_name_can_be_added_using_custom_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
 
         [Spec(nameof(ClrTypeSpecs.clr_type_with_conflicting_name_can_be_added_using_custom_name))]
         [Fact(Skip = "TODO")]
@@ -143,6 +191,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
+// SpecId: clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
+
         [Spec(nameof(ClrTypeSpecs.clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
@@ -150,6 +201,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
 
         [Spec(nameof(ClrTypeSpecs
             .clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name))]
@@ -160,6 +214,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
+// SpecId: custom_named_clr_typed_item_when_type_removed_should_retain_custom_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType
+
         [Spec(nameof(ClrTypeSpecs.custom_named_clr_typed_item_when_type_removed_should_retain_custom_name))]
         [Fact(Skip = "TODO")]
         public void custom_named_clr_typed_item_when_type_removed_should_retain_custom_name_()
@@ -168,4 +225,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
     }
 }
-// Source Hash Code: 5519042366641583487
+// Source Hash Code: 8563990069284199222

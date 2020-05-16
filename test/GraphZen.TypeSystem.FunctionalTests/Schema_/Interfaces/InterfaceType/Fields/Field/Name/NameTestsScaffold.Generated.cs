@@ -15,6 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     [NoReorder]
     public abstract class NameTestsScaffold
     {
+// SpecId: can_be_renamed
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InterfaceType\Fields\Field\Name
+
         [Spec(nameof(NameSpecs.can_be_renamed))]
         [Fact(Skip = "TODO")]
         public void can_be_renamed_()
@@ -23,4 +26,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
     }
 }
-// Source Hash Code: 10977626345665818572
+// Source Hash Code: 11419145914967321123

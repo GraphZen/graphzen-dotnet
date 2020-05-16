@@ -15,6 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Name
     [NoReorder]
     public abstract class NameTestsScaffold
     {
+// SpecId: can_be_renamed
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Unions\UnionType\Name
+
         [Spec(nameof(NameSpecs.can_be_renamed))]
         [Fact(Skip = "TODO")]
         public void can_be_renamed_()
@@ -23,4 +26,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Name
         }
     }
 }
-// Source Hash Code: 17373967476932201009
+// Source Hash Code: 10869400327109263101

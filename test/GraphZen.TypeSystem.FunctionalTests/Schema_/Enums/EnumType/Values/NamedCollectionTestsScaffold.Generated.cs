@@ -15,6 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
     [NoReorder]
     public abstract class NamedCollectionTests
     {
+// SpecId: named_item_can_be_added
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\Values
+
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_()
@@ -22,6 +25,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: named_item_cannot_be_added_with_null_value
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\Values
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
         [Fact(Skip = "TODO")]
@@ -31,6 +37,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
         }
 
 
+// SpecId: named_item_cannot_be_added_with_invalid_name
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\Values
+
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_added_with_invalid_name_()
@@ -38,6 +47,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: named_item_can_be_renamed
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\Values
 
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
         [Fact(Skip = "TODO")]
@@ -47,6 +59,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
         }
 
 
+// SpecId: named_item_can_be_removed
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\Values
+
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_removed_()
@@ -54,6 +69,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
             // var schema = Schema.Create(_ => { });
         }
 
+
+// SpecId: named_item_cannot_be_removed_with_null_value
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\Values
 
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
         [Fact(Skip = "TODO")]
@@ -69,4 +87,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
     {
     }
 }
-// Source Hash Code: 5615520991783834252
+// Source Hash Code: 9724255855793611674

@@ -15,6 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Descripti
     [NoReorder]
     public abstract class SdlTests
     {
+// SpecId: item_can_be_defined_by_sdl
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Unions\UnionType\Description
+
         [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_()
@@ -29,4 +32,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Descripti
     {
     }
 }
-// Source Hash Code: 8746389275314724619
+// Source Hash Code: 11834943999290418281

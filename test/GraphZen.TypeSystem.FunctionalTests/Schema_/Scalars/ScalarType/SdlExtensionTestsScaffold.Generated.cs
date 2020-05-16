@@ -15,6 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType
     [NoReorder]
     public abstract class SdlExtensionTestsScaffold
     {
+// SpecId: item_can_be_defined_by_sdl_extension
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars\ScalarType
+
         [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_extension_()
@@ -23,4 +26,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType
         }
     }
 }
-// Source Hash Code: 4644207610577722931
+// Source Hash Code: 9902662978952174311

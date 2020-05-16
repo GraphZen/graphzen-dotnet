@@ -15,6 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     [NoReorder]
     public abstract class SdlTests
     {
+// SpecId: item_can_be_defined_by_sdl
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\InputObjects\InputObjectType\Fields\InputField
+
         [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_()
@@ -29,4 +32,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     {
     }
 }
-// Source Hash Code: 9351740155211667442
+// Source Hash Code: 15656450988310312649

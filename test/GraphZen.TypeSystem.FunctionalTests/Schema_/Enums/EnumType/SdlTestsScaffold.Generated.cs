@@ -15,6 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
     [NoReorder]
     public abstract class SdlTests
     {
+// SpecId: item_can_be_defined_by_sdl
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType
+
         [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_()
@@ -29,4 +32,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
     {
     }
 }
-// Source Hash Code: 12124024968493752417
+// Source Hash Code: 13155645793370306699

@@ -15,6 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
     [NoReorder]
     public abstract class SdlTestsScaffold
     {
+// SpecId: item_can_be_defined_by_sdl
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Directives\Directive\Arguments\ArgumentDefinition
+
         [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_()
@@ -23,4 +26,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
         }
     }
 }
-// Source Hash Code: 16920182235431749429
+// Source Hash Code: 7262681430740771517

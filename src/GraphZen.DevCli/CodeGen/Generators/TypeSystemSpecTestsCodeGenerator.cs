@@ -45,7 +45,14 @@ namespace GraphZen.CodeGen.Generators
                     csharp.AppendLine("// ReSharper disable All");
                     csharp.Namespace(ns, _ =>
                     {
-                        var testFileExists = File.Exists(Path.Combine(fileDir, $"{className}.cs"));
+                        var testFile = Path.Combine(fileDir, $"{className}.cs");
+                        var testFileExists = File.Exists(testFile);
+
+                        _.AppendLine(@$"
+// testFile: {testFile}
+// testFileExists: {testFileExists}
+// fileDir: {fileDir}
+");
 
                         _.AppendLine("[NoReorder]");
                         _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
@@ -67,8 +74,6 @@ namespace GraphZen.CodeGen.Generators
                                         cls.AppendLine($@"
 
 // SpecId: {specId}
-// fileDir: {fileDir}
-
 [Spec({specRef})]
 [Fact(Skip=""TODO"")]
 public void {spec.Id}_() {{

@@ -15,6 +15,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType
     [NoReorder]
     public abstract class SdlExtensionTests
     {
+// SpecId: item_can_be_defined_by_sdl_extension
+// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InterfaceType
+
         [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_extension_()
@@ -29,4 +32,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType
     {
     }
 }
-// Source Hash Code: 12558398803277081547
+// Source Hash Code: 7814312199345008941
