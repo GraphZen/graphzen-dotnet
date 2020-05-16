@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     [NoReorder]
     public class SdlExtensionTests
     {
-        
+
 
 
         [Spec(nameof(item_can_be_defined_by_sdl_extension))]

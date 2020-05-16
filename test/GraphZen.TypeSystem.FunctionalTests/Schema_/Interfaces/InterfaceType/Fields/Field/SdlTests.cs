@@ -23,5 +23,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-       }
+    }
 }
