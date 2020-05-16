@@ -1,6 +1,5 @@
 #nullable enable
 
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -11,23 +10,32 @@ using JetBrains.Annotations;
 // ReSharper disable InconsistentNaming
 // ReSharper disable once PossibleInterfaceMemberAmbiguity
 
-namespace GraphZen.LanguageModel {
-public  partial class VariableSyntax {
-#region SyntaxNodeGenerator
+namespace GraphZen.LanguageModel
+{
+    public partial class VariableSyntax
+    {
+        #region SyntaxNodeGenerator
 
-	    /// <summary>Empty, read-only list of <see cref="VariableSyntax"/> nodes.</summary>
-		public static IReadOnlyList<VariableSyntax> EmptyList {get;} = ImmutableList<VariableSyntax>.Empty; 
-		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor"/> enters a <see cref="VariableSyntax"/> node.</summary>
-		public override void VisitEnter( GraphQLSyntaxVisitor visitor) => visitor.EnterVariable(this);
-		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor"/> leaves a <see cref="VariableSyntax"/> node.</summary>
-		public override void VisitLeave( GraphQLSyntaxVisitor visitor) => visitor.LeaveVariable(this);
-		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor{TResult}"/> enters a <see cref="VariableSyntax"/> node.</summary>
-		public override TResult VisitEnter<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.EnterVariable(this);
-		/// <summary>Called when a <see cref="GraphQLSyntaxVisitor{TResult}"/> leaves a <see cref="VariableSyntax"/> node.</summary>
-		public override TResult VisitLeave<TResult>( GraphQLSyntaxVisitor<TResult> visitor) => visitor.LeaveVariable(this);
-		public override SyntaxKind Kind {get;} = SyntaxKind.Variable;	
+        /// <summary>Empty, read-only list of <see cref="VariableSyntax" /> nodes.</summary>
+        public static IReadOnlyList<VariableSyntax> EmptyList { get; } = ImmutableList<VariableSyntax>.Empty;
 
-#endregion
-}
+        /// <summary>Called when a <see cref="GraphQLSyntaxVisitor" /> enters a <see cref="VariableSyntax" /> node.</summary>
+        public override void VisitEnter(GraphQLSyntaxVisitor visitor) => visitor.EnterVariable(this);
+
+        /// <summary>Called when a <see cref="GraphQLSyntaxVisitor" /> leaves a <see cref="VariableSyntax" /> node.</summary>
+        public override void VisitLeave(GraphQLSyntaxVisitor visitor) => visitor.LeaveVariable(this);
+
+        /// <summary>Called when a <see cref="GraphQLSyntaxVisitor{TResult}" /> enters a <see cref="VariableSyntax" /> node.</summary>
+        public override TResult VisitEnter<TResult>(GraphQLSyntaxVisitor<TResult> visitor) =>
+            visitor.EnterVariable(this);
+
+        /// <summary>Called when a <see cref="GraphQLSyntaxVisitor{TResult}" /> leaves a <see cref="VariableSyntax" /> node.</summary>
+        public override TResult VisitLeave<TResult>(GraphQLSyntaxVisitor<TResult> visitor) =>
+            visitor.LeaveVariable(this);
+
+        public override SyntaxKind Kind { get; } = SyntaxKind.Variable;
+
+        #endregion
+    }
 }
 // Source Hash Code: 8567554037649901791

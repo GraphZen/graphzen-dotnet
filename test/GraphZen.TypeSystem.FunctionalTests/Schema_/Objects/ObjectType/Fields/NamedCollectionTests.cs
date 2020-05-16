@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
@@ -13,26 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedColl
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields
 {
     [NoReorder]
-    public class FieldsTests
+    public class NamedCollectionTests
     {
-        [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
-        [Fact]
-        public void named_item_can_be_added_via_sdl_()
-        {
-            var schema = Schema.Create(_ => _.FromSchema(@"type Foo { bar: String }"));
-            schema.GetObject("Foo").HasField("bar").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(TypeSystemSpecs.SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
-        [Fact(Skip = "needs impl")]
-        public void named_item_can_be_added_via_sdl_extension_()
-        {
-            var schema = Schema.Create(_ => _.FromSchema(@"extend type Foo { bar: String }"));
-            schema.GetObject("Foo").HasField("bar").Should().BeTrue();
-        }
-
-
         [Spec(nameof(named_item_can_be_added))]
         [Fact]
         public void named_item_can_be_added_()

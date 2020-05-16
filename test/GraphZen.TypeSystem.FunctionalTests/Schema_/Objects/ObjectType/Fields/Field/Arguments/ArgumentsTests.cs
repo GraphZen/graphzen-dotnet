@@ -15,7 +15,7 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedColl
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.Field.Arguments
 {
     [NoReorder]
-    public class ArgumentsTests
+    public class NamedCollectionTests
     {
         [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
         [Fact]

@@ -1,8 +1,6 @@
 #nullable enable
 
 using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -11,30 +9,30 @@ using JetBrains.Annotations;
 // ReSharper disable InconsistentNaming
 // ReSharper disable once PossibleInterfaceMemberAmbiguity
 
-namespace GraphZen.TypeSystem {
-public  partial class InputObjectTypeDefinition {
-#region DictionaryAccessorGenerator
-
-
-
-        [GraphQLIgnore]
-        public InputFieldDefinition? FindField(String name) 
-            => Fields.TryGetValue(Check.NotNull(name,nameof(name)), out var field) ? field : null;
+namespace GraphZen.TypeSystem
+{
+    public partial class InputObjectTypeDefinition
+    {
+        #region DictionaryAccessorGenerator
 
         [GraphQLIgnore]
-        public bool HasField(String name) 
+        public InputFieldDefinition? FindField(string name)
+            => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out var field) ? field : null;
+
+        [GraphQLIgnore]
+        public bool HasField(string name)
             => Fields.ContainsKey(Check.NotNull(name, nameof(name)));
-        
-        [GraphQLIgnore]
-        public InputFieldDefinition GetField(String name) 
-            => FindField(Check.NotNull(name, nameof(name))) ?? throw new Exception($"{this} does not contain a {nameof(InputFieldDefinition)} with name '{name}'.");
 
         [GraphQLIgnore]
-        public bool TryGetField(String name, [NotNullWhen(true)] out InputFieldDefinition? inputFieldDefinition)
-             => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out inputFieldDefinition);
+        public InputFieldDefinition GetField(string name)
+            => FindField(Check.NotNull(name, nameof(name))) ??
+               throw new Exception($"{this} does not contain a {nameof(InputFieldDefinition)} with name '{name}'.");
 
+        [GraphQLIgnore]
+        public bool TryGetField(string name, [NotNullWhen(true)] out InputFieldDefinition? inputFieldDefinition)
+            => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out inputFieldDefinition);
 
-#endregion
-}
+        #endregion
+    }
 }
 // Source Hash Code: 4791407932118527682
