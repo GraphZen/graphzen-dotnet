@@ -41,6 +41,7 @@ namespace GraphZen.CodeGen.Generators
 
                     csharp.AppendLine("using Xunit;");
                     csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;");
+                    //csharp.AppendLine($"// using static {rootSpec.}");
                     // csharp.AppendLine("// ReSharper disable PartialTypeWithSinglePart");
                     csharp.AppendLine("// ReSharper disable All");
                     csharp.Namespace(ns, _ =>
@@ -48,12 +49,12 @@ namespace GraphZen.CodeGen.Generators
                         var testFile = Path.Combine(fileDir, $"{className}.cs");
                         var testFileExists = File.Exists(testFile);
 
-                        /*
                         _.AppendLine(@$"
+// rootSpec: {string.Join("|", path)}
 // testFile: {testFile}
 // testFileExists: {testFileExists}
 // fileDir: {fileDir}
-");*/
+");
 
                         _.AppendLine("[NoReorder]");
                         _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
