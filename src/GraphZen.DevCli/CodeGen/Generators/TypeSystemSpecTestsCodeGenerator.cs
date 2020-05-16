@@ -75,13 +75,13 @@ namespace GraphZen.CodeGen.Generators
                                             ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
                                             : $"\"{spec.Id}\"";
 
-/*                                        cls.AppendLine(@"
-// SpecId: {specId}
-// isTestImplemented: {isTestImplemented}
-// subject.Path: {subject.Path}
+                                        /*                                        cls.AppendLine(@"
+                                        // SpecId: {specId}
+                                        // isTestImplemented: {isTestImplemented}
+                                        // subject.Path: {subject.Path}
 
 
-");*/
+                                        ");*/
                                         cls.AppendLine($@"
 
 [Spec({specRef})]
