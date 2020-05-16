@@ -65,6 +65,10 @@ namespace GraphZen.CodeGen.Generators
                                             ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
                                             : $"\"{spec.Id}\"";
                                         cls.AppendLine($@"
+
+// SpecId: {specId}
+// fileDir: {fileDir}
+
 [Spec({specRef})]
 [Fact(Skip=""TODO"")]
 public void {spec.Id}_() {{
