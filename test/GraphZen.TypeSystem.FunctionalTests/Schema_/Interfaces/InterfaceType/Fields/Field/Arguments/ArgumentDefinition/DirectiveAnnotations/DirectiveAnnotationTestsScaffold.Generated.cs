@@ -129,10 +129,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
     }
 
-    // Move DirectiveAnnotationTests into a separate file to start writing tests
+// Move DirectiveAnnotationTests into a separate file to start writing tests
     [NoReorder]
     public class DirectiveAnnotationTestsScaffold
     {
     }
 }
-// Source Hash Code: 7908685792888362733
+// Source Hash Code: 14494446515633036673

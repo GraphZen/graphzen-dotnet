@@ -24,10 +24,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
         }
     }
 
-    // Move SdlExtensionTests into a separate file to start writing tests
+// Move SdlExtensionTests into a separate file to start writing tests
     [NoReorder]
     public class SdlExtensionTestsScaffold
     {
     }
 }
-// Source Hash Code: 13349405417979613020
+// Source Hash Code: 8345760694867521928

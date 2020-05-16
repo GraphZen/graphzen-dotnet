@@ -128,10 +128,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.DirectiveAn
         }
     }
 
-    // Move DirectiveAnnotationTests into a separate file to start writing tests
+// Move DirectiveAnnotationTests into a separate file to start writing tests
     [NoReorder]
     public class DirectiveAnnotationTestsScaffold
     {
     }
 }
-// Source Hash Code: 18353882393850327576
+// Source Hash Code: 120695030797285292

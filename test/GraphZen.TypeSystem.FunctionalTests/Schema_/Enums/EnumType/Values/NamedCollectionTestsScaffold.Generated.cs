@@ -64,10 +64,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
         }
     }
 
-    // Move NamedCollectionTests into a separate file to start writing tests
+// Move NamedCollectionTests into a separate file to start writing tests
     [NoReorder]
     public class NamedCollectionTestsScaffold
     {
     }
 }
-// Source Hash Code: 15032799429346210773
+// Source Hash Code: 11050103773088035049

@@ -129,10 +129,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
         }
     }
 
-    // Move DirectiveAnnotationTests into a separate file to start writing tests
+// Move DirectiveAnnotationTests into a separate file to start writing tests
     [NoReorder]
     public class DirectiveAnnotationTestsScaffold
     {
     }
 }
-// Source Hash Code: 9074877724868827321
+// Source Hash Code: 1760715622976827341

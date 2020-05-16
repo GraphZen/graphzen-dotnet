@@ -235,10 +235,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         }
     }
 
-    // Move ClrTypedCollectionTests into a separate file to start writing tests
+// Move ClrTypedCollectionTests into a separate file to start writing tests
     [NoReorder]
     public class ClrTypedCollectionTestsScaffold
     {
     }
 }
-// Source Hash Code: 14324477125530381026
+// Source Hash Code: 16307045055367958542

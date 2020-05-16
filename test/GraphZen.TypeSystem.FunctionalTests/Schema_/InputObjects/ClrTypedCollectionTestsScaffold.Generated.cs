@@ -235,10 +235,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
     }
 
-    // Move ClrTypedCollectionTests into a separate file to start writing tests
+// Move ClrTypedCollectionTests into a separate file to start writing tests
     [NoReorder]
     public class ClrTypedCollectionTestsScaffold
     {
     }
 }
-// Source Hash Code: 3385536362800532574
+// Source Hash Code: 15493918454781500914

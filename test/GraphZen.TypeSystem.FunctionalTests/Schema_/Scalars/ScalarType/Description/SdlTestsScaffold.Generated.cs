@@ -24,10 +24,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Descrip
         }
     }
 
-    // Move SdlTests into a separate file to start writing tests
+// Move SdlTests into a separate file to start writing tests
     [NoReorder]
     public class SdlTestsScaffold
     {
     }
 }
-// Source Hash Code: 16021864080002233224
+// Source Hash Code: 10463689764190070708

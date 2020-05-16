@@ -64,10 +64,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
     }
 
-    // Move NamedCollectionTests into a separate file to start writing tests
+// Move NamedCollectionTests into a separate file to start writing tests
     [NoReorder]
     public class NamedCollectionTestsScaffold
     {
     }
 }
-// Source Hash Code: 5137287670625151782
+// Source Hash Code: 6162128505511505746

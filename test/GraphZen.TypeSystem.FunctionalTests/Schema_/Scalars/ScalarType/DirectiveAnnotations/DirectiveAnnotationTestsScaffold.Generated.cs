@@ -128,10 +128,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         }
     }
 
-    // Move DirectiveAnnotationTests into a separate file to start writing tests
+// Move DirectiveAnnotationTests into a separate file to start writing tests
     [NoReorder]
     public class DirectiveAnnotationTestsScaffold
     {
     }
 }
-// Source Hash Code: 4725964844153678274
+// Source Hash Code: 13514912984196674646

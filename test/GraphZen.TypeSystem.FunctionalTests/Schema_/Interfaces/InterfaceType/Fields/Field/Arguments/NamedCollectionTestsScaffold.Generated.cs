@@ -64,10 +64,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
     }
 
-    // Move NamedCollectionTests into a separate file to start writing tests
+// Move NamedCollectionTests into a separate file to start writing tests
     [NoReorder]
     public class NamedCollectionTestsScaffold
     {
     }
 }
-// Source Hash Code: 14515342313818884360
+// Source Hash Code: 6133616178736271004

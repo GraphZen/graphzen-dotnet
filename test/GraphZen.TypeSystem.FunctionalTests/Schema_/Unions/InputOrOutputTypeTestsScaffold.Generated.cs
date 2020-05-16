@@ -88,10 +88,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         }
     }
 
-    // Move InputOrOutputTypeTests into a separate file to start writing tests
+// Move InputOrOutputTypeTests into a separate file to start writing tests
     [NoReorder]
     public class InputOrOutputTypeTestsScaffold
     {
     }
 }
-// Source Hash Code: 9557651155222605158
+// Source Hash Code: 7649165400880695954

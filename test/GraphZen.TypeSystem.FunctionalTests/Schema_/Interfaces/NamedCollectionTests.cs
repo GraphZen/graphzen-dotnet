@@ -14,23 +14,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
     [NoReorder]
     public class NamedCollectionTests
     {
-        // ReSharper disable once InconsistentNaming
-        private interface PlainInterface
-        {
-        }
-
-        [GraphQLName(AnnotatedName)]
-        // ReSharper disable once InconsistentNaming
-        private interface PlainInterfaceAnnotatedName
-        {
-            public const string AnnotatedName = nameof(AnnotatedName);
-        }
-
-        [GraphQLName("abc &*(")]
-        // ReSharper disable once InconsistentNaming
-        private interface PlainInterfaceInvalidNameAnnotation
-        {
-        }
 
         [Spec(nameof(named_item_can_be_added))]
         [Fact]

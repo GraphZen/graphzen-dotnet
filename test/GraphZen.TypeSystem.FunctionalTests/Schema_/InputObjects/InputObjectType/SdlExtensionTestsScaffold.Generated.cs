@@ -24,10 +24,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
     }
 
-    // Move SdlExtensionTests into a separate file to start writing tests
+// Move SdlExtensionTests into a separate file to start writing tests
     [NoReorder]
     public class SdlExtensionTestsScaffold
     {
     }
 }
-// Source Hash Code: 16452223442019877572
+// Source Hash Code: 4126261952009700208
