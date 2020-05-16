@@ -50,6 +50,8 @@ namespace GraphZen.CodeGen.Generators
                         var testFileExists = File.Exists(testFile);
 
                         _.AppendLine(@$"
+
+// rootSpec Field Info: {rootSpec.FieldInfo}
 // rootSpec: {string.Join("|", path)}
 // testFile: {testFile}
 // testFileExists: {testFileExists}
