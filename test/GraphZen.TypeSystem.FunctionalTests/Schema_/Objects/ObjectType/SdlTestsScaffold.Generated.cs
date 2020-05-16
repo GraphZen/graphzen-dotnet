@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType
     {
 // SpecId: item_can_be_defined_by_sdl
 // isTestImplemented: False
+// subject.Path: Schema_.Objects.ObjectType
         [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_()
@@ -35,4 +36,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType
     {
     }
 }
-// Source Hash Code: 9061165897952309462
+// Source Hash Code: 13161723274570815561

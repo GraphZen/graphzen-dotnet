@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
     {
 // SpecId: can_be_renamed
 // isTestImplemented: False
+// subject.Path: Schema_.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.Name
         [Spec(nameof(NameSpecs.can_be_renamed))]
         [Fact(Skip = "TODO")]
         public void can_be_renamed_()
@@ -29,4 +30,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
         }
     }
 }
-// Source Hash Code: 16873733040390794731
+// Source Hash Code: 3670254081371659390

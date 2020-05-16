@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     {
 // SpecId: named_item_can_be_added
 // isTestImplemented: False
+// subject.Path: Schema_.InputObjects
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_()
@@ -31,6 +32,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 
 // SpecId: named_item_cannot_be_added_with_null_value
 // isTestImplemented: False
+// subject.Path: Schema_.InputObjects
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_null_value))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_added_with_null_value_()
@@ -41,6 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 
 // SpecId: named_item_cannot_be_added_with_invalid_name
 // isTestImplemented: False
+// subject.Path: Schema_.InputObjects
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_added_with_invalid_name_()
@@ -51,6 +54,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 
 // SpecId: named_item_can_be_renamed
 // isTestImplemented: False
+// subject.Path: Schema_.InputObjects
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_renamed_()
@@ -61,6 +65,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 
 // SpecId: named_item_can_be_removed
 // isTestImplemented: False
+// subject.Path: Schema_.InputObjects
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_removed_()
@@ -71,6 +76,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 
 // SpecId: named_item_cannot_be_removed_with_null_value
 // isTestImplemented: False
+// subject.Path: Schema_.InputObjects
         [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_removed_with_null_value_()
@@ -85,4 +91,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     {
     }
 }
-// Source Hash Code: 9318936743492200646
+// Source Hash Code: 14786023398000548564

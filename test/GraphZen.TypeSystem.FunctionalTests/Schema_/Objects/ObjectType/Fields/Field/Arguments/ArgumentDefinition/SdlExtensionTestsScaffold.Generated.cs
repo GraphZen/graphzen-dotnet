@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
     {
 // SpecId: item_can_be_defined_by_sdl_extension
 // isTestImplemented: False
+// subject.Path: Schema_.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition
         [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_extension_()
@@ -35,4 +36,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
     {
     }
 }
-// Source Hash Code: 2571283554417050936
+// Source Hash Code: 15309681489230633246

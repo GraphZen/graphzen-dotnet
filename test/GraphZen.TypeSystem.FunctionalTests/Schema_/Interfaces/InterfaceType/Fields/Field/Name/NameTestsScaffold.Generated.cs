@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     {
 // SpecId: can_be_renamed
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.Fields.Field.Name
         [Spec(nameof(NameSpecs.can_be_renamed))]
         [Fact(Skip = "TODO")]
         public void can_be_renamed_()
@@ -29,4 +30,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
     }
 }
-// Source Hash Code: 1894631346692910847
+// Source Hash Code: 9729614673790515862

@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     {
 // SpecId: item_can_be_defined_by_sdl_extension
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition
         [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_extension_()
@@ -35,4 +36,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     {
     }
 }
-// Source Hash Code: 3389586196315109292
+// Source Hash Code: 2461673710209145558

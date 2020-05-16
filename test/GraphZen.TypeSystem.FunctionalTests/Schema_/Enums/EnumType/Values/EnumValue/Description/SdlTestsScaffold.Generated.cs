@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
     {
 // SpecId: item_can_be_defined_by_sdl
 // isTestImplemented: False
+// subject.Path: Schema_.Enums.EnumType.Values.EnumValue.Description
         [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_()
@@ -35,4 +36,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
     {
     }
 }
-// Source Hash Code: 11465177935310217776
+// Source Hash Code: 11848921313529539031

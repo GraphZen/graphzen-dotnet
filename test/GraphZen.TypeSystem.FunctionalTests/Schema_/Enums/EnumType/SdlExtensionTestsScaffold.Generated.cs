@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
     {
 // SpecId: item_can_be_defined_by_sdl_extension
 // isTestImplemented: False
+// subject.Path: Schema_.Enums.EnumType
         [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_extension_()
@@ -35,4 +36,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
     {
     }
 }
-// Source Hash Code: 17885536128977520813
+// Source Hash Code: 9731024372930801290

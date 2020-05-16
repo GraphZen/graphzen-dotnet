@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     {
 // SpecId: item_can_be_defined_by_sdl_extension
 // isTestImplemented: False
+// subject.Path: Schema_.InputObjects.InputObjectType.Fields.InputField
         [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_extension_()
@@ -35,4 +36,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     {
     }
 }
-// Source Hash Code: 812296106425437336
+// Source Hash Code: 8519618448617431598

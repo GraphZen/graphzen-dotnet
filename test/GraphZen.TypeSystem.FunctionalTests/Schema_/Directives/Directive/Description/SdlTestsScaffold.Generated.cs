@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Descr
     {
 // SpecId: item_can_be_defined_by_sdl
 // isTestImplemented: False
+// subject.Path: Schema_.Directives.Directive.Description
         [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_()
@@ -29,4 +30,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Descr
         }
     }
 }
-// Source Hash Code: 6345709350921982367
+// Source Hash Code: 16711877994001642722

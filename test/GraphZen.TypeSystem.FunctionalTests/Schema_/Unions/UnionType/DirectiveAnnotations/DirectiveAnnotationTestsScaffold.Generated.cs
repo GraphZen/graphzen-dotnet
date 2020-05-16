@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
     {
 // SpecId: directive_annotation_can_be_added
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_can_be_added))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_can_be_added_()
@@ -31,6 +32,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotation_cannot_be_added_unless_directive_is_defined
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_added_unless_directive_is_defined))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_unless_directive_is_defined_()
@@ -41,6 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotation_cannot_be_upserted_unless_directive_is_defined
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_upserted_unless_directive_is_defined))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_unless_directive_is_defined_()
@@ -51,6 +54,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotation_cannot_be_added_unless_location_is_valid
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_added_unless_location_is_valid))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_unless_location_is_valid_()
@@ -61,6 +65,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotation_cannot_be_upserted_unless_location_is_valid
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_upserted_unless_location_is_valid))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_unless_location_is_valid_()
@@ -71,6 +76,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotation_cannot_be_added_with_null_name
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_added_with_null_name))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_with_null_name_()
@@ -81,6 +87,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotation_cannot_be_upserted_with_null_name
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_upserted_with_null_name))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_with_null_name_()
@@ -91,6 +98,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotation_cannot_be_added_with_invalid_name
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_added_with_invalid_name))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_with_invalid_name_()
@@ -101,6 +109,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotation_cannot_be_upserted_with_invalid_name
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotation_cannot_be_upserted_with_invalid_name))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_with_invalid_name_()
@@ -111,6 +120,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotations_can_be_removed
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotations_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void directive_annotations_can_be_removed_()
@@ -121,6 +131,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotations_can_be_removed_by_name
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotations_can_be_removed_by_name))]
         [Fact(Skip = "TODO")]
         public void directive_annotations_can_be_removed_by_name_()
@@ -131,6 +142,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotations_cannot_be_removed_by_name_with_null_name
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotations_cannot_be_removed_by_name_with_null_name))]
         [Fact(Skip = "TODO")]
         public void directive_annotations_cannot_be_removed_by_name_with_null_name_()
@@ -141,6 +153,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotations_are_removed_when_directive_is_removed
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotations_are_removed_when_directive_is_removed))]
         [Fact(Skip = "TODO")]
         public void directive_annotations_are_removed_when_directive_is_removed_()
@@ -151,6 +164,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
 // SpecId: directive_annotations_are_removed_when_directive_is_ignored
 // isTestImplemented: False
+// subject.Path: Schema_.Unions.UnionType.DirectiveAnnotations
         [Spec(nameof(DirectiveAnnotationSpecs.directive_annotations_are_removed_when_directive_is_ignored))]
         [Fact(Skip = "TODO")]
         public void directive_annotations_are_removed_when_directive_is_ignored_()
@@ -165,4 +179,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
     {
     }
 }
-// Source Hash Code: 2806298256442170887
+// Source Hash Code: 5535734802093327063

@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
     {
 // SpecId: clr_type_can_be_added
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_added_()
@@ -31,6 +32,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_can_be_added_with_custom_name
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_added_with_custom_name_()
@@ -41,6 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_can_be_added_via_type_param
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_added_via_type_param_()
@@ -51,6 +54,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_can_be_added_via_type_param_with_custom_name
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_added_via_type_param_with_custom_name_()
@@ -61,6 +65,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_can_be_changed_with_custom_name
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_changed_with_custom_name_()
@@ -71,6 +76,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_can_be_changed_via_type_param
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_changed_via_type_param_()
@@ -81,6 +87,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_can_be_changed_via_type_param_with_custom_name
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_changed_via_type_param_with_custom_name_()
@@ -91,6 +98,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_name_should_be_unique
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_name_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_should_be_unique_()
@@ -101,6 +109,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_name_annotation_should_be_unique
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_name_annotation_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_unique_()
@@ -111,6 +120,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_name_annotation_should_be_valid
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_name_annotation_should_be_valid))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_valid_()
@@ -121,6 +131,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: custom_name_should_be_unique
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.custom_name_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void custom_name_should_be_unique_()
@@ -131,6 +142,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: custom_name_should_be_valid
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.custom_name_should_be_valid))]
         [Fact(Skip = "TODO")]
         public void custom_name_should_be_valid_()
@@ -141,6 +153,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: custom_name_cannot_be_null
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.custom_name_cannot_be_null))]
         [Fact(Skip = "TODO")]
         public void custom_name_cannot_be_null_()
@@ -151,6 +164,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: changing_clr_type_changes_name
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.changing_clr_type_changes_name))]
         [Fact(Skip = "TODO")]
         public void changing_clr_type_changes_name_()
@@ -161,6 +175,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: changing_clr_type_with_name_annotation_changes_name
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.changing_clr_type_with_name_annotation_changes_name))]
         [Fact(Skip = "TODO")]
         public void changing_clr_type_with_name_annotation_changes_name_()
@@ -171,6 +186,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_with_conflicting_name_can_be_added_using_custom_name
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_with_conflicting_name_can_be_added_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
@@ -181,6 +197,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
@@ -191,6 +208,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
 // SpecId: custom_named_clr_typed_item_when_type_removed_should_retain_custom_name
 // isTestImplemented: False
+// subject.Path: Schema_.Interfaces.InterfaceType.ClrType
         [Spec(nameof(ClrTypeSpecs.custom_named_clr_typed_item_when_type_removed_should_retain_custom_name))]
         [Fact(Skip = "TODO")]
         public void custom_named_clr_typed_item_when_type_removed_should_retain_custom_name_()
@@ -199,4 +217,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
         }
     }
 }
-// Source Hash Code: 16646742755742004986
+// Source Hash Code: 18144701715413997360
