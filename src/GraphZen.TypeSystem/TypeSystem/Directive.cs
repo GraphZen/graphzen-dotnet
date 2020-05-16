@@ -76,7 +76,6 @@ namespace GraphZen.TypeSystem
         public IReadOnlyCollection<DirectiveLocation> Locations { get; }
         [GraphQLIgnore] public Type? ClrType { get; }
 
-        [GraphQLCanBeNull]
-        public string? Description { get; }
+        [GraphQLCanBeNull] public string? Description { get; }
     }
 }

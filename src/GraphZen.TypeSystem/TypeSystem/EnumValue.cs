@@ -62,7 +62,6 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"{Name} ({Value.Inspect()})";
-        [GraphQLCanBeNull]
-        public string? Description { get; }
+        [GraphQLCanBeNull] public string? Description { get; }
     }
 }

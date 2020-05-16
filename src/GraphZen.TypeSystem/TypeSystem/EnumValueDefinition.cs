@@ -25,8 +25,10 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateEnumValue(name, declaringType));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotCreateEnumValue(name, declaringType));
             }
+
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Value = Name = Check.NotNull(name, nameof(name));
@@ -50,12 +52,14 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, this.DeclaringType));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, DeclaringType));
             }
 
             if (DeclaringType.TryGetValue(name, out var v) && !v.Equals(this))
             {
-                throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.DuplicateEnumValue(this, name));
+                throw new DuplicateNameException(
+                    TypeSystemExceptionMessages.DuplicateNameException.DuplicateEnumValue(this, name));
             }
 
             if (!configurationSource.Overrides(_nameConfigurationSource))

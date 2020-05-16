@@ -48,11 +48,12 @@ namespace GraphZen.CodeGen.Generators
                         var testFile = Path.Combine(fileDir, $"{className}.cs");
                         var testFileExists = File.Exists(testFile);
 
+                        /*
                         _.AppendLine(@$"
 // testFile: {testFile}
 // testFileExists: {testFileExists}
 // fileDir: {fileDir}
-");
+");*/
 
                         _.AppendLine("[NoReorder]");
                         _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
@@ -63,7 +64,9 @@ namespace GraphZen.CodeGen.Generators
                                 {
                                     var implementingTest = suite.Tests.FirstOrDefault(t =>
                                         t.SubjectPath == subject.Path && t.SpecId == specId);
-                                    var isTestImplemented = testFileExists && implementingTest != null && !implementingTest.TestMethod.DeclaringType!.Name.Contains("Scaffold");
+                                    var isTestImplemented =
+                                        testFileExists && implementingTest != null &&
+                                        !implementingTest.TestMethod.DeclaringType!.Name.Contains("Scaffold");
                                     if (!isTestImplemented &&
                                         !specId.Contains("deprecated", StringComparison.OrdinalIgnoreCase))
                                     {

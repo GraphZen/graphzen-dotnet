@@ -71,7 +71,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
                     .Value("Baz", v =>
                     {
                         Action rename = () => v.Name("Bar");
-                        rename.Should().Throw<DuplicateNameException>().WithMessage("Cannot rename enum value Foo.Baz to \"Bar\": Enum Foo already contains a value named \"Bar\".");
+                        rename.Should().Throw<DuplicateNameException>().WithMessage(
+                            "Cannot rename enum value Foo.Baz to \"Bar\": Enum Foo already contains a value named \"Bar\".");
                     });
             });
         }

@@ -86,7 +86,6 @@ namespace GraphZen.SpecFx
             sut.Specs.ContainsKey(SpecClass.FooSpec).Should().BeTrue();
             var withoutSpecs = sut.WithoutSpecs<SpecClass>();
             withoutSpecs.Specs.ContainsKey(SpecClass.FooSpec).Should().BeFalse();
-
         }
 
 

@@ -17,6 +17,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         {
             public const string item_can_be_defined_by_sdl = null;
         }
+
         public class SdlExtensionSpec
         {
             public const string item_can_be_defined_by_sdl_extension = null;
@@ -133,7 +134,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_cannot_be_added_with_null_value = null;
             public const string clr_typed_item_cannot_be_added_with_invalid_name_attribute = null;
             public const string clr_typed_item_with_conflicting_name_can_be_added_with_custom_name = null;
-            public const string clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name = null;
+
+            public const string clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name =
+                null;
 
             public const string clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name = null;
 
@@ -149,8 +152,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_cannot_be_added_with_invalid_custom_name = null;
             public const string clr_typed_item_subsequently_added_with_custom_name_sets_name = null;
             public const string named_item_subsequently_added_with_type_and_custom_name_sets_clr_type = null;
-            public const string clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist = null;
-            public const string clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist = null;
+
+            public const string clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist =
+                null;
+
+            public const string
+                clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
+                    = null;
 
 
             // Removing from collection with CLR Type

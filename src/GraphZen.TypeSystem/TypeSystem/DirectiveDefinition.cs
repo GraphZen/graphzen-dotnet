@@ -63,7 +63,6 @@ namespace GraphZen.TypeSystem
 
                     name = n;
                     _nameConfigurationSource = ConfigurationSource.DataAnnotation;
-
                 }
                 else
                 {
@@ -193,6 +192,7 @@ namespace GraphZen.TypeSystem
             {
                 return false;
             }
+
             ClrType = clrType;
             _clrTypeConfigurationSource = configurationSource;
             return true;

@@ -11,13 +11,15 @@ using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType.Fields
 {
     [NoReorder]
     public class FieldsTests
     {
-        [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
+        [Spec(nameof(item_can_be_defined_by_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -26,7 +28,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
+        [Spec(nameof(item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_added_via_sdl_extension_()
         {

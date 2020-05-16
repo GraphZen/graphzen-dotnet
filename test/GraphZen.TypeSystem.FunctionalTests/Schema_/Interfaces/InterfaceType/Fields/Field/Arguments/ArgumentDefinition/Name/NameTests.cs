@@ -5,29 +5,24 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition.Name
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition
+    .Name
 {
     [NoReorder]
     public class NameTests
     {
-        [Spec(nameof(TypeSystemSpecs.NameSpecs.can_be_renamed))]
+        [Spec(nameof(can_be_renamed))]
         [Fact]
         public void can_be_renamed_()
         {
             var schema = Schema.Create(_ =>
             {
-                _.Interface("Foo").Field("foo", "String", f =>
-                {
-                    f.Argument("foo", "String", a =>
-                    {
-                        a.Name("bar");
-                    });
-                });
+                _.Interface("Foo").Field("foo", "String",
+                    f => { f.Argument("foo", "String", a => { a.Name("bar"); }); });
             });
             var foo = schema.GetInterface("Foo").GetField("foo");
             foo.HasArgument("foo").Should().BeFalse();

@@ -62,12 +62,12 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<NamedCollectionSpecs>();
 
             var outputField = new Subject(nameof(Field))
-                    .WithSpecs<SdlSpec, SdlExtensionSpec>()
-                    .WithChild(name)
-                    .WithChild(description)
-                    .WithChild(argumentDefCollection)
-                    .WithChild(directiveAnnotations)
-                    .WithChildren(outputTypeRef.WithName(nameof(Field.FieldType)));
+                .WithSpecs<SdlSpec, SdlExtensionSpec>()
+                .WithChild(name)
+                .WithChild(description)
+                .WithChild(argumentDefCollection)
+                .WithChild(directiveAnnotations)
+                .WithChildren(outputTypeRef.WithName(nameof(Field.FieldType)));
 
             var outputFields = new Subject(nameof(FieldsDefinition.Fields))
                 .WithSpecs<NamedCollectionSpecs>();

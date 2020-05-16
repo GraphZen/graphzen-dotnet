@@ -70,7 +70,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Object((string) null!);
+                Action add = () => _.Object((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -82,7 +82,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveObject((string) null!);
+                Action remove = () => _.RemoveObject((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }

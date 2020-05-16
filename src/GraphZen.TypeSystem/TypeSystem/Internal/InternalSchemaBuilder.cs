@@ -638,11 +638,14 @@ namespace GraphZen.TypeSystem.Internal
             {
                 return null;
             }
+
             var typed = Definition.FindDirective(clrType);
             var named = Definition.FindDirective(name);
             if (typed != null && named != null && !typed.Equals(named))
             {
-                throw new DuplicateNameException(TypeSystemExceptionMessages.DuplicateNameException.CannotCreateDirectiveWithConflictingNameAndType(name, clrType, named, typed));
+                throw new DuplicateNameException(
+                    TypeSystemExceptionMessages.DuplicateNameException.CannotCreateDirectiveWithConflictingNameAndType(
+                        name, clrType, named, typed));
             }
 
             if (typed != null)
@@ -651,6 +654,7 @@ namespace GraphZen.TypeSystem.Internal
                 clrB?.SetName(name, configurationSource);
                 return clrB;
             }
+
             var ib = Directive(name, configurationSource);
             ib?.ClrType(clrType, configurationSource);
             return ib;
@@ -708,6 +712,7 @@ namespace GraphZen.TypeSystem.Internal
                 {
                     directive.SetClrType(clrType, configurationSource);
                 }
+
                 return directive.Builder;
             }
 

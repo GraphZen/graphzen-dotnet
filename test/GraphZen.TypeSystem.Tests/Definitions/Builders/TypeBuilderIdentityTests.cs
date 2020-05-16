@@ -390,7 +390,8 @@ namespace GraphZen.TypeSystem.Tests
                 var newTypeDef = sb.GetDefinition().GetType<NamedTypeDefinition>(NewTypeName);
 
                 ex.Message.Should()
-                    .Be(TypeSystemExceptionMessages.DuplicateNameException.CannotRenameType(typeDef.Identity, NewTypeName,
+                    .Be(TypeSystemExceptionMessages.DuplicateNameException.CannotRenameType(typeDef.Identity,
+                        NewTypeName,
                         newTypeDef.Identity));
             });
         }

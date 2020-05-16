@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Name
                 rename.Should()
                     .Throw<InvalidNameException>()
                     .WithMessage(
-                        $"Cannot rename enum Foo: \"{ name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                        $"Cannot rename enum Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

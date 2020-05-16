@@ -14,8 +14,9 @@ namespace GraphZen.Infrastructure
 {
     internal static class StringExtensions
     {
-
-        public static string TrimEnd(this string source, string value) => !source.EndsWith(value) ? source : source.Remove(source.LastIndexOf(value, StringComparison.Ordinal));
+        public static string TrimEnd(this string source, string value) => !source.EndsWith(value)
+            ? source
+            : source.Remove(source.LastIndexOf(value, StringComparison.Ordinal));
 
         public static string TrimStart(this string source, string value) =>
             !source.StartsWith(value) ? source : source.Remove(0, value.Length);

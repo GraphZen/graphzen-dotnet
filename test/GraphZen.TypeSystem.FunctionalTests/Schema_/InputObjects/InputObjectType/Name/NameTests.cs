@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
@@ -16,15 +15,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     [NoReorder]
     public class NameTests
     {
-
-        [Spec(nameof(TypeSystemSpecs.NameSpecs.can_be_renamed))]
+        [Spec(nameof(can_be_renamed))]
         [Fact]
         public void can_be_renamed_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Name("Bar");
-            });
+            var schema = Schema.Create(_ => { _.InputObject("Foo").Name("Bar"); });
             schema.HasInputObject("Foo").Should().BeFalse();
             schema.HasInputObject("Bar").Should().BeTrue();
         }

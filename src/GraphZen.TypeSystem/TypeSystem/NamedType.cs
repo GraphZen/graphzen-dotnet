@@ -53,7 +53,6 @@ namespace GraphZen.TypeSystem
 
         public override string ToString() => Name;
 
-        [GraphQLCanBeNull]
-        public string? Description { get; }
+        [GraphQLCanBeNull] public string? Description { get; }
     }
 }

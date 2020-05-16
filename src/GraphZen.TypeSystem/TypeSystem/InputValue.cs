@@ -72,7 +72,6 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore] public object? ClrInfo { get; }
 
 
-        [GraphQLCanBeNull]
-        public string? Description { get; }
+        [GraphQLCanBeNull] public string? Description { get; }
     }
 }
