@@ -7,9 +7,11 @@ using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 {
@@ -32,7 +34,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
             public const string InvalidName = "abc @#$%^";
         }
 
-        [Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
+        [Spec(nameof(item_can_be_defined_by_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()
         {
@@ -40,7 +42,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
             schema.HasInputObject("Foo").Should().BeTrue();
         }
 
-        [Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
+        [Spec(nameof(item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "needs implementation")]
         public void named_item_can_be_added_via_sdl_extension_()
         {
@@ -191,8 +193,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
 
 
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Spec(nameof(named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "needs design")]
         public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
@@ -209,8 +210,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
 
 
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
+        [Spec(nameof(named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "needs impl")]
         public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
         {
@@ -226,8 +226,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
 
 
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "needs impl")]
         public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
@@ -243,8 +242,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
 
 
-        [Spec(nameof(InputOrOutputTypeSpecs
-            .clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
+        [Spec(nameof(clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
         ))]
         [Fact(Skip = "needs impl")]
         public void
