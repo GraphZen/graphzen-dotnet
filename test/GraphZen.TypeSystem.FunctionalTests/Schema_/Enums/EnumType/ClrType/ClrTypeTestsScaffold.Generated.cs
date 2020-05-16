@@ -8,24 +8,14 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType {
-
-
-// rootSpec Field Info: 
-// rootSpec Field Name: ClrTypeSpecs
-// rootSpec: Schema_|Enums|EnumType|ClrType
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\ClrType\ClrTypeTests.cs
-// testFileExists: True
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\ClrType
-
 [NoReorder]
 public abstract  class ClrTypeTestsScaffold {
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_added))]
+[Spec(nameof(clr_type_can_be_added))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_added_() {
     // var schema = Schema.Create(_ => { });
@@ -34,7 +24,7 @@ public void clr_type_can_be_added_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_with_custom_name))]
+[Spec(nameof(clr_type_can_be_added_with_custom_name))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_added_with_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -43,7 +33,7 @@ public void clr_type_can_be_added_with_custom_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param))]
+[Spec(nameof(clr_type_can_be_added_via_type_param))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_added_via_type_param_() {
     // var schema = Schema.Create(_ => { });
@@ -52,7 +42,7 @@ public void clr_type_can_be_added_via_type_param_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param_with_custom_name))]
+[Spec(nameof(clr_type_can_be_added_via_type_param_with_custom_name))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_added_via_type_param_with_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -61,7 +51,7 @@ public void clr_type_can_be_added_via_type_param_with_custom_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_with_custom_name))]
+[Spec(nameof(clr_type_can_be_changed_with_custom_name))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_changed_with_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -70,7 +60,7 @@ public void clr_type_can_be_changed_with_custom_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param))]
+[Spec(nameof(clr_type_can_be_changed_via_type_param))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_changed_via_type_param_() {
     // var schema = Schema.Create(_ => { });
@@ -79,7 +69,7 @@ public void clr_type_can_be_changed_via_type_param_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param_with_custom_name))]
+[Spec(nameof(clr_type_can_be_changed_via_type_param_with_custom_name))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_changed_via_type_param_with_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -88,7 +78,7 @@ public void clr_type_can_be_changed_via_type_param_with_custom_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_name_should_be_unique))]
+[Spec(nameof(clr_type_name_should_be_unique))]
 [Fact(Skip="TODO")]
 public void clr_type_name_should_be_unique_() {
     // var schema = Schema.Create(_ => { });
@@ -97,7 +87,7 @@ public void clr_type_name_should_be_unique_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_name_annotation_should_be_unique))]
+[Spec(nameof(clr_type_name_annotation_should_be_unique))]
 [Fact(Skip="TODO")]
 public void clr_type_name_annotation_should_be_unique_() {
     // var schema = Schema.Create(_ => { });
@@ -106,7 +96,7 @@ public void clr_type_name_annotation_should_be_unique_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_name_annotation_should_be_valid))]
+[Spec(nameof(clr_type_name_annotation_should_be_valid))]
 [Fact(Skip="TODO")]
 public void clr_type_name_annotation_should_be_valid_() {
     // var schema = Schema.Create(_ => { });
@@ -115,7 +105,7 @@ public void clr_type_name_annotation_should_be_valid_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.custom_name_should_be_unique))]
+[Spec(nameof(custom_name_should_be_unique))]
 [Fact(Skip="TODO")]
 public void custom_name_should_be_unique_() {
     // var schema = Schema.Create(_ => { });
@@ -124,7 +114,7 @@ public void custom_name_should_be_unique_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.custom_name_should_be_valid))]
+[Spec(nameof(custom_name_should_be_valid))]
 [Fact(Skip="TODO")]
 public void custom_name_should_be_valid_() {
     // var schema = Schema.Create(_ => { });
@@ -133,7 +123,7 @@ public void custom_name_should_be_valid_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.custom_name_cannot_be_null))]
+[Spec(nameof(custom_name_cannot_be_null))]
 [Fact(Skip="TODO")]
 public void custom_name_cannot_be_null_() {
     // var schema = Schema.Create(_ => { });
@@ -142,7 +132,7 @@ public void custom_name_cannot_be_null_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.changing_clr_type_changes_name))]
+[Spec(nameof(changing_clr_type_changes_name))]
 [Fact(Skip="TODO")]
 public void changing_clr_type_changes_name_() {
     // var schema = Schema.Create(_ => { });
@@ -151,7 +141,7 @@ public void changing_clr_type_changes_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.changing_clr_type_with_name_annotation_changes_name))]
+[Spec(nameof(changing_clr_type_with_name_annotation_changes_name))]
 [Fact(Skip="TODO")]
 public void changing_clr_type_with_name_annotation_changes_name_() {
     // var schema = Schema.Create(_ => { });
@@ -160,7 +150,7 @@ public void changing_clr_type_with_name_annotation_changes_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_with_conflicting_name_can_be_added_using_custom_name))]
+[Spec(nameof(clr_type_with_conflicting_name_can_be_added_using_custom_name))]
 [Fact(Skip="TODO")]
 public void clr_type_with_conflicting_name_can_be_added_using_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -169,7 +159,7 @@ public void clr_type_with_conflicting_name_can_be_added_using_custom_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
+[Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
 [Fact(Skip="TODO")]
 public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -178,7 +168,7 @@ public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_
 
 
 
-[Spec(nameof(ClrTypeSpecs.custom_named_clr_typed_item_when_type_removed_should_retain_custom_name))]
+[Spec(nameof(custom_named_clr_typed_item_when_type_removed_should_retain_custom_name))]
 [Fact(Skip="TODO")]
 public void custom_named_clr_typed_item_when_type_removed_should_retain_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -187,4 +177,4 @@ public void custom_named_clr_typed_item_when_type_removed_should_retain_custom_n
 
 }
 }
-// Source Hash Code: 4396026830700754390
+// Source Hash Code: 11472201447219778276

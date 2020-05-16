@@ -8,24 +8,14 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.EnumValue {
-
-
-// rootSpec Field Info: 
-// rootSpec Field Name: SdlExtensionSpec
-// rootSpec: Schema_|Enums|EnumType|Values|EnumValue
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\Values\EnumValue\SdlExtensionTests.cs
-// testFileExists: False
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\Values\EnumValue
-
 [NoReorder]
 public abstract  class SdlExtensionTests {
 
 
-[Spec(nameof(SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
+[Spec(nameof(item_can_be_defined_by_sdl_extension))]
 [Fact(Skip="TODO")]
 public void item_can_be_defined_by_sdl_extension_() {
     // var schema = Schema.Create(_ => { });
@@ -38,4 +28,4 @@ public void item_can_be_defined_by_sdl_extension_() {
 public  class SdlExtensionTestsScaffold {
 }
 }
-// Source Hash Code: 12883138051737337018
+// Source Hash Code: 2917957201486222346

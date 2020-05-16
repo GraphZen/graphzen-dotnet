@@ -41,8 +41,7 @@ namespace GraphZen.CodeGen.Generators
 
                     csharp.AppendLine("using Xunit;");
                     csharp.AppendLine($"using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.{rootSpec.Name};");
-                    //csharp.AppendLine($"// using static {rootSpec.}");
-                    // csharp.AppendLine("// ReSharper disable PartialTypeWithSinglePart");
+                    csharp.AppendLine();
                     csharp.AppendLine("// ReSharper disable All");
                     csharp.Namespace(ns, _ =>
                     {

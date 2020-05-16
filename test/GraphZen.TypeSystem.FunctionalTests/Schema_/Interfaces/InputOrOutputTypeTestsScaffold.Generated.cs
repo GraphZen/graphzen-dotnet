@@ -8,24 +8,14 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces {
-
-
-// rootSpec Field Info: 
-// rootSpec Field Name: InputOrOutputTypeSpecs
-// rootSpec: Schema_|Interfaces
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InputOrOutputTypeTests.cs
-// testFileExists: False
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces
-
 [NoReorder]
 public abstract  class InputOrOutputTypeTests {
 
 
-[Spec(nameof(InputOrOutputTypeSpecs.named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
+[Spec(nameof(named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_() {
     // var schema = Schema.Create(_ => { });
@@ -34,7 +24,7 @@ public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_o
 
 
 
-[Spec(nameof(InputOrOutputTypeSpecs.named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
+[Spec(nameof(named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
 [Fact(Skip="TODO")]
 public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_() {
     // var schema = Schema.Create(_ => { });
@@ -43,7 +33,7 @@ public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of
 
 
 
-[Spec(nameof(InputOrOutputTypeSpecs.clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+[Spec(nameof(clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
 [Fact(Skip="TODO")]
 public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_() {
     // var schema = Schema.Create(_ => { });
@@ -52,7 +42,7 @@ public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_typ
 
 
 
-[Spec(nameof(InputOrOutputTypeSpecs.clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+[Spec(nameof(clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
 [Fact(Skip="TODO")]
 public void clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_() {
     // var schema = Schema.Create(_ => { });
@@ -61,7 +51,7 @@ public void clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_con
 
 
 
-[Spec(nameof(InputOrOutputTypeSpecs.clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
+[Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_() {
     // var schema = Schema.Create(_ => { });
@@ -70,7 +60,7 @@ public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identit
 
 
 
-[Spec(nameof(InputOrOutputTypeSpecs.clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io))]
+[Spec(nameof(clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io_() {
     // var schema = Schema.Create(_ => { });
@@ -79,7 +69,7 @@ public void clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute
 
 
 
-[Spec(nameof(InputOrOutputTypeSpecs.clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+[Spec(nameof(clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
 [Fact(Skip="TODO")]
 public void clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_() {
     // var schema = Schema.Create(_ => { });
@@ -88,7 +78,7 @@ public void clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_wi
 
 
 
-[Spec(nameof(InputOrOutputTypeSpecs.clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+[Spec(nameof(clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
 [Fact(Skip="TODO")]
 public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_() {
     // var schema = Schema.Create(_ => { });
@@ -101,4 +91,4 @@ public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_t
 public  class InputOrOutputTypeTestsScaffold {
 }
 }
-// Source Hash Code: 4847913341086253493
+// Source Hash Code: 5892484960509220990

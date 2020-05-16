@@ -8,24 +8,14 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType {
-
-
-// rootSpec Field Info: 
-// rootSpec Field Name: ClrTypeSpecs
-// rootSpec: Schema_|Scalars|ScalarType|ClrType
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars\ScalarType\ClrType\ClrTypeTests.cs
-// testFileExists: True
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars\ScalarType\ClrType
-
 [NoReorder]
 public abstract  class ClrTypeTestsScaffold {
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_added))]
+[Spec(nameof(clr_type_can_be_added))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_added_() {
     // var schema = Schema.Create(_ => { });
@@ -34,7 +24,7 @@ public void clr_type_can_be_added_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_with_custom_name))]
+[Spec(nameof(clr_type_can_be_added_with_custom_name))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_added_with_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -43,7 +33,7 @@ public void clr_type_can_be_added_with_custom_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param))]
+[Spec(nameof(clr_type_can_be_added_via_type_param))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_added_via_type_param_() {
     // var schema = Schema.Create(_ => { });
@@ -52,7 +42,7 @@ public void clr_type_can_be_added_via_type_param_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_added_via_type_param_with_custom_name))]
+[Spec(nameof(clr_type_can_be_added_via_type_param_with_custom_name))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_added_via_type_param_with_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -61,7 +51,7 @@ public void clr_type_can_be_added_via_type_param_with_custom_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_with_custom_name))]
+[Spec(nameof(clr_type_can_be_changed_with_custom_name))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_changed_with_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -70,7 +60,7 @@ public void clr_type_can_be_changed_with_custom_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_can_be_changed_via_type_param_with_custom_name))]
+[Spec(nameof(clr_type_can_be_changed_via_type_param_with_custom_name))]
 [Fact(Skip="TODO")]
 public void clr_type_can_be_changed_via_type_param_with_custom_name_() {
     // var schema = Schema.Create(_ => { });
@@ -79,7 +69,7 @@ public void clr_type_can_be_changed_via_type_param_with_custom_name_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_name_should_be_unique))]
+[Spec(nameof(clr_type_name_should_be_unique))]
 [Fact(Skip="TODO")]
 public void clr_type_name_should_be_unique_() {
     // var schema = Schema.Create(_ => { });
@@ -88,7 +78,7 @@ public void clr_type_name_should_be_unique_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_name_annotation_should_be_unique))]
+[Spec(nameof(clr_type_name_annotation_should_be_unique))]
 [Fact(Skip="TODO")]
 public void clr_type_name_annotation_should_be_unique_() {
     // var schema = Schema.Create(_ => { });
@@ -97,7 +87,7 @@ public void clr_type_name_annotation_should_be_unique_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.clr_type_name_annotation_should_be_valid))]
+[Spec(nameof(clr_type_name_annotation_should_be_valid))]
 [Fact(Skip="TODO")]
 public void clr_type_name_annotation_should_be_valid_() {
     // var schema = Schema.Create(_ => { });
@@ -106,7 +96,7 @@ public void clr_type_name_annotation_should_be_valid_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.custom_name_should_be_valid))]
+[Spec(nameof(custom_name_should_be_valid))]
 [Fact(Skip="TODO")]
 public void custom_name_should_be_valid_() {
     // var schema = Schema.Create(_ => { });
@@ -115,7 +105,7 @@ public void custom_name_should_be_valid_() {
 
 
 
-[Spec(nameof(ClrTypeSpecs.custom_name_cannot_be_null))]
+[Spec(nameof(custom_name_cannot_be_null))]
 [Fact(Skip="TODO")]
 public void custom_name_cannot_be_null_() {
     // var schema = Schema.Create(_ => { });
@@ -124,4 +114,4 @@ public void custom_name_cannot_be_null_() {
 
 }
 }
-// Source Hash Code: 10548351997893999435
+// Source Hash Code: 16371723446011472508

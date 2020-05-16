@@ -8,24 +8,14 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType.Fields.InputField.Description {
-
-
-// rootSpec Field Info: 
-// rootSpec Field Name: SdlSpec
-// rootSpec: Schema_|InputObjects|InputObjectType|Fields|InputField|Description
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\InputObjects\InputObjectType\Fields\InputField\Description\SdlTests.cs
-// testFileExists: False
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\InputObjects\InputObjectType\Fields\InputField\Description
-
 [NoReorder]
 public abstract  class SdlTests {
 
 
-[Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
+[Spec(nameof(item_can_be_defined_by_sdl))]
 [Fact(Skip="TODO")]
 public void item_can_be_defined_by_sdl_() {
     // var schema = Schema.Create(_ => { });
@@ -38,4 +28,4 @@ public void item_can_be_defined_by_sdl_() {
 public  class SdlTestsScaffold {
 }
 }
-// Source Hash Code: 10326067516351921781
+// Source Hash Code: 4936260984137459575

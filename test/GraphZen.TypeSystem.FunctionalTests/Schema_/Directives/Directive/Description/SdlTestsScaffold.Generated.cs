@@ -8,24 +8,14 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Description {
-
-
-// rootSpec Field Info: 
-// rootSpec Field Name: SdlSpec
-// rootSpec: Schema_|Directives|Directive|Description
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Directives\Directive\Description\SdlTests.cs
-// testFileExists: True
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Directives\Directive\Description
-
 [NoReorder]
 public abstract  class SdlTestsScaffold {
 
 
-[Spec(nameof(SdlSpec.item_can_be_defined_by_sdl))]
+[Spec(nameof(item_can_be_defined_by_sdl))]
 [Fact(Skip="TODO")]
 public void item_can_be_defined_by_sdl_() {
     // var schema = Schema.Create(_ => { });
@@ -34,4 +24,4 @@ public void item_can_be_defined_by_sdl_() {
 
 }
 }
-// Source Hash Code: 11341901335641419930
+// Source Hash Code: 1673438469056463662

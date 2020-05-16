@@ -8,24 +8,14 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Name {
-
-
-// rootSpec Field Info: 
-// rootSpec Field Name: NameSpecs
-// rootSpec: Schema_|Objects|ObjectType|Name
-// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\Name\NameTests.cs
-// testFileExists: True
-// fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\Name
-
 [NoReorder]
 public abstract  class NameTestsScaffold {
 
 
-[Spec(nameof(NameSpecs.can_be_renamed))]
+[Spec(nameof(can_be_renamed))]
 [Fact(Skip="TODO")]
 public void can_be_renamed_() {
     // var schema = Schema.Create(_ => { });
@@ -34,4 +24,4 @@ public void can_be_renamed_() {
 
 }
 }
-// Source Hash Code: 17619474277839191007
+// Source Hash Code: 11460653348987682276
