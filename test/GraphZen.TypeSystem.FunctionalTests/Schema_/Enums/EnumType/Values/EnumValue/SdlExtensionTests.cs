@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
     [NoReorder]
     public class SdlExtensionTests
     {
-         
+
 
 
         [Spec(nameof(TypeSystemSpecs.SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]

@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
     [NoReorder]
     public class NamedCollectionTests
     {
-     
+
 
 
         [Spec(nameof(named_item_can_be_added))]

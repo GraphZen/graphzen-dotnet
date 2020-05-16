@@ -1,3 +1,6 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 #nullable enable
 
 using System.Diagnostics.CodeAnalysis;
@@ -138,7 +141,7 @@ namespace GraphZen.LanguageModel
         VariableDefinition,
 
         /// <summary>Indicates an <see cref="VariableSyntax" /> node.</summary>
-        Variable
+        Variable,
     }
 }
 // Source Hash Code: 9144121253037187035
