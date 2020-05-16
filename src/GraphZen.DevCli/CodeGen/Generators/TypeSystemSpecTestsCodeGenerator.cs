@@ -74,6 +74,7 @@ namespace GraphZen.CodeGen.Generators
                                         cls.AppendLine($@"
 
 // SpecId: {specId}
+// isTestImplemented: {isTestImplemented}
 [Spec({specRef})]
 [Fact(Skip=""TODO"")]
 public void {spec.Id}_() {{

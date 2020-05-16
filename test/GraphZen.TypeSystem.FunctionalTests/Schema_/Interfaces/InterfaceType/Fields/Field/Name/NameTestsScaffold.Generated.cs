@@ -1,29 +1,33 @@
-// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-
 #nullable enable
 
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
+
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
-
 // ReSharper disable All
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Name
-{
-    [NoReorder]
-    public abstract class NameTestsScaffold
-    {
-// SpecId: can_be_renamed
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Name {
+
+// testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InterfaceType\Fields\Field\Name\NameTests.cs
+// testFileExists: True
 // fileDir: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InterfaceType\Fields\Field\Name
 
-        [Spec(nameof(NameSpecs.can_be_renamed))]
-        [Fact(Skip = "TODO")]
-        public void can_be_renamed_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-    }
+[NoReorder]
+public abstract  class NameTestsScaffold {
+
+
+// SpecId: can_be_renamed
+[Spec(nameof(NameSpecs.can_be_renamed))]
+[Fact(Skip="TODO")]
+public void can_be_renamed_() {
+    // var schema = Schema.Create(_ => { });
 }
-// Source Hash Code: 11419145914967321123
+
+
+}
+}
+// Source Hash Code: 4782189050359639131
