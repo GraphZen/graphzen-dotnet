@@ -3,13 +3,14 @@
 
 #nullable enable
 
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DirectiveAnnotationSpecs;
 
-// ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.Field.DirectiveAnnotations
 {
     [NoReorder]
@@ -127,10 +128,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
         }
     }
 
-// Move DirectiveAnnotationTests into a separate file to start writing tests
+    // Move DirectiveAnnotationTests into a separate file to start writing tests
     [NoReorder]
     public class DirectiveAnnotationTestsScaffold
     {
     }
 }
-// Source Hash Code: 1414886188840309020
+// Source Hash Code: 3762215274406616765

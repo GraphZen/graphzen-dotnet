@@ -3,13 +3,14 @@
 
 #nullable enable
 
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
 
-// ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType
 {
     [NoReorder]
@@ -23,10 +24,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
     }
 
-// Move SdlExtensionTests into a separate file to start writing tests
+    // Move SdlExtensionTests into a separate file to start writing tests
     [NoReorder]
     public class SdlExtensionTestsScaffold
     {
     }
 }
-// Source Hash Code: 986737859728199139
+// Source Hash Code: 16452223442019877572

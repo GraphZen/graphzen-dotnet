@@ -3,13 +3,14 @@
 
 #nullable enable
 
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
 
-// ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.ClrType
 {
     [NoReorder]
@@ -159,4 +160,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
         }
     }
 }
-// Source Hash Code: 1706115417368467871
+// Source Hash Code: 13804852605273623694

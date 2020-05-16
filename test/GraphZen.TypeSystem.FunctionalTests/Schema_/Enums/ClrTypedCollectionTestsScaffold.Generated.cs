@@ -3,13 +3,14 @@
 
 #nullable enable
 
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
 
-// ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
 {
     [NoReorder]
@@ -234,10 +235,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         }
     }
 
-// Move ClrTypedCollectionTests into a separate file to start writing tests
+    // Move ClrTypedCollectionTests into a separate file to start writing tests
     [NoReorder]
     public class ClrTypedCollectionTestsScaffold
     {
     }
 }
-// Source Hash Code: 8708112605161671469
+// Source Hash Code: 14324477125530381026

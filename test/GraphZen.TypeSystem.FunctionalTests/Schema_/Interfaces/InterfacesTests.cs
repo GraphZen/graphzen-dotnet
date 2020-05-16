@@ -96,7 +96,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
 
 
 
-        
+
 
 
         [Spec(nameof(named_item_can_be_added))]

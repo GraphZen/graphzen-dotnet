@@ -48,7 +48,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Interface((Type) null!);
+                Action add = () => _.Interface((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -99,7 +99,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveInterface((Type) null!);
+                Action remove = () => _.RemoveInterface((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

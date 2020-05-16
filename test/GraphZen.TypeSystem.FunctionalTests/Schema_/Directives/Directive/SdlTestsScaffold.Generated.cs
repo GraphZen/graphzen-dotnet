@@ -3,13 +3,14 @@
 
 #nullable enable
 
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 
-// ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive
 {
     [NoReorder]
@@ -23,4 +24,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive
         }
     }
 }
-// Source Hash Code: 11276526711229431917
+// Source Hash Code: 6263297460941130760

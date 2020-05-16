@@ -3,13 +3,14 @@
 
 #nullable enable
 
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
 
-// ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
 {
     [NoReorder]
@@ -146,4 +147,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         }
     }
 }
-// Source Hash Code: 15384997803135320005
+// Source Hash Code: 13348564231473929882

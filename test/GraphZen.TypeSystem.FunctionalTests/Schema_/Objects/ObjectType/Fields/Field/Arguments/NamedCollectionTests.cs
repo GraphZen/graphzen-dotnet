@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
     {
 
 
-     
+
 
 
         [Spec(nameof(named_item_can_be_added))]

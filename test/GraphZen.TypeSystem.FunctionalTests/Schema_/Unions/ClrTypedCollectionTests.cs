@@ -12,7 +12,7 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedC
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 {
     [NoReorder]
-    public abstract class ClrTypedCollectionTests
+    public class ClrTypedCollectionTests
     {
         public abstract class PlainAbstractClass
         {

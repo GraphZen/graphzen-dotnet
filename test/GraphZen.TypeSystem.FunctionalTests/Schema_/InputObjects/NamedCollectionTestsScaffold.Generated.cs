@@ -3,13 +3,14 @@
 
 #nullable enable
 
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 
-// ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 {
     [NoReorder]
@@ -63,10 +64,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
     }
 
-// Move NamedCollectionTests into a separate file to start writing tests
+    // Move NamedCollectionTests into a separate file to start writing tests
     [NoReorder]
     public class NamedCollectionTestsScaffold
     {
     }
 }
-// Source Hash Code: 13555305819364968421
+// Source Hash Code: 5137287670625151782

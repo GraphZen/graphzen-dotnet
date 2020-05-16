@@ -39,8 +39,7 @@ namespace GraphZen.CodeGen.Generators
                     var generate = false;
                     var csharp = CSharpStringBuilder.Create();
                     csharp.AppendLine("// ReSharper disable All");
-
-                    csharp.AppendLine("using using FluentAssertions;");
+                    csharp.AppendLine("using FluentAssertions;");
                     csharp.AppendLine("using Xunit;");
                     csharp.AppendLine($"using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.{rootSpec.Name};");
                     csharp.AppendLine();

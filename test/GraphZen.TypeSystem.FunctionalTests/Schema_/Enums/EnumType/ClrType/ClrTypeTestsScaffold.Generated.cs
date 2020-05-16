@@ -3,13 +3,14 @@
 
 #nullable enable
 
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
 
-// ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
 {
     [NoReorder]
@@ -159,4 +160,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
         }
     }
 }
-// Source Hash Code: 11137540805289815079
+// Source Hash Code: 13936776736379277238

@@ -12,7 +12,7 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtens
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType
 {
     [NoReorder]
-    public abstract class SdlExtensionTests
+    public class SdlExtensionTests
     {
         [Spec(nameof(item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "TODO")]

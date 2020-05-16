@@ -3,13 +3,14 @@
 
 #nullable enable
 
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
 
-// ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 {
     [NoReorder]
@@ -87,10 +88,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
     }
 
-// Move InputOrOutputTypeTests into a separate file to start writing tests
+    // Move InputOrOutputTypeTests into a separate file to start writing tests
     [NoReorder]
     public class InputOrOutputTypeTestsScaffold
     {
     }
 }
-// Source Hash Code: 1146122579196250731
+// Source Hash Code: 5615068247169538156

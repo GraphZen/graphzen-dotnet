@@ -3,13 +3,14 @@
 
 #nullable enable
 
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
 
-// ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 {
     [NoReorder]
@@ -234,10 +235,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
     }
 
-// Move ClrTypedCollectionTests into a separate file to start writing tests
+    // Move ClrTypedCollectionTests into a separate file to start writing tests
     [NoReorder]
     public class ClrTypedCollectionTestsScaffold
     {
     }
 }
-// Source Hash Code: 5537711371851733443
+// Source Hash Code: 3385536362800532574

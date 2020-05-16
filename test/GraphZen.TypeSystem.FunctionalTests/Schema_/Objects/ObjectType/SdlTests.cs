@@ -11,7 +11,7 @@ using Xunit;
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType
 {
     [NoReorder]
-    public abstract class SdlTests
+    public class SdlTests
     {
         [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
         [Fact]
