@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -51,14 +50,10 @@ namespace GraphZen.CodeGen.Generators
                         _.AppendLine("[NoReorder]");
                         _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
                         {
-
-                            // TODO: ordering is off here
                             foreach (var (specId, spec) in rootSpec.Children.Select(c => (c.Id, c)))
                             {
                                 if (subject.Specs.TryGetValue(specId, out var _))
                                 {
-
-
                                     var isTestImplemented = testFileExists && suite.Tests.Any(t =>
                                         t.SubjectPath == subject.Path && t.SpecId == specId &&
                                         !t.TestMethod.DeclaringType!.Name.Contains("Scaffold"));
