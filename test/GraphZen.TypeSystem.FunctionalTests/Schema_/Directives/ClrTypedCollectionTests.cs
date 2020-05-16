@@ -31,20 +31,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
-        [Fact(Skip = "TODO")]
-        public void named_item_can_be_added_via_sdl_()
-        {
-            var schema = Schema.Create(_ => { _.FromSchema(@"directive Foo"); });
-            schema.HasDirective("Foo").Should().BeTrue();
-        }
+    
 
-
-        [Spec(nameof(TypeSystemSpecs.SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
-        [Fact(Skip = "TODO")]
-        public void named_item_can_be_added_via_sdl_extension_()
-        {
-        }
 
 
         [Spec(nameof(clr_typed_item_can_be_added))]

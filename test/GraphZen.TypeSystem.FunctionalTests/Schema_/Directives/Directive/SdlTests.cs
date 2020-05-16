@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
@@ -14,9 +15,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive
     {
         [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
-        public void item_can_be_defined_by_sdl_()
+        public void named_item_can_be_added_via_sdl_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.FromSchema(@"directive Foo"); });
+            schema.HasDirective("Foo").Should().BeTrue();
+
         }
     }
 }
