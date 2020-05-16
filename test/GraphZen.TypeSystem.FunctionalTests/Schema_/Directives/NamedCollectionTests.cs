@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Directive((string) null!);
+                Action add = () => _.Directive((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -81,7 +81,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveDirective((string) null!);
+                Action remove = () => _.RemoveDirective((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }

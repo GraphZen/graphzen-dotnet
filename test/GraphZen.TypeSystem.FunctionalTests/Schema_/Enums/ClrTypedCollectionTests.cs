@@ -46,7 +46,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Enum((Type) null!);
+                Action add = () => _.Enum((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -98,7 +98,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
             Schema.Create(_ =>
             {
                 _.Enum<PlainEnum>();
-                Action remove = () => _.RemoveEnum((Type) null!);
+                Action remove = () => _.RemoveEnum((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

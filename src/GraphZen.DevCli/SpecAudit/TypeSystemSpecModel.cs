@@ -75,7 +75,7 @@ namespace GraphZen.SpecAudit
             var implementsInterfaces = new Subject(nameof(ObjectType.Interfaces));
 
             var clrType = new Subject(nameof(IClrType.ClrType))
-                .WithSpecs<ClrTypeSpecs>();
+                .WithSpecs<ClrTypeSpecs>(SpecPriority.Medium);
 
             var graphQLType = new Subject(nameof(NamedType))
                 .WithSpecs<SdlSpec, SdlExtensionSpec>()
@@ -174,7 +174,6 @@ namespace GraphZen.SpecAudit
                 .WithChild(objects)
                 .WithChild(interfaces)
                 .WithChild(enums);
-
 
             return new SpecSuite(nameof(TypeSystem), schemaBuilder, typeof(TypeSystemSpecs));
         }

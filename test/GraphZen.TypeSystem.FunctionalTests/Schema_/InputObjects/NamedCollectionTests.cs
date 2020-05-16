@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     [NoReorder]
     public class NamedCollectionTests
     {
-        
+
 
         [Spec(nameof(named_item_can_be_added))]
         [Fact]
@@ -31,7 +31,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((string) null!);
+                Action add = () => _.InputObject((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -80,7 +80,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.InputObject((string) null!);
+                Action add = () => _.InputObject((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
