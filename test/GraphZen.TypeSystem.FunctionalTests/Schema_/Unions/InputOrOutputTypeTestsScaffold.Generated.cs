@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: InputOrOutputTypeSpecs
 // rootSpec: Schema_|Unions
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Unions\InputOrOutputTypeTests.cs
 // testFileExists: False
@@ -99,4 +101,4 @@ public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_t
 public  class InputOrOutputTypeTestsScaffold {
 }
 }
-// Source Hash Code: 5092018512799288001
+// Source Hash Code: 17298070883719627317

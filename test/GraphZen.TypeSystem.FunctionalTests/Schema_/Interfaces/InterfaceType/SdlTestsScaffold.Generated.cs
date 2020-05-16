@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: SdlSpec
 // rootSpec: Schema_|Interfaces|InterfaceType
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InterfaceType\SdlTests.cs
 // testFileExists: False
@@ -36,4 +38,4 @@ public void item_can_be_defined_by_sdl_() {
 public  class SdlTestsScaffold {
 }
 }
-// Source Hash Code: 10237278756696254681
+// Source Hash Code: 918097842893919849

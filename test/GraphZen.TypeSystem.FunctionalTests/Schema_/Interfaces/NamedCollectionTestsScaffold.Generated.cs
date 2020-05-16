@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: NamedCollectionSpecs
 // rootSpec: Schema_|Interfaces
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\NamedCollectionTests.cs
 // testFileExists: False
@@ -81,4 +83,4 @@ public void named_item_cannot_be_removed_with_null_value_() {
 public  class NamedCollectionTestsScaffold {
 }
 }
-// Source Hash Code: 3314172710684370499
+// Source Hash Code: 1901296657545527463

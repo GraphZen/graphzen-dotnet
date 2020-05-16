@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: ClrTypeSpecs
 // rootSpec: Schema_|Scalars|ScalarType|ClrType
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars\ScalarType\ClrType\ClrTypeTests.cs
 // testFileExists: True
@@ -122,4 +124,4 @@ public void custom_name_cannot_be_null_() {
 
 }
 }
-// Source Hash Code: 4234282263455681319
+// Source Hash Code: 10548351997893999435

@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.Name {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: NameSpecs
 // rootSpec: Schema_|Objects|ObjectType|Fields|Field|Arguments|ArgumentDefinition|Name
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\Fields\Field\Arguments\ArgumentDefinition\Name\NameTests.cs
 // testFileExists: True
@@ -32,4 +34,4 @@ public void can_be_renamed_() {
 
 }
 }
-// Source Hash Code: 14258823487699458371
+// Source Hash Code: 1797900693633052753

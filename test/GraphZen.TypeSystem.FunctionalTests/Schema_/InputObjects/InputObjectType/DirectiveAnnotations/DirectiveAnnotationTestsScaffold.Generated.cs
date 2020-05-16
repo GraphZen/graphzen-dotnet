@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DirectiveAnnotationSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType.DirectiveAnnotations {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: DirectiveAnnotationSpecs
 // rootSpec: Schema_|InputObjects|InputObjectType|DirectiveAnnotations
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\InputObjects\InputObjectType\DirectiveAnnotations\DirectiveAnnotationTests.cs
 // testFileExists: False
@@ -153,4 +155,4 @@ public void directive_annotations_are_removed_when_directive_is_ignored_() {
 public  class DirectiveAnnotationTestsScaffold {
 }
 }
-// Source Hash Code: 1196336305435340069
+// Source Hash Code: 14001008724705692295

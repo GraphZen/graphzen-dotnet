@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Name {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: NameSpecs
 // rootSpec: Schema_|Scalars|ScalarType|Name
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars\ScalarType\Name\NameTests.cs
 // testFileExists: True
@@ -32,4 +34,4 @@ public void can_be_renamed_() {
 
 }
 }
-// Source Hash Code: 8852209710716171047
+// Source Hash Code: 3000481543711709875

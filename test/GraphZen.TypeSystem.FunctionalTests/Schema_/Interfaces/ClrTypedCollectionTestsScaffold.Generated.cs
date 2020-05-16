@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: ClrTypedCollectionSpecs
 // rootSpec: Schema_|Interfaces
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\ClrTypedCollectionTests.cs
 // testFileExists: False
@@ -270,4 +272,4 @@ public void clr_typed_item_cannot_be_renamed_if_name_already_exists_() {
 public  class ClrTypedCollectionTestsScaffold {
 }
 }
-// Source Hash Code: 3024750939896338882
+// Source Hash Code: 9983344986869130674

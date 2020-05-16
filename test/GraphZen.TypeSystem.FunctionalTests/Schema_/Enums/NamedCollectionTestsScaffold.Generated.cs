@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: NamedCollectionSpecs
 // rootSpec: Schema_|Enums
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\NamedCollectionTests.cs
 // testFileExists: False
@@ -81,4 +83,4 @@ public void named_item_cannot_be_removed_with_null_value_() {
 public  class NamedCollectionTestsScaffold {
 }
 }
-// Source Hash Code: 10250323866171216909
+// Source Hash Code: 9529767846426155425

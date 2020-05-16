@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Name {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: NameSpecs
 // rootSpec: Schema_|Interfaces|InterfaceType|Fields|Field|Name
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InterfaceType\Fields\Field\Name\NameTests.cs
 // testFileExists: True
@@ -32,4 +34,4 @@ public void can_be_renamed_() {
 
 }
 }
-// Source Hash Code: 1023901033241302859
+// Source Hash Code: 643309820621978041

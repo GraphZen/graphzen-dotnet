@@ -40,8 +40,7 @@ namespace GraphZen.CodeGen.Generators
                     var csharp = CSharpStringBuilder.Create();
 
                     csharp.AppendLine("using Xunit;");
-                    csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;");
-                    csharp.AppendLine($"// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.{rootSpec.Name};");
+                    csharp.AppendLine($"using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.{rootSpec.Name};");
                     //csharp.AppendLine($"// using static {rootSpec.}");
                     // csharp.AppendLine("// ReSharper disable PartialTypeWithSinglePart");
                     csharp.AppendLine("// ReSharper disable All");
@@ -50,7 +49,7 @@ namespace GraphZen.CodeGen.Generators
                         var testFile = Path.Combine(fileDir, $"{className}.cs");
                         var testFileExists = File.Exists(testFile);
 
-                        _.AppendLine(@$"
+                    /*    _.AppendLine(@$"
 
 // rootSpec Field Info: {rootSpec.FieldInfo}
 // rootSpec Field Name: {rootSpec.Name}
@@ -58,7 +57,7 @@ namespace GraphZen.CodeGen.Generators
 // testFile: {testFile}
 // testFileExists: {testFileExists}
 // fileDir: {fileDir}
-");
+");*/
 
                         _.AppendLine("[NoReorder]");
                         _.AbstractClass(testFileExists ? className + "Scaffold" : className, cls =>
@@ -77,7 +76,7 @@ namespace GraphZen.CodeGen.Generators
                                     {
                                         generate = true;
                                         var specRef = spec.FieldInfo != null
-                                            ? $"nameof({spec.FieldInfo.DeclaringType!.Name}.{spec.FieldInfo.Name})"
+                                            ? $"nameof({spec.Id})"
                                             : $"\"{spec.Id}\"";
 
                                         /*                                        cls.AppendLine(@"

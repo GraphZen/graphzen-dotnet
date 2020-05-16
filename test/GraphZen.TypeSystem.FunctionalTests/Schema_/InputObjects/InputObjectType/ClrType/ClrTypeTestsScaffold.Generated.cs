@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypeSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType.ClrType {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: ClrTypeSpecs
 // rootSpec: Schema_|InputObjects|InputObjectType|ClrType
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\InputObjects\InputObjectType\ClrType\ClrTypeTests.cs
 // testFileExists: True
@@ -185,4 +187,4 @@ public void custom_named_clr_typed_item_when_type_removed_should_retain_custom_n
 
 }
 }
-// Source Hash Code: 1937165718053486230
+// Source Hash Code: 12590910859537798010

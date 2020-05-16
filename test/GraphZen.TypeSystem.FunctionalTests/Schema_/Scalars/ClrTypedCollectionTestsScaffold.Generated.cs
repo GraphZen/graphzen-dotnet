@@ -9,11 +9,13 @@ using JetBrains.Annotations;
 
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
+// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars {
 
 
 // rootSpec Field Info: 
+// rootSpec Field Name: ClrTypedCollectionSpecs
 // rootSpec: Schema_|Scalars
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars\ClrTypedCollectionTests.cs
 // testFileExists: True
@@ -122,4 +124,4 @@ public void clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name
 
 }
 }
-// Source Hash Code: 3409735717592526633
+// Source Hash Code: 18428051384325200463
