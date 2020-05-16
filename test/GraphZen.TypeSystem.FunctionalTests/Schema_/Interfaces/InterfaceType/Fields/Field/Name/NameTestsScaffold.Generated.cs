@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Name {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Interfaces|InterfaceType|Fields|Field|Name
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InterfaceType\Fields\Field\Name\NameTests.cs
 // testFileExists: True
@@ -30,4 +32,4 @@ public void can_be_renamed_() {
 
 }
 }
-// Source Hash Code: 4230171689308842370
+// Source Hash Code: 1023901033241302859

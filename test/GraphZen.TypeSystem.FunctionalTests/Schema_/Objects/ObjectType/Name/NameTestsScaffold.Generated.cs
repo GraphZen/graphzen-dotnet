@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Name {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Objects|ObjectType|Name
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\Name\NameTests.cs
 // testFileExists: True
@@ -30,4 +32,4 @@ public void can_be_renamed_() {
 
 }
 }
-// Source Hash Code: 4222836048744969184
+// Source Hash Code: 5405871434567641575

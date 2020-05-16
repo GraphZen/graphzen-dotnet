@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Interfaces|InterfaceType|Fields|Field|Arguments|ArgumentDefinition
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\InterfaceType\Fields\Field\Arguments\ArgumentDefinition\SdlTests.cs
 // testFileExists: False
@@ -34,4 +36,4 @@ public void item_can_be_defined_by_sdl_() {
 public  class SdlTestsScaffold {
 }
 }
-// Source Hash Code: 14912505555566922636
+// Source Hash Code: 9418032664740233205

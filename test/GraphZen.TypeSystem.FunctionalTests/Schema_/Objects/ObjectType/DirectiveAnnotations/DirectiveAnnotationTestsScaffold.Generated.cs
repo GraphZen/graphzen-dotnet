@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.DirectiveAnnotations {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Objects|ObjectType|DirectiveAnnotations
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\DirectiveAnnotations\DirectiveAnnotationTests.cs
 // testFileExists: False
@@ -151,4 +153,4 @@ public void directive_annotations_are_removed_when_directive_is_ignored_() {
 public  class DirectiveAnnotationTestsScaffold {
 }
 }
-// Source Hash Code: 9767658780533334560
+// Source Hash Code: 12598169110058030249

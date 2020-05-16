@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Interfaces
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Interfaces\ClrTypedCollectionTests.cs
 // testFileExists: False
@@ -268,4 +270,4 @@ public void clr_typed_item_cannot_be_renamed_if_name_already_exists_() {
 public  class ClrTypedCollectionTestsScaffold {
 }
 }
-// Source Hash Code: 3092782539761877401
+// Source Hash Code: 3024750939896338882

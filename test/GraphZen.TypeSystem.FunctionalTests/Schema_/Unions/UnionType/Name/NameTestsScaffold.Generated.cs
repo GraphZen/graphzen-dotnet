@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Name {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Unions|UnionType|Name
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Unions\UnionType\Name\NameTests.cs
 // testFileExists: True
@@ -30,4 +32,4 @@ public void can_be_renamed_() {
 
 }
 }
-// Source Hash Code: 2718602694450923972
+// Source Hash Code: 4692876866727986731

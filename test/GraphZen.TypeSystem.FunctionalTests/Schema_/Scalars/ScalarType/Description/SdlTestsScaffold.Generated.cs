@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Description {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Scalars|ScalarType|Description
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars\ScalarType\Description\SdlTests.cs
 // testFileExists: False
@@ -34,4 +36,4 @@ public void item_can_be_defined_by_sdl_() {
 public  class SdlTestsScaffold {
 }
 }
-// Source Hash Code: 4597319513032214078
+// Source Hash Code: 1066686443845462567

@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Enums
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\InputAndOutputTypeTests.cs
 // testFileExists: False
@@ -97,4 +99,4 @@ public void clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_ma
 public  class InputAndOutputTypeTestsScaffold {
 }
 }
-// Source Hash Code: 4950598394716978992
+// Source Hash Code: 12380906721140125561

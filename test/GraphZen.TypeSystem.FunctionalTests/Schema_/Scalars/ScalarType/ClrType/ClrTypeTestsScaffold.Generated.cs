@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Scalars|ScalarType|ClrType
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars\ScalarType\ClrType\ClrTypeTests.cs
 // testFileExists: True
@@ -120,4 +122,4 @@ public void custom_name_cannot_be_null_() {
 
 }
 }
-// Source Hash Code: 11466292735434664672
+// Source Hash Code: 4234282263455681319

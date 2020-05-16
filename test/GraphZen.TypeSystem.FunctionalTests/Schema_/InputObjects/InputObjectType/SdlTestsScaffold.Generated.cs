@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|InputObjects|InputObjectType
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\InputObjects\InputObjectType\SdlTests.cs
 // testFileExists: False
@@ -34,4 +36,4 @@ public void item_can_be_defined_by_sdl_() {
 public  class SdlTestsScaffold {
 }
 }
-// Source Hash Code: 16332655781347220816
+// Source Hash Code: 15360425826069822681

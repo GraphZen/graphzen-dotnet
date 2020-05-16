@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Scalars
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Scalars\ClrTypedCollectionTests.cs
 // testFileExists: True
@@ -120,4 +122,4 @@ public void clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name
 
 }
 }
-// Source Hash Code: 11947346284327778978
+// Source Hash Code: 3409735717592526633

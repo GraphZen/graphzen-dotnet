@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Description {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Unions|UnionType|Description
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Unions\UnionType\Description\SdlTests.cs
 // testFileExists: False
@@ -34,4 +36,4 @@ public void item_can_be_defined_by_sdl_() {
 public  class SdlTestsScaffold {
 }
 }
-// Source Hash Code: 12428062033758461826
+// Source Hash Code: 1014754485639984779

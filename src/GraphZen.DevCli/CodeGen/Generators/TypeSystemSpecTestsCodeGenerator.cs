@@ -41,6 +41,7 @@ namespace GraphZen.CodeGen.Generators
 
                     csharp.AppendLine("using Xunit;");
                     csharp.AppendLine("using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;");
+                    csharp.AppendLine($"// using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.{rootSpec.Name};");
                     //csharp.AppendLine($"// using static {rootSpec.}");
                     // csharp.AppendLine("// ReSharper disable PartialTypeWithSinglePart");
                     csharp.AppendLine("// ReSharper disable All");
@@ -52,6 +53,7 @@ namespace GraphZen.CodeGen.Generators
                         _.AppendLine(@$"
 
 // rootSpec Field Info: {rootSpec.FieldInfo}
+// rootSpec Field Name: {rootSpec.Name}
 // rootSpec: {string.Join("|", path)}
 // testFile: {testFile}
 // testFileExists: {testFileExists}

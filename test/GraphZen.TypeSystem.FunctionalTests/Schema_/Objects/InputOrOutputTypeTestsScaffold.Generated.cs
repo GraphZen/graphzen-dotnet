@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Objects
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\InputOrOutputTypeTests.cs
 // testFileExists: False
@@ -97,4 +99,4 @@ public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_t
 public  class InputOrOutputTypeTestsScaffold {
 }
 }
-// Source Hash Code: 2495868846797347988
+// Source Hash Code: 11160134770076159517

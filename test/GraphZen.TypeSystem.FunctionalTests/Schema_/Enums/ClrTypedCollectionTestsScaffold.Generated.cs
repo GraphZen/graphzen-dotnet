@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Enums
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\ClrTypedCollectionTests.cs
 // testFileExists: False
@@ -268,4 +270,4 @@ public void clr_typed_item_cannot_be_renamed_if_name_already_exists_() {
 public  class ClrTypedCollectionTestsScaffold {
 }
 }
-// Source Hash Code: 778049721497051649
+// Source Hash Code: 1018124097760643144

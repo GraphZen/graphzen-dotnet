@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Objects|ObjectType|ClrType
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\ClrType\ClrTypeTests.cs
 // testFileExists: True
@@ -192,4 +194,4 @@ public void custom_named_clr_typed_item_when_type_removed_should_retain_custom_n
 
 }
 }
-// Source Hash Code: 5381271595003998556
+// Source Hash Code: 8792709128219613315

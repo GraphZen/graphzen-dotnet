@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Objects|ObjectType|Fields
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Objects\ObjectType\Fields\NamedCollectionTests.cs
 // testFileExists: False
@@ -79,4 +81,4 @@ public void named_item_cannot_be_removed_with_null_value_() {
 public  class NamedCollectionTestsScaffold {
 }
 }
-// Source Hash Code: 12475330292638106436
+// Source Hash Code: 1572994390226530413

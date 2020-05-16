@@ -12,6 +12,8 @@ using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 // ReSharper disable All
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.EnumValue.Description {
 
+
+// rootSpec Field Info: 
 // rootSpec: Schema_|Enums|EnumType|Values|EnumValue|Description
 // testFile: .\test\GraphZen.TypeSystem.FunctionalTests\Schema_\Enums\EnumType\Values\EnumValue\Description\SdlTests.cs
 // testFileExists: False
@@ -34,4 +36,4 @@ public void item_can_be_defined_by_sdl_() {
 public  class SdlTestsScaffold {
 }
 }
-// Source Hash Code: 11375302999928813066
+// Source Hash Code: 1831050582839571633
