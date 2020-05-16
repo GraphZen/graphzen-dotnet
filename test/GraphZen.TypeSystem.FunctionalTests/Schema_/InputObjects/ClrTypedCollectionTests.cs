@@ -31,7 +31,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
             public const string InvalidName = "abc @#$%^";
         }
 
-  
+
         [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
         public void clr_typed_item_can_be_added_()
