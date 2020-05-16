@@ -8,15 +8,11 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.ClrTypedCollectionSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputOrOutputTypeSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NamedCollectionSpecs;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
 {
     [NoReorder]
-    public class InterfacesTests
+    public class ClrTypedCollectionTests
     {
         // ReSharper disable once InconsistentNaming
         private interface PlainInterface
@@ -37,138 +33,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         }
 
 
-        [Spec(nameof(named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "needs design/impl")]
-        public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("input", "Bar");
-                Action add = () => _.Interface("Bar");
-                add.Should().Throw<Exception>();
-            });
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
-        // [Fact(Skip = "needs design/impl")]
-        [Fact]
-        public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("input", "Bar");
-                var baz = _.Interface("Baz");
-                Action rename = () => baz.Name("Bar");
-                rename.Should().Throw<Exception>();
-            });
-        }
-
-
-        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "needs design/implementation")]
-        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("input", "Bar");
-                var poci = _.Interface<PlainInterface>();
-                Action rename = () => poci.Name("Bar");
-                rename.Should().Throw<Exception>().WithMessage("something about input/output type");
-            });
-        }
-
-
-        [Spec(nameof(clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "needs design/impl")]
-        public void
-            clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("input", PlainInterfaceAnnotatedName.AnnotatedName);
-                Action add = () => _.Interface<PlainInterfaceAnnotatedName>();
-                add.Should().Throw<Exception>().WithMessage("something about input/output type");
-            });
-        }
-
-
-
-
-        
-
-
-        [Spec(nameof(named_item_can_be_added))]
-        [Fact]
-        public void named_item_can_be_added_()
-        {
-            var schema = Schema.Create(_ => { _.Interface("Foo"); });
-            schema.HasInterface("Foo").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_added_with_null_value))]
-        [Fact]
-        public void named_item_cannot_be_added_with_null_value_()
-        {
-            Schema.Create(_ =>
-            {
-                Action add = () => _.Interface((string)null!);
-                add.Should().ThrowArgumentNullException("name");
-            });
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_added_with_invalid_name))]
-        [Theory]
-        [InlineData("  xy")]
-        [InlineData("")]
-        public void named_item_cannot_be_added_with_invalid_name_(string name)
-        {
-            Schema.Create(_ =>
-            {
-                Action add = () => _.Interface(name);
-                add.Should().Throw<InvalidNameException>("x");
-            });
-        }
-
-
-        [Spec(nameof(named_item_can_be_renamed))]
-        [Fact]
-        public void named_item_can_be_renamed_()
-        {
-            var schema = Schema.Create(_ => { _.Interface("Foo").Name("Bar"); });
-            schema.HasInterface("Bar").Should().BeTrue();
-        }
-
-
-        [Spec(nameof(named_item_can_be_removed))]
-        [Fact(Skip = "needs impl")]
-        public void named_item_can_be_removed_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Interface("Foo");
-                _.RemoveInterface("Foo");
-            });
-            schema.HasInterface("Foo").Should().BeFalse();
-        }
-
-
-        [Spec(nameof(named_item_cannot_be_removed_with_null_value))]
-        [Fact]
-        public void named_item_cannot_be_removed_with_null_value_()
-        {
-            Schema.Create(_ =>
-            {
-                _.Interface("Foo");
-                Action remove = () => _.RemoveInterface((string)null!);
-                remove.Should().ThrowArgumentNullException("name");
-            });
-        }
-
-
         [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
         public void clr_typed_item_can_be_added_()
@@ -184,7 +48,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Interface((Type)null!);
+                Action add = () => _.Interface((Type) null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -235,7 +99,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveInterface((Type)null!);
+                Action remove = () => _.RemoveInterface((Type) null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }

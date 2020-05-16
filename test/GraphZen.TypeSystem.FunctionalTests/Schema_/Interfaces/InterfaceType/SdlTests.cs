@@ -7,18 +7,18 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlExtensionSpec;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType
 {
     [NoReorder]
-    public class SdlExtensionTests
+    public class SdlTests
     {
-        [Spec(nameof(item_can_be_defined_by_sdl_extension))]
-        [Fact(Skip = "needs design/impl")]
-        public void named_item_can_be_added_via_sdl_extension_()
+      
+        [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
+        [Fact]
+        public void named_item_can_be_added_via_sdl_()
         {
-            var schema = Schema.Create(_ => { _.FromSchema(@"extend interface Foo"); });
+            var schema = Schema.Create(_ => { _.FromSchema(@"interface Foo"); });
             schema.HasInterface("Foo").Should().BeTrue();
         }
     }

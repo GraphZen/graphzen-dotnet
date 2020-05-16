@@ -38,11 +38,12 @@ namespace GraphZen.CodeGen.Generators
                     var ns = string.Join(".", path.Prepend(rootNamespace));
                     var generate = false;
                     var csharp = CSharpStringBuilder.Create();
+                    csharp.AppendLine("// ReSharper disable All");
 
+                    csharp.AppendLine("using using FluentAssertions;");
                     csharp.AppendLine("using Xunit;");
                     csharp.AppendLine($"using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.{rootSpec.Name};");
                     csharp.AppendLine();
-                    csharp.AppendLine("// ReSharper disable All");
                     csharp.Namespace(ns, _ =>
                     {
                         var testFile = Path.Combine(fileDir, $"{className}.cs");
