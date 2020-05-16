@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((string) null!);
+                Action add = () => _.Scalar((string)null!);
                 add.Should().ThrowArgumentNullException("name");
             });
         }
@@ -78,7 +78,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         {
             Schema.Create(_ =>
             {
-                Action remove = () => _.RemoveScalar((string) null!);
+                Action remove = () => _.RemoveScalar((string)null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
         }

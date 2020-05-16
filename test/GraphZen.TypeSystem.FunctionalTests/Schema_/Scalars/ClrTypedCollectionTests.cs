@@ -63,7 +63,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         {
             Schema.Create(_ =>
             {
-                Action add = () => _.Scalar((Type) null!);
+                Action add = () => _.Scalar((Type)null!);
                 add.Should().ThrowArgumentNullException("clrType");
             });
         }
@@ -115,7 +115,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
             Schema.Create(_ =>
             {
                 _.Scalar<PlainStruct>();
-                Action remove = () => _.RemoveScalar((Type) null!);
+                Action remove = () => _.RemoveScalar((Type)null!);
                 remove.Should().ThrowArgumentNullException("clrType");
             });
         }
