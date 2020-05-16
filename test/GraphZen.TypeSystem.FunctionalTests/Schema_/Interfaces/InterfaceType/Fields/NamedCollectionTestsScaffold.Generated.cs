@@ -15,30 +15,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     [NoReorder]
     public abstract class NamedCollectionTests
     {
-        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
-        [Fact(Skip = "TODO")]
-        public void named_item_can_be_renamed_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_added_with_invalid_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
-        [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_removed_with_null_value_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_added))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_()
@@ -55,9 +31,33 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_added_with_invalid_name))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_added_with_invalid_name_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(NamedCollectionSpecs.named_item_can_be_renamed))]
+        [Fact(Skip = "TODO")]
+        public void named_item_can_be_renamed_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(NamedCollectionSpecs.named_item_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void named_item_can_be_removed_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(NamedCollectionSpecs.named_item_cannot_be_removed_with_null_value))]
+        [Fact(Skip = "TODO")]
+        public void named_item_cannot_be_removed_with_null_value_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -69,4 +69,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     {
     }
 }
-// Source Hash Code: 10482241358624013499
+// Source Hash Code: 4724585851233154427
