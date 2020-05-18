@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GraphZen.Infrastructure;
@@ -12,9 +11,6 @@ using GraphZen.Utilities;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
-
 namespace GraphZen.Tests.TypeSystem.IntrospectionTests
 {
     [NoReorder]
@@ -23,17 +19,25 @@ namespace GraphZen.Tests.TypeSystem.IntrospectionTests
         [Fact]
         public void IntrospectionSchemaContainsExpectedTypes()
         {
-            var expectedIntrospectionTypes = new[]
-            {
-                "__Directive", "__DirectiveLocation", "__EnumValue", "__Field", "__InputValue", "__Schema", "__Type",
-                "__TypeKind"
-            };
-            var introspectionTypeNames = Introspection.IntrospectionTypes.Select(_ => _.Name).ToArray();
+            var schema = Schema.Create();
+            schema.HasObject("__Directive").Should().BeTrue();
+            schema.HasEnum("__DirectiveLocation").Should().BeTrue();
+            schema.HasObject("__EnumValue").Should().BeTrue();
+            schema.HasObject("__Field").Should().BeTrue();
+            schema.HasObject("__InputValue").Should().BeTrue();
+            schema.HasObject("__Schema").Should().BeTrue();
+            schema.HasObject("__Type").Should().BeTrue();
+            schema.HasEnum("__TypeKind").Should().BeTrue();
+            //var expectedIntrospectionTypes = new[]
+            //{
+            //    "__Directive", "__DirectiveLocation", "__EnumValue", "__Field", "__InputValue", "__Schema", "__Type",
+            //    "__TypeKind"
+            //};
+            //var introspectionTypeNames = IntrospectionSpec.IntrospectionTypes.Select(_ => _.Name).ToArray();
 
-            introspectionTypeNames.Should().BeEquivalentTo(expectedIntrospectionTypes);
+            //introspectionTypeNames.Should().BeEquivalentTo(expectedIntrospectionTypes);
 
-            Introspection.Schema.GetTypes().Count().Should()
-                .Be(expectedIntrospectionTypes.Length + SpecScalars.All.Count);
+            //IntrospectionSpec.Schema.GetTypes().Count().Should() .Be(expectedIntrospectionTypes.Length);
         }
 
 

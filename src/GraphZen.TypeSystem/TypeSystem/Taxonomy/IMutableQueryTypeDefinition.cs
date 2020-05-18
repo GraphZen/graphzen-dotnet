@@ -11,7 +11,8 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableQueryTypeDefinition : IQueryTypeDefinition
     {
         new ObjectTypeDefinition? QueryType { get; }
-        bool SetQueryType(ObjectTypeDefinition? type, ConfigurationSource configurationSource);
+        bool SetQueryType(ObjectTypeDefinition type, ConfigurationSource configurationSource);
+        bool RemoveQueryType(ConfigurationSource configurationSource);
         ConfigurationSource? GetQueryTypeConfigurationSource();
     }
 }

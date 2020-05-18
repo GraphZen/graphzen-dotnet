@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
         [Fact(Skip = "TODO")]
         public void can_be_renamed_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
     }
 }

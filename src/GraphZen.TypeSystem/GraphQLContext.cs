@@ -47,7 +47,7 @@ namespace GraphZen
                 if (!_optionsInitialized)
                 {
                     var optionsBuilder = new GraphQLContextOptionsBuilder(_options);
-                    ((IGraphQLContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(
+                    ((IGraphQLContextOptionsBuilderInfrastructure) optionsBuilder).AddOrUpdateExtension(
                         _options.FindExtension<CoreOptionsExtension>() ?? new CoreOptionsExtension());
                     OnConfiguring(optionsBuilder);
 
@@ -78,85 +78,88 @@ namespace GraphZen
 
                 if (!SchemaCache.TryGetValue(contextType, out _schema))
                 {
-                    var schemaDef = new SchemaDefinition(SpecScalars.All);
-                    var schemaBuilder = new SchemaBuilder(schemaDef);
-                    var internalBuilder = schemaBuilder.GetInfrastructure<InternalSchemaBuilder>();
-                    var options = Options.GetExtension<CoreOptionsExtension>();
-
-                    // Configure query type
-                    if (options.QueryClrType != null)
+                    _schema = Schema.Create(sb
+                        =>
                     {
-                        schemaBuilder.QueryType(options.QueryClrType);
-                    }
-                    else
-                    {
-                        Type? queryClrType = default;
+                        var internalBuilder = sb
+                            .GetInfrastructure<InternalSchemaBuilder>();
+                        var options = Options.GetExtension<CoreOptionsExtension>();
 
-                        Type? DiscoverQueryType(Assembly? assembly, Func<Assembly, IEnumerable<Type>> getTypes)
+                        // Configure query type
+                        if (options.QueryClrType != null)
                         {
-                            if (assembly == null)
+                            sb
+                                .QueryType(options.QueryClrType);
+                        }
+                        else
+                        {
+                            Type? queryClrType = default;
+
+                            Type? DiscoverQueryType(Assembly? assembly, Func<Assembly, IEnumerable<Type>> getTypes)
                             {
-                                return null;
+                                if (assembly == null)
+                                {
+                                    return null;
+                                }
+
+                                var candidates = getTypes(assembly)
+                                    .Where(_ => _.IsClass && _.Name == "Query" && !_.IsNested).ToArray();
+                                if (candidates.Length > 1)
+                                {
+                                    throw new InvalidOperationException(
+                                        $"Unable to determine query type by convention. More than one class named 'Query' in assembly '{assembly}'");
+                                }
+
+                                return candidates.SingleOrDefault();
                             }
 
-                            var candidates = getTypes(assembly)
-                                .Where(_ => _.IsClass && _.Name == "Query" && !_.IsNested).ToArray();
-                            if (candidates.Length > 1)
+                            if (contextType != typeof(GraphQLContext))
                             {
-                                throw new InvalidOperationException(
-                                    $"Unable to determine query type by convention. More than one class named 'Query' in assembly '{assembly}'");
+                                queryClrType = DiscoverQueryType(contextType.Assembly, a => a.GetExportedTypes());
                             }
 
-                            return candidates.SingleOrDefault();
+                            if (queryClrType == null)
+                            {
+                                queryClrType = DiscoverQueryType(Assembly.GetEntryAssembly(), a => a.GetTypes());
+                            }
+
+                            if (queryClrType != null)
+                            {
+                                internalBuilder.QueryType(queryClrType, ConfigurationSource.Convention);
+                            }
                         }
 
-                        if (contextType != typeof(GraphQLContext))
+                        // Configure mutation type
+                        if (options.MutationClrType != null)
                         {
-                            queryClrType = DiscoverQueryType(contextType.Assembly, a => a.GetExportedTypes());
+                            sb
+                                .MutationType(options.MutationClrType);
                         }
-
-                        if (queryClrType == null)
+                        else
                         {
-                            queryClrType = DiscoverQueryType(Assembly.GetEntryAssembly(), a => a.GetTypes());
+                            Type? mutationClrType = default;
+                            if (contextType != typeof(GraphQLContext))
+                            {
+                                mutationClrType = contextType.Assembly.GetExportedTypes()
+                                    .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
+                            }
+
+                            if (mutationClrType == null)
+                            {
+                                mutationClrType = Assembly.GetEntryAssembly()?.GetTypes()
+                                    .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
+                            }
+
+                            if (mutationClrType != null)
+                            {
+                                internalBuilder.MutationType(mutationClrType, ConfigurationSource.Convention);
+                            }
                         }
 
-                        if (queryClrType != null)
-                        {
-                            internalBuilder.QueryType(queryClrType, ConfigurationSource.Convention);
-                        }
-                    }
 
-                    // Configure mutation type
-                    if (options.MutationClrType != null)
-                    {
-                        schemaBuilder.MutationType(options.MutationClrType);
-                    }
-                    else
-                    {
-                        Type? mutationClrType = default;
-                        if (contextType != typeof(GraphQLContext))
-                        {
-                            mutationClrType = contextType.Assembly.GetExportedTypes()
-                                .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
-                        }
-
-                        if (mutationClrType == null)
-                        {
-                            mutationClrType = Assembly.GetEntryAssembly()?.GetTypes()
-                                .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
-                        }
-
-                        if (mutationClrType != null)
-                        {
-                            internalBuilder.MutationType(mutationClrType, ConfigurationSource.Convention);
-                        }
-                    }
-
-
-                    OnSchemaCreating(schemaBuilder);
-
-
-                    _schema = schemaDef.ToSchema();
+                        OnSchemaCreating(sb
+                        );
+                    });
                     SchemaCache[contextType] = _schema;
                 }
 

@@ -30,6 +30,7 @@ namespace GraphZen.TypeSystem
             IEnumerable<IArgumentDefinition>? arguments, TypeResolver typeResolver, Type? clrType)
         {
             Name = Check.NotNull(name, nameof(name));
+            IsSpecDirective = Name == "include" || Name == "skip" || Name == "deprecated";
             Description = description;
             ClrType = clrType;
             Locations = Check.NotNull(locations, nameof(locations));
@@ -79,5 +80,8 @@ namespace GraphZen.TypeSystem
         [GraphQLCanBeNull] public string? Description { get; }
 
         public override string ToString() => $"directive {Name}";
+
+        [GraphQLIgnore]
+        public bool IsSpecDirective { get; }
     }
 }

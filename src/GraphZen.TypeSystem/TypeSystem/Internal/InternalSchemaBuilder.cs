@@ -14,9 +14,12 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class InternalSchemaBuilder : AnnotatableMemberDefinitionBuilder<SchemaDefinition>
     {
+        private readonly Lazy<SchemaBuilder> _builder;
+        public SchemaBuilder Builder => _builder.Value;
         public InternalSchemaBuilder(SchemaDefinition schemaDefinition)
             : base(schemaDefinition, schemaDefinition.Builder)
         {
+            _builder = new Lazy<SchemaBuilder>(() => new SchemaBuilder(schemaDefinition));
         }
 
         public IParser Parser { get; } = new SuperpowerParser();
@@ -736,6 +739,11 @@ namespace GraphZen.TypeSystem.Internal
             {
                 objectType.Builder.ConfigureObjectFromClrType();
             }
+
+            if (objectType.Name == "Query")
+            {
+                Definition.SetQueryType(objectType, ConfigurationSource.Convention);
+            }
         }
 
         public bool UnignoreType(string name, ConfigurationSource configurationSource)
@@ -841,15 +849,23 @@ namespace GraphZen.TypeSystem.Internal
         public InternalSchemaBuilder QueryType(string name, ConfigurationSource configurationSource)
         {
             Check.NotNull(name, nameof(name));
-            Definition.SetQueryType(Object(name, configurationSource)?.Definition, configurationSource);
+            var queryType = Object(name, configurationSource)?.Definition;
+            if (queryType != null)
+            {
+                Definition.SetQueryType(queryType, configurationSource);
+            }
             return this;
         }
 
 
-        public InternalSchemaBuilder QueryType(Type clrtType, ConfigurationSource configurationSource)
+        public InternalSchemaBuilder QueryType(Type clrType, ConfigurationSource configurationSource)
         {
-            Check.NotNull(clrtType, nameof(clrtType));
-            Definition.SetQueryType(Object(clrtType, configurationSource)?.Definition, configurationSource);
+            Check.NotNull(clrType, nameof(clrType));
+            var queryType = Object(clrType, configurationSource)?.Definition;
+            if (queryType != null)
+            {
+                Definition.SetQueryType(queryType, configurationSource);
+            }
             return this;
         }
 
@@ -1113,6 +1129,12 @@ namespace GraphZen.TypeSystem.Internal
         public void RemoveInputObject(string name, ConfigurationSource configurationSource)
         {
             throw new NotImplementedException();
+        }
+
+        public InternalSchemaBuilder Description(string description, ConfigurationSource configurationSource)
+        {
+            Definition.SetDescription(description, configurationSource);
+            return this;
         }
     }
 }

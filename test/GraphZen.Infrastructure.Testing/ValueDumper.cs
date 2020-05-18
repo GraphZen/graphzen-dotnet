@@ -29,7 +29,7 @@ namespace GraphZen.Infrastructure
             return value;
         }
 
-        public static T Dump<T>(this T value, string label = "_", bool expanded = false)
+        public static T Dump<T>(this T value, string label = "schemaBuilder", bool expanded = false)
         {
             if (expanded)
             {

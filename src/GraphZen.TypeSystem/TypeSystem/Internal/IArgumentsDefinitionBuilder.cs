@@ -17,7 +17,7 @@ namespace GraphZen.TypeSystem.Internal
         TBuilder Argument(string name, string type, Action<InputValueBuilder<object?>> configurator);
 
         TBuilder Argument<TArgument>(string name);
-        TBuilder Argument<TArgument>(string name, Action<InputValueBuilder<object?>> configurator);
+        TBuilder Argument<TArgument>(string name, Action<InputValueBuilder<TArgument>> configurator);
 
         TBuilder IgnoreArgument(string name);
         TBuilder UnignoreArgument(string name);

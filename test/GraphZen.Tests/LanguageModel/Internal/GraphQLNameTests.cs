@@ -17,7 +17,7 @@ namespace GraphZen.Tests.LanguageModel.Internal
         [Theory]
         [InlineData("", false)]
         [InlineData("0", false)]
-        [InlineData("_", true)]
+        [InlineData("schemaBuilder", true)]
         [InlineData("abc", true)]
         [InlineData("abc`", false)]
         [InlineData("0_aa0", false)]

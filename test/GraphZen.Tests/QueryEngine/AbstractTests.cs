@@ -31,7 +31,7 @@ namespace GraphZen.Tests.QueryEngine
         private class Dog
         {
             public string Name { [UsedImplicitly] get; set; }
-            public bool Woofs { [UsedImplicitly] get; set; }
+            public bool? Woofs { [UsedImplicitly] get; set; }
         }
 
         [Fact]
@@ -111,9 +111,10 @@ namespace GraphZen.Tests.QueryEngine
                             return "Cat";
                         case Human _:
                             return "Human";
+
                     }
 
-                    return null;
+                    return null!;
                 });
 
                 sb.Object("Human")
@@ -165,7 +166,7 @@ namespace GraphZen.Tests.QueryEngine
                             name = "Garfield",
                             meows = false
                         },
-                        null
+                        null!
                     }
                 },
                 errors = new object[]
@@ -210,7 +211,7 @@ namespace GraphZen.Tests.QueryEngine
                                 return "Human";
                         }
 
-                        return null;
+                        return null!;
                     });
 
 
@@ -251,7 +252,7 @@ namespace GraphZen.Tests.QueryEngine
                             name = "Garfield",
                             meows = false
                         },
-                        null
+                        null!
                     }
                 },
                 errors = new object[]
@@ -272,7 +273,7 @@ namespace GraphZen.Tests.QueryEngine
             var schema = Schema.Create(sb =>
             {
                 sb.Interface("FooInterface")
-                    .ResolveType((value, context, info) => null)
+                    .ResolveType((value, context, info) => null!)
                     .Field("bar", "String");
 
                 sb.Object("FooObject")
@@ -286,7 +287,7 @@ namespace GraphZen.Tests.QueryEngine
             return ExecuteAsync(schema, "{ foo { bar } }")
                 .ShouldEqual(new
                 {
-                    data = new { foo = (string)null },
+                    data = new { foo = (string)null! },
                     errors = new object[]
                     {
                         new
@@ -321,7 +322,7 @@ namespace GraphZen.Tests.QueryEngine
                         case Cat _:
                             return "Cat";
                         default:
-                            return null;
+                            return null!;
                     }
                 });
 

@@ -12,13 +12,5 @@ namespace GraphZen.TypeSystem
 {
     public static class GraphQLTypes
     {
-        public static IReadOnlyList<NamedType> All = new List<NamedType>
-        {
-            SpecScalars.String,
-            SpecScalars.ID,
-            SpecScalars.Boolean,
-            SpecScalars.Float,
-            SpecScalars.Int
-        }.Concat(Introspection.Schema.GetTypes()).ToImmutableList();
-    }
+            }
 }

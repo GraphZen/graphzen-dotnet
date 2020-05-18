@@ -24,8 +24,8 @@ namespace GraphZen.Tests.StarWars
                 schema.ToDocumentSyntax().WithoutBuiltInDefinitions().WithSortedChildren()
                     .ToSyntaxString();
 
-            var codeFirstSdl = Print(CodeFirstSchema);
-            var schemaBuilderSdl = Print(SchemaBuilderSchema);
+            var codeFirstSdl = Print(CodeFirstSchema());
+            var schemaBuilderSdl = Print(SchemaBuilderSchema());
             codeFirstSdl.Should().Be(schemaBuilderSdl, opt =>
             {
                 opt.ShowActual = false;

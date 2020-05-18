@@ -17,7 +17,7 @@ namespace GraphZen.Tests.StarWars
     {
         [Fact]
         public Task CorrectlyIdentifiesR2D2AsTHeHeroOfTheStarWarsSaga() =>
-            ExecuteAsync(StarWarsSchema, "query HeroNameQuery { hero { name } }").ShouldEqual(new
+            ExecuteAsync(StarWarsSchema(), "query HeroNameQuery { hero { name } }").ShouldEqual(new
             {
                 data = new
                 {
@@ -34,7 +34,7 @@ namespace GraphZen.Tests.StarWars
         [Fact]
         public Task AllowsUsToQueryForTheIdAndFriendsOfR2D2()
         {
-            return ExecuteAsync(StarWarsSchema, @" 
+            return ExecuteAsync(StarWarsSchema(), @" 
                 query HeroNameAndFriendsQuery {
                   hero {
                     id
@@ -65,7 +65,7 @@ namespace GraphZen.Tests.StarWars
         [Fact]
         public Task AllowsUsToQueryForFriendsOfFriendsOfR2D2()
         {
-            return ExecuteAsync(StarWarsSchema, @" 
+            return ExecuteAsync(StarWarsSchema(), @" 
                 query NestedQuery {
                   hero {
                     name
@@ -130,7 +130,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task AllowsUsToQueryFOrLukeSkywalkerDirectlyUsingHisId() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
             query FetchLukeQuery {
               human(id: ""1000"") {
                 name
@@ -153,7 +153,7 @@ namespace GraphZen.Tests.StarWars
         public Task GenericQuery(string id, string name)
         {
             var human = name != null ? new { name } : null;
-            return ExecuteAsync(StarWarsSchema, @" 
+            return ExecuteAsync(StarWarsSchema(), @" 
                 query FetchSomeIDQuery($someId: String!) {
                   human(id: $someId) {
                     name
@@ -169,7 +169,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task QueryForLukeWithAlias() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
               query FetchLukeAliased {
                 luke: human(id: ""1000"") {
                   name
@@ -184,7 +184,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task QueryForLukeAndLeiaOnRootWithAliases() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
               query FetchLukeAndLeiaAliased {
                 luke: human(id: ""1000"") {
                   name
@@ -203,7 +203,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task QueryUsingDuplicatedContent() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
           query DuplicateFields {
             luke: human(id: ""1000"") {
               name
@@ -224,7 +224,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task QueryUsingFragmentToAvoidDuplicatedContent() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
             query UseFragment {
               luke: human(id: ""1000"") {
                 ...HumanFragment
@@ -249,7 +249,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task UsingTypenameToVerifyR2D2IsADroid() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
             query CheckTypeOfR2{
               hero {
                 __typename
@@ -270,7 +270,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task UsingTypenameToVerifyLukeIsAHuman() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
             query CheckTypeOfLuke {
               hero(episode: EMPIRE) {
                 __typename
@@ -292,7 +292,7 @@ namespace GraphZen.Tests.StarWars
         [Fact]
         public Task CorrectlyReportsErrorOnAccessingSecretBackstory()
         {
-            return ExecuteAsync(StarWarsSchema, @"
+            return ExecuteAsync(StarWarsSchema(), @"
             query HeroNameQuery {
               hero {
                 name
@@ -327,7 +327,7 @@ namespace GraphZen.Tests.StarWars
         [Fact]
         public Task CorrectlyReportsErrorOnAccessingSecretBackstoryInAList()
         {
-            return ExecuteAsync(StarWarsSchema, @"
+            return ExecuteAsync(StarWarsSchema(), @"
             query HeroNameQuery {
               hero {
                 name
@@ -400,7 +400,7 @@ namespace GraphZen.Tests.StarWars
         [Fact]
         public Task CorrectlyReportsErrorOnAccessingSecretBackstoryThroughAnAlias()
         {
-            return ExecuteAsync(StarWarsSchema, @"
+            return ExecuteAsync(StarWarsSchema(), @"
             query HeroNameQuery {
               mainHero: hero {
                 name

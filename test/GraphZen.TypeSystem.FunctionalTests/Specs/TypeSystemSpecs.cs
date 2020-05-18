@@ -218,5 +218,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
             public const string custom_named_clr_typed_item_when_type_removed_should_retain_custom_name = null;
         }
+
+        public static class QueryTypeSpecs
+        {
+            public const string it_is_set_by_convention_when_object_named_query_added = null;
+            public const string it_is_set_by_convention_when_object_renamed_to_query = null;
+        }
     }
 }

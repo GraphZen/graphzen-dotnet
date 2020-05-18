@@ -97,11 +97,11 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public InputValueBuilder Argument(string name)
+        public InputValueBuilder<object?> Argument(string name)
         {
             Check.NotNull(name, nameof(name));
             var ib = Builder.Argument(name, ConfigurationSource.Explicit);
-            return new InputValueBuilder(ib);
+            return new InputValueBuilder<object?>(ib);
         }
 
         public FieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type)
@@ -112,15 +112,16 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+
         public FieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type,
-            Action<InputValueBuilder> configurator)
+            Action<InputValueBuilder<object?>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Check.NotNull(configurator, nameof(configurator));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit)
                 .Type(type, ConfigurationSource.Explicit);
-            configurator(new InputValueBuilder(argBuilder));
+            configurator(new InputValueBuilder<object?>(argBuilder));
             return this;
         }
 
@@ -140,21 +141,21 @@ namespace GraphZen.TypeSystem
         }
 
         public FieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
-            Action<InputValueBuilder> configurator)
+            Action<InputValueBuilder<object?>> configurator)
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit);
-            configurator?.Invoke(new InputValueBuilder(argBuilder));
+            configurator?.Invoke(new InputValueBuilder<object?>(argBuilder));
             return this;
         }
 
         public FieldBuilder<TDeclaringType, TField, TContext> Argument<TArg>(string name,
-            Action<InputValueBuilder> configurator)
+            Action<InputValueBuilder<TArg>> configurator)
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit)
                 .Type(typeof(TArg), ConfigurationSource.Explicit);
-            configurator(new InputValueBuilder(argBuilder));
+            configurator(new InputValueBuilder<TArg>(argBuilder));
             return this;
         }
 
@@ -169,19 +170,6 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             Builder.UnignoreArgument(name, ConfigurationSource.Explicit);
-            return this;
-        }
-
-        public FieldBuilder<TDeclaringType, TField, TContext> Deprecated(string reason)
-        {
-            Check.NotNull(reason, nameof(reason));
-            Builder.Deprecated(reason);
-            return this;
-        }
-
-        public FieldBuilder<TDeclaringType, TField, TContext> Deprecated(bool deprecated = true)
-        {
-            Builder.Deprecated(deprecated);
             return this;
         }
 

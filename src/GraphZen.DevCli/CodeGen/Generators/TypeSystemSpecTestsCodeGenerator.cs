@@ -41,14 +41,15 @@ namespace GraphZen.CodeGen.Generators
                     csharp.AppendLine("// ReSharper disable All");
                     csharp.AppendLine("using FluentAssertions;");
                     csharp.AppendLine("using Xunit;");
-                    csharp.AppendLine($"using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.{rootSpec.Name};");
+                    csharp.AppendLine(
+                        $"using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.{rootSpec.Name};");
                     csharp.AppendLine();
                     csharp.Namespace(ns, _ =>
                     {
                         var testFile = Path.Combine(fileDir, $"{className}.cs");
                         var testFileExists = File.Exists(testFile);
 
-                        /*    _.AppendLine(@$"
+                        /*    schemaBuilder.AppendLine(@$"
 
     // rootSpec Field Info: {rootSpec.FieldInfo}
     // rootSpec Field Name: {rootSpec.Name}
@@ -87,10 +88,10 @@ namespace GraphZen.CodeGen.Generators
                                         ");*/
                                         cls.AppendLine($@"
 
-[Spec({specRef})]
+[IntrospectionSpec({specRef})]
 [Fact(Skip=""TODO"")]
-public void {spec.Id}_() {{
-    // var schema = Schema.Create(_ => {{ }});
+public void {spec.Id}schemaBuilder() {{
+    // var schema = Schema.Create(schemaBuilder => {{ }});
 }}
 
 ");

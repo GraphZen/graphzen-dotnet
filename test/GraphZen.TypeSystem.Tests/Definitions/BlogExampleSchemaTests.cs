@@ -51,7 +51,6 @@ namespace GraphZen.TypeSystem.Tests
 
             var titleField = articleFieldType.GetField("title");
             titleField.Name.Should().Be("title");
-            titleField.FieldType.Should().Be(SpecScalars.String);
             titleField.FieldType.As<ScalarType>().Name.Should().Be("String");
 
             var authorField = articleFieldType.GetField("author");

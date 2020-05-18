@@ -157,5 +157,17 @@ namespace GraphZen.TypeSystem.Internal
             return ignoredMemberConfigurationSource.HasValue &&
                    ignoredMemberConfigurationSource.Overrides(configurationSource);
         }
+
+        public InternalObjectTypeBuilder SetName(string name, ConfigurationSource configurationSource)
+        {
+            Definition.SetName(name, configurationSource);
+            return this;
+        }
+
+        public InternalObjectTypeBuilder Description(string description, ConfigurationSource configurationSource)
+        {
+            Definition.SetDescription(description, configurationSource);
+            return this;
+        }
     }
 }

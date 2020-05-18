@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Descrip
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdl_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
     }
 

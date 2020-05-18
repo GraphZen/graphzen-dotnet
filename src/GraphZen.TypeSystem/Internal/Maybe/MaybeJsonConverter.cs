@@ -7,8 +7,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-#nullable disable
-
 
 namespace GraphZen.Internal
 {
@@ -16,12 +14,12 @@ namespace GraphZen.Internal
     {
         public override bool CanRead => false;
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue,
             JsonSerializer serializer) =>
             throw new NotImplementedException(
                 "Unnecessary because CanRead is false. The type will skip the converter.");

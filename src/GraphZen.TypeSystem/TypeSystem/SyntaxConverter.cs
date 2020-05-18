@@ -16,6 +16,6 @@ namespace GraphZen.TypeSystem
 
         public virtual object FromSyntax(SyntaxNode node) => throw new NotImplementedException();
 
-        public virtual SyntaxNode ToSyntax(object value) => throw new NotImplementedException();
+        public virtual SyntaxNode ToSyntax(object? value) => throw new NotImplementedException();
     }
 }

@@ -207,7 +207,7 @@ namespace GraphZen.Tests.StarWars
         protected static Droid GetDroid(string id) => DroidData.TryGetValue(id, out var droid) ? droid : null;
 
 
-        protected static Schema SchemaBuilderSchema = Schema.Create(sb =>
+        protected static Schema SchemaBuilderSchema() => Schema.Create(sb =>
         {
             sb.Enum("Episode")
                 .Description("One of the films in the Star Wars Trilogy")
@@ -279,8 +279,8 @@ namespace GraphZen.Tests.StarWars
                     .Resolve((root, args) => GetHuman(args.id)));
         });
 
-        protected static Schema StarWarsSchema => SchemaBuilderSchema;
-        protected static Schema CodeFirstSchema => Schema.Create(_ => { _.Object<Query>(); });
+        protected static Schema StarWarsSchema() => SchemaBuilderSchema();
+        protected static Schema CodeFirstSchema() => Schema.Create(_ => { _.Object<Query>(); });
 
         [Description("One of the films in the Star Wars Trilogy")]
         public enum Episode

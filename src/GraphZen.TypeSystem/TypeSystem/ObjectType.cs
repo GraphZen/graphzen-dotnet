@@ -49,7 +49,8 @@ namespace GraphZen.TypeSystem
                 new Lazy<IReadOnlyList<InterfaceType>>(() => InterfacesMap.Values.ToImmutableList());
             _syntax = new Lazy<ObjectTypeDefinitionSyntax>(() =>
             {
-                var fieldNodes = Fields.Values.ToSyntaxNodes<FieldDefinitionSyntax>();
+                var fieldNodes = Fields.Values
+                    .ToSyntaxNodes<FieldDefinitionSyntax>();
                 var dirs = DirectiveAnnotations.ToDirectiveNodes();
 
                 var syntax = new ObjectTypeDefinitionSyntax(

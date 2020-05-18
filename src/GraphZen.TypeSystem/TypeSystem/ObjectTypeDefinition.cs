@@ -53,6 +53,9 @@ namespace GraphZen.TypeSystem
         public override TypeKind Kind { get; } = TypeKind.Object;
 
 
+        IEnumerable<IInterfaceTypeDefinition> IInterfacesDefinition.GetInterfaces() => GetInterfaces();
+
+
         public bool AddInterface(InterfaceTypeDefinition @interface, ConfigurationSource configurationSource)
         {
             Check.NotNull(@interface, nameof(@interface));
@@ -128,8 +131,5 @@ namespace GraphZen.TypeSystem
 
             return false;
         }
-
-
-        IEnumerable<IInterfaceTypeDefinition> IInterfacesDefinition.GetInterfaces() => GetInterfaces();
     }
 }

@@ -54,7 +54,6 @@ namespace GraphZen.TypeSystem
 
         public abstract TypeKind Kind { get; }
         public bool IsIntrospection { get; }
-
         public string Name => Identity.Name;
 
         public bool SetName(string name, ConfigurationSource configurationSource)

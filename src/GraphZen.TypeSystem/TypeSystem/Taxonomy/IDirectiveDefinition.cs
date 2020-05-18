@@ -15,5 +15,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IArgumentsDefinition,
         IDirectiveLocationsDefinition
     {
+        public bool IsSpecDirective { get; }
     }
 }

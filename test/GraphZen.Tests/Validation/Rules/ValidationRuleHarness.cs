@@ -93,7 +93,7 @@ namespace GraphZen.Tests.Validation.Rules
                 .Value("SPOTTED", _ => _.CustomValue(3))
                 .Value("NO_FUR", _ =>
                 {
-                    // _.CustomValue(null);
+                    // schemaBuilder.CustomValue(null);
                 })
                 .Value("UNKNOWN");
 

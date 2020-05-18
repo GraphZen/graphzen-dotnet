@@ -22,6 +22,7 @@ namespace GraphZen.QueryEngine
 {
     internal class ExecutionContext
     {
+        
         private ExecutionContext(Schema schema,
             object rootValue,
             IReadOnlyDictionary<string, FragmentDefinitionSyntax> fragments,
@@ -38,10 +39,10 @@ namespace GraphZen.QueryEngine
             Errors = Check.NotNull(errors, nameof(errors));
             RootValue = rootValue;
             Options = options ?? new ExecutionOptions();
+            
         }
 
-        //
-        //public SpecifiedDirectives Directives { get; }
+
 
 
         public Schema Schema { get; }

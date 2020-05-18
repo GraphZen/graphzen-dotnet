@@ -62,18 +62,6 @@ namespace GraphZen.TypeSystem
             types = types ?? Enumerable.Empty<NamedType>();
 
             var initialTypes = new List<NamedType>();
-            // initialTypes.AddRange(SpecScalars.All);
-            // ReSharper disable once PossibleNullReferenceException
-            //if (schemaDefinition.Types.All(_ => _.Name != "String"))
-            //{
-            //    initialTypes.AddRange(SpecScalars.All);
-            //}
-            if (schemaDefinition.Types.All(_ => _.Name != "__Schema"))
-            {
-                var introTypes = Introspection.IntrospectionTypes;
-                initialTypes.AddRange(introTypes);
-            }
-
 
             initialTypes.AddRange(types);
 
@@ -81,8 +69,7 @@ namespace GraphZen.TypeSystem
             var definedDirectives = schemaDefinition.GetDirectives()
                 .ToImmutableDictionary(_ => _.Name, _ => Directive.From(_, ResolveType));
 
-            _directives = SpecDirectives.All.RemoveAll(d => definedDirectives.ContainsKey(d.Name))
-                .AddRange(definedDirectives.Values).ToImmutableDictionary(_ => _.Name);
+            _directives = definedDirectives;
             Directives = _directives.Values.ToImmutableList();
             _directivesByType = Directives.Where(_ => _.ClrType != null).ToImmutableDictionary(_ => _.ClrType!);
 
@@ -193,7 +180,11 @@ namespace GraphZen.TypeSystem
             _inputObjects =
                 new Lazy<IReadOnlyList<InputObjectType>>(() => GetTypes<InputObjectType>().ToImmutableList());
             _scalars = new Lazy<IReadOnlyList<ScalarType>>(() => GetTypes<ScalarType>().ToImmutableList());
+
+            Introspection = new IntrospectionInfo(this);
         }
+
+        internal IntrospectionInfo Introspection { get; }
 
 
         [GraphQLIgnore] public SchemaDefinition Definition { get; }
@@ -260,7 +251,6 @@ namespace GraphZen.TypeSystem
             GetObjects(includeSpecTypes);
 
 
-
         [GraphQLIgnore]
         public IEnumerable<EnumType> GetEnums() => Enums;
 
@@ -286,13 +276,19 @@ namespace GraphZen.TypeSystem
         }
 
         [GraphQLIgnore]
-        public IEnumerable<Directive> GetDirectives(bool includeSpecDirectives = false) => includeSpecDirectives ? Directives : Directives.Where(_ => SpecDirectives.All.All(sd => sd.Name != _.Name));
+        public IEnumerable<Directive> GetDirectives(bool includeSpecDirectives = false) =>
+            includeSpecDirectives ? Directives : Directives.Where(_ => !_.IsSpecDirective);
 
         IObjectTypeDefinition? IQueryTypeDefinition.QueryType => QueryType;
 
         IObjectTypeDefinition? IMutationTypeDefinition.MutationType => MutationType;
 
         IObjectTypeDefinition? ISubscriptionTypeDefinition.SubscriptionType => SubscriptionType;
+
+        IEnumerable<IDirectiveDefinition> IDirectivesDefinition.GetDirectives(bool includeSpecDirectives) =>
+            GetDirectives(includeSpecDirectives);
+
+        [GraphQLCanBeNull] public string? Description { get; }
 
         [GraphQLIgnore]
         public IEnumerable<NamedType> GetTypes() => Types.Values;
@@ -305,6 +301,9 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
+        public static Schema Create() => Create(sb => { });
+
+
         public static Schema Create(DocumentSyntax schemaDocument)
         {
             Check.NotNull(schemaDocument, nameof(schemaDocument));
@@ -322,7 +321,10 @@ namespace GraphZen.TypeSystem
         public static Schema Create(Action<SchemaBuilder> schemaConfiguration)
         {
             Check.NotNull(schemaConfiguration, nameof(schemaConfiguration));
-            var schemaBuilder = new SchemaBuilder(new SchemaDefinition(SpecScalars.All));
+            var schemaBuilder = new SchemaBuilder();
+            schemaBuilder.AddSpecScalars();
+            schemaBuilder.AddSpecDirectives();
+            schemaBuilder.AddIntrospectionTypes();
             schemaConfiguration(schemaBuilder);
             var schemaDef = schemaBuilder.GetInfrastructure<SchemaDefinition>();
             return schemaDef.ToSchema();
@@ -334,7 +336,10 @@ namespace GraphZen.TypeSystem
             where TContext : GraphQLContext
         {
             Check.NotNull(schemaConfiguration, nameof(schemaConfiguration));
-            var schemaBuilder = new SchemaBuilder<TContext>(new SchemaDefinition(SpecScalars.All));
+            var schemaBuilder = new SchemaBuilder<TContext>();
+            schemaBuilder.AddSpecScalars();
+            schemaBuilder.AddSpecDirectives();
+            schemaBuilder.AddIntrospectionTypes();
             schemaConfiguration(schemaBuilder);
             var schemaDef = schemaBuilder.GetInfrastructure<SchemaDefinition>();
             return schemaDef.ToSchema();
@@ -346,21 +351,21 @@ namespace GraphZen.TypeSystem
             switch (typeSyntax)
             {
                 case ListTypeSyntax listNode:
-                    {
-                        var innerType = GetTypeFromAst(listNode.OfType);
-                        return innerType != null ? ListType.Of(innerType) : null;
-                    }
+                {
+                    var innerType = GetTypeFromAst(listNode.OfType);
+                    return innerType != null ? ListType.Of(innerType) : null;
+                }
                 case NonNullTypeSyntax nnNode:
+                {
+                    var innerType = GetTypeFromAst(nnNode.OfType);
+                    switch (innerType)
                     {
-                        var innerType = GetTypeFromAst(nnNode.OfType);
-                        switch (innerType)
-                        {
-                            case null:
-                                return null;
-                            case INullableType nullable:
-                                return NonNullType.Of(nullable);
-                        }
+                        case null:
+                            return null;
+                        case INullableType nullable:
+                            return NonNullType.Of(nullable);
                     }
+                }
                     break;
                 case NamedTypeSyntax namedTypeNode:
                     return Types.TryGetValue(namedTypeNode.Name.Value, out var result) ? result : null;
@@ -627,8 +632,35 @@ namespace GraphZen.TypeSystem
             TryGetDirective(typeof(TDirective), out directive);
 
         public override string ToString() => "Schema";
-        IEnumerable<IDirectiveDefinition> IDirectivesDefinition.GetDirectives(bool includeSpecDirectives) => GetDirectives(includeSpecDirectives);
 
-        [GraphQLCanBeNull] public string? Description { get; }
+        internal class IntrospectionInfo
+        {
+            public IntrospectionInfo(Schema schema)
+            {
+                SchemaMetaFieldDef = new Field("__schema",
+                    "Access the current type schema of this server.", null,
+                    NonNullType.Of(schema.GetObject("__Schema")), null,
+                    (source, args, context, info) => info.Schema, null);
+
+                TypeMetaFieldDef = new Field("__type",
+                    "Request the type information of a single type.", null, schema.GetObject("__Type"),
+                    new[]
+                    {
+                        new Argument("name", null, NonNullType.Of(schema.GetScalar<string>()), null, null, false)
+                    },
+                    (source, args, context, info) => info.Schema.GetType(args.name), null);
+
+                TypeNameMetaFieldDef = new Field("__typename",
+                    "The name of the current Object type at runtime.", null, NonNullType.Of(schema.GetScalar<string>()),
+                    null,
+                    (source, args, context, info) => info.ParentType.Name, null);
+            }
+
+            public Field SchemaMetaFieldDef { get; }
+
+            public Field TypeMetaFieldDef { get; }
+
+            public Field TypeNameMetaFieldDef { get; }
+        }
     }
 }

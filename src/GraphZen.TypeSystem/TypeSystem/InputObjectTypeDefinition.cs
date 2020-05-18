@@ -134,7 +134,7 @@ namespace GraphZen.TypeSystem
 
             // Configure method w/conventions
             var fb = field.Builder;
-            fb.FieldType(property);
+            fb.InputFieldType(property);
             fb.DefaultValue(property, configurationSource);
             if (property.TryGetDescriptionFromDataAnnotation(out var description))
             {

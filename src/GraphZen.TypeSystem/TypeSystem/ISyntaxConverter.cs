@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem
     {
         bool CanRead { get; }
         bool CanWrite { get; }
-        object FromSyntax(SyntaxNode node);
-        SyntaxNode ToSyntax(object value);
+        object? FromSyntax(SyntaxNode node);
+        SyntaxNode ToSyntax(object? value);
     }
 }

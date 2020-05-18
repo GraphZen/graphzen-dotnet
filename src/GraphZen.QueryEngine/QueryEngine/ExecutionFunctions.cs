@@ -523,19 +523,19 @@ namespace GraphZen.QueryEngine
             ObjectType parentType,
             string fieldName)
         {
-            if (fieldName == Introspection.SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
+            if (fieldName == schema.Introspection.SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
             {
-                return Introspection.SchemaMetaFieldDef;
+                return schema.Introspection.SchemaMetaFieldDef;
             }
 
-            if (fieldName == Introspection.TypeMetaFieldDef.Name && schema.QueryType.Equals(parentType))
+            if (fieldName == schema.Introspection.TypeMetaFieldDef.Name && schema.QueryType.Equals(parentType))
             {
-                return Introspection.TypeMetaFieldDef;
+                return schema.Introspection.TypeMetaFieldDef;
             }
 
-            if (fieldName == Introspection.TypeNameMetaFieldDef.Name)
+            if (fieldName == schema.Introspection.TypeNameMetaFieldDef.Name)
             {
-                return Introspection.TypeNameMetaFieldDef;
+                return schema.Introspection.TypeNameMetaFieldDef;
             }
 
             var field = parentType.FindField(fieldName);

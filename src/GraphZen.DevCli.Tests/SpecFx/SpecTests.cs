@@ -46,6 +46,8 @@ Class '{mClass.Name}' incorrectly contains test '{_.SpecId}'
 
 {mClass.FullName!.TrimStart("GraphZen.TypeSystem.FunctionalTests.")} 
 
+(expected class name: {expectedClassName})
+
 
 
 
@@ -69,7 +71,7 @@ Class '{mClass.Name}' incorrectly contains test '{_.SpecId}'
                 {
                     var m = _.TestMethod;
                     var mClass = m.DeclaringType!.Name;
-                    var expectedMethodName = _.SpecId + "_";
+                    var expectedMethodName = _.SpecId + "schemaBuilder";
                     if (m.Name != expectedMethodName)
                     {
                         return $"{mClass}.{m.Name} should be named \"{expectedMethodName}\"";

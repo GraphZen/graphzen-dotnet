@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class InputValueBuilder<TInputValue> : IInfrastructure<InternalInputValueBuilder>, IAnnotableBuilder<InputValueBuilder>
+    public class InputValueBuilder<TInputValue> : IInfrastructure<InternalInputValueBuilder>, IAnnotableBuilder<InputValueBuilder<TInputValue>>
     {
         public InputValueBuilder(InternalInputValueBuilder builder)
         {

@@ -84,5 +84,18 @@ namespace GraphZen.TypeSystem.Internal
 
             return true;
         }
+
+        public InternalUnionTypeBuilder Description(string description, ConfigurationSource configurationSource)
+        {
+            Definition.SetDescription(description, configurationSource);
+            return this;
+        }
+
+        public InternalUnionTypeBuilder SetName(string name, ConfigurationSource configurationSource)
+        {
+
+            Definition.SetName(name, configurationSource);
+            return this;
+        }
     }
 }

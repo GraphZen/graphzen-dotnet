@@ -54,19 +54,19 @@ namespace GraphZen.Utilities
         {
             var name = node.Name.Value;
 
-            if (name == Introspection.SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
+            if (name == schema.Introspection.SchemaMetaFieldDef.Name && schema.QueryType.Equals(parentType))
             {
-                return Introspection.SchemaMetaFieldDef;
+                return schema.Introspection.SchemaMetaFieldDef;
             }
 
-            if (name == Introspection.TypeMetaFieldDef.Name && schema.QueryType.Equals(parentType))
+            if (name == schema.Introspection.TypeMetaFieldDef.Name && schema.QueryType.Equals(parentType))
             {
-                return Introspection.TypeMetaFieldDef;
+                return schema.Introspection.TypeMetaFieldDef;
             }
 
-            if (name == Introspection.TypeNameMetaFieldDef.Name && parentType is ICompositeType)
+            if (name == schema.Introspection.TypeNameMetaFieldDef.Name && parentType is ICompositeType)
             {
-                return Introspection.TypeNameMetaFieldDef;
+                return schema.Introspection.TypeNameMetaFieldDef;
             }
 
             if (parentType is ObjectType objectType)

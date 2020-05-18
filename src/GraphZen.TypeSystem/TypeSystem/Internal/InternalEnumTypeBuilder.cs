@@ -133,5 +133,18 @@ namespace GraphZen.TypeSystem.Internal
             Definition.UnignoreValue(name, configurationSource);
             return this;
         }
+
+        public InternalEnumTypeBuilder Description(string description, ConfigurationSource configurationSource)
+        {
+            Definition.SetDescription(description, configurationSource);
+            return this;
+        }
+
+        public InternalEnumTypeBuilder SetName(string name, ConfigurationSource configurationSource)
+        {
+
+            Definition.SetName(name, configurationSource);
+            return this;
+        }
     }
 }

@@ -33,27 +33,28 @@ namespace GraphZen.TypeSystem.Tests
         private EnumType EnumType => Schema.GetEnum(nameof(EnumType));
         private InputObjectType InputObjectType => Schema.GetInputObject(nameof(InputObjectType));
         private ScalarType ScalarType => Schema.GetScalar(nameof(ScalarType));
+        private ScalarType StringScalar => Schema.GetScalar<string>();
 
 
         [Fact]
         public void IsGraphQLTypeReturnsTrueForUnwrappedTypes()
         {
-            (SpecScalars.String.As<object>() is IGraphQLType).Should().BeTrue();
+            (StringScalar.As<object>() is IGraphQLType).Should().BeTrue();
             (ObjectType.As<object>() is IGraphQLType).Should().BeTrue();
         }
 
         [Fact]
         public void IsGraphQLTypeReturnsTrueForWrappedTypes()
         {
-            (NonNullType.Of(SpecScalars.String).As<object>() is IGraphQLType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is IGraphQLType).Should().BeTrue();
+            (NonNullType.Of(StringScalar).As<object>() is IGraphQLType).Should().BeTrue();
+            (ListType.Of(StringScalar).As<object>() is IGraphQLType).Should().BeTrue();
         }
 
         [Fact]
         public void IsScalarType_SpecDefined()
         {
-            (SpecScalars.String.As<object>() is ScalarType).Should().BeTrue();
-            (SpecScalars.String.As<object>() is IScalarType).Should().BeTrue();
+            (StringScalar.As<object>() is ScalarType).Should().BeTrue();
+            (StringScalar.As<object>() is IScalarType).Should().BeTrue();
         }
 
         [Fact]
@@ -66,8 +67,8 @@ namespace GraphZen.TypeSystem.Tests
         [Fact]
         public void IsScalar_FalseForWrapped()
         {
-            (ListType.Of(SpecScalars.String).As<object>() is ScalarType).Should().BeFalse();
-            (ListType.Of(SpecScalars.String).As<object>() is IScalarType).Should().BeFalse();
+            (ListType.Of(StringScalar).As<object>() is ScalarType).Should().BeFalse();
+            (ListType.Of(StringScalar).As<object>() is IScalarType).Should().BeFalse();
         }
 
         [Fact]
@@ -189,19 +190,19 @@ namespace GraphZen.TypeSystem.Tests
         [Fact]
         public void IsList_TrueForWrappedInputType()
         {
-            (ListType.Of(SpecScalars.String).As<object>() is ListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is IListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is ListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is IListType).Should().BeTrue();
+            (ListType.Of(StringScalar).As<object>() is ListType).Should().BeTrue();
+            (ListType.Of(StringScalar).As<object>() is IListType).Should().BeTrue();
+            (ListType.Of(StringScalar).As<object>() is ListType).Should().BeTrue();
+            (ListType.Of(StringScalar).As<object>() is IListType).Should().BeTrue();
         }
 
         [Fact]
         public void IsList_TrueForWrappedOutputType()
         {
-            (ListType.Of(SpecScalars.String).As<object>() is ListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is IListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is ListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is IListType).Should().BeTrue();
+            (ListType.Of(StringScalar).As<object>() is ListType).Should().BeTrue();
+            (ListType.Of(StringScalar).As<object>() is IListType).Should().BeTrue();
+            (ListType.Of(StringScalar).As<object>() is ListType).Should().BeTrue();
+            (ListType.Of(StringScalar).As<object>() is IListType).Should().BeTrue();
         }
 
         [Fact]
@@ -218,19 +219,19 @@ namespace GraphZen.TypeSystem.Tests
         [Fact]
         public void IsNonNull_TrueForWrappedInputType()
         {
-            (NonNullType.Of(SpecScalars.String).As<object>() is NonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is INonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is NonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is INonNullType).Should().BeTrue();
+            (NonNullType.Of(StringScalar).As<object>() is NonNullType).Should().BeTrue();
+            (NonNullType.Of(StringScalar).As<object>() is INonNullType).Should().BeTrue();
+            (NonNullType.Of(StringScalar).As<object>() is NonNullType).Should().BeTrue();
+            (NonNullType.Of(StringScalar).As<object>() is INonNullType).Should().BeTrue();
         }
 
         [Fact]
         public void IsNonNull_TrueForWrappedOutputType()
         {
-            (NonNullType.Of(SpecScalars.String).As<object>() is NonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is INonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is NonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is INonNullType).Should().BeTrue();
+            (NonNullType.Of(StringScalar).As<object>() is NonNullType).Should().BeTrue();
+            (NonNullType.Of(StringScalar).As<object>() is INonNullType).Should().BeTrue();
+            (NonNullType.Of(StringScalar).As<object>() is NonNullType).Should().BeTrue();
+            (NonNullType.Of(StringScalar).As<object>() is INonNullType).Should().BeTrue();
         }
 
         [Fact]

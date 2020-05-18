@@ -62,13 +62,13 @@ namespace GraphZen.Tests.QueryEngine
             [UsedImplicitly]
             public object[] C()
             {
-                return new object[] { "Contrived", null, "Confusing" };
+                return new object[] { "Contrived", null!, "Confusing" };
             }
 
             [UsedImplicitly]
             public object[] Deeper()
             {
-                return new object[] { _data, null, _data };
+                return new object[] { _data, null!, _data };
             }
         }
 
@@ -148,11 +148,11 @@ namespace GraphZen.Tests.QueryEngine
                     {
                         a = "Already Been Done",
                         b = "Boring",
-                        c = new object[] { "Contrived", null, "Confusing" },
+                        c = new object[] { "Contrived", null!, "Confusing" },
                         deeper = new object[]
                         {
                             new {a = "Apple", b = "Banana"},
-                            null,
+                            null!,
                             new {a = "Apple", b = "Banana"}
                         }
                     }
@@ -235,7 +235,7 @@ namespace GraphZen.Tests.QueryEngine
         public async Task ProvidesInfoAboutCurrentExecutionState()
         {
             var ast = Parser.ParseDocument("query ($var: String) { result: test }");
-            ResolveInfo info = default;
+            ResolveInfo info = default!;
             var schemaSut = Schema.Create(sb =>
             {
                 sb.Object("Test").Field("test", "String", _ => _
@@ -254,7 +254,7 @@ namespace GraphZen.Tests.QueryEngine
             info.FieldNodes.Count.Should().Be(1);
             info.FieldNodes[0].Should()
                 .Be(ast.Definitions[0].As<OperationDefinitionSyntax>().SelectionSet.Selections[0]);
-            info.ReturnType.Should().Be(SpecScalars.String);
+            info.ReturnType.Should().Be(schemaSut.GetType("String"));
             info.ParentType.Should().Be(schemaSut.QueryType);
             info.Path.Previous.Should().Be(null);
             info.Path.Key.Should().Be("result");
@@ -270,7 +270,7 @@ namespace GraphZen.Tests.QueryEngine
             var doc = "query Example { a }";
             var data = new DynamicDictionary();
             data["contextThing"] = "thing";
-            dynamic resolvedRootValue = default;
+            dynamic resolvedRootValue = default!;
             var schema = Schema.Create(sb =>
             {
                 sb.Object("Type").Field("a", "String", _ => _.Resolve(source =>

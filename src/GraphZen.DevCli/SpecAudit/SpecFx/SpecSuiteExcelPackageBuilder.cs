@@ -43,13 +43,13 @@ namespace GraphZen.SpecAudit.SpecFx
             testPathHeader.Value = "Path";
             var specCol = 4;
             var specHeader = testWs.Cells[1, specCol];
-            specHeader.Value = "Spec";
+            specHeader.Value = "IntrospectionSpec";
             var subjectInModelCol = 5;
             var subjectInModelHeader = testWs.Cells[1, subjectInModelCol];
             subjectInModelHeader.Value = "Model Subject";
             var specInModelCol = 6;
             var specModelHeader = testWs.Cells[1, specInModelCol];
-            specModelHeader.Value = "Model Spec";
+            specModelHeader.Value = "Model IntrospectionSpec";
 
             for (var i = 0; i < suite.Tests.Count; i++)
             {

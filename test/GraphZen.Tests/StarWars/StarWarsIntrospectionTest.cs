@@ -18,7 +18,7 @@ namespace GraphZen.Tests.StarWars
         [Fact]
         public Task AllowsQueryingTheSchemaForTypes()
         {
-            return ExecuteAsync(StarWarsSchema, @"
+            return ExecuteAsync(StarWarsSchema(), @"
 
                 query IntrospectionTypeQuery {
                   __schema {
@@ -65,7 +65,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task AllowsQueryingTheSchemaForTheQueryType() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
             
             query IntrospectionQueryTypeQuery {
               __schema {
@@ -91,7 +91,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task AllowsQueryingTheSchemaForASpecificType() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
             
         query IntrospectionDroidTypeQuery {
           __type(name: ""Droid"") {
@@ -112,7 +112,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task AllowsQueryingTheSchemaForAnObjectKind() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
             
         query IntrospectionDroidKindQuery {
           __type(name: ""Droid"") {
@@ -135,7 +135,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task AllowsQueryingTheSchemaForAnInterfaceKind() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
             
         query IntrospectionCharacterKindQuery {
           __type(name: ""Character"") {
@@ -159,7 +159,7 @@ namespace GraphZen.Tests.StarWars
         [Fact]
         public Task AllowsQueryingTheSchemaForObjectFields()
         {
-            return ExecuteAsync(StarWarsSchema, @"
+            return ExecuteAsync(StarWarsSchema(), @"
             
         query IntrospectionDroidFieldsQuery {
           __type(name: ""Droid"") {
@@ -247,7 +247,7 @@ namespace GraphZen.Tests.StarWars
         [Fact]
         public Task AllowsQueryingTheSchemaForNestedObjectFields()
         {
-            return ExecuteAsync(StarWarsSchema, @"
+            return ExecuteAsync(StarWarsSchema(), @"
             
         query IntrospectionDroidNestedFieldsQuery {
           __type(name: ""Droid"") {
@@ -357,7 +357,7 @@ namespace GraphZen.Tests.StarWars
         [Fact]
         public Task AllowsQueryingSchemaForFieldArgs()
         {
-            return ExecuteAsync(StarWarsSchema, @"
+            return ExecuteAsync(StarWarsSchema(), @"
 
         query IntrospectionQueryTypeQuery {
           __schema {
@@ -468,7 +468,7 @@ namespace GraphZen.Tests.StarWars
 
         [Fact]
         public Task AllowsQueryingTheSchemaForDocumentation() =>
-            ExecuteAsync(StarWarsSchema, @"
+            ExecuteAsync(StarWarsSchema(), @"
 
         query IntrospectionDroidDescriptionQuery {
           __type(name: ""Droid"") {

@@ -2,22 +2,23 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
+using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.Infrastructure
 {
     [NoReorder]
-    public static class Introspection
+    public static class IntrospectionSpec
     {
-        public static Schema Schema { get; } = Schema.Create(sb =>
+        public static SchemaBuilder<TContext> AddIntrospectionTypes<TContext>(this SchemaBuilder<TContext> sb) where TContext : GraphQLContext
         {
             sb.Object<IGraphQLType>()
                 .Description("The fundamental unit of any GraphQL Schema is the type. There are " +
@@ -35,18 +36,13 @@ namespace GraphZen.TypeSystem
                     .Resolve(type => type is NamedType named ? named.Description : null))
                 .Field("fields", "[__Field!]", _ =>
                 {
-                    _.Argument("includeDeprecated", "Boolean", configurator: a =>
-                        {
-                            var test = a;
-                            a.DefaultValue(false);
-                        })
+                    _.Argument("includeDeprecated", "Boolean", a => { a.DefaultValue(false); })
                         .Resolve((type, args) =>
                         {
                             if (type is IFields fieldsType)
                             {
                                 var includeDeprecated = args.includeDeprecated == true;
-                                return fieldsType.Fields.Values.Where(field =>
-                                    includeDeprecated || !field.IsDeprecated);
+                                return fieldsType.Fields.Values.Where(field => (includeDeprecated || !field.IsDeprecated));
                             }
 
                             return null;
@@ -92,6 +88,7 @@ namespace GraphZen.TypeSystem
 
             sb.Object<Directive>()
                 .Field<IEnumerable<InputValue>>("args", f => f.Resolve(d => d.GetArguments()));
+
             sb.Enum<DirectiveLocation>();
 
             sb.Object<Field>()
@@ -113,32 +110,11 @@ namespace GraphZen.TypeSystem
             sb.Object<EnumValue>();
 
             sb.Enum<TypeKind>();
-        });
+            return sb;
+        }
 
+        public static Schema Schema { get; } = Schema.Create(sb => { sb.AddIntrospectionTypes(); });
 
-        public static Field SchemaMetaFieldDef { get; } = new Field("__schema",
-            "Access the current type schema of this server.", null,
-            NonNullType.Of(Schema.GetObject("__Schema")), null,
-            (source, args, context, info) => info.Schema, null);
-
-
-        public static Field TypeMetaFieldDef { get; } = new Field("__type",
-            "Request the type information of a single type.", null, Schema.GetObject("__Type"),
-            new[]
-            {
-                new Argument("name", null, NonNullType.Of(SpecScalars.String), null, null, false)
-            },
-            (source, args, context, info) => info.Schema.GetType(args.name), null);
-
-
-        public static Field TypeNameMetaFieldDef { get; } = new Field("__typename",
-            "The name of the current Object type at runtime.", null, NonNullType.Of(SpecScalars.String), null,
-            (source, args, context, info) => info.ParentType.Name, null);
-
-
-        public static readonly IReadOnlyList<NamedType> IntrospectionTypes =
-            Schema.GetTypes()
-                .Where(_ => SpecScalars.All.All(ss => ss.Name != _.Name))
-                .ToImmutableList();
+        
     }
 }

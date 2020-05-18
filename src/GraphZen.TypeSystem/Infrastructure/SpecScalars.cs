@@ -2,25 +2,22 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.Infrastructure
 {
     public static class SpecScalars
     {
-        // ReSharper disable once InconsistentNaming
-
-        public static ScalarType ID { get; } = ScalarType.Create("ID", _ =>
-            {
-                _
+        public static SchemaBuilder<TContext> AddSpecScalars<TContext>(this SchemaBuilder<TContext> schemaBuilder) where TContext : GraphQLContext
+        {
+            schemaBuilder.Scalar("ID")
                     .Description(SpecScalarSyntaxNodes.ID.Description?.Value!)
                     .Serializer(value =>
                     {
@@ -62,12 +59,10 @@ namespace GraphZen.TypeSystem
                                 return Maybe.None<object>();
                         }
                     });
-            }
-        );
 
-
-        public static ScalarType String { get; } = ScalarType.Create<string>(
-            _ => _.Description(SpecScalarSyntaxNodes.String.Description?.Value!)
+            schemaBuilder.Scalar<string>()
+                .Name("String")
+                .Description(SpecScalarSyntaxNodes.String.Description?.Value!)
                 .ValueParser(value =>
                 {
                     if (value is string str)
@@ -97,13 +92,9 @@ namespace GraphZen.TypeSystem
                     }
 
                     throw new Exception($"String cannot represent a non string value: {value}");
-                })
-        );
+                });
 
-
-        public static ScalarType Int { get; } = ScalarType.Create<int>(_ =>
-        {
-            _
+            schemaBuilder.Scalar<int>()
                 .Description(SpecScalarSyntaxNodes.Int.Description?.Value!)
                 .Name("Int")
                 .ValueParser(value =>
@@ -148,14 +139,12 @@ namespace GraphZen.TypeSystem
 
                     throw new Exception($"Int cannot represent non-integer value: {value}");
                 });
-        });
 
 
-        public static ScalarType Float { get; } = ScalarType.Create<float>(_ =>
-        {
-            _
+
+            schemaBuilder.Scalar("Float")
                 .Description(SpecScalarSyntaxNodes.Float.Description?.Value!)
-                .Name("Float")
+                .ClrType<float>()
                 .Serializer(value =>
                 {
                     try
@@ -190,26 +179,14 @@ namespace GraphZen.TypeSystem
                             return Maybe.None<object>();
                     }
                 });
-        });
 
+            schemaBuilder.Scalar("Boolean").Description(SpecScalarSyntaxNodes.Boolean.Description?.Value!)
+                            .ValueParser(val => Maybe.Some<object>(Convert.ToBoolean(val)))
+                            .LiteralParser(
+                                node => node is BooleanValueSyntax bvn ? Maybe.Some<object>(bvn.Value) : Maybe.None<object>())
+                            .Serializer(value => Maybe.Some<object>(Convert.ToBoolean(value)));
 
-        public static ScalarType Boolean { get; } = ScalarType.Create<bool>(_ =>
-        {
-            _.Description(SpecScalarSyntaxNodes.Boolean.Description?.Value!)
-                .ValueParser(val => Maybe.Some<object>(Convert.ToBoolean(val)))
-                .LiteralParser(
-                    node => node is BooleanValueSyntax bvn ? Maybe.Some<object>(bvn.Value) : Maybe.None<object>())
-                .Serializer(value => Maybe.Some<object>(Convert.ToBoolean(value)));
-        });
-
-
-        public static IReadOnlyList<ScalarType> All { get; } = new List<ScalarType>
-        {
-            ID,
-            String,
-            Int,
-            Float,
-            Boolean
-        }.ToImmutableList();
+            return schemaBuilder;
+        }
     }
 }

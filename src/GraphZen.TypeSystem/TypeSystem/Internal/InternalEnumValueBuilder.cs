@@ -34,5 +34,11 @@ namespace GraphZen.TypeSystem.Internal
 
             return this;
         }
+
+        public InternalEnumValueBuilder Description(string description, ConfigurationSource configurationSource)
+        {
+            Definition.SetDescription(description, configurationSource);
+            return this;
+        }
     }
 }

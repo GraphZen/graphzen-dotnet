@@ -59,5 +59,11 @@ namespace GraphZen.TypeSystem.Internal
 
             return true;
         }
+
+        public InternalInterfaceTypeBuilder Description(string description, ConfigurationSource configurationSource)
+        {
+            Definition.SetDescription(description, configurationSource);
+            return this;
+        }
     }
 }

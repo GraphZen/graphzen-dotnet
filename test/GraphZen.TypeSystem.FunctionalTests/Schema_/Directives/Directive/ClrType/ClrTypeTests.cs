@@ -176,7 +176,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
             var schema = Schema.Create(_ =>
                        {
                            _.Directive(nameof(PlainClass));
-                           // var foo = _.Directive("Foo").ClrType<PlainClass>();
+                           // var foo = schemaBuilder.Directive("Foo").ClrType<PlainClass>();
                            //Action change = () => foo.ClrType<PlainClass>();
                            //change.Should().Throw<DuplicateClrTypeException>().WithMessage("Cannot set CLR type on directive Foo to CLR class 'PlainClass': directive PlainClass already exists with that CLR type.");
                        });
@@ -188,7 +188,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_unique_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -196,7 +196,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_valid_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -204,7 +204,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void custom_name_should_be_unique_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -212,7 +212,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void custom_name_should_be_valid_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -220,7 +220,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void custom_name_cannot_be_null_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -228,7 +228,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void changing_clr_type_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -236,7 +236,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void changing_clr_type_with_name_annotation_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -244,7 +244,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -252,7 +252,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -260,7 +260,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_removed_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -268,7 +268,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void clr_typed_item_when_type_removed_should_retain_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -276,7 +276,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -284,7 +284,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "TODO")]
         public void custom_named_clr_typed_item_when_type_removed_should_retain_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
     }
 }

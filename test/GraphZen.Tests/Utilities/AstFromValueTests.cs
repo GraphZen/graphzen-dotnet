@@ -46,103 +46,111 @@ namespace GraphZen.Tests.Utilities
         [Fact]
         public void ConvertsBooleanValuesToBooleanValueNodes()
         {
-            Get(Some(true), SpecScalars.Boolean).Should().Be(BooleanValue(true));
 
-            Get(Some(false), SpecScalars.Boolean).Should().Be(BooleanValue(false));
+            var schema = Schema.Create();
+            var boolean = schema.GetScalar<bool>();
+            Get(Some(true), boolean).Should().Be(BooleanValue(true));
 
-            Get(None(), SpecScalars.Boolean).Should().Be(null);
+            Get(Some(false), boolean).Should().Be(BooleanValue(false));
 
-            Get(Some(null), SpecScalars.Boolean).Should().Be(NullValue());
+            Get(None(), boolean).Should().Be(null);
 
-            Get(Some(0), SpecScalars.Boolean).Should().Be(BooleanValue(false));
+            Get(Some(null), boolean).Should().Be(NullValue());
 
-            Get(Some(1), SpecScalars.Boolean).Should().Be(BooleanValue(true));
+            Get(Some(0), boolean).Should().Be(BooleanValue(false));
 
-            Get(Some(1), NonNullType.Of(SpecScalars.Boolean)).Should().Be(BooleanValue(true));
+            Get(Some(1), boolean).Should().Be(BooleanValue(true));
 
-            Get(Some(0), NonNullType.Of(SpecScalars.Boolean)).Should().Be(BooleanValue(false));
+            Get(Some(1), NonNullType.Of(boolean)).Should().Be(BooleanValue(true));
+
+            Get(Some(0), NonNullType.Of(boolean)).Should().Be(BooleanValue(false));
         }
 
 
         [Fact]
         public void ItConvertsIntValuesToIntValueNodes()
         {
-            Get(Some(-1), SpecScalars.Int).Should().Be(IntValue(-1));
+            var intType = Schema.Create().GetScalar<int>();
+            Get(Some(-1), intType).Should().Be(IntValue(-1));
 
-            Get(Some(123.0), SpecScalars.Int).Should().Be(IntValue(123));
+            Get(Some(123.0), intType).Should().Be(IntValue(123));
 
-            Get(Some(1e4), SpecScalars.Int).Should().Be(IntValue(10000));
+            Get(Some(1e4), intType).Should().Be(IntValue(10000));
 
-            Assert.Throws<Exception>(() => Get(Some(123.5), SpecScalars.Int))
+            Assert.Throws<Exception>(() => Get(Some(123.5), intType))
                 .Message.Should().Be("Int cannot represent non-integer value: 123.5");
 
-            Assert.Throws<Exception>(() => Get(Some(1e40), SpecScalars.Int))
+            Assert.Throws<Exception>(() => Get(Some(1e40), intType))
                 .Message.Should().Be("Int cannot represent non 32-bit signed integer value: 1E+40");
         }
 
         [Fact]
         public void ItConvertsFloatValuesToIntFloatNodeValues()
         {
-            Get(Some(-1), SpecScalars.Float).Should().Be(IntValue(-1));
+            var floatType = Schema.Create().GetScalar<float>();
+            Get(Some(-1), floatType).Should().Be(IntValue(-1));
 
-            Get(Some(123.0), SpecScalars.Float).Should().Be(IntValue(123));
+            Get(Some(123.0), floatType).Should().Be(IntValue(123));
 
-            Get(Some(123.5), SpecScalars.Float).Should().Be(FloatValue("123.5"));
+            Get(Some(123.5), floatType).Should().Be(FloatValue("123.5"));
 
-            Get(Some(1e4), SpecScalars.Float).Should().Be(IntValue(10000));
+            Get(Some(1e4), floatType).Should().Be(IntValue(10000));
 
-            Get(Some(1e40), SpecScalars.Float).Should().Be(FloatValue("1e+40"));
+            Get(Some(1e40), floatType).Should().Be(FloatValue("1e+40"));
         }
 
         [Fact]
         public void ItConvertsStringValuesToStringValueNodes()
         {
-            Get(Some("hello"), SpecScalars.String).Should().Be(StringValue("hello"));
+            var stringScalar = Schema.Create().GetScalar<string>();
+            Get(Some("hello"), stringScalar).Should().Be(StringValue("hello"));
 
-            Get(Some("VALUE"), SpecScalars.String).Should().Be(StringValue("VALUE"));
+            Get(Some("VALUE"), stringScalar).Should().Be(StringValue("VALUE"));
 
-            Get(Some("VA\nLUE"), SpecScalars.String).Should().Be(StringValue("VA\nLUE"));
+            Get(Some("VA\nLUE"), stringScalar).Should().Be(StringValue("VA\nLUE"));
 
-            Get(Some(123), SpecScalars.String).Should().Be(StringValue("123"));
+            Get(Some(123), stringScalar).Should().Be(StringValue("123"));
 
-            Get(Some(false), SpecScalars.String).Should().Be(StringValue("false"));
+            Get(Some(false), stringScalar).Should().Be(StringValue("false"));
 
-            Get(Some(true), SpecScalars.String).Should().Be(StringValue("true"));
+            Get(Some(true), stringScalar).Should().Be(StringValue("true"));
 
-            Get(Some(null), SpecScalars.String).Should().Be(NullValue());
+            Get(Some(null), stringScalar).Should().Be(NullValue());
 
-            Get(None(), SpecScalars.String).Should().Be(null);
+            Get(None(), stringScalar).Should().Be(null);
         }
 
         [Fact]
         public void ItConvertsIdValuesToIntStringValueNodes()
         {
-            Get(Some("hello"), SpecScalars.ID).Should().Be(StringValue("hello"));
+            var idScalar = Schema.Create().GetScalar("ID");
+            Get(Some("hello"), idScalar).Should().Be(StringValue("hello"));
 
-            Get(Some("VALUE"), SpecScalars.ID).Should().Be(StringValue("VALUE"));
+            Get(Some("VALUE"), idScalar).Should().Be(StringValue("VALUE"));
 
-            Get(Some("VA\nLUE"), SpecScalars.ID).Should().Be(StringValue("VA\nLUE"));
+            Get(Some("VA\nLUE"), idScalar).Should().Be(StringValue("VA\nLUE"));
 
-            Get(Some(-1), SpecScalars.ID).Should().Be(IntValue(-1));
+            Get(Some(-1), idScalar).Should().Be(IntValue(-1));
 
-            Get(Some(123), SpecScalars.ID).Should().Be(IntValue(123));
+            Get(Some(123), idScalar).Should().Be(IntValue(123));
 
-            Get(Some("123"), SpecScalars.ID).Should().Be(IntValue(123));
+            Get(Some("123"), idScalar).Should().Be(IntValue(123));
 
-            Get(Some("01"), SpecScalars.ID).Should().Be(StringValue("01"));
+            Get(Some("01"), idScalar).Should().Be(StringValue("01"));
 
-            Assert.Throws<Exception>(() => Get(Some(false), SpecScalars.ID)).Message
+            Assert.Throws<Exception>(() => Get(Some(false), idScalar)).Message
                 .Should().Be("ID cannot represent value: false");
 
-            Get(Some(null), SpecScalars.ID).Should().Be(NullValue());
+            Get(Some(null), idScalar).Should().Be(NullValue());
 
-            Get(None(), SpecScalars.ID).Should().Be(null);
+            Get(None(), idScalar).Should().Be(null);
         }
 
         [Fact]
         public void ItConvertsNonNullValuesToNullValue()
         {
-            var nnBoolean = NonNullType.Of(SpecScalars.Boolean);
+            var booleanScalar = Schema.Create().GetScalar<bool>();
+            var nnBoolean = NonNullType.Of(booleanScalar);
             Get(null!, nnBoolean).Should().Be(null);
         }
 
@@ -160,7 +168,9 @@ namespace GraphZen.Tests.Utilities
         [Fact]
         public void ItConvertsArrayValuesToListValueNodes()
         {
-            Get(Some(new object[] { "FOO", "BAR" }), ListType.Of(SpecScalars.String)).Should()
+            var stringScalar = Schema.Create().GetScalar<string>();
+
+            Get(Some(new object[] { "FOO", "BAR" }), ListType.Of(stringScalar)).Should()
                 .Be(ListValue(StringValue("FOO"), StringValue("BAR")));
 
             Get(Some(new[] { "HELLO", "GOODBYE" }), ListType.Of(MyEnum))
@@ -171,7 +181,8 @@ namespace GraphZen.Tests.Utilities
         [Fact]
         public void ItConvertsListSingltons()
         {
-            Get(Some("FOO"), ListType.Of(SpecScalars.String)).Should().Be(StringValue("FOO"));
+            var stringScalar = Schema.Create().GetScalar<string>();
+            Get(Some("FOO"), ListType.Of(stringScalar)).Should().Be(StringValue("FOO"));
         }
 
         [Fact]

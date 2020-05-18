@@ -120,7 +120,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                                 DefineParentConventionallyWithDataAnnotation(sb, out parentName);
                                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
-                                TryGetValue(parentDef, out _).Should().BeTrue();
+                                TryGetValue(parentDef, out schemaBuilder).Should().BeTrue();
                                 ConfigureExplicitly(sb, parentName, ValueA);
                                 TryGetValue(parentDef, out var configuredA).Should().BeTrue();
                                 configuredA.Should().Be(ValueA);
@@ -142,13 +142,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                                 DefineParentConventionallyWithDataAnnotation(sb, out parentName);
                                 var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
                                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
-                                TryGetValue(parentDef, out _).Should().BeTrue();
+                                TryGetValue(parentDef, out schemaBuilder).Should().BeTrue();
                                 RemoveExplicitly(sb, parentName);
-                                TryGetValue(parentDef, out _).Should().BeFalse();
+                                TryGetValue(parentDef, out schemaBuilder).Should().BeFalse();
                                 GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
                             });
                             var parent = GetParentByName(schema, parentName);
-                            TryGetValue(parent, out _).Should().BeFalse();
+                            TryGetValue(parent, out schemaBuilder).Should().BeFalse();
                         }
 
                         public virtual void configure_by_convention()

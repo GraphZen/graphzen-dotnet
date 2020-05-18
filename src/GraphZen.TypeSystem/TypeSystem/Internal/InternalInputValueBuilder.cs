@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalInputValueBuilder FieldType(PropertyInfo property)
+        public InternalInputValueBuilder InputFieldType(PropertyInfo property)
         {
             Definition.InputType = Schema.GetOrAddTypeReference(property, Definition);
             return this;
@@ -90,6 +90,18 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInputValueBuilder RemoveDefaultValue(ConfigurationSource configurationSource)
         {
             Definition.RemoveDefaultValue(configurationSource);
+            return this;
+        }
+
+        public InternalInputValueBuilder Description(string description, ConfigurationSource configurationSource)
+        {
+            Definition.SetDescription(description, configurationSource);
+            return this;
+        }
+
+        public InternalInputValueBuilder SetName(string name, ConfigurationSource configurationSource)
+        {
+            Definition.SetName(name, configurationSource);
             return this;
         }
     }

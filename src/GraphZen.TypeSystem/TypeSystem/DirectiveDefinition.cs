@@ -226,5 +226,6 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"directive {Name}";
+        public bool IsSpecDirective { get; }
     }
 }

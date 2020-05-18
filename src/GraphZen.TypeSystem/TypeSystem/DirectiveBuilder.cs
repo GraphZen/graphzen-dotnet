@@ -8,7 +8,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 namespace GraphZen.TypeSystem
 {
     public class DirectiveBuilder<TDirective> : IDirectiveBuilder<TDirective>
@@ -78,21 +77,21 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public DirectiveBuilder<TDirective> Argument(string name, Action<InputValueBuilder> configurator)
+        public DirectiveBuilder<TDirective> Argument(string name, Action<InputValueBuilder<object?>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));
             var ib = Builder.Argument(name, ConfigurationSource.Explicit);
-            var b = new InputValueBuilder(ib);
+            var b = new InputValueBuilder<object?>(ib);
             configurator(b);
             return this;
         }
 
-        public InputValueBuilder Argument(string name)
+        public InputValueBuilder<object?> Argument(string name)
         {
             Check.NotNull(name, nameof(name));
             var ab = Builder.Argument(name, ConfigurationSource.Explicit);
-            return new InputValueBuilder(ab);
+            return new InputValueBuilder<object?>(ab);
         }
 
         public DirectiveBuilder<TDirective> Argument(string name, string type)
@@ -103,13 +102,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public DirectiveBuilder<TDirective> Argument(string name, string type, Action<InputValueBuilder> configurator)
+        public DirectiveBuilder<TDirective> Argument(string name, string type, Action<InputValueBuilder<object?>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Check.NotNull(configurator, nameof(configurator));
             var ib = Builder.Argument(name, ConfigurationSource.Explicit).Type(type, ConfigurationSource.Explicit);
-            var builder = new InputValueBuilder(ib);
+            var builder = new InputValueBuilder<object?>(ib);
             configurator(builder);
             return this;
         }
@@ -121,13 +120,14 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public DirectiveBuilder<TDirective> Argument<TArgument>(string name, Action<InputValueBuilder> configurator)
+
+        public DirectiveBuilder<TDirective> Argument<TArgument>(string name, Action<InputValueBuilder<TArgument>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));
             var ib = Builder.Argument(name, ConfigurationSource.Explicit)
                 .Type(typeof(TArgument), ConfigurationSource.Explicit);
-            var b = new InputValueBuilder(ib);
+            var b = new InputValueBuilder<TArgument>(ib);
             configurator(b);
             return this;
         }

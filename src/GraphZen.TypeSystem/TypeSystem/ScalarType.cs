@@ -8,7 +8,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
@@ -87,30 +86,6 @@ namespace GraphZen.TypeSystem
                 definition.Serializer,
                 definition.GetDirectiveAnnotations().ToList()
             );
-        }
-
-
-        public static ScalarType Create(string name,
-            Action<ScalarTypeBuilder<object, ValueSyntax>> scalarTypeConfigurator)
-        {
-            Check.NotNull(name, nameof(name));
-            Check.NotNull(scalarTypeConfigurator, nameof(scalarTypeConfigurator));
-            var schemaDef = new SchemaDefinition(Array.Empty<ScalarType>());
-            var definition = schemaDef.GetOrAddScalar(name, ConfigurationSource.Explicit);
-            var builder = new ScalarTypeBuilder<object, ValueSyntax>(definition.Builder);
-            scalarTypeConfigurator(builder);
-            return From(definition);
-        }
-
-
-        public static ScalarType Create<TScalar>(Action<ScalarTypeBuilder<TScalar, ValueSyntax>> scalarTypeConfigurator)
-        {
-            Check.NotNull(scalarTypeConfigurator, nameof(scalarTypeConfigurator));
-            var schemaDef = new SchemaDefinition(Array.Empty<ScalarType>());
-            var definition = schemaDef.GetOrAddScalar(typeof(TScalar), ConfigurationSource.Explicit);
-            var builder = new ScalarTypeBuilder<TScalar, ValueSyntax>(definition.Builder);
-            scalarTypeConfigurator(builder);
-            return From(definition);
         }
     }
 }

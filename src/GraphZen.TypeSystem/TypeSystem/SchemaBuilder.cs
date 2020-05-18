@@ -12,17 +12,28 @@ namespace GraphZen.TypeSystem
 {
     public class SchemaBuilder : SchemaBuilder<GraphQLContext>
     {
-        public SchemaBuilder(SchemaDefinition schemaDefinition) : base(schemaDefinition)
+        public SchemaBuilder() 
         {
+
+        }
+
+        public SchemaBuilder(SchemaDefinition schema) : base(schema)
+        {
+
         }
     }
 
     public partial class SchemaBuilder<TContext> : ISchemaBuilder<TContext> where TContext : GraphQLContext
     {
-        public SchemaBuilder(SchemaDefinition schemaDefinition)
+
+        public SchemaBuilder() : this(new SchemaDefinition())
         {
-            Check.NotNull(schemaDefinition, nameof(schemaDefinition));
-            Builder = schemaDefinition.Builder;
+
+        }
+
+        public SchemaBuilder(SchemaDefinition schema)
+        {
+            Builder = schema.Builder;
         }
 
         private InternalSchemaBuilder Builder { get; }

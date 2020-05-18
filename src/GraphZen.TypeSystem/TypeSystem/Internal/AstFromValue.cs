@@ -18,6 +18,7 @@ namespace GraphZen.TypeSystem.Internal
     {
         public static ValueSyntax? Get(Maybe<object> maybeValue, IGraphQLType type)
         {
+
             if (!(maybeValue is Some<object> someValue))
             {
                 return null;
@@ -112,7 +113,7 @@ namespace GraphZen.TypeSystem.Internal
                     }
 
 
-                    if (type.Equals(SpecScalars.ID))
+                    if (type.GetNamedType()?.Name == "ID")
                     {
                         if (!strVal.TrimStart('-', '+').StartsWith("0") && double.TryParse(strVal, out var numeric))
                         {

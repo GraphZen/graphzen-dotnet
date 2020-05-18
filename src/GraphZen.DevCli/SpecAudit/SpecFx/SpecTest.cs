@@ -85,7 +85,7 @@ namespace GraphZen.SpecAudit.SpecFx
             }
 
             subjects.Reverse();
-            return string.Join("_", subjects);
+            return string.Join("schemaBuilder", subjects);
         }
     }
 }
