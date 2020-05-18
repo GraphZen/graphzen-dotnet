@@ -18,10 +18,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Name
     {
         [Spec(nameof(can_be_renamed))]
         [Fact(Skip = "TODO")]
-        public void can_be_renamed_()
+        public void can_be_renamedschemaBuilder()
         {
             // var schema = Schema.Create(schemaBuilder => { });
         }
     }
 }
-// Source Hash Code: 7613635323759337612
+// Source Hash Code: 5296683008937040892

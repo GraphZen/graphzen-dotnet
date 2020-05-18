@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem
 {
     public class SchemaBuilder : SchemaBuilder<GraphQLContext>
     {
-        public SchemaBuilder() 
+        public SchemaBuilder()
         {
 
         }

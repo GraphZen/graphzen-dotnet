@@ -18,11 +18,10 @@ using JetBrains.Annotations;
 #nullable disable
 
 
-namespace GraphZen.QueryEngine
+namespace GraphZen.QueryEngine.Internal
 {
     internal class ExecutionContext
     {
-        
         private ExecutionContext(Schema schema,
             object rootValue,
             IReadOnlyDictionary<string, FragmentDefinitionSyntax> fragments,
@@ -39,10 +38,7 @@ namespace GraphZen.QueryEngine
             Errors = Check.NotNull(errors, nameof(errors));
             RootValue = rootValue;
             Options = options ?? new ExecutionOptions();
-            
         }
-
-
 
 
         public Schema Schema { get; }

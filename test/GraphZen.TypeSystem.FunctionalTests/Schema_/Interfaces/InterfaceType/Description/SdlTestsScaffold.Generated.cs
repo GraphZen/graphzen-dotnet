@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.D
     {
         [Spec(nameof(item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
-        public void item_can_be_defined_by_sdl_()
+        public void item_can_be_defined_by_sdlschemaBuilder()
         {
             // var schema = Schema.Create(schemaBuilder => { });
         }
@@ -30,4 +30,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.D
     {
     }
 }
-// Source Hash Code: 12950947969394008066
+// Source Hash Code: 16090139061724218002

@@ -78,7 +78,7 @@ namespace GraphZen.TypeSystem
                 {
                     QueryType = type;
 
-                    
+
                     return true;
                 }
             }

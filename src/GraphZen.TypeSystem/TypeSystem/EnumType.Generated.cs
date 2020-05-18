@@ -41,7 +41,9 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public EnumValue? FindValue(object value)
-            => ValuesByValue.TryGetValue(Check.NotNull(value, nameof(value)), out var _value) ? _value : null;
+            => ValuesByValue.TryGetValue(Check.NotNull(value, nameof(value)), out var schemaBuildervalue)
+                ? schemaBuildervalue
+                : null;
 
         [GraphQLIgnore]
         public bool HasValue(object value)
@@ -59,4 +61,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 17064179861912500514
+// Source Hash Code: 81261463593361688

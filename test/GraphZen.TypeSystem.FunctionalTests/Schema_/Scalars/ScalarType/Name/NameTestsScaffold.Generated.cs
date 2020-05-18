@@ -18,10 +18,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Name
     {
         [Spec(nameof(can_be_renamed))]
         [Fact(Skip = "TODO")]
-        public void can_be_renamed_()
+        public void can_be_renamedschemaBuilder()
         {
             // var schema = Schema.Create(schemaBuilder => { });
         }
     }
 }
-// Source Hash Code: 9199628806425098234
+// Source Hash Code: 15127990649097705578

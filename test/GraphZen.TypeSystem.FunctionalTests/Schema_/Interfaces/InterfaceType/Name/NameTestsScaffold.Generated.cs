@@ -18,10 +18,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.N
     {
         [Spec(nameof(can_be_renamed))]
         [Fact(Skip = "TODO")]
-        public void can_be_renamed_()
+        public void can_be_renamedschemaBuilder()
         {
             // var schema = Schema.Create(schemaBuilder => { });
         }
     }
 }
-// Source Hash Code: 9610270689954435116
+// Source Hash Code: 8142098237341563804

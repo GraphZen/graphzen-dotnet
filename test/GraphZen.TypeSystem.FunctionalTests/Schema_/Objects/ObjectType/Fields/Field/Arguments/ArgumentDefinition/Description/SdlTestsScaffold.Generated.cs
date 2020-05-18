@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
     {
         [Spec(nameof(item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
-        public void item_can_be_defined_by_sdl_()
+        public void item_can_be_defined_by_sdlschemaBuilder()
         {
             // var schema = Schema.Create(schemaBuilder => { });
         }
@@ -31,4 +31,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
     {
     }
 }
-// Source Hash Code: 8823759657463466443
+// Source Hash Code: 5493652051011590619

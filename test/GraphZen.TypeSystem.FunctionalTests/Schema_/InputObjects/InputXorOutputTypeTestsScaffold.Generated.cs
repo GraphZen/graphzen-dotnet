@@ -18,7 +18,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     {
         [Spec(nameof(clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        public void
+            clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
         {
             // var schema = Schema.Create(schemaBuilder => { });
         }
@@ -29,7 +30,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         ))]
         [Fact(Skip = "TODO")]
         public void
-            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
         {
             // var schema = Schema.Create(schemaBuilder => { });
         }
@@ -39,7 +40,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         ))]
         [Fact(Skip = "TODO")]
         public void
-            clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+            clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
         {
             // var schema = Schema.Create(schemaBuilder => { });
         }
@@ -47,10 +48,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 
         [Spec(nameof(clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
+        public void
+            clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
         {
             // var schema = Schema.Create(schemaBuilder => { });
         }
     }
 }
-// Source Hash Code: 8857755201085699394
+// Source Hash Code: 6686800278693175362

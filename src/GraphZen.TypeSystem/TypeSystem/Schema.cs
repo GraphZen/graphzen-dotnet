@@ -322,9 +322,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(schemaConfiguration, nameof(schemaConfiguration));
             var schemaBuilder = new SchemaBuilder();
-            schemaBuilder.AddSpecScalars();
-            schemaBuilder.AddSpecDirectives();
-            schemaBuilder.AddIntrospectionTypes();
+            schemaBuilder.AddSpecMembers();
             schemaConfiguration(schemaBuilder);
             var schemaDef = schemaBuilder.GetInfrastructure<SchemaDefinition>();
             return schemaDef.ToSchema();
@@ -337,9 +335,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(schemaConfiguration, nameof(schemaConfiguration));
             var schemaBuilder = new SchemaBuilder<TContext>();
-            schemaBuilder.AddSpecScalars();
-            schemaBuilder.AddSpecDirectives();
-            schemaBuilder.AddIntrospectionTypes();
+            schemaBuilder.AddSpecMembers();
             schemaConfiguration(schemaBuilder);
             var schemaDef = schemaBuilder.GetInfrastructure<SchemaDefinition>();
             return schemaDef.ToSchema();
@@ -351,21 +347,21 @@ namespace GraphZen.TypeSystem
             switch (typeSyntax)
             {
                 case ListTypeSyntax listNode:
-                {
-                    var innerType = GetTypeFromAst(listNode.OfType);
-                    return innerType != null ? ListType.Of(innerType) : null;
-                }
-                case NonNullTypeSyntax nnNode:
-                {
-                    var innerType = GetTypeFromAst(nnNode.OfType);
-                    switch (innerType)
                     {
-                        case null:
-                            return null;
-                        case INullableType nullable:
-                            return NonNullType.Of(nullable);
+                        var innerType = GetTypeFromAst(listNode.OfType);
+                        return innerType != null ? ListType.Of(innerType) : null;
                     }
-                }
+                case NonNullTypeSyntax nnNode:
+                    {
+                        var innerType = GetTypeFromAst(nnNode.OfType);
+                        switch (innerType)
+                        {
+                            case null:
+                                return null;
+                            case INullableType nullable:
+                                return NonNullType.Of(nullable);
+                        }
+                    }
                     break;
                 case NamedTypeSyntax namedTypeNode:
                     return Types.TryGetValue(namedTypeNode.Name.Value, out var result) ? result : null;

@@ -29,9 +29,9 @@ namespace GraphZen.TypeSystem
         private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _locations =
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
-        private ConfigurationSource _nameConfigurationSource;
         private ConfigurationSource? _clrTypeConfigurationSource;
-        protected override SchemaDefinition Schema { get; }
+
+        private ConfigurationSource _nameConfigurationSource;
 
 
         public DirectiveDefinition(string? name, Type? clrType, SchemaDefinition schema,
@@ -76,7 +76,10 @@ namespace GraphZen.TypeSystem
 
             Name = Check.NotNull(name, nameof(name));
             Builder = new InternalDirectiveBuilder(this, schema.Builder);
+            IsSpecDirective = SpecReservedNames.DirectiveNames.Contains(Name);
         }
+
+        protected override SchemaDefinition Schema { get; }
 
 
         internal InternalDirectiveBuilder Builder { get; }
@@ -198,7 +201,8 @@ namespace GraphZen.TypeSystem
 
             if (Schema.TryGetDirective(clrType, out var existing) && !existing.Equals(this))
             {
-                throw new DuplicateClrTypeException(TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType, existing));
+                throw new DuplicateClrTypeException(
+                    TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType, existing));
             }
 
 
@@ -211,8 +215,7 @@ namespace GraphZen.TypeSystem
 
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
-
-
+        public bool IsSpecDirective { get; }
         public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
         {
             if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))
@@ -226,6 +229,5 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"directive {Name}";
-        public bool IsSpecDirective { get; }
     }
 }
