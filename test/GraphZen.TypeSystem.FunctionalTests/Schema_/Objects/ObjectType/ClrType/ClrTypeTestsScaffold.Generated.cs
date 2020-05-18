@@ -24,17 +24,25 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_can_be_added_with_custom_name))]
+        [Spec(nameof(clr_type_can_be_added_via_type_param))]
         [Fact(Skip = "TODO")]
-        public void clr_type_can_be_added_with_custom_name_()
+        public void clr_type_can_be_added_via_type_param_()
         {
             // var schema = Schema.Create(_ => { });
         }
 
 
-        [Spec(nameof(clr_type_can_be_added_via_type_param))]
+        [Spec(nameof(clr_type_can_be_changed_via_type_param))]
         [Fact(Skip = "TODO")]
-        public void clr_type_can_be_added_via_type_param_()
+        public void clr_type_can_be_changed_via_type_param_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
+        [Spec(nameof(clr_type_can_be_added_with_custom_name))]
+        [Fact(Skip = "TODO")]
+        public void clr_type_can_be_added_with_custom_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -51,14 +59,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         [Spec(nameof(clr_type_can_be_changed_with_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_changed_with_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(clr_type_can_be_changed_via_type_param))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_can_be_changed_via_type_param_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -168,4 +168,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
     }
 }
-// Source Hash Code: 3416594039256265184
+// Source Hash Code: 75721265579176544
