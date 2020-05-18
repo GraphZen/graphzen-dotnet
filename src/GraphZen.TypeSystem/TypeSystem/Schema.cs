@@ -53,43 +53,23 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<IReadOnlyList<UnionType>> _unions;
 
 
-        public Schema(SchemaDefinition schemaDefinition, IEnumerable<NamedType>? types = null) : base(schemaDefinition
+        public Schema(SchemaDefinition schemaDefinition) : base(schemaDefinition
             .DirectiveAnnotations)
         {
             Check.NotNull(schemaDefinition, nameof(schemaDefinition));
             Description = schemaDefinition.Description;
             Definition = schemaDefinition;
-            types = types ?? Enumerable.Empty<NamedType>();
-
-            var initialTypes = new List<NamedType>();
-
-            initialTypes.AddRange(types);
-
-
-            var definedDirectives = schemaDefinition.GetDirectives()
+            _directives = schemaDefinition.GetDirectives()
                 .ToImmutableDictionary(_ => _.Name, _ => Directive.From(_, ResolveType));
-
-            _directives = definedDirectives;
             Directives = _directives.Values.ToImmutableList();
             _directivesByType = Directives.Where(_ => _.ClrType != null).ToImmutableDictionary(_ => _.ClrType!);
 
-            var definedTypes = schemaDefinition.Types
-                .Select(CreateType);
-            initialTypes.AddRange(definedTypes);
 
-            // ReSharper disable once PossibleNullReferenceException
-            var duplicate = initialTypes.GroupBy(_ => _.Name).Where(_ => _.Count() > 1).Select(_ => _.First())
-                .FirstOrDefault();
-
-            if (duplicate != null)
-            {
-                throw new InvalidOperationException($"Type `{duplicate.Name}` defined twice, cannot create schema.");
-            }
-
-            // ReSharper disable once PossibleNullReferenceException
-            Types = initialTypes
-                .OrderBy(_ => _.Name)
-                .ToDictionary(t => t.Name, t => t);
+            Types =
+                schemaDefinition.Types
+                    .Select(CreateType)
+                    .OrderBy(_ => _.Name)
+                    .ToDictionary(t => t.Name, t => t);
 
 
             QueryType = FindType<ObjectType>(Definition.QueryType?.Name ?? "Query")!;
@@ -347,21 +327,21 @@ namespace GraphZen.TypeSystem
             switch (typeSyntax)
             {
                 case ListTypeSyntax listNode:
-                    {
-                        var innerType = GetTypeFromAst(listNode.OfType);
-                        return innerType != null ? ListType.Of(innerType) : null;
-                    }
+                {
+                    var innerType = GetTypeFromAst(listNode.OfType);
+                    return innerType != null ? ListType.Of(innerType) : null;
+                }
                 case NonNullTypeSyntax nnNode:
+                {
+                    var innerType = GetTypeFromAst(nnNode.OfType);
+                    switch (innerType)
                     {
-                        var innerType = GetTypeFromAst(nnNode.OfType);
-                        switch (innerType)
-                        {
-                            case null:
-                                return null;
-                            case INullableType nullable:
-                                return NonNullType.Of(nullable);
-                        }
+                        case null:
+                            return null;
+                        case INullableType nullable:
+                            return NonNullType.Of(nullable);
                     }
+                }
                     break;
                 case NamedTypeSyntax namedTypeNode:
                     return Types.TryGetValue(namedTypeNode.Name.Value, out var result) ? result : null;
