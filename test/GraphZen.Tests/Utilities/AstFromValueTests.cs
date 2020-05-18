@@ -81,7 +81,7 @@ namespace GraphZen.Tests.Utilities
         }
 
         [Fact]
-        public void ItConvertsFloatvaluesToIntFloatNodeValues()
+        public void ItConvertsFloatValuesToIntFloatNodeValues()
         {
             Get(Some(-1), SpecScalars.Float).Should().Be(IntValue(-1));
 

@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem
 
         public IGraphQLTypeReference InputType { get; set; }
 
-        public bool SetDefaultValue(object value, ConfigurationSource configurationSource)
+        public bool SetDefaultValue(object? value, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(_defaultValueConfigurationSource))
             {

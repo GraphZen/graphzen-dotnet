@@ -26,19 +26,19 @@ namespace GraphZen.TypeSystem.Internal
         InputObjectTypeBuilder<TInputObject> RemoveField(string name);
 
         InputObjectTypeBuilder<TInputObject> Field(string name, string type,
-            Action<InputValueBuilder> inputFieldConfigurator);
+            Action<InputValueBuilder<object?>> inputFieldConfigurator);
 
-        InputValueBuilder Field(string name);
-        InputObjectTypeBuilder<TInputObject> Field(string name, Action<InputValueBuilder> inputFieldConfigurator);
+        InputValueBuilder<object?> Field(string name);
+        InputObjectTypeBuilder<TInputObject> Field(string name, Action<InputValueBuilder<object?>> inputFieldConfigurator);
         InputObjectTypeBuilder<TInputObject> Field<TField>(string name);
 
         InputObjectTypeBuilder<TInputObject> Field<TField>(string name,
-            Action<InputValueBuilder> inputFieldConfigurator);
+            Action<InputValueBuilder<TField>> inputFieldConfigurator);
 
         InputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector);
 
         InputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector,
-            Action<InputValueBuilder> fieldBuilder);
+            Action<InputValueBuilder<TField>> fieldBuilder);
 
         InputObjectTypeBuilder<TInputObject> IgnoreField<TField>(Expression<Func<TInputObject, TField>> fieldSelector);
 

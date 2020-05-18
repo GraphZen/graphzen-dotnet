@@ -80,7 +80,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalInputValueBuilder DefaultValue(object value, ConfigurationSource configurationSource)
+        public InternalInputValueBuilder DefaultValue(object? value, ConfigurationSource configurationSource)
         {
             Definition.SetDefaultValue(value, configurationSource);
             return this;

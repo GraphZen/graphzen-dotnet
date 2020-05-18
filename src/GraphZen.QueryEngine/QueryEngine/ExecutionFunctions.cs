@@ -630,13 +630,15 @@ namespace GraphZen.QueryEngine
 
         internal static bool ShouldIncludeNode(ExecutionContext exeContext, SyntaxNode node)
         {
-            var skip = Values.GetDirectiveValues(SpecDirectives.Skip, node, exeContext.VariableValues);
+            var skipDirective = exeContext.Schema.GetDirective("skip");
+            var skip = Values.GetDirectiveValues(skipDirective, node, exeContext.VariableValues);
             if (skip != null && skip["if"] == true)
             {
                 return false;
             }
 
-            var include = Values.GetDirectiveValues(SpecDirectives.Include, node, exeContext.VariableValues);
+            var includeDirective = exeContext.Schema.GetDirective("include");
+            var include = Values.GetDirectiveValues(includeDirective, node, exeContext.VariableValues);
             if (include != null && include["if"] == false)
             {
                 return false;

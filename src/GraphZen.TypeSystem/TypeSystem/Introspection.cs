@@ -35,7 +35,11 @@ namespace GraphZen.TypeSystem
                     .Resolve(type => type is NamedType named ? named.Description : null))
                 .Field("fields", "[__Field!]", _ =>
                 {
-                    _.Argument("includeDeprecated", "Boolean", a => a.DefaultValue(false))
+                    _.Argument("includeDeprecated", "Boolean", configurator: a =>
+                        {
+                            var test = a;
+                            a.DefaultValue(false);
+                        })
                         .Resolve((type, args) =>
                         {
                             if (type is IFields fieldsType)

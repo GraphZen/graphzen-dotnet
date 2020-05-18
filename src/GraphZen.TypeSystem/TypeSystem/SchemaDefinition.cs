@@ -905,7 +905,11 @@ namespace GraphZen.TypeSystem
         protected override SchemaDefinition Schema  => this;
         public IEnumerable<DirectiveDefinition> GetDirectives(bool includeSpecDirectives = false)
         {
-           throw new NotImplementedException(); 
+            if (includeSpecDirectives)
+            {
+                throw new NotImplementedException(nameof(includeSpecDirectives) + "not supported yet");
+            }
+            return _directives.Values;
         }
 
         IEnumerable<IDirectiveDefinition> IDirectivesDefinition.GetDirectives(bool includeSpecDirectives) => GetDirectives(includeSpecDirectives);

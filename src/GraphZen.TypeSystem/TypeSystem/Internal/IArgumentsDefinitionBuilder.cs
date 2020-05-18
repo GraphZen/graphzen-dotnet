@@ -11,17 +11,15 @@ namespace GraphZen.TypeSystem.Internal
     internal interface IArgumentsDefinitionBuilder<out TBuilder>
     {
         TBuilder RemoveArgument(string name);
-        TBuilder Argument(string name, Action<InputValueBuilder> configurator);
-        InputValueBuilder Argument(string name);
+        TBuilder Argument(string name, Action<InputValueBuilder<object?>> configurator);
+        InputValueBuilder<object?> Argument(string name);
         TBuilder Argument(string name, string type);
-        TBuilder Argument(string name, string type, Action<InputValueBuilder> configurator);
+        TBuilder Argument(string name, string type, Action<InputValueBuilder<object?>> configurator);
 
         TBuilder Argument<TArgument>(string name);
-        TBuilder Argument<TArgument>(string name, Action<InputValueBuilder> configurator);
+        TBuilder Argument<TArgument>(string name, Action<InputValueBuilder<object?>> configurator);
 
         TBuilder IgnoreArgument(string name);
-
-
         TBuilder UnignoreArgument(string name);
     }
 }
