@@ -23,14 +23,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Name
             {
                 _.Object("Foo");
                 var poco = _.Object("PlainClass");
-
                 Action rename = () => { poco.Name("Foo"); };
-
-                var pocoDef = _.GetDefinition().GetObject("PlainClass");
-                var fooDef = _.GetDefinition().GetObject("Foo");
-
                 rename.Should().Throw<DuplicateNameException>()
-                    .WithMessage( "Cannot rename object PlainClass to \"Foo\", object Foo already exists. All GraphQL type names must be unique.");
+                    .WithMessage(
+                        "Cannot rename object PlainClass to \"Foo\", object Foo already exists. All GraphQL type names must be unique.");
             });
         }
 

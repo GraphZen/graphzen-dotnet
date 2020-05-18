@@ -10,9 +10,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    internal interface IDescriptionBuilder<out TBuilder>
+    internal interface INamedBuilder<out TBuilder>
     {
-        TBuilder Description(string description);
-        TBuilder RemoveDescription();
+        TBuilder Name(string name);
     }
 }

@@ -5,9 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Internal
 {
-    public interface IAnnotableBuilder<out TBuilder>
+    internal interface IAnnotableBuilder<out TBuilder>
     {
         TBuilder AddDirectiveAnnotation(string name, object? value = null);
         TBuilder UpdateOrAddDirectiveAnnotation(string name, object? value = null);

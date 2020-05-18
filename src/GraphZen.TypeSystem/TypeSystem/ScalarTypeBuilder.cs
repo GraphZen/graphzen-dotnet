@@ -11,8 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class ScalarTypeBuilder<TScalar, TValueNode> : IInfrastructure<InternalScalarTypeBuilder>,
-        IScalarTypeBuilder<TScalar, TValueNode> where TValueNode : ValueSyntax
+    public class ScalarTypeBuilder<TScalar, TValueNode> : IScalarTypeBuilder<TScalar, TValueNode> where TValueNode : ValueSyntax
     {
         public ScalarTypeBuilder(InternalScalarTypeBuilder builder)
         {

@@ -9,9 +9,10 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     internal interface IUnionTypeBuilder<TUnion, TContext> :
+        IInfrastructure<InternalUnionTypeBuilder>,
         IDescriptionBuilder<UnionTypeBuilder<TUnion, TContext>>,
         IAnnotableBuilder<UnionTypeBuilder<TUnion, TContext>>,
-        INameBuilder<UnionTypeBuilder<TUnion, TContext>>,
+        INamedBuilder<UnionTypeBuilder<TUnion, TContext>>,
         IClrTypeBuilder<UnionTypeBuilder<object, TContext>> where TContext : GraphQLContext
     {
         UnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn);

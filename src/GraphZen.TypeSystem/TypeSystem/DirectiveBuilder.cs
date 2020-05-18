@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 #nullable disable
@@ -22,50 +21,50 @@ namespace GraphZen.TypeSystem
 
         private InternalDirectiveBuilder Builder { get; }
 
-        public IDirectiveBuilder<object> ClrType(Type clrType) => throw new NotImplementedException();
+        public DirectiveBuilder<object> ClrType(Type clrType) => throw new NotImplementedException();
 
-        public IDirectiveBuilder<object> ClrType(Type clrType, string name) => throw new NotImplementedException();
+        public DirectiveBuilder<object> ClrType(Type clrType, string name) => throw new NotImplementedException();
 
-        public IDirectiveBuilder<object> RemoveClrType() => throw new NotImplementedException();
+        public DirectiveBuilder<object> RemoveClrType() => throw new NotImplementedException();
 
-        public IDirectiveBuilder<T> ClrType<T>() => throw new NotImplementedException();
+        public DirectiveBuilder<T> ClrType<T>() => throw new NotImplementedException();
 
-        public IDirectiveBuilder<T> ClrType<T>(string name) => throw new NotImplementedException();
+        public DirectiveBuilder<T> ClrType<T>(string name) => throw new NotImplementedException();
 
-        public IDirectiveBuilder<TDirective> Description(string description)
+        public DirectiveBuilder<TDirective> Description(string description)
         {
             Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> RemoveDescription()
+        public DirectiveBuilder<TDirective> RemoveDescription()
         {
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> Name(string name)
+        public DirectiveBuilder<TDirective> Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations)
+        public DirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations)
         {
             Builder.Locations(locations, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> RemoveArgument(string name)
+        public DirectiveBuilder<TDirective> RemoveArgument(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.RemoveArgument(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> Argument(string name, Action<InputValueBuilder> configurator)
+        public DirectiveBuilder<TDirective> Argument(string name, Action<InputValueBuilder> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));
@@ -82,7 +81,7 @@ namespace GraphZen.TypeSystem
             return new InputValueBuilder(ab);
         }
 
-        public IDirectiveBuilder<TDirective> Argument(string name, string type)
+        public DirectiveBuilder<TDirective> Argument(string name, string type)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
@@ -90,7 +89,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> Argument(string name, string type, Action<InputValueBuilder> configurator)
+        public DirectiveBuilder<TDirective> Argument(string name, string type, Action<InputValueBuilder> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
@@ -101,14 +100,14 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> Argument<TArgument>(string name)
+        public DirectiveBuilder<TDirective> Argument<TArgument>(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArgument), ConfigurationSource.Explicit);
             return this;
         }
 
-        public IDirectiveBuilder<TDirective> Argument<TArgument>(string name, Action<InputValueBuilder> configurator)
+        public DirectiveBuilder<TDirective> Argument<TArgument>(string name, Action<InputValueBuilder> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));
@@ -120,11 +119,11 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IDirectiveBuilder<TDirective> IgnoreArgument(string name) => throw new NotImplementedException();
+        public DirectiveBuilder<TDirective> IgnoreArgument(string name) => throw new NotImplementedException();
 
-        public IDirectiveBuilder<TDirective> UnignoreArgument(string name) => throw new NotImplementedException();
+        public DirectiveBuilder<TDirective> UnignoreArgument(string name) => throw new NotImplementedException();
 
-        IDirectiveDefinition IInfrastructure<IDirectiveDefinition>.Instance => Builder.Definition;
+        DirectiveDefinition IInfrastructure<DirectiveDefinition>.Instance => Builder.Definition;
 
         InternalDirectiveBuilder IInfrastructure<InternalDirectiveBuilder>.Instance => Builder;
     }

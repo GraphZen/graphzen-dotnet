@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
@@ -23,32 +22,32 @@ namespace GraphZen.TypeSystem
         private InternalInputObjectTypeBuilder Builder { get; }
 
         InternalInputObjectTypeBuilder IInfrastructure<InternalInputObjectTypeBuilder>.Instance => Builder;
-        IInputObjectTypeDefinition IInfrastructure<IInputObjectTypeDefinition>.Instance => Builder.Definition;
+        InputObjectTypeDefinition IInfrastructure<InputObjectTypeDefinition>.Instance => Builder.Definition;
 
-        public IInputObjectTypeBuilder<TInputObject> Description(string description)
+        public InputObjectTypeBuilder<TInputObject> Description(string description)
         {
             Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> RemoveDescription()
+        public InputObjectTypeBuilder<TInputObject> RemoveDescription()
         {
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 
-        public IInputObjectTypeBuilder<object> ClrType(Type clrType)
+        public InputObjectTypeBuilder<object> ClrType(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
             Builder.ClrType(clrType, ConfigurationSource.Explicit);
             return new InputObjectTypeBuilder<object>(Builder);
         }
 
-        public IInputObjectTypeBuilder<object> ClrType(Type clrType, string name) =>
+        public InputObjectTypeBuilder<object> ClrType(Type clrType, string name) =>
             throw new NotImplementedException();
 
-        public IInputObjectTypeBuilder<object> RemoveClrType()
+        public InputObjectTypeBuilder<object> RemoveClrType()
         {
             Builder.RemoveClrType(ConfigurationSource.Explicit);
 
@@ -56,16 +55,16 @@ namespace GraphZen.TypeSystem
             return new InputObjectTypeBuilder<object>(Builder);
         }
 
-        public IInputObjectTypeBuilder<T> ClrType<T>()
+        public InputObjectTypeBuilder<T> ClrType<T>()
         {
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
             return new InputObjectTypeBuilder<T>(Builder);
         }
 
-        public IInputObjectTypeBuilder<T> ClrType<T>(string name) => throw new NotImplementedException();
+        public InputObjectTypeBuilder<T> ClrType<T>(string name) => throw new NotImplementedException();
 
 
-        public IInputObjectTypeBuilder<TInputObject> Field(string name, string type)
+        public InputObjectTypeBuilder<TInputObject> Field(string name, string type)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
@@ -73,14 +72,14 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> RemoveField(string name)
+        public InputObjectTypeBuilder<TInputObject> RemoveField(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.RemoveField(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> Field(string name, string type,
+        public InputObjectTypeBuilder<TInputObject> Field(string name, string type,
             Action<InputValueBuilder> inputFieldConfigurator)
         {
             Check.NotNull(name, nameof(name));
@@ -97,7 +96,7 @@ namespace GraphZen.TypeSystem
             return new InputValueBuilder(fb);
         }
 
-        public IInputObjectTypeBuilder<TInputObject> Field(string name,
+        public InputObjectTypeBuilder<TInputObject> Field(string name,
             Action<InputValueBuilder> inputFieldConfigurator)
         {
             Check.NotNull(name, nameof(name));
@@ -106,7 +105,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> Field<TField>(string name)
+        public InputObjectTypeBuilder<TInputObject> Field<TField>(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.Field(name, ConfigurationSource.Explicit)?
@@ -114,7 +113,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> Field<TField>(string name,
+        public InputObjectTypeBuilder<TInputObject> Field<TField>(string name,
             Action<InputValueBuilder> inputFieldConfigurator)
         {
             Check.NotNull(name, nameof(name));
@@ -125,7 +124,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject>
+        public InputObjectTypeBuilder<TInputObject>
             Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector)
         {
             var property = fieldSelector.GetPropertyInfoFromExpression();
@@ -133,7 +132,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector,
+        public InputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector,
             Action<InputValueBuilder> fieldBuilder)
         {
             Check.NotNull(fieldSelector, nameof(fieldSelector));
@@ -144,18 +143,18 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> IgnoreField<TField>(
+        public InputObjectTypeBuilder<TInputObject> IgnoreField<TField>(
             Expression<Func<TInputObject, TField>> fieldSelector) =>
             throw new NotImplementedException();
 
-        public IInputObjectTypeBuilder<TInputObject> IgnoreField(string name)
+        public InputObjectTypeBuilder<TInputObject> IgnoreField(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.IgnoreField(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> UnignoreField(string name)
+        public InputObjectTypeBuilder<TInputObject> UnignoreField(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.UnignoreField(name, ConfigurationSource.Explicit);
@@ -163,7 +162,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IInputObjectTypeBuilder<TInputObject> Name(string name)
+        public InputObjectTypeBuilder<TInputObject> Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
@@ -171,19 +170,19 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public IInputObjectTypeBuilder<TInputObject> AddDirectiveAnnotation(string name, object? value = null) =>
+        public InputObjectTypeBuilder<TInputObject> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public IInputObjectTypeBuilder<TInputObject> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public InputObjectTypeBuilder<TInputObject> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IInputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations(string name) =>
+        public InputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
 
-        public IInputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations() =>
+        public InputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations() =>
             throw new NotImplementedException();
     }
 }

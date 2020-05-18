@@ -8,31 +8,14 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public interface IImplementsInterfacesBuilder<out TBuilder>
-    {
-        TBuilder ImplementsInterface(string name);
-
-        TBuilder ImplementsInterfaces(string name, params string[] names);
-        TBuilder IgnoreInterface<T>();
-        TBuilder IgnoreInterface(Type clrType);
-        TBuilder IgnoreInterface(string name);
-        TBuilder UnignoreInterface(string name);
-    }
-
-    public interface IClrTypeBuilder<out TUntypedBuilder>
-    {
-        TUntypedBuilder ClrType(Type clrType);
-        TUntypedBuilder ClrType(Type clrType, string name);
-        TUntypedBuilder RemoveClrType();
-    }
-
     internal interface IObjectTypeBuilder<TObject, TContext> :
-        IImplementsInterfacesBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IInfrastructure<InternalObjectTypeBuilder>,
+
+        IImplementsInterfacesBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IDescriptionBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IAnnotableBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IClrTypeBuilder<ObjectTypeBuilder<object, TContext>>,
-        INameBuilder<ObjectTypeBuilder<TObject, TContext>>,
+        INamedBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IFieldsDefinitionBuilder<ObjectTypeBuilder<TObject, TContext>, TObject, TContext>
         where TContext : GraphQLContext
     {

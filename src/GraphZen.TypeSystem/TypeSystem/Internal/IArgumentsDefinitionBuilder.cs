@@ -6,14 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Internal
 {
-    public interface IArgumentsDefinitionBuilder<out TBuilder>
+    internal interface IArgumentsDefinitionBuilder<out TBuilder>
     {
         TBuilder RemoveArgument(string name);
         TBuilder Argument(string name, Action<InputValueBuilder> configurator);
         InputValueBuilder Argument(string name);
-
         TBuilder Argument(string name, string type);
         TBuilder Argument(string name, string type, Action<InputValueBuilder> configurator);
 

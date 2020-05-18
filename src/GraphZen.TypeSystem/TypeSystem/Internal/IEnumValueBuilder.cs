@@ -7,8 +7,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    internal interface IEnumValueBuilder : IAnnotableBuilder<EnumValueBuilder>,
-        INameBuilder<EnumValueBuilder>,
+    internal interface IEnumValueBuilder :
+        IAnnotableBuilder<EnumValueBuilder>,
+        INamedBuilder<EnumValueBuilder>,
         IDescriptionBuilder<EnumValueBuilder>,
         IInfrastructure<InternalEnumValueBuilder>
     {

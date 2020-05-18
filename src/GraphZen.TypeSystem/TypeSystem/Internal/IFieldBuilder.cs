@@ -5,17 +5,16 @@ using System;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem.Internal
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface IFieldBuilder<TDeclaringType, TField, TContext> :
+    internal interface IFieldBuilder<TDeclaringType, TField, TContext> :
         IAnnotableBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
         IArgumentsDefinitionBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
-        INameBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
+        INamedBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
         IDescriptionBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
         IInfrastructure<IFieldDefinition>,
         IInfrastructure<InternalFieldBuilder>

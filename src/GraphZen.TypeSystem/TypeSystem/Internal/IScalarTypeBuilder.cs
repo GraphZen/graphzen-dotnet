@@ -10,9 +10,10 @@ namespace GraphZen.TypeSystem.Internal
 {
     internal interface
         IScalarTypeBuilder<TScalar, TValueNode> :
+            IInfrastructure<InternalScalarTypeBuilder>,
             IDescriptionBuilder<ScalarTypeBuilder<TScalar, TValueNode>>,
             IAnnotableBuilder<ScalarTypeBuilder<TScalar, TValueNode>>,
-            INameBuilder<ScalarTypeBuilder<TScalar, TValueNode>>,
+            INamedBuilder<ScalarTypeBuilder<TScalar, TValueNode>>,
             IClrTypeBuilder<ScalarTypeBuilder<object, TValueNode>> where TValueNode : ValueSyntax
     {
         ScalarTypeBuilder<T, TValueNode> ClrType<T>();

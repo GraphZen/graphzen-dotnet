@@ -9,9 +9,10 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     internal interface IEnumTypeBuilder<TEnumValue> :
+        IInfrastructure<InternalEnumTypeBuilder>,
         IAnnotableBuilder<EnumTypeBuilder<TEnumValue>>,
         IDescriptionBuilder<EnumTypeBuilder<TEnumValue>>,
-        INameBuilder<EnumTypeBuilder<TEnumValue>>,
+        INamedBuilder<EnumTypeBuilder<TEnumValue>>,
         IClrTypeBuilder<EnumTypeBuilder<object>> where TEnumValue : notnull
     {
         EnumTypeBuilder<TEnumValue> Value(TEnumValue value);

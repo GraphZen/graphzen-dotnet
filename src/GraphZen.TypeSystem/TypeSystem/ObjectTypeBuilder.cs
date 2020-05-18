@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem
 
 
         public ObjectTypeBuilder<TObject, TContext> Field(string name,
-            Action<IFieldBuilder<TObject, object, TContext>> configurator)
+            Action<FieldBuilder<TObject, object, TContext>> configurator)
         {
             Check.NotNull(name, nameof(name));
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
@@ -86,7 +86,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IFieldBuilder<TObject, object, TContext> Field(string name)
+        public FieldBuilder<TObject, object, TContext> Field(string name)
         {
             Check.NotNull(name, nameof(name));
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
@@ -94,7 +94,7 @@ namespace GraphZen.TypeSystem
         }
 
         public ObjectTypeBuilder<TObject, TContext> Field(string name, string type,
-            Action<IFieldBuilder<TObject, object?, TContext>> configurator)
+            Action<FieldBuilder<TObject, object?, TContext>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
@@ -128,7 +128,7 @@ namespace GraphZen.TypeSystem
         }
 
         public ObjectTypeBuilder<TObject, TContext> Field<TField>(string name,
-            Action<IFieldBuilder<TObject, TField, TContext>> configurator)
+            Action<FieldBuilder<TObject, TField, TContext>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));
@@ -139,7 +139,7 @@ namespace GraphZen.TypeSystem
         }
 
         public ObjectTypeBuilder<TObject, TContext> Field<TField>(Expression<Func<TObject, TField>> selector,
-            Action<IFieldBuilder<TObject, TField, TContext>> configurator)
+            Action<FieldBuilder<TObject, TField, TContext>> configurator)
         {
             Check.NotNull(selector, nameof(selector));
             Check.NotNull(configurator, nameof(configurator));
