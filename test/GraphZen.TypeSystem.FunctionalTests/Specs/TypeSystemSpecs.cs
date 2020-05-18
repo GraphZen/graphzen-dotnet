@@ -176,13 +176,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         public class ClrTypeSpecs
         {
             public const string clr_type_can_be_added = null;
-            public const string clr_type_can_be_added_with_custom_name = null;
             public const string clr_type_can_be_added_via_type_param = null;
-            public const string clr_type_can_be_added_via_type_param_with_custom_name = null;
+
 
             public const string clr_type_can_be_changed = null;
-            public const string clr_type_can_be_changed_with_custom_name = null;
             public const string clr_type_can_be_changed_via_type_param = null;
+
+
+            public const string clr_type_can_be_added_with_custom_name = null;
+            public const string clr_type_can_be_added_via_type_param_with_custom_name = null;
+
+            public const string clr_type_can_be_changed_with_custom_name = null;
             public const string clr_type_can_be_changed_via_type_param_with_custom_name = null;
 
             public const string clr_type_cannot_be_null = null;

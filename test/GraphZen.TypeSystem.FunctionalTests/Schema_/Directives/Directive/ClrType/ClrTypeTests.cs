@@ -34,59 +34,87 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact]
         public void clr_type_can_be_added_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Directive("Foo").ClrType(typeof(PlainClass));
-            });
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType(typeof(PlainClass)); });
             schema.GetDirective("Foo").ClrType.Should().Be<PlainClass>();
         }
 
 
         [Spec(nameof(clr_type_can_be_added_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_type_can_be_added_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType(typeof(PlainClass), "Bar"); });
+            schema.HasDirective("Foo").Should().BeFalse();
+            schema.GetDirective("Bar").ClrType.Should().Be<PlainClass>();
+            schema.GetDirective<PlainClass>().Name.Should().Be("Bar");
         }
 
 
         [Spec(nameof(clr_type_can_be_added_via_type_param))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_type_can_be_added_via_type_param_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<PlainClass>(); });
+            schema.GetDirective("Foo").ClrType.Should().Be<PlainClass>();
         }
 
 
         [Spec(nameof(clr_type_can_be_added_via_type_param_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_type_can_be_added_via_type_param_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<PlainClass>("Bar"); });
+            schema.HasDirective("Foo").Should().BeFalse();
+            schema.GetDirective("Bar").ClrType.Should().Be<PlainClass>();
+            schema.GetDirective<PlainClass>().Name.Should().Be("Bar");
         }
 
 
         [Spec(nameof(clr_type_can_be_changed))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_type_can_be_changed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive<PlainClass>()
+                    .Description("original type: " + typeof(PlainClass))
+                    .ClrType(typeof(PlainClassAnnotatedName));
+            });
+            schema.HasDirective<PlainClass>().Should().BeFalse();
+            schema.GetDirective<PlainClassAnnotatedName>().Description.Should()
+                .Be("original type: " + typeof(PlainClass));
         }
 
 
         [Spec(nameof(clr_type_can_be_changed_with_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_type_can_be_changed_with_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive<PlainClass>()
+                    .Description("original type: " + typeof(PlainClass))
+                    .ClrType<PlainClassAnnotatedName>();
+            });
+            schema.HasDirective<PlainClass>().Should().BeFalse();
+            schema.GetDirective<PlainClassAnnotatedName>().Description.Should()
+                .Be("original type: " + typeof(PlainClass));
         }
 
 
         [Spec(nameof(clr_type_can_be_changed_via_type_param))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_type_can_be_changed_via_type_param_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive<PlainClass>()
+                    .Description("original type: " + typeof(PlainClass))
+                    .ClrType<PlainClassAnnotatedName>();
+            });
+            schema.HasDirective<PlainClass>().Should().BeFalse();
+            schema.GetDirective<PlainClassAnnotatedName>().Description.Should()
+                .Be("original type: " + typeof(PlainClass));
         }
 
 
@@ -224,6 +252,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         {
             // var schema = Schema.Create(_ => { });
         }
-
     }
 }

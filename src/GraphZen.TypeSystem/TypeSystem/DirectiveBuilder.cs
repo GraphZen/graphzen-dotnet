@@ -32,7 +32,11 @@ namespace GraphZen.TypeSystem
 
         public DirectiveBuilder<object> RemoveClrType() => throw new NotImplementedException();
 
-        public DirectiveBuilder<T> ClrType<T>() => throw new NotImplementedException();
+        public DirectiveBuilder<T> ClrType<T>()
+        {
+            var ib = Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            return new DirectiveBuilder<T>(ib);
+        }
 
         public DirectiveBuilder<T> ClrType<T>(string name) => throw new NotImplementedException();
 
