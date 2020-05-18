@@ -88,7 +88,7 @@ namespace GraphZen.CodeGen.Generators
                                         ");*/
                                         cls.AppendLine($@"
 
-[IntrospectionSpec({specRef})]
+[Spec({specRef})]
 [Fact(Skip=""TODO"")]
 public void {spec.Id}schemaBuilder() {{
     // var schema = Schema.Create(schemaBuilder => {{ }});

@@ -28,16 +28,6 @@ namespace GraphZen.Tests.TypeSystem.IntrospectionTests
             schema.HasObject("__Schema").Should().BeTrue();
             schema.HasObject("__Type").Should().BeTrue();
             schema.HasEnum("__TypeKind").Should().BeTrue();
-            //var expectedIntrospectionTypes = new[]
-            //{
-            //    "__Directive", "__DirectiveLocation", "__EnumValue", "__Field", "__InputValue", "__Schema", "__Type",
-            //    "__TypeKind"
-            //};
-            //var introspectionTypeNames = IntrospectionSpec.IntrospectionTypes.Select(_ => _.Name).ToArray();
-
-            //introspectionTypeNames.Should().BeEquivalentTo(expectedIntrospectionTypes);
-
-            //IntrospectionSpec.Schema.GetTypes().Count().Should() .Be(expectedIntrospectionTypes.Length);
         }
 
 
