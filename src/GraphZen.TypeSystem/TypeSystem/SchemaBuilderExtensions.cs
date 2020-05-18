@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
@@ -32,13 +31,5 @@ namespace GraphZen.TypeSystem
             var ast = Parser.ParseDocument(schema);
             return schemaBuilder.FromSchema(ast);
         }
-
-
-        internal static SchemaDefinition GetDefinition(this ISchemaBuilder<GraphQLContext> schemaBuilder) =>
-            Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<SchemaDefinition>();
-
-        internal static ISchemaDefinition GetDefinition<T>(this ISchemaBuilder<T> schemaBuilder)
-            where T : GraphQLContext =>
-            Check.NotNull(schemaBuilder, nameof(schemaBuilder)).GetInfrastructure<ISchemaDefinition>();
     }
 }

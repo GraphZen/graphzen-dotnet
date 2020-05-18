@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.NameSpecs;
@@ -31,9 +30,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Name
                 var fooDef = _.GetDefinition().GetObject("Foo");
 
                 rename.Should().Throw<DuplicateNameException>()
-                    .WithMessage(
-                        TypeSystemExceptionMessages.DuplicateNameException.CannotRenameType(pocoDef.Identity, "Foo",
-                            fooDef.Identity));
+                    .WithMessage( "Cannot rename object PlainClass to \"Foo\", object Foo already exists. All GraphQL type names must be unique.");
             });
         }
 
