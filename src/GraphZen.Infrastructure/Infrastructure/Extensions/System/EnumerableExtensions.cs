@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using JetBrains.Annotations;
 
 #nullable disable

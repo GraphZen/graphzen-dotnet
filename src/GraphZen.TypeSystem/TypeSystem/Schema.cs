@@ -50,8 +50,6 @@ namespace GraphZen.TypeSystem
 
         private readonly Lazy<DocumentSyntax> _sdlSyntax;
         private readonly Lazy<SchemaDefinitionSyntax> _syntax;
-
-
         private readonly Lazy<IReadOnlyList<UnionType>> _unions;
 
 
@@ -262,8 +260,6 @@ namespace GraphZen.TypeSystem
             GetObjects(includeSpecTypes);
 
 
-        [GraphQLIgnore]
-        IEnumerable<IDirectiveDefinition> IDirectivesDefinition.GetDirectives() => GetDirectives();
 
         [GraphQLIgnore]
         public IEnumerable<EnumType> GetEnums() => Enums;
@@ -290,7 +286,7 @@ namespace GraphZen.TypeSystem
         }
 
         [GraphQLIgnore]
-        public IEnumerable<Directive> GetDirectives() => Directives;
+        public IEnumerable<Directive> GetDirectives(bool includeSpecDirectives = false) => includeSpecDirectives ? Directives : Directives.Where(_ => SpecDirectives.All.All(sd => sd.Name != _.Name));
 
         IObjectTypeDefinition? IQueryTypeDefinition.QueryType => QueryType;
 
@@ -631,6 +627,8 @@ namespace GraphZen.TypeSystem
             TryGetDirective(typeof(TDirective), out directive);
 
         public override string ToString() => "Schema";
+        IEnumerable<IDirectiveDefinition> IDirectivesDefinition.GetDirectives(bool includeSpecDirectives) => GetDirectives(includeSpecDirectives);
+
         [GraphQLCanBeNull] public string? Description { get; }
     }
 }

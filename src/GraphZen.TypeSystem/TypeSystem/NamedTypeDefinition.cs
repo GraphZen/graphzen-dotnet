@@ -19,6 +19,7 @@ namespace GraphZen.TypeSystem
     {
         private ConfigurationSource _nameConfigurationSource;
         private ConfigurationSource? _clrTypeConfigurationSource;
+        protected override SchemaDefinition Schema { get; }
 
         protected NamedTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(configurationSource)
@@ -48,7 +49,6 @@ namespace GraphZen.TypeSystem
 
         public TypeIdentity Identity { get; }
 
-        public SchemaDefinition Schema { get; }
 
         private string DebuggerDisplay => ClrType != null ? $"{Kind}: {Name} ({ClrType.Name})" : $"{Kind}: {Name}";
 

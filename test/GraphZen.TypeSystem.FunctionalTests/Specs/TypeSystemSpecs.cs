@@ -173,6 +173,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_cannot_be_renamed_if_name_already_exists = null;
         }
 
+        public class FrozenSpecs
+        {
+
+        }
+
         public class ClrTypeSpecs
         {
             public const string clr_type_can_be_added = null;

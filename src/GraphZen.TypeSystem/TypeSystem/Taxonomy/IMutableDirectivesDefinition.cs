@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableDirectivesDefinition : IDirectivesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<DirectiveDefinition> GetDirectives();
+        new IEnumerable<DirectiveDefinition> GetDirectives(bool includeSpecDirectives = false);
 
         bool RenameDirective(DirectiveDefinition directive, string name, ConfigurationSource configurationSource);
 

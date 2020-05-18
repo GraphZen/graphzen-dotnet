@@ -30,16 +30,17 @@ namespace GraphZen.TypeSystem
         private bool _isDeprecated;
         private ConfigurationSource _nameConfigurationSource;
 
+        protected override SchemaDefinition Schema { get; }
+
 
         public FieldDefinition(string name, ConfigurationSource nameConfigurationSource,
             SchemaDefinition schema,
             FieldsDefinition declaringType,
             ConfigurationSource configurationSource, MemberInfo? clrInfo) : base(configurationSource)
         {
-            Check.NotNull(schema, nameof(schema));
+            Schema = schema;
             ClrInfo = clrInfo;
             Name = name;
-            Schema = schema;
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Builder = new InternalFieldBuilder(this, schema.Builder);
@@ -50,7 +51,6 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"field {Name}";
 
 
-        public SchemaDefinition Schema { get; }
 
 
         public InternalFieldBuilder Builder { get; }

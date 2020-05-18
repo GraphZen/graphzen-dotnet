@@ -77,5 +77,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore] public Type? ClrType { get; }
 
         [GraphQLCanBeNull] public string? Description { get; }
+
+        public override string ToString() => $"directive {Name}";
     }
 }

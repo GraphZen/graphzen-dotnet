@@ -13,6 +13,19 @@ namespace GraphZen.Internal
 {
     internal static class TypeSystemExceptionMessages
     {
+        private static string GetClrTypeDisplay(Type clrType) => clrType.IsInterface ? "interface" :
+            clrType.IsClass ? "class" :
+            clrType.IsEnum ? "enum" : "type";
+
+
+        public static class DuplicateClrTypeException
+        {
+            public static string
+                CannotChangeClrType(IMutableClrType definition, Type clrType, IMutableClrType existing) =>
+                $"Cannot set CLR type on {definition} to CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}': {existing} already exists with that CLR type.";
+        }
+
+
         public static class DuplicateNameException
         {
             internal static string CannotRenameType(TypeIdentity identity, string newName, TypeIdentity existing) =>
@@ -47,10 +60,6 @@ namespace GraphZen.Internal
 
         public static class InvalidNameException
         {
-            private static string GetClrTypeDisplay(Type clrType) => clrType.IsInterface ? "interface" :
-                clrType.IsClass ? "class" :
-                clrType.IsEnum ? "enum" : "type";
-
             public static string CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(Type clrType,
                 string annotatedName)
                 =>

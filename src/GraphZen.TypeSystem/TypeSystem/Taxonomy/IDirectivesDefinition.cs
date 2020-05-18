@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IDirectivesDefinition
     {
         [GraphQLIgnore]
-        IEnumerable<IDirectiveDefinition> GetDirectives();
+        IEnumerable<IDirectiveDefinition> GetDirectives(bool includeSpecDirectives = false);
     }
 }

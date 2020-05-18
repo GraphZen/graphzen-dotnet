@@ -18,11 +18,14 @@ namespace GraphZen.TypeSystem
     {
         private ConfigurationSource _nameConfigurationSource;
 
+        protected override SchemaDefinition Schema { get; }
+
         public EnumValueDefinition(string name, ConfigurationSource nameConfigurationSource,
             EnumTypeDefinition declaringType,
             SchemaDefinition schema, ConfigurationSource configurationSource) :
             base(configurationSource)
         {
+            Schema = schema;
             if (!name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(

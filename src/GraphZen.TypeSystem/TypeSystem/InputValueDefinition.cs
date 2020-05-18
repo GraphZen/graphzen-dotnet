@@ -15,6 +15,8 @@ namespace GraphZen.TypeSystem
         private ConfigurationSource? _defaultValueConfigurationSource;
         protected ConfigurationSource NameConfigurationSource;
 
+        protected override SchemaDefinition Schema { get; }
+
         public InputValueDefinition(
             string name,
             ConfigurationSource nameConfigurationSource,
@@ -23,6 +25,7 @@ namespace GraphZen.TypeSystem
             object? clrInfo, IMemberDefinition declaringMember) : base(configurationSource)
         {
             ClrInfo = clrInfo;
+            Schema = schema;
             DeclaringMember = declaringMember;
             NameConfigurationSource = nameConfigurationSource;
             Name = name.IsValidGraphQLName()

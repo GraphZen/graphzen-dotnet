@@ -31,11 +31,14 @@ namespace GraphZen.TypeSystem
 
         private ConfigurationSource _nameConfigurationSource;
         private ConfigurationSource? _clrTypeConfigurationSource;
+        protected override SchemaDefinition Schema { get; }
+
 
         public DirectiveDefinition(string? name, Type? clrType, SchemaDefinition schema,
             ConfigurationSource configurationSource) :
             base(configurationSource)
         {
+            Schema = schema;
             if (clrType != null)
             {
                 ClrType = clrType;
@@ -72,7 +75,7 @@ namespace GraphZen.TypeSystem
             }
 
             Name = Check.NotNull(name, nameof(name));
-            Builder = new InternalDirectiveBuilder(this, Check.NotNull(schema, nameof(schema)).Builder);
+            Builder = new InternalDirectiveBuilder(this, schema.Builder);
         }
 
 
@@ -192,6 +195,12 @@ namespace GraphZen.TypeSystem
             {
                 return false;
             }
+
+            if (Schema.TryGetDirective(clrType, out var existing) && !existing.Equals(this))
+            {
+                throw new DuplicateClrTypeException(TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType, existing));
+            }
+
 
             ClrType = clrType;
             _clrTypeConfigurationSource = configurationSource;

@@ -36,9 +36,6 @@ namespace GraphZen.TypeSystem
         private ConfigurationSource? _subscriptionTypeConfigurationSource;
         private ConfigurationSource? _mutationTypeConfigurationSource;
 
-        // ReSharper disable once NotNullMemberIsNotInitialized
-
-
         public SchemaDefinition(IReadOnlyList<ScalarType> scalars) : base(ConfigurationSource
             .Convention)
 
@@ -789,7 +786,6 @@ namespace GraphZen.TypeSystem
             _types.Remove(type);
         }
 
-        public IEnumerable<DirectiveDefinition> GetDirectives() => _directives.Values;
 
         public bool RenameDirective(DirectiveDefinition directive, string name, ConfigurationSource configurationSource)
         {
@@ -823,7 +819,6 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<EnumTypeDefinition> GetEnums() => _types.OfType<EnumTypeDefinition>();
 
-        IEnumerable<IDirectiveDefinition> IDirectivesDefinition.GetDirectives() => GetDirectives();
 
         IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecTypes) =>
             GetObjects(includeSpecTypes);
@@ -906,5 +901,13 @@ namespace GraphZen.TypeSystem
             directive = FindDirective(clrType);
             return directive != null;
         }
+
+        protected override SchemaDefinition Schema  => this;
+        public IEnumerable<DirectiveDefinition> GetDirectives(bool includeSpecDirectives = false)
+        {
+           throw new NotImplementedException(); 
+        }
+
+        IEnumerable<IDirectiveDefinition> IDirectivesDefinition.GetDirectives(bool includeSpecDirectives) => GetDirectives(includeSpecDirectives);
     }
 }

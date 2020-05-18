@@ -15,19 +15,18 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public partial class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
     {
-        internal readonly Dictionary<string, EnumValueDefinition> InternalValues =
-            new Dictionary<string, EnumValueDefinition>();
-
         private readonly Dictionary<string, ConfigurationSource> _ignoredValues =
             new Dictionary<string, ConfigurationSource>();
+
+        internal readonly Dictionary<string, EnumValueDefinition> InternalValues =
+            new Dictionary<string, EnumValueDefinition>();
 
         public EnumTypeDefinition(TypeIdentity identity,
             SchemaDefinition schema,
             ConfigurationSource configurationSource)
-            : base(Check.NotNull(identity, nameof(identity)), Check.NotNull(schema, nameof(schema)),
-                configurationSource)
+            : base(identity, schema, configurationSource)
         {
-            Builder = new InternalEnumTypeBuilder(this, Schema.Builder);
+            Builder = new InternalEnumTypeBuilder(this, schema.Builder);
             identity.Definition = this;
         }
 
@@ -86,8 +85,8 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<EnumValueDefinition> GetValues() => Values.Values;
 
-        public override string ToString() => $"enum {Name}";
-
         IEnumerable<IEnumValueDefinition> IEnumValuesDefinition.GetValues() => GetValues();
+
+        public override string ToString() => $"enum {Name}";
     }
 }

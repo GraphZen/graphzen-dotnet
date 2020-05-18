@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IDirectives : IDirectivesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<Directive> GetDirectives();
+        new IEnumerable<Directive> GetDirectives(bool includeSpecDirectives = false);
 
         [GraphQLIgnore] IReadOnlyList<Directive> Directives { get; }
     }

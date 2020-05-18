@@ -12,15 +12,7 @@ namespace GraphZen.TypeSystem.Tests
 {
     public static class ClrTypeUtils
     {
-        public static IEnumerable<Type> DumpTypes(this IEnumerable<Type> types)
-        {
-            // ReSharper disable once UnusedVariable
-            var dumpTypes = types as Type[] ?? types.ToArray();
-            dumpTypes
-                .OrderBy(_ => _.Name)
-                .Select(_ => new StringLiteral($"typeof({_.Name})")).Dump("types", true);
-            return dumpTypes;
-        }
+        
 
         public static Type[] GetImplementedTypes(Type type)
         {
