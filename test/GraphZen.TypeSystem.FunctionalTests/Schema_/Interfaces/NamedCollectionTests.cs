@@ -14,7 +14,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
     [NoReorder]
     public class NamedCollectionTests
     {
-
         [Spec(nameof(named_item_can_be_added))]
         [Fact]
         public void named_item_can_be_added_()

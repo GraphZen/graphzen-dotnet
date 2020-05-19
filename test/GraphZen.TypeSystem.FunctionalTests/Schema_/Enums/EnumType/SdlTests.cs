@@ -20,6 +20,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
             var schema = Schema.Create(_ => { _.FromSchema("enum Foo"); });
             schema.HasEnum("Foo").Should().BeTrue();
         }
-
     }
 }

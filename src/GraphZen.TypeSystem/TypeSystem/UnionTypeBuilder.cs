@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     public class UnionTypeBuilder<TUnion, TContext> : IUnionTypeBuilder<TUnion, TContext>
-         where TContext : GraphQLContext
+        where TContext : GraphQLContext
     {
         public UnionTypeBuilder(InternalUnionTypeBuilder builder)
         {

@@ -102,7 +102,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public DirectiveBuilder<TDirective> Argument(string name, string type, Action<InputValueBuilder<object?>> configurator)
+        public DirectiveBuilder<TDirective> Argument(string name, string type,
+            Action<InputValueBuilder<object?>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
@@ -121,7 +122,8 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public DirectiveBuilder<TDirective> Argument<TArgument>(string name, Action<InputValueBuilder<TArgument>> configurator)
+        public DirectiveBuilder<TDirective> Argument<TArgument>(string name,
+            Action<InputValueBuilder<TArgument>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));

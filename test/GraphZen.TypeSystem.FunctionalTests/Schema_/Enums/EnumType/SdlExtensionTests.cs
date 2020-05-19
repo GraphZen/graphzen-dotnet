@@ -13,8 +13,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
     [NoReorder]
     public class SdlExtensionTests
     {
-
-
         [Spec(nameof(TypeSystemSpecs.SdlExtensionSpec.item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_added_via_sdl_extension_()
@@ -23,6 +21,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
 
             schema.HasEnum("Foo").Should().BeTrue();
         }
-
     }
 }

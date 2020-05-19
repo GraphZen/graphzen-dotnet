@@ -18,7 +18,6 @@ namespace GraphZen.TypeSystem.Internal
     {
         public static ValueSyntax? Get(Maybe<object> maybeValue, IGraphQLType type)
         {
-
             if (!(maybeValue is Some<object> someValue))
             {
                 return null;

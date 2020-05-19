@@ -29,7 +29,10 @@ namespace GraphZen.TypeSystem.Internal
             Action<InputValueBuilder<object?>> inputFieldConfigurator);
 
         InputValueBuilder<object?> Field(string name);
-        InputObjectTypeBuilder<TInputObject> Field(string name, Action<InputValueBuilder<object?>> inputFieldConfigurator);
+
+        InputObjectTypeBuilder<TInputObject> Field(string name,
+            Action<InputValueBuilder<object?>> inputFieldConfigurator);
+
         InputObjectTypeBuilder<TInputObject> Field<TField>(string name);
 
         InputObjectTypeBuilder<TInputObject> Field<TField>(string name,

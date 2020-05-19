@@ -21,7 +21,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
             var schema = Schema.Create(_ => _.FromSchema(@"extend interface Foo { foo(foo: String): String }"));
             schema.GetInterface("Foo").GetField("foo").HasArgument("foo").Should().BeTrue();
         }
-
-
     }
 }

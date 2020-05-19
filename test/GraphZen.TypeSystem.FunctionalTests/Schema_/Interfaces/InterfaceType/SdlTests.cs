@@ -13,7 +13,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType
     [NoReorder]
     public class SdlTests
     {
-
         [Spec(nameof(TypeSystemSpecs.SdlSpec.item_can_be_defined_by_sdl))]
         [Fact]
         public void named_item_can_be_added_via_sdl_()

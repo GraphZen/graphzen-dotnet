@@ -20,7 +20,8 @@ namespace GraphZen.Infrastructure
     internal static class SchemaBuilderSpecExtensions
     {
         public static SchemaBuilder<TContext> AddSpecMembers<TContext>(this SchemaBuilder<TContext> schemaBuilder)
-            where TContext : GraphQLContext => schemaBuilder.AddSpecScalars().AddSpecDirectives().AddIntrospectionTypes();
+            where TContext : GraphQLContext =>
+            schemaBuilder.AddSpecScalars().AddSpecDirectives().AddIntrospectionTypes();
 
         private static SchemaBuilder<TContext> AddSpecScalars<TContext>(this SchemaBuilder<TContext> schemaBuilder)
             where TContext : GraphQLContext

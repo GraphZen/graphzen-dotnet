@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-
 namespace GraphZen.Internal
 {
     public class MaybeJsonConverter : JsonConverter

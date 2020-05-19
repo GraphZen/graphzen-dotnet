@@ -20,6 +20,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             var schema = Schema.Create(_ => _.FromSchema(@"type Foo { foo(foo: String): String }"));
             schema.GetObject("Foo").GetField("foo").HasArgument("foo").Should().BeTrue();
         }
-
     }
 }

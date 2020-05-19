@@ -81,7 +81,6 @@ namespace GraphZen.TypeSystem
 
         public override string ToString() => $"directive {Name}";
 
-        [GraphQLIgnore]
-        public bool IsSpecDirective { get; }
+        [GraphQLIgnore] public bool IsSpecDirective { get; }
     }
 }

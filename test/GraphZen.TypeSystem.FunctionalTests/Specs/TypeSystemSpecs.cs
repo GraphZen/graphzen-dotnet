@@ -175,7 +175,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
         public class FrozenSpecs
         {
-
         }
 
         public class ClrTypeSpecs

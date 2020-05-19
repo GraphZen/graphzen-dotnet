@@ -13,9 +13,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     [NoReorder]
     public class SdlExtensionTests
     {
-
-
-
         [Spec(nameof(item_can_be_defined_by_sdl_extension))]
         [Fact(Skip = "needs impl")]
         public void named_item_can_be_added_via_sdl_extension_()

@@ -29,7 +29,6 @@ namespace GraphZen.TypeSystem
         protected FieldsDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(identity, schema, configurationSource)
         {
-
         }
 
 

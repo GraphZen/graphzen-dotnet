@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
             {
-                this.Description(description, ConfigurationSource.DataAnnotation);
+                Description(description, ConfigurationSource.DataAnnotation);
             }
 
             var implementingTypes = clrType.GetImplementingTypes().Where(_ => !_.IsAbstract);
@@ -93,7 +93,6 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalUnionTypeBuilder SetName(string name, ConfigurationSource configurationSource)
         {
-
             Definition.SetName(name, configurationSource);
             return this;
         }

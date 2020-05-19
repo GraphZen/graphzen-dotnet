@@ -9,7 +9,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class InputValueBuilder<TInputValue> : IInfrastructure<InternalInputValueBuilder>, IAnnotableBuilder<InputValueBuilder<TInputValue>>
+    public class InputValueBuilder<TInputValue> : IInfrastructure<InternalInputValueBuilder>,
+        IAnnotableBuilder<InputValueBuilder<TInputValue>>
     {
         public InputValueBuilder(InternalInputValueBuilder builder)
         {
@@ -29,7 +30,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public InputValueBuilder<TInputValue> RemoveDirectiveAnnotations(string name) => throw new NotImplementedException();
+        public InputValueBuilder<TInputValue> RemoveDirectiveAnnotations(string name) =>
+            throw new NotImplementedException();
+
         public InputValueBuilder<TInputValue> RemoveDirectiveAnnotations() => throw new NotImplementedException();
 
 

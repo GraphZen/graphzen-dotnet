@@ -10,7 +10,6 @@ namespace GraphZen.TypeSystem.Internal
 {
     internal interface IObjectTypeBuilder<TObject, TContext> :
         IInfrastructure<InternalObjectTypeBuilder>,
-
         IImplementsInterfacesBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IDescriptionBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IAnnotableBuilder<ObjectTypeBuilder<TObject, TContext>>,

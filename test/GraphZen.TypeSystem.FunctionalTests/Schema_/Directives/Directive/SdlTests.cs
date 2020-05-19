@@ -19,7 +19,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive
         {
             var schema = Schema.Create(_ => { _.FromSchema(@"directive Foo"); });
             schema.HasDirective("Foo").Should().BeTrue();
-
         }
     }
 }

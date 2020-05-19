@@ -12,8 +12,6 @@ namespace GraphZen.TypeSystem.Tests
 {
     public static class ClrTypeUtils
     {
-
-
         public static Type[] GetImplementedTypes(Type type)
         {
             var types = type.Assembly.GetTypes()

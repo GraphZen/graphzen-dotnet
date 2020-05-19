@@ -142,7 +142,6 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalEnumTypeBuilder SetName(string name, ConfigurationSource configurationSource)
         {
-
             Definition.SetName(name, configurationSource);
             return this;
         }

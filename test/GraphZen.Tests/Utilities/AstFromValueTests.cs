@@ -46,7 +46,6 @@ namespace GraphZen.Tests.Utilities
         [Fact]
         public void ConvertsBooleanValuesToBooleanValueNodes()
         {
-
             var schema = Schema.Create();
             var boolean = schema.GetScalar<bool>();
             Get(Some(true), boolean).Should().Be(BooleanValue(true));

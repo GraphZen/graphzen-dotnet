@@ -13,7 +13,6 @@ namespace GraphZen.Infrastructure
 {
     public static class ValueDumper
     {
-
         public static IEnumerable<Type> DumpTypes(this IEnumerable<Type> types)
         {
             // ReSharper disable once UnusedVariable
@@ -23,6 +22,7 @@ namespace GraphZen.Infrastructure
                 .Select(_ => new StringLiteral($"typeof({_.Name})")).Dump("types", true);
             return dumpTypes;
         }
+
         public static T Dump<T, TR>(this T value, Func<T, TR> selector, string prefix = "")
         {
             selector(value).Dump(prefix);

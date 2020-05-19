@@ -51,7 +51,9 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
             var valueName = Attribute.ValueName;
             var valueNameCamelized = valueName.FirstCharToLower();
             var valueTypeCamelized = valueType.FirstCharToLower();
-            var outValueVar = valueNameCamelized == keyNameCamelized ? "schemaBuilder" + valueNameCamelized : valueNameCamelized;
+            var outValueVar = valueNameCamelized == keyNameCamelized
+                ? "schemaBuilder" + valueNameCamelized
+                : valueNameCamelized;
 
             csharp.AppendLine($@"
 

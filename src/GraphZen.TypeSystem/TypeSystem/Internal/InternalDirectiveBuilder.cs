@@ -43,7 +43,8 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public bool RemoveArgument(string name, ConfigurationSource configurationSource) => throw new NotImplementedException();
+        public bool RemoveArgument(string name, ConfigurationSource configurationSource) =>
+            throw new NotImplementedException();
 
         public InternalDirectiveBuilder SetName(string name, ConfigurationSource configurationSource)
         {

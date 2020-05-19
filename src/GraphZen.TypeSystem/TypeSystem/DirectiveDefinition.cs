@@ -216,6 +216,7 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
         public bool IsSpecDirective { get; }
+
         public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
         {
             if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))

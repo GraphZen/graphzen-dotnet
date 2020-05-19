@@ -111,7 +111,6 @@ namespace GraphZen.Tests.QueryEngine
                             return "Cat";
                         case Human _:
                             return "Human";
-
                     }
 
                     return null!;

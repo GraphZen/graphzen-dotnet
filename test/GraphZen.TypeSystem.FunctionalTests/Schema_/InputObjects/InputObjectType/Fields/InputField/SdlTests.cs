@@ -20,7 +20,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
             var schema = Schema.Create(_ => _.FromSchema(@"input Foo {foo: String } "));
             schema.GetInputObject("Foo").HasField("foo").Should().BeTrue();
         }
-
-
     }
 }

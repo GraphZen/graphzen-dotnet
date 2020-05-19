@@ -10,7 +10,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class InterfaceTypeBuilder<TInterface, TContext> : IInterfaceTypeBuilder<TInterface, TContext> where TContext : GraphQLContext
+    public class InterfaceTypeBuilder<TInterface, TContext> : IInterfaceTypeBuilder<TInterface, TContext>
+        where TContext : GraphQLContext
     {
         public InterfaceTypeBuilder(InternalInterfaceTypeBuilder builder)
         {

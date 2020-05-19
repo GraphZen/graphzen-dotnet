@@ -16,6 +16,7 @@ namespace GraphZen.TypeSystem.Internal
     {
         private readonly Lazy<SchemaBuilder> _builder;
         public SchemaBuilder Builder => _builder.Value;
+
         public InternalSchemaBuilder(SchemaDefinition schemaDefinition)
             : base(schemaDefinition, schemaDefinition.Builder)
         {
@@ -854,6 +855,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 Definition.SetQueryType(queryType, configurationSource);
             }
+
             return this;
         }
 
@@ -866,6 +868,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 Definition.SetQueryType(queryType, configurationSource);
             }
+
             return this;
         }
 

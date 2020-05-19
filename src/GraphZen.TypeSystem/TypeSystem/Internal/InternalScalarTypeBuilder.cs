@@ -57,7 +57,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
             {
-                this.Description(description, ConfigurationSource.DataAnnotation);
+                Description(description, ConfigurationSource.DataAnnotation);
             }
 
             return true;
