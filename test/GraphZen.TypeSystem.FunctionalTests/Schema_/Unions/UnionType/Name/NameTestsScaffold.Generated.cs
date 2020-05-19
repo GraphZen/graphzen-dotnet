@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Name
         [Fact(Skip = "TODO")]
         public void can_be_renamedschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 }

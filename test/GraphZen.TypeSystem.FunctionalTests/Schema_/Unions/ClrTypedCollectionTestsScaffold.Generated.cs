@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         [Fact(Skip = "TODO")]
         public void adding_clr_typed_item_updates_matching_named_items_clr_typeschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         [Fact(Skip = "TODO")]
         public void adding_clr_typed_item_with_name_annotation_updates_matching_named_items_clr_typeschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -36,7 +36,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         [Fact(Skip = "TODO")]
         public void clr_typed_item_uses_clr_type_nameschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -44,7 +44,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         [Fact(Skip = "TODO")]
         public void clr_typed_item_with_name_annotation_uses_clr_type_name_annotationschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -52,7 +52,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         [Fact(Skip = "TODO")]
         public void clr_typed_item_cannot_be_added_with_null_custom_nameschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         [Fact(Skip = "TODO")]
         public void clr_typed_item_cannot_be_added_with_invalid_custom_nameschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -68,7 +68,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         [Fact(Skip = "TODO")]
         public void clr_typed_item_subsequently_added_with_custom_name_sets_nameschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -76,7 +76,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         [Fact(Skip = "TODO")]
         public void named_item_subsequently_added_with_type_and_custom_name_sets_clr_typeschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -85,7 +85,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         public void
             clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_existschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -96,7 +96,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         public void
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_existschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 }

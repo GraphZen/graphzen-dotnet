@@ -58,7 +58,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
         [Fact(Skip = "TODO")]
         public void named_item_can_be_renamed_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -66,7 +66,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
         [Fact(Skip = "TODO")]
         public void named_item_can_be_removed_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -74,7 +74,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
         [Fact(Skip = "TODO")]
         public void named_item_cannot_be_removed_with_null_value_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 }

@@ -172,7 +172,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_added_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -180,7 +180,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_added_with_custom_name_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -188,7 +188,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_added_via_type_param_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -196,7 +196,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_added_via_type_param_with_custom_name_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -204,7 +204,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_changed_with_custom_name_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -212,7 +212,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void clr_type_can_be_changed_via_type_param_with_custom_name_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -220,7 +220,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void clr_type_name_should_be_unique_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -228,7 +228,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_unique_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -236,7 +236,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_valid_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -244,7 +244,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void custom_name_should_be_unique_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -252,7 +252,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void custom_name_should_be_valid_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -260,7 +260,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         [Fact(Skip = "TODO")]
         public void custom_name_cannot_be_null_()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 }
