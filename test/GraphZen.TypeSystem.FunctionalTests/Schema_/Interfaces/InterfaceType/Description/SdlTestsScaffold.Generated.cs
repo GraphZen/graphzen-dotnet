@@ -1,33 +1,33 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 #nullable enable
 
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-
-// ReSharper disable All
-using FluentAssertions;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Description {
-[NoReorder]
-public abstract  class SdlTests {
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Description
+{
+    [NoReorder]
+    public abstract class SdlTests
+    {
+        [Spec(nameof(item_can_be_defined_by_sdl))]
+        [Fact(Skip = "TODO")]
+        public void item_can_be_defined_by_sdlschemaBuilder()
+        {
+            // var schema = Schema.Create(schemaBuilder => { });
+        }
+    }
 
-
-[Spec(nameof(item_can_be_defined_by_sdl))]
-[Fact(Skip="TODO")]
-public void item_can_be_defined_by_sdlschemaBuilder() {
-    // var schema = Schema.Create(schemaBuilder => { });
-}
-
-
-}
 // Move SdlTests into a separate file to start writing tests
-[NoReorder] 
-public  class SdlTestsScaffold {
-}
+    [NoReorder]
+    public class SdlTestsScaffold
+    {
+    }
 }
 // Source Hash Code: 16090139061724218002
