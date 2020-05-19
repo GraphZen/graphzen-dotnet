@@ -6,7 +6,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 
@@ -245,8 +244,6 @@ namespace GraphZen.TypeSystem
             => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out directiveDefinition);
 
         #endregion
-
-        public bool RemoveQueryType(ConfigurationSource configurationSource) => throw new NotImplementedException();
     }
 }
 // Source Hash Code: 9880771895087418789

@@ -86,6 +86,8 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
+        public bool RemoveQueryType(ConfigurationSource configurationSource) => throw new NotImplementedException();
+
         public ConfigurationSource? GetQueryTypeConfigurationSource() => _queryTypeConfigurationSource;
         public ObjectTypeDefinition? MutationType { get; private set; }
 

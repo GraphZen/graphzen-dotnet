@@ -172,7 +172,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         [Fact(Skip = "todo")]
         public void clr_type_name_should_be_unique_()
         {
-            var schema = Schema.Create(_ =>
+            Schema.Create(_ =>
             {
                 _.Directive(nameof(PlainClass));
                 var foo = _.Directive("Foo").ClrType<PlainClass>();
