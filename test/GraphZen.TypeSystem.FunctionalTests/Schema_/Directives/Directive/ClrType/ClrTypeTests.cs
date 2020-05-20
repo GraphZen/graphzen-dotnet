@@ -327,37 +327,39 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
 
 
-        
-
         [Spec(nameof(clr_type_can_be_removed))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_type_can_be_removed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<PlainClass>().RemoveClrType(); });
+            schema.GetDirective("Foo").ClrType.Should().BeNull();
         }
 
 
         [Spec(nameof(clr_typed_item_when_type_removed_should_retain_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_when_type_removed_should_retain_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive<PlainClass>().RemoveClrType(); });
+            schema.GetDirective(nameof(PlainClass)).ClrType.Should().BeNull();
         }
 
 
         [Spec(nameof(clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive<PlainClassAnnotatedName>().RemoveClrType(); });
+            schema.GetDirective(PlainClassAnnotatedName.AnnotatedNameValue).ClrType.Should().BeNull();
         }
 
 
         [Spec(nameof(custom_named_clr_typed_item_when_type_removed_should_retain_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void custom_named_clr_typed_item_when_type_removed_should_retain_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<PlainClass>("Bar").RemoveClrType(); });
+            schema.GetDirective("Bar").ClrType.Should().BeNull();
         }
     }
 }

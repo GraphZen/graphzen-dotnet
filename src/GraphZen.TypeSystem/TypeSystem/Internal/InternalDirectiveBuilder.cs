@@ -63,5 +63,11 @@ namespace GraphZen.TypeSystem.Internal
             Definition.SetDescription(description, configurationSource);
             return this;
         }
+
+        public InternalDirectiveBuilder RemoveClrType(ConfigurationSource configurationSource)
+        {
+            Definition.RemoveClrType(configurationSource);
+            return this;
+        }
     }
 }

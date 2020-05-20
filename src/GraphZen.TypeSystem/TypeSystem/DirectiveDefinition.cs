@@ -276,7 +276,17 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public bool RemoveClrType(ConfigurationSource configurationSource) => throw new NotImplementedException();
+        public bool RemoveClrType(ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetClrTypeConfigurationSource()))
+            {
+                return false;
+
+            }
+            ClrType = null;
+            _clrTypeConfigurationSource = configurationSource;
+            return true;
+        }
 
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
