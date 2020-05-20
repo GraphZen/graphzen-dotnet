@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Descripti
     {
         [Spec(nameof(item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
-        public void item_can_be_defined_by_sdlschemaBuilder()
+        public void item_can_be_defined_by_sdl_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -30,4 +30,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Descripti
     {
     }
 }
-// Source Hash Code: 6986029258708645511
+// Source Hash Code: 6384907189860419874

@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
     {
         [Spec(nameof(directive_annotation_can_be_added))]
         [Fact(Skip = "TODO")]
-        public void directive_annotation_can_be_addedschemaBuilder()
+        public void directive_annotation_can_be_added_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotation_cannot_be_added_unless_directive_is_defined))]
         [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_added_unless_directive_is_definedschemaBuilder()
+        public void directive_annotation_cannot_be_added_unless_directive_is_defined_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotation_cannot_be_upserted_unless_directive_is_defined))]
         [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_upserted_unless_directive_is_definedschemaBuilder()
+        public void directive_annotation_cannot_be_upserted_unless_directive_is_defined_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -42,7 +42,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotation_cannot_be_added_unless_location_is_valid))]
         [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_added_unless_location_is_validschemaBuilder()
+        public void directive_annotation_cannot_be_added_unless_location_is_valid_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -50,7 +50,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotation_cannot_be_upserted_unless_location_is_valid))]
         [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_upserted_unless_location_is_validschemaBuilder()
+        public void directive_annotation_cannot_be_upserted_unless_location_is_valid_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -58,7 +58,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotation_cannot_be_added_with_null_name))]
         [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_added_with_null_nameschemaBuilder()
+        public void directive_annotation_cannot_be_added_with_null_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -66,7 +66,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotation_cannot_be_upserted_with_null_name))]
         [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_upserted_with_null_nameschemaBuilder()
+        public void directive_annotation_cannot_be_upserted_with_null_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -74,7 +74,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotation_cannot_be_added_with_invalid_name))]
         [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_added_with_invalid_nameschemaBuilder()
+        public void directive_annotation_cannot_be_added_with_invalid_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -82,7 +82,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotation_cannot_be_upserted_with_invalid_name))]
         [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_upserted_with_invalid_nameschemaBuilder()
+        public void directive_annotation_cannot_be_upserted_with_invalid_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -90,7 +90,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotations_can_be_removed))]
         [Fact(Skip = "TODO")]
-        public void directive_annotations_can_be_removedschemaBuilder()
+        public void directive_annotations_can_be_removed_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -98,7 +98,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotations_can_be_removed_by_name))]
         [Fact(Skip = "TODO")]
-        public void directive_annotations_can_be_removed_by_nameschemaBuilder()
+        public void directive_annotations_can_be_removed_by_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -106,7 +106,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotations_cannot_be_removed_by_name_with_null_name))]
         [Fact(Skip = "TODO")]
-        public void directive_annotations_cannot_be_removed_by_name_with_null_nameschemaBuilder()
+        public void directive_annotations_cannot_be_removed_by_name_with_null_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -114,7 +114,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotations_are_removed_when_directive_is_removed))]
         [Fact(Skip = "TODO")]
-        public void directive_annotations_are_removed_when_directive_is_removedschemaBuilder()
+        public void directive_annotations_are_removed_when_directive_is_removed_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -122,7 +122,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
 
         [Spec(nameof(directive_annotations_are_removed_when_directive_is_ignored))]
         [Fact(Skip = "TODO")]
-        public void directive_annotations_are_removed_when_directive_is_ignoredschemaBuilder()
+        public void directive_annotations_are_removed_when_directive_is_ignored_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -134,4 +134,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
     {
     }
 }
-// Source Hash Code: 4884999131974278676
+// Source Hash Code: 17608913329287125060

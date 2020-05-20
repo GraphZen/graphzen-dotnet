@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Descrip
     {
         [Spec(nameof(item_can_be_defined_by_sdl))]
         [Fact(Skip = "TODO")]
-        public void item_can_be_defined_by_sdlschemaBuilder()
+        public void item_can_be_defined_by_sdl_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -30,4 +30,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Descrip
     {
     }
 }
-// Source Hash Code: 14125978494874088089
+// Source Hash Code: 10463689764190070708

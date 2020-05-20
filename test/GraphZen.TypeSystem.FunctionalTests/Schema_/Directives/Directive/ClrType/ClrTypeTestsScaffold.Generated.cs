@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
     {
         [Spec(nameof(setting_clr_type_does_not_change_name))]
         [Fact(Skip = "TODO")]
-        public void setting_clr_type_does_not_change_nameschemaBuilder()
+        public void setting_clr_type_does_not_change_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -26,10 +26,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
 
         [Spec(nameof(setting_clr_type_with_name_annotation_does_not_change_name))]
         [Fact(Skip = "TODO")]
-        public void setting_clr_type_with_name_annotation_does_not_change_nameschemaBuilder()
+        public void setting_clr_type_with_name_annotation_does_not_change_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 9355498972086408108
+// Source Hash Code: 5012820316212048572

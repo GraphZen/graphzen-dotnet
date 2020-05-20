@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
     {
         [Spec(nameof(setting_clr_type_does_not_change_name))]
         [Fact(Skip = "TODO")]
-        public void setting_clr_type_does_not_change_nameschemaBuilder()
+        public void setting_clr_type_does_not_change_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -26,10 +26,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
 
         [Spec(nameof(setting_clr_type_with_name_annotation_does_not_change_name))]
         [Fact(Skip = "TODO")]
-        public void setting_clr_type_with_name_annotation_does_not_change_nameschemaBuilder()
+        public void setting_clr_type_with_name_annotation_does_not_change_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 3435538804031307666
+// Source Hash Code: 16121376383657346466

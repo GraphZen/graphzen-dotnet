@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
     {
         [Spec(nameof(named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+        public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 
         [Spec(nameof(named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+        public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -34,8 +34,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 
         [Spec(nameof(clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void
-            clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+        public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -46,7 +45,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         ))]
         [Fact(Skip = "TODO")]
         public void
-            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -54,7 +53,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 
         [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -65,7 +64,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         ))]
         [Fact(Skip = "TODO")]
         public void
-            clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+            clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -75,7 +74,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         ))]
         [Fact(Skip = "TODO")]
         public void
-            clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+            clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -83,8 +82,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 
         [Spec(nameof(clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void
-            clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+        public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -96,4 +94,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
     {
     }
 }
-// Source Hash Code: 2797325066890346886
+// Source Hash Code: 6440825095300384678

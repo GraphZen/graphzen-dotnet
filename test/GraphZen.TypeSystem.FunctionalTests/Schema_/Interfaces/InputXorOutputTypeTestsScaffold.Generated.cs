@@ -18,8 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
     {
         [Spec(nameof(clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void
-            clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+        public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -30,7 +29,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         ))]
         [Fact(Skip = "TODO")]
         public void
-            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -40,7 +39,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         ))]
         [Fact(Skip = "TODO")]
         public void
-            clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+            clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -48,11 +47,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
 
         [Spec(nameof(clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
-        public void
-            clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_ioschemaBuilder()
+        public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 12015500441224871938
+// Source Hash Code: 265016125316095810
