@@ -42,13 +42,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields.Descriptio
             sb.InputObject(Grandparent).Field(parentName, v => v.RemoveDescription());
         }
 
-        public override bool TryGetValue(InputField parent,[NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(InputField parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(InputFieldDefinition parent, [NotNullWhen(true)]out string? value)
+        public override bool TryGetValue(InputFieldDefinition parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

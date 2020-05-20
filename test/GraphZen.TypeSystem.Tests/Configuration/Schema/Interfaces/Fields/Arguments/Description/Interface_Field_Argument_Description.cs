@@ -44,13 +44,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Arguments.De
                 .Field(Grandparent, field => field.Argument(parentName, v => v.RemoveDescription()));
         }
 
-        public override bool TryGetValue(Argument parent,[NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(Argument parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(ArgumentDefinition parent,[NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(ArgumentDefinition parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

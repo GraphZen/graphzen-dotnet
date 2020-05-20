@@ -54,7 +54,8 @@ namespace GraphZen.TypeSystem
             return new ObjectTypeBuilder<T, TContext>(Builder);
         }
 
-        public ObjectTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull => throw new NotImplementedException();
+        public ObjectTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull =>
+            throw new NotImplementedException();
 
         public ObjectTypeBuilder<TObject, TContext> Description(string description)
         {

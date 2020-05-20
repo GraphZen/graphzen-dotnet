@@ -55,8 +55,11 @@ namespace GraphZen.TypeSystem
 
         public UnionTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
 
-        public UnionTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull => throw new NotImplementedException();
-        public UnionTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull => throw new NotImplementedException();
+        public UnionTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull =>
+            throw new NotImplementedException();
+
+        public UnionTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull =>
+            throw new NotImplementedException();
 
         public UnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes)
         {

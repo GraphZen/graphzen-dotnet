@@ -41,13 +41,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Description
             sb.Interface(parentName).RemoveDescription();
         }
 
-        public override bool TryGetValue(InterfaceType parent,[NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(InterfaceType parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(InterfaceTypeDefinition parent,[NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(InterfaceTypeDefinition parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

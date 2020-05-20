@@ -21,7 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotation_can_be_addedschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_unless_directive_is_definedschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -37,7 +37,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_unless_directive_is_definedschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_unless_location_is_validschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -53,7 +53,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_unless_location_is_validschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -61,7 +61,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_with_null_nameschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_with_null_nameschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -77,7 +77,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_with_invalid_nameschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -85,7 +85,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_with_invalid_nameschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -93,7 +93,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotations_can_be_removedschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -101,7 +101,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotations_can_be_removed_by_nameschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -109,7 +109,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotations_cannot_be_removed_by_name_with_null_nameschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -117,7 +117,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotations_are_removed_when_directive_is_removedschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -125,7 +125,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         [Fact(Skip = "TODO")]
         public void directive_annotations_are_removed_when_directive_is_ignoredschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
     }
 

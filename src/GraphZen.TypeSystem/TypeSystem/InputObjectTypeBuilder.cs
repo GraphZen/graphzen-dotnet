@@ -10,7 +10,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class InputObjectTypeBuilder<TInputObject> : IInputObjectTypeBuilder<TInputObject> where TInputObject : notnull
+    public class InputObjectTypeBuilder<TInputObject> : IInputObjectTypeBuilder<TInputObject>
+        where TInputObject : notnull
     {
         public InputObjectTypeBuilder(InternalInputObjectTypeBuilder builder)
         {
@@ -61,7 +62,8 @@ namespace GraphZen.TypeSystem
             return new InputObjectTypeBuilder<T>(Builder);
         }
 
-        public InputObjectTypeBuilder<T> ClrType<T>(string name) where T : notnull => throw new NotImplementedException();
+        public InputObjectTypeBuilder<T> ClrType<T>(string name) where T : notnull =>
+            throw new NotImplementedException();
 
 
         public InputObjectTypeBuilder<TInputObject> Field(string name, string type)

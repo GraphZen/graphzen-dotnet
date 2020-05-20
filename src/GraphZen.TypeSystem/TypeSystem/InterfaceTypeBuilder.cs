@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem
 {
     public class InterfaceTypeBuilder<TInterface, TContext> : IInterfaceTypeBuilder<TInterface, TContext>
         where TContext : GraphQLContext
-    where TInterface : notnull
+        where TInterface : notnull
     {
         public InterfaceTypeBuilder(InternalInterfaceTypeBuilder builder)
         {
@@ -46,11 +46,13 @@ namespace GraphZen.TypeSystem
             return new InterfaceTypeBuilder<object, TContext>(Builder);
         }
 
-        public InterfaceTypeBuilder<object, TContext> ClrType(Type clrType, string name) => throw new NotImplementedException();
+        public InterfaceTypeBuilder<object, TContext> ClrType(Type clrType, string name) =>
+            throw new NotImplementedException();
 
         public InterfaceTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
 
-        public InterfaceTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull => throw new NotImplementedException();
+        public InterfaceTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull =>
+            throw new NotImplementedException();
 
         public InterfaceTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull
         {

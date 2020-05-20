@@ -42,13 +42,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Description
             sb.Interface(Grandparent).Field(parentName, v => v.RemoveDescription());
         }
 
-        public override bool TryGetValue(Field parent,[NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(Field parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(FieldDefinition parent,[NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(FieldDefinition parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

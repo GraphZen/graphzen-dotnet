@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_if_name_matches_input_type_identityschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
         [Fact(Skip = "TODO")]
         public void named_item_can_be_added_if_name_matches_output_type_identityschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -36,7 +36,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
         [Fact(Skip = "TODO")]
         public void named_item_can_be_renamed_to_name_with_input_type_identityschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -44,7 +44,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
         [Fact(Skip = "TODO")]
         public void named_item_can_be_renamed_to_name_with_output_type_identityschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -52,7 +52,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_renamed_if_name_matches_input_type_identityschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_be_renamed_if_name_matches_output_type_identityschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -70,7 +70,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
         public void
             clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identityschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
 
 
@@ -80,7 +80,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
         public void
             clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identityschemaBuilder()
         {
-            // var schema = Schema.Create(_ => { });
+            // var schema = Schema.Create(schemaBuilder => { });
         }
     }
 
