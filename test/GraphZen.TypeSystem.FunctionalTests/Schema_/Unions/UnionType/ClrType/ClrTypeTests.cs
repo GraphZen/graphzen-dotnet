@@ -104,34 +104,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         }
 
 
-        [Spec(nameof(DEPRECATED_clr_type_with_conflicting_name_can_be_set_using_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Union(nameof(PlainAbstractClass));
-                _.Union("Foo").ClrType(typeof(PlainAbstractClass), "Bar");
-            });
-            schema.GetUnion(nameof(PlainAbstractClass)).ClrType.Should().BeNull();
-            schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClass>();
-        }
-
-
-        [Spec(nameof(DEPRECATED_clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Union(PlainAbstractClassAnnotatedName.AnnotatedName);
-                _.Union("Foo").ClrType(typeof(PlainAbstractClassAnnotatedName), "Bar");
-            });
-            schema.GetUnion(PlainAbstractClassAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
-            schema.GetUnion("Bar").ClrType.Should().Be<PlainAbstractClassAnnotatedName>();
-        }
-
-
+        
         [Spec(nameof(clr_type_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_removed_()

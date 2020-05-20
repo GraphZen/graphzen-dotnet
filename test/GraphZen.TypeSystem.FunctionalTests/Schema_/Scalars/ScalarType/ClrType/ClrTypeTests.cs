@@ -78,15 +78,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(DEPRECATED_clr_type_with_conflicting_name_can_be_set_using_custom_name))]
-        [Fact(Skip = "needs impl")]
-        public void adding_clr_type_to_item_with_name_changes_name_from_param_()
-        {
-            var schema = Schema.Create(_ => { _.Scalar("Foo").ClrType<PlainStruct>("Bar"); });
-            schema.HasScalar("Foo").Should().BeFalse();
-            schema.GetScalar<PlainStruct>().Name.Should().Be("Bar");
-        }
-
+        
 
         [Spec(nameof(setting_clr_type_with_duplicate_custom_name_should_throw))]
         [Fact(Skip = "needs impl")]
@@ -121,19 +113,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(DEPRECATED_clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name))]
-        [Fact]
-        public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Scalar(PlainStructAnnotatedName.AnnotatedName);
-                _.Scalar("Foo").ClrType(typeof(PlainStructAnnotatedName), "Bar");
-            });
-            schema.GetScalar(PlainStructAnnotatedName.AnnotatedName).ClrType.Should().BeNull();
-            schema.GetScalar<PlainStructAnnotatedName>().Name.Should().Be("Bar");
-        }
-
+        
 
         [Spec(nameof(clr_type_can_be_removed))]
         [Fact(Skip = "needs impl")]

@@ -106,7 +106,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
 
         [Spec(nameof(setting_clr_type_with_duplicate_custom_name_should_throw))]
         [Fact(Skip = "TODO")]
-        public void custom_name_should_be_unique_()
+        public void setting_clr_type_with_duplicate_custom_name_should_throw_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -114,7 +114,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
 
         [Spec(nameof(setting_clr_type_with_invalid_custom_name_should_throw))]
         [Fact(Skip = "TODO")]
-        public void custom_name_should_be_valid_()
+        public void setting_clr_type_with_invalid_custom_name_should_throw_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -122,7 +122,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
 
         [Spec(nameof(setting_clr_type_with_null_custom_name_should_throw))]
         [Fact(Skip = "TODO")]
-        public void custom_name_cannot_be_null_()
+        public void setting_clr_type_with_null_custom_name_should_throw_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -160,22 +160,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(DEPRECATED_clr_type_with_conflicting_name_can_be_set_using_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_can_be_set_using_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(DEPRECATED_clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(custom_named_clr_typed_item_when_type_removed_should_retain_custom_name))]
         [Fact(Skip = "TODO")]
         public void custom_named_clr_typed_item_when_type_removed_should_retain_custom_name_()
@@ -184,4 +168,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
     }
 }
-// Source Hash Code: 973858501202807304
+// Source Hash Code: 11527240151339966244

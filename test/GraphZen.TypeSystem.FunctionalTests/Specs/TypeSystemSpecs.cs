@@ -214,8 +214,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string setting_clr_type_with_name_annotation_does_not_change_name = null;
             public const string setting_clr_type_and_inferring_name_changes_name = null;
             public const string setting_clr_type_with_name_annotation_and_inferring_name_changes_name = null;
-            public const string DEPRECATED_clr_type_with_conflicting_name_can_be_set_using_custom_name = null;
-            public const string DEPRECATED_clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name = null;
 
             // Removing CLR Type
             public const string clr_type_can_be_removed = null;

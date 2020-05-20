@@ -327,26 +327,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
 
 
-        [Spec(nameof(DEPRECATED_clr_type_with_conflicting_name_can_be_set_using_custom_name))]
-        [Fact()]
-        public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
-        {
-             var schema = Schema.Create(_ =>
-             {
-                 _.Directive(nameof(PlainClass)).Description("a");
-                 _.Directive("Foo").ClrType<PlainClass>();
-             });
-
-        }
-
-
-        [Spec(nameof(DEPRECATED_clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name))]
-        [Fact(Skip = "TODO")]
-        public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
+        
 
         [Spec(nameof(clr_type_can_be_removed))]
         [Fact(Skip = "TODO")]
