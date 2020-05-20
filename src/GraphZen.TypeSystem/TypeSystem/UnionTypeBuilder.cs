@@ -46,20 +46,37 @@ namespace GraphZen.TypeSystem
         public UnionTypeBuilder<object, TContext> ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
-            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            Builder.ClrType(clrType, inferName, ConfigurationSource.Explicit);
             return new UnionTypeBuilder<object, TContext>(Builder);
         }
 
-        public UnionTypeBuilder<object, TContext> ClrType(Type clrType, string name) =>
-            throw new NotImplementedException();
+        public UnionTypeBuilder<object, TContext> ClrType(Type clrType, string name)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Check.NotNull(name, nameof(name));
+            Builder.ClrType(clrType, name, ConfigurationSource.Explicit);
+            return new UnionTypeBuilder<object, TContext>(Builder);
+        }
 
-        public UnionTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
+        public UnionTypeBuilder<object, TContext> RemoveClrType()
+        {
+            Builder.RemoveClrType(ConfigurationSource.Explicit);
+            return new UnionTypeBuilder<object, TContext>(Builder);
+        }
 
-        public UnionTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull =>
-            throw new NotImplementedException();
+        public UnionTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull
+        {
+            Builder.ClrType(typeof(T), inferName, ConfigurationSource.Explicit);
+            return new UnionTypeBuilder<T, TContext>(Builder);
+        }
 
-        public UnionTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull =>
-            throw new NotImplementedException();
+        public UnionTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.ClrType(typeof(T), name, ConfigurationSource.Explicit);
+            return new UnionTypeBuilder<T, TContext>(Builder);
+
+        }
 
         public UnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes)
         {

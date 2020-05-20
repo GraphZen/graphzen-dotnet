@@ -183,7 +183,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalUnionTypeBuilder? Union(Type clrType, string name, ConfigurationSource configurationSource) =>
-            Union(name, configurationSource)?.ClrType(clrType, configurationSource);
+            Union(name, configurationSource)?.ClrType(clrType, name, configurationSource);
 
         public InternalUnionTypeBuilder? Union(Type clrType, ConfigurationSource configurationSource)
         {
@@ -218,7 +218,7 @@ namespace GraphZen.TypeSystem.Internal
                 unionType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != unionType.ClrType)
                 {
-                    unionType.Builder.ClrType(id.ClrType, ConfigurationSource.Explicit);
+                    unionType.Builder.ClrType(id.ClrType,false, ConfigurationSource.Explicit);
                 }
 
                 return unionType.Builder;
