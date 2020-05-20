@@ -42,13 +42,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Description
             sb.InputObject(parentName).RemoveDescription();
         }
 
-        public override bool TryGetValue(InputObjectType parent, out string? value)
+        public override bool TryGetValue(InputObjectType parent,[NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(InputObjectTypeDefinition parent, out string? value)
+        public override bool TryGetValue(InputObjectTypeDefinition parent,[NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

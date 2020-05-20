@@ -41,13 +41,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description
             sb.Scalar(parentName).RemoveDescription();
         }
 
-        public override bool TryGetValue(ScalarType parent, out string? value)
+        public override bool TryGetValue(ScalarType parent,[NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(ScalarTypeDefinition parent, out string? value)
+        public override bool TryGetValue(ScalarTypeDefinition parent,[NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

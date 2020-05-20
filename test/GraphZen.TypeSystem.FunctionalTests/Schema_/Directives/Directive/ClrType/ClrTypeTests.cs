@@ -184,7 +184,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
 
 
         [Spec(nameof(clr_type_name_annotation_should_be_unique))]
-        [Fact(Skip = "TODO")]
+        [Fact()]
         public void clr_type_name_annotation_should_be_unique_()
         {
             // var schema = Schema.Create(_ => { });

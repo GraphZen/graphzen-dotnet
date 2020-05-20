@@ -41,13 +41,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Description
             sb.Object(parentName).RemoveDescription();
         }
 
-        public override bool TryGetValue(ObjectType parent, out string? value)
+        public override bool TryGetValue(ObjectType parent,[NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(ObjectTypeDefinition parent, out string? value)
+        public override bool TryGetValue(ObjectTypeDefinition parent,[NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

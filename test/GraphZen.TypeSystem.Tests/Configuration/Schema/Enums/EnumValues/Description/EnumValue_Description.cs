@@ -42,13 +42,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues.Description
             sb.Enum(Grandparent).Value(parentName, v => v.RemoveDescription());
         }
 
-        public override bool TryGetValue(EnumValue parent, out string? value)
+        public override bool TryGetValue(EnumValue parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(EnumValueDefinition parent, out string? value)
+        public override bool TryGetValue(EnumValueDefinition parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

@@ -41,13 +41,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description
             sb.Union(parentName).RemoveDescription();
         }
 
-        public override bool TryGetValue(UnionType parent, out string? value)
+        public override bool TryGetValue(UnionType parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;
         }
 
-        public override bool TryGetValue(UnionTypeDefinition parent, out string? value)
+        public override bool TryGetValue(UnionTypeDefinition parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description
             sb.Enum(parentName).RemoveDescription();
         }
 
-        public override bool TryGetValue(EnumType parent, out string? value)
+        public override bool TryGetValue(EnumType parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;
