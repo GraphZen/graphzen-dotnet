@@ -33,6 +33,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
         {
         }
 
+        public interface InvalidInterfaceName<T1, T2> {}
+
         [Spec(nameof(clr_type_can_be_added))]
         [Fact]
         public void clr_type_can_be_added_()
@@ -165,7 +167,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
                 var foo = _.Interface("Foo");
                 Action change = () => foo.ClrType<PlainInterface>();
                 change.Should().Throw<DuplicateClrTypeException>().WithMessage(
-                    "Cannot set CLR type on object Foo to CLR interface 'PlainInterface': object PlainInterface already exists with that CLR type.");
+                    "Cannot set CLR type on interface Foo to CLR interface 'PlainInterface': interface PlainInterface already exists with that CLR type.");
             });
         }
 
@@ -197,7 +199,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
                 var foo = _.Interface("Foo");
                 Action change = () => foo.ClrType<PlainInterface>(true);
                 change.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot set CLR type on object Foo and infer name: the CLR interface name 'PlainInterface' conflicts with an existing object named PlainInterface. All GraphQL type names must be unique.");
+                    "Cannot set CLR type on interface Foo and infer name: the CLR interface name 'PlainInterface' conflicts with an existing interface named PlainInterface. All GraphQL type names must be unique.");
             });
         }
 
@@ -212,7 +214,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
                 var foo = _.Interface("Foo");
                 Action change = () => foo.ClrType<PlainInterface>(true);
                 change.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot set CLR type on object Foo and infer name: the CLR interface name 'PlainInterface' conflicts with an existing object named PlainInterface. All GraphQL type names must be unique.");
+                    "Cannot set CLR type on interface Foo and infer name: the CLR interface name 'PlainInterface' conflicts with an existing interface named PlainInterface. All GraphQL type names must be unique.");
             });
         }
 
@@ -224,9 +226,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
             Schema.Create(_ =>
             {
                 var foo = _.Interface("Foo");
-                Action setClrType = () => foo.ClrType<InputValueBuilder<string>>(true);
+                Action setClrType = () => foo.ClrType<InvalidInterfaceName<string, string>>(true);
                 setClrType.Should().Throw<InvalidNameException>().WithMessage(
-                    "Cannot set CLR type on object Foo and infer name: the CLR interface name 'InputValueBuilder`1' is not a valid GraphQL name.");
+                    "Cannot set CLR type on interface Foo and infer name: the CLR interface name 'InvalidInterfaceName`2' is not a valid GraphQL name.");
             });
         }
 
@@ -245,7 +247,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
                 }.ForEach(set =>
                 {
                     set.Should().Throw<InvalidNameException>().WithMessage(
-                        "Cannot set CLR type on object Foo and infer name: the annotated name \"(*&#\" on CLR interface 'PlainInterfaceInvalidNameAnnotation' is not a valid GraphQL name.");
+                        "Cannot set CLR type on interface Foo and infer name: the annotated name \"(*&#\" on CLR interface 'PlainInterfaceInvalidNameAnnotation' is not a valid GraphQL name.");
                 });
             });
         }
@@ -266,7 +268,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
                 }.ForEach(set =>
                 {
                     set.Should().Throw<DuplicateNameException>().WithMessage(
-                        "Cannot set CLR type on object Bar with custom name: the custom name \"Foo\" conflicts with an existing object named 'Foo'. All type names must be unique.");
+                        "Cannot set CLR type on interface Bar with custom name: the custom name \"Foo\" conflicts with an existing interface named 'Foo'. All type names must be unique.");
                 });
             });
         }
@@ -287,7 +289,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
                 }.ForEach(set =>
                 {
                     set.Should().Throw<InvalidNameException>().WithMessage(
-                        "Cannot set CLR type on object Bar with custom name: the custom name \"invalid!\" is not a valid GraphQL name.");
+                        "Cannot set CLR type on interface Bar with custom name: the custom name \"invalid!\" is not a valid GraphQL name.");
                 });
             });
         }
