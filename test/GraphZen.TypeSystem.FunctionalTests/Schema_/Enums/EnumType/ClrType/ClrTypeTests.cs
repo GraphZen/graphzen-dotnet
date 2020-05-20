@@ -214,19 +214,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
         }
 
 
-        [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_valid))]
-        [Fact]
-        public void setting_clr_type_and_inferring_name_name_should_be_valid_()
-        {
-            Schema.Create(_ =>
-            {
-                var foo = _.Enum("Foo");
-                Action setClrType = () => foo.ClrType<InputValueBuilder<string>>(true);
-                setClrType.Should().Throw<InvalidNameException>().WithMessage(
-                    "Cannot set CLR type on enum Foo and infer name: the CLR enum name 'InputValueBuilder`1' is not a valid GraphQL name.");
-            });
-        }
-
+        
 
         [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_valid))]
         [Fact]

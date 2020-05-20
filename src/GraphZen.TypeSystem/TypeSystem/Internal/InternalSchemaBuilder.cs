@@ -574,8 +574,10 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource) =>
+        public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource)
+        {
             throw new NotImplementedException();
+        }
 
 
         public InternalObjectTypeBuilder? Object(string name, ConfigurationSource configurationSource)
