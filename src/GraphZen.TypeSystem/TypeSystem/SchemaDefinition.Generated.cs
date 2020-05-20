@@ -37,10 +37,10 @@ namespace GraphZen.TypeSystem
         public bool TryGetEnum(Type clrType, [NotNullWhen(true)] out EnumTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetEnum<TClrType>(out EnumTypeDefinition? type) =>
+        public bool TryGetEnum<TClrType>([NotNullWhen(true)] out EnumTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetEnum(string name, out EnumTypeDefinition? type) =>
+        public bool TryGetEnum(string name, [NotNullWhen(true)] out EnumTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasEnum(Type clrType) => HasType<EnumTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
@@ -72,10 +72,10 @@ namespace GraphZen.TypeSystem
         public bool TryGetInputObject(Type clrType, [NotNullWhen(true)] out InputObjectTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetInputObject<TClrType>(out InputObjectTypeDefinition? type) =>
+        public bool TryGetInputObject<TClrType>([NotNullWhen(true)] out InputObjectTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetInputObject(string name, out InputObjectTypeDefinition? type) =>
+        public bool TryGetInputObject(string name, [NotNullWhen(true)] out InputObjectTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasInputObject(Type clrType) =>
@@ -108,10 +108,10 @@ namespace GraphZen.TypeSystem
         public bool TryGetInterface(Type clrType, [NotNullWhen(true)] out InterfaceTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetInterface<TClrType>(out InterfaceTypeDefinition? type) =>
+        public bool TryGetInterface<TClrType>([NotNullWhen(true)] out InterfaceTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetInterface(string name, out InterfaceTypeDefinition? type) =>
+        public bool TryGetInterface(string name, [NotNullWhen(true)] out InterfaceTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasInterface(Type clrType) =>
@@ -142,7 +142,7 @@ namespace GraphZen.TypeSystem
         public bool TryGetObject(Type clrType, [NotNullWhen(true)] out ObjectTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetObject<TClrType>(out ObjectTypeDefinition? type) =>
+        public bool TryGetObject<TClrType>([NotNullWhen(true)] out ObjectTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
         public bool TryGetObject(string name, [NotNullWhen(true)] out ObjectTypeDefinition? type) =>
@@ -175,10 +175,10 @@ namespace GraphZen.TypeSystem
         public bool TryGetScalar(Type clrType, [NotNullWhen(true)] out ScalarTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetScalar<TClrType>(out ScalarTypeDefinition? type) =>
+        public bool TryGetScalar<TClrType>([NotNullWhen(true)] out ScalarTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetScalar(string name, out ScalarTypeDefinition? type) =>
+        public bool TryGetScalar(string name, [NotNullWhen(true)] out ScalarTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasScalar(Type clrType) => HasType<ScalarTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
@@ -208,10 +208,10 @@ namespace GraphZen.TypeSystem
         public bool TryGetUnion(Type clrType, [NotNullWhen(true)] out UnionTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetUnion<TClrType>(out UnionTypeDefinition? type) =>
+        public bool TryGetUnion<TClrType>([NotNullWhen(true)] out UnionTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetUnion(string name, out UnionTypeDefinition? type) =>
+        public bool TryGetUnion(string name, [NotNullWhen(true)] out UnionTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasUnion(Type clrType) => HasType<UnionTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
@@ -246,4 +246,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 9880771895087418789
+// Source Hash Code: 7180085119643695425

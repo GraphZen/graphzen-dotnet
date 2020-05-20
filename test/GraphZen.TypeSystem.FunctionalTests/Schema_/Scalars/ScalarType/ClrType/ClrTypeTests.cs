@@ -78,7 +78,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        
+
 
         [Spec(nameof(setting_clr_type_with_duplicate_custom_name_should_throw))]
         [Fact(Skip = "needs impl")]
@@ -113,7 +113,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        
+
 
         [Spec(nameof(clr_type_can_be_removed))]
         [Fact(Skip = "needs impl")]

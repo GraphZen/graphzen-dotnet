@@ -104,7 +104,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         }
 
 
-        
+
         [Spec(nameof(clr_type_can_be_removed))]
         [Fact(Skip = "TODO")]
         public void clr_typed_item_can_have_clr_type_removed_()
