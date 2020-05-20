@@ -20,8 +20,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.N
         [Fact(Skip = "TODO")]
         public void can_be_renamedschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 8142098237341563804
+// Source Hash Code: 7667401882997941271

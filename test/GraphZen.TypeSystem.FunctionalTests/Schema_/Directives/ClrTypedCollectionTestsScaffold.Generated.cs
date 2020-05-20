@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
         [Fact(Skip = "TODO")]
         public void adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_nameschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
 
 
@@ -29,8 +29,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
         public void
             adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_annotationschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 }
-// Source Hash Code: 11004547943858241454
+// Source Hash Code: 1069205526146831742

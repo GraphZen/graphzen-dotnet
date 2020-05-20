@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Descrip
         [Fact(Skip = "TODO")]
         public void item_can_be_defined_by_sdlschemaBuilder()
         {
-            // var schema = Schema.Create(schemaBuilder => { });
+            // var schema = Schema.Create(_ => { });
         }
     }
 
@@ -30,4 +30,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Descrip
     {
     }
 }
-// Source Hash Code: 15239012797589117214
+// Source Hash Code: 13739085158088065779
