@@ -218,7 +218,7 @@ namespace GraphZen.TypeSystem.Internal
                 unionType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != unionType.ClrType)
                 {
-                    unionType.Builder.ClrType(id.ClrType,false, ConfigurationSource.Explicit);
+                    unionType.Builder.ClrType(id.ClrType, false, ConfigurationSource.Explicit);
                 }
 
                 return unionType.Builder;
@@ -291,7 +291,7 @@ namespace GraphZen.TypeSystem.Internal
                 scalarType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
                 {
-                    scalarType.Builder.ClrType(id.ClrType,false, configurationSource);
+                    scalarType.Builder.ClrType(id.ClrType, false, configurationSource);
                 }
 
                 return scalarType.Builder;
@@ -362,7 +362,7 @@ namespace GraphZen.TypeSystem.Internal
                 interfaceType.UpdateConfigurationSource(configurationSource);
                 if (type.ClrType != id.ClrType && id.ClrType != null)
                 {
-                    interfaceType.Builder.ClrType(id.ClrType,false, configurationSource);
+                    interfaceType.Builder.ClrType(id.ClrType, false, configurationSource);
                 }
 
                 return interfaceType.Builder;
@@ -434,7 +434,7 @@ namespace GraphZen.TypeSystem.Internal
                 enumType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
                 {
-                    enumType.Builder.ClrType(id.ClrType,false, ConfigurationSource.Explicit);
+                    enumType.Builder.ClrType(id.ClrType, false, ConfigurationSource.Explicit);
                 }
 
                 return enumType.Builder;
@@ -576,7 +576,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            throw new NotImplementedException();
+            return Object(name, configurationSource)?.ClrType(clrType, name, configurationSource);
         }
 
 
@@ -637,8 +637,7 @@ namespace GraphZen.TypeSystem.Internal
             return objectType.Builder;
         }
 
-        public InternalDirectiveBuilder?
-            Directive(Type clrType, string name, ConfigurationSource configurationSource)
+        public InternalDirectiveBuilder? Directive(Type clrType, string name, ConfigurationSource configurationSource)
         {
             if (IsDirectiveIgnored(clrType, configurationSource) || IsDirectiveIgnored(name, configurationSource))
             {

@@ -26,6 +26,7 @@ namespace GraphZen.TypeSystem
 
         private INamedTypeDefinition? _typeDefinition;
 
+
         public TypeIdentity(string name, SchemaDefinition schema, TypeKind? kind = null)
         {
             Name = name;
@@ -260,7 +261,7 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
-            return Equals((TypeIdentity) obj);
+            return Equals((TypeIdentity)obj);
         }
 
         // ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
