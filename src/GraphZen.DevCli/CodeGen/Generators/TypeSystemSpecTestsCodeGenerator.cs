@@ -90,7 +90,7 @@ namespace GraphZen.CodeGen.Generators
 
 [Spec({specRef})]
 [Fact(Skip=""TODO"")]
-public void {spec.Id}schemaBuilder() {{
+public void {spec.Id}_() {{
     // var schema = Schema.Create(_ => {{ }});
 }}
 
