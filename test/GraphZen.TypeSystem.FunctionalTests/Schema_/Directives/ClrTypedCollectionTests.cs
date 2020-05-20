@@ -367,5 +367,32 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
                     "Cannot create directive Foo with CLR type 'PlainClassAnnotatedName': both directive Foo and directive AnnotatedNameValue (with CLR type PlainClassAnnotatedName) already exist.");
             });
         }
+
+        [Spec(nameof(adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name))]
+        [Fact()]
+        public void adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive(nameof(PlainClass));
+                _.Directive<PlainClass>("Foo");
+            });
+            schema.GetDirective(nameof(PlainClass)).ClrType.Should().BeNull();
+            schema.GetDirective<PlainClass>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_annotation))]
+        [Fact()]
+        public void adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_annotation_()
+        {
+            var schema = Schema.Create(_ =>
+                         {
+                             _.Directive(PlainClassAnnotatedName.AnnotatedNameValue);
+                             _.Directive<PlainClassAnnotatedName>("Foo");
+                         });
+            schema.GetDirective(PlainClassAnnotatedName.AnnotatedNameValue).ClrType.Should().BeNull();
+            schema.GetDirective<PlainClassAnnotatedName>().Name.Should().Be("Foo");
+        }
     }
 }

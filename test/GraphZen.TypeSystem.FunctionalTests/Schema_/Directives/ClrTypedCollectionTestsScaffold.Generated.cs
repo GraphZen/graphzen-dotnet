@@ -16,20 +16,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
     [NoReorder]
     public abstract class ClrTypedCollectionTestsScaffold
     {
-        [Spec(nameof(adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_annotation))]
-        [Fact(Skip = "TODO")]
-        public void adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_annotation_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
+        
     }
 }
 // Source Hash Code: 8058535403656986030
