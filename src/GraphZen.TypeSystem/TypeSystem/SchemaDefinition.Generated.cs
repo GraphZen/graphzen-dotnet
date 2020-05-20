@@ -34,13 +34,13 @@ namespace GraphZen.TypeSystem
         public EnumTypeDefinition? FindEnum(Type clrType) =>
             FindType<EnumTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public bool TryGetEnum(Type clrType, out EnumTypeDefinition type) =>
+        public bool TryGetEnum(Type clrType, [NotNullWhen(true)] out EnumTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetEnum<TClrType>(out EnumTypeDefinition type) =>
+        public bool TryGetEnum<TClrType>(out EnumTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetEnum(string name, out EnumTypeDefinition type) =>
+        public bool TryGetEnum(string name, out EnumTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasEnum(Type clrType) => HasType<EnumTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
@@ -69,13 +69,13 @@ namespace GraphZen.TypeSystem
         public InputObjectTypeDefinition? FindInputObject(Type clrType) =>
             FindType<InputObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public bool TryGetInputObject(Type clrType, out InputObjectTypeDefinition type) =>
+        public bool TryGetInputObject(Type clrType, [NotNullWhen(true)] out InputObjectTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetInputObject<TClrType>(out InputObjectTypeDefinition type) =>
+        public bool TryGetInputObject<TClrType>(out InputObjectTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetInputObject(string name, out InputObjectTypeDefinition type) =>
+        public bool TryGetInputObject(string name, out InputObjectTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasInputObject(Type clrType) =>
@@ -105,13 +105,13 @@ namespace GraphZen.TypeSystem
         public InterfaceTypeDefinition? FindInterface(Type clrType) =>
             FindType<InterfaceTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public bool TryGetInterface(Type clrType, out InterfaceTypeDefinition type) =>
+        public bool TryGetInterface(Type clrType, [NotNullWhen(true)] out InterfaceTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetInterface<TClrType>(out InterfaceTypeDefinition type) =>
+        public bool TryGetInterface<TClrType>(out InterfaceTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetInterface(string name, out InterfaceTypeDefinition type) =>
+        public bool TryGetInterface(string name, out InterfaceTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasInterface(Type clrType) =>
@@ -139,13 +139,13 @@ namespace GraphZen.TypeSystem
         public ObjectTypeDefinition? FindObject(Type clrType) =>
             FindType<ObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public bool TryGetObject(Type clrType, out ObjectTypeDefinition type) =>
+        public bool TryGetObject(Type clrType, [NotNullWhen(true)] out ObjectTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetObject<TClrType>(out ObjectTypeDefinition type) =>
+        public bool TryGetObject<TClrType>(out ObjectTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetObject(string name, out ObjectTypeDefinition type) =>
+        public bool TryGetObject(string name, [NotNullWhen(true)] out ObjectTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasObject(Type clrType) => HasType<ObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
@@ -172,13 +172,13 @@ namespace GraphZen.TypeSystem
         public ScalarTypeDefinition? FindScalar(Type clrType) =>
             FindType<ScalarTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public bool TryGetScalar(Type clrType, out ScalarTypeDefinition type) =>
+        public bool TryGetScalar(Type clrType, [NotNullWhen(true)] out ScalarTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetScalar<TClrType>(out ScalarTypeDefinition type) =>
+        public bool TryGetScalar<TClrType>(out ScalarTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetScalar(string name, out ScalarTypeDefinition type) =>
+        public bool TryGetScalar(string name, out ScalarTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasScalar(Type clrType) => HasType<ScalarTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
@@ -205,13 +205,13 @@ namespace GraphZen.TypeSystem
         public UnionTypeDefinition? FindUnion(Type clrType) =>
             FindType<UnionTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public bool TryGetUnion(Type clrType, out UnionTypeDefinition type) =>
+        public bool TryGetUnion(Type clrType, [NotNullWhen(true)] out UnionTypeDefinition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGetUnion<TClrType>(out UnionTypeDefinition type) =>
+        public bool TryGetUnion<TClrType>(out UnionTypeDefinition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGetUnion(string name, out UnionTypeDefinition type) =>
+        public bool TryGetUnion(string name, out UnionTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool HasUnion(Type clrType) => HasType<UnionTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));

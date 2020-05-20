@@ -62,11 +62,19 @@ namespace GraphZen.TypeSystem.Internal
 
             return false;
         }
-
-
-        public InternalObjectTypeBuilder SetClrType(Type clrType, ConfigurationSource configurationSource)
+        public InternalObjectTypeBuilder ClrType(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, false, configurationSource))
+            if (Definition.SetClrType(clrType, name, configurationSource))
+            {
+                ConfigureObjectFromClrType();
+            }
+
+            return this;
+        }
+
+        public InternalObjectTypeBuilder ClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
+        {
+            if (Definition.SetClrType(clrType, inferName, configurationSource))
             {
                 ConfigureObjectFromClrType();
             }

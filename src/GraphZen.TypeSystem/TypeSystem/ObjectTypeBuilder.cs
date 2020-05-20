@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem
         public ObjectTypeBuilder<object, TContext> ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
-            Builder.SetClrType(clrType, ConfigurationSource.Explicit);
+            Builder.ClrType(clrType, inferName, ConfigurationSource.Explicit);
             return new ObjectTypeBuilder<object, TContext>(Builder);
         }
 
@@ -50,12 +50,16 @@ namespace GraphZen.TypeSystem
 
         public ObjectTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull
         {
-            Builder.SetClrType(typeof(T), ConfigurationSource.Explicit);
+            Builder.ClrType(typeof(T), inferName, ConfigurationSource.Explicit);
             return new ObjectTypeBuilder<T, TContext>(Builder);
         }
 
-        public ObjectTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull =>
-            throw new NotImplementedException();
+        public ObjectTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.ClrType(typeof(T), name, ConfigurationSource.Explicit);
+            return new ObjectTypeBuilder<T, TContext>(Builder);
+        }
 
         public ObjectTypeBuilder<TObject, TContext> Description(string description)
         {

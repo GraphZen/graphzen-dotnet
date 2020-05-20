@@ -451,7 +451,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public bool TryGetType(Type clrType, out INamedType type)
+        public bool TryGetType(Type clrType, [NotNullWhen(true)] out INamedType type)
         {
             Check.NotNull(clrType, nameof(clrType));
             type = GetTypes<NamedType>().SingleOrDefault(_ => _.ClrType == clrType);

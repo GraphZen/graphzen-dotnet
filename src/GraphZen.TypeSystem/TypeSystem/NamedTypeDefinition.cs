@@ -55,6 +55,7 @@ namespace GraphZen.TypeSystem
         public bool IsIntrospection { get; }
         public string Name => Identity.Name;
 
+
         public bool SetName(string name, ConfigurationSource configurationSource)
         {
             if (!name.IsValidGraphQLName())
@@ -78,7 +79,35 @@ namespace GraphZen.TypeSystem
         public Type? ClrType => Identity.ClrType;
 
 
-        public bool SetClrType(Type clrType, string name, ConfigurationSource configurationSource) => throw new NotImplementedException();
+        public bool SetClrType(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetClrTypeConfigurationSource()))
+            {
+                return false;
+            }
+
+            if (Schema.TryGetType(clrType, out var existingTyped) && !existingTyped.Equals(this))
+            {
+                throw new DuplicateClrTypeException(
+                    TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType,
+                        existingTyped));
+            }
+
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException($"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" is not a valid GraphQL name.");
+            }
+
+            if (Schema.TryGetType(name, out var existingNamed) && !existingNamed.Equals(this))
+            {
+                throw new DuplicateNameException(
+                            $"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" conflicts with an existing {existingNamed.Kind.ToDisplayStringLower()} named '{existingNamed.Name}'. All type names must be unique.");
+            }
+
+            SetName(name, configurationSource);
+            return SetClrType(clrType, false, configurationSource);
+
+        }
 
         public virtual bool SetClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
         {

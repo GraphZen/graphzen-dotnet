@@ -146,7 +146,7 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name) =>
-            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
+            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?) null;
 
         public IEnumerable<ObjectTypeDefinition> GetObjects(bool includeSpecTypes = false) =>
             _types.OfType<ObjectTypeDefinition>();
@@ -737,17 +737,31 @@ namespace GraphZen.TypeSystem
                    throw new Exception($"No {typeof(T).Name} found with CLR type '{clrType}'.");
         }
 
-        public bool TryGetType<T>(string name, out T type) where T : NamedTypeDefinition
+        public bool TryGetType(string name, [NotNullWhen(true)] out NamedTypeDefinition? type)
+        {
+            Check.NotNull(name, nameof(name));
+            type = _types.SingleOrDefault(_ => _.Name == name);
+            return type != null;
+        }
+
+        public bool TryGetType<T>(string name, [NotNullWhen(true)] out T? type) where T : NamedTypeDefinition
         {
             Check.NotNull(name, nameof(name));
             type = _types.OfType<T>().SingleOrDefault(_ => _.Name == name);
             return type != null;
         }
 
-        public bool TryGetType<T>(Type clrType, out T type) where T : NamedTypeDefinition
+        public bool TryGetType<T>(Type clrType, [NotNullWhen(true)] out T? type) where T : NamedTypeDefinition
         {
             Check.NotNull(clrType, nameof(clrType));
             type = _types.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType);
+            return type != null;
+        }
+
+        public bool TryGetType(Type clrType, [NotNullWhen(true)] out NamedTypeDefinition? type)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            type = _types.SingleOrDefault(_ => _.ClrType == clrType);
             return type != null;
         }
 

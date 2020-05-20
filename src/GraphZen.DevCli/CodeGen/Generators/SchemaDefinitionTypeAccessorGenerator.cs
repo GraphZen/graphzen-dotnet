@@ -34,13 +34,13 @@ namespace GraphZen.CodeGen.Generators
         public {type}Definition? Find{kind}(Type clrType) => 
             FindType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public bool TryGet{kind}(Type clrType, out {type}Definition type) =>
+        public bool TryGet{kind}(Type clrType, [NotNullWhen(true)] out {type}Definition? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        public bool TryGet{kind}<TClrType>(out {type}Definition type) =>
+        public bool TryGet{kind}<TClrType>([NotNullWhen(true)] out {type}Definition? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        public bool TryGet{kind}(string name, out {type}Definition type) =>
+        public bool TryGet{kind}(string name, [NotNullWhen(true)] out {type}Definition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
         public bool Has{kind}(Type clrType) => HasType<{type}Definition>(Check.NotNull(clrType, nameof(clrType)));
