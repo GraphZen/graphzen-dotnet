@@ -70,9 +70,19 @@ namespace GraphZen.TypeSystem.Internal
             return builder;
         }
 
-        public InternalEnumTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
+        public InternalEnumTypeBuilder ClrType(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, false, configurationSource))
+            if (Definition.SetClrType(clrType, name, configurationSource))
+            {
+                ConfigureEnumFromClrType();
+            }
+
+            return this;
+        }
+
+        public InternalEnumTypeBuilder ClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
+        {
+            if (Definition.SetClrType(clrType, inferName, configurationSource))
             {
                 ConfigureEnumFromClrType();
             }
@@ -143,6 +153,12 @@ namespace GraphZen.TypeSystem.Internal
         public InternalEnumTypeBuilder SetName(string name, ConfigurationSource configurationSource)
         {
             Definition.SetName(name, configurationSource);
+            return this;
+        }
+
+        public InternalEnumTypeBuilder RemoveClrType(ConfigurationSource configurationSource)
+        {
+            Definition.RemoveClrType(configurationSource);
             return this;
         }
     }

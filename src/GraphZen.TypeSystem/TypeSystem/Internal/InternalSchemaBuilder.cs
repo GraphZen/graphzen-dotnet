@@ -434,7 +434,7 @@ namespace GraphZen.TypeSystem.Internal
                 enumType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
                 {
-                    enumType.Builder.ClrType(id.ClrType, ConfigurationSource.Explicit);
+                    enumType.Builder.ClrType(id.ClrType,false, ConfigurationSource.Explicit);
                 }
 
                 return enumType.Builder;

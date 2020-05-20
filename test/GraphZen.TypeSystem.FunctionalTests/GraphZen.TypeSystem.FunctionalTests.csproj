@@ -5,15 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Schema_\Interfaces\InterfaceType\DirectiveAnnotationAnnotations\**" />
-    <Compile Remove="Schema_\Interfaces\InterfaceType\Interfaces\**" />
-    <EmbeddedResource Remove="Schema_\Interfaces\InterfaceType\DirectiveAnnotationAnnotations\**" />
-    <EmbeddedResource Remove="Schema_\Interfaces\InterfaceType\Interfaces\**" />
-    <None Remove="Schema_\Interfaces\InterfaceType\DirectiveAnnotationAnnotations\**" />
-    <None Remove="Schema_\Interfaces\InterfaceType\Interfaces\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="1.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -32,9 +23,5 @@
     <ProjectReference Include="..\..\src\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Schema_\Directives\Directive\Arguments\ArgumentDefinition\DirectiveAnnotationAnnotations\DirectiveAnnotation\Name\" />
-    <Folder Include="Schema_\Objects\ObjectType\Interfaces\" />
-  </ItemGroup>
-
+ 
 </Project>

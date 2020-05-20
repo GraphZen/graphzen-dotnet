@@ -75,21 +75,36 @@ namespace GraphZen.TypeSystem
         public EnumTypeBuilder<object> ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
-            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            Builder.ClrType(clrType, inferName, ConfigurationSource.Explicit);
             return new EnumTypeBuilder<object>(Builder);
         }
 
-        public EnumTypeBuilder<object> ClrType(Type clrType, string name) => throw new NotImplementedException();
-
-        public EnumTypeBuilder<T> ClrType<T>() where T : notnull
+        public EnumTypeBuilder<object> ClrType(Type clrType, string name)
         {
-            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            Check.NotNull(clrType, nameof(clrType));
+            Check.NotNull(name, nameof(name));
+            Builder.ClrType(clrType, name, ConfigurationSource.Explicit);
+            return new EnumTypeBuilder<object>(Builder);
+        }
+
+        public EnumTypeBuilder<T> ClrType<T>(bool inferName = false) where T : notnull
+        {
+            Builder.ClrType(typeof(T), inferName, ConfigurationSource.Explicit);
             return new EnumTypeBuilder<T>(Builder);
         }
 
-        public EnumTypeBuilder<T> ClrType<T>(string name) where T : notnull => throw new NotImplementedException();
+        public EnumTypeBuilder<T> ClrType<T>(string name) where T : notnull
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.ClrType(typeof(T), name, ConfigurationSource.Explicit);
+            return new EnumTypeBuilder<T>(Builder);
+        }
 
-        public EnumTypeBuilder<object> RemoveClrType() => throw new NotImplementedException();
+        public EnumTypeBuilder<object> RemoveClrType()
+        {
+            Builder.RemoveClrType(ConfigurationSource.Explicit);
+            return new EnumTypeBuilder<object>(Builder);
+        }
 
 
         public EnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object? value = null) =>

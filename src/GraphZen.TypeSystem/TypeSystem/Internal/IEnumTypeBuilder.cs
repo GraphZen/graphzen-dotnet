@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.Internal
         EnumTypeBuilder<TEnumValue> Value(TEnumValue value, Action<EnumValueBuilder> configurator);
         EnumTypeBuilder<TEnumValue> IgnoreValue(TEnumValue value);
         EnumTypeBuilder<TEnumValue> UnignoreValue(TEnumValue value);
-        EnumTypeBuilder<T> ClrType<T>() where T : notnull;
+        EnumTypeBuilder<T> ClrType<T>(bool inferName = false) where T : notnull;
         EnumTypeBuilder<T> ClrType<T>(string name) where T : notnull;
     }
 }
