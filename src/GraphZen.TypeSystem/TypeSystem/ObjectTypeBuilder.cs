@@ -33,8 +33,6 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ObjectTypeBuilder<TObject, TContext> RemoveName() => throw new NotImplementedException();
-
         public ObjectTypeBuilder<object, TContext> ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
@@ -43,10 +41,20 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public ObjectTypeBuilder<object, TContext> ClrType(Type clrType, string name) =>
-            throw new NotImplementedException();
+        public ObjectTypeBuilder<object, TContext> ClrType(Type clrType, string name)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Check.NotNull(name, nameof(name));
+            Builder.ClrType(clrType, name, ConfigurationSource.Explicit);
+            return new ObjectTypeBuilder<object, TContext>(Builder);
+        }
 
-        public ObjectTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
+        public ObjectTypeBuilder<object, TContext> RemoveClrType()
+        {
+            Builder.RemoveClrType(ConfigurationSource.Explicit);
+
+            return new ObjectTypeBuilder<object, TContext>(Builder);
+        }
 
         public ObjectTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull
         {

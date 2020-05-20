@@ -177,5 +177,11 @@ namespace GraphZen.TypeSystem.Internal
             Definition.SetDescription(description, configurationSource);
             return this;
         }
+
+        public InternalObjectTypeBuilder RemoveClrType(ConfigurationSource configurationSource)
+        {
+            Definition.RemoveClrType(configurationSource);
+            return this;
+        }
     }
 }

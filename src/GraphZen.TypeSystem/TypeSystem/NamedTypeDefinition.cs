@@ -116,12 +116,65 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
+            if (Schema.TryGetType(clrType, out var existingTyped) && !existingTyped.Equals(this))
+            {
+                throw new DuplicateClrTypeException(
+                    TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType,
+                        existingTyped));
+            }
+
+            if (inferName)
+            {
+                if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated))
+                {
+                    if (!annotated.IsValidGraphQLName())
+                    {
+                        throw new InvalidNameException(
+                            $"Cannot set CLR type on {this} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' is not a valid GraphQL name.");
+                    }
+
+                    if (Schema.TryGetType(annotated, out var existingNamed) && !existingNamed.Equals(this))
+                    {
+                        throw new DuplicateNameException(
+                            $"Cannot set CLR type on {this} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' conflicts with an existing {existingNamed.Kind.ToDisplayStringLower()} named {existingNamed.Name}. All GraphQL type names must be unique.");
+                    }
+
+                    SetName(annotated, configurationSource);
+                }
+                else
+                {
+                    if (!clrType.Name.IsValidGraphQLName())
+                    {
+                        throw new InvalidNameException(
+                            $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' is not a valid GraphQL name.");
+                    }
+
+                    if (Schema.TryGetType(clrType.Name, out var existingNamed) && !existingNamed.Equals(this))
+                    {
+                        throw new DuplicateNameException(
+                            $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' conflicts with an existing {existingNamed.Kind.ToDisplayStringLower()} named {existingNamed.Name}. All GraphQL type names must be unique.");
+                    }
+
+                    SetName(clrType.Name, configurationSource);
+                }
+            }
+
             _clrTypeConfigurationSource = configurationSource;
             Identity.ClrType = clrType;
             return true;
         }
 
-        public bool RemoveClrType(ConfigurationSource configurationSource) => throw new NotImplementedException();
+        public bool RemoveClrType(ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(_clrTypeConfigurationSource))
+            {
+                return false;
+            }
+
+            _clrTypeConfigurationSource = configurationSource;
+            Identity.ClrType = null;
+            return true;
+        }
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
 

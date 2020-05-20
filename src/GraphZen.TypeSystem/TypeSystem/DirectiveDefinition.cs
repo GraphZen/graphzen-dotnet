@@ -261,7 +261,7 @@ namespace GraphZen.TypeSystem
                             $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' is not a valid GraphQL name.");
                     }
 
-                    if (Schema.TryGetDirective(clrType.Name, out var existingNamed))
+                    if (Schema.TryGetDirective(clrType.Name, out var existingNamed) && !existingNamed.Equals(this))
                     {
                         throw new DuplicateNameException(
                             $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");

@@ -162,7 +162,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                 var foo = _.Object("Foo");
                 Action change = () => foo.ClrType<PlainClass>();
                 change.Should().Throw<DuplicateClrTypeException>().WithMessage(
-                    "Cannot set CLR type on directive Foo to CLR class 'PlainClass': directive PlainClass already exists with that CLR type.");
+                    "Cannot set CLR type on object Foo to CLR class 'PlainClass': object PlainClass already exists with that CLR type.");
             });
         }
 
@@ -194,7 +194,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                 var foo = _.Object("Foo");
                 Action change = () => foo.ClrType<PlainClass>(true);
                 change.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot set CLR type on directive Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing directive named PlainClass. All directive names must be unique.");
+                    "Cannot set CLR type on object Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing object named PlainClass. All GraphQL type names must be unique.");
             });
         }
 
@@ -209,7 +209,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                 var foo = _.Object("Foo");
                 Action change = () => foo.ClrType<PlainClass>(true);
                 change.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot set CLR type on directive Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing directive named PlainClass. All directive names must be unique.");
+                    "Cannot set CLR type on object Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing object named PlainClass. All GraphQL type names must be unique.");
             });
         }
 
@@ -223,7 +223,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                 var foo = _.Object("Foo");
                 Action setClrType = () => foo.ClrType<InputValueBuilder<string>>(true);
                 setClrType.Should().Throw<InvalidNameException>().WithMessage(
-                    "Cannot set CLR type on directive Foo and infer name: the CLR class name 'InputValueBuilder`1' is not a valid GraphQL name.");
+                    "Cannot set CLR type on object Foo and infer name: the CLR class name 'InputValueBuilder`1' is not a valid GraphQL name.");
             });
         }
 
@@ -242,7 +242,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                 }.ForEach(set =>
                 {
                     set.Should().Throw<InvalidNameException>().WithMessage(
-                        "Cannot set CLR type on directive Foo and infer name: the annotated name \"(*&#\" on CLR class 'PlainClassInvalidNameAnnotation' is not a valid GraphQL name.");
+                        "Cannot set CLR type on object Foo and infer name: the annotated name \"(*&#\" on CLR class 'PlainClassInvalidNameAnnotation' is not a valid GraphQL name.");
                 });
             });
         }
@@ -263,7 +263,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                 }.ForEach(set =>
                 {
                     set.Should().Throw<DuplicateNameException>().WithMessage(
-                        "Cannot set CLR type on directive Bar with custom name: the custom name \"Foo\" conflicts with an existing directive named Foo. All directive names must be unique.");
+                        "Cannot set CLR type on object Bar with custom name: the custom name \"Foo\" conflicts with an existing object named 'Foo'. All type names must be unique.");
                 });
             });
         }
@@ -284,7 +284,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                 }.ForEach(set =>
                 {
                     set.Should().Throw<InvalidNameException>().WithMessage(
-                        "Cannot set CLR type on directive Bar with custom name: the custom name \"invalid!\" is not a valid GraphQL name.");
+                        "Cannot set CLR type on object Bar with custom name: the custom name \"invalid!\" is not a valid GraphQL name.");
                 });
             });
         }
