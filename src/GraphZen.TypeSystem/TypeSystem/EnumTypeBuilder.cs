@@ -72,7 +72,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public EnumTypeBuilder<object> ClrType(Type clrType)
+        public EnumTypeBuilder<object> ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
             Builder.ClrType(clrType, ConfigurationSource.Explicit);

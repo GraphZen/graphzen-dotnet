@@ -16,10 +16,11 @@ namespace GraphZen.TypeSystem.Internal
         IClrTypeBuilder<ObjectTypeBuilder<object, TContext>>,
         INamedBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IFieldsDefinitionBuilder<ObjectTypeBuilder<TObject, TContext>, TObject, TContext>
+        where TObject : notnull
         where TContext : GraphQLContext
     {
-        ObjectTypeBuilder<T, TContext> ClrType<T>();
-        ObjectTypeBuilder<T, TContext> ClrType<T>(string name);
+        ObjectTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull;
+        ObjectTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull;
         ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn);
         ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, bool> isTypeOfFn);
         ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, ResolveInfo, bool> isTypeOfFn);

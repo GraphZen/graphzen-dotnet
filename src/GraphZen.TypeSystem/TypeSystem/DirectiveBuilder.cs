@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class DirectiveBuilder<TDirective> : IDirectiveBuilder<TDirective>
+    public class DirectiveBuilder<TDirective> : IDirectiveBuilder<TDirective> where TDirective : notnull
     {
         public DirectiveBuilder(InternalDirectiveBuilder builder)
         {
@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem
 
         private InternalDirectiveBuilder Builder { get; }
 
-        public DirectiveBuilder<object> ClrType(Type clrType)
+        public DirectiveBuilder<object> ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
             var ib = Builder.ClrType(clrType, ConfigurationSource.Explicit);
@@ -36,13 +36,13 @@ namespace GraphZen.TypeSystem
 
         public DirectiveBuilder<object> RemoveClrType() => throw new NotImplementedException();
 
-        public DirectiveBuilder<T> ClrType<T>()
+        public DirectiveBuilder<T> ClrType<T>(bool inferName = false) where T : notnull
         {
             var ib = Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
             return new DirectiveBuilder<T>(ib);
         }
 
-        public DirectiveBuilder<T> ClrType<T>(string name) => throw new NotImplementedException();
+        public DirectiveBuilder<T> ClrType<T>(string name) where T : notnull => throw new NotImplementedException();
 
         public DirectiveBuilder<TDirective> Description(string description)
         {

@@ -16,10 +16,11 @@ namespace GraphZen.TypeSystem.Internal
         INamedBuilder<DirectiveBuilder<TDirective>>,
         IInfrastructure<DirectiveDefinition>,
         IInfrastructure<InternalDirectiveBuilder>
+        where TDirective : notnull
 
     {
-        DirectiveBuilder<T> ClrType<T>();
-        DirectiveBuilder<T> ClrType<T>(string name);
+        DirectiveBuilder<T> ClrType<T>(bool inferName = false) where T : notnull;
+        DirectiveBuilder<T> ClrType<T>(string name) where T : notnull;
         DirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations);
     }
 }

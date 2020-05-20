@@ -128,16 +128,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_can_be_added = null;
             public const string adding_clr_typed_item_updates_matching_named_items_clr_type = null;
             public const string adding_clr_typed_item_with_name_annotation_updates_matching_named_items_clr_type = null;
+            public const string adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name = null;
+            public const string adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_annotation = null;
             public const string clr_typed_item_can_be_added_via_type_param = null;
             public const string clr_typed_item_uses_clr_type_name = null;
             public const string clr_typed_item_with_name_annotation_uses_clr_type_name_annotation = null;
             public const string clr_typed_item_cannot_be_added_with_null_value = null;
             public const string clr_typed_item_cannot_be_added_with_invalid_name_attribute = null;
             public const string clr_typed_item_with_conflicting_name_can_be_added_with_custom_name = null;
-
-            public const string clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name =
-                null;
-
+            public const string clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name = null;
             public const string clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name = null;
 
             public const string
@@ -182,10 +181,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_type_can_be_added = null;
             public const string clr_type_can_be_added_via_type_param = null;
 
-
             public const string clr_type_can_be_changed = null;
             public const string clr_type_can_be_changed_via_type_param = null;
-
 
             public const string clr_type_can_be_added_with_custom_name = null;
             public const string clr_type_can_be_added_via_type_param_with_custom_name = null;
@@ -195,26 +192,26 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
             public const string clr_type_cannot_be_null = null;
             public const string clr_type_should_be_unique = null;
-            public const string clr_type_name_should_be_unique = null;
-            public const string clr_type_name_annotation_should_be_unique = null;
-            public const string clr_type_name_annotation_should_be_valid = null;
+            public const string setting_clr_type_and_inferring_name_name_should_be_unique = null;
+            public const string setting_clr_type_and_inferring_name_name_annotation_should_be_unique = null;
+            public const string setting_clr_type_and_inferring_name_name_annotation_should_be_valid = null;
+
             public const string custom_name_should_be_unique = null;
             public const string custom_name_should_be_valid = null;
             public const string custom_name_cannot_be_null = null;
 
             // Changing CLR type
-            public const string changing_clr_type_changes_name = null;
-            public const string changing_clr_type_with_name_annotation_changes_name = null;
-            public const string clr_type_with_conflicting_name_can_be_added_using_custom_name = null;
-            public const string clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name = null;
+            public const string setting_clr_type_does_not_change_name = null;
+            public const string setting_clr_type_with_name_annotation_does_not_change_name = null;
+            public const string setting_clr_type_and_inferring_name_changes_name = null;
+            public const string setting_clr_type_with_name_annotation_and_inferring_name_changes_name = null;
+            public const string clr_type_with_conflicting_name_can_be_set_using_custom_name = null;
+            public const string clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name = null;
 
             // Removing CLR Type
             public const string clr_type_can_be_removed = null;
             public const string clr_typed_item_when_type_removed_should_retain_name = null;
-
-            public const string clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name =
-                null;
-
+            public const string clr_typed_item_with_name_annotation_when_clr_type_removed_should_retain_annotated_name = null;
             public const string custom_named_clr_typed_item_when_type_removed_should_retain_custom_name = null;
         }
 

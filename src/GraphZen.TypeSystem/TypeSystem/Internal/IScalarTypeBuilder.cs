@@ -14,10 +14,12 @@ namespace GraphZen.TypeSystem.Internal
             IDescriptionBuilder<ScalarTypeBuilder<TScalar, TValueNode>>,
             IAnnotableBuilder<ScalarTypeBuilder<TScalar, TValueNode>>,
             INamedBuilder<ScalarTypeBuilder<TScalar, TValueNode>>,
-            IClrTypeBuilder<ScalarTypeBuilder<object, TValueNode>> where TValueNode : ValueSyntax
+            IClrTypeBuilder<ScalarTypeBuilder<object, TValueNode>>
+        where TValueNode : ValueSyntax
+        where TScalar : notnull
     {
-        ScalarTypeBuilder<T, TValueNode> ClrType<T>();
-        ScalarTypeBuilder<T, TValueNode> ClrType<T>(string name);
+        ScalarTypeBuilder<T, TValueNode> ClrType<T>(bool inferName = false) where T : notnull;
+        ScalarTypeBuilder<T, TValueNode> ClrType<T>(string name) where T : notnull;
         ScalarTypeBuilder<TScalar, TValueNode> Serializer(LeafSerializer serializer);
         ScalarTypeBuilder<TScalar, TValueNode> LiteralParser(LeafLiteralParser<object, TValueNode> literalParser);
         ScalarTypeBuilder<TScalar, TValueNode> ValueParser(LeafValueParser<object> valueParser);

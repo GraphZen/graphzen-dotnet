@@ -12,6 +12,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     public class ObjectTypeBuilder<TObject, TContext> : IObjectTypeBuilder<TObject, TContext>
+        where TObject : notnull
         where TContext : GraphQLContext
     {
         public ObjectTypeBuilder(InternalObjectTypeBuilder builder)
@@ -34,25 +35,26 @@ namespace GraphZen.TypeSystem
 
         public ObjectTypeBuilder<TObject, TContext> RemoveName() => throw new NotImplementedException();
 
-        public ObjectTypeBuilder<object, TContext> ClrType(Type clrType)
+        public ObjectTypeBuilder<object, TContext> ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
             Builder.SetClrType(clrType, ConfigurationSource.Explicit);
             return new ObjectTypeBuilder<object, TContext>(Builder);
         }
 
+
         public ObjectTypeBuilder<object, TContext> ClrType(Type clrType, string name) =>
             throw new NotImplementedException();
 
         public ObjectTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
 
-        public ObjectTypeBuilder<T, TContext> ClrType<T>()
+        public ObjectTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull
         {
             Builder.SetClrType(typeof(T), ConfigurationSource.Explicit);
             return new ObjectTypeBuilder<T, TContext>(Builder);
         }
 
-        public ObjectTypeBuilder<T, TContext> ClrType<T>(string name) => throw new NotImplementedException();
+        public ObjectTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull => throw new NotImplementedException();
 
         public ObjectTypeBuilder<TObject, TContext> Description(string description)
         {

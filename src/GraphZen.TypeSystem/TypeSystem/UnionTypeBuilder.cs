@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public UnionTypeBuilder<object, TContext> ClrType(Type clrType)
+        public UnionTypeBuilder<object, TContext> ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
             Builder.ClrType(clrType, ConfigurationSource.Explicit);
@@ -55,8 +55,8 @@ namespace GraphZen.TypeSystem
 
         public UnionTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
 
-        public UnionTypeBuilder<T, TContext> ClrType<T>() => throw new NotImplementedException();
-        public UnionTypeBuilder<T, TContext> ClrType<T>(string name) => throw new NotImplementedException();
+        public UnionTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull => throw new NotImplementedException();
+        public UnionTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull => throw new NotImplementedException();
 
         public UnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes)
         {

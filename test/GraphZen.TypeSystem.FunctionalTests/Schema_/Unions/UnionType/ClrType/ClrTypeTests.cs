@@ -83,7 +83,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         }
 
 
-        [Spec(nameof(changing_clr_type_changes_name))]
+        [Spec(nameof(setting_clr_type_and_inferring_name_changes_name))]
         [Fact(Skip = "todo")]
         public void adding_clr_type_to_item_changes_name_()
         {
@@ -93,7 +93,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         }
 
 
-        [Spec(nameof(changing_clr_type_with_name_annotation_changes_name))]
+        [Spec(nameof(setting_clr_type_with_name_annotation_and_inferring_name_changes_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_changes_name_()
         {
@@ -104,7 +104,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_with_conflicting_name_can_be_added_using_custom_name))]
+        [Spec(nameof(clr_type_with_conflicting_name_can_be_set_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
         {
@@ -118,7 +118,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
+        [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
         {
@@ -216,7 +216,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_name_should_be_unique))]
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_should_be_unique_()
         {
@@ -224,7 +224,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_name_annotation_should_be_unique))]
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_unique_()
         {
@@ -232,7 +232,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_name_annotation_should_be_valid))]
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_valid))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_valid_()
         {

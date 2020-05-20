@@ -18,8 +18,8 @@ namespace GraphZen.TypeSystem.Internal
         UnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn);
 
 
-        UnionTypeBuilder<T, TContext> ClrType<T>();
-        UnionTypeBuilder<T, TContext> ClrType<T>(string name);
+        UnionTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull;
+        UnionTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull;
 
 
         UnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes);

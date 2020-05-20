@@ -19,9 +19,10 @@ namespace GraphZen.TypeSystem.Internal
         IDescriptionBuilder<InputObjectTypeBuilder<TInputObject>>,
         IInfrastructure<InternalInputObjectTypeBuilder>,
         IInfrastructure<InputObjectTypeDefinition>
+        where TInputObject : notnull
     {
-        InputObjectTypeBuilder<T> ClrType<T>();
-        InputObjectTypeBuilder<T> ClrType<T>(string name);
+        InputObjectTypeBuilder<T> ClrType<T>(bool inferName = false) where T : notnull;
+        InputObjectTypeBuilder<T> ClrType<T>(string name) where T : notnull;
         InputObjectTypeBuilder<TInputObject> Field(string name, string type);
         InputObjectTypeBuilder<TInputObject> RemoveField(string name);
 

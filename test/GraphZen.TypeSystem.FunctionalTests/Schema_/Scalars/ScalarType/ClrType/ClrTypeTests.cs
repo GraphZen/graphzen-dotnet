@@ -68,7 +68,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(changing_clr_type_changes_name))]
+        [Spec(nameof(setting_clr_type_and_inferring_name_changes_name))]
         [Fact(Skip = "needs impl")]
         public void adding_clr_type_to_item_changes_name_()
         {
@@ -78,7 +78,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_with_conflicting_name_can_be_added_using_custom_name))]
+        [Spec(nameof(clr_type_with_conflicting_name_can_be_set_using_custom_name))]
         [Fact(Skip = "needs impl")]
         public void adding_clr_type_to_item_with_name_changes_name_from_param_()
         {
@@ -111,7 +111,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(changing_clr_type_with_name_annotation_changes_name))]
+        [Spec(nameof(setting_clr_type_with_name_annotation_and_inferring_name_changes_name))]
         [Fact(Skip = "TODO")]
         public void adding_clr_type_with_name_annotation_to_item_changes_name_()
         {
@@ -121,7 +121,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
+        [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name))]
         [Fact]
         public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
         {

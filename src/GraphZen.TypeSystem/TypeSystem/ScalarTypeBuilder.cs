@@ -13,6 +13,7 @@ namespace GraphZen.TypeSystem
 {
     public class ScalarTypeBuilder<TScalar, TValueNode> : IScalarTypeBuilder<TScalar, TValueNode>
         where TValueNode : ValueSyntax
+        where TScalar : notnull
     {
         public ScalarTypeBuilder(InternalScalarTypeBuilder builder)
         {
@@ -24,11 +25,12 @@ namespace GraphZen.TypeSystem
 
         InternalScalarTypeBuilder IInfrastructure<InternalScalarTypeBuilder>.Instance => Builder;
 
-        public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType)
+        public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, bool inferName = false)
         {
             var internalBuilder = Builder.ClrType(clrType, ConfigurationSource.Explicit);
             return new ScalarTypeBuilder<object, TValueNode>(internalBuilder);
         }
+
 
         public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, string name)
         {
@@ -39,7 +41,7 @@ namespace GraphZen.TypeSystem
             return new ScalarTypeBuilder<object, TValueNode>(Builder);
         }
 
-        public ScalarTypeBuilder<T, TValueNode> ClrType<T>(string name)
+        public ScalarTypeBuilder<T, TValueNode> ClrType<T>(string name) where T : notnull
         {
             Check.NotNull(name, name);
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
@@ -49,10 +51,9 @@ namespace GraphZen.TypeSystem
 
         public ScalarTypeBuilder<object, TValueNode> RemoveClrType() => throw new NotImplementedException();
 
-        public ScalarTypeBuilder<T, TValueNode> ClrType<T>()
+        public ScalarTypeBuilder<T, TValueNode> ClrType<T>(bool inferName = false) where T : notnull
         {
             Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
-
             return new ScalarTypeBuilder<T, TValueNode>(Builder);
         }
 

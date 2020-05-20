@@ -64,7 +64,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_name_should_be_unique))]
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_should_be_uniqueschemaBuilder()
         {
@@ -72,7 +72,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_name_annotation_should_be_unique))]
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_uniqueschemaBuilder()
         {
@@ -80,7 +80,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(clr_type_name_annotation_should_be_valid))]
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_valid))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_validschemaBuilder()
         {

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -168,14 +169,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
 
 
-        [Spec(nameof(clr_type_name_should_be_unique))]
-        [Fact(Skip = "todo")]
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_unique))]
+        [Fact]
         public void clr_type_name_should_be_unique_()
         {
             Schema.Create(_ =>
             {
                 _.Directive(nameof(PlainClass));
-                var foo = _.Directive("Foo").ClrType<PlainClass>();
+                var foo = _.Directive("Foo");
                 Action change = () => foo.ClrType<PlainClass>();
                 change.Should().Throw<DuplicateClrTypeException>().WithMessage(
                     "Cannot set CLR type on directive Foo to CLR class 'PlainClass': directive PlainClass already exists with that CLR type.");
@@ -183,15 +184,21 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
 
 
-        [Spec(nameof(clr_type_name_annotation_should_be_unique))]
-        [Fact()]
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_unique))]
+        [Fact]
         public void clr_type_name_annotation_should_be_unique_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive(PlainClassAnnotatedName.AnnotatedNameValue);
+                var foo = _.Directive("Foo");
+                Action add = () => foo.ClrType<PlainClassAnnotatedName>();
+            });
+            schema.GetDirectives().Dump().Count().Should().Be(0);
         }
 
 
-        [Spec(nameof(clr_type_name_annotation_should_be_valid))]
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_valid))]
         [Fact(Skip = "TODO")]
         public void clr_type_name_annotation_should_be_valid_()
         {
@@ -223,7 +230,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
 
 
-        [Spec(nameof(changing_clr_type_changes_name))]
+        [Spec(nameof(setting_clr_type_and_inferring_name_changes_name))]
         [Fact(Skip = "TODO")]
         public void changing_clr_type_changes_name_()
         {
@@ -231,7 +238,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
 
 
-        [Spec(nameof(changing_clr_type_with_name_annotation_changes_name))]
+        [Spec(nameof(setting_clr_type_with_name_annotation_and_inferring_name_changes_name))]
         [Fact(Skip = "TODO")]
         public void changing_clr_type_with_name_annotation_changes_name_()
         {
@@ -239,7 +246,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
 
 
-        [Spec(nameof(clr_type_with_conflicting_name_can_be_added_using_custom_name))]
+        [Spec(nameof(clr_type_with_conflicting_name_can_be_set_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
         {
@@ -247,7 +254,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
 
 
-        [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name))]
+        [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
         {

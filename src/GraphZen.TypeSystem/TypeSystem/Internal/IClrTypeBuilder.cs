@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.Internal
 {
     internal interface IClrTypeBuilder<out TUntypedBuilder>
     {
-        TUntypedBuilder ClrType(Type clrType);
+        TUntypedBuilder ClrType(Type clrType, bool inferName = false);
         TUntypedBuilder ClrType(Type clrType, string name);
         TUntypedBuilder RemoveClrType();
     }
