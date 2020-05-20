@@ -511,7 +511,7 @@ namespace GraphZen.TypeSystem.Internal
                 inputType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
                 {
-                    inputType.Builder.ClrType(id.ClrType, configurationSource);
+                    inputType.Builder.ClrType(id.ClrType, false, configurationSource);
                 }
 
                 return inputType.Builder;
