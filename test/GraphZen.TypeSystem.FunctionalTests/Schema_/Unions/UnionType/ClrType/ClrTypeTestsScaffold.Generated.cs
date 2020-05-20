@@ -16,6 +16,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
     [NoReorder]
     public abstract class ClrTypeTestsScaffold
     {
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_valid))]
+        [Fact(Skip = "TODO")]
+        public void setting_clr_type_and_inferring_name_name_should_be_valid_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(setting_clr_type_does_not_change_name))]
         [Fact(Skip = "TODO")]
         public void setting_clr_type_does_not_change_name_()
@@ -32,4 +40,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         }
     }
 }
-// Source Hash Code: 16121376383657346466
+// Source Hash Code: 5751137359992631200

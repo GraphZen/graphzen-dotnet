@@ -16,7 +16,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
     [NoReorder]
     public abstract class ClrTypeTestsScaffold
     {
-    
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_valid))]
+        [Fact(Skip = "TODO")]
+        public void setting_clr_type_and_inferring_name_name_should_be_valid_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 }
-// Source Hash Code: 5012820316212048572
+// Source Hash Code: 1890170915229818166

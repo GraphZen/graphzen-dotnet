@@ -80,6 +80,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
 
 
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_valid))]
+        [Fact(Skip = "TODO")]
+        public void setting_clr_type_and_inferring_name_name_should_be_valid_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void setting_clr_type_and_inferring_name_name_annotation_should_be_unique_()
@@ -184,4 +192,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
         }
     }
 }
-// Source Hash Code: 2802205875898165688
+// Source Hash Code: 8240172481409310706

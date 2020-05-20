@@ -64,7 +64,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
 
         [Spec(nameof(clr_type_can_be_changed_via_type_param))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void clr_type_can_be_changed_via_type_param_()
         {
             var schema = Schema.Create(_ =>
@@ -80,7 +80,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
 
 
         [Spec(nameof(clr_type_can_be_added_with_custom_name))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void clr_type_can_be_added_with_custom_name_()
         {
             var schema = Schema.Create(_ => { _.Directive("Foo").ClrType(typeof(PlainClass), "Bar"); });
@@ -91,7 +91,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
 
 
         [Spec(nameof(clr_type_can_be_added_via_type_param_with_custom_name))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void clr_type_can_be_added_via_type_param_with_custom_name_()
         {
             var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<PlainClass>("Bar"); });
@@ -102,7 +102,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
 
 
         [Spec(nameof(clr_type_can_be_changed_with_custom_name))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void clr_type_can_be_changed_with_custom_name_()
         {
             var schema = Schema.Create(_ =>
@@ -120,7 +120,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
 
 
         [Spec(nameof(clr_type_can_be_changed_via_type_param_with_custom_name))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void clr_type_can_be_changed_via_type_param_with_custom_name_()
         {
             var schema = Schema.Create(_ =>
@@ -215,16 +215,31 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
         }
 
 
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_valid))]
+        [Fact]
+        public void setting_clr_type_and_inferring_name_name_should_be_valid_()
+        {
+            Schema.Create(_ =>
+            {
+                var foo = _.Directive("Foo");
+                Action setClrType = () => foo.ClrType<InputValueBuilder<string>>(true);
+                setClrType.Should().Throw<InvalidNameException>().WithMessage(
+                    "Cannot set CLR type on directive Foo and infer name: the CLR class name 'InputValueBuilder`1' is not a valid GraphQL name.");
+            });
+        }
+
+
         [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_valid))]
-        [Fact()]
+        [Fact]
         public void clr_type_name_annotation_should_be_valid_()
         {
             Schema.Create(_ =>
-           {
-               var foo = _.Directive("Foo");
-               Action setClrType = () => foo.ClrType<PlainClassInvalidNameAnnotation>(true);
-               setClrType.Should().Throw<InvalidNameException>().WithMessage("Cannot set CLR type on directive Foo and infer name: the annotated name \"(*&#\" on CLR class 'PlainClassInvalidNameAnnotation' is not a valid GraphQL name.");
-           });
+            {
+                var foo = _.Directive("Foo");
+                Action setClrType = () => foo.ClrType<PlainClassInvalidNameAnnotation>(true);
+                setClrType.Should().Throw<InvalidNameException>().WithMessage(
+                    "Cannot set CLR type on directive Foo and infer name: the annotated name \"(*&#\" on CLR class 'PlainClassInvalidNameAnnotation' is not a valid GraphQL name.");
+            });
         }
 
 

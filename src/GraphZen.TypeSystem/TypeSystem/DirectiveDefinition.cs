@@ -192,6 +192,35 @@ namespace GraphZen.TypeSystem
 
         public Type? ClrType { get; private set; }
 
+        public bool SetClrType(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetClrTypeConfigurationSource()))
+            {
+                return false;
+            }
+
+            if (Schema.TryGetDirective(clrType, out var existingTyped) && !existingTyped.Equals(this))
+            {
+                throw new DuplicateClrTypeException(
+                    TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType,
+                        existingTyped));
+            }
+
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException($"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" is not a valid GraphQL name.");
+            }
+
+            if (Schema.TryGetDirective(name, out var existingNamed) && !existingNamed.Equals(this))
+            {
+                throw new DuplicateNameException(
+                            $"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" conflicts with an existing directive named {existingNamed.Name}.");
+            }
+
+            SetName(name, configurationSource);
+            return SetClrType(clrType, false, configurationSource);
+        }
+
         public bool SetClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(GetClrTypeConfigurationSource()))

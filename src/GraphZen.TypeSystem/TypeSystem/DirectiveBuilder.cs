@@ -31,7 +31,8 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(name, nameof(name));
-            throw new NotImplementedException();
+            var ib = Builder.ClrType(clrType, name, ConfigurationSource.Explicit);
+            return new DirectiveBuilder<object>(ib);
         }
 
         public DirectiveBuilder<object> RemoveClrType() => throw new NotImplementedException();
@@ -42,7 +43,12 @@ namespace GraphZen.TypeSystem
             return new DirectiveBuilder<T>(ib);
         }
 
-        public DirectiveBuilder<T> ClrType<T>(string name) where T : notnull => throw new NotImplementedException();
+        public DirectiveBuilder<T> ClrType<T>(string name) where T : notnull
+        {
+            Check.NotNull(name, nameof(name));
+            var ib = Builder.ClrType(typeof(T), name, ConfigurationSource.Explicit);
+            return new DirectiveBuilder<T>(ib);
+        }
 
         public DirectiveBuilder<TDirective> Description(string description)
         {

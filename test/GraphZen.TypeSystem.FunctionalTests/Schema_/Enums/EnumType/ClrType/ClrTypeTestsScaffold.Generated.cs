@@ -80,6 +80,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
         }
 
 
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_valid))]
+        [Fact(Skip = "TODO")]
+        public void setting_clr_type_and_inferring_name_name_should_be_valid_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void setting_clr_type_and_inferring_name_name_annotation_should_be_unique_()
@@ -176,4 +184,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
         }
     }
 }
-// Source Hash Code: 13821261752818380402
+// Source Hash Code: 5118592992783982432

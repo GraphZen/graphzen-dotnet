@@ -72,6 +72,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
+        [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_valid))]
+        [Fact(Skip = "TODO")]
+        public void setting_clr_type_and_inferring_name_name_should_be_valid_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+
+
         [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_unique))]
         [Fact(Skip = "TODO")]
         public void setting_clr_type_and_inferring_name_name_annotation_should_be_unique_()
@@ -120,4 +128,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
     }
 }
-// Source Hash Code: 4900683382556579226
+// Source Hash Code: 16752467907373326548

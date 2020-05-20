@@ -66,7 +66,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalObjectTypeBuilder SetClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType,false, configurationSource))
+            if (Definition.SetClrType(clrType, false, configurationSource))
             {
                 ConfigureObjectFromClrType();
             }

@@ -51,7 +51,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalUnionTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType,false, configurationSource))
+            if (Definition.SetClrType(clrType, false, configurationSource))
             {
                 ConfigureFromClrType();
             }
