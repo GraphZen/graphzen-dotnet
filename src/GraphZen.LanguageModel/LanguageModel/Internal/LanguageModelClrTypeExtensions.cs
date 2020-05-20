@@ -24,7 +24,9 @@ namespace GraphZen.LanguageModel.Internal
 
             return false;
         }
-        public static string GetGraphQLName(this Type clrType, Action<string> onInvalidNameAnnotation, Action<string> onInvalidClrTypeName)
+
+        public static string GetGraphQLName(this Type clrType, Action<string> onInvalidNameAnnotation,
+            Action<string> onInvalidClrTypeName)
         {
             if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated))
             {
@@ -32,8 +34,10 @@ namespace GraphZen.LanguageModel.Internal
                 {
                     return annotated;
                 }
+
                 onInvalidNameAnnotation(annotated);
-                throw new InvalidNameException($"Failed to get a valid GraphQL name for CLR type '{clrType}' because it was invalid. The invalid name was '{annotated}'.");
+                throw new InvalidNameException(
+                    $"Failed to get a valid GraphQL name for CLR type '{clrType}' because it was invalid. The invalid name was '{annotated}'.");
             }
 
             if (!clrType.Name.IsValidGraphQLName())
@@ -43,7 +47,6 @@ namespace GraphZen.LanguageModel.Internal
             }
 
             return clrType.Name;
-
         }
 
         public static string GetGraphQLName(this Type clrType, object? source = null)
@@ -105,6 +108,5 @@ namespace GraphZen.LanguageModel.Internal
                 .SingleOrDefault()?.Name;
             return name != null;
         }
-
     }
 }

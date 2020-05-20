@@ -361,7 +361,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
             var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<PlainClass>("Bar").RemoveClrType(); });
             schema.GetDirective("Bar").ClrType.Should().BeNull();
         }
-
-
     }
 }

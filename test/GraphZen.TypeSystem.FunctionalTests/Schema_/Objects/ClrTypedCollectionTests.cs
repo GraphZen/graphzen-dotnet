@@ -369,7 +369,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         }
 
         [Spec(nameof(adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name))]
-        [Fact()]
+        [Fact]
         public void adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_()
         {
             var schema = Schema.Create(_ =>
@@ -383,14 +383,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
 
 
         [Spec(nameof(adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_annotation))]
-        [Fact()]
+        [Fact]
         public void adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_annotation_()
         {
             var schema = Schema.Create(_ =>
-                         {
-                             _.Object(PlainClassAnnotatedName.AnnotatedNameValue);
-                             _.Object<PlainClassAnnotatedName>("Foo");
-                         });
+            {
+                _.Object(PlainClassAnnotatedName.AnnotatedNameValue);
+                _.Object<PlainClassAnnotatedName>("Foo");
+            });
             schema.GetObject(PlainClassAnnotatedName.AnnotatedNameValue).ClrType.Should().BeNull();
             schema.GetObject<PlainClassAnnotatedName>().Name.Should().Be("Foo");
         }

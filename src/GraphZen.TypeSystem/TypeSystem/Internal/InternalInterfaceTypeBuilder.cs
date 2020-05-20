@@ -41,7 +41,8 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public InternalInterfaceTypeBuilder ClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
+        public InternalInterfaceTypeBuilder ClrType(Type clrType, bool inferName,
+            ConfigurationSource configurationSource)
         {
             if (Definition.SetClrType(clrType, inferName, configurationSource))
             {
@@ -57,7 +58,6 @@ namespace GraphZen.TypeSystem.Internal
 
             return this;
         }
-
 
 
         public bool ConfigureInterfaceFromClrType()

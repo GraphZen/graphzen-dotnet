@@ -75,7 +75,6 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Builder.ClrType(typeof(T), name, ConfigurationSource.Explicit);
             return new UnionTypeBuilder<T, TContext>(Builder);
-
         }
 
         public UnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes)

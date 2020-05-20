@@ -322,7 +322,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         {
             var schema = Schema.Create(_ => { _.InputObject("Foo").ClrType<PlainClassAnnotatedName>(true); });
             schema.HasInputObject("Foo").Should().BeFalse();
-            schema.GetInputObject<PlainClassAnnotatedName>().Name.Should().Be(PlainClassAnnotatedName.AnnotatedNameValue);
+            schema.GetInputObject<PlainClassAnnotatedName>().Name.Should()
+                .Be(PlainClassAnnotatedName.AnnotatedNameValue);
         }
 
 

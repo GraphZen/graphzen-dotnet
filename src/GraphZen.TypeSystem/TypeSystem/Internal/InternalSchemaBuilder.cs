@@ -574,10 +574,8 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource)
-        {
-            return Object(name, configurationSource)?.ClrType(clrType, name, configurationSource);
-        }
+        public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource) =>
+            Object(name, configurationSource)?.ClrType(clrType, name, configurationSource);
 
 
         public InternalObjectTypeBuilder? Object(string name, ConfigurationSource configurationSource)

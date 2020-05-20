@@ -208,13 +208,14 @@ namespace GraphZen.TypeSystem
 
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException($"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" is not a valid GraphQL name.");
+                throw new InvalidNameException(
+                    $"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" is not a valid GraphQL name.");
             }
 
             if (Schema.TryGetDirective(name, out var existingNamed) && !existingNamed.Equals(this))
             {
                 throw new DuplicateNameException(
-                            $"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
+                    $"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
             }
 
             SetName(name, configurationSource);
@@ -281,8 +282,8 @@ namespace GraphZen.TypeSystem
             if (!configurationSource.Overrides(GetClrTypeConfigurationSource()))
             {
                 return false;
-
             }
+
             ClrType = null;
             _clrTypeConfigurationSource = configurationSource;
             return true;

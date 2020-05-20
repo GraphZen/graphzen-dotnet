@@ -13,12 +13,15 @@ namespace GraphZen.Internal
 {
     internal static class TypeSystemExceptionMessages
     {
-        public static string GetClrTypeKind(this Type clrType) => clrType.IsInterface ? "interface" : clrType.IsClass ? "class" : clrType.IsEnum ? "enum" : "type";
+        public static string GetClrTypeKind(this Type clrType) => clrType.IsInterface ? "interface" :
+            clrType.IsClass ? "class" :
+            clrType.IsEnum ? "enum" : "type";
 
         public static class DuplicateClrTypeException
         {
             public static string
-                CannotChangeClrType<T>(T definition, Type clrType, IMutableClrType existing) where T : INamed, IClrType =>
+                CannotChangeClrType<T>(T definition, Type clrType, IMutableClrType existing)
+                where T : INamed, IClrType =>
                 $"Cannot set CLR type on {definition} to CLR {GetClrTypeKind(clrType)} '{clrType.Name}': {existing} already exists with that CLR type.";
         }
 

@@ -323,7 +323,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
         {
             var schema = Schema.Create(_ => { _.Union("Foo").ClrType<PlainAbstractClassAnnotatedName>(true); });
             schema.HasUnion("Foo").Should().BeFalse();
-            schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should().Be(PlainAbstractClassAnnotatedName.AnnotatedNameValue);
+            schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should()
+                .Be(PlainAbstractClassAnnotatedName.AnnotatedNameValue);
         }
 
 

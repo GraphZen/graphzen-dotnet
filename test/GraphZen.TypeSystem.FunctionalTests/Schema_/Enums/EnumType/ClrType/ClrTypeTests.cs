@@ -16,6 +16,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
     public class ClrTypeTests
     {
         public const string AnnotatedNameValue = nameof(AnnotatedNameValue);
+
         public enum PlainEnum
         {
         }
@@ -212,8 +213,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
                     "Cannot set CLR type on enum Foo and infer name: the CLR enum name 'PlainEnum' conflicts with an existing enum named PlainEnum. All GraphQL type names must be unique.");
             });
         }
-
-
 
 
         [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_valid))]
