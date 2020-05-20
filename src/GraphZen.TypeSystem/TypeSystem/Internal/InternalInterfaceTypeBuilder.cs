@@ -31,16 +31,34 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-
-        public InternalInterfaceTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
+        public InternalInterfaceTypeBuilder ClrType(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, false, configurationSource))
+            if (Definition.SetClrType(clrType, name, configurationSource))
             {
                 ConfigureInterfaceFromClrType();
             }
 
             return this;
         }
+
+        public InternalInterfaceTypeBuilder ClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
+        {
+            if (Definition.SetClrType(clrType, inferName, configurationSource))
+            {
+                ConfigureInterfaceFromClrType();
+            }
+
+            return this;
+        }
+
+        public InternalInterfaceTypeBuilder RemoveClrType(ConfigurationSource configurationSource)
+        {
+            Definition.RemoveClrType(configurationSource);
+
+            return this;
+        }
+
+
 
         public bool ConfigureInterfaceFromClrType()
         {

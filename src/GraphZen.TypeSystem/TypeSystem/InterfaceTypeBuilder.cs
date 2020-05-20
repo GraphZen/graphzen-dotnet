@@ -42,21 +42,33 @@ namespace GraphZen.TypeSystem
         public InterfaceTypeBuilder<object, TContext> ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
-            Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            Builder.ClrType(clrType, inferName, ConfigurationSource.Explicit);
             return new InterfaceTypeBuilder<object, TContext>(Builder);
         }
 
-        public InterfaceTypeBuilder<object, TContext> ClrType(Type clrType, string name) =>
-            throw new NotImplementedException();
+        public InterfaceTypeBuilder<object, TContext> ClrType(Type clrType, string name)
+        {
+            Check.NotNull(clrType, nameof(clrType));
+            Check.NotNull(name, nameof(name));
+            Builder.ClrType(clrType, name, ConfigurationSource.Explicit);
+            return new InterfaceTypeBuilder<object, TContext>(Builder);
+        }
 
-        public InterfaceTypeBuilder<object, TContext> RemoveClrType() => throw new NotImplementedException();
+        public InterfaceTypeBuilder<object, TContext> RemoveClrType()
+        {
+            Builder.RemoveClrType(ConfigurationSource.Explicit);
+            return new InterfaceTypeBuilder<object, TContext>(Builder);
+        }
 
-        public InterfaceTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull =>
-            throw new NotImplementedException();
+        public InterfaceTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull
+        {
+            Builder.ClrType(typeof(T), name, ConfigurationSource.Explicit);
+            return new InterfaceTypeBuilder<T, TContext>(Builder);
+        }
 
         public InterfaceTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull
         {
-            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            Builder.ClrType(typeof(T), inferName,ConfigurationSource.Explicit);
             return new InterfaceTypeBuilder<T, TContext>(Builder);
         }
 

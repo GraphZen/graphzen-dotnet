@@ -362,7 +362,7 @@ namespace GraphZen.TypeSystem.Internal
                 interfaceType.UpdateConfigurationSource(configurationSource);
                 if (type.ClrType != id.ClrType && id.ClrType != null)
                 {
-                    interfaceType.Builder.ClrType(id.ClrType, configurationSource);
+                    interfaceType.Builder.ClrType(id.ClrType,false, configurationSource);
                 }
 
                 return interfaceType.Builder;
