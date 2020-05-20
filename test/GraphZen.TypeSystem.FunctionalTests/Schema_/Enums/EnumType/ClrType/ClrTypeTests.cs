@@ -214,7 +214,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
         }
 
 
-        
+
 
         [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_valid))]
         [Fact]

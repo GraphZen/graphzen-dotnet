@@ -129,6 +129,7 @@ namespace GraphZen.SpecAudit.SpecFx
 
 
         public Subject WithoutSpecs(params string[] specs) => WithoutSpecs(specs.AsEnumerable(), false);
+        public Subject WithoutSpecsDeep(params string[] specs) => WithoutSpecs(specs.AsEnumerable(), true);
 
         public Subject WithoutSpecs<T>(bool deep = false) =>
             WithoutSpecs(SpecReflectionHelpers.GetConstFields(typeof(T)).Select(_ => _.Name), deep);

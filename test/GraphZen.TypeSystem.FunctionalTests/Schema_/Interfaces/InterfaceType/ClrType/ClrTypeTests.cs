@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
 
         // ReSharper disable once InconsistentNaming
         // ReSharper disable twice UnusedTypeParameter
-        public interface InvalidInterfaceName<T1, T2> {}
+        public interface InvalidInterfaceName<T1, T2> { }
 
         [Spec(nameof(clr_type_can_be_added))]
         [Fact]

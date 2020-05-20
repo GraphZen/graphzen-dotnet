@@ -18,7 +18,7 @@ namespace GraphZen.Internal
         public static class DuplicateClrTypeException
         {
             public static string
-                CannotChangeClrType<T>(T definition, Type clrType, IMutableClrType existing) where T: INamed, IClrType=>
+                CannotChangeClrType<T>(T definition, Type clrType, IMutableClrType existing) where T : INamed, IClrType =>
                 $"Cannot set CLR type on {definition} to CLR {GetClrTypeKind(clrType)} '{clrType.Name}': {existing} already exists with that CLR type.";
         }
 

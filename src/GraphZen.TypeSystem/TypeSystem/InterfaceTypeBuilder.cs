@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem
 
         public InterfaceTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull
         {
-            Builder.ClrType(typeof(T), inferName,ConfigurationSource.Explicit);
+            Builder.ClrType(typeof(T), inferName, ConfigurationSource.Explicit);
             return new InterfaceTypeBuilder<T, TContext>(Builder);
         }
 

@@ -130,7 +130,7 @@ namespace GraphZen.SpecAudit
 
 
             var enumType = graphQLType.WithName(nameof(EnumType))
-                .WithoutSpecs(nameof(ClrTypeSpecs.setting_clr_type_and_inferring_name_name_should_be_valid))
+                .WithoutSpecsDeep(nameof(ClrTypeSpecs.setting_clr_type_and_inferring_name_name_should_be_valid))
                 .WithSpecs<InputAndOutputTypeSpecs>(SpecPriority.Medium)
                 .WithChild(enumValues);
 
