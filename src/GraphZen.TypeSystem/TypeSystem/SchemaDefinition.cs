@@ -298,14 +298,12 @@ namespace GraphZen.TypeSystem
             var validIdentities = _typeIdentities
                 .Where(_ => _.Kind == null || identity.Kind == null || _.Kind == identity.Kind).ToList();
             var clrTypeAndName =
-                // ReSharper disable once PossibleNullReferenceException
                 validIdentities.SingleOrDefault(_ => _.ClrType == identity.ClrType && _.Name == identity.Name);
             if (clrTypeAndName != null)
             {
                 return clrTypeAndName;
             }
 
-            // ReSharper disable once PossibleNullReferenceException
             var nameOnly = validIdentities.SingleOrDefault(_ => _.Name == identity.Name);
             if (nameOnly != null)
             {
@@ -313,7 +311,7 @@ namespace GraphZen.TypeSystem
                 {
                     if (nameOnly.ClrType == null)
                     {
-                        nameOnly.ClrType = identity.ClrType;
+                        nameOnly.SetClrType(identity.ClrType, false, identity.GetClrTypeConfigurationSource()!.Value);
                     }
                     else if (nameOnly.ClrType != identity.ClrType)
                     {

@@ -48,8 +48,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
 
 
         [Spec(nameof(named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
-        // [Fact(Skip = "needs design/impl")]
-        [Fact]
+        [Fact(Skip = "needs design/impl")]
         public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
         {
             Schema.Create(_ =>

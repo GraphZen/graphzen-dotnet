@@ -6,7 +6,9 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
+using GraphZen.TypeSystem.Taxonomy;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
+using GraphZen.TypeSystem.Tests.Configuration.Objects;
 using JetBrains.Annotations;
 using Xunit;
 
@@ -52,7 +54,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection[itemName].Should().NotBeNull();
                     defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
-                    defCollection[itemName].GetConfigurationSource().Should()
+                    defCollection[itemName].As<IMutableDefinition>().GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
                 });
                 var collection = fixture.GetCollection(schema, parentName);
@@ -123,7 +125,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection[itemName].Should().NotBeNull();
                     defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
-                    defCollection[itemName].GetConfigurationSource().Should()
+                    defCollection[itemName].As<IMutableDefinition>().GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
                     fixture.IgnoreItem(sb, parentName, itemName);
                     defCollection.ContainsKey(itemName).Should().BeFalse();
@@ -152,7 +154,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection[itemName].Should().NotBeNull();
                     defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
-                    defCollection[itemName].GetConfigurationSource().Should()
+                    defCollection[itemName].As<IMutableDefinition>().GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
                 });
                 var collection = fixture.GetCollection(schema, parentName);
@@ -197,7 +199,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
                     defCollection[itemName].Should().NotBeNull();
-                    defCollection[itemName].GetConfigurationSource().Should()
+                    defCollection[itemName].As<IMutableDefinition>().GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
                     defCollection[itemName].GetNameConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
@@ -225,14 +227,14 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     var defCollection = fixture.GetCollection(sb, parentName);
                     var initialItem = defCollection[initialItemName];
                     defCollection[initialItemName].Should().NotBeNull();
-                    defCollection[initialItemName].GetConfigurationSource().Should()
+                    defCollection[initialItemName].As<IMutableDefinition>().GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
                     defCollection[initialItemName].GetNameConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
                     fixture.RenameItem(sb, parentName, initialItemName, changedItemName);
                     defCollection.ContainsKey(initialItemName).Should().BeFalse();
                     defCollection[changedItemName].Should().NotBeNull();
-                    defCollection[changedItemName].GetConfigurationSource().Should()
+                    defCollection[changedItemName].As<IMutableDefinition>().GetConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);
                     defCollection[changedItemName].GetNameConfigurationSource().Should()
                         .Be(ConfigurationSource.Explicit);

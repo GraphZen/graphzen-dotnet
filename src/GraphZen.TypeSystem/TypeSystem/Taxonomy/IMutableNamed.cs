@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableNamed : INamed, IMutableDefinition
+    public interface IMutableNamed : INamed
     {
         bool SetName(string name, ConfigurationSource configurationSource);
         ConfigurationSource GetNameConfigurationSource();
