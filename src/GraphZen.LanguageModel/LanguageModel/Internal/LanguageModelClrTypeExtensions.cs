@@ -11,7 +11,7 @@ namespace GraphZen.LanguageModel.Internal
 {
     public static class LanguageModelClrTypeExtensions
     {
-        public static bool TryGetGraphQLName(this Type clrTYpe, [NotNullWhen(true)] out string? name,
+        public static bool TryGetValidGraphQLName(this Type clrTYpe, [NotNullWhen(true)] out string? name,
             object? source = null)
         {
             name = default;
@@ -24,7 +24,27 @@ namespace GraphZen.LanguageModel.Internal
 
             return false;
         }
+        public static string GetGraphQLName(this Type clrType, Action<string> onInvalidNameAnnotation, Action<string> onInvalidClrTypeName)
+        {
+            if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated))
+            {
+                if (annotated.IsValidGraphQLName())
+                {
+                    return annotated;
+                }
+                onInvalidNameAnnotation(annotated);
+                throw new InvalidNameException($"Failed to get a valid GraphQL name for CLR type '{clrType}' because it was invalid. The invalid name was '{annotated}'.");
+            }
 
+            if (!clrType.Name.IsValidGraphQLName())
+            {
+                onInvalidNameAnnotation(clrType.Name);
+                throw new InvalidNameException($"Failed to get a valid GraphQL name for CLR type '{clrType}'.");
+            }
+
+            return clrType.Name;
+
+        }
 
         public static string GetGraphQLName(this Type clrType, object? source = null)
         {
@@ -76,7 +96,7 @@ namespace GraphZen.LanguageModel.Internal
 
 
         public static bool HasValidGraphQLName(this Type clrType, object? source = null) =>
-            clrType.TryGetGraphQLName(out _, source);
+            clrType.TryGetValidGraphQLName(out _, source);
 
 
         public static bool TryGetGraphQLNameFromDataAnnotation(this Type clrType, [NotNullWhen(true)] out string? name)
@@ -85,5 +105,6 @@ namespace GraphZen.LanguageModel.Internal
                 .SingleOrDefault()?.Name;
             return name != null;
         }
+
     }
 }

@@ -192,19 +192,55 @@ namespace GraphZen.TypeSystem
 
         public Type? ClrType { get; private set; }
 
-        public bool SetClrType(Type clrType, ConfigurationSource configurationSource)
+        public bool SetClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(GetClrTypeConfigurationSource()))
             {
                 return false;
             }
 
-            if (Schema.TryGetDirective(clrType, out var existing) && !existing.Equals(this))
+            if (Schema.TryGetDirective(clrType, out var existingTyped) && !existingTyped.Equals(this))
             {
                 throw new DuplicateClrTypeException(
-                    TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType, existing));
+                    TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType,
+                        existingTyped));
             }
 
+            if (inferName)
+            {
+                if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated))
+                {
+                    if (!annotated.IsValidGraphQLName())
+                    {
+                        throw new InvalidNameException(
+                            $"Cannot set CLR type on {this} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' is not a valid GraphQL name.");
+                    }
+
+                    if (Schema.TryGetDirective(annotated, out var existingNamed) && !existingNamed.Equals(this))
+                    {
+                        throw new DuplicateNameException(
+                            $"Cannot set CLR type on {this} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}.");
+                    }
+
+                    SetName(annotated, configurationSource);
+                }
+                else
+                {
+                    if (!clrType.Name.IsValidGraphQLName())
+                    {
+                        throw new InvalidNameException(
+                            $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' is not a valid GraphQL name.");
+                    }
+
+                    if (Schema.TryGetDirective(clrType.Name, out var existingNamed))
+                    {
+                        throw new DuplicateNameException(
+                            $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}.");
+                    }
+
+                    SetName(clrType.Name, configurationSource);
+                }
+            }
 
             ClrType = clrType;
             _clrTypeConfigurationSource = configurationSource;
@@ -216,6 +252,19 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
         public bool IsSpecDirective { get; }
+
+        public bool SetName(Type clrType, ConfigurationSource configurationSource)
+        {
+            var name = clrType.GetGraphQLName(annotated => { }, clrName => { });
+            try
+            {
+                return SetName(name, configurationSource);
+            }
+            catch (DuplicateNameException)
+            {
+                throw new DuplicateNameException("");
+            }
+        }
 
         public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
         {

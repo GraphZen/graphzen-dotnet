@@ -77,7 +77,8 @@ namespace GraphZen.TypeSystem
 
         public Type? ClrType => Identity.ClrType;
 
-        public virtual bool SetClrType(Type? clrType, ConfigurationSource configurationSource)
+
+        public virtual bool SetClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(_clrTypeConfigurationSource))
             {

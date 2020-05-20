@@ -660,7 +660,7 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             var ib = Directive(name, configurationSource);
-            ib?.ClrType(clrType, configurationSource);
+            ib?.ClrType(clrType, false, configurationSource);
             return ib;
         }
 
@@ -714,7 +714,7 @@ namespace GraphZen.TypeSystem.Internal
                 directive.UpdateConfigurationSource(configurationSource);
                 if (directive.ClrType == null)
                 {
-                    directive.SetClrType(clrType, configurationSource);
+                    directive.SetClrType(clrType, false, configurationSource);
                 }
 
                 return directive.Builder;

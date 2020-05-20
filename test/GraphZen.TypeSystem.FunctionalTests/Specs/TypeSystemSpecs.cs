@@ -201,6 +201,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_type_cannot_be_null = null;
             public const string clr_type_should_be_unique = null;
             public const string setting_clr_type_and_inferring_name_name_should_be_unique = null;
+            public const string setting_clr_type_and_inferring_name_name_should_be_valid = null;
             public const string setting_clr_type_and_inferring_name_name_annotation_should_be_unique = null;
             public const string setting_clr_type_and_inferring_name_name_annotation_should_be_valid = null;
 

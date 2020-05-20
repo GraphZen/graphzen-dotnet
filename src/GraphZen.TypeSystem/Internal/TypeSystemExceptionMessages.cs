@@ -13,16 +13,13 @@ namespace GraphZen.Internal
 {
     internal static class TypeSystemExceptionMessages
     {
-        private static string GetClrTypeDisplay(Type clrType) => clrType.IsInterface ? "interface" :
-            clrType.IsClass ? "class" :
-            clrType.IsEnum ? "enum" : "type";
-
+        public static string GetClrTypeKind(this Type clrType) => clrType.IsInterface ? "interface" : clrType.IsClass ? "class" : clrType.IsEnum ? "enum" : "type";
 
         public static class DuplicateClrTypeException
         {
             public static string
                 CannotChangeClrType(IMutableClrType definition, Type clrType, IMutableClrType existing) =>
-                $"Cannot set CLR type on {definition} to CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}': {existing} already exists with that CLR type.";
+                $"Cannot set CLR type on {definition} to CLR {GetClrTypeKind(clrType)} '{clrType.Name}': {existing} already exists with that CLR type.";
         }
 
 
@@ -63,12 +60,12 @@ namespace GraphZen.Internal
             public static string CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(Type clrType,
                 string annotatedName)
                 =>
-                    $"Cannot create directive with CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeDisplay(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
+                    $"Cannot create directive with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeKind(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotGetOrCreateBuilderForClrTypeWithInvalidNameAttribute(Type clrType,
                 string annotatedName, TypeKind kind)
                 =>
-                    $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeDisplay(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
+                    $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeKind(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotGetOrCreateTypeBuilderWithInvalidName(string name, TypeKind kind)
                 =>
@@ -82,7 +79,7 @@ namespace GraphZen.Internal
 
             public static string CannotGetOrCreateBuilderForClrTypeWithInvalidName(Type clrType, TypeKind kind)
                 =>
-                    $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeDisplay(clrType)} '{clrType.Name}'. The CLR {GetClrTypeDisplay(clrType)} name '{clrType.Name}' is not a valid GraphQL name. {NameSpecDescription}";
+                    $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The CLR {GetClrTypeKind(clrType)} name '{clrType.Name}' is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotCreateInputValueWithInvalidName(IInputValueDefinition def, string name)
             {

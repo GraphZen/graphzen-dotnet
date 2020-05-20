@@ -37,9 +37,9 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public InternalDirectiveBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
+        public InternalDirectiveBuilder ClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
         {
-            Definition.SetClrType(clrType, configurationSource);
+            Definition.SetClrType(clrType, inferName, configurationSource);
             return this;
         }
 

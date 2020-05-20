@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -168,41 +167,64 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
             });
         }
 
+        [Spec(nameof(setting_clr_type_does_not_change_name))]
+        [Fact]
+        public void setting_clr_type_does_not_change_name_()
+        {
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<PlainClass>(); });
+            schema.GetDirective<PlainClass>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(setting_clr_type_with_name_annotation_does_not_change_name))]
+        [Fact]
+        public void setting_clr_type_with_name_annotation_does_not_change_name_()
+        {
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<PlainClassAnnotatedName>(); });
+            schema.GetDirective<PlainClassAnnotatedName>().Name.Should().Be("Foo");
+        }
+
 
         [Spec(nameof(setting_clr_type_and_inferring_name_name_should_be_unique))]
         [Fact]
-        public void clr_type_name_should_be_unique_()
+        public void setting_clr_type_and_inferring_name_name_should_be_unique()
         {
             Schema.Create(_ =>
             {
                 _.Directive(nameof(PlainClass));
                 var foo = _.Directive("Foo");
-                Action change = () => foo.ClrType<PlainClass>();
-                change.Should().Throw<DuplicateClrTypeException>().WithMessage(
-                    "Cannot set CLR type on directive Foo to CLR class 'PlainClass': directive PlainClass already exists with that CLR type.");
+                Action change = () => foo.ClrType<PlainClass>(true);
+                change.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot set CLR type on directive Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing directive named PlainClass.");
             });
         }
 
 
         [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_unique))]
         [Fact]
-        public void clr_type_name_annotation_should_be_unique_()
+        public void setting_clr_type_and_inferring_name_name_annotation_should_be_unique()
         {
-            var schema = Schema.Create(_ =>
+            Schema.Create(_ =>
             {
-                _.Directive(PlainClassAnnotatedName.AnnotatedNameValue);
+                _.Directive(nameof(PlainClass));
                 var foo = _.Directive("Foo");
-                Action add = () => foo.ClrType<PlainClassAnnotatedName>();
+                Action change = () => foo.ClrType<PlainClass>(true);
+                change.Should().Throw<DuplicateNameException>().WithMessage(
+                    "Cannot set CLR type on directive Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing directive named PlainClass.");
             });
-            schema.GetDirectives().Dump().Count().Should().Be(0);
         }
 
 
         [Spec(nameof(setting_clr_type_and_inferring_name_name_annotation_should_be_valid))]
-        [Fact(Skip = "TODO")]
+        [Fact()]
         public void clr_type_name_annotation_should_be_valid_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+           {
+               var foo = _.Directive("Foo");
+               Action setClrType = () => foo.ClrType<PlainClassInvalidNameAnnotation>(true);
+               setClrType.Should().Throw<InvalidNameException>().WithMessage("Cannot set CLR type on directive Foo and infer name: the annotated name \"(*&#\" on CLR class 'PlainClassInvalidNameAnnotation' is not a valid GraphQL name.");
+           });
         }
 
 

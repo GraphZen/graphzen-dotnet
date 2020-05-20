@@ -16,20 +16,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
     [NoReorder]
     public abstract class ClrTypeTestsScaffold
     {
-        [Spec(nameof(setting_clr_type_does_not_change_name))]
-        [Fact(Skip = "TODO")]
-        public void setting_clr_type_does_not_change_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(setting_clr_type_with_name_annotation_does_not_change_name))]
-        [Fact(Skip = "TODO")]
-        public void setting_clr_type_with_name_annotation_does_not_change_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
+    
     }
 }
 // Source Hash Code: 5012820316212048572

@@ -72,7 +72,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalEnumTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, configurationSource))
+            if (Definition.SetClrType(clrType, false, configurationSource))
             {
                 ConfigureEnumFromClrType();
             }

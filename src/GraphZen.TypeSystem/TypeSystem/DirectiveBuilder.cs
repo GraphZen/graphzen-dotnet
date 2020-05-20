@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
         public DirectiveBuilder<object> ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
-            var ib = Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            var ib = Builder.ClrType(clrType, inferName, ConfigurationSource.Explicit);
             return new DirectiveBuilder<object>(ib);
         }
 
@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem
 
         public DirectiveBuilder<T> ClrType<T>(bool inferName = false) where T : notnull
         {
-            var ib = Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            var ib = Builder.ClrType(typeof(T), inferName, ConfigurationSource.Explicit);
             return new DirectiveBuilder<T>(ib);
         }
 
