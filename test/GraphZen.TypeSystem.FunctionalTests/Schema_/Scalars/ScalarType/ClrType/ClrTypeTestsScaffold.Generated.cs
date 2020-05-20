@@ -96,7 +96,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(custom_name_should_be_valid))]
+        [Spec(nameof(setting_clr_type_with_invalid_custom_name_should_throw))]
         [Fact(Skip = "TODO")]
         public void custom_name_should_be_valid_()
         {
@@ -104,7 +104,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
         }
 
 
-        [Spec(nameof(custom_name_cannot_be_null))]
+        [Spec(nameof(setting_clr_type_with_null_custom_name_should_throw))]
         [Fact(Skip = "TODO")]
         public void custom_name_cannot_be_null_()
         {

@@ -205,17 +205,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string setting_clr_type_and_inferring_name_name_annotation_should_be_unique = null;
             public const string setting_clr_type_and_inferring_name_name_annotation_should_be_valid = null;
 
-            public const string custom_name_should_be_unique = null;
-            public const string custom_name_should_be_valid = null;
-            public const string custom_name_cannot_be_null = null;
+            public const string setting_clr_type_with_duplicate_custom_name_should_throw = null;
+            public const string setting_clr_type_with_invalid_custom_name_should_throw = null;
+            public const string setting_clr_type_with_null_custom_name_should_throw = null;
 
             // Changing CLR type
             public const string setting_clr_type_does_not_change_name = null;
             public const string setting_clr_type_with_name_annotation_does_not_change_name = null;
             public const string setting_clr_type_and_inferring_name_changes_name = null;
             public const string setting_clr_type_with_name_annotation_and_inferring_name_changes_name = null;
-            public const string clr_type_with_conflicting_name_can_be_set_using_custom_name = null;
-            public const string clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name = null;
+            public const string DEPRECATED_clr_type_with_conflicting_name_can_be_set_using_custom_name = null;
+            public const string DEPRECATED_clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name = null;
 
             // Removing CLR Type
             public const string clr_type_can_be_removed = null;

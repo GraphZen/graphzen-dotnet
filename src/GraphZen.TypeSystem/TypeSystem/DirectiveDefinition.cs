@@ -214,7 +214,7 @@ namespace GraphZen.TypeSystem
             if (Schema.TryGetDirective(name, out var existingNamed) && !existingNamed.Equals(this))
             {
                 throw new DuplicateNameException(
-                            $"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" conflicts with an existing directive named {existingNamed.Name}.");
+                            $"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
             }
 
             SetName(name, configurationSource);
@@ -248,7 +248,7 @@ namespace GraphZen.TypeSystem
                     if (Schema.TryGetDirective(annotated, out var existingNamed) && !existingNamed.Equals(this))
                     {
                         throw new DuplicateNameException(
-                            $"Cannot set CLR type on {this} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}.");
+                            $"Cannot set CLR type on {this} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
                     }
 
                     SetName(annotated, configurationSource);
@@ -264,7 +264,7 @@ namespace GraphZen.TypeSystem
                     if (Schema.TryGetDirective(clrType.Name, out var existingNamed))
                     {
                         throw new DuplicateNameException(
-                            $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}.");
+                            $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
                     }
 
                     SetName(clrType.Name, configurationSource);

@@ -195,7 +195,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
                 var foo = _.Directive("Foo");
                 Action change = () => foo.ClrType<PlainClass>(true);
                 change.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot set CLR type on directive Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing directive named PlainClass.");
+                    "Cannot set CLR type on directive Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing directive named PlainClass. All directive names must be unique.");
             });
         }
 
@@ -210,7 +210,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
                 var foo = _.Directive("Foo");
                 Action change = () => foo.ClrType<PlainClass>(true);
                 change.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot set CLR type on directive Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing directive named PlainClass.");
+                    "Cannot set CLR type on directive Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing directive named PlainClass. All directive names must be unique.");
             });
         }
 
@@ -236,62 +236,111 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
             Schema.Create(_ =>
             {
                 var foo = _.Directive("Foo");
-                Action setClrType = () => foo.ClrType<PlainClassInvalidNameAnnotation>(true);
-                setClrType.Should().Throw<InvalidNameException>().WithMessage(
-                    "Cannot set CLR type on directive Foo and infer name: the annotated name \"(*&#\" on CLR class 'PlainClassInvalidNameAnnotation' is not a valid GraphQL name.");
+                new List<Action>
+                {
+                    () => foo.ClrType<PlainClassInvalidNameAnnotation>(true),
+                    () => foo.ClrType(typeof(PlainClassInvalidNameAnnotation), true)
+                }.ForEach(set =>
+                {
+                    set.Should().Throw<InvalidNameException>().WithMessage(
+                        "Cannot set CLR type on directive Foo and infer name: the annotated name \"(*&#\" on CLR class 'PlainClassInvalidNameAnnotation' is not a valid GraphQL name.");
+                });
             });
         }
 
 
-        [Spec(nameof(custom_name_should_be_unique))]
-        [Fact(Skip = "TODO")]
+        [Spec(nameof(setting_clr_type_with_duplicate_custom_name_should_throw))]
+        [Fact]
         public void custom_name_should_be_unique_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Directive("Foo");
+                var bar = _.Directive("Bar");
+                new List<Action>
+                {
+                    () => bar.ClrType<PlainClassAnnotatedName>("Foo"),
+                    () => bar.ClrType(typeof(PlainClassAnnotatedName), "Foo")
+                }.ForEach(set =>
+                {
+                    set.Should().Throw<DuplicateNameException>().WithMessage(
+                        "Cannot set CLR type on directive Bar with custom name: the custom name \"Foo\" conflicts with an existing directive named Foo. All directive names must be unique.");
+                });
+            });
         }
 
 
-        [Spec(nameof(custom_name_should_be_valid))]
-        [Fact(Skip = "TODO")]
+        [Spec(nameof(setting_clr_type_with_invalid_custom_name_should_throw))]
+        [Fact]
         public void custom_name_should_be_valid_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Directive("Foo");
+                var bar = _.Directive("Bar");
+                new List<Action>
+                {
+                    () => bar.ClrType<PlainClassAnnotatedName>("invalid!"),
+                    () => bar.ClrType(typeof(PlainClassAnnotatedName), "invalid!")
+                }.ForEach(set =>
+                {
+                    set.Should().Throw<InvalidNameException>().WithMessage(
+                        "Cannot set CLR type on directive Bar with custom name: the custom name \"invalid!\" is not a valid GraphQL name.");
+                });
+            });
         }
 
 
-        [Spec(nameof(custom_name_cannot_be_null))]
-        [Fact(Skip = "TODO")]
+        [Spec(nameof(setting_clr_type_with_null_custom_name_should_throw))]
+        [Fact]
         public void custom_name_cannot_be_null_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                var bar = _.Directive("Bar");
+                new List<Action>
+                {
+                    () => bar.ClrType<PlainClassAnnotatedName>(null!),
+                    () => bar.ClrType(typeof(PlainClassAnnotatedName), null!)
+                }.ForEach(set => { set.Should().ThrowArgumentNullException("name"); });
+            });
         }
 
 
         [Spec(nameof(setting_clr_type_and_inferring_name_changes_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void changing_clr_type_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<PlainClass>(true); });
+            schema.HasDirective("Foo").Should().BeFalse();
+            schema.GetDirective<PlainClass>().Name.Should().Be(nameof(PlainClass));
         }
 
 
         [Spec(nameof(setting_clr_type_with_name_annotation_and_inferring_name_changes_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void changing_clr_type_with_name_annotation_changes_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<PlainClassAnnotatedName>(true); });
+            schema.HasDirective("Foo").Should().BeFalse();
+            schema.GetDirective<PlainClassAnnotatedName>().Name.Should().Be(PlainClassAnnotatedName.AnnotatedNameValue);
         }
 
 
-        [Spec(nameof(clr_type_with_conflicting_name_can_be_set_using_custom_name))]
-        [Fact(Skip = "TODO")]
+        [Spec(nameof(DEPRECATED_clr_type_with_conflicting_name_can_be_set_using_custom_name))]
+        [Fact()]
         public void clr_type_with_conflicting_name_can_be_added_using_custom_name_()
         {
-            // var schema = Schema.Create(_ => { });
+             var schema = Schema.Create(_ =>
+             {
+                 _.Directive(nameof(PlainClass)).Description("a");
+                 _.Directive("Foo").ClrType<PlainClass>();
+             });
+
         }
 
 
-        [Spec(nameof(clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name))]
+        [Spec(nameof(DEPRECATED_clr_type_with_conflicting_name_annotation_can_be_set_using_custom_name))]
         [Fact(Skip = "TODO")]
         public void clr_type_with_conflicting_name_annotation_can_be_added_using_custom_name_()
         {
