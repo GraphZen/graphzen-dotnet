@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem
 
         public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, bool inferName = false)
         {
-            var internalBuilder = Builder.ClrType(clrType, ConfigurationSource.Explicit);
+            var internalBuilder = Builder.ClrType(clrType, inferName, ConfigurationSource.Explicit);
             return new ScalarTypeBuilder<object, TValueNode>(internalBuilder);
         }
 
@@ -35,25 +35,27 @@ namespace GraphZen.TypeSystem
         public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, string name)
         {
             Check.NotNull(clrType, nameof(clrType));
-            Check.NotNull(name, name);
-            Builder.ClrType(clrType, ConfigurationSource.Explicit);
-            Builder.SetName(name, ConfigurationSource.Explicit);
+            Check.NotNull(name, nameof(name));
+            Builder.ClrType(clrType, name, ConfigurationSource.Explicit);
             return new ScalarTypeBuilder<object, TValueNode>(Builder);
         }
 
         public ScalarTypeBuilder<T, TValueNode> ClrType<T>(string name) where T : notnull
         {
-            Check.NotNull(name, name);
-            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
-            Builder.SetName(name, ConfigurationSource.Explicit);
+            Check.NotNull(name, nameof(name));
+            Builder.ClrType(typeof(T), name, ConfigurationSource.Explicit);
             return new ScalarTypeBuilder<T, TValueNode>(Builder);
         }
 
-        public ScalarTypeBuilder<object, TValueNode> RemoveClrType() => throw new NotImplementedException();
+        public ScalarTypeBuilder<object, TValueNode> RemoveClrType()
+        {
+            Builder.RemoveClrType(ConfigurationSource.Explicit);
+            return new ScalarTypeBuilder<object, TValueNode>(Builder);
+        }
 
         public ScalarTypeBuilder<T, TValueNode> ClrType<T>(bool inferName = false) where T : notnull
         {
-            Builder.ClrType(typeof(T), ConfigurationSource.Explicit);
+            Builder.ClrType(typeof(T), inferName, ConfigurationSource.Explicit);
             return new ScalarTypeBuilder<T, TValueNode>(Builder);
         }
 

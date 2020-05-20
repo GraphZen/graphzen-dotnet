@@ -261,7 +261,7 @@ namespace GraphZen.TypeSystem.Internal
         {
             AssertValidName(name, TypeKind.Scalar);
             return Scalar(new TypeIdentity(name, Definition), configurationSource)
-                ?.ClrType(clrType, configurationSource);
+                ?.ClrType(clrType, name, configurationSource);
         }
 
         public InternalScalarTypeBuilder? Scalar(string name, ConfigurationSource configurationSource)
@@ -291,7 +291,7 @@ namespace GraphZen.TypeSystem.Internal
                 scalarType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
                 {
-                    scalarType.Builder.ClrType(id.ClrType, configurationSource);
+                    scalarType.Builder.ClrType(id.ClrType,false, configurationSource);
                 }
 
                 return scalarType.Builder;

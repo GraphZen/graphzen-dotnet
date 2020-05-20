@@ -37,9 +37,19 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public InternalScalarTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
+        public InternalScalarTypeBuilder ClrType(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            if (Definition.SetClrType(clrType, false, configurationSource))
+            if (Definition.SetClrType(clrType, name, configurationSource))
+            {
+                ConfigureFromClrType();
+            }
+
+            return this;
+        }
+
+        public InternalScalarTypeBuilder ClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
+        {
+            if (Definition.SetClrType(clrType, inferName, configurationSource))
             {
                 ConfigureFromClrType();
             }
@@ -72,6 +82,12 @@ namespace GraphZen.TypeSystem.Internal
         public InternalScalarTypeBuilder SetName(string name, ConfigurationSource configurationSource)
         {
             Definition.SetName(name, configurationSource);
+            return this;
+        }
+
+        public InternalScalarTypeBuilder RemoveClrType(ConfigurationSource configurationSource)
+        {
+            Definition.RemoveClrType(configurationSource);
             return this;
         }
     }
