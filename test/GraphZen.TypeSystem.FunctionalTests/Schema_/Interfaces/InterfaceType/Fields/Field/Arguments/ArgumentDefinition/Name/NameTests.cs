@@ -82,7 +82,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
                             .Argument("bar", "String", a =>
                             {
                                 Action rename = () => a.Name("foo");
-                                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                                rename.Should().Throw<DuplicateItemException>().WithMessage(
                                     "Cannot rename argument bar to \"foo\": Field foo on interface Foo already contains an argument named \"foo\".");
                             });
                     });

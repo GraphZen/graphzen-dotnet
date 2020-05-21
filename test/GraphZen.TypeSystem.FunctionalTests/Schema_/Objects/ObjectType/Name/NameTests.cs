@@ -24,9 +24,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Name
                 _.Object("Foo");
                 var poco = _.Object("PlainClass");
                 Action rename = () => { poco.Name("Foo"); };
-                rename.Should().Throw<DuplicateNameException>()
+                rename.Should().Throw<DuplicateItemException>()
                     .WithMessage(
-                        "Cannot rename object PlainClass to \"Foo\", object Foo already exists. All GraphQL type names must be unique.");
+                        "Cannot rename object PlainClass to \"Foo\": a type with that name (object Foo) already exists. All GraphQL type names must be unique.");
             });
         }
 

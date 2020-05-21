@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem
 
         public TypeIdentity(string name, SchemaDefinition schema, TypeKind? kind = null)
         {
-            Name = name;
+            Name = name.IsValidGraphQLName() ? name : throw new InvalidNameException($"Cannot create Type Identity: \"{name}\" is not a valid GraphQL name.");
             Schema = schema;
             _kind = kind;
         }
@@ -119,8 +119,8 @@ namespace GraphZen.TypeSystem
 
             if (Schema.TryGetType(clrType, out var existingTyped) && !existingTyped.Equals(Definition))
             {
-                throw new DuplicateClrTypeException(
-                    TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType,
+                throw new DuplicateItemException(
+                    TypeSystemExceptionMessages.DuplicateItemException.CannotChangeClrType(this, clrType,
                         existingTyped));
             }
 
@@ -132,7 +132,7 @@ namespace GraphZen.TypeSystem
 
             if (Schema.TryGetType(name, out var existingNamed) && !existingNamed.Equals(Definition))
             {
-                throw new DuplicateNameException(
+                throw new DuplicateItemException(
                     $"Cannot set CLR type on {Definition} with custom name: the custom name \"{name}\" conflicts with an existing {existingNamed.Kind.ToDisplayStringLower()} named '{existingNamed.Name}'. All type names must be unique.");
             }
 
@@ -150,8 +150,8 @@ namespace GraphZen.TypeSystem
             if (Definition != null && Schema.TryGetType(clrType, out var existingTyped) &&
                 !existingTyped.Equals(Definition))
             {
-                throw new DuplicateClrTypeException(
-                    TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(Definition, clrType,
+                throw new DuplicateItemException(
+                    TypeSystemExceptionMessages.DuplicateItemException.CannotChangeClrType(Definition, clrType,
                         existingTyped));
             }
 
@@ -167,7 +167,7 @@ namespace GraphZen.TypeSystem
 
                     if (Schema.TryGetType(annotated, out var existingNamed) && !existingNamed.Equals(Definition))
                     {
-                        throw new DuplicateNameException(
+                        throw new DuplicateItemException(
                             $"Cannot set CLR type on {Definition} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' conflicts with an existing {existingNamed.Kind.ToDisplayStringLower()} named {existingNamed.Name}. All GraphQL type names must be unique.");
                     }
 
@@ -183,7 +183,7 @@ namespace GraphZen.TypeSystem
 
                     if (Schema.TryGetType(clrType.Name, out var existingNamed) && !existingNamed.Equals(Definition))
                     {
-                        throw new DuplicateNameException(
+                        throw new DuplicateItemException(
                             $"Cannot set CLR type on {Definition} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' conflicts with an existing {existingNamed.Kind.ToDisplayStringLower()} named {existingNamed.Name}. All GraphQL type names must be unique.");
                     }
 
@@ -230,8 +230,8 @@ namespace GraphZen.TypeSystem
             if (Definition != null && Schema.TryGetType(name, out var existingName) &&
                 !existingName.Equals(Definition))
             {
-                throw new DuplicateNameException(
-                    $"Cannot rename {Definition} to \"{name}\", {existingName} already exists. All GraphQL type names must be unique.");
+                throw new DuplicateItemException(
+                    $"Cannot rename {Definition} to \"{name}\": a type with that name ({existingName}) already exists. All GraphQL type names must be unique.");
             }
 
             Name = name;

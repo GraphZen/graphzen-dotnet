@@ -59,7 +59,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
                     .Field("baz", "String", f =>
                     {
                         Action rename = () => f.Name("bar");
-                        rename.Should().Throw<DuplicateNameException>().WithMessage(
+                        rename.Should().Throw<DuplicateItemException>().WithMessage(
                             "Cannot rename field baz to \"bar\": Object Foo already contains a field named \"bar\".");
                     });
             });

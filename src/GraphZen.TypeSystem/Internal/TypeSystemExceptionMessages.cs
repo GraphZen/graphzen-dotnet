@@ -17,19 +17,18 @@ namespace GraphZen.Internal
             clrType.IsClass ? "class" :
             clrType.IsEnum ? "enum" : "type";
 
-        public static class DuplicateClrTypeException
+
+        public static class DuplicateItemException
         {
             public static string
                 CannotChangeClrType<T>(T definition, Type clrType, IMutableClrType existing)
                 where T : INamed, IClrType =>
                 $"Cannot set CLR type on {definition} to CLR {GetClrTypeKind(clrType)} '{clrType.Name}': {existing} already exists with that CLR type.";
-        }
 
 
-        public static class DuplicateNameException
-        {
-            internal static string CannotRenameType(TypeIdentity identity, string newName, TypeIdentity existing) =>
-                $"Cannot rename {identity.Definition?.ToString() ?? identity.Name} to \"{newName}\", {existing.Definition?.ToString() ?? existing.ToString()} already exists. All GraphQL type names must be unique.";
+            internal static string CannotCreateTypeWithDuplicateNameAndType<T>(TypeKind kind, string name, Type clrType, T named, T typed)
+                where T : NamedTypeDefinition =>
+                $"Cannot create {kind.ToDisplayStringLower()} {name} with CLR {clrType.GetClrTypeKind()} '{clrType.Name}': both {named} and {typed} (with CLR {typed.ClrType?.GetClrTypeKind()} {typed.ClrType?.Name}) already exist.";
 
             internal static string CannotRenameField(IFieldDefinition field, string name) =>
                 $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";

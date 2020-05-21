@@ -153,8 +153,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
                 _.InputObject("Foo");
                 var poco = _.InputObject<PlainClass>();
                 Action rename = () => poco.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename input object PlainClass to ""Foo"", input object Foo already exists. All GraphQL type names must be unique.");
+                rename.Should().Throw<DuplicateItemException>().WithMessage(
+                    @"Cannot rename input object PlainClass to ""Foo"": a type with that name (input object Foo) already exists. All GraphQL type names must be unique.");
             });
         }
     }

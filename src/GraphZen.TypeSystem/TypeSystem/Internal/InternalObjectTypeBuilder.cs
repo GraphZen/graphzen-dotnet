@@ -167,7 +167,7 @@ namespace GraphZen.TypeSystem.Internal
                    ignoredMemberConfigurationSource.Overrides(configurationSource);
         }
 
-        public InternalObjectTypeBuilder SetName(string name, ConfigurationSource configurationSource)
+        public InternalObjectTypeBuilder Name(string name, ConfigurationSource configurationSource)
         {
             Definition.SetName(name, configurationSource);
             return this;

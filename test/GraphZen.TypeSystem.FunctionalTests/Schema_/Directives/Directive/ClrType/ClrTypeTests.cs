@@ -162,7 +162,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
                 _.Directive<PlainClass>();
                 var foo = _.Directive("Foo");
                 Action change = () => foo.ClrType<PlainClass>();
-                change.Should().Throw<DuplicateClrTypeException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on directive Foo to CLR class 'PlainClass': directive PlainClass already exists with that CLR type.");
             });
         }
@@ -194,7 +194,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
                 _.Directive(nameof(PlainClass));
                 var foo = _.Directive("Foo");
                 Action change = () => foo.ClrType<PlainClass>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on directive Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing directive named PlainClass. All directive names must be unique.");
             });
         }
@@ -209,7 +209,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
                 _.Directive(nameof(PlainClass));
                 var foo = _.Directive("Foo");
                 Action change = () => foo.ClrType<PlainClass>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on directive Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing directive named PlainClass. All directive names must be unique.");
             });
         }
@@ -263,7 +263,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.ClrTy
                     () => bar.ClrType(typeof(PlainClassAnnotatedName), "Foo")
                 }.ForEach(set =>
                 {
-                    set.Should().Throw<DuplicateNameException>().WithMessage(
+                    set.Should().Throw<DuplicateItemException>().WithMessage(
                         "Cannot set CLR type on directive Bar with custom name: the custom name \"Foo\" conflicts with an existing directive named Foo. All directive names must be unique.");
                 });
             });

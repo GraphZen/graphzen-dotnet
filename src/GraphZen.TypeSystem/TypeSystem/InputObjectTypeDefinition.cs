@@ -62,8 +62,8 @@ namespace GraphZen.TypeSystem
 
             if (TryGetField(name, out var existing) && !existing.Equals(field))
             {
-                throw new DuplicateNameException(
-                    TypeSystemExceptionMessages.DuplicateNameException.CannotRenameInputField(field, name));
+                throw new DuplicateItemException(
+                    TypeSystemExceptionMessages.DuplicateItemException.CannotRenameInputField(field, name));
             }
 
             _fields.Remove(field.Name);

@@ -170,7 +170,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
                 _.Interface<PlainInterface>();
                 var foo = _.Interface("Foo");
                 Action change = () => foo.ClrType<PlainInterface>();
-                change.Should().Throw<DuplicateClrTypeException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on interface Foo to CLR interface 'PlainInterface': interface PlainInterface already exists with that CLR type.");
             });
         }
@@ -202,7 +202,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
                 _.Interface(nameof(PlainInterface));
                 var foo = _.Interface("Foo");
                 Action change = () => foo.ClrType<PlainInterface>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on interface Foo and infer name: the CLR interface name 'PlainInterface' conflicts with an existing interface named PlainInterface. All GraphQL type names must be unique.");
             });
         }
@@ -217,7 +217,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
                 _.Interface(nameof(PlainInterface));
                 var foo = _.Interface("Foo");
                 Action change = () => foo.ClrType<PlainInterface>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on interface Foo and infer name: the CLR interface name 'PlainInterface' conflicts with an existing interface named PlainInterface. All GraphQL type names must be unique.");
             });
         }
@@ -271,7 +271,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.C
                     () => bar.ClrType(typeof(PlainInterfaceAnnotatedName), "Foo")
                 }.ForEach(set =>
                 {
-                    set.Should().Throw<DuplicateNameException>().WithMessage(
+                    set.Should().Throw<DuplicateItemException>().WithMessage(
                         "Cannot set CLR type on interface Bar with custom name: the custom name \"Foo\" conflicts with an existing interface named 'Foo'. All type names must be unique.");
                 });
             });

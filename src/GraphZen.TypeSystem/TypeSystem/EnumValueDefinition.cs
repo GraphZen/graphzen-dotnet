@@ -61,8 +61,8 @@ namespace GraphZen.TypeSystem
 
             if (DeclaringType.TryGetValue(name, out var v) && !v.Equals(this))
             {
-                throw new DuplicateNameException(
-                    TypeSystemExceptionMessages.DuplicateNameException.DuplicateEnumValue(this, name));
+                throw new DuplicateItemException(
+                    TypeSystemExceptionMessages.DuplicateItemException.DuplicateEnumValue(this, name));
             }
 
             if (!configurationSource.Overrides(_nameConfigurationSource))

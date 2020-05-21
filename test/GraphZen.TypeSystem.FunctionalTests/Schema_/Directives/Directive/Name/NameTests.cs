@@ -65,7 +65,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Name
                 _.Directive("Bar");
                 var foo = _.Directive("Foo");
                 Action rename = () => foo.Name("Bar");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
+                rename.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot rename directive Foo to \"Bar\": a directive named \"Bar\" already exists.");
             });
         }

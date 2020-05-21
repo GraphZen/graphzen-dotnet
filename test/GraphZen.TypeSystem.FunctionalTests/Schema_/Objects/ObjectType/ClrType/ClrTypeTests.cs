@@ -161,7 +161,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                 _.Object<PlainClass>();
                 var foo = _.Object("Foo");
                 Action change = () => foo.ClrType<PlainClass>();
-                change.Should().Throw<DuplicateClrTypeException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on object Foo to CLR class 'PlainClass': object PlainClass already exists with that CLR type.");
             });
         }
@@ -193,7 +193,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                 _.Object(nameof(PlainClass));
                 var foo = _.Object("Foo");
                 Action change = () => foo.ClrType<PlainClass>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on object Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing object named PlainClass. All GraphQL type names must be unique.");
             });
         }
@@ -208,7 +208,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                 _.Object(nameof(PlainClass));
                 var foo = _.Object("Foo");
                 Action change = () => foo.ClrType<PlainClass>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on object Foo and infer name: the CLR class name 'PlainClass' conflicts with an existing object named PlainClass. All GraphQL type names must be unique.");
             });
         }
@@ -262,7 +262,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.ClrType
                     () => bar.ClrType(typeof(PlainClassAnnotatedName), "Foo")
                 }.ForEach(set =>
                 {
-                    set.Should().Throw<DuplicateNameException>().WithMessage(
+                    set.Should().Throw<DuplicateItemException>().WithMessage(
                         "Cannot set CLR type on object Bar with custom name: the custom name \"Foo\" conflicts with an existing object named 'Foo'. All type names must be unique.");
                 });
             });

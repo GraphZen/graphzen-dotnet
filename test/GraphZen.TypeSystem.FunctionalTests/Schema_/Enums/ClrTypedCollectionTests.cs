@@ -156,8 +156,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
                 _.Enum("Foo");
                 var poce = _.Enum<PlainEnum>();
                 Action rename = () => poce.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename enum PlainEnum to ""Foo"", enum Foo already exists. All GraphQL type names must be unique.");
+                rename.Should().Throw<DuplicateItemException>().WithMessage(
+                    @"Cannot rename enum PlainEnum to ""Foo"": a type with that name (enum Foo) already exists. All GraphQL type names must be unique.");
             });
         }
     }

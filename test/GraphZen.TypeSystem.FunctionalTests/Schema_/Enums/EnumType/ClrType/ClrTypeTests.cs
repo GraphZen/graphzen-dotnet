@@ -162,7 +162,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
                 _.Enum<PlainEnum>();
                 var foo = _.Enum("Foo");
                 Action change = () => foo.ClrType<PlainEnum>();
-                change.Should().Throw<DuplicateClrTypeException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on enum Foo to CLR enum 'PlainEnum': enum PlainEnum already exists with that CLR type.");
             });
         }
@@ -194,7 +194,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
                 _.Enum(nameof(PlainEnum));
                 var foo = _.Enum("Foo");
                 Action change = () => foo.ClrType<PlainEnum>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on enum Foo and infer name: the CLR enum name 'PlainEnum' conflicts with an existing enum named PlainEnum. All GraphQL type names must be unique.");
             });
         }
@@ -209,7 +209,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
                 _.Enum(nameof(PlainEnum));
                 var foo = _.Enum("Foo");
                 Action change = () => foo.ClrType<PlainEnum>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on enum Foo and infer name: the CLR enum name 'PlainEnum' conflicts with an existing enum named PlainEnum. All GraphQL type names must be unique.");
             });
         }
@@ -249,7 +249,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.ClrType
                     () => bar.ClrType(typeof(PlainEnumAnnotatedName), "Foo")
                 }.ForEach(set =>
                 {
-                    set.Should().Throw<DuplicateNameException>().WithMessage(
+                    set.Should().Throw<DuplicateItemException>().WithMessage(
                         "Cannot set CLR type on enum Bar with custom name: the custom name \"Foo\" conflicts with an existing enum named 'Foo'. All type names must be unique.");
                 });
             });

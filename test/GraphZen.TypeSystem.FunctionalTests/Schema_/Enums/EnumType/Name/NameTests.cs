@@ -50,8 +50,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Name
                 _.Enum("Foo");
                 var bar = _.Enum("Bar");
                 Action rename = () => bar.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename enum Bar to ""Foo"", enum Foo already exists. All GraphQL type names must be unique.");
+                rename.Should().Throw<DuplicateItemException>().WithMessage(
+                    @"Cannot rename enum Bar to ""Foo"": a type with that name (enum Foo) already exists. All GraphQL type names must be unique.");
             });
         }
 

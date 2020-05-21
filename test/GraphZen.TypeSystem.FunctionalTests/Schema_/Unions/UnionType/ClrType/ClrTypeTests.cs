@@ -162,7 +162,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
                 _.Union<PlainAbstractClass>();
                 var foo = _.Union("Foo");
                 Action change = () => foo.ClrType<PlainAbstractClass>();
-                change.Should().Throw<DuplicateClrTypeException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on union Foo to CLR class 'PlainAbstractClass': union PlainAbstractClass already exists with that CLR type.");
             });
         }
@@ -194,7 +194,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
                 _.Union(nameof(PlainAbstractClass));
                 var foo = _.Union("Foo");
                 Action change = () => foo.ClrType<PlainAbstractClass>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on union Foo and infer name: the CLR class name 'PlainAbstractClass' conflicts with an existing union named PlainAbstractClass. All GraphQL type names must be unique.");
             });
         }
@@ -209,7 +209,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
                 _.Union(nameof(PlainAbstractClass));
                 var foo = _.Union("Foo");
                 Action change = () => foo.ClrType<PlainAbstractClass>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on union Foo and infer name: the CLR class name 'PlainAbstractClass' conflicts with an existing union named PlainAbstractClass. All GraphQL type names must be unique.");
             });
         }
@@ -263,7 +263,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.ClrType
                     () => bar.ClrType(typeof(PlainAbstractClassAnnotatedName), "Foo")
                 }.ForEach(set =>
                 {
-                    set.Should().Throw<DuplicateNameException>().WithMessage(
+                    set.Should().Throw<DuplicateItemException>().WithMessage(
                         "Cannot set CLR type on union Bar with custom name: the custom name \"Foo\" conflicts with an existing union named 'Foo'. All type names must be unique.");
                 });
             });

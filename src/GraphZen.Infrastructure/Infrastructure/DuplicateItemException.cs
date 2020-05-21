@@ -7,9 +7,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    public class DuplicateNameException : GraphQLException
+    public class DuplicateItemException : GraphQLException
     {
-        public DuplicateNameException(string message) : base(message)
+        public DuplicateItemException(string message) : base(message)
         {
         }
     }

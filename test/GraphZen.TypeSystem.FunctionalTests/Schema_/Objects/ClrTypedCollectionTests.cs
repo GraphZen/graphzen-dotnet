@@ -61,14 +61,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
 
 
         [Spec(nameof(clr_typed_item_cannot_be_added_with_invalid_name_attribute))]
-        [Fact(Skip = "wip")]
+        [Fact]
         public void clr_typed_item_cannot_be_added_with_invalid_name_attribute_()
         {
             Schema.Create(_ =>
             {
                 Action add = () => _.Object<PlainClassInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    "Cannot create object with CLR class 'PlainClassInvalidNameAnnotation'. The name \"(*&#\" specified in the GraphQLNameAttribute on the PlainClassInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    "Cannot get or create GraphQL object type builder with CLR class 'PlainClassInvalidNameAnnotation'. The name \"(*&#\" specified in the GraphQLNameAttribute on the PlainClassInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -221,7 +221,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
 
 
         [Spec(nameof(clr_typed_item_cannot_be_added_with_invalid_custom_name))]
-        [Theory(Skip = "wip")]
+        [Theory]
         [InlineData("{name}")]
         [InlineData("LKSJ ((")]
         [InlineData("   ")]
@@ -232,7 +232,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
             {
                 Action add = () => _.Object<PlainClass>(name);
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    $"Cannot create object named \"{name}\": \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Cannot get or create GraphQL type builder for object named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
@@ -274,7 +274,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
 
 
         [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_already_exists))]
-        [Fact(Skip = "wip")]
+        [Fact]
         public void clr_typed_item_cannot_be_renamed_if_name_already_exists_()
         {
             Schema.Create(_ =>
@@ -282,13 +282,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
                 _.Object("Foo");
                 var b = _.Object<PlainClass>();
                 Action rename = () => b.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot rename object PlainClass to \"Foo\": a object named \"Foo\" already exists.");
+                rename.Should().Throw<DuplicateItemException>().WithMessage(
+                    "Cannot rename object PlainClass to \"Foo\": a type with that name (object Foo) already exists. All GraphQL type names must be unique.");
             });
         }
 
         [Spec(nameof(clr_typed_item_subsequently_added_with_custom_name_sets_name))]
-        [Fact(Skip = "wip")]
+        [Fact]
         public void clr_typed_item_subsequently_added_with_custom_name_sets_name_()
         {
             var schema = Schema.Create(_ =>
@@ -338,7 +338,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         }
 
         [Spec(nameof(clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist))]
-        [Fact(Skip = "todo")]
+        [Fact]
         public void clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
         {
             Schema.Create(_ =>
@@ -346,15 +346,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
                 _.Object("Foo");
                 _.Object<PlainClass>();
                 Action add = () => _.Object<PlainClass>("Foo");
-                add.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot create object Foo with CLR type 'PlainClass': both object Foo and object PlainClass (with CLR type PlainClass) already exist.");
+                add.Should().Throw<DuplicateItemException>().WithMessage(
+                    "Cannot create object Foo with CLR class 'PlainClass': both object Foo and object PlainClass (with CLR class PlainClass) already exist.");
             });
         }
+
 
         [Spec(nameof(
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
         ))]
-        [Fact(Skip = "todo")]
+        [Fact()]
         public void
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
         {
@@ -363,8 +364,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
                 _.Object("Foo");
                 _.Object<PlainClassAnnotatedName>();
                 Action add = () => _.Object<PlainClassAnnotatedName>("Foo");
-                add.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot create object Foo with CLR type 'PlainClassAnnotatedName': both object Foo and object AnnotatedNameValue (with CLR type PlainClassAnnotatedName) already exist.");
+                add.Should().Throw<DuplicateItemException>().WithMessage("Cannot create object Foo with CLR class 'PlainClassAnnotatedName': both object Foo and object AnnotatedNameValue (with CLR class PlainClassAnnotatedName) already exist.");
             });
         }
 

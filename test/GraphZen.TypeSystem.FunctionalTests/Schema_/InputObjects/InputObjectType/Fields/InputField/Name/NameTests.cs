@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                     .Field("bar", "String", a =>
                     {
                         Action rename = () => a.Name("foo");
-                        rename.Should().Throw<DuplicateNameException>().WithMessage(
+                        rename.Should().Throw<DuplicateItemException>().WithMessage(
                             "Cannot rename input field bar to \"foo\": Input object foo already contains a field named \"foo\".");
                     });
             });

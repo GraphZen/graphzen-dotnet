@@ -60,9 +60,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 _.InputObject("Foo");
                 var bar = _.InputObject("Bar");
                 Action rename = () => bar.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>()
+                rename.Should().Throw<DuplicateItemException>()
                     .WithMessage(
-                        "Cannot rename input object Bar to \"Foo\", input object Foo already exists. All GraphQL type names must be unique.");
+                        "Cannot rename input object Bar to \"Foo\": a type with that name (input object Foo) already exists. All GraphQL type names must be unique.");
             });
         }
     }

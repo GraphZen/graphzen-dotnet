@@ -124,8 +124,8 @@ namespace GraphZen.TypeSystem
 
             if (TryGetArgument(name, out var existing) && existing != argument)
             {
-                throw new DuplicateNameException(
-                    TypeSystemExceptionMessages.DuplicateNameException.CannotRenameArgument(argument, name));
+                throw new DuplicateItemException(
+                    TypeSystemExceptionMessages.DuplicateItemException.CannotRenameArgument(argument, name));
             }
 
             _arguments.Remove(argument.Name);
@@ -201,8 +201,8 @@ namespace GraphZen.TypeSystem
 
             if (Schema.TryGetDirective(clrType, out var existingTyped) && !existingTyped.Equals(this))
             {
-                throw new DuplicateClrTypeException(
-                    TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType,
+                throw new DuplicateItemException(
+                    TypeSystemExceptionMessages.DuplicateItemException.CannotChangeClrType(this, clrType,
                         existingTyped));
             }
 
@@ -214,7 +214,7 @@ namespace GraphZen.TypeSystem
 
             if (Schema.TryGetDirective(name, out var existingNamed) && !existingNamed.Equals(this))
             {
-                throw new DuplicateNameException(
+                throw new DuplicateItemException(
                     $"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
             }
 
@@ -231,8 +231,8 @@ namespace GraphZen.TypeSystem
 
             if (Schema.TryGetDirective(clrType, out var existingTyped) && !existingTyped.Equals(this))
             {
-                throw new DuplicateClrTypeException(
-                    TypeSystemExceptionMessages.DuplicateClrTypeException.CannotChangeClrType(this, clrType,
+                throw new DuplicateItemException(
+                    TypeSystemExceptionMessages.DuplicateItemException.CannotChangeClrType(this, clrType,
                         existingTyped));
             }
 
@@ -248,7 +248,7 @@ namespace GraphZen.TypeSystem
 
                     if (Schema.TryGetDirective(annotated, out var existingNamed) && !existingNamed.Equals(this))
                     {
-                        throw new DuplicateNameException(
+                        throw new DuplicateItemException(
                             $"Cannot set CLR type on {this} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
                     }
 
@@ -264,7 +264,7 @@ namespace GraphZen.TypeSystem
 
                     if (Schema.TryGetDirective(clrType.Name, out var existingNamed) && !existingNamed.Equals(this))
                     {
-                        throw new DuplicateNameException(
+                        throw new DuplicateItemException(
                             $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
                     }
 
@@ -300,9 +300,9 @@ namespace GraphZen.TypeSystem
             {
                 return SetName(name, configurationSource);
             }
-            catch (DuplicateNameException)
+            catch (DuplicateItemException)
             {
-                throw new DuplicateNameException("");
+                throw new DuplicateItemException("");
             }
         }
 

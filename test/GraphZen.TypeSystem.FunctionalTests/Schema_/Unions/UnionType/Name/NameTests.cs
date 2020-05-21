@@ -53,8 +53,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Name
                 _.Union("Foo");
                 var bar = _.Union("Bar");
                 Action rename = () => bar.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot rename union Bar to \"Foo\", union Foo already exists. All GraphQL type names must be unique.");
+                rename.Should().Throw<DuplicateItemException>().WithMessage(
+                    "Cannot rename union Bar to \"Foo\": a type with that name (union Foo) already exists. All GraphQL type names must be unique.");
             });
         }
     }

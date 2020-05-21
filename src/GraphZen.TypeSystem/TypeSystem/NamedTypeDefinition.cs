@@ -17,10 +17,12 @@ namespace GraphZen.TypeSystem
         protected NamedTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(configurationSource)
         {
+            
             Identity = identity;
             Schema = schema;
             IsIntrospection = SpecReservedNames.IntrospectionTypeNames.Contains(Name);
         }
+
 
         protected override SchemaDefinition Schema { get; }
 

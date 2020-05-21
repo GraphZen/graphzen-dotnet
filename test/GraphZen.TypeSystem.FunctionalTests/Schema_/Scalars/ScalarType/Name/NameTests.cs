@@ -51,8 +51,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Name
                 _.Scalar("Foo");
                 var bar = _.Scalar("Bar");
                 Action rename = () => bar.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot rename scalar Bar to \"Foo\", scalar Foo already exists. All GraphQL type names must be unique.");
+                rename.Should().Throw<DuplicateItemException>().WithMessage(
+                    "Cannot rename scalar Bar to \"Foo\": a type with that name (scalar Foo) already exists. All GraphQL type names must be unique.");
             });
         }
     }

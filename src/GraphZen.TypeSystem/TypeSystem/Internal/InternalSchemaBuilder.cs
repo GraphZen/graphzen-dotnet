@@ -15,13 +15,14 @@ namespace GraphZen.TypeSystem.Internal
     public class InternalSchemaBuilder : AnnotatableMemberDefinitionBuilder<SchemaDefinition>
     {
         private readonly Lazy<SchemaBuilder> _builder;
-        public SchemaBuilder Builder => _builder.Value;
 
         public InternalSchemaBuilder(SchemaDefinition schemaDefinition)
             : base(schemaDefinition, schemaDefinition.Builder)
         {
             _builder = new Lazy<SchemaBuilder>(() => new SchemaBuilder(schemaDefinition));
         }
+
+        public SchemaBuilder Builder => _builder.Value;
 
         public IParser Parser { get; } = new SuperpowerParser();
 
@@ -338,7 +339,12 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalInterfaceTypeBuilder? Interface(Type clrType, string name,
-            ConfigurationSource configurationSource) => throw new NotImplementedException();
+            ConfigurationSource configurationSource)
+        {
+            return CreateByNameOrType<InterfaceTypeDefinition, InternalInterfaceTypeBuilder>(clrType, name,
+                () => Interface(name, configurationSource)?.ClrType(clrType, name, configurationSource),
+                () => Interface(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
+        }
 
         private InternalInterfaceTypeBuilder? Interface(in TypeIdentity id,
             ConfigurationSource configurationSource)
@@ -575,7 +581,37 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource) =>
-            Object(name, configurationSource)?.ClrType(clrType, name, configurationSource);
+            CreateByNameOrType<ObjectTypeDefinition, InternalObjectTypeBuilder>(clrType, name,
+                () => Object(name, configurationSource)?.ClrType(clrType, name, configurationSource),
+                () => Object(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
+
+        private TBuilder? CreateByNameOrType<T, TBuilder>(Type clrType, string name, Func<TBuilder?> createByName,
+            Func<TBuilder?> createByType)
+            where TBuilder : AnnotatableMemberDefinitionBuilder<T>
+            where T : NamedTypeDefinition
+        {
+            var byName = Definition.FindType(name);
+            var byType = Definition.FindType(clrType);
+            if (byType is T typed)
+            {
+                if (byName is T named)
+                {
+                    if (!named.Equals(typed))
+                    {
+                        throw new DuplicateItemException(
+                            TypeSystemExceptionMessages.DuplicateItemException.CannotCreateTypeWithDuplicateNameAndType(
+                                named.Kind, name,
+                                clrType, named, typed));
+                    }
+
+                    return createByName();
+                }
+
+                return createByType();
+            }
+
+            return createByName();
+        }
 
 
         public InternalObjectTypeBuilder? Object(string name, ConfigurationSource configurationSource)
@@ -646,8 +682,8 @@ namespace GraphZen.TypeSystem.Internal
             var named = Definition.FindDirective(name);
             if (typed != null && named != null && !typed.Equals(named))
             {
-                throw new DuplicateNameException(
-                    TypeSystemExceptionMessages.DuplicateNameException.CannotCreateDirectiveWithConflictingNameAndType(
+                throw new DuplicateItemException(
+                    TypeSystemExceptionMessages.DuplicateItemException.CannotCreateDirectiveWithConflictingNameAndType(
                         name, clrType, named, typed));
             }
 
@@ -1072,66 +1108,50 @@ namespace GraphZen.TypeSystem.Internal
             Definition.TryGetDirective(name, out var directive) && RemoveDirective(directive, configurationSource);
 
 
-        public void RemoveObject(Type clrType, ConfigurationSource configurationSource)
-        {
-            if (Definition.TryGetObject(clrType, out var ot))
-            {
-                RemoveType(ot, configurationSource);
-            }
-        }
+        public bool RemoveObject(Type clrType, ConfigurationSource configurationSource) =>
+            RemoveType<ObjectTypeDefinition>(clrType, configurationSource);
 
         public bool RemoveObject(string name, ConfigurationSource configurationSource) =>
-            Definition.TryGetObject(name, out var obje) && RemoveType(obje, configurationSource);
+            RemoveType<ObjectTypeDefinition>(name, configurationSource);
 
-        public void RemoveUnion(Type clrType, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveUnion(Type clrType, ConfigurationSource configurationSource) =>
+            RemoveType<UnionTypeDefinition>(clrType, configurationSource);
 
-        public void RemoveUnion(string name, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveUnion(string name, ConfigurationSource configurationSource) =>
+            RemoveType<UnionTypeDefinition>(name, configurationSource);
 
-        public void RemoveScalar(Type clrType, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveScalar(Type clrType, ConfigurationSource configurationSource) =>
+            RemoveType<ScalarTypeDefinition>(clrType, configurationSource);
 
-        public void RemoveScalar(string name, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveScalar(string name, ConfigurationSource configurationSource) =>
+            RemoveType<ScalarTypeDefinition>(name, configurationSource);
 
-        public void RemoveEnum(Type clrType, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveEnum(Type clrType, ConfigurationSource configurationSource) =>
+            RemoveType<EnumTypeDefinition>(clrType, configurationSource);
 
-        public void RemoveEnum(string name, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveEnum(string name, ConfigurationSource configurationSource) =>
+            RemoveType<EnumTypeDefinition>(name, configurationSource);
 
-        public void RemoveInterface(Type clrType, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveInterface(Type clrType, ConfigurationSource configurationSource) =>
+            RemoveType<InterfaceTypeDefinition>(clrType, configurationSource);
 
-        public void RemoveInterface(string name, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveInterface(string name, ConfigurationSource configurationSource) =>
+            RemoveType<InterfaceTypeDefinition>(name, configurationSource);
 
-        public void RemoveInputObject(Type clrType, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveInputObject(Type clrType, ConfigurationSource configurationSource) =>
+            RemoveType<InputObjectTypeDefinition>(clrType, configurationSource);
 
-        public void RemoveInputObject(string name, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+        public bool RemoveInputObject(string name, ConfigurationSource configurationSource) =>
+            RemoveType<InputObjectTypeDefinition>(name, configurationSource);
+
+        private bool RemoveType<T>(Type clrType, ConfigurationSource configurationSource)
+            where T : NamedTypeDefinition =>
+            Definition.TryGetType<T>(clrType, out var type) && RemoveType(type, configurationSource);
+
+        private bool RemoveType<T>(string name, ConfigurationSource configurationSource)
+            where T : NamedTypeDefinition =>
+            Definition.TryGetType<T>(name, out var type) && RemoveType(type, configurationSource);
+
 
         public InternalSchemaBuilder Description(string description, ConfigurationSource configurationSource)
         {

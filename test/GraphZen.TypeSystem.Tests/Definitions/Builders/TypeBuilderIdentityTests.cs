@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
@@ -383,16 +382,14 @@ namespace GraphZen.TypeSystem.Tests
             {
                 CreateTypeWithName(sb, TypeName);
                 CreateTypeWithName(sb, NewTypeName);
-                var ex = Assert.Throws<DuplicateNameException>(
+                var ex = Assert.Throws<DuplicateItemException>(
                     () => { ChangeNameByName(sb, TypeName, NewTypeName); });
 
                 var typeDef = sb.GetDefinition().GetType<NamedTypeDefinition>(TypeName);
                 var newTypeDef = sb.GetDefinition().GetType<NamedTypeDefinition>(NewTypeName);
 
                 ex.Message.Should()
-                    .Be(TypeSystemExceptionMessages.DuplicateNameException.CannotRenameType(typeDef.Identity,
-                        NewTypeName,
-                        newTypeDef.Identity));
+                    .Be($"Cannot rename {typeDef} to \"{NewTypeName}\": a type with that name ({newTypeDef}) already exists. All GraphQL type names must be unique.");
             });
         }
 

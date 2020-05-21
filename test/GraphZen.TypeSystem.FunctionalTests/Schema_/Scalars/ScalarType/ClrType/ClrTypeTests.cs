@@ -162,7 +162,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
                 _.Scalar<PlainStruct>();
                 var foo = _.Scalar("Foo");
                 Action change = () => foo.ClrType<PlainStruct>();
-                change.Should().Throw<DuplicateClrTypeException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on scalar Foo to CLR type 'PlainStruct': scalar PlainStruct already exists with that CLR type.");
             });
         }
@@ -194,7 +194,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
                 _.Scalar(nameof(PlainStruct));
                 var foo = _.Scalar("Foo");
                 Action change = () => foo.ClrType<PlainStruct>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on scalar Foo and infer name: the CLR type name 'PlainStruct' conflicts with an existing scalar named PlainStruct. All GraphQL type names must be unique.");
             });
         }
@@ -209,7 +209,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
                 _.Scalar(nameof(PlainStruct));
                 var foo = _.Scalar("Foo");
                 Action change = () => foo.ClrType<PlainStruct>(true);
-                change.Should().Throw<DuplicateNameException>().WithMessage(
+                change.Should().Throw<DuplicateItemException>().WithMessage(
                     "Cannot set CLR type on scalar Foo and infer name: the CLR type name 'PlainStruct' conflicts with an existing scalar named PlainStruct. All GraphQL type names must be unique.");
             });
         }
@@ -263,7 +263,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
                     () => bar.ClrType(typeof(PlainStructAnnotatedName), "Foo")
                 }.ForEach(set =>
                 {
-                    set.Should().Throw<DuplicateNameException>().WithMessage(
+                    set.Should().Throw<DuplicateItemException>().WithMessage(
                         "Cannot set CLR type on scalar Bar with custom name: the custom name \"Foo\" conflicts with an existing scalar named 'Foo'. All type names must be unique.");
                 });
             });

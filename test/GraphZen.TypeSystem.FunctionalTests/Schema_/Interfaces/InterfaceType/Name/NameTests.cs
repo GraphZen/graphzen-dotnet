@@ -54,8 +54,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.N
                 _.Interface("Foo");
                 var bar = _.Interface("Bar");
                 Action rename = () => bar.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    @"Cannot rename interface Bar to ""Foo"", interface Foo already exists. All GraphQL type names must be unique.");
+                rename.Should().Throw<DuplicateItemException>().WithMessage(
+                    @"Cannot rename interface Bar to ""Foo"": a type with that name (interface Foo) already exists. All GraphQL type names must be unique.");
             });
         }
     }

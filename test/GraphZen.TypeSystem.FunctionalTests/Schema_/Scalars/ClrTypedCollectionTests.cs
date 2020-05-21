@@ -208,8 +208,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
                 _.Scalar("Foo");
                 var pocs = _.Scalar<PlainStruct>();
                 Action rename = () => pocs.Name("Foo");
-                rename.Should().Throw<DuplicateNameException>().WithMessage(
-                    "Cannot rename scalar PlainStruct to \"Foo\", scalar Foo already exists. All GraphQL type names must be unique.");
+                rename.Should().Throw<DuplicateItemException>().WithMessage(
+                    $"Cannot rename scalar PlainStruct to \"Foo\": a type with that name (scalar Foo) already exists. All GraphQL type names must be unique.");
             });
         }
     }
