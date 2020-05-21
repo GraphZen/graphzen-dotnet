@@ -184,7 +184,9 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalUnionTypeBuilder? Union(Type clrType, string name, ConfigurationSource configurationSource) =>
-            Union(name, configurationSource)?.ClrType(clrType, name, configurationSource);
+            CreateByNameOrType<UnionTypeDefinition, InternalUnionTypeBuilder>(clrType, name,
+                () => Union(name, configurationSource)?.ClrType(clrType, name, configurationSource),
+                () => Union(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
         public InternalUnionTypeBuilder? Union(Type clrType, ConfigurationSource configurationSource)
         {
