@@ -62,7 +62,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
 
 
         [Spec(nameof(TypeSystemSpecs.NamedCollectionSpecs.named_item_can_be_removed))]
-        [Fact(Skip = "needs impl")]
+        [Fact()]
         public void named_item_can_be_removed_()
         {
             var schema = Schema.Create(_ =>

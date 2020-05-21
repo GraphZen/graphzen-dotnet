@@ -63,7 +63,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 
 
         [Spec(nameof(named_item_can_be_removed))]
-        [Fact(Skip = "TODO")]
+        [Fact()]
         public void named_item_can_be_removed_()
         {
             var schema = Schema.Create(_ =>
