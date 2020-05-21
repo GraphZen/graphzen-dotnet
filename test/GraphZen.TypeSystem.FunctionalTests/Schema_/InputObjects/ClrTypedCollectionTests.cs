@@ -14,20 +14,19 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     [NoReorder]
     public class ClrTypedCollectionTests
     {
-        private class PlainClass
+       public class PlainClass
         {
         }
 
-        [GraphQLName(AnnotatedName)]
-        private class PlainClassAnnotatedName
+        [GraphQLName(AnnotatedNameValue)]
+        public class PlainClassAnnotatedName
         {
-            public const string AnnotatedName = nameof(AnnotatedName);
+            public const string AnnotatedNameValue = nameof(AnnotatedNameValue);
         }
 
-        [GraphQLName(InvalidName)]
-        private class PlainClassInvalidNameAnnotation
+        [GraphQLName("(*&#")]
+        public class PlainClassInvalidNameAnnotation
         {
-            public const string InvalidName = "abc @#$%^";
         }
 
 
@@ -36,6 +35,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         public void clr_typed_item_can_be_added_()
         {
             var schema = Schema.Create(_ => { _.InputObject(typeof(PlainClass)); });
+            schema.HasInputObject<PlainClass>().Should().BeTrue();
+        }
+
+
+        [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
+        [Fact]
+        public void clr_typed_item_can_be_added_via_type_param_()
+        {
+            var schema = Schema.Create(_ => { _.InputObject<PlainClass>(); });
             schema.HasInputObject<PlainClass>().Should().BeTrue();
         }
 
@@ -60,13 +68,93 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
             {
                 Action add = () => _.InputObject<PlainClassInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    @"Cannot get or create GraphQL input object type builder with CLR class 'PlainClassInvalidNameAnnotation'. The name ""abc @#$%^"" specified in the GraphQLNameAttribute on the PlainClassInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    "Cannot get or create GraphQL input object type builder with CLR class 'PlainClassInvalidNameAnnotation'. The name \"(*&#\" specified in the GraphQLNameAttribute on the PlainClassInvalidNameAnnotation CLR class is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
 
+        [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_with_custom_name))]
+        [Fact]
+        public void clr_typed_item_with_conflicting_name_can_be_added_with_custom_name_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject(nameof(PlainClass));
+                _.InputObject(typeof(PlainClass), "Foo");
+            });
+            schema.GetInputObject<PlainClass>().Name.Should().Be("Foo");
+            schema.GetInputObject(nameof(PlainClass)).Name.Should().Be(nameof(PlainClass));
+            schema.GetInputObject(nameof(PlainClass)).ClrType.Should().BeNull();
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name))]
+        [Fact]
+        public void clr_typed_item_with_conflicting_name_can_be_added_via_type_param_with_custom_name_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject(nameof(PlainClass));
+                _.InputObject<PlainClass>("Foo");
+            });
+            schema.GetInputObject<PlainClass>().Name.Should().Be("Foo");
+            schema.GetInputObject(nameof(PlainClass)).Name.Should().Be(nameof(PlainClass));
+            schema.GetInputObject(nameof(PlainClass)).ClrType.Should().BeNull();
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name))]
+        [Fact]
+        public void clr_typed_item_with_conflicting_name_annotation_can_be_added_with_custom_name_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject(PlainClassAnnotatedName.AnnotatedNameValue);
+                _.InputObject(typeof(PlainClassAnnotatedName), "Foo");
+            });
+            schema.GetInputObject<PlainClassAnnotatedName>().Name.Should().Be("Foo");
+            schema.GetInputObject(PlainClassAnnotatedName.AnnotatedNameValue).Name.Should()
+                .Be(PlainClassAnnotatedName.AnnotatedNameValue);
+            schema.GetInputObject(PlainClassAnnotatedName.AnnotatedNameValue).ClrType.Should().BeNull();
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name))]
+        [Fact]
+        public void clr_typed_item_with_conflicting_name_annotation_can_be_added_via_type_param_with_custom_name_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject(PlainClassAnnotatedName.AnnotatedNameValue);
+                _.InputObject<PlainClassAnnotatedName>("Foo");
+            });
+            schema.GetInputObject<PlainClassAnnotatedName>().Name.Should().Be("Foo");
+            schema.GetInputObject(PlainClassAnnotatedName.AnnotatedNameValue).Name.Should()
+                .Be(PlainClassAnnotatedName.AnnotatedNameValue);
+            schema.GetInputObject(PlainClassAnnotatedName.AnnotatedNameValue).ClrType.Should().BeNull();
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name))]
+        [Fact]
+        public void clr_typed_item_with_invalid_name_annotation_can_be_added_with_custom_name_()
+        {
+            var schema = Schema.Create(_ => { _.InputObject(typeof(PlainClassInvalidNameAnnotation), "Foo"); });
+            schema.GetInputObject<PlainClassInvalidNameAnnotation>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name))]
+        [Fact]
+        public void clr_typed_item_with_invalid_name_annotation_can_be_added_via_type_param_with_custom_name_()
+        {
+            var schema = Schema.Create(_ => { _.InputObject<PlainClassInvalidNameAnnotation>("Foo"); });
+            schema.GetInputObject<PlainClassInvalidNameAnnotation>().Name.Should().Be("Foo");
+        }
+
+
         [Spec(nameof(clr_typed_item_can_be_removed))]
-        [Fact(Skip = "needs implementation")]
+        [Fact]
         public void clr_typed_item_can_be_removed_()
         {
             var schema = Schema.Create(_ =>
@@ -79,7 +167,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 
 
         [Spec(nameof(clr_typed_item_can_be_removed_via_type_param))]
-        [Fact(Skip = "needs implementation")]
+        [Fact]
         public void clr_typed_item_can_be_removed_via_type_param_()
         {
             var schema = Schema.Create(_ =>
@@ -102,13 +190,52 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
             });
         }
 
-        [Spec(nameof(clr_typed_item_can_be_added_via_type_param))]
+        [Spec(nameof(clr_typed_item_uses_clr_type_name))]
         [Fact]
-        public void clr_typed_item_can_be_added_via_type_param_()
+        public void clr_typed_item_uses_clr_type_name_()
         {
             var schema = Schema.Create(_ => { _.InputObject<PlainClass>(); });
-            schema.HasInputObject<PlainClass>().Should().BeTrue();
+            schema.GetInputObject<PlainClass>().Name.Should().Be(nameof(PlainClass));
         }
+
+
+        [Spec(nameof(clr_typed_item_with_name_annotation_uses_clr_type_name_annotation))]
+        [Fact]
+        public void clr_typed_item_with_name_annotation_uses_clr_type_name_annotation_()
+        {
+            var schema = Schema.Create(_ => { _.InputObject<PlainClassAnnotatedName>(); });
+            schema.GetInputObject<PlainClassAnnotatedName>().Name.Should().Be(PlainClassAnnotatedName.AnnotatedNameValue);
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_null_custom_name))]
+        [Fact]
+        public void clr_typed_item_cannot_be_added_with_null_custom_name_()
+        {
+            Schema.Create(_ =>
+            {
+                Action add = () => _.InputObject<PlainClass>(null!);
+                add.Should().ThrowArgumentNullException("name");
+            });
+        }
+
+
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_invalid_custom_name))]
+        [Theory]
+        [InlineData("{name}")]
+        [InlineData("LKSJ ((")]
+        [InlineData("   ")]
+        [InlineData(" )*(#&  ")]
+        public void clr_typed_item_cannot_be_added_with_invalid_custom_name_(string name)
+        {
+            Schema.Create(_ =>
+            {
+                Action add = () => _.InputObject<PlainClass>(name);
+                add.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot get or create GraphQL type builder for input object named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+            });
+        }
+
 
         [Spec(nameof(clr_typed_item_can_be_renamed))]
         [Fact]
@@ -130,14 +257,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 
         [Spec(nameof(clr_typed_item_cannot_be_renamed_with_an_invalid_name))]
         [Theory]
-        [InlineData("  xy")]
-        [InlineData("")]
+        [InlineData("{name}")]
+        [InlineData("LKSJ ((")]
+        [InlineData("   ")]
+        [InlineData(" )*(#&  ")]
         public void clr_typed_item_cannot_be_renamed_with_an_invalid_name_(string name)
         {
             Schema.Create(_ =>
             {
-                var poco = _.InputObject<PlainClass>();
-                Action rename = () => poco.Name(name);
+                var b = _.InputObject<PlainClass>();
+                Action rename = () => b.Name(name);
                 rename.Should().Throw<InvalidNameException>().WithMessage(
                     $"Cannot rename input object PlainClass: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
@@ -151,11 +280,119 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
             Schema.Create(_ =>
             {
                 _.InputObject("Foo");
-                var poco = _.InputObject<PlainClass>();
-                Action rename = () => poco.Name("Foo");
+                var b = _.InputObject<PlainClass>();
+                Action rename = () => b.Name("Foo");
                 rename.Should().Throw<DuplicateItemException>().WithMessage(
-                    @"Cannot rename input object PlainClass to ""Foo"": a type with that name (input object Foo) already exists. All GraphQL type names must be unique.");
+                    "Cannot rename input object PlainClass to \"Foo\": a type with that name (input object Foo) already exists. All GraphQL type names must be unique.");
             });
         }
+
+        [Spec(nameof(clr_typed_item_subsequently_added_with_custom_name_sets_name))]
+        [Fact]
+        public void clr_typed_item_subsequently_added_with_custom_name_sets_name_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject<PlainClass>();
+                _.InputObject<PlainClass>("Foo");
+            });
+            schema.GetInputObject<PlainClass>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(named_item_subsequently_added_with_type_and_custom_name_sets_clr_type))]
+        [Fact]
+        public void named_item_subsequently_added_with_type_and_custom_name_sets_clr_type_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject("Foo");
+                _.InputObject<PlainClass>("Foo");
+            });
+            schema.GetInputObject("Foo").ClrType.Should().Be<PlainClass>();
+        }
+
+        [Spec(nameof(adding_clr_typed_item_updates_matching_named_items_clr_type))]
+        [Fact]
+        public void adding_clr_typed_item_updates_matching_named_items_clr_type_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject(nameof(PlainClass)).Description("foo");
+                _.InputObject<PlainClass>();
+            });
+            schema.GetInputObject<PlainClass>().Description.Should().Be("foo");
+        }
+
+
+        [Spec(nameof(adding_clr_typed_item_with_name_annotation_updates_matching_named_items_clr_type))]
+        [Fact]
+        public void adding_clr_typed_item_with_name_annotation_updates_matching_named_items_clr_type_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject(PlainClassAnnotatedName.AnnotatedNameValue).Description("foo");
+                _.InputObject<PlainClassAnnotatedName>();
+            });
+            schema.GetInputObject<PlainClassAnnotatedName>().Description.Should().Be("foo");
+        }
+
+        [Spec(nameof(clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist))]
+        [Fact]
+        public void clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
+        {
+            Schema.Create(_ =>
+            {
+                _.InputObject("Foo");
+                _.InputObject<PlainClass>();
+                Action add = () => _.InputObject<PlainClass>("Foo");
+                add.Should().Throw<DuplicateItemException>().WithMessage(
+                    "Cannot create input object Foo with CLR class 'PlainClass': both input object Foo and input object PlainClass (with CLR class PlainClass) already exist.");
+            });
+        }
+
+
+        [Spec(nameof(
+            clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
+        ))]
+        [Fact()]
+        public void
+            clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
+        {
+            Schema.Create(_ =>
+            {
+                _.InputObject("Foo");
+                _.InputObject<PlainClassAnnotatedName>();
+                Action add = () => _.InputObject<PlainClassAnnotatedName>("Foo");
+                add.Should().Throw<DuplicateItemException>().WithMessage("Cannot create input object Foo with CLR class 'PlainClassAnnotatedName': both input object Foo and input object AnnotatedNameValue (with CLR class PlainClassAnnotatedName) already exist.");
+            });
+        }
+
+        [Spec(nameof(adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name))]
+        [Fact]
+        public void adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject(nameof(PlainClass));
+                _.InputObject<PlainClass>("Foo");
+            });
+            schema.GetInputObject(nameof(PlainClass)).ClrType.Should().BeNull();
+            schema.GetInputObject<PlainClass>().Name.Should().Be("Foo");
+        }
+
+
+        [Spec(nameof(adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_annotation))]
+        [Fact]
+        public void adding_clr_typed_item_with_custom_name_does_not_update_item_matching_clr_type_name_annotation_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject(PlainClassAnnotatedName.AnnotatedNameValue);
+                _.InputObject<PlainClassAnnotatedName>("Foo");
+            });
+            schema.GetInputObject(PlainClassAnnotatedName.AnnotatedNameValue).ClrType.Should().BeNull();
+            schema.GetInputObject<PlainClassAnnotatedName>().Name.Should().Be("Foo");
+        } 
     }
 }

@@ -409,8 +409,9 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalEnumTypeBuilder? Enum(Type clrType, string name, ConfigurationSource configurationSource) =>
-            throw new NotImplementedException();
-
+            CreateByNameOrType<EnumTypeDefinition, InternalEnumTypeBuilder>(clrType, name,
+                () => Enum(name, configurationSource)?.ClrType(clrType, name, configurationSource),
+                () => Enum(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
         public InternalEnumTypeBuilder? Enum(string name, ConfigurationSource configurationSource)
         {
@@ -481,7 +482,9 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalInputObjectTypeBuilder? InputObject(Type clrType, string name,
             ConfigurationSource configurationSource) =>
-            throw new NotImplementedException();
+            CreateByNameOrType<InputObjectTypeDefinition, InternalInputObjectTypeBuilder>(clrType, name,
+                () => InputObject(name, configurationSource)?.ClrType(clrType, name, configurationSource),
+                () => InputObject(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
         public InternalInputObjectTypeBuilder? InputObject(string name,
             ConfigurationSource configurationSource)
