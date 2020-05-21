@@ -71,7 +71,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
             {
                 Action add = () => _.Enum<PlainEnumInvalidNameAnnotation>();
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    "Cannot get or create GraphQL enum type builder with CLR enum 'PlainEnumInvalidNameAnnotation'. The name \"(*&#\" specified in the GraphQLNameAttribute on the PlainEnumInvalidNameAnnotation CLR enum is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    "Cannot get or create GraphQL enum type builder with CLR enum 'PlainEnumInvalidNameAnnotation'. The name \"abc ()(*322*&%^\" specified in the GraphQLNameAttribute on the PlainEnumInvalidNameAnnotation CLR enum is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 
