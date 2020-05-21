@@ -75,7 +75,7 @@ namespace GraphZen.SpecAudit
             var implementsInterfaces = new Subject(nameof(ObjectType.Interfaces));
 
             var clrType = new Subject(nameof(IClrType.ClrType))
-                .WithSpecs<ClrTypeSpecs>(SpecPriority.Medium);
+                .WithSpecs<ClrTypeSpecs>();
 
             var graphQLType = new Subject(nameof(NamedType))
                 .WithSpecs<SdlSpec, SdlExtensionSpec>()
@@ -86,20 +86,20 @@ namespace GraphZen.SpecAudit
 
             var graphQLTypes = new Subject("types")
                 .WithSpecs<NamedCollectionSpecs>()
-                .WithSpecs<ClrTypedCollectionSpecs>(SpecPriority.High);
+                .WithSpecs<ClrTypedCollectionSpecs>();
 
             var objectType = graphQLType.WithName(nameof(ObjectType))
                 .WithChild(outputFields.WithChild(outputField))
                 .WithChild(implementsInterfaces);
 
             var objects = graphQLTypes.WithName(nameof(Schema.Objects))
-                .WithSpecs<InputXorOutputTypeSpecs>(SpecPriority.Medium)
+                .WithSpecs<InputXorOutputTypeSpecs>(SpecPriority.High)
                 .WithChild(objectType);
 
             var scalar = graphQLType.WithName(nameof(ScalarType));
 
             var scalars = graphQLTypes.WithName(nameof(Schema.Scalars))
-                .WithSpecs<InputAndOutputTypeSpecs>(SpecPriority.Medium)
+                .WithSpecs<InputAndOutputTypeSpecs>(SpecPriority.High)
                 .WithChild(scalar);
 
             var interfaceType = graphQLType.WithName(nameof(InterfaceType))
@@ -107,14 +107,14 @@ namespace GraphZen.SpecAudit
                 .WithChild(implementsInterfaces);
 
             var interfaces = graphQLTypes.WithName(nameof(Schema.Interfaces))
-                .WithSpecs<InputXorOutputTypeSpecs>(SpecPriority.Medium)
+                .WithSpecs<InputXorOutputTypeSpecs>(SpecPriority.High)
                 .WithChild(interfaceType);
 
             var unionType = graphQLType.WithName(nameof(UnionType))
                 .WithChild(new Subject(nameof(UnionType.MemberTypes)));
 
             var unions = graphQLTypes.WithName(nameof(Schema.Unions))
-                .WithSpecs<InputXorOutputTypeSpecs>(SpecPriority.Medium)
+                .WithSpecs<InputXorOutputTypeSpecs>(SpecPriority.High)
                 .WithChild(unionType);
 
 
@@ -131,7 +131,7 @@ namespace GraphZen.SpecAudit
 
             var enumType = graphQLType.WithName(nameof(EnumType))
                 .WithoutSpecsDeep(nameof(ClrTypeSpecs.setting_clr_type_and_inferring_name_name_should_be_valid))
-                .WithSpecs<InputAndOutputTypeSpecs>(SpecPriority.Medium)
+                .WithSpecs<InputAndOutputTypeSpecs>(SpecPriority.High)
                 .WithChild(enumValues);
 
             var enums = graphQLTypes.WithName(nameof(Schema.Enums))
@@ -159,7 +159,7 @@ namespace GraphZen.SpecAudit
 
             var directives = new Subject(nameof(Schema.Directives))
                 .WithSpecs<NamedCollectionSpecs>()
-                .WithSpecs<ClrTypedCollectionSpecs>(SpecPriority.High)
+                .WithSpecs<ClrTypedCollectionSpecs>()
                 .WithChild(directive);
 
             var schemaBuilder = new Subject("Schema_")
