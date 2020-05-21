@@ -14,6 +14,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.N
     [NoReorder]
     public class NameTests
     {
+
+        [Spec(nameof(can_be_renamed))]
+        [Fact]
+        public void can_be_renamed_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.Interface("Foo").Name("Bar");
+            });
+            schema.HasInterface("Foo").Should().BeFalse();
+            schema.HasInterface("Bar").Should().BeTrue();
+        }
         [Spec(nameof(name_cannot_be_null))]
         [Fact]
         public void named_item_cannot_be_renamed_with_null_value_()
@@ -58,5 +70,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.N
                     @"Cannot rename interface Bar to ""Foo"": a type with that name (interface Foo) already exists. All GraphQL type names must be unique.");
             });
         }
+
+
     }
 }
