@@ -735,6 +735,13 @@ namespace GraphZen.TypeSystem
                    throw new Exception($"No {typeof(T).Name} found with CLR type '{clrType}'.");
         }
 
+        public bool TryGetTypeIdentity(string name, [NotNullWhen(true)] out TypeIdentity? identity)
+        {
+            Check.NotNull(name, nameof(name));
+            identity = _typeIdentities.SingleOrDefault(_ => _.Name == name);
+            return identity != null;
+        }
+
         public bool TryGetType(string name, [NotNullWhen(true)] out NamedTypeDefinition? type)
         {
             Check.NotNull(name, nameof(name));

@@ -20,17 +20,12 @@ namespace GraphZen.TypeSystem
         private readonly Dictionary<string, ConfigurationSource> _ignoredInterfaces =
             new Dictionary<string, ConfigurationSource>();
 
-
         private readonly List<InterfaceTypeDefinition> _interfaces = new List<InterfaceTypeDefinition>();
-
-
         public ObjectTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
-            ConfigurationSource configurationSource) : base(
-            Check.NotNull(identity, nameof(identity)),
-            Check.NotNull(schema, nameof(schema)), configurationSource)
+            ConfigurationSource configurationSource) :
+            base(identity, schema, configurationSource)
         {
             Builder = new InternalObjectTypeBuilder(this, schema.Builder);
-            identity.Definition = this;
         }
 
         private string DebuggerDisplay => $"type {Name}";
@@ -45,7 +40,7 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? FindIgnoredInterfaceConfigurationSource(string name)
         {
             Check.NotNull(name, nameof(name));
-            return _ignoredInterfaces.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
+            return _ignoredInterfaces.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?) null;
         }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;

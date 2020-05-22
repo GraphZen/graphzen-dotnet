@@ -21,13 +21,11 @@ namespace GraphZen.TypeSystem
         internal readonly Dictionary<string, EnumValueDefinition> InternalValues =
             new Dictionary<string, EnumValueDefinition>();
 
-        public EnumTypeDefinition(TypeIdentity identity,
-            SchemaDefinition schema,
+        public EnumTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource)
             : base(identity, schema, configurationSource)
         {
             Builder = new InternalEnumTypeBuilder(this, schema.Builder);
-            identity.Definition = this;
         }
 
         private string DebuggerDisplay => $"enum {Name}";
@@ -42,7 +40,7 @@ namespace GraphZen.TypeSystem
         public IReadOnlyDictionary<string, EnumValueDefinition> Values => InternalValues;
 
         public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) =>
-            _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
+            _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?) null;
 
 
         public bool IgnoreValue(string name, ConfigurationSource configurationSource)

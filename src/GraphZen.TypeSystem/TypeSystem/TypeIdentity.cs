@@ -69,6 +69,7 @@ namespace GraphZen.TypeSystem
                         $"Cannot set property {nameof(TypeIdentity)}.{nameof(Definition)} with value {value}, it's value has already been set with {_typeDefinition}.");
                 }
 
+
                 _typeDefinition =
                     value ?? throw new InvalidOperationException(
                         $"Cannot set property {nameof(TypeIdentity)}.{nameof(Definition)} to null.");
@@ -229,6 +230,7 @@ namespace GraphZen.TypeSystem
                 throw new InvalidNameException(
                     $"Cannot rename {Definition}: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             }
+
 
             if (Definition != null && Schema.TryGetType(name, out var existingName) &&
                 !existingName.Equals(Definition))

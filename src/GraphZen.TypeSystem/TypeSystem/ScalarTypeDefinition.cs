@@ -15,31 +15,19 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class ScalarTypeDefinition : NamedTypeDefinition, IMutableScalarTypeDefinition
     {
-        public ScalarTypeDefinition(
-            ScalarType source,
-            TypeIdentity identity,
-            SchemaDefinition schema,
-            ConfigurationSource configurationSource) : this(identity, schema, configurationSource)
-        {
-            Check.NotNull(source, nameof(source));
-            Source = source;
-        }
+
 
         public ScalarTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
-            ConfigurationSource configurationSource) : base(
-            Check.NotNull(identity, nameof(identity)), Check.NotNull(schema, nameof(schema)), configurationSource
-        )
+            ConfigurationSource configurationSource)
+            : base(identity, schema, configurationSource)
         {
             Builder = new InternalScalarTypeBuilder(this, schema.Builder);
-
-            identity.Definition = Source != null ? (INamedTypeDefinition)Source : this;
         }
 
         private string DebuggerDisplay => $"scalar {Name}";
 
 
         public InternalScalarTypeBuilder Builder { get; }
-        public ScalarType? Source { get; }
         public LeafSerializer<object>? Serializer { get; set; }
 
         public bool SetSerializer(LeafSerializer<object>? serializer, ConfigurationSource configurationSource) =>

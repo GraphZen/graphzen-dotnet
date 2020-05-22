@@ -22,17 +22,14 @@ namespace GraphZen.TypeSystem
         private readonly Dictionary<string, InputFieldDefinition> _fields =
             new Dictionary<string, InputFieldDefinition>();
 
-
         private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
         public InputObjectTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
-            ConfigurationSource configurationSource) : base(
-            Check.NotNull(identity, nameof(identity)),
-            Check.NotNull(schema, nameof(schema)), configurationSource)
+            ConfigurationSource configurationSource)
+            : base(identity, schema, configurationSource)
         {
             Builder = new InternalInputObjectTypeBuilder(this, schema.Builder);
-            identity.Definition = this;
         }
 
         private string DebuggerDisplay => $"input {Name}";
@@ -50,6 +47,18 @@ namespace GraphZen.TypeSystem
         public IReadOnlyDictionary<string, InputFieldDefinition> Fields => _fields;
 
         public IEnumerable<InputFieldDefinition> GetFields() => _fields.Values;
+
+        public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
+        {
+            if (_ignoredFields.TryGetValue(fieldName, out var cs))
+            {
+                return cs;
+            }
+
+            return null;
+        }
+
+        IEnumerable<IInputFieldDefinition> IInputFieldsDefinition.GetFields() => GetFields();
 
 
         public bool RenameField(InputFieldDefinition field, string name,
@@ -174,16 +183,6 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
-        {
-            if (_ignoredFields.TryGetValue(fieldName, out var cs))
-            {
-                return cs;
-            }
-
-            return null;
-        }
-
         public InputValueDefinition? GetOrAddField(string name, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
@@ -210,7 +209,5 @@ namespace GraphZen.TypeSystem
             _fields[name] = field;
             return field;
         }
-
-        IEnumerable<IInputFieldDefinition> IInputFieldsDefinition.GetFields() => GetFields();
     }
 }

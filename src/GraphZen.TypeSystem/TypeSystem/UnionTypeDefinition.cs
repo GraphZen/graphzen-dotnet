@@ -18,14 +18,11 @@ namespace GraphZen.TypeSystem
     {
         private readonly List<ObjectTypeDefinition> _types = new List<ObjectTypeDefinition>();
 
-
         public UnionTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource)
-            : base(Check.NotNull(identity, nameof(identity)), Check.NotNull(schema, nameof(schema)),
-                configurationSource)
+            : base(identity, schema, configurationSource)
         {
             Builder = new InternalUnionTypeBuilder(this, schema.Builder);
-            identity.Definition = this;
         }
 
         private string DebuggerDisplay => $"union {Name}";
@@ -46,6 +43,8 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Union;
 
+        IEnumerable<IObjectTypeDefinition> IMemberTypesDefinition.GetMemberTypes() => GetMemberTypes();
+
 
         public void AddType(ObjectTypeDefinition type)
         {
@@ -61,7 +60,5 @@ namespace GraphZen.TypeSystem
                 _types.Add(type);
             }
         }
-
-        IEnumerable<IObjectTypeDefinition> IMemberTypesDefinition.GetMemberTypes() => GetMemberTypes();
     }
 }

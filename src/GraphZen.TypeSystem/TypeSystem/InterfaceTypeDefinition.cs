@@ -17,7 +17,7 @@ namespace GraphZen.TypeSystem
     {
         public InterfaceTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(
-            Check.NotNull(identity, nameof(identity)), Check.NotNull(schema, nameof(schema)), configurationSource)
+            identity, schema, configurationSource)
         {
             Builder = new InternalInterfaceTypeBuilder(this, schema.Builder);
             if (identity.ClrType != null && !identity.ClrType.IsInterface)
@@ -25,11 +25,12 @@ namespace GraphZen.TypeSystem
                 throw new InvalidOperationException(
                     $"Cannot create GraphQL interface '{identity.Name}' from CLR type. '{identity.ClrType}' is not an interface type.");
             }
-
-            identity.Definition = this;
         }
 
         private string DebuggerDisplay => $"interface {Name}";
+
+
+        public InternalInterfaceTypeBuilder Builder { get; }
 
         public override bool SetClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
         {
@@ -41,9 +42,6 @@ namespace GraphZen.TypeSystem
 
             return base.SetClrType(clrType, inferName, configurationSource);
         }
-
-
-        public InternalInterfaceTypeBuilder Builder { get; }
 
         public TypeResolver<object, GraphQLContext>? ResolveType { get; set; }
 

@@ -14,9 +14,21 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public abstract class NamedTypeDefinition : AnnotatableMemberDefinition, IMutableNamedTypeDefinition
     {
+        [SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
         protected NamedTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(configurationSource)
         {
+            if (this.IsInputType() && !this.IsOutputType() && identity.IsOutputType == true)
+            {
+                throw new InvalidTypeException($"Cannot create {Kind.ToDisplayStringLower()} {identity.Name}: {Kind} types are input types and an object or interface field already references a type named '{identity.Name}'. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
+            }
+
+            if (!this.IsInputType() && this.IsOutputType() && identity.IsInputType == true)
+            {
+                throw new InvalidTypeException($"Cannot create {Kind.ToDisplayStringLower()} {identity.Name}: {Kind} types are output types and an input field or argument already references a type named '{identity.Name}'. GraphQL input type references are reserved for scalar, enum, or input object types.");
+            }
+
+            identity.Definition = this;
             Identity = identity;
             Schema = schema;
             IsIntrospection = SpecReservedNames.IntrospectionTypeNames.Contains(Name);
@@ -32,8 +44,28 @@ namespace GraphZen.TypeSystem
         public bool IsIntrospection { get; }
         public string Name => Identity.Name;
 
-        public bool SetName(string name, ConfigurationSource configurationSource) =>
-            Identity.SetName(name, configurationSource);
+        public bool SetName(string name, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetNameConfigurationSource()))
+            {
+                return false;
+            }
+
+            if (Schema.TryGetTypeIdentity(name, out var existing) && existing.Definition == null)
+            {
+                if (this.IsInputType() && !this.IsOutputType() && existing.IsOutputType == true)
+                {
+                    throw new InvalidTypeException($"Cannot rename {this} to \"{name}\": {Kind} types are input types and an object or interface field already references a type named \"{name}\". GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
+                }
+
+                if (!this.IsInputType() && this.IsOutputType() && existing.IsInputType == true)
+                {
+                    throw new InvalidTypeException($"Cannot rename {this} to \"{name}\": {Kind} types are output types and an input field or argument already references a type named \"{name}\". GraphQL input type references are reserved for scalar, enum, or input object types.");
+                }
+            }
+
+            return Identity.SetName(name, configurationSource);
+        }
 
         public ConfigurationSource GetNameConfigurationSource() => Identity.GetNameConfigurationSource();
         public Type? ClrType => Identity.ClrType;
