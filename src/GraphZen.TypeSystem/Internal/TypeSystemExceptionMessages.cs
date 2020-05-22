@@ -26,7 +26,8 @@ namespace GraphZen.Internal
                 $"Cannot set CLR type on {definition} to CLR {GetClrTypeKind(clrType)} '{clrType.Name}': {existing} already exists with that CLR type.";
 
 
-            internal static string CannotCreateTypeWithDuplicateNameAndType<T>(TypeKind kind, string name, Type clrType, T named, T typed)
+            internal static string CannotCreateTypeWithDuplicateNameAndType<T>(TypeKind kind, string name, Type clrType,
+                T named, T typed)
                 where T : NamedTypeDefinition =>
                 $"Cannot create {kind.ToDisplayStringLower()} {name} with CLR {clrType.GetClrTypeKind()} '{clrType.Name}': both {named} and {typed} (with CLR {typed.ClrType?.GetClrTypeKind()} {typed.ClrType?.Name}) already exist.";
 

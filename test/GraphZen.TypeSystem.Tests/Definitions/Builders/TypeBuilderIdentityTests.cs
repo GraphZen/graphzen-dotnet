@@ -389,7 +389,8 @@ namespace GraphZen.TypeSystem.Tests
                 var newTypeDef = sb.GetDefinition().GetType<NamedTypeDefinition>(NewTypeName);
 
                 ex.Message.Should()
-                    .Be($"Cannot rename {typeDef} to \"{NewTypeName}\": a type with that name ({newTypeDef}) already exists. All GraphQL type names must be unique.");
+                    .Be(
+                        $"Cannot rename {typeDef} to \"{NewTypeName}\": a type with that name ({newTypeDef}) already exists. All GraphQL type names must be unique.");
             });
         }
 

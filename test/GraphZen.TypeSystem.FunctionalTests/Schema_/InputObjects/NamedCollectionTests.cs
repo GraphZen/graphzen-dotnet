@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
 
 
         [Spec(nameof(named_item_can_be_removed))]
-        [Fact()]
+        [Fact]
         public void named_item_can_be_removed_()
         {
             var schema = Schema.Create(_ =>

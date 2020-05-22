@@ -18,10 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Name
         [Fact]
         public void can_be_renamed_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Scalar("Foo").Name("Bar");
-            });
+            var schema = Schema.Create(_ => { _.Scalar("Foo").Name("Bar"); });
             schema.HasScalar("Foo").Should().BeFalse();
             schema.HasScalar("Bar").Should().BeTrue();
         }

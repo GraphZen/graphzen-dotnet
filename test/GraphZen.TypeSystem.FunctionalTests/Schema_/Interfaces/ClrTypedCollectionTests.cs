@@ -359,7 +359,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         [Spec(nameof(
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
         ))]
-        [Fact()]
+        [Fact]
         public void
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
         {

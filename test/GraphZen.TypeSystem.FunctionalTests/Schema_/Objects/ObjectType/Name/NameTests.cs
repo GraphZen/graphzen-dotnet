@@ -15,18 +15,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Name
     [NoReorder]
     public class NameTests
     {
-
         [Spec(nameof(can_be_renamed))]
         [Fact]
         public void can_be_renamed_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Foo").Name("Bar");
-            });
+            var schema = Schema.Create(_ => { _.Object("Foo").Name("Bar"); });
             schema.HasObject("Foo").Should().BeFalse();
             schema.HasObject("Bar").Should().BeTrue();
         }
+
         [Spec(nameof(name_cannot_be_duplicate))]
         [Fact]
         public void object_cannot_be_renamed_if_name_already_exists()

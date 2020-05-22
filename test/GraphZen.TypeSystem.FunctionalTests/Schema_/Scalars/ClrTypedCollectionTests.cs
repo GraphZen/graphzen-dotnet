@@ -355,7 +355,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
         [Spec(nameof(
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
         ))]
-        [Fact()]
+        [Fact]
         public void
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
         {
@@ -364,7 +364,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
                 _.Scalar("Foo");
                 _.Scalar<PlainStructAnnotatedName>();
                 Action add = () => _.Scalar<PlainStructAnnotatedName>("Foo");
-                add.Should().Throw<DuplicateItemException>().WithMessage("Cannot create scalar Foo with CLR type 'PlainStructAnnotatedName': both scalar Foo and scalar AnnotatedNameValue (with CLR type PlainStructAnnotatedName) already exist.");
+                add.Should().Throw<DuplicateItemException>().WithMessage(
+                    "Cannot create scalar Foo with CLR type 'PlainStructAnnotatedName': both scalar Foo and scalar AnnotatedNameValue (with CLR type PlainStructAnnotatedName) already exist.");
             });
         }
 

@@ -204,7 +204,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         public void clr_typed_item_with_name_annotation_uses_clr_type_name_annotation_()
         {
             var schema = Schema.Create(_ => { _.Union<PlainAbstractClassAnnotatedName>(); });
-            schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should().Be(PlainAbstractClassAnnotatedName.AnnotatedNameValue);
+            schema.GetUnion<PlainAbstractClassAnnotatedName>().Name.Should()
+                .Be(PlainAbstractClassAnnotatedName.AnnotatedNameValue);
         }
 
 
@@ -355,7 +356,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         [Spec(nameof(
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
         ))]
-        [Fact()]
+        [Fact]
         public void
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
         {
@@ -364,7 +365,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
                 _.Union("Foo");
                 _.Union<PlainAbstractClassAnnotatedName>();
                 Action add = () => _.Union<PlainAbstractClassAnnotatedName>("Foo");
-                add.Should().Throw<DuplicateItemException>().WithMessage("Cannot create union Foo with CLR class 'PlainAbstractClassAnnotatedName': both union Foo and union AnnotatedNameValue (with CLR class PlainAbstractClassAnnotatedName) already exist.");
+                add.Should().Throw<DuplicateItemException>().WithMessage(
+                    "Cannot create union Foo with CLR class 'PlainAbstractClassAnnotatedName': both union Foo and union AnnotatedNameValue (with CLR class PlainAbstractClassAnnotatedName) already exist.");
             });
         }
 

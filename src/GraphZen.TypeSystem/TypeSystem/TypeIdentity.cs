@@ -29,7 +29,10 @@ namespace GraphZen.TypeSystem
 
         public TypeIdentity(string name, SchemaDefinition schema, TypeKind? kind = null)
         {
-            Name = name.IsValidGraphQLName() ? name : throw new InvalidNameException($"Cannot create Type Identity: \"{name}\" is not a valid GraphQL name.");
+            Name = name.IsValidGraphQLName()
+                ? name
+                : throw new InvalidNameException(
+                    $"Cannot create Type Identity: \"{name}\" is not a valid GraphQL name.");
             Schema = schema;
             _kind = kind;
         }

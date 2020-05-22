@@ -18,10 +18,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Name
         [Fact]
         public void can_be_renamed_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Union("Foo").Name("Bar");
-            });
+            var schema = Schema.Create(_ => { _.Union("Foo").Name("Bar"); });
             schema.HasUnion("Foo").Should().BeFalse();
             schema.HasUnion("Bar").Should().BeTrue();
         }

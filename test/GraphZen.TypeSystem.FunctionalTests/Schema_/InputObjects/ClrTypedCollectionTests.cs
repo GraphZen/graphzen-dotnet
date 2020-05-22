@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     [NoReorder]
     public class ClrTypedCollectionTests
     {
-       public class PlainClass
+        public class PlainClass
         {
         }
 
@@ -204,7 +204,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         public void clr_typed_item_with_name_annotation_uses_clr_type_name_annotation_()
         {
             var schema = Schema.Create(_ => { _.InputObject<PlainClassAnnotatedName>(); });
-            schema.GetInputObject<PlainClassAnnotatedName>().Name.Should().Be(PlainClassAnnotatedName.AnnotatedNameValue);
+            schema.GetInputObject<PlainClassAnnotatedName>().Name.Should()
+                .Be(PlainClassAnnotatedName.AnnotatedNameValue);
         }
 
 
@@ -355,7 +356,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         [Spec(nameof(
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
         ))]
-        [Fact()]
+        [Fact]
         public void
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
         {
@@ -364,7 +365,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
                 _.InputObject("Foo");
                 _.InputObject<PlainClassAnnotatedName>();
                 Action add = () => _.InputObject<PlainClassAnnotatedName>("Foo");
-                add.Should().Throw<DuplicateItemException>().WithMessage("Cannot create input object Foo with CLR class 'PlainClassAnnotatedName': both input object Foo and input object AnnotatedNameValue (with CLR class PlainClassAnnotatedName) already exist.");
+                add.Should().Throw<DuplicateItemException>().WithMessage(
+                    "Cannot create input object Foo with CLR class 'PlainClassAnnotatedName': both input object Foo and input object AnnotatedNameValue (with CLR class PlainClassAnnotatedName) already exist.");
             });
         }
 
@@ -393,6 +395,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
             });
             schema.GetInputObject(PlainClassAnnotatedName.AnnotatedNameValue).ClrType.Should().BeNull();
             schema.GetInputObject<PlainClassAnnotatedName>().Name.Should().Be("Foo");
-        } 
+        }
     }
 }

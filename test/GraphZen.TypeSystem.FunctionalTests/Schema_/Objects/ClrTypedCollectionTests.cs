@@ -355,7 +355,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         [Spec(nameof(
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
         ))]
-        [Fact()]
+        [Fact]
         public void
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
         {
@@ -364,7 +364,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
                 _.Object("Foo");
                 _.Object<PlainClassAnnotatedName>();
                 Action add = () => _.Object<PlainClassAnnotatedName>("Foo");
-                add.Should().Throw<DuplicateItemException>().WithMessage("Cannot create object Foo with CLR class 'PlainClassAnnotatedName': both object Foo and object AnnotatedNameValue (with CLR class PlainClassAnnotatedName) already exist.");
+                add.Should().Throw<DuplicateItemException>().WithMessage(
+                    "Cannot create object Foo with CLR class 'PlainClassAnnotatedName': both object Foo and object AnnotatedNameValue (with CLR class PlainClassAnnotatedName) already exist.");
             });
         }
 

@@ -31,8 +31,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         }
 
 
-
-
         [Spec(nameof(clr_typed_item_can_be_added))]
         [Fact]
         public void clr_typed_item_can_be_added_()
@@ -358,7 +356,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         [Spec(nameof(
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
         ))]
-        [Fact()]
+        [Fact]
         public void
             clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist_()
         {
@@ -367,7 +365,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
                 _.Enum("Foo");
                 _.Enum<PlainEnumAnnotatedName>();
                 Action add = () => _.Enum<PlainEnumAnnotatedName>("Foo");
-                add.Should().Throw<DuplicateItemException>().WithMessage("Cannot create enum Foo with CLR enum 'PlainEnumAnnotatedName': both enum Foo and enum AnnotatedNameValue (with CLR enum PlainEnumAnnotatedName) already exist.");
+                add.Should().Throw<DuplicateItemException>().WithMessage(
+                    "Cannot create enum Foo with CLR enum 'PlainEnumAnnotatedName': both enum Foo and enum AnnotatedNameValue (with CLR enum PlainEnumAnnotatedName) already exist.");
             });
         }
 
