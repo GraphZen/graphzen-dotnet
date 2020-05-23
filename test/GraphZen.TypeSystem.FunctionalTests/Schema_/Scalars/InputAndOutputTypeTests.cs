@@ -56,7 +56,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
 
 
         [Spec(nameof(type_can_be_renamed_if_name_matches_input_type_id))]
-        [Fact(Skip = "needs impl")]
+        [Fact]
         public void named_item_can_be_renamed_to_name_with_input_type_identity_()
         {
             var schema = Schema.Create(_ =>
@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
 
 
         [Spec(nameof(type_can_be_renamed_if_name_matches_output_type_id))]
-        [Fact(Skip = "needs impl")]
+        [Fact]
         public void named_item_can_be_renamed_to_name_with_output_type_identity_()
         {
             var schema = Schema.Create(_ =>
