@@ -11,6 +11,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IInputField : IInputFieldDefinition, IInputValue
     {
         new IGraphQLType FieldType { get; }
-        new InputObjectType DeclaringMember { get; }
+        new InputObjectType DeclaringType { get; }
     }
 }

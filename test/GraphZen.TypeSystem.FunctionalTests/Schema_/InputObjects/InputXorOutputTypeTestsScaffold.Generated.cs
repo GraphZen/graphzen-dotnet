@@ -16,7 +16,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     [NoReorder]
     public abstract class InputXorOutputTypeTestsScaffold
     {
-        [Spec(nameof(clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Spec(nameof(cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
         public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
@@ -24,18 +24,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
 
 
-        [Spec(nameof(
-            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            clr_type_cannot_be_added_via_type_param_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
+        
 
 
-        [Spec(nameof(clr_typed_item_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io
+        [Spec(nameof(cannot_create_type_via_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io
         ))]
         [Fact(Skip = "TODO")]
         public void
@@ -45,7 +37,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
 
 
-        [Spec(nameof(clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Spec(nameof(DEPRECATED_clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
         public void clr_type_cannot_be_changed_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
         {

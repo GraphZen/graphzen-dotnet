@@ -77,9 +77,14 @@ namespace GraphZen.TypeSystem
         }
 
 
+        public bool RemoveArgument(ArgumentDefinition argument, ConfigurationSource configurationSource) => throw new NotImplementedException();
+
+        public bool AddArgument(ArgumentDefinition argument, ConfigurationSource configurationSource) => throw new NotImplementedException();
+
         public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
 
-        public IGraphQLTypeReference FieldType { get; set; }
+        public TypeReference FieldType { get; set; }
+        IGraphQLTypeReference IFieldDefinition.FieldType => FieldType;
         public Resolver<object, object?>? Resolver { get; set; }
 
         IFieldsDefinition IFieldDefinition.DeclaringType => DeclaringType;
@@ -213,9 +218,17 @@ namespace GraphZen.TypeSystem
             return FindArgument(argumentName);
         }
 
-        public void RemoveArgument(ArgumentDefinition argument)
+        public bool RemoveArgument(ArgumentDefinition argument)
         {
-            _arguments.Remove(argument.Name);
+            if (_arguments.Remove(argument.Name, out var removed))
+            {
+                if (!removed.Equals(argument))
+                {
+                    throw new Exception("Did not remove expected argument");
+                }
+                return true;
+            }
+            return false;
         }
 
         public void UnignoreArgument(string name)
@@ -232,18 +245,19 @@ namespace GraphZen.TypeSystem
 
 
             var ab = argument.Builder;
-            argument.InputType = Schema.GetOrAddTypeReference(parameter, this);
+            argument.InputType= Schema.GetOrAddTypeReference(parameter, this);
             ab.DefaultValue(parameter, configurationSource);
             if (parameter.TryGetDescriptionFromDataAnnotation(out var description))
             {
                 ab.Description(description, ConfigurationSource.DataAnnotation);
             }
 
-            return AddArgument(argument);
+            AddArgument(argument);
+            return argument;
         }
 
 
-        private ArgumentDefinition AddArgument(ArgumentDefinition argument)
+        public bool AddArgument(ArgumentDefinition argument)
         {
             if (HasArgument(argument.Name))
             {
@@ -252,7 +266,7 @@ namespace GraphZen.TypeSystem
             }
 
             _arguments.Add(argument.Name, argument);
-            return argument;
+            return true;
         }
 
         public override string ToString() => $"field {Name}";

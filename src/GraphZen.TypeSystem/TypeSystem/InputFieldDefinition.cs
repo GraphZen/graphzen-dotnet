@@ -23,6 +23,10 @@ namespace GraphZen.TypeSystem
             base(Check.NotNull(name, nameof(name)), nameConfigurationSource,
                 Check.NotNull(schema, nameof(schema)), configurationSource, clrInfo, declaringMember)
         {
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateInputFieldWithInvalidName(this, name));
+            }
         }
 
         private string DebuggerDisplay => ToString();
@@ -32,7 +36,7 @@ namespace GraphZen.TypeSystem
             if (!name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, DeclaringMember));
+                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, DeclaringType));
             }
 
             if (!configurationSource.Overrides(GetNameConfigurationSource()))
@@ -42,7 +46,7 @@ namespace GraphZen.TypeSystem
 
             if (Name != name)
             {
-                DeclaringMember.RenameField(this, name, configurationSource);
+                DeclaringType.RenameField(this, name, configurationSource);
             }
 
             Name = name;
@@ -55,9 +59,9 @@ namespace GraphZen.TypeSystem
         IGraphQLTypeReference IInputFieldDefinition.FieldType => FieldType;
 
         public TypeReference FieldType => InputType;
-        IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
+        IInputObjectTypeDefinition IInputFieldDefinition.DeclaringType => DeclaringType;
 
-        public new InputObjectTypeDefinition DeclaringMember => (InputObjectTypeDefinition)base.DeclaringMember;
+        public InputObjectTypeDefinition DeclaringType => (InputObjectTypeDefinition)DeclaringMember;
 
         public override string ToString() => $"input field {Name}";
     }

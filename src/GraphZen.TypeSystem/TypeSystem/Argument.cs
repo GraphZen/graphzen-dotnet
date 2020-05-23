@@ -46,6 +46,8 @@ namespace GraphZen.TypeSystem
         }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.ArgumentDefinition;
+        IGraphQLTypeReference IArgumentDefinition.ArgumentType => InputType;
+        public IGraphQLType ArgumentType => InputType;
         public new IArguments DeclaringMember => (IArguments)base.DeclaringMember;
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
@@ -56,8 +58,7 @@ namespace GraphZen.TypeSystem
             TypeResolver typeResolver)
         {
             Check.NotNull(definition, nameof(definition));
-            Check.NotNull(definition.InputType, nameof(definition.InputType));
-            return new Argument(definition.Name, definition.Description, definition.InputType,
+            return new Argument(definition.Name, definition.Description, definition.ArgumentType,
                 definition.DefaultValue, definition.HasDefaultValue,
                 definition.GetDirectiveAnnotations().ToImmutableList(),
                 typeResolver, declaringMember, definition.ClrInfo);

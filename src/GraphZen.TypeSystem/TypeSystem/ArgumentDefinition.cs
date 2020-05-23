@@ -24,6 +24,10 @@ namespace GraphZen.TypeSystem
             name, nameConfigurationSource,
             schema, configurationSource, clrInfo, declaringMember)
         {
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateArgumentWithInvalidName(this, name));
+            }
         }
 
         private string DebuggerDisplay => $"argument {Name}";
@@ -45,15 +49,27 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
-            if (Name != name)
+
+            if (DeclaringMember.TryGetArgument(name, out var existing))
             {
-                DeclaringMember.RenameArgument(this, name, configurationSource);
+                if (!existing.Equals(this))
+                {
+                    throw new DuplicateItemException(
+                        TypeSystemExceptionMessages.DuplicateItemException.CannotRenameArgument(this, name));
+                }
+                return true;
             }
 
+            DeclaringMember.RemoveArgument(this);
             Name = name;
             NameConfigurationSource = configurationSource;
+            DeclaringMember.AddArgument(this);
             return true;
         }
+
+        IGraphQLTypeReference IArgumentDefinition.ArgumentType => ArgumentType;
+
+        public TypeReference ArgumentType => InputType;
 
         public new IMutableArgumentsDefinition DeclaringMember =>
             (IMutableArgumentsDefinition)base.DeclaringMember;

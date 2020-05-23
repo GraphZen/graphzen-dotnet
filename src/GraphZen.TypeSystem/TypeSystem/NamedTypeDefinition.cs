@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem
 
             if (Identity.SetName(name, configurationSource))
             {
-
+                
             }
 
             return false;

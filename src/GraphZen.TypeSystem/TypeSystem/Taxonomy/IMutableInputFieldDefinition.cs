@@ -11,6 +11,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableInputFieldDefinition : IInputFieldDefinition, IMutableInputValueDefinition
     {
         new TypeReference FieldType { get; }
-        new InputObjectTypeDefinition DeclaringMember { get; }
+        new InputObjectTypeDefinition DeclaringType { get; }
     }
 }

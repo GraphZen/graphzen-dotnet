@@ -823,8 +823,29 @@ namespace GraphZen.TypeSystem
 
         public void RemoveType(NamedTypeDefinition type)
         {
-            _typeIdentities.Remove(type.Identity.Name);
+            RemoveTypeIdentity(type.Identity);
             _types.Remove(type);
+
+            foreach (var typeReference in this.GetTypeReferences().Where(_ => _.Identity.Equals(type.Identity)).Select(typeRef => typeRef.DeclaringMember))
+            {
+                switch (typeReference)
+                {
+                    case ArgumentDefinition arg:
+                        arg.DeclaringMember.RemoveArgument(arg);
+                        break;
+                    case FieldDefinition field:
+                        field.DeclaringType.RemoveField(field);
+                        break;
+                    case InputFieldDefinition inputField:
+                        inputField.DeclaringType.RemoveField(inputField);
+                        break;
+                }
+            }
+        }
+
+        internal void RemoveTypeIdentity(TypeIdentity identity)
+        {
+            _typeIdentities.Remove(identity.Name);
         }
 
         public DirectiveDefinition AddDirective(Type clrType, ConfigurationSource configurationSource)
@@ -889,29 +910,44 @@ namespace GraphZen.TypeSystem
 
         internal IEnumerable<TypeReference> GetTypeReferences()
         {
-            foreach (var type in _types.Where(_ => !_.IsSpec))
+            foreach (var directiveArg in _directives.Values.Where(_ => !_.IsSpec).SelectMany(_ => _.GetArguments()))
             {
-                if (type is IFieldsDefinition hasOutputFields)
-                {
-
-
-                }
-
-                if (type is InputObjectTypeDefinition hasInputFields)
-                {
-                    foreach (var field in hasInputFields.GetFields())
-                    {
-                        yield return field.FieldType;
-
-
-                    }
-                }
-
+                yield return directiveArg.ArgumentType;
             }
 
-            yield break;
 
+            foreach (var type in _types.Where(_ => !_.IsSpec))
+            {
+                switch (type)
+                {
+                    case FieldsDefinition hasOutputFields:
+                    {
+                        foreach (var field in hasOutputFields.GetFields())
+                        {
+                            yield return field.FieldType;
+
+                            foreach (var arg in field.GetArguments())
+                            {
+                                yield return arg.ArgumentType;
+                            }
+                        }
+
+                        break;
+                    }
+                    case InputObjectTypeDefinition hasInputFields:
+                    {
+                        foreach (var field in hasInputFields.GetFields())
+                        {
+                            yield return field.FieldType;
+                        }
+
+                        break;
+                    }
+                }
+            }
         }
+
+
 
 
 #nullable disable

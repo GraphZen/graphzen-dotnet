@@ -43,7 +43,7 @@ namespace GraphZen.Internal
 
 
             internal static string CannotRenameInputField(IInputFieldDefinition field, string name) =>
-                $"Cannot rename {field} to \"{name}\": {field.DeclaringMember?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
+                $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
 
             internal static string CannotRenameArgument(IArgumentDefinition argument, string name)
             {
@@ -84,13 +84,13 @@ namespace GraphZen.Internal
                 =>
                     $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The CLR {GetClrTypeKind(clrType)} name '{clrType.Name}' is not a valid GraphQL name. {NameSpecDescription}";
 
-            public static string CannotCreateInputValueWithInvalidName(IInputValueDefinition def, string name)
-            {
-                var type = def is IArgumentDefinition ? "argument" :
-                    def is IInputFieldDefinition ? "field" : throw new NotImplementedException();
-                return
-                    $"Cannot create {type} named \"{name}\" for {def.DeclaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
-            }
+
+
+            public static string CannotCreateArgumentWithInvalidName(IArgumentDefinition def, string name)
+                => $"Cannot create argument named \"{name}\" for {def.DeclaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+
+            public static string CannotCreateInputFieldWithInvalidName(IInputFieldDefinition def, string name)
+                => $"Cannot create field named \"{name}\" for {def.DeclaringType}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotCreateDirectiveWithInvalidName(string name) =>
                 $"Cannot create directive named \"{name}\": \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";

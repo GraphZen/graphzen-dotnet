@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         }
 
 
-        [Spec(nameof(named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Spec(nameof(cannot_create_type_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "needs design/impl")]
         public void named_item_cannot_be_added_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
@@ -47,7 +47,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         }
 
 
-        [Spec(nameof(named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io))]
+        [Spec(nameof(cannot_create_type_via_clr_type_if_name_annotation_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "needs design/impl")]
         public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
         {
@@ -61,7 +61,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         }
 
 
-        [Spec(nameof(clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
+        [Spec(nameof(DEPRECATED_clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "needs design/implementation")]
         public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
@@ -76,7 +76,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
 
 
         [Spec(nameof(
-            clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io
+            DEPRECATED_cannot_add_clr_typed_with_name_attribute_if_conflicts_with_type_identity_of_opposite_io
         ))]
         [Fact(Skip = "needs design/impl")]
         public void

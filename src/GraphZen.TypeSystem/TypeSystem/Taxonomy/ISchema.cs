@@ -13,8 +13,13 @@ namespace GraphZen.TypeSystem.Taxonomy
         IQueryType,
         IMutationType,
         ISubscriptionType,
-        IDirectives, IObjectTypes, IInterfaceTypes, IUnionTypes,
-        IScalarTypes, IEnumTypes, IInputObjectTypes
+        IDirectives,
+        IObjectTypes,
+        IInterfaceTypes,
+        IUnionTypes,
+        IScalarTypes,
+        IEnumTypes,
+        IInputObjectTypes
     {
     }
 }

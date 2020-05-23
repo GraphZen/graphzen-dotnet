@@ -257,7 +257,7 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public IEnumerable<Directive> GetDirectives(bool includeSpecDirectives = false) =>
-            includeSpecDirectives ? Directives : Directives.Where(_ => !_.IsSpecDirective);
+            includeSpecDirectives ? Directives : Directives.Where(_ => !_.IsSpec);
 
         IObjectTypeDefinition? IQueryTypeDefinition.QueryType => QueryType;
 
@@ -271,7 +271,14 @@ namespace GraphZen.TypeSystem
         [GraphQLCanBeNull] public string? Description { get; }
 
         [GraphQLIgnore]
-        public IEnumerable<NamedType> GetTypes() => Types.Values;
+        public IEnumerable<NamedType> GetTypes(bool includeSpecTypes = false)
+        {
+            if (includeSpecTypes)
+            {
+                return Types.Values;
+            }
+            return Types.Values.Where(_ => !_.IsSpec);
+        }
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 

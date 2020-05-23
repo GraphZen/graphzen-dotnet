@@ -10,10 +10,8 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IInputValueDefinition : IAnnotatableDefinition, INamed, IDescription, IInputDefinition, IClrInfo
     {
-        IGraphQLTypeReference InputType { get; }
 
 
-        IMemberDefinition DeclaringMember { get; }
 
 
         object? DefaultValue { get; }

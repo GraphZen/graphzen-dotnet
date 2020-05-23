@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel.Internal;
@@ -17,7 +18,6 @@ namespace GraphZen.TypeSystem
     public class TypeIdentity : IMutableNamed, IMutableClrType, IMutableDefinition
     {
         private static int _typeIdSeed = 1;
-        public int Id { get; } = _typeIdSeed++;
         private readonly TypeKind? _kind;
         private ConfigurationSource? _clrTypeConfigurationSource;
 
@@ -56,6 +56,8 @@ namespace GraphZen.TypeSystem
                 _nameConfigurationSource = ConfigurationSource.Convention;
             }
         }
+
+        public int Id { get; } = _typeIdSeed++;
 
         private SchemaDefinition Schema { get; }
 
@@ -116,15 +118,13 @@ namespace GraphZen.TypeSystem
             {
                 if (Definition != null)
                 {
-                    return $"id({Id}): {Definition}";
+                    return $"id: {Definition} ({Id})";
                 }
 
-                if (ClrType != null)
-                {
-                    return $"id({Id}): {Name} (CLR type: {ClrType.Name})";
-                }
+                var io = IsInputType == true && IsOutputType == true ? "input/output" :
+                    IsInputType == true ? "input" : "output";
 
-                return $"id({Id}): {Name} ";
+                return $"id: unknown {io} type {Name} ({Id})";
             }
         }
 
@@ -252,14 +252,24 @@ namespace GraphZen.TypeSystem
             {
             }
             else if (Schema.TryGetType(name, out var existingName) &&
-                !existingName.Equals(Definition))
+                     !existingName.Equals(Definition))
             {
                 throw new DuplicateItemException(
                     $"Cannot rename {Definition} to \"{name}\": a type with that name ({existingName}) already exists. All GraphQL type names must be unique.");
             }
 
+            if (Schema.TryGetTypeIdentity(name, out var existing) && !existing.Equals(this))
+            {
+                foreach (var typeReference in Schema.GetTypeReferences().Where(typeRef => typeRef.Identity.Equals(existing)))
+                {
+                    typeReference.Identity = this;
+                }
+                Schema.RemoveTypeIdentity(existing);
+            }
+            Schema.RemoveTypeIdentity(this);
             Name = name;
             _nameConfigurationSource = configurationSource;
+            Schema.AddTypeIdentity(this);
             return true;
         }
 

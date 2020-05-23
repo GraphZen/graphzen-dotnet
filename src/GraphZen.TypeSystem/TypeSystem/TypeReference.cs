@@ -13,13 +13,14 @@ namespace GraphZen.TypeSystem
 {
     public class TypeReference : INamedTypeReference
     {
+        private readonly TypeSyntax _seedSyntax;
         private TypeIdentity _identity;
 
         public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMemberDefinition declaringMember)
         {
             _identity = identity;
             DeclaringMember = declaringMember;
-            TypeSyntax = typeSyntax;
+            _seedSyntax = typeSyntax;
         }
 
         public IMemberDefinition DeclaringMember { get; }
@@ -33,7 +34,9 @@ namespace GraphZen.TypeSystem
                 var def = value.Definition;
                 if (def != null)
                 {
-                    if (def.IsInputType() && def.IsOutputType()) { }
+                    if (def.IsInputType() && def.IsOutputType())
+                    {
+                    }
                     else if (def.IsInputType() && DeclaringMember is IOutputDefinition)
                     {
                         throw new InvalidTypeException("tbd");
@@ -43,11 +46,27 @@ namespace GraphZen.TypeSystem
                         throw new InvalidTypeException("tbd");
                     }
                 }
+
                 _identity = value;
             }
         }
 
-        public TypeSyntax TypeSyntax { get; }
+        public TypeSyntax TypeSyntax
+        {
+            get
+            {
+                TypeSyntax GetType(TypeSyntax node) =>
+                    node switch
+                    {
+                        ListTypeSyntax list => SyntaxFactory.ListType(GetType(list.OfType)),
+                        NonNullTypeSyntax nn => SyntaxFactory.NonNullType((NullableTypeSyntax) GetType(nn.OfType)),
+                        NamedTypeSyntax _ => SyntaxFactory.NamedType(SyntaxFactory.Name(Name)),
+                        _ => throw new NotImplementedException()
+                    };
+
+                return GetType(_seedSyntax);
+            }
+        }
 
         public string Name => Identity.Name;
 
@@ -61,7 +80,7 @@ namespace GraphZen.TypeSystem
                     case ListTypeSyntax list:
                         return ListType.Of(GetType(list.OfType));
                     case NonNullTypeSyntax nn:
-                        return NonNullType.Of((INullableType)GetType(nn.OfType));
+                        return NonNullType.Of((INullableType) GetType(nn.OfType));
                     case NamedTypeSyntax _:
                         var nameMatch = schema.FindType(Identity.Name);
                         if (nameMatch != null)
@@ -101,6 +120,6 @@ namespace GraphZen.TypeSystem
             return GetType(TypeSyntax);
         }
 
-        public override string ToString() => "Reference:" + Name;
+        public override string ToString() => $"ref: {TypeSyntax} | {Identity}";
     }
 }

@@ -76,7 +76,7 @@ namespace GraphZen.TypeSystem
 
             Name = Check.NotNull(name, nameof(name));
             Builder = new InternalDirectiveBuilder(this, schema.Builder);
-            IsSpecDirective = SpecReservedNames.DirectiveNames.Contains(Name);
+            IsSpec = SpecReservedNames.DirectiveNames.Contains(Name);
         }
 
         protected override SchemaDefinition Schema { get; }
@@ -128,17 +128,37 @@ namespace GraphZen.TypeSystem
                     TypeSystemExceptionMessages.DuplicateItemException.CannotRenameArgument(argument, name));
             }
 
-            _arguments.Remove(argument.Name);
-            _arguments[name] = argument;
+            if (RemoveArgument(argument))
+            {
+                _arguments[name] = argument;
+            }
             return true;
         }
 
-        public IEnumerable<IArgumentDefinition> GetArguments() => _arguments.Values;
+        public bool RemoveArgument(ArgumentDefinition argument)
+        {
+            if (_arguments.Remove(argument.Name, out var removed))
+            {
+                if (!removed.Equals(argument))
+                {
+                    throw new Exception("Did not remove expected argument");
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool AddArgument(ArgumentDefinition argument)
+        {
+            _arguments[argument.Name] = argument;
+            return true;
+        }
+
 
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
         public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
 
-        IEnumerable<ArgumentDefinition> IMutableArgumentsDefinition.GetArguments() => Arguments.Values;
+        public IEnumerable<ArgumentDefinition> GetArguments() => Arguments.Values;
 
         public bool AddLocation(DirectiveLocation location, ConfigurationSource configurationSource)
         {
@@ -291,7 +311,7 @@ namespace GraphZen.TypeSystem
 
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
-        public bool IsSpecDirective { get; }
+        public bool IsSpec { get; }
 
         public bool SetName(Type clrType, ConfigurationSource configurationSource)
         {
@@ -319,5 +339,6 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"directive {Name}";
+        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
     }
 }

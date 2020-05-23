@@ -10,6 +10,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IMutableArgumentDefinition : IArgumentDefinition, IMutableInputValueDefinition
     {
+        new TypeReference ArgumentType { get; }
         new IMutableArgumentsDefinition DeclaringMember { get; }
     }
 }

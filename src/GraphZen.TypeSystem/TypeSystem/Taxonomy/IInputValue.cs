@@ -10,6 +10,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IInputValue : IInputValueDefinition, ISyntaxConvertable
     {
-        new IGraphQLType InputType { get; }
+        IGraphQLType InputType { get; }
     }
 }

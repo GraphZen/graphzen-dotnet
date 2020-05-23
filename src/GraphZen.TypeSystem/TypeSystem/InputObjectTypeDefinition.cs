@@ -109,7 +109,7 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-        private InputFieldDefinition AddField(InputFieldDefinition field)
+        public bool AddField(InputFieldDefinition field)
         {
             if (_fields.ContainsKey(field.Name))
             {
@@ -118,7 +118,7 @@ namespace GraphZen.TypeSystem
             }
 
             _fields.Add(field.Name, field);
-            return field;
+            return true;
         }
 
         public InputFieldDefinition AddField(PropertyInfo property,
@@ -150,12 +150,14 @@ namespace GraphZen.TypeSystem
                 fb.Description(description, ConfigurationSource.DataAnnotation);
             }
 
-            return AddField(field);
+            AddField(field);
+            return field;
         }
 
-        public void RemoveField(InputFieldDefinition field)
+        public bool RemoveField(InputFieldDefinition field)
         {
             _fields.Remove(field.Name);
+            return true;
         }
 
         public bool IgnoreField(string fieldName, ConfigurationSource configurationSource)

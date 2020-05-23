@@ -10,6 +10,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IArgument : IArgumentDefinition, IInputValue
     {
+        new IGraphQLType ArgumentType { get; }
         new IArguments DeclaringMember { get; }
     }
 }

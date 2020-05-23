@@ -3,7 +3,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
@@ -15,8 +14,6 @@ namespace GraphZen.TypeSystem
         private ConfigurationSource? _defaultValueConfigurationSource;
         protected ConfigurationSource NameConfigurationSource;
 
-        protected override SchemaDefinition Schema { get; }
-
         public InputValueDefinition(
             string name,
             ConfigurationSource nameConfigurationSource,
@@ -27,19 +24,21 @@ namespace GraphZen.TypeSystem
             ClrInfo = clrInfo;
             Schema = schema;
             DeclaringMember = declaringMember;
+
             NameConfigurationSource = nameConfigurationSource;
-            Name = name.IsValidGraphQLName()
-                ? name
-                : throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
-                    .CannotCreateInputValueWithInvalidName(this, name));
+            Name = name;
             Builder = new InternalInputValueBuilder(this, schema.Builder);
             InputType = null!;
         }
+
+        protected override SchemaDefinition Schema { get; }
 
 
         public InternalInputValueBuilder Builder { get; }
 
         public TypeReference InputType { get; set; }
+
+        public IMemberDefinition DeclaringMember { get; }
 
         public bool SetDefaultValue(object? value, ConfigurationSource configurationSource)
         {
@@ -72,19 +71,11 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource? GetDefaultValueConfigurationSource() => _defaultValueConfigurationSource;
-
-        IGraphQLTypeReference IInputValueDefinition.InputType => InputType;
-        public IMemberDefinition DeclaringMember { get; }
         public object? DefaultValue { get; private set; }
         public bool HasDefaultValue { get; private set; }
-
-
         public string Name { get; protected set; }
-
         public abstract bool SetName(string name, ConfigurationSource configurationSource);
-
         public ConfigurationSource GetNameConfigurationSource() => NameConfigurationSource;
-
         public object? ClrInfo { get; }
     }
 }

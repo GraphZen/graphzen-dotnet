@@ -12,9 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableInputValueDefinition : IInputValueDefinition, IMutableAnnotatableDefinition, IMutableNamed,
         IMutableDescription
     {
-        new TypeReference InputType { get; set; }
-
-
         bool SetDefaultValue(object value, ConfigurationSource configurationSource);
         bool RemoveDefaultValue(ConfigurationSource configurationSource);
         ConfigurationSource? GetDefaultValueConfigurationSource();

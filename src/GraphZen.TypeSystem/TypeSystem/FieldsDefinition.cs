@@ -156,7 +156,8 @@ namespace GraphZen.TypeSystem
                 fb.Description(description, ConfigurationSource.DataAnnotation);
             }
 
-            return AddField(field);
+            AddField(field);
+            return field;
         }
 
         public FieldDefinition AddField(MethodInfo method, ConfigurationSource configurationSource)
@@ -170,10 +171,11 @@ namespace GraphZen.TypeSystem
             fb.FieldType(method);
 
 
-            return AddField(field);
+            AddField(field);
+            return field;
         }
 
-        private FieldDefinition AddField(FieldDefinition field)
+        public bool AddField(FieldDefinition field)
         {
             if (_fields.ContainsKey(field.Name))
             {
@@ -182,12 +184,13 @@ namespace GraphZen.TypeSystem
             }
 
             _fields.Add(field.Name, field);
-            return field;
+            return true;
         }
 
-        public void RemoveField(FieldDefinition field)
+        public bool RemoveField(FieldDefinition field)
         {
             _fields.Remove(field.Name);
+            return true;
         }
 
         public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)

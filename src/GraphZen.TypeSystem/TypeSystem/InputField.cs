@@ -35,9 +35,9 @@ namespace GraphZen.TypeSystem
         public IGraphQLType FieldType => InputType;
         IGraphQLTypeReference IInputFieldDefinition.FieldType => FieldType;
 
-        IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
+        IInputObjectTypeDefinition IInputFieldDefinition.DeclaringType => DeclaringType;
 
-        public new InputObjectType DeclaringMember => (InputObjectType)base.DeclaringMember;
+        public InputObjectType DeclaringType => (InputObjectType) DeclaringMember;
 
 
         public static InputField From(IInputFieldDefinition definition, TypeResolver typeResolver,
@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(typeResolver, nameof(typeResolver));
-            return new InputField(definition.Name, definition.Description, definition.InputType,
+            return new InputField(definition.Name, definition.Description, definition.FieldType,
                 definition.DefaultValue, definition.HasDefaultValue, definition.GetDirectiveAnnotations().ToList(),
                 typeResolver,
                 definition.ClrInfo, declaringType);

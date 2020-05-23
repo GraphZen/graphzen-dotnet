@@ -11,8 +11,8 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IArgumentDefinition : IInputValueDefinition
     {
-        new IArgumentsDefinition DeclaringMember { get; }
-
+        IGraphQLTypeReference ArgumentType { get; }
+        IArgumentsDefinition DeclaringMember { get; }
         new ParameterInfo? ClrInfo { get; }
     }
 }
