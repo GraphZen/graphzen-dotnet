@@ -90,14 +90,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
             public const string clr_type_can_be_set_if_custom_name_matches_input_id = null;
             public const string clr_type_can_be_set_if_custom_name_annotation_matches_output_id = null;
-
-
-            public const string DEPRECATED_cannot_set_clr_type_if_inferred_name_annotation_if_name_conflicts_with_type_identity_of_opposite_io = null;
-            public const string DEPRECATED_cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io = null;
-            public const string DEPRECATED_clr_typed_item_can_be_renamed_if_name_matches_input_type_identity = null;
-            public const string DEPRECATED_clr_typed_item_can_be_renamed_if_name_matches_output_type_identity = null;
-            public const string DEPRECATED_clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity = null;
-            public const string DEPRECATED_clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity = null;
         }
 
         public class NamedCollectionSpecs

@@ -87,61 +87,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.InputAndOutputTypeSpecs
-            .DEPRECATED_clr_typed_item_can_be_renamed_if_name_matches_input_type_identity))]
-        [Fact(Skip = "needs impl")]
-        public void clr_typed_item_can_be_renamed_if_name_matches_input_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                _.Enum<PlainEnum>().Name("Bar");
-            });
-            schema.HasEnum("Bar").Should().BeTrue();
-        }
 
 
-        [Spec(nameof(TypeSystemSpecs.InputAndOutputTypeSpecs
-            .DEPRECATED_clr_typed_item_can_be_renamed_if_name_matches_output_type_identity))]
-        [Fact(Skip = "needs impl")]
-        public void clr_typed_item_can_be_renamed_if_name_matches_output_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Foo").Field("outputField", "Bar");
-                _.Enum<PlainEnum>().Name("Bar");
-            });
-            schema.HasEnum("Bar").Should().BeTrue();
-        }
 
 
-        [Spec(nameof(TypeSystemSpecs.InputAndOutputTypeSpecs
-            .DEPRECATED_clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity))]
-        [Fact]
-        public void
-            clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_input_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", AnnotatedName);
-                _.Enum<PlainEnumAnnotatedName>();
-            });
-            schema.HasEnum(AnnotatedName).Should().BeTrue();
-        }
 
 
-        [Spec(nameof(TypeSystemSpecs.InputAndOutputTypeSpecs
-            .DEPRECATED_clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity))]
-        [Fact]
-        public void
-            clr_typed_item_with_name_attribute_can_be_added_if_name_attribute_matches_with_output_type_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Foo").Field("outputField", AnnotatedName);
-                _.Enum<PlainEnumAnnotatedName>();
-            });
-            schema.HasEnum(AnnotatedName).Should().BeTrue();
-        }
     }
 }
