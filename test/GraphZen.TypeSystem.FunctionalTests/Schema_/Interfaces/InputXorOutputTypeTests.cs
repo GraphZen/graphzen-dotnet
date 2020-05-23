@@ -61,33 +61,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
         }
 
 
-        [Spec(nameof(DEPRECATED_clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "needs design/implementation")]
-        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("input", "Bar");
-                var poci = _.Interface<PlainInterface>();
-                Action rename = () => poci.Name("Bar");
-                rename.Should().Throw<Exception>().WithMessage("something about input/output type");
-            });
-        }
 
-
-        [Spec(nameof(
-            DEPRECATED_cannot_add_clr_typed_with_name_attribute_if_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "needs design/impl")]
-        public void
-            clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("input", PlainInterfaceAnnotatedName.AnnotatedName);
-                Action add = () => _.Interface<PlainInterfaceAnnotatedName>();
-                add.Should().Throw<Exception>().WithMessage("something about input/output type");
-            });
-        }
     }
 }

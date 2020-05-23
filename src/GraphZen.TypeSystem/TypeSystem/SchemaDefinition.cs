@@ -921,28 +921,28 @@ namespace GraphZen.TypeSystem
                 switch (type)
                 {
                     case FieldsDefinition hasOutputFields:
-                    {
-                        foreach (var field in hasOutputFields.GetFields())
                         {
-                            yield return field.FieldType;
-
-                            foreach (var arg in field.GetArguments())
+                            foreach (var field in hasOutputFields.GetFields())
                             {
-                                yield return arg.ArgumentType;
+                                yield return field.FieldType;
+
+                                foreach (var arg in field.GetArguments())
+                                {
+                                    yield return arg.ArgumentType;
+                                }
                             }
-                        }
 
-                        break;
-                    }
+                            break;
+                        }
                     case InputObjectTypeDefinition hasInputFields:
-                    {
-                        foreach (var field in hasInputFields.GetFields())
                         {
-                            yield return field.FieldType;
-                        }
+                            foreach (var field in hasInputFields.GetFields())
+                            {
+                                yield return field.FieldType;
+                            }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
         }

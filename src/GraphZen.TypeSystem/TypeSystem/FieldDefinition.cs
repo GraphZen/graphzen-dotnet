@@ -245,7 +245,7 @@ namespace GraphZen.TypeSystem
 
 
             var ab = argument.Builder;
-            argument.InputType= Schema.GetOrAddTypeReference(parameter, this);
+            argument.InputType = Schema.GetOrAddTypeReference(parameter, this);
             ab.DefaultValue(parameter, configurationSource);
             if (parameter.TryGetDescriptionFromDataAnnotation(out var description))
             {

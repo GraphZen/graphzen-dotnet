@@ -85,7 +85,7 @@ namespace GraphZen.TypeSystem.Tests
                 _.InputObject("Bar").Field("field", "[Foo!]!");
             });
             var foo = schema.GetScalar("Foo");
-            var fieldType = (NonNullType) schema.GetInputObject("Bar").GetField("field").FieldType;
+            var fieldType = (NonNullType)schema.GetInputObject("Bar").GetField("field").FieldType;
             fieldType.InnerType.Should().Be(foo);
         }
 

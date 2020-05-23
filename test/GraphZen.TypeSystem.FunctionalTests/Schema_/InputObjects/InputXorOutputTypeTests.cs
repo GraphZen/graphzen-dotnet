@@ -65,37 +65,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         }
 
 
-        [Spec(nameof(DEPRECATED_clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "needs impl")]
-        public void clr_typed_item_cannot_be_renamed_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.Object("Foo").Field("outputField", "OutputType");
-                var poco = _.InputObject<PlainClass>();
-                Action rename = () => poco.Name("OutputType");
-                rename.Should().Throw<Exception>()
-                    .WithMessage(
-                        @"Cannot rename input object Bar to ""OutputTYpe"" because OutputType is already identified as an output type.");
-            });
-        }
 
 
-        [Spec(nameof(
-            DEPRECATED_cannot_add_clr_typed_with_name_attribute_if_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "needs impl")]
-        public void
-            clr_typed_item_with_name_attribute_cannot_be_added_if_name_attribute_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.Object("Foo").Field("outputField", PlainClassAnnotatedName.AnnotatedName);
-                Action add = () => _.InputObject<PlainClassAnnotatedName>();
-                add.Should().Throw<Exception>()
-                    .WithMessage(
-                        @"Cannot create input object AnnotatedNameValue because because AnnotatedNameValue is already identified as an output type.");
-            });
-        }
+
+
+
     }
 }

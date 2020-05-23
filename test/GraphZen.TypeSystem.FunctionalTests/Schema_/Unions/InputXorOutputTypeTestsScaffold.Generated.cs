@@ -11,19 +11,11 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputXorOutputTypeSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 {
     [NoReorder]
-    public abstract class InputXorOutputTypeTests
+    public abstract class InputXorOutputTypeTestsScaffold
     {
-        [Spec(nameof(cannot_create_type_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_create_type_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(cannot_rename_type_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
         public void cannot_rename_type_if_name_conflicts_with_type_identity_of_opposite_io_()
@@ -35,22 +27,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         [Spec(nameof(cannot_create_type_via_clr_type_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact(Skip = "TODO")]
         public void cannot_create_type_via_clr_type_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(cannot_create_type_via_clr_type_if_name_annotation_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_create_type_via_clr_type_if_name_annotation_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(cannot_create_type_via_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_create_type_via_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -72,20 +48,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
         {
             // var schema = Schema.Create(_ => { });
         }
-
-
-        [Spec(nameof(cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-    }
-
-// Move InputXorOutputTypeTests into a separate file to start writing tests
-    [NoReorder]
-    public class InputXorOutputTypeTestsScaffold
-    {
     }
 }
-// Source Hash Code: 8627287516631430448
+// Source Hash Code: 4719354323841481742

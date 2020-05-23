@@ -59,7 +59,7 @@ namespace GraphZen.TypeSystem
                     node switch
                     {
                         ListTypeSyntax list => SyntaxFactory.ListType(GetType(list.OfType)),
-                        NonNullTypeSyntax nn => SyntaxFactory.NonNullType((NullableTypeSyntax) GetType(nn.OfType)),
+                        NonNullTypeSyntax nn => SyntaxFactory.NonNullType((NullableTypeSyntax)GetType(nn.OfType)),
                         NamedTypeSyntax _ => SyntaxFactory.NamedType(SyntaxFactory.Name(Name)),
                         _ => throw new NotImplementedException()
                     };
@@ -80,7 +80,7 @@ namespace GraphZen.TypeSystem
                     case ListTypeSyntax list:
                         return ListType.Of(GetType(list.OfType));
                     case NonNullTypeSyntax nn:
-                        return NonNullType.Of((INullableType) GetType(nn.OfType));
+                        return NonNullType.Of((INullableType)GetType(nn.OfType));
                     case NamedTypeSyntax _:
                         var nameMatch = schema.FindType(Identity.Name);
                         if (nameMatch != null)

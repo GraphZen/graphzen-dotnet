@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
             where TSyntaxNode : SyntaxNode
         {
             Check.NotNull(source, nameof(source));
-            return source.Select(_ => (TSyntaxNode) _.ToSyntaxNode()).ToImmutableList();
+            return source.Select(_ => (TSyntaxNode)_.ToSyntaxNode()).ToImmutableList();
         }
 
 
@@ -75,6 +75,6 @@ namespace GraphZen.TypeSystem
 
 
         public static INullableType GetNullableType(this IGraphQLType type) =>
-            type is NonNullType nonNull ? nonNull.OfType : (INullableType) type;
+            type is NonNullType nonNull ? nonNull.OfType : (INullableType)type;
     }
 }
