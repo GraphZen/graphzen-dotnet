@@ -26,8 +26,9 @@ namespace GraphZen.Tests.Validation.Rules
             QueryShouldPass(@"
 
           query Foo {
-            name
-            ...Frag
+            catOrDog {
+                ...Frag
+            }
           }
 
           fragment Frag on Dog {

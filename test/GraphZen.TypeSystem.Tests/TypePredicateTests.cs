@@ -443,26 +443,26 @@ namespace GraphZen.TypeSystem.Tests
         public void GetNamedType_ReturnsNullForNoType()
         {
             // ReSharper disable once ExpressionIsAlwaysNull
-            ((IGraphQLType)null!).GetNamedType().Should().BeNull();
+            ((IGraphQLType)null!).MaybeGetNamedType().Should().BeNull();
         }
 
         [Fact]
         public void GetNamedType_ReturnsSelfForAnUnwrappedType()
         {
-            ObjectType.GetNamedType().Should().Be(ObjectType);
+            ObjectType.MaybeGetNamedType().Should().Be(ObjectType);
         }
 
         [Fact]
         public void GetNamedType_UnwrapsWrapperTypes()
         {
-            NonNullType.Of(ObjectType).GetNamedType().Should().Be(ObjectType);
-            ListType.Of(ObjectType).GetNamedType().Should().Be(ObjectType);
+            NonNullType.Of(ObjectType).MaybeGetNamedType().Should().Be(ObjectType);
+            ListType.Of(ObjectType).MaybeGetNamedType().Should().Be(ObjectType);
         }
 
         [Fact]
         public void GetNamedType_UnwrapsDeeplyWrapperTypes()
         {
-            NonNullType.Of(ListType.Of(NonNullType.Of(InputObjectType))).GetNamedType().Should()
+            NonNullType.Of(ListType.Of(NonNullType.Of(InputObjectType))).MaybeGetNamedType().Should()
                 .Be(InputObjectType);
         }
     }

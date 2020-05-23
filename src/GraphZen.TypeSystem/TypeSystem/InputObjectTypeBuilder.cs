@@ -177,7 +177,7 @@ namespace GraphZen.TypeSystem
         public InputObjectTypeBuilder<TInputObject> Name(string name)
         {
             Check.NotNull(name, nameof(name));
-            Builder.SetName(name, ConfigurationSource.Explicit);
+            Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }
 

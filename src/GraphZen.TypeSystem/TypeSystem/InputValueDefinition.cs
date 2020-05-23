@@ -39,7 +39,7 @@ namespace GraphZen.TypeSystem
 
         public InternalInputValueBuilder Builder { get; }
 
-        public IGraphQLTypeReference InputType { get; set; }
+        public TypeReference InputType { get; set; }
 
         public bool SetDefaultValue(object? value, ConfigurationSource configurationSource)
         {
@@ -73,6 +73,7 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? GetDefaultValueConfigurationSource() => _defaultValueConfigurationSource;
 
+        IGraphQLTypeReference IInputValueDefinition.InputType => InputType;
         public IMemberDefinition DeclaringMember { get; }
         public object? DefaultValue { get; private set; }
         public bool HasDefaultValue { get; private set; }

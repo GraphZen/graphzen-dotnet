@@ -248,7 +248,7 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public InternalInputObjectTypeBuilder SetName(string name, ConfigurationSource configurationSource)
+        public InternalInputObjectTypeBuilder Name(string name, ConfigurationSource configurationSource)
         {
             Definition.SetName(name, configurationSource);
             return this;

@@ -112,7 +112,7 @@ namespace GraphZen.TypeSystem.Internal
                     }
 
 
-                    if (type.GetNamedType()?.Name == "ID")
+                    if (type.MaybeGetNamedType()?.Name == "ID")
                     {
                         if (!strVal.TrimStart('-', '+').StartsWith("0") && double.TryParse(strVal, out var numeric))
                         {

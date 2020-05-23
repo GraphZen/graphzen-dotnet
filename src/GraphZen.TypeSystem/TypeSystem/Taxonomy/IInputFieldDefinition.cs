@@ -13,6 +13,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         new PropertyInfo? ClrInfo { get; }
 
+        IGraphQLTypeReference FieldType { get; }
         new IInputObjectTypeDefinition DeclaringMember { get; }
     }
 }

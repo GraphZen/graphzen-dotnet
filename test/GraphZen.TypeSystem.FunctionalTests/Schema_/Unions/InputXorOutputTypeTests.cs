@@ -64,15 +64,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
             .clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact]
         public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
+            {
             Schema.Create(_ =>
             {
                 _.InputObject("Foo").Field("inputField", "Bar");
                 Action add = () => _.Union<PlainAbstractClass>("Bar");
                 add.Should().Throw<InvalidTypeException>().WithMessage(
                     "Cannot create union Bar: Union types are output types and an input field or argument already references a type named 'Bar'. GraphQL input type references are reserved for scalar, enum, or input object types.");
+
             });
-        }
+
+                    }
 
 
         [Spec(nameof(

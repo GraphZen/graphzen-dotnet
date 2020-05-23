@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -35,43 +36,39 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public static bool IsInputType(this IGraphQLTypeReference type)
-        {
-            switch (type)
+        public static bool IsInputType(this IGraphQLTypeReference type) =>
+            type switch
             {
-                case IInputDefinition _:
-                    return true;
-                case IWrappingType wrapping:
-                    return wrapping.OfType.IsInputType();
-                default:
-                    return false;
-            }
-        }
+                IInputDefinition _ => true,
+                IWrappingType wrapping => wrapping.OfType.IsInputType(),
+                _ => false
+            };
 
 
-        public static bool IsOutputType(this IGraphQLTypeReference type)
+        public static bool IsOutputType(this IGraphQLTypeReference type) => type switch
         {
-            Check.NotNull(type, nameof(type));
-            switch (type)
+            IOutputDefinition _ => true,
+            IWrappingType wrapping => wrapping.OfType.IsOutputType(),
+            _ => false
+        };
+
+
+        public static NamedType GetNamedType(this IGraphQLType type) =>
+            type switch
             {
-                case IOutputDefinition _:
-                    return true;
-                case IWrappingType wrapping:
-                    return wrapping.OfType.IsOutputType();
-                default:
-                    return false;
-            }
-        }
+                NamedType named => named,
+                IWrappingType wrapped => wrapped.OfType.GetNamedType(),
+                _ => throw new InvalidTypeException("Unable to get named type")
+            };
 
-
-        public static NamedType? GetNamedType(this IGraphQLType type)
+        public static NamedType? MaybeGetNamedType(this IGraphQLType type)
         {
             switch (type)
             {
                 case NamedType named:
                     return named;
                 case IWrappingType wrapped:
-                    return wrapped.OfType.GetNamedType();
+                    return wrapped.OfType.MaybeGetNamedType();
                 default:
                     return null;
             }

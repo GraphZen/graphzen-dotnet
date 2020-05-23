@@ -20,10 +20,13 @@ namespace GraphZen.TypeSystem
             ClrType = clrType;
             Description = description;
             IsIntrospection = SpecReservedNames.IntrospectionTypeNames.Contains(name);
+            // ReSharper disable once VirtualMemberCallInConstructor
+            IsSpec = IsIntrospection || Kind == TypeKind.Scalar && SpecReservedNames.ScalarTypeNames.Contains(Name);
         }
 
         public abstract TypeKind Kind { get; }
         public bool IsIntrospection { get; }
+        public bool IsSpec { get; }
         public string Name { get; }
 
         [GraphQLIgnore] public Type? ClrType { get; }

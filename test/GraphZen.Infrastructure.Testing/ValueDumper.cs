@@ -29,7 +29,11 @@ namespace GraphZen.Infrastructure
             return value;
         }
 
-        public static T Dump<T>(this T value, string label = "schemaBuilder", bool expanded = false)
+        public static T XDump<T>(this T value) => value;
+        // ReSharper disable once MethodOverloadWithOptionalParameter
+        public static T XDump<T>(this T value, string label = "value", bool expanded = false) => value;
+
+        public static T Dump<T>(this T value, string label = "value", bool expanded = false)
         {
             if (expanded)
             {

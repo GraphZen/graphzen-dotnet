@@ -30,35 +30,16 @@ namespace GraphZen.TypeSystem
         private readonly Dictionary<string, ConfigurationSource> _ignoredTypes =
             new Dictionary<string, ConfigurationSource>();
 
-        private readonly List<TypeIdentity> _typeIdentities;
+        private readonly Dictionary<string, TypeIdentity> _typeIdentities = new Dictionary<string, TypeIdentity>();
         private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
         private ConfigurationSource? _mutationTypeConfigurationSource;
         private ConfigurationSource? _queryTypeConfigurationSource;
         private ConfigurationSource? _subscriptionTypeConfigurationSource;
 
-        public SchemaDefinition() : base(ConfigurationSource
-            .Convention)
+        public SchemaDefinition() : base(ConfigurationSource.Convention)
 
         {
-            // Check.NotNull(scalars, nameof(scalars));
             Builder = new InternalSchemaBuilder(this);
-            _typeIdentities = new List<TypeIdentity>();
-            /*
-                        foreach (var scalarType in scalars)
-                        {
-                            var id = scalarType.ClrType != null
-                                ? new TypeIdentity(scalarType.ClrType, this)
-                                : new TypeIdentity(scalarType.Name, this);
-                            if (id.Name != scalarType.Name)
-                            {
-                                id.Name = scalarType.Name;
-                            }
-                            // TODO: add logic to handle adding duplicate scalars
-
-                            AddTypeIdentity(id);
-                            var scalarDefinition = new ScalarTypeDefinition(scalarType, id, this, ConfigurationSource.Explicit);
-                            AddScalar(scalarDefinition);
-                        }*/
         }
 
         private string DebuggerDisplay { [UsedImplicitly] get; } = "schema";
@@ -204,7 +185,7 @@ namespace GraphZen.TypeSystem
         // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
         private bool TryDefineFirstUndefinedType(TypeIdentity? prev, [NotNullWhen(true)] out TypeIdentity identity)
         {
-            var undefined = _typeIdentities.Where(_ =>
+            var undefined = _typeIdentities.Values.Where(_ =>
                 _.Definition == null && _.ClrType != null && _.ClrType.NotIgnored()).ToArray();
             identity = undefined.FirstOrDefault();
             // ReSharper disable once PossibleUnintendedReferenceComparison
@@ -295,7 +276,7 @@ namespace GraphZen.TypeSystem
 
         public TypeIdentity? FindTypeIdentity(TypeIdentity identity)
         {
-            var validIdentities = _typeIdentities
+            var validIdentities = _typeIdentities.Values
                 .Where(_ => _.Kind == null || identity.Kind == null || _.Kind == identity.Kind).ToList();
             var clrTypeAndName =
                 validIdentities.SingleOrDefault(_ => _.ClrType == identity.ClrType && _.Name == identity.Name);
@@ -329,7 +310,7 @@ namespace GraphZen.TypeSystem
         public TypeIdentity? FindOverlappingTypeIdentity(TypeIdentity identity)
         {
             Check.NotNull(identity, nameof(identity));
-            var ids = _typeIdentities.Where(_ => _.Overlaps(identity)).ToList();
+            var ids = _typeIdentities.Values.Where(_ => _.Overlaps(identity)).ToList();
             if (ids.Count > 1)
             {
                 throw new InvalidOperationException();
@@ -338,8 +319,7 @@ namespace GraphZen.TypeSystem
             return ids.SingleOrDefault();
         }
 
-        public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember
-        )
+        public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember)
         {
             TypeSyntax typeNode;
             try
@@ -361,7 +341,7 @@ namespace GraphZen.TypeSystem
                     IsOutputType = referencingMember is IOutputDefinition
                 }
             );
-            return new TypeReference(identity, typeNode);
+            return new TypeReference(identity, typeNode, referencingMember);
         }
 
         public TypeReference GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
@@ -376,7 +356,7 @@ namespace GraphZen.TypeSystem
                         IsOutputType = referencingMember is IOutputDefinition
                     }
                 );
-                return new TypeReference(identity, typeNode);
+                return new TypeReference(identity, typeNode, referencingMember);
             }
 
             throw new NotImplementedException();
@@ -395,27 +375,10 @@ namespace GraphZen.TypeSystem
                         IsOutputType = referencingMember is IOutputDefinition
                     }
                 );
-                return new TypeReference(identity, typeNode);
+                return new TypeReference(identity, typeNode, referencingMember);
             }
 
             throw new NotImplementedException();
-        }
-
-        public TypeReference? NamedTypeReference(Type clrType, TypeKind kind)
-        {
-            if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
-            {
-                if (clrType != innerClrType)
-                {
-                    return null;
-                }
-
-
-                var identity = GetOrAddTypeIdentity(new TypeIdentity(innerClrType, this, kind));
-                return new TypeReference(identity, typeNode);
-            }
-
-            return null;
         }
 
 
@@ -432,7 +395,7 @@ namespace GraphZen.TypeSystem
                     }
                 );
 
-                return new TypeReference(identity, typeNode);
+                return new TypeReference(identity, typeNode, referencingMember);
             }
 
             throw new NotImplementedException();
@@ -450,7 +413,7 @@ namespace GraphZen.TypeSystem
                         IsOutputType = referencingMember is IOutputDefinition
                     }
                 );
-                return new TypeReference(identity, typeNode);
+                return new TypeReference(identity, typeNode, referencingMember);
             }
 
             throw new NotImplementedException();
@@ -469,7 +432,7 @@ namespace GraphZen.TypeSystem
             return FindTypeIdentity(identity) ?? AddTypeIdentity(identity);
         }
 
-        private TypeIdentity AddTypeIdentity(TypeIdentity identity)
+        internal TypeIdentity AddTypeIdentity(TypeIdentity identity)
         {
             var existing = FindTypeIdentity(identity);
             if (existing != null)
@@ -477,7 +440,7 @@ namespace GraphZen.TypeSystem
                 throw new InvalidOperationException();
             }
 
-            _typeIdentities.Add(identity);
+            _typeIdentities[identity.Name] = identity;
             return identity;
         }
 
@@ -735,12 +698,8 @@ namespace GraphZen.TypeSystem
                    throw new Exception($"No {typeof(T).Name} found with CLR type '{clrType}'.");
         }
 
-        public bool TryGetTypeIdentity(string name, [NotNullWhen(true)] out TypeIdentity? identity)
-        {
-            Check.NotNull(name, nameof(name));
-            identity = _typeIdentities.SingleOrDefault(_ => _.Name == name);
-            return identity != null;
-        }
+        public bool TryGetTypeIdentity(string name, [NotNullWhen(true)] out TypeIdentity? identity) =>
+            _typeIdentities.TryGetValue(name, out identity);
 
         public bool TryGetType(string name, [NotNullWhen(true)] out NamedTypeDefinition? type)
         {
@@ -851,10 +810,20 @@ namespace GraphZen.TypeSystem
             return new Schema(this);
         }
 
+        public IEnumerable<TypeIdentity> GetTypeIdentities(bool includeSpecTypes = false)
+        {
+            if (includeSpecTypes)
+            {
+                return _typeIdentities.Values.AsEnumerable();
+            }
+
+            return _typeIdentities.Values.Where(_ => _.Definition == null || !_.Definition.IsSpec);
+        }
+
 
         public void RemoveType(NamedTypeDefinition type)
         {
-            _typeIdentities.Remove(type.Identity);
+            _typeIdentities.Remove(type.Identity.Name);
             _types.Remove(type);
         }
 
@@ -916,6 +885,32 @@ namespace GraphZen.TypeSystem
         {
             directive = FindDirective(clrType);
             return directive != null;
+        }
+
+        internal IEnumerable<TypeReference> GetTypeReferences()
+        {
+            foreach (var type in _types.Where(_ => !_.IsSpec))
+            {
+                if (type is IFieldsDefinition hasOutputFields)
+                {
+
+
+                }
+
+                if (type is InputObjectTypeDefinition hasInputFields)
+                {
+                    foreach (var field in hasInputFields.GetFields())
+                    {
+                        yield return field.FieldType;
+
+
+                    }
+                }
+
+            }
+
+            yield break;
+
         }
 
 

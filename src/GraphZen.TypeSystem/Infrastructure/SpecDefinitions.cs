@@ -8,10 +8,10 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    public static class SchemaBuilderInfrastructureExtensions
+    internal static class SpecDefinitions
     {
-        public static SchemaDefinition GetDefinition<T>(this SchemaBuilder<T> schemaBuilder) where T : GraphQLContext =>
-            schemaBuilder.GetInfrastructure<SchemaDefinition>();
-
+        public static SchemaBuilder<TContext> AddSpecMembers<TContext>(this SchemaBuilder<TContext> schemaBuilder)
+            where TContext : GraphQLContext =>
+            schemaBuilder.AddSpecScalars().AddSpecDirectives().AddIntrospectionTypes();
     }
 }

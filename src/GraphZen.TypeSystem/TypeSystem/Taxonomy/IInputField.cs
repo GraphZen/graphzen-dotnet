@@ -10,6 +10,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IInputField : IInputFieldDefinition, IInputValue
     {
+        new IGraphQLType FieldType { get; }
         new InputObjectType DeclaringMember { get; }
     }
 }

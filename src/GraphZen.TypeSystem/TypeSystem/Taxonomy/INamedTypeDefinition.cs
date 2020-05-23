@@ -17,5 +17,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         TypeKind Kind { get; }
         bool IsIntrospection { get; }
+        bool IsSpec { get; }
     }
 }

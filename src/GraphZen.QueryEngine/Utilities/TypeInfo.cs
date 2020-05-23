@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -102,7 +103,7 @@ namespace GraphZen.Utilities
             switch (syntaxNode)
             {
                 case SelectionSetSyntax _:
-                    _parentTypeStack.Push(GetOutputType().GetNamedType() as ICompositeType);
+                    _parentTypeStack.Push(GetOutputType().MaybeGetNamedType() as ICompositeType);
                     break;
                 case FieldSyntax node:
                     var parentType = GetParentType();
@@ -116,7 +117,7 @@ namespace GraphZen.Utilities
                             fieldType = fieldDef.FieldType;
                         }
                     }
-
+                
                     _fieldDefStack.Push(fieldDef);
                     _typeStack.Push(fieldType);
                     break;
@@ -148,7 +149,7 @@ namespace GraphZen.Utilities
                         var typeCondition = node.TypeCondition;
                         var type = typeCondition != null
                             ? Schema.GetTypeFromAst(typeCondition)
-                            : GetOutputType().GetNamedType();
+                            : GetOutputType().MaybeGetNamedType();
                         _typeStack.Push(type);
                         break;
                     }
@@ -188,7 +189,7 @@ namespace GraphZen.Utilities
                     }
                 case ObjectFieldSyntax node:
                     {
-                        var objectType = GetInputType().GetNamedType();
+                        var objectType = GetInputType().MaybeGetNamedType();
                         IGraphQLType inputFieldType = null;
                         InputField inputField = null;
                         if (objectType is InputObjectType inputObject)
@@ -206,7 +207,7 @@ namespace GraphZen.Utilities
                 case EnumValueSyntax node:
 
                     {
-                        var type = GetInputType().GetNamedType();
+                        var type = GetInputType().MaybeGetNamedType();
                         EnumValue = type is EnumType enumType ? enumType.FindValue(node.Value) : null;
 
                         break;

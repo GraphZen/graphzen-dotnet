@@ -31,17 +31,19 @@ namespace GraphZen.TypeSystem
             identity.Definition = this;
             Identity = identity;
             Schema = schema;
-            IsIntrospection = SpecReservedNames.IntrospectionTypeNames.Contains(Name);
         }
 
 
         protected override SchemaDefinition Schema { get; }
 
-        public TypeIdentity Identity { get; }
+        public TypeIdentity Identity { get; private set; }
         private string DebuggerDisplay => ClrType != null ? $"{Kind}: {Name} ({ClrType.Name})" : $"{Kind}: {Name}";
 
         public abstract TypeKind Kind { get; }
-        public bool IsIntrospection { get; }
+        public bool IsIntrospection => SpecReservedNames.IntrospectionTypeNames.Contains(Name);
+
+        public bool IsSpec =>
+            IsIntrospection || Kind == TypeKind.Scalar && SpecReservedNames.ScalarTypeNames.Contains(Name);
         public string Name => Identity.Name;
 
         public bool SetName(string name, ConfigurationSource configurationSource)
@@ -51,7 +53,7 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
-            if (Schema.TryGetTypeIdentity(name, out var existing) && existing.Definition == null)
+            if (Schema.TryGetTypeIdentity(name, out var existing) && !existing.Equals(Identity))
             {
                 if (this.IsInputType() && !this.IsOutputType() && existing.IsOutputType == true)
                 {
@@ -64,7 +66,13 @@ namespace GraphZen.TypeSystem
                 }
             }
 
-            return Identity.SetName(name, configurationSource);
+
+            if (Identity.SetName(name, configurationSource))
+            {
+
+            }
+
+            return false;
         }
 
         public ConfigurationSource GetNameConfigurationSource() => Identity.GetNameConfigurationSource();

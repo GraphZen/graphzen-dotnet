@@ -32,6 +32,9 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputFieldDefinition;
 
         public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
+        public IGraphQLType FieldType => InputType;
+        IGraphQLTypeReference IInputFieldDefinition.FieldType => FieldType;
+
         IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
 
         public new InputObjectType DeclaringMember => (InputObjectType)base.DeclaringMember;

@@ -13,9 +13,11 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    [DebuggerDisplay(nameof(DebuggerDisplay))]
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class TypeIdentity : IMutableNamed, IMutableClrType, IMutableDefinition
     {
+        private static int _typeIdSeed = 1;
+        public int Id { get; } = _typeIdSeed++;
         private readonly TypeKind? _kind;
         private ConfigurationSource? _clrTypeConfigurationSource;
 
@@ -108,8 +110,23 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        internal string DebuggerDisplay =>
-            $"Identity:{(name: Name, clrType: ClrType, Kind, IsInputType, IsOutputType)}";
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                if (Definition != null)
+                {
+                    return $"id({Id}): {Definition}";
+                }
+
+                if (ClrType != null)
+                {
+                    return $"id({Id}): {Name} (CLR type: {ClrType.Name})";
+                }
+
+                return $"id({Id}): {Name} ";
+            }
+        }
 
 
         public Type? ClrType { get; private set; }
@@ -231,8 +248,10 @@ namespace GraphZen.TypeSystem
                     $"Cannot rename {Definition}: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             }
 
-
-            if (Definition != null && Schema.TryGetType(name, out var existingName) &&
+            if (Definition == null)
+            {
+            }
+            else if (Schema.TryGetType(name, out var existingName) &&
                 !existingName.Equals(Definition))
             {
                 throw new DuplicateItemException(
@@ -289,6 +308,6 @@ namespace GraphZen.TypeSystem
             return string.Equals(Name, identity.Name);
         }
 
-        public override string ToString() => $"type {Name}";
+        public override string ToString() => DebuggerDisplay;
     }
 }

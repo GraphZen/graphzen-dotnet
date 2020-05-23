@@ -13,15 +13,39 @@ namespace GraphZen.TypeSystem
 {
     public class TypeReference : INamedTypeReference
     {
-        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax)
+        private TypeIdentity _identity;
+
+        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMemberDefinition declaringMember)
         {
-            Identity = Check.NotNull(identity, nameof(identity));
-            TypeSyntax = Check.NotNull(typeSyntax, nameof(typeSyntax));
+            _identity = identity;
+            DeclaringMember = declaringMember;
+            TypeSyntax = typeSyntax;
         }
 
+        public IMemberDefinition DeclaringMember { get; }
 
-        public TypeIdentity Identity { get; }
 
+        public TypeIdentity Identity
+        {
+            get => _identity;
+            internal set
+            {
+                var def = value.Definition;
+                if (def != null)
+                {
+                    if (def.IsInputType() && def.IsOutputType()) { }
+                    else if (def.IsInputType() && DeclaringMember is IOutputDefinition)
+                    {
+                        throw new InvalidTypeException("tbd");
+                    }
+                    else if (def.IsOutputType() && DeclaringMember is IInputDefinition)
+                    {
+                        throw new InvalidTypeException("tbd");
+                    }
+                }
+                _identity = value;
+            }
+        }
 
         public TypeSyntax TypeSyntax { get; }
 
