@@ -18,10 +18,14 @@ namespace GraphZen.TypeSystem
     {
         public ArgumentDefinition(string name,
             ConfigurationSource nameConfigurationSource,
+            TypeIdentity typeIdentity,
+            TypeSyntax typeSyntax,
             SchemaDefinition schema,
             ConfigurationSource configurationSource, IMutableArgumentsDefinition declaringMember,
             ParameterInfo? clrInfo) : base(
+
             name, nameConfigurationSource,
+            typeIdentity, typeSyntax,
             schema, configurationSource, clrInfo, declaringMember)
         {
             if (!name.IsValidGraphQLName())

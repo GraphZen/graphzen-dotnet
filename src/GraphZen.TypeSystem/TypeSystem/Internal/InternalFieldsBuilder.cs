@@ -1,13 +1,13 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
@@ -29,18 +29,16 @@ namespace GraphZen.TypeSystem.Internal
             typeof(object).GetMethods().Select(_ => _.Name).ToImmutableList();
 
 
-        public InternalFieldBuilder? Field(string name,
-            ConfigurationSource nameConfigurationSource,
-            ConfigurationSource configurationSource)
-        {
-            if (!name.IsValidGraphQLName())
-            {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
-                    .CannotGetOrCreateFieldBuilderWithInvalidName(name, Definition));
-            }
+        public InternalFieldBuilder Field(string name) =>
+            Definition.FindField(name)?.Builder ?? throw new ItemNotFoundException(
+                $"Field \"{name}\" does not exist on {Definition}. Add the field by specifying a field type.");
 
-            return Definition.GetOrAddField(name, nameConfigurationSource, configurationSource)?.Builder;
-        }
+
+        public InternalFieldBuilder? Field(string name, Type clrType, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddField(name, clrType, configurationSource)?.Builder;
+
+        public InternalFieldBuilder? Field(string name, string type, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddField(name, type, configurationSource)?.Builder;
 
         protected void ConfigureOutputFields()
         {
@@ -61,14 +59,14 @@ namespace GraphZen.TypeSystem.Internal
                 switch (fieldMember)
                 {
                     case MethodInfo method:
-                        {
-                            Field(method, ConfigurationSource.Convention);
-                        }
+                    {
+                        Field(method, ConfigurationSource.Convention);
+                    }
                         break;
                     case PropertyInfo property:
-                        {
-                            Field(property, ConfigurationSource.Convention);
-                        }
+                    {
+                        Field(property, ConfigurationSource.Convention);
+                    }
                         break;
                 }
             }

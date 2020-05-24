@@ -68,7 +68,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         
         [GraphQLIgnore]
         public {valueType} Get{valueName}({keyType} {keyNameCamelized}) 
-            => Find{valueName}(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized}))) ?? throw new Exception($""{{this}} does not contain a {{nameof({valueType})}} with {keyNameCamelized} '{{{keyNameCamelized}}}'."");
+            => Find{valueName}(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized}))) ?? throw new ItemNotFoundException($""{{this}} does not contain a {{nameof({valueType})}} with {keyNameCamelized} '{{{keyNameCamelized}}}'."");
 
         [GraphQLIgnore]
         public bool TryGet{valueName}({keyType} {keyNameCamelized}, [NotNullWhen(true)] out {valueType}? {valueTypeCamelized})

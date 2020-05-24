@@ -34,17 +34,23 @@ namespace GraphZen.TypeSystem
 
 
         public FieldDefinition(string name, ConfigurationSource nameConfigurationSource,
+            TypeIdentity fieldTypeIdentity,
+            TypeSyntax fieldTypeSyntax,
             SchemaDefinition schema,
             FieldsDefinition declaringType,
             ConfigurationSource configurationSource, MemberInfo? clrInfo) : base(configurationSource)
         {
             Schema = schema;
             ClrInfo = clrInfo;
-            Name = name;
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Builder = new InternalFieldBuilder(this, schema.Builder);
-            FieldType = null!;
+            FieldType = new TypeReference(fieldTypeIdentity, fieldTypeSyntax, this);
+            Name = name;
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateField(name, this));
+            }
         }
 
 
@@ -79,7 +85,28 @@ namespace GraphZen.TypeSystem
 
         public bool RemoveArgument(ArgumentDefinition argument, ConfigurationSource configurationSource) => throw new NotImplementedException();
 
-        public bool AddArgument(ArgumentDefinition argument, ConfigurationSource configurationSource) => throw new NotImplementedException();
+        public ArgumentDefinition AddArgument(string name, string type, ConfigurationSource configurationSource)
+        {
+            var typeSyntax = Schema.Builder.Parser.ParseType(type);
+            var typeName = typeSyntax.GetNamedType().Name.Value;
+            var typeIdentity = Schema.GetOrAddInputTypeIdentity(typeName);
+            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema, configurationSource, this, null);
+            AddArgument(argument);
+            return argument;
+        }
+
+        public ArgumentDefinition AddArgument(string name, Type clrType, ConfigurationSource configurationSource)
+        {
+            if (!clrType.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
+            {
+                throw new InvalidOperationException($"Unable to get argument type info from  {clrType}");
+
+            }
+            var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
+            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema, configurationSource, this, null);
+            AddArgument(argument);
+            return argument;
+        }
 
         public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
 
@@ -240,18 +267,20 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource)
         {
             var (argName, nameConfigurationSource) = parameter.GetGraphQLArgumentName();
-            var argument = new ArgumentDefinition(argName, nameConfigurationSource, Schema, configurationSource, this,
-                parameter);
 
+            if (!parameter.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
+            {
+                throw new Exception($"Unable to get type info from parameter {parameter}");
+            }
 
+            var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
+            var argument = new ArgumentDefinition(argName, nameConfigurationSource, typeIdentity, typeSyntax, Schema, configurationSource, this, parameter);
             var ab = argument.Builder;
-            argument.InputType = Schema.GetOrAddTypeReference(parameter, this);
             ab.DefaultValue(parameter, configurationSource);
             if (parameter.TryGetDescriptionFromDataAnnotation(out var description))
             {
                 ab.Description(description, ConfigurationSource.DataAnnotation);
             }
-
             AddArgument(argument);
             return argument;
         }
@@ -272,16 +301,5 @@ namespace GraphZen.TypeSystem
         public override string ToString() => $"field {Name}";
 
 
-        public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
-        {
-            if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))
-            {
-                argument = new ArgumentDefinition(name, configurationSource, Builder.Schema,
-                    configurationSource, this, null);
-                _arguments[name] = argument;
-            }
-
-            return argument;
-        }
     }
 }

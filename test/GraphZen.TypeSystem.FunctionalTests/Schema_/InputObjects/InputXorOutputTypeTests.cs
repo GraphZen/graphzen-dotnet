@@ -14,11 +14,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     [NoReorder]
     public class InputXorOutputTypeTests
     {
+        // ReSharper disable once UnusedType.Local
         private class PlainClass
         {
         }
 
         [GraphQLName(AnnotatedName)]
+        // ReSharper disable once UnusedType.Local
         private class PlainClassAnnotatedName
         {
             public const string AnnotatedName = nameof(AnnotatedName);

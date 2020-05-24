@@ -137,7 +137,16 @@ namespace GraphZen.TypeSystem
             }
 
             var (fieldName, nameConfigurationSource) = property.GetGraphQLFieldName();
-            var field = new InputFieldDefinition(fieldName, nameConfigurationSource, Schema, configurationSource,
+
+
+            if (!property.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
+            {
+                throw new Exception($"Cannot get type info for property {property}");
+            }
+
+            var fieldTypeId = Schema.GetOrAddInputTypeIdentity(innerClrType);
+
+            var field = new InputFieldDefinition(fieldName, fieldTypeId, typeNode, nameConfigurationSource, Schema, configurationSource,
                 property, this);
 
 
@@ -185,7 +194,40 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public InputValueDefinition? GetOrAddField(string name, ConfigurationSource configurationSource)
+        public InputFieldDefinition? GetOrAddField(string name, Type clrType, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
+            if (ignoredConfigurationSource.HasValue)
+            {
+                if (!configurationSource.Overrides(ignoredConfigurationSource))
+                {
+                    return null;
+                }
+
+                _ignoredFields.Remove(name);
+            }
+
+
+            var field = FindField(name);
+            if (field != null)
+            {
+                field.UpdateConfigurationSource(configurationSource);
+                return field;
+
+            }
+            if (!clrType.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
+            {
+                return null;
+            }
+            var fieldTypeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
+
+
+            field = new InputFieldDefinition(name, fieldTypeIdentity, typeSyntax, configurationSource, Schema, configurationSource, null, this);
+            AddField(field);
+            return field;
+        }
+
+        public InputFieldDefinition? GetOrAddField(string name, string type, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)
@@ -205,8 +247,25 @@ namespace GraphZen.TypeSystem
                 field.UpdateConfigurationSource(configurationSource);
                 return field;
             }
+            TypeSyntax typeNode;
+            try
+            {
+                typeNode = Schema.Builder.Parser.ParseType(type);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidTypeReferenceException(
+                    "Unable to parse type reference. See inner exception for details.", e);
+            }
 
-            field = new InputFieldDefinition(name, configurationSource, Schema, configurationSource,
+            var fieldTypeName = typeNode.GetNamedType().Name.Value;
+            var fieldTypeIdentity = Schema.GetOrAddInputTypeIdentity(fieldTypeName);
+
+
+            field = new InputFieldDefinition(name, fieldTypeIdentity,
+                typeNode, configurationSource,
+
+                Schema, configurationSource,
                 null, this);
             _fields[name] = field;
             return field;

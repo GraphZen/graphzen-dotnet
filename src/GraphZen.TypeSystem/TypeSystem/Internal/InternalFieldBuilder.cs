@@ -76,8 +76,52 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalInputValueBuilder Argument(string name, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddArgument(name, configurationSource).Builder;
+        public InternalInputValueBuilder? Argument(string name, string type, ConfigurationSource configurationSource)
+        {
+            if (IsArgumentIgnored(name, configurationSource))
+            {
+                return null;
+            }
+
+            var argument = Definition.FindArgument(name);
+            if (argument == null)
+            {
+                Definition.UnignoreArgument(name);
+                argument = Definition.AddArgument(name, type, configurationSource);
+            }
+            else
+            {
+                argument.UpdateConfigurationSource(configurationSource);
+            }
+
+            return argument.Builder;
+
+        }
+
+        public InternalInputValueBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource)
+        {
+            if (IsArgumentIgnored(name, configurationSource))
+            {
+                return null;
+            }
+
+            var argument = Definition.FindArgument(name);
+            if (argument == null)
+            {
+                Definition.UnignoreArgument(name);
+                argument = Definition.AddArgument(name, clrType, configurationSource);
+            }
+            else
+            {
+                argument.UpdateConfigurationSource(configurationSource);
+            }
+            return argument.Builder;
+        }
+
+
+
+        public InternalInputValueBuilder Argument(string name) =>
+            Definition.FindArgument(name)?.Builder ?? throw new ItemNotFoundException("TODO");
 
         public InternalInputValueBuilder? Argument(ParameterInfo parameter,
             ConfigurationSource configurationSource)

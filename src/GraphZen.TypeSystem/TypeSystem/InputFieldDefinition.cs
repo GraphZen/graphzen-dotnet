@@ -17,11 +17,13 @@ namespace GraphZen.TypeSystem
     public class InputFieldDefinition : InputValueDefinition, IMutableInputFieldDefinition
     {
         public InputFieldDefinition(string name,
+            TypeIdentity typeIdentity, TypeSyntax typeSyntax,
             ConfigurationSource nameConfigurationSource,
             SchemaDefinition schema, ConfigurationSource configurationSource, PropertyInfo? clrInfo,
             IInputObjectTypeDefinition declaringMember) :
-            base(Check.NotNull(name, nameof(name)), nameConfigurationSource,
-                Check.NotNull(schema, nameof(schema)), configurationSource, clrInfo, declaringMember)
+            base(name, nameConfigurationSource,
+                typeIdentity, typeSyntax,
+                schema, configurationSource, clrInfo, declaringMember)
         {
             if (!name.IsValidGraphQLName())
             {
@@ -57,7 +59,6 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputFieldDefinition;
         public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
         IGraphQLTypeReference IInputFieldDefinition.FieldType => FieldType;
-
         public TypeReference FieldType => InputType;
         IInputObjectTypeDefinition IInputFieldDefinition.DeclaringType => DeclaringType;
 

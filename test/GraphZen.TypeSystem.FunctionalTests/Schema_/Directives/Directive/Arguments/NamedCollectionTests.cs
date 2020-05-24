@@ -58,8 +58,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                 var foo = d.GetInfrastructure<IDirectiveDefinition>();
                 new List<Action>
                 {
-                    () => d.Argument(name),
-                    () => d.Argument(name, a => { }),
                     () => d.Argument(name, "String"),
                     () => d.Argument(name, "String", a => { }),
                     () => d.Argument<string>(name),

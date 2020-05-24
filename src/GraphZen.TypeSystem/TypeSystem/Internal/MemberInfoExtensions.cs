@@ -273,6 +273,7 @@ namespace GraphZen.TypeSystem.Internal
             return (member.Name.FirstCharToLower(), ConfigurationSource.Convention);
         }
 
+
         public static (string name, ConfigurationSource configurationSource) GetGraphQLNameForEnumValue(
             this MemberInfo member)
         {

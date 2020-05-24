@@ -16,7 +16,7 @@ namespace GraphZen.TypeSystem.Tests
             Schema.Create(_ =>
             {
                 _.InputObject("Foo");
-                var ids = _.GetDefinition().GetTypeIdentities().ToList();
+                var ids = _.GetDefinition().GetTypeIdentities().Dump("ids", true).ToList();
                 ids.Count.Should().Be(1);
                 var fooId = ids.Single();
                 fooId.Name.Should().Be("Foo");

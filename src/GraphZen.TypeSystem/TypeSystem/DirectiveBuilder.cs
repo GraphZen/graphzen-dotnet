@@ -91,24 +91,19 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));
-            var ib = Builder.Argument(name, ConfigurationSource.Explicit);
+            var ib = Builder.Argument(name);
             var b = new InputValueBuilder<object?>(ib);
             configurator(b);
             return this;
         }
 
-        public InputValueBuilder<object?> Argument(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            var ab = Builder.Argument(name, ConfigurationSource.Explicit);
-            return new InputValueBuilder<object?>(ab);
-        }
+        public InputValueBuilder<object?> Argument(string name) => new InputValueBuilder<object?>(Builder.Argument(Check.NotNull(name, nameof(name))));
 
         public DirectiveBuilder<TDirective> Argument(string name, string type)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
-            Builder.Argument(name, ConfigurationSource.Explicit).Type(type, ConfigurationSource.Explicit);
+            Builder.Argument(name, type, ConfigurationSource.Explicit);
             return this;
         }
 
@@ -118,7 +113,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Check.NotNull(configurator, nameof(configurator));
-            var ib = Builder.Argument(name, ConfigurationSource.Explicit).Type(type, ConfigurationSource.Explicit);
+            var ib = Builder.Argument(name, type, ConfigurationSource.Explicit)!;
             var builder = new InputValueBuilder<object?>(ib);
             configurator(builder);
             return this;
@@ -127,7 +122,7 @@ namespace GraphZen.TypeSystem
         public DirectiveBuilder<TDirective> Argument<TArgument>(string name)
         {
             Check.NotNull(name, nameof(name));
-            Builder.Argument(name, ConfigurationSource.Explicit).Type(typeof(TArgument), ConfigurationSource.Explicit);
+            Builder.Argument(name, typeof(TArgument), ConfigurationSource.Explicit);
             return this;
         }
 
@@ -137,8 +132,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));
-            var ib = Builder.Argument(name, ConfigurationSource.Explicit)
-                .Type(typeof(TArgument), ConfigurationSource.Explicit);
+            var ib = Builder.Argument(name, typeof(TArgument), ConfigurationSource.Explicit)!;
             var b = new InputValueBuilder<TArgument>(ib);
             configurator(b);
             return this;

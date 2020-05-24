@@ -23,6 +23,9 @@ namespace GraphZen.TypeSystem
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
+        private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
+            new Dictionary<string, ConfigurationSource>();
+
         private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _ignoredLocations =
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
@@ -115,26 +118,6 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
-        public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
-        {
-            if (!configurationSource.Overrides(argument.GetNameConfigurationSource()))
-            {
-                return false;
-            }
-
-            if (TryGetArgument(name, out var existing) && existing != argument)
-            {
-                throw new DuplicateItemException(
-                    TypeSystemExceptionMessages.DuplicateItemException.CannotRenameArgument(argument, name));
-            }
-
-            if (RemoveArgument(argument))
-            {
-                _arguments[name] = argument;
-            }
-            return true;
-        }
-
         public bool RemoveArgument(ArgumentDefinition argument)
         {
             if (_arguments.Remove(argument.Name, out var removed))
@@ -143,8 +126,10 @@ namespace GraphZen.TypeSystem
                 {
                     throw new Exception("Did not remove expected argument");
                 }
+
                 return true;
             }
+
             return false;
         }
 
@@ -153,6 +138,9 @@ namespace GraphZen.TypeSystem
             _arguments[argument.Name] = argument;
             return true;
         }
+
+        public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name) =>
+            throw new NotImplementedException();
 
 
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
@@ -312,6 +300,53 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
         public bool IsSpec { get; }
+        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
+
+        public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(argument.GetNameConfigurationSource()))
+            {
+                return false;
+            }
+
+            if (TryGetArgument(name, out var existing) && existing != argument)
+            {
+                throw new DuplicateItemException(
+                    TypeSystemExceptionMessages.DuplicateItemException.CannotRenameArgument(argument, name));
+            }
+
+            if (RemoveArgument(argument))
+            {
+                _arguments[name] = argument;
+            }
+
+            return true;
+        }
+
+
+        public ArgumentDefinition? AddArgument(string name, Type clrType, ConfigurationSource configurationSource)
+        {
+            if (!clrType.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
+            {
+                return null;
+            }
+            var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
+            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema,
+                configurationSource, this, null);
+            AddArgument(argument);
+            return argument;
+        }
+
+        public ArgumentDefinition AddArgument(string name, string type, ConfigurationSource configurationSource)
+        {
+            var typeSyntax = Schema.Builder.Parser.ParseType(type);
+            var typeName = typeSyntax.GetNamedType().Name.Value;
+            var typeIdentity = Schema.GetOrAddInputTypeIdentity(typeName);
+            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema,
+                configurationSource, this, null);
+            AddArgument(argument);
+            return argument;
+        }
 
         public bool SetName(Type clrType, ConfigurationSource configurationSource)
         {
@@ -326,19 +361,49 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        public ArgumentDefinition GetOrAddArgument(string name, ConfigurationSource configurationSource)
-        {
-            if (!_arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument))
-            {
-                argument = new ArgumentDefinition(name, ConfigurationSource.Convention, Builder.Schema,
-                    configurationSource, this, null);
-                _arguments[name] = argument;
-            }
-
-            return argument;
-        }
 
         public override string ToString() => $"directive {Name}";
-        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
+
+
+        public bool IgnoreArgument(string name, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
+            if (ignoredConfigurationSource.HasValue &&
+                ignoredConfigurationSource.Overrides(configurationSource))
+            {
+                return true;
+            }
+
+            if (ignoredConfigurationSource != null)
+            {
+                configurationSource = configurationSource.Max(ignoredConfigurationSource);
+            }
+
+            _ignoredArguments[name] = configurationSource;
+            var existing = FindArgument(name);
+
+            if (existing != null)
+            {
+                return IgnoreArgument(existing, configurationSource);
+            }
+
+            return true;
+        }
+
+        private bool IgnoreArgument(ArgumentDefinition argument, ConfigurationSource configurationSource)
+        {
+            if (configurationSource.Overrides(argument.GetConfigurationSource()))
+            {
+                _arguments.Remove(argument.Name);
+                return true;
+            }
+
+            return false;
+        }
+
+        public void UnignoreArgument(string name)
+        {
+            _ignoredArguments.Remove(name);
+        }
     }
 }

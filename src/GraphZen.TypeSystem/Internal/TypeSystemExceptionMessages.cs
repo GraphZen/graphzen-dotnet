@@ -74,10 +74,9 @@ namespace GraphZen.Internal
                 =>
                     $"Cannot get or create GraphQL type builder for {kind.ToDisplayStringLower()} named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
-            public static string CannotGetOrCreateFieldBuilderWithInvalidName(string name,
-                IFieldsDefinition declaringType)
+            public static string CannotCreateField(string name, FieldDefinition field)
                 =>
-                    $"Cannot get or create GraphQL field builder for field \"{name}\" on {declaringType}. The field name \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+                    $"Cannot create field named \"{name}\" on {field.DeclaringType}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
 
             public static string CannotGetOrCreateBuilderForClrTypeWithInvalidName(Type clrType, TypeKind kind)

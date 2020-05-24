@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem.Internal
                 return Type(identity.ClrType, identity.Kind.Value);
             }
 
-            return Type(identity.ClrType, identity.IsInputType, identity.IsOutputType);
+            return Type(identity.ClrType, identity.IsInputType(), identity.IsOutputType());
         }
 
         public MemberDefinitionBuilder? Type(Type clrType, bool? isInputType, bool? isOutputType)

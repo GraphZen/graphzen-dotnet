@@ -3,6 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
@@ -14,10 +15,13 @@ namespace GraphZen.TypeSystem
         private ConfigurationSource? _defaultValueConfigurationSource;
         protected ConfigurationSource NameConfigurationSource;
 
-        public InputValueDefinition(
+        protected InputValueDefinition(
             string name,
             ConfigurationSource nameConfigurationSource,
+            TypeIdentity typeIdentity,
+            TypeSyntax typeSyntax,
             SchemaDefinition schema,
+
             ConfigurationSource configurationSource,
             object? clrInfo, IMemberDefinition declaringMember) : base(configurationSource)
         {
@@ -28,7 +32,7 @@ namespace GraphZen.TypeSystem
             NameConfigurationSource = nameConfigurationSource;
             Name = name;
             Builder = new InternalInputValueBuilder(this, schema.Builder);
-            InputType = null!;
+            InputType = new TypeReference(typeIdentity, typeSyntax, this);
         }
 
         protected override SchemaDefinition Schema { get; }

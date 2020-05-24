@@ -58,8 +58,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 var foo = d.GetInfrastructure<IInputObjectTypeDefinition>();
                 new List<Action>
                 {
-                    () => d.Field(name),
-                    () => d.Field(name, a => { }),
                     () => d.Field(name, "String"),
                     () => d.Field(name, "String", a => { }),
                     () => d.Field<string>(name),

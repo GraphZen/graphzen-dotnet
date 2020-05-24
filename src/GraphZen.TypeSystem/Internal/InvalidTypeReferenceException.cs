@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Internal
 {
-    public class InvalidTypeReferenceException : Exception
+    public class InvalidTypeReferenceException : GraphQLException
     {
         public InvalidTypeReferenceException(string message, Exception innerException) : base(message, innerException)
         {

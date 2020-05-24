@@ -18,12 +18,12 @@ namespace GraphZen.TypeSystem
         protected NamedTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(configurationSource)
         {
-            if (this.IsInputType() && !this.IsOutputType() && identity.IsOutputType == true)
+            if (this.IsInputType() && !this.IsOutputType() && identity.IsOutputType())
             {
                 throw new InvalidTypeException($"Cannot create {Kind.ToDisplayStringLower()} {identity.Name}: {Kind} types are input types and an object or interface field already references a type named '{identity.Name}'. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
             }
 
-            if (!this.IsInputType() && this.IsOutputType() && identity.IsInputType == true)
+            if (!this.IsInputType() && this.IsOutputType() && identity.IsInputType())
             {
                 throw new InvalidTypeException($"Cannot create {Kind.ToDisplayStringLower()} {identity.Name}: {Kind} types are output types and an input field or argument already references a type named '{identity.Name}'. GraphQL input type references are reserved for scalar, enum, or input object types.");
             }
@@ -55,12 +55,12 @@ namespace GraphZen.TypeSystem
 
             if (Schema.TryGetTypeIdentity(name, out var existing) && !existing.Equals(Identity))
             {
-                if (this.IsInputType() && !this.IsOutputType() && existing.IsOutputType == true)
+                if (this.IsInputType() && !this.IsOutputType() && existing.IsOutputType())
                 {
                     throw new InvalidTypeException($"Cannot rename {this} to \"{name}\": {Kind} types are input types and an object or interface field already references a type named \"{name}\". GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
                 }
 
-                if (!this.IsInputType() && this.IsOutputType() && existing.IsInputType == true)
+                if (!this.IsInputType() && this.IsOutputType() && existing.IsInputType())
                 {
                     throw new InvalidTypeException($"Cannot rename {this} to \"{name}\": {Kind} types are output types and an input field or argument already references a type named \"{name}\". GraphQL input type references are reserved for scalar, enum, or input object types.");
                 }

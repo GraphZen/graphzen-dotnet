@@ -46,9 +46,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
             Schema.Create(_ =>
             {
                 var foo = _.Interface("Foo");
-                Action add = () => foo.Field(name);
+                Action add = () => foo.Field(name, "Bar");
                 add.Should().Throw<InvalidNameException>().WithMessage(
-                    $"Cannot get or create GraphQL field builder for field \"{name}\" on interface Foo. The field name \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Cannot create field named \"{name}\" on interface Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

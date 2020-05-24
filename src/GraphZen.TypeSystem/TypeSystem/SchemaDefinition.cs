@@ -334,12 +334,7 @@ namespace GraphZen.TypeSystem
 
             var named = typeNode.GetNamedType();
 
-            var identity = GetOverlappingOrAddTypeIdentity(
-                new TypeIdentity(named.Name.Value, this)
-                {
-                    IsInputType = referencingMember is IInputDefinition,
-                    IsOutputType = referencingMember is IOutputDefinition
-                }
+            var identity = GetOverlappingOrAddTypeIdentity(new TypeIdentity(named.Name.Value, this)
             );
             return new TypeReference(identity, typeNode, referencingMember);
         }
@@ -347,17 +342,7 @@ namespace GraphZen.TypeSystem
         public TypeReference GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
         )
         {
-            if (method.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
-            {
-                var identity = GetOverlappingOrAddTypeIdentity(
-                    new TypeIdentity(innerClrType, this)
-                    {
-                        IsInputType = referencingMember is IInputDefinition,
-                        IsOutputType = referencingMember is IOutputDefinition
-                    }
-                );
-                return new TypeReference(identity, typeNode, referencingMember);
-            }
+
 
             throw new NotImplementedException();
         }
@@ -370,10 +355,7 @@ namespace GraphZen.TypeSystem
             {
                 var identity = GetOverlappingOrAddTypeIdentity(
                     new TypeIdentity(innerClrType, this)
-                    {
-                        IsInputType = referencingMember is IInputDefinition,
-                        IsOutputType = referencingMember is IOutputDefinition
-                    }
+
                 );
                 return new TypeReference(identity, typeNode, referencingMember);
             }
@@ -389,11 +371,7 @@ namespace GraphZen.TypeSystem
             {
                 var identity = GetOverlappingOrAddTypeIdentity(
                     new TypeIdentity(innerClrType, this)
-                    {
-                        IsInputType = referencingMember is IInputDefinition,
-                        IsOutputType = referencingMember is IOutputDefinition
-                    }
-                );
+                                    );
 
                 return new TypeReference(identity, typeNode, referencingMember);
             }
@@ -408,10 +386,6 @@ namespace GraphZen.TypeSystem
             {
                 var identity = GetOverlappingOrAddTypeIdentity(
                     new TypeIdentity(innerClrType, this)
-                    {
-                        IsInputType = referencingMember is IInputDefinition,
-                        IsOutputType = referencingMember is IOutputDefinition
-                    }
                 );
                 return new TypeReference(identity, typeNode, referencingMember);
             }
@@ -434,26 +408,8 @@ namespace GraphZen.TypeSystem
 
         internal TypeIdentity AddTypeIdentity(TypeIdentity identity)
         {
-            var existing = FindTypeIdentity(identity);
-            if (existing != null)
-            {
-                throw new InvalidOperationException();
-            }
-
             _typeIdentities[identity.Name] = identity;
             return identity;
-        }
-
-        public ScalarTypeDefinition GetOrAddScalar(string name, ConfigurationSource configurationSource)
-        {
-            return GetOrAddType(Check.NotNull(name, nameof(name)),
-                id => new ScalarTypeDefinition(id, this, configurationSource));
-        }
-
-        public ScalarTypeDefinition GetOrAddScalar(Type clrType, ConfigurationSource configurationSource)
-        {
-            return GetOrAddType(Check.NotNull(clrType, nameof(clrType)),
-                id => new ScalarTypeDefinition(id, this, configurationSource));
         }
 
 
@@ -757,16 +713,19 @@ namespace GraphZen.TypeSystem
             return _types.SingleOrDefault(_ => _.Identity.Equals(identity));
         }
 
-        public NamedTypeDefinition? FindType(string name)
-        {
-            return _types.SingleOrDefault(_ => _.Name == name);
-        }
+        public NamedTypeDefinition? FindType(string name) => _types.SingleOrDefault(_ => _.Name == name);
 
-        public NamedTypeDefinition? FindType(Type clrType)
-        {
-            return _types.SingleOrDefault(_ => _.ClrType == clrType);
-        }
+        public NamedTypeDefinition? FindType(Type clrType) => _types.SingleOrDefault(_ => _.ClrType == clrType);
 
+        public TypeIdentity GetOrAddOutputTypeIdentity(Type clrType) => FindOutputTypeIdentity(clrType) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
+        public TypeIdentity? FindOutputTypeIdentity(Type clrType) => _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsOutputType());
+        public TypeIdentity? FindInputTypeIdentity(Type clrType) => _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsOutputType());
+        public TypeIdentity GetOrAddInputTypeIdentity(Type clrType) => FindInputTypeIdentity(clrType) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
+
+        public TypeIdentity GetOrAddOutputTypeIdentity(string name) => FindOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
+        public TypeIdentity? FindOutputTypeIdentity(string name) => _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType());
+        public TypeIdentity? FindInputTypeIdentity(string name) => _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType());
+        public TypeIdentity GetOrAddInputTypeIdentity(string name) => FindInputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
 
         public NamedTypeDefinition? FindOutputType(Type clrType)
         {

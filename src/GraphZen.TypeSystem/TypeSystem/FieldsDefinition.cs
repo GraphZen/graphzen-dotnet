@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
@@ -31,13 +32,41 @@ namespace GraphZen.TypeSystem
         {
         }
 
-
-        public IEnumerable<FieldDefinition> GetFields() => _fields.Values;
-
         [GenDictionaryAccessors(nameof(FieldDefinition.Name), "Field")]
         public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
 
         IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => GetFields();
+
+        public bool AddField(FieldDefinition field)
+        {
+            if (_fields.ContainsKey(field.Name))
+            {
+                throw new InvalidOperationException(
+                    $"Duplicate field names: Cannot add field '{field.Name}' to {Kind.ToString().ToLower()} '{Name}', a field with that name already exists.");
+            }
+
+            _fields.Add(field.Name, field);
+            return true;
+        }
+
+        public bool RemoveField(FieldDefinition field)
+        {
+            _fields.Remove(field.Name);
+            return true;
+        }
+
+        public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
+        {
+            if (_ignoredFields.TryGetValue(fieldName, out var cs))
+            {
+                return cs;
+            }
+
+            return null;
+        }
+
+
+        public IEnumerable<FieldDefinition> GetFields() => _fields.Values;
 
         public void UnignoreField(string fieldName)
         {
@@ -125,12 +154,23 @@ namespace GraphZen.TypeSystem
             }
 
             var (fieldName, nameConfigurationSource) = propertyInfo.GetGraphQLFieldName();
-            var field = new FieldDefinition(fieldName, nameConfigurationSource,
-                Schema, this, configurationSource, propertyInfo);
-            var fb = field.Builder;
+            if (!propertyInfo.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
+            {
+                throw new InvalidOperationException($"Unable to infer type from property {propertyInfo}");
+            }
 
+            var fieldTypeIdentity = Schema.GetTypeIdentities(true)
+                                        .SingleOrDefault(_ => _.IsOutputType() && _.ClrType == innerClrType) ??
+                                    Schema.AddTypeIdentity(new TypeIdentity(innerClrType, Schema));
+
+            var field = new FieldDefinition(fieldName, nameConfigurationSource,
+                fieldTypeIdentity, typeNode,
+                Schema, this, configurationSource, propertyInfo);
+
+            var fb = field.Builder;
             try
             {
+                fb.FieldType(propertyInfo);
                 var getter = propertyInfo.GetGetMethod();
                 var entity = Expression.Parameter(ClrType);
                 Debug.Assert(getter != null, nameof(getter) + " != null");
@@ -140,7 +180,6 @@ namespace GraphZen.TypeSystem
                 var propertyFunc = lambda.Compile();
 
                 // Configure method w/conventions
-                fb.FieldType(propertyInfo);
                 fb.Resolve((source, args, context, info) => propertyFunc.DynamicInvoke(source));
             }
             catch (Exception e)
@@ -164,52 +203,60 @@ namespace GraphZen.TypeSystem
         {
             var (fieldName, nameConfigurationSource) = method.GetGraphQLFieldName();
 
-            var field = new FieldDefinition(fieldName, nameConfigurationSource, Schema, this, configurationSource,
+            if (!method.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
+            {
+                throw new Exception($"Unable to infer type from method {method}");
+            }
+
+            var fieldTypeId = Schema.GetOrAddOutputTypeIdentity(innerClrType);
+            var field = new FieldDefinition(fieldName, nameConfigurationSource,
+                fieldTypeId, typeNode,
+                Schema, this, configurationSource,
                 method);
-
-            var fb = field.Builder;
-            fb.FieldType(method);
-
-
             AddField(field);
             return field;
         }
 
-        public bool AddField(FieldDefinition field)
-        {
-            if (_fields.ContainsKey(field.Name))
-            {
-                throw new InvalidOperationException(
-                    $"Duplicate field names: Cannot add field '{field.Name}' to {Kind.ToString().ToLower()} '{Name}', a field with that name already exists.");
-            }
 
-            _fields.Add(field.Name, field);
-            return true;
-        }
-
-        public bool RemoveField(FieldDefinition field)
-        {
-            _fields.Remove(field.Name);
-            return true;
-        }
-
-        public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
-        {
-            if (_ignoredFields.TryGetValue(fieldName, out var cs))
-            {
-                return cs;
-            }
-
-            return null;
-        }
-
-        public FieldDefinition? GetOrAddField(string name, ConfigurationSource nameConfigurationSource,
-            ConfigurationSource configurationSource)
+        public FieldDefinition? GetOrAddField(string name, Type clrType, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)
             {
-                if (!nameConfigurationSource.Overrides(ignoredConfigurationSource))
+                if (!configurationSource.Overrides(ignoredConfigurationSource))
+                {
+                    return null;
+                }
+
+                _ignoredFields.Remove(name);
+            }
+
+            var field = FindField(name);
+            if (field != null)
+            {
+                field.UpdateConfigurationSource(configurationSource);
+                return field;
+            }
+
+            if (!clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
+            {
+                throw new InvalidOperationException($"Unable to get field type info from {clrType}");
+            }
+
+            var typeIdentity = Schema.GetOrAddOutputTypeIdentity(innerClrType);
+            field = new FieldDefinition(name, configurationSource, typeIdentity, typeNode, Schema, this,
+                configurationSource, null);
+            AddField(field);
+            return field;
+        }
+
+
+        public FieldDefinition? GetOrAddField(string name, string type, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
+            if (ignoredConfigurationSource.HasValue)
+            {
+                if (!configurationSource.Overrides(ignoredConfigurationSource))
                 {
                     return null;
                 }
@@ -225,8 +272,23 @@ namespace GraphZen.TypeSystem
                 return field;
             }
 
-            field = new FieldDefinition(name, nameConfigurationSource, Schema, this, configurationSource, null);
-            _fields.Add(field.Name, field);
+            TypeSyntax typeNode;
+            try
+            {
+                typeNode = Schema.Builder.Parser.ParseType(type);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidTypeReferenceException(
+                    "Unable to parse type reference. See inner exception for details.", e);
+            }
+
+
+            var fieldTypeName = typeNode.GetNamedType().Name.Value;
+            var typeIdentity = Schema.GetOrAddOutputTypeIdentity(fieldTypeName);
+            field = new FieldDefinition(name, configurationSource, typeIdentity, typeNode, Schema, this,
+                configurationSource, null);
+            AddField(field);
             return field;
         }
     }

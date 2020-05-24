@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields.Descriptio
 
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
         {
-            sb.InputObject(Grandparent).Field(parentName);
+            sb.InputObject(Grandparent).Field(parentName, "String");
         }
 
         public override InputField GetParent(Schema schema, string parentName) =>

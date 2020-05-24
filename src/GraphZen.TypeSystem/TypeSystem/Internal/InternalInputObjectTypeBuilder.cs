@@ -19,8 +19,19 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        public InternalInputValueBuilder? Field(string name, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddField(name, configurationSource)?.Builder;
+        public InternalInputValueBuilder Field(string name) =>
+            Definition.FindField(name)?.Builder ?? throw new ItemNotFoundException(
+                $"Field \"{name}\" does not exist on {Definition}. Add the field by specifying a field type.");
+
+
+        public InternalInputValueBuilder? Field(string name, Type clrType, ConfigurationSource configurationSource) => Definition.GetOrAddField(name, clrType, configurationSource)?.Builder;
+
+        public InternalInputValueBuilder? Field(string name, string type, ConfigurationSource configurationSource)
+        {
+            return Definition.GetOrAddField(name, type, configurationSource)?.Builder;
+
+
+        }
 
         public bool IgnoreField(string fieldName, ConfigurationSource configurationSource)
         {

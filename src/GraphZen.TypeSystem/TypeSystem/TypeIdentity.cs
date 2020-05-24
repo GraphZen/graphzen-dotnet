@@ -21,8 +21,6 @@ namespace GraphZen.TypeSystem
         private readonly TypeKind? _kind;
         private ConfigurationSource? _clrTypeConfigurationSource;
 
-        private bool? _isInputType;
-        private bool? _isOutputType;
         private ConfigurationSource _nameConfigurationSource = ConfigurationSource.Explicit;
 
 
@@ -82,35 +80,33 @@ namespace GraphZen.TypeSystem
 
         public TypeKind? Kind => _typeDefinition?.Kind ?? _kind;
 
-        public bool? IsInputType
-        {
-            get => Kind?.IsInputType() ?? _isInputType;
-            set
-            {
-                if (_kind.HasValue)
-                {
-                    throw new InvalidOperationException(
-                        $"Cannot set property {nameof(TypeIdentity)}.{nameof(IsInputType)}, because the identity's type kind ({Kind}) is already set.");
-                }
 
-                _isInputType = value;
+
+        public bool IsInputType()
+        {
+            if (Definition is IInputTypeDefinition)
+            {
+                return true;
             }
+
+            var typeRefs = Schema.GetTypeReferences();
+            return typeRefs
+                .Any(_ => ReferenceEquals(_.Identity, this) && _.DeclaringMember is IInputDefinition);
         }
 
-        public bool? IsOutputType
+        public bool IsOutputType()
         {
-            get => Kind?.IsOutputType() ?? _isOutputType;
-            set
+            if (Definition is IOutputTypeDefinition)
             {
-                if (_kind.HasValue)
-                {
-                    throw new InvalidOperationException(
-                        $"Cannot set property {nameof(TypeIdentity)}.{nameof(IsOutputType)}, because the type identity's kind ({Kind}) is already set.");
-                }
-
-                _isOutputType = value;
+                return true;
             }
+
+            return Schema.GetTypeReferences()
+                .Any(_ => ReferenceEquals(_.Identity, this) && _.DeclaringMember is IOutputDefinition);
         }
+
+
+
 
         internal string DebuggerDisplay
         {
@@ -121,9 +117,9 @@ namespace GraphZen.TypeSystem
                     return $"id: {Definition} ({Id})";
                 }
 
-                var io = IsInputType == true && IsOutputType == true ? "input/output" :
-                    IsInputType == true ? "input" : "output";
-
+                var input = IsInputType();
+                var output = IsOutputType();
+                var io = input && output ? "input/output" : input ? "input" : "output";
                 return $"id: unknown {io} type {Name} ({Id})";
             }
         }
@@ -308,8 +304,8 @@ namespace GraphZen.TypeSystem
 
             if (ClrType != null && identity.ClrType != null)
             {
-                if (IsInputType == true && identity.IsInputType == true
-                    || IsOutputType == true && identity.IsOutputType == true)
+                if (IsInputType() && identity.IsInputType()
+                    || IsOutputType() && identity.IsOutputType())
                 {
                     return ClrType == identity.ClrType;
                 }

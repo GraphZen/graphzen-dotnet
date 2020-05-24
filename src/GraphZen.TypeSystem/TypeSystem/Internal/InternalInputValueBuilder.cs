@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalInputValueBuilder Type(string type, ConfigurationSource configurationSource)
+        public InternalInputValueBuilder InputType(string type, ConfigurationSource configurationSource)
         {
             // TODO: incorporate configuration source
             Definition.InputType = Schema.GetOrAddTypeReference(type, Definition);

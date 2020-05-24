@@ -78,7 +78,7 @@ namespace GraphZen.TypeSystem
             Action<FieldBuilder<TInterface, object, TContext>> configurator)
         {
             Check.NotNull(name, nameof(name));
-            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
+            var fb = Builder.Field(name)!;
 
             configurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
             return this;
@@ -88,15 +88,14 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
-            Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type);
+            Builder.Field(name, type, ConfigurationSource.Explicit);
             return this;
         }
 
         public FieldBuilder<TInterface, object, TContext> Field(string name)
         {
             Check.NotNull(name, nameof(name));
-            return new FieldBuilder<TInterface, object, TContext>(Builder.Field(name, ConfigurationSource.Explicit,
-                ConfigurationSource.Explicit)!);
+            return new FieldBuilder<TInterface, object, TContext>(Builder.Field(name));
         }
 
         public InterfaceTypeBuilder<TInterface, TContext> Field(string name, string type,
@@ -106,7 +105,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Check.NotNull(configurator, nameof(configurator));
-            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?.FieldType(type)!;
+            var fb = Builder.Field(name, type, ConfigurationSource.Explicit)?.FieldType(type)!;
             configurator(new FieldBuilder<TInterface, object?, TContext>(fb));
             return this;
         }
@@ -123,8 +122,7 @@ namespace GraphZen.TypeSystem
         public InterfaceTypeBuilder<TInterface, TContext> Field<TField>(string name)
         {
             Check.NotNull(name, nameof(name));
-            Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?
-                .FieldType(typeof(TField));
+            Builder.Field(name, typeof(TField), ConfigurationSource.Explicit);
             return this;
         }
 
@@ -140,8 +138,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));
-            var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)?
-                .FieldType(typeof(TField))!;
+            var fb = Builder.Field(name, typeof(TField), ConfigurationSource.Explicit)!;
             configurator(new FieldBuilder<TInterface, TField, TContext>(fb));
             return this;
         }

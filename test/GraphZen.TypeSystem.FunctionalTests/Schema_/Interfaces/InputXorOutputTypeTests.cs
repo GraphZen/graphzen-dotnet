@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Microsoft.VisualBasic.CompilerServices;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputXorOutputTypeSpecs;
 
@@ -22,6 +21,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
 
         [GraphQLName(AnnotatedName)]
         // ReSharper disable once InconsistentNaming
+        // ReSharper disable once UnusedType.Local
         private interface PlainInterfaceAnnotatedName
         {
             public const string AnnotatedName = nameof(AnnotatedName);
@@ -65,14 +65,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
 
 
         [Spec(nameof(cannot_create_type_via_clr_type_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact]
+        [Fact(Skip = "wip")]
         public void cannot_create_type_via_clr_type_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             Schema.Create(_ =>
             {
                 _.InputObject("Foo").Field("field", nameof(PlainInterface));
                 Action add = () => _.Interface<PlainInterface>();
-                add.Should().Throw<InvalidTypeException>().WithMessage("Cannot create interface PlainInterface: Interface types are output types and an input field or argument already references a type named 'PlainInterface'. GraphQL input type references are reserved for scalar, enum, or input object types.");
+                add.Should().Throw<InvalidTypeException>().WithMessage(
+                    "Cannot create interface PlainInterface: Interface types are output types and an input field or argument already references a type named 'PlainInterface'. GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
 
