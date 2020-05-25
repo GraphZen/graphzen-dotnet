@@ -3,7 +3,6 @@
 
 #nullable enable
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -29,7 +28,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public ArgumentDefinition GetArgument(string name)
             => FindArgument(Check.NotNull(name, nameof(name))) ??
-               throw new Exception($"{this} does not contain a {nameof(ArgumentDefinition)} with name '{name}'.");
+               throw new ItemNotFoundException(
+                   $"{this} does not contain a {nameof(ArgumentDefinition)} with name '{name}'.");
 
         [GraphQLIgnore]
         public bool TryGetArgument(string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
@@ -38,4 +38,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 12492850903361786258
+// Source Hash Code: 13415323359497253728

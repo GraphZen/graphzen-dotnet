@@ -295,7 +295,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public Directive GetDirective(string name)
             => FindDirective(Check.NotNull(name, nameof(name))) ??
-               throw new Exception($"{this} does not contain a {nameof(Directive)} with name '{name}'.");
+               throw new ItemNotFoundException($"{this} does not contain a {nameof(Directive)} with name '{name}'.");
 
         [GraphQLIgnore]
         public bool TryGetDirective(string name, [NotNullWhen(true)] out Directive? directive)
@@ -318,7 +318,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public Directive GetDirective(Type clrType)
             => FindDirective(Check.NotNull(clrType, nameof(clrType))) ??
-               throw new Exception($"{this} does not contain a {nameof(Directive)} with clrType '{clrType}'.");
+               throw new ItemNotFoundException(
+                   $"{this} does not contain a {nameof(Directive)} with clrType '{clrType}'.");
 
         [GraphQLIgnore]
         public bool TryGetDirective(Type clrType, [NotNullWhen(true)] out Directive? directive)
@@ -327,4 +328,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 6304228097206620330
+// Source Hash Code: 1856311056922380998

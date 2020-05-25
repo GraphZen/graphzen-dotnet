@@ -11,7 +11,7 @@ namespace GraphZen.LanguageModel.Internal
 {
     public static class LanguageModelClrTypeExtensions
     {
-        public static bool TryGetValidGraphQLName(this Type clrTYpe, [NotNullWhen(true)] out string? name,
+        public static bool TryGetValidGraphQLNameAnnotation(this Type clrTYpe, [NotNullWhen(true)] out string? name,
             object? source = null)
         {
             name = default;
@@ -24,7 +24,6 @@ namespace GraphZen.LanguageModel.Internal
 
             return false;
         }
-
         public static string GetGraphQLName(this Type clrType, Action<string> onInvalidNameAnnotation,
             Action<string> onInvalidClrTypeName)
         {
@@ -99,7 +98,7 @@ namespace GraphZen.LanguageModel.Internal
 
 
         public static bool HasValidGraphQLName(this Type clrType, object? source = null) =>
-            clrType.TryGetValidGraphQLName(out _, source);
+            clrType.TryGetValidGraphQLNameAnnotation(out _, source);
 
 
         public static bool TryGetGraphQLNameFromDataAnnotation(this Type clrType, [NotNullWhen(true)] out string? name)

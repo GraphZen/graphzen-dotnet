@@ -3,7 +3,6 @@
 
 #nullable enable
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -29,7 +28,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public InputFieldDefinition GetField(string name)
             => FindField(Check.NotNull(name, nameof(name))) ??
-               throw new Exception($"{this} does not contain a {nameof(InputFieldDefinition)} with name '{name}'.");
+               throw new ItemNotFoundException(
+                   $"{this} does not contain a {nameof(InputFieldDefinition)} with name '{name}'.");
 
         [GraphQLIgnore]
         public bool TryGetField(string name, [NotNullWhen(true)] out InputFieldDefinition? inputFieldDefinition)
@@ -38,4 +38,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 4791407932118527682
+// Source Hash Code: 16409686280612900560

@@ -3,7 +3,6 @@
 
 #nullable enable
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -29,7 +28,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public EnumValue GetValue(string name)
             => FindValue(Check.NotNull(name, nameof(name))) ??
-               throw new Exception($"{this} does not contain a {nameof(EnumValue)} with name '{name}'.");
+               throw new ItemNotFoundException($"{this} does not contain a {nameof(EnumValue)} with name '{name}'.");
 
         [GraphQLIgnore]
         public bool TryGetValue(string name, [NotNullWhen(true)] out EnumValue? enumValue)
@@ -52,7 +51,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public EnumValue GetValue(object value)
             => FindValue(Check.NotNull(value, nameof(value))) ??
-               throw new Exception($"{this} does not contain a {nameof(EnumValue)} with value '{value}'.");
+               throw new ItemNotFoundException($"{this} does not contain a {nameof(EnumValue)} with value '{value}'.");
 
         [GraphQLIgnore]
         public bool TryGetValue(object value, [NotNullWhen(true)] out EnumValue? enumValue)
@@ -61,4 +60,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 81261463593361688
+// Source Hash Code: 11283436566665434552

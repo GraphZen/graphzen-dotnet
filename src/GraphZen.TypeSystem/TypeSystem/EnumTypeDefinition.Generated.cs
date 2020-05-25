@@ -3,7 +3,6 @@
 
 #nullable enable
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -29,7 +28,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public EnumValueDefinition GetValue(string name)
             => FindValue(Check.NotNull(name, nameof(name))) ??
-               throw new Exception($"{this} does not contain a {nameof(EnumValueDefinition)} with name '{name}'.");
+               throw new ItemNotFoundException(
+                   $"{this} does not contain a {nameof(EnumValueDefinition)} with name '{name}'.");
 
         [GraphQLIgnore]
         public bool TryGetValue(string name, [NotNullWhen(true)] out EnumValueDefinition? enumValueDefinition)
@@ -38,4 +38,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 3309979234034442738
+// Source Hash Code: 1951449052172890496
