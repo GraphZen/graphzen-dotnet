@@ -29,6 +29,17 @@ namespace GraphZen.TypeSystem
             Schema = schema;
         }
 
+
+        public TypeIdentity(Type clrType, string name, SchemaDefinition schema)
+        {
+            ClrType = clrType;
+            _clrTypeConfigurationSource = ConfigurationSource.Explicit;
+            _nameConfigurationSource = ConfigurationSource.Explicit;
+            Name = name.IsValidGraphQLName() ? name : throw new InvalidNameException($"Cannot create Type Identity: \"{name}\" is not a valid GraphQL name.");
+            Schema = schema;
+        }
+
+
         public TypeIdentity(Type clrType, SchemaDefinition schema)
         {
             ClrType = clrType.GetEffectiveClrType();
@@ -50,9 +61,7 @@ namespace GraphZen.TypeSystem
 
         private SchemaDefinition Schema { get; }
 
-
-        public NamedTypeDefinition? Definition => Schema.Types.SingleOrDefault(_ => _.Identity == this);
-
+        public NamedTypeDefinition? Definition => Schema.FindType(this);
 
         public bool? IsInputType()
         {

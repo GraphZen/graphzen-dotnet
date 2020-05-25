@@ -176,10 +176,12 @@ namespace GraphZen.TypeSystem.Internal
                 : $"Cannot add {kind.ToDisplayStringLower()} named '{identity.Name}', an existing {existingType.Kind.ToDisplayStringLower()} already exists with that name.";
         }
 
-        public InternalUnionTypeBuilder? Union(Type clrType, string name, ConfigurationSource configurationSource) =>
-            CreateByNameOrType<UnionTypeDefinition, InternalUnionTypeBuilder>(clrType, name,
+        public InternalUnionTypeBuilder? Union(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            return AssertNotDuplicate<UnionTypeDefinition, InternalUnionTypeBuilder>(clrType, name,
                 () => Union(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Union(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
+        }
 
         public InternalUnionTypeBuilder? Union(Type clrType, ConfigurationSource configurationSource)
         {
@@ -254,7 +256,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalScalarTypeBuilder? Scalar(Type clrType, string name, ConfigurationSource configurationSource) =>
-            CreateByNameOrType<ScalarTypeDefinition, InternalScalarTypeBuilder>(clrType, name,
+            AssertNotDuplicate<ScalarTypeDefinition, InternalScalarTypeBuilder>(clrType, name,
                 () => Scalar(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Scalar(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
@@ -334,7 +336,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInterfaceTypeBuilder? Interface(Type clrType, string name,
             ConfigurationSource configurationSource)
         {
-            return CreateByNameOrType<InterfaceTypeDefinition, InternalInterfaceTypeBuilder>(clrType, name,
+            return AssertNotDuplicate<InterfaceTypeDefinition, InternalInterfaceTypeBuilder>(clrType, name,
                 () => Interface(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Interface(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
         }
@@ -401,10 +403,13 @@ namespace GraphZen.TypeSystem.Internal
             return Enum(new TypeIdentity(clrType, Definition), configurationSource);
         }
 
-        public InternalEnumTypeBuilder? Enum(Type clrType, string name, ConfigurationSource configurationSource) =>
-            CreateByNameOrType<EnumTypeDefinition, InternalEnumTypeBuilder>(clrType, name,
+        public InternalEnumTypeBuilder? Enum(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            var id = new TypeIdentity(name, Definition).SetClrType(clrType, name, configurationSource);
+            return AssertNotDuplicate<EnumTypeDefinition, InternalEnumTypeBuilder>(clrType, name,
                 () => Enum(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Enum(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
+        }
 
         public InternalEnumTypeBuilder? Enum(string name, ConfigurationSource configurationSource)
         {
@@ -475,7 +480,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalInputObjectTypeBuilder? InputObject(Type clrType, string name,
             ConfigurationSource configurationSource) =>
-            CreateByNameOrType<InputObjectTypeDefinition, InternalInputObjectTypeBuilder>(clrType, name,
+            AssertNotDuplicate<InputObjectTypeDefinition, InternalInputObjectTypeBuilder>(clrType, name,
                 () => InputObject(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => InputObject(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
@@ -576,26 +581,40 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource) =>
-            CreateByNameOrType<ObjectTypeDefinition, InternalObjectTypeBuilder>(clrType, name,
+        public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            return AssertNotDuplicate<ObjectTypeDefinition, InternalObjectTypeBuilder>(clrType, name,
                 () => Object(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Object(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
-        private TBuilder? CreateByNameOrType<T, TBuilder>(Type clrType, string name, Func<TBuilder?> createByName,
+        }
+
+        private TBuilder? AssertNotDuplicate<T, TBuilder>(Type clrType, string name, Func<TBuilder?> createByName,
             Func<TBuilder?> createByType)
             where TBuilder : AnnotatableMemberDefinitionBuilder<T>
             where T : NamedTypeDefinition
         {
-            if (Definition.TryGetType(name, out var named) && Definition.TryGetType(clrType, out var typed) &&
-                !named.Equals(typed))
+            var byName = Definition.FindType(name);
+            var byType = Definition.FindType<T>(clrType);
+            if (byType != null)
             {
-                throw new DuplicateItemException(
-                                            TypeSystemExceptionMessages.DuplicateItemException.CannotCreateTypeWithDuplicateNameAndType(
-                                                named.Kind, name,
-                                                clrType, named, typed));
+                if (byName != null)
+                {
+                    if (!byName.Equals(byType))
+                    {
+                        throw new DuplicateItemException(
+                            TypeSystemExceptionMessages.DuplicateItemException.CannotCreateTypeWithDuplicateNameAndType(
+                                byName.Kind, name,
+                                clrType, byName, byType));
+                    }
+
+                    return createByName();
+                }
+
+                return createByType();
             }
 
-            return createByType();
+            return createByName();
         }
 
 

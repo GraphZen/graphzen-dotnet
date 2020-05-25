@@ -492,41 +492,22 @@ namespace GraphZen.TypeSystem
             return _types.OfType<T>().Any(_ => _.Name == name);
         }
 
-        public bool HasType<T>(Type clrType) where T : NamedTypeDefinition
-        {
-            Check.NotNull(clrType, nameof(clrType));
-            return _types.OfType<T>().Any(_ => _.ClrType == clrType);
-        }
+        public bool HasType<T>(Type clrType) where T : NamedTypeDefinition => FindType<T>(clrType) != null;
 
 
-        public T? FindType<T>(string name) where T : NamedTypeDefinition
-        {
-            Check.NotNull(name, nameof(name));
-            return _types.OfType<T>().SingleOrDefault(_ => _.Name == name);
-        }
-
+        public T? FindType<T>(string name) where T : NamedTypeDefinition => FindTypeIdentity(name)?.Definition as T;
 
         public T? FindType<T>(Type clrType) where T : NamedTypeDefinition
         {
             Check.NotNull(clrType, nameof(clrType));
-            return _types.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType);
+            return _types.OfType<T>().FirstOrDefault(_ => _.ClrType == clrType);
         }
 
-
-        public T GetType<T>(string name) where T : NamedTypeDefinition
-        {
-            Check.NotNull(name, nameof(name));
-            return _types.OfType<T>().SingleOrDefault(_ => _.Name == name) ??
-                   throw new Exception($"No {typeof(T).Name} found named '{name}'.");
-        }
+        private T GetType<T>(string name) where T : NamedTypeDefinition => FindType(name) as T ?? throw new ItemNotFoundException($"No {typeof(T).Name} found named '{name}'.");
+        public NamedTypeDefinition GetType(string name) => GetType<NamedTypeDefinition>(name);
 
 
-        public T GetType<T>(Type clrType) where T : NamedTypeDefinition
-        {
-            Check.NotNull(clrType, nameof(clrType));
-            return _types.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType) ??
-                   throw new Exception($"No {typeof(T).Name} found with CLR type '{clrType}'.");
-        }
+        private T GetType<T>(Type clrType) where T : NamedTypeDefinition => FindType<T>(clrType) ?? throw new ItemNotFoundException($"No {typeof(T).Name} found with CLR type '{clrType}'.");
 
         public bool TryGetType(string name, [NotNullWhen(true)] out NamedTypeDefinition? type)
         {
@@ -536,13 +517,13 @@ namespace GraphZen.TypeSystem
 
         public bool TryGetType<T>(string name, [NotNullWhen(true)] out T? type) where T : NamedTypeDefinition
         {
-            type = FindTypeIdentity(name)?.Definition as T;
+            type = FindType(name) as T;
             return type != null;
         }
 
         public bool TryGetType<T>(Type clrType, [NotNullWhen(true)] out T? type) where T : NamedTypeDefinition
         {
-            type = _types.Values.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType);
+            type = FindType<T>(clrType);
             return type != null;
         }
 
@@ -689,7 +670,7 @@ namespace GraphZen.TypeSystem
 
         public Schema ToSchema()
         {
-            FinalizeTypes();
+            // FinalizeTypes();
             return new Schema(this);
         }
 

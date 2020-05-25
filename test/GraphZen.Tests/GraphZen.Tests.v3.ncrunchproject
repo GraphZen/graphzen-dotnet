@@ -1,0 +1,10 @@
+﻿<ProjectConfiguration>
+  <Settings>
+    <IgnoredTests>
+      <FixtureTestSelector>
+        <FixtureName>GraphZen.Tests.FixIndentTests</FixtureName>
+      </FixtureTestSelector>
+      <AllTestsSelector />
+    </IgnoredTests>
+  </Settings>
+</ProjectConfiguration>
