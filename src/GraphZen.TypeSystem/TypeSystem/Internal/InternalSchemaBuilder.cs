@@ -745,7 +745,7 @@ namespace GraphZen.TypeSystem.Internal
                 return null;
             }
 
-            var directive = Definition.FindDirective(clrType) ?? Definition.FindDirective(clrType.GetGraphQLName());
+            var directive = Definition.FindDirective(clrType) ?? Definition.FindDirective(clrType.GetGraphQLNameAnnotation());
 
             if (directive != null)
             {
@@ -811,7 +811,7 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public bool IgnoreType(Type clrType, ConfigurationSource configurationSource) =>
-            IgnoreType(clrType.GetGraphQLName(), configurationSource);
+            IgnoreType(clrType.GetGraphQLNameAnnotation(), configurationSource);
 
         public bool IgnoreType(string name, ConfigurationSource configurationSource)
         {

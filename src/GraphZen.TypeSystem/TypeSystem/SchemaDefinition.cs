@@ -32,6 +32,7 @@ namespace GraphZen.TypeSystem
 
         [GenDictionaryAccessors("name", nameof(TypeIdentity))]
         private readonly Dictionary<string, TypeIdentity> _typeIdentities = new Dictionary<string, TypeIdentity>();
+
         private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
         private ConfigurationSource? _mutationTypeConfigurationSource;
         private ConfigurationSource? _queryTypeConfigurationSource;
@@ -128,7 +129,7 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name) =>
-            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
+            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?) null;
 
         public IEnumerable<ObjectTypeDefinition> GetObjects(bool includeSpecTypes = false) =>
             _types.OfType<ObjectTypeDefinition>();
@@ -181,7 +182,7 @@ namespace GraphZen.TypeSystem
             _ignoredTypes.FindValueOrDefault(name);
 
         public ConfigurationSource? FindIgnoredTypeConfigurationSource(Type clrType) =>
-            FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName());
+            FindIgnoredTypeConfigurationSource(clrType.GetGraphQLNameAnnotation());
 
         // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
         private bool TryDefineFirstUndefinedType(TypeIdentity? prev, [NotNullWhen(true)] out TypeIdentity identity)
@@ -274,52 +275,8 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        /*
-                public TypeIdentity? FindTypeIdentity(TypeIdentity identity)
-                {
-                    var validIdentities = _typeIdentities.Values
-                        .Where(_ => _.Kind == null || identity.Kind == null || _.Kind == identity.Kind).ToList();
-                    var clrTypeAndName =
-                        validIdentities.SingleOrDefault(_ => _.ClrType == identity.ClrType && _.Name == identity.Name);
-                    if (clrTypeAndName != null)
-                    {
-                        return clrTypeAndName;
-                    }
 
-                    var nameOnly = validIdentities.SingleOrDefault(_ => _.Name == identity.Name);
-                    if (nameOnly != null)
-                    {
-                        if (identity.ClrType != null)
-                        {
-                            if (nameOnly.ClrType == null)
-                            {
-                                nameOnly.SetClrType(identity.ClrType, false, identity.GetClrTypeConfigurationSource()!.Value);
-                            }
-                            else if (nameOnly.ClrType != identity.ClrType)
-                            {
-                                throw new InvalidOperationException(
-                                    $"Found mismatched type identity {nameOnly} for identity {identity}");
-                            }
-                        }
-                    }
-
-
-                    return nameOnly;
-                }
-        */
-
-
-        public TypeIdentity? FindOverlappingTypeIdentity(TypeIdentity identity)
-        {
-            Check.NotNull(identity, nameof(identity));
-            var ids = _typeIdentities.Values.Where(_ => _.Overlaps(identity)).ToList();
-            if (ids.Count > 1)
-            {
-                throw new InvalidOperationException();
-            }
-
-            return ids.SingleOrDefault();
-        }
+        
 
         public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember)
         {
@@ -335,9 +292,7 @@ namespace GraphZen.TypeSystem
             }
 
             var named = typeNode.GetNamedType();
-
-            var identity = GetOverlappingOrAddTypeIdentity(new TypeIdentity(named.Name.Value, this)
-            );
+            var identity = GetOrAddTypeIdentity(named.Name.Value);
             return new TypeReference(identity, typeNode, referencingMember);
         }
 
@@ -345,30 +300,13 @@ namespace GraphZen.TypeSystem
         ) =>
             throw new NotImplementedException();
 
-        public TypeReference GetOrAddTypeReference(ParameterInfo parameter,
-            IMemberDefinition referencingMember
-        )
-        {
-            if (parameter.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
-            {
-                var identity = GetOverlappingOrAddTypeIdentity(
-                    new TypeIdentity(innerClrType, this)
-                );
-                return new TypeReference(identity, typeNode, referencingMember);
-            }
-
-            throw new NotImplementedException();
-        }
-
 
         public TypeReference GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
         )
         {
             if (property.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
             {
-                var identity = GetOverlappingOrAddTypeIdentity(
-                    new TypeIdentity(innerClrType, this)
-                );
+                var identity = GetOrAddTypeIdentity(innerClrType);
 
                 return new TypeReference(identity, typeNode, referencingMember);
             }
@@ -381,21 +319,14 @@ namespace GraphZen.TypeSystem
         {
             if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType, canBeNull, itemCanBeNull))
             {
-                var identity = GetOverlappingOrAddTypeIdentity(
-                    new TypeIdentity(innerClrType, this)
-                );
+                var identity = GetOrAddTypeIdentity(innerClrType);
                 return new TypeReference(identity, typeNode, referencingMember);
             }
 
             throw new NotImplementedException();
         }
 
-        private TypeIdentity GetOverlappingOrAddTypeIdentity(TypeIdentity identity
-        )
-        {
-            Check.NotNull(identity, nameof(identity));
-            return FindOverlappingTypeIdentity(identity) ?? AddTypeIdentity(identity);
-        }
+        
 
         /*
         private TypeIdentity GetOrAddTypeIdentity(TypeIdentity identity)
@@ -405,27 +336,23 @@ namespace GraphZen.TypeSystem
         }
         */
 
-        internal TypeIdentity AddTypeIdentity(TypeIdentity identity)
-        {
-            if (identity.Name == "Boolean")
-            {
-            }
 
-            _typeIdentities[identity.Name] = identity;
-            return identity;
-        }
+        internal TypeIdentity AddTypeIdentity(string name) => AddTypeIdentity(new TypeIdentity(name, this));
+        internal TypeIdentity AddTypeIdentity(Type clrType) => AddTypeIdentity(new TypeIdentity(clrType, this));
+
+        internal TypeIdentity AddTypeIdentity(TypeIdentity identity) => _typeIdentities[identity.Name] = identity;
 
 
         public UnionTypeDefinition AddUnion(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = FindPossibleOutputTypeIdentity(clrType) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
+            var id = GetOrAddTypeIdentity(clrType);
             var unionType = new UnionTypeDefinition(id, this, configurationSource);
             return AddUnion(unionType);
         }
 
         public UnionTypeDefinition AddUnion(string name, ConfigurationSource configurationSource)
         {
-            var id = FindPossibleOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
+            var id = GetOrAddTypeIdentity(name);
             var unionType = new UnionTypeDefinition(id, this, configurationSource);
             return AddUnion(unionType);
         }
@@ -439,14 +366,14 @@ namespace GraphZen.TypeSystem
 
         public ScalarTypeDefinition AddScalar(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = FindPossibleInputOrOutputTypeIdentity(clrType) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
+            var id = GetOrAddTypeIdentity(clrType);
             var scalarType = new ScalarTypeDefinition(id, this, configurationSource);
             return AddScalar(scalarType);
         }
 
         public ScalarTypeDefinition AddScalar(string name, ConfigurationSource configurationSource)
         {
-            var id = FindPossibleInputOrOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
+            var id = GetOrAddTypeIdentity(name);
             var scalarType = new ScalarTypeDefinition(id, this, configurationSource);
             return AddScalar(scalarType);
         }
@@ -459,14 +386,14 @@ namespace GraphZen.TypeSystem
 
         public InterfaceTypeDefinition AddInterface(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = FindPossibleOutputTypeIdentity(clrType) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
+            var id = GetOrAddTypeIdentity(clrType);
             var interfaceType = new InterfaceTypeDefinition(id, this, configurationSource);
             return AddInterface(interfaceType);
         }
 
         public InterfaceTypeDefinition AddInterface(string name, ConfigurationSource configurationSource)
         {
-            var id = FindPossibleOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
+            var id = GetOrAddTypeIdentity(name);
             var interfaceType = new InterfaceTypeDefinition(id, this, configurationSource);
             return AddInterface(interfaceType);
         }
@@ -479,14 +406,14 @@ namespace GraphZen.TypeSystem
 
         public EnumTypeDefinition AddEnum(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = FindPossibleInputOrOutputTypeIdentity(clrType) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
+            var id = GetOrAddTypeIdentity(clrType);
             var enumType = new EnumTypeDefinition(id, this, configurationSource);
             return AddEnum(enumType);
         }
 
         public EnumTypeDefinition AddEnum(string name, ConfigurationSource configurationSource)
         {
-            var id = FindPossibleInputOrOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
+            var id = GetOrAddTypeIdentity(name);
             var enumType = new EnumTypeDefinition(id, this, configurationSource);
             return AddEnum(enumType);
         }
@@ -499,14 +426,14 @@ namespace GraphZen.TypeSystem
 
         public InputObjectTypeDefinition AddInputObject(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = FindPossibleInputTypeIdentity(clrType) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
+            var id = GetOrAddTypeIdentity(clrType);
             var inputObjectType = new InputObjectTypeDefinition(id, this, configurationSource);
             return AddInputObject(inputObjectType);
         }
 
         public InputObjectTypeDefinition AddInputObject(string name, ConfigurationSource configurationSource)
         {
-            var id = new TypeIdentity(name, this);
+            var id = GetOrAddTypeIdentity(name);
             var inputObjectType = new InputObjectTypeDefinition(id, this, configurationSource);
             return AddInputObject(inputObjectType);
         }
@@ -519,14 +446,14 @@ namespace GraphZen.TypeSystem
 
         public ObjectTypeDefinition AddObject(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = new TypeIdentity(clrType, this);
+            var id = GetOrAddTypeIdentity(clrType);
             var objectType = new ObjectTypeDefinition(id, this, configurationSource);
             return AddObject(objectType);
         }
 
         public ObjectTypeDefinition AddObject(string name, ConfigurationSource configurationSource)
         {
-            var id = new TypeIdentity(name, this);
+            var id = GetOrAddTypeIdentity(name);
             var objectType = new ObjectTypeDefinition(id, this, configurationSource);
             return AddObject(objectType);
         }
@@ -538,7 +465,7 @@ namespace GraphZen.TypeSystem
         }
 
         public void IgnoreDirective(Type clrType, ConfigurationSource configurationSource) =>
-            IgnoreDirective(clrType.GetGraphQLName(), configurationSource);
+            IgnoreDirective(clrType.GetGraphQLNameAnnotation(), configurationSource);
 
         public void IgnoreDirective(string name, ConfigurationSource configurationSource)
         {
@@ -548,7 +475,7 @@ namespace GraphZen.TypeSystem
         }
 
         public void UnignoreDirective(Type clrType, ConfigurationSource configurationSource) =>
-            UnignoreDirective(clrType.GetGraphQLName(), configurationSource);
+            UnignoreDirective(clrType.GetGraphQLNameAnnotation(), configurationSource);
 
         public void UnignoreDirective(string name, ConfigurationSource configurationSource)
         {
@@ -572,7 +499,7 @@ namespace GraphZen.TypeSystem
 
         public void IgnoreType(Type clrType, ConfigurationSource configurationSource)
         {
-            IgnoreType(clrType.GetGraphQLName(), configurationSource);
+            IgnoreType(clrType.GetGraphQLNameAnnotation(), configurationSource);
         }
 
 
@@ -583,7 +510,7 @@ namespace GraphZen.TypeSystem
 
         public void UnignoreType(Type clrType)
         {
-            UnignoreType(clrType.GetGraphQLName());
+            UnignoreType(clrType.GetGraphQLNameAnnotation());
         }
 
 
@@ -700,7 +627,7 @@ namespace GraphZen.TypeSystem
                 return id;
             }
 
-            if (clrType.TryGetValidGraphQLNameAnnotation(out var name))
+            if (clrType.TryGetGraphQLName(out var name))
             {
                 return FindPossibleOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
             }
@@ -710,19 +637,32 @@ namespace GraphZen.TypeSystem
 
         public TypeIdentity? FindPossibleOutputTypeIdentity(Type clrType)
         {
-            var knownOutputType = _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsOutputType() == true);
+            var knownOutputType =
+                _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsOutputType() == true);
             if (knownOutputType != null)
             {
                 return knownOutputType;
-
             }
+
             return _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsOutputType() != false);
+        }
+
+
+        public TypeIdentity? FindPossibleInputTypeIdentity(string name)
+        {
+            if (_typeIdentities.TryGetValue(name, out var id) && id.IsInputType() != false)
+            {
+                return id;
+            }
+
+            return null;
         }
 
 
         public TypeIdentity? FindPossibleInputTypeIdentity(Type clrType)
         {
-            var knownInputType = _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsInputType() == true);
+            var knownInputType =
+                _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsInputType() == true);
             if (knownInputType != null)
             {
                 return knownInputType;
@@ -739,33 +679,47 @@ namespace GraphZen.TypeSystem
                 return id;
             }
 
-            if (clrType.TryGetValidGraphQLNameAnnotation(out var name))
+            if (clrType.TryGetGraphQLName(out var name))
             {
                 return FindPossibleInputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
             }
 
             return AddTypeIdentity(new TypeIdentity(clrType, this));
-
         }
 
-        public TypeIdentity GetOrAddOutputTypeIdentity(string name)
-        {
-            return FindPossibleOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
-        }
+        public TypeIdentity GetOrAddOutputTypeIdentity(string name) =>
+            FindPossibleOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
 
         public TypeIdentity? FindPossibleOutputTypeIdentity(string name) =>
             _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType() != false);
 
-        public TypeIdentity? FindPossibleInputOrOutputTypeIdentity(string name) =>
-                    _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType() != false && _.IsInputType() != false);
+        public TypeIdentity? FindTypeIdentity(string name) => _typeIdentities.TryGetValue(name, out var id) ? id : null;
+        public TypeIdentity GetOrAddTypeIdentity(string name) => FindTypeIdentity(name) ?? AddTypeIdentity(name);
+        public TypeIdentity GetOrAddTypeIdentity(Type clrType) => FindTypeIdentity(clrType) ?? AddTypeIdentity(clrType);
 
-        public TypeIdentity? FindPossibleInputOrOutputTypeIdentity(Type clrType) => throw new InvalidOperationException("");
+        public TypeIdentity? FindTypeIdentity(Type clrType) =>
+            _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType);
 
-        public TypeIdentity? FindPossibleInputTypeIdentity(string name) =>
-            _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsInputType() != false);
+        public TypeIdentity? FindPossibleInputAndOutputTypeIdentity(Type clrType)
+        {
+            var knownInputAndOutputTypeId = _typeIdentities.Values.SingleOrDefault(_ =>
+                _.ClrType == clrType && _.IsInputType() == true && _.IsOutputType() == true);
 
-        public TypeIdentity GetOrAddInputTypeIdentity(string name) =>
-            FindPossibleInputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
+            if (knownInputAndOutputTypeId != null)
+            {
+                return knownInputAndOutputTypeId;
+            }
+
+            var knownPossibleInputAndOutputTypeId = _typeIdentities.Values.SingleOrDefault(_ =>
+                _.ClrType == clrType && (_.IsInputType() != false || _.IsOutputType() != false));
+
+            if (knownPossibleInputAndOutputTypeId != null)
+            {
+                return knownPossibleInputAndOutputTypeId;
+            }
+
+            return FindTypeIdentity(clrType.GetGraphQLNameAnnotation());
+        }
 
         public NamedTypeDefinition? FindOutputType(Type clrType)
         {
@@ -902,28 +856,28 @@ namespace GraphZen.TypeSystem
                 switch (type)
                 {
                     case FieldsDefinition hasOutputFields:
+                    {
+                        foreach (var field in hasOutputFields.GetFields())
                         {
-                            foreach (var field in hasOutputFields.GetFields())
+                            yield return field.FieldType;
+
+                            foreach (var arg in field.GetArguments())
                             {
-                                yield return field.FieldType;
-
-                                foreach (var arg in field.GetArguments())
-                                {
-                                    yield return arg.ArgumentType;
-                                }
+                                yield return arg.ArgumentType;
                             }
-
-                            break;
                         }
+
+                        break;
+                    }
                     case InputObjectTypeDefinition hasInputFields:
+                    {
+                        foreach (var field in hasInputFields.GetFields())
                         {
-                            foreach (var field in hasInputFields.GetFields())
-                            {
-                                yield return field.FieldType;
-                            }
-
-                            break;
+                            yield return field.FieldType;
                         }
+
+                        break;
+                    }
                 }
             }
         }

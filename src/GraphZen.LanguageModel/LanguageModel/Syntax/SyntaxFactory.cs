@@ -18,7 +18,7 @@ namespace GraphZen.LanguageModel
 
         [DebuggerStepThrough]
         public static NamedTypeSyntax NamedType(Type clrType) =>
-            new NamedTypeSyntax(Name(Check.NotNull(clrType, nameof(clrType)).GetGraphQLName()));
+            new NamedTypeSyntax(Name(Check.NotNull(clrType, nameof(clrType)).GetGraphQLNameAnnotation()));
 
         [DebuggerStepThrough]
         public static BooleanValueSyntax BooleanValue(bool value) => BooleanValueSyntax.From(value);

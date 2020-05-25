@@ -207,7 +207,7 @@ namespace GraphZen.TypeSystem
 
         public ObjectTypeBuilder<TObject, TContext> IgnoreInterface<T>()
         {
-            Builder.IgnoreInterface(typeof(T).GetGraphQLName(), ConfigurationSource.Explicit);
+            Builder.IgnoreInterface(typeof(T).GetGraphQLNameAnnotation(), ConfigurationSource.Explicit);
 
             return this;
         }
@@ -215,7 +215,7 @@ namespace GraphZen.TypeSystem
         public ObjectTypeBuilder<TObject, TContext> IgnoreInterface(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
-            Builder.IgnoreInterface(clrType.GetGraphQLName(), ConfigurationSource.Explicit);
+            Builder.IgnoreInterface(clrType.GetGraphQLNameAnnotation(), ConfigurationSource.Explicit);
             return this;
         }
 

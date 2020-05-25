@@ -11,19 +11,7 @@ namespace GraphZen.LanguageModel.Internal
 {
     public static class LanguageModelClrTypeExtensions
     {
-        public static bool TryGetValidGraphQLNameAnnotation(this Type clrTYpe, [NotNullWhen(true)] out string? name,
-            object? source = null)
-        {
-            name = default;
-            if (clrTYpe.TryGetGraphQLNameWithoutValidation(out var maybeInvalidName, source) &&
-                maybeInvalidName.IsValidGraphQLName())
-            {
-                name = maybeInvalidName;
-                return true;
-            }
 
-            return false;
-        }
         public static string GetGraphQLName(this Type clrType, Action<string> onInvalidNameAnnotation,
             Action<string> onInvalidClrTypeName)
         {
@@ -48,9 +36,9 @@ namespace GraphZen.LanguageModel.Internal
             return clrType.Name;
         }
 
-        public static string GetGraphQLName(this Type clrType, object? source = null)
+        public static string GetGraphQLNameAnnotation(this Type clrType, object? source = null)
         {
-            if (clrType.TryGetGraphQLNameWithoutValidation(out var maybeInvalidName, source))
+            if (clrType.TryGetGraphQLName(out var maybeInvalidName, source))
             {
                 if (maybeInvalidName.IsValidGraphQLName())
                 {
@@ -64,7 +52,7 @@ namespace GraphZen.LanguageModel.Internal
             throw new Exception($"Failed to get a valid GraphQL name for CLR type '{clrType}'.");
         }
 
-        private static bool TryGetGraphQLNameWithoutValidation(this Type clrType, [NotNullWhen(true)] out string? name,
+        public static bool TryGetGraphQLName(this Type clrType, [NotNullWhen(true)] out string? name,
             object? source = null)
         {
             Check.NotNull(clrType, nameof(clrType));
@@ -96,9 +84,8 @@ namespace GraphZen.LanguageModel.Internal
             return true;
         }
 
+        
 
-        public static bool HasValidGraphQLName(this Type clrType, object? source = null) =>
-            clrType.TryGetValidGraphQLNameAnnotation(out _, source);
 
 
         public static bool TryGetGraphQLNameFromDataAnnotation(this Type clrType, [NotNullWhen(true)] out string? name)
@@ -107,5 +94,6 @@ namespace GraphZen.LanguageModel.Internal
                 .SingleOrDefault()?.Name;
             return name != null;
         }
+
     }
 }

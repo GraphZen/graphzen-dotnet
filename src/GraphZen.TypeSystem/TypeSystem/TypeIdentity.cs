@@ -291,47 +291,7 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
 
-        private bool Equals(TypeIdentity other) => Overlaps(other);
 
-        public override bool Equals(object? obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
-            if (obj.GetType() != GetType())
-            {
-                return false;
-            }
-
-            return Equals((TypeIdentity)obj);
-        }
-
-        // ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
-        public override int GetHashCode() => base.GetHashCode();
-
-
-        public bool Overlaps(TypeIdentity identity)
-        {
-            Check.NotNull(identity, nameof(identity));
-
-            if (ClrType != null && identity.ClrType != null)
-            {
-                if (IsInputType() == true && identity.IsInputType() == true
-                    || IsOutputType() == true && identity.IsOutputType() == true)
-                {
-                    return ClrType == identity.ClrType;
-                }
-            }
-
-            return string.Equals(Name, identity.Name);
-        }
 
         public override string ToString() => DebuggerDisplay;
     }

@@ -31,10 +31,10 @@ namespace GraphZen.TypeSystem.Internal
         {
             if (clrType.IsIgnoredByDataAnnotation())
             {
-                IgnoreInterface(clrType.GetGraphQLName(), ConfigurationSource.DataAnnotation);
+                IgnoreInterface(clrType.GetGraphQLNameAnnotation(), ConfigurationSource.DataAnnotation);
             }
 
-            if (IsInterfaceIgnored(clrType.GetGraphQLName(), configurationSource))
+            if (IsInterfaceIgnored(clrType.GetGraphQLNameAnnotation(), configurationSource))
             {
                 return false;
             }
@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (existing != null)
             {
-                Definition.IgnoreInterface(clrType.GetGraphQLName(), ConfigurationSource.Convention);
+                Definition.IgnoreInterface(clrType.GetGraphQLNameAnnotation(), ConfigurationSource.Convention);
                 return false;
             }
 

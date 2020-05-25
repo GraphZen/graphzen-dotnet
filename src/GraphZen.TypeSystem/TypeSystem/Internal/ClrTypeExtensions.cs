@@ -238,7 +238,9 @@ namespace GraphZen.TypeSystem.Internal
                 return false;
             }
 
-            return clrType.HasValidGraphQLName();
+
+
+            return clrType.TryGetGraphQLName(out var name) && name.IsValidGraphQLName();
         }
 
         public static IEnumerable<MemberInfo> GetTargetingInterfaceProperties(this PropertyInfo property)

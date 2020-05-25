@@ -307,7 +307,7 @@ namespace GraphZen.QueryEngine
             ResolveInfo info,
             IAbstractType abstractType)
         {
-            var typeName = value?.GetType().GetGraphQLName(value);
+            var typeName = value?.GetType().GetGraphQLNameAnnotation(value);
             return typeName;
 
             /*

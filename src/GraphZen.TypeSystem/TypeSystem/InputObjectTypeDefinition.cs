@@ -259,7 +259,7 @@ namespace GraphZen.TypeSystem
             }
 
             var fieldTypeName = typeNode.GetNamedType().Name.Value;
-            var fieldTypeIdentity = Schema.GetOrAddInputTypeIdentity(fieldTypeName);
+            var fieldTypeIdentity = Schema.GetOrAddTypeIdentity(fieldTypeName);
 
 
             field = new InputFieldDefinition(name, fieldTypeIdentity,

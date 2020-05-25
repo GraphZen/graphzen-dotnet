@@ -72,7 +72,7 @@ namespace GraphZen.TypeSystem
                 }
                 else
                 {
-                    name = clrType.GetGraphQLName();
+                    name = clrType.GetGraphQLNameAnnotation();
                     _nameConfigurationSource = ConfigurationSource.Convention;
                 }
             }
@@ -340,7 +340,7 @@ namespace GraphZen.TypeSystem
         {
             var typeSyntax = Schema.Builder.Parser.ParseType(type);
             var typeName = typeSyntax.GetNamedType().Name.Value;
-            var typeIdentity = Schema.GetOrAddInputTypeIdentity(typeName);
+            var typeIdentity = Schema.GetOrAddTypeIdentity(typeName);
             var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema,
                 configurationSource, this, null);
             AddArgument(argument);
