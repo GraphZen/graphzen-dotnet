@@ -29,23 +29,29 @@ namespace GraphZen.TypeSystem.Internal
         public override InternalSchemaBuilder SchemaBuilder => this;
 
 
-        public MemberDefinitionBuilder? Type(TypeReference reference)
+        public bool DefineType(TypeReference reference)
         {
             if (reference.Identity.Definition != null)
             {
-                return null;
+                throw new InvalidOperationException("type is already defined");
             }
 
             if (reference.Identity.ClrType == null)
             {
-                return Scalar(reference.Identity.Name, reference.GetConfigurationSource());
+                return Scalar(reference.Identity.Name, reference.GetConfigurationSource()) != null;
             }
 
-            return Type(reference.Identity.ClrType, reference.Identity.IsInputType(), reference.Identity.IsOutputType());
+            if (Schema.TryGetTypeKind(reference.Identity.ClrType, reference.Identity.IsInputType(), reference.Identity.IsOutputType(), out var kind, out _))
+            {
+                return Type(reference.Identity.ClrType, kind, ConfigurationSource.Convention) != null;
+            }
+
+            return false;
         }
 
         public MemberDefinitionBuilder? Type(Type clrType, bool? isInputType, bool? isOutputType)
         {
+
             if (Schema.TryGetTypeKind(clrType, isInputType, isOutputType, out var kind, out _))
             {
                 return Type(clrType, kind, ConfigurationSource.Convention);
@@ -178,7 +184,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalUnionTypeBuilder? Union(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            return AssertNotDuplicate<UnionTypeDefinition, InternalUnionTypeBuilder>(clrType, name,
+            return CreateByNameOrType<UnionTypeDefinition, InternalUnionTypeBuilder>(clrType, name,
                 () => Union(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Union(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
         }
@@ -256,7 +262,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalScalarTypeBuilder? Scalar(Type clrType, string name, ConfigurationSource configurationSource) =>
-            AssertNotDuplicate<ScalarTypeDefinition, InternalScalarTypeBuilder>(clrType, name,
+            CreateByNameOrType<ScalarTypeDefinition, InternalScalarTypeBuilder>(clrType, name,
                 () => Scalar(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Scalar(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
@@ -336,7 +342,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInterfaceTypeBuilder? Interface(Type clrType, string name,
             ConfigurationSource configurationSource)
         {
-            return AssertNotDuplicate<InterfaceTypeDefinition, InternalInterfaceTypeBuilder>(clrType, name,
+            return CreateByNameOrType<InterfaceTypeDefinition, InternalInterfaceTypeBuilder>(clrType, name,
                 () => Interface(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Interface(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
         }
@@ -405,8 +411,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalEnumTypeBuilder? Enum(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            var id = new TypeIdentity(name, Definition).SetClrType(clrType, name, configurationSource);
-            return AssertNotDuplicate<EnumTypeDefinition, InternalEnumTypeBuilder>(clrType, name,
+            return CreateByNameOrType<EnumTypeDefinition, InternalEnumTypeBuilder>(clrType, name,
                 () => Enum(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Enum(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
         }
@@ -480,7 +485,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalInputObjectTypeBuilder? InputObject(Type clrType, string name,
             ConfigurationSource configurationSource) =>
-            AssertNotDuplicate<InputObjectTypeDefinition, InternalInputObjectTypeBuilder>(clrType, name,
+            CreateByNameOrType<InputObjectTypeDefinition, InternalInputObjectTypeBuilder>(clrType, name,
                 () => InputObject(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => InputObject(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
@@ -583,13 +588,13 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            return AssertNotDuplicate<ObjectTypeDefinition, InternalObjectTypeBuilder>(clrType, name,
+            return CreateByNameOrType<ObjectTypeDefinition, InternalObjectTypeBuilder>(clrType, name,
                 () => Object(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Object(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
         }
 
-        private TBuilder? AssertNotDuplicate<T, TBuilder>(Type clrType, string name, Func<TBuilder?> createByName,
+        private TBuilder? CreateByNameOrType<T, TBuilder>(Type clrType, string name, Func<TBuilder?> createByName,
             Func<TBuilder?> createByType)
             where TBuilder : AnnotatableMemberDefinitionBuilder<T>
             where T : NamedTypeDefinition

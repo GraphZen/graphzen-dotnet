@@ -30,7 +30,8 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public TypeIdentity(Type clrType, string name, SchemaDefinition schema)
+        /*
+        private TypeIdentity(Type clrType, string name, SchemaDefinition schema)
         {
             ClrType = clrType;
             _clrTypeConfigurationSource = ConfigurationSource.Explicit;
@@ -38,6 +39,7 @@ namespace GraphZen.TypeSystem
             Name = name.IsValidGraphQLName() ? name : throw new InvalidNameException($"Cannot create Type Identity: \"{name}\" is not a valid GraphQL name.");
             Schema = schema;
         }
+        */
 
 
         public TypeIdentity(Type clrType, SchemaDefinition schema)

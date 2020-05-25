@@ -132,15 +132,15 @@ namespace GraphZen.TypeSystem
             _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
 
         public IEnumerable<ObjectTypeDefinition> GetObjects(bool includeSpecTypes = false) =>
-            _types.OfType<ObjectTypeDefinition>();
+            Types.OfType<ObjectTypeDefinition>();
 
-        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _types.OfType<InterfaceTypeDefinition>();
+        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => Types.OfType<InterfaceTypeDefinition>();
 
-        public IEnumerable<UnionTypeDefinition> GetUnions() => _types.OfType<UnionTypeDefinition>();
+        public IEnumerable<UnionTypeDefinition> GetUnions() => Types.OfType<UnionTypeDefinition>();
 
-        public IEnumerable<ScalarTypeDefinition> GetScalars() => _types.OfType<ScalarTypeDefinition>();
+        public IEnumerable<ScalarTypeDefinition> GetScalars() => Types.OfType<ScalarTypeDefinition>();
 
-        public IEnumerable<EnumTypeDefinition> GetEnums() => _types.OfType<EnumTypeDefinition>();
+        public IEnumerable<EnumTypeDefinition> GetEnums() => Types.OfType<EnumTypeDefinition>();
 
 
         IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecTypes) =>
@@ -154,7 +154,7 @@ namespace GraphZen.TypeSystem
 
         IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums() => GetEnums();
 
-        public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => _types.OfType<InputObjectTypeDefinition>();
+        public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => Types.OfType<InputObjectTypeDefinition>();
 
         IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.GetInputObjects() =>
             GetInputObjects();
@@ -243,19 +243,40 @@ namespace GraphZen.TypeSystem
         }
 
 
-        private void FinalizeTypes()
-        {
-            while (TryGetUndefinedTypeReference(out var reference))
-            {
-                Builder.Type(reference);
-            }
-        }
 
-        private bool TryGetUndefinedTypeReference(out TypeReference reference)
-        {
-            reference = this.GetTypeReferences().FirstOrDefault(r => r.Identity.Definition == null);
-            return reference != null;
-        }
+        /*
+                private bool TryDefineFirstUndefinedType(TypeIdentity? prev, [NotNullWhen(true)] out TypeIdentity? identity)
+                {
+                    var typeRefMissingIdentityDef = GetTypeReferences()
+                        .FirstOrDefault(_ => _.Identity.Definition == null);
+
+                    if (typeRefMissingIdentityDef == null)
+                    {
+                        return false;
+                    }
+
+                    Builder.Type(typeIdentiMi)
+
+
+
+                    identity = undefined.FirstOrDefault()?.Identity;
+
+
+                    if (identity != null)
+                    {
+                        if (Builder.Type(identity)?.Definition is INamedTypeDefinition def &&
+                            identity.Definition == null)
+                        {
+                            identity.Definition = def;
+                        }
+
+                        return identity.Definition != null;
+                    }
+
+                    return false;
+                }
+        */
+        
 
 
         public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember, ConfigurationSource configurationSource)
@@ -486,11 +507,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public bool HasType<T>(string name) where T : NamedTypeDefinition
-        {
-            Check.NotNull(name, nameof(name));
-            return _types.OfType<T>().Any(_ => _.Name == name);
-        }
+        public bool HasType<T>(string name) where T : NamedTypeDefinition => FindType<T>(name) != null;
 
         public bool HasType<T>(Type clrType) where T : NamedTypeDefinition => FindType<T>(clrType) != null;
 
@@ -500,7 +517,7 @@ namespace GraphZen.TypeSystem
         public T? FindType<T>(Type clrType) where T : NamedTypeDefinition
         {
             Check.NotNull(clrType, nameof(clrType));
-            return _types.OfType<T>().FirstOrDefault(_ => _.ClrType == clrType);
+            return _types.Values.OfType<T>().FirstOrDefault(_ => _.ClrType == clrType);
         }
 
         private T GetType<T>(string name) where T : NamedTypeDefinition => FindType(name) as T ?? throw new ItemNotFoundException($"No {typeof(T).Name} found named '{name}'.");
@@ -670,9 +687,24 @@ namespace GraphZen.TypeSystem
 
         public Schema ToSchema()
         {
-            // FinalizeTypes();
+            void FinalizeTypes()
+            {
+                TypeReference? GetFirstUndefinedTypeReference() => GetTypeReferences()
+                                .FirstOrDefault(_ => _.Identity.Definition == null);
+
+                var undefined = GetFirstUndefinedTypeReference();
+                while (undefined != null)
+                {
+                    Builder.DefineType(undefined);
+                    undefined = GetFirstUndefinedTypeReference();
+                }
+            }
+
+            FinalizeTypes();
             return new Schema(this);
         }
+
+
 
         public IEnumerable<TypeIdentity> GetTypeIdentities(bool includeSpecTypes = false)
         {
@@ -779,7 +811,6 @@ namespace GraphZen.TypeSystem
             {
                 yield return directiveArg.ArgumentType;
             }
-
 
             foreach (var type in _types.Values.Where(_ => !_.IsSpec))
             {
