@@ -84,7 +84,7 @@ namespace GraphZen.LanguageModel.Internal
             return true;
         }
 
-        
+
 
 
 

@@ -245,6 +245,29 @@ namespace GraphZen.TypeSystem
             => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out directiveDefinition);
 
         #endregion
+
+        #region DictionaryAccessorGenerator
+
+        [GraphQLIgnore]
+        public TypeIdentity? FindTypeIdentity(string name)
+            => _typeIdentities.TryGetValue(Check.NotNull(name, nameof(name)), out var typeIdentity)
+                ? typeIdentity
+                : null;
+
+        [GraphQLIgnore]
+        public bool HasTypeIdentity(string name)
+            => _typeIdentities.ContainsKey(Check.NotNull(name, nameof(name)));
+
+        [GraphQLIgnore]
+        public TypeIdentity GetTypeIdentity(string name)
+            => FindTypeIdentity(Check.NotNull(name, nameof(name))) ??
+               throw new ItemNotFoundException($"{this} does not contain a {nameof(TypeIdentity)} with name '{name}'.");
+
+        [GraphQLIgnore]
+        public bool TryGetTypeIdentity(string name, [NotNullWhen(true)] out TypeIdentity? typeIdentity)
+            => _typeIdentities.TryGetValue(Check.NotNull(name, nameof(name)), out typeIdentity);
+
+        #endregion
     }
 }
-// Source Hash Code: 2976726479427653331
+// Source Hash Code: 8486950285032902004

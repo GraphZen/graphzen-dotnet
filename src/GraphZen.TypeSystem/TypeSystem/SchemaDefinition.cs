@@ -129,7 +129,7 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name) =>
-            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?) null;
+            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
 
         public IEnumerable<ObjectTypeDefinition> GetObjects(bool includeSpecTypes = false) =>
             _types.OfType<ObjectTypeDefinition>();
@@ -276,8 +276,6 @@ namespace GraphZen.TypeSystem
         }
 
 
-        
-
         public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember)
         {
             TypeSyntax typeNode;
@@ -325,16 +323,6 @@ namespace GraphZen.TypeSystem
 
             throw new NotImplementedException();
         }
-
-        
-
-        /*
-        private TypeIdentity GetOrAddTypeIdentity(TypeIdentity identity)
-        {
-            Check.NotNull(identity, nameof(identity));
-            return FindTypeIdentity(identity) ?? AddTypeIdentity(identity);
-        }
-        */
 
 
         internal TypeIdentity AddTypeIdentity(string name) => AddTypeIdentity(new TypeIdentity(name, this));
@@ -556,9 +544,6 @@ namespace GraphZen.TypeSystem
                    throw new Exception($"No {typeof(T).Name} found with CLR type '{clrType}'.");
         }
 
-        public bool TryGetTypeIdentity(string name, [NotNullWhen(true)] out TypeIdentity? identity) =>
-            _typeIdentities.TryGetValue(name, out identity);
-
         public bool TryGetType(string name, [NotNullWhen(true)] out NamedTypeDefinition? type)
         {
             Check.NotNull(name, nameof(name));
@@ -693,7 +678,6 @@ namespace GraphZen.TypeSystem
         public TypeIdentity? FindPossibleOutputTypeIdentity(string name) =>
             _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType() != false);
 
-        public TypeIdentity? FindTypeIdentity(string name) => _typeIdentities.TryGetValue(name, out var id) ? id : null;
         public TypeIdentity GetOrAddTypeIdentity(string name) => FindTypeIdentity(name) ?? AddTypeIdentity(name);
         public TypeIdentity GetOrAddTypeIdentity(Type clrType) => FindTypeIdentity(clrType) ?? AddTypeIdentity(clrType);
 
@@ -856,28 +840,28 @@ namespace GraphZen.TypeSystem
                 switch (type)
                 {
                     case FieldsDefinition hasOutputFields:
-                    {
-                        foreach (var field in hasOutputFields.GetFields())
                         {
-                            yield return field.FieldType;
-
-                            foreach (var arg in field.GetArguments())
+                            foreach (var field in hasOutputFields.GetFields())
                             {
-                                yield return arg.ArgumentType;
+                                yield return field.FieldType;
+
+                                foreach (var arg in field.GetArguments())
+                                {
+                                    yield return arg.ArgumentType;
+                                }
                             }
-                        }
 
-                        break;
-                    }
+                            break;
+                        }
                     case InputObjectTypeDefinition hasInputFields:
-                    {
-                        foreach (var field in hasInputFields.GetFields())
                         {
-                            yield return field.FieldType;
-                        }
+                            foreach (var field in hasInputFields.GetFields())
+                            {
+                                yield return field.FieldType;
+                            }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
         }
