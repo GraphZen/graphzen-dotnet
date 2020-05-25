@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem.Tests
             Schema.Create(_ =>
             {
                 _.InputObject("Foo");
+                _.GetDefinition().GetTypeReferences() .Where(r => r.Identity.ToString().Contains("unknown output type Boolean")).Dump();
+                _.GetDefinition().GetTypeIdentities() .Where(r => r.ToString().Contains("unknown output type Boolean")).Dump();
                 var ids = _.GetDefinition().GetTypeIdentities().Dump("ids", true).ToList();
                 ids.Count.Should().Be(1);
                 var fooId = ids.Single();

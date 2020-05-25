@@ -340,12 +340,8 @@ namespace GraphZen.TypeSystem
         }
 
         public TypeReference GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
-        )
-        {
-
-
+        ) =>
             throw new NotImplementedException();
-        }
 
         public TypeReference GetOrAddTypeReference(ParameterInfo parameter,
             IMemberDefinition referencingMember
@@ -355,7 +351,6 @@ namespace GraphZen.TypeSystem
             {
                 var identity = GetOverlappingOrAddTypeIdentity(
                     new TypeIdentity(innerClrType, this)
-
                 );
                 return new TypeReference(identity, typeNode, referencingMember);
             }
@@ -371,7 +366,7 @@ namespace GraphZen.TypeSystem
             {
                 var identity = GetOverlappingOrAddTypeIdentity(
                     new TypeIdentity(innerClrType, this)
-                                    );
+                );
 
                 return new TypeReference(identity, typeNode, referencingMember);
             }
@@ -408,6 +403,10 @@ namespace GraphZen.TypeSystem
 
         internal TypeIdentity AddTypeIdentity(TypeIdentity identity)
         {
+            if (identity.Name == "Boolean")
+            {
+            }
+
             _typeIdentities[identity.Name] = identity;
             return identity;
         }
@@ -534,33 +533,6 @@ namespace GraphZen.TypeSystem
             _types.Add(objectType);
             return objectType;
         }
-
-
-        private T AddType<T>(T type) where T : NamedTypeDefinition
-        {
-            Check.NotNull(type, nameof(type));
-
-            if (type.ClrType != null)
-            {
-                var existingBasedOnType = _types.SingleOrDefault(_ => _.ClrType == type.ClrType);
-                if (existingBasedOnType != null)
-                {
-                    throw new InvalidOperationException(
-                        $"Cannot add type \"{type.Name}\" with CLR type \"{type.ClrType}\", a type named \"{existingBasedOnType.Name}\" already exists with that CLR type.");
-                }
-            }
-
-            var existingBasedOnName = _types.SingleOrDefault(_ => _.Name == type.Name);
-            if (existingBasedOnName != null)
-            {
-                throw new InvalidOperationException(
-                    $"Cannot add type \"{type.Name}\", a {existingBasedOnName.GetType().Name} type with that name already exists.");
-            }
-
-            _types.Add(type);
-            return type;
-        }
-
 
         public void IgnoreDirective(Type clrType, ConfigurationSource configurationSource) =>
             IgnoreDirective(clrType.GetGraphQLName(), configurationSource);
@@ -717,15 +689,74 @@ namespace GraphZen.TypeSystem
 
         public NamedTypeDefinition? FindType(Type clrType) => _types.SingleOrDefault(_ => _.ClrType == clrType);
 
-        public TypeIdentity GetOrAddOutputTypeIdentity(Type clrType) => FindOutputTypeIdentity(clrType) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
-        public TypeIdentity? FindOutputTypeIdentity(Type clrType) => _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsOutputType());
-        public TypeIdentity? FindInputTypeIdentity(Type clrType) => _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsOutputType());
-        public TypeIdentity GetOrAddInputTypeIdentity(Type clrType) => FindInputTypeIdentity(clrType) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
+        public TypeIdentity GetOrAddOutputTypeIdentity(Type clrType)
+        {
+            var id = FindPossibleOutputTypeIdentity(clrType);
+            if (id != null)
+            {
+                return id;
+            }
 
-        public TypeIdentity GetOrAddOutputTypeIdentity(string name) => FindOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
-        public TypeIdentity? FindOutputTypeIdentity(string name) => _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType());
-        public TypeIdentity? FindInputTypeIdentity(string name) => _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType());
-        public TypeIdentity GetOrAddInputTypeIdentity(string name) => FindInputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
+            if (clrType.TryGetValidGraphQLName(out var name))
+            {
+                return FindPossibleOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
+            }
+
+            return AddTypeIdentity(new TypeIdentity(clrType, this));
+        }
+
+        public TypeIdentity? FindPossibleOutputTypeIdentity(Type clrType)
+        {
+            var knownOutputType = _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsOutputType() == true);
+            if (knownOutputType != null)
+            {
+                return knownOutputType;
+
+            }
+            return _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsOutputType() != false);
+        }
+
+        public TypeIdentity? FindPossibleInputTypeIdentity(Type clrType)
+        {
+            var knownInputType = _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsInputType() == true);
+            if (knownInputType != null)
+            {
+                return knownInputType;
+            }
+
+            return _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType && _.IsInputType() != false);
+        }
+
+        public TypeIdentity GetOrAddInputTypeIdentity(Type clrType)
+        {
+            var id = FindPossibleInputTypeIdentity(clrType);
+            if (id != null)
+            {
+                return id;
+            }
+
+            if (clrType.TryGetValidGraphQLName(out var name))
+            {
+                return FindPossibleInputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(clrType, this));
+            }
+
+            return AddTypeIdentity(new TypeIdentity(clrType, this));
+
+        }
+
+        public TypeIdentity GetOrAddOutputTypeIdentity(string name)
+        {
+            return FindPossibleOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
+        }
+
+        public TypeIdentity? FindPossibleOutputTypeIdentity(string name) =>
+            _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType() != false);
+
+        public TypeIdentity? FindPossibleInputTypeIdentity(string name) =>
+            _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsInputType() != false);
+
+        public TypeIdentity GetOrAddInputTypeIdentity(string name) =>
+            FindPossibleInputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
 
         public NamedTypeDefinition? FindOutputType(Type clrType)
         {
@@ -741,25 +772,6 @@ namespace GraphZen.TypeSystem
         public NamedTypeDefinition? FindInputType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.IsInputType() && _.ClrType == clrType);
-        }
-
-        private T GetOrAddType<T>(string name, Func<TypeIdentity, T> typeFactory
-        ) where T : NamedTypeDefinition
-        {
-            Check.NotNull(name, nameof(name));
-            Check.NotNull(typeFactory, nameof(typeFactory));
-            var identity =
-                GetOrAddTypeIdentity(new TypeIdentity(name, this));
-
-            return FindType<T>(identity) ?? AddType(name, typeFactory);
-        }
-
-        private T GetOrAddType<T>(Type clrType, Func<TypeIdentity, T> typeFactory) where T : NamedTypeDefinition
-        {
-            Check.NotNull(clrType, nameof(clrType));
-            Check.NotNull(typeFactory, nameof(typeFactory));
-            var identity = GetOrAddTypeIdentity(new TypeIdentity(clrType, this));
-            return FindType<T>(identity) ?? AddType(clrType, typeFactory);
         }
 
 
@@ -785,7 +797,8 @@ namespace GraphZen.TypeSystem
             RemoveTypeIdentity(type.Identity);
             _types.Remove(type);
 
-            foreach (var typeReference in this.GetTypeReferences().Where(_ => _.Identity.Equals(type.Identity)).Select(typeRef => typeRef.DeclaringMember))
+            foreach (var typeReference in GetTypeReferences().Where(_ => _.Identity.Equals(type.Identity))
+                .Select(typeRef => typeRef.DeclaringMember))
             {
                 switch (typeReference)
                 {
@@ -905,29 +918,5 @@ namespace GraphZen.TypeSystem
                 }
             }
         }
-
-
-
-
-#nullable disable
-        private T AddType<T>(Type clrType, Func<TypeIdentity, T> typeFactory)
-            where T : NamedTypeDefinition
-        {
-            Check.NotNull(clrType, nameof(clrType));
-            Check.NotNull(typeFactory, nameof(typeFactory));
-            var identity = GetOrAddTypeIdentity(new TypeIdentity(clrType, this));
-            return AddType(typeFactory(identity));
-        }
-
-
-        private T AddType<T>(string name, Func<TypeIdentity, T> typeFactory)
-            where T : NamedTypeDefinition
-        {
-            Check.NotNull(name, nameof(name));
-            Check.NotNull(typeFactory, nameof(typeFactory));
-            var identity = GetOrAddTypeIdentity(new TypeIdentity(name, this));
-            return AddType(typeFactory(identity));
-        }
-#nullable restore
     }
 }

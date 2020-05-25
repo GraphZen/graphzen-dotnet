@@ -160,7 +160,7 @@ namespace GraphZen.TypeSystem
             }
 
             var fieldTypeIdentity = Schema.GetTypeIdentities(true)
-                                        .SingleOrDefault(_ => _.IsOutputType() && _.ClrType == innerClrType) ??
+                                        .SingleOrDefault(_ => _.IsOutputType() == true && _.ClrType == innerClrType) ??
                                     Schema.AddTypeIdentity(new TypeIdentity(innerClrType, Schema));
 
             var field = new FieldDefinition(fieldName, nameConfigurationSource,

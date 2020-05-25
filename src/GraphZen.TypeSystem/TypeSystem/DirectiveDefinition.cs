@@ -187,7 +187,6 @@ namespace GraphZen.TypeSystem
             return false;
         }
 
-
         public ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
             _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
 
@@ -347,20 +346,6 @@ namespace GraphZen.TypeSystem
             AddArgument(argument);
             return argument;
         }
-
-        public bool SetName(Type clrType, ConfigurationSource configurationSource)
-        {
-            var name = clrType.GetGraphQLName(annotated => { }, clrName => { });
-            try
-            {
-                return SetName(name, configurationSource);
-            }
-            catch (DuplicateItemException)
-            {
-                throw new DuplicateItemException("");
-            }
-        }
-
 
         public override string ToString() => $"directive {Name}";
 

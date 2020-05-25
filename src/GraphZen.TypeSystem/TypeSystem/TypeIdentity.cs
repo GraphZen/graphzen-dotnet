@@ -82,27 +82,46 @@ namespace GraphZen.TypeSystem
 
 
 
-        public bool IsInputType()
+        public bool? IsInputType()
         {
             if (Definition is IInputTypeDefinition)
             {
                 return true;
             }
 
-            var typeRefs = Schema.GetTypeReferences();
-            return typeRefs
-                .Any(_ => ReferenceEquals(_.Identity, this) && _.DeclaringMember is IInputDefinition);
+            if (Definition is IOutputTypeDefinition)
+            {
+                return false;
+            }
+
+            var referencedByInputMember = Schema.GetTypeReferences().Any(_ => ReferenceEquals(_.Identity, this) && _.DeclaringMember is IInputDefinition);
+            if (referencedByInputMember)
+            {
+                return true;
+            }
+            return null;
         }
 
-        public bool IsOutputType()
+        public bool? IsOutputType()
         {
             if (Definition is IOutputTypeDefinition)
             {
                 return true;
             }
 
-            return Schema.GetTypeReferences()
-                .Any(_ => ReferenceEquals(_.Identity, this) && _.DeclaringMember is IOutputDefinition);
+            if (Definition is IInputTypeDefinition)
+            {
+                return false;
+            }
+
+            var referencedByOutputMember = Schema.GetTypeReferences().Any(_ => ReferenceEquals(_.Identity, this) && _.DeclaringMember is IOutputDefinition);
+            if (referencedByOutputMember)
+            {
+                return true;
+            }
+            return null;
+
+
         }
 
 
@@ -114,13 +133,13 @@ namespace GraphZen.TypeSystem
             {
                 if (Definition != null)
                 {
-                    return $"id: {Definition} ({Id})";
+                    return $"id: {Definition} ({Id}, CLR Type: {ClrType?.Name ?? "none"})";
                 }
 
-                var input = IsInputType();
-                var output = IsOutputType();
+                var input = IsInputType() == true;
+                var output = IsOutputType() == true;
                 var io = input && output ? "input/output" : input ? "input" : "output";
-                return $"id: unknown {io} type {Name} ({Id})";
+                return $"id: unknown {io} type {Name} ({Id}, CLR Type: {ClrType?.Name ?? "none"})";
             }
         }
 
@@ -304,8 +323,8 @@ namespace GraphZen.TypeSystem
 
             if (ClrType != null && identity.ClrType != null)
             {
-                if (IsInputType() && identity.IsInputType()
-                    || IsOutputType() && identity.IsOutputType())
+                if (IsInputType() == true && identity.IsInputType() == true
+                    || IsOutputType() == true && identity.IsOutputType() == true)
                 {
                     return ClrType == identity.ClrType;
                 }
