@@ -51,7 +51,7 @@ namespace GraphZen.TypeSystem
         private SchemaDefinition Schema { get; }
 
 
-        public INamedTypeDefinition? Definition => Schema.Types.SingleOrDefault(_ => _.Identity == this);
+        public NamedTypeDefinition? Definition => Schema.Types.SingleOrDefault(_ => _.Identity == this);
 
 
         public bool? IsInputType()

@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem
         [GenDictionaryAccessors("name", nameof(TypeIdentity))]
         private readonly Dictionary<string, TypeIdentity> _typeIdentities = new Dictionary<string, TypeIdentity>();
 
-        private readonly List<NamedTypeDefinition> _types = new List<NamedTypeDefinition>();
+        private readonly Dictionary<TypeIdentity, NamedTypeDefinition> _types = new Dictionary<TypeIdentity, NamedTypeDefinition>();
         private ConfigurationSource? _mutationTypeConfigurationSource;
         private ConfigurationSource? _queryTypeConfigurationSource;
         private ConfigurationSource? _subscriptionTypeConfigurationSource;
@@ -46,7 +46,7 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay { [UsedImplicitly] get; } = "schema";
         public InternalSchemaBuilder Builder { get; }
-        public IReadOnlyList<NamedTypeDefinition> Types => _types;
+        public IReadOnlyCollection<NamedTypeDefinition> Types => _types.Values;
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Schema;
 
         protected override SchemaDefinition Schema => this;
@@ -324,13 +324,18 @@ namespace GraphZen.TypeSystem
         {
             var id = GetOrAddTypeIdentity(name);
             var unionType = new UnionTypeDefinition(id, this, configurationSource);
-            return AddUnion(unionType);
+            return AddType(unionType);
         }
 
         private UnionTypeDefinition AddUnion(UnionTypeDefinition unionType)
         {
-            _types.Add(unionType);
-            return unionType;
+            return AddType(unionType);
+        }
+
+        private T AddType<T>(T type) where T : NamedTypeDefinition
+        {
+            _types[type.Identity] = type;
+            return type;
         }
 
 
@@ -350,8 +355,7 @@ namespace GraphZen.TypeSystem
 
         private ScalarTypeDefinition AddScalar(ScalarTypeDefinition scalarType)
         {
-            _types.Add(scalarType);
-            return scalarType;
+            return AddType(scalarType);
         }
 
         public InterfaceTypeDefinition AddInterface(Type clrType, ConfigurationSource configurationSource)
@@ -370,8 +374,7 @@ namespace GraphZen.TypeSystem
 
         private InterfaceTypeDefinition AddInterface(InterfaceTypeDefinition interfaceType)
         {
-            _types.Add(interfaceType);
-            return interfaceType;
+            return AddType(interfaceType);
         }
 
         public EnumTypeDefinition AddEnum(Type clrType, ConfigurationSource configurationSource)
@@ -390,8 +393,8 @@ namespace GraphZen.TypeSystem
 
         private EnumTypeDefinition AddEnum(EnumTypeDefinition enumType)
         {
-            _types.Add(enumType);
-            return enumType;
+
+            return AddType(enumType);
         }
 
         public InputObjectTypeDefinition AddInputObject(Type clrType, ConfigurationSource configurationSource)
@@ -410,8 +413,8 @@ namespace GraphZen.TypeSystem
 
         private InputObjectTypeDefinition AddInputObject(InputObjectTypeDefinition inputObjectType)
         {
-            _types.Add(inputObjectType);
-            return inputObjectType;
+
+            return AddType(inputObjectType);
         }
 
         public ObjectTypeDefinition AddObject(Type clrType, ConfigurationSource configurationSource)
@@ -430,8 +433,7 @@ namespace GraphZen.TypeSystem
 
         private ObjectTypeDefinition AddObject(ObjectTypeDefinition objectType)
         {
-            _types.Add(objectType);
-            return objectType;
+            return AddType(objectType);
         }
 
         public void IgnoreDirective(Type clrType, ConfigurationSource configurationSource) =>
@@ -528,29 +530,25 @@ namespace GraphZen.TypeSystem
 
         public bool TryGetType(string name, [NotNullWhen(true)] out NamedTypeDefinition? type)
         {
-            Check.NotNull(name, nameof(name));
-            type = _types.SingleOrDefault(_ => _.Name == name);
+            type = FindTypeIdentity(name)?.Definition;
             return type != null;
         }
 
         public bool TryGetType<T>(string name, [NotNullWhen(true)] out T? type) where T : NamedTypeDefinition
         {
-            Check.NotNull(name, nameof(name));
-            type = _types.OfType<T>().SingleOrDefault(_ => _.Name == name);
+            type = FindTypeIdentity(name)?.Definition as T;
             return type != null;
         }
 
         public bool TryGetType<T>(Type clrType, [NotNullWhen(true)] out T? type) where T : NamedTypeDefinition
         {
-            Check.NotNull(clrType, nameof(clrType));
-            type = _types.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType);
+            type = _types.Values.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType);
             return type != null;
         }
 
         public bool TryGetType(Type clrType, [NotNullWhen(true)] out NamedTypeDefinition? type)
         {
-            Check.NotNull(clrType, nameof(clrType));
-            type = _types.SingleOrDefault(_ => _.ClrType == clrType);
+            type = _types.Values.SingleOrDefault(_ => _.ClrType == clrType);
             return type != null;
         }
 
@@ -576,15 +574,14 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public NamedTypeDefinition? FindType(TypeIdentity identity)
-        {
-            Check.NotNull(identity, nameof(identity));
-            return _types.SingleOrDefault(_ => _.Identity.Equals(identity));
-        }
+        public NamedTypeDefinition? FindType(TypeIdentity identity) => TryGetType(identity, out var type) ? type : null;
 
-        public NamedTypeDefinition? FindType(string name) => _types.SingleOrDefault(_ => _.Name == name);
 
-        public NamedTypeDefinition? FindType(Type clrType) => _types.SingleOrDefault(_ => _.ClrType == clrType);
+        public bool TryGetType(TypeIdentity identity, [NotNullWhen(true)] out NamedTypeDefinition? type) => _types.TryGetValue(identity, out type);
+
+        public NamedTypeDefinition? FindType(string name) => FindTypeIdentity(name)?.Definition;
+
+        public NamedTypeDefinition? FindFirstType(Type clrType) => _types.Values.FirstOrDefault(_ => _.ClrType == clrType);
 
         public TypeIdentity GetOrAddOutputTypeIdentity(Type clrType)
         {
@@ -676,17 +673,17 @@ namespace GraphZen.TypeSystem
             _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType) ?? (clrType.TryGetGraphQLName(out var name) ? FindTypeIdentity(name) : null);
 
 
-        public NamedTypeDefinition? FindOutputType(Type clrType) => _types.SingleOrDefault(_ => _.IsOutputType() && _.ClrType == clrType);
+        public NamedTypeDefinition? FindOutputType(Type clrType) => _types.Values.SingleOrDefault(_ => _.IsOutputType() && _.ClrType == clrType);
 
         public NamedTypeDefinition? FindType(Type clrType, TypeKind kind)
         {
-            return _types.Where(_ => _.Kind == kind)
+            return _types.Values.Where(_ => _.Kind == kind)
                 .SingleOrDefault(_ => _.ClrType == clrType);
         }
 
         public NamedTypeDefinition? FindInputType(Type clrType)
         {
-            return _types.SingleOrDefault(_ => _.IsInputType() && _.ClrType == clrType);
+            return _types.Values.SingleOrDefault(_ => _.IsInputType() && _.ClrType == clrType);
         }
 
 
@@ -710,7 +707,7 @@ namespace GraphZen.TypeSystem
         public void RemoveType(NamedTypeDefinition type)
         {
             RemoveTypeIdentity(type.Identity);
-            _types.Remove(type);
+            _types.Remove(type.Identity);
 
             foreach (var typeReference in GetTypeReferences().Where(_ => _.Identity.Equals(type.Identity))
                 .Select(typeRef => typeRef.DeclaringMember))
@@ -803,7 +800,7 @@ namespace GraphZen.TypeSystem
             }
 
 
-            foreach (var type in _types.Where(_ => !_.IsSpec))
+            foreach (var type in _types.Values.Where(_ => !_.IsSpec))
             {
                 switch (type)
                 {

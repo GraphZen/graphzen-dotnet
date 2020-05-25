@@ -427,7 +427,7 @@ namespace GraphZen.TypeSystem.Internal
 
             var type = id.ClrType == null
                 ? Definition.FindType(id.Name)
-                : Definition.FindType(id.ClrType) ?? Definition.FindType(id.Name);
+                : Definition.FindFirstType(id.ClrType) ?? Definition.FindType(id.Name);
 
             if (type is EnumTypeDefinition enumType)
             {
@@ -586,22 +586,13 @@ namespace GraphZen.TypeSystem.Internal
             where TBuilder : AnnotatableMemberDefinitionBuilder<T>
             where T : NamedTypeDefinition
         {
-            var byName = Definition.FindType(name);
-            var byType = Definition.FindType(clrType);
-            if (byType is T typed)
+            if (Definition.TryGetType(name, out var named) && Definition.TryGetType(clrType, out var typed) &&
+                !named.Equals(typed))
             {
-                if (byName is T named)
-                {
-                    if (!named.Equals(typed))
-                    {
-                        throw new DuplicateItemException(
-                            TypeSystemExceptionMessages.DuplicateItemException.CannotCreateTypeWithDuplicateNameAndType(
-                                named.Kind, name,
-                                clrType, named, typed));
-                    }
-
-                }
-
+                throw new DuplicateItemException(
+                                            TypeSystemExceptionMessages.DuplicateItemException.CannotCreateTypeWithDuplicateNameAndType(
+                                                named.Kind, name,
+                                                clrType, named, typed));
             }
 
             return createByType();
