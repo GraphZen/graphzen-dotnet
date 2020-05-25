@@ -25,21 +25,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalFieldBuilder FieldType(PropertyInfo property
-        )
-        {
-            Definition.FieldType = Schema.GetOrAddTypeReference(property, Definition);
-            return this;
-        }
-
-
-        public InternalFieldBuilder FieldType(MethodInfo method)
-        {
-            Definition.FieldType = Schema.GetOrAddTypeReference(method, Definition);
-            return this;
-        }
-
-
+     
         public InternalFieldBuilder FieldType(string type, ConfigurationSource configurationSource)
         {
             try

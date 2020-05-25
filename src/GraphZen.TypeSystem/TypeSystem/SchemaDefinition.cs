@@ -276,7 +276,7 @@ namespace GraphZen.TypeSystem
                     return false;
                 }
         */
-        
+
 
 
         public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember, ConfigurationSource configurationSource)
@@ -297,10 +297,7 @@ namespace GraphZen.TypeSystem
             return new TypeReference(identity, typeNode, referencingMember, configurationSource);
         }
 
-        public TypeReference GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
-        ) =>
-            throw new NotImplementedException();
-
+    
 
         public TypeReference GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
         )
@@ -652,8 +649,10 @@ namespace GraphZen.TypeSystem
         public TypeIdentity GetOrAddOutputTypeIdentity(string name) =>
             FindPossibleOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
 
-        public TypeIdentity? FindPossibleOutputTypeIdentity(string name) =>
-            _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType() != false);
+        public TypeIdentity? FindPossibleOutputTypeIdentity(string name)
+        {
+            return _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType() != false);
+        }
 
         public TypeIdentity GetOrAddTypeIdentity(string name) => FindTypeIdentity(name) ?? AddTypeIdentity(name);
         public TypeIdentity GetOrAddTypeIdentity(Type clrType, ConfigurationSource configurationSource)
@@ -687,21 +686,22 @@ namespace GraphZen.TypeSystem
 
         public Schema ToSchema()
         {
-            void FinalizeTypes()
-            {
-                TypeReference? GetFirstUndefinedTypeReference() => GetTypeReferences()
-                                .FirstOrDefault(_ => _.Identity.Definition == null);
 
-                var undefined = GetFirstUndefinedTypeReference();
-                while (undefined != null)
-                {
-                    Builder.DefineType(undefined);
-                    undefined = GetFirstUndefinedTypeReference();
-                }
-            }
 
             FinalizeTypes();
             return new Schema(this);
+        }
+        void FinalizeTypes()
+        {
+            TypeReference? GetFirstUndefinedTypeReference() => GetTypeReferences()
+                            .FirstOrDefault(_ => _.Identity.Definition == null);
+
+            var undefined = GetFirstUndefinedTypeReference();
+            while (undefined != null)
+            {
+                Builder.DefineType(undefined);
+                undefined = GetFirstUndefinedTypeReference();
+            }
         }
 
 
@@ -805,7 +805,7 @@ namespace GraphZen.TypeSystem
             return directive != null;
         }
 
-        internal IEnumerable<TypeReference> GetTypeReferences()
+        public IEnumerable<TypeReference> GetTypeReferences()
         {
             foreach (var directiveArg in _directives.Values.Where(_ => !_.IsSpec).SelectMany(_ => _.GetArguments()))
             {

@@ -170,7 +170,6 @@ namespace GraphZen.TypeSystem
             var fb = field.Builder;
             try
             {
-                fb.FieldType(propertyInfo);
                 var getter = propertyInfo.GetGetMethod();
                 var entity = Expression.Parameter(ClrType);
                 Debug.Assert(getter != null, nameof(getter) + " != null");

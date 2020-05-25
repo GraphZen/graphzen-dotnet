@@ -25,40 +25,36 @@ namespace GraphZen.TypeSystem
 
         InternalScalarTypeBuilder IInfrastructure<InternalScalarTypeBuilder>.Instance => Builder;
 
-        public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, bool inferName = false)
-        {
-            var internalBuilder = Builder.ClrType(clrType, inferName, ConfigurationSource.Explicit);
-            return new ScalarTypeBuilder<object, TValueNode>(internalBuilder);
-        }
+        [DebuggerStepThrough]
+        public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, bool inferName = false) =>
+            new ScalarTypeBuilder<object, TValueNode>(Builder.ClrType(Check.NotNull(clrType, nameof(clrType)),
+                inferName, ConfigurationSource.Explicit));
 
+        [DebuggerStepThrough]
+        public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, string name) =>
+            new ScalarTypeBuilder<object, TValueNode>(
+                Builder.ClrType(Check.NotNull(clrType, nameof(clrType)), Check.NotNull(name, nameof(name)),
+                    ConfigurationSource.Explicit)
+            );
 
-        public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, string name)
-        {
-            Check.NotNull(clrType, nameof(clrType));
-            Check.NotNull(name, nameof(name));
-            Builder.ClrType(clrType, name, ConfigurationSource.Explicit);
-            return new ScalarTypeBuilder<object, TValueNode>(Builder);
-        }
+        [DebuggerStepThrough]
+        public ScalarTypeBuilder<T, TValueNode> ClrType<T>(string name) where T : notnull => new ScalarTypeBuilder<T, TValueNode>(Builder.ClrType(typeof(T), Check.NotNull(name, nameof(name)), ConfigurationSource.Explicit));
 
-        public ScalarTypeBuilder<T, TValueNode> ClrType<T>(string name) where T : notnull
-        {
-            Check.NotNull(name, nameof(name));
-            Builder.ClrType(typeof(T), name, ConfigurationSource.Explicit);
-            return new ScalarTypeBuilder<T, TValueNode>(Builder);
-        }
-
+        [DebuggerStepThrough]
         public ScalarTypeBuilder<object, TValueNode> RemoveClrType()
         {
             Builder.RemoveClrType(ConfigurationSource.Explicit);
             return new ScalarTypeBuilder<object, TValueNode>(Builder);
         }
 
+        [DebuggerStepThrough]
         public ScalarTypeBuilder<T, TValueNode> ClrType<T>(bool inferName = false) where T : notnull
         {
             Builder.ClrType(typeof(T), inferName, ConfigurationSource.Explicit);
             return new ScalarTypeBuilder<T, TValueNode>(Builder);
         }
 
+        [DebuggerStepThrough]
         public ScalarTypeBuilder<TScalar, TValueNode> Description(string description)
         {
             Check.NotNull(description, nameof(description));
@@ -66,12 +62,14 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        [DebuggerStepThrough]
         public ScalarTypeBuilder<TScalar, TValueNode> RemoveDescription()
         {
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 
+        [DebuggerStepThrough]
         public ScalarTypeBuilder<TScalar, TValueNode> Serializer(LeafSerializer serializer)
         {
             Check.NotNull(serializer, nameof(serializer));

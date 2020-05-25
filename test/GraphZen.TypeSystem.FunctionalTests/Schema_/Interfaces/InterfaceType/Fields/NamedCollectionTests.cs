@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -79,6 +80,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         {
             Schema.Create(_ =>
             {
+                _.GetDefinition().GetTypeReferences().Where(_ => _.Identity.Name == "String").Dump();
                 var foo = _.Interface("Foo").Field("field", "String");
                 Action remove = () => foo.RemoveField(null!);
                 remove.Should().ThrowArgumentNullException("name");
