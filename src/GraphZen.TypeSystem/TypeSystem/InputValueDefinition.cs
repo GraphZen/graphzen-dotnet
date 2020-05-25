@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem
             NameConfigurationSource = nameConfigurationSource;
             Name = name;
             Builder = new InternalInputValueBuilder(this, schema.Builder);
-            InputType = new TypeReference(typeIdentity, typeSyntax, this);
+            InputType = new TypeReference(typeIdentity, typeSyntax, this, configurationSource);
         }
 
         protected override SchemaDefinition Schema { get; }

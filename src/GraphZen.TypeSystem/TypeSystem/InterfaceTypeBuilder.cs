@@ -105,7 +105,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Check.NotNull(configurator, nameof(configurator));
-            var fb = Builder.Field(name, type, ConfigurationSource.Explicit)?.FieldType(type)!;
+            var fb = Builder.Field(name, type, ConfigurationSource.Explicit)!;
             configurator(new FieldBuilder<TInterface, object?, TContext>(fb));
             return this;
         }

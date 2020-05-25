@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem
         public FieldBuilder<TDeclaringType, object, TContext> FieldType(string type)
         {
             Check.NotNull(type, nameof(type));
-            Builder.FieldType(type);
+            Builder.FieldType(type, ConfigurationSource.Explicit);
             return new FieldBuilder<TDeclaringType, object, TContext>(Builder);
         }
 
@@ -40,7 +40,7 @@ namespace GraphZen.TypeSystem
         public FieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false,
             bool itemCanBeNull = false) where TFieldNew : IEnumerable
         {
-            Builder.FieldType(typeof(TFieldNew));
+            Builder.FieldType(typeof(TFieldNew), ConfigurationSource.Explicit);
             return new FieldBuilder<TDeclaringType, TFieldNew, TContext>(Builder);
         }
 
@@ -188,7 +188,7 @@ namespace GraphZen.TypeSystem
 
         public FieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false)
         {
-            Builder.FieldType(typeof(TFieldNew));
+            Builder.FieldType(typeof(TFieldNew), ConfigurationSource.Explicit);
             return new FieldBuilder<TDeclaringType, TFieldNew, TContext>(Builder);
         }
     }

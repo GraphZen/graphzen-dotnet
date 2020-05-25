@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInputValueBuilder InputType(string type, ConfigurationSource configurationSource)
         {
             // TODO: incorporate configuration source
-            Definition.InputType = Schema.GetOrAddTypeReference(type, Definition);
+            Definition.InputType = Schema.GetOrAddTypeReference(type, Definition, configurationSource);
             return this;
         }
 
@@ -30,7 +30,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInputValueBuilder Type(Type clrType, ConfigurationSource configurationSource)
         {
             // TODO: incorporate configuration source
-            Definition.InputType = Schema.GetOrAddTypeReference(clrType, false, false, Definition);
+            Definition.InputType = Schema.GetOrAddTypeReference(clrType, false, false, Definition, configurationSource);
             return this;
         }
 

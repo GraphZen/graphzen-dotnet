@@ -29,26 +29,26 @@ namespace GraphZen.TypeSystem.Internal
         public override InternalSchemaBuilder SchemaBuilder => this;
 
 
-        public MemberDefinitionBuilder? Type(TypeIdentity identity)
+        public MemberDefinitionBuilder? Type(TypeReference reference)
         {
-            if (identity.ClrType == null)
+            if (reference.Identity.Definition != null)
             {
                 return null;
             }
 
-            if (identity.Kind != null)
+            if (reference.Identity.ClrType == null)
             {
-                return Type(identity.ClrType, identity.Kind.Value);
+                return Scalar(reference.Identity.Name, reference.GetConfigurationSource());
             }
 
-            return Type(identity.ClrType, identity.IsInputType(), identity.IsOutputType());
+            return Type(reference.Identity.ClrType, reference.Identity.IsInputType(), reference.Identity.IsOutputType());
         }
 
         public MemberDefinitionBuilder? Type(Type clrType, bool? isInputType, bool? isOutputType)
         {
             if (Schema.TryGetTypeKind(clrType, isInputType, isOutputType, out var kind, out _))
             {
-                return Type(clrType, kind);
+                return Type(clrType, kind, ConfigurationSource.Convention);
             }
 
             return null;
@@ -149,28 +149,21 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        private MemberDefinitionBuilder? Type(Type clrType, TypeKind kind)
+        private MemberDefinitionBuilder? Type(Type clrType, TypeKind kind, ConfigurationSource configurationSource)
         {
-            switch (kind)
+            return kind switch
             {
-                case TypeKind.Scalar:
-                    return Scalar(clrType, ConfigurationSource.Convention);
-                case TypeKind.Object:
-                    return Object(clrType, ConfigurationSource.Convention);
-                case TypeKind.Interface:
-                    return Interface(clrType, ConfigurationSource.Convention);
-                case TypeKind.Union:
-                    return Union(clrType, ConfigurationSource.Convention);
-                case TypeKind.Enum:
-                    return Enum(clrType, ConfigurationSource.Convention);
-                case TypeKind.InputObject:
-                    return InputObject(clrType, ConfigurationSource.Convention);
-                case TypeKind.List:
-                case TypeKind.NonNull:
-                    throw new InvalidOperationException("List and Non-Null types cannot be user-defined");
-                default:
-                    throw new InvalidOperationException("Unsupported type kind");
-            }
+                TypeKind.Scalar => Scalar(clrType, configurationSource),
+                TypeKind.Object => Object(clrType, configurationSource),
+                TypeKind.Interface => Interface(clrType, configurationSource),
+                TypeKind.Union => Union(clrType, configurationSource),
+                TypeKind.Enum => Enum(clrType, configurationSource),
+                TypeKind.InputObject => InputObject(clrType, configurationSource),
+                TypeKind.List => throw new InvalidOperationException("List and Non-Null types cannot be user-defined"),
+                TypeKind.NonNull => throw new InvalidOperationException(
+                    "List and Non-Null types cannot be user-defined"),
+                _ => throw new InvalidOperationException("Unsupported type kind")
+            };
         }
 
 
@@ -607,13 +600,11 @@ namespace GraphZen.TypeSystem.Internal
                                 clrType, named, typed));
                     }
 
-                    return createByName();
                 }
 
-                return createByType();
             }
 
-            return createByName();
+            return createByType();
         }
 
 

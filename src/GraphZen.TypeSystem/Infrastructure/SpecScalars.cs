@@ -82,8 +82,7 @@ namespace GraphZen.Infrastructure
         public static SchemaBuilder<TContext> AddStringScalar<TContext>(this SchemaBuilder<TContext> schemaBuilder)
             where TContext : GraphQLContext
         {
-            schemaBuilder.Scalar<string>()
-                .Name("String")
+            schemaBuilder.Scalar<string>("String")
                 .Description(SpecScalarSyntaxNodes.String.Description?.Value!)
                 .ValueParser(value =>
                 {
@@ -123,9 +122,8 @@ namespace GraphZen.Infrastructure
         public static SchemaBuilder<TContext> AddIntScalar<TContext>(this SchemaBuilder<TContext> schemaBuilder)
             where TContext : GraphQLContext
         {
-            schemaBuilder.Scalar<int>()
+            schemaBuilder.Scalar<int>("Int")
                 .Description(SpecScalarSyntaxNodes.Int.Description?.Value!)
-                .Name("Int")
                 .ValueParser(value =>
                 {
                     if (InternalNumerics.TryGetWholeDouble(value, out var wholeNumber))
@@ -174,9 +172,8 @@ namespace GraphZen.Infrastructure
         public static SchemaBuilder<TContext> AddFloatScalar<TContext>(this SchemaBuilder<TContext> schemaBuilder)
             where TContext : GraphQLContext
         {
-            schemaBuilder.Scalar("Float")
+            schemaBuilder.Scalar<float>("Float")
                 .Description(SpecScalarSyntaxNodes.Float.Description?.Value!)
-                .ClrType<float>()
                 .Serializer(value =>
                 {
                     try
@@ -217,7 +214,7 @@ namespace GraphZen.Infrastructure
         public static SchemaBuilder<TContext> AddBooleanScalar<TContext>(this SchemaBuilder<TContext> schemaBuilder)
             where TContext : GraphQLContext
         {
-            schemaBuilder.Scalar("Boolean").Description(SpecScalarSyntaxNodes.Boolean.Description?.Value!)
+            schemaBuilder.Scalar<bool>("Boolean").Description(SpecScalarSyntaxNodes.Boolean.Description?.Value!)
                 .ValueParser(val => Maybe.Some<object>(Convert.ToBoolean(val)))
                 .LiteralParser(
                     node => node is BooleanValueSyntax bvn ? Maybe.Some<object>(bvn.Value) : Maybe.None<object>())

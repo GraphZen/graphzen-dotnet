@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
+using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
@@ -15,12 +16,16 @@ namespace GraphZen.TypeSystem
     {
         private readonly TypeSyntax _seedSyntax;
         private TypeIdentity _identity;
+        private ConfigurationSource _configurationSource;
 
-        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMemberDefinition declaringMember)
+        public ConfigurationSource GetConfigurationSource() => _configurationSource;
+
+        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMemberDefinition declaringMember, ConfigurationSource configurationSource)
         {
             _identity = identity;
             DeclaringMember = declaringMember;
             _seedSyntax = typeSyntax;
+            _configurationSource = configurationSource;
         }
 
         public IMemberDefinition DeclaringMember { get; }

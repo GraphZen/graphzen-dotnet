@@ -45,7 +45,7 @@ namespace GraphZen.TypeSystem
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Builder = new InternalFieldBuilder(this, schema.Builder);
-            FieldType = new TypeReference(fieldTypeIdentity, fieldTypeSyntax, this);
+            FieldType = new TypeReference(fieldTypeIdentity, fieldTypeSyntax, this, configurationSource);
             Name = name;
             if (!name.IsValidGraphQLName())
             {

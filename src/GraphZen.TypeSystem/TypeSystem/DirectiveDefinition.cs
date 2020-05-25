@@ -23,6 +23,7 @@ namespace GraphZen.TypeSystem
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
+        // ReSharper disable once CollectionNeverQueried.Local
         private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
             new Dictionary<string, ConfigurationSource>();
 

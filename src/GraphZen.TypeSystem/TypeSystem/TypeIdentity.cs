@@ -18,31 +18,22 @@ namespace GraphZen.TypeSystem
     public class TypeIdentity : IMutableNamed, IMutableClrType, IMutableDefinition
     {
         private static int _typeIdSeed = 1;
-        private readonly TypeKind? _kind;
         private ConfigurationSource? _clrTypeConfigurationSource;
-
         private ConfigurationSource _nameConfigurationSource = ConfigurationSource.Explicit;
-
-
-        private INamedTypeDefinition? _typeDefinition;
-
-
-        public TypeIdentity(string name, SchemaDefinition schema, TypeKind? kind = null)
+        public TypeIdentity(string name, SchemaDefinition schema)
         {
             Name = name.IsValidGraphQLName()
                 ? name
                 : throw new InvalidNameException(
                     $"Cannot create Type Identity: \"{name}\" is not a valid GraphQL name.");
             Schema = schema;
-            _kind = kind;
         }
 
-        public TypeIdentity(Type clrType, SchemaDefinition schema, TypeKind? kind = null)
+        public TypeIdentity(Type clrType, SchemaDefinition schema)
         {
             ClrType = clrType.GetEffectiveClrType();
             _clrTypeConfigurationSource = ConfigurationSource.Convention;
             Schema = schema;
-            _kind = kind;
             if (ClrType.TryGetGraphQLNameFromDataAnnotation(out var annotated))
             {
                 _nameConfigurationSource = ConfigurationSource.DataAnnotation;
@@ -60,26 +51,7 @@ namespace GraphZen.TypeSystem
         private SchemaDefinition Schema { get; }
 
 
-        public INamedTypeDefinition? Definition
-        {
-            get => _typeDefinition;
-            set
-            {
-                if (_typeDefinition != null)
-                {
-                    throw new InvalidOperationException(
-                        $"Cannot set property {nameof(TypeIdentity)}.{nameof(Definition)} with value {value}, it's value has already been set with {_typeDefinition}.");
-                }
-
-
-                _typeDefinition =
-                    value ?? throw new InvalidOperationException(
-                        $"Cannot set property {nameof(TypeIdentity)}.{nameof(Definition)} to null.");
-            }
-        }
-
-        public TypeKind? Kind => _typeDefinition?.Kind ?? _kind;
-
+        public INamedTypeDefinition? Definition => Schema.Types.SingleOrDefault(_ => _.Identity == this);
 
 
         public bool? IsInputType()

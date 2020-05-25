@@ -15,8 +15,6 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class ScalarTypeDefinition : NamedTypeDefinition, IMutableScalarTypeDefinition
     {
-
-
         public ScalarTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource)
             : base(identity, schema, configurationSource)
