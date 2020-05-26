@@ -159,12 +159,14 @@ namespace GraphZen.TypeSystem
                     {
                         if (IsInputType() == true && IsOutputType() == false && existing.IsOutputType() == true)
                         {
-                            throw new InvalidTypeException($"Cannot set CLR type on input type {Definition} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' refers to an output type referenced by an object or interface field. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
+                            throw new InvalidTypeException(
+                                $"Cannot set CLR type on input type {Definition} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' refers to an output type referenced by an object or interface field. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
                         }
 
                         if (IsInputType() == false && IsOutputType() == true && existing.IsInputType() == true)
                         {
-                            throw new InvalidTypeException($"Cannot set CLR type on output type {Definition} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' refers to an input type referenced by a field argument, directive argument, or input field. GraphQL input type references are reserved for scalar, enum, or input object types.");
+                            throw new InvalidTypeException(
+                                $"Cannot set CLR type on output type {Definition} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' refers to an input type referenced by a field argument, directive argument, or input field. GraphQL input type references are reserved for scalar, enum, or input object types.");
                         }
                     }
 

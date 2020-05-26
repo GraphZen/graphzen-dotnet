@@ -25,7 +25,6 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-     
         public InternalFieldBuilder FieldType(string type, ConfigurationSource configurationSource)
         {
             try
@@ -81,7 +80,6 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             return argument.Builder;
-
         }
 
         public InternalInputValueBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource)
@@ -101,9 +99,9 @@ namespace GraphZen.TypeSystem.Internal
             {
                 argument.UpdateConfigurationSource(configurationSource);
             }
+
             return argument.Builder;
         }
-
 
 
         public InternalInputValueBuilder Argument(string name) =>

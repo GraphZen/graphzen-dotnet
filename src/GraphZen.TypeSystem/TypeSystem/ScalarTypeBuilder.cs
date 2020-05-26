@@ -38,7 +38,9 @@ namespace GraphZen.TypeSystem
             );
 
         [DebuggerStepThrough]
-        public ScalarTypeBuilder<T, TValueNode> ClrType<T>(string name) where T : notnull => new ScalarTypeBuilder<T, TValueNode>(Builder.ClrType(typeof(T), Check.NotNull(name, nameof(name)), ConfigurationSource.Explicit));
+        public ScalarTypeBuilder<T, TValueNode> ClrType<T>(string name) where T : notnull =>
+            new ScalarTypeBuilder<T, TValueNode>(Builder.ClrType(typeof(T), Check.NotNull(name, nameof(name)),
+                ConfigurationSource.Explicit));
 
         [DebuggerStepThrough]
         public ScalarTypeBuilder<object, TValueNode> RemoveClrType()

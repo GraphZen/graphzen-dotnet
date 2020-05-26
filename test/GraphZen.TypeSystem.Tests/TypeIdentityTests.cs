@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
@@ -16,8 +19,10 @@ namespace GraphZen.TypeSystem.Tests
             Schema.Create(_ =>
             {
                 _.InputObject("Foo");
-                _.GetDefinition().GetTypeReferences().Where(r => r.Identity.ToString().Contains("unknown output type Boolean")).Dump();
-                _.GetDefinition().GetTypeIdentities().Where(r => r.ToString().Contains("unknown output type Boolean")).Dump();
+                _.GetDefinition().GetTypeReferences()
+                    .Where(r => r.Identity.ToString().Contains("unknown output type Boolean")).Dump();
+                _.GetDefinition().GetTypeIdentities().Where(r => r.ToString().Contains("unknown output type Boolean"))
+                    .Dump();
                 var ids = _.GetDefinition().GetTypeIdentities().Dump("ids", true).ToList();
                 ids.Count.Should().Be(1);
                 var fooId = ids.Single();

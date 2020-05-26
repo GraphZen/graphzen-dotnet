@@ -19,7 +19,8 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource GetConfigurationSource() => _configurationSource;
 
-        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMemberDefinition declaringMember, ConfigurationSource configurationSource)
+        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMemberDefinition declaringMember,
+            ConfigurationSource configurationSource)
         {
             Identity = identity;
             DeclaringMember = declaringMember;
@@ -52,16 +53,13 @@ namespace GraphZen.TypeSystem
                     throw new InvalidTypeException("tbd");
                 }
             }
-            this.Identity = identity;
-            this._configurationSource = configurationSource;
+
+            Identity = identity;
+            _configurationSource = configurationSource;
             return true;
         }
 
-        public TypeIdentity Identity
-        {
-            get; private set;
-
-        }
+        public TypeIdentity Identity { get; private set; }
 
         public TypeSyntax TypeSyntax
         {

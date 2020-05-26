@@ -47,7 +47,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields
             {
                 var foo = _.Object("Foo");
                 Action add = () => foo.Field(name, "Bar");
-                add.Should().Throw<InvalidNameException>().WithMessage($"Cannot create field named \"{name}\" on object Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                add.Should().Throw<InvalidNameException>().WithMessage(
+                    $"Cannot create field named \"{name}\" on object Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

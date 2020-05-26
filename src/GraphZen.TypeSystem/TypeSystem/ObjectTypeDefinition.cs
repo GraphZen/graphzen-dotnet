@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem
             new Dictionary<string, ConfigurationSource>();
 
         private readonly List<InterfaceTypeDefinition> _interfaces = new List<InterfaceTypeDefinition>();
+
         public ObjectTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) :
             base(identity, schema, configurationSource)

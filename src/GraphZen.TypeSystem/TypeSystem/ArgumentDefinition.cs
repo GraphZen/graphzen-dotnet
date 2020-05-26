@@ -23,14 +23,14 @@ namespace GraphZen.TypeSystem
             SchemaDefinition schema,
             ConfigurationSource configurationSource, IMutableArgumentsDefinition declaringMember,
             ParameterInfo? clrInfo) : base(
-
             name, nameConfigurationSource,
             typeIdentity, typeSyntax,
             schema, configurationSource, clrInfo, declaringMember)
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateArgumentWithInvalidName(this, name));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotCreateArgumentWithInvalidName(this, name));
             }
         }
 
@@ -61,6 +61,7 @@ namespace GraphZen.TypeSystem
                     throw new DuplicateItemException(
                         TypeSystemExceptionMessages.DuplicateItemException.CannotRenameArgument(this, name));
                 }
+
                 return true;
             }
 

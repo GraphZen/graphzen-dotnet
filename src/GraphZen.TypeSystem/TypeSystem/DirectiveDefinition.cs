@@ -330,6 +330,7 @@ namespace GraphZen.TypeSystem
             {
                 return null;
             }
+
             var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
             var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema,
                 configurationSource, this, null);

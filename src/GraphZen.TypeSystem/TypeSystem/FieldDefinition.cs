@@ -49,7 +49,8 @@ namespace GraphZen.TypeSystem
             Name = name;
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException.CannotCreateField(name, this));
+                throw new InvalidNameException(
+                    TypeSystemExceptionMessages.InvalidNameException.CannotCreateField(name, this));
             }
         }
 
@@ -83,14 +84,16 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public bool RemoveArgument(ArgumentDefinition argument, ConfigurationSource configurationSource) => throw new NotImplementedException();
+        public bool RemoveArgument(ArgumentDefinition argument, ConfigurationSource configurationSource) =>
+            throw new NotImplementedException();
 
         public ArgumentDefinition AddArgument(string name, string type, ConfigurationSource configurationSource)
         {
             var typeSyntax = Schema.Builder.Parser.ParseType(type);
             var typeName = typeSyntax.GetNamedType().Name.Value;
             var typeIdentity = Schema.GetOrAddTypeIdentity(typeName);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema, configurationSource, this, null);
+            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema,
+                configurationSource, this, null);
             AddArgument(argument);
             return argument;
         }
@@ -100,10 +103,11 @@ namespace GraphZen.TypeSystem
             if (!clrType.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
             {
                 throw new InvalidOperationException($"Unable to get argument type info from  {clrType}");
-
             }
+
             var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema, configurationSource, this, null);
+            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema,
+                configurationSource, this, null);
             AddArgument(argument);
             return argument;
         }
@@ -253,8 +257,10 @@ namespace GraphZen.TypeSystem
                 {
                     throw new Exception("Did not remove expected argument");
                 }
+
                 return true;
             }
+
             return false;
         }
 
@@ -274,13 +280,15 @@ namespace GraphZen.TypeSystem
             }
 
             var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
-            var argument = new ArgumentDefinition(argName, nameConfigurationSource, typeIdentity, typeSyntax, Schema, configurationSource, this, parameter);
+            var argument = new ArgumentDefinition(argName, nameConfigurationSource, typeIdentity, typeSyntax, Schema,
+                configurationSource, this, parameter);
             var ab = argument.Builder;
             ab.DefaultValue(parameter, configurationSource);
             if (parameter.TryGetDescriptionFromDataAnnotation(out var description))
             {
                 ab.Description(description, ConfigurationSource.DataAnnotation);
             }
+
             AddArgument(argument);
             return argument;
         }
@@ -299,7 +307,5 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"field {Name}";
-
-
     }
 }

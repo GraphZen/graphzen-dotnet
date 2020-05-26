@@ -33,7 +33,9 @@ namespace GraphZen.TypeSystem
         [GenDictionaryAccessors("name", nameof(TypeIdentity))]
         private readonly Dictionary<string, TypeIdentity> _typeIdentities = new Dictionary<string, TypeIdentity>();
 
-        private readonly Dictionary<TypeIdentity, NamedTypeDefinition> _types = new Dictionary<TypeIdentity, NamedTypeDefinition>();
+        private readonly Dictionary<TypeIdentity, NamedTypeDefinition> _types =
+            new Dictionary<TypeIdentity, NamedTypeDefinition>();
+
         private ConfigurationSource? _mutationTypeConfigurationSource;
         private ConfigurationSource? _queryTypeConfigurationSource;
         private ConfigurationSource? _subscriptionTypeConfigurationSource;
@@ -185,7 +187,6 @@ namespace GraphZen.TypeSystem
             FindIgnoredTypeConfigurationSource(clrType.GetGraphQLNameAnnotation());
 
 
-
         public bool TryGetTypeKind(Type clrType, bool? isInputType, bool? isOutputType, out TypeKind kind,
             out ConfigurationSource configurationSource)
         {
@@ -243,7 +244,6 @@ namespace GraphZen.TypeSystem
         }
 
 
-
         /*
                 private bool TryDefineFirstUndefinedType(TypeIdentity? prev, [NotNullWhen(true)] out TypeIdentity? identity)
                 {
@@ -278,8 +278,8 @@ namespace GraphZen.TypeSystem
         */
 
 
-
-        public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember, ConfigurationSource configurationSource)
+        public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember,
+            ConfigurationSource configurationSource)
         {
             TypeSyntax typeNode;
             try
@@ -296,7 +296,6 @@ namespace GraphZen.TypeSystem
             var identity = GetOrAddTypeIdentity(named.Name.Value);
             return new TypeReference(identity, typeNode, referencingMember, configurationSource);
         }
-
 
 
         public TypeReference GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
@@ -346,10 +345,7 @@ namespace GraphZen.TypeSystem
             return AddType(unionType);
         }
 
-        private UnionTypeDefinition AddUnion(UnionTypeDefinition unionType)
-        {
-            return AddType(unionType);
-        }
+        private UnionTypeDefinition AddUnion(UnionTypeDefinition unionType) => AddType(unionType);
 
         private T AddType<T>(T type) where T : NamedTypeDefinition
         {
@@ -373,10 +369,7 @@ namespace GraphZen.TypeSystem
             return AddScalar(scalarType);
         }
 
-        private ScalarTypeDefinition AddScalar(ScalarTypeDefinition scalarType)
-        {
-            return AddType(scalarType);
-        }
+        private ScalarTypeDefinition AddScalar(ScalarTypeDefinition scalarType) => AddType(scalarType);
 
         public InterfaceTypeDefinition AddInterface(Type clrType, ConfigurationSource configurationSource)
         {
@@ -393,10 +386,7 @@ namespace GraphZen.TypeSystem
             return AddInterface(interfaceType);
         }
 
-        private InterfaceTypeDefinition AddInterface(InterfaceTypeDefinition interfaceType)
-        {
-            return AddType(interfaceType);
-        }
+        private InterfaceTypeDefinition AddInterface(InterfaceTypeDefinition interfaceType) => AddType(interfaceType);
 
         public EnumTypeDefinition AddEnum(Type clrType, ConfigurationSource configurationSource)
         {
@@ -413,11 +403,7 @@ namespace GraphZen.TypeSystem
             return AddEnum(enumType);
         }
 
-        private EnumTypeDefinition AddEnum(EnumTypeDefinition enumType)
-        {
-
-            return AddType(enumType);
-        }
+        private EnumTypeDefinition AddEnum(EnumTypeDefinition enumType) => AddType(enumType);
 
         public InputObjectTypeDefinition AddInputObject(Type clrType, ConfigurationSource configurationSource)
         {
@@ -434,11 +420,8 @@ namespace GraphZen.TypeSystem
             return AddInputObject(inputObjectType);
         }
 
-        private InputObjectTypeDefinition AddInputObject(InputObjectTypeDefinition inputObjectType)
-        {
-
-            return AddType(inputObjectType);
-        }
+        private InputObjectTypeDefinition AddInputObject(InputObjectTypeDefinition inputObjectType) =>
+            AddType(inputObjectType);
 
         public ObjectTypeDefinition AddObject(Type clrType, ConfigurationSource configurationSource)
         {
@@ -455,10 +438,7 @@ namespace GraphZen.TypeSystem
             return AddObject(objectType);
         }
 
-        private ObjectTypeDefinition AddObject(ObjectTypeDefinition objectType)
-        {
-            return AddType(objectType);
-        }
+        private ObjectTypeDefinition AddObject(ObjectTypeDefinition objectType) => AddType(objectType);
 
         public void IgnoreDirective(Type clrType, ConfigurationSource configurationSource) =>
             IgnoreDirective(clrType.GetGraphQLNameAnnotation(), configurationSource);
@@ -523,11 +503,15 @@ namespace GraphZen.TypeSystem
             return _types.Values.OfType<T>().FirstOrDefault(_ => _.ClrType == clrType);
         }
 
-        private T GetType<T>(string name) where T : NamedTypeDefinition => FindType(name) as T ?? throw new ItemNotFoundException($"No {typeof(T).Name} found named '{name}'.");
+        private T GetType<T>(string name) where T : NamedTypeDefinition =>
+            FindType(name) as T ?? throw new ItemNotFoundException($"No {typeof(T).Name} found named '{name}'.");
+
         public NamedTypeDefinition GetType(string name) => GetType<NamedTypeDefinition>(name);
 
 
-        private T GetType<T>(Type clrType) where T : NamedTypeDefinition => FindType<T>(clrType) ?? throw new ItemNotFoundException($"No {typeof(T).Name} found with CLR type '{clrType}'.");
+        private T GetType<T>(Type clrType) where T : NamedTypeDefinition =>
+            FindType<T>(clrType) ??
+            throw new ItemNotFoundException($"No {typeof(T).Name} found with CLR type '{clrType}'.");
 
         public bool TryGetType(string name, [NotNullWhen(true)] out NamedTypeDefinition? type)
         {
@@ -578,11 +562,13 @@ namespace GraphZen.TypeSystem
         public NamedTypeDefinition? FindType(TypeIdentity identity) => TryGetType(identity, out var type) ? type : null;
 
 
-        public bool TryGetType(TypeIdentity identity, [NotNullWhen(true)] out NamedTypeDefinition? type) => _types.TryGetValue(identity, out type);
+        public bool TryGetType(TypeIdentity identity, [NotNullWhen(true)] out NamedTypeDefinition? type) =>
+            _types.TryGetValue(identity, out type);
 
         public NamedTypeDefinition? FindType(string name) => FindTypeIdentity(name)?.Definition;
 
-        public NamedTypeDefinition? FindFirstType(Type clrType) => _types.Values.FirstOrDefault(_ => _.ClrType == clrType);
+        public NamedTypeDefinition? FindFirstType(Type clrType) =>
+            _types.Values.FirstOrDefault(_ => _.ClrType == clrType);
 
         public TypeIdentity GetOrAddOutputTypeIdentity(Type clrType)
         {
@@ -661,13 +647,15 @@ namespace GraphZen.TypeSystem
         }
 
         public TypeIdentity GetOrAddTypeIdentity(string name) => FindTypeIdentity(name) ?? AddTypeIdentity(name);
-        public TypeIdentity GetOrAddTypeIdentity(Type clrType) => FindTypeIdentity(clrType) ??  AddTypeIdentity(clrType);
+        public TypeIdentity GetOrAddTypeIdentity(Type clrType) => FindTypeIdentity(clrType) ?? AddTypeIdentity(clrType);
 
         public TypeIdentity? FindTypeIdentity(Type clrType) =>
-            _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType) ?? (clrType.TryGetGraphQLName(out var name) ? FindTypeIdentity(name) : null);
+            _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType) ??
+            (clrType.TryGetGraphQLName(out var name) ? FindTypeIdentity(name) : null);
 
 
-        public NamedTypeDefinition? FindOutputType(Type clrType) => _types.Values.SingleOrDefault(_ => _.IsOutputType() && _.ClrType == clrType);
+        public NamedTypeDefinition? FindOutputType(Type clrType) =>
+            _types.Values.SingleOrDefault(_ => _.IsOutputType() && _.ClrType == clrType);
 
         public NamedTypeDefinition? FindType(Type clrType, TypeKind kind)
         {
@@ -683,16 +671,16 @@ namespace GraphZen.TypeSystem
 
         public Schema ToSchema()
         {
-
-
             FinalizeTypes();
             return new Schema(this);
         }
-        void FinalizeTypes()
+
+        private void FinalizeTypes()
         {
             var typeRefs = GetTypeReferences().ToList();
+
             TypeReference? GetFirstUndefinedTypeReference() => typeRefs
-                            .FirstOrDefault(_ => _.Identity.Definition == null);
+                .FirstOrDefault(_ => _.Identity.Definition == null);
 
             var undefined = GetFirstUndefinedTypeReference();
             while (undefined != null)
@@ -706,7 +694,6 @@ namespace GraphZen.TypeSystem
                 undefined = GetFirstUndefinedTypeReference();
             }
         }
-
 
 
         public IEnumerable<TypeIdentity> GetTypeIdentities(bool includeSpecTypes = false)

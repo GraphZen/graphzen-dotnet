@@ -10,10 +10,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IInputValueDefinition : IAnnotatableDefinition, INamed, IDescription, IInputDefinition, IClrInfo
     {
-
-
-
-
         object? DefaultValue { get; }
 
         bool HasDefaultValue { get; }

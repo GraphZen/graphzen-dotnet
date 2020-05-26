@@ -65,12 +65,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
                         @"Cannot rename input object Bar to ""OutputTYpe"" because OutputType is already identified as an output type.");
             });
         }
-
-
-
-
-
-
-
     }
 }

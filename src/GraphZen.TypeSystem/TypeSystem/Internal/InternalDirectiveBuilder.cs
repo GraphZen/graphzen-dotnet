@@ -28,7 +28,8 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalInputValueBuilder Argument(string name) => Definition.FindArgument(name)?.Builder ?? throw new NotImplementedException();
+        public InternalInputValueBuilder Argument(string name) =>
+            Definition.FindArgument(name)?.Builder ?? throw new NotImplementedException();
 
         public InternalInputValueBuilder? Argument(string name, string type, ConfigurationSource configurationSource)
         {
@@ -49,7 +50,6 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             return argument.Builder;
-
         }
 
         public bool IsArgumentIgnored(string name, ConfigurationSource configurationSource)
@@ -83,7 +83,6 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             return argument?.Builder;
-
         }
 
 

@@ -11,7 +11,6 @@ namespace GraphZen.LanguageModel.Internal
 {
     public static class LanguageModelClrTypeExtensions
     {
-
         public static string GetGraphQLName(this Type clrType, Action<string> onInvalidNameAnnotation,
             Action<string> onInvalidClrTypeName)
         {
@@ -85,15 +84,11 @@ namespace GraphZen.LanguageModel.Internal
         }
 
 
-
-
-
         public static bool TryGetGraphQLNameFromDataAnnotation(this Type clrType, [NotNullWhen(true)] out string? name)
         {
             name = clrType.GetCustomAttributes(typeof(GraphQLNameAttribute), false).Cast<GraphQLNameAttribute>()
                 .SingleOrDefault()?.Name;
             return name != null;
         }
-
     }
 }

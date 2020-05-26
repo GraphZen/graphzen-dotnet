@@ -13,6 +13,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         [GenDictionaryAccessors(nameof(InputFieldDefinition.Name), "Field")]
         IReadOnlyDictionary<string, InputFieldDefinition> Fields { get; }
+
         bool RemoveField(InputFieldDefinition field);
         bool AddField(InputFieldDefinition field);
         ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName);

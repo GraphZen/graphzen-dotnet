@@ -21,7 +21,8 @@ namespace GraphZen.Infrastructure
         {
         }
 
-        public ItemNotFoundException([JetBrains.Annotations.NotNull] string message, [CanBeNull] Exception? innerException) : base(message, innerException)
+        public ItemNotFoundException([JetBrains.Annotations.NotNull] string message,
+            [CanBeNull] Exception? innerException) : base(message, innerException)
         {
         }
     }

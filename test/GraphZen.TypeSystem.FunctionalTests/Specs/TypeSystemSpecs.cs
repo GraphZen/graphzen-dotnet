@@ -56,12 +56,21 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string cannot_create_type_if_name_conflicts_with_type_identity_of_opposite_io = null;
             public const string cannot_rename_type_if_name_conflicts_with_type_identity_of_opposite_io = null;
 
-            public const string cannot_create_type_via_clr_type_if_name_conflicts_with_type_identity_of_opposite_io = null;
-            public const string cannot_create_type_via_clr_type_if_name_annotation_conflicts_with_type_identity_of_opposite_io = null;
-            public const string cannot_create_type_via_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io = null;
+            public const string cannot_create_type_via_clr_type_if_name_conflicts_with_type_identity_of_opposite_io =
+                null;
+
+            public const string
+                cannot_create_type_via_clr_type_if_name_annotation_conflicts_with_type_identity_of_opposite_io = null;
+
+            public const string
+                cannot_create_type_via_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io = null;
 
             public const string cannot_set_clr_type_if_inferred_name_conflicts_with_type_identity_of_opposite_io = null;
-            public const string cannot_set_clr_type_if_inferred_name_annotation_if_name_conflicts_with_type_identity_of_opposite_io = null;
+
+            public const string
+                cannot_set_clr_type_if_inferred_name_annotation_if_name_conflicts_with_type_identity_of_opposite_io =
+                    null;
+
             public const string cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io = null;
         }
 

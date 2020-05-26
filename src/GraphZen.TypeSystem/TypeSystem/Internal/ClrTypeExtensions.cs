@@ -239,7 +239,6 @@ namespace GraphZen.TypeSystem.Internal
             }
 
 
-
             return clrType.TryGetGraphQLName(out var name) && name.IsValidGraphQLName();
         }
 

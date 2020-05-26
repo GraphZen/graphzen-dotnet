@@ -30,6 +30,7 @@ namespace GraphZen.Infrastructure
         }
 
         public static T XDump<T>(this T value) => value;
+
         // ReSharper disable once MethodOverloadWithOptionalParameter
         public static T XDump<T>(this T value, string label = "value", bool expanded = false) => value;
 

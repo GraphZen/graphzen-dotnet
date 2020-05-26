@@ -53,8 +53,7 @@ namespace GraphZen.TypeSystem
             DeclaringMember = declaringMember;
         }
 
-        [GraphQLName("type")]
-        public IGraphQLType InputType => _type.Value;
+        [GraphQLName("type")] public IGraphQLType InputType => _type.Value;
 
         [GraphQLIgnore] public IMemberDefinition DeclaringMember { get; }
 

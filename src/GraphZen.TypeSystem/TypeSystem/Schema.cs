@@ -277,6 +277,7 @@ namespace GraphZen.TypeSystem
             {
                 return Types.Values;
             }
+
             return Types.Values.Where(_ => !_.IsSpec);
         }
 
@@ -475,7 +476,6 @@ namespace GraphZen.TypeSystem
                 {
                     return requestedType;
                 }
-
 
 
                 throw new InvalidOperationException(

@@ -84,12 +84,13 @@ namespace GraphZen.Internal
                     $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The CLR {GetClrTypeKind(clrType)} name '{clrType.Name}' is not a valid GraphQL name. {NameSpecDescription}";
 
 
-
             public static string CannotCreateArgumentWithInvalidName(IArgumentDefinition def, string name)
-                => $"Cannot create argument named \"{name}\" for {def.DeclaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+                =>
+                    $"Cannot create argument named \"{name}\" for {def.DeclaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotCreateInputFieldWithInvalidName(IInputFieldDefinition def, string name)
-                => $"Cannot create field named \"{name}\" for {def.DeclaringType}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
+                =>
+                    $"Cannot create field named \"{name}\" for {def.DeclaringType}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotCreateDirectiveWithInvalidName(string name) =>
                 $"Cannot create directive named \"{name}\": \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";

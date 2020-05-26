@@ -146,7 +146,8 @@ namespace GraphZen.TypeSystem
 
             var fieldTypeId = Schema.GetOrAddInputTypeIdentity(innerClrType);
 
-            var field = new InputFieldDefinition(fieldName, fieldTypeId, typeNode, nameConfigurationSource, Schema, configurationSource,
+            var field = new InputFieldDefinition(fieldName, fieldTypeId, typeNode, nameConfigurationSource, Schema,
+                configurationSource,
                 property, this);
 
 
@@ -212,16 +213,18 @@ namespace GraphZen.TypeSystem
             {
                 field.UpdateConfigurationSource(configurationSource);
                 return field;
-
             }
+
             if (!clrType.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
             {
                 return null;
             }
+
             var fieldTypeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
 
 
-            field = new InputFieldDefinition(name, fieldTypeIdentity, typeSyntax, configurationSource, Schema, configurationSource, null, this);
+            field = new InputFieldDefinition(name, fieldTypeIdentity, typeSyntax, configurationSource, Schema,
+                configurationSource, null, this);
             AddField(field);
             return field;
         }
@@ -246,6 +249,7 @@ namespace GraphZen.TypeSystem
                 field.UpdateConfigurationSource(configurationSource);
                 return field;
             }
+
             TypeSyntax typeNode;
             try
             {
@@ -263,7 +267,6 @@ namespace GraphZen.TypeSystem
 
             field = new InputFieldDefinition(name, fieldTypeIdentity,
                 typeNode, configurationSource,
-
                 Schema, configurationSource,
                 null, this);
             _fields[name] = field;

@@ -12,6 +12,5 @@ namespace GraphZen.Infrastructure
     {
         public static SchemaDefinition GetDefinition<T>(this SchemaBuilder<T> schemaBuilder) where T : GraphQLContext =>
             schemaBuilder.GetInfrastructure<SchemaDefinition>();
-
     }
 }

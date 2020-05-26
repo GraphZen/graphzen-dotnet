@@ -97,7 +97,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public InputValueBuilder<object?> Argument(string name) => new InputValueBuilder<object?>(Builder.Argument(Check.NotNull(name, nameof(name))));
+        public InputValueBuilder<object?> Argument(string name) =>
+            new InputValueBuilder<object?>(Builder.Argument(Check.NotNull(name, nameof(name))));
 
         public DirectiveBuilder<TDirective> Argument(string name, string type)
         {

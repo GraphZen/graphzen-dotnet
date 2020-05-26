@@ -21,7 +21,6 @@ namespace GraphZen.TypeSystem
             TypeIdentity typeIdentity,
             TypeSyntax typeSyntax,
             SchemaDefinition schema,
-
             ConfigurationSource configurationSource,
             object? clrInfo, IMemberDefinition declaringMember) : base(configurationSource)
         {

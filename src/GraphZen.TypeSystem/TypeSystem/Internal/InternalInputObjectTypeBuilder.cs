@@ -24,14 +24,11 @@ namespace GraphZen.TypeSystem.Internal
                 $"Field \"{name}\" does not exist on {Definition}. Add the field by specifying a field type.");
 
 
-        public InternalInputValueBuilder? Field(string name, Type clrType, ConfigurationSource configurationSource) => Definition.GetOrAddField(name, clrType, configurationSource)?.Builder;
+        public InternalInputValueBuilder? Field(string name, Type clrType, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddField(name, clrType, configurationSource)?.Builder;
 
-        public InternalInputValueBuilder? Field(string name, string type, ConfigurationSource configurationSource)
-        {
-            return Definition.GetOrAddField(name, type, configurationSource)?.Builder;
-
-
-        }
+        public InternalInputValueBuilder? Field(string name, string type, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddField(name, type, configurationSource)?.Builder;
 
         public bool IgnoreField(string fieldName, ConfigurationSource configurationSource)
         {

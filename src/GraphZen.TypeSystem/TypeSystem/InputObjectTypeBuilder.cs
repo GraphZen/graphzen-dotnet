@@ -95,12 +95,14 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Check.NotNull(inputFieldConfigurator, nameof(inputFieldConfigurator));
-            var fb = Builder.Field(name, type, ConfigurationSource.Explicit)?.InputType(type, ConfigurationSource.Explicit)!;
+            var fb = Builder.Field(name, type, ConfigurationSource.Explicit)
+                ?.InputType(type, ConfigurationSource.Explicit)!;
             inputFieldConfigurator(new InputValueBuilder<object?>(fb));
             return this;
         }
 
-        public InputValueBuilder<object?> Field(string name) => new InputValueBuilder<object?>(Builder.Field(Check.NotNull(name, nameof(name))));
+        public InputValueBuilder<object?> Field(string name) =>
+            new InputValueBuilder<object?>(Builder.Field(Check.NotNull(name, nameof(name))));
 
         public InputObjectTypeBuilder<TInputObject> Field(string name,
             Action<InputValueBuilder<object?>> inputFieldConfigurator)
