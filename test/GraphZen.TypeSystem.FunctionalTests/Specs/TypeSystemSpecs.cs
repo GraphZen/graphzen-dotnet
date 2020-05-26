@@ -74,6 +74,24 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io = null;
         }
 
+
+        public class TypeReferenceSpecs
+        {
+            public const string it_can_be_created_if_type_matches_own_io_identity = null;
+            public const string it_can_be_created_with_clr_type_if_type_matches_own_io_identity = null;
+
+            public const string it_cannot_be_created_if_type_conflicts_with_own_io_identity = null;
+            public const string it_cannot_be_created_with_clr_type_if_type_conflicts_with_own_io_identity = null;
+
+            public const string type_can_be_set_if_type_matches_own_io_identity = null;
+            public const string type_can_be_set_with_clr_type_if_type_matches_own_io_identity = null;
+
+            public const string type_cannot_be_set_if_type_conflicts_with_own_io_identity = null;
+            public const string type_cannot_be_set__with_clr_type_if_type_conflicts_with_own_io_identity = null;
+
+        }
+
+
         public class InputAndOutputTypeSpecs
         {
             public const string type_can_be_created_if_name_matches_input_type_id = null;

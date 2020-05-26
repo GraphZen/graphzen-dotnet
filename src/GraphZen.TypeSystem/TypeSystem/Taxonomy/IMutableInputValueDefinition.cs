@@ -9,7 +9,10 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableInputValueDefinition : IInputValueDefinition, IMutableAnnotatableDefinition, IMutableNamed,
+    public interface IMutableInputValueDefinition : IInputValueDefinition,
+        IMutableAnnotatableDefinition,
+        IMutableNamed,
+        IMutableTypeReferenceDefinition,
         IMutableDescription
     {
         bool SetDefaultValue(object value, ConfigurationSource configurationSource);

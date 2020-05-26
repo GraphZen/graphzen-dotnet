@@ -53,7 +53,7 @@ namespace GraphZen.TypeSystem
             DeclaringMember = declaringMember;
         }
 
-        [GraphQLName("type")] public IGraphQLType InputType => _type.Value;
+        [GraphQLName("type")] public IGraphQLType InputType => TypeReference;
 
         [GraphQLIgnore] public IMemberDefinition DeclaringMember { get; }
 
@@ -69,5 +69,9 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLCanBeNull] public string? Description { get; }
+
+        [GraphQLIgnore]
+        public IGraphQLType TypeReference => _type.Value;
+        IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
     }
 }

@@ -16,6 +16,22 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
+
+    public abstract class TypeReferencingMember : AnnotatableMemberDefinition
+    {
+        protected TypeReferencingMember(ConfigurationSource configurationSource) : base(configurationSource)
+        {
+        }
+
+        protected bool SetType(string type, ConfigurationSource configurationSource)
+        {
+
+            return false;
+        }
+    }
+
+
+
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public partial class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {

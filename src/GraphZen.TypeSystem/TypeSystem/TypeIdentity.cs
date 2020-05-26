@@ -272,10 +272,7 @@ namespace GraphZen.TypeSystem
                 foreach (var typeReference in Schema.GetTypeReferences()
                     .Where(typeRef => typeRef.Identity.Equals(existing)))
                 {
-                    if (typeReference.SetIdentity(this, configurationSource))
-                    {
-                        // throw new GraphQLException($"Unable to update type reference ({typeReference}) with identity ({this}).");
-                    }
+                    typeReference.SetIdentity(this, configurationSource);
                 }
 
                 Schema.RemoveTypeIdentity(existing);

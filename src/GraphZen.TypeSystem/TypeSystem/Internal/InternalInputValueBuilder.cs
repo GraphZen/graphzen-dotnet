@@ -21,23 +21,24 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalInputValueBuilder InputType(string type, ConfigurationSource configurationSource)
         {
-            // TODO: incorporate configuration source
-            Definition.InputType = Schema.GetOrAddTypeReference(type, Definition, configurationSource);
+            var typeRef = Schema.GetOrAddTypeReference(type, Definition, configurationSource);
+            Definition.SetTypeReference(typeRef, configurationSource);
             return this;
         }
 
 
         public InternalInputValueBuilder Type(Type clrType, ConfigurationSource configurationSource)
         {
-            // TODO: incorporate configuration source
-            Definition.InputType = Schema.GetOrAddTypeReference(clrType, false, false, Definition, configurationSource);
+            var typeRef = Schema.GetOrAddTypeReference(clrType, false, false, Definition, configurationSource);
+            Definition.SetTypeReference(typeRef, configurationSource);
             return this;
         }
 
 
         public InternalInputValueBuilder InputFieldType(PropertyInfo property)
         {
-            Definition.InputType = Schema.GetOrAddTypeReference(property, Definition);
+            var typeRef = Schema.GetOrAddTypeReference(property, Definition);
+            Definition.SetTypeReference(typeRef, ConfigurationSource.Convention);
             return this;
         }
 

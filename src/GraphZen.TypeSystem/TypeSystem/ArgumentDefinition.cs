@@ -74,7 +74,7 @@ namespace GraphZen.TypeSystem
 
         IGraphQLTypeReference IArgumentDefinition.ArgumentType => ArgumentType;
 
-        public TypeReference ArgumentType => InputType;
+        public TypeReference ArgumentType => TypeReference;
 
         public new IMutableArgumentsDefinition DeclaringMember =>
             (IMutableArgumentsDefinition)base.DeclaringMember;

@@ -10,9 +10,12 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
+    // public abstract class TypeReferenceDefinition : AnnotatableMemberDefinition { }
+
     public abstract class InputValueDefinition : AnnotatableMemberDefinition, IMutableInputValueDefinition
     {
         private ConfigurationSource? _defaultValueConfigurationSource;
+        private ConfigurationSource _typeReferenceConfigurationSource;
         protected ConfigurationSource NameConfigurationSource;
 
         protected InputValueDefinition(
@@ -31,7 +34,8 @@ namespace GraphZen.TypeSystem
             NameConfigurationSource = nameConfigurationSource;
             Name = name;
             Builder = new InternalInputValueBuilder(this, schema.Builder);
-            InputType = new TypeReference(typeIdentity, typeSyntax, this, configurationSource);
+            TypeReference = new TypeReference(typeIdentity, typeSyntax, this, configurationSource);
+            _typeReferenceConfigurationSource = configurationSource;
         }
 
         protected override SchemaDefinition Schema { get; }
@@ -39,7 +43,6 @@ namespace GraphZen.TypeSystem
 
         public InternalInputValueBuilder Builder { get; }
 
-        public TypeReference InputType { get; set; }
 
         public IMemberDefinition DeclaringMember { get; }
 
@@ -52,9 +55,7 @@ namespace GraphZen.TypeSystem
 
             DefaultValue = value;
             HasDefaultValue = true;
-
             _defaultValueConfigurationSource = configurationSource;
-
             return true;
         }
 
@@ -67,9 +68,7 @@ namespace GraphZen.TypeSystem
 
             DefaultValue = null;
             HasDefaultValue = false;
-
             _defaultValueConfigurationSource = configurationSource;
-
             return true;
         }
 
@@ -80,5 +79,21 @@ namespace GraphZen.TypeSystem
         public abstract bool SetName(string name, ConfigurationSource configurationSource);
         public ConfigurationSource GetNameConfigurationSource() => NameConfigurationSource;
         public object? ClrInfo { get; }
+        public ConfigurationSource GetTypeReferenceConfigurationSource() => _typeReferenceConfigurationSource;
+
+        public TypeReference TypeReference { get; private set; }
+        public bool SetTypeReference(TypeReference type, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetTypeReferenceConfigurationSource()))
+            {
+                return false;
+            }
+
+            TypeReference = type;
+            _typeReferenceConfigurationSource = configurationSource;
+            return true;
+        }
+
+        IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
     }
 }
