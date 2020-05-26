@@ -8,81 +8,10 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Xunit;
-using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputXorOutputTypeSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
 {
-    [NoReorder]
-    public abstract class InputXorOutputTypeTests
-    {
-        [Spec(nameof(cannot_create_type_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_create_type_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(cannot_rename_type_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_rename_type_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(cannot_create_type_via_clr_type_if_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_create_type_via_clr_type_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(cannot_create_type_via_clr_type_if_name_annotation_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_create_type_via_clr_type_if_name_annotation_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(cannot_create_type_via_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_create_type_via_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(cannot_set_clr_type_if_inferred_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_set_clr_type_if_inferred_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(cannot_set_clr_type_if_inferred_name_annotation_if_name_conflicts_with_type_identity_of_opposite_io
-        ))]
-        [Fact(Skip = "TODO")]
-        public void
-            cannot_set_clr_type_if_inferred_name_annotation_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact(Skip = "TODO")]
-        public void cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-    }
-
-// Move InputXorOutputTypeTests into a separate file to start writing tests
+    // Move InputXorOutputTypeTests into a separate file to start writing tests
     [NoReorder]
     public class InputXorOutputTypeTestsScaffold
     {

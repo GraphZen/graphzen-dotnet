@@ -3,29 +3,30 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
+using FluentAssertions;
+using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.InputXorOutputTypeSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
 {
     [NoReorder]
     public class InputXorOutputTypeTests
     {
-        public abstract class PlainAbstractClass
+        public class PlainClass
         {
         }
 
         [GraphQLName(AnnotatedNameValue)]
-        public abstract class PlainAbstractClassAnnotatedName
+        public class PlainClassAnnotatedName
         {
             public const string AnnotatedNameValue = nameof(AnnotatedNameValue);
         }
 
         [GraphQLName("(*&#")]
-        public abstract class PlainAbstractClassInvalidNameAnnotation
+        public class PlainClassInvalidNameAnnotation
         {
         }
 
@@ -36,9 +37,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
             Schema.Create(_ =>
             {
                 _.InputObject("Foo").Field("inputField", "Bar");
-                Action add = () => _.Union("Bar");
+                Action add = () => _.Object("Bar");
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create union Bar: Union types are output types and an input field or argument already references a type named 'Bar'. GraphQL input type references are reserved for scalar, enum, or input object types.");
+                    "Cannot create object Bar: Object types are output types and an input field or argument already references a type named 'Bar'. GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
 
@@ -49,11 +50,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
             Schema.Create(_ =>
             {
                 _.InputObject("Foo").Field("inputField", "Bar");
-                var baz = _.Union("Baz");
+                var baz = _.Object("Baz");
                 Action rename = () => baz.Name("Bar");
                 rename
                     .Should().Throw<InvalidTypeException>().WithMessage(
-                        "Cannot rename union Baz to \"Bar\": Union types are output types and an input field or argument already references a type named \"Bar\". GraphQL input type references are reserved for scalar, enum, or input object types.");
+                        "Cannot rename object Baz to \"Bar\": Object types are output types and an input field or argument already references a type named \"Bar\". GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
 
@@ -63,10 +64,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         {
             Schema.Create(_ =>
             {
-                _.InputObject("Foo").Field("inputField", nameof(PlainAbstractClass));
-                Action add = () => _.Union<PlainAbstractClass>();
+                _.InputObject("Foo").Field("inputField", nameof(PlainClass));
+                Action add = () => _.Object<PlainClass>();
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create union PlainAbstractClass: Union types are output types and an input field or argument already references a type named 'PlainAbstractClass'. GraphQL input type references are reserved for scalar, enum, or input object types.");
+                    "Cannot create object PlainClass: Object types are output types and an input field or argument already references a type named 'PlainClass'. GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
 
@@ -77,10 +78,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         {
             Schema.Create(_ =>
             {
-                _.InputObject("Foo").Field("inputField", PlainAbstractClassAnnotatedName.AnnotatedNameValue);
-                Action add = () => _.Union<PlainAbstractClassAnnotatedName>();
+                _.InputObject("Foo").Field("inputField", PlainClassAnnotatedName.AnnotatedNameValue);
+                Action add = () => _.Object<PlainClassAnnotatedName>();
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create union AnnotatedNameValue: Union types are output types and an input field or argument already references a type named 'AnnotatedNameValue'. GraphQL input type references are reserved for scalar, enum, or input object types.");
+                    "Cannot create object AnnotatedNameValue: Object types are output types and an input field or argument already references a type named 'AnnotatedNameValue'. GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
 
@@ -92,9 +93,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
             Schema.Create(_ =>
             {
                 _.InputObject("Foo").Field("inputField", "Bar");
-                Action add = () => _.Union<PlainAbstractClass>("Bar");
+                Action add = () => _.Object<PlainClass>("Bar");
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create union Bar: Union types are output types and an input field or argument already references a type named 'Bar'. GraphQL input type references are reserved for scalar, enum, or input object types.");
+                    "Cannot create object Bar: Object types are output types and an input field or argument already references a type named 'Bar'. GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
 
@@ -105,11 +106,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         {
             Schema.Create(_ =>
             {
-                _.InputObject("Foo").Field("inputField", nameof(PlainAbstractClass));
-                var baz = _.Union("Baz");
-                Action set = () => baz.ClrType<PlainAbstractClass>(true);
+                _.InputObject("Foo").Field("inputField", nameof(PlainClass));
+                var baz = _.Object("Baz");
+                Action set = () => baz.ClrType<PlainClass>(true);
                 set.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot set CLR type on union Baz and infer name \"PlainAbstractClass\": Union types are output types and an input field or argument already references a type named \"PlainAbstractClass\". GraphQL input type references are reserved for scalar, enum, or input object types.");
+                    "Cannot set CLR type on object Baz and infer name \"PlainClass\": Object types are output types and an input field or argument already references a type named \"PlainClass\". GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
 
@@ -122,11 +123,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
         {
             Schema.Create(_ =>
             {
-                _.InputObject("Foo").Field("inputField", PlainAbstractClassAnnotatedName.AnnotatedNameValue);
-                var baz = _.Union("Baz");
-                Action set = () => baz.ClrType<PlainAbstractClassAnnotatedName>(true);
+                _.InputObject("Foo").Field("inputField", PlainClassAnnotatedName.AnnotatedNameValue);
+                var baz = _.Object("Baz");
+                Action set = () => baz.ClrType<PlainClassAnnotatedName>(true);
                 set.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot set CLR type on output type union Baz and infer name: the annotated name \"AnnotatedNameValue\" on CLR class 'PlainAbstractClassAnnotatedName' refers to an input type referenced by a field argument, directive argument, or input field. GraphQL input type references are reserved for scalar, enum, or input object types.");
+                    "Cannot set CLR type on output type object Baz and infer name: the annotated name \"AnnotatedNameValue\" on CLR class 'PlainClassAnnotatedName' refers to an input type referenced by a field argument, directive argument, or input field. GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
 
@@ -137,10 +138,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
             Schema.Create(_ =>
             {
                 _.InputObject("Foo").Field("inputField", "Bar");
-                var baz = _.Union("Baz");
-                Action set = () => baz.ClrType<PlainAbstractClass>("Bar");
+                var baz = _.Object("Baz");
+                Action set = () => baz.ClrType<PlainClass>("Bar");
                 set.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot rename union Baz to \"Bar\": Union types are output types and an input field or argument already references a type named \"Bar\". GraphQL input type references are reserved for scalar, enum, or input object types.");
+                    "Cannot rename object Baz to \"Bar\": Object types are output types and an input field or argument already references a type named \"Bar\". GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
     }
