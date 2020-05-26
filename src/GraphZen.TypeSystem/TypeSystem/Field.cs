@@ -124,5 +124,8 @@ namespace GraphZen.TypeSystem
         public override string ToString() => $"{DeclaringType}.{Name}";
 
         [GraphQLCanBeNull] public string? Description { get; }
+
+        [GraphQLIgnore] public IGraphQLType TypeReference => FieldType;
+        IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
     }
 }

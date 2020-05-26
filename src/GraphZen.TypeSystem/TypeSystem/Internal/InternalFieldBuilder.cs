@@ -20,7 +20,9 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalFieldBuilder FieldType(Type clrType, ConfigurationSource configurationSource)
         {
-            Definition.FieldType = Schema.GetOrAddTypeReference(clrType, false, false, Definition, configurationSource);
+            var typeRef = Schema.GetOrAddTypeReference(clrType, false, false, Definition, configurationSource);
+
+            Definition.SetTypeReference(typeRef, configurationSource);
             return this;
         }
 
@@ -29,7 +31,8 @@ namespace GraphZen.TypeSystem.Internal
         {
             try
             {
-                Definition.FieldType = Schema.GetOrAddTypeReference(type, Definition, configurationSource);
+                var typeRef = Schema.GetOrAddTypeReference(type, Definition);
+                Definition.SetTypeReference(typeRef, configurationSource);
             }
             catch (InvalidTypeReferenceException e)
             {

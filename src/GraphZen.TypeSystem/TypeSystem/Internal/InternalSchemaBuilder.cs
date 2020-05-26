@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (reference.Identity.ClrType == null)
             {
-                return Scalar(reference.Identity.Name, reference.GetConfigurationSource())?.Definition;
+                return Scalar(reference.Identity.Name, reference.DeclaringMember.GetConfigurationSource())?.Definition;
             }
 
             if (Schema.TryGetTypeKind(reference.Identity.ClrType, reference.Identity.IsInputType(),

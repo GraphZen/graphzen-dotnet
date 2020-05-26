@@ -13,9 +13,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMutableDescription,
         IMutableDeprecation
     {
-        new object Value { get; set; }
-
-
         new EnumTypeDefinition DeclaringType { get; }
     }
 }

@@ -15,28 +15,20 @@ namespace GraphZen.TypeSystem
     public class TypeReference : INamedTypeReference
     {
         private readonly TypeSyntax _seedSyntax;
-        private ConfigurationSource _configurationSource;
 
-        public ConfigurationSource GetConfigurationSource() => _configurationSource;
 
-        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMemberDefinition declaringMember,
-            ConfigurationSource configurationSource)
+        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMutableDefinition declaringMember)
         {
             Identity = identity;
             DeclaringMember = declaringMember;
             _seedSyntax = typeSyntax;
-            _configurationSource = configurationSource;
         }
 
-        public IMemberDefinition DeclaringMember { get; }
+        public IMutableDefinition DeclaringMember { get; }
 
 
         public bool SetIdentity(TypeIdentity identity, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(GetConfigurationSource()))
-            {
-                return false;
-            }
 
             var def = identity.Definition;
             if (def != null)
@@ -55,7 +47,6 @@ namespace GraphZen.TypeSystem
             }
 
             Identity = identity;
-            _configurationSource = configurationSource;
             return true;
         }
 

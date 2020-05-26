@@ -8,17 +8,15 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableFieldDefinition : IFieldDefinition, IMutableAnnotatableDefinition,
+    public interface IMutableFieldDefinition : IFieldDefinition, IMutableAnnotatableDefinition, IMutableTypeReferenceDefinition,
         IMutableNamed,
         IMutableDescription,
         IMutableArgumentsDefinition,
         IMutableDeprecation
     {
-        new TypeReference FieldType { get; set; }
+        new TypeReference FieldType { get; }
 
-
-        new Resolver<object, object?>? Resolver { get; set; }
-
+        new Resolver<object, object?>? Resolver { get; }
 
         new IMutableFieldsDefinition DeclaringType { get; }
     }

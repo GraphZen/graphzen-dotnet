@@ -16,38 +16,20 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-
-    public abstract class TypeReferencingMember : AnnotatableMemberDefinition
-    {
-        protected TypeReferencingMember(ConfigurationSource configurationSource) : base(configurationSource)
-        {
-        }
-
-        protected bool SetType(string type, ConfigurationSource configurationSource)
-        {
-
-            return false;
-        }
-    }
-
-
-
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public partial class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
+
+        private readonly TypeReferenceConfiguration<FieldDefinition> _typeReferenceConfiguration;
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
-
-
         private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
             new Dictionary<string, ConfigurationSource>();
-
         private string? _deprecationReason;
         private bool _isDeprecated;
         private ConfigurationSource _nameConfigurationSource;
 
         protected override SchemaDefinition Schema { get; }
-
 
         public FieldDefinition(string name, ConfigurationSource nameConfigurationSource,
             TypeIdentity fieldTypeIdentity,
@@ -61,13 +43,14 @@ namespace GraphZen.TypeSystem
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Builder = new InternalFieldBuilder(this, schema.Builder);
-            FieldType = new TypeReference(fieldTypeIdentity, fieldTypeSyntax, this, configurationSource);
             Name = name;
             if (!name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
                     TypeSystemExceptionMessages.InvalidNameException.CannotCreateField(name, this));
             }
+
+            _typeReferenceConfiguration = new TypeReferenceConfiguration<FieldDefinition>(fieldTypeIdentity, fieldTypeSyntax, this);
         }
 
 
@@ -130,7 +113,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
 
-        public TypeReference FieldType { get; set; }
+        public TypeReference FieldType => TypeReference;
         IGraphQLTypeReference IFieldDefinition.FieldType => FieldType;
         public Resolver<object, object?>? Resolver { get; set; }
 
@@ -323,5 +306,15 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"field {Name}";
+
+        public ConfigurationSource GetTypeReferenceConfigurationSource() =>
+            _typeReferenceConfiguration.GetTypeReferenceConfigurationSource();
+
+        public TypeReference TypeReference => _typeReferenceConfiguration.TypeReference;
+
+        public bool SetTypeReference(TypeReference type, ConfigurationSource configurationSource) =>
+            _typeReferenceConfiguration.SetTypeReference(type, configurationSource);
+
+        IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
     }
 }

@@ -10,6 +10,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IMutableAbstractTypeDefinition : IAbstractTypeDefinition
     {
-        new TypeResolver<object, GraphQLContext>? ResolveType { get; set; }
+        new TypeResolver<object, GraphQLContext>? ResolveType { get; }
     }
 }

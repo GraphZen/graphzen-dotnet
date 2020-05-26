@@ -21,7 +21,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalInputValueBuilder InputType(string type, ConfigurationSource configurationSource)
         {
-            var typeRef = Schema.GetOrAddTypeReference(type, Definition, configurationSource);
+            var typeRef = Schema.GetOrAddTypeReference(type, Definition);
             Definition.SetTypeReference(typeRef, configurationSource);
             return this;
         }

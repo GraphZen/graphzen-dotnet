@@ -278,8 +278,7 @@ namespace GraphZen.TypeSystem
         */
 
 
-        public TypeReference GetOrAddTypeReference(string type, IMemberDefinition referencingMember,
-            ConfigurationSource configurationSource)
+        public TypeReference GetOrAddTypeReference(string type, IMutableDefinition referencingMember)
         {
             TypeSyntax typeNode;
             try
@@ -294,30 +293,30 @@ namespace GraphZen.TypeSystem
 
             var named = typeNode.GetNamedType();
             var identity = GetOrAddTypeIdentity(named.Name.Value);
-            return new TypeReference(identity, typeNode, referencingMember, configurationSource);
+            return new TypeReference(identity, typeNode, referencingMember);
         }
 
 
-        public TypeReference GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
+        public TypeReference GetOrAddTypeReference(PropertyInfo property, IMutableDefinition referencingMember
         )
         {
             if (property.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
             {
                 var identity = GetOrAddTypeIdentity(innerClrType);
 
-                return new TypeReference(identity, typeNode, referencingMember, ConfigurationSource.Convention);
+                return new TypeReference(identity, typeNode, referencingMember);
             }
 
             throw new NotImplementedException();
         }
 
         public TypeReference GetOrAddTypeReference(Type clrType, bool canBeNull, bool itemCanBeNull,
-            IMemberDefinition referencingMember, ConfigurationSource configurationSource)
+            IMutableDefinition referencingMember, ConfigurationSource configurationSource)
         {
             if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType, canBeNull, itemCanBeNull))
             {
                 var identity = GetOrAddTypeIdentity(innerClrType);
-                return new TypeReference(identity, typeNode, referencingMember, configurationSource);
+                return new TypeReference(identity, typeNode, referencingMember);
             }
 
             throw new NotImplementedException();
@@ -686,7 +685,7 @@ namespace GraphZen.TypeSystem
             while (undefined != null)
             {
                 var def = Builder.DefineType(undefined);
-                if (def == null || !undefined.SetIdentity(def.Identity, undefined.GetConfigurationSource()))
+                if (def == null || !undefined.SetIdentity(def.Identity, def.GetConfigurationSource()))
                 {
                     throw new Exception($"Unable to define type for type reference {undefined}");
                 }
