@@ -376,12 +376,59 @@ namespace GraphZen.TypeSystem
                 case ListType lt:
                     return lt;
                 case TypeReference reference:
-                    return reference.ToType(this);
+                    return GetType(reference);
                 case INamedTypeReference named:
                     return GetType(named.Name);
             }
 
             throw new InvalidOperationException($"Unable to get input type for definition {typeReference}.");
+        }
+
+        private IGraphQLType GetType(TypeReference reference)
+        {
+            IGraphQLType GetType(TypeSyntax node)
+            {
+                switch (node)
+                {
+                    case ListTypeSyntax list:
+                        return ListType.Of(GetType(list.OfType));
+                    case NonNullTypeSyntax nn:
+                        return NonNullType.Of((INullableType)GetType(nn.OfType));
+                    case NamedTypeSyntax _:
+                        var nameMatch = FindType(reference.Identity.Name);
+                        if (nameMatch != null)
+                        {
+                            return nameMatch;
+                        }
+
+                        if (reference.Identity.ClrType != null)
+                        {
+                            var typeMatches = Types.Values
+                                .Where(_ => _.ClrType != null && _.ClrType.IsAssignableFrom(reference.Identity.ClrType))
+                                .ToArray();
+
+                            if (typeMatches.Length == 1)
+                            {
+                                return typeMatches[0];
+                            }
+
+                            if (typeMatches.Length > 1)
+                            {
+                                throw new Exception(
+                                    $"More than one type in the schema matched type reference  \"{reference.Identity.Name}\" with CLR type {reference.Identity.ClrType}");
+                            }
+
+                            throw new Exception(
+                                $"Unable to find output type for type reference named \"{reference.Identity.Name}\" with CLR type {reference.Identity.ClrType}");
+                        }
+
+                        throw new Exception(
+                            $"Unable to find output type for type reference named \"{reference.Identity.Name}\"");
+                }
+                throw new Exception($"Unable to create type reference from type node: {node?.GetType()}");
+            }
+
+            return GetType(reference.TypeSyntax);
         }
 
 

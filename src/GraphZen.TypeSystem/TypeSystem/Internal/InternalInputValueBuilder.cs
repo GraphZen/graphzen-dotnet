@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -21,24 +20,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalInputValueBuilder InputType(string type, ConfigurationSource configurationSource)
         {
-            var typeRef = Schema.GetOrAddTypeReference(type, Definition);
-            Definition.SetTypeReference(typeRef, configurationSource);
-            return this;
-        }
-
-
-        public InternalInputValueBuilder Type(Type clrType, ConfigurationSource configurationSource)
-        {
-            var typeRef = Schema.GetOrAddTypeReference(clrType, false, false, Definition, configurationSource);
-            Definition.SetTypeReference(typeRef, configurationSource);
-            return this;
-        }
-
-
-        public InternalInputValueBuilder InputFieldType(PropertyInfo property)
-        {
-            var typeRef = Schema.GetOrAddTypeReference(property, Definition);
-            Definition.SetTypeReference(typeRef, ConfigurationSource.Convention);
+            Definition.SetTypeReference(type, configurationSource);
             return this;
         }
 

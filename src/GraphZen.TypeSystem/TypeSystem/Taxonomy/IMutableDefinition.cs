@@ -12,5 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableDefinition : IMemberDefinition
     {
         ConfigurationSource GetConfigurationSource();
+
+        SchemaDefinition Schema { get; }
     }
 }

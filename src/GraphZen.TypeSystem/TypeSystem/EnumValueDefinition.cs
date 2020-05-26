@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem
     {
         private ConfigurationSource _nameConfigurationSource;
 
-        protected override SchemaDefinition Schema { get; }
+        public override SchemaDefinition Schema { get; }
 
         public EnumValueDefinition(string name, ConfigurationSource nameConfigurationSource,
             EnumTypeDefinition declaringType,

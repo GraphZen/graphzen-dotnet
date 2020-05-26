@@ -27,7 +27,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<DescriptionSpecs>()
                 .WithSpecs<SdlSpec>();
 
-            var typeRef = new Subject("Type");
+            var typeRef = new Subject("Type").WithSpecs<TypeReferenceSpecs>(SpecPriority.High);
 
             var inputTypeRef = typeRef.WithName("InputTypeRef");
             var outputTypeRef = typeRef.WithName("OutputTypeRef");
@@ -46,7 +46,7 @@ namespace GraphZen.SpecAudit
             var directiveAnnotation = new Subject(nameof(DirectiveAnnotation));
 
             var directiveAnnotations = new Subject(nameof(AnnotatableMemberDefinition.DirectiveAnnotations))
-                .WithSpecs<DirectiveAnnotationSpecs>();
+                .WithSpecs<DirectiveAnnotationSpecs>(SpecPriority.Medium);
 
             var inputValue = new Subject(nameof(InputValue))
                 .WithSpecs<SdlSpec, SdlExtensionSpec>()

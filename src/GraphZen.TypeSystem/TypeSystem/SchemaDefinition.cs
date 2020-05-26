@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
@@ -47,11 +46,11 @@ namespace GraphZen.TypeSystem
         }
 
         private string DebuggerDisplay { [UsedImplicitly] get; } = "schema";
-        public InternalSchemaBuilder Builder { get; }
+        internal InternalSchemaBuilder Builder { get; }
         public IReadOnlyCollection<NamedTypeDefinition> Types => _types.Values;
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Schema;
 
-        protected override SchemaDefinition Schema => this;
+        public override SchemaDefinition Schema => this;
         public ObjectTypeDefinition? QueryType { get; private set; }
 
         public bool SetQueryType(ObjectTypeDefinition type, ConfigurationSource configurationSource)
@@ -241,85 +240,6 @@ namespace GraphZen.TypeSystem
             }
 
             return false;
-        }
-
-
-        /*
-                private bool TryDefineFirstUndefinedType(TypeIdentity? prev, [NotNullWhen(true)] out TypeIdentity? identity)
-                {
-                    var typeRefMissingIdentityDef = GetTypeReferences()
-                        .FirstOrDefault(_ => _.Identity.Definition == null);
-
-                    if (typeRefMissingIdentityDef == null)
-                    {
-                        return false;
-                    }
-
-                    Builder.Type(typeIdentiMi)
-
-
-
-                    identity = undefined.FirstOrDefault()?.Identity;
-
-
-                    if (identity != null)
-                    {
-                        if (Builder.Type(identity)?.Definition is INamedTypeDefinition def &&
-                            identity.Definition == null)
-                        {
-                            identity.Definition = def;
-                        }
-
-                        return identity.Definition != null;
-                    }
-
-                    return false;
-                }
-        */
-
-
-        public TypeReference GetOrAddTypeReference(string type, IMutableDefinition referencingMember)
-        {
-            TypeSyntax typeNode;
-            try
-            {
-                typeNode = Builder.Parser.ParseType(type);
-            }
-            catch (Exception e)
-            {
-                throw new InvalidTypeReferenceException(
-                    "Unable to parse type reference. See inner exception for details.", e);
-            }
-
-            var named = typeNode.GetNamedType();
-            var identity = GetOrAddTypeIdentity(named.Name.Value);
-            return new TypeReference(identity, typeNode, referencingMember);
-        }
-
-
-        public TypeReference GetOrAddTypeReference(PropertyInfo property, IMutableDefinition referencingMember
-        )
-        {
-            if (property.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
-            {
-                var identity = GetOrAddTypeIdentity(innerClrType);
-
-                return new TypeReference(identity, typeNode, referencingMember);
-            }
-
-            throw new NotImplementedException();
-        }
-
-        public TypeReference GetOrAddTypeReference(Type clrType, bool canBeNull, bool itemCanBeNull,
-            IMutableDefinition referencingMember, ConfigurationSource configurationSource)
-        {
-            if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType, canBeNull, itemCanBeNull))
-            {
-                var identity = GetOrAddTypeIdentity(innerClrType);
-                return new TypeReference(identity, typeNode, referencingMember);
-            }
-
-            throw new NotImplementedException();
         }
 
 

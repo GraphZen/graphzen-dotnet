@@ -20,7 +20,6 @@ namespace GraphZen.TypeSystem
     public partial class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
 
-        private readonly TypeReferenceConfiguration<FieldDefinition> _typeReferenceConfiguration;
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
         private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
@@ -29,7 +28,7 @@ namespace GraphZen.TypeSystem
         private bool _isDeprecated;
         private ConfigurationSource _nameConfigurationSource;
 
-        protected override SchemaDefinition Schema { get; }
+        public override SchemaDefinition Schema { get; }
 
         public FieldDefinition(string name, ConfigurationSource nameConfigurationSource,
             TypeIdentity fieldTypeIdentity,
@@ -49,8 +48,7 @@ namespace GraphZen.TypeSystem
                 throw new InvalidNameException(
                     TypeSystemExceptionMessages.InvalidNameException.CannotCreateField(name, this));
             }
-
-            _typeReferenceConfiguration = new TypeReferenceConfiguration<FieldDefinition>(fieldTypeIdentity, fieldTypeSyntax, this);
+            TypeReference = new TypeReference(fieldTypeIdentity, fieldTypeSyntax, this);
         }
 
 
@@ -308,12 +306,16 @@ namespace GraphZen.TypeSystem
         public override string ToString() => $"field {Name}";
 
         public ConfigurationSource GetTypeReferenceConfigurationSource() =>
-            _typeReferenceConfiguration.GetTypeReferenceConfigurationSource();
+            TypeReference.GetTypeReferenceConfigurationSource();
 
-        public TypeReference TypeReference => _typeReferenceConfiguration.TypeReference;
+        public TypeReference TypeReference { get; private set; }
 
-        public bool SetTypeReference(TypeReference type, ConfigurationSource configurationSource) =>
-            _typeReferenceConfiguration.SetTypeReference(type, configurationSource);
+        public bool SetTypeReference(TypeIdentity identity, TypeSyntax syntax,
+            ConfigurationSource configurationSource) =>
+            TypeReference.SetTypeReference(identity, syntax, configurationSource);
+
+        public bool SetTypeReference(string type, ConfigurationSource configurationSource) =>
+            TypeReference.SetTypeReference(type, configurationSource);
 
         IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
     }

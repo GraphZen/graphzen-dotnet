@@ -30,7 +30,6 @@ namespace GraphZen.TypeSystem
             Schema = schema;
         }
 
-
         /*
         private TypeIdentity(Type clrType, string name, SchemaDefinition schema)
         {
@@ -62,7 +61,7 @@ namespace GraphZen.TypeSystem
 
         public int Id { get; } = _typeIdSeed++;
 
-        private SchemaDefinition Schema { get; }
+        public SchemaDefinition Schema { get; }
 
         public NamedTypeDefinition? Definition => Schema.FindType(this);
 

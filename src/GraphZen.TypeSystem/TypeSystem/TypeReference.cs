@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
@@ -12,24 +11,79 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class TypeReference : INamedTypeReference
+    public class TypeReference : INamedTypeReference, IMutableTypeReferenceDefinition
     {
-        private readonly TypeSyntax _seedSyntax;
-
+        private ConfigurationSource _configurationSource;
+        private TypeSyntax _syntax;
 
         public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMutableDefinition declaringMember)
         {
             Identity = identity;
             DeclaringMember = declaringMember;
-            _seedSyntax = typeSyntax;
+            _syntax = typeSyntax;
+            _configurationSource = declaringMember.GetConfigurationSource();
         }
 
         public IMutableDefinition DeclaringMember { get; }
 
+        public TypeIdentity Identity { get; private set; }
+
+        public TypeSyntax TypeSyntax
+        {
+            get
+            {
+                TypeSyntax GetType(TypeSyntax node) =>
+                    node switch
+                    {
+                        ListTypeSyntax list => SyntaxFactory.ListType(GetType(list.OfType)),
+                        NonNullTypeSyntax nn => SyntaxFactory.NonNullType((NullableTypeSyntax) GetType(nn.OfType)),
+                        NamedTypeSyntax _ => SyntaxFactory.NamedType(SyntaxFactory.Name(Name)),
+                        _ => throw new NotImplementedException()
+                    };
+
+                return GetType(_syntax);
+            }
+        }
+
+        public ConfigurationSource GetTypeReferenceConfigurationSource() => _configurationSource;
+
+        TypeReference IMutableTypeReferenceDefinition.TypeReference => this;
+
+        public bool SetTypeReference(TypeIdentity identity, TypeSyntax syntax, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetTypeReferenceConfigurationSource()))
+            {
+                return false;
+            }
+
+            _syntax = syntax;
+            Identity = identity;
+            _configurationSource = configurationSource;
+            return true;
+        }
+
+        public bool SetTypeReference(string type, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetTypeReferenceConfigurationSource()))
+            {
+                return false;
+            }
+
+            var syntax = Schema.Builder.Parser.ParseType(type);
+            var named = syntax.GetNamedType();
+            var identity = Schema.GetOrAddTypeIdentity(named.Name.Value);
+            return SetTypeReference(identity, syntax, configurationSource);
+        }
+
+        IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => this;
+        public ConfigurationSource GetConfigurationSource() => GetTypeReferenceConfigurationSource();
+
+        public SchemaDefinition Schema => DeclaringMember.Schema;
+
+        public string Name => Identity.Name;
 
         public bool SetIdentity(TypeIdentity identity, ConfigurationSource configurationSource)
         {
-
             var def = identity.Definition;
             if (def != null)
             {
@@ -48,77 +102,6 @@ namespace GraphZen.TypeSystem
 
             Identity = identity;
             return true;
-        }
-
-        public TypeIdentity Identity { get; private set; }
-
-        public TypeSyntax TypeSyntax
-        {
-            get
-            {
-                TypeSyntax GetType(TypeSyntax node) =>
-                    node switch
-                    {
-                        ListTypeSyntax list => SyntaxFactory.ListType(GetType(list.OfType)),
-                        NonNullTypeSyntax nn => SyntaxFactory.NonNullType((NullableTypeSyntax)GetType(nn.OfType)),
-                        NamedTypeSyntax _ => SyntaxFactory.NamedType(SyntaxFactory.Name(Name)),
-                        _ => throw new NotImplementedException()
-                    };
-
-                return GetType(_seedSyntax);
-            }
-        }
-
-        public string Name => Identity.Name;
-
-
-        public IGraphQLType ToType(Schema schema)
-        {
-            IGraphQLType GetType(TypeSyntax node)
-            {
-                switch (node)
-                {
-                    case ListTypeSyntax list:
-                        return ListType.Of(GetType(list.OfType));
-                    case NonNullTypeSyntax nn:
-                        return NonNullType.Of((INullableType)GetType(nn.OfType));
-                    case NamedTypeSyntax _:
-                        var nameMatch = schema.FindType(Identity.Name);
-                        if (nameMatch != null)
-                        {
-                            return nameMatch;
-                        }
-
-                        if (Identity.ClrType != null)
-                        {
-                            var typeMatches = schema.Types.Values
-                                .Where(_ => _.ClrType != null && _.ClrType.IsAssignableFrom(Identity.ClrType))
-                                .ToArray();
-
-                            if (typeMatches.Length == 1)
-                            {
-                                return typeMatches[0];
-                            }
-
-                            if (typeMatches.Length > 1)
-                            {
-                                throw new Exception(
-                                    $"More than one type in the schema matched type reference  \"{Identity.Name}\" with CLR type {Identity.ClrType}");
-                            }
-
-                            throw new Exception(
-                                $"Unable to find output type for type reference named \"{Identity.Name}\" with CLR type {Identity.ClrType}");
-                        }
-
-                        throw new Exception(
-                            $"Unable to find output type for type reference named \"{Identity.Name}\"");
-                }
-
-                throw new Exception($"Unable to create type reference from type node: {node?.GetType()}");
-            }
-
-
-            return GetType(TypeSyntax);
         }
 
         public override string ToString() => $"ref: {TypeSyntax} | {Identity}";

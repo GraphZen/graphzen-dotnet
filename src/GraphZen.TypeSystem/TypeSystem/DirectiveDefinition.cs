@@ -83,7 +83,7 @@ namespace GraphZen.TypeSystem
             IsSpec = SpecReservedNames.DirectiveNames.Contains(Name);
         }
 
-        protected override SchemaDefinition Schema { get; }
+        public override SchemaDefinition Schema { get; }
 
 
         internal InternalDirectiveBuilder Builder { get; }

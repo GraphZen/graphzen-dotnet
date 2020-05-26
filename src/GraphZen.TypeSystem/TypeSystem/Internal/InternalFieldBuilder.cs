@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using GraphZen.Infrastructure;
-using GraphZen.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
@@ -17,30 +16,21 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-
         public InternalFieldBuilder FieldType(Type clrType, ConfigurationSource configurationSource)
         {
-            var typeRef = Schema.GetOrAddTypeReference(clrType, false, false, Definition, configurationSource);
+            if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
+            {
+                var identity = Schema.GetOrAddTypeIdentity(innerClrType);
+                Definition.SetTypeReference(identity, typeNode, configurationSource);
+            }
 
-            Definition.SetTypeReference(typeRef, configurationSource);
             return this;
         }
 
 
         public InternalFieldBuilder FieldType(string type, ConfigurationSource configurationSource)
         {
-            try
-            {
-                var typeRef = Schema.GetOrAddTypeReference(type, Definition);
-                Definition.SetTypeReference(typeRef, configurationSource);
-            }
-            catch (InvalidTypeReferenceException e)
-            {
-                throw new InvalidOperationException(
-                    $"Invalid type reference: '{type}' is not a valid type reference for {Definition.DeclaringType.Kind.ToDisplayStringLower()} field '{Definition.DeclaringType.Name}.{Definition.Name}'.",
-                    e);
-            }
-
+            Definition.SetTypeReference(type, configurationSource);
             return this;
         }
 
