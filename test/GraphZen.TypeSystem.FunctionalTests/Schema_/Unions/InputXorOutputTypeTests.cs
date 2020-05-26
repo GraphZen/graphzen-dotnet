@@ -31,7 +31,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 
         [Spec(nameof(cannot_create_type_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact]
-        public void cannot_create_type_if_name_conflicts_with_type_identity_of_opposite_io()
+        public void cannot_create_type_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             Schema.Create(_ =>
             {
@@ -44,7 +44,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 
         [Spec(nameof(cannot_rename_type_if_name_conflicts_with_type_identity_of_opposite_io))]
         [Fact]
-        public void cannot_rename_type_if_name_conflicts_with_type_identity_of_opposite_io()
+        public void cannot_rename_type_if_name_conflicts_with_type_identity_of_opposite_io_()
         {
             Schema.Create(_ =>
             {
@@ -73,32 +73,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
 
         [Spec(nameof(cannot_create_type_via_clr_type_if_name_annotation_conflicts_with_type_identity_of_opposite_io))]
         [Fact]
-        public void named_item_cannot_be_renamed_to_name_conflicts_with_type_identity_of_opposite_io_()
+        public void cannot_create_type_via_clr_type_if_name_annotation_conflicts_with_type_identity_of_opposite_io_()
         {
+
             Schema.Create(_ =>
             {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                var baz = _.Union("Baz");
-                Action rename = () => baz.Name("Bar");
-                rename.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot rename union Baz to \"Bar\": Union types are output types and an input field or argument already references a type named \"Bar\". GraphQL input type references are reserved for scalar, enum, or input object types.");
+                _.InputObject("Foo").Field("inputField", PlainAbstractClassAnnotatedName.AnnotatedNameValue);
+                Action add = () => _.Union<PlainAbstractClassAnnotatedName>();
+                add.Should().Throw<InvalidTypeException>().WithMessage(
+                    "Cannot create union AnnotatedNameValue: Union types are output types and an input field or argument already references a type named 'AnnotatedNameValue'. GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
 
-
-        [Spec(nameof(cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io))]
-        [Fact]
-        public void clr_type_cannot_be_added_with_custom_name_if_name_conflicts_with_type_identity_of_opposite_io_()
-        {
-            Schema.Create(_ =>
-            {
-                _.InputObject("Foo").Field("inputField", "Bar");
-                var baz = _.Union("Baz");
-                Action set = () => baz.ClrType<PlainAbstractClass>("Bar");
-                set.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot rename union Baz to \"Bar\": Union types are output types and an input field or argument already references a type named \"Bar\". GraphQL input type references are reserved for scalar, enum, or input object types.");
-            });
-        }
 
 
         [Spec(nameof(cannot_create_type_via_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io))]
@@ -113,6 +99,22 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
                     "Cannot create union Bar: Union types are output types and an input field or argument already references a type named 'Bar'. GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
+
+        [Spec(nameof(cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io))]
+        [Fact]
+        public void cannot_set_clr_type_if_custom_name_conflicts_with_type_identity_of_opposite_io_()
+        {
+            Schema.Create(_ =>
+            {
+                _.InputObject("Foo").Field("inputField", "Bar");
+                var baz = _.Union("Baz");
+                Action set = () => baz.ClrType<PlainAbstractClass>("Bar");
+                set.Should().Throw<InvalidTypeException>().WithMessage(
+                    "Cannot rename union Baz to \"Bar\": Union types are output types and an input field or argument already references a type named \"Bar\". GraphQL input type references are reserved for scalar, enum, or input object types.");
+            });
+        }
+
+
 
 
         [Spec(nameof(cannot_set_clr_type_if_inferred_name_conflicts_with_type_identity_of_opposite_io))]
@@ -142,7 +144,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
                 var baz = _.Union("Baz");
                 Action set = () => baz.ClrType<PlainAbstractClassAnnotatedName>(true);
                 set.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot set CLR type on union Baz and infer name \"PlainAbstractClass\": Union types are output types and an input field or argument already references a type named \"PlainAbstractClass\". GraphQL input type references are reserved for scalar, enum, or input object types.");
+                    "Cannot set CLR type on output type union Baz and infer name: the annotated name \"AnnotatedNameValue\" on CLR class 'PlainAbstractClassAnnotatedName' refers to an input type referenced by a field argument, directive argument, or input field. GraphQL input type references are reserved for scalar, enum, or input object types.");
             });
         }
     }
