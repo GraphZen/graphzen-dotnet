@@ -15,14 +15,13 @@ namespace GraphZen.TypeSystem
     public class TypeReference : INamedTypeReference
     {
         private readonly TypeSyntax _seedSyntax;
-        private TypeIdentity _identity;
         private ConfigurationSource _configurationSource;
 
         public ConfigurationSource GetConfigurationSource() => _configurationSource;
 
         public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMemberDefinition declaringMember, ConfigurationSource configurationSource)
         {
-            _identity = identity;
+            Identity = identity;
             DeclaringMember = declaringMember;
             _seedSyntax = typeSyntax;
             _configurationSource = configurationSource;
@@ -31,29 +30,37 @@ namespace GraphZen.TypeSystem
         public IMemberDefinition DeclaringMember { get; }
 
 
+        public bool SetIdentity(TypeIdentity identity, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetConfigurationSource()))
+            {
+                return false;
+            }
+
+            var def = identity.Definition;
+            if (def != null)
+            {
+                if (def.IsInputType() && def.IsOutputType())
+                {
+                }
+                else if (def.IsInputType() && DeclaringMember is IOutputDefinition)
+                {
+                    throw new InvalidTypeException("tbd");
+                }
+                else if (def.IsOutputType() && DeclaringMember is IInputDefinition)
+                {
+                    throw new InvalidTypeException("tbd");
+                }
+            }
+            this.Identity = identity;
+            this._configurationSource = configurationSource;
+            return true;
+        }
+
         public TypeIdentity Identity
         {
-            get => _identity;
-            internal set
-            {
-                var def = value.Definition;
-                if (def != null)
-                {
-                    if (def.IsInputType() && def.IsOutputType())
-                    {
-                    }
-                    else if (def.IsInputType() && DeclaringMember is IOutputDefinition)
-                    {
-                        throw new InvalidTypeException("tbd");
-                    }
-                    else if (def.IsOutputType() && DeclaringMember is IInputDefinition)
-                    {
-                        throw new InvalidTypeException("tbd");
-                    }
-                }
+            get; private set;
 
-                _identity = value;
-            }
         }
 
         public TypeSyntax TypeSyntax

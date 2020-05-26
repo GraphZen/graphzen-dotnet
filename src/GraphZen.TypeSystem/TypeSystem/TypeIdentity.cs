@@ -20,6 +20,7 @@ namespace GraphZen.TypeSystem
         private static int _typeIdSeed = 1;
         private ConfigurationSource? _clrTypeConfigurationSource;
         private ConfigurationSource _nameConfigurationSource = ConfigurationSource.Explicit;
+
         public TypeIdentity(string name, SchemaDefinition schema)
         {
             Name = name.IsValidGraphQLName()
@@ -64,50 +65,6 @@ namespace GraphZen.TypeSystem
         private SchemaDefinition Schema { get; }
 
         public NamedTypeDefinition? Definition => Schema.FindType(this);
-
-        public bool? IsInputType()
-        {
-            if (Definition is IInputTypeDefinition)
-            {
-                return true;
-            }
-
-            if (Definition is IOutputTypeDefinition)
-            {
-                return false;
-            }
-
-            var referencedByInputMember = Schema.GetTypeReferences().Any(_ => ReferenceEquals(_.Identity, this) && _.DeclaringMember is IInputDefinition);
-            if (referencedByInputMember)
-            {
-                return true;
-            }
-            return null;
-        }
-
-        public bool? IsOutputType()
-        {
-            if (Definition is IOutputTypeDefinition)
-            {
-                return true;
-            }
-
-            if (Definition is IInputTypeDefinition)
-            {
-                return false;
-            }
-
-            var referencedByOutputMember = Schema.GetTypeReferences().Any(_ => ReferenceEquals(_.Identity, this) && _.DeclaringMember is IOutputDefinition);
-            if (referencedByOutputMember)
-            {
-                return true;
-            }
-            return null;
-
-
-        }
-
-
 
 
         internal string DebuggerDisplay
@@ -155,7 +112,15 @@ namespace GraphZen.TypeSystem
                     $"Cannot set CLR type on {Definition} with custom name: the custom name \"{name}\" conflicts with an existing {existingNamed.Kind.ToDisplayStringLower()} named '{existingNamed.Name}'. All type names must be unique.");
             }
 
-            SetName(name, configurationSource);
+            if (Definition != null)
+            {
+                Definition.SetName(name, configurationSource);
+            }
+            else
+            {
+                SetName(name, configurationSource);
+            }
+
             return SetClrType(clrType, false, configurationSource);
         }
 
@@ -190,23 +155,66 @@ namespace GraphZen.TypeSystem
                             $"Cannot set CLR type on {Definition} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' conflicts with an existing {existingNamed.Kind.ToDisplayStringLower()} named {existingNamed.Name}. All GraphQL type names must be unique.");
                     }
 
-                    SetName(annotated, configurationSource);
+                    if (Schema.TryGetTypeIdentity(annotated, out var existing) && !existing.Equals(this))
+                    {
+                        if (IsInputType() == true && IsOutputType() == false && existing.IsOutputType() == true)
+                        {
+                            throw new InvalidTypeException($"Cannot set CLR type on output type {Definition} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' refers to an output type referenced by an object or interface field. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
+                        }
+
+                        if (IsInputType() == false && IsOutputType() == true && existing.IsInputType() == true)
+                        {
+                            throw new InvalidTypeException($"Cannot set CLR type on input type {Definition} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' refers to an output type referenced by an object or interface field. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
+                        }
+                    }
+
+                    if (Definition != null)
+                    {
+                        Definition.SetName(annotated, configurationSource);
+                    }
+                    else
+                    {
+                        SetName(annotated, configurationSource);
+                    }
                 }
                 else
                 {
-                    if (!clrType.Name.IsValidGraphQLName())
+                    var name = clrType.Name;
+                    if (!name.IsValidGraphQLName())
                     {
                         throw new InvalidNameException(
-                            $"Cannot set CLR type on {Definition} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' is not a valid GraphQL name.");
+                            $"Cannot set CLR type on {Definition} and infer name: the CLR {clrType.GetClrTypeKind()} name '{name}' is not a valid GraphQL name.");
                     }
 
-                    if (Schema.TryGetType(clrType.Name, out var existingNamed) && !existingNamed.Equals(Definition))
+                    if (Schema.TryGetType(name, out var existingNamed) && !existingNamed.Equals(Definition))
                     {
                         throw new DuplicateItemException(
-                            $"Cannot set CLR type on {Definition} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' conflicts with an existing {existingNamed.Kind.ToDisplayStringLower()} named {existingNamed.Name}. All GraphQL type names must be unique.");
+                            $"Cannot set CLR type on {Definition} and infer name: the CLR {clrType.GetClrTypeKind()} name '{name}' conflicts with an existing {existingNamed.Kind.ToDisplayStringLower()} named {existingNamed.Name}. All GraphQL type names must be unique.");
                     }
 
-                    SetName(clrType.Name, configurationSource);
+                    if (Schema.TryGetTypeIdentity(clrType.Name, out var existing) && !existing.Equals(this))
+                    {
+                        if (IsInputType() == true && IsOutputType() == false && existing.IsOutputType() == true)
+                        {
+                            throw new InvalidTypeException(
+                                $"Cannot set CLR type on {Definition} and infer name \"{name}\": {Definition?.Kind.ToDisplayString()} types are input types and an object or interface field already references a type named \"{name}\". GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
+                        }
+
+                        if (IsInputType() == false && IsOutputType() == true && existing.IsInputType() == true)
+                        {
+                            throw new InvalidTypeException(
+                                $"Cannot set CLR type on {Definition} and infer name \"{name}\": {Definition?.Kind.ToDisplayString()} types are output types and an input field or argument already references a type named \"{name}\". GraphQL input type references are reserved for scalar, enum, or input object types.");
+                        }
+                    }
+
+                    if (Definition != null)
+                    {
+                        Definition.SetName(clrType.Name, configurationSource);
+                    }
+                    else
+                    {
+                        SetName(clrType.Name, configurationSource);
+                    }
                 }
             }
 
@@ -246,6 +254,7 @@ namespace GraphZen.TypeSystem
                     $"Cannot rename {Definition}: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
             }
 
+
             if (Definition == null)
             {
             }
@@ -258,12 +267,18 @@ namespace GraphZen.TypeSystem
 
             if (Schema.TryGetTypeIdentity(name, out var existing) && !existing.Equals(this))
             {
-                foreach (var typeReference in Schema.GetTypeReferences().Where(typeRef => typeRef.Identity.Equals(existing)))
+                foreach (var typeReference in Schema.GetTypeReferences()
+                    .Where(typeRef => typeRef.Identity.Equals(existing)))
                 {
-                    typeReference.Identity = this;
+                    if (typeReference.SetIdentity(this, configurationSource))
+                    {
+                        // throw new GraphQLException($"Unable to update type reference ({typeReference}) with identity ({this}).");
+                    }
                 }
+
                 Schema.RemoveTypeIdentity(existing);
             }
+
             Schema.RemoveTypeIdentity(this);
             Name = name;
             _nameConfigurationSource = configurationSource;
@@ -273,7 +288,49 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
+        public bool? IsInputType()
+        {
+            if (Definition is IInputTypeDefinition)
+            {
+                return true;
+            }
 
+            if (Definition is IOutputTypeDefinition)
+            {
+                return false;
+            }
+
+            var referencedByInputMember = Schema.GetTypeReferences().Any(_ =>
+                ReferenceEquals(_.Identity, this) && _.DeclaringMember is IInputDefinition);
+            if (referencedByInputMember)
+            {
+                return true;
+            }
+
+            return null;
+        }
+
+        public bool? IsOutputType()
+        {
+            if (Definition is IOutputTypeDefinition)
+            {
+                return true;
+            }
+
+            if (Definition is IInputTypeDefinition)
+            {
+                return false;
+            }
+
+            var referencedByOutputMember = Schema.GetTypeReferences().Any(_ =>
+                ReferenceEquals(_.Identity, this) && _.DeclaringMember is IOutputDefinition);
+            if (referencedByOutputMember)
+            {
+                return true;
+            }
+
+            return null;
+        }
 
 
         public override string ToString() => DebuggerDisplay;

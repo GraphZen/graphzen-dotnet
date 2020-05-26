@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem.Internal
         public override InternalSchemaBuilder SchemaBuilder => this;
 
 
-        public bool DefineType(TypeReference reference)
+        public NamedTypeDefinition? DefineType(TypeReference reference )
         {
             if (reference.Identity.Definition != null)
             {
@@ -38,15 +38,15 @@ namespace GraphZen.TypeSystem.Internal
 
             if (reference.Identity.ClrType == null)
             {
-                return Scalar(reference.Identity.Name, reference.GetConfigurationSource()) != null;
+                return Scalar(reference.Identity.Name, reference.GetConfigurationSource())?.Definition;
             }
 
             if (Schema.TryGetTypeKind(reference.Identity.ClrType, reference.Identity.IsInputType(), reference.Identity.IsOutputType(), out var kind, out _))
             {
-                return Type(reference.Identity.ClrType, kind, ConfigurationSource.Convention) != null;
+                return Type(reference.Identity.ClrType, kind, ConfigurationSource.Convention)?.Definition as NamedTypeDefinition;
             }
 
-            return false;
+            return null;
         }
 
         public MemberDefinitionBuilder? Type(Type clrType, bool? isInputType, bool? isOutputType)

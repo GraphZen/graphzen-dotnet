@@ -297,7 +297,7 @@ namespace GraphZen.TypeSystem
             return new TypeReference(identity, typeNode, referencingMember, configurationSource);
         }
 
-    
+
 
         public TypeReference GetOrAddTypeReference(PropertyInfo property, IMemberDefinition referencingMember
         )
@@ -661,6 +661,7 @@ namespace GraphZen.TypeSystem
             if (identity != null && identity.ClrType == null)
             {
                 identity.SetClrType(clrType, false, configurationSource);
+                return identity;
             }
 
             return AddTypeIdentity(clrType);
@@ -693,13 +694,19 @@ namespace GraphZen.TypeSystem
         }
         void FinalizeTypes()
         {
-            TypeReference? GetFirstUndefinedTypeReference() => GetTypeReferences()
+            var typeRefs = GetTypeReferences().ToList();
+            TypeReference? GetFirstUndefinedTypeReference() => typeRefs
                             .FirstOrDefault(_ => _.Identity.Definition == null);
 
             var undefined = GetFirstUndefinedTypeReference();
             while (undefined != null)
             {
-                Builder.DefineType(undefined);
+                var def = Builder.DefineType(undefined);
+                if (def == null || !undefined.SetIdentity(def.Identity, undefined.GetConfigurationSource()))
+                {
+                    throw new Exception($"Unable to define type for type reference {undefined}");
+                }
+
                 undefined = GetFirstUndefinedTypeReference();
             }
         }

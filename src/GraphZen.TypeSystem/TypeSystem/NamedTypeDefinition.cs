@@ -32,6 +32,8 @@ namespace GraphZen.TypeSystem
                 throw new InvalidTypeException($"Cannot create {Kind.ToDisplayStringLower()} {identity.Name}: {Kind} types are output types and an input field or argument already references a type named '{identity.Name}'. GraphQL input type references are reserved for scalar, enum, or input object types.");
             }
 
+
+
             Identity = identity;
             Schema = schema;
         }
@@ -67,6 +69,7 @@ namespace GraphZen.TypeSystem
                 {
                     throw new InvalidTypeException($"Cannot rename {this} to \"{name}\": {Kind} types are output types and an input field or argument already references a type named \"{name}\". GraphQL input type references are reserved for scalar, enum, or input object types.");
                 }
+
             }
 
 

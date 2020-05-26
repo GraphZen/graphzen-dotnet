@@ -8,13 +8,13 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    public abstract class GraphQLException : Exception
+    public class GraphQLException : Exception
     {
-        protected GraphQLException(string message) : base(message)
+        public GraphQLException(string message) : base(message)
         {
         }
 
-        protected GraphQLException(string message, Exception? innerException) : base(message, innerException)
+        public GraphQLException(string message, Exception? innerException) : base(message, innerException)
         {
         }
     }
