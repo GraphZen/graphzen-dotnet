@@ -304,7 +304,7 @@ namespace GraphZen.TypeSystem
         {
             if (property.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
             {
-                var identity = GetOrAddTypeIdentity(innerClrType, ConfigurationSource.Convention);
+                var identity = GetOrAddTypeIdentity(innerClrType);
 
                 return new TypeReference(identity, typeNode, referencingMember, ConfigurationSource.Convention);
             }
@@ -317,7 +317,7 @@ namespace GraphZen.TypeSystem
         {
             if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType, canBeNull, itemCanBeNull))
             {
-                var identity = GetOrAddTypeIdentity(innerClrType, configurationSource);
+                var identity = GetOrAddTypeIdentity(innerClrType);
                 return new TypeReference(identity, typeNode, referencingMember, configurationSource);
             }
 
@@ -333,8 +333,9 @@ namespace GraphZen.TypeSystem
 
         public UnionTypeDefinition AddUnion(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = GetOrAddTypeIdentity(clrType, configurationSource);
+            var id = GetOrAddTypeIdentity(clrType);
             var unionType = new UnionTypeDefinition(id, this, configurationSource);
+            unionType.SetClrType(clrType, false, configurationSource);
             return AddUnion(unionType);
         }
 
@@ -359,8 +360,9 @@ namespace GraphZen.TypeSystem
 
         public ScalarTypeDefinition AddScalar(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = GetOrAddTypeIdentity(clrType, configurationSource);
+            var id = GetOrAddTypeIdentity(clrType);
             var scalarType = new ScalarTypeDefinition(id, this, configurationSource);
+            scalarType.SetClrType(clrType, false, configurationSource);
             return AddScalar(scalarType);
         }
 
@@ -378,8 +380,9 @@ namespace GraphZen.TypeSystem
 
         public InterfaceTypeDefinition AddInterface(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = GetOrAddTypeIdentity(clrType, configurationSource);
+            var id = GetOrAddTypeIdentity(clrType);
             var interfaceType = new InterfaceTypeDefinition(id, this, configurationSource);
+            interfaceType.SetClrType(clrType, false, configurationSource);
             return AddInterface(interfaceType);
         }
 
@@ -397,8 +400,9 @@ namespace GraphZen.TypeSystem
 
         public EnumTypeDefinition AddEnum(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = GetOrAddTypeIdentity(clrType, configurationSource);
+            var id = GetOrAddTypeIdentity(clrType);
             var enumType = new EnumTypeDefinition(id, this, configurationSource);
+            enumType.SetClrType(clrType, false, configurationSource);
             return AddEnum(enumType);
         }
 
@@ -417,8 +421,9 @@ namespace GraphZen.TypeSystem
 
         public InputObjectTypeDefinition AddInputObject(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = GetOrAddTypeIdentity(clrType, configurationSource);
+            var id = GetOrAddTypeIdentity(clrType);
             var inputObjectType = new InputObjectTypeDefinition(id, this, configurationSource);
+            inputObjectType.SetClrType(clrType, false, configurationSource);
             return AddInputObject(inputObjectType);
         }
 
@@ -437,8 +442,9 @@ namespace GraphZen.TypeSystem
 
         public ObjectTypeDefinition AddObject(Type clrType, ConfigurationSource configurationSource)
         {
-            var id = GetOrAddTypeIdentity(clrType, configurationSource);
+            var id = GetOrAddTypeIdentity(clrType);
             var objectType = new ObjectTypeDefinition(id, this, configurationSource);
+            objectType.SetClrType(clrType, false, configurationSource);
             return AddObject(objectType);
         }
 
@@ -655,17 +661,7 @@ namespace GraphZen.TypeSystem
         }
 
         public TypeIdentity GetOrAddTypeIdentity(string name) => FindTypeIdentity(name) ?? AddTypeIdentity(name);
-        public TypeIdentity GetOrAddTypeIdentity(Type clrType, ConfigurationSource configurationSource)
-        {
-            var identity = FindTypeIdentity(clrType);
-            if (identity != null && identity.ClrType == null)
-            {
-                identity.SetClrType(clrType, false, configurationSource);
-                return identity;
-            }
-
-            return AddTypeIdentity(clrType);
-        }
+        public TypeIdentity GetOrAddTypeIdentity(Type clrType) => FindTypeIdentity(clrType) ??  AddTypeIdentity(clrType);
 
         public TypeIdentity? FindTypeIdentity(Type clrType) =>
             _typeIdentities.Values.SingleOrDefault(_ => _.ClrType == clrType) ?? (clrType.TryGetGraphQLName(out var name) ? FindTypeIdentity(name) : null);

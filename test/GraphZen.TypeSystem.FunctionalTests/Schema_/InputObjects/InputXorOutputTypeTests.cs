@@ -19,11 +19,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         {
         }
 
-        [GraphQLName(AnnotatedName)]
+        [GraphQLName(AnnotatedNameValue)]
         // ReSharper disable once UnusedType.Local
         private class PlainClassAnnotatedName
         {
-            public const string AnnotatedName = nameof(AnnotatedName);
+            public const string AnnotatedNameValue = nameof(AnnotatedNameValue);
         }
 
         [GraphQLName(InvalidName)]

@@ -383,6 +383,8 @@ namespace GraphZen.TypeSystem.Internal
                 interfaceType = id.ClrType != null
                     ? Definition.AddInterface(id.ClrType, configurationSource)
                     : Definition.AddInterface(id.Name, configurationSource);
+
+
                 OnInterfaceAdded(interfaceType);
             }
             else
