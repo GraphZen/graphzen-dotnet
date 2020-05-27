@@ -12,7 +12,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition
-    .InputTypeRef
+    .ArgumentType
 {
     [NoReorder]
     public abstract class SdlTests
@@ -31,4 +31,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     {
     }
 }
-// Source Hash Code: 18248952831858624662
+// Source Hash Code: 5226821486417125086

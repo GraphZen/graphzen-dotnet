@@ -12,7 +12,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.TypeReferenceSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition
-    .InputTypeRef
+    .ArgumentType
 {
     [NoReorder]
     public abstract class TypeReferenceTests
@@ -87,4 +87,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     {
     }
 }
-// Source Hash Code: 14354375735996661495
+// Source Hash Code: 9657414085664380975

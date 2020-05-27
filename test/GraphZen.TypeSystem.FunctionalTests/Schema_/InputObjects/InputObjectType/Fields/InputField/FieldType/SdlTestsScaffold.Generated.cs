@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Arguments.ArgumentDefinition.InputTypeRef
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType.Fields.InputField.FieldType
 {
     [NoReorder]
     public abstract class SdlTests
@@ -30,4 +30,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
     {
     }
 }
-// Source Hash Code: 1825504184568234323
+// Source Hash Code: 14283361881922635283

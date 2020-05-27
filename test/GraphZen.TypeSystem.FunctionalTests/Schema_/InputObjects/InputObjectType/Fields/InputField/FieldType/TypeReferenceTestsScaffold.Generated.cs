@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.TypeReferenceSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Arguments.ArgumentDefinition.InputTypeRef
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType.Fields.InputField.FieldType
 {
     [NoReorder]
     public abstract class TypeReferenceTests
@@ -86,4 +86,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
     {
     }
 }
-// Source Hash Code: 11258017589886287892
+// Source Hash Code: 15772412185034238068
