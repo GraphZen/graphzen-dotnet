@@ -19,11 +19,12 @@ namespace GraphZen.TypeSystem
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public partial class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
-
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
+
         private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
             new Dictionary<string, ConfigurationSource>();
+
         private string? _deprecationReason;
         private bool _isDeprecated;
         private ConfigurationSource _nameConfigurationSource;
@@ -48,6 +49,7 @@ namespace GraphZen.TypeSystem
                 throw new InvalidNameException(
                     TypeSystemExceptionMessages.InvalidNameException.CannotCreateField(name, this));
             }
+
             TypeReference = new TypeReference(fieldTypeIdentity, fieldTypeSyntax, this);
         }
 
@@ -314,7 +316,7 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource GetTypeReferenceConfigurationSource() =>
             TypeReference.GetTypeReferenceConfigurationSource();
 
-        public TypeReference TypeReference { get; private set; }
+        public TypeReference TypeReference { get; }
 
         public bool SetTypeReference(TypeIdentity identity, TypeSyntax syntax,
             ConfigurationSource configurationSource) =>

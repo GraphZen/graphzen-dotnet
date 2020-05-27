@@ -1,19 +1,25 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.TypeReferenceSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType.Fields.InputField.FieldType
 {
     [NoReorder]
     public class TypeReferenceTests
     {
-        [Spec(nameof(TypeSystemSpecs.TypeReferenceSpecs.it_can_be_created_if_type_matches_own_io_identity))]
+        public class PlainClass
+        {
+        }
+
+
+        [Spec(nameof(it_can_be_created_if_type_matches_own_io_identity))]
         [Fact]
         public void it_can_be_created_if_type_matches_own_io_identity_()
         {
@@ -27,25 +33,35 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.TypeReferenceSpecs
-            .it_can_be_created_with_clr_type_if_type_matches_own_io_identity))]
-        [Fact(Skip = "TODO")]
+        [Spec(nameof(it_can_be_created_with_clr_type_if_type_matches_own_io_identity))]
+        [Fact]
         public void it_can_be_created_with_clr_type_if_type_matches_own_io_identity_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject<PlainClass>();
+                _.InputObject("Bar").Field<PlainClass>("field");
+            });
+            var foo = schema.GetInputObject<PlainClass>();
+            schema.GetInputObject("Bar").GetField("field").FieldType.GetNamedType().Should().Be(foo);
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.TypeReferenceSpecs.it_cannot_be_created_if_type_conflicts_with_own_io_identity))]
-        [Fact(Skip = "TODO")]
+        [Spec(nameof(it_cannot_be_created_if_type_conflicts_with_own_io_identity))]
+        [Fact]
         public void it_cannot_be_created_if_type_conflicts_with_own_io_identity_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Object("Foo");
+                var bar = _.InputObject("Bar");
+                Action add = () => bar.Field("field", "Foo");
+                add.Should().Throw<InvalidTypeException>().WithMessage("x");
+            });
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.TypeReferenceSpecs
-            .it_cannot_be_created_with_clr_type_if_type_conflicts_with_own_io_identity))]
+        [Spec(nameof(it_cannot_be_created_with_clr_type_if_type_conflicts_with_own_io_identity))]
         [Fact(Skip = "TODO")]
         public void it_cannot_be_created_with_clr_type_if_type_conflicts_with_own_io_identity_()
         {
@@ -53,7 +69,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.TypeReferenceSpecs.type_can_be_set_if_type_matches_own_io_identity))]
+        [Spec(nameof(type_can_be_set_if_type_matches_own_io_identity))]
         [Fact(Skip = "TODO")]
         public void type_can_be_set_if_type_matches_own_io_identity_()
         {
@@ -61,7 +77,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.TypeReferenceSpecs.type_can_be_set_with_clr_type_if_type_matches_own_io_identity))]
+        [Spec(nameof(type_can_be_set_with_clr_type_if_type_matches_own_io_identity))]
         [Fact(Skip = "TODO")]
         public void type_can_be_set_with_clr_type_if_type_matches_own_io_identity_()
         {
@@ -69,7 +85,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.TypeReferenceSpecs.type_cannot_be_set_if_type_conflicts_with_own_io_identity))]
+        [Spec(nameof(type_cannot_be_set_if_type_conflicts_with_own_io_identity))]
         [Fact(Skip = "TODO")]
         public void type_cannot_be_set_if_type_conflicts_with_own_io_identity_()
         {
@@ -77,8 +93,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.TypeReferenceSpecs
-            .type_cannot_be_set__with_clr_type_if_type_conflicts_with_own_io_identity))]
+        [Spec(nameof(type_cannot_be_set__with_clr_type_if_type_conflicts_with_own_io_identity))]
         [Fact(Skip = "TODO")]
         public void type_cannot_be_set__with_clr_type_if_type_conflicts_with_own_io_identity_()
         {

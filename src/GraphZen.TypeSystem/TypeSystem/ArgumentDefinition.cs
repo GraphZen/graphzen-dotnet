@@ -32,6 +32,7 @@ namespace GraphZen.TypeSystem
                 throw new InvalidNameException(
                     TypeSystemExceptionMessages.InvalidNameException.CannotCreateArgumentWithInvalidName(this, name));
             }
+
             Builder = new InternalArgumentBuilder(this);
         }
 

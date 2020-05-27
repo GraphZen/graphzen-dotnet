@@ -28,7 +28,9 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public MemberDefinition Definition { get; }
-        public bool RemoveDescription(ConfigurationSource configurationSource) => Definition.RemoveDescription(configurationSource);
+
+        public bool RemoveDescription(ConfigurationSource configurationSource) =>
+            Definition.RemoveDescription(configurationSource);
 
         public SchemaDefinition Schema => Definition.Schema;
     }

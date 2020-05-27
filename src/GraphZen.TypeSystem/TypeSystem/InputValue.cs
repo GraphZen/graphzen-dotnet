@@ -70,8 +70,7 @@ namespace GraphZen.TypeSystem
 
         [GraphQLCanBeNull] public string? Description { get; }
 
-        [GraphQLIgnore]
-        public IGraphQLType TypeReference => _type.Value;
+        [GraphQLIgnore] public IGraphQLType TypeReference => _type.Value;
         IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
     }
 }

@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Internal
     public class InternalDirectiveBuilder : MemberDefinitionBuilder<DirectiveDefinition>
     {
         public InternalDirectiveBuilder(DirectiveDefinition directive
-            ) : base(directive)
+        ) : base(directive)
         {
         }
 

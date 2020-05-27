@@ -10,7 +10,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IMutableFieldDefinition : IFieldDefinition, IMutableAnnotatableDefinition, IMutableTypeReferenceDefinition,
+    public interface IMutableFieldDefinition : IFieldDefinition, IMutableAnnotatableDefinition,
+        IMutableTypeReferenceDefinition,
         IMutableNamed,
         IMutableDescription,
         IMutableArgumentsDefinition,
@@ -24,6 +25,5 @@ namespace GraphZen.TypeSystem.Taxonomy
 
         bool SetFieldType(TypeIdentity identity, TypeSyntax syntax, ConfigurationSource configurationSource);
         bool SetFieldType(string type, ConfigurationSource configurationSource);
-
     }
 }

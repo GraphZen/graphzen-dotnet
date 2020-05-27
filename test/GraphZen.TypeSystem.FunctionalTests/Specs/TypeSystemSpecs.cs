@@ -88,7 +88,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 
             public const string type_cannot_be_set_if_type_conflicts_with_own_io_identity = null;
             public const string type_cannot_be_set__with_clr_type_if_type_conflicts_with_own_io_identity = null;
-
         }
 
 

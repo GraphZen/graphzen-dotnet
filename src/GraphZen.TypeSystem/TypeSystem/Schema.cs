@@ -425,6 +425,7 @@ namespace GraphZen.TypeSystem
                         throw new Exception(
                             $"Unable to find output type for type reference named \"{reference.Identity.Name}\"");
                 }
+
                 throw new Exception($"Unable to create type reference from type node: {node?.GetType()}");
             }
 

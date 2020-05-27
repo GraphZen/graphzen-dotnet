@@ -30,6 +30,7 @@ namespace GraphZen.TypeSystem
                 throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
                     .CannotCreateInputFieldWithInvalidName(this, name));
             }
+
             Builder = new InternalInputFieldBuilder(this);
         }
 

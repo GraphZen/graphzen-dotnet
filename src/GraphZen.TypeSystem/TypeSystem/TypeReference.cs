@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
-using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
@@ -21,6 +20,13 @@ namespace GraphZen.TypeSystem
             DeclaringMember = declaringMember;
             _syntax = typeSyntax;
             _configurationSource = declaringMember.GetConfigurationSource();
+
+            if (identity.IsInputType() == false && declaringMember is IInputDefinition)
+            {
+                var parent = declaringMember is InputFieldDefinition inputField ? (IMemberDefinition)inputField.DeclaringType :
+                    declaringMember is ArgumentDefinition arg ? arg.DeclaringMember : null;
+                throw new InvalidTypeException($"Cannot create {declaringMember} on {parent} with type {identity.Name}");
+            }
         }
 
         public IMutableDefinition DeclaringMember { get; }

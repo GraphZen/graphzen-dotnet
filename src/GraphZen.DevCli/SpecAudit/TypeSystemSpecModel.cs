@@ -28,8 +28,8 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<SdlSpec>();
 
             var typeRef = new Subject("Type")
-                .WithSpecs<TypeReferenceSpecs>(SpecPriority.High)
-                .WithSpecs<SdlSpec>()
+                    .WithSpecs<TypeReferenceSpecs>(SpecPriority.High)
+                    .WithSpecs<SdlSpec>()
                 ;
 
             var inputTypeRef = typeRef.WithName("InputTypeRef");

@@ -8,5 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface INamedTypeReference : INamed, IGraphQLTypeReference { }
+    public interface INamedTypeReference : INamed, IGraphQLTypeReference
+    {
+    }
 }

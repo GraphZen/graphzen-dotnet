@@ -9,7 +9,6 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-
     public class InternalInputFieldBuilder : InternalInputValueBuilder<InputFieldDefinition, InternalInputFieldBuilder>
     {
         public InternalInputFieldBuilder(InputFieldDefinition definition) : base(definition)
@@ -24,15 +23,14 @@ namespace GraphZen.TypeSystem.Internal
         }
     }
 
-    public abstract class InternalInputValueBuilder<T, TBuilder> : AnnotatableMemberDefinitionBuilder<T> where T : InputValueDefinition
+    public abstract class InternalInputValueBuilder<T, TBuilder> : AnnotatableMemberDefinitionBuilder<T>
+        where T : InputValueDefinition
         where TBuilder : InternalInputValueBuilder<T, TBuilder>
     {
         public InternalInputValueBuilder(T definition) : base(
             definition)
         {
         }
-
-
 
 
         public TBuilder DefaultValue(ParameterInfo parameter,

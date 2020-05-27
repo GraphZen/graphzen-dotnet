@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Internal
     public class InternalUnionTypeBuilder : AnnotatableMemberDefinitionBuilder<UnionTypeDefinition>
     {
         public InternalUnionTypeBuilder(UnionTypeDefinition definition
-            ) : base(definition)
+        ) : base(definition)
         {
         }
 
