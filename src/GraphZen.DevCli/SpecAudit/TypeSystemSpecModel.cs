@@ -27,7 +27,10 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<DescriptionSpecs>()
                 .WithSpecs<SdlSpec>();
 
-            var typeRef = new Subject("Type").WithSpecs<TypeReferenceSpecs>(SpecPriority.High);
+            var typeRef = new Subject("Type")
+                .WithSpecs<TypeReferenceSpecs>(SpecPriority.High)
+                .WithSpecs<SdlSpec>()
+                ;
 
             var inputTypeRef = typeRef.WithName("InputTypeRef");
             var outputTypeRef = typeRef.WithName("OutputTypeRef");
@@ -93,13 +96,13 @@ namespace GraphZen.SpecAudit
                 .WithChild(implementsInterfaces);
 
             var objects = graphQLTypes.WithName(nameof(Schema.Objects))
-                .WithSpecs<InputXorOutputTypeSpecs>(SpecPriority.High)
+                .WithSpecs<InputXorOutputTypeSpecs>()
                 .WithChild(objectType);
 
             var scalar = graphQLType.WithName(nameof(ScalarType));
 
             var scalars = graphQLTypes.WithName(nameof(Schema.Scalars))
-                .WithSpecs<InputAndOutputTypeSpecs>(SpecPriority.High)
+                .WithSpecs<InputAndOutputTypeSpecs>()
                 .WithChild(scalar);
 
             var interfaceType = graphQLType.WithName(nameof(InterfaceType))
@@ -107,14 +110,14 @@ namespace GraphZen.SpecAudit
                 .WithChild(implementsInterfaces);
 
             var interfaces = graphQLTypes.WithName(nameof(Schema.Interfaces))
-                .WithSpecs<InputXorOutputTypeSpecs>(SpecPriority.High)
+                .WithSpecs<InputXorOutputTypeSpecs>()
                 .WithChild(interfaceType);
 
             var unionType = graphQLType.WithName(nameof(UnionType))
                 .WithChild(new Subject(nameof(UnionType.MemberTypes)));
 
             var unions = graphQLTypes.WithName(nameof(Schema.Unions))
-                .WithSpecs<InputXorOutputTypeSpecs>(SpecPriority.High)
+                .WithSpecs<InputXorOutputTypeSpecs>()
                 .WithChild(unionType);
 
 
@@ -134,7 +137,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(enumValues);
 
             var enums = graphQLTypes.WithName(nameof(Schema.Enums))
-                .WithSpecs<InputAndOutputTypeSpecs>(SpecPriority.High)
+                .WithSpecs<InputAndOutputTypeSpecs>()
                 .WithChild(enumType);
 
             var inputObjectType = graphQLType.WithName(nameof(InputObjectType))
