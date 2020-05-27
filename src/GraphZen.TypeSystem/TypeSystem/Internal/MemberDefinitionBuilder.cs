@@ -10,8 +10,8 @@ namespace GraphZen.TypeSystem.Internal
     public abstract class MemberDefinitionBuilder<TDefinition> : MemberDefinitionBuilder
         where TDefinition : MemberDefinition
     {
-        protected MemberDefinitionBuilder(TDefinition definition ) : base(
-            definition )
+        protected MemberDefinitionBuilder(TDefinition definition) : base(
+            definition)
         {
         }
 

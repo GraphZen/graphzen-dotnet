@@ -54,12 +54,12 @@ namespace GraphZen.SpecAudit
             var inputValue = new Subject(nameof(InputValue))
                 .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(description)
-                .WithChild(inputTypeRef)
                 .WithChild(new Subject(nameof(InputValue.DefaultValue)))
                 .WithChild(name)
                 .WithChild(directiveAnnotations);
 
-            var argumentDef = inputValue.WithName(nameof(ArgumentDefinition));
+            var argumentDef = inputValue.WithName(nameof(ArgumentDefinition))
+                .WithChild(inputTypeRef.WithName(nameof(Argument.ArgumentType)));
             var argumentDefCollection = new Subject(nameof(IArguments.Arguments))
                 .WithChild(argumentDef)
                 .WithSpecs<NamedCollectionSpecs>();
@@ -140,10 +140,13 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<InputAndOutputTypeSpecs>()
                 .WithChild(enumType);
 
+
+            var inputField = inputValue.WithName(nameof(InputField))
+                .WithChild(inputTypeRef.WithName(nameof(InputField.FieldType)));
             var inputObjectType = graphQLType.WithName(nameof(InputObjectType))
                 .WithChild(new Subject(nameof(InputObjectType.Fields))
                     .WithSpecs<NamedCollectionSpecs>()
-                    .WithChild(inputValue.WithName(nameof(InputField))));
+                    .WithChild(inputField));
 
             var inputObjects = graphQLTypes.WithName(nameof(Schema.InputObjects))
                 .WithSpecs<InputXorOutputTypeSpecs>()
