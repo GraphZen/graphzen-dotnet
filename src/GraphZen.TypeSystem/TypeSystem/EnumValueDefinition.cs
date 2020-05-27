@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Value = Name = Check.NotNull(name, nameof(name));
-            Builder = new InternalEnumValueBuilder(this, Check.NotNull(schema, nameof(schema)).Builder);
+            Builder = new InternalEnumValueBuilder(this);
         }
 
         private string DebuggerDisplay => $"enum value {Name}";

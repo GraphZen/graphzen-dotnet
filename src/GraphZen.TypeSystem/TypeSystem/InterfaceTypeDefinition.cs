@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource) : base(
             identity, schema, configurationSource)
         {
-            Builder = new InternalInterfaceTypeBuilder(this, schema.Builder);
+            Builder = new InternalInterfaceTypeBuilder(this);
             if (identity.ClrType != null && !identity.ClrType.IsInterface)
             {
                 throw new InvalidOperationException(

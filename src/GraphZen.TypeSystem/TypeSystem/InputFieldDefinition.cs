@@ -30,8 +30,11 @@ namespace GraphZen.TypeSystem
                 throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
                     .CannotCreateInputFieldWithInvalidName(this, name));
             }
+            Builder = new InternalInputFieldBuilder(this);
         }
 
+
+        internal InternalInputFieldBuilder Builder { get; }
         private string DebuggerDisplay => ToString();
 
         public override bool SetName(string name, ConfigurationSource configurationSource)
@@ -62,6 +65,12 @@ namespace GraphZen.TypeSystem
         IGraphQLTypeReference IInputFieldDefinition.FieldType => FieldType;
         public TypeReference FieldType => TypeReference;
         IInputObjectTypeDefinition IInputFieldDefinition.DeclaringType => DeclaringType;
+
+        public bool SetFieldType(TypeIdentity identity, TypeSyntax syntax, ConfigurationSource configurationSource) =>
+            TypeReference.Update(identity, syntax, configurationSource);
+
+        public bool SetFieldType(string type, ConfigurationSource configurationSource) =>
+            TypeReference.Update(type, configurationSource);
 
         public InputObjectTypeDefinition DeclaringType => (InputObjectTypeDefinition)DeclaringMember;
 

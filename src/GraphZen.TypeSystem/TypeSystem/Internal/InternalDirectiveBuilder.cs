@@ -11,8 +11,8 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class InternalDirectiveBuilder : MemberDefinitionBuilder<DirectiveDefinition>
     {
-        public InternalDirectiveBuilder(DirectiveDefinition definition,
-            InternalSchemaBuilder schemaBuilder) : base(definition, schemaBuilder)
+        public InternalDirectiveBuilder(DirectiveDefinition directive
+            ) : base(directive)
         {
         }
 
@@ -28,10 +28,10 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalInputValueBuilder Argument(string name) =>
+        public InternalArgumentBuilder Argument(string name) =>
             Definition.FindArgument(name)?.Builder ?? throw new NotImplementedException();
 
-        public InternalInputValueBuilder? Argument(string name, string type, ConfigurationSource configurationSource)
+        public InternalArgumentBuilder? Argument(string name, string type, ConfigurationSource configurationSource)
         {
             if (IsArgumentIgnored(name, configurationSource))
             {
@@ -64,7 +64,7 @@ namespace GraphZen.TypeSystem.Internal
                    ignoredMemberConfigurationSource.Overrides(configurationSource);
         }
 
-        public InternalInputValueBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource)
+        public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource)
         {
             if (IsArgumentIgnored(name, configurationSource))
             {

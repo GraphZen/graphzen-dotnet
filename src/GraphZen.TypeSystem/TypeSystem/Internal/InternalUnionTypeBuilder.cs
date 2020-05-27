@@ -11,8 +11,8 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class InternalUnionTypeBuilder : AnnotatableMemberDefinitionBuilder<UnionTypeDefinition>
     {
-        public InternalUnionTypeBuilder(UnionTypeDefinition definition,
-            InternalSchemaBuilder schemaBuilder) : base(definition, schemaBuilder)
+        public InternalUnionTypeBuilder(UnionTypeDefinition definition
+            ) : base(definition)
         {
         }
 
@@ -85,7 +85,7 @@ namespace GraphZen.TypeSystem.Internal
             var implementingTypes = clrType.GetImplementingTypes().Where(_ => !_.IsAbstract);
             foreach (var implementingType in implementingTypes)
             {
-                var memberType = SchemaBuilder.Object(implementingType, ConfigurationSource.Convention)?.Definition;
+                var memberType = Schema.Builder.Object(implementingType, ConfigurationSource.Convention)?.Definition;
                 if (memberType != null)
                 {
                     Definition.AddType(memberType);

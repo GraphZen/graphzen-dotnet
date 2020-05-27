@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource)
             : base(identity, schema, configurationSource)
         {
-            Builder = new InternalInputObjectTypeBuilder(this, schema.Builder);
+            Builder = new InternalInputObjectTypeBuilder(this);
         }
 
         private string DebuggerDisplay => $"input {Name}";

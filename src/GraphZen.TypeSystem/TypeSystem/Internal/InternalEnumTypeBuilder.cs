@@ -11,8 +11,7 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTypeDefinition>
     {
-        public InternalEnumTypeBuilder(EnumTypeDefinition definition, InternalSchemaBuilder schemaBuilder)
-            : base(definition, schemaBuilder)
+        public InternalEnumTypeBuilder(EnumTypeDefinition @enum) : base(@enum)
         {
         }
 
@@ -57,7 +56,7 @@ namespace GraphZen.TypeSystem.Internal
                 enumValue.SetName(name, nameConfigurationSource);
             }
 
-            var builder = new InternalEnumValueBuilder(enumValue, SchemaBuilder);
+            var builder = new InternalEnumValueBuilder(enumValue);
             if (enumMember != null)
             {
                 builder.CustomValue(value);

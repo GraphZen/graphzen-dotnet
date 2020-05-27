@@ -16,17 +16,14 @@ namespace GraphZen.TypeSystem.Internal
     {
         private readonly Lazy<SchemaBuilder> _builder;
 
-        public InternalSchemaBuilder(SchemaDefinition schemaDefinition)
-            : base(schemaDefinition, schemaDefinition.Builder)
+        public InternalSchemaBuilder(SchemaDefinition schema) : base(schema)
         {
-            _builder = new Lazy<SchemaBuilder>(() => new SchemaBuilder(schemaDefinition));
+            _builder = new Lazy<SchemaBuilder>(() => new SchemaBuilder(schema));
         }
 
         public SchemaBuilder Builder => _builder.Value;
 
         public IParser Parser { get; } = new SuperpowerParser();
-
-        public override InternalSchemaBuilder SchemaBuilder => this;
 
 
         public NamedTypeDefinition? DefineType(TypeReference reference)

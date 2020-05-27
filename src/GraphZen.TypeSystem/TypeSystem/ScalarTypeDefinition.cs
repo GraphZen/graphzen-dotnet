@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource)
             : base(identity, schema, configurationSource)
         {
-            Builder = new InternalScalarTypeBuilder(this, schema.Builder);
+            Builder = new InternalScalarTypeBuilder(this);
         }
 
         private string DebuggerDisplay => $"scalar {Name}";

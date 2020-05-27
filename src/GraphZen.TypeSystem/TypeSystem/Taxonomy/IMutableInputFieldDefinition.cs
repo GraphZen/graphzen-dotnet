@@ -3,6 +3,8 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
@@ -12,5 +14,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         new TypeReference FieldType { get; }
         new InputObjectTypeDefinition DeclaringType { get; }
+        bool SetFieldType(TypeIdentity identity, TypeSyntax syntax, ConfigurationSource configurationSource);
+        bool SetFieldType(string type, ConfigurationSource configurationSource);
     }
 }

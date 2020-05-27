@@ -11,8 +11,7 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class InternalFieldBuilder : AnnotatableMemberDefinitionBuilder<FieldDefinition>
     {
-        public InternalFieldBuilder(FieldDefinition definition, InternalSchemaBuilder schemaBuilder)
-            : base(definition, schemaBuilder)
+        public InternalFieldBuilder(FieldDefinition field) : base(field)
         {
         }
 
@@ -54,7 +53,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalInputValueBuilder? Argument(string name, string type, ConfigurationSource configurationSource)
+        public InternalArgumentBuilder? Argument(string name, string type, ConfigurationSource configurationSource)
         {
             if (IsArgumentIgnored(name, configurationSource))
             {
@@ -75,7 +74,7 @@ namespace GraphZen.TypeSystem.Internal
             return argument.Builder;
         }
 
-        public InternalInputValueBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource)
+        public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource)
         {
             if (IsArgumentIgnored(name, configurationSource))
             {
@@ -97,10 +96,10 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalInputValueBuilder Argument(string name) =>
+        public InternalArgumentBuilder Argument(string name) =>
             Definition.FindArgument(name)?.Builder ?? throw new ItemNotFoundException("TODO");
 
-        public InternalInputValueBuilder? Argument(ParameterInfo parameter,
+        public InternalArgumentBuilder? Argument(ParameterInfo parameter,
             ConfigurationSource configurationSource)
         {
             var (argName, _) = parameter.GetGraphQLArgumentName();

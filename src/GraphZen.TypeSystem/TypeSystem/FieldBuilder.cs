@@ -97,8 +97,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public InputValueBuilder<object?> Argument(string name) =>
-            new InputValueBuilder<object?>(Builder.Argument(Check.NotNull(name, nameof(name))));
+        public ArgumentBuilder<object?> Argument(string name) =>
+            new ArgumentBuilder<object?>(Builder.Argument(Check.NotNull(name, nameof(name))));
 
         public FieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type)
         {
@@ -110,13 +110,13 @@ namespace GraphZen.TypeSystem
 
 
         public FieldBuilder<TDeclaringType, TField, TContext> Argument(string name, string type,
-            Action<InputValueBuilder<object?>> configurator)
+            Action<ArgumentBuilder<object?>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Check.NotNull(configurator, nameof(configurator));
             var argBuilder = Builder.Argument(name, type, ConfigurationSource.Explicit)!;
-            configurator(new InputValueBuilder<object?>(argBuilder));
+            configurator(new ArgumentBuilder<object?>(argBuilder));
             return this;
         }
 
@@ -136,20 +136,20 @@ namespace GraphZen.TypeSystem
         }
 
         public FieldBuilder<TDeclaringType, TField, TContext> Argument(string name,
-            Action<InputValueBuilder<object?>> configurator)
+            Action<ArgumentBuilder<object?>> configurator)
         {
             Check.NotNull(name, nameof(name));
             var ib = Builder.Argument(name);
-            configurator(new InputValueBuilder<object?>(ib));
+            configurator(new ArgumentBuilder<object?>(ib));
             return this;
         }
 
         public FieldBuilder<TDeclaringType, TField, TContext> Argument<TArgument>(string name,
-            Action<InputValueBuilder<TArgument>> configurator)
+            Action<ArgumentBuilder<TArgument>> configurator)
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, typeof(TArgument), ConfigurationSource.Explicit)!;
-            configurator(new InputValueBuilder<TArgument>(argBuilder));
+            configurator(new ArgumentBuilder<TArgument>(argBuilder));
             return this;
         }
 

@@ -14,9 +14,7 @@ namespace GraphZen.TypeSystem.Internal
     public class
         InternalObjectTypeBuilder : InternalFieldsBuilder<ObjectTypeDefinition, InternalObjectTypeBuilder>
     {
-        public InternalObjectTypeBuilder(ObjectTypeDefinition definition,
-            InternalSchemaBuilder schemaBuilder) : base(
-            definition, schemaBuilder)
+        public InternalObjectTypeBuilder(ObjectTypeDefinition @object) : base(@object)
         {
         }
 
@@ -53,7 +51,7 @@ namespace GraphZen.TypeSystem.Internal
                 return false;
             }
 
-            var interfaceRef = SchemaBuilder.Interface(clrType, configurationSource)?.Definition;
+            var interfaceRef = Schema.Builder.Interface(clrType, configurationSource)?.Definition;
             if (interfaceRef != null)
             {
                 Definition.AddInterface(interfaceRef, configurationSource);
@@ -94,7 +92,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (clrType.BaseType != null && clrType.BaseType.IsAbstract)
             {
-                SchemaBuilder.Union(clrType.BaseType, ConfigurationSource.Convention);
+                Schema.Builder.Union(clrType.BaseType, ConfigurationSource.Convention);
             }
 
             ConfigureOutputFields();
@@ -127,7 +125,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalObjectTypeBuilder ImplementsInterface(string interfaceType,
             ConfigurationSource configurationSource)
         {
-            var interfaceRef = SchemaBuilder.Interface(interfaceType, configurationSource)?.Definition;
+            var interfaceRef = Schema.Builder.Interface(interfaceType, configurationSource)?.Definition;
             if (interfaceRef != null)
             {
                 Definition.AddInterface(interfaceRef, configurationSource);

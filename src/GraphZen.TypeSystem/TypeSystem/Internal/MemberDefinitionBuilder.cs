@@ -10,9 +10,8 @@ namespace GraphZen.TypeSystem.Internal
     public abstract class MemberDefinitionBuilder<TDefinition> : MemberDefinitionBuilder
         where TDefinition : MemberDefinition
     {
-        protected MemberDefinitionBuilder(TDefinition definition,
-            InternalSchemaBuilder schemaBuilder) : base(
-            definition, schemaBuilder)
+        protected MemberDefinitionBuilder(TDefinition definition ) : base(
+            definition )
         {
         }
 
@@ -23,23 +22,14 @@ namespace GraphZen.TypeSystem.Internal
 
     public abstract class MemberDefinitionBuilder
     {
-        protected MemberDefinitionBuilder(MemberDefinition definition,
-            InternalSchemaBuilder schemaBuilder)
+        protected MemberDefinitionBuilder(MemberDefinition definition)
         {
             Definition = definition;
-            SchemaBuilder = schemaBuilder;
         }
 
-
         public MemberDefinition Definition { get; }
+        public bool RemoveDescription(ConfigurationSource configurationSource) => Definition.RemoveDescription(configurationSource);
 
-
-        public virtual InternalSchemaBuilder SchemaBuilder { get; }
-
-
-        public bool RemoveDescription(ConfigurationSource configurationSource) =>
-            Definition.RemoveDescription(configurationSource);
-
-        public SchemaDefinition Schema => SchemaBuilder.Definition;
+        public SchemaDefinition Schema => Definition.Schema;
     }
 }

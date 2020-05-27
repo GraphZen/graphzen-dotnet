@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource)
             : base(identity, schema, configurationSource)
         {
-            Builder = new InternalUnionTypeBuilder(this, schema.Builder);
+            Builder = new InternalUnionTypeBuilder(this);
         }
 
         private string DebuggerDisplay => $"union {Name}";

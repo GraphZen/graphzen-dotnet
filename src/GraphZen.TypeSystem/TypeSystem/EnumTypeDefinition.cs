@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource)
             : base(identity, schema, configurationSource)
         {
-            Builder = new InternalEnumTypeBuilder(this, schema.Builder);
+            Builder = new InternalEnumTypeBuilder(this);
         }
 
         private string DebuggerDisplay => $"enum {Name}";

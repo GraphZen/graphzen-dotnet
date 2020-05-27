@@ -9,9 +9,7 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class InternalEnumValueBuilder : AnnotatableMemberDefinitionBuilder<EnumValueDefinition>
     {
-        public InternalEnumValueBuilder(EnumValueDefinition definition,
-            InternalSchemaBuilder schemaBuilder)
-            : base(definition, schemaBuilder)
+        public InternalEnumValueBuilder(EnumValueDefinition value) : base(value)
         {
         }
 

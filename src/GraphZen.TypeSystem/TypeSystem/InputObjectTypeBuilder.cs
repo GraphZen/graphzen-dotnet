@@ -90,26 +90,25 @@ namespace GraphZen.TypeSystem
         }
 
         public InputObjectTypeBuilder<TInputObject> Field(string name, string type,
-            Action<InputValueBuilder<object?>> inputFieldConfigurator)
+            Action<InputFieldBuilder<object?>> inputFieldConfigurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Check.NotNull(inputFieldConfigurator, nameof(inputFieldConfigurator));
-            var fb = Builder.Field(name, type, ConfigurationSource.Explicit)
-                ?.InputType(type, ConfigurationSource.Explicit)!;
-            inputFieldConfigurator(new InputValueBuilder<object?>(fb));
+            var fb = Builder.Field(name, type, ConfigurationSource.Explicit)!;
+            inputFieldConfigurator(new InputFieldBuilder<object?>(fb));
             return this;
         }
 
-        public InputValueBuilder<object?> Field(string name) =>
-            new InputValueBuilder<object?>(Builder.Field(Check.NotNull(name, nameof(name))));
+        public InputFieldBuilder<object?> Field(string name) =>
+            new InputFieldBuilder<object?>(Builder.Field(Check.NotNull(name, nameof(name))));
 
         public InputObjectTypeBuilder<TInputObject> Field(string name,
-            Action<InputValueBuilder<object?>> inputFieldConfigurator)
+            Action<InputFieldBuilder<object?>> inputFieldConfigurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(inputFieldConfigurator, nameof(inputFieldConfigurator));
-            inputFieldConfigurator(new InputValueBuilder<object?>(Builder.Field(name)));
+            inputFieldConfigurator(new InputFieldBuilder<object?>(Builder.Field(name)));
             return this;
         }
 
@@ -121,12 +120,12 @@ namespace GraphZen.TypeSystem
         }
 
         public InputObjectTypeBuilder<TInputObject> Field<TField>(string name,
-            Action<InputValueBuilder<TField>> inputFieldConfigurator)
+            Action<InputFieldBuilder<TField>> inputFieldConfigurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(inputFieldConfigurator, nameof(inputFieldConfigurator));
             var fb = Builder.Field(name, typeof(TField), ConfigurationSource.Explicit)!;
-            inputFieldConfigurator(new InputValueBuilder<TField>(fb));
+            inputFieldConfigurator(new InputFieldBuilder<TField>(fb));
             return this;
         }
 
@@ -139,13 +138,13 @@ namespace GraphZen.TypeSystem
         }
 
         public InputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector,
-            Action<InputValueBuilder<TField>> fieldBuilder)
+            Action<InputFieldBuilder<TField>> fieldBuilder)
         {
             Check.NotNull(fieldSelector, nameof(fieldSelector));
             Check.NotNull(fieldBuilder, nameof(fieldBuilder));
             var property = fieldSelector.GetPropertyInfoFromExpression();
             var fb = Builder.Field(property, ConfigurationSource.Explicit)!;
-            fieldBuilder?.Invoke(new InputValueBuilder<TField>(fb));
+            fieldBuilder?.Invoke(new InputFieldBuilder<TField>(fb));
             return this;
         }
 

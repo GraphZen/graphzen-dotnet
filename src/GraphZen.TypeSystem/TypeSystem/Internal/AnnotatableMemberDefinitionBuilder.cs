@@ -15,9 +15,7 @@ namespace GraphZen.TypeSystem.Internal
     public abstract class AnnotatableMemberDefinitionBuilder<TDefinition> : MemberDefinitionBuilder<TDefinition>
         where TDefinition : AnnotatableMemberDefinition
     {
-        protected AnnotatableMemberDefinitionBuilder(TDefinition definition,
-            InternalSchemaBuilder schemaBuilder) : base(
-            definition, schemaBuilder)
+        protected AnnotatableMemberDefinitionBuilder(TDefinition definition) : base(definition)
         {
         }
 

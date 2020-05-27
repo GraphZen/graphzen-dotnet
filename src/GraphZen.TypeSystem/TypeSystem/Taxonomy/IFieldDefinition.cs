@@ -9,11 +9,11 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IFieldDefinition : 
-        IAnnotatableDefinition, 
-        IArgumentsDefinition, 
+    public interface IFieldDefinition :
+        IAnnotatableDefinition,
+        IArgumentsDefinition,
         ITypeReferenceDefinition,
-        INamed, 
+        INamed,
         IDescription,
         IDeprecation,
         IClrInfo,

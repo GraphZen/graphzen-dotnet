@@ -39,5 +39,18 @@ namespace GraphZen.LanguageModel
 
             return (NamedTypeSyntax)GetNamedType(this);
         }
+
+        public TypeSyntax WithName(string name)
+        {
+            TypeSyntax GetType(TypeSyntax node) =>
+                    node switch
+                    {
+                        ListTypeSyntax list => SyntaxFactory.ListType(GetType(list.OfType)),
+                        NonNullTypeSyntax nn => SyntaxFactory.NonNullType((NullableTypeSyntax)GetType(nn.OfType)),
+                        NamedTypeSyntax _ => SyntaxFactory.NamedType(SyntaxFactory.Name(name)),
+                        _ => throw new NotImplementedException()
+                    };
+            return GetType(this);
+        }
     }
 }

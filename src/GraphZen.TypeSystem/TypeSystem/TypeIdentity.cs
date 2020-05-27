@@ -271,7 +271,7 @@ namespace GraphZen.TypeSystem
                 foreach (var typeReference in Schema.GetTypeReferences()
                     .Where(typeRef => typeRef.Identity.Equals(existing)))
                 {
-                    typeReference.SetIdentity(this, configurationSource);
+                    typeReference.Update(this, configurationSource);
                 }
 
                 Schema.RemoveTypeIdentity(existing);

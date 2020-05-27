@@ -17,9 +17,7 @@ namespace GraphZen.TypeSystem.Internal
         where TDefinition : FieldsDefinition
         where TBuilder : InternalFieldsBuilder<TDefinition, TBuilder>
     {
-        protected InternalFieldsBuilder(TDefinition definition,
-            InternalSchemaBuilder schemaBuilder)
-            : base(definition, schemaBuilder)
+        protected InternalFieldsBuilder(TDefinition definition) : base(definition)
         {
         }
 

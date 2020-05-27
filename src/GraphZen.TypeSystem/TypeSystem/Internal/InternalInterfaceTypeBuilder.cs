@@ -12,8 +12,7 @@ namespace GraphZen.TypeSystem.Internal
         InternalInterfaceTypeBuilder : InternalFieldsBuilder<InterfaceTypeDefinition,
             InternalInterfaceTypeBuilder>
     {
-        public InternalInterfaceTypeBuilder(InterfaceTypeDefinition definition,
-            InternalSchemaBuilder schemaBuilder) : base(definition, schemaBuilder)
+        public InternalInterfaceTypeBuilder(InterfaceTypeDefinition @interface) : base(@interface)
         {
         }
 

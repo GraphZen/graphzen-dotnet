@@ -12,22 +12,19 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder<InputObjectTypeDefinition>
     {
-        public InternalInputObjectTypeBuilder(InputObjectTypeDefinition definition,
-            InternalSchemaBuilder schemaBuilder) :
-            base(definition,
-                schemaBuilder)
+        public InternalInputObjectTypeBuilder(InputObjectTypeDefinition inputObject) : base(inputObject)
         {
         }
 
-        public InternalInputValueBuilder Field(string name) =>
+        public InternalInputFieldBuilder Field(string name) =>
             Definition.FindField(name)?.Builder ?? throw new ItemNotFoundException(
                 $"Field \"{name}\" does not exist on {Definition}. Add the field by specifying a field type.");
 
 
-        public InternalInputValueBuilder? Field(string name, Type clrType, ConfigurationSource configurationSource) =>
+        public InternalInputFieldBuilder? Field(string name, Type clrType, ConfigurationSource configurationSource) =>
             Definition.GetOrAddField(name, clrType, configurationSource)?.Builder;
 
-        public InternalInputValueBuilder? Field(string name, string type, ConfigurationSource configurationSource) =>
+        public InternalInputFieldBuilder? Field(string name, string type, ConfigurationSource configurationSource) =>
             Definition.GetOrAddField(name, type, configurationSource)?.Builder;
 
         public bool IgnoreField(string fieldName, ConfigurationSource configurationSource)
@@ -169,7 +166,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalInputValueBuilder? Field(PropertyInfo property, ConfigurationSource configurationSource)
+        public InternalInputFieldBuilder? Field(PropertyInfo property, ConfigurationSource configurationSource)
         {
             var (fieldName, _) = property.GetGraphQLFieldName();
             if (property.IsIgnoredByDataAnnotation())

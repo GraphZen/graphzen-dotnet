@@ -11,8 +11,7 @@ namespace GraphZen.TypeSystem.Internal
 {
     public class InternalScalarTypeBuilder : AnnotatableMemberDefinitionBuilder<ScalarTypeDefinition>
     {
-        public InternalScalarTypeBuilder(ScalarTypeDefinition definition,
-            InternalSchemaBuilder schemaBuilder) : base(definition, schemaBuilder)
+        public InternalScalarTypeBuilder(ScalarTypeDefinition definition) : base(definition)
         {
         }
 

@@ -32,10 +32,13 @@ namespace GraphZen.TypeSystem
                 throw new InvalidNameException(
                     TypeSystemExceptionMessages.InvalidNameException.CannotCreateArgumentWithInvalidName(this, name));
             }
+            Builder = new InternalArgumentBuilder(this);
         }
 
         private string DebuggerDisplay => $"argument {Name}";
 
+
+        internal InternalArgumentBuilder Builder { get; }
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.ArgumentDefinition;
 
@@ -78,6 +81,12 @@ namespace GraphZen.TypeSystem
 
         public new IMutableArgumentsDefinition DeclaringMember =>
             (IMutableArgumentsDefinition)base.DeclaringMember;
+
+        public bool SetArgumentType(TypeIdentity identity, TypeSyntax syntax,
+            ConfigurationSource configurationSource) => TypeReference.Update(identity, syntax, configurationSource);
+
+        public bool SetArgumentType(string type, ConfigurationSource configurationSource) =>
+            TypeReference.Update(type, configurationSource);
 
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;

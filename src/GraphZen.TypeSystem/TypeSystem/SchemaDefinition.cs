@@ -605,7 +605,7 @@ namespace GraphZen.TypeSystem
             while (undefined != null)
             {
                 var def = Builder.DefineType(undefined);
-                if (def == null || !undefined.SetIdentity(def.Identity, def.GetConfigurationSource()))
+                if (def == null || !undefined.Update(def.Identity, undefined.TypeSyntax, def.GetConfigurationSource()))
                 {
                     throw new Exception($"Unable to define type for type reference {undefined}");
                 }

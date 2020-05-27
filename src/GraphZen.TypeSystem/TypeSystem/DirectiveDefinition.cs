@@ -79,7 +79,7 @@ namespace GraphZen.TypeSystem
             }
 
             Name = Check.NotNull(name, nameof(name));
-            Builder = new InternalDirectiveBuilder(this, schema.Builder);
+            Builder = new InternalDirectiveBuilder(this);
             IsSpec = SpecReservedNames.DirectiveNames.Contains(Name);
         }
 

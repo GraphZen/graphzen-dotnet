@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem
             ClrInfo = clrInfo;
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
-            Builder = new InternalFieldBuilder(this, schema.Builder);
+            Builder = new InternalFieldBuilder(this);
             Name = name;
             if (!name.IsValidGraphQLName())
             {
@@ -59,6 +59,12 @@ namespace GraphZen.TypeSystem
 
 
         public FieldsDefinition DeclaringType { get; }
+
+        public bool SetFieldType(TypeIdentity identity, TypeSyntax syntax, ConfigurationSource configurationSource) =>
+            TypeReference.Update(identity, syntax, configurationSource);
+
+        public bool SetFieldType(string type, ConfigurationSource configurationSource) =>
+            TypeReference.Update(type, configurationSource);
 
         public MemberInfo? ClrInfo { get; }
 
@@ -312,10 +318,10 @@ namespace GraphZen.TypeSystem
 
         public bool SetTypeReference(TypeIdentity identity, TypeSyntax syntax,
             ConfigurationSource configurationSource) =>
-            TypeReference.SetTypeReference(identity, syntax, configurationSource);
+            TypeReference.Update(identity, syntax, configurationSource);
 
         public bool SetTypeReference(string type, ConfigurationSource configurationSource) =>
-            TypeReference.SetTypeReference(type, configurationSource);
+            TypeReference.Update(type, configurationSource);
 
         IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
     }

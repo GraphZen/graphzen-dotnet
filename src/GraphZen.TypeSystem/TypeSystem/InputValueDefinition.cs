@@ -30,14 +30,10 @@ namespace GraphZen.TypeSystem
 
             NameConfigurationSource = nameConfigurationSource;
             Name = name;
-            Builder = new InternalInputValueBuilder(this, schema.Builder);
             TypeReference = new TypeReference(typeIdentity, typeSyntax, this);
         }
 
         public override SchemaDefinition Schema { get; }
-
-
-        public InternalInputValueBuilder Builder { get; }
 
 
         public IMemberDefinition DeclaringMember { get; }
@@ -80,12 +76,6 @@ namespace GraphZen.TypeSystem
             TypeReference.GetTypeReferenceConfigurationSource();
 
         public TypeReference TypeReference { get; }
-
-        public bool SetTypeReference(TypeIdentity identity, TypeSyntax syntax,
-            ConfigurationSource configurationSource) =>
-            TypeReference.SetTypeReference(identity, syntax, configurationSource);
-        public bool SetTypeReference(string type, ConfigurationSource configurationSource) =>
-            TypeReference.SetTypeReference(type, configurationSource);
 
         IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
     }

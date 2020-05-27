@@ -41,6 +41,9 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => ClrType != null ? $"{Kind}: {Name} ({ClrType.Name})" : $"{Kind}: {Name}";
 
         public abstract TypeKind Kind { get; }
+
+        public bool IsInputType() => Kind.IsInputType();
+        public bool IsOutputType() => Kind.IsOutputType();
         public bool IsIntrospection => SpecReservedNames.IntrospectionTypeNames.Contains(Name);
 
         public bool IsSpec =>

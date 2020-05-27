@@ -222,9 +222,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.ClrType
             Schema.Create(_ =>
             {
                 var foo = _.Scalar("Foo");
-                Action setClrType = () => foo.ClrType<InputValueBuilder<string>>(true);
+                Action setClrType = () => foo.ClrType<ArgumentBuilder<string>>(true);
                 setClrType.Should().Throw<InvalidNameException>().WithMessage(
-                    "Cannot set CLR type on scalar Foo and infer name: the CLR class name 'InputValueBuilder`1' is not a valid GraphQL name.");
+                    "Cannot set CLR type on scalar Foo and infer name: the CLR class name 'ArgumentBuilder`1' is not a valid GraphQL name.");
             });
         }
 

@@ -9,36 +9,36 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class InputValueBuilder<TInputValue> : IInfrastructure<InternalInputValueBuilder>,
-        IAnnotableBuilder<InputValueBuilder<TInputValue>>
+    public class ArgumentBuilder<TArgument> : IInfrastructure<InternalArgumentBuilder>,
+        IAnnotableBuilder<ArgumentBuilder<TArgument>>
     {
-        public InputValueBuilder(InternalInputValueBuilder builder)
+        public ArgumentBuilder(InternalArgumentBuilder builder)
         {
             Check.NotNull(builder, nameof(builder));
             Builder = builder;
         }
 
 
-        protected InternalInputValueBuilder Builder { get; }
+        protected InternalArgumentBuilder Builder { get; }
 
-        public InputValueBuilder<TInputValue> AddDirectiveAnnotation(string name, object? value = null) =>
+        public ArgumentBuilder<TArgument> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public InputValueBuilder<TInputValue> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public ArgumentBuilder<TArgument> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
         {
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public InputValueBuilder<TInputValue> RemoveDirectiveAnnotations(string name) =>
+        public ArgumentBuilder<TArgument> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
 
-        public InputValueBuilder<TInputValue> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public ArgumentBuilder<TArgument> RemoveDirectiveAnnotations() => throw new NotImplementedException();
 
 
-        InternalInputValueBuilder IInfrastructure<InternalInputValueBuilder>.Instance => Builder;
+        InternalArgumentBuilder IInfrastructure<InternalArgumentBuilder>.Instance => Builder;
 
-        public InputValueBuilder<TInputValue> Name(string name)
+        public ArgumentBuilder<TArgument> Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
@@ -46,20 +46,20 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public InputValueBuilder<TInputValue> DefaultValue(TInputValue value)
+        public ArgumentBuilder<TArgument> DefaultValue(TArgument value)
         {
             Builder.DefaultValue(value, ConfigurationSource.Explicit);
             return this;
         }
 
 
-        public InputValueBuilder<TInputValue> RemoveDescription()
+        public ArgumentBuilder<TArgument> RemoveDescription()
         {
             Builder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 
-        public InputValueBuilder<TInputValue> Description(string description)
+        public ArgumentBuilder<TArgument> Description(string description)
         {
             Check.NotNull(description, nameof(description));
             Builder.Description(description, ConfigurationSource.Explicit);

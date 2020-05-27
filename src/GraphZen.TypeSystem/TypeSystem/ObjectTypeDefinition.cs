@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource) :
             base(identity, schema, configurationSource)
         {
-            Builder = new InternalObjectTypeBuilder(this, schema.Builder);
+            Builder = new InternalObjectTypeBuilder(this);
         }
 
         private string DebuggerDisplay => $"type {Name}";

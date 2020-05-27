@@ -9,27 +9,37 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalInputValueBuilder : AnnotatableMemberDefinitionBuilder<InputValueDefinition>
+
+    public class InternalInputFieldBuilder : InternalInputValueBuilder<InputFieldDefinition, InternalInputFieldBuilder>
     {
-        public InternalInputValueBuilder(InputValueDefinition definition,
-            InternalSchemaBuilder schemaBuilder) : base(
-            definition, schemaBuilder)
+        public InternalInputFieldBuilder(InputFieldDefinition definition) : base(definition)
+        {
+        }
+    }
+
+    public class InternalArgumentBuilder : InternalInputValueBuilder<ArgumentDefinition, InternalArgumentBuilder>
+    {
+        public InternalArgumentBuilder(ArgumentDefinition definition) : base(definition)
+        {
+        }
+    }
+
+    public abstract class InternalInputValueBuilder<T, TBuilder> : AnnotatableMemberDefinitionBuilder<T> where T : InputValueDefinition
+        where TBuilder : InternalInputValueBuilder<T, TBuilder>
+    {
+        public InternalInputValueBuilder(T definition) : base(
+            definition)
         {
         }
 
 
-        public InternalInputValueBuilder InputType(string type, ConfigurationSource configurationSource)
-        {
-            Definition.SetTypeReference(type, configurationSource);
-            return this;
-        }
 
 
-        public InternalInputValueBuilder DefaultValue(ParameterInfo parameter,
+        public TBuilder DefaultValue(ParameterInfo parameter,
             ConfigurationSource configurationSource)
         {
             var defaultValueAttribute = parameter.GetCustomAttribute<DefaultValueAttribute>();
-            if (defaultValueAttribute != null && defaultValueAttribute.Value != null)
+            if (defaultValueAttribute?.Value != null)
             {
                 Definition.SetDefaultValue(defaultValueAttribute.Value, ConfigurationSource.DataAnnotation);
             }
@@ -42,11 +52,11 @@ namespace GraphZen.TypeSystem.Internal
                 RemoveDefaultValue(configurationSource);
             }
 
-            return this;
+            return (TBuilder)this;
         }
 
 
-        public InternalInputValueBuilder DefaultValue(PropertyInfo property,
+        public TBuilder DefaultValue(PropertyInfo property,
             ConfigurationSource configurationSource)
         {
             var defaultValueAttribute = property.GetCustomAttribute<DefaultValueAttribute>();
@@ -59,33 +69,33 @@ namespace GraphZen.TypeSystem.Internal
                 RemoveDefaultValue(configurationSource);
             }
 
-            return this;
+            return (TBuilder)this;
         }
 
 
-        public InternalInputValueBuilder DefaultValue(object? value, ConfigurationSource configurationSource)
+        public TBuilder DefaultValue(object? value, ConfigurationSource configurationSource)
         {
             Definition.SetDefaultValue(value, configurationSource);
-            return this;
+            return (TBuilder)this;
         }
 
 
-        public InternalInputValueBuilder RemoveDefaultValue(ConfigurationSource configurationSource)
+        public TBuilder RemoveDefaultValue(ConfigurationSource configurationSource)
         {
             Definition.RemoveDefaultValue(configurationSource);
-            return this;
+            return (TBuilder)this;
         }
 
-        public InternalInputValueBuilder Description(string description, ConfigurationSource configurationSource)
+        public TBuilder Description(string description, ConfigurationSource configurationSource)
         {
             Definition.SetDescription(description, configurationSource);
-            return this;
+            return (TBuilder)this;
         }
 
-        public InternalInputValueBuilder SetName(string name, ConfigurationSource configurationSource)
+        public TBuilder SetName(string name, ConfigurationSource configurationSource)
         {
             Definition.SetName(name, configurationSource);
-            return this;
+            return (TBuilder)this;
         }
     }
 }

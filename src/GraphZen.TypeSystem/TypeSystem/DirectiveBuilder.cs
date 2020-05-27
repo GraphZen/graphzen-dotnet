@@ -87,18 +87,18 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public DirectiveBuilder<TDirective> Argument(string name, Action<InputValueBuilder<object?>> configurator)
+        public DirectiveBuilder<TDirective> Argument(string name, Action<ArgumentBuilder<object?>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));
             var ib = Builder.Argument(name);
-            var b = new InputValueBuilder<object?>(ib);
+            var b = new ArgumentBuilder<object?>(ib);
             configurator(b);
             return this;
         }
 
-        public InputValueBuilder<object?> Argument(string name) =>
-            new InputValueBuilder<object?>(Builder.Argument(Check.NotNull(name, nameof(name))));
+        public ArgumentBuilder<object?> Argument(string name) =>
+            new ArgumentBuilder<object?>(Builder.Argument(Check.NotNull(name, nameof(name))));
 
         public DirectiveBuilder<TDirective> Argument(string name, string type)
         {
@@ -109,13 +109,13 @@ namespace GraphZen.TypeSystem
         }
 
         public DirectiveBuilder<TDirective> Argument(string name, string type,
-            Action<InputValueBuilder<object?>> configurator)
+            Action<ArgumentBuilder<object?>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
             Check.NotNull(configurator, nameof(configurator));
             var ib = Builder.Argument(name, type, ConfigurationSource.Explicit)!;
-            var builder = new InputValueBuilder<object?>(ib);
+            var builder = new ArgumentBuilder<object?>(ib);
             configurator(builder);
             return this;
         }
@@ -129,12 +129,12 @@ namespace GraphZen.TypeSystem
 
 
         public DirectiveBuilder<TDirective> Argument<TArgument>(string name,
-            Action<InputValueBuilder<TArgument>> configurator)
+            Action<ArgumentBuilder<TArgument>> configurator)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(configurator, nameof(configurator));
             var ib = Builder.Argument(name, typeof(TArgument), ConfigurationSource.Explicit)!;
-            var b = new InputValueBuilder<TArgument>(ib);
+            var b = new ArgumentBuilder<TArgument>(ib);
             configurator(b);
             return this;
         }
