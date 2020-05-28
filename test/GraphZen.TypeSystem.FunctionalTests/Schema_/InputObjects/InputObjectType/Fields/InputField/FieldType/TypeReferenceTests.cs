@@ -18,10 +18,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         {
         }
 
-
         [Spec(nameof(it_can_be_created_if_type_io_compatible))]
         [Fact]
-        public void it_can_be_created_if_type_matches_own_io_identity_()
+        public void it_can_be_created_if_type_io_compatible_()
         {
             var schema = Schema.Create(_ =>
             {
@@ -32,24 +31,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
             schema.GetInputObject("Bar").GetField("field").FieldType.GetNamedType().Should().Be(foo);
         }
 
-
-        [Spec(nameof(it_can_be_created_with_clr_type_if_type_io_compatible))]
+        [Spec(nameof(it_cannot_be_created_if_type_has_io_conflict))]
         [Fact]
-        public void it_can_be_created_with_clr_type_if_type_matches_own_io_identity_()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.InputObject<PlainClass>();
-                _.InputObject("Bar").Field<PlainClass>("field");
-            });
-            var foo = schema.GetInputObject<PlainClass>();
-            schema.GetInputObject("Bar").GetField("field").FieldType.GetNamedType().Should().Be(foo);
-        }
-
-
-        [Spec(nameof(it_cannot_be_created_if_type_io_conflict))]
-        [Fact]
-        public void it_cannot_be_created_if_type_conflicts_with_own_io_identity_()
+        public void it_cannot_be_created_if_type_has_io_conflict_()
         {
             Schema.Create(_ =>
             {
@@ -62,9 +46,23 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
+        [Spec(nameof(it_can_be_created_with_clr_type_if_type_io_compatible))]
+        [Fact]
+        public void it_can_be_created_with_clr_type_if_type_io_compatible_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject<PlainClass>();
+                _.InputObject("Bar").Field<PlainClass>("field");
+            });
+            var foo = schema.GetInputObject<PlainClass>();
+            schema.GetInputObject("Bar").GetField("field").FieldType.GetNamedType().Should().Be(foo);
+        }
+
+
         [Spec(nameof(it_cannot_be_created_with_clr_type_if_type_has_io_conflict))]
         [Fact]
-        public void it_cannot_be_created_with_clr_type_if_type_conflicts_with_own_io_identity_()
+        public void it_cannot_be_created_with_clr_type_if_type_has_io_conflict_()
         {
             Schema.Create(_ =>
             {
@@ -91,8 +89,21 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
+
+
+
+        [Spec(nameof(type_cannot_be_set_if_type_has_io_conflict))]
+        [Fact(Skip = "wip")]
+        public void type_cannot_be_set_if_type_conflicts_with_own_io_identity_()
+        {
+            var schema = Schema.Create(_ =>
+            {
+
+            });
+        }
+
         [Spec(nameof(type_can_be_set_with_clr_type_if_type_io_compatible))]
-        [Fact()]
+        [Fact(Skip = "wip")]
         public void type_can_be_set_with_clr_type_if_type_matches_own_io_identity_()
         {
             var schema = Schema.Create(_ =>
@@ -107,12 +118,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         }
 
 
-        [Spec(nameof(type_cannot_be_set_if_type_has_io_conflict))]
-        [Fact(Skip = "TODO")]
-        public void type_cannot_be_set_if_type_conflicts_with_own_io_identity_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
+
 
 
         [Spec(nameof(type_cannot_be_set_with_clr_type_if_type_has_io_conflict))]

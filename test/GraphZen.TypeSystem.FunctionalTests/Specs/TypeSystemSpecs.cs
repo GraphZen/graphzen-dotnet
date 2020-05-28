@@ -78,7 +78,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         public class TypeReferenceSpecs
         {
             public const string it_can_be_created_if_type_io_compatible = null;
-            public const string it_cannot_be_created_if_type_io_conflict = null;
+            public const string it_cannot_be_created_if_type_has_io_conflict = null;
 
             public const string it_can_be_created_with_clr_type_if_type_io_compatible = null;
             public const string it_cannot_be_created_with_clr_type_if_type_has_io_conflict = null;
