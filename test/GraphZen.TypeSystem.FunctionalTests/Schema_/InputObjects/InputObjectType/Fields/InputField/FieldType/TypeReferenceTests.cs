@@ -56,16 +56,22 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 _.Object("Foo");
                 var bar = _.InputObject("Bar");
                 Action add = () => bar.Field("baz", "[Foo]!");
-                add.Should().Throw<InvalidTypeException>().WithMessage("x");
+                add.Should().Throw<InvalidTypeException>().WithMessage("Cannot create input field baz on input object Bar with type '[Foo]!': object Foo is only an output type and input fields can only use input types.");
             });
         }
 
 
         [Spec(nameof(it_cannot_be_created_with_clr_type_if_type_conflicts_with_own_io_identity))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void it_cannot_be_created_with_clr_type_if_type_conflicts_with_own_io_identity_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Object<PlainClass>("Foo");
+                var bar = _.InputObject("Bar");
+                Action add = () => bar.Field<PlainClass>("baz");
+                add.Should().Throw<InvalidTypeException>().WithMessage("Cannot create input field baz on input object Bar with type '[Foo]!': object Foo is only an output type and input fields can only use input types.");
+            });
         }
 
 

@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
 
             if (identity.Definition is IOutputTypeDefinition outputType && !(identity.Definition is IInputTypeDefinition) && declaringMember is IInputDefinition)
             {
-                throw new InvalidTypeException($"Cannot create {declaringMember} on {declaringMember.GetParentMember()} with type {TypeSyntax}: {outputType} is only an output type and {declaringMember.GetDisplayOrTypeName()}s can only use input types.");
+                throw new InvalidTypeException($"Cannot create {declaringMember} on {declaringMember.GetParentMember()} with type '{TypeSyntax}': {outputType} is only an output type and {declaringMember.GetDisplayOrTypeName()}s can only use input types.");
             }
         }
 

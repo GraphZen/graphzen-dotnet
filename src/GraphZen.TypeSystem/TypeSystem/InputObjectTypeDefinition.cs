@@ -220,9 +220,7 @@ namespace GraphZen.TypeSystem
                 return null;
             }
 
-            var fieldTypeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
-
-
+            var fieldTypeIdentity = Schema.GetOrAddTypeIdentity(innerClrType);
             field = new InputFieldDefinition(name, fieldTypeIdentity, typeSyntax, configurationSource, Schema,
                 configurationSource, null, this);
             AddField(field);

@@ -348,7 +348,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
                 _.InputObject<PlainClass>();
                 Action add = () => _.InputObject<PlainClass>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create input object Foo with CLR class 'PlainClass': both input object Foo and input object PlainClass (with CLR class PlainClass) already exist.");
+                    "Cannot create input object Foo with CLR class 'PlainClass': both input object Foo and input object PlainClass already exist.");
             });
         }
 
@@ -366,7 +366,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
                 _.InputObject<PlainClassAnnotatedName>();
                 Action add = () => _.InputObject<PlainClassAnnotatedName>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create input object Foo with CLR class 'PlainClassAnnotatedName': both input object Foo and input object AnnotatedNameValue (with CLR class PlainClassAnnotatedName) already exist.");
+                    "Cannot create input object Foo with CLR class 'PlainClassAnnotatedName': both input object Foo and input object AnnotatedNameValue (CLR class: PlainClassAnnotatedName) already exist.");
             });
         }
 

@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
@@ -94,6 +95,15 @@ namespace GraphZen.TypeSystem
             Identity.RemoveClrType(configurationSource);
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => Identity.GetClrTypeConfigurationSource();
-        public override string ToString() => $"{Kind.ToDisplayStringLower()} {Name}";
+        public override string ToString()
+        {
+            var kindName = $"{Kind.ToDisplayStringLower()} {Name}";
+            if (ClrType != null && ClrType.Name != Name)
+            {
+                return $"{Kind.ToDisplayStringLower()} {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})";
+            }
+            return kindName;
+        }
+
     }
 }
