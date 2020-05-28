@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -14,12 +15,44 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInputFieldBuilder(InputFieldDefinition definition) : base(definition)
         {
         }
+
+        public InternalInputFieldBuilder FieldType(string type, ConfigurationSource configurationSource)
+        {
+            Definition.SetFieldType(type, configurationSource);
+            return this;
+        }
+
+        public InternalInputFieldBuilder FieldType(Type clrType, ConfigurationSource configurationSource)
+        {
+            if (clrType.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
+            {
+                var identity = Schema.GetOrAddTypeIdentity(innerClrType);
+                Definition.SetFieldType(identity, typeSyntax, configurationSource);
+            }
+            return this;
+        }
     }
 
     public class InternalArgumentBuilder : InternalInputValueBuilder<ArgumentDefinition, InternalArgumentBuilder>
     {
         public InternalArgumentBuilder(ArgumentDefinition definition) : base(definition)
         {
+        }
+
+        public InternalArgumentBuilder ArgumentType(string type, ConfigurationSource configurationSource)
+        {
+            Definition.SetArgumentType(type, configurationSource);
+            return this;
+        }
+
+        public InternalArgumentBuilder ArgumentType(Type clrType, ConfigurationSource configurationSource)
+        {
+            if (clrType.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
+            {
+                var identity = Schema.GetOrAddTypeIdentity(innerClrType);
+                Definition.SetArgumentType(identity, typeSyntax, configurationSource);
+            }
+            return this;
         }
     }
 

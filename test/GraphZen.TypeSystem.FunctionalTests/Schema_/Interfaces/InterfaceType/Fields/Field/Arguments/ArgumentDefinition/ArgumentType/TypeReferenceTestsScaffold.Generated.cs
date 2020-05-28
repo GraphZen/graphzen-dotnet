@@ -17,7 +17,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     [NoReorder]
     public abstract class TypeReferenceTests
     {
-        [Spec(nameof(it_can_be_created_if_type_matches_own_io_identity))]
+        [Spec(nameof(it_can_be_created_if_type_io_compatible))]
         [Fact(Skip = "TODO")]
         public void it_can_be_created_if_type_matches_own_io_identity_()
         {
@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-        [Spec(nameof(it_can_be_created_with_clr_type_if_type_matches_own_io_identity))]
+        [Spec(nameof(it_can_be_created_with_clr_type_if_type_io_compatible))]
         [Fact(Skip = "TODO")]
         public void it_can_be_created_with_clr_type_if_type_matches_own_io_identity_()
         {
@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-        [Spec(nameof(it_cannot_be_created_if_type_conflicts_with_own_io_identity))]
+        [Spec(nameof(it_cannot_be_created_if_type_io_conflict))]
         [Fact(Skip = "TODO")]
         public void it_cannot_be_created_if_type_conflicts_with_own_io_identity_()
         {
@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-        [Spec(nameof(it_cannot_be_created_with_clr_type_if_type_conflicts_with_own_io_identity))]
+        [Spec(nameof(it_cannot_be_created_with_clr_type_if_type_has_io_conflict))]
         [Fact(Skip = "TODO")]
         public void it_cannot_be_created_with_clr_type_if_type_conflicts_with_own_io_identity_()
         {
@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-        [Spec(nameof(type_can_be_set_if_type_matches_own_io_identity))]
+        [Spec(nameof(type_can_be_set_if_type_io_compatible))]
         [Fact(Skip = "TODO")]
         public void type_can_be_set_if_type_matches_own_io_identity_()
         {
@@ -57,7 +57,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-        [Spec(nameof(type_can_be_set_with_clr_type_if_type_matches_own_io_identity))]
+        [Spec(nameof(type_can_be_set_with_clr_type_if_type_io_compatible))]
         [Fact(Skip = "TODO")]
         public void type_can_be_set_with_clr_type_if_type_matches_own_io_identity_()
         {
@@ -65,7 +65,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-        [Spec(nameof(type_cannot_be_set_if_type_conflicts_with_own_io_identity))]
+        [Spec(nameof(type_cannot_be_set_if_type_has_io_conflict))]
         [Fact(Skip = "TODO")]
         public void type_cannot_be_set_if_type_conflicts_with_own_io_identity_()
         {
@@ -73,7 +73,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-        [Spec(nameof(type_cannot_be_set__with_clr_type_if_type_conflicts_with_own_io_identity))]
+        [Spec(nameof(type_cannot_be_set_with_clr_type_if_type_has_io_conflict))]
         [Fact(Skip = "TODO")]
         public void type_cannot_be_set__with_clr_type_if_type_conflicts_with_own_io_identity_()
         {
