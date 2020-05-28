@@ -55,7 +55,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
             {
                 _.Object("Foo");
                 var bar = _.InputObject("Bar");
-                Action add = () => bar.Field("field", "Foo");
+                Action add = () => bar.Field("baz", "[Foo]!");
                 add.Should().Throw<InvalidTypeException>().WithMessage("x");
             });
         }

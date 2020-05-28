@@ -21,11 +21,9 @@ namespace GraphZen.TypeSystem
             _syntax = typeSyntax;
             _configurationSource = declaringMember.GetConfigurationSource();
 
-            if (identity.IsInputType() == false && declaringMember is IInputDefinition)
+            if (identity.Definition is IOutputTypeDefinition outputType && !(identity.Definition is IInputTypeDefinition) && declaringMember is IInputDefinition)
             {
-                var parent = declaringMember is InputFieldDefinition inputField ? (IMemberDefinition)inputField.DeclaringType :
-                    declaringMember is ArgumentDefinition arg ? arg.DeclaringMember : null;
-                throw new InvalidTypeException($"Cannot create {declaringMember} on {parent} with type {identity.Name}");
+                throw new InvalidTypeException($"Cannot create {declaringMember} on {declaringMember.GetParentMember()} with type {TypeSyntax}: {outputType} is only an output type and {declaringMember.GetDisplayOrTypeName()}s can only use input types.");
             }
         }
 

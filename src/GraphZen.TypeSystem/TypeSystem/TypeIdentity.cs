@@ -300,6 +300,7 @@ namespace GraphZen.TypeSystem
 
             var referencedByInputMember = Schema.GetTypeReferences().Any(_ =>
                 ReferenceEquals(_.Identity, this) && _.DeclaringMember is IInputDefinition);
+
             if (referencedByInputMember)
             {
                 return true;

@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -19,8 +20,17 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
+
+
     public static class ClrTypeExtensions
     {
+
+        internal static string GetDisplayNameOrName(this Type clrType) =>
+            clrType.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? clrType.Name;
+
+        internal static string GetDisplayOrTypeName<T>(this T value) where T : notnull => value.GetType().GetDisplayNameOrName();
+
+
         internal static bool IsFunc(this Type clrType) =>
             clrType.Assembly == typeof(Func<>).Assembly
             && clrType.FullName is { } name && name.StartsWith("System.Func");
