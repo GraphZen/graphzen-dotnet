@@ -67,10 +67,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         {
             Schema.Create(_ =>
             {
-                _.Object<PlainClass>("Foo");
-                var bar = _.InputObject("Bar");
-                Action add = () => bar.Field<PlainClass>("baz");
-                add.Should().Throw<InvalidTypeException>().WithMessage("Cannot create input field baz on input object Bar with type '[Foo]!': object Foo is only an output type and input fields can only use input types.");
+                _.Object<PlainClass>("Foo"); var bar = _.InputObject("Bar"); Action add = () => bar.Field<PlainClass>("baz");
+                add.Should().Throw<InvalidTypeException>().WithMessage("Cannot create input field baz on input object Bar with type 'Foo!': object Foo (CLR class: PlainClass) is only an output type and input fields can only use input types.");
             });
         }
 

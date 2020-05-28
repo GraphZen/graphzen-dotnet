@@ -349,7 +349,7 @@ namespace GraphZen.TypeSystem
             return argument;
         }
 
-        public override string ToString() => $"directive {Name}";
+        public override string ToString() => ClrType != null && ClrType.Name != Name ? $"directive {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})" : $"directive {Name}";
 
 
         public bool IgnoreArgument(string name, ConfigurationSource configurationSource)

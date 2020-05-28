@@ -351,7 +351,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
                 _.Interface<PlainInterface>();
                 Action add = () => _.Interface<PlainInterface>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create interface Foo with CLR interface 'PlainInterface': both interface Foo and interface PlainInterface (with CLR interface PlainInterface) already exist.");
+                    "Cannot create interface Foo with CLR interface 'PlainInterface': both interface Foo and interface PlainInterface already exist.");
             });
         }
 
@@ -369,7 +369,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces
                 _.Interface<PlainInterfaceAnnotatedName>();
                 Action add = () => _.Interface<PlainInterfaceAnnotatedName>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create interface Foo with CLR interface 'PlainInterfaceAnnotatedName': both interface Foo and interface AnnotatedNameValue (with CLR interface PlainInterfaceAnnotatedName) already exist.");
+                    "Cannot create interface Foo with CLR interface 'PlainInterfaceAnnotatedName': both interface Foo and interface AnnotatedNameValue (CLR interface: PlainInterfaceAnnotatedName) already exist.");
             });
         }
 

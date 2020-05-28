@@ -29,7 +29,7 @@ namespace GraphZen.Internal
             internal static string CannotCreateTypeWithDuplicateNameAndType<T>(TypeKind kind, string name, Type clrType,
                 T named, T typed)
                 where T : NamedTypeDefinition =>
-                $"Cannot create {kind.ToDisplayStringLower()} {name} with CLR {clrType.GetClrTypeKind()} '{clrType.Name}': both {named} and {typed} (with CLR {typed.ClrType?.GetClrTypeKind()} {typed.ClrType?.Name}) already exist.";
+                $"Cannot create {kind.ToDisplayStringLower()} {name} with CLR {clrType.GetClrTypeKind()} '{clrType.Name}': both {named} and {typed} already exist.";
 
             internal static string CannotRenameField(IFieldDefinition field, string name) =>
                 $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
@@ -39,7 +39,7 @@ namespace GraphZen.Internal
 
             internal static string CannotCreateDirectiveWithConflictingNameAndType(string name, Type clrType,
                 IDirectiveDefinition existingNamed, IDirectiveDefinition existingTyped) =>
-                $"Cannot create directive {name} with CLR type '{clrType.Name}': both {existingNamed} and {existingTyped} (with CLR type {existingTyped.ClrType?.Name}) already exist.";
+                $"Cannot create directive {name} with CLR type '{clrType.Name}': both {existingNamed} and {existingTyped} already exist.";
 
 
             internal static string CannotRenameInputField(IInputFieldDefinition field, string name) =>

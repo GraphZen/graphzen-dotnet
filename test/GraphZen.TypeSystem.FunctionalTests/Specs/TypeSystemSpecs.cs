@@ -185,6 +185,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string clr_typed_item_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist =
                 null;
 
+            // not happy with the exception message 
             public const string
                 clr_typed_item_with_name_annotation_cannot_be_added_with_custom_name_if_named_and_typed_items_already_exist
                     = null;

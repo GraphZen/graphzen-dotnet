@@ -348,7 +348,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
                 _.Union<PlainAbstractClass>();
                 Action add = () => _.Union<PlainAbstractClass>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create union Foo with CLR class 'PlainAbstractClass': both union Foo and union PlainAbstractClass (with CLR class PlainAbstractClass) already exist.");
+                    "Cannot create union Foo with CLR class 'PlainAbstractClass': both union Foo and union PlainAbstractClass already exist.");
             });
         }
 
@@ -366,7 +366,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions
                 _.Union<PlainAbstractClassAnnotatedName>();
                 Action add = () => _.Union<PlainAbstractClassAnnotatedName>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create union Foo with CLR class 'PlainAbstractClassAnnotatedName': both union Foo and union AnnotatedNameValue (with CLR class PlainAbstractClassAnnotatedName) already exist.");
+                    "Cannot create union Foo with CLR class 'PlainAbstractClassAnnotatedName': both union Foo and union AnnotatedNameValue (CLR class: PlainAbstractClassAnnotatedName) already exist.");
             });
         }
 

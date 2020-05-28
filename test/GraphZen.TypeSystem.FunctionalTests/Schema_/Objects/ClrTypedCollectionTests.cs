@@ -347,7 +347,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
                 _.Object<PlainClass>();
                 Action add = () => _.Object<PlainClass>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create object Foo with CLR class 'PlainClass': both object Foo and object PlainClass (with CLR class PlainClass) already exist.");
+                    "Cannot create object Foo with CLR class 'PlainClass': both object Foo and object PlainClass already exist.");
             });
         }
 
@@ -365,7 +365,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects
                 _.Object<PlainClassAnnotatedName>();
                 Action add = () => _.Object<PlainClassAnnotatedName>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create object Foo with CLR class 'PlainClassAnnotatedName': both object Foo and object AnnotatedNameValue (with CLR class PlainClassAnnotatedName) already exist.");
+                    "Cannot create object Foo with CLR class 'PlainClassAnnotatedName': both object Foo and object AnnotatedNameValue (CLR class: PlainClassAnnotatedName) already exist.");
             });
         }
 

@@ -347,7 +347,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
                 _.Scalar<PlainStruct>();
                 Action add = () => _.Scalar<PlainStruct>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create scalar Foo with CLR type 'PlainStruct': both scalar Foo and scalar PlainStruct (with CLR type PlainStruct) already exist.");
+                    "Cannot create scalar Foo with CLR type 'PlainStruct': both scalar Foo and scalar PlainStruct already exist.");
             });
         }
 
@@ -365,7 +365,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars
                 _.Scalar<PlainStructAnnotatedName>();
                 Action add = () => _.Scalar<PlainStructAnnotatedName>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create scalar Foo with CLR type 'PlainStructAnnotatedName': both scalar Foo and scalar AnnotatedNameValue (with CLR type PlainStructAnnotatedName) already exist.");
+                    "Cannot create scalar Foo with CLR type 'PlainStructAnnotatedName': both scalar Foo and scalar AnnotatedNameValue (CLR type: PlainStructAnnotatedName) already exist.");
             });
         }
 

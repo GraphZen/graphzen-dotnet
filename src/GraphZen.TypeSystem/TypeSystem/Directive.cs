@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
+using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Taxonomy;
@@ -79,7 +80,7 @@ namespace GraphZen.TypeSystem
 
         [GraphQLCanBeNull] public string? Description { get; }
 
-        public override string ToString() => $"directive {Name}";
+        public override string ToString() => ClrType != null && ClrType.Name != Name ? $"directive {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})" : $"directive {Name}";
 
         [GraphQLIgnore] public bool IsSpec { get; }
     }

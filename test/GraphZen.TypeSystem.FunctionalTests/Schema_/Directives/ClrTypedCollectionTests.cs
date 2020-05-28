@@ -347,7 +347,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
                 _.Directive<PlainClass>();
                 Action add = () => _.Directive<PlainClass>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create directive Foo with CLR type 'PlainClass': both directive Foo and directive PlainClass (with CLR type PlainClass) already exist.");
+                    "Cannot create directive Foo with CLR type 'PlainClass': both directive Foo and directive PlainClass already exist.");
             });
         }
 
@@ -364,7 +364,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
                 _.Directive<PlainClassAnnotatedName>();
                 Action add = () => _.Directive<PlainClassAnnotatedName>("Foo");
                 add.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot create directive Foo with CLR type 'PlainClassAnnotatedName': both directive Foo and directive AnnotatedNameValue (with CLR type PlainClassAnnotatedName) already exist.");
+                    "Cannot create directive Foo with CLR type 'PlainClassAnnotatedName': both directive Foo and directive AnnotatedNameValue (CLR class: PlainClassAnnotatedName) already exist.");
             });
         }
 
