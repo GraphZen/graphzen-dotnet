@@ -30,5 +30,11 @@ namespace GraphZen.TypeSystem.Internal
 
             return this;
         }
+
+        public InternalInputFieldBuilder SetName(string name, ConfigurationSource configurationSource)
+        {
+            Definition.SetName(name, configurationSource);
+            return this;
+        }
     }
 }

@@ -76,10 +76,5 @@ namespace GraphZen.TypeSystem.Internal
             return (TBuilder)this;
         }
 
-        public TBuilder SetName(string name, ConfigurationSource configurationSource)
-        {
-            Definition.SetName(name, configurationSource);
-            return (TBuilder)this;
-        }
     }
 }

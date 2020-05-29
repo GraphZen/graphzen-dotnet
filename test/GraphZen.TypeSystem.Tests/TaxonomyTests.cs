@@ -19,8 +19,10 @@ namespace GraphZen.TypeSystem.Tests
             var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
             var expected = new[]
             {
+                typeof(ArgumentTypeReference),
                 typeof(EnumType),
                 typeof(EnumTypeDefinition),
+                typeof(FieldTypeReference),
                 typeof(InputObjectType),
                 typeof(InputObjectTypeDefinition),
                 typeof(InterfaceType),
@@ -31,7 +33,6 @@ namespace GraphZen.TypeSystem.Tests
                 typeof(ObjectTypeDefinition),
                 typeof(ScalarType),
                 typeof(ScalarTypeDefinition),
-                typeof(TypeReference),
                 typeof(UnionType),
                 typeof(UnionTypeDefinition)
             };

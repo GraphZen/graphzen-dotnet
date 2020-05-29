@@ -10,6 +10,9 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IMemberDefinition
     {
+        internal string? GetName() => this is INamed named ? named.Name : null;
+
+
         internal IMemberDefinition? GetParentMember() => this switch
         {
             IArgumentDefinition argumentDefinition => argumentDefinition.DeclaringMember,

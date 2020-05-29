@@ -268,7 +268,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
                 var b = _.Directive<PlainClass>();
                 Action rename = () => b.Name(name);
                 rename.Should().Throw<InvalidNameException>().WithMessage(
-                    $"Cannot rename directive PlainClass: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Cannot rename directive PlainClass to \"{name}\". Names are limited to underscores and alpha-numeric ASCII characters.");
             });
         }
 

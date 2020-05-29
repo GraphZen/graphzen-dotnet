@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
@@ -14,6 +15,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+    [DisplayName("union")]
     public class UnionTypeDefinition : NamedTypeDefinition, IMutableUnionTypeDefinition
     {
         private readonly List<ObjectTypeDefinition> _types = new List<ObjectTypeDefinition>();

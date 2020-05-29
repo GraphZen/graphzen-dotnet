@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
@@ -17,6 +18,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+    [DisplayName("directive")]
     public partial class DirectiveDefinition : MemberDefinition, IMutableDirectiveDefinition,
         IInfrastructure<InternalDirectiveBuilder>
     {
@@ -98,8 +100,7 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this));
+                throw InvalidNameException.ForRename(this, name);
             }
 
             if (!configurationSource.Overrides(GetNameConfigurationSource()))

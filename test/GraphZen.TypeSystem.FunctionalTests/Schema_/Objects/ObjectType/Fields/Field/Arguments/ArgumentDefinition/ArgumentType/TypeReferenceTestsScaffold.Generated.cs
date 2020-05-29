@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
 
         [Spec(nameof(it_cannot_be_created_if_type_has_io_conflict))]
         [Fact(Skip = "TODO")]
-        public void it_cannot_be_created_if_type_io_conflict_()
+        public void it_cannot_be_created_if_type_has_io_conflict_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -119,4 +119,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
     {
     }
 }
-// Source Hash Code: 16404809095198384337
+// Source Hash Code: 3417634890172079271

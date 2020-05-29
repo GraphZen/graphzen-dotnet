@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -17,6 +18,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+    [DisplayName("field")]
     public partial class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
@@ -50,7 +52,7 @@ namespace GraphZen.TypeSystem
                     TypeSystemExceptionMessages.InvalidNameException.CannotCreateField(name, this));
             }
 
-            TypeReference = new TypeReference(fieldTypeIdentity, fieldTypeSyntax, this);
+            TypeReference = new FieldTypeReference(fieldTypeIdentity, fieldTypeSyntax, this);
         }
 
 
@@ -165,8 +167,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, DeclaringType));
+                throw InvalidNameException.ForRename(this, name);
             }
 
             if (!configurationSource.Overrides(_nameConfigurationSource))
@@ -311,7 +312,7 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public override string ToString() => $"field {Name}";
+        public override string ToString() => $"{DeclaringType.GetTypeDisplayName()} field {DeclaringType.Name}.{Name}";
 
         public ConfigurationSource GetTypeReferenceConfigurationSource() =>
             TypeReference.GetTypeReferenceConfigurationSource();

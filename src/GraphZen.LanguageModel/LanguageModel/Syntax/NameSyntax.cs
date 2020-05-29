@@ -24,7 +24,7 @@ namespace GraphZen.LanguageModel
             if (!value.IsValidGraphQLName())
             {
                 throw new ArgumentException(
-                    $"Error creating name '{value}': Names are limited to underscores and alpha-numeric ASCII characters.");
+                    $"Error creating name '{value}'. Names are limited to underscores and alpha-numeric ASCII characters.");
             }
         }
 

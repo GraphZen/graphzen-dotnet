@@ -10,24 +10,25 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class TypeReference : INamedTypeReference, IMutableTypeReferenceDefinition
+    public abstract class TypeReference : INamedTypeReference, IMutableTypeReferenceDefinition
     {
         private ConfigurationSource _configurationSource;
         private TypeSyntax _syntax;
 
-        public TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMutableDefinition declaringMember)
-        {
-            Identity = identity;
-            DeclaringMember = declaringMember;
-            _syntax = typeSyntax;
-            _configurationSource = declaringMember.GetConfigurationSource();
 
+        protected TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMutableDefinition declaringMember)
+        {
             if (identity.Definition is IOutputTypeDefinition outputType &&
                 !(identity.Definition is IInputTypeDefinition) && declaringMember is IInputDefinition)
             {
                 throw new InvalidTypeException(
-                    $"Cannot create {declaringMember} on {declaringMember.GetParentMember()} with type '{TypeSyntax}': {outputType} is only an output type and {declaringMember.GetDisplayOrTypeName()}s can only use input types.");
+                    $"Cannot create {declaringMember} with {this.GetTypeDisplayName()} '{typeSyntax.WithName(identity.Name)}'. {outputType} is only an output type and {declaringMember?.GetParentMember()?.GetTypeDisplayName()} {declaringMember.GetTypeDisplayName()}s can only use input types.");
             }
+
+            Identity = identity;
+            DeclaringMember = declaringMember;
+            _syntax = typeSyntax;
+            _configurationSource = declaringMember.GetConfigurationSource();
         }
 
         public IMutableDefinition DeclaringMember { get; }
@@ -56,6 +57,14 @@ namespace GraphZen.TypeSystem
             {
                 return false;
             }
+
+            if (identity.Definition is IOutputTypeDefinition outputType &&
+                !(identity.Definition is IInputTypeDefinition) && DeclaringMember is IInputDefinition)
+            {
+                throw new InvalidTypeException(
+                    $"Cannot set {this.GetTypeDisplayName()} '{syntax}' on {DeclaringMember}. {outputType} is only an output type and {DeclaringMember?.GetParentMember()?.GetTypeDisplayName()} {DeclaringMember.GetTypeDisplayName()}s can only use input types.");
+            }
+
 
             _syntax = syntax;
             Identity = identity;

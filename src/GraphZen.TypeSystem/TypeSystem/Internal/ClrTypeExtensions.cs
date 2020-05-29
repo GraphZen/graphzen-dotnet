@@ -22,11 +22,14 @@ namespace GraphZen.TypeSystem.Internal
 {
     public static class ClrTypeExtensions
     {
-        internal static string GetDisplayNameOrName(this Type clrType) =>
-            clrType.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? clrType.Name;
+        internal static string? GetDisplayName(this Type clrType) =>
+                    clrType.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
 
-        internal static string GetDisplayOrTypeName<T>(this T value) where T : notnull =>
-            value.GetType().GetDisplayNameOrName();
+        internal static string GetDisplayOrTypeName(this Type clrType) =>
+            clrType.GetDisplayName() ?? clrType.Name;
+
+        internal static string? GetTypeDisplayName<T>(this T value) =>
+            value?.GetType()?.GetDisplayOrTypeName();
 
 
         internal static bool IsFunc(this Type clrType) =>

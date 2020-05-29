@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
@@ -14,11 +15,10 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+    [DisplayName("value")]
     public class EnumValueDefinition : AnnotatableMemberDefinition, IMutableEnumValueDefinition
     {
         private ConfigurationSource _nameConfigurationSource;
-
-        public override SchemaDefinition Schema { get; }
 
         public EnumValueDefinition(string name, ConfigurationSource nameConfigurationSource,
             EnumTypeDefinition declaringType,
@@ -42,6 +42,8 @@ namespace GraphZen.TypeSystem
 
         public InternalEnumValueBuilder Builder { get; }
 
+        public override SchemaDefinition Schema { get; }
+
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.EnumValue;
 
         public object Value { get; set; }
@@ -55,8 +57,7 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, DeclaringType));
+                throw InvalidNameException.ForRename(this, name);
             }
 
             if (DeclaringType.TryGetValue(name, out var v) && !v.Equals(this))
@@ -93,6 +94,6 @@ namespace GraphZen.TypeSystem
         // ReSharper disable once UnassignedGetOnlyAutoProperty
         public string? DeprecationReason { get; }
 
-        public override string ToString() => $"enum value {Name}";
+        public override string ToString() => $"enum value {DeclaringType.Name}.{Name}";
     }
 }

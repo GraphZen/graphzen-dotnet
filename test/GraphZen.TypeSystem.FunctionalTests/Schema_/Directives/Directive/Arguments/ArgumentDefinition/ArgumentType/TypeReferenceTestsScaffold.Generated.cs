@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
 
         [Spec(nameof(it_cannot_be_created_if_type_has_io_conflict))]
         [Fact(Skip = "TODO")]
-        public void it_cannot_be_created_if_type_io_conflict_()
+        public void it_cannot_be_created_if_type_has_io_conflict_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -118,4 +118,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
     {
     }
 }
-// Source Hash Code: 3788786755618927202
+// Source Hash Code: 13233620001168635576

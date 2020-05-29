@@ -48,7 +48,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
                     {
                         Action rename = () => a.Name(name);
                         rename.Should().Throw<InvalidNameException>().WithMessage(
-                            $"Cannot rename argument foo on field bar on object Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                            $"Cannot rename object field argument Foo.bar.foo to \"{name}\". Names are limited to underscores and alpha-numeric ASCII characters.");
                     });
                 });
             });
@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
                             {
                                 Action rename = () => a.Name("foo");
                                 rename.Should().Throw<DuplicateItemException>().WithMessage(
-                                    "Cannot rename argument bar to \"foo\": Field foo on object Foo already contains an argument named \"foo\".");
+                                    "Cannot rename object field argument Foo.foo.bar to \"foo\": object field Foo.foo already has a argument named \"foo\".");
                             });
                     });
             });

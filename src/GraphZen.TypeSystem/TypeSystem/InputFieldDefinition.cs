@@ -15,7 +15,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    [DisplayName("input field")]
+    [DisplayName("field")]
     public class InputFieldDefinition : InputValueDefinition, IMutableInputFieldDefinition
     {
         public InputFieldDefinition(string name,
@@ -44,8 +44,7 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotRename(name, this, DeclaringType));
+                throw InvalidNameException.ForRename(this, name);
             }
 
             if (!configurationSource.Overrides(GetNameConfigurationSource()))
@@ -75,8 +74,8 @@ namespace GraphZen.TypeSystem
         public bool SetFieldType(string type, ConfigurationSource configurationSource) =>
             TypeReference.Update(type, configurationSource);
 
-        public InputObjectTypeDefinition DeclaringType => (InputObjectTypeDefinition)DeclaringMember;
+        public InputObjectTypeDefinition DeclaringType => (InputObjectTypeDefinition) DeclaringMember;
 
-        public override string ToString() => $"input field {Name}";
+        public override string ToString() => $"input object field {DeclaringType.Name}.{Name}";
     }
 }

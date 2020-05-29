@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using static GraphZen.Infrastructure.GraphQLName;
@@ -20,6 +21,10 @@ namespace GraphZen.Internal
 
         public static class DuplicateItemException
         {
+
+            public static GraphZen.Infrastructure.DuplicateItemException ForRename(IMutableDefinition definition, string name) =>
+                new Infrastructure.DuplicateItemException($"Cannot rename {definition} to \"{name}\": {definition.GetParentMember()} already has a {definition.GetTypeDisplayName()} named \"{name}\".");
+
             public static string
                 CannotChangeClrType<T>(T definition, Type clrType, IMutableClrType existing)
                 where T : INamed, IClrType =>
@@ -60,10 +65,11 @@ namespace GraphZen.Internal
 
         public static class InvalidNameException
         {
+
             public static string CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(Type clrType,
-                string annotatedName)
-                =>
-                    $"Cannot create directive with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeKind(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
+    string annotatedName)
+    =>
+        $"Cannot create directive with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeKind(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotGetOrCreateBuilderForClrTypeWithInvalidNameAttribute(Type clrType,
                 string annotatedName, TypeKind kind)
@@ -99,26 +105,9 @@ namespace GraphZen.Internal
                 $"Cannot add enum value \"{name}\" to {parent}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
 
-            public static string CannotRename(string name, string namedDescription) =>
-                $"Cannot rename {namedDescription}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
-
-            public static string CannotRename(string name, INamed named) => CannotRename(name, named.ToString()!);
-
-            public static string CannotRename(string name, INamed named, INamed parentDef) =>
-                CannotRename(name, $"{named} on {parentDef}");
-
-            public static string CannotRenameArgument(IArgumentDefinition argument, string name)
-            {
-                var parent = argument.DeclaringMember is IFieldDefinition fd
-                    ? $"{fd} on {fd.DeclaringType}"
-                    : argument.DeclaringMember.ToString();
-                return
-                    $"Cannot rename {argument} on {parent}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
-            }
 
 
-            public static string CannotRemove(IMutableNamedTypeDefinition named) =>
-                $"Cannot remove name from {named}. Only custom names can be removed from GraphQL {named.Kind.ToDisplayStringLower()} with a CLR type.";
+
         }
     }
 }

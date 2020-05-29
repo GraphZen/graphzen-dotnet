@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -14,6 +15,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+    [DisplayName("argument")]
     public class ArgumentDefinition : InputValueDefinition, IMutableArgumentDefinition
     {
         public ArgumentDefinition(string name,
@@ -48,8 +50,7 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotRenameArgument(this, name));
+                throw InvalidNameException.ForRename(this, name);
             }
 
             if (!configurationSource.Overrides(GetNameConfigurationSource()))
@@ -62,8 +63,7 @@ namespace GraphZen.TypeSystem
             {
                 if (!existing.Equals(this))
                 {
-                    throw new DuplicateItemException(
-                        TypeSystemExceptionMessages.DuplicateItemException.CannotRenameArgument(this, name));
+                    throw TypeSystemExceptionMessages.DuplicateItemException.ForRename(this, name);
                 }
 
                 return true;
@@ -92,6 +92,10 @@ namespace GraphZen.TypeSystem
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 
-        public override string ToString() => $"argument {Name}";
+        public override string ToString()
+        {
+            var grandparent = DeclaringMember.GetParentMember();
+            return grandparent != null ? $"{grandparent.GetTypeDisplayName()} {DeclaringMember.GetTypeDisplayName()} argument {grandparent.GetName()}.{DeclaringMember.GetName()}.{Name}" : $"{DeclaringMember.GetTypeDisplayName()} argument {DeclaringMember.GetName()}.{Name}";
+        }
     }
 }

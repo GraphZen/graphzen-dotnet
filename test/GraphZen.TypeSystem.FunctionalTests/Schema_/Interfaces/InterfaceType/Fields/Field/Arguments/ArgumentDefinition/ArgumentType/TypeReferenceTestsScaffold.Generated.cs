@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
 
         [Spec(nameof(it_cannot_be_created_if_type_has_io_conflict))]
         [Fact(Skip = "TODO")]
-        public void it_cannot_be_created_if_type_io_conflict_()
+        public void it_cannot_be_created_if_type_has_io_conflict_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -119,4 +119,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     {
     }
 }
-// Source Hash Code: 8606174187329457125
+// Source Hash Code: 7402772167025529275

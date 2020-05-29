@@ -30,7 +30,9 @@ namespace GraphZen.TypeSystem
 
             NameConfigurationSource = nameConfigurationSource;
             Name = name;
-            TypeReference = new TypeReference(typeIdentity, typeSyntax, this);
+            TypeReference = this is ArgumentDefinition
+                ? (TypeReference)new ArgumentTypeReference(typeIdentity, typeSyntax, this)
+                : new FieldTypeReference(typeIdentity, typeSyntax, this);
         }
 
         public override SchemaDefinition Schema { get; }

@@ -62,7 +62,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
                     {
                         Action rename = () => a.Name(name);
                         rename.Should().Throw<InvalidNameException>().WithMessage(
-                            $"Cannot rename argument foo on field bar on interface Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                            $"Cannot rename interface field argument Foo.bar.foo to \"{name}\". Names are limited to underscores and alpha-numeric ASCII characters.");
                     });
                 });
             });
@@ -83,7 +83,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
                             {
                                 Action rename = () => a.Name("foo");
                                 rename.Should().Throw<DuplicateItemException>().WithMessage(
-                                    "Cannot rename argument bar to \"foo\": Field foo on interface Foo already contains an argument named \"foo\".");
+                                    "Cannot rename interface field argument Foo.foo.bar to \"foo\": interface field Foo.foo already has a argument named \"foo\".");
                             });
                     });
             });

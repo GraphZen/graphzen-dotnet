@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -15,6 +16,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+    [DisplayName("object")]
     public class ObjectTypeDefinition : FieldsDefinition, IMutableObjectTypeDefinition
     {
         private readonly Dictionary<string, ConfigurationSource> _ignoredInterfaces =
