@@ -80,7 +80,9 @@ namespace GraphZen.TypeSystem
 
         [GraphQLCanBeNull] public string? Description { get; }
 
-        public override string ToString() => ClrType != null && ClrType.Name != Name ? $"directive {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})" : $"directive {Name}";
+        public override string ToString() => ClrType != null && ClrType.Name != Name
+            ? $"directive {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})"
+            : $"directive {Name}";
 
         [GraphQLIgnore] public bool IsSpec { get; }
     }

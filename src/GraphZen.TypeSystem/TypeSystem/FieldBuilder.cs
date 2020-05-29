@@ -37,7 +37,8 @@ namespace GraphZen.TypeSystem
         }
 
         [SuppressMessage("ReSharper", "MethodOverloadWithOptionalParameter")]
-        public FieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false, bool itemCanBeNull = false) where TFieldNew : IEnumerable
+        public FieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false,
+            bool itemCanBeNull = false) where TFieldNew : IEnumerable
         {
             Builder.FieldType(typeof(TFieldNew), ConfigurationSource.Explicit);
             return new FieldBuilder<TDeclaringType, TFieldNew, TContext>(Builder);

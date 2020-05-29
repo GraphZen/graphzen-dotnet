@@ -20,15 +20,13 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-
-
     public static class ClrTypeExtensions
     {
-
         internal static string GetDisplayNameOrName(this Type clrType) =>
             clrType.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? clrType.Name;
 
-        internal static string GetDisplayOrTypeName<T>(this T value) where T : notnull => value.GetType().GetDisplayNameOrName();
+        internal static string GetDisplayOrTypeName<T>(this T value) where T : notnull =>
+            value.GetType().GetDisplayNameOrName();
 
 
         internal static bool IsFunc(this Type clrType) =>

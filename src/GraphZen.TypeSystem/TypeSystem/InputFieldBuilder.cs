@@ -27,6 +27,7 @@ namespace GraphZen.TypeSystem
             Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
+
         public InputFieldBuilder<object?> FieldType(string type)
         {
             Check.NotNull(type, nameof(type));

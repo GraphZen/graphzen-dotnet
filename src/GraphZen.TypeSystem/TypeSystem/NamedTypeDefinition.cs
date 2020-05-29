@@ -95,6 +95,7 @@ namespace GraphZen.TypeSystem
             Identity.RemoveClrType(configurationSource);
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => Identity.GetClrTypeConfigurationSource();
+
         public override string ToString()
         {
             var kindName = $"{Kind.ToDisplayStringLower()} {Name}";
@@ -102,8 +103,8 @@ namespace GraphZen.TypeSystem
             {
                 return $"{Kind.ToDisplayStringLower()} {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})";
             }
+
             return kindName;
         }
-
     }
 }

@@ -11,7 +11,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    internal interface IArgumentBuilder<T> : IInfrastructure<InternalArgumentBuilder>, IAnnotableBuilder<ArgumentBuilder<T>>
+    internal interface IArgumentBuilder<T> : IInfrastructure<InternalArgumentBuilder>,
+        IAnnotableBuilder<ArgumentBuilder<T>>
     {
         ArgumentBuilder<TNew> ArgumentType<TNew>();
         ArgumentBuilder<object?> ArgumentType(Type clrType);
