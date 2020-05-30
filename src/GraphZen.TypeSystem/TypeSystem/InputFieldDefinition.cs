@@ -74,7 +74,7 @@ namespace GraphZen.TypeSystem
         public bool SetFieldType(string type, ConfigurationSource configurationSource) =>
             TypeReference.Update(type, configurationSource);
 
-        public InputObjectTypeDefinition DeclaringType => (InputObjectTypeDefinition) DeclaringMember;
+        public InputObjectTypeDefinition DeclaringType => (InputObjectTypeDefinition)DeclaringMember;
 
         public override string ToString() => $"input object field {DeclaringType.Name}.{Name}";
     }

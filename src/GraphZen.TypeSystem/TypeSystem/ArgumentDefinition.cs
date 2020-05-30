@@ -95,7 +95,9 @@ namespace GraphZen.TypeSystem
         public override string ToString()
         {
             var grandparent = DeclaringMember.GetParentMember();
-            return grandparent != null ? $"{grandparent.GetTypeDisplayName()} {DeclaringMember.GetTypeDisplayName()} argument {grandparent.GetName()}.{DeclaringMember.GetName()}.{Name}" : $"{DeclaringMember.GetTypeDisplayName()} argument {DeclaringMember.GetName()}.{Name}";
+            return grandparent != null
+                ? $"{grandparent.GetTypeDisplayName()} {DeclaringMember.GetTypeDisplayName()} argument {grandparent.GetName()}.{DeclaringMember.GetName()}.{Name}"
+                : $"{DeclaringMember.GetTypeDisplayName()} argument {DeclaringMember.GetName()}.{Name}";
         }
     }
 }

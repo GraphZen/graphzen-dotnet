@@ -13,6 +13,7 @@ namespace GraphZen.Infrastructure
         {
         }
 
-        internal static InvalidNameException ForRename(object value, string name) => new InvalidNameException($"Cannot rename {value} to \"{name}\". {GraphQLName.NameSpecDescription}");
+        internal static InvalidNameException ForRename(object value, string name) =>
+            new InvalidNameException($"Cannot rename {value} to \"{name}\". {GraphQLName.NameSpecDescription}");
     }
 }

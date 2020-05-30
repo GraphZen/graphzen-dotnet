@@ -75,6 +75,5 @@ namespace GraphZen.TypeSystem.Internal
             Definition.SetDescription(description, configurationSource);
             return (TBuilder)this;
         }
-
     }
 }

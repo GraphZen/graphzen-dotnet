@@ -99,7 +99,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 _.InputObject("Bar").Field("field", "Baz", f =>
                 {
                     Action set = () => f.FieldType("Foo");
-                    set.Should().Throw<InvalidTypeException>().WithMessage("Cannot set field type 'Foo' on input object field Bar.field: object Foo is only an output type and input object fields can only use input types.");
+                    set.Should().Throw<InvalidTypeException>().WithMessage(
+                        "Cannot set field type 'Foo' on input object field Bar.field: object Foo is only an output type and input object fields can only use input types.");
                 });
             });
         }

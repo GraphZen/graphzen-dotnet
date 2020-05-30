@@ -12,8 +12,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace GraphZen.Infrastructure
 {
-
-
     public class CoreOptionsExtension : IGraphQLContextOptionsExtension
     {
         public ISchema? Schema { get; private set; }

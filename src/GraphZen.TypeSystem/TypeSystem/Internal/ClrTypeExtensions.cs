@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem.Internal
     public static class ClrTypeExtensions
     {
         internal static string? GetDisplayName(this Type clrType) =>
-                    clrType.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
+            clrType.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName;
 
         internal static string GetDisplayOrTypeName(this Type clrType) =>
             clrType.GetDisplayName() ?? clrType.Name;

@@ -21,9 +21,9 @@ namespace GraphZen.Internal
 
         public static class DuplicateItemException
         {
-
-            public static GraphZen.Infrastructure.DuplicateItemException ForRename(IMutableDefinition definition, string name) =>
-                new Infrastructure.DuplicateItemException($"Cannot rename {definition} to \"{name}\": {definition.GetParentMember()} already has a {definition.GetTypeDisplayName()} named \"{name}\".");
+            public static Infrastructure.DuplicateItemException ForRename(IMutableDefinition definition, string name) =>
+                new Infrastructure.DuplicateItemException(
+                    $"Cannot rename {definition} to \"{name}\": {definition.GetParentMember()} already has a {definition.GetTypeDisplayName()} named \"{name}\".");
 
             public static string
                 CannotChangeClrType<T>(T definition, Type clrType, IMutableClrType existing)
@@ -65,11 +65,10 @@ namespace GraphZen.Internal
 
         public static class InvalidNameException
         {
-
             public static string CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(Type clrType,
-    string annotatedName)
-    =>
-        $"Cannot create directive with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeKind(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
+                string annotatedName)
+                =>
+                    $"Cannot create directive with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The name \"{annotatedName}\" specified in the {nameof(GraphQLNameAttribute)} on the {clrType.Name} CLR {GetClrTypeKind(clrType)} is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotGetOrCreateBuilderForClrTypeWithInvalidNameAttribute(Type clrType,
                 string annotatedName, TypeKind kind)
@@ -103,11 +102,6 @@ namespace GraphZen.Internal
 
             public static string CannotCreateEnumValue(string name, IEnumTypeDefinition parent) =>
                 $"Cannot add enum value \"{name}\" to {parent}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
-
-
-
-
-
         }
     }
 }

@@ -53,7 +53,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                     Action rename = () => a.Name(name);
                     rename.Should().Throw<InvalidNameException>().WithMessage(
                         $"Cannot rename directive argument Foo.foo to \"{name}\". Names are limited to underscores and alpha-numeric ASCII characters.");
-
                 });
             });
         }
