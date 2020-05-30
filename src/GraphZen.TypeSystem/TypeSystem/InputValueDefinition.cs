@@ -80,5 +80,13 @@ namespace GraphZen.TypeSystem
         public TypeReference TypeReference { get; }
 
         IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
+
+        public override string ToString()
+        {
+            var grandparent = DeclaringMember.GetParentMember();
+            return grandparent is null || grandparent is SchemaDefinition
+                ? $"{DeclaringMember.GetTypeDisplayName()} {this.GetTypeDisplayName()} {DeclaringMember.GetName()}.{Name}"
+                : $"{grandparent.GetTypeDisplayName()} {DeclaringMember.GetTypeDisplayName()} {this.GetTypeDisplayName()} {grandparent.GetName()}.{DeclaringMember.GetName()}.{Name}";
+        }
     }
 }

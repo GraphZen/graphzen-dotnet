@@ -42,7 +42,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
                 {
                     Action rename = () => f.Name(name);
                     rename.Should().Throw<InvalidNameException>().WithMessage(
-                        $"Cannot rename field bar on object Foo: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                        $"Cannot rename object field Foo.bar to \"{name}\". Names are limited to underscores and alpha-numeric ASCII characters.");
                 });
             });
         }

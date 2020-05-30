@@ -18,7 +18,6 @@ namespace GraphZen.TypeSystem
     [Description("A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all " +
                  "available types and directives on the server, as well as the entry points for " +
                  "query, mutation, and subscription operations.")]
-    [DisplayName("schema")]
     public partial class Schema : AnnotatableMember, ISchema
     {
         [GenDictionaryAccessors("name", nameof(Directive))]

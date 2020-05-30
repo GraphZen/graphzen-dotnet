@@ -81,8 +81,7 @@ namespace GraphZen.TypeSystem
 
             if (TryGetArgument(name, out var existing) && existing != argument)
             {
-                throw new DuplicateItemException(
-                    TypeSystemExceptions.DuplicateItemException.CannotRenameArgument(argument, name));
+                throw TypeSystemExceptions.DuplicateItemException.ForRename(argument, name);
             }
 
             _arguments.Remove(argument.Name);

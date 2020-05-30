@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 var bar = _.InputObject("Bar");
                 Action add = () => bar.Field("baz", "[Foo]!");
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create input object field Bar.baz with field type '[Foo]!'. object Foo is only an output type and input object fields can only use input types.");
+                    "Cannot create input object field Bar.baz with field type '[Foo]!'. Input object fields can only use input types. Object Foo is only an output type.");
             });
         }
 
@@ -70,7 +70,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 var bar = _.InputObject("Bar");
                 Action add = () => bar.Field<PlainClass>("baz");
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create input object field Bar.baz with field type 'Foo!'. object Foo (CLR class: PlainClass) is only an output type and input object fields can only use input types.");
+                    "Cannot create input object field Bar.baz with field type 'Foo!'. Input object fields can only use input types. Object Foo (CLR class: PlainClass) is only an output type.");
             });
         }
 
@@ -100,31 +100,38 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 {
                     Action set = () => f.FieldType("Foo");
                     set.Should().Throw<InvalidTypeException>().WithMessage(
-                        "Cannot set field type to 'Foo' on input object field Bar.field. Object Foo is only an output type and input object fields can only use input types.");
+                        "Cannot set field type to 'Foo' on input object field Bar.field. Input object fields can only use input types. Object Foo is only an output type.");
                 });
             });
         }
 
         [Spec(nameof(type_can_be_set_with_clr_type_if_type_io_compatible))]
-        [Fact(Skip = "wip")]
+        [Fact]
         public void type_can_be_set_with_clr_type_if_type_matches_own_io_identity_()
         {
             var schema = Schema.Create(_ =>
             {
-                _.InputObject("Foo");
-                _.InputObject("Bar").Field("field", "Baz");
-                _.InputObject("Bar").Field("field", "Foo");
+                _.InputObject<PlainClass>();
+                _.InputObject("Bar").Field("field", "Baz", f => f.FieldType<PlainClass>());
             });
-            var foo = schema.GetInputObject("Foo");
+            var foo = schema.GetInputObject<PlainClass>();
             schema.GetInputObject("Bar").GetField("field").FieldType.GetNamedType().Should().Be(foo);
         }
 
 
         [Spec(nameof(type_cannot_be_set_with_clr_type_if_type_has_io_conflict))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void type_cannot_be_set__with_clr_type_if_type_conflicts_with_own_io_identity_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Object<PlainClass>();
+                _.InputObject("Bar").Field("field", "Baz", f =>
+                {
+                    Action set = () => f.FieldType<PlainClass>();
+                    set.Should().Throw<InvalidTypeException>().WithMessage("Cannot set field type to 'PlainClass!' on input object field Bar.field. Input object fields can only use input types. Object PlainClass is only an output type.");
+                });
+            });
         }
 
 

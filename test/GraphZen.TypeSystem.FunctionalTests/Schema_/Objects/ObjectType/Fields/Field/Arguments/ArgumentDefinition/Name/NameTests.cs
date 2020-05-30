@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
                             {
                                 Action rename = () => a.Name("foo");
                                 rename.Should().Throw<DuplicateItemException>().WithMessage(
-                                    "Cannot rename object field argument Foo.foo.bar to \"foo\": object field Foo.foo already has a argument named \"foo\".");
+                                    "Cannot rename object field argument Foo.foo.bar to \"foo\". Object field Foo.foo already contains a argument named \"foo\".");
                             });
                     });
             });

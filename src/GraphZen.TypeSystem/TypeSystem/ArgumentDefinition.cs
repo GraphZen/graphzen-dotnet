@@ -92,12 +92,6 @@ namespace GraphZen.TypeSystem
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 
-        public override string ToString()
-        {
-            var grandparent = DeclaringMember.GetParentMember();
-            return grandparent != null
-                ? $"{grandparent.GetTypeDisplayName()} {DeclaringMember.GetTypeDisplayName()} argument {grandparent.GetName()}.{DeclaringMember.GetName()}.{Name}"
-                : $"{DeclaringMember.GetTypeDisplayName()} argument {DeclaringMember.GetName()}.{Name}";
-        }
+        
     }
 }

@@ -23,11 +23,10 @@ namespace GraphZen.Internal
         {
             public static Infrastructure.DuplicateItemException ForRename(IMutableDefinition definition, string name)
             {
-
-
-
+                var parent = definition.GetParentMember();
+                var parentDescription = parent is SchemaDefinition ? "The schema" : parent?.ToString()?.FirstCharToUpper();
                 return new Infrastructure.DuplicateItemException(
-                    $"Cannot rename {definition} to \"{name}\". {definition.GetParentMember()?.ToString()?.FirstCharToUpper()} already has a {definition.GetTypeDisplayName()} named \"{name}\".");
+                    $"Cannot rename {definition} to \"{name}\". {parentDescription} already contains a {definition.GetTypeDisplayName()} named \"{name}\".");
             }
 
             public static string
@@ -49,16 +48,8 @@ namespace GraphZen.Internal
 
 
             internal static string CannotRenameInputField(IInputFieldDefinition field, string name) =>
-                $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
+                $"Cannot rename {field} to \"{name}\". {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
 
-            internal static string CannotRenameArgument(IArgumentDefinition argument, string name)
-            {
-                var parent = argument.DeclaringMember is IFieldDefinition fd
-                    ? $"{fd} on {fd.DeclaringType}"
-                    : argument.DeclaringMember.ToString();
-                return
-                    $"Cannot rename {argument} to \"{name}\": {parent?.FirstCharToUpper()} already contains an argument named \"{name}\".";
-            }
 
             internal static string DuplicateEnumValue(IEnumValueDefinition enumValue, string name) =>
                 $"Cannot rename enum value {enumValue.DeclaringType.Name}.{enumValue.Name} to \"{name}\": {enumValue.DeclaringType.ToString()?.FirstCharToUpper()} already contains a value named \"{name}\".";

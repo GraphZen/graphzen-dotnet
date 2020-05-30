@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
                     {
                         Action rename = () => f.Name("bar");
                         rename.Should().Throw<DuplicateItemException>().WithMessage(
-                            "Cannot rename interface field Foo.baz to \"bar\": Interface Foo already contains a field named \"bar\".");
+                            "Cannot rename interface field Foo.baz to \"bar\". Interface Foo already contains a field named \"bar\".");
                     });
             });
         }

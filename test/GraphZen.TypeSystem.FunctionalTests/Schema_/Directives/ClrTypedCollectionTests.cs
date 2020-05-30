@@ -283,7 +283,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives
                 var b = _.Directive<PlainClass>();
                 Action rename = () => b.Name("Foo");
                 rename.Should().Throw<DuplicateItemException>().WithMessage(
-                    "Cannot rename directive PlainClass to \"Foo\": a directive named \"Foo\" already exists.");
+                    "Cannot rename directive PlainClass to \"Foo\". The schema already contains a directive named \"Foo\".");
             });
         }
 

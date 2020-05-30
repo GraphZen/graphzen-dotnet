@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -17,6 +18,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+    [DisplayName("the schema")]
     public partial class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefinition
     {
         [GenDictionaryAccessors("name", nameof(Directive))]

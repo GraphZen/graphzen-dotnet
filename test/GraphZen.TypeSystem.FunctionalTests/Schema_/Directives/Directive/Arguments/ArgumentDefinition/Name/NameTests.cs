@@ -70,7 +70,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                     {
                         Action rename = () => a.Name("foo");
                         rename.Should().Throw<DuplicateItemException>().WithMessage(
-                            "Cannot rename directive argument foo.bar to \"foo\": directive foo already has a argument named \"foo\".");
+                            "Cannot rename directive argument foo.bar to \"foo\". Directive foo already contains a argument named \"foo\".");
                     });
             });
         }
