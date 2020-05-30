@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -15,17 +14,9 @@ namespace GraphZen.TypeSystem
     public class InputField : InputValue, IInputField
     {
         public InputField(
-            string name,
-            string? description,
-            IGraphQLTypeReference? type,
-            object? defaultValue,
-            bool hasDefaultValue,
-            IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver, PropertyInfo? clrInfo, InputObjectType inputObject) :
-            base(name, description, type,
-                defaultValue, hasDefaultValue,
-                Check.NotNull(directives, nameof(directives)),
-                Check.NotNull(typeResolver, nameof(typeResolver)), clrInfo, inputObject)
+            string name, string? description, IGraphQLTypeReference type, object? defaultValue, bool hasDefaultValue,
+            IEnumerable<IDirectiveAnnotation> directives, PropertyInfo? clrInfo, InputObjectType inputObject) :
+            base(name, description, type, defaultValue, hasDefaultValue, directives, clrInfo, inputObject)
         {
         }
 
@@ -37,17 +28,15 @@ namespace GraphZen.TypeSystem
 
         IInputObjectTypeDefinition IInputFieldDefinition.DeclaringType => DeclaringType;
 
-        public InputObjectType DeclaringType => (InputObjectType)DeclaringMember;
+        public InputObjectType DeclaringType => (InputObjectType) DeclaringMember;
 
 
-        public static InputField From(IInputFieldDefinition definition, TypeResolver typeResolver,
+        public static InputField From(IInputFieldDefinition definition,
             InputObjectType declaringType)
         {
             Check.NotNull(definition, nameof(definition));
-            Check.NotNull(typeResolver, nameof(typeResolver));
             return new InputField(definition.Name, definition.Description, definition.FieldType,
-                definition.DefaultValue, definition.HasDefaultValue, definition.GetDirectiveAnnotations().ToList(),
-                typeResolver,
+                definition.DefaultValue, definition.HasDefaultValue, definition.GetDirectiveAnnotations(),
                 definition.ClrInfo, declaringType);
         }
     }

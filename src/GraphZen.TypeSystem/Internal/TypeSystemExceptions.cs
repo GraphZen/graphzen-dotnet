@@ -12,7 +12,7 @@ using static GraphZen.Infrastructure.GraphQLName;
 
 namespace GraphZen.Internal
 {
-    internal static class TypeSystemExceptionMessages
+    internal static class TypeSystemExceptions
     {
         public static string GetClrTypeKind(this Type clrType) => clrType.IsInterface ? "interface" :
             clrType.IsClass ? "class" :
@@ -21,9 +21,14 @@ namespace GraphZen.Internal
 
         public static class DuplicateItemException
         {
-            public static Infrastructure.DuplicateItemException ForRename(IMutableDefinition definition, string name) =>
-                new Infrastructure.DuplicateItemException(
-                    $"Cannot rename {definition} to \"{name}\": {definition.GetParentMember()} already has a {definition.GetTypeDisplayName()} named \"{name}\".");
+            public static Infrastructure.DuplicateItemException ForRename(IMutableDefinition definition, string name)
+            {
+
+
+
+                return new Infrastructure.DuplicateItemException(
+                    $"Cannot rename {definition} to \"{name}\". {definition.GetParentMember()?.ToString()?.FirstCharToUpper()} already has a {definition.GetTypeDisplayName()} named \"{name}\".");
+            }
 
             public static string
                 CannotChangeClrType<T>(T definition, Type clrType, IMutableClrType existing)
@@ -36,11 +41,7 @@ namespace GraphZen.Internal
                 where T : NamedTypeDefinition =>
                 $"Cannot create {kind.ToDisplayStringLower()} {name} with CLR {clrType.GetClrTypeKind()} '{clrType.Name}': both {named} and {typed} already exist.";
 
-            internal static string CannotRenameField(IFieldDefinition field, string name) =>
-                $"Cannot rename {field} to \"{name}\": {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
 
-            internal static string CannotRenameDirective(IDirectiveDefinition directive, string name) =>
-                $"Cannot rename {directive} to \"{name}\": a directive named \"{name}\" already exists.";
 
             internal static string CannotCreateDirectiveWithConflictingNameAndType(string name, Type clrType,
                 IDirectiveDefinition existingNamed, IDirectiveDefinition existingTyped) =>

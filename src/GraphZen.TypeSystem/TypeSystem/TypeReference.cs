@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem
                 !(identity.Definition is IInputTypeDefinition) && declaringMember is IInputDefinition)
             {
                 throw new InvalidTypeException(
-                    $"Cannot create {declaringMember} with {this.GetTypeDisplayName()} '{typeSyntax.WithName(identity.Name)}'. {outputType} is only an output type and {declaringMember?.GetParentMember()?.GetTypeDisplayName()} {declaringMember.GetTypeDisplayName()}s can only use input types.");
+                    $"Cannot create {declaringMember} with {this.GetTypeDisplayName()} '{typeSyntax.WithName(identity.Name)}'. {outputType.ToString()?.FirstCharToUpper()} is only an output type and {declaringMember?.GetParentMember()?.GetTypeDisplayName()} {declaringMember.GetTypeDisplayName()}s can only use input types.");
             }
 
             Identity = identity;
@@ -62,7 +62,7 @@ namespace GraphZen.TypeSystem
                 !(identity.Definition is IInputTypeDefinition) && DeclaringMember is IInputDefinition)
             {
                 throw new InvalidTypeException(
-                    $"Cannot set {this.GetTypeDisplayName()} '{syntax}' on {DeclaringMember}. {outputType} is only an output type and {DeclaringMember?.GetParentMember()?.GetTypeDisplayName()} {DeclaringMember.GetTypeDisplayName()}s can only use input types.");
+                    $"Cannot set {this.GetTypeDisplayName()} to '{syntax.WithName(Identity.Name)}' on {DeclaringMember}. {outputType.ToString()?.FirstCharToUpper()} is only an output type and {DeclaringMember?.GetParentMember()?.GetTypeDisplayName()} {DeclaringMember.GetTypeDisplayName()}s can only use input types.");
             }
 
 
@@ -86,5 +86,6 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"ref: {TypeSyntax} | {Identity}";
+        ISchemaDefinition IMemberDefinition.Schema => Schema;
     }
 }

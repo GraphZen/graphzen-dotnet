@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem
             if (!name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotCreateArgumentWithInvalidName(this, name));
+                    TypeSystemExceptions.InvalidNameException.CannotCreateArgumentWithInvalidName(this, name));
             }
 
             Builder = new InternalArgumentBuilder(this);
@@ -63,7 +63,7 @@ namespace GraphZen.TypeSystem
             {
                 if (!existing.Equals(this))
                 {
-                    throw TypeSystemExceptionMessages.DuplicateItemException.ForRename(this, name);
+                    throw TypeSystemExceptions.DuplicateItemException.ForRename(this, name);
                 }
 
                 return true;

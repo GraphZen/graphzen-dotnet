@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem
     public abstract class NamedType : AnnotatableMember, INamedType
     {
         protected NamedType(string name, string? description, Type? clrType,
-            IReadOnlyList<IDirectiveAnnotation> directives) : base(directives)
+            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(directives, schema)
         {
             Name = name;
             Description = description;
@@ -31,12 +31,15 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore] public Type? ClrType { get; }
 
+        [GraphQLCanBeNull] public string? Description { get; }
+        ISchemaDefinition IMemberDefinition.Schema => Schema;
+
         public static NamedType From(INamedTypeDefinition definition, Schema schema)
         {
             switch (definition)
             {
                 case IScalarTypeDefinition __:
-                    return ScalarType.From(__);
+                    return ScalarType.From(__, schema);
                 case IUnionTypeDefinition __:
                     return UnionType.From(__, schema);
                 case IObjectTypeDefinition __:
@@ -44,7 +47,7 @@ namespace GraphZen.TypeSystem
                 case IInputObjectTypeDefinition __:
                     return InputObjectType.From(__, schema);
                 case IEnumTypeDefinition __:
-                    return EnumType.From(__);
+                    return EnumType.From(__, schema);
                 case IInterfaceTypeDefinition __:
                     return InterfaceType.From(__, schema);
             }
@@ -53,7 +56,5 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => Name;
-
-        [GraphQLCanBeNull] public string? Description { get; }
     }
 }

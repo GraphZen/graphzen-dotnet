@@ -561,7 +561,7 @@ namespace GraphZen.TypeSystem.Internal
             if (!name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateTypeBuilderWithInvalidName(name,
+                    TypeSystemExceptions.InvalidNameException.CannotGetOrCreateTypeBuilderWithInvalidName(name,
                         kind));
             }
         }
@@ -573,7 +573,7 @@ namespace GraphZen.TypeSystem.Internal
                 if (!annotated.IsValidGraphQLName())
                 {
                     throw new InvalidNameException(
-                        TypeSystemExceptionMessages.InvalidNameException
+                        TypeSystemExceptions.InvalidNameException
                             .CannotGetOrCreateBuilderForClrTypeWithInvalidNameAttribute(clrType, annotated,
                                 kind));
                 }
@@ -581,7 +581,7 @@ namespace GraphZen.TypeSystem.Internal
             else if (!clrType.Name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotGetOrCreateBuilderForClrTypeWithInvalidName(
+                    TypeSystemExceptions.InvalidNameException.CannotGetOrCreateBuilderForClrTypeWithInvalidName(
                         clrType, kind));
             }
         }
@@ -607,7 +607,7 @@ namespace GraphZen.TypeSystem.Internal
                     if (!byName.Equals(byType))
                     {
                         throw new DuplicateItemException(
-                            TypeSystemExceptionMessages.DuplicateItemException.CannotCreateTypeWithDuplicateNameAndType(
+                            TypeSystemExceptions.DuplicateItemException.CannotCreateTypeWithDuplicateNameAndType(
                                 byName.Kind, name,
                                 clrType, byName, byType));
                     }
@@ -691,7 +691,7 @@ namespace GraphZen.TypeSystem.Internal
             if (typed != null && named != null && !typed.Equals(named))
             {
                 throw new DuplicateItemException(
-                    TypeSystemExceptionMessages.DuplicateItemException.CannotCreateDirectiveWithConflictingNameAndType(
+                    TypeSystemExceptions.DuplicateItemException.CannotCreateDirectiveWithConflictingNameAndType(
                         name, clrType, named, typed));
             }
 
@@ -736,7 +736,7 @@ namespace GraphZen.TypeSystem.Internal
                 !annotatedName.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException
+                    TypeSystemExceptions.InvalidNameException
                         .CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(clrType, annotatedName));
             }
 

@@ -27,8 +27,8 @@ namespace GraphZen.TypeSystem
             LeafValueParser<object>? valueParser,
             LeafLiteralParser<object, ValueSyntax>? literalParser,
             LeafSerializer<object>? serializer,
-            IReadOnlyList<IDirectiveAnnotation> directives
-        ) : base(Check.NotNull(name, nameof(name)), description, clrType, Check.NotNull(directives, nameof(directives)))
+            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema
+        ) : base(name, description, clrType, directives, schema)
 
         {
             _valueParser = valueParser;
@@ -69,7 +69,7 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Scalar;
 
-        public static ScalarType From(IScalarTypeDefinition definition)
+        public static ScalarType From(IScalarTypeDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
 
@@ -80,7 +80,7 @@ namespace GraphZen.TypeSystem
                 definition.ValueParser,
                 definition.LiteralParser,
                 definition.Serializer,
-                definition.GetDirectiveAnnotations().ToList()
+                definition.GetDirectiveAnnotations().ToList(), schema
             );
         }
     }

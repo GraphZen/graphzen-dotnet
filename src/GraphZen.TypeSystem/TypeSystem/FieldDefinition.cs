@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem
             if (!name.IsValidGraphQLName())
             {
                 throw new InvalidNameException(
-                    TypeSystemExceptionMessages.InvalidNameException.CannotCreateField(name, this));
+                    TypeSystemExceptions.InvalidNameException.CannotCreateField(name, this));
             }
 
             TypeReference = new FieldTypeReference(fieldTypeIdentity, fieldTypeSyntax, this);
@@ -82,7 +82,7 @@ namespace GraphZen.TypeSystem
             if (TryGetArgument(name, out var existing) && existing != argument)
             {
                 throw new DuplicateItemException(
-                    TypeSystemExceptionMessages.DuplicateItemException.CannotRenameArgument(argument, name));
+                    TypeSystemExceptions.DuplicateItemException.CannotRenameArgument(argument, name));
             }
 
             _arguments.Remove(argument.Name);

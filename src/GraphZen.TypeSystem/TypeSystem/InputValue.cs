@@ -28,20 +28,16 @@ namespace GraphZen.TypeSystem
         protected InputValue(
             string name,
             string? description,
-            IGraphQLTypeReference? type,
+            IGraphQLTypeReference type,
             object? defaultValue,
             bool hasDefaultValue,
-            IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver? typeResolver, object? clrInfo, IMemberDefinition declaringMember) : base(directives)
+            IEnumerable<IDirectiveAnnotation>? directives,
+            object? clrInfo, IMember declaringMember) : base(directives, declaringMember.Schema)
         {
-            IGraphQLType DefaultTypeResolver(IGraphQLTypeReference typeReference) =>
-                type as IGraphQLType ?? throw new InvalidOperationException(
-                    $"{typeReference} is not a valid GraphQL type. Provide a type resolver to correctly resolve.");
 
             Description = description;
-            typeResolver ??= DefaultTypeResolver;
             Name = name;
-            _type = new Lazy<IGraphQLType>(() => typeResolver(type!));
+            _type = new Lazy<IGraphQLType>(() => Schema.ResolveType(type));
             DefaultValue = defaultValue;
             HasDefaultValue = hasDefaultValue;
             ClrInfo = clrInfo;
@@ -72,5 +68,6 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore] public IGraphQLType TypeReference => _type.Value;
         IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
+
     }
 }

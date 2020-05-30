@@ -15,9 +15,9 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public abstract class AnnotatableMember : Member, IDirectiveAnnotations
     {
-        protected AnnotatableMember(IReadOnlyList<IDirectiveAnnotation>? directives)
+        protected AnnotatableMember(IEnumerable<IDirectiveAnnotation>? directives, Schema schema) : base(schema)
         {
-            DirectiveAnnotations = directives ?? ImmutableArray<IDirectiveAnnotation>.Empty;
+            DirectiveAnnotations = directives?.ToImmutableArray() ?? ImmutableArray<IDirectiveAnnotation>.Empty;
         }
 
         [GraphQLIgnore] public abstract DirectiveLocation DirectiveLocation { get; }

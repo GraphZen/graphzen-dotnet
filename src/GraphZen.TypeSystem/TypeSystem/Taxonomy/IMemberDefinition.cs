@@ -12,9 +12,13 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         internal string? GetName() => this is INamed named ? named.Name : null;
 
+        ISchemaDefinition Schema { get; }
+
 
         internal IMemberDefinition? GetParentMember() => this switch
         {
+            IDirectiveDefinition directive => directive.Schema,
+            INamedTypeDefinition type => type.Schema,
             IArgumentDefinition argumentDefinition => argumentDefinition.DeclaringMember,
             IEnumValueDefinition enumValueDefinition => enumValueDefinition.DeclaringType,
             IFieldDefinition fieldDefinition when

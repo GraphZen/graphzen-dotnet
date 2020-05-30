@@ -19,11 +19,11 @@ namespace GraphZen.TypeSystem
         public InputObjectType(string name, string? description, Type? clrType,
             IEnumerable<IInputFieldDefinition> fields,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(name,
-            description, clrType, Check.NotNull(directives, nameof(directives)))
+            description, clrType, directives, schema)
         {
             Check.NotNull(fields, nameof(fields));
             Check.NotNull(schema, nameof(schema));
-            Fields = fields.ToReadOnlyDictionary(_ => _.Name, _ => InputField.From(_, schema.ResolveType, this));
+            Fields = fields.ToReadOnlyDictionary(_ => _.Name, _ => InputField.From(_, this));
             _syntax = new Lazy<InputObjectTypeDefinitionSyntax>(() =>
                 new InputObjectTypeDefinitionSyntax(SyntaxFactory.Name(Name), SyntaxHelpers.Description(Description),
                     null,

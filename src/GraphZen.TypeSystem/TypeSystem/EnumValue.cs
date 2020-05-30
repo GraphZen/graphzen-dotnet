@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
 
         public EnumValue(string name, string? description, object value, bool isDeprecated, string? deprecatedReason,
-            IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(directives)
+            IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(directives, declaringType.Schema)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
@@ -64,5 +64,6 @@ namespace GraphZen.TypeSystem
 
         public override string ToString() => $"{Name} ({Value.Inspect()})";
         [GraphQLCanBeNull] public string? Description { get; }
+
     }
 }

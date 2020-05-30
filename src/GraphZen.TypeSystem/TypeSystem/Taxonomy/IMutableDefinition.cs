@@ -13,6 +13,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         ConfigurationSource GetConfigurationSource();
 
-        SchemaDefinition Schema { get; }
+        new SchemaDefinition Schema { get; }
     }
 }

@@ -22,9 +22,8 @@ namespace GraphZen.TypeSystem
         public UnionType(string name, string? description, Type? clrType,
             Lazy<IReadOnlyDictionary<string, ObjectType>> lazyTypes,
             TypeResolver<object, GraphQLContext>? resolveType,
-            IReadOnlyList<IDirectiveAnnotation> directives
-        ) : base(
-            Check.NotNull(name, nameof(name)), description, clrType, Check.NotNull(directives, nameof(directives)))
+            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema
+        ) : base(name, description, clrType, directives, schema)
         {
             Check.NotNull(lazyTypes, nameof(lazyTypes));
             ResolveType = resolveType;
@@ -98,7 +97,7 @@ namespace GraphZen.TypeSystem
                     .ToDictionary(_ => _.Name, _ => schema.GetObject(_.Name));
             });
             return new UnionType(definition.Name, definition.Description, definition.ClrType, lazyTypes,
-                definition.ResolveType, definition.GetDirectiveAnnotations().ToList());
+                definition.ResolveType, definition.GetDirectiveAnnotations().ToList(), schema);
         }
     }
 }

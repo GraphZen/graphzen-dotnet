@@ -29,7 +29,7 @@ namespace GraphZen.TypeSystem
         {
             if (!name.IsValidGraphQLName())
             {
-                throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
+                throw new InvalidNameException(TypeSystemExceptions.InvalidNameException
                     .CannotCreateInputFieldWithInvalidName(this, name));
             }
 

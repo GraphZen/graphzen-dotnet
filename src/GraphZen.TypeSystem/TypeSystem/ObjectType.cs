@@ -24,9 +24,9 @@ namespace GraphZen.TypeSystem
         private ObjectType(string name, string? description, Type? clrType, IsTypeOf<object, GraphQLContext>? isTypeOf,
             IEnumerable<IFieldDefinition> fields,
             IEnumerable<INamedTypeReference> interfaces,
-            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(Check.NotNull(name, nameof(name)),
+            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(name,
             description, clrType,
-            Check.NotNull(directives, nameof(directives))
+           directives, schema
         )
         {
             IsTypeOf = isTypeOf;
@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(interfaces, nameof(interfaces));
             Check.NotNull(schema, nameof(schema));
             _fields = new Lazy<IReadOnlyDictionary<string, Field>>(() =>
-                fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, schema.ResolveType)));
+                fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, schema)));
 
             _interfaceMap = new Lazy<IReadOnlyDictionary<string, InterfaceType>>(() =>
                 {

@@ -18,6 +18,7 @@ namespace GraphZen.TypeSystem
     [Description("A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all " +
                  "available types and directives on the server, as well as the entry points for " +
                  "query, mutation, and subscription operations.")]
+    [DisplayName("schema")]
     public partial class Schema : AnnotatableMember, ISchema
     {
         [GenDictionaryAccessors("name", nameof(Directive))]
@@ -54,13 +55,13 @@ namespace GraphZen.TypeSystem
 
 
         public Schema(SchemaDefinition schemaDefinition) : base(schemaDefinition
-            .DirectiveAnnotations)
+            .DirectiveAnnotations, null!)
         {
             Check.NotNull(schemaDefinition, nameof(schemaDefinition));
             Description = schemaDefinition.Description;
             Definition = schemaDefinition;
             _directives = schemaDefinition.GetDirectives()
-                .ToImmutableDictionary(_ => _.Name, _ => Directive.From(_, ResolveType));
+                .ToImmutableDictionary(_ => _.Name, _ => Directive.From(_, this));
             Directives = _directives.Values.ToImmutableList();
             _directivesByType = Directives.Where(_ => _.ClrType != null).ToImmutableDictionary(_ => _.ClrType!);
 
@@ -666,6 +667,9 @@ namespace GraphZen.TypeSystem
 
         public override string ToString() => "Schema";
 
+        ISchemaDefinition IMemberDefinition.Schema => this;
+
+
         internal class IntrospectionInfo
         {
             public IntrospectionInfo(Schema schema)
@@ -673,20 +677,20 @@ namespace GraphZen.TypeSystem
                 SchemaMetaFieldDef = new Field("__schema",
                     "Access the current type schema of this server.", null,
                     NonNullType.Of(schema.GetObject("__Schema")), null,
-                    (source, args, context, info) => info.Schema, null);
+                    (source, args, context, info) => info.Schema, ImmutableArray<IDirectiveAnnotation>.Empty, null, schema);
 
                 TypeMetaFieldDef = new Field("__type",
                     "Request the type information of a single type.", null, schema.GetObject("__Type"),
-                    new[]
+                   field => new[]
                     {
-                        new Argument("name", null, NonNullType.Of(schema.GetScalar<string>()), null, null, false)
+                        new Argument("name", null, NonNullType.Of(schema.GetScalar<string>()), null,  false, null, field, null)
                     },
-                    (source, args, context, info) => info.Schema.GetType(args.name), null);
+                    (source, args, context, info) => info.Schema.GetType(args.name), null, null, schema);
 
                 TypeNameMetaFieldDef = new Field("__typename",
                     "The name of the current Object type at runtime.", null, NonNullType.Of(schema.GetScalar<string>()),
                     null,
-                    (source, args, context, info) => info.ParentType.Name, null);
+                    (source, args, context, info) => info.ParentType.Name, null, null, schema);
             }
 
             public Field SchemaMetaFieldDef { get; }
@@ -694,6 +698,7 @@ namespace GraphZen.TypeSystem
             public Field TypeMetaFieldDef { get; }
 
             public Field TypeNameMetaFieldDef { get; }
+
         }
     }
 }

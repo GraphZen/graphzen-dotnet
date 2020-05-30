@@ -19,8 +19,7 @@ namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     [DisplayName("directive")]
-    public partial class DirectiveDefinition : MemberDefinition, IMutableDirectiveDefinition,
-        IInfrastructure<InternalDirectiveBuilder>
+    public partial class DirectiveDefinition : MemberDefinition, IMutableDirectiveDefinition
     {
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
@@ -55,7 +54,7 @@ namespace GraphZen.TypeSystem
             {
                 name = name.IsValidGraphQLName()
                     ? name
-                    : throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
+                    : throw new InvalidNameException(TypeSystemExceptions.InvalidNameException
                         .CannotCreateDirectiveWithInvalidName(name));
                 _nameConfigurationSource = ConfigurationSource.Explicit;
             }
@@ -65,7 +64,7 @@ namespace GraphZen.TypeSystem
                 {
                     if (!n.IsValidGraphQLName())
                     {
-                        throw new InvalidNameException(TypeSystemExceptionMessages.InvalidNameException
+                        throw new InvalidNameException(TypeSystemExceptions.InvalidNameException
                             .CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(clrType, n));
                     }
 
@@ -211,7 +210,7 @@ namespace GraphZen.TypeSystem
             if (Schema.TryGetDirective(clrType, out var existingTyped) && !existingTyped.Equals(this))
             {
                 throw new DuplicateItemException(
-                    TypeSystemExceptionMessages.DuplicateItemException.CannotChangeClrType(this, clrType,
+                    TypeSystemExceptions.DuplicateItemException.CannotChangeClrType(this, clrType,
                         existingTyped));
             }
 
@@ -241,7 +240,7 @@ namespace GraphZen.TypeSystem
             if (Schema.TryGetDirective(clrType, out var existingTyped) && !existingTyped.Equals(this))
             {
                 throw new DuplicateItemException(
-                    TypeSystemExceptionMessages.DuplicateItemException.CannotChangeClrType(this, clrType,
+                    TypeSystemExceptions.DuplicateItemException.CannotChangeClrType(this, clrType,
                         existingTyped));
             }
 
@@ -313,7 +312,7 @@ namespace GraphZen.TypeSystem
             if (TryGetArgument(name, out var existing) && existing != argument)
             {
                 throw new DuplicateItemException(
-                    TypeSystemExceptionMessages.DuplicateItemException.CannotRenameArgument(argument, name));
+                    TypeSystemExceptions.DuplicateItemException.CannotRenameArgument(argument, name));
             }
 
             if (RemoveArgument(argument))

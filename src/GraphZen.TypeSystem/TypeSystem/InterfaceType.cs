@@ -21,13 +21,13 @@ namespace GraphZen.TypeSystem
             IEnumerable<IFieldDefinition> fields,
             TypeResolver<object, GraphQLContext>? resolveType,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(
-            Check.NotNull(name, nameof(name)), description, clrType, Check.NotNull(directives, nameof(directives)))
+            name, description, clrType, directives, schema)
         {
             Check.NotNull(schema, nameof(schema));
             Check.NotNull(fields, nameof(fields));
             _fields = new Lazy<IReadOnlyDictionary<string, Field>>(() =>
                 // ReSharper disable once PossibleNullReferenceException
-                fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, schema.ResolveType)));
+                fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, Schema)));
             ResolveType = resolveType;
             _syntax = new Lazy<InterfaceTypeDefinitionSyntax>(() => new InterfaceTypeDefinitionSyntax(
                 SyntaxFactory.Name(Name),

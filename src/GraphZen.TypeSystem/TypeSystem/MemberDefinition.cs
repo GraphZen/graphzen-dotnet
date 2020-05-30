@@ -15,6 +15,7 @@ namespace GraphZen.TypeSystem
         private ConfigurationSource _descriptionConfigurationSource = ConfigurationSource.Convention;
 
         public abstract SchemaDefinition Schema { get; }
+        ISchemaDefinition IMemberDefinition.Schema => Schema;
 
         public MemberDefinition(ConfigurationSource configurationSource)
         {

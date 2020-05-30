@@ -95,7 +95,7 @@ namespace GraphZen.TypeSystem
             if (Schema.TryGetType(clrType, out var existingTyped) && !existingTyped.Equals(Definition))
             {
                 throw new DuplicateItemException(
-                    TypeSystemExceptionMessages.DuplicateItemException.CannotChangeClrType(this, clrType,
+                    TypeSystemExceptions.DuplicateItemException.CannotChangeClrType(this, clrType,
                         existingTyped));
             }
 
@@ -134,7 +134,7 @@ namespace GraphZen.TypeSystem
                 !existingTyped.Equals(Definition))
             {
                 throw new DuplicateItemException(
-                    TypeSystemExceptionMessages.DuplicateItemException.CannotChangeClrType(Definition, clrType,
+                    TypeSystemExceptions.DuplicateItemException.CannotChangeClrType(Definition, clrType,
                         existingTyped));
             }
 
@@ -333,5 +333,6 @@ namespace GraphZen.TypeSystem
 
 
         public override string ToString() => DebuggerDisplay;
+        ISchemaDefinition IMemberDefinition.Schema => Schema;
     }
 }

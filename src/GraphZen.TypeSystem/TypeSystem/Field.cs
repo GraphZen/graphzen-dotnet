@@ -3,10 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -23,29 +22,20 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<IGraphQLType> _fieldType;
         private readonly Lazy<FieldDefinitionSyntax> _syntax;
 
-        public Field(string name, string description, IFields? declaringType, IGraphQLType fieldType,
-            IEnumerable<IArgumentDefinition>? arguments, Resolver<object, object?> resolver, MemberInfo? clrMember,
-            bool isDeprecated = false, string? deprecatedReason = null,
-            IReadOnlyList<IDirectiveAnnotation>? directives = null
-        ) : this(name, description, declaringType, fieldType, arguments, resolver, isDeprecated, deprecatedReason,
-            directives ?? DirectiveAnnotation.EmptyList, typeRef => (IGraphQLType)typeRef, clrMember)
-        {
-        }
 
         public Field(string name, string? description, IFields? declaringType, IGraphQLTypeReference fieldType,
-            IEnumerable<IArgumentDefinition>? arguments, Resolver<object, object?>? resolver,
-            bool isDeprecated, string? deprecatedReason,
-            IReadOnlyList<IDirectiveAnnotation>? directives,
-            TypeResolver typeResolver, MemberInfo? clrInfo) : base(directives)
+            Func<Field, IEnumerable<Argument>>? arguments,
+            Resolver<object, object?>? resolver,
+            IEnumerable<IDirectiveAnnotation>? directives,
+            MemberInfo? clrInfo, Schema schema) : base(directives, schema)
         {
-            Check.NotNull(typeResolver, nameof(typeResolver));
             Name = Check.NotNull(name, nameof(name));
             Description = description;
             _fieldType = new Lazy<IGraphQLType>(() =>
             {
                 try
                 {
-                    return typeResolver(fieldType);
+                    return schema.ResolveType(fieldType);
                 }
                 catch (Exception e)
                 {
@@ -53,12 +43,11 @@ namespace GraphZen.TypeSystem
                         e);
                 }
             });
-            Arguments = new ReadOnlyDictionary<string, Argument>(
-                (arguments ?? Enumerable.Empty<IArgumentDefinition>())
-                .Select(_ => Argument.From(_, this, typeResolver)).ToDictionary(_ => _.Name));
+            Arguments = arguments == null
+                ? ImmutableDictionary<string, Argument>.Empty
+                : arguments(this).ToReadOnlyDictionary(_ => _.Name);
+
             Resolver = resolver;
-            IsDeprecated = isDeprecated;
-            DeprecationReason = deprecatedReason;
             ClrInfo = clrInfo;
             DeclaringType = declaringType!;
             _syntax = new Lazy<FieldDefinitionSyntax>(() =>
@@ -83,9 +72,9 @@ namespace GraphZen.TypeSystem
 
         IFieldsDefinition IFieldDefinition.DeclaringType => DeclaringType;
 
-        public bool IsDeprecated { get; }
+        public bool IsDeprecated { get; } = false;
 
-        [GraphQLCanBeNull] public string? DeprecationReason { get; }
+        [GraphQLCanBeNull] public string? DeprecationReason { get; } = null;
 
         [GraphQLIgnore]
         [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
@@ -108,24 +97,24 @@ namespace GraphZen.TypeSystem
 
         object? IClrInfo.ClrInfo => ClrInfo;
 
-
-        [GraphQLIgnore]
-        public static Field From(IFieldDefinition definition, IFields declaringType,
-            TypeResolver typeResolver)
-        {
-            Check.NotNull(definition, nameof(definition));
-            Check.NotNull(definition.FieldType, nameof(definition.FieldType));
-            return new Field(definition.Name, definition.Description, declaringType,
-                definition.FieldType, definition.GetArguments(), definition.Resolver, definition.IsDeprecated,
-                definition.DeprecationReason, definition.GetDirectiveAnnotations().ToList(), typeResolver,
-                definition.ClrInfo);
-        }
-
-        public override string ToString() => $"{DeclaringType}.{Name}";
-
         [GraphQLCanBeNull] public string? Description { get; }
 
         [GraphQLIgnore] public IGraphQLType TypeReference => FieldType;
         IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
+
+        [GraphQLIgnore]
+        public static Field From(IFieldDefinition definition, IFields? declaringType, Schema schema)
+        {
+            Check.NotNull(definition, nameof(definition));
+            Check.NotNull(definition.FieldType, nameof(definition.FieldType));
+            return new Field(definition.Name, definition.Description, declaringType,
+                definition.FieldType, Argument.CreateArguments(definition.GetArguments()), definition.Resolver,
+                definition.GetDirectiveAnnotations(),
+                definition.ClrInfo,
+                schema);
+        }
+
+
+        public override string ToString() => $"{DeclaringType}.{Name}";
     }
 }

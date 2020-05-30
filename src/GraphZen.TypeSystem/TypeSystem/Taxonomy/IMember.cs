@@ -7,7 +7,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
+    [GraphQLIgnore]
     public interface IMember : IMemberDefinition
     {
+        new Schema Schema { get; }
     }
 }

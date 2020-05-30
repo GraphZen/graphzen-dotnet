@@ -23,8 +23,8 @@ namespace GraphZen.TypeSystem
             string? description,
             Type? clrType,
             IEnumerable<IEnumValueDefinition> valueDefinitions,
-            IReadOnlyList<IDirectiveAnnotation> directives)
-            : base(name, description, clrType, directives)
+            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema)
+            : base(name, description, clrType, directives, schema)
         {
             var values = valueDefinitions.Select(v => EnumValue.From(v, this)).ToImmutableList();
             Values = values.ToReadOnlyDictionary(v => v.Name);
@@ -84,14 +84,14 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public static EnumType From(IEnumTypeDefinition definition)
+        public static EnumType From(IEnumTypeDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
             return new EnumType(definition.Name,
                 definition.Description,
                 definition.ClrType,
                 definition.GetValues(),
-                definition.GetDirectiveAnnotations().ToList());
+                definition.GetDirectiveAnnotations().ToList(), schema);
         }
     }
 }

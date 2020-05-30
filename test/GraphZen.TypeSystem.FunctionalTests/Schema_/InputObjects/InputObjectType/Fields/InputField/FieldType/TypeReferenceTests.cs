@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 var bar = _.InputObject("Bar");
                 Action add = () => bar.Field("baz", "[Foo]!");
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create input object field Bar.baz with field type '[Foo]!': object Foo is only an output type and input object fields can only use input types.");
+                    "Cannot create input object field Bar.baz with field type '[Foo]!'. object Foo is only an output type and input object fields can only use input types.");
             });
         }
 
@@ -70,7 +70,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 var bar = _.InputObject("Bar");
                 Action add = () => bar.Field<PlainClass>("baz");
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create input object field Bar.baz with field type 'Foo!': object Foo (CLR class: PlainClass) is only an output type and input object fields can only use input types.");
+                    "Cannot create input object field Bar.baz with field type 'Foo!'. object Foo (CLR class: PlainClass) is only an output type and input object fields can only use input types.");
             });
         }
 
@@ -100,7 +100,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 {
                     Action set = () => f.FieldType("Foo");
                     set.Should().Throw<InvalidTypeException>().WithMessage(
-                        "Cannot set field type 'Foo' on input object field Bar.field: object Foo is only an output type and input object fields can only use input types.");
+                        "Cannot set field type to 'Foo' on input object field Bar.field. Object Foo is only an output type and input object fields can only use input types.");
                 });
             });
         }

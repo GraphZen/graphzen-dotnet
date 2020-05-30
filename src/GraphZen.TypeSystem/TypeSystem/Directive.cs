@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
 
         public Directive(string name, string? description, IReadOnlyCollection<DirectiveLocation> locations,
-            IEnumerable<IArgumentDefinition>? arguments, TypeResolver typeResolver, Type? clrType)
+            IEnumerable<IArgumentDefinition>? arguments, Type? clrType, Schema schema) : base(schema)
         {
             Name = Check.NotNull(name, nameof(name));
             IsSpec = Name == "include" || Name == "skip" || Name == "deprecated";
@@ -39,7 +39,7 @@ namespace GraphZen.TypeSystem
             // arguments = arguments != null ? Enumerable.Empty<IArgumentDefinition>();
             // ReSharper disable once PossibleNullReferenceException
             Arguments = new ReadOnlyDictionary<string, Argument>(arguments.ToDictionary(_ => _.Name,
-                _ => Argument.From(_, this, typeResolver)));
+                _ => Argument.From(_, this)));
             _syntax = new Lazy<DirectiveDefinitionSyntax>(() =>
             {
                 return new DirectiveDefinitionSyntax(SyntaxFactory.Name(Name),
@@ -68,11 +68,11 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public static Directive From(IDirectiveDefinition definition, TypeResolver typeResolver)
+        public static Directive From(IDirectiveDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
             return new Directive(definition.Name, definition.Description, definition.Locations,
-                definition.GetArguments(), typeResolver, definition.ClrType);
+                definition.GetArguments(), definition.ClrType, schema);
         }
 
         public IReadOnlyCollection<DirectiveLocation> Locations { get; }
