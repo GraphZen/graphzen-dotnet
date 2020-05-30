@@ -129,41 +129,69 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 _.InputObject("Bar").Field("field", "Baz", f =>
                 {
                     Action set = () => f.FieldType<PlainClass>();
-                    set.Should().Throw<InvalidTypeException>().WithMessage("Cannot set field type to 'PlainClass!' on input object field Bar.field. Input object fields can only use input types. Object PlainClass is only an output type.");
+                    set.Should().Throw<InvalidTypeException>().WithMessage(
+                        "Cannot set field type to 'PlainClass!' on input object field Bar.field. Input object fields can only use input types. Object PlainClass is only an output type.");
                 });
             });
         }
 
 
         [Spec(nameof(type_can_be_set_via_parent_redefinition_if_type_io_compatible))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void type_can_be_set_via_parent_redefinition_if_type_io_compatible_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject("Foo");
+                _.InputObject("Bar").Field("field", "Bar");
+                _.InputObject("Bar").Field("field", "Foo");
+            });
+            var foo = schema.GetInputObject("Foo");
+            schema.GetInputObject("Bar").GetField("field").FieldType.GetNamedType().Should().Be(foo);
         }
 
 
         [Spec(nameof(type_cannot_be_set_via_parent_redefinition_if_type_has_io_conflict))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void type_cannot_be_set_via_parent_redefinition_if_type_has_io_conflict_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Object("Foo");
+                var bar = _.InputObject("Bar").Field("field", "Bar");
+                Action redefine = () => bar.Field("field", "Foo");
+                redefine.Should().Throw<InvalidTypeException>().WithMessage(
+                    "Cannot set field type to 'Foo' on input object field Bar.field. Input object fields can only use input types. Object Foo is only an output type.");
+            });
         }
 
 
         [Spec(nameof(type_can_be_set_via_parent_redefinition_with_clr_type_if_type_io_compatible))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void type_can_be_set_via_parent_redefinition_with_clr_type_if_type_io_compatible_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.InputObject<PlainClass>();
+                _.InputObject("Bar").Field("field", "Bar");
+                _.InputObject("Bar").Field<PlainClass>("field");
+            });
+            var typed = schema.GetInputObject<PlainClass>();
+            schema.GetInputObject("Bar").GetField("field").FieldType.GetNamedType().Should().Be(typed);
         }
 
 
         [Spec(nameof(type_cannot_be_set_via_parent_redefinition_with_clr_type_if_type_has_io_conflict))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void type_cannot_be_set_via_parent_redefinition_with_clr_type_if_type_has_io_conflict_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                _.Object<PlainClass>();
+                var bar = _.InputObject("Bar").Field("field", "Bar");
+                Action redefine = () => bar.Field<PlainClass>("field");
+                redefine.Should().Throw<InvalidTypeException>().WithMessage("Cannot set field type to 'PlainClass!' on input object field Bar.field. Input object fields can only use input types. Object PlainClass is only an output type.");
+            });
         }
     }
 }

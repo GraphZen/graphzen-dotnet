@@ -214,6 +214,7 @@ namespace GraphZen.TypeSystem
             if (field != null)
             {
                 field.UpdateConfigurationSource(configurationSource);
+                field.Builder.FieldType(clrType, configurationSource);
                 return field;
             }
 
@@ -247,6 +248,7 @@ namespace GraphZen.TypeSystem
             if (field != null)
             {
                 field.UpdateConfigurationSource(configurationSource);
+                field.Builder.FieldType(type, configurationSource);
                 return field;
             }
 
