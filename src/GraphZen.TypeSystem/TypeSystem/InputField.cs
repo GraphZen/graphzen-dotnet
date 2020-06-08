@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem
 
         IInputObjectTypeDefinition IInputFieldDefinition.DeclaringType => DeclaringType;
 
-        public InputObjectType DeclaringType => (InputObjectType) DeclaringMember;
+        public InputObjectType DeclaringType => (InputObjectType)DeclaringMember;
 
 
         public static InputField From(IInputFieldDefinition definition,

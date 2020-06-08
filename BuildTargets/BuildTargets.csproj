@@ -15,7 +15,7 @@
     </PackageReference>
     <PackageReference Include="LibGit2Sharp" Version="0.26.2" />
     <PackageReference Include="SimpleExec" Version="6.2.0" />
-    <PackageReference Include="ReportGenerator.Core" Version="4.5.8" />
+    <PackageReference Include="ReportGenerator.Core" Version="4.6.1" />
   </ItemGroup>
   <Target Name="CopyResharperTools" AfterTargets="Build">
     <ItemGroup>

@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.ArgumentDefinition;
         IGraphQLTypeReference IArgumentDefinition.ArgumentType => InputType;
         public IGraphQLType ArgumentType => InputType;
-        public new IArguments DeclaringMember => (IArguments) base.DeclaringMember;
+        public new IArguments DeclaringMember => (IArguments)base.DeclaringMember;
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 

@@ -9,7 +9,7 @@
     <ProjectReference Include="..\GraphZen.Infrastructure\GraphZen.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="minver" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="minver" Version="2.3.0" PrivateAssets="All" />
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" PrivateAssets="All" />
   </ItemGroup>
 

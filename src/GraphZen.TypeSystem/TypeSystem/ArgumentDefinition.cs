@@ -92,6 +92,6 @@ namespace GraphZen.TypeSystem
         public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
         IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
 
-        
+
     }
 }
