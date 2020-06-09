@@ -18,11 +18,16 @@ namespace GraphZen.TypeSystem
 
         protected TypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMutableDefinition declaringMember)
         {
-            if (identity.Definition is IOutputTypeDefinition outputType &&
-                !(identity.Definition is IInputTypeDefinition) && declaringMember is IInputDefinition)
+            if (identity.Definition is IOutputTypeDefinition outputType)
             {
-                throw new InvalidTypeException(
-                    $"Cannot create {declaringMember} with {this.GetTypeDisplayName()} '{typeSyntax.WithName(identity.Name)}'. {declaringMember?.GetParentMember()?.GetTypeDisplayName()?.FirstCharToUpper()} {declaringMember.GetTypeDisplayName()}s can only use input types. {outputType.ToString()?.FirstCharToUpper()} is only an output type.");
+                if (!(identity.Definition is IInputTypeDefinition))
+                {
+                    if (declaringMember is IInputDefinition)
+                    {
+                        throw new InvalidTypeException(
+                            $"Cannot create {declaringMember} with {this.GetTypeDisplayName()} '{typeSyntax.WithName(identity.Name)}'. {declaringMember?.GetParentMember()?.GetTypeDisplayName()?.FirstCharToUpper()} {declaringMember.GetTypeDisplayName()}s can only use input types. {outputType.ToString()?.FirstCharToUpper()} is only an output type.");
+                    }
+                }
             }
 
             Identity = identity;

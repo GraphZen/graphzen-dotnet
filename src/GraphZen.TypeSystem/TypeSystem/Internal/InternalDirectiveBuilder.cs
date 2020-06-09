@@ -46,28 +46,7 @@ namespace GraphZen.TypeSystem.Internal
                    ignoredMemberConfigurationSource.Overrides(configurationSource);
         }
 
-        public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource)
-        {
-            if (IsArgumentIgnored(name, configurationSource))
-            {
-                return null;
-            }
-
-            var argument = Definition.FindArgument(name);
-            if (argument == null)
-            {
-                Definition.UnignoreArgument(name);
-                argument = Definition.AddArgument(name, clrType, configurationSource);
-            }
-            else
-            {
-                argument.UpdateConfigurationSource(configurationSource);
-            }
-
-            return argument?.Builder;
-        }
-
-
+        public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource) => Definition.GetOrAddArgument(name, clrType, configurationSource)?.Builder;
         public InternalDirectiveBuilder Name(string name, ConfigurationSource configurationSource)
         {
             Definition.SetName(name, configurationSource);

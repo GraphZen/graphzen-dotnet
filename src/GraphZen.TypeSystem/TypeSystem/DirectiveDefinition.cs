@@ -120,8 +120,38 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
         public ArgumentDefinition?
-            GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource) =>
-            throw new NotImplementedException();
+            GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
+            if (ignoredConfigurationSource.HasValue)
+            {
+                if (!configurationSource.Overrides(ignoredConfigurationSource))
+                {
+                    return null;
+                }
+
+                _ignoredArguments.Remove(name);
+            }
+
+            var argument = FindArgument(name);
+            if (argument != null)
+            {
+                argument.UpdateConfigurationSource(configurationSource);
+                argument.Builder.ArgumentType(clrType, configurationSource);
+                return argument;
+            }
+
+            if (!clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
+            {
+                throw new InvalidOperationException($"Unable to get field type info from {clrType}");
+            }
+
+            var typeIdentity = Schema.GetOrAddOutputTypeIdentity(innerClrType);
+            argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource,
+                this, null);
+            AddArgument(argument);
+            return argument;
+        }
 
         public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource)
         {
@@ -141,6 +171,7 @@ namespace GraphZen.TypeSystem
             if (argument != null)
             {
                 argument.UpdateConfigurationSource(configurationSource);
+                argument.Builder.ArgumentType(type, configurationSource);
                 return argument;
             }
 
@@ -157,7 +188,7 @@ namespace GraphZen.TypeSystem
 
 
             var argumentTypeName = typeNode.GetNamedType().Name.Value;
-            var typeIdentity = Schema.GetOrAddInputTypeIdentity(argumentTypeName);
+            var typeIdentity = Schema.GetOrAddTypeIdentity(argumentTypeName);
             argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource,
                 this, null);
             AddArgument(argument);

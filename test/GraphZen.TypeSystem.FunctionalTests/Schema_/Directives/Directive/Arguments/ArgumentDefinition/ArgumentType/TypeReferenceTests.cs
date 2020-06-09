@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                 var bar = _.Directive("Bar");
                 Action add = () => bar.Argument("baz", "[Foo]!");
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create input object field Bar.baz with field type '[Foo]!'. Input object fields can only use input types. Object Foo is only an output type.");
+                    "Cannot create directive argument Bar.baz with argument type '[Foo]!'. Directive arguments can only use input types. Object Foo is only an output type.");
             });
         }
 
@@ -70,7 +70,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                 var bar = _.Directive("Bar");
                 Action add = () => bar.Argument<PlainClass>("baz");
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create input object field Bar.baz with field type 'Foo!'. Input object fields can only use input types. Object Foo (CLR class: PlainClass) is only an output type.");
+                    "Cannot create directive argument Bar.baz with argument type 'Foo!'. Directive arguments can only use input types. Object Foo (CLR class: PlainClass) is only an output type.");
             });
         }
 
@@ -81,17 +81,17 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("Foo");
+                _.InputObject("Foo");
                 _.Directive("Bar").Argument("field", "Baz", f => f.ArgumentType("Foo"));
             });
-            var foo = schema.GetDirective("Foo");
+            var foo = schema.GetInputObject("Foo");
             schema.GetDirective("Bar").GetArgument("field").ArgumentType.GetNamedType().Should().Be(foo);
         }
 
 
         [Spec(nameof(type_cannot_be_set_if_type_has_io_conflict))]
         [Fact]
-        public void type_cannot_be_set_if_type_conflicts_with_own_io_identity_()
+        public void type_cannot_be_set_if_type_has_io_conflict_()
         {
             Schema.Create(_ =>
             {
@@ -100,21 +100,21 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                 {
                     Action set = () => f.ArgumentType("Foo");
                     set.Should().Throw<InvalidTypeException>().WithMessage(
-                        "Cannot set field type to 'Foo' on input object field Bar.field. Input object fields can only use input types. Object Foo is only an output type.");
+                        "Cannot set argument type to 'Foo' on directive argument Bar.field. Directive arguments can only use input types. Object Foo is only an output type.");
                 });
             });
         }
 
         [Spec(nameof(type_can_be_set_with_clr_type_if_type_io_compatible))]
         [Fact]
-        public void type_can_be_set_with_clr_type_if_type_matches_own_io_identity_()
+        public void type_can_be_set_with_clr_type_if_type_io_compatible_()
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive<PlainClass>();
+                _.InputObject<PlainClass>();
                 _.Directive("Bar").Argument("field", "Baz", f => f.ArgumentType<PlainClass>());
             });
-            var foo = schema.GetDirective<PlainClass>();
+            var foo = schema.GetInputObject<PlainClass>();
             schema.GetDirective("Bar").GetArgument("field").ArgumentType.GetNamedType().Should().Be(foo);
         }
 
@@ -130,7 +130,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                 {
                     Action set = () => f.ArgumentType<PlainClass>();
                     set.Should().Throw<InvalidTypeException>().WithMessage(
-                        "Cannot set field type to 'PlainClass!' on input object field Bar.field. Input object fields can only use input types. Object PlainClass is only an output type.");
+                        "Cannot set argument type to 'PlainClass!' on directive argument Bar.field. Directive arguments can only use input types. Object PlainClass is only an output type.");
                 });
             });
         }
@@ -142,11 +142,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("Foo");
+                _.InputObject("Foo");
                 _.Directive("Bar").Argument("field", "Bar");
                 _.Directive("Bar").Argument("field", "Foo");
             });
-            var foo = schema.GetDirective("Foo");
+            var foo = schema.GetInputObject("Foo");
             schema.GetDirective("Bar").GetArgument("field").ArgumentType.GetNamedType().Should().Be(foo);
         }
 
@@ -161,7 +161,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                 var bar = _.Directive("Bar").Argument("field", "Bar");
                 Action redefine = () => bar.Argument("field", "Foo");
                 redefine.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot set field type to 'Foo' on input object field Bar.field. Input object fields can only use input types. Object Foo is only an output type.");
+                    "Cannot set argument type to 'Foo' on directive argument Bar.field. Directive arguments can only use input types. Object Foo is only an output type.");
             });
         }
 
@@ -172,11 +172,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive<PlainClass>();
+                _.InputObject<PlainClass>();
                 _.Directive("Bar").Argument("field", "Bar");
                 _.Directive("Bar").Argument<PlainClass>("field");
             });
-            var typed = schema.GetDirective<PlainClass>();
+            var typed = schema.GetInputObject<PlainClass>();
             schema.GetDirective("Bar").GetArgument("field").ArgumentType.GetNamedType().Should().Be(typed);
         }
 
@@ -190,7 +190,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                 _.Object<PlainClass>();
                 var bar = _.Directive("Bar").Argument("field", "Bar");
                 Action redefine = () => bar.Argument<PlainClass>("field");
-                redefine.Should().Throw<InvalidTypeException>().WithMessage("Cannot set field type to 'PlainClass!' on input object field Bar.field. Input object fields can only use input types. Object PlainClass is only an output type.");
+                redefine.Should().Throw<InvalidTypeException>().WithMessage("Cannot set argument type to 'PlainClass!' on directive argument Bar.field. Directive arguments can only use input types. Object PlainClass is only an output type.");
             });
         }
     }
