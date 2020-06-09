@@ -21,13 +21,6 @@ namespace GraphZen.TypeSystem
     [DisplayName("directive")]
     public partial class DirectiveDefinition : MemberDefinition, IMutableDirectiveDefinition
     {
-        private readonly Dictionary<string, ArgumentDefinition> _arguments =
-            new Dictionary<string, ArgumentDefinition>();
-
-        // ReSharper disable once CollectionNeverQueried.Local
-        private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
-            new Dictionary<string, ConfigurationSource>();
-
         private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _ignoredLocations =
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
@@ -37,6 +30,8 @@ namespace GraphZen.TypeSystem
         private ConfigurationSource? _clrTypeConfigurationSource;
 
         private ConfigurationSource _nameConfigurationSource;
+
+        private readonly ArgumentsDefinitionContainer _args;
 
 
         public DirectiveDefinition(string? name, Type? clrType, SchemaDefinition schema,
@@ -82,6 +77,7 @@ namespace GraphZen.TypeSystem
             Name = Check.NotNull(name, nameof(name));
             Builder = new InternalDirectiveBuilder(this);
             IsSpec = SpecReservedNames.DirectiveNames.Contains(Name);
+            _args = new ArgumentsDefinitionContainer(this);
         }
 
         public override SchemaDefinition Schema { get; }
@@ -120,108 +116,28 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
         public ArgumentDefinition?
-            GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource)
-        {
-            var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
-            if (ignoredConfigurationSource.HasValue)
-            {
-                if (!configurationSource.Overrides(ignoredConfigurationSource))
-                {
-                    return null;
-                }
-
-                _ignoredArguments.Remove(name);
-            }
-
-            var argument = FindArgument(name);
-            if (argument != null)
-            {
-                argument.UpdateConfigurationSource(configurationSource);
-                argument.Builder.ArgumentType(clrType, configurationSource);
-                return argument;
-            }
-
-            if (!clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
-            {
-                throw new InvalidOperationException($"Unable to get field type info from {clrType}");
-            }
-
-            var typeIdentity = Schema.GetOrAddOutputTypeIdentity(innerClrType);
-            argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource,
-                this, null);
-            AddArgument(argument);
-            return argument;
-        }
+            GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource) =>
+            _args.GetOrAddArgument(name, clrType, configurationSource);
 
         public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource)
         {
-            var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
-            if (ignoredConfigurationSource.HasValue)
-            {
-                if (!configurationSource.Overrides(ignoredConfigurationSource))
-                {
-                    return null;
-                }
+            return _args.GetOrAddArgument(name, type, configurationSource);
 
-                _ignoredArguments.Remove(name);
-            }
-
-
-            var argument = FindArgument(name);
-            if (argument != null)
-            {
-                argument.UpdateConfigurationSource(configurationSource);
-                argument.Builder.ArgumentType(type, configurationSource);
-                return argument;
-            }
-
-            TypeSyntax typeNode;
-            try
-            {
-                typeNode = Schema.Builder.Parser.ParseType(type);
-            }
-            catch (Exception e)
-            {
-                throw new InvalidTypeReferenceException(
-                    "Unable to parse type reference. See inner exception for details.", e);
-            }
-
-
-            var argumentTypeName = typeNode.GetNamedType().Name.Value;
-            var typeIdentity = Schema.GetOrAddTypeIdentity(argumentTypeName);
-            argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource,
-                this, null);
-            AddArgument(argument);
-            return argument;
         }
 
-        public bool RemoveArgument(ArgumentDefinition argument)
-        {
-            if (_arguments.Remove(argument.Name, out var removed))
-            {
-                if (!removed.Equals(argument))
-                {
-                    throw new Exception("Did not remove expected argument");
-                }
+        public bool RemoveArgument(ArgumentDefinition argument) => _args.RemoveArgument(argument);
 
-                return true;
-            }
 
-            return false;
-        }
+        public bool AddArgument(ArgumentDefinition argument) => _args.AddArgument(argument);
 
-        public bool AddArgument(ArgumentDefinition argument)
-        {
-            _arguments[argument.Name] = argument;
-            return true;
-        }
 
-        public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name)
-            => _ignoredArguments.TryGetValue(name, out var cs) ? (ConfigurationSource?)cs : null;
+        public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name) =>
+            _args.FindIgnoredArgumentConfigurationSource(name);
+
 
 
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
-        public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
+        public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _args.Arguments;
 
         public IEnumerable<ArgumentDefinition> GetArguments() => Arguments.Values;
 
@@ -377,97 +293,10 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
         public bool IsSpec { get; }
         IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
-
-        public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
-        {
-            if (!configurationSource.Overrides(argument.GetNameConfigurationSource()))
-            {
-                return false;
-            }
-
-            if (TryGetArgument(name, out var existing) && existing != argument)
-            {
-                throw TypeSystemExceptions.DuplicateItemException.ForRename(this, name);
-            }
-
-            if (RemoveArgument(argument))
-            {
-                _arguments[name] = argument;
-            }
-
-            return true;
-        }
-
-
-        public ArgumentDefinition? AddArgument(string name, Type clrType, ConfigurationSource configurationSource)
-        {
-            if (!clrType.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
-            {
-                return null;
-            }
-
-            var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax,
-                configurationSource, this, null);
-            AddArgument(argument);
-            return argument;
-        }
-
-        public ArgumentDefinition AddArgument(string name, string type, ConfigurationSource configurationSource)
-        {
-            var typeSyntax = Schema.Builder.Parser.ParseType(type);
-            var typeName = typeSyntax.GetNamedType().Name.Value;
-            var typeIdentity = Schema.GetOrAddTypeIdentity(typeName);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax,
-                configurationSource, this, null);
-            AddArgument(argument);
-            return argument;
-        }
+       
 
         public override string ToString() => ClrType != null && ClrType.Name != Name
             ? $"directive {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})"
             : $"directive {Name}";
-
-
-        public bool IgnoreArgument(string name, ConfigurationSource configurationSource)
-        {
-            var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
-            if (ignoredConfigurationSource.HasValue &&
-                ignoredConfigurationSource.Overrides(configurationSource))
-            {
-                return true;
-            }
-
-            if (ignoredConfigurationSource != null)
-            {
-                configurationSource = configurationSource.Max(ignoredConfigurationSource);
-            }
-
-            _ignoredArguments[name] = configurationSource;
-            var existing = FindArgument(name);
-
-            if (existing != null)
-            {
-                return IgnoreArgument(existing, configurationSource);
-            }
-
-            return true;
-        }
-
-        private bool IgnoreArgument(ArgumentDefinition argument, ConfigurationSource configurationSource)
-        {
-            if (configurationSource.Overrides(argument.GetConfigurationSource()))
-            {
-                _arguments.Remove(argument.Name);
-                return true;
-            }
-
-            return false;
-        }
-
-        public void UnignoreArgument(string name)
-        {
-            _ignoredArguments.Remove(name);
-        }
     }
 }
