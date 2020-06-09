@@ -31,26 +31,8 @@ namespace GraphZen.TypeSystem.Internal
         public InternalArgumentBuilder Argument(string name) =>
             Definition.FindArgument(name)?.Builder ?? throw new NotImplementedException();
 
-        public InternalArgumentBuilder? Argument(string name, string type, ConfigurationSource configurationSource)
-        {
-            if (IsArgumentIgnored(name, configurationSource))
-            {
-                return null;
-            }
-
-            var argument = Definition.FindArgument(name);
-            if (argument == null)
-            {
-                Definition.UnignoreArgument(name);
-                argument = Definition.AddArgument(name, type, configurationSource);
-            }
-            else
-            {
-                argument.UpdateConfigurationSource(configurationSource);
-            }
-
-            return argument.Builder;
-        }
+        public InternalArgumentBuilder? Argument(string name, string type, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddArgument(name, type, configurationSource)?.Builder;
 
         public bool IsArgumentIgnored(string name, ConfigurationSource configurationSource)
         {

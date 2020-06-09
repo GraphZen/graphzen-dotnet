@@ -561,6 +561,10 @@ namespace GraphZen.TypeSystem
         public TypeIdentity GetOrAddOutputTypeIdentity(string name) =>
             FindPossibleOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
 
+        public TypeIdentity GetOrAddInputTypeIdentity(string name) =>
+                    FindPossibleInputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
+
+
         public TypeIdentity? FindPossibleOutputTypeIdentity(string name)
         {
             return _typeIdentities.Values.SingleOrDefault(_ => _.Name == name && _.IsOutputType() != false);

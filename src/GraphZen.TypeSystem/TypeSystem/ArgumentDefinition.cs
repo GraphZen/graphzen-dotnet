@@ -22,12 +22,11 @@ namespace GraphZen.TypeSystem
             ConfigurationSource nameConfigurationSource,
             TypeIdentity typeIdentity,
             TypeSyntax typeSyntax,
-            SchemaDefinition schema,
             ConfigurationSource configurationSource, IMutableArgumentsDefinition declaringMember,
             ParameterInfo? clrInfo) : base(
             name, nameConfigurationSource,
             typeIdentity, typeSyntax,
-            schema, configurationSource, clrInfo, declaringMember)
+            declaringMember.Schema, configurationSource, clrInfo, declaringMember)
         {
             if (!name.IsValidGraphQLName())
             {

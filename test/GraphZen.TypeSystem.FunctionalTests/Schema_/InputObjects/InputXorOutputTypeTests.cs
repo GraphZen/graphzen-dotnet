@@ -14,18 +14,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
     [NoReorder]
     public class InputXorOutputTypeTests
     {
-        public abstract class PlainAbstractClass
+        public class PlainClass
         {
         }
 
         [GraphQLName(AnnotatedNameValue)]
-        public abstract class PlainAbstractClassAnnotatedName
+        public class PlainClassAnnotatedName
         {
             public const string AnnotatedNameValue = nameof(AnnotatedNameValue);
         }
 
         [GraphQLName("(*&#")]
-        public abstract class PlainAbstractClassInvalidNameAnnotation
+        public class PlainClassInvalidNameAnnotation
         {
         }
 
@@ -63,10 +63,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo").Field("inputField", nameof(PlainAbstractClass));
-                Action add = () => _.InputObject<PlainAbstractClass>();
+                _.Object("Foo").Field("inputField", nameof(PlainClass));
+                Action add = () => _.InputObject<PlainClass>();
                 add.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot create input object PlainAbstractClass: Input Object types are input types and an object or interface field already references a type named 'PlainAbstractClass'. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
+                    "Cannot create input object PlainClass: Input Object types are input types and an object or interface field already references a type named 'PlainClass'. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
             });
         }
 
@@ -77,8 +77,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo").Field("inputField", PlainAbstractClassAnnotatedName.AnnotatedNameValue);
-                Action add = () => _.InputObject<PlainAbstractClassAnnotatedName>();
+                _.Object("Foo").Field("inputField", PlainClassAnnotatedName.AnnotatedNameValue);
+                Action add = () => _.InputObject<PlainClassAnnotatedName>();
                 add.Should().Throw<InvalidTypeException>().WithMessage(
                     "Cannot create input object AnnotatedNameValue: Input Object types are input types and an object or interface field already references a type named 'AnnotatedNameValue'. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
             });
@@ -92,7 +92,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
             Schema.Create(_ =>
             {
                 _.Object("Foo").Field("inputField", "Bar");
-                Action add = () => _.InputObject<PlainAbstractClass>("Bar");
+                Action add = () => _.InputObject<PlainClass>("Bar");
                 add.Should().Throw<InvalidTypeException>().WithMessage(
                     "Cannot create input object Bar: Input Object types are input types and an object or interface field already references a type named 'Bar'. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
             });
@@ -105,11 +105,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo").Field("inputField", nameof(PlainAbstractClass));
+                _.Object("Foo").Field("inputField", nameof(PlainClass));
                 var baz = _.InputObject("Baz");
-                Action set = () => baz.ClrType<PlainAbstractClass>(true);
+                Action set = () => baz.ClrType<PlainClass>(true);
                 set.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot set CLR type on input object Baz and infer name \"PlainAbstractClass\": Input Object types are input types and an object or interface field already references a type named \"PlainAbstractClass\". GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
+                    "Cannot set CLR type on input object Baz and infer name \"PlainClass\": Input Object types are input types and an object or interface field already references a type named \"PlainClass\". GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
             });
         }
 
@@ -122,11 +122,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo").Field("inputField", PlainAbstractClassAnnotatedName.AnnotatedNameValue);
+                _.Object("Foo").Field("inputField", PlainClassAnnotatedName.AnnotatedNameValue);
                 var baz = _.InputObject("Baz");
-                Action set = () => baz.ClrType<PlainAbstractClassAnnotatedName>(true);
+                Action set = () => baz.ClrType<PlainClassAnnotatedName>(true);
                 set.Should().Throw<InvalidTypeException>().WithMessage(
-                    "Cannot set CLR type on input type input object Baz and infer name: the annotated name \"AnnotatedNameValue\" on CLR class 'PlainAbstractClassAnnotatedName' refers to an output type referenced by an object or interface field. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
+                    "Cannot set CLR type on input type input object Baz and infer name: the annotated name \"AnnotatedNameValue\" on CLR class 'PlainClassAnnotatedName' refers to an output type referenced by an object or interface field. GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
             });
         }
 
@@ -138,7 +138,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects
             {
                 _.Object("Foo").Field("inputField", "Bar");
                 var baz = _.InputObject("Baz");
-                Action set = () => baz.ClrType<PlainAbstractClass>("Bar");
+                Action set = () => baz.ClrType<PlainClass>("Bar");
                 set.Should().Throw<InvalidTypeException>().WithMessage(
                     "Cannot rename input object Baz to \"Bar\": Input Object types are input types and an object or interface field already references a type named \"Bar\". GraphQL output type references are reserved for scalar, enum, interface, object, or union types.");
             });

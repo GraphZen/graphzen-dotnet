@@ -17,6 +17,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
+
+
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     [DisplayName("field")]
     public partial class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
@@ -98,7 +100,7 @@ namespace GraphZen.TypeSystem
             var typeSyntax = Schema.Builder.Parser.ParseType(type);
             var typeName = typeSyntax.GetNamedType().Name.Value;
             var typeIdentity = Schema.GetOrAddTypeIdentity(typeName);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema,
+            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax,
                 configurationSource, this, null);
             AddArgument(argument);
             return argument;
@@ -112,7 +114,7 @@ namespace GraphZen.TypeSystem
             }
 
             var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema,
+            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax,
                 configurationSource, this, null);
             AddArgument(argument);
             return argument;
@@ -159,6 +161,10 @@ namespace GraphZen.TypeSystem
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
         public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
 
+        public ArgumentDefinition? GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource) => throw new NotImplementedException();
+
+        public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource) => throw new NotImplementedException();
+
         IMutableFieldsDefinition IMutableFieldDefinition.DeclaringType => DeclaringType;
 
         public bool SetName(string name, ConfigurationSource configurationSource)
@@ -195,15 +201,8 @@ namespace GraphZen.TypeSystem
 
         public bool RemoveDeprecation(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
-        public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name)
-        {
-            if (_ignoredArguments.TryGetValue(name, out var cs))
-            {
-                return cs;
-            }
-
-            return null;
-        }
+        public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name) 
+            => _ignoredArguments.TryGetValue(name, out var cs) ? (ConfigurationSource?) cs : null;
 
         public bool IgnoreArgument(string name, ConfigurationSource configurationSource)
         {
@@ -285,7 +284,7 @@ namespace GraphZen.TypeSystem
             }
 
             var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
-            var argument = new ArgumentDefinition(argName, nameConfigurationSource, typeIdentity, typeSyntax, Schema,
+            var argument = new ArgumentDefinition(argName, nameConfigurationSource, typeIdentity, typeSyntax, 
                 configurationSource, this, parameter);
             var ab = argument.Builder;
             ab.DefaultValue(parameter, configurationSource);

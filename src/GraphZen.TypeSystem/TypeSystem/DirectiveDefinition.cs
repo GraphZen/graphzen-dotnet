@@ -119,6 +119,51 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
+        public ArgumentDefinition?
+            GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource) =>
+            throw new NotImplementedException();
+
+        public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
+            if (ignoredConfigurationSource.HasValue)
+            {
+                if (!configurationSource.Overrides(ignoredConfigurationSource))
+                {
+                    return null;
+                }
+
+                _ignoredArguments.Remove(name);
+            }
+
+
+            var argument = FindArgument(name);
+            if (argument != null)
+            {
+                argument.UpdateConfigurationSource(configurationSource);
+                return argument;
+            }
+
+            TypeSyntax typeNode;
+            try
+            {
+                typeNode = Schema.Builder.Parser.ParseType(type);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidTypeReferenceException(
+                    "Unable to parse type reference. See inner exception for details.", e);
+            }
+
+
+            var argumentTypeName = typeNode.GetNamedType().Name.Value;
+            var typeIdentity = Schema.GetOrAddInputTypeIdentity(argumentTypeName);
+            argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource,
+                this, null);
+            AddArgument(argument);
+            return argument;
+        }
+
         public bool RemoveArgument(ArgumentDefinition argument)
         {
             if (_arguments.Remove(argument.Name, out var removed))
@@ -140,8 +185,8 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-        public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name) =>
-            throw new NotImplementedException();
+        public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name)
+            => _ignoredArguments.TryGetValue(name, out var cs) ? (ConfigurationSource?)cs : null;
 
 
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
@@ -331,7 +376,7 @@ namespace GraphZen.TypeSystem
             }
 
             var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema,
+            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax,
                 configurationSource, this, null);
             AddArgument(argument);
             return argument;
@@ -342,7 +387,7 @@ namespace GraphZen.TypeSystem
             var typeSyntax = Schema.Builder.Parser.ParseType(type);
             var typeName = typeSyntax.GetNamedType().Name.Value;
             var typeIdentity = Schema.GetOrAddTypeIdentity(typeName);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax, Schema,
+            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax,
                 configurationSource, this, null);
             AddArgument(argument);
             return argument;
