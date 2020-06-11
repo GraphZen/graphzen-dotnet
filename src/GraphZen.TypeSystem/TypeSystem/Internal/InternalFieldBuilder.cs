@@ -53,26 +53,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalArgumentBuilder? Argument(string name, string type, ConfigurationSource configurationSource)
-        {
-            if (IsArgumentIgnored(name, configurationSource))
-            {
-                return null;
-            }
-
-            var argument = Definition.FindArgument(name);
-            if (argument == null)
-            {
-                Definition.UnignoreArgument(name);
-                argument = Definition.AddArgument(name, type, configurationSource);
-            }
-            else
-            {
-                argument.UpdateConfigurationSource(configurationSource);
-            }
-
-            return argument.Builder;
-        }
+        public InternalArgumentBuilder? Argument(string name, string type, ConfigurationSource configurationSource) => Definition.GetOrAddArgument(name, type, configurationSource)?.Builder;
 
         public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource) => Definition.GetOrAddArgument(name, clrType, configurationSource)?.Builder;
 

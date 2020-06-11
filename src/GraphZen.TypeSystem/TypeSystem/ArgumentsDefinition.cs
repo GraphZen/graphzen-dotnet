@@ -1,9 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -16,10 +13,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    internal class ArgumentsDefinitionContainer : IMutableArgumentsDefinition
+    internal partial class ArgumentsDefinition : IMutableArgumentsDefinition
     {
-        private IMutableArgumentsDefinition DeclaringMember { get; }
-
         private readonly Dictionary<string, ArgumentDefinition> _arguments =
             new Dictionary<string, ArgumentDefinition>();
 
@@ -27,11 +22,12 @@ namespace GraphZen.TypeSystem
             new Dictionary<string, ConfigurationSource>();
 
 
-
-        public ArgumentsDefinitionContainer(IMutableArgumentsDefinition declaringMember)
+        public ArgumentsDefinition(IMutableArgumentsDefinition declaringMember)
         {
             DeclaringMember = declaringMember;
         }
+
+        private IMutableArgumentsDefinition DeclaringMember { get; }
 
         public ConfigurationSource GetConfigurationSource() => DeclaringMember.GetConfigurationSource();
 
@@ -41,6 +37,7 @@ namespace GraphZen.TypeSystem
 
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
         public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
+
         public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
@@ -51,11 +48,11 @@ namespace GraphZen.TypeSystem
                     return null;
                 }
 
-                _ignoredArguments.Remove(name);
+                UnignoreArgument(name);
             }
 
 
-            ArgumentDefinition argument = null!; //FindArgument(name);
+            var argument = FindArgument(name);
             if (argument != null)
             {
                 argument.UpdateConfigurationSource(configurationSource);
@@ -78,7 +75,7 @@ namespace GraphZen.TypeSystem
             var argumentTypeName = typeNode.GetNamedType().Name.Value;
             var typeIdentity = Schema.GetOrAddTypeIdentity(argumentTypeName);
             argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource,
-                this, null);
+                DeclaringMember, null);
             AddArgument(argument);
             return argument;
         }
@@ -96,7 +93,7 @@ namespace GraphZen.TypeSystem
                 _ignoredArguments.Remove(name);
             }
 
-            ArgumentDefinition argument = null!; //FindArgument(name);
+            var argument = FindArgument(name);
             if (argument != null)
             {
                 argument.UpdateConfigurationSource(configurationSource);
@@ -110,8 +107,7 @@ namespace GraphZen.TypeSystem
             }
 
             var typeIdentity = Schema.GetOrAddOutputTypeIdentity(innerClrType);
-            argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource,
-                this, null);
+            argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource, DeclaringMember, null);
             AddArgument(argument);
             return argument;
         }
@@ -141,7 +137,7 @@ namespace GraphZen.TypeSystem
             => _ignoredArguments.TryGetValue(name, out var cs) ? (ConfigurationSource?)cs : null;
 
 
-        public IEnumerable<ArgumentDefinition> GetArguments() => throw new NotImplementedException();
+        public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
 
         IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
@@ -153,10 +149,10 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
-            /*if (TryGetArgument(name, out var existing) && existing != argument)
+            if (TryGetArgument(name, out var existing) && existing != argument)
             {
                 throw TypeSystemExceptions.DuplicateItemException.ForRename(this, name);
-            }*/
+            }
 
             if (RemoveArgument(argument))
             {
@@ -166,31 +162,6 @@ namespace GraphZen.TypeSystem
             return true;
         }
 
-
-        public ArgumentDefinition? AddArgument(string name, Type clrType, ConfigurationSource configurationSource)
-        {
-            if (!clrType.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
-            {
-                return null;
-            }
-
-            var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax,
-                configurationSource, this, null);
-            AddArgument(argument);
-            return argument;
-        }
-
-        public ArgumentDefinition AddArgument(string name, string type, ConfigurationSource configurationSource)
-        {
-            var typeSyntax = Schema.Builder.Parser.ParseType(type);
-            var typeName = typeSyntax.GetNamedType().Name.Value;
-            var typeIdentity = Schema.GetOrAddTypeIdentity(typeName);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax,
-                configurationSource, this, null);
-            AddArgument(argument);
-            return argument;
-        }
 
         public bool IgnoreArgument(string name, ConfigurationSource configurationSource)
         {
@@ -207,13 +178,12 @@ namespace GraphZen.TypeSystem
             }
 
             _ignoredArguments[name] = configurationSource;
-            /*
             var existing = FindArgument(name);
 
             if (existing != null)
             {
                 return IgnoreArgument(existing, configurationSource);
-            }*/
+            }
 
             return true;
         }

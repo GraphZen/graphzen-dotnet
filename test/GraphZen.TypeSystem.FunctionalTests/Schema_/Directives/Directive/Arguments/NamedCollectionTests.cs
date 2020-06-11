@@ -62,10 +62,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                     () => d.Argument(name, "String", a => { }),
                     () => d.Argument<string>(name),
                     () => d.Argument<string>(name, a => { })
-                }.ForEach(a => a.Should().Throw<InvalidNameException>()
-                    .WithMessage(
-                        $"Cannot create argument named \"{name}\" for {foo}: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.")
-                );
+                }.ForEach(action: a =>
+                {
+                    a.Should().Throw<InvalidNameException>()
+                        .WithMessage(
+                            $"Cannot create argument named \"{name}\" for {foo}: \"{name}\" is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+                });
             });
         }
 

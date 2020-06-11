@@ -81,7 +81,7 @@ namespace GraphZen.Internal
                     $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The CLR {GetClrTypeKind(clrType)} name '{clrType.Name}' is not a valid GraphQL name. {NameSpecDescription}";
 
 
-            public static string CannotCreateArgumentWithInvalidName(IArgumentDefinition def, string name)
+            public static string CannotCreateArgumentWithInvalidName(IMutableArgumentDefinition def, string name)
                 =>
                     $"Cannot create argument named \"{name}\" for {def.DeclaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 

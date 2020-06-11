@@ -23,15 +23,13 @@ namespace GraphZen.TypeSystem
     [DisplayName("field")]
     public partial class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
-        private readonly Dictionary<string, ArgumentDefinition> _arguments =
-            new Dictionary<string, ArgumentDefinition>();
 
-        private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
-            new Dictionary<string, ConfigurationSource>();
 
         private string? _deprecationReason;
         private bool _isDeprecated;
         private ConfigurationSource _nameConfigurationSource;
+
+        private readonly ArgumentsDefinition _args;
 
         public override SchemaDefinition Schema { get; }
 
@@ -55,6 +53,7 @@ namespace GraphZen.TypeSystem
             }
 
             TypeReference = new FieldTypeReference(fieldTypeIdentity, fieldTypeSyntax, this);
+            _args = new ArgumentsDefinition(this);
         }
 
 
@@ -76,51 +75,16 @@ namespace GraphZen.TypeSystem
 
         public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(argument.GetNameConfigurationSource()))
-            {
-                return false;
-            }
-
-            if (TryGetArgument(name, out var existing) && existing != argument)
-            {
-                throw TypeSystemExceptions.DuplicateItemException.ForRename(argument, name);
-            }
-
-            _arguments.Remove(argument.Name);
-            _arguments[name] = argument;
-            return true;
+            return _args.RenameArgument(argument, name, configurationSource);
         }
 
 
-        public bool RemoveArgument(ArgumentDefinition argument, ConfigurationSource configurationSource) =>
-            throw new NotImplementedException();
+        //public bool RemoveArgument(ArgumentDefinition argument, ConfigurationSource configurationSource) =>
+        //    _args.RemoveArgument(argument, configurationSource);
 
-        public ArgumentDefinition AddArgument(string name, string type, ConfigurationSource configurationSource)
-        {
-            var typeSyntax = Schema.Builder.Parser.ParseType(type);
-            var typeName = typeSyntax.GetNamedType().Name.Value;
-            var typeIdentity = Schema.GetOrAddTypeIdentity(typeName);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax,
-                configurationSource, this, null);
-            AddArgument(argument);
-            return argument;
-        }
 
-        public ArgumentDefinition AddArgument(string name, Type clrType, ConfigurationSource configurationSource)
-        {
-            if (!clrType.TryGetGraphQLTypeInfo(out var typeSyntax, out var innerClrType))
-            {
-                throw new InvalidOperationException($"Unable to get argument type info from  {clrType}");
-            }
 
-            var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
-            var argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeSyntax,
-                configurationSource, this, null);
-            AddArgument(argument);
-            return argument;
-        }
-
-        public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
+        public IEnumerable<ArgumentDefinition> GetArguments() => _args.GetArguments();
 
         public TypeReference FieldType => TypeReference;
         IGraphQLTypeReference IFieldDefinition.FieldType => FieldType;
@@ -159,11 +123,14 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.FieldDefinition;
 
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
-        public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
+        public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _args.Arguments;
 
-        public ArgumentDefinition? GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource) => throw new NotImplementedException();
+        public ArgumentDefinition?
+            GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource) =>
+            _args.GetOrAddArgument(name, clrType, configurationSource);
 
-        public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource) => throw new NotImplementedException();
+        public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource) =>
+            _args.GetOrAddArgument(name, type, configurationSource);
 
         IMutableFieldsDefinition IMutableFieldDefinition.DeclaringType => DeclaringType;
 
@@ -201,49 +168,17 @@ namespace GraphZen.TypeSystem
 
         public bool RemoveDeprecation(ConfigurationSource configurationSource) => throw new NotImplementedException();
 
-        public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name) 
-            => _ignoredArguments.TryGetValue(name, out var cs) ? (ConfigurationSource?) cs : null;
+        public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name)
+            => _args.FindIgnoredArgumentConfigurationSource(name);
 
-        public bool IgnoreArgument(string name, ConfigurationSource configurationSource)
-        {
-            var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
-            if (ignoredConfigurationSource.HasValue &&
-                ignoredConfigurationSource.Overrides(configurationSource))
-            {
-                return true;
-            }
+        public bool IgnoreArgument(string name, ConfigurationSource configurationSource) =>
+            _args.IgnoreArgument(name, configurationSource);
 
-            if (ignoredConfigurationSource != null)
-            {
-                configurationSource = configurationSource.Max(ignoredConfigurationSource);
-            }
-
-            _ignoredArguments[name] = configurationSource;
-            var existing = FindArgument(name);
-
-            if (existing != null)
-            {
-                return IgnoreArgument(existing, configurationSource);
-            }
-
-            return true;
-        }
-
-        private bool IgnoreArgument(ArgumentDefinition argument, ConfigurationSource configurationSource)
-        {
-            if (configurationSource.Overrides(argument.GetConfigurationSource()))
-            {
-                _arguments.Remove(argument.Name);
-                return true;
-            }
-
-            return false;
-        }
 
         public ArgumentDefinition? FindArgument(ParameterInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
-            var memberMatch = _arguments.Values.SingleOrDefault(_ => _.ClrInfo == member);
+            var memberMatch = GetArguments().SingleOrDefault(_ => _.ClrInfo == member);
             if (memberMatch != null)
             {
                 return memberMatch;
@@ -253,25 +188,10 @@ namespace GraphZen.TypeSystem
             return FindArgument(argumentName);
         }
 
-        public bool RemoveArgument(ArgumentDefinition argument)
-        {
-            if (_arguments.Remove(argument.Name, out var removed))
-            {
-                if (!removed.Equals(argument))
-                {
-                    throw new Exception("Did not remove expected argument");
-                }
+        public bool RemoveArgument(ArgumentDefinition argument) => _args.RemoveArgument(argument);
 
-                return true;
-            }
+        public void UnignoreArgument(string name) => _args.UnignoreArgument(name);
 
-            return false;
-        }
-
-        public void UnignoreArgument(string name)
-        {
-            _ignoredArguments.Remove(name);
-        }
 
         public ArgumentDefinition AddArgument(ParameterInfo parameter,
             ConfigurationSource configurationSource)
@@ -284,7 +204,7 @@ namespace GraphZen.TypeSystem
             }
 
             var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
-            var argument = new ArgumentDefinition(argName, nameConfigurationSource, typeIdentity, typeSyntax, 
+            var argument = new ArgumentDefinition(argName, nameConfigurationSource, typeIdentity, typeSyntax,
                 configurationSource, this, parameter);
             var ab = argument.Builder;
             ab.DefaultValue(parameter, configurationSource);
@@ -298,17 +218,8 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public bool AddArgument(ArgumentDefinition argument)
-        {
-            if (HasArgument(argument.Name))
-            {
-                throw new InvalidOperationException(
-                    $"Cannot add {argument} to {this}. An argument with that name already exists.");
-            }
+        public bool AddArgument(ArgumentDefinition argument) => _args.AddArgument(argument);
 
-            _arguments.Add(argument.Name, argument);
-            return true;
-        }
 
         public override string ToString() => $"{DeclaringType.GetTypeDisplayName()} field {DeclaringType.Name}.{Name}";
 

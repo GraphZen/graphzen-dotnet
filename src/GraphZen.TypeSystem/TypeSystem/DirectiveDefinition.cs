@@ -31,7 +31,7 @@ namespace GraphZen.TypeSystem
 
         private ConfigurationSource _nameConfigurationSource;
 
-        private readonly ArgumentsDefinitionContainer _args;
+        private readonly ArgumentsDefinition _args;
 
 
         public DirectiveDefinition(string? name, Type? clrType, SchemaDefinition schema,
@@ -77,7 +77,7 @@ namespace GraphZen.TypeSystem
             Name = Check.NotNull(name, nameof(name));
             Builder = new InternalDirectiveBuilder(this);
             IsSpec = SpecReservedNames.DirectiveNames.Contains(Name);
-            _args = new ArgumentsDefinitionContainer(this);
+            _args = new ArgumentsDefinition(this);
         }
 
         public override SchemaDefinition Schema { get; }
@@ -293,7 +293,7 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
         public bool IsSpec { get; }
         IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
-       
+
 
         public override string ToString() => ClrType != null && ClrType.Name != Name
             ? $"directive {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})"
