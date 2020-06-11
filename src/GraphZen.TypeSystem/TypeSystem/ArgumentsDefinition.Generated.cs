@@ -38,4 +38,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 8719350642108602436
+// Source Hash Code: 11478388202270490861

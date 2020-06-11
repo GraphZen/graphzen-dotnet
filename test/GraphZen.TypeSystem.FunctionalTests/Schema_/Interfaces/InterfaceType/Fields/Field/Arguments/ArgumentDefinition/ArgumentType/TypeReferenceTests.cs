@@ -9,7 +9,8 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.TypeReferenceSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.Field.Arguments.ArgumentDefinition.
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition
+    .
     ArgumentType
 {
     [NoReorder]
@@ -26,10 +27,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             var schema = Schema.Create(_ =>
             {
                 _.InputObject("Foo");
-                _.Object("Bar").Field("field", "String", f => { f.Argument("arg", "Foo"); });
+                _.Interface("Bar").Field("field", "String", f => { f.Argument("arg", "Foo"); });
             });
             var foo = schema.GetInputObject("Foo");
-            schema.GetObject("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should().Be(foo);
+            schema.GetInterface("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should()
+                .Be(foo);
         }
 
         [Spec(nameof(it_cannot_be_created_if_type_has_io_conflict))]
@@ -38,12 +40,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo");
-                _.Object("Bar").Field("field", "String", f =>
+                _.Interface("Foo");
+                _.Interface("Bar").Field("field", "String", f =>
                 {
                     Action add = () => f.Argument("baz", "[Foo]!");
                     add.Should().Throw<InvalidTypeException>().WithMessage(
-                        "Cannot create object field argument Bar.field.baz with argument type '[Foo]!'. Field arguments can only use input types. Object Foo is only an output type.");
+                        "Cannot create interface field argument Bar.field.baz with argument type '[Foo]!'. Field arguments can only use input types. Interface Foo is only an output type.");
                 });
             });
         }
@@ -56,10 +58,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             var schema = Schema.Create(_ =>
             {
                 _.InputObject<PlainClass>();
-                _.Object("Bar").Field("field", "String", f => { f.Argument<PlainClass>("arg"); });
+                _.Interface("Bar").Field("field", "String", f => { f.Argument<PlainClass>("arg"); });
             });
             var foo = schema.GetInputObject<PlainClass>();
-            schema.GetObject("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should().Be(foo);
+            schema.GetInterface("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should()
+                .Be(foo);
         }
 
 
@@ -69,12 +72,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
         {
             Schema.Create(_ =>
             {
-                _.Object<PlainClass>("Foo");
-                _.Object("Bar").Field("field", "String", f =>
+                _.Interface<PlainClass>("Foo");
+                _.Interface("Bar").Field("field", "String", f =>
                 {
                     Action add = () => f.Argument<PlainClass>("baz");
                     add.Should().Throw<InvalidTypeException>().WithMessage(
-                        "Cannot create object field argument Bar.field.baz with argument type 'Foo!'. Field arguments can only use input types. Object Foo (CLR class: PlainClass) is only an output type.");
+                        "Cannot create interface field argument Bar.field.baz with argument type 'Foo!'. Field arguments can only use input types. Interface Foo (CLR class: PlainClass) is only an output type.");
                 });
             });
         }
@@ -86,11 +89,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             var schema = Schema.Create(_ =>
             {
                 _.InputObject("Foo");
-                _.Object("Bar").Field("field", "String",
+                _.Interface("Bar").Field("field", "String",
                     f => { f.Argument("arg", "Baz", a => a.ArgumentType("Foo")); });
             });
             var foo = schema.GetInputObject("Foo");
-            schema.GetObject("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should().Be(foo);
+            schema.GetInterface("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should()
+                .Be(foo);
         }
 
 
@@ -100,14 +104,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo");
-                _.Object("Bar").Field("field", "String", f =>
+                _.Interface("Foo");
+                _.Interface("Bar").Field("field", "String", f =>
                 {
                     f.Argument("arg", "Baz", arg =>
                     {
                         Action set = () => arg.ArgumentType("Foo");
                         set.Should().Throw<InvalidTypeException>().WithMessage(
-                            "Cannot set argument type to 'Foo' on object field argument Bar.field.arg. Field arguments can only use input types. Object Foo is only an output type.");
+                            "Cannot set argument type to 'Foo' on interface field argument Bar.field.arg. Field arguments can only use input types. Interface Foo is only an output type.");
                     });
                 });
             });
@@ -120,11 +124,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             var schema = Schema.Create(_ =>
             {
                 _.InputObject<PlainClass>();
-                _.Object("Bar").Field("field", "String",
+                _.Interface("Bar").Field("field", "String",
                     f => { f.Argument("arg", "Baz", a => a.ArgumentType<PlainClass>()); });
             });
             var foo = schema.GetInputObject<PlainClass>();
-            schema.GetObject("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should().Be(foo);
+            schema.GetInterface("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should()
+                .Be(foo);
         }
 
 
@@ -135,14 +140,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             Schema.Create(_ =>
             {
                 _.Object<PlainClass>();
-                _.Object("Bar")
+                _.Interface("Bar")
                     .Field("field", "String", f =>
                     {
                         f.Argument("arg", "Baz", arg =>
                         {
                             Action set = () => arg.ArgumentType<PlainClass>();
                             set.Should().Throw<InvalidTypeException>().WithMessage(
-                                "Cannot set argument type to 'PlainClass!' on object field argument Bar.field.arg. Field arguments can only use input types. Object PlainClass is only an output type.");
+                                "Cannot set argument type to 'PlainClass!' on interface field argument Bar.field.arg. Field arguments can only use input types. Object PlainClass is only an output type.");
                         });
                     });
             });
@@ -156,14 +161,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             var schema = Schema.Create(_ =>
             {
                 _.InputObject("Foo");
-                _.Object("Bar").Field("field", "String", f =>
+                _.Interface("Bar").Field("field", "String", f =>
                 {
                     f.Argument("arg", "Baz");
                     f.Argument("arg", "Foo");
                 });
             });
             var foo = schema.GetInputObject("Foo");
-            schema.GetObject("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should().Be(foo);
+            schema.GetInterface("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should()
+                .Be(foo);
         }
 
 
@@ -173,14 +179,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
         {
             Schema.Create(_ =>
             {
-                _.Object("Foo");
-                _.Object("Bar")
+                _.Interface("Foo");
+                _.Interface("Bar")
                     .Field("field", "String", f =>
                     {
                         f.Argument("arg", "Baz");
                         Action redefine = () => f.Argument("arg", "Foo");
                         redefine.Should().Throw<InvalidTypeException>().WithMessage(
-                            "Cannot set argument type to 'Foo' on object field argument Bar.field.arg. Field arguments can only use input types. Object Foo is only an output type.");
+                            "Cannot set argument type to 'Foo' on interface field argument Bar.field.arg. Field arguments can only use input types. Interface Foo is only an output type.");
                     });
             });
         }
@@ -193,14 +199,15 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             var schema = Schema.Create(_ =>
             {
                 _.InputObject<PlainClass>();
-                _.Object("Bar").Field("field", "String", f =>
+                _.Interface("Bar").Field("field", "String", f =>
                 {
                     f.Argument("arg", "Baz");
                     f.Argument<PlainClass>("arg");
                 });
             });
             var typed = schema.GetInputObject<PlainClass>();
-            schema.GetObject("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should().Be(typed);
+            schema.GetInterface("Bar").GetField("field").GetArgument("arg").ArgumentType.GetNamedType().Should()
+                .Be(typed);
         }
 
 
@@ -211,12 +218,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             Schema.Create(_ =>
             {
                 _.Object<PlainClass>();
-                _.Object("Bar").Field("field", "String", f =>
+                _.Interface("Bar").Field("field", "String", f =>
                 {
                     f.Argument("arg", "Baz");
                     Action redefine = () => f.Argument<PlainClass>("arg");
                     redefine.Should().Throw<InvalidTypeException>().WithMessage(
-                        "Cannot set argument type to 'PlainClass!' on object field argument Bar.field.arg. Field arguments can only use input types. Object PlainClass is only an output type.");
+                        "Cannot set argument type to 'PlainClass!' on interface field argument Bar.field.arg. Field arguments can only use input types. Object PlainClass is only an output type.");
                 });
             });
         }
