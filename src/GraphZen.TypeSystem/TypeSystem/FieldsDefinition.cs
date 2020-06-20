@@ -233,6 +233,7 @@ namespace GraphZen.TypeSystem
             if (field != null)
             {
                 field.UpdateConfigurationSource(configurationSource);
+                field?.Builder.FieldType(clrType, configurationSource);
                 return field;
             }
 
@@ -241,7 +242,7 @@ namespace GraphZen.TypeSystem
                 throw new InvalidOperationException($"Unable to get field type info from {clrType}");
             }
 
-            var typeIdentity = Schema.GetOrAddOutputTypeIdentity(innerClrType);
+            var typeIdentity = Schema.GetOrAddTypeIdentity(innerClrType);
             field = new FieldDefinition(name, configurationSource, typeIdentity, typeNode, Schema, this,
                 configurationSource, null);
             AddField(field);
@@ -267,6 +268,7 @@ namespace GraphZen.TypeSystem
             if (field != null)
             {
                 field.UpdateConfigurationSource(configurationSource);
+                field?.Builder.FieldType(type, configurationSource);
                 return field;
             }
 
@@ -283,7 +285,7 @@ namespace GraphZen.TypeSystem
 
 
             var fieldTypeName = typeNode.GetNamedType().Name.Value;
-            var typeIdentity = Schema.GetOrAddOutputTypeIdentity(fieldTypeName);
+            var typeIdentity = Schema.GetOrAddTypeIdentity(fieldTypeName);
             field = new FieldDefinition(name, configurationSource, typeIdentity, typeNode, Schema, this,
                 configurationSource, null);
             AddField(field);

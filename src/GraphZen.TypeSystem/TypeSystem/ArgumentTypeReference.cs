@@ -13,8 +13,8 @@ namespace GraphZen.TypeSystem
     [DisplayName("argument type")]
     public class ArgumentTypeReference : TypeReference
     {
-        public ArgumentTypeReference(TypeIdentity identity, TypeSyntax typeSyntax, IMutableDefinition declaringMember) :
-            base(identity, typeSyntax, declaringMember)
+        public ArgumentTypeReference(TypeIdentity identity, TypeSyntax syntax, IMutableDefinition declaringMember) :
+            base(identity, syntax, declaringMember)
         {
         }
     }
