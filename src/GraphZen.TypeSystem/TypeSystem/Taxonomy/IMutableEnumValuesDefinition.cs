@@ -16,6 +16,8 @@ namespace GraphZen.TypeSystem.Taxonomy
         IReadOnlyDictionary<string, EnumValueDefinition> Values { get; }
 
         ConfigurationSource? FindIgnoredValueConfigurationSource(string name);
+
+        bool RemoveValue(EnumValueDefinition value);
         bool IgnoreValue(string name, ConfigurationSource configurationSource);
         bool UnignoreValue(string name, ConfigurationSource configurationSource);
 

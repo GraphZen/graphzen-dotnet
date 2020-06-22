@@ -28,7 +28,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<SdlSpec>();
 
             var typeRef = new Subject("Type")
-                    .WithSpecs<TypeReferenceSpecs>(SpecPriority.High)
+                    .WithSpecs<TypeReferenceSpecs>()
                     .WithSpecs<SdlSpec>()
                 ;
 

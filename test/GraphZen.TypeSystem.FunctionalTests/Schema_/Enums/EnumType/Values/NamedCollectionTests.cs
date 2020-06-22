@@ -55,18 +55,32 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
 
 
         [Spec(nameof(named_item_can_be_renamed))]
-        [Fact(Skip = "TODO")]
+        [Fact()]
         public void named_item_can_be_renamed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Enum("Foo").Value("Bar", v =>
+                {
+                    v.Description("value desc");
+                    v.Name("Baz");
+                });
+            });
+            schema.GetEnum("Foo").HasValue("Bar").Should().BeFalse();
+            var baz = schema.GetEnum("Foo").GetValue("Baz");
+            baz.Description.Should().Be("value desc");
         }
 
 
         [Spec(nameof(named_item_can_be_removed))]
-        [Fact(Skip = "TODO")]
+        [Fact()]
         public void named_item_can_be_removed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Enum("Foo").Value("Bar").RemoveValue("Bar");
+            });
+            schema.GetEnum("Foo").HasValue("Bar").Should().BeFalse();
         }
 
 

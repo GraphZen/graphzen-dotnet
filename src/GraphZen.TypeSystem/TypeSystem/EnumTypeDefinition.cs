@@ -44,6 +44,12 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) =>
             _ignoredValues.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
 
+        public bool RemoveValue(EnumValueDefinition value)
+        {
+            InternalValues.Remove(value.Name);
+            return true;
+        }
+
 
         public bool IgnoreValue(string name, ConfigurationSource configurationSource)
         {

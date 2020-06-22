@@ -41,6 +41,15 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public EnumTypeBuilder<TEnum> RemoveValue(TEnum value)
+        {
+            Check.NotNull(value, nameof(value));
+            Builder.RemoveValue(value, ConfigurationSource.Explicit);
+            return this;
+
+
+        }
+
         public EnumTypeBuilder<TEnum> Value(TEnum value, Action<EnumValueBuilder> configurator)
         {
             Check.NotNull(value, nameof(value));

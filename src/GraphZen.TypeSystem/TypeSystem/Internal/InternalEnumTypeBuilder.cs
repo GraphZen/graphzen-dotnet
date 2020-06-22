@@ -160,5 +160,23 @@ namespace GraphZen.TypeSystem.Internal
             Definition.RemoveClrType(configurationSource);
             return this;
         }
+
+        public bool RemoveValue<TEnum>(TEnum value, ConfigurationSource configurationSource) where TEnum : notnull =>
+            Definition.TryGetValue(value.ToString()!, out var valueDef) &&
+            RemoveValue(valueDef, configurationSource);
+
+        public bool RemoveValue(EnumValueDefinition value, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(value.GetConfigurationSource()))
+            {
+                return false;
+            }
+
+
+            Definition.RemoveValue(value);
+
+            return true;
+        }
+
     }
 }

@@ -16,6 +16,7 @@ namespace GraphZen.TypeSystem.Internal
         IClrTypeBuilder<EnumTypeBuilder<object>> where TEnumValue : notnull
     {
         EnumTypeBuilder<TEnumValue> Value(TEnumValue value);
+        EnumTypeBuilder<TEnumValue> RemoveValue(TEnumValue value);
         EnumTypeBuilder<TEnumValue> Value(TEnumValue value, Action<EnumValueBuilder> configurator);
         EnumTypeBuilder<TEnumValue> IgnoreValue(TEnumValue value);
         EnumTypeBuilder<TEnumValue> UnignoreValue(TEnumValue value);
