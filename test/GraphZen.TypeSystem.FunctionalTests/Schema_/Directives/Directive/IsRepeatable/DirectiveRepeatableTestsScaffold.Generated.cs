@@ -16,62 +16,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.IsRep
     [NoReorder]
     public abstract class DirectiveRepeatableTestsScaffold
     {
-        [Spec(nameof(is_initially_false))]
-        [Fact(Skip = "TODO")]
-        public void is_initially_false_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(can_be_set_to_true))]
-        [Fact(Skip = "TODO")]
-        public void can_be_set_to_true_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(can_be_set_to_false))]
-        [Fact(Skip = "TODO")]
-        public void can_be_set_to_false_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(when_created_via_clr_attribute_honors_allow_multiple_true))]
-        [Fact(Skip = "TODO")]
-        public void when_created_via_clr_attribute_honors_allow_multiple_true_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(when_created_via_clr_attribute_honors_allow_multiple_false))]
-        [Fact(Skip = "TODO")]
-        public void when_created_via_clr_attribute_honors_allow_multiple_false_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(when_clr_attribute_set_honors_allow_multiple_true))]
-        [Fact(Skip = "TODO")]
-        public void when_clr_attribute_set_honors_allow_multiple_true_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(when_clr_attribute_set_honors_allow_multiple_false))]
-        [Fact(Skip = "TODO")]
-        public void when_clr_attribute_set_honors_allow_multiple_false_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(cannot_be_set_to_true_when_clr_attribute_allow_multiple_false))]
         [Fact(Skip = "TODO")]
         public void cannot_be_set_to_true_when_clr_attribute_allow_multiple_false_()
@@ -88,4 +32,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.IsRep
         }
     }
 }
-// Source Hash Code: 17477452932205932900
+// Source Hash Code: 14170773858591568064

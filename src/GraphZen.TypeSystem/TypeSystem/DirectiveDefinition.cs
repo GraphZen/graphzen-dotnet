@@ -31,9 +31,9 @@ namespace GraphZen.TypeSystem
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
         private ConfigurationSource? _clrTypeConfigurationSource;
-        private ConfigurationSource _repeatableConfigurationSource;
 
         private ConfigurationSource _nameConfigurationSource;
+        private ConfigurationSource _repeatableConfigurationSource;
 
 
         public DirectiveDefinition(string? name, Type? clrType, SchemaDefinition schema,
@@ -183,14 +183,14 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
-            _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+            _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?) null;
 
         public ConfigurationSource?
             FindIgnoredDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
-            _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+            _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?) null;
 
         public IReadOnlyCollection<DirectiveLocation> Locations =>
-            (IReadOnlyCollection<DirectiveLocation>)_locations.Keys;
+            (IReadOnlyCollection<DirectiveLocation>) _locations.Keys;
 
         public Type? ClrType { get; private set; }
 
@@ -276,7 +276,8 @@ namespace GraphZen.TypeSystem
 
             ClrType = clrType;
             _clrTypeConfigurationSource = configurationSource;
-            SetRepeatable(ClrType.GetCustomAttribute<AttributeUsageAttribute>()?.AllowMultiple == true, configurationSource);
+            SetRepeatable(ClrType.GetCustomAttribute<AttributeUsageAttribute>()?.AllowMultiple == true,
+                configurationSource);
             return true;
         }
 
@@ -303,6 +304,13 @@ namespace GraphZen.TypeSystem
             if (!configurationSource.Overrides(GetRepeatableConfigurationSource()))
             {
                 return false;
+            }
+
+            var allowMultiple = ClrType?.GetCustomAttribute<AttributeUsageAttribute>()?.AllowMultiple;
+            if (allowMultiple != null && allowMultiple != repeatable)
+            {
+                throw new InvalidOperationException(
+                    $"Cannot set {this}.{nameof(IsRepeatable)} to '{repeatable.ToString().ToLower()}': the directive CLR type '{ClrType?.Name}' has an {nameof(AttributeUsageAttribute)} with an {nameof(AttributeUsageAttribute.AllowMultiple)} value of '{allowMultiple?.ToString().ToLower()}'.");
             }
 
             IsRepeatable = repeatable;

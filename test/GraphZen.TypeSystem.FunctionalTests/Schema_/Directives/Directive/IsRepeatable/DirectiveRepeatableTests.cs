@@ -86,5 +86,31 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.IsRep
             var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<DisallowMultipleAttribute>(); });
             schema.GetDirective<DisallowMultipleAttribute>().IsRepeatable.Should().BeFalse();
         }
+
+        [Spec(nameof(cannot_be_set_to_true_when_clr_attribute_allow_multiple_false))]
+        [Fact]
+        public void cannot_be_set_to_true_when_clr_attribute_allow_multiple_false_()
+        {
+            Schema.Create(_ =>
+            {
+                var directive = _.Directive<DisallowMultipleAttribute>();
+                Action set = () => directive.Repeatable(true);
+                set.Should().Throw<InvalidOperationException>().WithMessage(
+                    "Cannot set directive DisallowMultipleAttribute.IsRepeatable to 'true': the directive CLR type 'DisallowMultipleAttribute' has an AttributeUsageAttribute with an AllowMultiple value of 'false'.");
+            });
+        }
+
+        [Spec(nameof(cannot_be_set_to_false_when_clr_attribute_allow_multiple_true))]
+        [Fact]
+        public void cannot_be_set_to_false_when_clr_attribute_allow_multiple_true_()
+        {
+            Schema.Create(_ =>
+            {
+                var directive = _.Directive<AllowMultipleAttribute>();
+                Action set = () => directive.Repeatable(false);
+                set.Should().Throw<InvalidOperationException>().WithMessage(
+                    "Cannot set directive AllowMultipleAttribute.IsRepeatable to 'false': the directive CLR type 'AllowMultipleAttribute' has an AttributeUsageAttribute with an AllowMultiple value of 'true'.");
+            });
+        }
     }
 }
