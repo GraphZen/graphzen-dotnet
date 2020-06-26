@@ -21,6 +21,8 @@ namespace GraphZen.TypeSystem
     [DisplayName("directive")]
     public partial class DirectiveDefinition : MemberDefinition, IMutableDirectiveDefinition
     {
+        private readonly ArgumentsDefinition _args;
+
         private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _ignoredLocations =
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
@@ -28,10 +30,9 @@ namespace GraphZen.TypeSystem
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
         private ConfigurationSource? _clrTypeConfigurationSource;
+        private ConfigurationSource _isRepeatableConfigurationSource;
 
         private ConfigurationSource _nameConfigurationSource;
-
-        private readonly ArgumentsDefinition _args;
 
 
         public DirectiveDefinition(string? name, Type? clrType, SchemaDefinition schema,
@@ -80,12 +81,12 @@ namespace GraphZen.TypeSystem
             _args = new ArgumentsDefinition(this);
         }
 
-        public override SchemaDefinition Schema { get; }
-
 
         internal InternalDirectiveBuilder Builder { get; }
 
         private string DebuggerDisplay => $"directive {Name}";
+
+        public override SchemaDefinition Schema { get; }
 
         InternalDirectiveBuilder IInfrastructure<InternalDirectiveBuilder>.Instance => Builder;
 
@@ -119,11 +120,9 @@ namespace GraphZen.TypeSystem
             GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource) =>
             _args.GetOrAddArgument(name, clrType, configurationSource);
 
-        public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource)
-        {
-            return _args.GetOrAddArgument(name, type, configurationSource);
-
-        }
+        public ArgumentDefinition?
+            GetOrAddArgument(string name, string type, ConfigurationSource configurationSource) =>
+            _args.GetOrAddArgument(name, type, configurationSource);
 
         public bool RemoveArgument(ArgumentDefinition argument) => _args.RemoveArgument(argument);
 
@@ -133,7 +132,6 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name) =>
             _args.FindIgnoredArgumentConfigurationSource(name);
-
 
 
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
@@ -181,14 +179,14 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
-            _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+            _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?) null;
 
         public ConfigurationSource?
             FindIgnoredDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
-            _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+            _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?) null;
 
         public IReadOnlyCollection<DirectiveLocation> Locations =>
-            (IReadOnlyCollection<DirectiveLocation>)_locations.Keys;
+            (IReadOnlyCollection<DirectiveLocation>) _locations.Keys;
 
         public Type? ClrType { get; private set; }
 
@@ -292,7 +290,22 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
         public bool IsSpec { get; }
+        public bool IsRepeatable { get; private set; }
         IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
+
+        public bool SetIsRepeatable(bool isRepeatable, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetIsRepeatableConfigurationSource()))
+            {
+                return false;
+            }
+
+            IsRepeatable = isRepeatable;
+            _isRepeatableConfigurationSource = configurationSource;
+            return true;
+        }
+
+        public ConfigurationSource GetIsRepeatableConfigurationSource() => _isRepeatableConfigurationSource;
 
 
         public override string ToString() => ClrType != null && ClrType.Name != Name

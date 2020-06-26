@@ -27,14 +27,14 @@ namespace GraphZen.TypeSystem
     {
         private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
 
-        public Directive(string name, string? description, IReadOnlyCollection<DirectiveLocation> locations,
-            IEnumerable<IArgumentDefinition>? arguments, Type? clrType, Schema schema) : base(schema)
+        public Directive(string name, string? description, IEnumerable<IArgumentDefinition>? arguments, bool repeatable, IReadOnlyCollection<DirectiveLocation> locations, Type? clrType, Schema schema) : base(schema)
         {
-            Name = Check.NotNull(name, nameof(name));
-            IsSpec = Name == "include" || Name == "skip" || Name == "deprecated";
+            Name = name;
+            IsSpec = SpecReservedNames.DirectiveNames.Contains(name);
             Description = description;
             ClrType = clrType;
             Locations = Check.NotNull(locations, nameof(locations));
+            IsRepeatable = repeatable;
 
             // arguments = arguments != null ? Enumerable.Empty<IArgumentDefinition>();
             // ReSharper disable once PossibleNullReferenceException
@@ -71,8 +71,7 @@ namespace GraphZen.TypeSystem
         public static Directive From(IDirectiveDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
-            return new Directive(definition.Name, definition.Description, definition.Locations,
-                definition.GetArguments(), definition.ClrType, schema);
+            return new Directive(definition.Name, definition.Description, definition.GetArguments(), definition.IsRepeatable, definition.Locations, definition.ClrType, schema);
         }
 
         public IReadOnlyCollection<DirectiveLocation> Locations { get; }
@@ -85,5 +84,6 @@ namespace GraphZen.TypeSystem
             : $"directive {Name}";
 
         [GraphQLIgnore] public bool IsSpec { get; }
+        public bool IsRepeatable { get; }
     }
 }
