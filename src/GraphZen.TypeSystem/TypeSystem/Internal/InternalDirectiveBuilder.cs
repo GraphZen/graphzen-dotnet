@@ -93,5 +93,10 @@ namespace GraphZen.TypeSystem.Internal
             Definition.SetRepeatable(repeatable, configurationSource);
             return this;
         }
+
+        public void AddLocation(DirectiveLocation location, ConfigurationSource @explicit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

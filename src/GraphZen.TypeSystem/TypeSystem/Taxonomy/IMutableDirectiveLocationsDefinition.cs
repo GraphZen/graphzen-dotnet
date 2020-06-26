@@ -12,6 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableDirectiveLocationsDefinition : IDirectiveLocationsDefinition
     {
         bool AddLocation(DirectiveLocation location, ConfigurationSource configurationSource);
+        bool RemoveLocation(DirectiveLocation location, ConfigurationSource configurationSource);
         bool IgnoreLocation(DirectiveLocation location, ConfigurationSource configurationSource);
         bool UnignoreLocation(DirectiveLocation location, ConfigurationSource configurationSource);
         ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation location);

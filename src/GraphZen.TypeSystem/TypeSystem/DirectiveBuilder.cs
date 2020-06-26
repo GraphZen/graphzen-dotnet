@@ -54,6 +54,29 @@ namespace GraphZen.TypeSystem
             return new DirectiveBuilder<T>(ib);
         }
 
+        public DirectiveBuilder<TDirective> AddLocation(DirectiveLocation location)
+        {
+            Builder.AddLocation(location, ConfigurationSource.Explicit);
+
+            return this;
+        }
+
+        public DirectiveBuilder<TDirective> RemoveLocation(DirectiveLocation location)
+        {
+            return this;
+        }
+
+        public DirectiveBuilder<TDirective> Locations(DirectiveLocation location,
+            params DirectiveLocation[] additionalLocations)
+        {
+            return this;
+        }
+
+        public DirectiveBuilder<TDirective> RemoveLocations()
+        {
+            return this;
+        }
+
         public DirectiveBuilder<TDirective> Description(string description)
         {
             Check.NotNull(description, nameof(description));

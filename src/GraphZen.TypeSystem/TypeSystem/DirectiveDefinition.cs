@@ -146,13 +146,24 @@ namespace GraphZen.TypeSystem
         public bool AddLocation(DirectiveLocation location, ConfigurationSource configurationSource)
         {
             var locationConfigurationSource = FindDirectiveLocationConfigurationSource(location);
-            if (configurationSource.Overrides(locationConfigurationSource))
+            if (!configurationSource.Overrides(locationConfigurationSource))
             {
-                _locations.AddOrUpdate(location, configurationSource, (dl, cs) => configurationSource);
-                return true;
+                return false;
             }
 
-            return false;
+            _locations.AddOrUpdate(location, configurationSource, (dl, cs) => configurationSource);
+            return true;
+
+        }
+
+        public bool RemoveLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(FindDirectiveLocationConfigurationSource(location)))
+            {
+                return false;
+            }
+            _locations.Remove(location, out _);
+            return true;
         }
 
         public bool IgnoreLocation(DirectiveLocation location, ConfigurationSource configurationSource)

@@ -3,6 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
@@ -19,6 +20,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IInfrastructure<InternalDirectiveBuilder>
     {
         bool SetRepeatable(bool repeatable, ConfigurationSource configurationSource);
-        ConfigurationSource GetRepeatableConfigurationSource();
+                ConfigurationSource GetRepeatableConfigurationSource();
     }
 }
