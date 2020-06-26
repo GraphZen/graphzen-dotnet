@@ -5,21 +5,20 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.FunctionalTests.Specs;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DirectiveRepeatableSpecs;
 
 namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repeatable
 {
-
-
     [NoReorder]
     public class DirectiveRepeatableTests
     {
-        [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
-        public class PlainAttribute : Attribute { }
+        public class PlainAttribute : Attribute
+        {
+        }
 
-        [Spec(nameof(TypeSystemSpecs.DirectiveRepeatableSpecs.is_initially_false))]
+        [Spec(nameof(is_initially_false))]
         [Fact]
         public void is_initially_false_()
         {
@@ -28,7 +27,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repea
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.DirectiveRepeatableSpecs.can_be_set_to_true))]
+        [Spec(nameof(can_be_set_to_true))]
         [Fact]
         public void can_be_set_to_true_()
         {
@@ -37,7 +36,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repea
         }
 
 
-        [Spec(nameof(TypeSystemSpecs.DirectiveRepeatableSpecs.can_be_set_to_false))]
+        [Spec(nameof(can_be_set_to_false))]
         [Fact]
         public void can_be_set_to_false_()
         {

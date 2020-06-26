@@ -28,13 +28,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string is_initially_false = null;
             public const string can_be_set_to_true = null;
             public const string can_be_set_to_false = null;
-            public const string when_created_via_clr_attribute_defaults_false = null;
-            public const string when_created_via_clr_attribute_with_allow_multiple_is_true = null;
-            public const string when_created_via_clr_attribute_with_allow_multiple_false_is_false = null;
-            public const string when_clr_attribute_set_defaults_false = null;
-            public const string when_clr_attribute_set_with_allow_multiple_is_true = null;
-            public const string when_clr_attribute_set_with_allow_multiple_false_is_false = null;
-
+            public const string when_created_via_clr_attribute_honors_allow_multiple_true = null;
+            public const string when_created_via_clr_attribute_honors_allow_multiple_false = null;
+            public const string when_clr_attribute_set_honors_allow_multiple_true = null;
+            public const string when_clr_attribute_set_honors_allow_multiple_false = null;
         }
 
 
