@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -94,9 +95,35 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public void AddLocation(DirectiveLocation location, ConfigurationSource @explicit)
+        public InternalDirectiveBuilder AddLocation(DirectiveLocation location, ConfigurationSource configurationSource)
         {
-            throw new NotImplementedException();
+            Definition.AddLocation(location, configurationSource);
+            return this;
+        }
+
+        public InternalDirectiveBuilder Locations(IEnumerable<DirectiveLocation> locations, ConfigurationSource configurationSource)
+        {
+            foreach (var location in locations)
+            {
+                AddLocation(location, configurationSource);
+            }
+
+            return this;
+        }
+
+        public InternalDirectiveBuilder RemoveLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        {
+            Definition.RemoveLocation(location, configurationSource);
+            return this;
+        }
+
+        public InternalDirectiveBuilder RemoveLocations(ConfigurationSource configurationSource)
+        {
+            foreach (var location in Definition.Locations)
+            {
+                Definition.RemoveLocation(location, configurationSource);
+            }
+            return this;
         }
     }
 }

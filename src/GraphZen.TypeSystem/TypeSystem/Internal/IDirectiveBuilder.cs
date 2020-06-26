@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -24,6 +25,7 @@ namespace GraphZen.TypeSystem.Internal
         DirectiveBuilder<TDirective> AddLocation(DirectiveLocation location);
         DirectiveBuilder<TDirective> RemoveLocation(DirectiveLocation location);
         DirectiveBuilder<TDirective> Locations(DirectiveLocation location, params DirectiveLocation[] additionalLocations);
+        DirectiveBuilder<TDirective> Locations(IEnumerable<DirectiveLocation> locations);
         DirectiveBuilder<TDirective> RemoveLocations();
         DirectiveBuilder<TDirective> Repeatable(bool isRepeatable);
     }

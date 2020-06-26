@@ -2,7 +2,9 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
@@ -63,17 +65,26 @@ namespace GraphZen.TypeSystem
 
         public DirectiveBuilder<TDirective> RemoveLocation(DirectiveLocation location)
         {
+            Builder.RemoveLocation(location, ConfigurationSource.Explicit);
             return this;
         }
 
-        public DirectiveBuilder<TDirective> Locations(DirectiveLocation location,
-            params DirectiveLocation[] additionalLocations)
+        public DirectiveBuilder<TDirective> Locations(DirectiveLocation location, params DirectiveLocation[] additionalLocations)
         {
+            var locations = additionalLocations.ToList().Prepend(location);
+            Builder.Locations(locations, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public DirectiveBuilder<TDirective> Locations(IEnumerable<DirectiveLocation> locations)
+        {
+            Builder.Locations(locations, ConfigurationSource.Explicit);
             return this;
         }
 
         public DirectiveBuilder<TDirective> RemoveLocations()
         {
+            Builder.RemoveLocations(ConfigurationSource.Explicit);
             return this;
         }
 
@@ -97,11 +108,7 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public DirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations)
-        {
-            Builder.Locations(locations, ConfigurationSource.Explicit);
-            return this;
-        }
+
 
         public DirectiveBuilder<TDirective> Repeatable(bool repeatable)
         {

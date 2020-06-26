@@ -40,8 +40,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         {
             public const string location_can_be_added = null;
             public const string location_can_be_removed = null;
-            public const string locations_can_be_set = null;
+            public const string single_location_can_be_set = null;
+            public const string multiple_locations_can_be_set = null;
+            public const string setting_multiple_locations_removes_other_locations = null;
+            public const string setting_multiple_locations_of_same_kind_are_made_distinct = null;
             public const string locations_can_be_removed = null;
+            public const string location_added_twice_results_in_single = null;
         }
 
 

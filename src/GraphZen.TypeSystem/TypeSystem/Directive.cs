@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem
             IsSpec = SpecReservedNames.DirectiveNames.Contains(name);
             Description = description;
             ClrType = clrType;
-            Locations = Check.NotNull(locations, nameof(locations));
+            Locations = locations;
             IsRepeatable = repeatable;
 
             // arguments = arguments != null ? Enumerable.Empty<IArgumentDefinition>();
@@ -77,6 +77,7 @@ namespace GraphZen.TypeSystem
         }
 
         public IReadOnlyCollection<DirectiveLocation> Locations { get; }
+
         [GraphQLIgnore] public Type? ClrType { get; }
 
         [GraphQLCanBeNull] public string? Description { get; }
