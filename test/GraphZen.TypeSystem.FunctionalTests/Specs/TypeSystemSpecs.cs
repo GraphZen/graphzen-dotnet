@@ -23,11 +23,18 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string item_can_be_defined_by_sdl_extension = null;
         }
 
-        public class DirectiveIsRepeatableSpecs
+        public class DirectiveRepeatableSpecs
         {
             public const string is_initially_false = null;
             public const string can_be_set_to_true = null;
             public const string can_be_set_to_false = null;
+            public const string when_created_via_clr_attribute_defaults_false = null;
+            public const string when_created_via_clr_attribute_with_allow_multiple_is_true = null;
+            public const string when_created_via_clr_attribute_with_allow_multiple_false_is_false = null;
+            public const string when_clr_attribute_set_defaults_false = null;
+            public const string when_clr_attribute_set_with_allow_multiple_is_true = null;
+            public const string when_clr_attribute_set_with_allow_multiple_false_is_false = null;
+
         }
 
 

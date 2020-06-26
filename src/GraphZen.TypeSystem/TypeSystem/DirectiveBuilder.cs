@@ -80,6 +80,12 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public DirectiveBuilder<TDirective> Repeatable(bool repeatable)
+        {
+            Builder.Repeatable(repeatable, ConfigurationSource.Explicit);
+            return this;
+        }
+
         public DirectiveBuilder<TDirective> RemoveArgument(string name)
         {
             Check.NotNull(name, nameof(name));

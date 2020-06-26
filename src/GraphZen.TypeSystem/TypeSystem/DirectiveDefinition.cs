@@ -30,7 +30,7 @@ namespace GraphZen.TypeSystem
             new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
 
         private ConfigurationSource? _clrTypeConfigurationSource;
-        private ConfigurationSource _isRepeatableConfigurationSource;
+        private ConfigurationSource _repeatableConfigurationSource;
 
         private ConfigurationSource _nameConfigurationSource;
 
@@ -290,22 +290,22 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
         public bool IsSpec { get; }
-        public bool IsRepeatable { get; private set; }
+        public bool Repeatable { get; private set; }
         IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
-        public bool SetIsRepeatable(bool isRepeatable, ConfigurationSource configurationSource)
+        public bool SetRepeatable(bool repeatable, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(GetIsRepeatableConfigurationSource()))
+            if (!configurationSource.Overrides(GetRepeatableConfigurationSource()))
             {
                 return false;
             }
 
-            IsRepeatable = isRepeatable;
-            _isRepeatableConfigurationSource = configurationSource;
+            Repeatable = repeatable;
+            _repeatableConfigurationSource = configurationSource;
             return true;
         }
 
-        public ConfigurationSource GetIsRepeatableConfigurationSource() => _isRepeatableConfigurationSource;
+        public ConfigurationSource GetRepeatableConfigurationSource() => _repeatableConfigurationSource;
 
 
         public override string ToString() => ClrType != null && ClrType.Name != Name

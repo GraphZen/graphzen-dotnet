@@ -18,8 +18,8 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMutableClrType,
         IInfrastructure<InternalDirectiveBuilder>
     {
-        bool SetIsRepeatable(bool isRepeatable, ConfigurationSource configurationSource);
-        ConfigurationSource GetIsRepeatableConfigurationSource();
+        bool SetRepeatable(bool repeatable, ConfigurationSource configurationSource);
+        ConfigurationSource GetRepeatableConfigurationSource();
 
     }
 }

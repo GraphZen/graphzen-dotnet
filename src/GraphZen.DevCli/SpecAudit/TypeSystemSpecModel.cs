@@ -156,7 +156,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(name)
                 .WithChild(clrType)
                 .WithChild(argumentDefCollection)
-                .WithChild(new Subject(nameof(Directive.IsRepeatable)).WithSpecs<DirectiveIsRepeatableSpecs, SdlSpec>())
+                .WithChild(new Subject(nameof(Directive.Repeatable)).WithSpecs<DirectiveRepeatableSpecs, SdlSpec>())
                 .WithChild(new Subject(nameof(Directive.Locations)))
                 .WithChild(description)
                 .WithSpecs<SdlSpec>()

@@ -85,5 +85,11 @@ namespace GraphZen.TypeSystem.Internal
             Definition.RemoveClrType(configurationSource);
             return this;
         }
+
+        public InternalDirectiveBuilder Repeatable(in bool repeatable, ConfigurationSource configurationSource)
+        {
+            Definition.SetRepeatable(repeatable, configurationSource);
+            return this;
+        }
     }
 }

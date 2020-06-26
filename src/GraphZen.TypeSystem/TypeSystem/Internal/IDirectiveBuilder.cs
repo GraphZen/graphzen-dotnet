@@ -22,5 +22,6 @@ namespace GraphZen.TypeSystem.Internal
         DirectiveBuilder<T> ClrType<T>(bool inferName = false) where T : notnull;
         DirectiveBuilder<T> ClrType<T>(string name) where T : notnull;
         DirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations);
+        DirectiveBuilder<TDirective> Repeatable(bool isRepeatable);
     }
 }
