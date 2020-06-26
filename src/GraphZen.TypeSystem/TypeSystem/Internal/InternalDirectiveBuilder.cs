@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
@@ -103,8 +105,19 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalDirectiveBuilder Locations(IEnumerable<DirectiveLocation> locations, ConfigurationSource configurationSource)
         {
-            foreach (var location in locations)
+            var distinct = locations.ToHashSet();
+
+            foreach (var existing in Definition.Locations)
             {
+                if (!distinct.Contains(existing))
+                {
+                    RemoveLocation(existing, configurationSource);
+                }
+            }
+
+            foreach (var location in distinct)
+            {
+
                 AddLocation(location, configurationSource);
             }
 
