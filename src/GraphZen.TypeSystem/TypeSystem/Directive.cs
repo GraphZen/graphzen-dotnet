@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem
             Description = description;
             ClrType = clrType;
             Locations = Check.NotNull(locations, nameof(locations));
-            Repeatable = repeatable;
+            IsRepeatable = repeatable;
 
             // arguments = arguments != null ? Enumerable.Empty<IArgumentDefinition>();
             // ReSharper disable once PossibleNullReferenceException
@@ -71,7 +71,7 @@ namespace GraphZen.TypeSystem
         public static Directive From(IDirectiveDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
-            return new Directive(definition.Name, definition.Description, definition.GetArguments(), definition.Repeatable, definition.Locations, definition.ClrType, schema);
+            return new Directive(definition.Name, definition.Description, definition.GetArguments(), definition.IsRepeatable, definition.Locations, definition.ClrType, schema);
         }
 
         public IReadOnlyCollection<DirectiveLocation> Locations { get; }
@@ -84,6 +84,6 @@ namespace GraphZen.TypeSystem
             : $"directive {Name}";
 
         [GraphQLIgnore] public bool IsSpec { get; }
-        public bool Repeatable { get; }
+        public bool IsRepeatable { get; }
     }
 }

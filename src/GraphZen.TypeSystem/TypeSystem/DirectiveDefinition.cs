@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
@@ -44,7 +45,10 @@ namespace GraphZen.TypeSystem
             {
                 ClrType = clrType;
                 _clrTypeConfigurationSource = configurationSource;
+                IsRepeatable = clrType.GetCustomAttribute<AttributeUsageAttribute>()?.AllowMultiple == true;
             }
+
+            _repeatableConfigurationSource = ConfigurationSource.Convention;
 
             if (name != null)
             {
@@ -272,6 +276,7 @@ namespace GraphZen.TypeSystem
 
             ClrType = clrType;
             _clrTypeConfigurationSource = configurationSource;
+            SetRepeatable(ClrType.GetCustomAttribute<AttributeUsageAttribute>()?.AllowMultiple == true, configurationSource);
             return true;
         }
 
@@ -290,7 +295,7 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
         public bool IsSpec { get; }
-        public bool Repeatable { get; private set; }
+        public bool IsRepeatable { get; private set; }
         IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
         public bool SetRepeatable(bool repeatable, ConfigurationSource configurationSource)
@@ -300,7 +305,7 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
-            Repeatable = repeatable;
+            IsRepeatable = repeatable;
             _repeatableConfigurationSource = configurationSource;
             return true;
         }

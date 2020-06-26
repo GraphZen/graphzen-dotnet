@@ -14,16 +14,24 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repea
     [NoReorder]
     public class DirectiveRepeatableTests
     {
-        public class PlainAttribute : Attribute
+        // ReSharper disable once RedundantAttributeUsageProperty
+        [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
+        public class DisallowMultipleAttribute : Attribute
         {
         }
+
+        [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+        public class AllowMultipleAttribute : Attribute
+        {
+        }
+
 
         [Spec(nameof(is_initially_false))]
         [Fact]
         public void is_initially_false_()
         {
             var schema = Schema.Create(_ => { _.Directive("Foo"); });
-            schema.GetDirective("Foo").Repeatable.Should().BeFalse();
+            schema.GetDirective("Foo").IsRepeatable.Should().BeFalse();
         }
 
 
@@ -32,7 +40,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repea
         public void can_be_set_to_true_()
         {
             var schema = Schema.Create(_ => { _.Directive("Foo").Repeatable(true); });
-            schema.GetDirective("Foo").Repeatable.Should().BeTrue();
+            schema.GetDirective("Foo").IsRepeatable.Should().BeTrue();
         }
 
 
@@ -41,7 +49,42 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repea
         public void can_be_set_to_false_()
         {
             var schema = Schema.Create(_ => { _.Directive("Foo").Repeatable(true).Repeatable(false); });
-            schema.GetDirective("Foo").Repeatable.Should().BeFalse();
+            schema.GetDirective("Foo").IsRepeatable.Should().BeFalse();
+        }
+
+        [Spec(nameof(when_created_via_clr_attribute_honors_allow_multiple_true))]
+        [Fact]
+        public void when_created_via_clr_attribute_honors_allow_multiple_true_()
+        {
+            var schema = Schema.Create(_ => { _.Directive<AllowMultipleAttribute>(); });
+            schema.GetDirective<AllowMultipleAttribute>().IsRepeatable.Should().BeTrue();
+        }
+
+
+        [Spec(nameof(when_created_via_clr_attribute_honors_allow_multiple_false))]
+        [Fact]
+        public void when_created_via_clr_attribute_honors_allow_multiple_false_()
+        {
+            var schema = Schema.Create(_ => { _.Directive<DisallowMultipleAttribute>(); });
+            schema.GetDirective<DisallowMultipleAttribute>().IsRepeatable.Should().BeFalse();
+        }
+
+
+        [Spec(nameof(when_clr_attribute_set_honors_allow_multiple_true))]
+        [Fact()]
+        public void when_clr_attribute_set_honors_allow_multiple_true_()
+        {
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<AllowMultipleAttribute>(); });
+            schema.GetDirective<AllowMultipleAttribute>().IsRepeatable.Should().BeTrue();
+        }
+
+
+        [Spec(nameof(when_clr_attribute_set_honors_allow_multiple_false))]
+        [Fact()]
+        public void when_clr_attribute_set_honors_allow_multiple_false_()
+        {
+            var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<DisallowMultipleAttribute>(); });
+            schema.GetDirective<DisallowMultipleAttribute>().IsRepeatable.Should().BeFalse();
         }
     }
 }

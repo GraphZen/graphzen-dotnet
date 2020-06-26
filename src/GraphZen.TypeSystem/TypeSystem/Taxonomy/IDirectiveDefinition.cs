@@ -16,6 +16,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IDirectiveLocationsDefinition
     {
         public bool IsSpec { get; }
-        public bool Repeatable { get; }
+        public bool IsRepeatable { get; }
     }
 }
