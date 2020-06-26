@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
@@ -43,9 +44,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Directi
         }
 
 
-
-
-
         [Spec(nameof(directive_annotation_cannot_be_added_unless_location_is_valid))]
         [Fact]
         public void directive_annotation_cannot_be_added_unless_location_is_valid_()
@@ -63,40 +61,25 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Directi
 
 
         [Spec(nameof(directive_annotation_cannot_be_added_with_null_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void directive_annotation_cannot_be_added_with_null_name_()
         {
             Schema.Create(_ =>
             {
-                _.Directive("bar").Locations(DirectiveLocation.ArgumentDefinition, DirectiveLocation.Schema,
-                    DirectiveLocation.Query);
                 var foo = _.Object("Foo");
-                Action add = () => foo.AddDirectiveAnnotation("bar", "test");
-                add.Should().Throw<InvalidOperationException>().WithMessage(
-                    "Cannot annotate object Foo with directive bar: Directive bar cannot be annotated on objects because it is only valid on queries, the schema, or arguments.");
+                var adds = new List<Action>
+                {
+                    () => foo.AddDirectiveAnnotation(null!),
+                    () => foo.AddDirectiveAnnotation(null!, "test")
+                };
+                adds.ForEach(add => { add.Should().ThrowArgumentNullException("name"); });
             });
-        }
-
-
-        [Spec(nameof(DEPRECATED_directive_annotation_cannot_be_upserted_with_null_name))]
-        [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_upserted_with_null_name_()
-        {
-            // var schema = Schema.Create(_ => { });
         }
 
 
         [Spec(nameof(directive_annotation_cannot_be_added_with_invalid_name))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_with_invalid_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(DEPRECATED_directive_annotation_cannot_be_upserted_with_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_upserted_with_invalid_name_()
         {
             // var schema = Schema.Create(_ => { });
         }

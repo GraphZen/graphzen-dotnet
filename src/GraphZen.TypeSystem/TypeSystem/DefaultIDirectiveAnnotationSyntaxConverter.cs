@@ -19,13 +19,7 @@ namespace GraphZen.TypeSystem
 
         public override object FromSyntax(SyntaxNode node)
         {
-            if (node is DirectiveSyntax directive)
-            {
-                throw new NotImplementedException();
-                // return new DirectiveAnnotation(directive.Name.Value, directive);
-            }
-
-            return null;
+            throw new NotImplementedException();
         }
 
         public override SyntaxNode ToSyntax(object value)

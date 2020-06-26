@@ -124,9 +124,17 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public SchemaBuilder<TContext> AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
+        public SchemaBuilder<TContext> AddDirectiveAnnotation(string name, object value)
+        {
+            Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public SchemaBuilder<TContext> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public SchemaBuilder<TContext> AddDirectiveAnnotation(string name)
+        {
+            Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
+            return this;
+        }
 
 
         public SchemaBuilder<TContext> RemoveDirectiveAnnotations(string name) =>

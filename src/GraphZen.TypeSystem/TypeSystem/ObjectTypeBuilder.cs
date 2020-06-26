@@ -252,9 +252,17 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public ObjectTypeBuilder<TObject, TContext> AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
+        public ObjectTypeBuilder<TObject, TContext> AddDirectiveAnnotation(string name, object value)
+        {
+            Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public ObjectTypeBuilder<TObject, TContext> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public ObjectTypeBuilder<TObject, TContext> AddDirectiveAnnotation(string name)
+        {
+            Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
+            return this;
+        }
 
 
         public ObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotations(string name) =>
