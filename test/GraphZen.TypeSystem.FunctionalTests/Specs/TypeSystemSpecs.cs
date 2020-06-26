@@ -36,6 +36,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string cannot_be_set_to_false_when_clr_attribute_allow_multiple_true = null;
         }
 
+        public class DirectiveLocationsSpecs
+        {
+            public const string location_can_be_added = null;
+            public const string location_can_be_removed = null;
+            public const string locations_can_be_set = null;
+            public const string locations_can_be_removed = null;
+        }
+
 
         public class DirectiveAnnotationSpecs
         {

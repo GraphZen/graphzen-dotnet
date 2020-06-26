@@ -126,9 +126,9 @@ namespace GraphZen.TypeSystem
         public SchemaBuilder<TContext> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public SchemaBuilder<TContext> UpdateOrAddDirectiveAnnotation(string name, object? value)
+        public SchemaBuilder<TContext> AddOrUpdateDirectiveAnnotation(string name, object? value)
         {
-            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
+            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 
@@ -142,7 +142,7 @@ namespace GraphZen.TypeSystem
         SchemaDefinition IInfrastructure<SchemaDefinition>.Instance => Builder.Definition;
 
 
-        public SchemaBuilder<TContext> DirectiveAnnotation(string name) => UpdateOrAddDirectiveAnnotation(name, null);
+        public SchemaBuilder<TContext> DirectiveAnnotation(string name) => AddOrUpdateDirectiveAnnotation(name, null);
 
         public SchemaBuilder<TContext> DirectiveAnnotation(object directive) =>
             throw new NotImplementedException();

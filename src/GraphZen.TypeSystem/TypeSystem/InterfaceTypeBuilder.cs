@@ -195,10 +195,10 @@ namespace GraphZen.TypeSystem
         public InterfaceTypeBuilder<TInterface, TContext> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public InterfaceTypeBuilder<TInterface, TContext> UpdateOrAddDirectiveAnnotation(string name,
+        public InterfaceTypeBuilder<TInterface, TContext> AddOrUpdateDirectiveAnnotation(string name,
             object? value = null)
         {
-            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
+            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

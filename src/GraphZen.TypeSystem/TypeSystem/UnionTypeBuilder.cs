@@ -146,10 +146,10 @@ namespace GraphZen.TypeSystem
         public UnionTypeBuilder<TUnion, TContext> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public UnionTypeBuilder<TUnion, TContext> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public UnionTypeBuilder<TUnion, TContext> AddOrUpdateDirectiveAnnotation(string name, object? value = null)
         {
             Check.NotNull(name, nameof(name));
-            Builder.DirectiveAnnotation(name, value, ConfigurationSource.Explicit);
+            Builder.AddOrUpdateDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 

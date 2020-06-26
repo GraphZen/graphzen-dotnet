@@ -170,10 +170,10 @@ namespace GraphZen.TypeSystem
         public FieldBuilder<TDeclaringType, TField, TContext>
             AddDirectiveAnnotation(string name, object? value = null) => throw new NotImplementedException();
 
-        public FieldBuilder<TDeclaringType, TField, TContext> UpdateOrAddDirectiveAnnotation(string name,
+        public FieldBuilder<TDeclaringType, TField, TContext> AddOrUpdateDirectiveAnnotation(string name,
             object? value = null)
         {
-            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
+            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

@@ -52,9 +52,9 @@ namespace GraphZen.TypeSystem
         public EnumValueBuilder AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public EnumValueBuilder UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public EnumValueBuilder AddOrUpdateDirectiveAnnotation(string name, object? value = null)
         {
-            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
+            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

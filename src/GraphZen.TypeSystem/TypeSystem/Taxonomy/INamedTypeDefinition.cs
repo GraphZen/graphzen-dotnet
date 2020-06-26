@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMemberDefinition,
         IDescription,
         INamedTypeReference,
-        IDirectiveAnnotations,
+        IDirectiveAnnotationsDefinition,
         IClrType
     {
         TypeKind Kind { get; }

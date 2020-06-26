@@ -29,8 +29,7 @@ namespace GraphZen.SpecAudit
 
             var typeRef = new Subject("Type")
                     .WithSpecs<TypeReferenceSpecs>()
-                    .WithSpecs<SdlSpec>()
-                ;
+                    .WithSpecs<SdlSpec>();
 
             var inputTypeRef = typeRef.WithName("InputTypeRef");
             var outputTypeRef = typeRef.WithName("OutputTypeRef");
@@ -157,7 +156,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(clrType)
                 .WithChild(argumentDefCollection)
                 .WithChild(new Subject(nameof(Directive.IsRepeatable)).WithSpecs<DirectiveRepeatableSpecs, SdlSpec>())
-                .WithChild(new Subject(nameof(Directive.Locations)))
+                .WithChild(new Subject(nameof(Directive.Locations)).WithSpecs<DirectiveLocationsSpecs, SdlSpec>())
                 .WithChild(description)
                 .WithSpecs<SdlSpec>()
                 .WithoutSpecs<SdlExtensionSpec>(true);

@@ -117,9 +117,9 @@ namespace GraphZen.TypeSystem
         public EnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public EnumTypeBuilder<TEnum> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public EnumTypeBuilder<TEnum> AddOrUpdateDirectiveAnnotation(string name, object? value = null)
         {
-            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
+            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

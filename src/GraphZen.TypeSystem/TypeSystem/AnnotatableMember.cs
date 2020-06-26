@@ -15,22 +15,22 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public abstract class AnnotatableMember : Member, IDirectiveAnnotations
     {
+        private ImmutableArray<IDirectiveAnnotation> _annotations;
         protected AnnotatableMember(IEnumerable<IDirectiveAnnotation>? directives, Schema schema) : base(schema)
         {
-            DirectiveAnnotations = directives?.ToImmutableArray() ?? ImmutableArray<IDirectiveAnnotation>.Empty;
+            _annotations = directives?.ToImmutableArray() ?? ImmutableArray<IDirectiveAnnotation>.Empty;
         }
 
         [GraphQLIgnore] public abstract DirectiveLocation DirectiveLocation { get; }
-        public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => DirectiveAnnotations;
+
+        public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => _annotations;
 
 
         [GraphQLIgnore]
-        public IDirectiveAnnotation FindDirectiveAnnotation(string name)
+        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(string name)
         {
             Check.NotNull(name, nameof(name));
-            return DirectiveAnnotations.SingleOrDefault(_ => _.Name == name);
+            return _annotations.Where(_ => _.Name == name);
         }
-
-        [GraphQLIgnore] public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations { get; }
     }
 }

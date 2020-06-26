@@ -22,9 +22,9 @@ namespace GraphZen.TypeSystem
         public InputFieldBuilder<T> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public InputFieldBuilder<T> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public InputFieldBuilder<T> AddOrUpdateDirectiveAnnotation(string name, object? value = null)
         {
-            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
+            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

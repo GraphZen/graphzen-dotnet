@@ -51,7 +51,7 @@ namespace GraphZen.TypeSystem
             {
                 var fieldNodes = Fields.Values
                     .ToSyntaxNodes<FieldDefinitionSyntax>();
-                var dirs = DirectiveAnnotations.ToDirectiveNodes();
+                var dirs = GetDirectiveAnnotations().ToDirectiveNodes();
 
                 var syntax = new ObjectTypeDefinitionSyntax(
                     SyntaxFactory.Name(Name),

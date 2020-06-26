@@ -119,9 +119,9 @@ namespace GraphZen.TypeSystem
         public ScalarTypeBuilder<TScalar, TValueNode> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public ScalarTypeBuilder<TScalar, TValueNode> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public ScalarTypeBuilder<TScalar, TValueNode> AddOrUpdateDirectiveAnnotation(string name, object? value = null)
         {
-            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
+            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

@@ -154,7 +154,7 @@ namespace GraphZen.Tests.Utilities
             var schema = Schema.Create(body);
             var expectedDirective = new GraphQLDeprecatedAttribute("test");
             var field = schema.QueryType.GetField("str");
-            var actualDirective = field.FindDirectiveAnnotation("deprecated");
+            var actualDirective = field.FindDirectiveAnnotations("deprecated").Single();
             actualDirective.Value.Should().Be(expectedDirective);
             field.DeprecationReason.Should().Be("test");
         }

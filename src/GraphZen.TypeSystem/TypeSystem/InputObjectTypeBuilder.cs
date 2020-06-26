@@ -178,9 +178,9 @@ namespace GraphZen.TypeSystem
         public InputObjectTypeBuilder<TInputObject> AddDirectiveAnnotation(string name, object? value = null) =>
             throw new NotImplementedException();
 
-        public InputObjectTypeBuilder<TInputObject> UpdateOrAddDirectiveAnnotation(string name, object? value = null)
+        public InputObjectTypeBuilder<TInputObject> AddOrUpdateDirectiveAnnotation(string name, object? value = null)
         {
-            Builder.DirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
+            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
             return this;
         }
 

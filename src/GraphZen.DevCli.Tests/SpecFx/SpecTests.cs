@@ -31,6 +31,10 @@ namespace GraphZen.SpecFx
             foreach (var _ in suite.Tests)
             {
                 var spec = suite.Specs[_.SpecId];
+                if (!suite.SubjectsByPath.ContainsKey(_.SubjectPath))
+                {
+                    throw new Exception($"Unable to find {_.SubjectPath}");
+                }
                 var subject = suite.SubjectsByPath[_.SubjectPath];
                 var parent = spec.Parent;
                 if (parent != null)

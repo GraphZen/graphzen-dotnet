@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem
 
 
         public static IReadOnlyList<DirectiveSyntax> ToDirectiveNodes(
-            this IReadOnlyList<IDirectiveAnnotation> directives)
+            this IEnumerable<IDirectiveAnnotation> directives)
         {
             Check.NotNull(directives, nameof(directives));
 

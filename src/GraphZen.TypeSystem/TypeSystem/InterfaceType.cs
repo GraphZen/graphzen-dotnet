@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem
             _syntax = new Lazy<InterfaceTypeDefinitionSyntax>(() => new InterfaceTypeDefinitionSyntax(
                 SyntaxFactory.Name(Name),
                 Description != null ? SyntaxFactory.StringValue(Description, true) : null,
-                DirectiveAnnotations.ToDirectiveNodes(),
+                GetDirectiveAnnotations().ToDirectiveNodes(),
                 Fields.Values.ToSyntaxNodes<FieldDefinitionSyntax>()));
         }
 

@@ -10,6 +10,5 @@ namespace GraphZen.TypeSystem.Taxonomy
     [GraphQLIgnore]
     public interface IDirectiveAnnotations : IDirectiveAnnotationsDefinition
     {
-        IDirectiveAnnotation? FindDirectiveAnnotation(string name);
     }
 }
