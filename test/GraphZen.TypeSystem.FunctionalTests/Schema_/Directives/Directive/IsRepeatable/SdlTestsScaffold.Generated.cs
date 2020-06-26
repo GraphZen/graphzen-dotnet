@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.SdlSpec;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repeatable
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.IsRepeatable
 {
     [NoReorder]
     public abstract class SdlTests
@@ -30,4 +30,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repea
     {
     }
 }
-// Source Hash Code: 6529954638383222787
+// Source Hash Code: 6019615900817536969
