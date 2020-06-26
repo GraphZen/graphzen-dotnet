@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string item_can_be_defined_by_sdl_extension = null;
         }
 
-        public class DirectiveRemovableSpecs
+        public class DirectiveIsRepeatableSpecs
         {
             public const string is_initially_false = null;
             public const string can_be_set_to_true = null;
