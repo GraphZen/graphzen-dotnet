@@ -14,6 +14,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         [GenDictionaryAccessors(nameof(FieldDefinition.Name), "Field")]
         IReadOnlyDictionary<string, FieldDefinition> Fields { get; }
+
         FieldDefinition? GetOrAddField(string name, Type clrType, ConfigurationSource configurationSource);
         FieldDefinition? GetOrAddField(string name, string type, ConfigurationSource configurationSource);
         bool RemoveField(FieldDefinition field);

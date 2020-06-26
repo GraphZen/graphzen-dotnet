@@ -53,9 +53,11 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public InternalArgumentBuilder? Argument(string name, string type, ConfigurationSource configurationSource) => Definition.GetOrAddArgument(name, type, configurationSource)?.Builder;
+        public InternalArgumentBuilder? Argument(string name, string type, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddArgument(name, type, configurationSource)?.Builder;
 
-        public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource) => Definition.GetOrAddArgument(name, clrType, configurationSource)?.Builder;
+        public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddArgument(name, clrType, configurationSource)?.Builder;
 
         public InternalArgumentBuilder Argument(string name) =>
             Definition.FindArgument(name)?.Builder ?? throw new ItemNotFoundException("TODO");

@@ -562,7 +562,7 @@ namespace GraphZen.TypeSystem
             FindPossibleOutputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
 
         public TypeIdentity GetOrAddInputTypeIdentity(string name) =>
-                    FindPossibleInputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
+            FindPossibleInputTypeIdentity(name) ?? AddTypeIdentity(new TypeIdentity(name, this));
 
 
         public TypeIdentity? FindPossibleOutputTypeIdentity(string name)

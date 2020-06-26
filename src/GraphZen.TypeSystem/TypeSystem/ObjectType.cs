@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem
             IEnumerable<INamedTypeReference> interfaces,
             IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(name,
             description, clrType,
-           directives, schema
+            directives, schema
         )
         {
             IsTypeOf = isTypeOf;

@@ -676,13 +676,15 @@ namespace GraphZen.TypeSystem
                 SchemaMetaFieldDef = new Field("__schema",
                     "Access the current type schema of this server.", null,
                     NonNullType.Of(schema.GetObject("__Schema")), null,
-                    (source, args, context, info) => info.Schema, ImmutableArray<IDirectiveAnnotation>.Empty, null, schema);
+                    (source, args, context, info) => info.Schema, ImmutableArray<IDirectiveAnnotation>.Empty, null,
+                    schema);
 
                 TypeMetaFieldDef = new Field("__type",
                     "Request the type information of a single type.", null, schema.GetObject("__Type"),
-                   field => new[]
+                    field => new[]
                     {
-                        new Argument("name", null, NonNullType.Of(schema.GetScalar<string>()), null,  false, null, field, null)
+                        new Argument("name", null, NonNullType.Of(schema.GetScalar<string>()), null, false, null, field,
+                            null)
                     },
                     (source, args, context, info) => info.Schema.GetType(args.name), null, null, schema);
 
@@ -697,7 +699,6 @@ namespace GraphZen.TypeSystem
             public Field TypeMetaFieldDef { get; }
 
             public Field TypeNameMetaFieldDef { get; }
-
         }
     }
 }

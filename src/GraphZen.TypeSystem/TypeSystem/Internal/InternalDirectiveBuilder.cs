@@ -46,7 +46,9 @@ namespace GraphZen.TypeSystem.Internal
                    ignoredMemberConfigurationSource.Overrides(configurationSource);
         }
 
-        public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource) => Definition.GetOrAddArgument(name, clrType, configurationSource)?.Builder;
+        public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource) =>
+            Definition.GetOrAddArgument(name, clrType, configurationSource)?.Builder;
+
         public InternalDirectiveBuilder Name(string name, ConfigurationSource configurationSource)
         {
             Definition.SetName(name, configurationSource);

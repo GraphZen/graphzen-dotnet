@@ -190,7 +190,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
                 _.Object<PlainClass>();
                 var bar = _.InputObject("Bar").Field("field", "Bar");
                 Action redefine = () => bar.Field<PlainClass>("field");
-                redefine.Should().Throw<InvalidTypeException>().WithMessage("Cannot set field type to 'PlainClass!' on input object field Bar.field. Input object fields can only use input types. Object PlainClass is only an output type.");
+                redefine.Should().Throw<InvalidTypeException>().WithMessage(
+                    "Cannot set field type to 'PlainClass!' on input object field Bar.field. Input object fields can only use input types. Object PlainClass is only an output type.");
             });
         }
     }

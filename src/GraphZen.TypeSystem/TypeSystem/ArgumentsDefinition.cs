@@ -107,7 +107,8 @@ namespace GraphZen.TypeSystem
             }
 
             var typeIdentity = Schema.GetOrAddOutputTypeIdentity(innerClrType);
-            argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource, DeclaringMember, null);
+            argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource,
+                DeclaringMember, null);
             AddArgument(argument);
             return argument;
         }

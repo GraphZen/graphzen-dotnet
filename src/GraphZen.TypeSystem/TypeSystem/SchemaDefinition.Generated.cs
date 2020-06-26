@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem
 
         public EnumTypeDefinition GetEnum<TClrType>() => GetType<EnumTypeDefinition>(typeof(TClrType));
 
-        public EnumTypeDefinition? FindEnum(string name) => FindType(name) as EnumTypeDefinition;
+        public EnumTypeDefinition? FindEnum(string name) => FindType<EnumTypeDefinition>(name);
 
         public EnumTypeDefinition? FindEnum<TClrType>() => FindType<EnumTypeDefinition>(typeof(TClrType));
 

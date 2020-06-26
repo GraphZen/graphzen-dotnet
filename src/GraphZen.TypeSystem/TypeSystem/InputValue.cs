@@ -34,7 +34,6 @@ namespace GraphZen.TypeSystem
             IEnumerable<IDirectiveAnnotation>? directives,
             object? clrInfo, IMember declaringMember) : base(directives, declaringMember.Schema)
         {
-
             Description = description;
             Name = name;
             _type = new Lazy<IGraphQLType>(() => Schema.ResolveType(type));
@@ -68,6 +67,5 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore] public IGraphQLType TypeReference => _type.Value;
         IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
-
     }
 }

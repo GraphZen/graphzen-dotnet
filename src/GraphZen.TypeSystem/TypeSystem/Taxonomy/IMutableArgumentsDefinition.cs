@@ -15,6 +15,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
         IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
+
         ArgumentDefinition? GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource);
         ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource);
         bool RemoveArgument(ArgumentDefinition argument);

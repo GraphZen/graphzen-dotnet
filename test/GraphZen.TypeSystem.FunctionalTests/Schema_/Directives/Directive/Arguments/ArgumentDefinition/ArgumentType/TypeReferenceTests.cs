@@ -190,7 +190,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                 _.Object<PlainClass>();
                 var bar = _.Directive("Bar").Argument("field", "Bar");
                 Action redefine = () => bar.Argument<PlainClass>("field");
-                redefine.Should().Throw<InvalidTypeException>().WithMessage("Cannot set argument type to 'PlainClass!' on directive argument Bar.field. Directive arguments can only use input types. Object PlainClass is only an output type.");
+                redefine.Should().Throw<InvalidTypeException>().WithMessage(
+                    "Cannot set argument type to 'PlainClass!' on directive argument Bar.field. Directive arguments can only use input types. Object PlainClass is only an output type.");
             });
         }
     }

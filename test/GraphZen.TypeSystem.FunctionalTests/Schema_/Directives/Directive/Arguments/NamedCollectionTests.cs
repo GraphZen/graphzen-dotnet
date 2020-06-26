@@ -62,7 +62,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
                     () => d.Argument(name, "String", a => { }),
                     () => d.Argument<string>(name),
                     () => d.Argument<string>(name, a => { })
-                }.ForEach(action: a =>
+                }.ForEach(a =>
                 {
                     a.Should().Throw<InvalidNameException>()
                         .WithMessage(

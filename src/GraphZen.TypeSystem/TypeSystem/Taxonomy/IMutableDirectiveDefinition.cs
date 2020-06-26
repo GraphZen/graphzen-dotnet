@@ -20,6 +20,5 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
         bool SetRepeatable(bool repeatable, ConfigurationSource configurationSource);
         ConfigurationSource GetRepeatableConfigurationSource();
-
     }
 }

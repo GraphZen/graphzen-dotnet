@@ -42,7 +42,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
                 _.Interface("Foo").Field("bar", "String", f =>
                 {
                     Action rename = () => f.Name(name);
-                    rename.Should().Throw<InvalidNameException>().WithMessage($"Cannot rename interface field Foo.bar to \"{name}\". Names are limited to underscores and alpha-numeric ASCII characters.");
+                    rename.Should().Throw<InvalidNameException>().WithMessage(
+                        $"Cannot rename interface field Foo.bar to \"{name}\". Names are limited to underscores and alpha-numeric ASCII characters.");
                 });
             });
         }

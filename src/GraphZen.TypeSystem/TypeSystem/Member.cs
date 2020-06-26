@@ -22,7 +22,6 @@ namespace GraphZen.TypeSystem
 
         ISchemaDefinition IMemberDefinition.Schema => Schema;
 
-        [GraphQLIgnore]
-        public Schema Schema { get; }
+        [GraphQLIgnore] public Schema Schema { get; }
     }
 }

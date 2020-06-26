@@ -27,7 +27,8 @@ namespace GraphZen.TypeSystem
     {
         private readonly Lazy<DirectiveDefinitionSyntax> _syntax;
 
-        public Directive(string name, string? description, IEnumerable<IArgumentDefinition>? arguments, bool repeatable, IReadOnlyCollection<DirectiveLocation> locations, Type? clrType, Schema schema) : base(schema)
+        public Directive(string name, string? description, IEnumerable<IArgumentDefinition>? arguments, bool repeatable,
+            IReadOnlyCollection<DirectiveLocation> locations, Type? clrType, Schema schema) : base(schema)
         {
             Name = name;
             IsSpec = SpecReservedNames.DirectiveNames.Contains(name);
@@ -71,7 +72,8 @@ namespace GraphZen.TypeSystem
         public static Directive From(IDirectiveDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
-            return new Directive(definition.Name, definition.Description, definition.GetArguments(), definition.IsRepeatable, definition.Locations, definition.ClrType, schema);
+            return new Directive(definition.Name, definition.Description, definition.GetArguments(),
+                definition.IsRepeatable, definition.Locations, definition.ClrType, schema);
         }
 
         public IReadOnlyCollection<DirectiveLocation> Locations { get; }

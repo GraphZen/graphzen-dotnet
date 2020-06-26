@@ -24,7 +24,8 @@ namespace GraphZen.Internal
             public static Infrastructure.DuplicateItemException ForRename(IMutableDefinition definition, string name)
             {
                 var parent = definition.GetParentMember();
-                var parentDescription = parent is SchemaDefinition ? "The schema" : parent?.ToString()?.FirstCharToUpper();
+                var parentDescription =
+                    parent is SchemaDefinition ? "The schema" : parent?.ToString()?.FirstCharToUpper();
                 return new Infrastructure.DuplicateItemException(
                     $"Cannot rename {definition} to \"{name}\". {parentDescription} already contains a {definition.GetTypeDisplayName()} named \"{name}\".");
             }
@@ -39,7 +40,6 @@ namespace GraphZen.Internal
                 T named, T typed)
                 where T : NamedTypeDefinition =>
                 $"Cannot create {kind.ToDisplayStringLower()} {name} with CLR {clrType.GetClrTypeKind()} '{clrType.Name}': both {named} and {typed} already exist.";
-
 
 
             internal static string CannotCreateDirectiveWithConflictingNameAndType(string name, Type clrType,

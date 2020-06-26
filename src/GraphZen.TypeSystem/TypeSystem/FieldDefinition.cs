@@ -17,14 +17,10 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-
-
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     [DisplayName("field")]
     public partial class FieldDefinition : AnnotatableMemberDefinition, IMutableFieldDefinition
     {
-
-
         private string? _deprecationReason;
         private bool _isDeprecated;
         private ConfigurationSource _nameConfigurationSource;
@@ -73,15 +69,12 @@ namespace GraphZen.TypeSystem
 
         public MemberInfo? ClrInfo { get; }
 
-        public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
-        {
-            return _args.RenameArgument(argument, name, configurationSource);
-        }
+        public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource) =>
+            _args.RenameArgument(argument, name, configurationSource);
 
 
         //public bool RemoveArgument(ArgumentDefinition argument, ConfigurationSource configurationSource) =>
         //    _args.RemoveArgument(argument, configurationSource);
-
 
 
         public IEnumerable<ArgumentDefinition> GetArguments() => _args.GetArguments();
@@ -129,7 +122,8 @@ namespace GraphZen.TypeSystem
             GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource) =>
             _args.GetOrAddArgument(name, clrType, configurationSource);
 
-        public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource) =>
+        public ArgumentDefinition?
+            GetOrAddArgument(string name, string type, ConfigurationSource configurationSource) =>
             _args.GetOrAddArgument(name, type, configurationSource);
 
         IMutableFieldsDefinition IMutableFieldDefinition.DeclaringType => DeclaringType;

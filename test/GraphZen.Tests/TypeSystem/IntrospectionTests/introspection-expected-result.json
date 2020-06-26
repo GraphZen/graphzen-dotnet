@@ -15,7 +15,7 @@
               }
             }
           ],
-          "locations": [ "FIELD_DEFINITION", "ENUM_VALUE" ]
+          "locations": ["FIELD_DEFINITION", "ENUM_VALUE"]
         },
         {
           "name": "include",
@@ -34,7 +34,7 @@
               }
             }
           ],
-          "locations": [ "FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT" ]
+          "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"]
         },
         {
           "name": "skip",
@@ -53,7 +53,7 @@
               }
             }
           ],
-          "locations": [ "FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT" ]
+          "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"]
         }
       ],
       "mutationType": null,

@@ -55,7 +55,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
 
 
         [Spec(nameof(named_item_can_be_renamed))]
-        [Fact()]
+        [Fact]
         public void named_item_can_be_renamed_()
         {
             var schema = Schema.Create(_ =>
@@ -73,13 +73,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values
 
 
         [Spec(nameof(named_item_can_be_removed))]
-        [Fact()]
+        [Fact]
         public void named_item_can_be_removed_()
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Enum("Foo").Value("Bar").RemoveValue("Bar");
-            });
+            var schema = Schema.Create(_ => { _.Enum("Foo").Value("Bar").RemoveValue("Bar"); });
             schema.GetEnum("Foo").HasValue("Bar").Should().BeFalse();
         }
 

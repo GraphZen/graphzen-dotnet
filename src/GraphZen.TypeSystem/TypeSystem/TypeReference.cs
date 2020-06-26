@@ -46,7 +46,8 @@ namespace GraphZen.TypeSystem
             Update(identity, _syntax.WithName(identity.Name), configurationSource);
 
 
-        private void ThrowIfInvalid(TypeIdentity identity, TypeSyntax syntax, IMutableDefinition declaringMember, bool isUpdate = false)
+        private void ThrowIfInvalid(TypeIdentity identity, TypeSyntax syntax, IMutableDefinition declaringMember,
+            bool isUpdate = false)
         {
             if (identity.Definition is IOutputTypeDefinition outputType)
             {
@@ -54,12 +55,16 @@ namespace GraphZen.TypeSystem
                 {
                     if (declaringMember is IInputDefinition)
                     {
-                        var detail = $"{declaringMember?.GetParentMember()?.GetTypeDisplayName()?.FirstCharToUpper()} {declaringMember.GetTypeDisplayName()}s can only use input types. {outputType.ToString()?.FirstCharToUpper()} is only an output type.";
+                        var detail =
+                            $"{declaringMember?.GetParentMember()?.GetTypeDisplayName()?.FirstCharToUpper()} {declaringMember.GetTypeDisplayName()}s can only use input types. {outputType.ToString()?.FirstCharToUpper()} is only an output type.";
                         if (isUpdate)
                         {
-                            throw new InvalidTypeException($"Cannot set {this.GetTypeDisplayName()} to '{syntax.WithName(identity.Name)}' on {DeclaringMember}. {detail}");
+                            throw new InvalidTypeException(
+                                $"Cannot set {this.GetTypeDisplayName()} to '{syntax.WithName(identity.Name)}' on {DeclaringMember}. {detail}");
                         }
-                        throw new InvalidTypeException($"Cannot create {declaringMember} with {this.GetTypeDisplayName()} '{syntax.WithName(identity.Name)}'. {detail}");
+
+                        throw new InvalidTypeException(
+                            $"Cannot create {declaringMember} with {this.GetTypeDisplayName()} '{syntax.WithName(identity.Name)}'. {detail}");
                     }
                 }
             }
@@ -67,12 +72,16 @@ namespace GraphZen.TypeSystem
             {
                 if (declaringMember is IOutputDefinition)
                 {
-                    var detail = $"{declaringMember?.GetParentMember()?.GetTypeDisplayName()?.FirstCharToUpper()} {declaringMember.GetTypeDisplayName()}s can only use output types. {inputType.ToString()?.FirstCharToUpper()} is only an input type.";
+                    var detail =
+                        $"{declaringMember?.GetParentMember()?.GetTypeDisplayName()?.FirstCharToUpper()} {declaringMember.GetTypeDisplayName()}s can only use output types. {inputType.ToString()?.FirstCharToUpper()} is only an input type.";
                     if (isUpdate)
                     {
-                        throw new InvalidTypeException($"Cannot set {this.GetTypeDisplayName()} to '{syntax.WithName(identity.Name)}' on {DeclaringMember}. {detail}");
+                        throw new InvalidTypeException(
+                            $"Cannot set {this.GetTypeDisplayName()} to '{syntax.WithName(identity.Name)}' on {DeclaringMember}. {detail}");
                     }
-                    throw new InvalidTypeException($"Cannot create {declaringMember} with {this.GetTypeDisplayName()} '{syntax.WithName(identity.Name)}'. {detail}");
+
+                    throw new InvalidTypeException(
+                        $"Cannot create {declaringMember} with {this.GetTypeDisplayName()} '{syntax.WithName(identity.Name)}'. {detail}");
                 }
             }
         }
@@ -83,6 +92,7 @@ namespace GraphZen.TypeSystem
             {
                 return false;
             }
+
             ThrowIfInvalid(identity, syntax, DeclaringMember, true);
             _syntax = syntax;
             Identity = identity;
