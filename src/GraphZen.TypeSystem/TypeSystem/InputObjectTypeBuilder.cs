@@ -179,7 +179,7 @@ namespace GraphZen.TypeSystem
 
         public InputObjectTypeBuilder<TInputObject> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
 
-        
+
 
         public InputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();

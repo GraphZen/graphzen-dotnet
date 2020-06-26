@@ -172,7 +172,7 @@ namespace GraphZen.TypeSystem
 
         public FieldBuilder<TDeclaringType, TField, TContext> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
 
-        
+
 
         public FieldBuilder<TDeclaringType, TField, TContext> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();

@@ -196,7 +196,7 @@ namespace GraphZen.TypeSystem
 
         public InterfaceTypeBuilder<TInterface, TContext> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
 
-        
+
 
         public InterfaceTypeBuilder<TInterface, TContext> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();

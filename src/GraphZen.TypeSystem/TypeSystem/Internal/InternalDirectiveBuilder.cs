@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        
+
         public InternalArgumentBuilder Argument(string name) =>
             Definition.FindArgument(name)?.Builder ?? throw new NotImplementedException();
 

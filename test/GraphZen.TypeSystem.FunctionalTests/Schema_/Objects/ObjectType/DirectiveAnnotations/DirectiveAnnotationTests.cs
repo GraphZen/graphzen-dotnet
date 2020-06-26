@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Directi
         }
 
 
-        
+
 
 
         [Spec(nameof(directive_annotation_cannot_be_added_unless_location_is_valid))]

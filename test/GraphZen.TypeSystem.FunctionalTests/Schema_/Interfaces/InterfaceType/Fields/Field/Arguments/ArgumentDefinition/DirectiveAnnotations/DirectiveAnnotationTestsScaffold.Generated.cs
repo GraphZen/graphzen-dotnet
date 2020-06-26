@@ -33,25 +33,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-        [Spec(nameof(DEPRECATED_directive_annotation_cannot_be_upserted_unless_directive_is_defined))]
-        [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_upserted_unless_directive_is_defined_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(directive_annotation_cannot_be_added_unless_location_is_valid))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_unless_location_is_valid_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(DEPRECATED_directive_annotation_cannot_be_upserted_unless_location_is_valid))]
-        [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_upserted_unless_location_is_valid_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -65,25 +49,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
         }
 
 
-        [Spec(nameof(DEPRECATED_directive_annotation_cannot_be_upserted_with_null_name))]
-        [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_upserted_with_null_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
         [Spec(nameof(directive_annotation_cannot_be_added_with_invalid_name))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_added_with_invalid_name_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
-
-
-        [Spec(nameof(DEPRECATED_directive_annotation_cannot_be_upserted_with_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_upserted_with_invalid_name_()
         {
             // var schema = Schema.Create(_ => { });
         }
@@ -135,4 +103,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
     {
     }
 }
-// Source Hash Code: 14494446515633036673
+// Source Hash Code: 8777501271514263197
