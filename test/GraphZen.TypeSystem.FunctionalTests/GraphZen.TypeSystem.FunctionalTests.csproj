@@ -23,5 +23,9 @@
     <ProjectReference Include="..\..\src\GraphZen.TypeSystem\GraphZen.TypeSystem.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Schema_\Directives\Directive\Repeatable\" />
+  </ItemGroup>
+
  
 </Project>

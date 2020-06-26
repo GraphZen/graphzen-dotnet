@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DirectiveRepeatableSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repeatable
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.IsRepeatable
 {
     [NoReorder]
     public class DirectiveRepeatableTests
@@ -71,7 +71,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repea
 
 
         [Spec(nameof(when_clr_attribute_set_honors_allow_multiple_true))]
-        [Fact()]
+        [Fact]
         public void when_clr_attribute_set_honors_allow_multiple_true_()
         {
             var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<AllowMultipleAttribute>(); });
@@ -80,7 +80,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Repea
 
 
         [Spec(nameof(when_clr_attribute_set_honors_allow_multiple_false))]
-        [Fact()]
+        [Fact]
         public void when_clr_attribute_set_honors_allow_multiple_false_()
         {
             var schema = Schema.Create(_ => { _.Directive("Foo").ClrType<DisallowMultipleAttribute>(); });

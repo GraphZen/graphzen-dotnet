@@ -32,6 +32,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string when_created_via_clr_attribute_honors_allow_multiple_false = null;
             public const string when_clr_attribute_set_honors_allow_multiple_true = null;
             public const string when_clr_attribute_set_honors_allow_multiple_false = null;
+            public const string cannot_be_set_to_true_when_clr_attribute_allow_multiple_false = null;
+            public const string cannot_be_set_to_false_when_clr_attribute_allow_multiple_true = null;
         }
 
 
