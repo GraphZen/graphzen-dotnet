@@ -233,7 +233,7 @@ namespace GraphZen.TypeSystem.Internal
 
                         foreach (var directive in node.Directives)
                         {
-                            type.AddOrUpdateDirectiveAnnotation(directive.Name.Value, directive);
+                            type.AddDirectiveAnnotation(directive.Name.Value, directive);
                         }
 
                         foreach (var iface in node.Interfaces)
@@ -252,7 +252,7 @@ namespace GraphZen.TypeSystem.Internal
 
                                 foreach (var directiveNode in fieldNode.Directives)
                                 {
-                                    field.AddOrUpdateDirectiveAnnotation(directiveNode.Name.Value, directiveNode);
+                                    field.AddDirectiveAnnotation(directiveNode.Name.Value, directiveNode);
                                 }
 
                                 foreach (var argumentNode in fieldNode.Arguments)

@@ -1,8 +1,8 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -21,39 +21,28 @@ namespace GraphZen.TypeSystem
         {
         }
 
+        public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations => _directiveAnnotations;
+
         public abstract DirectiveLocation DirectiveLocation { get; }
         public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => _directiveAnnotations;
 
-        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            return _directiveAnnotations.Where(_ => _.Name == name);
-        }
+        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(string name) =>
+            _directiveAnnotations.Where(_ => _.Name == name);
 
-        public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations => _directiveAnnotations;
+        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(Func<IDirectiveAnnotation, bool> predicate) =>
+            _directiveAnnotations.Where(predicate);
 
-        public IDirectiveAnnotation AddDirectiveAnnotation(string name, object? value)
+
+        public bool AddDirectiveAnnotation(IDirectiveAnnotation directive, ConfigurationSource configurationSource)
         {
-            var directive = new DirectiveAnnotation(name, value);
             _directiveAnnotations.Add(directive);
-            return directive;
+            return true;
         }
 
-        public IDirectiveAnnotation UpdateDirectiveAnnotation(string name, object? value)
+        public bool RemoveDirectiveAnnotation(IDirectiveAnnotation directive, ConfigurationSource configurationSource)
         {
-            Check.NotNull(name, nameof(name));
-            RemoveDirectiveAnnotation(name);
-            return AddDirectiveAnnotation(name, value);
-        }
-
-        public void RemoveDirectiveAnnotation(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            _directiveAnnotations.RemoveAll(_ =>
-            {
-                Debug.Assert(_ != null, nameof(_) + " != null");
-                return _.Name == name;
-            });
+            _directiveAnnotations.Remove(directive);
+            return true;
         }
     }
 }

@@ -78,6 +78,9 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyCollection<DirectiveLocation> Locations { get; }
 
+        [GraphQLIgnore]
+        public bool HasLocation(DirectiveLocation location) => Locations.Contains(location);
+
         [GraphQLIgnore] public Type? ClrType { get; }
 
         [GraphQLCanBeNull] public string? Description { get; }

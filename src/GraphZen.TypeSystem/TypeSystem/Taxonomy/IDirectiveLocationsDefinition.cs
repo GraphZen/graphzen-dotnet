@@ -13,5 +13,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IDirectiveLocationsDefinition
     {
         IReadOnlyCollection<DirectiveLocation> Locations { get; }
+        bool HasLocation(DirectiveLocation location);
     }
 }

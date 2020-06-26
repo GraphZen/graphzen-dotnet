@@ -9,8 +9,8 @@ namespace GraphZen.TypeSystem.Internal
 {
     internal interface IAnnotableBuilder<out TBuilder>
     {
-        TBuilder AddDirectiveAnnotation(string name, object? value = null);
-        TBuilder AddOrUpdateDirectiveAnnotation(string name, object? value = null);
+        TBuilder AddDirectiveAnnotation(string name, object value);
+        TBuilder AddDirectiveAnnotation(string name);
         TBuilder RemoveDirectiveAnnotations(string name);
         TBuilder RemoveDirectiveAnnotations();
     }

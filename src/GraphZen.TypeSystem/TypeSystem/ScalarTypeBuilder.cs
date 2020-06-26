@@ -116,14 +116,10 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public ScalarTypeBuilder<TScalar, TValueNode> AddDirectiveAnnotation(string name, object? value = null) =>
-            throw new NotImplementedException();
+        public ScalarTypeBuilder<TScalar, TValueNode> AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
 
-        public ScalarTypeBuilder<TScalar, TValueNode> AddOrUpdateDirectiveAnnotation(string name, object? value = null)
-        {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
-            return this;
-        }
+        public ScalarTypeBuilder<TScalar, TValueNode> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+
 
         public ScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();

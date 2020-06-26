@@ -53,13 +53,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         {
             public const string directive_annotation_can_be_added = null;
             public const string directive_annotation_cannot_be_added_unless_directive_is_defined = null;
-            public const string directive_annotation_cannot_be_upserted_unless_directive_is_defined = null;
+            public const string DEPRECATED_directive_annotation_cannot_be_upserted_unless_directive_is_defined = null;
             public const string directive_annotation_cannot_be_added_unless_location_is_valid = null;
-            public const string directive_annotation_cannot_be_upserted_unless_location_is_valid = null;
+            public const string DEPRECATED_directive_annotation_cannot_be_upserted_unless_location_is_valid = null;
             public const string directive_annotation_cannot_be_added_with_null_name = null;
-            public const string directive_annotation_cannot_be_upserted_with_null_name = null;
+            public const string DEPRECATED_directive_annotation_cannot_be_upserted_with_null_name = null;
             public const string directive_annotation_cannot_be_added_with_invalid_name = null;
-            public const string directive_annotation_cannot_be_upserted_with_invalid_name = null;
+            public const string DEPRECATED_directive_annotation_cannot_be_upserted_with_invalid_name = null;
             public const string directive_annotations_can_be_removed = null;
             public const string directive_annotations_can_be_removed_by_name = null;
             public const string directive_annotations_cannot_be_removed_by_name_with_null_name = null;

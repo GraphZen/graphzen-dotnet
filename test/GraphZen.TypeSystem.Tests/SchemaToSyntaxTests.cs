@@ -23,10 +23,10 @@ namespace GraphZen.TypeSystem.Tests
             schema.Directive("onSchema").Locations(DirectiveLocation.Schema);
             schema.Directive("onInterface").Locations(DirectiveLocation.Interface);
 
-            schema.DirectiveAnnotation("onSchema");
+            schema.AddDirectiveAnnotation("onSchema");
 
             schema.Interface("Interface")
-                .AddOrUpdateDirectiveAnnotation("onInterface")
+                .AddDirectiveAnnotation("onInterface")
                 .Description("interface description")
                 .Field("field", "String", _ => _.Description("field description"))
                 .Field("nn", "String!")

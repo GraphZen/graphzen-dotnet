@@ -192,15 +192,11 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public InterfaceTypeBuilder<TInterface, TContext> AddDirectiveAnnotation(string name, object? value = null) =>
-            throw new NotImplementedException();
+        public InterfaceTypeBuilder<TInterface, TContext> AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
 
-        public InterfaceTypeBuilder<TInterface, TContext> AddOrUpdateDirectiveAnnotation(string name,
-            object? value = null)
-        {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
-            return this;
-        }
+        public InterfaceTypeBuilder<TInterface, TContext> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+
+        
 
         public InterfaceTypeBuilder<TInterface, TContext> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();

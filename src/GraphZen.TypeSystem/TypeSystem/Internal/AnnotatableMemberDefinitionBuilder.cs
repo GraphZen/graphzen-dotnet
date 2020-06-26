@@ -7,7 +7,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
-using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
@@ -37,76 +36,28 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public void DirectiveAnnotation(object value, ConfigurationSource configurationSource)
-        {
-            if (value is DirectiveSyntax node)
-            {
-                if (TryGetDeprecatedAttribute(node, out var attr))
-                {
-                    AddOrUpdateDirectiveAnnotation("deprecated", attr, configurationSource);
-                    return;
-                }
-
-                var existingDirective = Schema.FindDirective(node.Name.Value);
-                if (existingDirective != null)
-                {
-                }
-                else
-                {
-                    DirectiveAnnotation(node, configurationSource);
-                }
-            }
-        }
-
-        // ReSharper disable once UnusedParameter.Local
-        private void DirectiveAnnotation(DirectiveSyntax directive, ConfigurationSource configurationSource)
-        {
-            Definition.AddDirectiveAnnotation(directive.Name.Value, directive);
-        }
-
-
-
-        public void AddOrUpdateDirectiveAnnotation(string name, object? value, ConfigurationSource configurationSource)
-        {
-            var existing = Definition.FindDirectiveAnnotations(name).SingleOrDefault();
-            if (existing == null)
-            {
-                AddDirectiveAnnotation(name, value, configurationSource);
-            }
-            else
-            {
-                Definition.UpdateDirectiveAnnotation(name, value);
-            }
-        }
 
         public void AddDirectiveAnnotation(string name, object? value, ConfigurationSource configurationSource)
         {
             var directive = Schema.FindDirective(name);
-            var displayVal = Definition.DirectiveLocation.GetDisplayValue();
-            var directiveDescription =
-                Definition is INamed namedDef ? $"{displayVal} '{namedDef}'" : displayVal;
+
             if (directive == null)
             {
                 throw new InvalidOperationException(
-                    $"Unknown directive: cannot add '{name}' directive to the {directiveDescription}. Ensure the '{name}' directive is defined in the schema before it is used.");
+                    $"Cannot annotate {Definition} with directive {name}: Directive {name} has not been defined yet.");
             }
 
-            if (!directive.Locations.Contains(Definition.DirectiveLocation))
+            if (!directive.HasLocation(Definition.DirectiveLocation))
             {
-                var validLocations = directive.Locations.Any()
-                    ? $" The '{name}' directive is only valid on a {directive.Locations.Select(_ => _.GetDisplayValue()).OrList()}."
-                    : "";
+                var reason = directive.Locations.Any()
+                    ? $"is only valid on {directive.Locations.Select(_ => _.GetPluralizedDisplayValue()).OrList()}."
+                    : "does not have any locations defined.";
 
                 throw new InvalidOperationException(
-                    $"Invalid directive location: The '{name}' directive cannot be annotated on the {directiveDescription}.{validLocations}");
+                    $"Cannot annotate {Definition} with {directive}: Directive {name} cannot be annotated on {Definition.DirectiveLocation.GetPluralizedDisplayValue()} because it {reason}");
             }
 
-            Definition.AddDirectiveAnnotation(name, value);
-        }
-
-        public void RemoveDirectiveAnnotation(string name)
-        {
-            Definition.RemoveDirectiveAnnotation(name);
+            Definition.AddDirectiveAnnotation(new DirectiveAnnotation(directive, value), configurationSource);
         }
     }
 }

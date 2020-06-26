@@ -19,14 +19,12 @@ namespace GraphZen.TypeSystem
 
         protected InternalInputFieldBuilder Builder { get; }
 
-        public InputFieldBuilder<T> AddDirectiveAnnotation(string name, object? value = null) =>
-            throw new NotImplementedException();
 
-        public InputFieldBuilder<T> AddOrUpdateDirectiveAnnotation(string name, object? value = null)
-        {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
-            return this;
-        }
+        public InputFieldBuilder<T> AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
+
+        public InputFieldBuilder<T> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+
+
 
         public InputFieldBuilder<object?> FieldType(string type)
         {

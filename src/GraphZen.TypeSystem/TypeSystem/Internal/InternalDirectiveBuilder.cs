@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -19,18 +18,7 @@ namespace GraphZen.TypeSystem.Internal
         {
         }
 
-        public InternalDirectiveBuilder Locations(DirectiveLocation[] locations,
-            ConfigurationSource configurationSource)
-        {
-            foreach (var directiveLocation in locations)
-            {
-                Definition.AddLocation(directiveLocation, configurationSource);
-            }
-
-            return this;
-        }
-
-
+        
         public InternalArgumentBuilder Argument(string name) =>
             Definition.FindArgument(name)?.Builder ?? throw new NotImplementedException();
 
@@ -103,7 +91,8 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public InternalDirectiveBuilder Locations(IEnumerable<DirectiveLocation> locations, ConfigurationSource configurationSource)
+        public InternalDirectiveBuilder Locations(IEnumerable<DirectiveLocation> locations,
+            ConfigurationSource configurationSource)
         {
             var distinct = locations.ToHashSet();
 
@@ -117,14 +106,14 @@ namespace GraphZen.TypeSystem.Internal
 
             foreach (var location in distinct)
             {
-
                 AddLocation(location, configurationSource);
             }
 
             return this;
         }
 
-        public InternalDirectiveBuilder RemoveLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        public InternalDirectiveBuilder RemoveLocation(DirectiveLocation location,
+            ConfigurationSource configurationSource)
         {
             Definition.RemoveLocation(location, configurationSource);
             return this;
@@ -136,6 +125,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 Definition.RemoveLocation(location, configurationSource);
             }
+
             return this;
         }
     }

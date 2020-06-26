@@ -123,14 +123,11 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public SchemaBuilder<TContext> AddDirectiveAnnotation(string name, object? value = null) =>
-            throw new NotImplementedException();
 
-        public SchemaBuilder<TContext> AddOrUpdateDirectiveAnnotation(string name, object? value)
-        {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
-            return this;
-        }
+        public SchemaBuilder<TContext> AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
+
+        public SchemaBuilder<TContext> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+
 
         public SchemaBuilder<TContext> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();
@@ -141,16 +138,5 @@ namespace GraphZen.TypeSystem
 
         SchemaDefinition IInfrastructure<SchemaDefinition>.Instance => Builder.Definition;
 
-
-        public SchemaBuilder<TContext> DirectiveAnnotation(string name) => AddOrUpdateDirectiveAnnotation(name, null);
-
-        public SchemaBuilder<TContext> DirectiveAnnotation(object directive) =>
-            throw new NotImplementedException();
-
-        public SchemaBuilder<TContext> RemoveDirectiveAnnotation(string name)
-        {
-            Builder.RemoveDirectiveAnnotation(Check.NotNull(name, nameof(name)));
-            return this;
-        }
     }
 }

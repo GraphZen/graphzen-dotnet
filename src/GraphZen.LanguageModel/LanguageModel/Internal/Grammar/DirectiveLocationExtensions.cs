@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -10,7 +11,7 @@ namespace GraphZen.LanguageModel.Internal
 {
     public static class DirectiveLocationExtensions
     {
-        private static readonly Dictionary<DirectiveLocation, string> DirectiveLocationDisplayValues =
+        public static readonly ImmutableDictionary<DirectiveLocation, string> DirectiveLocationDisplayValues =
             new Dictionary<DirectiveLocation, string>
             {
                 {DirectiveLocation.Query, "query"},
@@ -31,9 +32,17 @@ namespace GraphZen.LanguageModel.Internal
                 {DirectiveLocation.Scalar, "scalar"},
                 {DirectiveLocation.Union, "union"},
                 {DirectiveLocation.Interface, "interface"}
-            };
+            }.ToImmutableDictionary();
 
         public static string GetDisplayValue(this DirectiveLocation directiveLocation) =>
             DirectiveLocationDisplayValues[directiveLocation];
+
+        public static string GetPluralizedDisplayValue(this DirectiveLocation directiveLocation) =>
+            directiveLocation switch
+            {
+                DirectiveLocation.Schema => "the schema",
+                DirectiveLocation.Query => "queries",
+                _ => GetDisplayValue(directiveLocation) + "s"
+            };
     }
 }

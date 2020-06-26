@@ -20,14 +20,11 @@ namespace GraphZen.TypeSystem
 
         protected InternalArgumentBuilder Builder { get; }
 
-        public ArgumentBuilder<T> AddDirectiveAnnotation(string name, object? value = null) =>
-            throw new NotImplementedException();
 
-        public ArgumentBuilder<T> AddOrUpdateDirectiveAnnotation(string name, object? value = null)
-        {
-            Builder.AddOrUpdateDirectiveAnnotation(Check.NotNull(name, nameof(name)), value, ConfigurationSource.Explicit);
-            return this;
-        }
+        public ArgumentBuilder<T> AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
+
+        public ArgumentBuilder<T> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+
 
         public ArgumentBuilder<T> RemoveDirectiveAnnotations(string name) =>
             throw new NotImplementedException();

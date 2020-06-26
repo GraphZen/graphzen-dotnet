@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -15,7 +16,8 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public abstract class AnnotatableMember : Member, IDirectiveAnnotations
     {
-        private ImmutableArray<IDirectiveAnnotation> _annotations;
+        private readonly ImmutableArray<IDirectiveAnnotation> _annotations;
+
         protected AnnotatableMember(IEnumerable<IDirectiveAnnotation>? directives, Schema schema) : base(schema)
         {
             _annotations = directives?.ToImmutableArray() ?? ImmutableArray<IDirectiveAnnotation>.Empty;
@@ -32,5 +34,8 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             return _annotations.Where(_ => _.Name == name);
         }
+
+        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(Func<IDirectiveAnnotation, bool> predicate) =>
+            _annotations.Where(predicate);
     }
 }

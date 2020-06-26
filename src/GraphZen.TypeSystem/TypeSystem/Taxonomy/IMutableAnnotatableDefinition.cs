@@ -12,6 +12,5 @@ namespace GraphZen.TypeSystem.Taxonomy
         IAnnotatableDefinition,
         IMutableDefinition,
         IMutableDirectiveAnnotationsDefinition
-    {
-    }
+    { }
 }

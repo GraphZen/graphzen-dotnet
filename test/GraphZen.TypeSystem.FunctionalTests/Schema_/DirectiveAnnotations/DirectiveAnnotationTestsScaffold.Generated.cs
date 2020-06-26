@@ -32,7 +32,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations
         }
 
 
-        [Spec(nameof(directive_annotation_cannot_be_upserted_unless_directive_is_defined))]
+        [Spec(nameof(DEPRECATED_directive_annotation_cannot_be_upserted_unless_directive_is_defined))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_unless_directive_is_defined_()
         {
@@ -48,7 +48,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations
         }
 
 
-        [Spec(nameof(directive_annotation_cannot_be_upserted_unless_location_is_valid))]
+        [Spec(nameof(DEPRECATED_directive_annotation_cannot_be_upserted_unless_location_is_valid))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_unless_location_is_valid_()
         {
@@ -64,7 +64,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations
         }
 
 
-        [Spec(nameof(directive_annotation_cannot_be_upserted_with_null_name))]
+        [Spec(nameof(DEPRECATED_directive_annotation_cannot_be_upserted_with_null_name))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_with_null_name_()
         {
@@ -80,7 +80,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations
         }
 
 
-        [Spec(nameof(directive_annotation_cannot_be_upserted_with_invalid_name))]
+        [Spec(nameof(DEPRECATED_directive_annotation_cannot_be_upserted_with_invalid_name))]
         [Fact(Skip = "TODO")]
         public void directive_annotation_cannot_be_upserted_with_invalid_name_()
         {

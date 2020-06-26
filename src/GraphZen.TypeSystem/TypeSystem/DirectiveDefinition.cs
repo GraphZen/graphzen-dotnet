@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
@@ -202,6 +203,8 @@ namespace GraphZen.TypeSystem
 
         public IReadOnlyCollection<DirectiveLocation> Locations =>
             (IReadOnlyCollection<DirectiveLocation>)_locations.Keys;
+
+        public bool HasLocation(DirectiveLocation location) => Locations.Contains(location);
 
         public Type? ClrType { get; private set; }
 

@@ -1,8 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
@@ -12,16 +10,15 @@ namespace GraphZen.TypeSystem
 {
     public class DirectiveAnnotation : IDirectiveAnnotation
     {
-        public DirectiveAnnotation(string name, object? value)
+        private readonly DirectiveDefinition _directive;
+
+        public DirectiveAnnotation(DirectiveDefinition directive, object? value)
         {
-            Name = Check.NotNull(name, nameof(name));
+            _directive = directive;
             Value = value;
         }
 
-        public static IReadOnlyList<IDirectiveAnnotation> EmptyList { get; } =
-            ImmutableList<IDirectiveAnnotation>.Empty;
-
-        public string Name { get; }
+        public string Name => _directive.Name;
         public object? Value { get; }
     }
 }
