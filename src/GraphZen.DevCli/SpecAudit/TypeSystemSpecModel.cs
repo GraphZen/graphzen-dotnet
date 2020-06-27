@@ -70,7 +70,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(argumentDef)
                 .WithSpecs<NamedCollectionSpecs>();
 
-            var outputField = new Subject(nameof(Field))
+            var outputField = member.WithName(nameof(Field))
                 .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(name)
                 .WithChild(description)
@@ -86,7 +86,7 @@ namespace GraphZen.SpecAudit
             var clrType = new Subject(nameof(IClrType.ClrType))
                 .WithSpecs<ClrTypeSpecs>();
 
-            var graphQLType = new Subject(nameof(NamedType))
+            var graphQLType = member.WithName(nameof(NamedType))
                 .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(name)
                 .WithChild(description)
@@ -158,7 +158,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<InputXorOutputTypeSpecs>()
                 .WithChild(inputObjectType);
 
-            var directive = new Subject(nameof(Directive))
+            var directive = member.WithName(nameof(Directive))
                 .WithChild(name)
                 .WithChild(clrType)
                 .WithChild(argumentDefCollection)
@@ -173,7 +173,7 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<ClrTypedCollectionSpecs>()
                 .WithChild(directive);
 
-            var schemaBuilder = new Subject("Schema_")
+            var schemaBuilder = member.WithName("Schema_")
                 .WithChild(description)
                 .WithChild(directiveAnnotations)
                 .WithChild(new Subject(nameof(Schema.QueryType)))
