@@ -17,7 +17,7 @@ namespace GraphZen.TypeSystem.Taxonomy
         IDescription,
         IDeprecation,
         IClrInfo,
-        IOutputDefinition, 
+        IOutputDefinition,
         IMemberParentDefinition
     {
         IGraphQLTypeReference FieldType { get; }
