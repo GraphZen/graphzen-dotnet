@@ -28,6 +28,7 @@ namespace GraphZen.TypeSystem
         private readonly ArgumentsDefinition _args;
 
         public override SchemaDefinition Schema { get; }
+        public IEnumerable<IMemberDefinition> Children() => GetArguments();
 
         public FieldDefinition(string name, ConfigurationSource nameConfigurationSource,
             TypeIdentity fieldTypeIdentity,

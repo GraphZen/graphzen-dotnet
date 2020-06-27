@@ -116,5 +116,8 @@ namespace GraphZen.TypeSystem
 
 
         public override string ToString() => $"{DeclaringType}.{Name}";
+        IEnumerable<IMemberDefinition> IMemberParentDefinition.Children() => Children();
+
+        public IEnumerable<IMember> Children() => GetArguments();
     }
 }
