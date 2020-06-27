@@ -114,14 +114,35 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public EnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
+        public EnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object value)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public EnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public EnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
+            return this;
+
+        }
 
 
+        public EnumTypeBuilder<TEnum> RemoveDirectiveAnnotations(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
+            return this;
 
-        public EnumTypeBuilder<TEnum> RemoveDirectiveAnnotations(string name) => throw new NotImplementedException();
-        public EnumTypeBuilder<TEnum> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        }
+
+        public EnumTypeBuilder<TEnum> RemoveDirectiveAnnotations()
+        {
+            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            return this;
+        }
 
 
         InternalEnumTypeBuilder IInfrastructure<InternalEnumTypeBuilder>.Instance => Builder;

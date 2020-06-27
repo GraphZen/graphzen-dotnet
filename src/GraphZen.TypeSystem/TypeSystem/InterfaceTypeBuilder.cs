@@ -177,7 +177,7 @@ namespace GraphZen.TypeSystem
             TypeResolver<TInterface, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface)value, (TContext)context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface) value, (TContext) context, info));
             return this;
         }
 
@@ -194,22 +194,31 @@ namespace GraphZen.TypeSystem
 
         public InterfaceTypeBuilder<TInterface, TContext> AddDirectiveAnnotation(string name, object value)
         {
+            Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
-
         }
 
         public InterfaceTypeBuilder<TInterface, TContext> AddDirectiveAnnotation(string name)
         {
+            Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
             return this;
         }
 
 
-        public InterfaceTypeBuilder<TInterface, TContext> RemoveDirectiveAnnotations(string name) =>
-            throw new NotImplementedException();
+        public InterfaceTypeBuilder<TInterface, TContext> RemoveDirectiveAnnotations(string name)
+        {
+            Check.NotNull(name, nameof(name));
 
-        public InterfaceTypeBuilder<TInterface, TContext> RemoveDirectiveAnnotations() =>
-            throw new NotImplementedException();
+            Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public InterfaceTypeBuilder<TInterface, TContext> RemoveDirectiveAnnotations()
+        {
+            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            return this;
+        }
     }
 }

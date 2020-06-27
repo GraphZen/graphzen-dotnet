@@ -126,25 +126,34 @@ namespace GraphZen.TypeSystem
 
         public SchemaBuilder<TContext> AddDirectiveAnnotation(string name, object value)
         {
+            Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 
         public SchemaBuilder<TContext> AddDirectiveAnnotation(string name)
         {
+            Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
             return this;
         }
 
 
-        public SchemaBuilder<TContext> RemoveDirectiveAnnotations(string name) =>
-            throw new NotImplementedException();
+        public SchemaBuilder<TContext> RemoveDirectiveAnnotations(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public SchemaBuilder<TContext> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public SchemaBuilder<TContext> RemoveDirectiveAnnotations()
+        {
+            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            return this;
+        }
 
         InternalSchemaBuilder IInfrastructure<InternalSchemaBuilder>.Instance => Builder;
 
         SchemaDefinition IInfrastructure<SchemaDefinition>.Instance => Builder.Definition;
-
     }
 }

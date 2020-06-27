@@ -771,5 +771,7 @@ namespace GraphZen.TypeSystem
                 }
             }
         }
+
+        public override string ToString() => "schema";
     }
 }
