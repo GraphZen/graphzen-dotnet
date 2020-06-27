@@ -16,6 +16,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
         public class MemberSpecs
         {
             public const string should_be_included_in_schema_descendants = null;
+            public const string should_be_included_in_schema_definition_descendants = null;
         }
 
         public class SdlSpec

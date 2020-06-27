@@ -970,7 +970,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 foreach (var annotable in Definition.DescendantsAndSelf().OfType<AnnotatableMemberDefinition>())
                 {
-                     annotable.Builder.RemoveDirectiveAnnotations(definition.Name, configurationSource);
+                    annotable.Builder.RemoveDirectiveAnnotations(definition.Name, configurationSource);
                 }
             }
 
