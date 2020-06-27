@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem.Taxonomy
         IDescription,
         IClrType,
         IArgumentsDefinition,
-        IDirectiveLocationsDefinition, 
+        IDirectiveLocationsDefinition,
         IMemberParentDefinition
     {
         public bool IsSpec { get; }
