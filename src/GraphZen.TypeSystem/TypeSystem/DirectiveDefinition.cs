@@ -49,6 +49,7 @@ namespace GraphZen.TypeSystem
                 IsRepeatable = clrType.GetCustomAttribute<AttributeUsageAttribute>()?.AllowMultiple == true;
             }
 
+
             _repeatableConfigurationSource = ConfigurationSource.Convention;
 
             if (name != null)
@@ -87,7 +88,8 @@ namespace GraphZen.TypeSystem
         }
 
 
-        internal InternalDirectiveBuilder Builder { get; }
+        internal new InternalDirectiveBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
 
         private string DebuggerDisplay => $"directive {Name}";
 

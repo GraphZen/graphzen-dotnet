@@ -254,22 +254,31 @@ namespace GraphZen.TypeSystem
 
         public ObjectTypeBuilder<TObject, TContext> AddDirectiveAnnotation(string name, object value)
         {
+            Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 
         public ObjectTypeBuilder<TObject, TContext> AddDirectiveAnnotation(string name)
         {
+            Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
             return this;
         }
 
 
-        public ObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotations(string name) =>
-            throw new NotImplementedException();
+        public ObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotations(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public ObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotations() =>
-            throw new NotImplementedException();
+        public ObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotations()
+        {
+            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            return this;
+        }
 
         public ObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector) =>
             throw new NotImplementedException();

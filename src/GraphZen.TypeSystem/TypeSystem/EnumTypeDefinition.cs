@@ -32,7 +32,8 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"enum {Name}";
 
-        public InternalEnumTypeBuilder Builder { get; }
+        internal new InternalEnumTypeBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 

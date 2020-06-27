@@ -37,7 +37,8 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"input {Name}";
 
 
-        public InternalInputObjectTypeBuilder Builder { get; }
+        internal new InternalInputObjectTypeBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputObject;
 

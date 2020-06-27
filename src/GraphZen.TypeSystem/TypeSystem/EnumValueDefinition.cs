@@ -40,7 +40,8 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"enum value {Name}";
 
-        public InternalEnumValueBuilder Builder { get; }
+        internal new InternalEnumValueBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
 
         public override SchemaDefinition Schema { get; }
 

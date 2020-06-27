@@ -78,42 +78,92 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Directi
 
 
         [Spec(nameof(directive_annotation_cannot_be_added_with_invalid_name))]
-        [Fact(Skip = "TODO")]
-        public void directive_annotation_cannot_be_added_with_invalid_name_()
+        [Theory]
+        [InlineData("{name}")]
+        [InlineData("sdfa asf")]
+        [InlineData("sdf*(#&aasf")]
+        public void directive_annotation_cannot_be_added_with_invalid_name_(string name)
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                var foo = _.Object("Foo");
+                var adds = new List<Action>
+                {
+                    () => foo.AddDirectiveAnnotation(name),
+                    () => foo.AddDirectiveAnnotation(name, "test")
+                };
+                adds.ForEach(add =>
+                {
+                    add.Should().Throw<InvalidNameException>().WithMessage(
+                        $"Cannot annotate object Foo with directive: \"{name}\" is not a valid directive name.");
+                });
+            });
         }
 
 
         [Spec(nameof(directive_annotations_can_be_removed))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void directive_annotations_can_be_removed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive("foo").Locations(DirectiveLocation.Object);
+                _.Directive("bar").Locations(DirectiveLocation.Object);
+                _.Object("Baz")
+                    .AddDirectiveAnnotation("foo")
+                    .AddDirectiveAnnotation("bar")
+                    .RemoveDirectiveAnnotations();
+            });
+            schema.GetObject("Baz").DirectiveAnnotations.Should().BeEmpty();
         }
 
 
         [Spec(nameof(directive_annotations_can_be_removed_by_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void directive_annotations_can_be_removed_by_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive("foo").Locations(DirectiveLocation.Object);
+                _.Directive("bar").Locations(DirectiveLocation.Object);
+                _.Object("Baz")
+                    .AddDirectiveAnnotation("foo")
+                    .AddDirectiveAnnotation("bar")
+                    .RemoveDirectiveAnnotations("bar");
+            });
+            var baz = schema.GetObject("Baz");
+            baz.DirectiveAnnotations.Should().HaveCount(1);
+            baz.HasAnyDirectiveAnnotation("foo").Should().BeTrue();
+            baz.HasAnyDirectiveAnnotation("bar").Should().BeFalse();
         }
 
 
         [Spec(nameof(directive_annotations_cannot_be_removed_by_name_with_null_name))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void directive_annotations_cannot_be_removed_by_name_with_null_name_()
         {
-            // var schema = Schema.Create(_ => { });
+            Schema.Create(_ =>
+            {
+                var foo = _.Object("Foo");
+                Action remove = () => foo.RemoveDirectiveAnnotations(null!);
+                remove.Should().ThrowArgumentNullException("name");
+            });
         }
 
 
         [Spec(nameof(directive_annotations_are_removed_when_directive_is_removed))]
-        [Fact(Skip = "TODO")]
+        [Fact]
         public void directive_annotations_are_removed_when_directive_is_removed_()
         {
-            // var schema = Schema.Create(_ => { });
+            var schema = Schema.Create(_ =>
+            {
+                _.Directive("foo").Locations(DirectiveLocation.Object);
+                _.Object("Baz")
+                    .AddDirectiveAnnotation("foo");
+                _.RemoveDirective("foo");
+            });
+            var baz = schema.GetObject("Baz");
+            baz.DirectiveAnnotations.Should().BeEmpty();
         }
 
 

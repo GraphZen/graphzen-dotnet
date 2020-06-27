@@ -667,6 +667,9 @@ namespace GraphZen.TypeSystem
         public override string ToString() => "Schema";
 
         ISchemaDefinition IMemberDefinition.Schema => this;
+        IEnumerable<IMemberDefinition> IMemberParentDefinition.Children() => Children();
+
+        public IEnumerable<IMember> Children() => throw new NotImplementedException();
 
 
         internal class IntrospectionInfo

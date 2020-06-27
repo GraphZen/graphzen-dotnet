@@ -48,11 +48,26 @@ namespace GraphZen.TypeSystem
         }
 
         private string DebuggerDisplay { [UsedImplicitly] get; } = "schema";
-        internal InternalSchemaBuilder Builder { get; }
+        internal new InternalSchemaBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+
         public IReadOnlyCollection<NamedTypeDefinition> Types => _types.Values;
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Schema;
 
         public override SchemaDefinition Schema => this;
+
+        public IEnumerable<IMemberDefinition> Children()
+        {
+            foreach (var directive in GetDirectives())
+            {
+                yield return directive;
+            }
+            foreach (var type in _types.Values)
+            {
+                yield return type;
+            }
+        }
+
         public ObjectTypeDefinition? QueryType { get; private set; }
 
         public bool SetQueryType(ObjectTypeDefinition type, ConfigurationSource configurationSource)

@@ -35,7 +35,11 @@ namespace GraphZen.TypeSystem
             return _annotations.Where(_ => _.Name == name);
         }
 
+        public bool HasAnyDirectiveAnnotation(string name) => FindDirectiveAnnotations(name).Any();
+
         public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(Func<IDirectiveAnnotation, bool> predicate) =>
             _annotations.Where(predicate);
+
+        public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations => _annotations;
     }
 }

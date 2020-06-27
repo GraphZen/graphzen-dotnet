@@ -56,7 +56,8 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"field {Name}";
 
 
-        public InternalFieldBuilder Builder { get; }
+        internal new InternalFieldBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
 
 
         public FieldsDefinition DeclaringType { get; }

@@ -16,6 +16,7 @@ namespace GraphZen.TypeSystem.Taxonomy
         DirectiveLocation DirectiveLocation { get; }
         IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations();
         IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(string name);
+        bool HasAnyDirectiveAnnotation(string name);
         IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(Func<IDirectiveAnnotation, bool> predicate);
     }
 }

@@ -31,18 +31,11 @@ namespace GraphZen.SpecAudit
                     .WithSpecs<TypeReferenceSpecs>()
                     .WithSpecs<SdlSpec>();
 
+            var member = new Subject(nameof(Member)).WithSpecs<MemberSpecs>();
+
             var inputTypeRef = typeRef.WithName("InputTypeRef");
             var outputTypeRef = typeRef.WithName("OutputTypeRef");
 
-            var argument = new Subject("Argument")
-                .WithChild(name)
-                //.WithSpecs<SdlSpec, SdlExtensionSpec>()
-                .WithChild(new Subject("Value"));
-
-            // ReSharper disable once UnusedVariable
-            var argumentCollection = new Subject("Arguments")
-                .WithSpecs<NamedCollectionSpecs>()
-                .WithChild(argument);
 
             // ReSharper disable once UnusedVariable
             var directiveAnnotation = new Subject(nameof(DirectiveAnnotation));
@@ -50,15 +43,27 @@ namespace GraphZen.SpecAudit
             var directiveAnnotations = new Subject(nameof(AnnotatableMemberDefinition.DirectiveAnnotations))
                 .WithSpecs<DirectiveAnnotationSpecs>(SpecPriority.Medium);
 
-            var inputValue = new Subject(nameof(InputValue))
+            var inputValue = member.WithName(nameof(InputValue))
                 .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(description)
                 .WithChild(new Subject(nameof(InputValue.DefaultValue)))
                 .WithChild(name)
                 .WithChild(directiveAnnotations);
 
+            var argument = inputValue.WithName(nameof(Argument))
+                            .WithChild(name)
+                            //.WithSpecs<SdlSpec, SdlExtensionSpec>()
+                            .WithChild(new Subject("Value"));
+
+            // ReSharper disable once UnusedVariable
+            var argumentCollection = new Subject("Arguments")
+                .WithSpecs<NamedCollectionSpecs>()
+                .WithChild(argument);
+
+
             var argumentDef = inputValue.WithName(nameof(ArgumentDefinition))
                 .WithChild(inputTypeRef.WithName(nameof(Argument.ArgumentType)));
+
             var argumentDefCollection = new Subject(nameof(IArguments.Arguments))
                 .WithChild(argumentDef)
                 .WithSpecs<NamedCollectionSpecs>();

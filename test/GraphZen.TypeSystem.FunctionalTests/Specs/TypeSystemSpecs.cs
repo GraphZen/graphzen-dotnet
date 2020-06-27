@@ -13,6 +13,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
 {
     public class TypeSystemSpecs
     {
+        public class MemberSpecs
+        {
+            public const string should_be_included_in_schema_descendants = null;
+        }
+
         public class SdlSpec
         {
             public const string item_can_be_defined_by_sdl = null;
@@ -61,6 +66,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Specs
             public const string directive_annotations_cannot_be_removed_by_name_with_null_name = null;
             public const string directive_annotations_are_removed_when_directive_is_removed = null;
             public const string directive_annotations_are_removed_when_directive_is_ignored = null;
+            public const string directive_annotations_are_renamed_when_directive_is_renamed = null;
         }
 
 

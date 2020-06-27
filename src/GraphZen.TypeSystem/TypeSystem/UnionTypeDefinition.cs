@@ -30,7 +30,8 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"union {Name}";
 
 
-        public InternalUnionTypeBuilder Builder { get; }
+        internal new InternalUnionTypeBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
 
 
         public IEnumerable<ObjectTypeDefinition> GetMemberTypes() => _types;

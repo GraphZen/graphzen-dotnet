@@ -5,40 +5,51 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public abstract class AnnotatableMemberDefinitionBuilder<TDefinition> : MemberDefinitionBuilder<TDefinition>
+    public abstract class AnnotatableMemberDefinitionBuilder<TDefinition> : AnnotatableMemberDefinitionBuilder
         where TDefinition : AnnotatableMemberDefinition
     {
-        protected AnnotatableMemberDefinitionBuilder(TDefinition definition) : base(definition)
+        protected AnnotatableMemberDefinitionBuilder(AnnotatableMemberDefinition definition) : base(definition)
         {
         }
 
-        private static bool TryGetDeprecatedAttribute(DirectiveSyntax node,
-            [NotNullWhen(true)] out GraphQLDeprecatedAttribute? attribute)
+        public new TDefinition Definition => (TDefinition) base.Definition;
+    }
+
+    public abstract class AnnotatableMemberDefinitionBuilder : MemberDefinitionBuilder<AnnotatableMemberDefinition>
+    {
+        protected AnnotatableMemberDefinitionBuilder(AnnotatableMemberDefinition definition) : base(definition)
         {
-            if (node.Name.Value != "deprecated")
+        }
+
+        public void RemoveDirectiveAnnotations(string name, ConfigurationSource configurationSource)
+        {
+            foreach (var annotation in Definition.FindDirectiveAnnotations(name).ToArray())
             {
-                attribute = null;
-                return false;
+                Definition.RemoveDirectiveAnnotation(annotation, configurationSource);
             }
-
-            var reason =
-                node.Arguments.SingleOrDefault(_ => _.Name.Value == "reason")?.Value is StringValueSyntax strValue
-                    ? strValue.Value
-                    : null;
-
-            attribute = new GraphQLDeprecatedAttribute(reason);
-            return true;
         }
 
+        public void RemoveDirectiveAnnotations(ConfigurationSource configurationSource)
+        {
+            foreach (var annotation in Definition.DirectiveAnnotations.ToArray())
+            {
+                Definition.RemoveDirectiveAnnotation(annotation, configurationSource);
+            }
+        }
 
         public void AddDirectiveAnnotation(string name, object? value, ConfigurationSource configurationSource)
         {
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(
+                    $"Cannot annotate {Definition} with directive: \"{name}\" is not a valid directive name.");
+            }
+
             var directive = Schema.FindDirective(name);
 
             if (directive == null)

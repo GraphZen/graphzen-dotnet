@@ -21,6 +21,8 @@ namespace GraphZen.TypeSystem
         {
         }
 
+        internal new AnnotatableMemberDefinitionBuilder Builder => (AnnotatableMemberDefinitionBuilder)base.Builder;
+
         public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations => _directiveAnnotations;
 
         public abstract DirectiveLocation DirectiveLocation { get; }
@@ -29,9 +31,9 @@ namespace GraphZen.TypeSystem
         public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(string name) =>
             _directiveAnnotations.Where(_ => _.Name == name);
 
-        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(Func<IDirectiveAnnotation, bool> predicate) =>
-            _directiveAnnotations.Where(predicate);
+        public bool HasAnyDirectiveAnnotation(string name) => FindDirectiveAnnotations(name).Any();
 
+        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(Func<IDirectiveAnnotation, bool> predicate) => _directiveAnnotations.Where(predicate);
 
         public bool AddDirectiveAnnotation(IDirectiveAnnotation directive, ConfigurationSource configurationSource)
         {
@@ -44,5 +46,6 @@ namespace GraphZen.TypeSystem
             _directiveAnnotations.Remove(directive);
             return true;
         }
+
     }
 }

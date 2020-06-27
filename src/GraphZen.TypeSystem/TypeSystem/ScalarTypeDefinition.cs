@@ -25,7 +25,9 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"scalar {Name}";
 
 
-        public InternalScalarTypeBuilder Builder { get; }
+        internal new InternalScalarTypeBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+
         public LeafSerializer<object>? Serializer { get; set; }
 
         public bool SetSerializer(LeafSerializer<object>? serializer, ConfigurationSource configurationSource) =>

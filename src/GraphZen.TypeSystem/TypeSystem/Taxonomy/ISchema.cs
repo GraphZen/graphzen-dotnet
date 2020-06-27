@@ -19,7 +19,8 @@ namespace GraphZen.TypeSystem.Taxonomy
         IUnionTypes,
         IScalarTypes,
         IEnumTypes,
-        IInputObjectTypes
+        IInputObjectTypes,
+        IMemberParent
     {
     }
 }

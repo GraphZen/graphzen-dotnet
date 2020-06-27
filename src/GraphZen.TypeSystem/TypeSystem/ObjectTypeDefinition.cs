@@ -32,10 +32,8 @@ namespace GraphZen.TypeSystem
         }
 
         private string DebuggerDisplay => $"type {Name}";
-
-
-        public InternalObjectTypeBuilder Builder { get; }
-
+        new public InternalObjectTypeBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
         public IsTypeOf<object, GraphQLContext>? IsTypeOf { get; set; }
 
         public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _interfaces;

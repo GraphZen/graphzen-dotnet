@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
@@ -965,7 +966,13 @@ namespace GraphZen.TypeSystem.Internal
                 return false;
             }
 
-            Definition.RemoveDirective(definition);
+            if (Definition.RemoveDirective(definition))
+            {
+                foreach (var annotable in Definition.DescendantsAndSelf().OfType<AnnotatableMemberDefinition>())
+                {
+                     annotable.Builder.RemoveDirectiveAnnotations(definition.Name, configurationSource);
+                }
+            }
 
             return true;
         }

@@ -36,8 +36,9 @@ namespace GraphZen.TypeSystem
             Builder = new InternalInputFieldBuilder(this);
         }
 
+        internal new InternalInputFieldBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
 
-        internal InternalInputFieldBuilder Builder { get; }
         private string DebuggerDisplay => ToString();
 
         public override bool SetName(string name, ConfigurationSource configurationSource)

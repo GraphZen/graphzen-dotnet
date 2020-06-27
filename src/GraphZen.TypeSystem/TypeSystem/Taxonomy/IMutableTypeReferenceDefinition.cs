@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
 {
-    public interface IMutableTypeReferenceDefinition : ITypeReferenceDefinition, IMutableDefinition
+    public interface IMutableTypeReferenceDefinition : ITypeReferenceDefinition
     {
         new TypeReference TypeReference { get; }
         ConfigurationSource GetTypeReferenceConfigurationSource();

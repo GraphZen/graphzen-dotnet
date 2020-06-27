@@ -12,7 +12,8 @@ namespace GraphZen.TypeSystem.Taxonomy
         IObjectTypeDefinition,
         IInterfaces,
         ICompositeType,
-        IFields
+        IFields,
+        IDirectiveAnnotations
     {
     }
 }

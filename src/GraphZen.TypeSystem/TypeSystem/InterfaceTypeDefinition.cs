@@ -32,7 +32,8 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"interface {Name}";
 
 
-        public InternalInterfaceTypeBuilder Builder { get; }
+        internal new InternalInterfaceTypeBuilder Builder { get; }
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
 
         public override bool SetClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
         {

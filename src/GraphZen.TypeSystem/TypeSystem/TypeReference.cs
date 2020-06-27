@@ -114,6 +114,5 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => $"ref: {TypeSyntax} | {Identity}";
-        ISchemaDefinition IMemberDefinition.Schema => Schema;
     }
 }
