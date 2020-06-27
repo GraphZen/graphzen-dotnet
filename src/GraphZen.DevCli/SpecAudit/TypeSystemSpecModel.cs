@@ -43,6 +43,17 @@ namespace GraphZen.SpecAudit
             var directiveAnnotations = new Subject(nameof(AnnotatableMemberDefinition.DirectiveAnnotations))
                 .WithSpecs<DirectiveAnnotationSpecs>(SpecPriority.Medium);
 
+            var argument = new Subject("Argument")
+                                        .WithChild(name)
+                                        //.WithSpecs<SdlSpec, SdlExtensionSpec>()
+                                        .WithChild(new Subject("Value"));
+
+            // ReSharper disable once UnusedVariable
+            var argumentCollection = new Subject("Arguments")
+                .WithSpecs<NamedCollectionSpecs>()
+                .WithChild(argument);
+
+
             var inputValue = member.WithName(nameof(InputValue))
                 .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(description)
@@ -50,15 +61,6 @@ namespace GraphZen.SpecAudit
                 .WithChild(name)
                 .WithChild(directiveAnnotations);
 
-            var argument = inputValue.WithName(nameof(Argument))
-                            .WithChild(name)
-                            //.WithSpecs<SdlSpec, SdlExtensionSpec>()
-                            .WithChild(new Subject("Value"));
-
-            // ReSharper disable once UnusedVariable
-            var argumentCollection = new Subject("Arguments")
-                .WithSpecs<NamedCollectionSpecs>()
-                .WithChild(argument);
 
 
             var argumentDef = inputValue.WithName(nameof(ArgumentDefinition))
