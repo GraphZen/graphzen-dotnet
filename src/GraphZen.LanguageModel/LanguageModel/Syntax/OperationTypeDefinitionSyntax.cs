@@ -33,9 +33,9 @@ namespace GraphZen.LanguageModel
 
         public NamedTypeSyntax Type { get; }
 
-        public override IEnumerable<SyntaxNode> Children
+        public override IEnumerable<SyntaxNode> Children()
         {
-            get { yield return Type; }
+             yield return Type; 
         }
 
         private bool Equals(OperationTypeDefinitionSyntax other) =>

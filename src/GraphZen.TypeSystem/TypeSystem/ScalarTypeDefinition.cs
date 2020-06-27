@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
@@ -20,6 +21,11 @@ namespace GraphZen.TypeSystem
             : base(identity, schema, configurationSource)
         {
             Builder = new InternalScalarTypeBuilder(this);
+        }
+
+        public override IEnumerable<IMemberDefinition> Children()
+        {
+            yield break;
         }
 
         private string DebuggerDisplay => $"scalar {Name}";

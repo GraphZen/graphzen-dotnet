@@ -34,7 +34,7 @@ namespace GraphZen.LanguageModel
         public EnumValueSyntax Value { get; }
 
 
-        public override IEnumerable<SyntaxNode> Children =>
+        public override IEnumerable<SyntaxNode> Children() =>
             Value.ToEnumerable().Concat(Directives);
 
         public StringValueSyntax? Description { get; }

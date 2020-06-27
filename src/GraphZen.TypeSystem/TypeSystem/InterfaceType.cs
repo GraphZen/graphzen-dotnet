@@ -40,6 +40,7 @@ namespace GraphZen.TypeSystem
         public TypeResolver<object, GraphQLContext>? ResolveType { get; }
 
         public override TypeKind Kind { get; } = TypeKind.Interface;
+        public override IEnumerable<IMember> Children() => throw new NotImplementedException();
 
         IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => Fields.Values;
 

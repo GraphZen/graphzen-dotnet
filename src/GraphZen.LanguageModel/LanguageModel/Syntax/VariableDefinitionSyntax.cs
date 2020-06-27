@@ -41,16 +41,13 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public ValueSyntax? DefaultValue { get; }
 
-        public override IEnumerable<SyntaxNode> Children
+        public override IEnumerable<SyntaxNode> Children()
         {
-            get
+            yield return Variable;
+            yield return VariableType;
+            if (DefaultValue != null)
             {
-                yield return Variable;
-                yield return VariableType;
-                if (DefaultValue != null)
-                {
-                    yield return DefaultValue;
-                }
+                yield return DefaultValue;
             }
         }
 

@@ -72,6 +72,8 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Object;
 
+        public override IEnumerable<IMember> Children() => GetFields();
+        
         IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => GetFields();
 
         public IEnumerable<Field> GetFields() => Fields.Values;

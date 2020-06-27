@@ -31,7 +31,7 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<NamedTypeSyntax> Types { get; }
 
 
-        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Types);
+        public override IEnumerable<SyntaxNode> Children() => Name.ToEnumerable().Concat(Directives).Concat(Types);
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 

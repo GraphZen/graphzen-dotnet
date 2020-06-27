@@ -30,7 +30,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<FieldDefinitionSyntax> Fields { get; }
 
-        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Fields);
+        public override IEnumerable<SyntaxNode> Children() => Name.ToEnumerable().Concat(Directives).Concat(Fields);
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 

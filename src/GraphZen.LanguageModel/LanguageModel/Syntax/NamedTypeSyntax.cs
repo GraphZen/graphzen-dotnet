@@ -20,9 +20,9 @@ namespace GraphZen.LanguageModel
             Name = Check.NotNull(name, nameof(name));
         }
 
-        public override IEnumerable<SyntaxNode> Children
+        public override IEnumerable<SyntaxNode> Children()
         {
-            get { yield return Name; }
+            yield return Name;
         }
 
         /// <summary>

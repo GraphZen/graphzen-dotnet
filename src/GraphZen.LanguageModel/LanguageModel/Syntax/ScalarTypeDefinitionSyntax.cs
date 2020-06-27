@@ -44,7 +44,7 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 
 
-        public override IEnumerable<SyntaxNode> Children =>
+        public override IEnumerable<SyntaxNode> Children() =>
             Name.ToEnumerable().Concat(Directives);
 
         public override StringValueSyntax? Description { get; }

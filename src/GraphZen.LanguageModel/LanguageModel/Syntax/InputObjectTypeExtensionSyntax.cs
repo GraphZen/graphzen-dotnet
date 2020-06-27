@@ -34,7 +34,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<InputValueDefinitionSyntax> Fields { get; }
 
-        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Fields);
+        public override IEnumerable<SyntaxNode> Children() => Name.ToEnumerable().Concat(Directives).Concat(Fields);
 
         private bool Equals(InputObjectTypeExtensionSyntax other) =>
             Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives) &&

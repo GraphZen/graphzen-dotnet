@@ -38,7 +38,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<EnumValueDefinitionSyntax> Values { get; }
 
-        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Values);
+        public override IEnumerable<SyntaxNode> Children() => Name.ToEnumerable().Concat(Directives).Concat(Values);
 
         /// <summary>
         ///     Enum extension directives

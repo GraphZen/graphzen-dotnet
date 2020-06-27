@@ -34,7 +34,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<ObjectFieldSyntax> Fields { get; }
 
-        public override IEnumerable<SyntaxNode> Children => Fields;
+        public override IEnumerable<SyntaxNode> Children() => Fields;
 
         private bool Equals(ObjectValueSyntax other) => Fields.SequenceEqual(other.Fields);
 

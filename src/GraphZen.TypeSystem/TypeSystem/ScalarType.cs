@@ -64,6 +64,7 @@ namespace GraphZen.TypeSystem
         public Maybe<object> ParseLiteral(ValueSyntax value) => LiteralParser(value);
 
         public override TypeKind Kind { get; } = TypeKind.Scalar;
+        public override IEnumerable<IMember> Children() => throw new NotImplementedException();
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 

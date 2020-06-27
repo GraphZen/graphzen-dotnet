@@ -29,7 +29,7 @@ namespace GraphZen.LanguageModel
             Fields = fields ?? FieldDefinitionSyntax.EmptyList;
         }
 
-        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives).Concat(Fields);
+        public override IEnumerable<SyntaxNode> Children() => Name.ToEnumerable().Concat(Directives).Concat(Fields);
 
         public override StringValueSyntax? Description { get; }
 

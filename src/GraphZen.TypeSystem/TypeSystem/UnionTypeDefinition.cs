@@ -27,6 +27,11 @@ namespace GraphZen.TypeSystem
             Builder = new InternalUnionTypeBuilder(this);
         }
 
+        public override IEnumerable<IMemberDefinition> Children()
+        {
+            yield break;
+        }
+
         private string DebuggerDisplay => $"union {Name}";
 
 

@@ -28,9 +28,9 @@ namespace GraphZen.LanguageModel
 
         public NameSyntax Name { get; }
 
-        public override IEnumerable<SyntaxNode> Children
+        public override IEnumerable<SyntaxNode> Children()
         {
-            get { yield return Name; }
+            yield return Name;
         }
 
 

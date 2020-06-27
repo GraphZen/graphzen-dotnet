@@ -32,7 +32,7 @@ namespace GraphZen.LanguageModel
         public SelectionSetSyntax SelectionSet { get; }
 
 
-        public override IEnumerable<SyntaxNode> Children =>
+        public override IEnumerable<SyntaxNode> Children() =>
             TypeCondition.Concat(Directives).Concat(SelectionSet);
 
 

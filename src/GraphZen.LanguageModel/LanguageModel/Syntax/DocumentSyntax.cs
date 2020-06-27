@@ -98,7 +98,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<DefinitionSyntax> Definitions { get; }
 
-        public override IEnumerable<SyntaxNode> Children => Definitions;
+        public override IEnumerable<SyntaxNode> Children() => Definitions;
 
 
         public IReadOnlyList<TypeDefinitionSyntax> GetInputTypeDefinitions() => _inputTypeDefinitions.Value;

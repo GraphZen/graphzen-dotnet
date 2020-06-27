@@ -34,7 +34,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<SelectionSyntax> Selections { get; }
 
-        public override IEnumerable<SyntaxNode> Children => Selections;
+        public override IEnumerable<SyntaxNode> Children() => Selections;
 
         public int Count => Selections.Count;
 

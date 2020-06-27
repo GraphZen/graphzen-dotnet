@@ -16,6 +16,6 @@ namespace GraphZen.LanguageModel
         {
         }
 
-        public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
+        public override IEnumerable<SyntaxNode> Children() => Enumerable.Empty<SyntaxNode>();
     }
 }

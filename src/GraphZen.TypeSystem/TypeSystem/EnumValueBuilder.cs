@@ -49,14 +49,33 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public EnumValueBuilder AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
+        public EnumValueBuilder AddDirectiveAnnotation(string name, object value)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public EnumValueBuilder AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public EnumValueBuilder AddDirectiveAnnotation(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
+            return this;
+        }
 
 
+        public EnumValueBuilder RemoveDirectiveAnnotations(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public EnumValueBuilder RemoveDirectiveAnnotations(string name) => throw new NotImplementedException();
-        public EnumValueBuilder RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public EnumValueBuilder RemoveDirectiveAnnotations()
+        {
+            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            return this;
+        }
 
 
         InternalEnumValueBuilder IInfrastructure<InternalEnumValueBuilder>.Instance => Builder;

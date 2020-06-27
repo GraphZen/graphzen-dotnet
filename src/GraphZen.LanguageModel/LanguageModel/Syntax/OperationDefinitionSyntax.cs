@@ -56,7 +56,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<VariableDefinitionSyntax> VariableDefinitions { get; }
 
-        public override IEnumerable<SyntaxNode> Children =>
+        public override IEnumerable<SyntaxNode> Children() =>
             Name.Concat(VariableDefinitions).Concat(Directives).Concat(SelectionSet);
 
 

@@ -26,7 +26,7 @@ namespace GraphZen.LanguageModel
         /// </summary>
         public int Value { get; }
 
-        public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
+        public override IEnumerable<SyntaxNode> Children() => Enumerable.Empty<SyntaxNode>();
 
         public string GetDisplayValue() => Value.ToString();
 

@@ -9,7 +9,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface INamedType : INamedTypeDefinition, INullableType, IMember
+    public interface INamedType : INamedTypeDefinition, INullableType, IMemberParent
     {
     }
 }

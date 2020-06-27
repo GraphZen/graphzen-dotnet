@@ -32,7 +32,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<OperationTypeDefinitionSyntax> RootOperationTypes { get; }
 
-        public override IEnumerable<SyntaxNode> Children =>
+        public override IEnumerable<SyntaxNode> Children() =>
             Directives.Concat(RootOperationTypes);
 
         /// <summary>

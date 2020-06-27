@@ -37,13 +37,10 @@ namespace GraphZen.LanguageModel
         public ValueSyntax Value { get; }
 
 
-        public override IEnumerable<SyntaxNode> Children
+        public override IEnumerable<SyntaxNode> Children()
         {
-            get
-            {
-                yield return Name;
-                yield return Value;
-            }
+            yield return Name;
+            yield return Value;
         }
 
 

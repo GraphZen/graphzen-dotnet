@@ -36,6 +36,7 @@ namespace GraphZen.TypeSystem
 
 
         public override TypeKind Kind { get; } = TypeKind.InputObject;
+        public override IEnumerable<IMember> Children() => throw new NotImplementedException();
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 

@@ -30,7 +30,10 @@ namespace GraphZen.TypeSystem
             Builder = new InternalEnumTypeBuilder(this);
         }
 
-        private string DebuggerDisplay => $"enum {Name}";
+        public override IEnumerable<IMemberDefinition> Children() => GetValues();
+         
+
+         private string DebuggerDisplay => $"enum {Name}";
 
         internal new InternalEnumTypeBuilder Builder { get; }
         protected override MemberDefinitionBuilder GetBuilder() => Builder;

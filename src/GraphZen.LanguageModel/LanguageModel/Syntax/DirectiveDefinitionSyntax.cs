@@ -42,7 +42,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<NameSyntax> Locations { get; }
 
-        public override IEnumerable<SyntaxNode> Children =>
+        public override IEnumerable<SyntaxNode> Children() =>
             Name.ToEnumerable().Concat(Arguments)
                 .Concat(Locations);
 

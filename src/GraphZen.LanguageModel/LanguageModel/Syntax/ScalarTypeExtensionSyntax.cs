@@ -26,7 +26,7 @@ namespace GraphZen.LanguageModel
 
         public override NameSyntax Name { get; }
 
-        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable().Concat(Directives);
+        public override IEnumerable<SyntaxNode> Children() => Name.ToEnumerable().Concat(Directives);
 
         public IReadOnlyList<DirectiveSyntax> Directives { get; }
 

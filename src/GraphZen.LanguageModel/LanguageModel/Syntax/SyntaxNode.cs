@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
@@ -26,17 +25,35 @@ namespace GraphZen.LanguageModel
             _printed = new Lazy<string>(() => new Printer().Print(this));
         }
 
-
-        public abstract IEnumerable<SyntaxNode> Children { get; }
-
         public abstract SyntaxKind Kind { [DebuggerStepThrough] get; }
+
+
+        internal string DebuggerDisplay => ToSyntaxString();
 
         public SyntaxLocation? Location { get; }
 
 
-        public IEnumerable<SyntaxNode> DescendantNodes()
+        public abstract IEnumerable<SyntaxNode> Children();
+
+        public IEnumerable<SyntaxNode> DescendantsAndSelf()
         {
-            return Children.SelectMany(c => c.DescendantNodes());
+            yield return this;
+            foreach (var desc in Descendants())
+            {
+                yield return desc;
+            }
+        }
+
+        public IEnumerable<SyntaxNode> Descendants()
+        {
+            foreach (var c in Children())
+            {
+                yield return c;
+                foreach (var cd in c.Descendants())
+                {
+                    yield return cd;
+                }
+            }
         }
 
 
@@ -48,8 +65,5 @@ namespace GraphZen.LanguageModel
 
 
         public string ToSyntaxString() => _printed.Value;
-
-
-        internal string DebuggerDisplay => ToSyntaxString();
     }
 }

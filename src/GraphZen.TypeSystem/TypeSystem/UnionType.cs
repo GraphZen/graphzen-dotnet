@@ -63,6 +63,7 @@ namespace GraphZen.TypeSystem
         public IReadOnlyDictionary<string, ObjectType> MemberTypesMap => _memberTypeMap.Value;
 
         public override TypeKind Kind { get; } = TypeKind.Union;
+        public override IEnumerable<IMember> Children() => throw new NotImplementedException();
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 

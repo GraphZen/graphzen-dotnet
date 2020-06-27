@@ -35,7 +35,7 @@ namespace GraphZen.LanguageModel
 
         public string Value { get; }
 
-        public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
+        public override IEnumerable<SyntaxNode> Children() => Enumerable.Empty<SyntaxNode>();
 
         private bool Equals(StringValueSyntax other) =>
             IsBlockString == other.IsBlockString && string.Equals(Value, other.Value);

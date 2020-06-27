@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
@@ -37,6 +38,7 @@ namespace GraphZen.TypeSystem
 
 
         public override SchemaDefinition Schema { get; }
+        public abstract IEnumerable<IMemberDefinition> Children();
 
         public TypeIdentity Identity { get; }
         private string DebuggerDisplay => ClrType != null ? $"{Kind}: {Name} ({ClrType.Name})" : $"{Kind}: {Name}";

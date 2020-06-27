@@ -41,7 +41,7 @@ namespace GraphZen.LanguageModel
         public IReadOnlyList<NamedTypeSyntax> MemberTypes { get; }
 
 
-        public override IEnumerable<SyntaxNode> Children =>
+        public override IEnumerable<SyntaxNode> Children() =>
             Name.ToEnumerable().Concat(Directives).Concat(MemberTypes);
 
         public override StringValueSyntax? Description { get; }

@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -33,7 +34,11 @@ namespace GraphZen.TypeSystem
 
 
         internal new InternalInterfaceTypeBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+
+        public override IEnumerable<IMemberDefinition> Children()
+        {
+            yield break;
+        }
 
         public override bool SetClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
         {
@@ -51,5 +56,6 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Interface;
 
         public override TypeKind Kind { get; } = TypeKind.Interface;
+        protected override MemberDefinitionBuilder GetBuilder() => Builder;
     }
 }

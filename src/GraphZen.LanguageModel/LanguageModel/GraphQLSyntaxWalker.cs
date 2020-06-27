@@ -19,7 +19,7 @@ namespace GraphZen.LanguageModel
             {
                 node.VisitEnter(this);
                 _ancestors.Push(node);
-                foreach (var child in node.Children)
+                foreach (var child in node.Children())
                 {
                     Visit(child);
                 }
@@ -45,7 +45,7 @@ namespace GraphZen.LanguageModel
             {
                 node.VisitEnter(this);
                 _ancestors.Push(node);
-                foreach (var child in node.Children)
+                foreach (var child in node.Children())
                 {
                     Visit(child);
                 }

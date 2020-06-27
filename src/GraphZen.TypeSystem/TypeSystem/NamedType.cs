@@ -33,6 +33,10 @@ namespace GraphZen.TypeSystem
 
         [GraphQLCanBeNull] public string? Description { get; }
         ISchemaDefinition IMemberDefinition.Schema => Schema;
+        IEnumerable<IMemberDefinition> IMemberParentDefinition.Children() => Children();
+
+        public abstract IEnumerable<IMember> Children();
+
 
         public static NamedType From(INamedTypeDefinition definition, Schema schema)
         {

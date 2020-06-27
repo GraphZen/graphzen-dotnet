@@ -25,7 +25,7 @@ namespace GraphZen.LanguageModel
             Arguments = arguments ?? ArgumentSyntax.EmptyList;
         }
 
-        public override IEnumerable<SyntaxNode> Children =>
+        public override IEnumerable<SyntaxNode> Children() =>
             Name.ToEnumerable().Concat(Arguments);
 
         /// <summary>

@@ -52,7 +52,7 @@ namespace GraphZen.LanguageModel
         public ValueSyntax? DefaultValue { get; }
 
 
-        public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable()
+        public override IEnumerable<SyntaxNode> Children() => Name.ToEnumerable()
             .Concat(Type)
             .Concat(DefaultValue).Concat(Directives);
 

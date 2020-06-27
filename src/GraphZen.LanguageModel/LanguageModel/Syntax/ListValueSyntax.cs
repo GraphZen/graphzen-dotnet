@@ -33,7 +33,7 @@ namespace GraphZen.LanguageModel
 
         public IReadOnlyList<ValueSyntax> Values { get; }
 
-        public override IEnumerable<SyntaxNode> Children => Values;
+        public override IEnumerable<SyntaxNode> Children() => Values;
 
         private bool Equals(ListValueSyntax other) => Values.SequenceEqual(other.Values);
 
