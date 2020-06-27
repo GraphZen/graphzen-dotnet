@@ -14,7 +14,7 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DirectiveAnnotationSpecs;
 
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.DirectiveAnnotations
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.DirectiveAnnotations
 {
     [NoReorder]
     public class DirectiveAnnotationTests
@@ -25,10 +25,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("Foo").Locations(DirectiveLocation.Scalar);
-                _.Scalar("Foo").AddDirectiveAnnotation("Foo", "test");
+                _.Directive("Foo").Locations(DirectiveLocation.Union);
+                _.Union("Foo").AddDirectiveAnnotation("Foo", "test");
             });
-            schema.GetScalar("Foo").FindDirectiveAnnotations("Foo").Single().Value.Should().Be("test");
+            schema.GetUnion("Foo").FindDirectiveAnnotations("Foo").Single().Value.Should().Be("test");
         }
 
 
@@ -38,10 +38,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         {
             Schema.Create(_ =>
             {
-                var foo = _.Scalar("Foo");
+                var foo = _.Union("Foo");
                 Action add = () => foo.AddDirectiveAnnotation("bar", "test");
                 add.Should().Throw<InvalidOperationException>().WithMessage(
-                    "Cannot annotate scalar Foo with directive bar: Directive bar has not been defined yet.");
+                    "Cannot annotate union Foo with directive bar: Directive bar has not been defined yet.");
             });
         }
 
@@ -54,10 +54,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
             {
                 _.Directive("bar").Locations(DirectiveLocation.ArgumentDefinition, DirectiveLocation.Schema,
                     DirectiveLocation.Query);
-                var foo = _.Scalar("Foo");
+                var foo = _.Union("Foo");
                 Action add = () => foo.AddDirectiveAnnotation("bar", "test");
                 add.Should().Throw<InvalidOperationException>().WithMessage(
-                    "Cannot annotate scalar Foo with directive bar: Directive bar cannot be annotated on scalars because it is only valid on queries, the schema, or arguments.");
+                    "Cannot annotate union Foo with directive bar: Directive bar cannot be annotated on unions because it is only valid on queries, the schema, or arguments.");
             });
         }
 
@@ -68,7 +68,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         {
             Schema.Create(_ =>
             {
-                var foo = _.Scalar("Foo");
+                var foo = _.Union("Foo");
                 var adds = new List<Action>
                 {
                     () => foo.AddDirectiveAnnotation(null!),
@@ -88,7 +88,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         {
             Schema.Create(_ =>
             {
-                var foo = _.Scalar("Foo");
+                var foo = _.Union("Foo");
                 var adds = new List<Action>
                 {
                     () => foo.AddDirectiveAnnotation(name),
@@ -97,7 +97,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
                 adds.ForEach(add =>
                 {
                     add.Should().Throw<InvalidNameException>().WithMessage(
-                        $"Cannot annotate scalar Foo with directive: \"{name}\" is not a valid directive name.");
+                        $"Cannot annotate union Foo with directive: \"{name}\" is not a valid directive name.");
                 });
             });
         }
@@ -109,14 +109,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.Scalar);
-                _.Directive("bar").Locations(DirectiveLocation.Scalar);
-                _.Scalar("Baz")
+                _.Directive("foo").Locations(DirectiveLocation.Union);
+                _.Directive("bar").Locations(DirectiveLocation.Union);
+                _.Union("Baz")
                     .AddDirectiveAnnotation("foo")
                     .AddDirectiveAnnotation("bar")
                     .RemoveDirectiveAnnotations();
             });
-            schema.GetScalar("Baz").DirectiveAnnotations.Should().BeEmpty();
+            schema.GetUnion("Baz").DirectiveAnnotations.Should().BeEmpty();
         }
 
 
@@ -126,14 +126,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.Scalar);
-                _.Directive("bar").Locations(DirectiveLocation.Scalar);
-                _.Scalar("Baz")
+                _.Directive("foo").Locations(DirectiveLocation.Union);
+                _.Directive("bar").Locations(DirectiveLocation.Union);
+                _.Union("Baz")
                     .AddDirectiveAnnotation("foo")
                     .AddDirectiveAnnotation("bar")
                     .RemoveDirectiveAnnotations("bar");
             });
-            var baz = schema.GetScalar("Baz");
+            var baz = schema.GetUnion("Baz");
             baz.DirectiveAnnotations.Should().HaveCount(1);
             baz.HasAnyDirectiveAnnotation("foo").Should().BeTrue();
             baz.HasAnyDirectiveAnnotation("bar").Should().BeFalse();
@@ -146,7 +146,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         {
             Schema.Create(_ =>
             {
-                var foo = _.Scalar("Foo");
+                var foo = _.Union("Foo");
                 Action remove = () => foo.RemoveDirectiveAnnotations(null!);
                 remove.Should().ThrowArgumentNullException("name");
             });
@@ -159,12 +159,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.Scalar);
-                _.Scalar("Baz")
+                _.Directive("foo").Locations(DirectiveLocation.Union);
+                _.Union("Baz")
                     .AddDirectiveAnnotation("foo");
                 _.RemoveDirective("foo");
             });
-            var baz = schema.GetScalar("Baz");
+            var baz = schema.GetUnion("Baz");
             baz.DirectiveAnnotations.Should().BeEmpty();
         }
 
@@ -175,12 +175,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.Scalar);
-                _.Scalar("Baz")
+                _.Directive("foo").Locations(DirectiveLocation.Union);
+                _.Union("Baz")
                     .AddDirectiveAnnotation("foo", "test");
                 _.Directive("foo").Name("bar");
             });
-            var baz = schema.GetScalar("Baz");
+            var baz = schema.GetUnion("Baz");
             baz.FindDirectiveAnnotations("bar").Single().Value.Should().Be("test");
         }
 

@@ -12,7 +12,7 @@ using FluentAssertions;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DirectiveAnnotationSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.DirectiveAnnotations {
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations {
 [NoReorder]
 public abstract  class DirectiveAnnotationTestsScaffold {
 
@@ -26,4 +26,4 @@ public void directive_annotations_are_removed_when_directive_is_ignored_() {
 
 }
 }
-// Source Hash Code: 18264712185561357958
+// Source Hash Code: 8311931708836856797
