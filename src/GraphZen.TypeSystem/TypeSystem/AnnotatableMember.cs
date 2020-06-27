@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem
             _annotations = directives?.ToImmutableArray() ?? ImmutableArray<IDirectiveAnnotation>.Empty;
         }
 
-        [GraphQLIgnore] 
+        [GraphQLIgnore]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public abstract DirectiveLocation DirectiveLocation { get; }
 
