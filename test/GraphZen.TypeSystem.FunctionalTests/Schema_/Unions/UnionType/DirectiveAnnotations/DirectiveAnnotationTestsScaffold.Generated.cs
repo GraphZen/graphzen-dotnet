@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DirectiveAnnotationSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.DirectiveAnnotations
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.DirectiveAnnotations
 {
     [NoReorder]
     public abstract class DirectiveAnnotationTestsScaffold
@@ -24,4 +24,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
         }
     }
 }
-// Source Hash Code: 7850447853311149112
+// Source Hash Code: 5457991772050020518
