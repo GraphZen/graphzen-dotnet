@@ -21,7 +21,7 @@ namespace GraphZen.LanguageModel.Internal
                 {DirectiveLocation.EnumValue, "enum value"},
                 {DirectiveLocation.Object, "object"},
                 {DirectiveLocation.InputObject, "input object"},
-                {DirectiveLocation.InputFieldDefinition, "input field"},
+                {DirectiveLocation.InputFieldDefinition, "input field definition"},
                 {DirectiveLocation.Field, "field"},
                 {DirectiveLocation.FieldDefinition, "field definition"},
                 {DirectiveLocation.FragmentDefinition, "fragment definition"},

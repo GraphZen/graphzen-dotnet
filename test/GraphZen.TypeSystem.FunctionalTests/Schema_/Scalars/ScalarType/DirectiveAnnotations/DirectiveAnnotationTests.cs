@@ -114,7 +114,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType.Directi
                 _.Scalar("Baz")
                     .AddDirectiveAnnotation("foo")
                     .AddDirectiveAnnotation("bar")
-                    .RemoveDirectiveAnnotations();
+                    .ClearDirectiveAnnotations();
             });
             schema.GetScalar("Baz").DirectiveAnnotations.Should().BeEmpty();
         }

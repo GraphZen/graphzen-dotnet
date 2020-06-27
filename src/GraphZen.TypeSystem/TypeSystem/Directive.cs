@@ -89,6 +89,10 @@ namespace GraphZen.TypeSystem
             ? $"directive {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})"
             : $"directive {Name}";
 
+        IEnumerable<IMemberDefinition> IMemberParentDefinition.Children() => Children();
+
+        public IEnumerable<IMember> Children() => GetArguments();
+
         [GraphQLIgnore] public bool IsSpec { get; }
         public bool IsRepeatable { get; }
     }

@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Internal
         TBuilder AddDirectiveAnnotation(string name, object value);
         TBuilder AddDirectiveAnnotation(string name);
         TBuilder RemoveDirectiveAnnotations(string name);
-        TBuilder RemoveDirectiveAnnotations();
+        TBuilder ClearDirectiveAnnotations();
     }
 }

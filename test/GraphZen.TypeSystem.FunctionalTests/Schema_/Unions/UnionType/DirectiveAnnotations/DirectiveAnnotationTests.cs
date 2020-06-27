@@ -114,7 +114,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Directive
                 _.Union("Baz")
                     .AddDirectiveAnnotation("foo")
                     .AddDirectiveAnnotation("bar")
-                    .RemoveDirectiveAnnotations();
+                    .ClearDirectiveAnnotations();
             });
             schema.GetUnion("Baz").DirectiveAnnotations.Should().BeEmpty();
         }

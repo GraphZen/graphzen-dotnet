@@ -71,9 +71,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public EnumValueBuilder RemoveDirectiveAnnotations()
+        public EnumValueBuilder ClearDirectiveAnnotations()
         {
-            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
 

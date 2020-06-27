@@ -138,9 +138,9 @@ namespace GraphZen.TypeSystem
 
         }
 
-        public EnumTypeBuilder<TEnum> RemoveDirectiveAnnotations()
+        public EnumTypeBuilder<TEnum> ClearDirectiveAnnotations()
         {
-            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
 

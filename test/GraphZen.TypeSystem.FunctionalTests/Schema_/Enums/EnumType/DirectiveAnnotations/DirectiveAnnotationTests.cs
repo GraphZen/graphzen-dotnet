@@ -114,7 +114,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.DirectiveAn
                 _.Enum("Baz")
                     .AddDirectiveAnnotation("foo")
                     .AddDirectiveAnnotation("bar")
-                    .RemoveDirectiveAnnotations();
+                    .ClearDirectiveAnnotations();
             });
             schema.GetEnum("Baz").DirectiveAnnotations.Should().BeEmpty();
         }

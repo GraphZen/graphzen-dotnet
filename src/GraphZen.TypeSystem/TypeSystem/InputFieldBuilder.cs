@@ -17,13 +17,22 @@ namespace GraphZen.TypeSystem
             Builder = builder;
         }
 
-        protected InternalInputFieldBuilder Builder { get; }
+        private InternalInputFieldBuilder Builder { get; }
 
 
-        public InputFieldBuilder<T> AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
+        public InputFieldBuilder<T> AddDirectiveAnnotation(string name, object value)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public InputFieldBuilder<T> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
-
+        public InputFieldBuilder<T> AddDirectiveAnnotation(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
+            return this;
+        }
 
 
         public InputFieldBuilder<object?> FieldType(string type)
@@ -46,10 +55,18 @@ namespace GraphZen.TypeSystem
             return new InputFieldBuilder<TNew>(Builder);
         }
 
-        public InputFieldBuilder<T> RemoveDirectiveAnnotations(string name) =>
-            throw new NotImplementedException();
+        public InputFieldBuilder<T> RemoveDirectiveAnnotations(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public InputFieldBuilder<T> RemoveDirectiveAnnotations() => throw new NotImplementedException();
+        public InputFieldBuilder<T> ClearDirectiveAnnotations()
+        {
+            Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
+            return this;
+        }
 
 
         InternalInputFieldBuilder IInfrastructure<InternalInputFieldBuilder>.Instance => Builder;

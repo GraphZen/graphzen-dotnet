@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem.Internal
             }
         }
 
-        public void RemoveDirectiveAnnotations(ConfigurationSource configurationSource)
+        public void ClearDirectiveAnnotations(ConfigurationSource configurationSource)
         {
             foreach (var annotation in Definition.DirectiveAnnotations.ToArray())
             {

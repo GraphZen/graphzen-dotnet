@@ -274,9 +274,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotations()
+        public ObjectTypeBuilder<TObject, TContext> ClearDirectiveAnnotations()
         {
-            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
 

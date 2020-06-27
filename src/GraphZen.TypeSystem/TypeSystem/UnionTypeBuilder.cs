@@ -165,9 +165,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public UnionTypeBuilder<TUnion, TContext> RemoveDirectiveAnnotations()
+        public UnionTypeBuilder<TUnion, TContext> ClearDirectiveAnnotations()
         {
-            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
     }

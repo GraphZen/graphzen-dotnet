@@ -109,7 +109,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations
                 _
                     .AddDirectiveAnnotation("foo")
                     .AddDirectiveAnnotation("bar")
-                    .RemoveDirectiveAnnotations();
+                    .ClearDirectiveAnnotations();
             });
             schema.DirectiveAnnotations.Should().BeEmpty();
         }

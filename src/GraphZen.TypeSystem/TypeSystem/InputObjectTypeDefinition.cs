@@ -34,10 +34,7 @@ namespace GraphZen.TypeSystem
             Builder = new InternalInputObjectTypeBuilder(this);
         }
 
-        public override IEnumerable<IMemberDefinition> Children()
-        {
-            yield break;
-        }
+        public override IEnumerable<IMemberDefinition> Children() => GetFields();
 
         private string DebuggerDisplay => $"input {Name}";
 

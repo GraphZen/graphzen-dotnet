@@ -114,7 +114,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.D
                 _.Interface("Baz")
                     .AddDirectiveAnnotation("foo")
                     .AddDirectiveAnnotation("bar")
-                    .RemoveDirectiveAnnotations();
+                    .ClearDirectiveAnnotations();
             });
             schema.GetInterface("Baz").DirectiveAnnotations.Should().BeEmpty();
         }

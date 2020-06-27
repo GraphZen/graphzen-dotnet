@@ -35,7 +35,7 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children()
         {
-             yield return Type; 
+            yield return Type;
         }
 
         private bool Equals(OperationTypeDefinitionSyntax other) =>

@@ -146,9 +146,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public SchemaBuilder<TContext> RemoveDirectiveAnnotations()
+        public SchemaBuilder<TContext> ClearDirectiveAnnotations()
         {
-            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
 

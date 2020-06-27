@@ -137,9 +137,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public ScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotations()
+        public ScalarTypeBuilder<TScalar, TValueNode> ClearDirectiveAnnotations()
         {
-            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
     }

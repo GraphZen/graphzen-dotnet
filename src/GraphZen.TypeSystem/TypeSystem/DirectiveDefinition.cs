@@ -94,6 +94,7 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"directive {Name}";
 
         public override SchemaDefinition Schema { get; }
+        public IEnumerable<IMemberDefinition> Children() => GetArguments();
 
         InternalDirectiveBuilder IInfrastructure<InternalDirectiveBuilder>.Instance => Builder;
 

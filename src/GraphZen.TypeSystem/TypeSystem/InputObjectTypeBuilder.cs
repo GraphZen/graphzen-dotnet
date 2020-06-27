@@ -197,9 +197,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public InputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations()
+        public InputObjectTypeBuilder<TInputObject> ClearDirectiveAnnotations()
         {
-            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
     }

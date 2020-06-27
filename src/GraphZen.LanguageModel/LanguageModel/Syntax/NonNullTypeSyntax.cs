@@ -28,7 +28,7 @@ namespace GraphZen.LanguageModel
 
         public override IEnumerable<SyntaxNode> Children()
         {
-             yield return OfType; 
+            yield return OfType;
         }
 
         private bool Equals(NonNullTypeSyntax other) => OfType.Equals(other.OfType);

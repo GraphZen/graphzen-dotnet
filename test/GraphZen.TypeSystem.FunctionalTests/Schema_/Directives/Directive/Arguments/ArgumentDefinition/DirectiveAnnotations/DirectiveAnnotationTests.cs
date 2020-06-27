@@ -14,7 +14,8 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DirectiveAnnotationSpecs;
 
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.EnumValue.DirectiveAnnotations
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Arguments.ArgumentDefinition.
+    DirectiveAnnotations
 {
     [NoReorder]
     public class DirectiveAnnotationTests
@@ -25,13 +26,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("Foo").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Foo").Value("Bar", v =>
-                {
-                    v.AddDirectiveAnnotation("Foo", "test");
-                });
+                _.Directive("Foo").Locations(DirectiveLocation.ArgumentDefinition);
+                _.Directive("Foo").Argument("Bar", "String", a => { a.AddDirectiveAnnotation("Foo", "test"); });
             });
-            schema.GetEnum("Foo").GetValue("Bar").FindDirectiveAnnotations("Foo").Single().Value.Should().Be("test");
+            schema.GetDirective("Foo").GetArgument("Bar").FindDirectiveAnnotations("Foo").Single().Value.Should()
+                .Be("test");
         }
 
 
@@ -41,12 +40,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             Schema.Create(_ =>
             {
-                _.Enum("Foo").Value("Bar", v =>
+                _.Directive("Foo").Argument("Bar", "String", a
+                    =>
                 {
-                    Action add = () => v.AddDirectiveAnnotation("bar", "test");
+                    Action add = () => a
+                        .AddDirectiveAnnotation("bar", "test");
                     add.Should().Throw<InvalidOperationException>().WithMessage(
-                                         "Cannot annotate enum value Foo.Bar with directive bar: Directive bar has not been defined yet.");
-
+                        "Cannot annotate directive argument Foo.Bar with directive bar: Directive bar has not been defined yet.");
                 });
             });
         }
@@ -58,13 +58,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             Schema.Create(_ =>
             {
-                _.Directive("bar").Locations(DirectiveLocation.ArgumentDefinition, DirectiveLocation.Schema,
-                    DirectiveLocation.Query);
-                _.Enum("Foo").Value("Bar", v =>
+                _.Directive("bar").Locations(DirectiveLocation.Schema, DirectiveLocation.Query);
+                _.Directive("Foo").Argument("Bar", "String", a =>
                 {
-                    Action add = () => v.AddDirectiveAnnotation("bar", "test");
+                    Action add = () => a.AddDirectiveAnnotation("bar", "test");
                     add.Should().Throw<InvalidOperationException>().WithMessage(
-                         "Cannot annotate enum value Foo.Bar with directive bar: Directive bar cannot be annotated on enum values because it is only valid on queries, the schema, or arguments.");
+                        "Cannot annotate directive argument Foo.Bar with directive bar: Directive bar cannot be annotated on arguments because it is only valid on queries or the schema.");
                 });
             });
         }
@@ -76,17 +75,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             Schema.Create(_ =>
             {
-                _.Enum("Foo").Value("Bar", v =>
+                _.Directive("Foo").Argument("Bar", "String", a =>
                     {
                         var adds = new List<Action>
-                {
-                    () => v.AddDirectiveAnnotation(null!),
-                    () => v.AddDirectiveAnnotation(null!, "test")
-                };
+                        {
+                            () => a.AddDirectiveAnnotation(null!),
+                            () => a.AddDirectiveAnnotation(null!, "test")
+                        };
                         adds.ForEach(add => { add.Should().ThrowArgumentNullException("name"); });
                     }
                 );
-
             });
         }
 
@@ -100,20 +98,19 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             Schema.Create(_ =>
             {
-                _.Enum("Foo").Value("Bar", v =>
+                _.Directive("Foo").Argument("Bar", "String", a =>
                 {
                     var adds = new List<Action>
-               {
-                    () => v.AddDirectiveAnnotation(name),
-                    () => v.AddDirectiveAnnotation(name, "test")
-               };
+                    {
+                        () => a.AddDirectiveAnnotation(name),
+                        () => a.AddDirectiveAnnotation(name, "test")
+                    };
                     adds.ForEach(add =>
-                     {
-                         add.Should().Throw<InvalidNameException>().WithMessage(
-                             $"Cannot annotate enum value Foo.Bar with directive: \"{name}\" is not a valid directive name.");
-                     });
+                    {
+                        add.Should().Throw<InvalidNameException>().WithMessage(
+                            $"Cannot annotate directive argument Foo.Bar with directive: \"{name}\" is not a valid directive name.");
+                    });
                 });
-
             });
         }
 
@@ -124,17 +121,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.EnumValue);
-                _.Directive("bar").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Baz").Value("Bar", v =>
+                _.Directive("foo").Locations(DirectiveLocation.ArgumentDefinition);
+                _.Directive("bar").Locations(DirectiveLocation.ArgumentDefinition);
+                _.Directive("Baz").Argument("Bar", "String", a =>
                 {
-                    v.AddDirectiveAnnotation("foo")
+                    a.AddDirectiveAnnotation("foo")
                         .AddDirectiveAnnotation("bar")
                         .ClearDirectiveAnnotations();
-
                 });
             });
-            schema.GetEnum("Baz").GetValue("Bar").DirectiveAnnotations.Should().BeEmpty();
+            schema.GetDirective("Baz").GetArgument("Bar").DirectiveAnnotations.Should().BeEmpty();
         }
 
 
@@ -144,17 +140,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.EnumValue);
-                _.Directive("bar").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Baz").Value("Bar", v =>
+                _.Directive("foo").Locations(DirectiveLocation.ArgumentDefinition);
+                _.Directive("bar").Locations(DirectiveLocation.ArgumentDefinition);
+                _.Directive("Baz").Argument("Bar", "String", a =>
                 {
-                    v.AddDirectiveAnnotation("foo")
+                    a.AddDirectiveAnnotation("foo")
                         .AddDirectiveAnnotation("bar")
                         .RemoveDirectiveAnnotations("bar");
                 });
-
             });
-            var bar = schema.GetEnum("Baz").GetValue("Bar");
+            var bar = schema.GetDirective("Baz").GetArgument("Bar");
             bar.DirectiveAnnotations.Should().HaveCount(1);
             bar.HasAnyDirectiveAnnotation("foo").Should().BeTrue();
             bar.HasAnyDirectiveAnnotation("bar").Should().BeFalse();
@@ -167,9 +162,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             Schema.Create(_ =>
             {
-                _.Enum("Foo").Value("Bar", v =>
+                _.Directive("Foo").Argument("Bar", "String", a =>
                 {
-                    Action remove = () => v.RemoveDirectiveAnnotations(null!);
+                    Action remove = () => a.RemoveDirectiveAnnotations(null!);
                     remove.Should().ThrowArgumentNullException("name");
                 });
             });
@@ -182,14 +177,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Foo").Value("Baz", v =>
-                {
-                    v.AddDirectiveAnnotation("foo");
-                });
+                _.Directive("foo").Locations(DirectiveLocation.ArgumentDefinition);
+                _.Directive("Foo").Argument("Baz", "String", a => { a.AddDirectiveAnnotation("foo"); });
                 _.RemoveDirective("foo");
             });
-            var baz = schema.GetEnum("Foo").GetValue("Baz");
+            var baz = schema.GetDirective("Foo").GetArgument("Baz");
             baz.DirectiveAnnotations.Should().BeEmpty();
         }
 
@@ -200,16 +192,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Baz").Value("Bar", v =>
-                {
-                    v.AddDirectiveAnnotation("foo", "test");
-                });
+                _.Directive("foo").Locations(DirectiveLocation.ArgumentDefinition);
+                _.Directive("Baz").Argument("Bar", "String", a => { a.AddDirectiveAnnotation("foo", "test"); });
                 _.Directive("foo").Name("bar");
             });
-            var bar = schema.GetEnum("Baz").GetValue("Bar");
+            var bar = schema.GetDirective("Baz").GetArgument("Bar");
             bar.FindDirectiveAnnotations("bar").Single().Value.Should().Be("test");
         }
-
     }
 }

@@ -215,9 +215,9 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public InterfaceTypeBuilder<TInterface, TContext> RemoveDirectiveAnnotations()
+        public InterfaceTypeBuilder<TInterface, TContext> ClearDirectiveAnnotations()
         {
-            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
     }

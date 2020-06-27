@@ -14,7 +14,8 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DirectiveAnnotationSpecs;
 
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.EnumValue.DirectiveAnnotations
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectType.Fields.InputField.
+    DirectiveAnnotations
 {
     [NoReorder]
     public class DirectiveAnnotationTests
@@ -25,13 +26,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("Foo").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Foo").Value("Bar", v =>
-                {
-                    v.AddDirectiveAnnotation("Foo", "test");
-                });
+                _.Directive("Foo").Locations(DirectiveLocation.InputFieldDefinition);
+                _.InputObject("Foo").Field("Bar", "String", f => { f.AddDirectiveAnnotation("Foo", "test"); });
             });
-            schema.GetEnum("Foo").GetValue("Bar").FindDirectiveAnnotations("Foo").Single().Value.Should().Be("test");
+            schema.GetInputObject("Foo").GetField("Bar").FindDirectiveAnnotations("Foo").Single().Value.Should()
+                .Be("test");
         }
 
 
@@ -41,12 +40,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             Schema.Create(_ =>
             {
-                _.Enum("Foo").Value("Bar", v =>
+                _.InputObject("Foo").Field("Bar", "String", f =>
                 {
-                    Action add = () => v.AddDirectiveAnnotation("bar", "test");
+                    Action add = () => f.AddDirectiveAnnotation("bar", "test");
                     add.Should().Throw<InvalidOperationException>().WithMessage(
-                                         "Cannot annotate enum value Foo.Bar with directive bar: Directive bar has not been defined yet.");
-
+                        "Cannot annotate input object field Foo.Bar with directive bar: Directive bar has not been defined yet.");
                 });
             });
         }
@@ -60,11 +58,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
             {
                 _.Directive("bar").Locations(DirectiveLocation.ArgumentDefinition, DirectiveLocation.Schema,
                     DirectiveLocation.Query);
-                _.Enum("Foo").Value("Bar", v =>
+                _.InputObject("Foo").Field("Bar", "String", f =>
                 {
-                    Action add = () => v.AddDirectiveAnnotation("bar", "test");
+                    Action add = () => f.AddDirectiveAnnotation("bar", "test");
                     add.Should().Throw<InvalidOperationException>().WithMessage(
-                         "Cannot annotate enum value Foo.Bar with directive bar: Directive bar cannot be annotated on enum values because it is only valid on queries, the schema, or arguments.");
+                        "Cannot annotate input object field Foo.Bar with directive bar: Directive bar cannot be annotated on input field definitions because it is only valid on queries, the schema, or arguments.");
                 });
             });
         }
@@ -76,17 +74,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             Schema.Create(_ =>
             {
-                _.Enum("Foo").Value("Bar", v =>
+                _.InputObject("Foo").Field("Bar", "String", f =>
                     {
                         var adds = new List<Action>
-                {
-                    () => v.AddDirectiveAnnotation(null!),
-                    () => v.AddDirectiveAnnotation(null!, "test")
-                };
+                        {
+                            () => f.AddDirectiveAnnotation(null!),
+                            () => f.AddDirectiveAnnotation(null!, "test")
+                        };
                         adds.ForEach(add => { add.Should().ThrowArgumentNullException("name"); });
                     }
                 );
-
             });
         }
 
@@ -100,20 +97,19 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             Schema.Create(_ =>
             {
-                _.Enum("Foo").Value("Bar", v =>
+                _.InputObject("Foo").Field("Bar", "String", f =>
                 {
                     var adds = new List<Action>
-               {
-                    () => v.AddDirectiveAnnotation(name),
-                    () => v.AddDirectiveAnnotation(name, "test")
-               };
+                    {
+                        () => f.AddDirectiveAnnotation(name),
+                        () => f.AddDirectiveAnnotation(name, "test")
+                    };
                     adds.ForEach(add =>
-                     {
-                         add.Should().Throw<InvalidNameException>().WithMessage(
-                             $"Cannot annotate enum value Foo.Bar with directive: \"{name}\" is not a valid directive name.");
-                     });
+                    {
+                        add.Should().Throw<InvalidNameException>().WithMessage(
+                            $"Cannot annotate input object field Foo.Bar with directive: \"{name}\" is not a valid directive name.");
+                    });
                 });
-
             });
         }
 
@@ -124,17 +120,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.EnumValue);
-                _.Directive("bar").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Baz").Value("Bar", v =>
+                _.Directive("foo").Locations(DirectiveLocation.InputFieldDefinition);
+                _.Directive("bar").Locations(DirectiveLocation.InputFieldDefinition);
+                _.InputObject("Baz").Field("Bar", "String", f =>
                 {
-                    v.AddDirectiveAnnotation("foo")
+                    f.AddDirectiveAnnotation("foo")
                         .AddDirectiveAnnotation("bar")
                         .ClearDirectiveAnnotations();
-
                 });
             });
-            schema.GetEnum("Baz").GetValue("Bar").DirectiveAnnotations.Should().BeEmpty();
+            schema.GetInputObject("Baz").GetField("Bar").DirectiveAnnotations.Should().BeEmpty();
         }
 
 
@@ -144,17 +139,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.EnumValue);
-                _.Directive("bar").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Baz").Value("Bar", v =>
+                _.Directive("foo").Locations(DirectiveLocation.InputFieldDefinition);
+                _.Directive("bar").Locations(DirectiveLocation.InputFieldDefinition);
+                _.InputObject("Baz").Field("Bar", "String", f =>
                 {
-                    v.AddDirectiveAnnotation("foo")
+                    f.AddDirectiveAnnotation("foo")
                         .AddDirectiveAnnotation("bar")
                         .RemoveDirectiveAnnotations("bar");
                 });
-
             });
-            var bar = schema.GetEnum("Baz").GetValue("Bar");
+            var bar = schema.GetInputObject("Baz").GetField("Bar");
             bar.DirectiveAnnotations.Should().HaveCount(1);
             bar.HasAnyDirectiveAnnotation("foo").Should().BeTrue();
             bar.HasAnyDirectiveAnnotation("bar").Should().BeFalse();
@@ -167,9 +161,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             Schema.Create(_ =>
             {
-                _.Enum("Foo").Value("Bar", v =>
+                _.InputObject("Foo").Field("Bar", "String", f =>
                 {
-                    Action remove = () => v.RemoveDirectiveAnnotations(null!);
+                    Action remove = () => f.RemoveDirectiveAnnotations(null!);
                     remove.Should().ThrowArgumentNullException("name");
                 });
             });
@@ -182,14 +176,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Foo").Value("Baz", v =>
-                {
-                    v.AddDirectiveAnnotation("foo");
-                });
+                _.Directive("foo").Locations(DirectiveLocation.InputFieldDefinition);
+                _.InputObject("Foo").Field("Baz", "String", f => { f.AddDirectiveAnnotation("foo"); });
                 _.RemoveDirective("foo");
             });
-            var baz = schema.GetEnum("Foo").GetValue("Baz");
+            var baz = schema.GetInputObject("Foo").GetField("Baz");
             baz.DirectiveAnnotations.Should().BeEmpty();
         }
 
@@ -200,16 +191,12 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
         {
             var schema = Schema.Create(_ =>
             {
-                _.Directive("foo").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Baz").Value("Bar", v =>
-                {
-                    v.AddDirectiveAnnotation("foo", "test");
-                });
+                _.Directive("foo").Locations(DirectiveLocation.InputFieldDefinition);
+                _.InputObject("Baz").Field("Bar", "String", f => { f.AddDirectiveAnnotation("foo", "test"); });
                 _.Directive("foo").Name("bar");
             });
-            var bar = schema.GetEnum("Baz").GetValue("Bar");
+            var bar = schema.GetInputObject("Baz").GetField("Bar");
             bar.FindDirectiveAnnotations("bar").Single().Value.Should().Be("test");
         }
-
     }
 }

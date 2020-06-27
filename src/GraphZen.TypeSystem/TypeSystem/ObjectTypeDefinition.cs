@@ -30,11 +30,7 @@ namespace GraphZen.TypeSystem
         {
             Builder = new InternalObjectTypeBuilder(this);
         }
-
-        public override IEnumerable<IMemberDefinition> Children()
-        {
-            yield break;
-        }
+        public override IEnumerable<IMemberDefinition> Children() => GetFields();
 
         private string DebuggerDisplay => $"type {Name}";
         new public InternalObjectTypeBuilder Builder { get; }

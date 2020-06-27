@@ -35,10 +35,8 @@ namespace GraphZen.TypeSystem
 
         internal new InternalInterfaceTypeBuilder Builder { get; }
 
-        public override IEnumerable<IMemberDefinition> Children()
-        {
-            yield break;
-        }
+        public override IEnumerable<IMemberDefinition> Children() => GetFields();
+
 
         public override bool SetClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
         {
