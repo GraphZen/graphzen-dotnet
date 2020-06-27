@@ -22,6 +22,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
         {
             // var schema = Schema.Create(_ => { });
         }
+
+
+        [Spec(nameof(should_be_included_in_schema_definition_descendants))]
+        [Fact(Skip = "TODO")]
+        public void should_be_included_in_schema_definition_descendants_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 
 // Move MemberTests into a separate file to start writing tests
@@ -30,4 +38,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
     {
     }
 }
-// Source Hash Code: 1024482678916268067
+// Source Hash Code: 17180149467382069067

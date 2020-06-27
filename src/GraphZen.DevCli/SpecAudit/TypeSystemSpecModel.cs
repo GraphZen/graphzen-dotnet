@@ -127,7 +127,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(unionType);
 
 
-            var enumValue = new Subject(nameof(EnumValue))
+            var enumValue = member.WithName(nameof(EnumValue))
                 .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(name)
                 .WithChild(directiveAnnotations)

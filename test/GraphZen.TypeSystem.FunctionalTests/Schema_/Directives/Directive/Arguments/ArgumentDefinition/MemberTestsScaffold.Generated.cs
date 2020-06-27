@@ -1,3 +1,6 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 #nullable enable
 
 // ReSharper disable All
@@ -19,6 +22,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
         {
             // var schema = Schema.Create(_ => { });
         }
+
+
+        [Spec(nameof(should_be_included_in_schema_definition_descendants))]
+        [Fact(Skip = "TODO")]
+        public void should_be_included_in_schema_definition_descendants_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 
 // Move MemberTests into a separate file to start writing tests
@@ -27,4 +38,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Argum
     {
     }
 }
-// Source Hash Code: 4990403096685396579
+// Source Hash Code: 6838591366912610571

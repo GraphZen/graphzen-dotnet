@@ -22,6 +22,14 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType
         {
             // var schema = Schema.Create(_ => { });
         }
+
+
+        [Spec(nameof(should_be_included_in_schema_definition_descendants))]
+        [Fact(Skip = "TODO")]
+        public void should_be_included_in_schema_definition_descendants_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
     }
 
 // Move MemberTests into a separate file to start writing tests
@@ -30,4 +38,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType
     {
     }
 }
-// Source Hash Code: 10121618753599846545
+// Source Hash Code: 7732809315518204925

@@ -669,7 +669,10 @@ namespace GraphZen.TypeSystem
         ISchemaDefinition IMemberDefinition.Schema => this;
         IEnumerable<IMemberDefinition> IMemberParentDefinition.Children() => Children();
 
-        public IEnumerable<IMember> Children() => throw new NotImplementedException();
+        public IEnumerable<IMember> Children()
+        {
+            yield break;
+        }
 
 
         internal class IntrospectionInfo
