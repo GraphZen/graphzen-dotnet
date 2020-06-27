@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -23,7 +24,9 @@ namespace GraphZen.TypeSystem
             _annotations = directives?.ToImmutableArray() ?? ImmutableArray<IDirectiveAnnotation>.Empty;
         }
 
-        [GraphQLIgnore] public abstract DirectiveLocation DirectiveLocation { get; }
+        [GraphQLIgnore] 
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public abstract DirectiveLocation DirectiveLocation { get; }
 
         public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => _annotations;
 

@@ -13,12 +13,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Directi
     [NoReorder]
     public abstract class DirectiveAnnotationTestsScaffold
     {
-        [Spec(nameof(directive_annotations_are_renamed_when_directive_is_renamed))]
-        [Fact(Skip = "TODO")]
-        public void directive_annotations_are_renamed_when_directive_is_renamed_()
-        {
-            // var schema = Schema.Create(_ => { });
-        }
+        
     }
 }
 // Source Hash Code: 13124561500620689138

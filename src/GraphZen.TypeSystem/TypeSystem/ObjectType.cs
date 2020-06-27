@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -81,6 +82,7 @@ namespace GraphZen.TypeSystem
         [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;
 
 

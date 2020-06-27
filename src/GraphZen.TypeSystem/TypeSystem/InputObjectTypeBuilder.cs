@@ -175,16 +175,32 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public InputObjectTypeBuilder<TInputObject> AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
+        public InputObjectTypeBuilder<TInputObject> AddDirectiveAnnotation(string name, object value)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public InputObjectTypeBuilder<TInputObject> AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+        public InputObjectTypeBuilder<TInputObject> AddDirectiveAnnotation(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
+            return this;
+        }
 
 
+        public InputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
+            return this;
+        }
 
-        public InputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations(string name) =>
-            throw new NotImplementedException();
-
-        public InputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations() =>
-            throw new NotImplementedException();
+        public InputObjectTypeBuilder<TInputObject> RemoveDirectiveAnnotations()
+        {
+            Builder.RemoveDirectiveAnnotations(ConfigurationSource.Explicit);
+            return this;
+        }
     }
 }
