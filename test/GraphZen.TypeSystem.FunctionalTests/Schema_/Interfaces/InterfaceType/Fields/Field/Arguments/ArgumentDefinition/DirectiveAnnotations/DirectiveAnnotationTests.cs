@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -14,7 +13,8 @@ using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.DirectiveAnnotationSpecs;
 
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition.
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.Fields.Field.Arguments.ArgumentDefinition
+    .
     DirectiveAnnotations
 {
     [NoReorder]
@@ -27,15 +27,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
             var schema = Schema.Create(_ =>
             {
                 _.Directive("Foo").Locations(DirectiveLocation.ArgumentDefinition);
-                _.Interface("Foo").Field("Bar", "String", f =>
-                {
-                    f.Argument("arg", "String", a =>
-                    {
-                        a.AddDirectiveAnnotation("Foo", "test");
-                    });
-                });
+                _.Interface("Foo").Field("Bar", "String",
+                    f => { f.Argument("arg", "String", a => { a.AddDirectiveAnnotation("Foo", "test"); }); });
             });
-            schema.GetInterface("Foo").GetField("Bar").GetArgument("arg").FindDirectiveAnnotations("Foo").Single().Value.Should()
+            schema.GetInterface("Foo").GetField("Bar").GetArgument("arg").FindDirectiveAnnotations("Foo").Single().Value
+                .Should()
                 .Be("test");
         }
 
@@ -73,7 +69,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
                         Action add = () => a.AddDirectiveAnnotation("bar", "test");
                         add.Should().Throw<InvalidOperationException>().WithMessage(
                             "Cannot annotate interface field argument Foo.Bar.arg with directive bar: Directive bar cannot be annotated on arguments because it is only valid on queries or the schema.");
-
                     });
                 });
             });
@@ -117,17 +112,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
                     f.Argument("arg", "String", a =>
                     {
                         var adds = new List<Action>
-                    {
-                        () => a.AddDirectiveAnnotation(name),
-                        () => a.AddDirectiveAnnotation(name, "test")
-                    };
+                        {
+                            () => a.AddDirectiveAnnotation(name),
+                            () => a.AddDirectiveAnnotation(name, "test")
+                        };
                         adds.ForEach(add =>
                         {
                             add.Should().Throw<InvalidNameException>().WithMessage(
                                 $"Cannot annotate interface field argument Foo.Bar.arg with directive: \"{name}\" is not a valid directive name.");
                         });
                     });
-
                 });
             });
         }
@@ -146,9 +140,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
                     f.Argument("arg", "String", a =>
                     {
                         a.AddDirectiveAnnotation("foo")
-                                                .AddDirectiveAnnotation("bar")
-                                                .ClearDirectiveAnnotations();
-
+                            .AddDirectiveAnnotation("bar")
+                            .ClearDirectiveAnnotations();
                     });
                 });
             });
@@ -169,10 +162,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
                     f.Argument("arg", "String", a =>
                     {
                         a.AddDirectiveAnnotation("foo")
-                                                .AddDirectiveAnnotation("bar")
-                                                .RemoveDirectiveAnnotations("bar");
+                            .AddDirectiveAnnotation("bar")
+                            .RemoveDirectiveAnnotations("bar");
                     });
-
                 });
             });
             var arg = schema.GetInterface("Baz").GetField("Bar").GetArgument("arg");
@@ -207,14 +199,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
             var schema = Schema.Create(_ =>
             {
                 _.Directive("foo").Locations(DirectiveLocation.ArgumentDefinition);
-                _.Interface("Foo").Field("Baz", "String", f =>
-                {
-                    f.Argument("arg", "String", a =>
-                    {
-
-                        a.AddDirectiveAnnotation("foo");
-                    });
-                });
+                _.Interface("Foo").Field("Baz", "String",
+                    f => { f.Argument("arg", "String", a => { a.AddDirectiveAnnotation("foo"); }); });
                 _.RemoveDirective("foo");
             });
             var arg = schema.GetInterface("Foo").GetField("Baz").GetArgument("arg");
@@ -229,14 +215,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
             var schema = Schema.Create(_ =>
             {
                 _.Directive("foo").Locations(DirectiveLocation.ArgumentDefinition);
-                _.Interface("Baz").Field("Bar", "String", f =>
-                {
-                    f.Argument("arg", "String", a =>
-                    {
-
-                        a.AddDirectiveAnnotation("foo", "test");
-                    });
-                });
+                _.Interface("Baz").Field("Bar", "String",
+                    f => { f.Argument("arg", "String", a => { a.AddDirectiveAnnotation("foo", "test"); }); });
                 _.Directive("foo").Name("bar");
             });
             var arg = schema.GetInterface("Baz").GetField("Bar").GetArgument("arg");

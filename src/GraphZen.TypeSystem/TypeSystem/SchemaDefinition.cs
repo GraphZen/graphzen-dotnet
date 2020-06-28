@@ -62,6 +62,7 @@ namespace GraphZen.TypeSystem
             {
                 yield return directive;
             }
+
             foreach (var type in _types.Values)
             {
                 yield return type;

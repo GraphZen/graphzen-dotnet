@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -51,7 +50,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations
         {
             Schema.Create(_ =>
             {
-                _.Directive("bar").Locations(DirectiveLocation.ArgumentDefinition, DirectiveLocation.Object, DirectiveLocation.Query);
+                _.Directive("bar").Locations(DirectiveLocation.ArgumentDefinition, DirectiveLocation.Object,
+                    DirectiveLocation.Query);
                 Action add = () => _.AddDirectiveAnnotation("bar", "test");
                 add.Should().Throw<InvalidOperationException>().WithMessage(
                     "Cannot annotate schema with directive bar: Directive bar cannot be annotated on the schema because it is only valid on queries, objects, or arguments.");
@@ -172,6 +172,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations
             });
             schema.FindDirectiveAnnotations("bar").Single().Value.Should().Be("test");
         }
-
     }
 }

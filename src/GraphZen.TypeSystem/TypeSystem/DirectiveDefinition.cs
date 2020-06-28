@@ -157,7 +157,6 @@ namespace GraphZen.TypeSystem
 
             _locations.AddOrUpdate(location, configurationSource, (dl, cs) => configurationSource);
             return true;
-
         }
 
         public bool RemoveLocation(DirectiveLocation location, ConfigurationSource configurationSource)
@@ -166,6 +165,7 @@ namespace GraphZen.TypeSystem
             {
                 return false;
             }
+
             _locations.Remove(location, out _);
             return true;
         }

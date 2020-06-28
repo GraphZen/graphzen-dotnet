@@ -188,7 +188,6 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
             return this;
-
         }
 
         public FieldBuilder<TDeclaringType, TField, TContext> ClearDirectiveAnnotations()

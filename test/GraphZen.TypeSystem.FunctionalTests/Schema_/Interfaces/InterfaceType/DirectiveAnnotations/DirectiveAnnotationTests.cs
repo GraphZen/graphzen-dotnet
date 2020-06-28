@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -183,8 +182,5 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.D
             var baz = schema.GetInterface("Baz");
             baz.FindDirectiveAnnotations("bar").Single().Value.Should().Be("test");
         }
-
-
-
     }
 }

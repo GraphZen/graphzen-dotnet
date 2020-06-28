@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem
         {
             _configurationSource = configurationSource;
         }
+
         internal MemberDefinitionBuilder Builder => GetBuilder();
         protected abstract MemberDefinitionBuilder GetBuilder();
 

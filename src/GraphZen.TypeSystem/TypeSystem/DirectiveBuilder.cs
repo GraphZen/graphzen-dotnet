@@ -69,7 +69,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public DirectiveBuilder<TDirective> Locations(DirectiveLocation location, params DirectiveLocation[] additionalLocations)
+        public DirectiveBuilder<TDirective> Locations(DirectiveLocation location,
+            params DirectiveLocation[] additionalLocations)
         {
             var locations = additionalLocations.ToList().Prepend(location);
             Builder.Locations(locations, ConfigurationSource.Explicit);
@@ -107,7 +108,6 @@ namespace GraphZen.TypeSystem
             Builder.Name(name, ConfigurationSource.Explicit);
             return this;
         }
-
 
 
         public DirectiveBuilder<TDirective> Repeatable(bool repeatable)

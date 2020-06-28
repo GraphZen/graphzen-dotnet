@@ -24,7 +24,10 @@ namespace GraphZen.TypeSystem.Internal
         DirectiveBuilder<T> ClrType<T>(string name) where T : notnull;
         DirectiveBuilder<TDirective> AddLocation(DirectiveLocation location);
         DirectiveBuilder<TDirective> RemoveLocation(DirectiveLocation location);
-        DirectiveBuilder<TDirective> Locations(DirectiveLocation location, params DirectiveLocation[] additionalLocations);
+
+        DirectiveBuilder<TDirective> Locations(DirectiveLocation location,
+            params DirectiveLocation[] additionalLocations);
+
         DirectiveBuilder<TDirective> Locations(IEnumerable<DirectiveLocation> locations);
         DirectiveBuilder<TDirective> RemoveLocations();
         DirectiveBuilder<TDirective> Repeatable(bool isRepeatable);

@@ -28,8 +28,8 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<SdlSpec>();
 
             var typeRef = new Subject("Type")
-                    .WithSpecs<TypeReferenceSpecs>()
-                    .WithSpecs<SdlSpec>();
+                .WithSpecs<TypeReferenceSpecs>()
+                .WithSpecs<SdlSpec>();
 
             var member = new Subject(nameof(Member)).WithSpecs<MemberSpecs>();
 
@@ -44,9 +44,9 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<DirectiveAnnotationSpecs>(SpecPriority.Medium);
 
             var argument = new Subject("Argument")
-                                        .WithChild(name)
-                                        //.WithSpecs<SdlSpec, SdlExtensionSpec>()
-                                        .WithChild(new Subject("Value"));
+                .WithChild(name)
+                //.WithSpecs<SdlSpec, SdlExtensionSpec>()
+                .WithChild(new Subject("Value"));
 
             // ReSharper disable once UnusedVariable
             var argumentCollection = new Subject("Arguments")
@@ -60,7 +60,6 @@ namespace GraphZen.SpecAudit
                 .WithChild(new Subject(nameof(InputValue.DefaultValue)))
                 .WithChild(name)
                 .WithChild(directiveAnnotations);
-
 
 
             var argumentDef = inputValue.WithName(nameof(ArgumentDefinition))

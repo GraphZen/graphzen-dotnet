@@ -17,10 +17,7 @@ namespace GraphZen.TypeSystem
         public override bool CanRead { get; } = true;
         public override bool CanWrite { get; } = true;
 
-        public override object FromSyntax(SyntaxNode node)
-        {
-            throw new NotImplementedException();
-        }
+        public override object FromSyntax(SyntaxNode node) => throw new NotImplementedException();
 
         public override SyntaxNode ToSyntax(object value)
         {

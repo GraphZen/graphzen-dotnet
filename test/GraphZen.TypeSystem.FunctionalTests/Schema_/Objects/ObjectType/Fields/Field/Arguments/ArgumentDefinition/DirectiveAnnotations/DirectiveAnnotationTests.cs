@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -27,15 +26,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             var schema = Schema.Create(_ =>
             {
                 _.Directive("Foo").Locations(DirectiveLocation.ArgumentDefinition);
-                _.Object("Foo").Field("Bar", "String", f =>
-                {
-                    f.Argument("arg", "String", a =>
-                    {
-                        a.AddDirectiveAnnotation("Foo", "test");
-                    });
-                });
+                _.Object("Foo").Field("Bar", "String",
+                    f => { f.Argument("arg", "String", a => { a.AddDirectiveAnnotation("Foo", "test"); }); });
             });
-            schema.GetObject("Foo").GetField("Bar").GetArgument("arg").FindDirectiveAnnotations("Foo").Single().Value.Should()
+            schema.GetObject("Foo").GetField("Bar").GetArgument("arg").FindDirectiveAnnotations("Foo").Single().Value
+                .Should()
                 .Be("test");
         }
 
@@ -73,7 +68,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
                         Action add = () => a.AddDirectiveAnnotation("bar", "test");
                         add.Should().Throw<InvalidOperationException>().WithMessage(
                             "Cannot annotate object field argument Foo.Bar.arg with directive bar: Directive bar cannot be annotated on arguments because it is only valid on queries or the schema.");
-
                     });
                 });
             });
@@ -117,17 +111,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
                     f.Argument("arg", "String", a =>
                     {
                         var adds = new List<Action>
-                    {
-                        () => a.AddDirectiveAnnotation(name),
-                        () => a.AddDirectiveAnnotation(name, "test")
-                    };
+                        {
+                            () => a.AddDirectiveAnnotation(name),
+                            () => a.AddDirectiveAnnotation(name, "test")
+                        };
                         adds.ForEach(add =>
                         {
                             add.Should().Throw<InvalidNameException>().WithMessage(
                                 $"Cannot annotate object field argument Foo.Bar.arg with directive: \"{name}\" is not a valid directive name.");
                         });
                     });
-
                 });
             });
         }
@@ -146,9 +139,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
                     f.Argument("arg", "String", a =>
                     {
                         a.AddDirectiveAnnotation("foo")
-                                                .AddDirectiveAnnotation("bar")
-                                                .ClearDirectiveAnnotations();
-
+                            .AddDirectiveAnnotation("bar")
+                            .ClearDirectiveAnnotations();
                     });
                 });
             });
@@ -169,10 +161,9 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
                     f.Argument("arg", "String", a =>
                     {
                         a.AddDirectiveAnnotation("foo")
-                                                .AddDirectiveAnnotation("bar")
-                                                .RemoveDirectiveAnnotations("bar");
+                            .AddDirectiveAnnotation("bar")
+                            .RemoveDirectiveAnnotations("bar");
                     });
-
                 });
             });
             var arg = schema.GetObject("Baz").GetField("Bar").GetArgument("arg");
@@ -207,14 +198,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             var schema = Schema.Create(_ =>
             {
                 _.Directive("foo").Locations(DirectiveLocation.ArgumentDefinition);
-                _.Object("Foo").Field("Baz", "String", f =>
-                {
-                    f.Argument("arg", "String", a =>
-                    {
-
-                        a.AddDirectiveAnnotation("foo");
-                    });
-                });
+                _.Object("Foo").Field("Baz", "String",
+                    f => { f.Argument("arg", "String", a => { a.AddDirectiveAnnotation("foo"); }); });
                 _.RemoveDirective("foo");
             });
             var arg = schema.GetObject("Foo").GetField("Baz").GetArgument("arg");
@@ -229,14 +214,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             var schema = Schema.Create(_ =>
             {
                 _.Directive("foo").Locations(DirectiveLocation.ArgumentDefinition);
-                _.Object("Baz").Field("Bar", "String", f =>
-                {
-                    f.Argument("arg", "String", a =>
-                    {
-
-                        a.AddDirectiveAnnotation("foo", "test");
-                    });
-                });
+                _.Object("Baz").Field("Bar", "String",
+                    f => { f.Argument("arg", "String", a => { a.AddDirectiveAnnotation("foo", "test"); }); });
                 _.Directive("foo").Name("bar");
             });
             var arg = schema.GetObject("Baz").GetField("Bar").GetArgument("arg");

@@ -126,7 +126,6 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
             return this;
-
         }
 
 
@@ -135,7 +134,6 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
             return this;
-
         }
 
         public EnumTypeBuilder<TEnum> ClearDirectiveAnnotations()

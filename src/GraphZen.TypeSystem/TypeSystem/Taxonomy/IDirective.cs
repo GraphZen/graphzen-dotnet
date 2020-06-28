@@ -8,7 +8,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
-    public interface IDirective : IDirectiveDefinition, IArguments, ISyntaxConvertable, IDirectiveLocations, IMemberParent
+    public interface IDirective : IDirectiveDefinition, IArguments, ISyntaxConvertable, IDirectiveLocations,
+        IMemberParent
     {
     }
 }

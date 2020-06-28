@@ -39,7 +39,7 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"argument {Name}";
 
-        new public InternalArgumentBuilder Builder { get; }
+        public new InternalArgumentBuilder Builder { get; }
         protected override MemberDefinitionBuilder GetBuilder() => Builder;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.ArgumentDefinition;

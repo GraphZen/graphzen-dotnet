@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -26,10 +25,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
             var schema = Schema.Create(_ =>
             {
                 _.Directive("Foo").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Foo").Value("Bar", v =>
-                {
-                    v.AddDirectiveAnnotation("Foo", "test");
-                });
+                _.Enum("Foo").Value("Bar", v => { v.AddDirectiveAnnotation("Foo", "test"); });
             });
             schema.GetEnum("Foo").GetValue("Bar").FindDirectiveAnnotations("Foo").Single().Value.Should().Be("test");
         }
@@ -45,8 +41,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
                 {
                     Action add = () => v.AddDirectiveAnnotation("bar", "test");
                     add.Should().Throw<InvalidOperationException>().WithMessage(
-                                         "Cannot annotate enum value Foo.Bar with directive bar: Directive bar has not been defined yet.");
-
+                        "Cannot annotate enum value Foo.Bar with directive bar: Directive bar has not been defined yet.");
                 });
             });
         }
@@ -64,7 +59,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
                 {
                     Action add = () => v.AddDirectiveAnnotation("bar", "test");
                     add.Should().Throw<InvalidOperationException>().WithMessage(
-                         "Cannot annotate enum value Foo.Bar with directive bar: Directive bar cannot be annotated on enum values because it is only valid on queries, the schema, or arguments.");
+                        "Cannot annotate enum value Foo.Bar with directive bar: Directive bar cannot be annotated on enum values because it is only valid on queries, the schema, or arguments.");
                 });
             });
         }
@@ -79,14 +74,13 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
                 _.Enum("Foo").Value("Bar", v =>
                     {
                         var adds = new List<Action>
-                {
-                    () => v.AddDirectiveAnnotation(null!),
-                    () => v.AddDirectiveAnnotation(null!, "test")
-                };
+                        {
+                            () => v.AddDirectiveAnnotation(null!),
+                            () => v.AddDirectiveAnnotation(null!, "test")
+                        };
                         adds.ForEach(add => { add.Should().ThrowArgumentNullException("name"); });
                     }
                 );
-
             });
         }
 
@@ -103,17 +97,16 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
                 _.Enum("Foo").Value("Bar", v =>
                 {
                     var adds = new List<Action>
-               {
-                    () => v.AddDirectiveAnnotation(name),
-                    () => v.AddDirectiveAnnotation(name, "test")
-               };
+                    {
+                        () => v.AddDirectiveAnnotation(name),
+                        () => v.AddDirectiveAnnotation(name, "test")
+                    };
                     adds.ForEach(add =>
-                     {
-                         add.Should().Throw<InvalidNameException>().WithMessage(
-                             $"Cannot annotate enum value Foo.Bar with directive: \"{name}\" is not a valid directive name.");
-                     });
+                    {
+                        add.Should().Throw<InvalidNameException>().WithMessage(
+                            $"Cannot annotate enum value Foo.Bar with directive: \"{name}\" is not a valid directive name.");
+                    });
                 });
-
             });
         }
 
@@ -131,7 +124,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
                     v.AddDirectiveAnnotation("foo")
                         .AddDirectiveAnnotation("bar")
                         .ClearDirectiveAnnotations();
-
                 });
             });
             schema.GetEnum("Baz").GetValue("Bar").DirectiveAnnotations.Should().BeEmpty();
@@ -152,7 +144,6 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
                         .AddDirectiveAnnotation("bar")
                         .RemoveDirectiveAnnotations("bar");
                 });
-
             });
             var bar = schema.GetEnum("Baz").GetValue("Bar");
             bar.DirectiveAnnotations.Should().HaveCount(1);
@@ -183,10 +174,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
             var schema = Schema.Create(_ =>
             {
                 _.Directive("foo").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Foo").Value("Baz", v =>
-                {
-                    v.AddDirectiveAnnotation("foo");
-                });
+                _.Enum("Foo").Value("Baz", v => { v.AddDirectiveAnnotation("foo"); });
                 _.RemoveDirective("foo");
             });
             var baz = schema.GetEnum("Foo").GetValue("Baz");
@@ -201,15 +189,11 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
             var schema = Schema.Create(_ =>
             {
                 _.Directive("foo").Locations(DirectiveLocation.EnumValue);
-                _.Enum("Baz").Value("Bar", v =>
-                {
-                    v.AddDirectiveAnnotation("foo", "test");
-                });
+                _.Enum("Baz").Value("Bar", v => { v.AddDirectiveAnnotation("foo", "test"); });
                 _.Directive("foo").Name("bar");
             });
             var bar = schema.GetEnum("Baz").GetValue("Bar");
             bar.FindDirectiveAnnotations("bar").Single().Value.Should().Be("test");
         }
-
     }
 }

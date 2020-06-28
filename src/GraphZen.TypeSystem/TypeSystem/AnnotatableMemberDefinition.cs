@@ -33,7 +33,8 @@ namespace GraphZen.TypeSystem
 
         public bool HasAnyDirectiveAnnotation(string name) => FindDirectiveAnnotations(name).Any();
 
-        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(Func<IDirectiveAnnotation, bool> predicate) => _directiveAnnotations.Where(predicate);
+        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(Func<IDirectiveAnnotation, bool> predicate) =>
+            _directiveAnnotations.Where(predicate);
 
         public bool AddDirectiveAnnotation(IDirectiveAnnotation directive, ConfigurationSource configurationSource)
         {
@@ -46,6 +47,5 @@ namespace GraphZen.TypeSystem
             _directiveAnnotations.Remove(directive);
             return true;
         }
-
     }
 }

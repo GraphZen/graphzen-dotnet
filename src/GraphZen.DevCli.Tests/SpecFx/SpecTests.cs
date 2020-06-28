@@ -35,6 +35,7 @@ namespace GraphZen.SpecFx
                 {
                     throw new Exception($"Unable to find {_.SubjectPath}");
                 }
+
                 var subject = suite.SubjectsByPath[_.SubjectPath];
                 var parent = spec.Parent;
                 if (parent != null)
