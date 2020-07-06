@@ -27,11 +27,14 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<DescriptionSpecs>()
                 .WithSpecs<SdlSpec>();
 
-            var typeRef = new Subject("Type")
+            var sdl = new Subject("sdl")
+                .WithSpecs<SdlSpec>();
+
+            var typeRef = sdl.WithName("Type")
                 .WithSpecs<TypeReferenceSpecs>()
                 .WithSpecs<SdlSpec>();
 
-            var member = new Subject(nameof(Member)).WithSpecs<MemberSpecs>();
+            var member = sdl.WithName(nameof(Member)).WithSpecs<MemberSpecs>();
 
             var inputTypeRef = typeRef.WithName("InputTypeRef");
             var outputTypeRef = typeRef.WithName("OutputTypeRef");
@@ -161,10 +164,9 @@ namespace GraphZen.SpecAudit
                 .WithChild(name)
                 .WithChild(clrType)
                 .WithChild(argumentDefCollection)
-                .WithChild(new Subject(nameof(Directive.IsRepeatable)).WithSpecs<DirectiveRepeatableSpecs, SdlSpec>())
-                .WithChild(new Subject(nameof(Directive.Locations)).WithSpecs<DirectiveLocationsSpecs, SdlSpec>())
+                .WithChild(sdl.WithName(nameof(Directive.IsRepeatable)).WithSpecs<DirectiveRepeatableSpecs>())
+                .WithChild(sdl.WithName(nameof(Directive.Locations)).WithSpecs<DirectiveLocationsSpecs>())
                 .WithChild(description)
-                .WithSpecs<SdlSpec>()
                 .WithoutSpecs<SdlExtensionSpec>(true);
 
             var directives = new Subject(nameof(Schema.Directives))

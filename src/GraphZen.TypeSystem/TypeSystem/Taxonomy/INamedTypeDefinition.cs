@@ -13,10 +13,10 @@ namespace GraphZen.TypeSystem.Taxonomy
         IDescription,
         INamedTypeReference,
         IDirectiveAnnotationsDefinition,
-        IClrType
+        IClrType,
+        IMaybeSpecDefinition,
+        IMaybeIntrospectionDefinition
     {
         TypeKind Kind { get; }
-        bool IsIntrospection { get; }
-        bool IsSpec { get; }
     }
 }

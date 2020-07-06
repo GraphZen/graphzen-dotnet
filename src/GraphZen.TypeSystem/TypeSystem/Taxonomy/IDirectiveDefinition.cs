@@ -3,6 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Taxonomy
@@ -14,9 +15,49 @@ namespace GraphZen.TypeSystem.Taxonomy
         IClrType,
         IArgumentsDefinition,
         IDirectiveLocationsDefinition,
-        IMemberParentDefinition
+        IMemberParentDefinition,
+        IMaybeRepeatableDefinition, IMaybeSpecDefinition
+
     {
+    }
+
+    public interface IMaybeIntrospectionDefinition
+    {
+        bool IsIntrospection { get; }
+    }
+
+    public interface IMaybeIntrospection : IMaybeIntrospectionDefinition
+    {
+    }
+
+
+
+
+
+    public interface IMaybeSpecDefinition
+    {
+
         public bool IsSpec { get; }
+    }
+
+    public interface IMaybeSpec : IMaybeSpecDefinition
+    {
+
+    }
+
+    public interface IMaybeRepeatableDefinition
+    {
+
         public bool IsRepeatable { get; }
     }
+
+    public interface IMutableMaybeRepeatableDefinition : IMaybeRepeatableDefinition
+    {
+        bool SetRepeatable(bool repeatable, ConfigurationSource configurationSource);
+        ConfigurationSource GetRepeatableConfigurationSource();
+
+    }
+
+    public interface IMaybeRepeatable : IMaybeRepeatableDefinition { }
+
 }

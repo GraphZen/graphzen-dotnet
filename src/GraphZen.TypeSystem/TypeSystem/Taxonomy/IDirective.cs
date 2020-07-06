@@ -9,7 +9,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 {
     [GraphQLIgnore]
     public interface IDirective : IDirectiveDefinition, IArguments, ISyntaxConvertable, IDirectiveLocations,
-        IMemberParent
+        IMemberParent, IMaybeRepeatable, IMaybeSpec
     {
     }
 }
