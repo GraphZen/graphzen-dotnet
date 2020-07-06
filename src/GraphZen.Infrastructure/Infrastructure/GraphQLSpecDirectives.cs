@@ -8,7 +8,7 @@ namespace GraphZen.Infrastructure
     public static class GraphQLSpecDirectives
     {
         public const string Deprecated = "deprecated";
-        public const string Include = "deprecated";
+        public const string Include = "include";
         public const string Skip = "skip";
 
 
