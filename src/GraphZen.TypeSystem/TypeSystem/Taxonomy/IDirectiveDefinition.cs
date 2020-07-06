@@ -21,11 +21,13 @@ namespace GraphZen.TypeSystem.Taxonomy
     {
     }
 
+    [GraphQLIgnore]
     public interface IMaybeIntrospectionDefinition
     {
         bool IsIntrospection { get; }
     }
 
+    [GraphQLIgnore]
     public interface IMaybeIntrospection : IMaybeIntrospectionDefinition
     {
     }
@@ -34,23 +36,28 @@ namespace GraphZen.TypeSystem.Taxonomy
 
 
 
+    [GraphQLIgnore]
     public interface IMaybeSpecDefinition
     {
 
+        [GraphQLIgnore]
         public bool IsSpec { get; }
     }
 
+    [GraphQLIgnore]
     public interface IMaybeSpec : IMaybeSpecDefinition
     {
 
     }
 
+    [GraphQLIgnore]
     public interface IMaybeRepeatableDefinition
     {
 
         public bool IsRepeatable { get; }
     }
 
+    [GraphQLIgnore]
     public interface IMutableMaybeRepeatableDefinition : IMaybeRepeatableDefinition
     {
         bool SetRepeatable(bool repeatable, ConfigurationSource configurationSource);
@@ -58,6 +65,7 @@ namespace GraphZen.TypeSystem.Taxonomy
 
     }
 
+    [GraphQLIgnore]
     public interface IMaybeRepeatable : IMaybeRepeatableDefinition { }
 
 }
