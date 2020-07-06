@@ -29,24 +29,20 @@ namespace GraphZen.Infrastructure
         [DebuggerStepThrough]
         public static string SerializeObject(object value)
         {
-            using (var ms = new MemoryStream())
-            using (var writer = new StreamWriter(ms))
-            using (var jsonWriter = new JsonTextWriter(writer)
+            using var ms = new MemoryStream();
+            using var writer = new StreamWriter(ms);
+            using var jsonWriter = new JsonTextWriter(writer)
             {
                 QuoteChar = '\''
-            })
-            {
-                var ser = Serializer;
-                ser.Serialize(jsonWriter, value);
-                jsonWriter.Flush();
+            };
+            var ser = Serializer;
+            ser.Serialize(jsonWriter, value);
+            jsonWriter.Flush();
 
-                ms.Position = 0;
-                using (var sr = new StreamReader(ms))
-                {
-                    var str = sr.ReadToEnd();
-                    return str;
-                }
-            }
+            ms.Position = 0;
+            using var sr = new StreamReader(ms);
+            var str = sr.ReadToEnd();
+            return str;
         }
     }
 }
