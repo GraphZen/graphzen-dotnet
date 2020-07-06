@@ -28,15 +28,14 @@ namespace GraphZen.LanguageModel
 
         public static bool IsIntrospectionType(this DefinitionSyntax node) =>
             node is TypeDefinitionSyntax typeDef &&
-            SpecReservedNames.IntrospectionTypeNames.Contains(typeDef.Name.Value);
+            typeDef.Name.Value.IsIntrospectionType();
 
-        public static bool IsSpecDefinedDirective(this DefinitionSyntax node) =>
+        public static bool IsSpecDirective(this DefinitionSyntax node) =>
             node is DirectiveDefinitionSyntax dirDef &&
-            SpecReservedNames.DirectiveNames.Contains(dirDef.Name.Value);
+            dirDef.Name.Value.IsSpecDirective();
 
         public static bool IsSpecDefinedType(this DefinitionSyntax node) =>
-            node is ScalarTypeDefinitionSyntax typeDef &&
-            SpecReservedNames.ScalarTypeNames.Contains(typeDef.Name.Value);
+            node is ScalarTypeDefinitionSyntax typeDef && typeDef.Name.Value.IsSpecScalar();
 
         public static bool IsSchemaOfCommonNames(this SchemaDefinitionSyntax schemaDefinitionNode)
         {

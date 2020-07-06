@@ -8,19 +8,13 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    internal static class SpecReservedNames
+    public static class GraphQLIntrospectionTypes
     {
-        public static ImmutableHashSet<string> ScalarTypeNames { get; } =
-            ImmutableHashSet.Create("String", "Int", "Float", "Boolean", "ID");
-
-
-        public static ImmutableHashSet<string> DirectiveNames { get; } =
-            ImmutableHashSet.Create("deprecated", "include", "skip");
-
-
-        public static ImmutableHashSet<string> IntrospectionTypeNames { get; } =
+        private static ImmutableHashSet<string> IntrospectionTypeNames { get; } =
             ImmutableHashSet.Create("__Type", "__Field", "__Schema", "__Directive", "__InputValue", "__EnumValue",
                 "__DirectiveLocation",
                 "__TypeKind");
+
+        public static bool IsIntrospectionType(this string value) => IntrospectionTypeNames.Contains(value);
     }
 }

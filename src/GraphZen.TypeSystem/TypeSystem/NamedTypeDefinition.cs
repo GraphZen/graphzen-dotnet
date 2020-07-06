@@ -47,10 +47,9 @@ namespace GraphZen.TypeSystem
 
         public bool IsInputType() => Kind.IsInputType();
         public bool IsOutputType() => Kind.IsOutputType();
-        public bool IsIntrospection => SpecReservedNames.IntrospectionTypeNames.Contains(Name);
-
+        public bool IsIntrospection => Name.IsIntrospectionType();
         public bool IsSpec =>
-            IsIntrospection || Kind == TypeKind.Scalar && SpecReservedNames.ScalarTypeNames.Contains(Name);
+            IsIntrospection || Kind == TypeKind.Scalar && Name.IsSpecScalar();
 
         public string Name => Identity.Name;
 

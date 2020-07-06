@@ -36,7 +36,7 @@ namespace GraphZen.LanguageModel
         public static DocumentSyntax WithoutSpecDefinitions(this DocumentSyntax document)
         {
             return Check.NotNull(document, nameof(document))
-                .WithFilteredDefinitions(def => !def.IsSpecDefinedType() && !def.IsSpecDefinedDirective());
+                .WithFilteredDefinitions(def => !def.IsSpecDefinedType() && !def.IsSpecDirective());
         }
 
 

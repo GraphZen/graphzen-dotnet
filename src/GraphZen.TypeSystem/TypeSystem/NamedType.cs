@@ -19,9 +19,9 @@ namespace GraphZen.TypeSystem
             Description = description;
             ClrType = clrType;
             Description = description;
-            IsIntrospection = SpecReservedNames.IntrospectionTypeNames.Contains(name);
+            IsIntrospection = name.IsIntrospectionType();
             // ReSharper disable once VirtualMemberCallInConstructor
-            IsSpec = IsIntrospection || Kind == TypeKind.Scalar && SpecReservedNames.ScalarTypeNames.Contains(Name);
+            IsSpec = IsIntrospection || Kind == TypeKind.Scalar && Name.IsSpecScalar();
         }
 
         public abstract TypeKind Kind { get; }

@@ -31,7 +31,7 @@ namespace GraphZen.TypeSystem
             IReadOnlyCollection<DirectiveLocation> locations, Type? clrType, Schema schema) : base(schema)
         {
             Name = name;
-            IsSpec = SpecReservedNames.DirectiveNames.Contains(name);
+            IsSpec = name.IsSpecDirective();
             Description = description;
             ClrType = clrType;
             Locations = locations;
