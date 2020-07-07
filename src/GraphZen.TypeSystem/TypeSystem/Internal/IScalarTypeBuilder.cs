@@ -9,8 +9,10 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     internal interface
+        // ReSharper disable once PossibleInterfaceMemberAmbiguity
         IScalarTypeBuilder<TScalar, TValueNode> :
             IInfrastructure<InternalScalarTypeBuilder>,
+            IInfrastructure<ScalarTypeDefinition>,
             IDescriptionBuilder<ScalarTypeBuilder<TScalar, TValueNode>>,
             IAnnotableBuilder<ScalarTypeBuilder<TScalar, TValueNode>>,
             INamedBuilder<ScalarTypeBuilder<TScalar, TValueNode>>,

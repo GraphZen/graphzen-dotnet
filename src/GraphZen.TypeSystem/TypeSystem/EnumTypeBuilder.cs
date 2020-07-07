@@ -144,5 +144,6 @@ namespace GraphZen.TypeSystem
 
 
         InternalEnumTypeBuilder IInfrastructure<InternalEnumTypeBuilder>.Instance => Builder;
+        EnumTypeDefinition IInfrastructure<EnumTypeDefinition>.Instance => Builder.Definition;
     }
 }

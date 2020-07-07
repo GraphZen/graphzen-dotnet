@@ -42,7 +42,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Description
             var schema = Schema.Create(_ =>
             {
                 _.Description("desc").RemoveDescription();
-                _.GetDefinition().Description.Should().BeNull();
+                _.GetInfrastructure<SchemaDefinition>().Description.Should().BeNull();
             });
             schema.Description.Should().BeNull();
         }

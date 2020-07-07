@@ -25,6 +25,7 @@ namespace GraphZen.TypeSystem
         private InternalObjectTypeBuilder Builder { get; }
 
         InternalObjectTypeBuilder IInfrastructure<InternalObjectTypeBuilder>.Instance => Builder;
+        ObjectTypeDefinition IInfrastructure<ObjectTypeDefinition>.Instance => Builder.Definition;
 
         public ObjectTypeBuilder<TObject, TContext> Name(string name)
         {
@@ -282,5 +283,6 @@ namespace GraphZen.TypeSystem
 
         public ObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector) =>
             throw new NotImplementedException();
+
     }
 }

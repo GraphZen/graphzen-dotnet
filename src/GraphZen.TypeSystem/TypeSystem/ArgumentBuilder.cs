@@ -51,6 +51,7 @@ namespace GraphZen.TypeSystem
 
 
         InternalArgumentBuilder IInfrastructure<InternalArgumentBuilder>.Instance => Builder;
+        ArgumentDefinition IInfrastructure<ArgumentDefinition>.Instance => Builder.Definition;
 
         public ArgumentBuilder<TNew> ArgumentType<TNew>()
         {

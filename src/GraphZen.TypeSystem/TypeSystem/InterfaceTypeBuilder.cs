@@ -19,12 +19,11 @@ namespace GraphZen.TypeSystem
             Builder = Check.NotNull(builder, nameof(builder));
         }
 
-
         private InternalInterfaceTypeBuilder Builder { get; }
-
 
         InternalInterfaceTypeBuilder IInfrastructure<InternalInterfaceTypeBuilder>.Instance => Builder;
 
+        InterfaceTypeDefinition IInfrastructure<InterfaceTypeDefinition>.Instance => Builder.Definition;
 
         public InterfaceTypeBuilder<TInterface, TContext> Description(string description)
         {

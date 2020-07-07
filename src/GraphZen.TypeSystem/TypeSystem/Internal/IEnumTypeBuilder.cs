@@ -8,7 +8,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
     internal interface IEnumTypeBuilder<TEnumValue> :
+        IInfrastructure<EnumTypeDefinition>,
         IInfrastructure<InternalEnumTypeBuilder>,
         IAnnotableBuilder<EnumTypeBuilder<TEnumValue>>,
         IDescriptionBuilder<EnumTypeBuilder<TEnumValue>>,

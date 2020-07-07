@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure
 {
-    public static class SchemaBuilderInfrastructureExtensions
+    internal static class SchemaBuilderInfrastructureExtensions
     {
         public static SchemaDefinition GetDefinition<T>(this SchemaBuilder<T> schemaBuilder) where T : GraphQLContext =>
             schemaBuilder.GetInfrastructure<SchemaDefinition>();

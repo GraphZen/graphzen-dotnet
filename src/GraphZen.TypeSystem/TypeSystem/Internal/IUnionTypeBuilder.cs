@@ -8,7 +8,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
     internal interface IUnionTypeBuilder<TUnion, TContext> :
+        IInfrastructure<UnionTypeDefinition>,
         IInfrastructure<InternalUnionTypeBuilder>,
         IDescriptionBuilder<UnionTypeBuilder<TUnion, TContext>>,
         IAnnotableBuilder<UnionTypeBuilder<TUnion, TContext>>,

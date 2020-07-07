@@ -11,7 +11,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
     internal interface IArgumentBuilder<T> : IInfrastructure<InternalArgumentBuilder>,
+        IInfrastructure<ArgumentDefinition>,
         IAnnotableBuilder<ArgumentBuilder<T>>
     {
         ArgumentBuilder<TNew> ArgumentType<TNew>();

@@ -8,8 +8,10 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
     internal interface IObjectTypeBuilder<TObject, TContext> :
         IInfrastructure<InternalObjectTypeBuilder>,
+        IInfrastructure<ObjectTypeDefinition>,
         IImplementsInterfacesBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IDescriptionBuilder<ObjectTypeBuilder<TObject, TContext>>,
         IAnnotableBuilder<ObjectTypeBuilder<TObject, TContext>>,

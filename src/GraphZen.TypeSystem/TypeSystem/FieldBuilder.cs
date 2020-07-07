@@ -197,6 +197,7 @@ namespace GraphZen.TypeSystem
         }
 
         InternalFieldBuilder IInfrastructure<InternalFieldBuilder>.Instance => Builder;
+        FieldDefinition IInfrastructure<FieldDefinition>.Instance => Builder.Definition;
         IFieldDefinition IInfrastructure<IFieldDefinition>.Instance => Builder.Definition;
 
         public FieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false)

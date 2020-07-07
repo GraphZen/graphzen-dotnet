@@ -8,7 +8,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
     internal interface IInputFieldBuilder<T> : IInfrastructure<InternalInputFieldBuilder>,
+        IInfrastructure<InputFieldDefinition>,
         IAnnotableBuilder<InputFieldBuilder<T>>
     {
         InputFieldBuilder<TNew> FieldType<TNew>();

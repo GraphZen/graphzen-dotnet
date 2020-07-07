@@ -48,6 +48,7 @@ namespace GraphZen.TypeSystem
         public bool IsInputType() => Kind.IsInputType();
         public bool IsOutputType() => Kind.IsOutputType();
         public bool IsIntrospection => Name.IsIntrospectionType();
+
         public bool IsSpec =>
             IsIntrospection || Kind == TypeKind.Scalar && Name.IsSpecScalar();
 

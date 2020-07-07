@@ -79,5 +79,6 @@ namespace GraphZen.TypeSystem
 
 
         InternalEnumValueBuilder IInfrastructure<InternalEnumValueBuilder>.Instance => Builder;
+        EnumValueDefinition IInfrastructure<EnumValueDefinition>.Instance => Builder.Definition;
     }
 }

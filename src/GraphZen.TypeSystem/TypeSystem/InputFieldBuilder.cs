@@ -70,6 +70,7 @@ namespace GraphZen.TypeSystem
 
 
         InternalInputFieldBuilder IInfrastructure<InternalInputFieldBuilder>.Instance => Builder;
+        InputFieldDefinition IInfrastructure<InputFieldDefinition>.Instance => Builder.Definition;
 
         public InputFieldBuilder<T> Name(string name)
         {

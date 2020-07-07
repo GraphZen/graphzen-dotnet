@@ -17,10 +17,10 @@ namespace GraphZen.TypeSystem
             Builder = Check.NotNull(builder, nameof(builder));
         }
 
-
         private InternalUnionTypeBuilder Builder { get; }
 
         InternalUnionTypeBuilder IInfrastructure<InternalUnionTypeBuilder>.Instance => Builder;
+        UnionTypeDefinition IInfrastructure<UnionTypeDefinition>.Instance => Builder.Definition;
 
 
         public UnionTypeBuilder<TUnion, TContext> Description(string description)

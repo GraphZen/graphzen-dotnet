@@ -17,7 +17,8 @@ namespace GraphZen.TypeSystem.Internal
         INamedBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
         IDescriptionBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
         IInfrastructure<IFieldDefinition>,
-        IInfrastructure<InternalFieldBuilder>
+        IInfrastructure<InternalFieldBuilder>,
+        IInfrastructure<FieldDefinition>
         where TContext : GraphQLContext
     {
         FieldBuilder<TDeclaringType, object, TContext> FieldType(string type);

@@ -28,7 +28,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_
         {
             Schema.Create(_ =>
             {
-                var schema = _.GetDefinition();
+                var schema = _.GetInfrastructure<SchemaDefinition>();
                 schema.DescendantsAndSelf().Should().ContainSingle(d => d == schema);
             });
         }

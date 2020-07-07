@@ -7,7 +7,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
     internal interface IEnumValueBuilder :
+        IInfrastructure<EnumValueDefinition>,
         IAnnotableBuilder<EnumValueBuilder>,
         INamedBuilder<EnumValueBuilder>,
         IDescriptionBuilder<EnumValueBuilder>,

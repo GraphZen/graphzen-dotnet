@@ -24,6 +24,7 @@ namespace GraphZen.TypeSystem
         private InternalScalarTypeBuilder Builder { get; }
 
         InternalScalarTypeBuilder IInfrastructure<InternalScalarTypeBuilder>.Instance => Builder;
+        ScalarTypeDefinition IInfrastructure<ScalarTypeDefinition>.Instance => Builder.Definition;
 
         [DebuggerStepThrough]
         public ScalarTypeBuilder<object, TValueNode> ClrType(Type clrType, bool inferName = false) =>
