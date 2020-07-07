@@ -74,33 +74,6 @@ namespace GraphZen.TypeSystem.Tests.Api
                 AssertImplementsAccessor(internalBuilderName);
                 AssertImplementsAccessor(memberDefinitionName);
             }
-
-
-            /*
-            var buildersToExclude = new List<Type>
-            {
-                 typeof(GraphQLContextOptionsBuilder)
-            }.Select(_ => _.Name).ToList();
-            foreach (var builder in GetPublicBuilderClasses().Where(_ => !buildersToExclude.Any(ex => _.Name.Contains(ex)))
-            )
-            {
-                var infrastructureInterfaces = builder.GetInterfaces().Where(_ =>
-                    _.IsGenericType && _.GetGenericTypeDefinition() == typeof(IInfrastructure<>))
-                    .SelectMany(_ => _.GetGenericArguments())
-                    .ToList();
-
-                var infra = infrastructureInterfaces.SingleOrDefault(_ =>
-                  _.Name.StartsWith("Internal") && _.Name.EndsWith("Builder"));
-
-                if (infra == null)
-                {
-                    throw new Exception($"\n\n{builder.Name} should implement a {typeof(IInfrastructure<>).Name} for an internal builder.\n");
-                }
-
-                infrastructureInterfaces.Should().ContainSingle(_ =>
-                                   _.Name.EndsWith("Definition"), $"{builder.Name} should implement a {typeof(IInfrastructure<>).Name} for a definition");
-            }
-            */
         }
 
         [Fact]

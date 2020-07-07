@@ -65,6 +65,11 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         [GraphQLIgnore]
         public bool Has{valueName}({keyType} {keyNameCamelized}) 
             => {propertyName}.ContainsKey(Check.NotNull({keyNameCamelized}, nameof({keyNameCamelized})));
+
+        [GraphQLIgnore]
+        public bool Has{valueName}s() 
+            => {propertyName}.Count > 0;
+
         
         [GraphQLIgnore]
         public {valueType} Get{valueName}({keyType} {keyNameCamelized}) 
