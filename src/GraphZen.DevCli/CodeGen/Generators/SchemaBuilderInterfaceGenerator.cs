@@ -15,6 +15,10 @@ namespace GraphZen.CodeGen.Generators
 {
     public class EnumerableBuilderExtensionsGenerator : PartialTypeGenerator
     {
+        public override IReadOnlyList<string> Usings { get; } = new List<string>()
+        {
+            "GraphZen.TypeSystem.Taxonomy"
+        };
 
         public EnumerableBuilderExtensionsGenerator() : base(typeof(EnumerableBuilderExtensions))
         {
