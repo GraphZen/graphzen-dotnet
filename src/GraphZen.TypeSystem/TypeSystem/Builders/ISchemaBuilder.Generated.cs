@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -20,7 +21,7 @@ namespace GraphZen.TypeSystem
 
         #region Directives
 
-        // IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpec); TODO
+        IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpecDirectives = false);
 
 
         DirectiveBuilder<object> Directive(string name);
@@ -57,8 +58,6 @@ namespace GraphZen.TypeSystem
 
         #region Types
 
-        // IEnumerable<Builder> GetTypes(bool includeSpec); TODO
-
 
         SchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull;
 
@@ -83,7 +82,7 @@ namespace GraphZen.TypeSystem
 
         #region Objects
 
-        // IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpec); TODO
+        IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpecObjects = false);
 
 
         ObjectTypeBuilder<object, TContext> Object(string name);
@@ -120,7 +119,7 @@ namespace GraphZen.TypeSystem
 
         #region Unions
 
-        // IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpec); TODO
+        IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpecUnions = false);
 
 
         UnionTypeBuilder<object, TContext> Union(string name);
@@ -157,7 +156,7 @@ namespace GraphZen.TypeSystem
 
         #region Scalars
 
-        // IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpec); TODO
+        IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpecScalars = false);
 
 
         SchemaBuilder<TContext> UnignoreScalar<TScalar>() where TScalar : notnull;
@@ -183,7 +182,7 @@ namespace GraphZen.TypeSystem
 
         #region Enums
 
-        // IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpec); TODO
+        IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpecEnums = false);
 
 
         EnumTypeBuilder<string> Enum(string name);
@@ -220,7 +219,7 @@ namespace GraphZen.TypeSystem
 
         #region Interfaces
 
-        // IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpec); TODO
+        IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpecInterfaces = false);
 
 
         InterfaceTypeBuilder<object, TContext> Interface(string name);
@@ -257,7 +256,7 @@ namespace GraphZen.TypeSystem
 
         #region InputObjects
 
-        // IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpec); TODO
+        IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpecInputObjects = false);
 
 
         InputObjectTypeBuilder<object> InputObject(string name);
@@ -295,4 +294,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 7174583386891090922
+// Source Hash Code: 2618841811624436100

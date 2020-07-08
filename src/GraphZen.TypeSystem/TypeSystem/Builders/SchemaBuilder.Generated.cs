@@ -300,6 +300,8 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
+        public IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpecUnions = false) => throw new NotImplementedException();
+
         #endregion
 
         #region Unions
@@ -405,6 +407,8 @@ namespace GraphZen.TypeSystem
             Builder.RemoveUnion(name, ConfigurationSource.Explicit);
             return this;
         }
+
+        public IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpecScalars = false) => throw new NotImplementedException();
 
         #endregion
 
@@ -581,6 +585,8 @@ namespace GraphZen.TypeSystem
             Builder.RemoveEnum(name, ConfigurationSource.Explicit);
             return this;
         }
+
+        public IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpecInterfaces = false) => throw new NotImplementedException();
 
         #endregion
 
