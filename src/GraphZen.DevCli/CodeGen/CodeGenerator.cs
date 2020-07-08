@@ -19,10 +19,9 @@ namespace GraphZen.CodeGen
 {
     public static class CodeGenerator
     {
-        public static void Generate(bool quick)
-        {
-            AssertChangesCommitted();
 
+        public static List<GeneratedCode> GetGeneratedCode()
+        {
             var generated = new List<GeneratedCode>
             {
                 LanguageModelCodeGen.GenSyntaxKindEnum(),
@@ -30,7 +29,14 @@ namespace GraphZen.CodeGen
             };
             generated.AddRange(PartialTypeGenerator.Generate(CreatePartialTypeGenerators()));
             generated.AddRange(TypeSystemSpecTestsCodeGenerator.ScaffoldSystemSpec());
+            return generated.ToList();
 
+        }
+        public static void Generate(bool quick)
+        {
+            AssertChangesCommitted();
+
+            var generated = GetGeneratedCode();
             var existingGeneratedFiles = Directory.GetFiles(".", "*Generated.cs", SearchOption.AllDirectories);
 
             foreach (var _ in generated)

@@ -23,7 +23,18 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
     public abstract class PartialTypeGenerator
     {
         private static readonly Lazy<IReadOnlyList<string>> CSharpFilesLazy =
-            new Lazy<IReadOnlyList<string>>(() => Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories));
+            new Lazy<IReadOnlyList<string>>(() =>
+            {
+                var test = Directory.GetCurrentDirectory();
+                if (test != null)
+                {
+
+                    throw new Exception(test);
+                }
+
+
+                return Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories);
+            });
 
         protected PartialTypeGenerator(Type targetType)
         {
