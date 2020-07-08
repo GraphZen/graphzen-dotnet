@@ -21,8 +21,7 @@ namespace GraphZen.TypeSystem
 
         #region Directives
 
-        // TEST IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpecDirectives = false);
-        IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpecDirectives = false);
+        IEnumerable<IDirectiveDefinition> GetDirectives(bool includeSpecDirectives = false);
 
 
         DirectiveBuilder<object> Directive(string name);
@@ -59,8 +58,7 @@ namespace GraphZen.TypeSystem
 
         #region Types
 
-        // TEST IEnumerable<INamedTypeBuilder> GetTypes(bool includeSpecTypes = false);
-        IEnumerable<INamedTypeBuilder> GetTypes(bool includeSpecTypes = false);
+        IEnumerable<INamedTypeDefinition> GetTypes(bool includeSpecTypes = false);
 
 
         SchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull;
@@ -86,8 +84,7 @@ namespace GraphZen.TypeSystem
 
         #region Objects
 
-        // TEST IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpecObjects = false);
-        IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpecObjects = false);
+        IEnumerable<IObjectTypeDefinition> GetObjects(bool includeSpecObjects = false);
 
 
         ObjectTypeBuilder<object, TContext> Object(string name);
@@ -124,8 +121,7 @@ namespace GraphZen.TypeSystem
 
         #region Unions
 
-        // TEST IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpecUnions = false);
-        IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpecUnions = false);
+        IEnumerable<IUnionTypeDefinition> GetUnions(bool includeSpecUnions = false);
 
 
         UnionTypeBuilder<object, TContext> Union(string name);
@@ -162,8 +158,7 @@ namespace GraphZen.TypeSystem
 
         #region Scalars
 
-        // TEST IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpecScalars = false);
-        IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpecScalars = false);
+        IEnumerable<IScalarTypeDefinition> GetScalars(bool includeSpecScalars = false);
 
 
         SchemaBuilder<TContext> UnignoreScalar<TScalar>() where TScalar : notnull;
@@ -189,8 +184,7 @@ namespace GraphZen.TypeSystem
 
         #region Enums
 
-        // TEST IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpecEnums = false);
-        IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpecEnums = false);
+        IEnumerable<IEnumTypeDefinition> GetEnums(bool includeSpecEnums = false);
 
 
         EnumTypeBuilder<string> Enum(string name);
@@ -227,8 +221,7 @@ namespace GraphZen.TypeSystem
 
         #region Interfaces
 
-        // TEST IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpecInterfaces = false);
-        IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpecInterfaces = false);
+        IEnumerable<IInterfaceTypeDefinition> GetInterfaces(bool includeSpecInterfaces = false);
 
 
         InterfaceTypeBuilder<object, TContext> Interface(string name);
@@ -265,8 +258,7 @@ namespace GraphZen.TypeSystem
 
         #region InputObjects
 
-        // TEST IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpecInputObjects = false);
-        IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpecInputObjects = false);
+        IEnumerable<IInputObjectTypeDefinition> GetInputObjects(bool includeSpecInputObjects = false);
 
 
         InputObjectTypeBuilder<object> InputObject(string name);
@@ -304,4 +296,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 15107571594081130896
+// Source Hash Code: 5871842628999824593

@@ -725,5 +725,11 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => "schema";
+
+        IEnumerable<INamedTypeDefinition> INamedTypesDefinition.GetTypes(bool includeSpecTypes) =>
+            GetTypes(includeSpecTypes);
+
+        public IEnumerable<NamedTypeDefinition> GetTypes(bool includeSpecTypes) =>
+            includeSpecTypes ? Types : Types.Where(_ => !_.IsSpec);
     }
 }

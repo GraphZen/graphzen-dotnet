@@ -10,6 +10,7 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable once PossibleInterfaceMemberAmbiguity
 
@@ -315,4 +316,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 3715663662154622726
+// Source Hash Code: 17037223998941350511

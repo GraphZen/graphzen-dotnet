@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
@@ -22,8 +21,8 @@ namespace GraphZen.TypeSystem
 
         #region Directives
 
-        public IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpecDirectives = false) =>
-            Builder.Definition.GetDirectives(includeSpecDirectives).Select(_ => _.Builder);
+        public IEnumerable<IDirectiveDefinition> GetDirectives(bool includeSpecDirectives = false) =>
+            Builder.Definition.GetDirectives(includeSpecDirectives);
 
 
         public DirectiveBuilder<object> Directive(string name)
@@ -134,6 +133,10 @@ namespace GraphZen.TypeSystem
 
         #region Types
 
+        public IEnumerable<INamedTypeDefinition> GetTypes(bool includeSpecTypes = false) =>
+            Builder.Definition.GetTypes(includeSpecTypes);
+
+
         public SchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull
         {
             Builder.UnignoreType(typeof(TClrType), ConfigurationSource.Explicit);
@@ -199,8 +202,8 @@ namespace GraphZen.TypeSystem
 
         #region Objects
 
-        public IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpecObjects = false) =>
-            Builder.Definition.GetObjects(includeSpecObjects).Select(_ => _.Builder);
+        public IEnumerable<IObjectTypeDefinition> GetObjects(bool includeSpecObjects = false) =>
+            Builder.Definition.GetObjects(includeSpecObjects);
 
 
         public ObjectTypeBuilder<object, TContext> Object(string name)
@@ -309,8 +312,8 @@ namespace GraphZen.TypeSystem
 
         #region Unions
 
-        public IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpecUnions = false) =>
-            Builder.Definition.GetUnions(includeSpecUnions).Select(_ => _.Builder);
+        public IEnumerable<IUnionTypeDefinition> GetUnions(bool includeSpecUnions = false) =>
+            Builder.Definition.GetUnions(includeSpecUnions);
 
 
         public UnionTypeBuilder<object, TContext> Union(string name)
@@ -419,8 +422,8 @@ namespace GraphZen.TypeSystem
 
         #region Scalars
 
-        public IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpecScalars = false) =>
-            Builder.Definition.GetScalars(includeSpecScalars).Select(_ => _.Builder);
+        public IEnumerable<IScalarTypeDefinition> GetScalars(bool includeSpecScalars = false) =>
+            Builder.Definition.GetScalars(includeSpecScalars);
 
 
         public SchemaBuilder<TContext> UnignoreScalar<TScalar>() where TScalar : notnull
@@ -488,8 +491,8 @@ namespace GraphZen.TypeSystem
 
         #region Enums
 
-        public IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpecEnums = false) =>
-            Builder.Definition.GetEnums(includeSpecEnums).Select(_ => _.Builder);
+        public IEnumerable<IEnumTypeDefinition> GetEnums(bool includeSpecEnums = false) =>
+            Builder.Definition.GetEnums(includeSpecEnums);
 
 
         public EnumTypeBuilder<string> Enum(string name)
@@ -600,8 +603,8 @@ namespace GraphZen.TypeSystem
 
         #region Interfaces
 
-        public IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpecInterfaces = false) =>
-            Builder.Definition.GetInterfaces(includeSpecInterfaces).Select(_ => _.Builder);
+        public IEnumerable<IInterfaceTypeDefinition> GetInterfaces(bool includeSpecInterfaces = false) =>
+            Builder.Definition.GetInterfaces(includeSpecInterfaces);
 
 
         public InterfaceTypeBuilder<object, TContext> Interface(string name)
@@ -710,8 +713,8 @@ namespace GraphZen.TypeSystem
 
         #region InputObjects
 
-        public IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpecInputObjects = false) =>
-            Builder.Definition.GetInputObjects(includeSpecInputObjects).Select(_ => _.Builder);
+        public IEnumerable<IInputObjectTypeDefinition> GetInputObjects(bool includeSpecInputObjects = false) =>
+            Builder.Definition.GetInputObjects(includeSpecInputObjects);
 
 
         public InputObjectTypeBuilder<object> InputObject(string name)
@@ -823,4 +826,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 2567069570015823122
+// Source Hash Code: 6310438481020478108

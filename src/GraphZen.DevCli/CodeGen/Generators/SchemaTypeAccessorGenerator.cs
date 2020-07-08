@@ -14,10 +14,7 @@ namespace GraphZen.CodeGen.Generators
 {
     public class SchemaTypeAccessorGenerator : PartialTypeGenerator<Schema>
     {
-        public override IReadOnlyList<string> Usings { get; } = new List<string>
-        {
-            // "GraphZen.TypeSystem.Taxonomy"
-        };
+        public override IReadOnlyList<string> Usings { get; } = new List<string>();
 
 
         public override void Apply(StringBuilder csharp)

@@ -27,6 +27,7 @@ namespace GraphZen.TypeSystem.Internal
         public IParser Parser { get; } = new SuperpowerParser();
 
 
+
         public NamedTypeDefinition? DefineType(TypeReference reference)
         {
             if (reference.Identity.Definition != null)
