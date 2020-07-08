@@ -8,10 +8,11 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel.Internal;
+using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Internal
+namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public class TypeIdentity : IMutableNamed, IMutableClrType, IMutableDefinition
@@ -28,17 +29,6 @@ namespace GraphZen.TypeSystem.Internal
                     $"Cannot create Type Identity: \"{name}\" is not a valid GraphQL name.");
             Schema = schema;
         }
-
-        /*
-        private TypeIdentity(Type clrType, string name, SchemaDefinition schema)
-        {
-            ClrType = clrType;
-            _clrTypeConfigurationSource = ConfigurationSource.Explicit;
-            _nameConfigurationSource = ConfigurationSource.Explicit;
-            Name = name.IsValidGraphQLName() ? name : throw new InvalidNameException($"Cannot create Type Identity: \"{name}\" is not a valid GraphQL name.");
-            Schema = schema;
-        }
-        */
 
 
         public TypeIdentity(Type clrType, SchemaDefinition schema)

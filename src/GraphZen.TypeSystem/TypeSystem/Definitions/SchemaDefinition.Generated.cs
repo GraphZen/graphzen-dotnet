@@ -1,9 +1,8 @@
-// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-
 #nullable enable
 
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
@@ -13,18 +12,15 @@ using JetBrains.Annotations;
 // ReSharper disable InconsistentNaming
 // ReSharper disable once PossibleInterfaceMemberAmbiguity
 
-namespace GraphZen.TypeSystem
-{
-    public partial class SchemaDefinition
-    {
-        #region SchemaDefinitionTypeAccessorGenerator
-
-        #region Enum type accessors
+namespace GraphZen.TypeSystem {
+public  partial class SchemaDefinition {
+#region SchemaDefinitionTypeAccessorGenerator
+#region Enum type accessors
 
         public EnumTypeDefinition GetEnum(string name) => GetType<EnumTypeDefinition>(name);
 
         public EnumTypeDefinition GetEnum(Type clrType) =>
-            GetType<EnumTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
+                GetType<EnumTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public EnumTypeDefinition GetEnum<TClrType>() => GetType<EnumTypeDefinition>(typeof(TClrType));
 
@@ -32,7 +28,7 @@ namespace GraphZen.TypeSystem
 
         public EnumTypeDefinition? FindEnum<TClrType>() => FindType<EnumTypeDefinition>(typeof(TClrType));
 
-        public EnumTypeDefinition? FindEnum(Type clrType) =>
+        public EnumTypeDefinition? FindEnum(Type clrType) => 
             FindType<EnumTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetEnum(Type clrType, [NotNullWhen(true)] out EnumTypeDefinition? type) =>
@@ -50,24 +46,21 @@ namespace GraphZen.TypeSystem
 
         public bool HasEnum(string name) => HasType<EnumTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-        #endregion
-
-        #region InputObject type accessors
+#endregion
+#region InputObject type accessors
 
         public InputObjectTypeDefinition GetInputObject(string name) => GetType<InputObjectTypeDefinition>(name);
 
         public InputObjectTypeDefinition GetInputObject(Type clrType) =>
-            GetType<InputObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
+                GetType<InputObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
-        public InputObjectTypeDefinition GetInputObject<TClrType>() =>
-            GetType<InputObjectTypeDefinition>(typeof(TClrType));
+        public InputObjectTypeDefinition GetInputObject<TClrType>() => GetType<InputObjectTypeDefinition>(typeof(TClrType));
 
         public InputObjectTypeDefinition? FindInputObject(string name) => FindType<InputObjectTypeDefinition>(name);
 
-        public InputObjectTypeDefinition? FindInputObject<TClrType>() =>
-            FindType<InputObjectTypeDefinition>(typeof(TClrType));
+        public InputObjectTypeDefinition? FindInputObject<TClrType>() => FindType<InputObjectTypeDefinition>(typeof(TClrType));
 
-        public InputObjectTypeDefinition? FindInputObject(Type clrType) =>
+        public InputObjectTypeDefinition? FindInputObject(Type clrType) => 
             FindType<InputObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetInputObject(Type clrType, [NotNullWhen(true)] out InputObjectTypeDefinition? type) =>
@@ -79,31 +72,27 @@ namespace GraphZen.TypeSystem
         public bool TryGetInputObject(string name, [NotNullWhen(true)] out InputObjectTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
-        public bool HasInputObject(Type clrType) =>
-            HasType<InputObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
+        public bool HasInputObject(Type clrType) => HasType<InputObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool HasInputObject<TClrType>() => HasType<InputObjectTypeDefinition>(typeof(TClrType));
 
-        public bool HasInputObject(string name) =>
-            HasType<InputObjectTypeDefinition>(Check.NotNull(name, nameof(name)));
+        public bool HasInputObject(string name) => HasType<InputObjectTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-        #endregion
-
-        #region Interface type accessors
+#endregion
+#region Interface type accessors
 
         public InterfaceTypeDefinition GetInterface(string name) => GetType<InterfaceTypeDefinition>(name);
 
         public InterfaceTypeDefinition GetInterface(Type clrType) =>
-            GetType<InterfaceTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
+                GetType<InterfaceTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public InterfaceTypeDefinition GetInterface<TClrType>() => GetType<InterfaceTypeDefinition>(typeof(TClrType));
 
         public InterfaceTypeDefinition? FindInterface(string name) => FindType<InterfaceTypeDefinition>(name);
 
-        public InterfaceTypeDefinition? FindInterface<TClrType>() =>
-            FindType<InterfaceTypeDefinition>(typeof(TClrType));
+        public InterfaceTypeDefinition? FindInterface<TClrType>() => FindType<InterfaceTypeDefinition>(typeof(TClrType));
 
-        public InterfaceTypeDefinition? FindInterface(Type clrType) =>
+        public InterfaceTypeDefinition? FindInterface(Type clrType) => 
             FindType<InterfaceTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetInterface(Type clrType, [NotNullWhen(true)] out InterfaceTypeDefinition? type) =>
@@ -115,21 +104,19 @@ namespace GraphZen.TypeSystem
         public bool TryGetInterface(string name, [NotNullWhen(true)] out InterfaceTypeDefinition? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
-        public bool HasInterface(Type clrType) =>
-            HasType<InterfaceTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
+        public bool HasInterface(Type clrType) => HasType<InterfaceTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool HasInterface<TClrType>() => HasType<InterfaceTypeDefinition>(typeof(TClrType));
 
         public bool HasInterface(string name) => HasType<InterfaceTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-        #endregion
-
-        #region Object type accessors
+#endregion
+#region Object type accessors
 
         public ObjectTypeDefinition GetObject(string name) => GetType<ObjectTypeDefinition>(name);
 
         public ObjectTypeDefinition GetObject(Type clrType) =>
-            GetType<ObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
+                GetType<ObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public ObjectTypeDefinition GetObject<TClrType>() => GetType<ObjectTypeDefinition>(typeof(TClrType));
 
@@ -137,7 +124,7 @@ namespace GraphZen.TypeSystem
 
         public ObjectTypeDefinition? FindObject<TClrType>() => FindType<ObjectTypeDefinition>(typeof(TClrType));
 
-        public ObjectTypeDefinition? FindObject(Type clrType) =>
+        public ObjectTypeDefinition? FindObject(Type clrType) => 
             FindType<ObjectTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetObject(Type clrType, [NotNullWhen(true)] out ObjectTypeDefinition? type) =>
@@ -155,14 +142,13 @@ namespace GraphZen.TypeSystem
 
         public bool HasObject(string name) => HasType<ObjectTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-        #endregion
-
-        #region Scalar type accessors
+#endregion
+#region Scalar type accessors
 
         public ScalarTypeDefinition GetScalar(string name) => GetType<ScalarTypeDefinition>(name);
 
         public ScalarTypeDefinition GetScalar(Type clrType) =>
-            GetType<ScalarTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
+                GetType<ScalarTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public ScalarTypeDefinition GetScalar<TClrType>() => GetType<ScalarTypeDefinition>(typeof(TClrType));
 
@@ -170,7 +156,7 @@ namespace GraphZen.TypeSystem
 
         public ScalarTypeDefinition? FindScalar<TClrType>() => FindType<ScalarTypeDefinition>(typeof(TClrType));
 
-        public ScalarTypeDefinition? FindScalar(Type clrType) =>
+        public ScalarTypeDefinition? FindScalar(Type clrType) => 
             FindType<ScalarTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetScalar(Type clrType, [NotNullWhen(true)] out ScalarTypeDefinition? type) =>
@@ -188,14 +174,13 @@ namespace GraphZen.TypeSystem
 
         public bool HasScalar(string name) => HasType<ScalarTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-        #endregion
-
-        #region Union type accessors
+#endregion
+#region Union type accessors
 
         public UnionTypeDefinition GetUnion(string name) => GetType<UnionTypeDefinition>(name);
 
         public UnionTypeDefinition GetUnion(Type clrType) =>
-            GetType<UnionTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
+                GetType<UnionTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public UnionTypeDefinition GetUnion<TClrType>() => GetType<UnionTypeDefinition>(typeof(TClrType));
 
@@ -203,7 +188,7 @@ namespace GraphZen.TypeSystem
 
         public UnionTypeDefinition? FindUnion<TClrType>() => FindType<UnionTypeDefinition>(typeof(TClrType));
 
-        public UnionTypeDefinition? FindUnion(Type clrType) =>
+        public UnionTypeDefinition? FindUnion(Type clrType) => 
             FindType<UnionTypeDefinition>(Check.NotNull(clrType, nameof(clrType)));
 
         public bool TryGetUnion(Type clrType, [NotNullWhen(true)] out UnionTypeDefinition? type) =>
@@ -221,54 +206,52 @@ namespace GraphZen.TypeSystem
 
         public bool HasUnion(string name) => HasType<UnionTypeDefinition>(Check.NotNull(name, nameof(name)));
 
-        #endregion
+#endregion
+#endregion
+#region DictionaryAccessorGenerator
 
-        #endregion
 
-        #region DictionaryAccessorGenerator
-
-        [GraphQLIgnore]
-        public DirectiveDefinition? FindDirective(string name)
-            => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out var directive) ? directive : null;
 
         [GraphQLIgnore]
-        public bool HasDirective(string name)
+        public DirectiveDefinition? FindDirective(String name) 
+            => _directives.TryGetValue(Check.NotNull(name,nameof(name)), out var directive) ? directive : null;
+
+        [GraphQLIgnore]
+        public bool HasDirective(String name) 
             => _directives.ContainsKey(Check.NotNull(name, nameof(name)));
 
         [GraphQLIgnore]
-        public DirectiveDefinition GetDirective(string name)
-            => FindDirective(Check.NotNull(name, nameof(name))) ??
-               throw new ItemNotFoundException(
-                   $"{this} does not contain a {nameof(DirectiveDefinition)} with name '{name}'.");
+        public DirectiveDefinition GetDirective(String name) 
+            => FindDirective(Check.NotNull(name, nameof(name))) ?? throw new ItemNotFoundException($"{this} does not contain a {nameof(DirectiveDefinition)} with name '{name}'.");
 
         [GraphQLIgnore]
-        public bool TryGetDirective(string name, [NotNullWhen(true)] out DirectiveDefinition? directiveDefinition)
-            => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out directiveDefinition);
+        public bool TryGetDirective(String name, [NotNullWhen(true)] out DirectiveDefinition? directiveDefinition)
+             => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out directiveDefinition);
 
-        #endregion
 
-        #region DictionaryAccessorGenerator
+#endregion
+#region DictionaryAccessorGenerator
 
-        [GraphQLIgnore]
-        public TypeIdentity? FindTypeIdentity(string name)
-            => _typeIdentities.TryGetValue(Check.NotNull(name, nameof(name)), out var typeIdentity)
-                ? typeIdentity
-                : null;
+
 
         [GraphQLIgnore]
-        public bool HasTypeIdentity(string name)
+        public TypeIdentity? FindTypeIdentity(String name) 
+            => _typeIdentities.TryGetValue(Check.NotNull(name,nameof(name)), out var typeIdentity) ? typeIdentity : null;
+
+        [GraphQLIgnore]
+        public bool HasTypeIdentity(String name) 
             => _typeIdentities.ContainsKey(Check.NotNull(name, nameof(name)));
 
         [GraphQLIgnore]
-        public TypeIdentity GetTypeIdentity(string name)
-            => FindTypeIdentity(Check.NotNull(name, nameof(name))) ??
-               throw new ItemNotFoundException($"{this} does not contain a {nameof(TypeIdentity)} with name '{name}'.");
+        public TypeIdentity GetTypeIdentity(String name) 
+            => FindTypeIdentity(Check.NotNull(name, nameof(name))) ?? throw new ItemNotFoundException($"{this} does not contain a {nameof(TypeIdentity)} with name '{name}'.");
 
         [GraphQLIgnore]
-        public bool TryGetTypeIdentity(string name, [NotNullWhen(true)] out TypeIdentity? typeIdentity)
-            => _typeIdentities.TryGetValue(Check.NotNull(name, nameof(name)), out typeIdentity);
+        public bool TryGetTypeIdentity(String name, [NotNullWhen(true)] out TypeIdentity? typeIdentity)
+             => _typeIdentities.TryGetValue(Check.NotNull(name, nameof(name)), out typeIdentity);
 
-        #endregion
-    }
+
+#endregion
 }
-// Source Hash Code: 8486950285032902004
+}
+// Source Hash Code: 12865743757049512308

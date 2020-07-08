@@ -1,9 +1,8 @@
-// Copyright (c) GraphZen LLC. All rights reserved.
-// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
-
 #nullable enable
 
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -12,320 +11,312 @@ using JetBrains.Annotations;
 // ReSharper disable InconsistentNaming
 // ReSharper disable once PossibleInterfaceMemberAmbiguity
 
-namespace GraphZen.TypeSystem
-{
-    public partial class Schema
-    {
-        #region SchemaTypeAccessorGenerator
+namespace GraphZen.TypeSystem {
+public  partial class Schema {
+#region SchemaTypeAccessorGenerator
+#region Enum type accessors
 
-        #region Enum type accessors
+[GraphQLIgnore]        
+public EnumType GetEnum(string name) => GetType<EnumType>(name);
 
-        [GraphQLIgnore]
-        public EnumType GetEnum(string name) => GetType<EnumType>(name);
-
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public EnumType GetEnum(Type clrType) => GetType<EnumType>(Check.NotNull(clrType, nameof(clrType)));
-
-        [GraphQLIgnore]
+        
+[GraphQLIgnore]        
         public EnumType GetEnum<TClrType>() => GetType<EnumType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public EnumType? FindEnum(string name) => FindType<EnumType>(name);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public EnumType? FindEnum<TClrType>() => FindType<EnumType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public EnumType? FindEnum(Type clrType) => FindType<EnumType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetEnum(Type clrType, [NotNullWhen(true)] out EnumType? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetEnum<TClrType>([NotNullWhen(true)] out EnumType? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetEnum(string name, [NotNullWhen(true)] out EnumType? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasEnum(Type clrType) => HasType<EnumType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasEnum<TClrType>() => HasType<EnumType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasEnum(string name) => HasType<EnumType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #region InputObject type accessors
+#endregion
+#region InputObject type accessors
 
-        [GraphQLIgnore]
-        public InputObjectType GetInputObject(string name) => GetType<InputObjectType>(name);
+[GraphQLIgnore]        
+public InputObjectType GetInputObject(string name) => GetType<InputObjectType>(name);
 
-        [GraphQLIgnore]
-        public InputObjectType GetInputObject(Type clrType) =>
-            GetType<InputObjectType>(Check.NotNull(clrType, nameof(clrType)));
-
-        [GraphQLIgnore]
+[GraphQLIgnore]        
+        public InputObjectType GetInputObject(Type clrType) => GetType<InputObjectType>(Check.NotNull(clrType, nameof(clrType)));
+        
+[GraphQLIgnore]        
         public InputObjectType GetInputObject<TClrType>() => GetType<InputObjectType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public InputObjectType? FindInputObject(string name) => FindType<InputObjectType>(name);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public InputObjectType? FindInputObject<TClrType>() => FindType<InputObjectType>(typeof(TClrType));
 
-        [GraphQLIgnore]
-        public InputObjectType? FindInputObject(Type clrType) =>
-            FindType<InputObjectType>(Check.NotNull(clrType, nameof(clrType)));
+[GraphQLIgnore]        
+        public InputObjectType? FindInputObject(Type clrType) => FindType<InputObjectType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetInputObject(Type clrType, [NotNullWhen(true)] out InputObjectType? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetInputObject<TClrType>([NotNullWhen(true)] out InputObjectType? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetInputObject(string name, [NotNullWhen(true)] out InputObjectType? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasInputObject(Type clrType) => HasType<InputObjectType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasInputObject<TClrType>() => HasType<InputObjectType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasInputObject(string name) => HasType<InputObjectType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #region Interface type accessors
+#endregion
+#region Interface type accessors
 
-        [GraphQLIgnore]
-        public InterfaceType GetInterface(string name) => GetType<InterfaceType>(name);
+[GraphQLIgnore]        
+public InterfaceType GetInterface(string name) => GetType<InterfaceType>(name);
 
-        [GraphQLIgnore]
-        public InterfaceType GetInterface(Type clrType) =>
-            GetType<InterfaceType>(Check.NotNull(clrType, nameof(clrType)));
-
-        [GraphQLIgnore]
+[GraphQLIgnore]        
+        public InterfaceType GetInterface(Type clrType) => GetType<InterfaceType>(Check.NotNull(clrType, nameof(clrType)));
+        
+[GraphQLIgnore]        
         public InterfaceType GetInterface<TClrType>() => GetType<InterfaceType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public InterfaceType? FindInterface(string name) => FindType<InterfaceType>(name);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public InterfaceType? FindInterface<TClrType>() => FindType<InterfaceType>(typeof(TClrType));
 
-        [GraphQLIgnore]
-        public InterfaceType? FindInterface(Type clrType) =>
-            FindType<InterfaceType>(Check.NotNull(clrType, nameof(clrType)));
+[GraphQLIgnore]        
+        public InterfaceType? FindInterface(Type clrType) => FindType<InterfaceType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetInterface(Type clrType, [NotNullWhen(true)] out InterfaceType? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetInterface<TClrType>([NotNullWhen(true)] out InterfaceType? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetInterface(string name, [NotNullWhen(true)] out InterfaceType? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasInterface(Type clrType) => HasType<InterfaceType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasInterface<TClrType>() => HasType<InterfaceType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasInterface(string name) => HasType<InterfaceType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #region Object type accessors
+#endregion
+#region Object type accessors
 
-        [GraphQLIgnore]
-        public ObjectType GetObject(string name) => GetType<ObjectType>(name);
+[GraphQLIgnore]        
+public ObjectType GetObject(string name) => GetType<ObjectType>(name);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public ObjectType GetObject(Type clrType) => GetType<ObjectType>(Check.NotNull(clrType, nameof(clrType)));
-
-        [GraphQLIgnore]
+        
+[GraphQLIgnore]        
         public ObjectType GetObject<TClrType>() => GetType<ObjectType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public ObjectType? FindObject(string name) => FindType<ObjectType>(name);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public ObjectType? FindObject<TClrType>() => FindType<ObjectType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public ObjectType? FindObject(Type clrType) => FindType<ObjectType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetObject(Type clrType, [NotNullWhen(true)] out ObjectType? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetObject<TClrType>([NotNullWhen(true)] out ObjectType? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetObject(string name, [NotNullWhen(true)] out ObjectType? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasObject(Type clrType) => HasType<ObjectType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasObject<TClrType>() => HasType<ObjectType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasObject(string name) => HasType<ObjectType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #region Scalar type accessors
+#endregion
+#region Scalar type accessors
 
-        [GraphQLIgnore]
-        public ScalarType GetScalar(string name) => GetType<ScalarType>(name);
+[GraphQLIgnore]        
+public ScalarType GetScalar(string name) => GetType<ScalarType>(name);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public ScalarType GetScalar(Type clrType) => GetType<ScalarType>(Check.NotNull(clrType, nameof(clrType)));
-
-        [GraphQLIgnore]
+        
+[GraphQLIgnore]        
         public ScalarType GetScalar<TClrType>() => GetType<ScalarType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public ScalarType? FindScalar(string name) => FindType<ScalarType>(name);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public ScalarType? FindScalar<TClrType>() => FindType<ScalarType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public ScalarType? FindScalar(Type clrType) => FindType<ScalarType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetScalar(Type clrType, [NotNullWhen(true)] out ScalarType? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetScalar<TClrType>([NotNullWhen(true)] out ScalarType? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetScalar(string name, [NotNullWhen(true)] out ScalarType? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasScalar(Type clrType) => HasType<ScalarType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasScalar<TClrType>() => HasType<ScalarType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasScalar(string name) => HasType<ScalarType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #region Union type accessors
+#endregion
+#region Union type accessors
 
-        [GraphQLIgnore]
-        public UnionType GetUnion(string name) => GetType<UnionType>(name);
+[GraphQLIgnore]        
+public UnionType GetUnion(string name) => GetType<UnionType>(name);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public UnionType GetUnion(Type clrType) => GetType<UnionType>(Check.NotNull(clrType, nameof(clrType)));
-
-        [GraphQLIgnore]
+        
+[GraphQLIgnore]        
         public UnionType GetUnion<TClrType>() => GetType<UnionType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public UnionType? FindUnion(string name) => FindType<UnionType>(name);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public UnionType? FindUnion<TClrType>() => FindType<UnionType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public UnionType? FindUnion(Type clrType) => FindType<UnionType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetUnion(Type clrType, [NotNullWhen(true)] out UnionType? type) =>
             TryGetType(Check.NotNull(clrType, nameof(clrType)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetUnion<TClrType>([NotNullWhen(true)] out UnionType? type) =>
             TryGetType(typeof(TClrType), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool TryGetUnion(string name, [NotNullWhen(true)] out UnionType? type) =>
             TryGetType(Check.NotNull(name, nameof(name)), out type);
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasUnion(Type clrType) => HasType<UnionType>(Check.NotNull(clrType, nameof(clrType)));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasUnion<TClrType>() => HasType<UnionType>(typeof(TClrType));
 
-        [GraphQLIgnore]
+[GraphQLIgnore]        
         public bool HasUnion(string name) => HasType<UnionType>(Check.NotNull(name, nameof(name)));
 
-        #endregion
 
-        #endregion
+#endregion
+#endregion
+#region DictionaryAccessorGenerator
 
-        #region DictionaryAccessorGenerator
 
-        [GraphQLIgnore]
-        public Directive? FindDirective(string name)
-            => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out var directive) ? directive : null;
 
         [GraphQLIgnore]
-        public bool HasDirective(string name)
+        public Directive? FindDirective(String name) 
+            => _directives.TryGetValue(Check.NotNull(name,nameof(name)), out var directive) ? directive : null;
+
+        [GraphQLIgnore]
+        public bool HasDirective(String name) 
             => _directives.ContainsKey(Check.NotNull(name, nameof(name)));
 
         [GraphQLIgnore]
-        public Directive GetDirective(string name)
-            => FindDirective(Check.NotNull(name, nameof(name))) ??
-               throw new ItemNotFoundException($"{this} does not contain a {nameof(Directive)} with name '{name}'.");
+        public Directive GetDirective(String name) 
+            => FindDirective(Check.NotNull(name, nameof(name))) ?? throw new ItemNotFoundException($"{this} does not contain a {nameof(Directive)} with name '{name}'.");
 
         [GraphQLIgnore]
-        public bool TryGetDirective(string name, [NotNullWhen(true)] out Directive? directive)
-            => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out directive);
+        public bool TryGetDirective(String name, [NotNullWhen(true)] out Directive? directive)
+             => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out directive);
 
-        #endregion
 
-        #region DictionaryAccessorGenerator
+#endregion
+#region DictionaryAccessorGenerator
 
-        [GraphQLIgnore]
-        public Directive? FindDirective(Type clrType)
-            => _directivesByType.TryGetValue(Check.NotNull(clrType, nameof(clrType)), out var directive)
-                ? directive
-                : null;
+
 
         [GraphQLIgnore]
-        public bool HasDirective(Type clrType)
+        public Directive? FindDirective(Type clrType) 
+            => _directivesByType.TryGetValue(Check.NotNull(clrType,nameof(clrType)), out var directive) ? directive : null;
+
+        [GraphQLIgnore]
+        public bool HasDirective(Type clrType) 
             => _directivesByType.ContainsKey(Check.NotNull(clrType, nameof(clrType)));
 
         [GraphQLIgnore]
-        public Directive GetDirective(Type clrType)
-            => FindDirective(Check.NotNull(clrType, nameof(clrType))) ??
-               throw new ItemNotFoundException(
-                   $"{this} does not contain a {nameof(Directive)} with clrType '{clrType}'.");
+        public Directive GetDirective(Type clrType) 
+            => FindDirective(Check.NotNull(clrType, nameof(clrType))) ?? throw new ItemNotFoundException($"{this} does not contain a {nameof(Directive)} with clrType '{clrType}'.");
 
         [GraphQLIgnore]
         public bool TryGetDirective(Type clrType, [NotNullWhen(true)] out Directive? directive)
-            => _directivesByType.TryGetValue(Check.NotNull(clrType, nameof(clrType)), out directive);
+             => _directivesByType.TryGetValue(Check.NotNull(clrType, nameof(clrType)), out directive);
 
-        #endregion
-    }
+
+#endregion
 }
-// Source Hash Code: 1856311056922380998
+}
+// Source Hash Code: 3484410955245617862
