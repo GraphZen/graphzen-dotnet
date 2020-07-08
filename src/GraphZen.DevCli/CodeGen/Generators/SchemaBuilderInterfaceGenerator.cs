@@ -65,6 +65,8 @@ namespace GraphZen.CodeGen.Generators
                     var typeParam = "T" + (config.TypeParamName ?? kind);
 
                     region.AppendLine($@"
+
+        // TEST IEnumerable<{config.TypeName}Builder> Get{kind}s(bool includeSpec{kind}s = false);
         IEnumerable<{config.TypeName}Builder> Get{kind}s(bool includeSpec{kind}s = false);
 ");
 
