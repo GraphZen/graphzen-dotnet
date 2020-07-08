@@ -28,7 +28,7 @@ namespace GraphZen.CodeGen.Generators
                     new KindConfig {TypeName = nameof(Directive), SimpleBuilder = true}
                 },
                 {
-                    "Type", new KindConfig {TypeParamName = "ClrType", TypeName = nameof(INamedType)}
+                    "Type", new KindConfig {TypeParamName = "ClrType", TypeName = nameof(NamedType)}
                 },
                 {
                     nameof(Object),
@@ -67,7 +67,7 @@ namespace GraphZen.CodeGen.Generators
 
                     region.AppendLine($@"
 
-        IEnumerable<I{config.TypeName}> Get{kind}s(bool includeSpec{kind}s = false);
+        IEnumerable<I{config.TypeName}Definition> Get{kind}s(bool includeSpec{kind}s = false);
 ");
 
                     if (config.SimpleBuilder)
