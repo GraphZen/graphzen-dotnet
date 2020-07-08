@@ -17,22 +17,22 @@ namespace GraphZen.TypeSystem
     {
         #region DictionaryAccessorGenerator
 
-        [GraphQLIgnore]
-        public Field? FindField(string name)
-            => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out var field) ? field : null;
+        //[GraphQLIgnore]
+        //public Field? FindField(string name)
+        //    => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out var field) ? field : null;
 
-        [GraphQLIgnore]
-        public bool HasField(string name)
-            => Fields.ContainsKey(Check.NotNull(name, nameof(name)));
+        //[GraphQLIgnore]
+        //public bool HasField(string name)
+        //    => Fields.ContainsKey(Check.NotNull(name, nameof(name)));
 
-        [GraphQLIgnore]
-        public Field GetField(string name)
-            => FindField(Check.NotNull(name, nameof(name))) ??
-               throw new ItemNotFoundException($"{this} does not contain a {nameof(Field)} with name '{name}'.");
+        //[GraphQLIgnore]
+        //public Field GetField(string name)
+        //    => FindField(Check.NotNull(name, nameof(name))) ??
+        //       throw new ItemNotFoundException($"{this} does not contain a {nameof(Field)} with name '{name}'.");
 
-        [GraphQLIgnore]
-        public bool TryGetField(string name, [NotNullWhen(true)] out Field? field)
-            => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out field);
+        //[GraphQLIgnore]
+        //public bool TryGetField(string name, [NotNullWhen(true)] out Field? field)
+        //    => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out field);
 
         #endregion
     }

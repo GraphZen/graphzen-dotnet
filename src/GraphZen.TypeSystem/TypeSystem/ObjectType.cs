@@ -17,6 +17,7 @@ namespace GraphZen.TypeSystem
     [GraphQLType(typeof(IGraphQLType))]
     public partial class ObjectType : NamedType, IObjectType
     {
+        [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
         private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
         private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
         private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
@@ -81,7 +82,6 @@ namespace GraphZen.TypeSystem
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
-        [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
         public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
 
         [EditorBrowsable(EditorBrowsableState.Never)]
