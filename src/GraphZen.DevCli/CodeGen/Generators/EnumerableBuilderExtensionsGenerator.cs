@@ -26,13 +26,15 @@ namespace GraphZen.CodeGen.Generators
         {
             foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds)
             {
-                csharp.AppendLine($@"
+                if (kind != "Type")
+                {
+                    csharp.AppendLine($@"
     public static IEnumerable<{config.TypeName}Builder> Where(this IEnumerable<{config.TypeName}Builder> source,
             Func<I{config.TypeName}Definition, bool> predicate) =>
             source.Where(_=> predicate(_.GetInfrastructure<{config.TypeName}Definition>()));
 
 ");
-
+                }
             }
         }
     }

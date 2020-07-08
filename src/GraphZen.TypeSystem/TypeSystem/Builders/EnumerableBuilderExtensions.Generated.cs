@@ -22,39 +22,40 @@ namespace GraphZen.TypeSystem
 
         public static IEnumerable<DirectiveBuilder> Where(this IEnumerable<DirectiveBuilder> source,
             Func<IDirectiveDefinition, bool> predicate) =>
-            source.Where(_ => predicate(_.GetInfrastructure<DirectiveDefinition>()));
+            Enumerable.Where(source, _ => predicate(_.GetInfrastructure<DirectiveDefinition>()));
+
 
 
         public static IEnumerable<ObjectTypeBuilder> Where(this IEnumerable<ObjectTypeBuilder> source,
             Func<IObjectTypeDefinition, bool> predicate) =>
-            source.Where(_ => predicate(_.GetInfrastructure<ObjectTypeDefinition>()));
+            Enumerable.Where(source, _ => predicate(_.GetInfrastructure<ObjectTypeDefinition>()));
 
 
         public static IEnumerable<UnionTypeBuilder> Where(this IEnumerable<UnionTypeBuilder> source,
             Func<IUnionTypeDefinition, bool> predicate) =>
-            source.Where(_ => predicate(_.GetInfrastructure<UnionTypeDefinition>()));
+            Enumerable.Where(source, _ => predicate(_.GetInfrastructure<UnionTypeDefinition>()));
 
 
         public static IEnumerable<ScalarTypeBuilder> Where(this IEnumerable<ScalarTypeBuilder> source,
             Func<IScalarTypeDefinition, bool> predicate) =>
-            source.Where(_ => predicate(_.GetInfrastructure<ScalarTypeDefinition>()));
+            Enumerable.Where(source, _ => predicate(_.GetInfrastructure<ScalarTypeDefinition>()));
 
 
         public static IEnumerable<EnumTypeBuilder> Where(this IEnumerable<EnumTypeBuilder> source,
             Func<IEnumTypeDefinition, bool> predicate) =>
-            source.Where(_ => predicate(_.GetInfrastructure<EnumTypeDefinition>()));
+            Enumerable.Where(source, _ => predicate(_.GetInfrastructure<EnumTypeDefinition>()));
 
 
         public static IEnumerable<InterfaceTypeBuilder> Where(this IEnumerable<InterfaceTypeBuilder> source,
             Func<IInterfaceTypeDefinition, bool> predicate) =>
-            source.Where(_ => predicate(_.GetInfrastructure<InterfaceTypeDefinition>()));
+            Enumerable.Where(source, _ => predicate(_.GetInfrastructure<InterfaceTypeDefinition>()));
 
 
         public static IEnumerable<InputObjectTypeBuilder> Where(this IEnumerable<InputObjectTypeBuilder> source,
             Func<IInputObjectTypeDefinition, bool> predicate) =>
-            source.Where(_ => predicate(_.GetInfrastructure<InputObjectTypeDefinition>()));
+            Enumerable.Where(source, _ => predicate(_.GetInfrastructure<InputObjectTypeDefinition>()));
 
         #endregion
     }
 }
-// Source Hash Code: 3947471795795107389
+// Source Hash Code: 4505642051170363133
