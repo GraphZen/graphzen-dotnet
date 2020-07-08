@@ -66,6 +66,8 @@ public {type} Get{kind}(string name) => GetType<{type}>(name);
 [GraphQLIgnore]        
         public bool Has{kind}(string name) => HasType<{type}>(Check.NotNull(name, nameof(name)));
 
+[GraphQLIgnore]
+public IReadOnlyList<{type}> {kind}s => _{kind.FirstCharToLower()}s.Value;
 
 [GraphQLIgnore]        
 public IEnumerable<{type}> Get{kind}s(bool includeSpec{kind}s = false) => includeSpec{kind}s ? {kind}s.AsEnumerable() : {kind}s.Where(_ => !_.IsSpec);

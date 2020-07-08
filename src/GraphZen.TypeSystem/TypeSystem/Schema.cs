@@ -198,9 +198,6 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore] public IReadOnlyList<InputObjectType> InputObjects => _inputObjects.Value;
 
-        [GraphQLIgnore]
-        public IEnumerable<InputObjectType> GetInputObjects() => InputObjects;
-
 
         [GraphQLIgnore] public IReadOnlyList<EnumType> Enums => _enums.Value;
 

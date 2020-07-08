@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
@@ -62,7 +63,8 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw new NotImplementedException();
+        public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) =>
+            includeSpecEnums ? Enums.AsEnumerable() : Enums.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
         IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) =>
@@ -116,7 +118,7 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public IEnumerable<InputObjectType> GetInputObjects(bool includeSpecInputObjects = false) =>
-            throw new NotImplementedException();
+            includeSpecInputObjects ? InputObjects.AsEnumerable() : InputObjects.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
         IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.
@@ -170,7 +172,7 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public IEnumerable<InterfaceType> GetInterfaces(bool includeSpecInterfaces = false) =>
-            throw new NotImplementedException();
+            includeSpecInterfaces ? Interfaces.AsEnumerable() : Interfaces.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
         IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces(bool includeSpecInterfaces) =>
@@ -222,7 +224,7 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public IEnumerable<ObjectType> GetObjects(bool includeSpecObjects = false) =>
-            throw new NotImplementedException();
+            includeSpecObjects ? Objects.AsEnumerable() : Objects.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
         IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecObjects) =>
@@ -274,7 +276,7 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public IEnumerable<ScalarType> GetScalars(bool includeSpecScalars = false) =>
-            throw new NotImplementedException();
+            includeSpecScalars ? Scalars.AsEnumerable() : Scalars.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
         IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars(bool includeSpecScalars) =>
@@ -325,7 +327,8 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public IEnumerable<UnionType> GetUnions(bool includeSpecUnions = false) => throw new NotImplementedException();
+        public IEnumerable<UnionType> GetUnions(bool includeSpecUnions = false) =>
+            includeSpecUnions ? Unions.AsEnumerable() : Unions.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
         IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions(bool includeSpecUnions) =>
@@ -381,4 +384,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 13035419999577403176
+// Source Hash Code: 4643528935942345315
