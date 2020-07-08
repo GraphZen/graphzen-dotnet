@@ -25,15 +25,17 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
         private static readonly Lazy<IReadOnlyList<string>> CSharpFilesLazy =
             new Lazy<IReadOnlyList<string>>(() =>
             {
-                var test = Directory.GetCurrentDirectory();
-                if (test != null)
+
+                var startingDir = Directory.GetCurrentDirectory();
+                while (!File.Exists("GraphZen.sln"))
                 {
-
-                    throw new Exception("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY: " +test);
+                    Directory.SetCurrentDirectory("..");
                 }
+                
+                var files = Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories);
+                Directory.SetCurrentDirectory(startingDir);
 
-
-                return Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories);
+                return files;
             });
 
         protected PartialTypeGenerator(Type targetType)
