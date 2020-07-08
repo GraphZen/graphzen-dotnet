@@ -38,4 +38,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType
     {
     }
 }
-// Source Hash Code: 1819145297084200275
+// Source Hash Code: 10745907191357679550

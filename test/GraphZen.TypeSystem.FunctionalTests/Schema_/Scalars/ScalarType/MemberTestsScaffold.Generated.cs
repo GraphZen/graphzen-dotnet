@@ -38,4 +38,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Scalars.ScalarType
     {
     }
 }
-// Source Hash Code: 7732809315518204925
+// Source Hash Code: 4467110407751532840

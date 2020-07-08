@@ -629,4 +629,4 @@ namespace GraphZen.LanguageModel
         public virtual TResult LeaveVariable(VariableSyntax node) => OnLeave(node);
     }
 }
-// Source Hash Code: 15376310504071804497
+// Source Hash Code: 17850366221343712028

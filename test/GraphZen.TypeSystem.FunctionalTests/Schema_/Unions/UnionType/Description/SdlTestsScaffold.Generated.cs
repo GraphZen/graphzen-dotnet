@@ -30,4 +30,4 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Unions.UnionType.Descripti
     {
     }
 }
-// Source Hash Code: 6384907189860419874
+// Source Hash Code: 938966338094785485
