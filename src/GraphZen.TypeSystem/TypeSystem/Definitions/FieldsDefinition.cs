@@ -34,6 +34,7 @@ namespace GraphZen.TypeSystem
         [GenDictionaryAccessors(nameof(FieldDefinition.Name), "Field")]
         public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
 
+
         IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => GetFields();
 
         public bool AddField(FieldDefinition field)
