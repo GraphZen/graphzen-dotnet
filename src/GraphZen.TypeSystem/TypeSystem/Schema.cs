@@ -282,6 +282,7 @@ namespace GraphZen.TypeSystem
             return Types.Values.Where(_ => !_.IsSpec);
         }
 
+
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
 

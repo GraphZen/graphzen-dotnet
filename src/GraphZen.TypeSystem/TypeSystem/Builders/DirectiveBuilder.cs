@@ -12,41 +12,122 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class DirectiveBuilder<TDirective> : IDirectiveBuilder<TDirective> where TDirective : notnull
+    public class DirectiveBuilder : IDirectiveBuilder
     {
         public DirectiveBuilder(InternalDirectiveBuilder builder)
         {
             Builder = builder;
         }
 
+        protected InternalDirectiveBuilder Builder { get; }
 
-        private InternalDirectiveBuilder Builder { get; }
+        DirectiveDefinition IInfrastructure<DirectiveDefinition>.Instance => Builder.Definition;
 
-        public DirectiveBuilder<object> ClrType(Type clrType, bool inferName = false)
+        InternalDirectiveBuilder IInfrastructure<InternalDirectiveBuilder>.Instance => Builder;
+
+        public IClrTypeBuilder ClrType(Type clrType, bool inferName = false)
         {
             Check.NotNull(clrType, nameof(clrType));
-            var ib = Builder.ClrType(clrType, inferName, ConfigurationSource.Explicit);
-            return new DirectiveBuilder<object>(ib);
+            Builder.ClrType(clrType, inferName, ConfigurationSource.Explicit);
+            return this;
         }
 
-        IClrTypeBuilder IClrTypeBuilder.ClrType(Type clrType, string name) => ClrType(clrType, name);
-
-        IClrTypeBuilder IClrTypeBuilder.RemoveClrType() => RemoveClrType();
-
-        IClrTypeBuilder IClrTypeBuilder.ClrType(Type clrType, bool inferName) => ClrType(clrType, inferName);
-
-        public DirectiveBuilder<object> ClrType(Type clrType, string name)
+        public IClrTypeBuilder ClrType(Type clrType, string name)
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(name, nameof(name));
-            var ib = Builder.ClrType(clrType, name, ConfigurationSource.Explicit);
-            return new DirectiveBuilder<object>(ib);
+            Builder.ClrType(clrType, name, ConfigurationSource.Explicit);
+            return this;
         }
 
-        public DirectiveBuilder<object> RemoveClrType()
+        public IClrTypeBuilder RemoveClrType()
         {
-            var ib = Builder.RemoveClrType(ConfigurationSource.Explicit);
-            return new DirectiveBuilder<object>(ib);
+            Builder.RemoveClrType(ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDescriptionBuilder Description(string description)
+        {
+            Check.NotNull(description, nameof(description));
+            Builder.Description(description, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDescriptionBuilder RemoveDescription()
+        {
+            Builder.RemoveDescription(ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public INamedBuilder Name(string name)
+        {
+            Check.NotNull(name, nameof(name));
+            Builder.Name(name, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder AddLocation(DirectiveLocation location)
+        {
+            Builder.AddLocation(location, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder RemoveLocation(DirectiveLocation location)
+        {
+            Builder.RemoveLocation(location, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder Locations(DirectiveLocation location, params DirectiveLocation[] additionalLocations)
+        {
+            var locations = additionalLocations.ToList().Prepend(location);
+            Builder.Locations(locations, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder Locations(IEnumerable<DirectiveLocation> locations)
+        {
+            Builder.Locations(locations, ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder ClearLocations()
+        {
+            Builder.RemoveLocations(ConfigurationSource.Explicit);
+            return this;
+        }
+
+        public IDirectiveBuilder Repeatable(bool isRepeatable)
+        {
+            Builder.Repeatable(isRepeatable, ConfigurationSource.Explicit);
+            return this;
+
+        }
+    }
+
+    public class DirectiveBuilder<TDirective> : DirectiveBuilder, IDirectiveBuilder<TDirective>
+        where TDirective : notnull
+    {
+        public DirectiveBuilder(InternalDirectiveBuilder builder) : base(builder)
+        {
+        }
+
+        public new DirectiveBuilder<object> ClrType(Type clrType, bool inferName = false)
+        {
+            base.ClrType(clrType, inferName);
+            return new DirectiveBuilder<object>(Builder);
+        }
+
+        public new DirectiveBuilder<object> ClrType(Type clrType, string name)
+        {
+            base.ClrType(clrType, name);
+            return new DirectiveBuilder<object>(Builder);
+        }
+
+        public new DirectiveBuilder<object> RemoveClrType()
+        {
+            base.RemoveClrType();
+            return new DirectiveBuilder<object>(Builder);
         }
 
         public DirectiveBuilder<T> ClrType<T>(bool inferName = false) where T : notnull
@@ -62,68 +143,46 @@ namespace GraphZen.TypeSystem
             return new DirectiveBuilder<T>(ib);
         }
 
-        public DirectiveBuilder<TDirective> AddLocation(DirectiveLocation location)
+        public new DirectiveBuilder<TDirective> AddLocation(DirectiveLocation location)
         {
-            Builder.AddLocation(location, ConfigurationSource.Explicit);
-
-            return this;
+            return (DirectiveBuilder<TDirective>)base.AddLocation(location);
         }
 
-        public DirectiveBuilder<TDirective> RemoveLocation(DirectiveLocation location)
+        public new DirectiveBuilder<TDirective> RemoveLocation(DirectiveLocation location)
         {
-            Builder.RemoveLocation(location, ConfigurationSource.Explicit);
-            return this;
+            return (DirectiveBuilder<TDirective>)base.RemoveLocation(location);
         }
 
-        public DirectiveBuilder<TDirective> Locations(DirectiveLocation location,
+        public new DirectiveBuilder<TDirective> Locations(DirectiveLocation location,
             params DirectiveLocation[] additionalLocations)
         {
-            var locations = additionalLocations.ToList().Prepend(location);
-            Builder.Locations(locations, ConfigurationSource.Explicit);
-            return this;
+            return (DirectiveBuilder<TDirective>)base.Locations(location, additionalLocations);
         }
 
-        public DirectiveBuilder<TDirective> Locations(IEnumerable<DirectiveLocation> locations)
+        public new DirectiveBuilder<TDirective> Locations(IEnumerable<DirectiveLocation> locations)
         {
-            Builder.Locations(locations, ConfigurationSource.Explicit);
-            return this;
+            return (DirectiveBuilder<TDirective>)base.Locations(locations);
         }
 
-        public DirectiveBuilder<TDirective> RemoveLocations()
+        public new DirectiveBuilder<TDirective> ClearLocations()
         {
-            Builder.RemoveLocations(ConfigurationSource.Explicit);
-            return this;
+            return (DirectiveBuilder<TDirective>)base.ClearLocations();
         }
 
-        public DirectiveBuilder<TDirective> Description(string description)
+        public new DirectiveBuilder<TDirective> Description(string description) =>
+            (DirectiveBuilder<TDirective>)base.Description(description);
+
+
+        public new DirectiveBuilder<TDirective> RemoveDescription() =>
+            (DirectiveBuilder<TDirective>)base.RemoveDescription();
+
+        public new DirectiveBuilder<TDirective> Name(string name) => (DirectiveBuilder<TDirective>)base.Name(name);
+
+
+        public new DirectiveBuilder<TDirective> Repeatable(bool repeatable)
+
         {
-            Check.NotNull(description, nameof(description));
-            Builder.Description(description, ConfigurationSource.Explicit);
-            return this;
-        }
-
-        IDescriptionBuilder IDescriptionBuilder.RemoveDescription() => RemoveDescription();
-
-        IDescriptionBuilder IDescriptionBuilder.Description(string description) => Description(description);
-
-        public DirectiveBuilder<TDirective> RemoveDescription()
-        {
-            Builder.RemoveDescription(ConfigurationSource.Explicit);
-            return this;
-        }
-
-        public DirectiveBuilder<TDirective> Name(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            Builder.Name(name, ConfigurationSource.Explicit);
-            return this;
-        }
-
-
-        public DirectiveBuilder<TDirective> Repeatable(bool repeatable)
-        {
-            Builder.Repeatable(repeatable, ConfigurationSource.Explicit);
-            return this;
+            return (DirectiveBuilder<TDirective>)base.Repeatable(repeatable);
         }
 
         public DirectiveBuilder<TDirective> RemoveArgument(string name)
@@ -190,9 +249,6 @@ namespace GraphZen.TypeSystem
 
         public DirectiveBuilder<TDirective> UnignoreArgument(string name) => throw new NotImplementedException();
 
-        DirectiveDefinition IInfrastructure<DirectiveDefinition>.Instance => Builder.Definition;
-
-        InternalDirectiveBuilder IInfrastructure<InternalDirectiveBuilder>.Instance => Builder;
         INamedBuilder INamedBuilder.Name(string name) => Name(name);
     }
 }

@@ -55,7 +55,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Locat
             var schema = Schema.Create(_ =>
             {
                 _.Directive("Foo").Locations(DirectiveLocation.Enum, DirectiveLocation.ArgumentDefinition)
-                    .RemoveLocations();
+                    .ClearLocations();
             });
             schema.GetDirective("Foo").Locations.Should().BeEmpty();
         }

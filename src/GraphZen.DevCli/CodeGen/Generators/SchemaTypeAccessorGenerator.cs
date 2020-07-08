@@ -59,6 +59,10 @@ public {type} Get{kind}(string name) => GetType<{type}>(name);
 [GraphQLIgnore]        
         public bool Has{kind}(string name) => HasType<{type}>(Check.NotNull(name, nameof(name)));
 
+
+//[GraphQLIgnore]        
+//public IEnumerable<{type}> Get{kind}s(bool includeSpec{kind}s = false) => throw new NotImplementedException();
+
 ");
                 });
             }

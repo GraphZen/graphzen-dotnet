@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    internal interface IArgumentsDefinitionBuilder<out TBuilder>
+    public interface IArgumentsDefinitionBuilder<out TBuilder>
     {
         TBuilder RemoveArgument(string name);
         TBuilder Argument(string name, Action<ArgumentBuilder<object?>> configurator);

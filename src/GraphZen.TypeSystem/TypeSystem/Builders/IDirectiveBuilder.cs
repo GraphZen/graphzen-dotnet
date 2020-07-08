@@ -11,26 +11,40 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    internal interface IDirectiveBuilder<TDirective> :
+    public interface IDirectiveBuilder : IClrTypeBuilder, IDescriptionBuilder, INamedBuilder,
+        IInfrastructure<DirectiveDefinition>,
+        IInfrastructure<InternalDirectiveBuilder>
+
+    {
+        IDirectiveBuilder AddLocation(DirectiveLocation location);
+        IDirectiveBuilder RemoveLocation(DirectiveLocation location);
+
+        IDirectiveBuilder Locations(DirectiveLocation location,
+            params DirectiveLocation[] additionalLocations);
+
+        IDirectiveBuilder Locations(IEnumerable<DirectiveLocation> locations);
+        IDirectiveBuilder ClearLocations();
+        IDirectiveBuilder Repeatable(bool isRepeatable);
+    }
+
+    public interface IDirectiveBuilder<TDirective> : IDirectiveBuilder,
         IClrTypeBuilder<DirectiveBuilder<object>>,
         IDescriptionBuilder<DirectiveBuilder<TDirective>>,
         IArgumentsDefinitionBuilder<DirectiveBuilder<TDirective>>,
-        INamedBuilder<DirectiveBuilder<TDirective>>,
-        IInfrastructure<DirectiveDefinition>,
-        IInfrastructure<InternalDirectiveBuilder>
+        INamedBuilder<DirectiveBuilder<TDirective>>
         where TDirective : notnull
 
     {
         DirectiveBuilder<T> ClrType<T>(bool inferName = false) where T : notnull;
         DirectiveBuilder<T> ClrType<T>(string name) where T : notnull;
-        DirectiveBuilder<TDirective> AddLocation(DirectiveLocation location);
-        DirectiveBuilder<TDirective> RemoveLocation(DirectiveLocation location);
+        new DirectiveBuilder<TDirective> AddLocation(DirectiveLocation location);
+        new DirectiveBuilder<TDirective> RemoveLocation(DirectiveLocation location);
 
-        DirectiveBuilder<TDirective> Locations(DirectiveLocation location,
+        new DirectiveBuilder<TDirective> Locations(DirectiveLocation location,
             params DirectiveLocation[] additionalLocations);
 
-        DirectiveBuilder<TDirective> Locations(IEnumerable<DirectiveLocation> locations);
-        DirectiveBuilder<TDirective> RemoveLocations();
-        DirectiveBuilder<TDirective> Repeatable(bool isRepeatable);
+        new DirectiveBuilder<TDirective> Locations(IEnumerable<DirectiveLocation> locations);
+        new DirectiveBuilder<TDirective> ClearLocations();
+        new DirectiveBuilder<TDirective> Repeatable(bool isRepeatable);
     }
 }
