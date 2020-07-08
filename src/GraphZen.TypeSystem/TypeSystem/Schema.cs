@@ -195,7 +195,7 @@ namespace GraphZen.TypeSystem
         [GraphQLCanBeNull]
         public ObjectType? SubscriptionType { get; }
 
-        
+
         [GraphQLIgnore] public IReadOnlyList<InputObjectType> InputObjects => _inputObjects.Value;
 
         [GraphQLIgnore]
@@ -204,17 +204,17 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore] public IReadOnlyList<EnumType> Enums => _enums.Value;
 
-        
+
         [GraphQLIgnore] public IReadOnlyList<ScalarType> Scalars => _scalars.Value;
 
-        
+
 
         [GraphQLIgnore] public IReadOnlyList<UnionType> Unions => _unions.Value;
 
-        
+
         [GraphQLIgnore] public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
 
-        
+
 
 
 
@@ -228,7 +228,7 @@ namespace GraphZen.TypeSystem
         public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
 
 
-        
+
 
         [GraphQLIgnore]
         public IEnumerable<Directive> GetDirectives(bool includeSpecDirectives = false) =>

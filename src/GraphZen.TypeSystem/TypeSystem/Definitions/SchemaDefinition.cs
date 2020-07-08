@@ -152,7 +152,7 @@ namespace GraphZen.TypeSystem
         public IEnumerable<ObjectTypeDefinition> GetObjects(bool includeSpecTypes = false) =>
             Types.OfType<ObjectTypeDefinition>();
 
-        
+
 
 
 
