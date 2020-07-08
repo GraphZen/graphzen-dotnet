@@ -67,8 +67,7 @@ namespace GraphZen.CodeGen.Generators
 
                     region.AppendLine($@"
 
-        // TEST IEnumerable<{config.TypeName}Builder> Get{kind}s(bool includeSpec{kind}s = false);
-        IEnumerable<{config.TypeName}Builder> Get{kind}s(bool includeSpec{kind}s = false);
+        IEnumerable<I{config.TypeName}> Get{kind}s(bool includeSpec{kind}s = false);
 ");
 
                     if (config.SimpleBuilder)

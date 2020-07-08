@@ -30,15 +30,12 @@ namespace GraphZen.CodeGen.Generators
                 {
                     var typeParam = "T" + (config.TypeParamName ?? kind);
 
-                    if (kind != "Type")
-                    {
 
-                        region.AppendLine($@"
- public IEnumerable<{config.TypeName}Builder> Get{kind}s(bool includeSpec{kind}s = false) =>
-            Builder.Definition.Get{kind}s(includeSpec{kind}s).Select(_ => _.Builder);
+                    region.AppendLine($@"
+ public IEnumerable<I{config.TypeName}> Get{kind}s(bool includeSpec{kind}s = false) =>
+            Builder.Definition.Get{kind}s(includeSpec{kind}s);
 
 ");
-                    }
 
                     if (config.SimpleBuilder)
                     {

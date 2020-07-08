@@ -101,7 +101,6 @@ namespace GraphZen.TypeSystem
         {
             Builder.Repeatable(isRepeatable, ConfigurationSource.Explicit);
             return this;
-
         }
     }
 
@@ -143,31 +142,21 @@ namespace GraphZen.TypeSystem
             return new DirectiveBuilder<T>(ib);
         }
 
-        public new DirectiveBuilder<TDirective> AddLocation(DirectiveLocation location)
-        {
-            return (DirectiveBuilder<TDirective>)base.AddLocation(location);
-        }
+        public new DirectiveBuilder<TDirective> AddLocation(DirectiveLocation location) =>
+            (DirectiveBuilder<TDirective>)base.AddLocation(location);
 
-        public new DirectiveBuilder<TDirective> RemoveLocation(DirectiveLocation location)
-        {
-            return (DirectiveBuilder<TDirective>)base.RemoveLocation(location);
-        }
+        public new DirectiveBuilder<TDirective> RemoveLocation(DirectiveLocation location) =>
+            (DirectiveBuilder<TDirective>)base.RemoveLocation(location);
 
         public new DirectiveBuilder<TDirective> Locations(DirectiveLocation location,
-            params DirectiveLocation[] additionalLocations)
-        {
-            return (DirectiveBuilder<TDirective>)base.Locations(location, additionalLocations);
-        }
+            params DirectiveLocation[] additionalLocations) =>
+            (DirectiveBuilder<TDirective>)base.Locations(location, additionalLocations);
 
-        public new DirectiveBuilder<TDirective> Locations(IEnumerable<DirectiveLocation> locations)
-        {
-            return (DirectiveBuilder<TDirective>)base.Locations(locations);
-        }
+        public new DirectiveBuilder<TDirective> Locations(IEnumerable<DirectiveLocation> locations) =>
+            (DirectiveBuilder<TDirective>)base.Locations(locations);
 
-        public new DirectiveBuilder<TDirective> ClearLocations()
-        {
-            return (DirectiveBuilder<TDirective>)base.ClearLocations();
-        }
+        public new DirectiveBuilder<TDirective> ClearLocations() =>
+            (DirectiveBuilder<TDirective>)base.ClearLocations();
 
         public new DirectiveBuilder<TDirective> Description(string description) =>
             (DirectiveBuilder<TDirective>)base.Description(description);
@@ -179,11 +168,8 @@ namespace GraphZen.TypeSystem
         public new DirectiveBuilder<TDirective> Name(string name) => (DirectiveBuilder<TDirective>)base.Name(name);
 
 
-        public new DirectiveBuilder<TDirective> Repeatable(bool repeatable)
-
-        {
-            return (DirectiveBuilder<TDirective>)base.Repeatable(repeatable);
-        }
+        public new DirectiveBuilder<TDirective> Repeatable(bool repeatable) =>
+            (DirectiveBuilder<TDirective>)base.Repeatable(repeatable);
 
         public DirectiveBuilder<TDirective> RemoveArgument(string name)
         {

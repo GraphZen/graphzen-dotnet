@@ -130,7 +130,6 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        
         #endregion
 
         #region Types

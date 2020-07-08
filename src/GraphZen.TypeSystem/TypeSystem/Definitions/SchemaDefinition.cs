@@ -447,7 +447,6 @@ namespace GraphZen.TypeSystem
         }
 
 
-
         public NamedTypeDefinition? FindType(TypeIdentity identity) => TryGetType(identity, out var type) ? type : null;
 
 

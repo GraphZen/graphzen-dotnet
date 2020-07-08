@@ -85,7 +85,8 @@ namespace GraphZen.TypeSystem.Internal
             var implementingTypes = clrType.GetImplementingTypes().Where(_ => !_.IsAbstract);
             foreach (var implementingType in implementingTypes)
             {
-                var memberType = Schema.InternalBuilder.Object(implementingType, ConfigurationSource.Convention)?.Definition;
+                var memberType = Schema.InternalBuilder.Object(implementingType, ConfigurationSource.Convention)
+                    ?.Definition;
                 if (memberType != null)
                 {
                     Definition.AddType(memberType);

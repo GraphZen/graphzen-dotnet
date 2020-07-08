@@ -170,8 +170,8 @@ namespace GraphZen.TypeSystem
         }
 
         public IEnumerable<INamedTypeBuilder> GetTypes(bool includeSpecTypes = false) => includeSpecTypes
-                    ? Builder.Definition.Types.Select(_ => _.Builder)
-                    : Builder.Definition.Types.Where(_ => !_.IsSpec).Select(_ => _.Builder);
+            ? Builder.Definition.Types.Select(_ => _.Builder)
+            : Builder.Definition.Types.Where(_ => !_.IsSpec).Select(_ => _.Builder);
 
 
         InternalSchemaBuilder IInfrastructure<InternalSchemaBuilder>.Instance => Builder;
