@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IUnionTypesDefinition
     {
         [GraphQLIgnore]
-        IEnumerable<IUnionTypeDefinition> GetUnions();
+        IEnumerable<IUnionTypeDefinition> GetUnions(bool includeSpecUnions = false);
     }
 }

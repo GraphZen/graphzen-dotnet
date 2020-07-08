@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableInputObjectTypesDefinition : IInputObjectTypesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<InputObjectTypeDefinition> GetInputObjects();
+        new IEnumerable<InputObjectTypeDefinition> GetInputObjects(bool includeSpecInputObjects = false);
     }
 }

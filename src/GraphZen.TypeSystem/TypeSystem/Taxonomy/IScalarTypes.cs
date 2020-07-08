@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IScalarTypes : IScalarTypesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<ScalarType> GetScalars();
+        new IEnumerable<ScalarType> GetScalars(bool includeSpecScalars = false);
 
         [GraphQLIgnore] IReadOnlyList<ScalarType> Scalars { get; }
     }

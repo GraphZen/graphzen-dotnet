@@ -62,11 +62,12 @@ namespace GraphZen.TypeSystem
         public bool HasEnum(string name) => HasType<EnumType>(Check.NotNull(name, nameof(name)));
 
 
-[GraphQLIgnore]        
-public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw new NotImplementedException();
+        [GraphQLIgnore]
+        public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw new NotImplementedException();
 
-[GraphQLIgnore]
-IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnum) => GetEnums(includeSpecEnum);
+        [GraphQLIgnore]
+        IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) =>
+            GetEnums(includeSpecEnums);
 
         #endregion
 
@@ -114,11 +115,13 @@ IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecE
         public bool HasInputObject(string name) => HasType<InputObjectType>(Check.NotNull(name, nameof(name)));
 
 
-//[GraphQLIgnore]        
-//public IEnumerable<InputObjectType> GetInputObjects(bool includeSpecInputObjects = false) => throw new NotImplementedException();
+        [GraphQLIgnore]
+        public IEnumerable<InputObjectType> GetInputObjects(bool includeSpecInputObjects = false) =>
+            throw new NotImplementedException();
 
-//[GraphQLIgnore]
-//IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.GetInputObjects(bool includeSpecInputObject) => GetInputObjects(includeSpecInputObject);
+        [GraphQLIgnore]
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.
+            GetInputObjects(bool includeSpecInputObjects) => GetInputObjects(includeSpecInputObjects);
 
         #endregion
 
@@ -166,11 +169,13 @@ IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecE
         public bool HasInterface(string name) => HasType<InterfaceType>(Check.NotNull(name, nameof(name)));
 
 
-//[GraphQLIgnore]        
-//public IEnumerable<InterfaceType> GetInterfaces(bool includeSpecInterfaces = false) => throw new NotImplementedException();
+        [GraphQLIgnore]
+        public IEnumerable<InterfaceType> GetInterfaces(bool includeSpecInterfaces = false) =>
+            throw new NotImplementedException();
 
-//[GraphQLIgnore]
-//IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces(bool includeSpecInterface) => GetInterfaces(includeSpecInterface);
+        [GraphQLIgnore]
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces(bool includeSpecInterfaces) =>
+            GetInterfaces(includeSpecInterfaces);
 
         #endregion
 
@@ -216,11 +221,13 @@ IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecE
         public bool HasObject(string name) => HasType<ObjectType>(Check.NotNull(name, nameof(name)));
 
 
-//[GraphQLIgnore]        
-//public IEnumerable<ObjectType> GetObjects(bool includeSpecObjects = false) => throw new NotImplementedException();
+        [GraphQLIgnore]
+        public IEnumerable<ObjectType> GetObjects(bool includeSpecObjects = false) =>
+            throw new NotImplementedException();
 
-//[GraphQLIgnore]
-//IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecObject) => GetObjects(includeSpecObject);
+        [GraphQLIgnore]
+        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecObjects) =>
+            GetObjects(includeSpecObjects);
 
         #endregion
 
@@ -266,11 +273,13 @@ IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecE
         public bool HasScalar(string name) => HasType<ScalarType>(Check.NotNull(name, nameof(name)));
 
 
-//[GraphQLIgnore]        
-//public IEnumerable<ScalarType> GetScalars(bool includeSpecScalars = false) => throw new NotImplementedException();
+        [GraphQLIgnore]
+        public IEnumerable<ScalarType> GetScalars(bool includeSpecScalars = false) =>
+            throw new NotImplementedException();
 
-//[GraphQLIgnore]
-//IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars(bool includeSpecScalar) => GetScalars(includeSpecScalar);
+        [GraphQLIgnore]
+        IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars(bool includeSpecScalars) =>
+            GetScalars(includeSpecScalars);
 
         #endregion
 
@@ -316,11 +325,12 @@ IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecE
         public bool HasUnion(string name) => HasType<UnionType>(Check.NotNull(name, nameof(name)));
 
 
-//[GraphQLIgnore]        
-//public IEnumerable<UnionType> GetUnions(bool includeSpecUnions = false) => throw new NotImplementedException();
+        [GraphQLIgnore]
+        public IEnumerable<UnionType> GetUnions(bool includeSpecUnions = false) => throw new NotImplementedException();
 
-//[GraphQLIgnore]
-//IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions(bool includeSpecUnion) => GetUnions(includeSpecUnion);
+        [GraphQLIgnore]
+        IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions(bool includeSpecUnions) =>
+            GetUnions(includeSpecUnions);
 
         #endregion
 
@@ -372,4 +382,4 @@ IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecE
         #endregion
     }
 }
-// Source Hash Code: 3132305200239627219
+// Source Hash Code: 234052644407941367

@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IScalarTypesDefinition
     {
         [GraphQLIgnore]
-        IEnumerable<IScalarTypeDefinition> GetScalars();
+        IEnumerable<IScalarTypeDefinition> GetScalars(bool includeSpecScalars = false);
     }
 }

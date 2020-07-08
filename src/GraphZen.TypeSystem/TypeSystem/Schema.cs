@@ -195,11 +195,7 @@ namespace GraphZen.TypeSystem
         [GraphQLCanBeNull]
         public ObjectType? SubscriptionType { get; }
 
-        [GraphQLIgnore]
-        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.GetInputObjects() =>
-            GetInputObjects();
-
-
+        
         [GraphQLIgnore] public IReadOnlyList<InputObjectType> InputObjects => _inputObjects.Value;
 
         [GraphQLIgnore]
@@ -208,26 +204,17 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore] public IReadOnlyList<EnumType> Enums => _enums.Value;
 
-        [GraphQLIgnore]
-        IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars() => GetScalars();
-
+        
         [GraphQLIgnore] public IReadOnlyList<ScalarType> Scalars => _scalars.Value;
 
-        [GraphQLIgnore]
-        IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions() => GetUnions();
-
+        
 
         [GraphQLIgnore] public IReadOnlyList<UnionType> Unions => _unions.Value;
 
-        [GraphQLIgnore]
-        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces() => GetInterfaces();
-
+        
         [GraphQLIgnore] public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
 
-        [GraphQLIgnore]
-        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecTypes) =>
-            GetObjects(includeSpecTypes);
-
+        
 
 
 
@@ -241,16 +228,7 @@ namespace GraphZen.TypeSystem
         public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
 
 
-        [GraphQLIgnore]
-        public IEnumerable<ObjectType> GetObjects(bool includeSpecTypes = false)
-        {
-            if (includeSpecTypes)
-            {
-                return _objects.Value;
-            }
-
-            return _objects.Value.Where(_ => _.IsIntrospection == false);
-        }
+        
 
         [GraphQLIgnore]
         public IEnumerable<Directive> GetDirectives(bool includeSpecDirectives = false) =>

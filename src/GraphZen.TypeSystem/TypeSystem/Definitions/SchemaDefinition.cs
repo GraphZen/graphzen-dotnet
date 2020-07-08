@@ -152,30 +152,9 @@ namespace GraphZen.TypeSystem
         public IEnumerable<ObjectTypeDefinition> GetObjects(bool includeSpecTypes = false) =>
             Types.OfType<ObjectTypeDefinition>();
 
-        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => Types.OfType<InterfaceTypeDefinition>();
-
-        public IEnumerable<UnionTypeDefinition> GetUnions() => Types.OfType<UnionTypeDefinition>();
-
-        public IEnumerable<ScalarTypeDefinition> GetScalars() => Types.OfType<ScalarTypeDefinition>();
-
-        public IEnumerable<EnumTypeDefinition> GetEnums(bool includeSpecEnums = false) => Types.OfType<EnumTypeDefinition>();
+        
 
 
-        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecTypes) =>
-            GetObjects(includeSpecTypes);
-
-        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces() => GetInterfaces();
-
-        IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions() => GetUnions();
-
-        IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars() => GetScalars();
-
-        IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) => GetEnums(includeSpecEnums);
-
-        public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => Types.OfType<InputObjectTypeDefinition>();
-
-        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.GetInputObjects() =>
-            GetInputObjects();
 
         IObjectTypeDefinition? IQueryTypeDefinition.QueryType => QueryType;
 
@@ -774,5 +753,30 @@ namespace GraphZen.TypeSystem
         }
 
         public override string ToString() => "schema";
+        IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) => GetEnums(includeSpecEnums);
+
+        public IEnumerable<EnumTypeDefinition> GetEnums(bool includeSpecEnums = false) => throw new NotImplementedException();
+
+        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecObjects) => GetObjects(includeSpecObjects);
+
+        public IEnumerable<IUnionTypeDefinition> GetUnions(bool includeSpecUnions = false) => throw new NotImplementedException();
+        IEnumerable<UnionTypeDefinition> IMutableUnionTypesDefinition.GetUnions(bool includeSpecUnions) => throw new NotImplementedException();
+
+        public IEnumerable<UnionTypeDefinition> GetUnions() => throw new NotImplementedException();
+
+        public IEnumerable<IInputObjectTypeDefinition> GetInputObjects(bool includeSpecInputObjects = false) => throw new NotImplementedException();
+        IEnumerable<InputObjectTypeDefinition> IMutableInputObjectTypesDefinition.GetInputObjects(bool includeSpecInputObjects) => throw new NotImplementedException();
+
+        public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => throw new NotImplementedException();
+
+        public IEnumerable<IScalarTypeDefinition> GetScalars(bool includeSpecScalars = false) => throw new NotImplementedException();
+        IEnumerable<ScalarTypeDefinition> IMutableScalarTypesDefinition.GetScalars(bool includeSpecScalars) => throw new NotImplementedException();
+
+        public IEnumerable<ScalarTypeDefinition> GetScalars() => throw new NotImplementedException();
+
+        public IEnumerable<IInterfaceTypeDefinition> GetInterfaces(bool includeSpecInterfaces = false) => throw new NotImplementedException();
+        IEnumerable<InterfaceTypeDefinition> IMutableInterfaceTypesDefinition.GetInterfaces(bool includeSpecInterfaces) => throw new NotImplementedException();
+
+        public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => throw new NotImplementedException();
     }
 }

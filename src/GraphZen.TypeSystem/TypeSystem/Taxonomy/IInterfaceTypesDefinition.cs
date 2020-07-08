@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IInterfaceTypesDefinition
     {
         [GraphQLIgnore]
-        IEnumerable<IInterfaceTypeDefinition> GetInterfaces();
+        IEnumerable<IInterfaceTypeDefinition> GetInterfaces(bool includeSpecInterfaces = false);
     }
 }

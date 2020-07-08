@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableScalarTypesDefinition : IScalarTypesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<ScalarTypeDefinition> GetScalars();
+        new IEnumerable<ScalarTypeDefinition> GetScalars(bool includeSpecScalars = false);
     }
 }

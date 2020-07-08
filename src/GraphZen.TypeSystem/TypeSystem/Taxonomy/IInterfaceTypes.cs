@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IInterfaceTypes : IInterfaceTypesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<InterfaceType> GetInterfaces();
+        new IEnumerable<InterfaceType> GetInterfaces(bool includeSpecInterfaces = false);
 
         [GraphQLIgnore] IReadOnlyList<InterfaceType> Interfaces { get; }
     }

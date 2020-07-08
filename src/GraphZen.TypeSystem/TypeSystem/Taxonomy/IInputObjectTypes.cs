@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IInputObjectTypes : IInputObjectTypesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<InputObjectType> GetInputObjects();
+        new IEnumerable<InputObjectType> GetInputObjects(bool includeSpecInputObjects = false);
 
         [GraphQLIgnore] IReadOnlyList<InputObjectType> InputObjects { get; }
     }
