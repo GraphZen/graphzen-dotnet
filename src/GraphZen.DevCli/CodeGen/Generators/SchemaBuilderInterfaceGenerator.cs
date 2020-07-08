@@ -13,32 +13,6 @@ using static GraphZen.TypeSystem.TypeKind;
 
 namespace GraphZen.CodeGen.Generators
 {
-    public class EnumerableBuilderExtensionsGenerator : PartialTypeGenerator
-    {
-        public override IReadOnlyList<string> Usings { get; } = new List<string>()
-        {
-            "GraphZen.TypeSystem.Taxonomy"
-        };
-
-        public EnumerableBuilderExtensionsGenerator() : base(typeof(EnumerableBuilderExtensions))
-        {
-        }
-
-        public override void Apply(StringBuilder csharp)
-        {
-            foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds)
-            {
-                csharp.AppendLine($@"
-    public static IEnumerable<{config.TypeName}Builder> Where(this IEnumerable<{config.TypeName}Builder> source,
-            Func<I{config.TypeName}Definition, bool> predicate) =>
-            Enumerable.Where(source, _=> predicate(_.GetInfrastructure<{config.TypeName}Definition>()));
-
-");
-
-            }
-        }
-    }
-
     public class SchemaBuilderInterfaceGenerator : PartialTypeGenerator
     {
         public SchemaBuilderInterfaceGenerator() : base(typeof(ISchemaBuilder<>))
