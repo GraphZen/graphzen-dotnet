@@ -48,6 +48,11 @@ namespace GraphZen.CodeGen.Generators
         public bool Has{kind}<TClrType>() => HasType<{type}Definition>(typeof(TClrType));
 
         public bool Has{kind}(string name) => HasType<{type}Definition>(Check.NotNull(name, nameof(name)));
+
+public IEnumerable<{type}Definition> Get{kind}s(bool includeSpec{kind}s = false) => includeSpec{kind}s ? Types.OfType<{type}Definition>() :Types.OfType<{type}Definition>().Where(_ => !_.IsSpec);
+
+IEnumerable<I{type}Definition> I{type}sDefinition.Get{kind}s(bool includeSpec{kind}s) => Get{kind}s(includeSpec{kind}s);
+
 ");
                 });
             }

@@ -755,7 +755,8 @@ namespace GraphZen.TypeSystem
         public override string ToString() => "schema";
         IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) => GetEnums(includeSpecEnums);
 
-        public IEnumerable<EnumTypeDefinition> GetEnums(bool includeSpecEnums = false) => throw new NotImplementedException();
+        public IEnumerable<EnumTypeDefinition> GetEnums(bool includeSpecEnums = false) => includeSpecEnums ?
+            Types.OfType<EnumTypeDefinition>() : Types.OfType<EnumTypeDefinition>().Where(_ => !_.IsSpec);
 
         IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecObjects) => GetObjects(includeSpecObjects);
 

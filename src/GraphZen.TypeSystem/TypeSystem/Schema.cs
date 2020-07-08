@@ -174,8 +174,6 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Schema;
 
-        [GraphQLIgnore] public IReadOnlyList<ObjectType> Objects => _objects.Value;
-
 
         [GraphQLName("directives")]
         [Description("A list of all types supported by this server.")]
@@ -194,37 +192,6 @@ namespace GraphZen.TypeSystem
         [Description("If this server support subscription, the type that subscription operations will be rooted at.")]
         [GraphQLCanBeNull]
         public ObjectType? SubscriptionType { get; }
-
-
-        [GraphQLIgnore] public IReadOnlyList<InputObjectType> InputObjects => _inputObjects.Value;
-
-
-        [GraphQLIgnore] public IReadOnlyList<EnumType> Enums => _enums.Value;
-
-
-        [GraphQLIgnore] public IReadOnlyList<ScalarType> Scalars => _scalars.Value;
-
-
-
-        [GraphQLIgnore] public IReadOnlyList<UnionType> Unions => _unions.Value;
-
-
-        [GraphQLIgnore] public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
-
-
-
-
-
-        [GraphQLIgnore]
-        public IEnumerable<ScalarType> GetScalars() => Scalars;
-
-        [GraphQLIgnore]
-        public IEnumerable<UnionType> GetUnions() => Unions;
-
-        [GraphQLIgnore]
-        public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
-
-
 
 
         [GraphQLIgnore]
@@ -308,21 +275,21 @@ namespace GraphZen.TypeSystem
             switch (typeSyntax)
             {
                 case ListTypeSyntax listNode:
-                    {
-                        var innerType = GetTypeFromAst(listNode.OfType);
-                        return innerType != null ? ListType.Of(innerType) : null;
-                    }
+                {
+                    var innerType = GetTypeFromAst(listNode.OfType);
+                    return innerType != null ? ListType.Of(innerType) : null;
+                }
                 case NonNullTypeSyntax nnNode:
+                {
+                    var innerType = GetTypeFromAst(nnNode.OfType);
+                    switch (innerType)
                     {
-                        var innerType = GetTypeFromAst(nnNode.OfType);
-                        switch (innerType)
-                        {
-                            case null:
-                                return null;
-                            case INullableType nullable:
-                                return NonNullType.Of(nullable);
-                        }
+                        case null:
+                            return null;
+                        case INullableType nullable:
+                            return NonNullType.Of(nullable);
                     }
+                }
                     break;
                 case NamedTypeSyntax namedTypeNode:
                     return Types.TryGetValue(namedTypeNode.Name.Value, out var result) ? result : null;
@@ -366,7 +333,7 @@ namespace GraphZen.TypeSystem
                     case ListTypeSyntax list:
                         return ListType.Of(GetType(list.OfType));
                     case NonNullTypeSyntax nn:
-                        return NonNullType.Of((INullableType)GetType(nn.OfType));
+                        return NonNullType.Of((INullableType) GetType(nn.OfType));
                     case NamedTypeSyntax _:
                         var nameMatch = FindType(reference.Identity.Name);
                         if (nameMatch != null)

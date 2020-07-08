@@ -61,6 +61,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool HasEnum(string name) => HasType<EnumType>(Check.NotNull(name, nameof(name)));
 
+        [GraphQLIgnore] public IReadOnlyList<EnumType> Enums => _enums.Value;
 
         [GraphQLIgnore]
         public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) =>
@@ -115,6 +116,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool HasInputObject(string name) => HasType<InputObjectType>(Check.NotNull(name, nameof(name)));
 
+        [GraphQLIgnore] public IReadOnlyList<InputObjectType> InputObjects => _inputObjects.Value;
 
         [GraphQLIgnore]
         public IEnumerable<InputObjectType> GetInputObjects(bool includeSpecInputObjects = false) =>
@@ -169,6 +171,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool HasInterface(string name) => HasType<InterfaceType>(Check.NotNull(name, nameof(name)));
 
+        [GraphQLIgnore] public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
 
         [GraphQLIgnore]
         public IEnumerable<InterfaceType> GetInterfaces(bool includeSpecInterfaces = false) =>
@@ -221,6 +224,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool HasObject(string name) => HasType<ObjectType>(Check.NotNull(name, nameof(name)));
 
+        [GraphQLIgnore] public IReadOnlyList<ObjectType> Objects => _objects.Value;
 
         [GraphQLIgnore]
         public IEnumerable<ObjectType> GetObjects(bool includeSpecObjects = false) =>
@@ -273,6 +277,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool HasScalar(string name) => HasType<ScalarType>(Check.NotNull(name, nameof(name)));
 
+        [GraphQLIgnore] public IReadOnlyList<ScalarType> Scalars => _scalars.Value;
 
         [GraphQLIgnore]
         public IEnumerable<ScalarType> GetScalars(bool includeSpecScalars = false) =>
@@ -325,6 +330,7 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool HasUnion(string name) => HasType<UnionType>(Check.NotNull(name, nameof(name)));
 
+        [GraphQLIgnore] public IReadOnlyList<UnionType> Unions => _unions.Value;
 
         [GraphQLIgnore]
         public IEnumerable<UnionType> GetUnions(bool includeSpecUnions = false) =>
@@ -384,4 +390,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 2552661462143231624
+// Source Hash Code: 5524626860166924757
