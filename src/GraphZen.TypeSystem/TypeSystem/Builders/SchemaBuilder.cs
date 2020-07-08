@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
@@ -167,6 +168,11 @@ namespace GraphZen.TypeSystem
             Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
+
+        public IEnumerable<INamedTypeBuilder> GetTypes(bool includeSpecTypes = false) => includeSpecTypes
+                    ? Builder.Definition.Types.Select(_ => _.Builder)
+                    : Builder.Definition.Types.Where(_ => !_.IsSpec).Select(_ => _.Builder);
+
 
         InternalSchemaBuilder IInfrastructure<InternalSchemaBuilder>.Instance => Builder;
 

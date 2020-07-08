@@ -59,7 +59,8 @@ namespace GraphZen.TypeSystem
 
         #region Types
 
-        // TEST IEnumerable<Builder> GetTypes(bool includeSpecTypes = false);
+        // TEST IEnumerable<INamedTypeBuilder> GetTypes(bool includeSpecTypes = false);
+        IEnumerable<INamedTypeBuilder> GetTypes(bool includeSpecTypes = false);
 
 
         SchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull;
@@ -303,4 +304,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 7086784380701910384
+// Source Hash Code: 15107571594081130896
