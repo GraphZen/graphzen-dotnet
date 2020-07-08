@@ -4,7 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem.Taxonomy;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
 #nullable disable

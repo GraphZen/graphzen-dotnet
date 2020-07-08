@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Taxonomy;
+using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 

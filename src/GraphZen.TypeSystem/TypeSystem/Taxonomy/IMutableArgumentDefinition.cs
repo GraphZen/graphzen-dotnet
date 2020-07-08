@@ -7,7 +7,7 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
     public interface IMutableArgumentDefinition : IArgumentDefinition, IMutableInputValueDefinition

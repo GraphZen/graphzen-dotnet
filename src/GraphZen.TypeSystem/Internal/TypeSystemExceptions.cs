@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
-using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using static GraphZen.Infrastructure.GraphQLName;
 

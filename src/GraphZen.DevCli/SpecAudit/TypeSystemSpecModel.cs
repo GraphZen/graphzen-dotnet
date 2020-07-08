@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using GraphZen.SpecAudit.SpecFx;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.FunctionalTests.Specs;
-using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs;
 

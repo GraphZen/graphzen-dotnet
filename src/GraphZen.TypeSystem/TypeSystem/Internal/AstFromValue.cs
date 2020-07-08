@@ -8,7 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 

@@ -7,7 +7,7 @@ using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
     public interface ILeafType : INamedType

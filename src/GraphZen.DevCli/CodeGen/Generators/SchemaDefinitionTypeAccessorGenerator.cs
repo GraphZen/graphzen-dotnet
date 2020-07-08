@@ -16,7 +16,7 @@ namespace GraphZen.CodeGen.Generators
     {
         public override IReadOnlyList<string> Usings { get; } = new List<string>
         {
-            "GraphZen.TypeSystem.Taxonomy"
+            // "GraphZen.TypeSystem.Taxonomy"
         };
 
         public override void Apply(StringBuilder csharp)

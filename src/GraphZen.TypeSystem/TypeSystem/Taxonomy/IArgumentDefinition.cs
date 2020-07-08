@@ -6,7 +6,7 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
     public interface IArgumentDefinition : IInputValueDefinition

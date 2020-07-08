@@ -8,7 +8,7 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
     public partial interface IMutableArgumentsDefinition : IArgumentsDefinition, IMutableDefinition

@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 // ReSharper disable InconsistentNaming
 // ReSharper disable once PossibleInterfaceMemberAmbiguity
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem
 {
     public partial interface IFields
     {
