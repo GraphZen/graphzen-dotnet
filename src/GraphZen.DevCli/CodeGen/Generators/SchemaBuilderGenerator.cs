@@ -79,7 +79,7 @@ public  {config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType, 
 }}
 
  public IEnumerable<{config.TypeName}Builder> Get{kind}s(bool includeSpec{kind}s = false) =>
-            Builder.Definition.Get{kind}s(includeSpec{kind}s).Select(_ => new ObjectTypeBuilder(_.Builder));
+            Builder.Definition.Get{kind}s(includeSpec{kind}s).Select(_ => new {config.TypeName}Builder(_.Builder));
 
 
 ");
