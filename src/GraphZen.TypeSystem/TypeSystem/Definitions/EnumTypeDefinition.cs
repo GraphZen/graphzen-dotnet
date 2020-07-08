@@ -23,11 +23,13 @@ namespace GraphZen.TypeSystem
         internal readonly Dictionary<string, EnumValueDefinition> InternalValues =
             new Dictionary<string, EnumValueDefinition>();
 
+
         public EnumTypeDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource)
             : base(identity, schema, configurationSource)
         {
-            Builder = new InternalEnumTypeBuilder(this);
+            InternalBuilder = new InternalEnumTypeBuilder(this);
+            Builder = new EnumTypeBuilder(InternalBuilder);
         }
 
         public override IEnumerable<IMemberDefinition> Children() => GetValues();
@@ -35,8 +37,11 @@ namespace GraphZen.TypeSystem
 
         private string DebuggerDisplay => $"enum {Name}";
 
-        internal new InternalEnumTypeBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        internal new InternalEnumTypeBuilder InternalBuilder { get; }
+        public new EnumTypeBuilder Builder { get; }
+        protected override INamedTypeBuilder GetBuilder() => Builder;
+
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 

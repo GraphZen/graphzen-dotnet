@@ -19,5 +19,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMutableMaybeRepeatableDefinition,
         IInfrastructure<InternalDirectiveBuilder>
     {
+        DirectiveBuilder Builder { get; }
     }
 }

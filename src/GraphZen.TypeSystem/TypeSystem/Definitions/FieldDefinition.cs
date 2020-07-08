@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem
             ClrInfo = clrInfo;
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
-            Builder = new InternalFieldBuilder(this);
+            InternalBuilder = new InternalFieldBuilder(this);
             Name = name;
             if (!name.IsValidGraphQLName())
             {
@@ -57,8 +57,8 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"field {Name}";
 
 
-        internal new InternalFieldBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        internal new InternalFieldBuilder InternalBuilder { get; }
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
 
         public FieldsDefinition DeclaringType { get; }
@@ -202,7 +202,7 @@ namespace GraphZen.TypeSystem
             var typeIdentity = Schema.GetOrAddInputTypeIdentity(innerClrType);
             var argument = new ArgumentDefinition(argName, nameConfigurationSource, typeIdentity, typeSyntax,
                 configurationSource, this, parameter);
-            var ab = argument.Builder;
+            var ab = argument.InternalBuilder;
             ab.DefaultValue(parameter, configurationSource);
             if (parameter.TryGetDescriptionFromDataAnnotation(out var description))
             {

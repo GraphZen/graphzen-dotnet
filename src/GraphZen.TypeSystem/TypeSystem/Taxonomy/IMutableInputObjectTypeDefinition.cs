@@ -11,5 +11,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IMutableInputObjectTypeDefinition : IInputObjectTypeDefinition, IMutableNamedTypeDefinition,
         IMutableInputFieldsDefinition
     {
+        new InputObjectTypeBuilder Builder { get; }
     }
 }

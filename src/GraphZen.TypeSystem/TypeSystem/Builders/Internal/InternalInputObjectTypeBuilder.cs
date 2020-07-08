@@ -17,15 +17,15 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalInputFieldBuilder Field(string name) =>
-            Definition.FindField(name)?.Builder ?? throw new ItemNotFoundException(
+            Definition.FindField(name)?.InternalBuilder ?? throw new ItemNotFoundException(
                 $"Field \"{name}\" does not exist on {Definition}. Add the field by specifying a field type.");
 
 
         public InternalInputFieldBuilder? Field(string name, Type clrType, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddField(name, clrType, configurationSource)?.Builder;
+            Definition.GetOrAddField(name, clrType, configurationSource)?.InternalBuilder;
 
         public InternalInputFieldBuilder? Field(string name, string type, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddField(name, type, configurationSource)?.Builder;
+            Definition.GetOrAddField(name, type, configurationSource)?.InternalBuilder;
 
         public bool IgnoreField(string fieldName, ConfigurationSource configurationSource)
         {
@@ -182,7 +182,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (property.TryGetGraphQLTypeInfo(out _, out var innerClrType))
             {
-                var fieldInnerType = Schema.Builder.InputType(innerClrType, configurationSource);
+                var fieldInnerType = Schema.InternalBuilder.InputType(innerClrType, configurationSource);
                 if (fieldInnerType == null)
                 {
                     IgnoreField(property, ConfigurationSource.Convention);
@@ -212,10 +212,10 @@ namespace GraphZen.TypeSystem.Internal
 
             if (property.TryGetDescriptionFromDataAnnotation(out var desc))
             {
-                field.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+                field.InternalBuilder.Description(desc, ConfigurationSource.DataAnnotation);
             }
 
-            return field.Builder;
+            return field.InternalBuilder;
         }
 
         public bool IgnoreField(MemberInfo member, ConfigurationSource configurationSource)

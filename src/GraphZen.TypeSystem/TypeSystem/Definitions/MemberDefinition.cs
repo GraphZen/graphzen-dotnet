@@ -17,13 +17,13 @@ namespace GraphZen.TypeSystem
         public abstract SchemaDefinition Schema { get; }
         ISchemaDefinition IMemberDefinition.Schema => Schema;
 
-        public MemberDefinition(ConfigurationSource configurationSource)
+        protected MemberDefinition(ConfigurationSource configurationSource)
         {
             _configurationSource = configurationSource;
         }
 
-        internal MemberDefinitionBuilder Builder => GetBuilder();
-        protected abstract MemberDefinitionBuilder GetBuilder();
+        internal MemberDefinitionBuilder InternalBuilder => GetInternalBuilder();
+        protected abstract MemberDefinitionBuilder GetInternalBuilder();
 
         public string? Description { get; private set; }
 

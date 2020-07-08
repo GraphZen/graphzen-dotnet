@@ -31,7 +31,8 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource)
             : base(identity, schema, configurationSource)
         {
-            Builder = new InternalInputObjectTypeBuilder(this);
+            InternalBuilder = new InternalInputObjectTypeBuilder(this);
+            Builder = new InputObjectTypeBuilder(InternalBuilder);
         }
 
         public override IEnumerable<IMemberDefinition> Children() => GetFields();
@@ -39,8 +40,11 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"input {Name}";
 
 
-        internal new InternalInputObjectTypeBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        internal new InternalInputObjectTypeBuilder InternalBuilder { get; }
+        public new InputObjectTypeBuilder Builder { get; }
+        protected override INamedTypeBuilder GetBuilder() => Builder;
+
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputObject;
 
@@ -157,7 +161,7 @@ namespace GraphZen.TypeSystem
 
 
             // Configure method w/conventions
-            var fb = field.Builder;
+            var fb = field.InternalBuilder;
             fb.DefaultValue(property, configurationSource);
             if (property.TryGetDescriptionFromDataAnnotation(out var description))
             {
@@ -217,7 +221,7 @@ namespace GraphZen.TypeSystem
             if (field != null)
             {
                 field.UpdateConfigurationSource(configurationSource);
-                field.Builder.FieldType(clrType, configurationSource);
+                field.InternalBuilder.FieldType(clrType, configurationSource);
                 return field;
             }
 
@@ -251,14 +255,14 @@ namespace GraphZen.TypeSystem
             if (field != null)
             {
                 field.UpdateConfigurationSource(configurationSource);
-                field.Builder.FieldType(type, configurationSource);
+                field.InternalBuilder.FieldType(type, configurationSource);
                 return field;
             }
 
             TypeSyntax typeNode;
             try
             {
-                typeNode = Schema.Builder.Parser.ParseType(type);
+                typeNode = Schema.InternalBuilder.Parser.ParseType(type);
             }
             catch (Exception e)
             {

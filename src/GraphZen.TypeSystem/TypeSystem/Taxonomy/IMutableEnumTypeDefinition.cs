@@ -13,5 +13,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMutableNamedTypeDefinition,
         IMutableEnumValuesDefinition
     {
+        new EnumTypeBuilder Builder { get; }
     }
 }

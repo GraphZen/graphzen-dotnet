@@ -21,6 +21,7 @@ namespace GraphZen.TypeSystem
 
         #region Directives
 
+        // TEST IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpecDirectives = false);
         IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpecDirectives = false);
 
 
@@ -58,6 +59,9 @@ namespace GraphZen.TypeSystem
 
         #region Types
 
+        // TEST IEnumerable<Builder> GetTypes(bool includeSpecTypes = false);
+        IEnumerable<INamedTypeBuilder> GetTypes(bool includeSpecTypes = false);
+
 
         SchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull;
 
@@ -82,6 +86,7 @@ namespace GraphZen.TypeSystem
 
         #region Objects
 
+        // TEST IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpecObjects = false);
         IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpecObjects = false);
 
 
@@ -119,6 +124,7 @@ namespace GraphZen.TypeSystem
 
         #region Unions
 
+        // TEST IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpecUnions = false);
         IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpecUnions = false);
 
 
@@ -156,6 +162,7 @@ namespace GraphZen.TypeSystem
 
         #region Scalars
 
+        // TEST IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpecScalars = false);
         IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpecScalars = false);
 
 
@@ -182,6 +189,7 @@ namespace GraphZen.TypeSystem
 
         #region Enums
 
+        // TEST IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpecEnums = false);
         IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpecEnums = false);
 
 
@@ -219,6 +227,7 @@ namespace GraphZen.TypeSystem
 
         #region Interfaces
 
+        // TEST IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpecInterfaces = false);
         IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpecInterfaces = false);
 
 
@@ -256,6 +265,7 @@ namespace GraphZen.TypeSystem
 
         #region InputObjects
 
+        // TEST IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpecInputObjects = false);
         IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpecInputObjects = false);
 
 
@@ -294,4 +304,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 2618841811624436100
+// Source Hash Code: 7086784380701910384

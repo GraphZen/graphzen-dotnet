@@ -24,7 +24,8 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource)
             : base(identity, schema, configurationSource)
         {
-            Builder = new InternalUnionTypeBuilder(this);
+            InternalBuilder = new InternalUnionTypeBuilder(this);
+            Builder = new UnionTypeBuilder(InternalBuilder);
         }
 
         public override IEnumerable<IMemberDefinition> Children()
@@ -35,8 +36,11 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"union {Name}";
 
 
-        internal new InternalUnionTypeBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        internal new InternalUnionTypeBuilder InternalBuilder { get; }
+        public new UnionTypeBuilder Builder { get; }
+        protected override INamedTypeBuilder GetBuilder() => Builder;
+
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
 
         public IEnumerable<ObjectTypeDefinition> GetMemberTypes() => _types;

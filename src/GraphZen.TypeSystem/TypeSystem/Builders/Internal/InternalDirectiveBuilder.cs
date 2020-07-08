@@ -20,10 +20,10 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public InternalArgumentBuilder Argument(string name) =>
-            Definition.FindArgument(name)?.Builder ?? throw new NotImplementedException();
+            Definition.FindArgument(name)?.InternalBuilder ?? throw new NotImplementedException();
 
         public InternalArgumentBuilder? Argument(string name, string type, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddArgument(name, type, configurationSource)?.Builder;
+            Definition.GetOrAddArgument(name, type, configurationSource)?.InternalBuilder;
 
         public bool IsArgumentIgnored(string name, ConfigurationSource configurationSource)
         {
@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddArgument(name, clrType, configurationSource)?.Builder;
+            Definition.GetOrAddArgument(name, clrType, configurationSource)?.InternalBuilder;
 
         public InternalDirectiveBuilder Name(string name, ConfigurationSource configurationSource)
         {

@@ -55,14 +55,14 @@ namespace GraphZen.TypeSystem.Internal
             if (argument != null)
             {
                 argument.UpdateConfigurationSource(configurationSource);
-                argument.Builder.ArgumentType(type, configurationSource);
+                argument.InternalBuilder.ArgumentType(type, configurationSource);
                 return argument;
             }
 
             TypeSyntax typeNode;
             try
             {
-                typeNode = Schema.Builder.Parser.ParseType(type);
+                typeNode = Schema.InternalBuilder.Parser.ParseType(type);
             }
             catch (Exception e)
             {
@@ -96,7 +96,7 @@ namespace GraphZen.TypeSystem.Internal
             if (argument != null)
             {
                 argument.UpdateConfigurationSource(configurationSource);
-                argument.Builder.ArgumentType(clrType, configurationSource);
+                argument.InternalBuilder.ArgumentType(clrType, configurationSource);
                 return argument;
             }
 

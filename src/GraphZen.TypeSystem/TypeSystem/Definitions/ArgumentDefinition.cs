@@ -34,13 +34,13 @@ namespace GraphZen.TypeSystem
                     TypeSystemExceptions.InvalidNameException.CannotCreateArgumentWithInvalidName(this, name));
             }
 
-            Builder = new InternalArgumentBuilder(this);
+            InternalBuilder = new InternalArgumentBuilder(this);
         }
 
         private string DebuggerDisplay => $"argument {Name}";
 
-        internal new InternalArgumentBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        internal new InternalArgumentBuilder InternalBuilder { get; }
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.ArgumentDefinition;
 

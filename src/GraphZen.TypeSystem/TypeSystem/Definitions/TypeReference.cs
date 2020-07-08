@@ -107,7 +107,7 @@ namespace GraphZen.TypeSystem
                 return false;
             }
 
-            var syntax = Schema.Builder.Parser.ParseType(type);
+            var syntax = Schema.InternalBuilder.Parser.ParseType(type);
             var named = syntax.GetNamedType();
             var identity = Schema.GetOrAddTypeIdentity(named.Name.Value);
             return Update(identity, syntax, configurationSource);

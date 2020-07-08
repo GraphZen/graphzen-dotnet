@@ -108,5 +108,8 @@ namespace GraphZen.TypeSystem
 
             return kindName;
         }
+
+        public INamedTypeBuilder Builder => GetBuilder();
+        protected abstract INamedTypeBuilder GetBuilder();
     }
 }

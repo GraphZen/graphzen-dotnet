@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem
         #region Directives
 
         public IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpecDirectives = false) =>
-            Builder.Definition.GetDirectives(includeSpecDirectives).Select(_ => new DirectiveBuilder(_.Builder));
+            Builder.Definition.GetDirectives(includeSpecDirectives).Select(_ => new DirectiveBuilder(_.InternalBuilder));
 
 
         public DirectiveBuilder<object> Directive(string name)
@@ -200,7 +200,7 @@ namespace GraphZen.TypeSystem
         #region Objects
 
         public IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpecObjects = false) =>
-            Builder.Definition.GetObjects(includeSpecObjects).Select(_ => new ObjectTypeBuilder(_.Builder));
+            Builder.Definition.GetObjects(includeSpecObjects).Select(_ => new ObjectTypeBuilder(_.InternalBuilder));
 
 
         public ObjectTypeBuilder<object, TContext> Object(string name)
@@ -310,7 +310,7 @@ namespace GraphZen.TypeSystem
         #region Unions
 
         public IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpecUnions = false) =>
-            Builder.Definition.GetUnions(includeSpecUnions).Select(_ => new UnionTypeBuilder(_.Builder));
+            Builder.Definition.GetUnions(includeSpecUnions).Select(_ => new UnionTypeBuilder(_.InternalBuilder));
 
 
         public UnionTypeBuilder<object, TContext> Union(string name)
@@ -420,7 +420,7 @@ namespace GraphZen.TypeSystem
         #region Scalars
 
         public IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpecScalars = false) =>
-            Builder.Definition.GetScalars(includeSpecScalars).Select(_ => new ScalarTypeBuilder(_.Builder));
+            Builder.Definition.GetScalars(includeSpecScalars).Select(_ => new ScalarTypeBuilder(_.InternalBuilder));
 
 
         public SchemaBuilder<TContext> UnignoreScalar<TScalar>() where TScalar : notnull
@@ -489,7 +489,7 @@ namespace GraphZen.TypeSystem
         #region Enums
 
         public IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpecEnums = false) =>
-            Builder.Definition.GetEnums(includeSpecEnums).Select(_ => new EnumTypeBuilder(_.Builder));
+            Builder.Definition.GetEnums(includeSpecEnums).Select(_ => new EnumTypeBuilder(_.InternalBuilder));
 
 
         public EnumTypeBuilder<string> Enum(string name)
@@ -601,7 +601,7 @@ namespace GraphZen.TypeSystem
         #region Interfaces
 
         public IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpecInterfaces = false) =>
-            Builder.Definition.GetInterfaces(includeSpecInterfaces).Select(_ => new InterfaceTypeBuilder(_.Builder));
+            Builder.Definition.GetInterfaces(includeSpecInterfaces).Select(_ => _.Builder);
 
 
         public InterfaceTypeBuilder<object, TContext> Interface(string name)
@@ -712,7 +712,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpecInputObjects = false) =>
             Builder.Definition.GetInputObjects(includeSpecInputObjects)
-                .Select(_ => new InputObjectTypeBuilder(_.Builder));
+                .Select(_ => new InputObjectTypeBuilder(_.InternalBuilder));
 
 
         public InputObjectTypeBuilder<object> InputObject(string name)

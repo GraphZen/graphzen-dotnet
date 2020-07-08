@@ -15,5 +15,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMutableNamed,
         IMutableDescription
     {
+        INamedTypeBuilder Builder { get; }
     }
 }

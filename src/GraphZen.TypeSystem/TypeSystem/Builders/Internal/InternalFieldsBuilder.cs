@@ -28,15 +28,15 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public InternalFieldBuilder Field(string name) =>
-            Definition.FindField(name)?.Builder ?? throw new ItemNotFoundException(
+            Definition.FindField(name)?.InternalBuilder ?? throw new ItemNotFoundException(
                 $"Field \"{name}\" does not exist on {Definition}. Add the field by specifying a field type.");
 
 
         public InternalFieldBuilder? Field(string name, Type clrType, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddField(name, clrType, configurationSource)?.Builder;
+            Definition.GetOrAddField(name, clrType, configurationSource)?.InternalBuilder;
 
         public InternalFieldBuilder? Field(string name, string type, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddField(name, type, configurationSource)?.Builder;
+            Definition.GetOrAddField(name, type, configurationSource)?.InternalBuilder;
 
         protected void ConfigureOutputFields()
         {
@@ -173,7 +173,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (property.TryGetGraphQLTypeInfo(out _, out var innerClrType))
             {
-                var fieldInnerType = Schema.Builder.OutputType(innerClrType, configurationSource);
+                var fieldInnerType = Schema.InternalBuilder.OutputType(innerClrType, configurationSource);
                 if (fieldInnerType == null)
                 {
                     IgnoreField(property, ConfigurationSource.Convention);
@@ -203,10 +203,10 @@ namespace GraphZen.TypeSystem.Internal
 
             if (property.TryGetDescriptionFromDataAnnotation(out var desc))
             {
-                field.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+                field.InternalBuilder.Description(desc, ConfigurationSource.DataAnnotation);
             }
 
-            return field.Builder;
+            return field.InternalBuilder;
         }
 
 
@@ -239,7 +239,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (method.TryGetGraphQLTypeInfo(out _, out var innerClrType))
             {
-                var fieldInnerType = Schema.Builder.OutputType(innerClrType, configurationSource);
+                var fieldInnerType = Schema.InternalBuilder.OutputType(innerClrType, configurationSource);
                 if (fieldInnerType == null)
                 {
                     IgnoreField(method, ConfigurationSource.Convention);
@@ -269,15 +269,15 @@ namespace GraphZen.TypeSystem.Internal
 
             if (method.TryGetDescriptionFromDataAnnotation(out var desc))
             {
-                field.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+                field.InternalBuilder.Description(desc, ConfigurationSource.DataAnnotation);
             }
 
             foreach (var parameter in method.GetParameters())
             {
-                field.Builder.Argument(parameter, ConfigurationSource.Convention);
+                field.InternalBuilder.Argument(parameter, ConfigurationSource.Convention);
             }
 
-            return field.Builder;
+            return field.InternalBuilder;
         }
 
         private bool Ignore(FieldDefinition field, ConfigurationSource configurationSource)

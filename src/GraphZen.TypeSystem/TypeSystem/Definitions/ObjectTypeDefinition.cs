@@ -28,14 +28,18 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource) :
             base(identity, schema, configurationSource)
         {
-            Builder = new InternalObjectTypeBuilder(this);
+            InternalBuilder = new InternalObjectTypeBuilder(this);
+            Builder = new ObjectTypeBuilder(InternalBuilder);
         }
 
         public override IEnumerable<IMemberDefinition> Children() => GetFields();
 
         private string DebuggerDisplay => $"type {Name}";
-        internal new InternalObjectTypeBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        internal new InternalObjectTypeBuilder InternalBuilder { get; }
+        public new ObjectTypeBuilder Builder { get; }
+        protected override INamedTypeBuilder GetBuilder() => Builder;
+
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
         public IsTypeOf<object, GraphQLContext>? IsTypeOf { get; set; }
 
         public IEnumerable<InterfaceTypeDefinition> GetInterfaces() => _interfaces;

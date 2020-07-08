@@ -12,5 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IUnionTypeDefinition, IMutableNamedTypeDefinition, IMutableAbstractTypeDefinition,
         IMutableMemberTypesDefinition
     {
+        new UnionTypeBuilder Builder { get; }
     }
 }

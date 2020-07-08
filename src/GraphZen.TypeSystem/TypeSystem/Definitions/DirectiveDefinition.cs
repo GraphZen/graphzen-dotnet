@@ -82,21 +82,23 @@ namespace GraphZen.TypeSystem
             }
 
             Name = Check.NotNull(name, nameof(name));
-            Builder = new InternalDirectiveBuilder(this);
+            InternalBuilder = new InternalDirectiveBuilder(this);
+            Builder = new DirectiveBuilder(InternalBuilder);
             IsSpec = Name.IsSpecDirective();
             _args = new ArgumentsDefinition(this);
         }
 
 
-        internal new InternalDirectiveBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        public DirectiveBuilder Builder {get;}
+        internal new InternalDirectiveBuilder InternalBuilder { get; }
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
         private string DebuggerDisplay => $"directive {Name}";
 
         public override SchemaDefinition Schema { get; }
         public IEnumerable<IMemberDefinition> Children() => GetArguments();
 
-        InternalDirectiveBuilder IInfrastructure<InternalDirectiveBuilder>.Instance => Builder;
+        InternalDirectiveBuilder IInfrastructure<InternalDirectiveBuilder>.Instance => InternalBuilder;
 
         public string Name { get; private set; }
 
@@ -114,7 +116,7 @@ namespace GraphZen.TypeSystem
 
             if (Name != name)
             {
-                Builder.Schema.RenameDirective(this, name, configurationSource);
+                InternalBuilder.Schema.RenameDirective(this, name, configurationSource);
             }
 
             Name = name;

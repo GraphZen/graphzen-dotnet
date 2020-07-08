@@ -44,12 +44,12 @@ namespace GraphZen.TypeSystem
         public SchemaDefinition() : base(ConfigurationSource.Convention)
 
         {
-            Builder = new InternalSchemaBuilder(this);
+            InternalBuilder = new InternalSchemaBuilder(this);
         }
 
         private string DebuggerDisplay { [UsedImplicitly] get; } = "schema";
-        internal new InternalSchemaBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        internal new InternalSchemaBuilder InternalBuilder { get; }
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
         public IReadOnlyCollection<NamedTypeDefinition> Types => _types.Values;
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Schema;
@@ -578,7 +578,7 @@ namespace GraphZen.TypeSystem
             var undefined = GetFirstUndefinedTypeReference();
             while (undefined != null)
             {
-                var def = Builder.DefineType(undefined);
+                var def = InternalBuilder.DefineType(undefined);
                 if (def == null || !undefined.Update(def.Identity, undefined.TypeSyntax, def.GetConfigurationSource()))
                 {
                     throw new Exception($"Unable to define type for type reference {undefined}");

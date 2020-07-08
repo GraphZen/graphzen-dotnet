@@ -35,7 +35,7 @@ namespace GraphZen.CodeGen.Generators
 
                         region.AppendLine($@"
  public IEnumerable<{config.TypeName}Builder> Get{kind}s(bool includeSpec{kind}s = false) =>
-            Builder.Definition.Get{kind}s(includeSpec{kind}s).Select(_ => new {config.TypeName}Builder(_.Builder));
+            Builder.Definition.Get{kind}s(includeSpec{kind}s).Select(_ => _.Builder);
 
 ");
                     }

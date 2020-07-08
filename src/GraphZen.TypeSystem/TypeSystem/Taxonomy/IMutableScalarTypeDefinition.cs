@@ -16,5 +16,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMutableLiteralParserDefinition
 
     {
+        new ScalarTypeBuilder Builder { get; }
     }
 }

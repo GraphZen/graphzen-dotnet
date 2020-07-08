@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalUnionTypeBuilder IncludesType(string objectType,
             ConfigurationSource configurationSource)
         {
-            var obj = Schema.Builder.Object(objectType, configurationSource)?.Definition;
+            var obj = Schema.InternalBuilder.Object(objectType, configurationSource)?.Definition;
             if (obj != null)
             {
                 Definition.AddType(obj);
@@ -40,7 +40,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalUnionTypeBuilder IncludesType(Type clrType,
             ConfigurationSource configurationSource)
         {
-            var objectType = Schema.Builder.Object(clrType, configurationSource)?.Definition;
+            var objectType = Schema.InternalBuilder.Object(clrType, configurationSource)?.Definition;
             if (objectType != null)
             {
                 Definition.AddType(objectType);
@@ -85,7 +85,7 @@ namespace GraphZen.TypeSystem.Internal
             var implementingTypes = clrType.GetImplementingTypes().Where(_ => !_.IsAbstract);
             foreach (var implementingType in implementingTypes)
             {
-                var memberType = Schema.Builder.Object(implementingType, ConfigurationSource.Convention)?.Definition;
+                var memberType = Schema.InternalBuilder.Object(implementingType, ConfigurationSource.Convention)?.Definition;
                 if (memberType != null)
                 {
                     Definition.AddType(memberType);

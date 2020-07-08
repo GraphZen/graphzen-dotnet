@@ -166,7 +166,7 @@ namespace GraphZen.TypeSystem
                 fieldTypeIdentity, typeNode,
                 Schema, this, configurationSource, propertyInfo);
 
-            var fb = field.Builder;
+            var fb = field.InternalBuilder;
             try
             {
                 var getter = propertyInfo.GetGetMethod();
@@ -233,7 +233,7 @@ namespace GraphZen.TypeSystem
             if (field != null)
             {
                 field.UpdateConfigurationSource(configurationSource);
-                field?.Builder.FieldType(clrType, configurationSource);
+                field?.InternalBuilder.FieldType(clrType, configurationSource);
                 return field;
             }
 
@@ -268,14 +268,14 @@ namespace GraphZen.TypeSystem
             if (field != null)
             {
                 field.UpdateConfigurationSource(configurationSource);
-                field?.Builder.FieldType(type, configurationSource);
+                field?.InternalBuilder.FieldType(type, configurationSource);
                 return field;
             }
 
             TypeSyntax typeNode;
             try
             {
-                typeNode = Schema.Builder.Parser.ParseType(type);
+                typeNode = Schema.InternalBuilder.Parser.ParseType(type);
             }
             catch (Exception e)
             {

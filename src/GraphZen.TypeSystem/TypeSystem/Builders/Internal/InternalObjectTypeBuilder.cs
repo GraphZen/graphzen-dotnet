@@ -51,7 +51,7 @@ namespace GraphZen.TypeSystem.Internal
                 return false;
             }
 
-            var interfaceRef = Schema.Builder.Interface(clrType, configurationSource)?.Definition;
+            var interfaceRef = Schema.InternalBuilder.Interface(clrType, configurationSource)?.Definition;
             if (interfaceRef != null)
             {
                 Definition.AddInterface(interfaceRef, configurationSource);
@@ -92,7 +92,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (clrType.BaseType != null && clrType.BaseType.IsAbstract)
             {
-                Schema.Builder.Union(clrType.BaseType, ConfigurationSource.Convention);
+                Schema.InternalBuilder.Union(clrType.BaseType, ConfigurationSource.Convention);
             }
 
             ConfigureOutputFields();
@@ -110,11 +110,11 @@ namespace GraphZen.TypeSystem.Internal
             {
                 if (@interface.GetCustomAttribute<GraphQLUnionAttribute>() != null)
                 {
-                    Schema.Builder.Union(@interface, ConfigurationSource.DataAnnotation);
+                    Schema.InternalBuilder.Union(@interface, ConfigurationSource.DataAnnotation);
                 }
                 else
                 {
-                    Definition.Builder.ImplementsInterface(@interface, ConfigurationSource.Convention);
+                    Definition.InternalBuilder.ImplementsInterface(@interface, ConfigurationSource.Convention);
                 }
             }
 
@@ -125,7 +125,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalObjectTypeBuilder ImplementsInterface(string interfaceType,
             ConfigurationSource configurationSource)
         {
-            var interfaceRef = Schema.Builder.Interface(interfaceType, configurationSource)?.Definition;
+            var interfaceRef = Schema.InternalBuilder.Interface(interfaceType, configurationSource)?.Definition;
             if (interfaceRef != null)
             {
                 Definition.AddInterface(interfaceRef, configurationSource);

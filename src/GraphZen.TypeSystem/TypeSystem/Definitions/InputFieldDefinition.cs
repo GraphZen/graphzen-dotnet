@@ -33,11 +33,11 @@ namespace GraphZen.TypeSystem
                     .CannotCreateInputFieldWithInvalidName(this, name));
             }
 
-            Builder = new InternalInputFieldBuilder(this);
+            InternalBuilder = new InternalInputFieldBuilder(this);
         }
 
-        internal new InternalInputFieldBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        internal new InternalInputFieldBuilder InternalBuilder { get; }
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
         private string DebuggerDisplay => ToString();
 

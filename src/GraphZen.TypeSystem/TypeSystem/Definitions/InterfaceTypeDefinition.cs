@@ -22,7 +22,8 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource) : base(
             identity, schema, configurationSource)
         {
-            Builder = new InternalInterfaceTypeBuilder(this);
+            InternalBuilder = new InternalInterfaceTypeBuilder(this);
+            Builder = new InterfaceTypeBuilder(InternalBuilder);
             if (identity.ClrType != null && !identity.ClrType.IsInterface)
             {
                 throw new InvalidOperationException(
@@ -33,7 +34,10 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"interface {Name}";
 
 
-        internal new InternalInterfaceTypeBuilder Builder { get; }
+        internal new InternalInterfaceTypeBuilder InternalBuilder { get; }
+
+        public new InterfaceTypeBuilder Builder { get; }
+        protected override INamedTypeBuilder GetBuilder() => Builder;
 
         public override IEnumerable<IMemberDefinition> Children() => GetFields();
 
@@ -54,6 +58,6 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Interface;
 
         public override TypeKind Kind { get; } = TypeKind.Interface;
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
     }
 }

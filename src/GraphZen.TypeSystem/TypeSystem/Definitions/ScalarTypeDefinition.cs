@@ -20,7 +20,8 @@ namespace GraphZen.TypeSystem
             ConfigurationSource configurationSource)
             : base(identity, schema, configurationSource)
         {
-            Builder = new InternalScalarTypeBuilder(this);
+            InternalBuilder = new InternalScalarTypeBuilder(this);
+            Builder = new ScalarTypeBuilder(InternalBuilder);
         }
 
         public override IEnumerable<IMemberDefinition> Children()
@@ -31,8 +32,11 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"scalar {Name}";
 
 
-        internal new InternalScalarTypeBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        internal new InternalScalarTypeBuilder InternalBuilder { get; }
+        public new ScalarTypeBuilder Builder { get; }
+        protected override INamedTypeBuilder GetBuilder() => Builder;
+
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
         public LeafSerializer<object>? Serializer { get; set; }
 

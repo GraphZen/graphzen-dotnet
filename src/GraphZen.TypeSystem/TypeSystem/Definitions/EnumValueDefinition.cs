@@ -35,13 +35,13 @@ namespace GraphZen.TypeSystem
             _nameConfigurationSource = nameConfigurationSource;
             DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
             Value = Name = Check.NotNull(name, nameof(name));
-            Builder = new InternalEnumValueBuilder(this);
+            InternalBuilder = new InternalEnumValueBuilder(this);
         }
 
         private string DebuggerDisplay => $"enum value {Name}";
 
-        internal new InternalEnumValueBuilder Builder { get; }
-        protected override MemberDefinitionBuilder GetBuilder() => Builder;
+        internal new InternalEnumValueBuilder InternalBuilder { get; }
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
         public override SchemaDefinition Schema { get; }
 

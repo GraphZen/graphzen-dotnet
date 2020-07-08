@@ -15,5 +15,6 @@ namespace GraphZen.TypeSystem.Taxonomy
         IMutableInterfacesDefinition
     {
         new IsTypeOf<object, GraphQLContext>? IsTypeOf { get; }
+        new ObjectTypeBuilder Builder { get; }
     }
 }

@@ -221,10 +221,10 @@ namespace GraphZen.TypeSystem.Internal
                 unionType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != unionType.ClrType)
                 {
-                    unionType.Builder.ClrType(id.ClrType, false, ConfigurationSource.Explicit);
+                    unionType.InternalBuilder.ClrType(id.ClrType, false, ConfigurationSource.Explicit);
                 }
 
-                return unionType.Builder;
+                return unionType.InternalBuilder;
             }
 
             if (type is null)
@@ -241,7 +241,7 @@ namespace GraphZen.TypeSystem.Internal
                 throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Union, id, type));
             }
 
-            return unionType.Builder;
+            return unionType.InternalBuilder;
         }
 
         private void OnUnionAdded(UnionTypeDefinition unionType)
@@ -249,7 +249,7 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = unionType.ClrType;
             if (clrType != null)
             {
-                unionType.Builder.ConfigureFromClrType();
+                unionType.InternalBuilder.ConfigureFromClrType();
             }
         }
 
@@ -292,10 +292,10 @@ namespace GraphZen.TypeSystem.Internal
                 scalarType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
                 {
-                    scalarType.Builder.ClrType(id.ClrType, false, configurationSource);
+                    scalarType.InternalBuilder.ClrType(id.ClrType, false, configurationSource);
                 }
 
-                return scalarType.Builder;
+                return scalarType.InternalBuilder;
             }
 
             if (type is null)
@@ -312,7 +312,7 @@ namespace GraphZen.TypeSystem.Internal
                 throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Scalar, id, type));
             }
 
-            return scalarType.Builder;
+            return scalarType.InternalBuilder;
         }
 
         private void OnScalarAdded(ScalarTypeDefinition scalarType)
@@ -320,7 +320,7 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = scalarType.ClrType;
             if (clrType != null)
             {
-                scalarType.Builder.ConfigureFromClrType();
+                scalarType.InternalBuilder.ConfigureFromClrType();
             }
         }
 
@@ -368,10 +368,10 @@ namespace GraphZen.TypeSystem.Internal
                 interfaceType.UpdateConfigurationSource(configurationSource);
                 if (type.ClrType != id.ClrType && id.ClrType != null)
                 {
-                    interfaceType.Builder.ClrType(id.ClrType, false, configurationSource);
+                    interfaceType.InternalBuilder.ClrType(id.ClrType, false, configurationSource);
                 }
 
-                return interfaceType.Builder;
+                return interfaceType.InternalBuilder;
             }
 
             if (type is null)
@@ -391,7 +391,7 @@ namespace GraphZen.TypeSystem.Internal
                 throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Interface, id, type));
             }
 
-            return interfaceType.Builder;
+            return interfaceType.InternalBuilder;
         }
 
 
@@ -400,7 +400,7 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = interfaceType.ClrType;
             if (clrType != null)
             {
-                interfaceType.Builder.ConfigureInterfaceFromClrType();
+                interfaceType.InternalBuilder.ConfigureInterfaceFromClrType();
             }
         }
 
@@ -445,10 +445,10 @@ namespace GraphZen.TypeSystem.Internal
                 enumType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
                 {
-                    enumType.Builder.ClrType(id.ClrType, false, ConfigurationSource.Explicit);
+                    enumType.InternalBuilder.ClrType(id.ClrType, false, ConfigurationSource.Explicit);
                 }
 
-                return enumType.Builder;
+                return enumType.InternalBuilder;
             }
 
             if (type is null)
@@ -464,7 +464,7 @@ namespace GraphZen.TypeSystem.Internal
                 throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Enum, id, type));
             }
 
-            return enumType.Builder;
+            return enumType.InternalBuilder;
         }
 
         private void OnEnumAdded(EnumTypeDefinition enumType)
@@ -472,7 +472,7 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = enumType.ClrType;
             if (clrType != null)
             {
-                enumType.Builder.ConfigureEnumFromClrType();
+                enumType.InternalBuilder.ConfigureEnumFromClrType();
             }
         }
 
@@ -524,10 +524,10 @@ namespace GraphZen.TypeSystem.Internal
                 inputType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
                 {
-                    inputType.Builder.ClrType(id.ClrType, false, configurationSource);
+                    inputType.InternalBuilder.ClrType(id.ClrType, false, configurationSource);
                 }
 
-                return inputType.Builder;
+                return inputType.InternalBuilder;
             }
 
             if (type is null)
@@ -544,7 +544,7 @@ namespace GraphZen.TypeSystem.Internal
                 throw new InvalidOperationException(InvalidTypeAddition(TypeKind.InputObject, id, type));
             }
 
-            return inputType.Builder;
+            return inputType.InternalBuilder;
         }
 
         private void OnInputObjectAdded(InputObjectTypeDefinition inputType)
@@ -552,7 +552,7 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = inputType.ClrType;
             if (clrType != null)
             {
-                inputType.Builder.ConfigureFromClrType();
+                inputType.InternalBuilder.ConfigureFromClrType();
             }
         }
 
@@ -657,10 +657,10 @@ namespace GraphZen.TypeSystem.Internal
                 objectType.UpdateConfigurationSource(configurationSource);
                 if (objectType.ClrType != id.ClrType && id.ClrType != null)
                 {
-                    objectType.Builder.ClrType(id.ClrType, false, configurationSource);
+                    objectType.InternalBuilder.ClrType(id.ClrType, false, configurationSource);
                 }
 
-                return objectType.Builder;
+                return objectType.InternalBuilder;
             }
 
             if (type is null)
@@ -677,7 +677,7 @@ namespace GraphZen.TypeSystem.Internal
                 throw new InvalidOperationException(InvalidTypeAddition(TypeKind.Object, id, type));
             }
 
-            return objectType.Builder;
+            return objectType.InternalBuilder;
         }
 
         public InternalDirectiveBuilder? Directive(Type clrType, string name, ConfigurationSource configurationSource)
@@ -720,7 +720,7 @@ namespace GraphZen.TypeSystem.Internal
             if (directive != null)
             {
                 directive.UpdateConfigurationSource(configurationSource);
-                return directive.Builder;
+                return directive.InternalBuilder;
             }
 
             Definition.UnignoreDirective(name, configurationSource);
@@ -728,7 +728,7 @@ namespace GraphZen.TypeSystem.Internal
 
             OnDirectiveAdded(directive);
 
-            return directive.Builder;
+            return directive.InternalBuilder;
         }
 
         public InternalDirectiveBuilder? Directive(Type clrType, ConfigurationSource configurationSource)
@@ -762,7 +762,7 @@ namespace GraphZen.TypeSystem.Internal
                     directive.SetClrType(clrType, false, configurationSource);
                 }
 
-                return directive.Builder;
+                return directive.InternalBuilder;
             }
 
             Definition.UnignoreDirective(clrType, configurationSource);
@@ -770,7 +770,7 @@ namespace GraphZen.TypeSystem.Internal
 
             OnDirectiveAdded(directive);
 
-            return directive.Builder;
+            return directive.InternalBuilder;
         }
 
         // ReSharper disable once UnusedParameter.Local
@@ -783,7 +783,7 @@ namespace GraphZen.TypeSystem.Internal
             var clrType = objectType.ClrType;
             if (clrType != null)
             {
-                objectType.Builder.ConfigureObjectFromClrType();
+                objectType.InternalBuilder.ConfigureObjectFromClrType();
             }
 
             if (objectType.Name == "Query")
@@ -970,7 +970,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 foreach (var annotable in Definition.DescendantsAndSelf().OfType<AnnotatableMemberDefinition>())
                 {
-                    annotable.Builder.RemoveDirectiveAnnotations(definition.Name, configurationSource);
+                    annotable.InternalBuilder.RemoveDirectiveAnnotations(definition.Name, configurationSource);
                 }
             }
 

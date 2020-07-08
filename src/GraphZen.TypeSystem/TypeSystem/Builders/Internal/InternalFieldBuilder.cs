@@ -54,13 +54,13 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public InternalArgumentBuilder? Argument(string name, string type, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddArgument(name, type, configurationSource)?.Builder;
+            Definition.GetOrAddArgument(name, type, configurationSource)?.InternalBuilder;
 
         public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddArgument(name, clrType, configurationSource)?.Builder;
+            Definition.GetOrAddArgument(name, clrType, configurationSource)?.InternalBuilder;
 
         public InternalArgumentBuilder Argument(string name) =>
-            Definition.FindArgument(name)?.Builder ?? throw new ItemNotFoundException("TODO");
+            Definition.FindArgument(name)?.InternalBuilder ?? throw new ItemNotFoundException("TODO");
 
         public InternalArgumentBuilder? Argument(ParameterInfo parameter,
             ConfigurationSource configurationSource)
@@ -79,7 +79,7 @@ namespace GraphZen.TypeSystem.Internal
 
             if (parameter.TryGetGraphQLTypeInfo(out _, out var innerClrType))
             {
-                var argumentInnerType = Schema.Builder.InputType(innerClrType, configurationSource);
+                var argumentInnerType = Schema.InternalBuilder.InputType(innerClrType, configurationSource);
                 if (argumentInnerType == null)
                 {
                     IgnoreArgument(parameter, ConfigurationSource.Convention);
@@ -108,10 +108,10 @@ namespace GraphZen.TypeSystem.Internal
 
             if (parameter.TryGetDescriptionFromDataAnnotation(out var desc))
             {
-                argument.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+                argument.InternalBuilder.Description(desc, ConfigurationSource.DataAnnotation);
             }
 
-            return argument.Builder;
+            return argument.InternalBuilder;
         }
 
         public bool IsArgumentIgnored(string name, ConfigurationSource configurationSource)

@@ -2,6 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -30,10 +31,12 @@ namespace GraphZen.TypeSystem
 
         public SchemaBuilder(SchemaDefinition schema)
         {
-            Builder = schema.Builder;
+            Builder = schema.InternalBuilder;
         }
 
         private InternalSchemaBuilder Builder { get; }
+
+        public IEnumerable<INamedTypeBuilder> GetTypes(bool includeSpecTypes = false) => throw new NotImplementedException();
 
         public ScalarTypeBuilder<object, ValueSyntax> Scalar(string name) =>
             new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(name, nameof(name)),
