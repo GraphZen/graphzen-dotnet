@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
@@ -63,8 +62,7 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) =>
-            includeSpecEnums ? Enums : Enums.Where(_ => !_.IsSpec);
+        public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw new NotImplementedException();
 
         [GraphQLIgnore]
         IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) =>
