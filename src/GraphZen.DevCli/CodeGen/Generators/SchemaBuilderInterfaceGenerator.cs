@@ -15,6 +15,7 @@ namespace GraphZen.CodeGen.Generators
 {
     public class EnumerableBuilderExtensionsGenerator : PartialTypeGenerator
     {
+
         public EnumerableBuilderExtensionsGenerator() : base(typeof(EnumerableBuilderExtensions))
         {
         }
@@ -26,7 +27,7 @@ namespace GraphZen.CodeGen.Generators
                 csharp.AppendLine($@"
     public static IEnumerable<{config.TypeName}Builder> Where(this IEnumerable<{config.TypeName}Builder> source,
             Func<I{config.TypeName}Definition, bool> predicate) =>
-            source.Where(_=> predicate(_.GetInfrastructure<{config.TypeName}Definition>()));
+            Enumerable.Where(source, _=> predicate(_.GetInfrastructure<{config.TypeName}Definition>()));
 
 ");
 

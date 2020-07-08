@@ -11,10 +11,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public static class EnumerableBuilderExtensions
+    public static partial class EnumerableBuilderExtensions
     {
-        public static IEnumerable<ObjectTypeBuilder> Where(this IEnumerable<ObjectTypeBuilder> source,
-            Func<IObjectTypeDefinition, bool> predicate) =>
-            source.Where(builder => predicate(builder.GetInfrastructure<ObjectTypeDefinition>()));
+
     }
 }
