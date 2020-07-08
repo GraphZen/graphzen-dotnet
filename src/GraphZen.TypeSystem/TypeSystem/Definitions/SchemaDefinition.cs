@@ -150,10 +150,6 @@ namespace GraphZen.TypeSystem
             _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
 
 
-
-
-
-
         IObjectTypeDefinition? IQueryTypeDefinition.QueryType => QueryType;
 
         IObjectTypeDefinition? IMutationTypeDefinition.MutationType => MutationType;
@@ -451,31 +447,11 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public T? FindType<T>(TypeIdentity identity) where T : NamedTypeDefinition
-        {
-            Check.NotNull(identity, nameof(identity));
-
-            var type = FindType(identity);
-
-            if (type != null)
-            {
-                if (type is T requested)
-                {
-                    return requested;
-                }
-
-                throw new Exception(
-                    $"Expected type \"{type.Name}\" to be of type \"{typeof(T).Name}\", but instead found a  type of \"{type.GetType().Name}\" ");
-            }
-
-            return null!;
-        }
-
 
         public NamedTypeDefinition? FindType(TypeIdentity identity) => TryGetType(identity, out var type) ? type : null;
 
 
-        public bool TryGetType(TypeIdentity identity, [NotNullWhen(true)] out NamedTypeDefinition? type) =>
+        private bool TryGetType(TypeIdentity identity, [NotNullWhen(true)] out NamedTypeDefinition? type) =>
             _types.TryGetValue(identity, out type);
 
         public NamedTypeDefinition? FindType(string name) => FindTypeIdentity(name)?.Definition;
