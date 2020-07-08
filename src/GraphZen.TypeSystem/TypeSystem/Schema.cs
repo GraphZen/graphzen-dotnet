@@ -275,21 +275,21 @@ namespace GraphZen.TypeSystem
             switch (typeSyntax)
             {
                 case ListTypeSyntax listNode:
-                {
-                    var innerType = GetTypeFromAst(listNode.OfType);
-                    return innerType != null ? ListType.Of(innerType) : null;
-                }
-                case NonNullTypeSyntax nnNode:
-                {
-                    var innerType = GetTypeFromAst(nnNode.OfType);
-                    switch (innerType)
                     {
-                        case null:
-                            return null;
-                        case INullableType nullable:
-                            return NonNullType.Of(nullable);
+                        var innerType = GetTypeFromAst(listNode.OfType);
+                        return innerType != null ? ListType.Of(innerType) : null;
                     }
-                }
+                case NonNullTypeSyntax nnNode:
+                    {
+                        var innerType = GetTypeFromAst(nnNode.OfType);
+                        switch (innerType)
+                        {
+                            case null:
+                                return null;
+                            case INullableType nullable:
+                                return NonNullType.Of(nullable);
+                        }
+                    }
                     break;
                 case NamedTypeSyntax namedTypeNode:
                     return Types.TryGetValue(namedTypeNode.Name.Value, out var result) ? result : null;
@@ -333,7 +333,7 @@ namespace GraphZen.TypeSystem
                     case ListTypeSyntax list:
                         return ListType.Of(GetType(list.OfType));
                     case NonNullTypeSyntax nn:
-                        return NonNullType.Of((INullableType) GetType(nn.OfType));
+                        return NonNullType.Of((INullableType)GetType(nn.OfType));
                     case NamedTypeSyntax _:
                         var nameMatch = FindType(reference.Identity.Name);
                         if (nameMatch != null)

@@ -4,8 +4,11 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 
@@ -49,6 +52,13 @@ namespace GraphZen.TypeSystem
 
         public bool HasEnum(string name) => HasType<EnumTypeDefinition>(Check.NotNull(name, nameof(name)));
 
+        public IEnumerable<EnumTypeDefinition> GetEnums(bool includeSpecEnums = false) => includeSpecEnums
+            ? Types.OfType<EnumTypeDefinition>()
+            : Types.OfType<EnumTypeDefinition>().Where(_ => !_.IsSpec);
+
+        IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) =>
+            GetEnums(includeSpecEnums);
+
         #endregion
 
         #region InputObject type accessors
@@ -86,6 +96,14 @@ namespace GraphZen.TypeSystem
         public bool HasInputObject(string name) =>
             HasType<InputObjectTypeDefinition>(Check.NotNull(name, nameof(name)));
 
+        public IEnumerable<InputObjectTypeDefinition> GetInputObjects(bool includeSpecInputObjects = false) =>
+            includeSpecInputObjects
+                ? Types.OfType<InputObjectTypeDefinition>()
+                : Types.OfType<InputObjectTypeDefinition>().Where(_ => !_.IsSpec);
+
+        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.
+            GetInputObjects(bool includeSpecInputObjects) => GetInputObjects(includeSpecInputObjects);
+
         #endregion
 
         #region Interface type accessors
@@ -121,6 +139,14 @@ namespace GraphZen.TypeSystem
 
         public bool HasInterface(string name) => HasType<InterfaceTypeDefinition>(Check.NotNull(name, nameof(name)));
 
+        public IEnumerable<InterfaceTypeDefinition> GetInterfaces(bool includeSpecInterfaces = false) =>
+            includeSpecInterfaces
+                ? Types.OfType<InterfaceTypeDefinition>()
+                : Types.OfType<InterfaceTypeDefinition>().Where(_ => !_.IsSpec);
+
+        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces(bool includeSpecInterfaces) =>
+            GetInterfaces(includeSpecInterfaces);
+
         #endregion
 
         #region Object type accessors
@@ -153,6 +179,13 @@ namespace GraphZen.TypeSystem
         public bool HasObject<TClrType>() => HasType<ObjectTypeDefinition>(typeof(TClrType));
 
         public bool HasObject(string name) => HasType<ObjectTypeDefinition>(Check.NotNull(name, nameof(name)));
+
+        public IEnumerable<ObjectTypeDefinition> GetObjects(bool includeSpecObjects = false) => includeSpecObjects
+            ? Types.OfType<ObjectTypeDefinition>()
+            : Types.OfType<ObjectTypeDefinition>().Where(_ => !_.IsSpec);
+
+        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecObjects) =>
+            GetObjects(includeSpecObjects);
 
         #endregion
 
@@ -187,6 +220,13 @@ namespace GraphZen.TypeSystem
 
         public bool HasScalar(string name) => HasType<ScalarTypeDefinition>(Check.NotNull(name, nameof(name)));
 
+        public IEnumerable<ScalarTypeDefinition> GetScalars(bool includeSpecScalars = false) => includeSpecScalars
+            ? Types.OfType<ScalarTypeDefinition>()
+            : Types.OfType<ScalarTypeDefinition>().Where(_ => !_.IsSpec);
+
+        IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars(bool includeSpecScalars) =>
+            GetScalars(includeSpecScalars);
+
         #endregion
 
         #region Union type accessors
@@ -219,6 +259,13 @@ namespace GraphZen.TypeSystem
         public bool HasUnion<TClrType>() => HasType<UnionTypeDefinition>(typeof(TClrType));
 
         public bool HasUnion(string name) => HasType<UnionTypeDefinition>(Check.NotNull(name, nameof(name)));
+
+        public IEnumerable<UnionTypeDefinition> GetUnions(bool includeSpecUnions = false) => includeSpecUnions
+            ? Types.OfType<UnionTypeDefinition>()
+            : Types.OfType<UnionTypeDefinition>().Where(_ => !_.IsSpec);
+
+        IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions(bool includeSpecUnions) =>
+            GetUnions(includeSpecUnions);
 
         #endregion
 
@@ -270,4 +317,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 18097567824353591129
+// Source Hash Code: 17037223998941350511
