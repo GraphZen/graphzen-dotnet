@@ -68,7 +68,7 @@ public {type} Get{kind}(string name) => GetType<{type}>(name);
 
 
 [GraphQLIgnore]        
-public IEnumerable<{type}> Get{kind}s(bool includeSpec{kind}s = false) => throw new NotImplementedException();
+public IEnumerable<{type}> Get{kind}s(bool includeSpec{kind}s = false) => includeSpec{kind}s ? Enums : Enums.Where(_ => !_.IsSpec);
 
 [GraphQLIgnore]
 IEnumerable<I{type}Definition> I{type}sDefinition.Get{kind}s(bool includeSpec{kind}s) => Get{kind}s(includeSpec{kind}s);

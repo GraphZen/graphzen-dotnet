@@ -6,10 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable once PossibleInterfaceMemberAmbiguity
@@ -63,7 +63,8 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw new NotImplementedException();
+        public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) =>
+            includeSpecEnums ? Enums : Enums.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
         IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) =>
@@ -382,4 +383,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 234052644407941367
+// Source Hash Code: 13035419999577403176
