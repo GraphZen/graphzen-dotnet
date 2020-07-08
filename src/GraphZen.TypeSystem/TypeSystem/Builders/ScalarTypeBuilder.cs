@@ -13,7 +13,7 @@ namespace GraphZen.TypeSystem
 {
     public class ScalarTypeBuilder : IScalarTypeBuilder
     {
-        protected ScalarTypeBuilder(InternalScalarTypeBuilder builder)
+        public ScalarTypeBuilder(InternalScalarTypeBuilder builder)
         {
             Builder = builder;
         }

@@ -2,9 +2,7 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
@@ -171,9 +169,5 @@ namespace GraphZen.TypeSystem
         InternalSchemaBuilder IInfrastructure<InternalSchemaBuilder>.Instance => Builder;
 
         SchemaDefinition IInfrastructure<SchemaDefinition>.Instance => Builder.Definition;
-
-
-        public IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpecTypes = false) =>
-            Builder.Definition.GetObjects(includeSpecTypes).Select(_ => new ObjectTypeBuilder(_.Builder));
     }
 }

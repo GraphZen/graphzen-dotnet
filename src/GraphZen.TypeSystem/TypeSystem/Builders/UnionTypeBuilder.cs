@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem
 {
     public class UnionTypeBuilder : IUnionTypeBuilder
     {
-        protected UnionTypeBuilder(InternalUnionTypeBuilder builder)
+        public UnionTypeBuilder(InternalUnionTypeBuilder builder)
         {
             Builder = builder;
         }

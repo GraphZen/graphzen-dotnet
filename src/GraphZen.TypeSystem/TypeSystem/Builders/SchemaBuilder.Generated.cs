@@ -22,6 +22,10 @@ namespace GraphZen.TypeSystem
 
         #region Directives
 
+        public IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpecDirectives = false) =>
+            Builder.Definition.GetDirectives(includeSpecDirectives).Select(_ => new DirectiveBuilder(_.Builder));
+
+
         public DirectiveBuilder<object> Directive(string name)
         {
             Check.NotNull(name, nameof(name));
@@ -63,9 +67,6 @@ namespace GraphZen.TypeSystem
             var builder = new DirectiveBuilder<object>(internalBuilder);
             return builder;
         }
-
-        public IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpecDirectives = false) =>
-            Builder.Definition.GetDirectives(includeSpecDirectives).Select(_ => new DirectiveBuilder(_.Builder));
 
 
         public SchemaBuilder<TContext> UnignoreDirective<TDirective>() where TDirective : notnull
@@ -198,6 +199,10 @@ namespace GraphZen.TypeSystem
 
         #region Objects
 
+        public IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpecObjects = false) =>
+            Builder.Definition.GetObjects(includeSpecObjects).Select(_ => new ObjectTypeBuilder(_.Builder));
+
+
         public ObjectTypeBuilder<object, TContext> Object(string name)
         {
             Check.NotNull(name, nameof(name));
@@ -300,11 +305,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpecUnions = false) => throw new NotImplementedException();
-
         #endregion
 
         #region Unions
+
+        public IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpecUnions = false) =>
+            Builder.Definition.GetUnions(includeSpecUnions).Select(_ => new UnionTypeBuilder(_.Builder));
+
 
         public UnionTypeBuilder<object, TContext> Union(string name)
         {
@@ -408,11 +415,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpecScalars = false) => throw new NotImplementedException();
-
         #endregion
 
         #region Scalars
+
+        public IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpecScalars = false) =>
+            Builder.Definition.GetScalars(includeSpecScalars).Select(_ => new ScalarTypeBuilder(_.Builder));
+
 
         public SchemaBuilder<TContext> UnignoreScalar<TScalar>() where TScalar : notnull
         {
@@ -479,6 +488,10 @@ namespace GraphZen.TypeSystem
 
         #region Enums
 
+        public IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpecEnums = false) =>
+            Builder.Definition.GetEnums(includeSpecEnums).Select(_ => new EnumTypeBuilder(_.Builder));
+
+
         public EnumTypeBuilder<string> Enum(string name)
         {
             Check.NotNull(name, nameof(name));
@@ -520,9 +533,6 @@ namespace GraphZen.TypeSystem
             var builder = new EnumTypeBuilder<string>(internalBuilder);
             return builder;
         }
-
-        public IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpecEnums = false) =>
-            Builder.Definition.GetEnums(includeSpecEnums).Select(_ => new EnumTypeBuilder(_.Builder));
 
 
         public SchemaBuilder<TContext> UnignoreEnum<TEnum>() where TEnum : notnull
@@ -586,11 +596,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpecInterfaces = false) => throw new NotImplementedException();
-
         #endregion
 
         #region Interfaces
+
+        public IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpecInterfaces = false) =>
+            Builder.Definition.GetInterfaces(includeSpecInterfaces).Select(_ => new InterfaceTypeBuilder(_.Builder));
+
 
         public InterfaceTypeBuilder<object, TContext> Interface(string name)
         {
@@ -698,6 +710,11 @@ namespace GraphZen.TypeSystem
 
         #region InputObjects
 
+        public IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpecInputObjects = false) =>
+            Builder.Definition.GetInputObjects(includeSpecInputObjects)
+                .Select(_ => new InputObjectTypeBuilder(_.Builder));
+
+
         public InputObjectTypeBuilder<object> InputObject(string name)
         {
             Check.NotNull(name, nameof(name));
@@ -739,10 +756,6 @@ namespace GraphZen.TypeSystem
             var builder = new InputObjectTypeBuilder<object>(internalBuilder);
             return builder;
         }
-
-        public IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpecInputObjects = false) =>
-            Builder.Definition.GetInputObjects(includeSpecInputObjects)
-                .Select(_ => new InputObjectTypeBuilder(_.Builder));
 
 
         public SchemaBuilder<TContext> UnignoreInputObject<TInputObject>() where TInputObject : notnull
@@ -811,4 +824,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 14172732363827360952
+// Source Hash Code: 7923490702767696174

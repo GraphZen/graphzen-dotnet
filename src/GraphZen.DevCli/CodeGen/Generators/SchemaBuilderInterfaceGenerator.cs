@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -14,7 +13,6 @@ using static GraphZen.TypeSystem.TypeKind;
 
 namespace GraphZen.CodeGen.Generators
 {
-
     public class EnumerableBuilderExtensionsGenerator : PartialTypeGenerator
     {
         public EnumerableBuilderExtensionsGenerator() : base(typeof(EnumerableBuilderExtensions))
@@ -23,6 +21,16 @@ namespace GraphZen.CodeGen.Generators
 
         public override void Apply(StringBuilder csharp)
         {
+            foreach (var (kind, config) in SchemaBuilderInterfaceGenerator.Kinds)
+            {
+                csharp.AppendLine($@"
+    public static IEnumerable<{config.TypeName}Builder> Where(this IEnumerable<{config.TypeName}Builder> source,
+            Func<I{config.TypeName}Definition, bool> predicate) =>
+            source.Where(_=> predicate(_.GetInfrastructure<{config.TypeName}Definition>()));
+
+");
+
+            }
         }
     }
 
@@ -43,7 +51,7 @@ namespace GraphZen.CodeGen.Generators
                     "Type", new KindConfig {TypeParamName = "ClrType"}
                 },
                 {
-                    nameof(TypeKind.Object),
+                    nameof(Object),
                     new KindConfig {TypeName = nameof(ObjectType), ContextBuilder = true}
                 },
                 {
@@ -55,7 +63,7 @@ namespace GraphZen.CodeGen.Generators
                     new KindConfig {TypeName = nameof(ScalarType)}
                 },
                 {
-                    nameof(TypeKind.Enum),
+                    nameof(Enum),
                     new KindConfig {TypeName = nameof(EnumType), SimpleBuilder = true, DefaultTypeName = "string"}
                 },
                 {

@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem
 {
     public class InterfaceTypeBuilder : IInterfaceTypeBuilder
     {
-        protected InterfaceTypeBuilder(InternalInterfaceTypeBuilder builder)
+        public InterfaceTypeBuilder(InternalInterfaceTypeBuilder builder)
         {
             Builder = builder;
         }
