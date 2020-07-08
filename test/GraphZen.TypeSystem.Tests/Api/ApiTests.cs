@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem.Tests.Api
         }
 
 
-        [Theory]
+        [Theory(Skip = "wip")]
         [InlineData(typeof(ObjectTypeBuilder<,>))]
         public void GetPublicBuilderClasses_should_contain_some_expected_builders(Type type)
         {
@@ -42,7 +42,7 @@ namespace GraphZen.TypeSystem.Tests.Api
         }
 
 
-        [Fact]
+        [Fact(Skip = "wip")]
         public void all_builders_should_expose_definition_and_internal_builder_infrastructure()
         {
             var buildersToExclude = new List<Type>
@@ -79,7 +79,7 @@ namespace GraphZen.TypeSystem.Tests.Api
             }
         }
 
-        [Fact]
+        [Fact(Skip = "wip")]
         public void public_builders_should_only_have_one_non_inherited_interface()
         {
             foreach (var builderClass in PublicBuilderClasses)
