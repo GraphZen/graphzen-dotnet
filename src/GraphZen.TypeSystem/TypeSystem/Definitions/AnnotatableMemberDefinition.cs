@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem
         }
 
         internal new AnnotatableMemberDefinitionBuilder InternalBuilder =>
-            (AnnotatableMemberDefinitionBuilder) base.InternalBuilder;
+            (AnnotatableMemberDefinitionBuilder)base.InternalBuilder;
 
         public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations => _directiveAnnotations;
 

@@ -89,7 +89,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public DirectiveBuilder Builder {get;}
+        public DirectiveBuilder Builder { get; }
         internal new InternalDirectiveBuilder InternalBuilder { get; }
         protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
 
