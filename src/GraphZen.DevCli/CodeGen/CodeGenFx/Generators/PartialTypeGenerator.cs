@@ -29,7 +29,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                 if (test != null)
                 {
 
-                    throw new Exception(test);
+                    throw new Exception("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY: " +test);
                 }
 
 
