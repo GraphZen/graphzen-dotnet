@@ -60,11 +60,11 @@ public {type} Get{kind}(string name) => GetType<{type}>(name);
         public bool Has{kind}(string name) => HasType<{type}>(Check.NotNull(name, nameof(name)));
 
 
-//[GraphQLIgnore]        
-//public IEnumerable<{type}> Get{kind}s(bool includeSpec{kind}s = false) => throw new NotImplementedException();
+[GraphQLIgnore]        
+public IEnumerable<{type}> Get{kind}s(bool includeSpec{kind}s = false) => throw new NotImplementedException();
 
-//[GraphQLIgnore]
-//IEnumerable<I{type}Definition> I{type}sDefinition.Get{kind}s(bool includeSpec{kind}) => Get{kind}s(includeSpec{kind});
+[GraphQLIgnore]
+IEnumerable<I{type}Definition> I{type}sDefinition.Get{kind}s(bool includeSpec{kind}s) => Get{kind}s(includeSpec{kind}s);
 
 
 ");

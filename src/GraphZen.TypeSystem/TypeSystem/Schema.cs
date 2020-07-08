@@ -205,10 +205,6 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public IEnumerable<InputObjectType> GetInputObjects() => InputObjects;
 
-        [GraphQLIgnore]
-        IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) => GetEnums();
-
-
 
         [GraphQLIgnore] public IReadOnlyList<EnumType> Enums => _enums.Value;
 
@@ -233,7 +229,7 @@ namespace GraphZen.TypeSystem
             GetObjects(includeSpecTypes);
 
 
-        
+
 
         [GraphQLIgnore]
         public IEnumerable<ScalarType> GetScalars() => Scalars;

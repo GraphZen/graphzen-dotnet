@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
 
@@ -64,6 +65,9 @@ namespace GraphZen.TypeSystem
 [GraphQLIgnore]        
 public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw new NotImplementedException();
 
+[GraphQLIgnore]
+IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnum) => GetEnums(includeSpecEnum);
+
         #endregion
 
         #region InputObject type accessors
@@ -112,6 +116,9 @@ public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw ne
 
 //[GraphQLIgnore]        
 //public IEnumerable<InputObjectType> GetInputObjects(bool includeSpecInputObjects = false) => throw new NotImplementedException();
+
+//[GraphQLIgnore]
+//IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.GetInputObjects(bool includeSpecInputObject) => GetInputObjects(includeSpecInputObject);
 
         #endregion
 
@@ -162,6 +169,9 @@ public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw ne
 //[GraphQLIgnore]        
 //public IEnumerable<InterfaceType> GetInterfaces(bool includeSpecInterfaces = false) => throw new NotImplementedException();
 
+//[GraphQLIgnore]
+//IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces(bool includeSpecInterface) => GetInterfaces(includeSpecInterface);
+
         #endregion
 
         #region Object type accessors
@@ -208,6 +218,9 @@ public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw ne
 
 //[GraphQLIgnore]        
 //public IEnumerable<ObjectType> GetObjects(bool includeSpecObjects = false) => throw new NotImplementedException();
+
+//[GraphQLIgnore]
+//IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecObject) => GetObjects(includeSpecObject);
 
         #endregion
 
@@ -256,6 +269,9 @@ public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw ne
 //[GraphQLIgnore]        
 //public IEnumerable<ScalarType> GetScalars(bool includeSpecScalars = false) => throw new NotImplementedException();
 
+//[GraphQLIgnore]
+//IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars(bool includeSpecScalar) => GetScalars(includeSpecScalar);
+
         #endregion
 
         #region Union type accessors
@@ -302,6 +318,9 @@ public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw ne
 
 //[GraphQLIgnore]        
 //public IEnumerable<UnionType> GetUnions(bool includeSpecUnions = false) => throw new NotImplementedException();
+
+//[GraphQLIgnore]
+//IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions(bool includeSpecUnion) => GetUnions(includeSpecUnion);
 
         #endregion
 
@@ -353,4 +372,4 @@ public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw ne
         #endregion
     }
 }
-// Source Hash Code: 15574291068366890081
+// Source Hash Code: 3132305200239627219
