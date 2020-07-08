@@ -8,8 +8,8 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
+using static GraphZen.TypeSystem.Internal.SyntaxHelpers;
 using static GraphZen.LanguageModel.SyntaxFactory;
-using static GraphZen.TypeSystem.SyntaxHelpers;
 
 
 namespace GraphZen.TypeSystem.Tests
@@ -130,7 +130,7 @@ namespace GraphZen.TypeSystem.Tests
             var expected = new UnionTypeDefinitionSyntax(Name("Union"),
                 Description("union description"),
                 null,
-                new[] { NamedType(Name("Object")) });
+                new[] {NamedType(Name("Object"))});
             union.ToSyntaxNode().Should().Be(expected);
         }
 

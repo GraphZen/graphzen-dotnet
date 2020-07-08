@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.LanguageModel.SyntaxFactory;
@@ -29,7 +29,7 @@ enum AnnotatedEnum @onEnum {
 ");
             var expected = Document(new EnumTypeDefinitionSyntax(Name("AnnotatedEnum"),
                 null,
-                new[] { Directive(Name("onEnum")) }, new[]
+                new[] {Directive(Name("onEnum"))}, new[]
                 {
                     new EnumValueDefinitionSyntax(EnumValue(Name("ANNOTATED_VALUE")), null,
                         new[] {Directive(Name("onEnumValue"))}),
