@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem
 {
     public class EnumTypeBuilder : IEnumTypeBuilder
     {
-        protected EnumTypeBuilder(InternalEnumTypeBuilder builder)
+        public EnumTypeBuilder(InternalEnumTypeBuilder builder)
         {
             Builder = builder;
         }

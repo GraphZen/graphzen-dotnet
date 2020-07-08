@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem
         public override IEnumerable<IMemberDefinition> Children() => GetFields();
 
         private string DebuggerDisplay => $"type {Name}";
-        public new InternalObjectTypeBuilder Builder { get; }
+        internal new InternalObjectTypeBuilder Builder { get; }
         protected override MemberDefinitionBuilder GetBuilder() => Builder;
         public IsTypeOf<object, GraphQLContext>? IsTypeOf { get; set; }
 
@@ -50,9 +50,7 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Object;
 
-
         IEnumerable<IInterfaceTypeDefinition> IInterfacesDefinition.GetInterfaces() => GetInterfaces();
-
 
         public bool AddInterface(InterfaceTypeDefinition @interface, ConfigurationSource configurationSource)
         {

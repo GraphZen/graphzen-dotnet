@@ -4,7 +4,9 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
@@ -61,6 +63,9 @@ namespace GraphZen.TypeSystem
             var builder = new DirectiveBuilder<object>(internalBuilder);
             return builder;
         }
+
+        public IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpecDirectives = false) =>
+            Builder.Definition.GetDirectives(includeSpecDirectives).Select(_ => new DirectiveBuilder(_.Builder));
 
 
         public SchemaBuilder<TContext> UnignoreDirective<TDirective>() where TDirective : notnull
@@ -512,6 +517,9 @@ namespace GraphZen.TypeSystem
             return builder;
         }
 
+        public IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpecEnums = false) =>
+            Builder.Definition.GetEnums(includeSpecEnums).Select(_ => new EnumTypeBuilder(_.Builder));
+
 
         public SchemaBuilder<TContext> UnignoreEnum<TEnum>() where TEnum : notnull
         {
@@ -726,6 +734,10 @@ namespace GraphZen.TypeSystem
             return builder;
         }
 
+        public IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpecInputObjects = false) =>
+            Builder.Definition.GetInputObjects(includeSpecInputObjects)
+                .Select(_ => new InputObjectTypeBuilder(_.Builder));
+
 
         public SchemaBuilder<TContext> UnignoreInputObject<TInputObject>() where TInputObject : notnull
         {
@@ -793,4 +805,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 3025481465810080051
+// Source Hash Code: 14172732363827360952

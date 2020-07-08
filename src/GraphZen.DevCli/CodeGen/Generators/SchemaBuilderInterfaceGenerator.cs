@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -13,6 +14,18 @@ using static GraphZen.TypeSystem.TypeKind;
 
 namespace GraphZen.CodeGen.Generators
 {
+
+    public class EnumerableBuilderExtensionsGenerator : PartialTypeGenerator
+    {
+        public EnumerableBuilderExtensionsGenerator() : base(typeof(EnumerableBuilderExtensions))
+        {
+        }
+
+        public override void Apply(StringBuilder csharp)
+        {
+        }
+    }
+
     public class SchemaBuilderInterfaceGenerator : PartialTypeGenerator
     {
         public SchemaBuilderInterfaceGenerator() : base(typeof(ISchemaBuilder<>))
@@ -24,14 +37,13 @@ namespace GraphZen.CodeGen.Generators
             {
                 {
                     nameof(Directive),
-
                     new KindConfig {TypeName = nameof(Directive), SimpleBuilder = true}
                 },
                 {
                     "Type", new KindConfig {TypeParamName = "ClrType"}
                 },
                 {
-                    nameof(Object),
+                    nameof(TypeKind.Object),
                     new KindConfig {TypeName = nameof(ObjectType), ContextBuilder = true}
                 },
                 {
@@ -43,7 +55,7 @@ namespace GraphZen.CodeGen.Generators
                     new KindConfig {TypeName = nameof(ScalarType)}
                 },
                 {
-                    nameof(Enum),
+                    nameof(TypeKind.Enum),
                     new KindConfig {TypeName = nameof(EnumType), SimpleBuilder = true, DefaultTypeName = "string"}
                 },
                 {
@@ -66,9 +78,7 @@ namespace GraphZen.CodeGen.Generators
                     var typeParam = "T" + (config.TypeParamName ?? kind);
 
                     region.AppendLine($@"
-
-        // IEnumerable<{config.TypeName}Builder> Get{kind}s(bool includeSpec); TODO
-
+        IEnumerable<{config.TypeName}Builder> Get{kind}s(bool includeSpec{kind}s = false);
 ");
 
                     if (config.SimpleBuilder)

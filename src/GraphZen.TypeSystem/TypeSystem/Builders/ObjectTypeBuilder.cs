@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem
             Builder = builder;
         }
 
-        protected InternalObjectTypeBuilder Builder { get; }
+        internal InternalObjectTypeBuilder Builder { get; }
 
         public INamedBuilder Name(string name)
         {
