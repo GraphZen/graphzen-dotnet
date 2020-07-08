@@ -8,6 +8,7 @@ using GraphZen.CodeGen.CodeGenFx;
 using GraphZen.CodeGen.CodeGenFx.Generators;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
+using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using static GraphZen.TypeSystem.TypeKind;
 
@@ -27,7 +28,7 @@ namespace GraphZen.CodeGen.Generators
                     new KindConfig {TypeName = nameof(Directive), SimpleBuilder = true}
                 },
                 {
-                    "Type", new KindConfig {TypeParamName = "ClrType"}
+                    "Type", new KindConfig {TypeParamName = "ClrType", TypeName = nameof(INamedType)}
                 },
                 {
                     nameof(Object),

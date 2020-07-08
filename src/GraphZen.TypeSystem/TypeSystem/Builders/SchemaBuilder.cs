@@ -36,7 +36,6 @@ namespace GraphZen.TypeSystem
 
         private InternalSchemaBuilder Builder { get; }
 
-        public IEnumerable<INamedTypeBuilder> GetTypes(bool includeSpecTypes = false) => throw new NotImplementedException();
 
         public ScalarTypeBuilder<object, ValueSyntax> Scalar(string name) =>
             new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(name, nameof(name)),
