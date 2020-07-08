@@ -14,7 +14,7 @@
     <ProjectReference Include="..\GraphZen.LanguageModel\GraphZen.LanguageModel.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="TypeSystem\ArgumentsDefinition.Generated.cs">
+    <Compile Update="TypeSystem\Definitions\Internal\ArgumentsDefinition.Generated.cs">
       <DependentUpon>ArgumentsDefinition.cs</DependentUpon>
     </Compile>
   </ItemGroup>
