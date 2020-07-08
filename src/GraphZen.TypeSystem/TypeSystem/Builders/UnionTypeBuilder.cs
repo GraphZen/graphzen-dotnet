@@ -100,16 +100,16 @@ namespace GraphZen.TypeSystem
         }
 
         public new UnionTypeBuilder<TUnion, TContext> Description(string description) =>
-            (UnionTypeBuilder<TUnion, TContext>) base.Description(description);
+            (UnionTypeBuilder<TUnion, TContext>)base.Description(description);
 
 
         public new UnionTypeBuilder<TUnion, TContext> RemoveDescription() =>
-            (UnionTypeBuilder<TUnion, TContext>) base.RemoveDescription();
+            (UnionTypeBuilder<TUnion, TContext>)base.RemoveDescription();
 
         public UnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TUnion) value, (TContext) context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TUnion)value, (TContext)context, info));
             return this;
         }
 
@@ -202,21 +202,21 @@ namespace GraphZen.TypeSystem
                 typeof(T9), typeof(T10));
 
         public new UnionTypeBuilder<TUnion, TContext> Name(string name) =>
-            (UnionTypeBuilder<TUnion, TContext>) base.Name(name);
+            (UnionTypeBuilder<TUnion, TContext>)base.Name(name);
 
 
         public new UnionTypeBuilder<TUnion, TContext> AddDirectiveAnnotation(string name, object value) =>
-            (UnionTypeBuilder<TUnion, TContext>) base.AddDirectiveAnnotation(name, value);
+            (UnionTypeBuilder<TUnion, TContext>)base.AddDirectiveAnnotation(name, value);
 
 
         public new UnionTypeBuilder<TUnion, TContext> AddDirectiveAnnotation(string name) =>
-            (UnionTypeBuilder<TUnion, TContext>) base.AddDirectiveAnnotation(name);
+            (UnionTypeBuilder<TUnion, TContext>)base.AddDirectiveAnnotation(name);
 
 
         public new UnionTypeBuilder<TUnion, TContext> RemoveDirectiveAnnotations(string name) =>
-            (UnionTypeBuilder<TUnion, TContext>) base.RemoveDirectiveAnnotations(name);
+            (UnionTypeBuilder<TUnion, TContext>)base.RemoveDirectiveAnnotations(name);
 
         public new UnionTypeBuilder<TUnion, TContext> ClearDirectiveAnnotations() =>
-            (UnionTypeBuilder<TUnion, TContext>) base.ClearDirectiveAnnotations();
+            (UnionTypeBuilder<TUnion, TContext>)base.ClearDirectiveAnnotations();
     }
 }

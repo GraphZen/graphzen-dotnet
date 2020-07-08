@@ -29,7 +29,7 @@ enum AnnotatedEnum @onEnum {
 ");
             var expected = Document(new EnumTypeDefinitionSyntax(Name("AnnotatedEnum"),
                 null,
-                new[] {Directive(Name("onEnum"))}, new[]
+                new[] { Directive(Name("onEnum")) }, new[]
                 {
                     new EnumValueDefinitionSyntax(EnumValue(Name("ANNOTATED_VALUE")), null,
                         new[] {Directive(Name("onEnumValue"))}),

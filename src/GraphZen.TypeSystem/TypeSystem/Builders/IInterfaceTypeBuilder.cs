@@ -13,7 +13,6 @@ namespace GraphZen.TypeSystem
         IInfrastructure<InterfaceTypeDefinition>,
         IInfrastructure<InternalInterfaceTypeBuilder>
     {
-
     }
 
     // ReSharper disable once PossibleInterfaceMemberAmbiguity

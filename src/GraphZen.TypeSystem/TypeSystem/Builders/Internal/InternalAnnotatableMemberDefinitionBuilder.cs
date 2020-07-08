@@ -10,7 +10,8 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public abstract class InternalAnnotatableMemberDefinitionBuilder<TDefinition> : InternalAnnotatableMemberDefinitionBuilder
+    public abstract class
+        InternalAnnotatableMemberDefinitionBuilder<TDefinition> : InternalAnnotatableMemberDefinitionBuilder
         where TDefinition : AnnotatableMemberDefinition
     {
         protected InternalAnnotatableMemberDefinitionBuilder(AnnotatableMemberDefinition definition) : base(definition)
@@ -20,7 +21,8 @@ namespace GraphZen.TypeSystem.Internal
         public new TDefinition Definition => (TDefinition)base.Definition;
     }
 
-    public abstract class InternalAnnotatableMemberDefinitionBuilder : InternalMemberDefinitionBuilder<AnnotatableMemberDefinition>
+    public abstract class
+        InternalAnnotatableMemberDefinitionBuilder : InternalMemberDefinitionBuilder<AnnotatableMemberDefinition>
     {
         protected InternalAnnotatableMemberDefinitionBuilder(AnnotatableMemberDefinition definition) : base(definition)
         {

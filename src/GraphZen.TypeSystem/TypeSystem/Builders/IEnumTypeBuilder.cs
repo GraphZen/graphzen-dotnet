@@ -9,18 +9,16 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
     public interface IEnumTypeBuilder : INamedTypeBuilder,
         IInfrastructure<EnumTypeDefinition>,
         IInfrastructure<InternalEnumTypeBuilder>
     {
-
     }
 
     public interface IEnumTypeBuilder<TEnumValue> : IEnumTypeBuilder,
         INamedTypeBuilder<EnumTypeBuilder<TEnumValue>, EnumTypeBuilder<object>>
-         where TEnumValue : notnull
+        where TEnumValue : notnull
     {
         EnumTypeBuilder<TEnumValue> Value(TEnumValue value);
         EnumTypeBuilder<TEnumValue> RemoveValue(TEnumValue value);

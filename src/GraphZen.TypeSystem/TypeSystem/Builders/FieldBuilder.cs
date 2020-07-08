@@ -185,7 +185,8 @@ namespace GraphZen.TypeSystem
 
         IAnnotableBuilder IAnnotableBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name, object value) => AddDirectiveAnnotation(name, value);
+        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name, object value) =>
+            AddDirectiveAnnotation(name, value);
 
         public FieldBuilder<TDeclaringType, TField, TContext> AddDirectiveAnnotation(string name)
         {

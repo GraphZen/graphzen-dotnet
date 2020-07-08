@@ -1,42 +1,41 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 #nullable enable
 
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+// ReSharper disable All
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-
-// ReSharper disable All
-using FluentAssertions;
 using Xunit;
 using static GraphZen.TypeSystem.FunctionalTests.Specs.TypeSystemSpecs.MemberSpecs;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Arguments.ArgumentDefinition {
-[NoReorder]
-public abstract  class MemberTests {
+namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Directives.Directive.Arguments.ArgumentDefinition
+{
+    [NoReorder]
+    public abstract class MemberTests
+    {
+        [Spec(nameof(should_be_included_in_schema_descendants))]
+        [Fact(Skip = "TODO")]
+        public void should_be_included_in_schema_descendants_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
 
 
-[Spec(nameof(should_be_included_in_schema_descendants))]
-[Fact(Skip="TODO")]
-public void should_be_included_in_schema_descendants_() {
-    // var schema = Schema.Create(_ => { });
-}
+        [Spec(nameof(should_be_included_in_schema_definition_descendants))]
+        [Fact(Skip = "TODO")]
+        public void should_be_included_in_schema_definition_descendants_()
+        {
+            // var schema = Schema.Create(_ => { });
+        }
+    }
 
-
-
-
-[Spec(nameof(should_be_included_in_schema_definition_descendants))]
-[Fact(Skip="TODO")]
-public void should_be_included_in_schema_definition_descendants_() {
-    // var schema = Schema.Create(_ => { });
-}
-
-
-}
 // Move MemberTests into a separate file to start writing tests
-[NoReorder] 
-public  class MemberTestsScaffold {
-}
+    [NoReorder]
+    public class MemberTestsScaffold
+    {
+    }
 }
 // Source Hash Code: 6838591366912610571

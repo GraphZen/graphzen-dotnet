@@ -104,10 +104,10 @@ namespace GraphZen.TypeSystem
         }
 
         public new InterfaceTypeBuilder<TInterface, TContext> Description(string description) =>
-            (InterfaceTypeBuilder<TInterface, TContext>) base.Description(description);
+            (InterfaceTypeBuilder<TInterface, TContext>)base.Description(description);
 
         public new InterfaceTypeBuilder<TInterface, TContext> RemoveDescription() =>
-            (InterfaceTypeBuilder<TInterface, TContext>) base.RemoveDescription();
+            (InterfaceTypeBuilder<TInterface, TContext>)base.RemoveDescription();
 
         public new InterfaceTypeBuilder<object, TContext> ClrType(Type clrType, bool inferName = false)
         {
@@ -242,27 +242,27 @@ namespace GraphZen.TypeSystem
             TypeResolver<TInterface, TContext> resolveTypeFn)
         {
             Check.NotNull(resolveTypeFn, nameof(resolveTypeFn));
-            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface) value, (TContext) context, info));
+            Builder.ResolveType((value, context, info) => resolveTypeFn((TInterface)value, (TContext)context, info));
             return this;
         }
 
 
         public new InterfaceTypeBuilder<TInterface, TContext> Name(string name) =>
-            (InterfaceTypeBuilder<TInterface, TContext>) base.Name(name);
+            (InterfaceTypeBuilder<TInterface, TContext>)base.Name(name);
 
 
         public new InterfaceTypeBuilder<TInterface, TContext> AddDirectiveAnnotation(string name, object value) =>
-            (InterfaceTypeBuilder<TInterface, TContext>) base.AddDirectiveAnnotation(name, value);
+            (InterfaceTypeBuilder<TInterface, TContext>)base.AddDirectiveAnnotation(name, value);
 
 
         public new InterfaceTypeBuilder<TInterface, TContext> AddDirectiveAnnotation(string name) =>
-            (InterfaceTypeBuilder<TInterface, TContext>) base.AddDirectiveAnnotation(name);
+            (InterfaceTypeBuilder<TInterface, TContext>)base.AddDirectiveAnnotation(name);
 
 
         public new InterfaceTypeBuilder<TInterface, TContext> RemoveDirectiveAnnotations(string name) =>
-            (InterfaceTypeBuilder<TInterface, TContext>) base.RemoveDirectiveAnnotations(name);
+            (InterfaceTypeBuilder<TInterface, TContext>)base.RemoveDirectiveAnnotations(name);
 
         public new InterfaceTypeBuilder<TInterface, TContext> ClearDirectiveAnnotations() =>
-            (InterfaceTypeBuilder<TInterface, TContext>) base.ClearDirectiveAnnotations();
+            (InterfaceTypeBuilder<TInterface, TContext>)base.ClearDirectiveAnnotations();
     }
 }

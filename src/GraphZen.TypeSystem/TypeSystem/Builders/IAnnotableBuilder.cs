@@ -14,6 +14,7 @@ namespace GraphZen.TypeSystem
         IAnnotableBuilder RemoveDirectiveAnnotations(string name);
         IAnnotableBuilder ClearDirectiveAnnotations();
     }
+
     public interface IAnnotableBuilder<out TBuilder> : IAnnotableBuilder
     {
         new TBuilder AddDirectiveAnnotation(string name, object value);

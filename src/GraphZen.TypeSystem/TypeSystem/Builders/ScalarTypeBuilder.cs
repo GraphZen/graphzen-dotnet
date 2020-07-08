@@ -136,11 +136,11 @@ namespace GraphZen.TypeSystem
 
         [DebuggerStepThrough]
         public new ScalarTypeBuilder<TScalar, TValueNode> Description(string description) =>
-            (ScalarTypeBuilder<TScalar, TValueNode>) base.Description(description);
+            (ScalarTypeBuilder<TScalar, TValueNode>)base.Description(description);
 
         [DebuggerStepThrough]
         public new ScalarTypeBuilder<TScalar, TValueNode> RemoveDescription() =>
-            (ScalarTypeBuilder<TScalar, TValueNode>) base.RemoveDescription();
+            (ScalarTypeBuilder<TScalar, TValueNode>)base.RemoveDescription();
 
         [DebuggerStepThrough]
         public ScalarTypeBuilder<TScalar, TValueNode> Serializer(LeafSerializer serializer)
@@ -157,7 +157,7 @@ namespace GraphZen.TypeSystem
             Builder.LiteralParser(value =>
             {
                 Debug.Assert(value != null, nameof(value) + " != null");
-                var parsed = literalParser((TValueNode) value);
+                var parsed = literalParser((TValueNode)value);
                 Debug.Assert(parsed != null, nameof(parsed) + " != null");
                 return parsed.Cast<object>();
             });
@@ -180,20 +180,20 @@ namespace GraphZen.TypeSystem
 
 
         public new ScalarTypeBuilder<TScalar, TValueNode> Name(string name) =>
-            (ScalarTypeBuilder<TScalar, TValueNode>) base.Name(name);
+            (ScalarTypeBuilder<TScalar, TValueNode>)base.Name(name);
 
 
         public new ScalarTypeBuilder<TScalar, TValueNode> AddDirectiveAnnotation(string name, object value) =>
-            (ScalarTypeBuilder<TScalar, TValueNode>) base.AddDirectiveAnnotation(name, value);
+            (ScalarTypeBuilder<TScalar, TValueNode>)base.AddDirectiveAnnotation(name, value);
 
 
         public new ScalarTypeBuilder<TScalar, TValueNode> AddDirectiveAnnotation(string name) =>
-            (ScalarTypeBuilder<TScalar, TValueNode>) base.AddDirectiveAnnotation(name);
+            (ScalarTypeBuilder<TScalar, TValueNode>)base.AddDirectiveAnnotation(name);
 
         public new ScalarTypeBuilder<TScalar, TValueNode> RemoveDirectiveAnnotations(string name) =>
-            (ScalarTypeBuilder<TScalar, TValueNode>) base.RemoveDirectiveAnnotations(name);
+            (ScalarTypeBuilder<TScalar, TValueNode>)base.RemoveDirectiveAnnotations(name);
 
         public new ScalarTypeBuilder<TScalar, TValueNode> ClearDirectiveAnnotations() =>
-            (ScalarTypeBuilder<TScalar, TValueNode>) base.ClearDirectiveAnnotations();
+            (ScalarTypeBuilder<TScalar, TValueNode>)base.ClearDirectiveAnnotations();
     }
 }

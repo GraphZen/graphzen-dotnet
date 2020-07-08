@@ -1,3 +1,6 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -12,6 +15,6 @@ namespace GraphZen.TypeSystem
     {
         public static IEnumerable<ObjectTypeBuilder> Where(this IEnumerable<ObjectTypeBuilder> source,
             Func<IObjectTypeDefinition, bool> predicate) =>
-            source.Where(builder => predicate(AccessorExtensions.GetInfrastructure<ObjectTypeDefinition>(builder)));
+            source.Where(builder => predicate(builder.GetInfrastructure<ObjectTypeDefinition>()));
     }
 }

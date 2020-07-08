@@ -96,9 +96,9 @@ namespace GraphZen.TypeSystem
         }
 
         public new EnumTypeBuilder<TEnum> Description(string description) =>
-            (EnumTypeBuilder<TEnum>) base.Description(description);
+            (EnumTypeBuilder<TEnum>)base.Description(description);
 
-        public new EnumTypeBuilder<TEnum> RemoveDescription() => (EnumTypeBuilder<TEnum>) base.RemoveDescription();
+        public new EnumTypeBuilder<TEnum> RemoveDescription() => (EnumTypeBuilder<TEnum>)base.RemoveDescription();
 
         public EnumTypeBuilder<TEnum> Value(TEnum value)
         {
@@ -138,7 +138,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public new EnumTypeBuilder<TEnum> Name(string name) => (EnumTypeBuilder<TEnum>) base.Name(name);
+        public new EnumTypeBuilder<TEnum> Name(string name) => (EnumTypeBuilder<TEnum>)base.Name(name);
 
         public new EnumTypeBuilder<object> ClrType(Type clrType, bool inferName = false)
         {
@@ -164,21 +164,21 @@ namespace GraphZen.TypeSystem
             return new EnumTypeBuilder<T>(Builder);
         }
 
-        public new EnumTypeBuilder<object> RemoveClrType() => (EnumTypeBuilder<object>) base.RemoveClrType();
+        public new EnumTypeBuilder<object> RemoveClrType() => (EnumTypeBuilder<object>)base.RemoveClrType();
 
 
         public new EnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name, object value) =>
-            (EnumTypeBuilder<TEnum>) base.AddDirectiveAnnotation(name, value);
+            (EnumTypeBuilder<TEnum>)base.AddDirectiveAnnotation(name, value);
 
 
         public new EnumTypeBuilder<TEnum> AddDirectiveAnnotation(string name) =>
-            (EnumTypeBuilder<TEnum>) base.AddDirectiveAnnotation(name);
+            (EnumTypeBuilder<TEnum>)base.AddDirectiveAnnotation(name);
 
 
         public new EnumTypeBuilder<TEnum> RemoveDirectiveAnnotations(string name) =>
-            (EnumTypeBuilder<TEnum>) base.RemoveDirectiveAnnotations(name);
+            (EnumTypeBuilder<TEnum>)base.RemoveDirectiveAnnotations(name);
 
         public new EnumTypeBuilder<TEnum> ClearDirectiveAnnotations() =>
-            (EnumTypeBuilder<TEnum>) base.ClearDirectiveAnnotations();
+            (EnumTypeBuilder<TEnum>)base.ClearDirectiveAnnotations();
     }
 }

@@ -14,7 +14,6 @@ namespace GraphZen.TypeSystem
         IInfrastructure<InternalUnionTypeBuilder>, INamedTypeBuilder
 
     {
-
     }
 
 

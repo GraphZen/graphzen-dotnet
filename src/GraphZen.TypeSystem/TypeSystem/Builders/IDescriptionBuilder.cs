@@ -15,6 +15,7 @@ namespace GraphZen.TypeSystem
         IDescriptionBuilder Description(string description);
         IDescriptionBuilder RemoveDescription();
     }
+
     public interface IDescriptionBuilder<out TBuilder> : IDescriptionBuilder
     {
         new TBuilder Description(string description);

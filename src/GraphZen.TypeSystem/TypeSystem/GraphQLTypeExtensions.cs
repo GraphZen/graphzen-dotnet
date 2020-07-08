@@ -51,6 +51,6 @@ namespace GraphZen.TypeSystem
 
 
         public static INullableType GetNullableType(this IGraphQLType type) =>
-            type is NonNullType nonNull ? nonNull.OfType : (INullableType) type;
+            type is NonNullType nonNull ? nonNull.OfType : (INullableType)type;
     }
 }

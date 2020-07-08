@@ -187,7 +187,7 @@ namespace GraphZen.TypeSystem
         public ObjectTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull
         {
             base.ClrType(typeof(T), name);
-                        return new ObjectTypeBuilder<T, TContext>(Builder);
+            return new ObjectTypeBuilder<T, TContext>(Builder);
         }
 
         public new ObjectTypeBuilder<TObject, TContext> Description(string description)
@@ -283,42 +283,42 @@ namespace GraphZen.TypeSystem
         public ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value));
             return this;
         }
 
         public ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value, (TContext) context));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value, (TContext)context));
             return this;
         }
 
         public ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, ResolveInfo, bool> isTypeOfFn)
         {
             Check.NotNull(isTypeOfFn, nameof(isTypeOfFn));
-            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject) value, (TContext) context, info));
+            Builder.IsTypeOf((value, context, info) => isTypeOfFn((TObject)value, (TContext)context, info));
             return this;
         }
 
         public new ObjectTypeBuilder<TObject, TContext> ImplementsInterface(string name) =>
-            (ObjectTypeBuilder<TObject, TContext>) base.ImplementsInterface(name);
+            (ObjectTypeBuilder<TObject, TContext>)base.ImplementsInterface(name);
 
         public new ObjectTypeBuilder<TObject, TContext> ImplementsInterfaces(string name, params string[] names) =>
-            (ObjectTypeBuilder<TObject, TContext>) base.ImplementsInterfaces(name, names);
+            (ObjectTypeBuilder<TObject, TContext>)base.ImplementsInterfaces(name, names);
 
 
         public new ObjectTypeBuilder<TObject, TContext> IgnoreInterface<T>() =>
-            (ObjectTypeBuilder<TObject, TContext>) base.IgnoreInterface<T>();
+            (ObjectTypeBuilder<TObject, TContext>)base.IgnoreInterface<T>();
 
         public new ObjectTypeBuilder<TObject, TContext> IgnoreInterface(Type clrType) =>
-            (ObjectTypeBuilder<TObject, TContext>) base.IgnoreInterface(clrType);
+            (ObjectTypeBuilder<TObject, TContext>)base.IgnoreInterface(clrType);
 
         public new ObjectTypeBuilder<TObject, TContext> IgnoreInterface(string name) =>
-            (ObjectTypeBuilder<TObject, TContext>) base.IgnoreInterface(name);
+            (ObjectTypeBuilder<TObject, TContext>)base.IgnoreInterface(name);
 
         public new ObjectTypeBuilder<TObject, TContext> UnignoreInterface(string name) =>
-            (ObjectTypeBuilder<TObject, TContext>) base.UnignoreInterface(name);
+            (ObjectTypeBuilder<TObject, TContext>)base.UnignoreInterface(name);
 
         public ObjectTypeBuilder<TObject, TContext> IgnoreField<TField>(
             Expression<Func<TObject, TField>> selector) =>
@@ -340,17 +340,17 @@ namespace GraphZen.TypeSystem
 
 
         public new ObjectTypeBuilder<TObject, TContext> AddDirectiveAnnotation(string name, object value) =>
-            (ObjectTypeBuilder<TObject, TContext>) base.AddDirectiveAnnotation(name, value);
+            (ObjectTypeBuilder<TObject, TContext>)base.AddDirectiveAnnotation(name, value);
 
         public new ObjectTypeBuilder<TObject, TContext> AddDirectiveAnnotation(string name) =>
-            (ObjectTypeBuilder<TObject, TContext>) base.AddDirectiveAnnotation(name);
+            (ObjectTypeBuilder<TObject, TContext>)base.AddDirectiveAnnotation(name);
 
 
         public new ObjectTypeBuilder<TObject, TContext> RemoveDirectiveAnnotations(string name) =>
-            (ObjectTypeBuilder<TObject, TContext>) base.RemoveDirectiveAnnotations(name);
+            (ObjectTypeBuilder<TObject, TContext>)base.RemoveDirectiveAnnotations(name);
 
         public new ObjectTypeBuilder<TObject, TContext> ClearDirectiveAnnotations() =>
-            (ObjectTypeBuilder<TObject, TContext>) base.ClearDirectiveAnnotations();
+            (ObjectTypeBuilder<TObject, TContext>)base.ClearDirectiveAnnotations();
 
         public ObjectTypeBuilder<TObject, TContext> IgnoreField(Expression<Func<TObject, object>> fieldSelector) =>
             throw new NotImplementedException();

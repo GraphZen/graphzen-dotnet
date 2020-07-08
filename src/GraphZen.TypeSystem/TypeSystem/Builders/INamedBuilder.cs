@@ -14,6 +14,7 @@ namespace GraphZen.TypeSystem
     {
         INamedBuilder Name(string name);
     }
+
     public interface INamedBuilder<out TBuilder> : INamedBuilder
     {
         new TBuilder Name(string name);
