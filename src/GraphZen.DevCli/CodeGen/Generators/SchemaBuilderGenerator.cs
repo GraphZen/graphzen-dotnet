@@ -30,6 +30,13 @@ namespace GraphZen.CodeGen.Generators
                 {
                     var typeParam = "T" + (config.TypeParamName ?? kind);
 
+                    region.AppendLine($@"
+
+
+
+
+");
+
                     if (config.SimpleBuilder)
                     {
                         region.AppendLine($@"
@@ -71,7 +78,8 @@ public  {config.TypeName}Builder<{config.DefaultTypeName}> {kind}(Type clrType, 
     return builder;
 }}
 
-
+ public IEnumerable<{config.TypeName}Builder> Get{kind}s(bool includeSpec{kind}s = false) =>
+            Builder.Definition.GetObjects(includeSpec{kind}s).Select(_ => new ObjectTypeBuilder(_.Builder));
 
 
 ");
