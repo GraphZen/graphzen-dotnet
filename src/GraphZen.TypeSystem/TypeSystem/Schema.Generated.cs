@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
@@ -59,6 +60,10 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool HasEnum(string name) => HasType<EnumType>(Check.NotNull(name, nameof(name)));
 
+
+[GraphQLIgnore]        
+public IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false) => throw new NotImplementedException();
+
         #endregion
 
         #region InputObject type accessors
@@ -103,6 +108,10 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public bool HasInputObject(string name) => HasType<InputObjectType>(Check.NotNull(name, nameof(name)));
+
+
+//[GraphQLIgnore]        
+//public IEnumerable<InputObjectType> GetInputObjects(bool includeSpecInputObjects = false) => throw new NotImplementedException();
 
         #endregion
 
@@ -149,6 +158,10 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool HasInterface(string name) => HasType<InterfaceType>(Check.NotNull(name, nameof(name)));
 
+
+//[GraphQLIgnore]        
+//public IEnumerable<InterfaceType> GetInterfaces(bool includeSpecInterfaces = false) => throw new NotImplementedException();
+
         #endregion
 
         #region Object type accessors
@@ -191,6 +204,10 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public bool HasObject(string name) => HasType<ObjectType>(Check.NotNull(name, nameof(name)));
+
+
+//[GraphQLIgnore]        
+//public IEnumerable<ObjectType> GetObjects(bool includeSpecObjects = false) => throw new NotImplementedException();
 
         #endregion
 
@@ -235,6 +252,10 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public bool HasScalar(string name) => HasType<ScalarType>(Check.NotNull(name, nameof(name)));
 
+
+//[GraphQLIgnore]        
+//public IEnumerable<ScalarType> GetScalars(bool includeSpecScalars = false) => throw new NotImplementedException();
+
         #endregion
 
         #region Union type accessors
@@ -277,6 +298,10 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public bool HasUnion(string name) => HasType<UnionType>(Check.NotNull(name, nameof(name)));
+
+
+//[GraphQLIgnore]        
+//public IEnumerable<UnionType> GetUnions(bool includeSpecUnions = false) => throw new NotImplementedException();
 
         #endregion
 
@@ -328,4 +353,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 3484410955245617862
+// Source Hash Code: 15574291068366890081

@@ -20,6 +20,9 @@ namespace GraphZen.TypeSystem
 
         #region Directives
 
+        // IEnumerable<DirectiveBuilder> GetDirectives(bool includeSpec); TODO
+
+
         DirectiveBuilder<object> Directive(string name);
 
 
@@ -54,6 +57,9 @@ namespace GraphZen.TypeSystem
 
         #region Types
 
+        // IEnumerable<Builder> GetTypes(bool includeSpec); TODO
+
+
         SchemaBuilder<TContext> UnignoreType<TClrType>() where TClrType : notnull;
 
         SchemaBuilder<TContext> UnignoreType(Type clrType);
@@ -76,6 +82,9 @@ namespace GraphZen.TypeSystem
         #endregion
 
         #region Objects
+
+        // IEnumerable<ObjectTypeBuilder> GetObjects(bool includeSpec); TODO
+
 
         ObjectTypeBuilder<object, TContext> Object(string name);
 
@@ -111,6 +120,9 @@ namespace GraphZen.TypeSystem
 
         #region Unions
 
+        // IEnumerable<UnionTypeBuilder> GetUnions(bool includeSpec); TODO
+
+
         UnionTypeBuilder<object, TContext> Union(string name);
 
 
@@ -145,6 +157,9 @@ namespace GraphZen.TypeSystem
 
         #region Scalars
 
+        // IEnumerable<ScalarTypeBuilder> GetScalars(bool includeSpec); TODO
+
+
         SchemaBuilder<TContext> UnignoreScalar<TScalar>() where TScalar : notnull;
 
         SchemaBuilder<TContext> UnignoreScalar(Type clrType);
@@ -167,6 +182,9 @@ namespace GraphZen.TypeSystem
         #endregion
 
         #region Enums
+
+        // IEnumerable<EnumTypeBuilder> GetEnums(bool includeSpec); TODO
+
 
         EnumTypeBuilder<string> Enum(string name);
 
@@ -202,6 +220,9 @@ namespace GraphZen.TypeSystem
 
         #region Interfaces
 
+        // IEnumerable<InterfaceTypeBuilder> GetInterfaces(bool includeSpec); TODO
+
+
         InterfaceTypeBuilder<object, TContext> Interface(string name);
 
 
@@ -235,6 +256,9 @@ namespace GraphZen.TypeSystem
         #endregion
 
         #region InputObjects
+
+        // IEnumerable<InputObjectTypeBuilder> GetInputObjects(bool includeSpec); TODO
+
 
         InputObjectTypeBuilder<object> InputObject(string name);
 
@@ -271,4 +295,4 @@ namespace GraphZen.TypeSystem
         #endregion
     }
 }
-// Source Hash Code: 8400576393048999543
+// Source Hash Code: 7782180402857748511

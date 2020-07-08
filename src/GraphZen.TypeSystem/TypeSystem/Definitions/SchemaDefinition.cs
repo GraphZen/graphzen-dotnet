@@ -158,7 +158,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<ScalarTypeDefinition> GetScalars() => Types.OfType<ScalarTypeDefinition>();
 
-        public IEnumerable<EnumTypeDefinition> GetEnums() => Types.OfType<EnumTypeDefinition>();
+        public IEnumerable<EnumTypeDefinition> GetEnums(bool includeSpecEnums = false) => Types.OfType<EnumTypeDefinition>();
 
 
         IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecTypes) =>
@@ -170,7 +170,7 @@ namespace GraphZen.TypeSystem
 
         IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars() => GetScalars();
 
-        IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums() => GetEnums();
+        IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) => GetEnums(includeSpecEnums);
 
         public IEnumerable<InputObjectTypeDefinition> GetInputObjects() => Types.OfType<InputObjectTypeDefinition>();
 

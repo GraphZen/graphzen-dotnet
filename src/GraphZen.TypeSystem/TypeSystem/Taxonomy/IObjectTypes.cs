@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IObjectTypes : IObjectTypesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<ObjectType> GetObjects(bool includeSpecTypes = false);
+        new IEnumerable<ObjectType> GetObjects(bool includeSpecObjects = false);
     }
 }

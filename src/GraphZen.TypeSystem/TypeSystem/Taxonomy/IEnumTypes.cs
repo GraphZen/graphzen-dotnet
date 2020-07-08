@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IEnumTypes : IEnumTypesDefinition
     {
         [GraphQLIgnore]
-        new IEnumerable<EnumType> GetEnums();
+        new IEnumerable<EnumType> GetEnums(bool includeSpecEnums = false);
 
         [GraphQLIgnore] IReadOnlyList<EnumType> Enums { get; }
     }

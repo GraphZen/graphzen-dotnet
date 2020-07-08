@@ -12,6 +12,6 @@ namespace GraphZen.TypeSystem.Taxonomy
     public interface IEnumTypesDefinition
     {
         [GraphQLIgnore]
-        IEnumerable<IEnumTypeDefinition> GetEnums();
+        IEnumerable<IEnumTypeDefinition> GetEnums(bool includeSpecEnums = false);
     }
 }

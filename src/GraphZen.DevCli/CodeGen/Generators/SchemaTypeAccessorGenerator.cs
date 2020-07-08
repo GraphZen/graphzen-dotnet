@@ -63,6 +63,10 @@ public {type} Get{kind}(string name) => GetType<{type}>(name);
 //[GraphQLIgnore]        
 //public IEnumerable<{type}> Get{kind}s(bool includeSpec{kind}s = false) => throw new NotImplementedException();
 
+//[GraphQLIgnore]
+//IEnumerable<I{type}Definition> I{type}sDefinition.Get{kind}s(bool includeSpec{kind}) => Get{kind}s(includeSpec{kind});
+
+
 ");
                 });
             }
