@@ -17,8 +17,8 @@ namespace GraphZen.TypeSystem
     [GraphQLType(typeof(IGraphQLType))]
     public partial class ObjectType : NamedType, IObjectType
     {
-        [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
-        private readonly Lazy<IReadOnlyDictionary<string, Field>> _fields;
+        private readonly Lazy<IReadOnlyDictionary<string, Field>> _fieldMap;
+        private readonly Lazy<IReadOnlyCollection<Field>> _fields;
         private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
         private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
         private readonly Lazy<ObjectTypeDefinitionSyntax> _syntax;
@@ -35,8 +35,9 @@ namespace GraphZen.TypeSystem
             Check.NotNull(fields, nameof(fields));
             Check.NotNull(interfaces, nameof(interfaces));
             Check.NotNull(schema, nameof(schema));
-            _fields = new Lazy<IReadOnlyDictionary<string, Field>>(() =>
+            _fieldMap = new Lazy<IReadOnlyDictionary<string, Field>>(() =>
                 fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, schema)));
+            _fields = new Lazy<IReadOnlyCollection<Field>>(() => _fieldMap.Value.Values.ToList().AsReadOnly());
 
             _interfaceMap = new Lazy<IReadOnlyDictionary<string, InterfaceType>>(() =>
                 {
@@ -51,8 +52,7 @@ namespace GraphZen.TypeSystem
                 new Lazy<IReadOnlyList<InterfaceType>>(() => InterfacesMap.Values.ToImmutableList());
             _syntax = new Lazy<ObjectTypeDefinitionSyntax>(() =>
             {
-                var fieldNodes = Fields.Values
-                    .ToSyntaxNodes<FieldDefinitionSyntax>();
+                var fieldNodes = Fields.ToSyntaxNodes<FieldDefinitionSyntax>();
                 var dirs = GetDirectiveAnnotations().ToDirectiveNodes();
 
                 var syntax = new ObjectTypeDefinitionSyntax(
@@ -73,16 +73,16 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Object;
 
-        public override IEnumerable<IMember> Children() => GetFields();
+        public override IEnumerable<IMember> Children() => Fields;
 
-        IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => GetFields();
 
-        public IEnumerable<Field> GetFields() => Fields.Values;
 
+        public IReadOnlyCollection<Field> Fields => _fields.Value;
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
-        public IReadOnlyDictionary<string, Field> Fields => _fields.Value;
+        [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
+        public IReadOnlyDictionary<string, Field> FieldMap => _fieldMap.Value;
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;
@@ -93,7 +93,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(schema, nameof(Schema));
             return new ObjectType(definition.Name, definition.Description, definition.ClrType, definition.IsTypeOf,
-                definition.GetFields(), definition.GetInterfaces(),
+                definition.Fields, definition.GetInterfaces(),
                 definition.GetDirectiveAnnotations().ToList(),
                 schema
             );
@@ -105,5 +105,6 @@ namespace GraphZen.TypeSystem
         public IReadOnlyDictionary<string, InterfaceType> InterfacesMap => _interfaceMap.Value;
 
         IEnumerable<IInterfaceTypeDefinition> IInterfacesDefinition.GetInterfaces() => GetInterfaces();
+        IReadOnlyCollection<IFieldDefinition> IFieldsDefinition.Fields => Fields;
     }
 }

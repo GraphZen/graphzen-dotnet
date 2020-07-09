@@ -107,7 +107,7 @@ namespace GraphZen.QueryEngine.Validation.Rules
             if (type is IFields fields)
             {
                 // ReSharper disable once UnusedVariable
-                var possibleFieldNames = fields.Fields.Keys;
+                var possibleFieldNames = fields.FieldMap.Keys;
                 return StringUtils.GetSuggestionList(fieldName, possibleFieldNames);
             }
 

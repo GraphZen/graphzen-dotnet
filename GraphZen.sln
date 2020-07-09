@@ -108,6 +108,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LanguageModel", "LanguageMo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "QueryEngine", "QueryEngine", "{95900963-3ED0-405B-8C98-5FFDFAA028E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphZen.DevCli.IntegrationTests", "src\GraphZen.DevCli.IntegrationTests\GraphZen.DevCli.IntegrationTests.csproj", "{55ABC15E-08E9-4768-B9A5-A28C299BA188}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -250,6 +252,10 @@ Global
 		{E4C5FCC7-35DD-4294-9992-C5E8F641FB2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4C5FCC7-35DD-4294-9992-C5E8F641FB2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4C5FCC7-35DD-4294-9992-C5E8F641FB2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55ABC15E-08E9-4768-B9A5-A28C299BA188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55ABC15E-08E9-4768-B9A5-A28C299BA188}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55ABC15E-08E9-4768-B9A5-A28C299BA188}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55ABC15E-08E9-4768-B9A5-A28C299BA188}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -297,6 +303,7 @@ Global
 		{ABFC6248-DF46-4161-AAAD-85D570A0A783} = {2E0A06A1-462D-4305-883F-5365CBBFBDCF}
 		{A79823BE-CA98-45AF-A2F3-AB38CE07316E} = {2E0A06A1-462D-4305-883F-5365CBBFBDCF}
 		{95900963-3ED0-405B-8C98-5FFDFAA028E3} = {2E0A06A1-462D-4305-883F-5365CBBFBDCF}
+		{55ABC15E-08E9-4768-B9A5-A28C299BA188} = {5659C2C2-63A1-496D-8B0A-676B4D5B4583}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F2A2408-678E-4184-B769-5C46F0B10F25}

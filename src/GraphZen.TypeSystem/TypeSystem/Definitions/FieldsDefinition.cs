@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -18,10 +19,7 @@ namespace GraphZen.TypeSystem
 {
     public abstract partial class FieldsDefinition : NamedTypeDefinition, IMutableFieldsDefinition
     {
-        private readonly Dictionary<string, FieldDefinition> _fields =
-            new Dictionary<string, FieldDefinition>();
-
-
+        private readonly Dictionary<string, FieldDefinition> _fields;
         private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
@@ -29,13 +27,16 @@ namespace GraphZen.TypeSystem
         protected FieldsDefinition(TypeIdentity identity, SchemaDefinition schema,
             ConfigurationSource configurationSource) : base(identity, schema, configurationSource)
         {
+            _fields = new Dictionary<string, FieldDefinition>();
+            FieldMap = new ReadOnlyDictionary<string, FieldDefinition>(_fields);
         }
 
+        IReadOnlyCollection<IFieldDefinition> IFieldsDefinition.Fields => Fields;
+
+
         [GenDictionaryAccessors(nameof(FieldDefinition.Name), "Field")]
-        public IReadOnlyDictionary<string, FieldDefinition> Fields => _fields;
-
-
-        IEnumerable<IFieldDefinition> IFieldsDefinition.GetFields() => GetFields();
+        public IReadOnlyDictionary<string, FieldDefinition> FieldMap { get; }
+        public IReadOnlyCollection<FieldDefinition> Fields => _fields.Values;
 
         public bool AddField(FieldDefinition field)
         {

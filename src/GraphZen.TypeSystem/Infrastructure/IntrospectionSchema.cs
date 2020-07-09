@@ -40,7 +40,7 @@ namespace GraphZen.Infrastructure
                             if (type is IFields fieldsType)
                             {
                                 var includeDeprecated = args.includeDeprecated == true;
-                                return fieldsType.Fields.Values.Where(field =>
+                                return fieldsType.Fields.Where(field =>
                                     includeDeprecated || !field.IsDeprecated);
                             }
 

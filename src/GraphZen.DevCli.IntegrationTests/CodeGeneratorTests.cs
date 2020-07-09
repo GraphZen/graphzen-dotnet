@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
+using GraphZen.CodeGen;
+using GraphZen.Infrastructure;
+using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.CodeGen
+namespace GraphZen
 {
     public class CodeGeneratorTests
     {

@@ -12,12 +12,12 @@ namespace GraphZen.TypeSystem
 {
     public partial interface IMutableFieldsDefinition : IFieldsDefinition
     {
-        IReadOnlyDictionary<string, FieldDefinition> Fields { get; }
+        new IReadOnlyCollection<FieldDefinition> Fields { get; }
+        IReadOnlyDictionary<string, FieldDefinition> FieldMap { get; }
         FieldDefinition? GetOrAddField(string name, Type clrType, ConfigurationSource configurationSource);
         FieldDefinition? GetOrAddField(string name, string type, ConfigurationSource configurationSource);
         bool RemoveField(FieldDefinition field);
         bool AddField(FieldDefinition field);
         ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName);
-        new IEnumerable<FieldDefinition> GetFields();
     }
 }

@@ -19,11 +19,11 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public FieldDefinition? FindField(string name)
-            => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out var field) ? field : null;
+            => FieldMap.TryGetValue(Check.NotNull(name, nameof(name)), out var field) ? field : null;
 
         [GraphQLIgnore]
         public bool HasField(string name)
-            => Fields.ContainsKey(Check.NotNull(name, nameof(name)));
+            => FieldMap.ContainsKey(Check.NotNull(name, nameof(name)));
 
         [GraphQLIgnore]
         public FieldDefinition GetField(string name)
@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         public bool TryGetField(string name, [NotNullWhen(true)] out FieldDefinition? fieldDefinition)
-            => Fields.TryGetValue(Check.NotNull(name, nameof(name)), out fieldDefinition);
+            => FieldMap.TryGetValue(Check.NotNull(name, nameof(name)), out fieldDefinition);
 
         #endregion
     }

@@ -11,6 +11,6 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public interface IFieldsDefinition
     {
-        IEnumerable<IFieldDefinition> GetFields();
+        IReadOnlyCollection<IFieldDefinition> Fields { get; }
     }
 }

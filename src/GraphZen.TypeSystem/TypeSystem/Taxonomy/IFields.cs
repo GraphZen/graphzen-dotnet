@@ -11,11 +11,7 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public partial interface IFields : IFieldsDefinition, INamedType
     {
-        // [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
-        IReadOnlyDictionary<string, Field> Fields { get; }
-
-
-        [GraphQLCanBeNull]
-        new IEnumerable<Field> GetFields();
+        new IReadOnlyCollection<Field> Fields { get; }
+        IReadOnlyDictionary<string, Field> FieldMap { get; }
     }
 }

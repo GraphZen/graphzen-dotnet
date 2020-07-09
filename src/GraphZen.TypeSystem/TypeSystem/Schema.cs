@@ -526,7 +526,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(interfaceType, nameof(interfaceType));
 
 
-            foreach (var ifaceField in interfaceType.Fields.Values)
+            foreach (var ifaceField in interfaceType.Fields)
             {
                 var fieldName = ifaceField.Name;
                 var objectField = objectType.FindField(ifaceField.Name);
