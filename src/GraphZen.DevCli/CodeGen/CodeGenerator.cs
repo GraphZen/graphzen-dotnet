@@ -19,7 +19,6 @@ namespace GraphZen.CodeGen
 {
     public static class CodeGenerator
     {
-
         public static List<GeneratedCode> GetGeneratedCode()
         {
             var generated = new List<GeneratedCode>
@@ -30,8 +29,8 @@ namespace GraphZen.CodeGen
             generated.AddRange(PartialTypeGenerator.Generate(CreatePartialTypeGenerators()));
             generated.AddRange(TypeSystemSpecTestsCodeGenerator.ScaffoldSystemSpec());
             return generated.ToList();
-
         }
+
         public static void Generate(bool quick)
         {
             AssertChangesCommitted();

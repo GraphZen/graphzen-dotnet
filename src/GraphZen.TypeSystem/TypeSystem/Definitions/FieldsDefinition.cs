@@ -20,6 +20,7 @@ namespace GraphZen.TypeSystem
     public abstract partial class FieldsDefinition : NamedTypeDefinition, IMutableFieldsDefinition
     {
         private readonly Dictionary<string, FieldDefinition> _fields;
+
         private readonly Dictionary<string, ConfigurationSource> _ignoredFields =
             new Dictionary<string, ConfigurationSource>();
 
@@ -36,6 +37,7 @@ namespace GraphZen.TypeSystem
 
         [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
         public IReadOnlyDictionary<string, FieldDefinition> FieldMap { get; }
+
         public IReadOnlyCollection<FieldDefinition> Fields => _fields.Values;
 
         public bool AddField(FieldDefinition field)

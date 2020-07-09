@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem
         IMutableSubscriptionTypeDefinition,
         IMutableMutationTypeDefinition,
         IMutableDirectivesDefinition,
-    IMutableNamedTypesDefinition
+        IMutableNamedTypesDefinition
     {
     }
 }

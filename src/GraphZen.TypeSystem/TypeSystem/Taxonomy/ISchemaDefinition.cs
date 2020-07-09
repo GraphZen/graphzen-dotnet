@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem
         IMutationTypeDefinition,
         ISubscriptionTypeDefinition,
         IDirectivesDefinition,
-                IMemberParentDefinition
+        IMemberParentDefinition
     {
     }
 }

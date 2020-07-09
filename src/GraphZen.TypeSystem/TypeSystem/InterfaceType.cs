@@ -45,7 +45,6 @@ namespace GraphZen.TypeSystem
         public override IEnumerable<IMember> Children() => throw new NotImplementedException();
 
 
-
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]

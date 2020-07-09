@@ -29,7 +29,6 @@ namespace GraphZen.TypeSystem
                 new InputObjectTypeDefinitionSyntax(SyntaxFactory.Name(Name), SyntaxHelpers.Description(Description),
                     null,
                     Fields.ToSyntaxNodes<InputValueDefinitionSyntax>()));
-
         }
 
 
@@ -45,7 +44,6 @@ namespace GraphZen.TypeSystem
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputObject;
-
 
 
         public static InputObjectType From(IInputObjectTypeDefinition definition,

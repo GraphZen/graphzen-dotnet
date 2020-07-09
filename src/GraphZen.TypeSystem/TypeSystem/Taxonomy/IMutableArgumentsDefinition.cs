@@ -15,6 +15,7 @@ namespace GraphZen.TypeSystem
     {
         [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
         IReadOnlyDictionary<string, ArgumentDefinition> ArgumentMap { get; }
+
         new IReadOnlyCollection<ArgumentDefinition> Arguments { get; }
         ArgumentDefinition? GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource);
         ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource);

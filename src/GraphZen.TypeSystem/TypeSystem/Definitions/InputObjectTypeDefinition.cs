@@ -68,7 +68,6 @@ namespace GraphZen.TypeSystem
         }
 
 
-
         public bool RenameField(InputFieldDefinition field, string name,
             ConfigurationSource configurationSource)
         {

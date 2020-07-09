@@ -149,7 +149,6 @@ namespace GraphZen.TypeSystem
         public IReadOnlyDictionary<string, ArgumentDefinition> ArgumentMap => _args.ArgumentMap;
 
 
-
         public bool AddLocation(DirectiveLocation location, ConfigurationSource configurationSource)
         {
             var locationConfigurationSource = FindDirectiveLocationConfigurationSource(location);

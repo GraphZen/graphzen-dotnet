@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem
         ISubscriptionType,
         IDirectives,
         INamedTypes,
-            IMemberParent
+        IMemberParent
     {
     }
 }

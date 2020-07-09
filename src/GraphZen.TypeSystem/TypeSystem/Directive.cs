@@ -55,13 +55,11 @@ namespace GraphZen.TypeSystem
         [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
         public IReadOnlyDictionary<string, Argument> ArgumentMap { get; }
 
-        [GraphQLName("args")]
-        public IReadOnlyCollection<Argument> Arguments { get; }
+        [GraphQLName("args")] public IReadOnlyCollection<Argument> Arguments { get; }
         public string Name { get; }
 
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
-
 
 
         [GraphQLIgnore]

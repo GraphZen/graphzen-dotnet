@@ -74,9 +74,6 @@ namespace GraphZen.TypeSystem
             _args.RenameArgument(argument, name, configurationSource);
 
 
-
-
-
         public TypeReference FieldType => TypeReference;
         IGraphQLTypeReference IFieldDefinition.FieldType => FieldType;
         public Resolver<object, object?>? Resolver { get; set; }

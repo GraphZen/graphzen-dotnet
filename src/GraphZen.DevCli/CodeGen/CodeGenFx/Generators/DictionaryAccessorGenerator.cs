@@ -49,8 +49,10 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
             var gArgs = memberType.GetGenericArguments();
             if (gArgs.Length != 2)
             {
-                throw new InvalidOperationException($"{nameof(DictionaryAccessorGenerator)}: {Member.DeclaringType?.Name}.{Member.Name} does not have two genric arguments. Is it a dictionary?");
+                throw new InvalidOperationException(
+                    $"{nameof(DictionaryAccessorGenerator)}: {Member.DeclaringType?.Name}.{Member.Name} does not have two genric arguments. Is it a dictionary?");
             }
+
             var keyType = memberType.GetGenericArguments()[0].Name;
             var valueType = memberType.GetGenericArguments()[1].Name;
             var valueName = Attribute.ValueName;

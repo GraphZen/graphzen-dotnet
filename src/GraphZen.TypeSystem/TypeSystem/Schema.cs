@@ -603,7 +603,9 @@ namespace GraphZen.TypeSystem
             TryGetDirective(typeof(TDirective), out directive);
 
         public override string ToString() => "Schema";
-        IEnumerable<INamedTypeDefinition> INamedTypesDefinition.GetTypes(bool includeSpecTypes) => GetTypes(includeSpecTypes);
+
+        IEnumerable<INamedTypeDefinition> INamedTypesDefinition.GetTypes(bool includeSpecTypes) =>
+            GetTypes(includeSpecTypes);
 
         ISchemaDefinition IMemberDefinition.Schema => this;
         IEnumerable<IMemberDefinition> IMemberParentDefinition.Children() => Children();

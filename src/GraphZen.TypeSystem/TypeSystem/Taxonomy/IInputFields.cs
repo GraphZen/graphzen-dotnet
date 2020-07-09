@@ -14,7 +14,5 @@ namespace GraphZen.TypeSystem
         IReadOnlyDictionary<string, InputField> FieldMap { get; }
 
         new IReadOnlyCollection<InputField> Fields { get; }
-
-
     }
 }

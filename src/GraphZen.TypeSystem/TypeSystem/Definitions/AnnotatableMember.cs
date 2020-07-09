@@ -28,7 +28,6 @@ namespace GraphZen.TypeSystem
         public abstract DirectiveLocation DirectiveLocation { get; }
 
 
-
         [GraphQLIgnore]
         public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(string name)
         {

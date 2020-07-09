@@ -16,6 +16,7 @@ namespace GraphZen.TypeSystem
 
         [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
         IReadOnlyDictionary<string, FieldDefinition> FieldMap { get; }
+
         FieldDefinition? GetOrAddField(string name, Type clrType, ConfigurationSource configurationSource);
         FieldDefinition? GetOrAddField(string name, string type, ConfigurationSource configurationSource);
         bool RemoveField(FieldDefinition field);

@@ -41,10 +41,7 @@ namespace GraphZen.TypeSystem
 
             _interfaceMap = new Lazy<IReadOnlyDictionary<string, InterfaceType>>(() =>
                 {
-                    return interfaces.ToReadOnlyDictionary(_ => _.Name, _ =>
-                    {
-                        return schema.GetInterface(_.Name);
-                    });
+                    return interfaces.ToReadOnlyDictionary(_ => _.Name, _ => { return schema.GetInterface(_.Name); });
                 }
             );
             _interfaces =
@@ -72,7 +69,6 @@ namespace GraphZen.TypeSystem
         public override TypeKind Kind { get; } = TypeKind.Object;
 
         public override IEnumerable<IMember> Children() => Fields;
-
 
 
         public IReadOnlyCollection<Field> Fields => _fields.Value;

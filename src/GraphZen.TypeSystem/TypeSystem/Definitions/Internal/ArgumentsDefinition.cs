@@ -141,7 +141,6 @@ namespace GraphZen.TypeSystem.Internal
         public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
 
 
-
         public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(argument.GetNameConfigurationSource()))
