@@ -11,6 +11,5 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public interface IDirectiveAnnotations : IDirectiveAnnotationsDefinition
     {
-        IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations { get; }
     }
 }

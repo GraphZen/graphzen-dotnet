@@ -713,7 +713,7 @@ namespace GraphZen.TypeSystem
                         }
                     case InputObjectTypeDefinition hasInputFields:
                         {
-                            foreach (var field in hasInputFields.GetFields())
+                            foreach (var field in hasInputFields.Fields)
                             {
                                 yield return field.FieldType;
                             }

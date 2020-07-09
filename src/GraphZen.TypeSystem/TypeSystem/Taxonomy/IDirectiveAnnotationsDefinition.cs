@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem
     public interface IDirectiveAnnotationsDefinition
     {
         DirectiveLocation DirectiveLocation { get; }
-        IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations();
+        IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations { get; }
         IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(string name);
         bool HasAnyDirectiveAnnotation(string name);
         IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(Func<IDirectiveAnnotation, bool> predicate);

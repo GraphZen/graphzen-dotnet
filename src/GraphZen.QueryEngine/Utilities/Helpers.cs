@@ -103,7 +103,7 @@ namespace GraphZen.Utilities
                         return f.Name.Value;
                     }, f => f);
 
-                    foreach (var field in inputObject.Fields.Values)
+                    foreach (var field in inputObject.Fields)
                     {
                         Debug.Assert(field != null, nameof(field) + " != null");
                         if (!fieldNodes.TryGetValue(field.Name, out var fieldNode) ||

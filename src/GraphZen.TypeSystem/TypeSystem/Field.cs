@@ -110,7 +110,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition.FieldType, nameof(definition.FieldType));
             return new Field(definition.Name, definition.Description, declaringType,
                 definition.FieldType, Argument.CreateArguments(definition.Arguments), definition.Resolver,
-                definition.GetDirectiveAnnotations(),
+                definition.DirectiveAnnotations,
                 definition.ClrInfo,
                 schema);
         }

@@ -53,7 +53,7 @@ namespace GraphZen.TypeSystem
             _syntax = new Lazy<ObjectTypeDefinitionSyntax>(() =>
             {
                 var fieldNodes = Fields.ToSyntaxNodes<FieldDefinitionSyntax>();
-                var dirs = GetDirectiveAnnotations().ToDirectiveNodes();
+                var dirs = DirectiveAnnotations.ToDirectiveNodes();
 
                 var syntax = new ObjectTypeDefinitionSyntax(
                     SyntaxFactory.Name(Name),
@@ -94,7 +94,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(schema, nameof(Schema));
             return new ObjectType(definition.Name, definition.Description, definition.ClrType, definition.IsTypeOf,
                 definition.Fields, definition.GetInterfaces(),
-                definition.GetDirectiveAnnotations().ToList(),
+                definition.DirectiveAnnotations,
                 schema
             );
         }

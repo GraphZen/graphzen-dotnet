@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(definition, nameof(definition));
             return new InputField(definition.Name, definition.Description, definition.FieldType,
-                definition.DefaultValue, definition.HasDefaultValue, definition.GetDirectiveAnnotations(),
+                definition.DefaultValue, definition.HasDefaultValue, definition.DirectiveAnnotations,
                 definition.ClrInfo, declaringType);
         }
     }

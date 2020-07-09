@@ -23,16 +23,20 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(fields, nameof(fields));
             Check.NotNull(schema, nameof(schema));
-            Fields = fields.ToReadOnlyDictionary(_ => _.Name, _ => InputField.From(_, this));
+            FieldMap = fields.ToReadOnlyDictionary(_ => _.Name, _ => InputField.From(_, this));
+            Fields = FieldMap.Values.ToList().AsReadOnly();
             _syntax = new Lazy<InputObjectTypeDefinitionSyntax>(() =>
                 new InputObjectTypeDefinitionSyntax(SyntaxFactory.Name(Name), SyntaxHelpers.Description(Description),
                     null,
-                    Fields.Values.ToSyntaxNodes<InputValueDefinitionSyntax>()));
+                    Fields.ToSyntaxNodes<InputValueDefinitionSyntax>()));
+
         }
 
 
         [GenDictionaryAccessors(nameof(InputField.Name), "Field")]
-        public IReadOnlyDictionary<string, InputField> Fields { get; }
+        public IReadOnlyDictionary<string, InputField> FieldMap { get; }
+
+        public IReadOnlyCollection<InputField> Fields { get; }
 
 
         public override TypeKind Kind { get; } = TypeKind.InputObject;
@@ -42,7 +46,6 @@ namespace GraphZen.TypeSystem
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputObject;
 
-        public IEnumerable<InputField> GetFields() => Fields.Values;
 
 
         public static InputObjectType From(IInputObjectTypeDefinition definition,
@@ -51,9 +54,9 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(schema, nameof(schema));
             return new InputObjectType(definition.Name, definition.Description, definition.ClrType,
-                definition.GetFields(), definition.GetDirectiveAnnotations().ToList(), schema);
+                definition.Fields, definition.DirectiveAnnotations, schema);
         }
 
-        IEnumerable<IInputFieldDefinition> IInputFieldsDefinition.GetFields() => GetFields();
+        IReadOnlyCollection<IInputFieldDefinition> IInputFieldsDefinition.Fields => Fields;
     }
 }

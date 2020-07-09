@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem
             _syntax = new Lazy<InterfaceTypeDefinitionSyntax>(() => new InterfaceTypeDefinitionSyntax(
                 SyntaxFactory.Name(Name),
                 Description != null ? SyntaxFactory.StringValue(Description, true) : null,
-                GetDirectiveAnnotations().ToDirectiveNodes(),
+                DirectiveAnnotations.ToDirectiveNodes(),
                 Fields.ToSyntaxNodes<FieldDefinitionSyntax>()));
         }
 
@@ -63,7 +63,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(schema, nameof(schema));
             return new InterfaceType(definition.Name, definition.Description, definition.ClrType,
-                definition.Fields, definition.ResolveType, definition.GetDirectiveAnnotations().ToList(), schema);
+                definition.Fields, definition.ResolveType, definition.DirectiveAnnotations, schema);
         }
 
         IReadOnlyCollection<IFieldDefinition> IFieldsDefinition.Fields => Fields;

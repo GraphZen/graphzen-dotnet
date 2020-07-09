@@ -11,9 +11,10 @@ namespace GraphZen.TypeSystem
     public partial interface IInputFields : IInputFieldsDefinition
     {
         [GenDictionaryAccessors(nameof(InputField.Name), "Field")]
-        IReadOnlyDictionary<string, InputField> Fields { get; }
+        IReadOnlyDictionary<string, InputField> FieldMap { get; }
+
+        new IReadOnlyCollection<InputField> Fields { get; }
 
 
-        new IEnumerable<InputField> GetFields();
     }
 }

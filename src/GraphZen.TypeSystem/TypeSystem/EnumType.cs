@@ -92,7 +92,7 @@ namespace GraphZen.TypeSystem
                 definition.Description,
                 definition.ClrType,
                 definition.GetValues(),
-                definition.GetDirectiveAnnotations().ToList(), schema);
+                definition.DirectiveAnnotations, schema);
         }
     }
 }

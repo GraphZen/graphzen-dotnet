@@ -27,7 +27,6 @@ namespace GraphZen.TypeSystem
         [EditorBrowsable(EditorBrowsableState.Never)]
         public abstract DirectiveLocation DirectiveLocation { get; }
 
-        public IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations() => _annotations;
 
 
         [GraphQLIgnore]

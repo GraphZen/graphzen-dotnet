@@ -12,11 +12,12 @@ namespace GraphZen.TypeSystem
     public partial interface IMutableInputFieldsDefinition : IInputFieldsDefinition
     {
         [GenDictionaryAccessors(nameof(InputFieldDefinition.Name), "Field")]
-        IReadOnlyDictionary<string, InputFieldDefinition> Fields { get; }
+        IReadOnlyDictionary<string, InputFieldDefinition> FieldMap { get; }
+
+        new IReadOnlyCollection<InputFieldDefinition> Fields { get; }
 
         bool RemoveField(InputFieldDefinition field);
         bool AddField(InputFieldDefinition field);
         ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName);
-        new IEnumerable<InputFieldDefinition> GetFields();
     }
 }

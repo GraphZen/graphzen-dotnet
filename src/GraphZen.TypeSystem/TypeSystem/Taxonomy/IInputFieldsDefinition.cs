@@ -10,6 +10,6 @@ namespace GraphZen.TypeSystem
 {
     public interface IInputFieldsDefinition
     {
-        IEnumerable<IInputFieldDefinition> GetFields();
+        IReadOnlyCollection<IInputFieldDefinition> Fields { get; }
     }
 }

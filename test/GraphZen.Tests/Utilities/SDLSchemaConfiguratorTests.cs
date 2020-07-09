@@ -736,7 +736,7 @@ namespace GraphZen.Tests.Utilities
             var testField = query.GetField("testField");
             testField.Print().Should().Be("testField(testArg: TestInput): TestUnion");
             testField.Arguments.First().Print().Should().Be("testArg: TestInput");
-            testInput.Fields["testInputField"].Print().Should().Be("testInputField: TestEnum");
+            testInput.FieldMap["testInputField"].Print().Should().Be("testInputField: TestEnum");
             testEnum.GetValue("TEST_VALUE").Print().Should().Be("TEST_VALUE");
             testInterface.FieldMap["interfaceField"].Print().Should().Be("interfaceField: String");
             testType.FieldMap["interfaceField"].Print().Should().Be("interfaceField: String");

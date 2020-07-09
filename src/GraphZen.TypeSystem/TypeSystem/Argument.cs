@@ -39,14 +39,14 @@ namespace GraphZen.TypeSystem
         internal static Func<IArguments, IEnumerable<Argument>> CreateArguments(
             IEnumerable<IArgumentDefinition> arguments) =>
             declaringMember => arguments.Select(_ => new Argument(_.Name, _.Description, _.ArgumentType, _.DefaultValue,
-                _.HasDefaultValue, _.GetDirectiveAnnotations(), declaringMember, _.ClrInfo));
+                _.HasDefaultValue, _.DirectiveAnnotations, declaringMember, _.ClrInfo));
 
         [GraphQLIgnore]
         public static Argument From(IArgumentDefinition definition, IArguments declaringMember)
         {
             Check.NotNull(definition, nameof(definition));
             return new Argument(definition.Name, definition.Description, definition.ArgumentType,
-                definition.DefaultValue, definition.HasDefaultValue, definition.GetDirectiveAnnotations(),
+                definition.DefaultValue, definition.HasDefaultValue, definition.DirectiveAnnotations,
                 declaringMember, definition.ClrInfo);
         }
     }

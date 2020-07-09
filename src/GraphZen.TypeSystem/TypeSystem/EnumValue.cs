@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
@@ -60,7 +59,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(definition, nameof(definition));
             return new EnumValue(definition.Name, definition.Description, definition.Value, definition.IsDeprecated,
-                definition.DeprecationReason, definition.GetDirectiveAnnotations().ToList(), declaringTye);
+                definition.DeprecationReason, definition.DirectiveAnnotations, declaringTye);
         }
 
         public override string ToString() => $"{Name} ({Value.Inspect()})";

@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem.Internal
             {
                 var fieldsNodes = new List<ObjectFieldSyntax>();
                 var valueDictionary = JObject.FromObject(value).ToDictionary();
-                foreach (var field in inputObject.Fields.Values)
+                foreach (var field in inputObject.Fields)
                 {
                     if (valueDictionary.TryGetValue(field.Name, out var fv))
                     {

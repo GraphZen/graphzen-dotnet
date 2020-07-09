@@ -205,7 +205,7 @@ namespace GraphZen.QueryEngine
 
 
                         // Ensure every defined field is valid
-                        foreach (var field in inputObject.Fields.Values)
+                        foreach (var field in inputObject.Fields)
                         {
                             var fieldValue = values.TryGetValue(field.Name, out var fv) ? fv : null;
                             if (fieldValue == null)

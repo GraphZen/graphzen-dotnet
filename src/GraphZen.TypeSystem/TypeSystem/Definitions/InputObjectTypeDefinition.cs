@@ -34,7 +34,7 @@ namespace GraphZen.TypeSystem
             Builder = new InputObjectTypeBuilder(InternalBuilder);
         }
 
-        public override IEnumerable<IMemberDefinition> Children() => GetFields();
+        public override IEnumerable<IMemberDefinition> Children() => Fields;
 
         private string DebuggerDisplay => $"input {Name}";
 
@@ -52,9 +52,10 @@ namespace GraphZen.TypeSystem
 
 
         [GenDictionaryAccessors(nameof(InputFieldDefinition.Name), "Field")]
-        public IReadOnlyDictionary<string, InputFieldDefinition> Fields => _fields;
+        public IReadOnlyDictionary<string, InputFieldDefinition> FieldMap => _fields;
 
-        public IEnumerable<InputFieldDefinition> GetFields() => _fields.Values;
+        public IReadOnlyCollection<InputFieldDefinition> Fields => _fields.Values;
+
 
         public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
         {
@@ -66,7 +67,6 @@ namespace GraphZen.TypeSystem
             return null;
         }
 
-        IEnumerable<IInputFieldDefinition> IInputFieldsDefinition.GetFields() => GetFields();
 
 
         public bool RenameField(InputFieldDefinition field, string name,
@@ -280,5 +280,7 @@ namespace GraphZen.TypeSystem
             _fields[name] = field;
             return field;
         }
+
+        IReadOnlyCollection<IInputFieldDefinition> IInputFieldsDefinition.Fields => Fields;
     }
 }
