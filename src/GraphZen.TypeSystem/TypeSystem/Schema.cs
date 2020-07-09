@@ -548,9 +548,8 @@ namespace GraphZen.TypeSystem
                 }
 
                 // Assert each interface field arg is implemented.
-                foreach (var ifaceArg in ifaceField.GetArguments())
+                foreach (var (argName, ifaceArg) in ifaceField.ArgumentMap)
                 {
-                    var argName = ifaceArg.Name;
                     var objectArg = objectField.FindArgument(argName);
                     // Assert interface field arg exists on object field.
                     if (objectArg == null)
@@ -571,9 +570,9 @@ namespace GraphZen.TypeSystem
                     }
                 }
 
-                foreach (var objectArg in objectField.GetArguments())
+                foreach (var (argName, objectArg) in objectField.ArgumentMap)
                 {
-                    var argName = objectArg.Name;
+                    // var argName = objectArg.Name;
                     var ifaceArg = ifaceField.FindArgument(argName);
                     if (ifaceArg == null)
                     {

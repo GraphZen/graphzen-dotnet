@@ -288,7 +288,7 @@ namespace GraphZen.QueryEngine
             IReadOnlyDictionary<string, object> variableValues) where TNode : SyntaxNode, IArgumentsNode
         {
             var coercedValues = new DynamicDictionary();
-            var argDefs = def.GetArguments();
+            var argDefs = def.Arguments;
             var argNodes = node.Arguments;
 
             var argNodeMap = argNodes.ToDictionary(arg => arg.Name.Value, arg => arg);

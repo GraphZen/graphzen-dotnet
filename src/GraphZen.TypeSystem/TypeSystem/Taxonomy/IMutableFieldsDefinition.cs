@@ -13,6 +13,8 @@ namespace GraphZen.TypeSystem
     public interface IMutableFieldsDefinition : IFieldsDefinition
     {
         new IReadOnlyCollection<FieldDefinition> Fields { get; }
+
+        [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
         IReadOnlyDictionary<string, FieldDefinition> FieldMap { get; }
         FieldDefinition? GetOrAddField(string name, Type clrType, ConfigurationSource configurationSource);
         FieldDefinition? GetOrAddField(string name, string type, ConfigurationSource configurationSource);

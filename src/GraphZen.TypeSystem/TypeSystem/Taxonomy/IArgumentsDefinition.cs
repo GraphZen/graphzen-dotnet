@@ -11,6 +11,6 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public interface IArgumentsDefinition : IMemberDefinition
     {
-        IEnumerable<IArgumentDefinition> GetArguments();
+        IReadOnlyCollection<IArgumentDefinition> Arguments { get; }
     }
 }

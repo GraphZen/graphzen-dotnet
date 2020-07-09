@@ -688,7 +688,7 @@ namespace GraphZen.TypeSystem
 
         public IEnumerable<TypeReference> GetTypeReferences()
         {
-            foreach (var directiveArg in _directives.Values.Where(_ => !_.IsSpec).SelectMany(_ => _.GetArguments()))
+            foreach (var directiveArg in _directives.Values.Where(_ => !_.IsSpec).SelectMany(_ => _.Arguments))
             {
                 yield return directiveArg.ArgumentType;
             }
@@ -703,7 +703,7 @@ namespace GraphZen.TypeSystem
                             {
                                 yield return field.FieldType;
 
-                                foreach (var arg in field.GetArguments())
+                                foreach (var arg in field.Arguments)
                                 {
                                     yield return arg.ArgumentType;
                                 }

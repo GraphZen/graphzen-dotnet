@@ -735,13 +735,13 @@ namespace GraphZen.Tests.Utilities
             restoredSchemaAST.ToSyntaxString().Should().Be(schemaAST.ToSyntaxString());
             var testField = query.GetField("testField");
             testField.Print().Should().Be("testField(testArg: TestInput): TestUnion");
-            testField.GetArguments().First().Print().Should().Be("testArg: TestInput");
+            testField.Arguments.First().Print().Should().Be("testArg: TestInput");
             testInput.Fields["testInputField"].Print().Should().Be("testInputField: TestEnum");
             testEnum.GetValue("TEST_VALUE").Print().Should().Be("TEST_VALUE");
             testInterface.FieldMap["interfaceField"].Print().Should().Be("interfaceField: String");
             testType.FieldMap["interfaceField"].Print().Should().Be("interfaceField: String");
             // ReSharper disable once PossibleNullReferenceException
-            testDirective.GetArguments().First().Print().Should().Be("arg: TestScalar");
+            testDirective.Arguments.First().Print().Should().Be("arg: TestScalar");
         }
 
         [Fact]

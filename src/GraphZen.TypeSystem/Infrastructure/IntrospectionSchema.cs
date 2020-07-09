@@ -86,12 +86,12 @@ namespace GraphZen.Infrastructure
                     });
 
             sb.Object<Directive>()
-                .Field<IEnumerable<InputValue>>("args", f => f.Resolve(d => d.GetArguments()));
+                .Field<IEnumerable<InputValue>>("args", f => f.Resolve(d => d.Arguments));
 
             sb.Enum<DirectiveLocation>();
 
             sb.Object<Field>()
-                .Field<IEnumerable<InputValue>>("args", f => f.Resolve(d => d.GetArguments()));
+                .Field<IEnumerable<InputValue>>("args", f => f.Resolve(d => d.Arguments));
 
             sb.Object<InputValue>()
                 .Field("defaultValue", "String", _ => _

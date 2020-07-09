@@ -19,11 +19,11 @@ namespace GraphZen.TypeSystem.Internal
 
         [GraphQLIgnore]
         public ArgumentDefinition? FindArgument(string name)
-            => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var argument) ? argument : null;
+            => ArgumentMap.TryGetValue(Check.NotNull(name, nameof(name)), out var argument) ? argument : null;
 
         [GraphQLIgnore]
         public bool HasArgument(string name)
-            => Arguments.ContainsKey(Check.NotNull(name, nameof(name)));
+            => ArgumentMap.ContainsKey(Check.NotNull(name, nameof(name)));
 
         [GraphQLIgnore]
         public ArgumentDefinition GetArgument(string name)
@@ -33,7 +33,7 @@ namespace GraphZen.TypeSystem.Internal
 
         [GraphQLIgnore]
         public bool TryGetArgument(string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
-            => Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
+            => ArgumentMap.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
 
         #endregion
     }

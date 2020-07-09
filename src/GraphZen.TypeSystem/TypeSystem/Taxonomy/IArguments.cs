@@ -11,10 +11,9 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public partial interface IArguments : IArgumentsDefinition, IMember
     {
+        new IReadOnlyCollection<Argument> Arguments { get; }
+
         [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
-        IReadOnlyDictionary<string, Argument> Arguments { get; }
-
-
-        new IEnumerable<Argument> GetArguments();
+        IReadOnlyDictionary<string, Argument> ArgumentMap { get; }
     }
 }

@@ -13,14 +13,13 @@ namespace GraphZen.TypeSystem
     [GraphQLIgnore]
     public partial interface IMutableArgumentsDefinition : IArgumentsDefinition, IMutableDefinition
     {
-        [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
-        IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
-
+        [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
+        IReadOnlyDictionary<string, ArgumentDefinition> ArgumentMap { get; }
+        new IReadOnlyCollection<ArgumentDefinition> Arguments { get; }
         ArgumentDefinition? GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource);
         ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource);
         bool RemoveArgument(ArgumentDefinition argument);
         bool AddArgument(ArgumentDefinition argument);
         ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name);
-        new IEnumerable<ArgumentDefinition> GetArguments();
     }
 }

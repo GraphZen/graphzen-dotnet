@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem
         private readonly ArgumentsDefinition _args;
 
         public override SchemaDefinition Schema { get; }
-        public IEnumerable<IMemberDefinition> Children() => GetArguments();
+        public IEnumerable<IMemberDefinition> Children() => Arguments;
 
         public FieldDefinition(string name, ConfigurationSource nameConfigurationSource,
             TypeIdentity fieldTypeIdentity,
@@ -74,11 +74,8 @@ namespace GraphZen.TypeSystem
             _args.RenameArgument(argument, name, configurationSource);
 
 
-        //public bool RemoveArgument(ArgumentDefinition argument, ConfigurationSource configurationSource) =>
-        //    _args.RemoveArgument(argument, configurationSource);
 
 
-        public IEnumerable<ArgumentDefinition> GetArguments() => _args.GetArguments();
 
         public TypeReference FieldType => TypeReference;
         IGraphQLTypeReference IFieldDefinition.FieldType => FieldType;
@@ -117,7 +114,9 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.FieldDefinition;
 
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
-        public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _args.Arguments;
+        public IReadOnlyDictionary<string, ArgumentDefinition> ArgumentMap => _args.ArgumentMap;
+
+        public IReadOnlyCollection<ArgumentDefinition> Arguments => _args.Arguments;
 
         public ArgumentDefinition?
             GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource) =>
@@ -154,7 +153,6 @@ namespace GraphZen.TypeSystem
 
         public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
 
-        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
         object? IClrInfo.ClrInfo => ClrInfo;
 
@@ -173,7 +171,7 @@ namespace GraphZen.TypeSystem
         public ArgumentDefinition? FindArgument(ParameterInfo member)
         {
             // ReSharper disable once PossibleNullReferenceException
-            var memberMatch = GetArguments().SingleOrDefault(_ => _.ClrInfo == member);
+            var memberMatch = Arguments.SingleOrDefault(_ => _.ClrInfo == member);
             if (memberMatch != null)
             {
                 return memberMatch;
@@ -215,7 +213,6 @@ namespace GraphZen.TypeSystem
 
         public bool AddArgument(ArgumentDefinition argument) => _args.AddArgument(argument);
 
-
         public override string ToString() => $"{DeclaringType.GetTypeDisplayName()} field {DeclaringType.Name}.{Name}";
 
         public ConfigurationSource GetTypeReferenceConfigurationSource() =>
@@ -231,5 +228,6 @@ namespace GraphZen.TypeSystem
             TypeReference.Update(type, configurationSource);
 
         IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
+        IReadOnlyCollection<IArgumentDefinition> IArgumentsDefinition.Arguments => Arguments;
     }
 }

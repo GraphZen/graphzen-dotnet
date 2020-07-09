@@ -37,16 +37,15 @@ namespace GraphZen.TypeSystem
             Locations = locations;
             IsRepeatable = repeatable;
 
-            // arguments = arguments != null ? Enumerable.Empty<IArgumentDefinition>();
-            // ReSharper disable once PossibleNullReferenceException
-            Arguments = new ReadOnlyDictionary<string, Argument>(arguments.ToDictionary(_ => _.Name,
+            ArgumentMap = new ReadOnlyDictionary<string, Argument>(arguments.ToDictionary(_ => _.Name,
                 _ => Argument.From(_, this)));
+            Arguments = ArgumentMap.Values.ToList().AsReadOnly();
             _syntax = new Lazy<DirectiveDefinitionSyntax>(() =>
             {
                 return new DirectiveDefinitionSyntax(SyntaxFactory.Name(Name),
                     Locations.Select(DirectiveLocationHelper.ToStringValue).Select(_ => SyntaxFactory.Name(_))
                         .ToArray(),
-                    Arguments.Values.ToSyntaxNodes<InputValueDefinitionSyntax>().ToList(),
+                    Arguments.ToSyntaxNodes<InputValueDefinitionSyntax>().ToList(),
                     SyntaxHelpers.Description(Description)
                 );
             });
@@ -54,25 +53,22 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
-        public IReadOnlyDictionary<string, Argument> Arguments { get; }
+        public IReadOnlyDictionary<string, Argument> ArgumentMap { get; }
 
+        [GraphQLName("args")]
+        public IReadOnlyCollection<Argument> Arguments { get; }
         public string Name { get; }
 
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
-        [GraphQLName("args")]
-        public IEnumerable<Argument> GetArguments() => Arguments.Values;
-
-        [GraphQLIgnore]
-        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
 
         [GraphQLIgnore]
         public static Directive From(IDirectiveDefinition definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
-            return new Directive(definition.Name, definition.Description, definition.GetArguments(),
+            return new Directive(definition.Name, definition.Description, definition.Arguments,
                 definition.IsRepeatable, definition.Locations, definition.ClrType, schema);
         }
 
@@ -91,9 +87,10 @@ namespace GraphZen.TypeSystem
 
         IEnumerable<IMemberDefinition> IMemberParentDefinition.Children() => Children();
 
-        public IEnumerable<IMember> Children() => GetArguments();
+        public IEnumerable<IMember> Children() => Arguments;
 
         [GraphQLIgnore] public bool IsSpec { get; }
         public bool IsRepeatable { get; }
+        IReadOnlyCollection<IArgumentDefinition> IArgumentsDefinition.Arguments => Arguments;
     }
 }

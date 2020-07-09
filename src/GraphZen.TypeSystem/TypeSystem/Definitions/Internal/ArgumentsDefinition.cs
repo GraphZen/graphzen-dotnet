@@ -33,8 +33,10 @@ namespace GraphZen.TypeSystem.Internal
 
         ISchemaDefinition IMemberDefinition.Schema => Schema;
 
-        [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
-        public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _arguments;
+        [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
+        public IReadOnlyDictionary<string, ArgumentDefinition> ArgumentMap => _arguments;
+
+        public IReadOnlyCollection<ArgumentDefinition> Arguments => _arguments.Values;
 
         public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource)
         {
@@ -138,7 +140,6 @@ namespace GraphZen.TypeSystem.Internal
 
         public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
 
-        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
 
         public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
@@ -202,5 +203,7 @@ namespace GraphZen.TypeSystem.Internal
         {
             _ignoredArguments.Remove(name);
         }
+
+        IReadOnlyCollection<IArgumentDefinition> IArgumentsDefinition.Arguments => Arguments;
     }
 }

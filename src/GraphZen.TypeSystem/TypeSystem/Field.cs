@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -43,9 +44,11 @@ namespace GraphZen.TypeSystem
                         e);
                 }
             });
-            Arguments = arguments == null
+            ArgumentMap = arguments == null
                 ? ImmutableDictionary<string, Argument>.Empty
                 : arguments(this).ToReadOnlyDictionary(_ => _.Name);
+
+            Arguments = ArgumentMap.Values.ToList().AsReadOnly();
 
             Resolver = resolver;
             ClrInfo = clrInfo;
@@ -55,7 +58,7 @@ namespace GraphZen.TypeSystem
                 var fieldTypeNode = FieldType.ToTypeSyntax();
                 return new FieldDefinitionSyntax(SyntaxFactory.Name(Name), fieldTypeNode,
                     SyntaxHelpers.Description(Description),
-                    Arguments.Values.ToSyntaxNodes<InputValueDefinitionSyntax>());
+                    Arguments.ToSyntaxNodes<InputValueDefinitionSyntax>());
             });
         }
 
@@ -78,8 +81,10 @@ namespace GraphZen.TypeSystem
 
         [GraphQLIgnore]
         [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
-        public IReadOnlyDictionary<string, Argument> Arguments { get; }
+        public IReadOnlyDictionary<string, Argument> ArgumentMap { get; }
 
+        [GraphQLName("args")]
+        public IReadOnlyCollection<Argument> Arguments { get; }
 
         public string Name { get; }
 
@@ -87,11 +92,7 @@ namespace GraphZen.TypeSystem
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
-        [GraphQLIgnore]
-        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
-        [GraphQLName("args")]
-        public IEnumerable<Argument> GetArguments() => Arguments.Values;
 
         [GraphQLIgnore] public MemberInfo? ClrInfo { get; }
 
@@ -108,7 +109,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(definition.FieldType, nameof(definition.FieldType));
             return new Field(definition.Name, definition.Description, declaringType,
-                definition.FieldType, Argument.CreateArguments(definition.GetArguments()), definition.Resolver,
+                definition.FieldType, Argument.CreateArguments(definition.Arguments), definition.Resolver,
                 definition.GetDirectiveAnnotations(),
                 definition.ClrInfo,
                 schema);
@@ -118,6 +119,7 @@ namespace GraphZen.TypeSystem
         public override string ToString() => $"{DeclaringType}.{Name}";
         IEnumerable<IMemberDefinition> IMemberParentDefinition.Children() => Children();
 
-        public IEnumerable<IMember> Children() => GetArguments();
+        public IEnumerable<IMember> Children() => Arguments;
+        IReadOnlyCollection<IArgumentDefinition> IArgumentsDefinition.Arguments => Arguments;
     }
 }

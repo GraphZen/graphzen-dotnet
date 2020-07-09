@@ -95,7 +95,9 @@ namespace GraphZen.TypeSystem
         private string DebuggerDisplay => $"directive {Name}";
 
         public override SchemaDefinition Schema { get; }
-        public IEnumerable<IMemberDefinition> Children() => GetArguments();
+        public IEnumerable<IMemberDefinition> Children() => Arguments;
+
+        public IReadOnlyCollection<ArgumentDefinition> Arguments => _args.Arguments;
 
         InternalDirectiveBuilder IInfrastructure<InternalDirectiveBuilder>.Instance => InternalBuilder;
 
@@ -144,9 +146,9 @@ namespace GraphZen.TypeSystem
 
 
         [GenDictionaryAccessors(nameof(ArgumentDefinition.Name), "Argument")]
-        public IReadOnlyDictionary<string, ArgumentDefinition> Arguments => _args.Arguments;
+        public IReadOnlyDictionary<string, ArgumentDefinition> ArgumentMap => _args.ArgumentMap;
 
-        public IEnumerable<ArgumentDefinition> GetArguments() => Arguments.Values;
+
 
         public bool AddLocation(DirectiveLocation location, ConfigurationSource configurationSource)
         {
@@ -315,7 +317,6 @@ namespace GraphZen.TypeSystem
         public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
         public bool IsSpec { get; }
         public bool IsRepeatable { get; private set; }
-        IEnumerable<IArgumentDefinition> IArgumentsDefinition.GetArguments() => GetArguments();
 
         public bool SetRepeatable(bool repeatable, ConfigurationSource configurationSource)
         {
@@ -342,5 +343,7 @@ namespace GraphZen.TypeSystem
         public override string ToString() => ClrType != null && ClrType.Name != Name
             ? $"directive {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})"
             : $"directive {Name}";
+
+        IReadOnlyCollection<IArgumentDefinition> IArgumentsDefinition.Arguments => Arguments;
     }
 }
