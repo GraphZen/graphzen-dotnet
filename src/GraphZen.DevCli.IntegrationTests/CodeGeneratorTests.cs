@@ -11,7 +11,7 @@ namespace GraphZen
         [Fact]
         public void TestCodeGen()
         {
-            var test = CodeGenerator.GetGeneratedCode();
+            CodeGenerator.GetGeneratedCode();
         }
 
     }
