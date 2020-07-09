@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public partial interface IMutableFieldsDefinition : IFieldsDefinition
+    public interface IMutableFieldsDefinition : IFieldsDefinition
     {
         new IReadOnlyCollection<FieldDefinition> Fields { get; }
         IReadOnlyDictionary<string, FieldDefinition> FieldMap { get; }
