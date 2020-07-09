@@ -55,7 +55,6 @@ namespace GraphZen.LanguageModel.Validation.Rules
                     {
                         objectTypeNode.Name
                     };
-                    // ReSharper disable once PossibleNullReferenceException
                     nodes.AddRange(extensionNodes.Select(_ => _.Name));
                     ReportError($"Type {objectTypeName} must define one or more fields.", nodes);
                 }

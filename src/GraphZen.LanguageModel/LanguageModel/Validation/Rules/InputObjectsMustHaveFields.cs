@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using GraphZen.Infrastructure;
@@ -41,17 +40,13 @@ namespace GraphZen.LanguageModel.Validation.Rules
             foreach (var input in _inputObjects)
             {
                 var inputExts = _extensions.GetItems(input.Key);
-                Debug.Assert(input.Value != null, "input.Value != null");
                 var inputFields = input.Value
-                    // ReSharper disable once PossibleNullReferenceException
                     .SelectMany(_ => _.Fields)
-                    // ReSharper disable once PossibleNullReferenceException
                     .Concat(inputExts.SelectMany(_ => _.Fields))
                     .ToArray();
                 if (!inputFields.Any())
                 {
                     ReportError($"Input Object type {input.Key} must define one or more fields.",
-                        // ReSharper disable twice PossibleNullReferenceException
                         input.Value.Select(_ => _.Name).Concat(inputExts.Select(_ => _.Name)).ToArray<SyntaxNode>());
                 }
 

@@ -19,9 +19,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
             var objectDefs = schema.Definitions.OfType<ObjectTypeDefinitionSyntax>().ToList();
             var objectExts = schema.Definitions.OfType<ObjectTypeExtensionSyntax>().ToList();
 
-            // ReSharper disable once PossibleNullReferenceException
             var objectFieldMap = objectDefs.Select(_ => (_.Name, _.Fields)).Concat(objectExts
-                // ReSharper disable once PossibleNullReferenceException
                 .Select(_ => (_.Name, _.Fields))).ToDictionary(_ => _.Name, _ => _.Fields);
             var interfaceFieldMap = schema.Definitions.OfType<InterfaceTypeDefinitionSyntax>()
                 .Select(_ => (_.Name, _.Fields)).Concat(schema.Definitions.OfType<InterfaceTypeExtensionSyntax>()
@@ -29,13 +27,10 @@ namespace GraphZen.LanguageModel.Validation.Rules
 
             foreach (var objectType in objectDefs)
             {
-                // ReSharper disable once PossibleNullReferenceException
                 var exts = objectExts.Where(_ => _.Name.Equals(objectType.Name)).ToList();
-                // ReSharper disable twice PossibleNullReferenceException
                 var interfaces = objectType.Interfaces.Concat(exts.SelectMany(_ => _.Interfaces)).Select(_ => _.Name)
                     .ToList();
 
-                // ReSharper disable once PossibleNullReferenceException
 
                 var fieldMap = objectFieldMap[objectType.Name].ToDictionary(_ => _.Name);
 

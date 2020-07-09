@@ -32,7 +32,6 @@ namespace GraphZen.QueryEngine.Validation
             TypeInfo = Check.NotNull(typeInfo, nameof(typeInfo));
             _fragments = new Lazy<IReadOnlyDictionary<string, FragmentDefinitionSyntax>>(() =>
                 ast.Definitions.OfType<FragmentDefinitionSyntax>()
-                    // ReSharper disable once PossibleNullReferenceException
                     .ToReadOnlyDictionaryIgnoringDuplicates(_ => _.Name.Value));
         }
 

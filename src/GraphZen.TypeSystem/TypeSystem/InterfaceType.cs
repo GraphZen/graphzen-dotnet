@@ -27,7 +27,6 @@ namespace GraphZen.TypeSystem
             Check.NotNull(schema, nameof(schema));
             Check.NotNull(fields, nameof(fields));
             _fieldMap = new Lazy<IReadOnlyDictionary<string, Field>>(() =>
-                // ReSharper disable once PossibleNullReferenceException
                 fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, Schema)));
             _fields = new Lazy<IReadOnlyCollection<Field>>(() => _fieldMap.Value.Values.ToList().AsReadOnly());
             ResolveType = resolveType;

@@ -117,8 +117,7 @@ namespace GraphZen.TypeSystem.Tests
                     def.Should()
                         .NotBeNull(
                             $"because {clrType.Name} is included as a {kind} by {configurationSource} configuration.");
-                    // ReSharper disable once PossibleNullReferenceException
-                    def.GetConfigurationSource().Should().Be(configurationSource);
+                    def!.GetConfigurationSource().Should().Be(configurationSource);
                 }
             });
 

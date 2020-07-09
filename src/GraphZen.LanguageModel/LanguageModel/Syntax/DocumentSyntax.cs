@@ -58,7 +58,6 @@ namespace GraphZen.LanguageModel
                     .Cast<TypeDefinitionSyntax>().ToReadOnlyDictionaryIgnoringDuplicates(_ => _.Name.Value));
             _objectTypeMap = new Lazy<IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax>>(() =>
                 Definitions.OfType<ObjectTypeDefinitionSyntax>()
-                    // ReSharper disable once PossibleNullReferenceException
                     .ToReadOnlyDictionaryIgnoringDuplicates(_ => _.Name.Value));
 
             _implementations = new Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>>(

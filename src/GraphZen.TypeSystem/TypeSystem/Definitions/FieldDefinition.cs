@@ -170,7 +170,6 @@ namespace GraphZen.TypeSystem
 
         public ArgumentDefinition? FindArgument(ParameterInfo member)
         {
-            // ReSharper disable once PossibleNullReferenceException
             var memberMatch = Arguments.SingleOrDefault(_ => _.ClrInfo == member);
             if (memberMatch != null)
             {

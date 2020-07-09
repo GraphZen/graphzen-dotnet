@@ -15,7 +15,6 @@ namespace GraphZen.LanguageModel.Validation.Rules
         {
         }
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public override VisitAction LeaveDocument(DocumentSyntax node)
         {
             var objectTypes = node.Definitions.OfType<ObjectTypeDefinitionSyntax>().ToList();
@@ -60,7 +59,6 @@ namespace GraphZen.LanguageModel.Validation.Rules
                             foreach (var expectedArg in expectedField.Arguments)
                             {
                                 var implementedArg = implementedField.Arguments.FirstOrDefault(_ =>
-                                    // ReSharper disable once PossibleNullReferenceException
                                     _.Name.Value == expectedArg.Name.Value && _.Type.Equals(expectedArg.Type));
                                 if (implementedArg == null)
                                 {

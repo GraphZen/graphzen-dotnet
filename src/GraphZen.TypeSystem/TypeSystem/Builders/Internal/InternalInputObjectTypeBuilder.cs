@@ -100,7 +100,6 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
-            // ReSharper disable once PossibleNullReferenceException
 
             var fieldMembers = clrType.GetMembers(flags)
                 .OfType<PropertyInfo>()

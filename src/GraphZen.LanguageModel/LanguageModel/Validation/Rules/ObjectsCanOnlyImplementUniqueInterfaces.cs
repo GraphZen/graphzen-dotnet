@@ -24,16 +24,13 @@ namespace GraphZen.LanguageModel.Validation.Rules
             foreach (var objectType in node.Definitions.OfType<ObjectTypeDefinitionSyntax>())
             {
                 var objectName = objectType.Name.Value;
-                // ReSharper disable once PossibleNullReferenceException
                 var objectExtInterfaces = objectTypeExtensions.Where(_ => _.Name.Value == objectName)
                     .SelectMany(_ => _.Interfaces);
                 var implementedInterfaces = objectType.Interfaces.Concat(objectExtInterfaces);
-                // ReSharper disable once PossibleNullReferenceException
                 foreach (var interfacesByName in implementedInterfaces.GroupBy(_ => _.Name.Value)
                     .Select(_ => _.ToList()))
                 {
                     var @interface = interfacesByName[0];
-                    // ReSharper disable once PossibleNullReferenceException
                     var interfaceName = @interface.Name.Value;
                     if (!interfaces.Contains(interfaceName))
                     {

@@ -39,7 +39,6 @@ namespace GraphZen.Tests.QueryEngine
         {
             var schema = Schema.Create(sb =>
             {
-                // ReSharper disable once PossibleNullReferenceException
                 sb.Interface("Pet")
                     .Field("name", "String");
 

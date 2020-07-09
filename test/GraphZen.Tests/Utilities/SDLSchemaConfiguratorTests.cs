@@ -740,7 +740,6 @@ namespace GraphZen.Tests.Utilities
             testEnum.GetValue("TEST_VALUE").Print().Should().Be("TEST_VALUE");
             testInterface.FieldMap["interfaceField"].Print().Should().Be("interfaceField: String");
             testType.FieldMap["interfaceField"].Print().Should().Be("interfaceField: String");
-            // ReSharper disable once PossibleNullReferenceException
             testDirective.Arguments.First().Print().Should().Be("arg: TestScalar");
         }
 

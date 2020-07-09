@@ -43,7 +43,6 @@ namespace GraphZen.TypeSystem
                 {
                     return interfaces.ToReadOnlyDictionary(_ => _.Name, _ =>
                     {
-                        // ReSharper disable once PossibleNullReferenceException
                         return schema.GetInterface(_.Name);
                     });
                 }

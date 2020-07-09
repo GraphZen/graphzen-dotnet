@@ -20,7 +20,6 @@ namespace GraphZen.QueryEngine.Validation.Rules
         private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>>> _lazyLocationsMap;
 
 
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public KnownDirectives(QueryValidationContext context) : base(context)
         {
             _lazyLocationsMap = new Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>>>(() =>

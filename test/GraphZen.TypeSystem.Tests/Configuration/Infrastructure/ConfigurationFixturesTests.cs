@@ -39,9 +39,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
             var configuredTypes = ConfigurationFixtures.GetAll<IConfigurationFixture>().Select(_ => _.GetType())
                 .ToArray();
             var knownTypes = AppDomain.CurrentDomain.GetAssemblies()
-                // ReSharper disable once PossibleNullReferenceException
                 .SelectMany(_ => _.GetTypes())
-                // ReSharper disable once PossibleNullReferenceException
                 .Where(_ => type.IsAssignableFrom(_) && !_.IsAbstract && _.IsClass);
 
             var missingTypeNames = knownTypes.Where(_ => !configuredTypes.Contains(_)).Select(_ => $"new {_.Name}(),")
