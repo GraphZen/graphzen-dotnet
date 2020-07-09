@@ -31,7 +31,7 @@ namespace GraphZen.CodeGen.CodeGenFx.Generators
                 {
                     Directory.SetCurrentDirectory("..");
                 }
-                
+
                 var files = Directory.GetFiles(".", "*.cs", SearchOption.AllDirectories);
 
                 return files;
