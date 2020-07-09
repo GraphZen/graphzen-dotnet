@@ -55,7 +55,6 @@ namespace GraphZen.LanguageModel
 
             _abstractTypeMap = new Lazy<IReadOnlyDictionary<string, TypeDefinitionSyntax>>(() =>
                 Definitions.Where(_ => _ is UnionTypeDefinitionSyntax || _ is InterfaceTypeDefinitionSyntax)
-                    // ReSharper disable once PossibleNullReferenceException
                     .Cast<TypeDefinitionSyntax>().ToReadOnlyDictionaryIgnoringDuplicates(_ => _.Name.Value));
             _objectTypeMap = new Lazy<IReadOnlyDictionary<string, ObjectTypeDefinitionSyntax>>(() =>
                 Definitions.OfType<ObjectTypeDefinitionSyntax>()

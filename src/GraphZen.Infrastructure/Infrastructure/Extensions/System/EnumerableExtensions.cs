@@ -91,7 +91,6 @@ namespace GraphZen.Infrastructure
             Check.NotNull(source, nameof(source));
             Check.NotNull(keySelector, nameof(keySelector));
 
-            // ReSharper disable once PossibleNullReferenceException
 
             var dict = source.GroupBy(keySelector).ToDictionary(_ => _.Key, _ => _.First());
             return new ReadOnlyDictionary<TKey, TSource>(dict);

@@ -60,7 +60,6 @@ namespace GraphZen.TypeSystem
                     SyntaxHelpers.Description(Description),
                     Interfaces.Select(_ => SyntaxFactory.NamedType(SyntaxFactory.Name(_.Name))).ToArray(),
                     dirs,
-                    // ReSharper disable once PossibleNullReferenceException
                     fieldNodes
                 );
                 return syntax;

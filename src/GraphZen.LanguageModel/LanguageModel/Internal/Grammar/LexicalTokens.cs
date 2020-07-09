@@ -77,7 +77,6 @@ namespace GraphZen.LanguageModel.Internal
             {
                 foreach (var name in names)
                 {
-                    // ReSharper disable once PossibleNullReferenceException
                     var result = Keyword(name).Try()(input);
                     if (result.HasValue)
                     {

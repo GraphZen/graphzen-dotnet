@@ -23,7 +23,6 @@ namespace Microsoft.AspNetCore.Builder
                 RequestPath = ""
             };
             var defaultFileOptions = new DefaultFilesOptions(shared);
-            // ReSharper disable once PossibleNullReferenceException
             defaultFileOptions.DefaultFileNames.Clear();
             defaultFileOptions.DefaultFileNames.Add("playground.html");
             app.UseDefaultFiles(defaultFileOptions);
