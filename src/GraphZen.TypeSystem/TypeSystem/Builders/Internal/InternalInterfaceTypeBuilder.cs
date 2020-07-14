@@ -9,10 +9,10 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     public class
-        InternalInterfaceTypeBuilder : InternalFieldsBuilder<InterfaceTypeDefinition,
+        InternalInterfaceTypeBuilder : InternalFieldsBuilder<MutableInterfaceType,
             InternalInterfaceTypeBuilder>
     {
-        public InternalInterfaceTypeBuilder(InterfaceTypeDefinition @interface) : base(@interface)
+        public InternalInterfaceTypeBuilder(MutableInterfaceType @interface) : base(@interface)
         {
         }
 

@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
         Type ParentMemberType { get; }
         Type ParentMemberDefinitionType { get; }
         void ConfigureParentExplicitly(SchemaBuilder sb, string parentName);
-        Member GetParent(Schema schema, string parentName);
-        MemberDefinition GetParent(SchemaBuilder sb, string parentName);
+        MutableMember GetParent(Schema schema, string parentName);
+        MutableMember GetParent(SchemaBuilder sb, string parentName);
     }
 }

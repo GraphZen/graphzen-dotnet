@@ -9,104 +9,103 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class ArgumentBuilder<T> : IArgumentBuilder<T>
+
+    public class ArgumentBuilder : IArgumentBuilder
     {
         public ArgumentBuilder(InternalArgumentBuilder builder)
         {
-            Check.NotNull(builder, nameof(builder));
-            Builder = builder;
+            InternalBuilder = builder;
         }
 
+        protected InternalArgumentBuilder InternalBuilder { get; }
+        InternalArgumentBuilder IInfrastructure<InternalArgumentBuilder>.Instance => InternalBuilder;
+        MutableArgument IInfrastructure<MutableArgument>.Instance => InternalBuilder.Definition;
 
-        protected InternalArgumentBuilder Builder { get; }
-
-
-        public ArgumentBuilder<T> AddDirectiveAnnotation(string name, object value)
+        public IArgumentBuilder AddDirectiveAnnotation(string name, object value)
         {
             Check.NotNull(name, nameof(name));
-            Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
+            InternalBuilder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
 
-        IAnnotableBuilder IAnnotableBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
+        IDirectivesBuilder IDirectivesBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
 
-        IAnnotableBuilder IAnnotableBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
+        IDirectivesBuilder IDirectivesBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name, object value) =>
-            AddDirectiveAnnotation(name, value);
 
-        public ArgumentBuilder<T> AddDirectiveAnnotation(string name)
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name, object value) => AddDirectiveAnnotation(name, value);
+
+        public IArgumentBuilder AddDirectiveAnnotation(string name)
         {
             Check.NotNull(name, nameof(name));
-            Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
+            InternalBuilder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
             return this;
         }
 
 
-        public ArgumentBuilder<T> RemoveDirectiveAnnotations(string name)
+        public IArgumentBuilder RemoveDirectiveAnnotations(string name)
         {
             Check.NotNull(name, nameof(name));
-            Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
+            InternalBuilder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public ArgumentBuilder<T> ClearDirectiveAnnotations()
+        public IArgumentBuilder ClearDirectiveAnnotations()
         {
-            Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
+            InternalBuilder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
 
 
-        InternalArgumentBuilder IInfrastructure<InternalArgumentBuilder>.Instance => Builder;
-        ArgumentDefinition IInfrastructure<ArgumentDefinition>.Instance => Builder.Definition;
-
-        public ArgumentBuilder<TNew> ArgumentType<TNew>()
+        public IArgumentBuilder ArgumentType<T>()
         {
-            Builder.ArgumentType(typeof(TNew), ConfigurationSource.Explicit);
-            return new ArgumentBuilder<TNew>(Builder);
+            InternalBuilder.ArgumentType(typeof(T), ConfigurationSource.Explicit);
+            return this;
         }
 
-        public ArgumentBuilder<object?> ArgumentType(Type clrType)
+        public IArgumentBuilder ArgumentType(Type clrType)
         {
             Check.NotNull(clrType, nameof(clrType));
-            Builder.ArgumentType(clrType, ConfigurationSource.Explicit);
-            return new ArgumentBuilder<object?>(Builder);
+            InternalBuilder.ArgumentType(clrType, ConfigurationSource.Explicit);
+            return this;
         }
 
-        public ArgumentBuilder<object?> ArgumentType(string type)
+        public IArgumentBuilder ArgumentType(string type)
         {
             Check.NotNull(type, nameof(type));
-            Builder.ArgumentType(type, ConfigurationSource.Explicit);
-            return new ArgumentBuilder<object?>(Builder);
+            InternalBuilder.ArgumentType(type, ConfigurationSource.Explicit);
+            return this;
         }
 
-        public ArgumentBuilder<T> Name(string name)
+        public IArgumentBuilder Name(string name)
         {
             Check.NotNull(name, nameof(name));
-            Builder.SetName(name, ConfigurationSource.Explicit);
+            InternalBuilder.SetName(name, ConfigurationSource.Explicit);
             return this;
         }
 
 
-        public ArgumentBuilder<T> DefaultValue(T value)
+        public IArgumentBuilder DefaultValue(object? value)
         {
-            Builder.DefaultValue(value, ConfigurationSource.Explicit);
+            InternalBuilder.DefaultValue(value, ConfigurationSource.Explicit);
             return this;
         }
 
+        public IArgumentBuilder RemoveDefaultValue() => throw new NotImplementedException();
 
-        public ArgumentBuilder<T> RemoveDescription()
+
+        public IArgumentBuilder RemoveDescription()
         {
-            Builder.RemoveDescription(ConfigurationSource.Explicit);
+            InternalBuilder.RemoveDescription(ConfigurationSource.Explicit);
             return this;
         }
 
-        public ArgumentBuilder<T> Description(string description)
+        public IArgumentBuilder Description(string description)
         {
             Check.NotNull(description, nameof(description));
-            Builder.Description(description, ConfigurationSource.Explicit);
+            InternalBuilder.Description(description, ConfigurationSource.Explicit);
             return this;
         }
     }

@@ -12,7 +12,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields
     // ReSharper disable once InconsistentNaming
     public abstract class Object_Fields :
         NamedCollectionConfigurationFixture<IFields,
-            IFieldsDefinition, IMutableFieldsDefinition, FieldDefinition, Field, ObjectTypeDefinition,
+            IFields, IMutableFields, MutableField, Field, MutableObjectType,
             ObjectType>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
@@ -22,15 +22,15 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields
 
         public override ObjectType GetParent(Schema schema, string parentName) => schema.GetObject(parentName);
 
-        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        public override MutableObjectType GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetObject(parentName);
 
-        public override NamedCollection<FieldDefinition> GetCollection(ObjectTypeDefinition parent) =>
+        public override NamedCollection<MutableField> GetCollection(MutableObjectType parent) =>
             parent.Fields.ToNamedCollection();
 
         public override NamedCollection<Field> GetCollection(ObjectType parent) => parent.Fields.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(ObjectTypeDefinition parent,
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(MutableObjectType parent,
             string name) =>
             parent.FindIgnoredFieldConfigurationSource(name);
 

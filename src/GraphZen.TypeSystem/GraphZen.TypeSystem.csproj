@@ -14,8 +14,32 @@
     <ProjectReference Include="..\GraphZen.LanguageModel\GraphZen.LanguageModel.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="TypeSystem\Definitions\MutableInputObjectType.Generated.cs">
+      <DependentUpon>MutableInputObjectType.cs</DependentUpon>
+    </Compile>
+    <Compile Update="TypeSystem\Definitions\MutableFields.Generated.cs">
+      <DependentUpon>MutableFields.cs</DependentUpon>
+    </Compile>
+    <Compile Update="TypeSystem\Definitions\MutableField.Generated.cs">
+      <DependentUpon>MutableField.cs</DependentUpon>
+    </Compile>
+    <Compile Update="TypeSystem\Definitions\MutableEnumType.Generated.cs">
+      <DependentUpon>MutableEnumType.cs</DependentUpon>
+    </Compile>
+    <Compile Update="TypeSystem\Definitions\MutableDirectiveDefinition.Generated.cs">
+      <DependentUpon>MutableDirectiveDefinition.cs</DependentUpon>
+    </Compile>
     <Compile Update="TypeSystem\Definitions\Internal\ArgumentsDefinition.Generated.cs">
       <DependentUpon>ArgumentsDefinition.cs</DependentUpon>
+    </Compile>
+    <Compile Update="TypeSystem\Definitions\MutableSchema.Generated.cs">
+      <DependentUpon>MutableSchema.cs</DependentUpon>
+    </Compile>
+    <Compile Update="TypeSystem\DirectiveDefinition.Generated.cs">
+      <DependentUpon>DirectiveDefinition.cs</DependentUpon>
+    </Compile>
+    <Compile Update="TypeSystem\Taxonomy\IMutableFields.Generated.cs">
+      <DependentUpon>IMutableFields.cs</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

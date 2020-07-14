@@ -3,17 +3,17 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface IScalarType :
-        ILeafType,
-        IScalarTypeDefinition,
-        ISerializer,
-        IValueParser,
-        ILiteralParser
+    public interface IScalarType : ILeafType, IOutputMember, IInputMember
     {
+
+        LeafValueParser<object?>? ValueParser { get; }
+        LeafSerializer<object?>? Serializer { get; }
+        LeafLiteralParser<object?, ValueSyntax>? LiteralParser { get; }
     }
 }

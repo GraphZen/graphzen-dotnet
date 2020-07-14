@@ -60,13 +60,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
 
-        IAnnotableBuilder IAnnotableBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
+        IDirectivesBuilder IDirectivesBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
 
-        IAnnotableBuilder IAnnotableBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
+        IDirectivesBuilder IDirectivesBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name, object value) =>
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name, object value) =>
             AddDirectiveAnnotation(name, value);
 
         public EnumValueBuilder AddDirectiveAnnotation(string name)
@@ -92,7 +92,7 @@ namespace GraphZen.TypeSystem
 
 
         InternalEnumValueBuilder IInfrastructure<InternalEnumValueBuilder>.Instance => Builder;
-        EnumValueDefinition IInfrastructure<EnumValueDefinition>.Instance => Builder.Definition;
-        INamedBuilder INamedBuilder.Name(string name) => Name(name);
+        MutableEnumValue IInfrastructure<MutableEnumValue>.Instance => Builder.Definition;
+        INameBuilder INameBuilder.Name(string name) => Name(name);
     }
 }

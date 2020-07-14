@@ -27,13 +27,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
 
-        IAnnotableBuilder IAnnotableBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
+        IDirectivesBuilder IDirectivesBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
 
-        IAnnotableBuilder IAnnotableBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
+        IDirectivesBuilder IDirectivesBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name, object value) =>
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name, object value) =>
             AddDirectiveAnnotation(name, value);
 
         public InputFieldBuilder<T> AddDirectiveAnnotation(string name)
@@ -79,7 +79,7 @@ namespace GraphZen.TypeSystem
 
 
         InternalInputFieldBuilder IInfrastructure<InternalInputFieldBuilder>.Instance => Builder;
-        InputFieldDefinition IInfrastructure<InputFieldDefinition>.Instance => Builder.Definition;
+        MutableInputField IInfrastructure<MutableInputField>.Instance => Builder.Definition;
 
         public InputFieldBuilder<T> Name(string name)
         {

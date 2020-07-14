@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
             {
                 _.Interface("Foo").Field("foo", "String", f =>
                 {
-                    var foo = f.GetInfrastructure<IFieldDefinition>();
+                    var foo = f.GetInfrastructure<IField>();
                     new List<Action>
                     {
                         () => f.Argument(name, "String"),

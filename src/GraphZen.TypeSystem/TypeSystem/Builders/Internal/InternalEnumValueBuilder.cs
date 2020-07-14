@@ -7,9 +7,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalEnumValueBuilder : AnnotatableMemberDefinitionBuilder<EnumValueDefinition>
+    public class InternalEnumValueBuilder : AnnotatableMemberDefinitionBuilder<MutableEnumValue>
     {
-        public InternalEnumValueBuilder(EnumValueDefinition value) : base(value)
+        public InternalEnumValueBuilder(MutableEnumValue value) : base(value)
         {
         }
 

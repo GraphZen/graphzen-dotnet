@@ -9,10 +9,10 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public abstract class NamedType : AnnotatableMember, INamedType
+    public abstract class NamedTypeDefinition : AnnotatableMember, INamedTypeDefinition
     {
-        protected NamedType(string name, string? description, Type? clrType,
-            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(directives, schema)
+        protected NamedTypeDefinition(string name, string? description, Type? clrType,
+            IReadOnlyList<IDirective> directives, Schema schema) : base(directives, schema)
         {
             Name = name;
             Description = description;
@@ -31,27 +31,24 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore] public Type? ClrType { get; }
 
         [GraphQLCanBeNull] public string? Description { get; }
-        ISchemaDefinition IMemberDefinition.Schema => Schema;
-        IEnumerable<IMemberDefinition> IMemberParentDefinition.Children() => Children();
-
-        public abstract IEnumerable<IMember> Children();
+        ISchema IMember.Schema => Schema;
 
 
-        public static NamedType From(INamedTypeDefinition definition, Schema schema)
+        public static NamedTypeDefinition From(INamedTypeDefinition definition, Schema schema)
         {
             switch (definition)
             {
-                case IScalarTypeDefinition __:
+                case IScalarType __:
                     return ScalarType.From(__, schema);
-                case IUnionTypeDefinition __:
+                case IUnionType __:
                     return UnionType.From(__, schema);
-                case IObjectTypeDefinition __:
+                case IObjectType __:
                     return ObjectType.From(__, schema);
-                case IInputObjectTypeDefinition __:
+                case IInputObjectType __:
                     return InputObjectType.From(__, schema);
-                case IEnumTypeDefinition __:
+                case IEnumType __:
                     return EnumType.From(__, schema);
-                case IInterfaceTypeDefinition __:
+                case IInterfaceType __:
                     return InterfaceType.From(__, schema);
             }
 

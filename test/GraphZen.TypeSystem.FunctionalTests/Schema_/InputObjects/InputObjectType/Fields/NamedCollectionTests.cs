@@ -54,7 +54,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.InputObjects.InputObjectTy
             Schema.Create(_ =>
             {
                 var d = _.InputObject("Foo");
-                var foo = d.GetInfrastructure<IInputObjectTypeDefinition>();
+                var foo = d.GetInfrastructure<IInputObjectType>();
                 new List<Action>
                 {
                     () => d.Field(name, "String"),

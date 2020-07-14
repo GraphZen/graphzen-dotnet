@@ -9,9 +9,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public abstract class Member : ISyntaxConvertable, IMember
+    public abstract class Member : ISyntaxMember, IMember
     {
-        protected Member(Schema schema)
+        protected Member(ISchema schema)
         {
             Schema = schema;
         }
@@ -19,8 +19,8 @@ namespace GraphZen.TypeSystem
         [GraphQLIgnore]
         public abstract SyntaxNode ToSyntaxNode();
 
-        ISchemaDefinition IMemberDefinition.Schema => Schema;
+        // ISchema IMember.Schema => Schema;
 
-        [GraphQLIgnore] public Schema Schema { get; }
+        [GraphQLIgnore] public ISchema Schema { get; }
     }
 }

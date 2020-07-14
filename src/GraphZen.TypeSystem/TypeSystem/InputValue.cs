@@ -27,15 +27,15 @@ namespace GraphZen.TypeSystem
         protected InputValue(
             string name,
             string? description,
-            IGraphQLTypeReference type,
+            IGraphQLType type,
             object? defaultValue,
             bool hasDefaultValue,
-            IEnumerable<IDirectiveAnnotation>? directives,
-            object? clrInfo, IMember declaringMember) : base(directives, declaringMember.Schema)
+            IEnumerable<IDirective>? directives,
+            object? clrInfo, IParentMember declaringMember, Schema schema) : base(directives, declaringMember.Schema)
         {
             Description = description;
             Name = name;
-            _type = new Lazy<IGraphQLType>(() => Schema.ResolveType(type));
+            _type = new Lazy<IGraphQLType>(() => schema.ResolveType(type));
             DefaultValue = defaultValue;
             HasDefaultValue = hasDefaultValue;
             ClrInfo = clrInfo;
@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem
 
         [GraphQLName("type")] public IGraphQLType InputType => TypeReference;
 
-        [GraphQLIgnore] public IMemberDefinition DeclaringMember { get; }
+        [GraphQLIgnore] public IParentMember DeclaringMember { get; }
 
         [GraphQLIgnore] public object? DefaultValue { get; }
 
@@ -65,6 +65,6 @@ namespace GraphZen.TypeSystem
         [GraphQLCanBeNull] public string? Description { get; }
 
         [GraphQLIgnore] public IGraphQLType TypeReference => _type.Value;
-        IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
+        public IParentMember Parent => DeclaringMember;
     }
 }

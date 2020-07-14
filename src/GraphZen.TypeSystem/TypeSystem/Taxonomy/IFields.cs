@@ -9,11 +9,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public partial interface IFields : IFieldsDefinition, INamedType
+    public interface IFields : IParentMember
     {
-        new IReadOnlyCollection<Field> Fields { get; }
-
-        [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
-        IReadOnlyDictionary<string, Field> FieldMap { get; }
+        IReadOnlyDictionary<string, IField> FieldMap { get; }
+        IReadOnlyCollection<IField> Fields { get; }
     }
 }

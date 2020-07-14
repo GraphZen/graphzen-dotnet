@@ -15,8 +15,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         ConfigurationFixture<TMarker, TDefMarker, TMutableDefMarker, TParentMemberDefinition, TParentMember>,
         ILeafConfigurationFixture
         where TMutableDefMarker : TDefMarker
-        where TParentMemberDefinition : MemberDefinition, TMutableDefMarker
-        where TParentMember : Member, TMarker
+        where TParentMemberDefinition : MutableMember, TMutableDefMarker
+        where TParentMember : MutableMember, TMarker
         where TMarker : TDefMarker
     {
         //public virtual TElement ConventionalValue =>
@@ -71,10 +71,10 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         //public abstract bool TryGetValue(TMarker parent, out TElement value);
         public abstract ConfigurationSource GetElementConfigurationSource(TMutableDefMarker parent);
 
-        public ConfigurationSource GetElementConfigurationSource(MemberDefinition parent) =>
+        public ConfigurationSource GetElementConfigurationSource(MutableMember parent) =>
             GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition)!);
 
-        public bool TryGetValue(MemberDefinition parent, [NotNullWhen(true)] out object? value)
+        public bool TryGetValue(MutableMember parent, [NotNullWhen(true)] out object? value)
         {
             if (TryGetValue((TParentMemberDefinition)parent, out var inner))
             {
@@ -86,7 +86,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
             return false;
         }
 
-        public bool TryGetValue(Member parent, [NotNullWhen(true)] out object? value)
+        public bool TryGetValue(MutableMember parent, [NotNullWhen(true)] out object? value)
         {
             if (TryGetValue((TParentMember)parent, out var inner))
             {

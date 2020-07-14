@@ -10,12 +10,15 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    internal interface IInputFieldBuilder<T> : IInfrastructure<InternalInputFieldBuilder>,
-        IInfrastructure<InputFieldDefinition>,
-        IAnnotableBuilder<InputFieldBuilder<T>>
+    public interface IInputFieldBuilder :
+        IInfrastructure<InternalInputFieldBuilder>,
+        IInfrastructure<MutableInputField>,
+        IDirectivesBuilder<IInputFieldBuilder>
     {
-        InputFieldBuilder<TNew> FieldType<TNew>();
-        InputFieldBuilder<object?> FieldType(Type clrType);
-        InputFieldBuilder<object?> FieldType(string type);
+        IInputFieldBuilder FieldType<T>();
+        IInputFieldBuilder FieldType(Type clrType);
+        IInputFieldBuilder FieldType(string type);
+        IInputFieldBuilder DefaultValue(object? value);
+        IInputFieldBuilder RemoveDefaultValue();
     }
 }

@@ -9,21 +9,23 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface IInterfaceTypeBuilder : INamedTypeBuilder,
-        IInfrastructure<InterfaceTypeDefinition>,
+    public interface IInterfaceTypeBuilder : INamedTypeDefinitionBuilder<IInterfaceTypeBuilder, IInterfaceTypeBuilder>,
+        IFieldsBuilder<IInterfaceTypeBuilder, object, GraphQLContext>,
+        IImplementsInterfacesBuilder<IInterfaceTypeBuilder>,
+        IInfrastructure<MutableInterfaceType>,
         IInfrastructure<InternalInterfaceTypeBuilder>
     {
     }
 
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
     public interface IInterfaceTypeBuilder<TInterface, TContext> :
-        INamedTypeBuilder<InterfaceTypeBuilder<TInterface, TContext>, InterfaceTypeBuilder<object, TContext>>,
-        IFieldsDefinitionBuilder<InterfaceTypeBuilder<TInterface, TContext>, TInterface, TContext>
+        INamedTypeDefinitionBuilder<IInterfaceTypeBuilder<TInterface, TContext>, IInterfaceTypeBuilder<object, TContext>>,
+        IFieldsBuilder<IInterfaceTypeBuilder<TInterface, TContext>, TInterface, TContext>
         where TContext : GraphQLContext
         where TInterface : notnull
     {
-        InterfaceTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull;
-        InterfaceTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull;
-        InterfaceTypeBuilder<TInterface, TContext> ResolveType(TypeResolver<TInterface, TContext> resolveTypeFn);
+        IInterfaceTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull;
+        IInterfaceTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull;
+        IInterfaceTypeBuilder<TInterface, TContext> ResolveType(TypeResolver<TInterface, TContext> resolveTypeFn);
     }
 }

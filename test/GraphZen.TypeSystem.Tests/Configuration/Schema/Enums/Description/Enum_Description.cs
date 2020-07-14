@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description
     // ReSharper disable once InconsistentNaming
     public abstract class Enum_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,
-        string?, EnumTypeDefinition, EnumType>
+        string?, MutableEnumType, EnumType>
     {
         public override string ValueA { get; } = "description a";
         public override string ValueB { get; } = "description b";
@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description
 
         public override EnumType GetParent(Schema schema, string parentName) => schema.GetEnum(parentName);
 
-        public override EnumTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        public override MutableEnumType GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetEnum(parentName);
 
 
@@ -46,7 +46,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description
             return value != null;
         }
 
-        public override bool TryGetValue(EnumTypeDefinition parent, [NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(MutableEnumType parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description!;
             return value != null;

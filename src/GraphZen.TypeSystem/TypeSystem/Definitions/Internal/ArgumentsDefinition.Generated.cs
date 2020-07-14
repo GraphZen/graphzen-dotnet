@@ -18,7 +18,7 @@ namespace GraphZen.TypeSystem.Internal
         #region DictionaryAccessorGenerator
 
         [GraphQLIgnore]
-        public ArgumentDefinition? FindArgument(string name)
+        public MutableArgument? FindArgument(string name)
             => ArgumentMap.TryGetValue(Check.NotNull(name, nameof(name)), out var argument) ? argument : null;
 
         [GraphQLIgnore]
@@ -26,13 +26,13 @@ namespace GraphZen.TypeSystem.Internal
             => ArgumentMap.ContainsKey(Check.NotNull(name, nameof(name)));
 
         [GraphQLIgnore]
-        public ArgumentDefinition GetArgument(string name)
+        public MutableArgument GetArgument(string name)
             => FindArgument(Check.NotNull(name, nameof(name))) ??
                throw new ItemNotFoundException(
-                   $"{this} does not contain a {nameof(ArgumentDefinition)} with name '{name}'.");
+                   $"{this} does not contain a {nameof(MutableArgument)} with name '{name}'.");
 
         [GraphQLIgnore]
-        public bool TryGetArgument(string name, [NotNullWhen(true)] out ArgumentDefinition? argumentDefinition)
+        public bool TryGetArgument(string name, [NotNullWhen(true)] out MutableArgument? argumentDefinition)
             => ArgumentMap.TryGetValue(Check.NotNull(name, nameof(name)), out argumentDefinition);
 
         #endregion

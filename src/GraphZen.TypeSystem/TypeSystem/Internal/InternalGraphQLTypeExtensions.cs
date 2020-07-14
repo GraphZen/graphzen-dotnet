@@ -13,11 +13,11 @@ namespace GraphZen.TypeSystem.Internal
 {
     public static class InternalGraphQLTypeExtensions
     {
-        public static string Print(this ISyntaxConvertable source) =>
+        public static string Print(this ISyntaxMember source) =>
             Check.NotNull(source, nameof(source)).ToSyntaxNode().ToSyntaxString();
 
         public static IReadOnlyList<TSyntaxNode> ToSyntaxNodes<TSyntaxNode>(
-            this IEnumerable<ISyntaxConvertable> source)
+            this IEnumerable<ISyntaxMember> source)
             where TSyntaxNode : SyntaxNode
         {
             Check.NotNull(source, nameof(source));
@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public static IEnumerable<SyntaxNode> ToSyntaxNodes(
-            this IEnumerable<ISyntaxConvertable> source)
+            this IEnumerable<ISyntaxMember> source)
         {
             Check.NotNull(source, nameof(source));
             return source.Select(_ => _.ToSyntaxNode());

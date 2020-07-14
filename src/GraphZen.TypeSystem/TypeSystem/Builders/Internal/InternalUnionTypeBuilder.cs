@@ -9,9 +9,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalUnionTypeBuilder : AnnotatableMemberDefinitionBuilder<UnionTypeDefinition>
+    public class InternalUnionTypeBuilder : AnnotatableMemberDefinitionBuilder<MutableUnionType>
     {
-        public InternalUnionTypeBuilder(UnionTypeDefinition definition
+        public InternalUnionTypeBuilder(MutableUnionType definition
         ) : base(definition)
         {
         }

@@ -10,54 +10,41 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface IUnionTypeBuilder : IInfrastructure<UnionTypeDefinition>,
-        IInfrastructure<InternalUnionTypeBuilder>, INamedTypeBuilder
+    public interface IUnionTypeBuilder : IInfrastructure<MutableUnionType>,
+        IInfrastructure<InternalUnionTypeBuilder>, INamedTypeDefinitionBuilder<IUnionTypeBuilder, IUnionTypeBuilder>
 
     {
-    }
+        IUnionTypeBuilder ResolveType<TUnion>(TypeResolver<TUnion, GraphQLContext> resolveTypeFn);
+
+        IUnionTypeBuilder OfTypes(params string[] objectTypes);
+
+        IUnionTypeBuilder OfTypes(params Type[] objectTypes);
+
+        IUnionTypeBuilder OfTypes<T1>();
 
 
-    public interface IUnionTypeBuilder<TUnion, TContext> : IUnionTypeBuilder,
-        INamedTypeBuilder<UnionTypeBuilder<TUnion, TContext>, UnionTypeBuilder<object, TContext>>
-        where TContext : GraphQLContext
-    {
-        UnionTypeBuilder<TUnion, TContext> ResolveType(TypeResolver<TUnion, TContext> resolveTypeFn);
+        IUnionTypeBuilder OfTypes<T1, T2>();
 
 
-        UnionTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull;
-        UnionTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull;
+        IUnionTypeBuilder OfTypes<T1, T2, T3>();
 
 
-        UnionTypeBuilder<TUnion, TContext> OfTypes(params string[] objectTypes);
+        IUnionTypeBuilder OfTypes<T1, T2, T3, T4>();
 
 
-        UnionTypeBuilder<TUnion, TContext> OfTypes(params Type[] objectTypes);
+        IUnionTypeBuilder OfTypes<T1, T2, T3, T4, T5>();
 
 
-        UnionTypeBuilder<TUnion, TContext> OfTypes<T1>();
+        IUnionTypeBuilder OfTypes<T1, T2, T3, T4, T5, T6>();
 
 
-        UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2>();
+        IUnionTypeBuilder OfTypes<T1, T2, T3, T4, T5, T6, T7>();
 
 
-        UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3>();
+        IUnionTypeBuilder OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
 
 
-        UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4>();
+        IUnionTypeBuilder OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
 
-
-        UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5>();
-
-
-        UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6>();
-
-
-        UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7>();
-
-
-        UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9>();
-
-
-        UnionTypeBuilder<TUnion, TContext> OfTypes<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>();
     }
 }

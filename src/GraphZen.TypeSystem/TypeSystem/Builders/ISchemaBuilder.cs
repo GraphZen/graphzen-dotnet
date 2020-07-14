@@ -11,32 +11,29 @@ using JetBrains.Annotations;
 // ReSharper disable PossibleInterfaceMemberAmbiguity
 namespace GraphZen.TypeSystem
 {
-    internal partial interface ISchemaBuilder<TContext> :
+    public partial interface ISchemaBuilder :
         IInfrastructure<InternalSchemaBuilder>,
-        IAnnotableBuilder<SchemaBuilder<TContext>>,
-        IDescriptionBuilder<SchemaBuilder<TContext>>,
-        IInfrastructure<SchemaDefinition> where TContext : GraphQLContext
+        IDirectivesBuilder<ISchemaBuilder>,
+        IDescriptionBuilder<ISchemaBuilder>,
+        IInfrastructure<MutableSchema>
+
     {
-        ScalarTypeBuilder<object, ValueSyntax> Scalar(string name);
 
-        ScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>() where TScalar : notnull;
-        ScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>(string name) where TScalar : notnull;
+        IScalarTypeBuilder Scalar(string name);
+        IScalarTypeBuilder Scalar(Type clrType);
+        IScalarTypeBuilder Scalar(Type clrType, string name);
 
-        ScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType);
-        ScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType, string name);
+        ISchemaBuilder QueryType(string type);
+        ISchemaBuilder QueryType(Type clrType);
+        ISchemaBuilder MutationType(string type);
+        ISchemaBuilder MutationType(Type clrType);
+        ISchemaBuilder SubscriptionType(string type);
+    }
 
-        ScalarTypeBuilder<TScalar, TValueNode> Scalar<TScalar, TValueNode>()
-            where TValueNode : ValueSyntax
-            where TScalar : notnull;
+    public partial interface ISchemaBuilder<TContext> : ISchemaBuilder,
+        IDirectivesBuilder<ISchemaBuilder<TContext>>,
+        IDescriptionBuilder<ISchemaBuilder<TContext>>
+    {
 
-        SchemaBuilder<TContext> QueryType(string type);
-
-        SchemaBuilder<TContext> QueryType(Type clrType);
-
-        SchemaBuilder<TContext> MutationType(string type);
-
-        SchemaBuilder<TContext> MutationType(Type clrType);
-
-        SchemaBuilder<TContext> SubscriptionType(string type);
     }
 }

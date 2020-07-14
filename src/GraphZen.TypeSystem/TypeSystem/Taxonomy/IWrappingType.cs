@@ -11,6 +11,6 @@ namespace GraphZen.TypeSystem
     public interface IWrappingType : IGraphQLType
     {
         IGraphQLType OfType { get; }
-        INamedTypeDefinition InnerType { get; }
+        INamedTypeReference InnerType { get; }
     }
 }

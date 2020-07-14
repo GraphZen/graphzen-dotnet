@@ -202,7 +202,7 @@ namespace GraphZen.TypeSystem
 
         #region Objects
 
-        public IEnumerable<IObjectTypeDefinition> GetObjects(bool includeSpecObjects = false) =>
+        public IEnumerable<IObjectType> GetObjects(bool includeSpecObjects = false) =>
             Builder.Definition.GetObjects(includeSpecObjects);
 
 
@@ -312,7 +312,7 @@ namespace GraphZen.TypeSystem
 
         #region Unions
 
-        public IEnumerable<IUnionTypeDefinition> GetUnions(bool includeSpecUnions = false) =>
+        public IEnumerable<IUnionType> GetUnions(bool includeSpecUnions = false) =>
             Builder.Definition.GetUnions(includeSpecUnions);
 
 
@@ -422,7 +422,7 @@ namespace GraphZen.TypeSystem
 
         #region Scalars
 
-        public IEnumerable<IScalarTypeDefinition> GetScalars(bool includeSpecScalars = false) =>
+        public IEnumerable<IScalarType> GetScalars(bool includeSpecScalars = false) =>
             Builder.Definition.GetScalars(includeSpecScalars);
 
 
@@ -491,7 +491,7 @@ namespace GraphZen.TypeSystem
 
         #region Enums
 
-        public IEnumerable<IEnumTypeDefinition> GetEnums(bool includeSpecEnums = false) =>
+        public IEnumerable<IEnumType> GetEnums(bool includeSpecEnums = false) =>
             Builder.Definition.GetEnums(includeSpecEnums);
 
 
@@ -603,7 +603,7 @@ namespace GraphZen.TypeSystem
 
         #region Interfaces
 
-        public IEnumerable<IInterfaceTypeDefinition> GetInterfaces(bool includeSpecInterfaces = false) =>
+        public IEnumerable<IInterfaceType> GetInterfaces(bool includeSpecInterfaces = false) =>
             Builder.Definition.GetInterfaces(includeSpecInterfaces);
 
 
@@ -713,7 +713,7 @@ namespace GraphZen.TypeSystem
 
         #region InputObjects
 
-        public IEnumerable<IInputObjectTypeDefinition> GetInputObjects(bool includeSpecInputObjects = false) =>
+        public IEnumerable<IInputObjectType> GetInputObjects(bool includeSpecInputObjects = false) =>
             Builder.Definition.GetInputObjects(includeSpecInputObjects);
 
 

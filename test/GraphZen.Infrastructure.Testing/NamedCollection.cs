@@ -15,24 +15,24 @@ namespace GraphZen.Infrastructure
     public static class NamedCollection
     {
         public static NamedCollection<T> ToNamedCollection<T>(this IReadOnlyDictionary<string, T> source)
-            where T : class, INamed =>
+            where T : class, IName =>
             ToNamedCollection<T, T>(source);
 
 
-        public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : class, INamed =>
+        public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : class, IName =>
             ToNamedCollection<T, T>(source);
 
 
         public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(
-            this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : class, INamed =>
+            this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : class, IName =>
             new DictionaryWrapper<TInner, TOuter>(source);
 
 
         public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IEnumerable<TInner> source)
-            where TInner : TOuter where TOuter : class, INamed =>
+            where TInner : TOuter where TOuter : class, IName =>
             new EnumerableWrapper<TInner, TOuter>(source);
 
-        private class EnumerableWrapper<TInner, T> : NamedCollection<T> where T : class, INamed where TInner : T, INamed
+        private class EnumerableWrapper<TInner, T> : NamedCollection<T> where T : class, IName where TInner : T, IName
         {
             public EnumerableWrapper(IEnumerable<TInner> innerEnumerable)
             {
@@ -67,7 +67,7 @@ namespace GraphZen.Infrastructure
             public override IEnumerator<T> GetEnumerator() => InnerEnumerable.Cast<T>().GetEnumerator();
         }
 
-        private class DictionaryWrapper<TInner, T> : NamedCollection<T> where TInner : T where T : class, INamed
+        private class DictionaryWrapper<TInner, T> : NamedCollection<T> where TInner : T where T : class, IName
         {
             public DictionaryWrapper(IReadOnlyDictionary<string, TInner> innerDictionary)
             {
@@ -101,7 +101,7 @@ namespace GraphZen.Infrastructure
     }
 
 
-    public abstract class NamedCollection<T> : IEnumerable<T> where T : class, INamed
+    public abstract class NamedCollection<T> : IEnumerable<T> where T : class, IName
     {
         public abstract int Count { get; }
 

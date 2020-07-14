@@ -18,9 +18,9 @@ namespace GraphZen.TypeSystem
 
         protected InternalEnumTypeBuilder Builder { get; }
         InternalEnumTypeBuilder IInfrastructure<InternalEnumTypeBuilder>.Instance => Builder;
-        EnumTypeDefinition IInfrastructure<EnumTypeDefinition>.Instance => Builder.Definition;
+        MutableEnumType IInfrastructure<MutableEnumType>.Instance => Builder.Definition;
 
-        public INamedBuilder Name(string name)
+        public INameBuilder Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
@@ -61,28 +61,28 @@ namespace GraphZen.TypeSystem
             return new EnumTypeBuilder<object>(Builder);
         }
 
-        public IAnnotableBuilder AddDirectiveAnnotation(string name, object value)
+        public IDirectivesBuilder AddDirectiveAnnotation(string name, object value)
         {
             Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder AddDirectiveAnnotation(string name)
+        public IDirectivesBuilder AddDirectiveAnnotation(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder RemoveDirectiveAnnotations(string name)
+        public IDirectivesBuilder RemoveDirectiveAnnotations(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder ClearDirectiveAnnotations()
+        public IDirectivesBuilder ClearDirectiveAnnotations()
         {
             Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;

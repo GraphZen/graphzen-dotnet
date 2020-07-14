@@ -16,8 +16,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
         TParentMember> : IConfigurationFixture
         where TMarker : TDefMarker
         where TMutableDefMarker : TDefMarker
-        where TParentMemberDefinition : MemberDefinition, TMutableDefMarker
-        where TParentMember : Member, TMarker
+        where TParentMemberDefinition : MutableMember, TMutableDefMarker
+        where TParentMember : MutableMember, TMarker
 
     {
         protected const string Grandparent = nameof(Grandparent);
@@ -28,9 +28,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
         public Type ParentMemberDefinitionType { get; } = typeof(TParentMemberDefinition);
         public abstract void ConfigureParentExplicitly(SchemaBuilder sb, string parentName);
 
-        Member IConfigurationFixture.GetParent(Schema schema, string parentName) => GetParent(schema, parentName);
+        MutableMember IConfigurationFixture.GetParent(Schema schema, string parentName) => GetParent(schema, parentName);
 
-        MemberDefinition IConfigurationFixture.GetParent(SchemaBuilder sb,
+        MutableMember IConfigurationFixture.GetParent(SchemaBuilder sb,
             string parentName) =>
             GetParent(sb, parentName);
 

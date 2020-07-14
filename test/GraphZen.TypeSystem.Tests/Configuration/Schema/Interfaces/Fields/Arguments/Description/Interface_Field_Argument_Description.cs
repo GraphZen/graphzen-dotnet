@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Arguments.De
     // ReSharper disable once InconsistentNaming
     public abstract class Interface_Field_Argument_Description : LeafElementConfigurationFixture<IDescription,
         IDescription, IMutableDescription,
-        string?, ArgumentDefinition, Argument>
+        string?, MutableArgument, Argument>
     {
         public override string ValueA { get; } = "description a";
         public override string ValueB { get; } = "description b";
@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Arguments.De
         public override Argument GetParent(Schema schema, string parentName) => schema.GetInterface(GreatGrandparent)
             .GetField(Grandparent).GetArgument(parentName);
 
-        public override ArgumentDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition()
+        public override MutableArgument GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition()
             .GetInterface(GreatGrandparent).GetField(Grandparent).GetArgument(parentName);
 
 
@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields.Arguments.De
             return value != null;
         }
 
-        public override bool TryGetValue(ArgumentDefinition parent, [NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(MutableArgument parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

@@ -9,8 +9,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public interface IMutableClrType : IClrType
+    public interface IMutableClrType : IBuildableClrType, IMutableMember
     {
+        
         bool SetClrType(Type clrType, string name, ConfigurationSource configurationSource);
         bool SetClrType(Type clrType, bool inferName, ConfigurationSource configurationSource);
         bool RemoveClrType(ConfigurationSource configurationSource);

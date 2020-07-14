@@ -10,9 +10,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder<InputObjectTypeDefinition>
+    public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder<MutableInputObjectType>
     {
-        public InternalInputObjectTypeBuilder(InputObjectTypeDefinition inputObject) : base(inputObject)
+        public InternalInputObjectTypeBuilder(MutableInputObjectType inputObject) : base(inputObject)
         {
         }
 
@@ -124,7 +124,7 @@ namespace GraphZen.TypeSystem.Internal
                    ignoredMemberConfigurationSource.Overrides(configurationSource);
         }
 
-        public bool IgnoreField(InputFieldDefinition field, ConfigurationSource configurationSource)
+        public bool IgnoreField(MutableInputField field, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetConfigurationSource()))
             {
@@ -136,7 +136,7 @@ namespace GraphZen.TypeSystem.Internal
             return RemoveField(field, configurationSource);
         }
 
-        private bool Ignore(InputFieldDefinition field, ConfigurationSource configurationSource)
+        private bool Ignore(MutableInputField field, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetConfigurationSource()))
             {
@@ -150,7 +150,7 @@ namespace GraphZen.TypeSystem.Internal
         public bool RemoveField(string name, ConfigurationSource configurationSource) =>
             Definition.TryGetField(name, out var f) && RemoveField(f, configurationSource);
 
-        public bool RemoveField(InputFieldDefinition field, ConfigurationSource configurationSource)
+        public bool RemoveField(MutableInputField field, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetConfigurationSource()))
             {

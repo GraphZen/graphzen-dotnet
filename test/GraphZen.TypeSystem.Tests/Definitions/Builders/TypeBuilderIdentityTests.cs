@@ -12,7 +12,7 @@ using Xunit;
 namespace GraphZen.TypeSystem.Tests
 {
     [NoReorder]
-    public abstract class TypeBuilderIdentityTests<TGraphQLType> where TGraphQLType : NamedType
+    public abstract class TypeBuilderIdentityTests<TGraphQLType> where TGraphQLType : NamedTypeDefinition
     {
         public string TypeName => ClrType.Name;
         public string NewTypeName => NewClrType.Name;

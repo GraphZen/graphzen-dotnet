@@ -11,9 +11,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalDirectiveBuilder : MemberDefinitionBuilder<DirectiveDefinition>
+    public class InternalDirectiveDefinitionBuilder : MemberDefinitionBuilder<MutableDirectiveDefinition>
     {
-        public InternalDirectiveBuilder(DirectiveDefinition directive
+        public InternalDirectiveDefinitionBuilder(MutableDirectiveDefinition directive
         ) : base(directive)
         {
         }
@@ -40,19 +40,19 @@ namespace GraphZen.TypeSystem.Internal
         public InternalArgumentBuilder? Argument(string name, Type clrType, ConfigurationSource configurationSource) =>
             Definition.GetOrAddArgument(name, clrType, configurationSource)?.InternalBuilder;
 
-        public InternalDirectiveBuilder Name(string name, ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder Name(string name, ConfigurationSource configurationSource)
         {
             Definition.SetName(name, configurationSource);
             return this;
         }
 
-        public InternalDirectiveBuilder ClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder ClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
         {
             Definition.SetClrType(clrType, inferName, configurationSource);
             return this;
         }
 
-        public InternalDirectiveBuilder ClrType(Type clrType, string name, ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder ClrType(Type clrType, string name, ConfigurationSource configurationSource)
         {
             Definition.SetClrType(clrType, name, configurationSource);
             return this;
@@ -61,37 +61,37 @@ namespace GraphZen.TypeSystem.Internal
         public bool RemoveArgument(string name, ConfigurationSource configurationSource) =>
             throw new NotImplementedException();
 
-        public InternalDirectiveBuilder SetName(string name, ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder SetName(string name, ConfigurationSource configurationSource)
         {
             Definition.SetName(name, configurationSource);
             return this;
         }
 
-        public InternalDirectiveBuilder Description(string description, ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder Description(string description, ConfigurationSource configurationSource)
         {
             Definition.SetDescription(description, configurationSource);
             return this;
         }
 
-        public InternalDirectiveBuilder RemoveClrType(ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder RemoveClrType(ConfigurationSource configurationSource)
         {
             Definition.RemoveClrType(configurationSource);
             return this;
         }
 
-        public InternalDirectiveBuilder Repeatable(in bool repeatable, ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder Repeatable(in bool repeatable, ConfigurationSource configurationSource)
         {
             Definition.SetRepeatable(repeatable, configurationSource);
             return this;
         }
 
-        public InternalDirectiveBuilder AddLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder AddLocation(DirectiveLocation location, ConfigurationSource configurationSource)
         {
             Definition.AddLocation(location, configurationSource);
             return this;
         }
 
-        public InternalDirectiveBuilder Locations(IEnumerable<DirectiveLocation> locations,
+        public InternalDirectiveDefinitionBuilder Locations(IEnumerable<DirectiveLocation> locations,
             ConfigurationSource configurationSource)
         {
             var distinct = locations.ToHashSet();
@@ -112,14 +112,14 @@ namespace GraphZen.TypeSystem.Internal
             return this;
         }
 
-        public InternalDirectiveBuilder RemoveLocation(DirectiveLocation location,
+        public InternalDirectiveDefinitionBuilder RemoveLocation(DirectiveLocation location,
             ConfigurationSource configurationSource)
         {
             Definition.RemoveLocation(location, configurationSource);
             return this;
         }
 
-        public InternalDirectiveBuilder RemoveLocations(ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder RemoveLocations(ConfigurationSource configurationSource)
         {
             foreach (var location in Definition.Locations)
             {

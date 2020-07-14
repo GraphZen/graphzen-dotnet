@@ -14,13 +14,13 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public abstract class AnnotatableMember : Member, IDirectiveAnnotations
+    public abstract class AnnotatableMember : Member, IDirectives
     {
-        private readonly ImmutableArray<IDirectiveAnnotation> _annotations;
+        private readonly ImmutableArray<IDirective> _annotations;
 
-        protected AnnotatableMember(IEnumerable<IDirectiveAnnotation>? directives, Schema schema) : base(schema)
+        protected AnnotatableMember(IEnumerable<IDirective>? directives, ISchema schema) : base(schema)
         {
-            _annotations = directives?.ToImmutableArray() ?? ImmutableArray<IDirectiveAnnotation>.Empty;
+            _annotations = directives?.ToImmutableArray() ?? ImmutableArray<IDirective>.Empty;
         }
 
         [GraphQLIgnore]
@@ -29,18 +29,21 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(string name)
+        public IEnumerable<IDirective> FindDirectiveAnnotations(string name)
         {
             Check.NotNull(name, nameof(name));
             return _annotations.Where(_ => _.Name == name);
         }
 
         [GraphQLIgnore]
-        public bool HasAnyDirectiveAnnotation(string name) => FindDirectiveAnnotations(name).Any();
+        public bool HasDirectiveAnnotation(string name) => FindDirectiveAnnotations(name).Any();
 
-        public IEnumerable<IDirectiveAnnotation> FindDirectiveAnnotations(Func<IDirectiveAnnotation, bool> predicate) =>
+        public IEnumerable<IDirective> FindDirectiveAnnotations(Func<IDirective, bool> predicate) =>
             _annotations.Where(predicate);
 
-        public IReadOnlyList<IDirectiveAnnotation> DirectiveAnnotations => _annotations;
+        public IReadOnlyList<IDirective> DirectiveAnnotations => _annotations;
+        public IEnumerable<IChildMember> Children() => GetChildren();
+
+        protected virtual IEnumerable<IChildMember> GetChildren() => DirectiveAnnotations;
     }
 }

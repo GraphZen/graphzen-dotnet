@@ -31,37 +31,37 @@ namespace GraphZen.TypeSystem.Internal
 
         private static IReadOnlyDictionary<Type, TypeKind> KindByType { get; } = new Dictionary<Type, TypeKind>
         {
-            {typeof(ScalarTypeDefinition), TypeKind.Scalar},
+            {typeof(MutableScalarType), TypeKind.Scalar},
             {typeof(ScalarType), TypeKind.Scalar},
             {typeof(IScalarType), TypeKind.Scalar},
-            {typeof(IScalarTypeDefinition), TypeKind.Scalar},
+            {typeof(IScalarType), TypeKind.Scalar},
 
 
-            {typeof(UnionTypeDefinition), TypeKind.Union},
+            {typeof(MutableUnionType), TypeKind.Union},
             {typeof(UnionType), TypeKind.Union},
             {typeof(IUnionType), TypeKind.Union},
-            {typeof(IUnionTypeDefinition), TypeKind.Union},
+            {typeof(IUnionType), TypeKind.Union},
 
-            {typeof(ObjectTypeDefinition), TypeKind.Object},
+            {typeof(MutableObjectType), TypeKind.Object},
             {typeof(ObjectType), TypeKind.Object},
             {typeof(IObjectType), TypeKind.Object},
-            {typeof(IObjectTypeDefinition), TypeKind.Object},
+            {typeof(IObjectType), TypeKind.Object},
 
-            {typeof(InputObjectTypeDefinition), TypeKind.InputObject},
+            {typeof(MutableInputObjectType), TypeKind.InputObject},
             {typeof(InputObjectType), TypeKind.InputObject},
             {typeof(IInputObjectType), TypeKind.InputObject},
-            {typeof(IInputObjectTypeDefinition), TypeKind.InputObject},
+            {typeof(IInputObjectType), TypeKind.InputObject},
 
 
-            {typeof(EnumTypeDefinition), TypeKind.Enum},
+            {typeof(MutableEnumType), TypeKind.Enum},
             {typeof(EnumType), TypeKind.Enum},
             {typeof(IEnumType), TypeKind.Enum},
-            {typeof(IEnumTypeDefinition), TypeKind.Enum},
+            {typeof(IEnumType), TypeKind.Enum},
 
-            {typeof(InterfaceTypeDefinition), TypeKind.Interface},
+            {typeof(MutableInterfaceType), TypeKind.Interface},
             {typeof(InterfaceType), TypeKind.Interface},
             {typeof(IInterfaceType), TypeKind.Interface},
-            {typeof(IInterfaceTypeDefinition), TypeKind.Interface},
+            {typeof(IInterfaceType), TypeKind.Interface},
 
             {typeof(ListType), TypeKind.List},
             {typeof(IListType), TypeKind.List},
@@ -75,11 +75,11 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public static bool TryGetTypeKindFromDefinition<TGraphQLType>(out TypeKind kind)
-            where TGraphQLType : NamedTypeDefinition =>
+            where TGraphQLType : MutableNamedTypeDefinition =>
             KindByType.TryGetValue(typeof(TGraphQLType), out kind);
 
         public static bool TryGetTypeKindFromType<TGraphQLType>(out TypeKind kind)
-            where TGraphQLType : NamedType =>
+            where TGraphQLType : NamedTypeDefinition =>
             KindByType.TryGetValue(typeof(TGraphQLType), out kind);
 
 

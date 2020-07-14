@@ -9,9 +9,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTypeDefinition>
+    public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<MutableEnumType>
     {
-        public InternalEnumTypeBuilder(EnumTypeDefinition @enum) : base(@enum)
+        public InternalEnumTypeBuilder(MutableEnumType @enum) : base(@enum)
         {
         }
 
@@ -165,7 +165,7 @@ namespace GraphZen.TypeSystem.Internal
             Definition.TryGetValue(value.ToString()!, out var valueDef) &&
             RemoveValue(valueDef, configurationSource);
 
-        public bool RemoveValue(EnumValueDefinition value, ConfigurationSource configurationSource)
+        public bool RemoveValue(MutableEnumValue value, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(value.GetConfigurationSource()))
             {

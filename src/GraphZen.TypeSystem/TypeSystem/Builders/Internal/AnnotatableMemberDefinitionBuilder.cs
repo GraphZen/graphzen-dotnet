@@ -11,18 +11,18 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     public abstract class AnnotatableMemberDefinitionBuilder<TDefinition> : AnnotatableMemberDefinitionBuilder
-        where TDefinition : AnnotatableMemberDefinition
+        where TDefinition : MutableAnnotatableMember
     {
-        protected AnnotatableMemberDefinitionBuilder(AnnotatableMemberDefinition definition) : base(definition)
+        protected AnnotatableMemberDefinitionBuilder(MutableAnnotatableMember definition) : base(definition)
         {
         }
 
         public new TDefinition Definition => (TDefinition)base.Definition;
     }
 
-    public abstract class AnnotatableMemberDefinitionBuilder : MemberDefinitionBuilder<AnnotatableMemberDefinition>
+    public abstract class AnnotatableMemberDefinitionBuilder : MemberDefinitionBuilder<MutableAnnotatableMember>
     {
-        protected AnnotatableMemberDefinitionBuilder(AnnotatableMemberDefinition definition) : base(definition)
+        protected AnnotatableMemberDefinitionBuilder(MutableAnnotatableMember definition) : base(definition)
         {
         }
 
@@ -30,7 +30,7 @@ namespace GraphZen.TypeSystem.Internal
         {
             foreach (var annotation in Definition.FindDirectiveAnnotations(name).ToArray())
             {
-                Definition.RemoveDirectiveAnnotation(annotation, configurationSource);
+                Definition.RemoveDirective(annotation, configurationSource);
             }
         }
 
@@ -38,7 +38,7 @@ namespace GraphZen.TypeSystem.Internal
         {
             foreach (var annotation in Definition.DirectiveAnnotations.ToArray())
             {
-                Definition.RemoveDirectiveAnnotation(annotation, configurationSource);
+                Definition.RemoveDirective(annotation, configurationSource);
             }
         }
 
@@ -50,7 +50,7 @@ namespace GraphZen.TypeSystem.Internal
                     $"Cannot annotate {Definition} with directive: \"{name}\" is not a valid directive name.");
             }
 
-            var directive = Schema.FindDirective(name);
+            var directive = Schema.FindDirectiveDefinition(name);
 
             if (directive == null)
             {
@@ -68,7 +68,7 @@ namespace GraphZen.TypeSystem.Internal
                     $"Cannot annotate {Definition} with {directive}: Directive {name} cannot be annotated on {Definition.DirectiveLocation.GetPluralizedDisplayValue()} because it {reason}");
             }
 
-            Definition.AddDirectiveAnnotation(new DirectiveAnnotation(directive, value), configurationSource);
+            Definition.AddDirective(new Directive(directive, value), configurationSource);
         }
     }
 }

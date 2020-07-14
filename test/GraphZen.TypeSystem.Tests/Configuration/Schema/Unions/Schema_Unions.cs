@@ -11,9 +11,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions
 {
     // ReSharper disable once InconsistentNaming
     public abstract class Schema_Unions : NamedCollectionConfigurationFixture<IUnionTypes,
-        IUnionTypesDefinition, IMutableUnionTypesDefinition, UnionTypeDefinition,
+        IUnionTypesDefinition, IMutableUnionTypesDefinition, MutableUnionType,
         UnionType,
-        SchemaDefinition,
+        MutableSchema,
         Schema>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions
 
         public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
+        public override MutableSchema GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -44,12 +44,12 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions
             sb.Union(itemName).Name(newName);
         }
 
-        public override NamedCollection<UnionTypeDefinition> GetCollection(SchemaDefinition parent) =>
+        public override NamedCollection<MutableUnionType> GetCollection(MutableSchema parent) =>
             parent.GetUnions().ToNamedCollection();
 
         public override NamedCollection<UnionType> GetCollection(Schema parent) => parent.Unions.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(MutableSchema parent, string name) =>
             parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

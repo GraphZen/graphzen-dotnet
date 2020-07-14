@@ -15,18 +15,18 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLType(typeof(IGraphQLType))]
-    public partial class ObjectType : NamedType, IObjectType
+    public partial class ObjectType : NamedTypeDefinition, IObjectType
     {
-        private readonly Lazy<IReadOnlyDictionary<string, Field>> _fieldMap;
-        private readonly Lazy<IReadOnlyCollection<Field>> _fields;
-        private readonly Lazy<IReadOnlyList<InterfaceType>> _interfaces;
-        private readonly Lazy<IReadOnlyDictionary<string, InterfaceType>> _interfaceMap;
+        private readonly Lazy<IReadOnlyDictionary<string, IField>> _fieldMap;
+        private readonly Lazy<IReadOnlyCollection<IField>> _fields;
+        private readonly Lazy<IReadOnlyList<IInterfaceTypeReference>> _interfaces;
+        private readonly Lazy<IReadOnlyDictionary<string, IInterfaceTypeReference>> _interfaceMap;
         private readonly Lazy<ObjectTypeDefinitionSyntax> _syntax;
 
         private ObjectType(string name, string? description, Type? clrType, IsTypeOf<object, GraphQLContext>? isTypeOf,
-            IEnumerable<IFieldDefinition> fields,
+            IEnumerable<IField> fields,
             IEnumerable<INamedTypeReference> interfaces,
-            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(name,
+            IReadOnlyList<IDirective> directives, Schema schema) : base(name,
             description, clrType,
             directives, schema
         )
@@ -35,17 +35,17 @@ namespace GraphZen.TypeSystem
             Check.NotNull(fields, nameof(fields));
             Check.NotNull(interfaces, nameof(interfaces));
             Check.NotNull(schema, nameof(schema));
-            _fieldMap = new Lazy<IReadOnlyDictionary<string, Field>>(() =>
-                fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, schema)));
-            _fields = new Lazy<IReadOnlyCollection<Field>>(() => _fieldMap.Value.Values.ToList().AsReadOnly());
+            _fieldMap = new Lazy<IReadOnlyDictionary<string, IField>>(() =>
+                fields.ToReadOnlyDictionary(_ => _.Name, _ => (IField)Field.From(_, this, schema)));
+            _fields = new Lazy<IReadOnlyCollection<IField>>(() => _fieldMap.Value.Values.ToList().AsReadOnly());
 
-            _interfaceMap = new Lazy<IReadOnlyDictionary<string, InterfaceType>>(() =>
+            _interfaceMap = new Lazy<IReadOnlyDictionary<string, IInterfaceTypeReference>>(() =>
                 {
-                    return interfaces.ToReadOnlyDictionary(_ => _.Name, _ => { return schema.GetInterface(_.Name); });
+                    throw new NotImplementedException();
+                    // return interfaces.ToReadOnlyDictionary(_ => _.Name, _ => { return schema.GetInterface(_.Name); });
                 }
             );
-            _interfaces =
-                new Lazy<IReadOnlyList<InterfaceType>>(() => InterfacesMap.Values.ToImmutableList());
+            _interfaces = new Lazy<IReadOnlyList<IInterfaceTypeReference>>(() => InterfaceMap.Values.ToImmutableList());
             _syntax = new Lazy<ObjectTypeDefinitionSyntax>(() =>
             {
                 var fieldNodes = Fields.ToSyntaxNodes<FieldDefinitionSyntax>();
@@ -54,7 +54,7 @@ namespace GraphZen.TypeSystem
                 var syntax = new ObjectTypeDefinitionSyntax(
                     SyntaxFactory.Name(Name),
                     SyntaxHelpers.Description(Description),
-                    Interfaces.Select(_ => SyntaxFactory.NamedType(SyntaxFactory.Name(_.Name))).ToArray(),
+                    Interfaces.Select(_ => SyntaxFactory.NamedType(SyntaxFactory.Name(_.Type.Name))).ToArray(),
                     dirs,
                     fieldNodes
                 );
@@ -68,37 +68,33 @@ namespace GraphZen.TypeSystem
 
         public override TypeKind Kind { get; } = TypeKind.Object;
 
-        public override IEnumerable<IMember> Children() => Fields;
+        protected override IEnumerable<IChildMember> GetChildren() =>
+            base.GetChildren().Concat(Fields);
 
-
-        public IReadOnlyCollection<Field> Fields => _fields.Value;
+        public IReadOnlyCollection<IField> Fields => _fields.Value;
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         [GenDictionaryAccessors(nameof(Field.Name), nameof(Field))]
-        public IReadOnlyDictionary<string, Field> FieldMap => _fieldMap.Value;
+        public IReadOnlyDictionary<string, IField> FieldMap => _fieldMap.Value;
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Object;
 
 
-        public static ObjectType From(IObjectTypeDefinition definition, Schema schema)
+        public static ObjectType From(IObjectType definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(schema, nameof(Schema));
             return new ObjectType(definition.Name, definition.Description, definition.ClrType, definition.IsTypeOf,
-                definition.Fields, definition.GetInterfaces(),
+                definition.Fields, definition.Interfaces,
                 definition.DirectiveAnnotations,
                 schema
             );
         }
 
-        public IEnumerable<InterfaceType> GetInterfaces() => Interfaces;
 
-        public IReadOnlyList<InterfaceType> Interfaces => _interfaces.Value;
-        public IReadOnlyDictionary<string, InterfaceType> InterfacesMap => _interfaceMap.Value;
-
-        IEnumerable<IInterfaceTypeDefinition> IInterfacesDefinition.GetInterfaces() => GetInterfaces();
-        IReadOnlyCollection<IFieldDefinition> IFieldsDefinition.Fields => Fields;
+        public IReadOnlyCollection<IInterfaceTypeReference> Interfaces => _interfaces.Value;
+        public IReadOnlyDictionary<string, IInterfaceTypeReference> InterfaceMap => _interfaceMap.Value;
     }
 }

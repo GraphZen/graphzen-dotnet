@@ -24,14 +24,15 @@ namespace GraphZen.TypeSystem
         private readonly Lazy<FieldDefinitionSyntax> _syntax;
 
 
-        public Field(string name, string? description, IFields? declaringType, IGraphQLTypeReference fieldType,
+        public Field(string name, string? description, IFields? declaringType, IGraphQLType fieldType,
             Func<Field, IEnumerable<Argument>>? arguments,
             Resolver<object, object?>? resolver,
-            IEnumerable<IDirectiveAnnotation>? directives,
+            IEnumerable<IDirective>? directives,
             MemberInfo? clrInfo, Schema schema) : base(directives, schema)
         {
-            Name = Check.NotNull(name, nameof(name));
+            Name = name;
             Description = description;
+            Parent = declaringType!;
             _fieldType = new Lazy<IGraphQLType>(() =>
             {
                 try
@@ -63,17 +64,15 @@ namespace GraphZen.TypeSystem
         }
 
 
-        [GraphQLIgnore] public IFields DeclaringType { get; }
 
 
         [GraphQLName("type")] public IGraphQLType FieldType => _fieldType.Value;
 
 
-        IGraphQLTypeReference IFieldDefinition.FieldType => FieldType;
 
         [GraphQLIgnore] public Resolver<object, object?>? Resolver { get; }
+        public IFields? DeclaringType { get; }
 
-        IFieldsDefinition IFieldDefinition.DeclaringType => DeclaringType;
 
         public bool IsDeprecated { get; } = false;
 
@@ -98,16 +97,14 @@ namespace GraphZen.TypeSystem
 
         [GraphQLCanBeNull] public string? Description { get; }
 
-        [GraphQLIgnore] public IGraphQLType TypeReference => FieldType;
-        IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => TypeReference;
 
         [GraphQLIgnore]
-        public static Field From(IFieldDefinition definition, IFields? declaringType, Schema schema)
+        public static Field From(IField definition, IFields? declaringType, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(definition.FieldType, nameof(definition.FieldType));
             return new Field(definition.Name, definition.Description, declaringType,
-                definition.FieldType, Argument.CreateArguments(definition.Arguments), definition.Resolver,
+                definition.FieldType, Argument.CreateArguments(definition.Arguments, schema), definition.Resolver,
                 definition.DirectiveAnnotations,
                 definition.ClrInfo,
                 schema);
@@ -115,9 +112,10 @@ namespace GraphZen.TypeSystem
 
 
         public override string ToString() => $"{DeclaringType}.{Name}";
-        IEnumerable<IMemberDefinition> IMemberParentDefinition.Children() => Children();
 
-        public IEnumerable<IMember> Children() => Arguments;
-        IReadOnlyCollection<IArgumentDefinition> IArgumentsDefinition.Arguments => Arguments;
+        protected override IEnumerable<IChildMember> GetChildren() => Arguments.Concat(base.GetChildren());
+
+        IReadOnlyCollection<IArgument> IArguments.Arguments => Arguments;
+        public IParentMember Parent { get; }
     }
 }

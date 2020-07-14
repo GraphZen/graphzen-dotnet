@@ -12,44 +12,46 @@ namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
 
-    public interface IInputObjectTypeBuilder : INamedTypeBuilder,
+    public interface IInputObjectTypeBuilder : INamedTypeDefinitionBuilder<IInputObjectTypeBuilder, IInputObjectTypeBuilder>,
         IInfrastructure<InternalInputObjectTypeBuilder>,
-        IInfrastructure<InputObjectTypeDefinition>
+        IInfrastructure<MutableInputObjectType>
     {
+        IInputObjectTypeBuilder Field(string name, string type);
+        IInputObjectTypeBuilder RemoveField(string name);
+
+        IInputObjectTypeBuilder Field(string name, string type, Action<IInputFieldBuilder> fieldAction);
+
+        IInputFieldBuilder Field(string name);
+
+        IInputObjectTypeBuilder Field(string name, Action<IInputFieldBuilder> fieldAction);
+
+        IInputObjectTypeBuilder Field<TField>(string name);
+
+        IInputObjectTypeBuilder Field<TField>(string name, Action<IInputFieldBuilder> fieldAction);
+
+        IInputObjectTypeBuilder IgnoreField(string name);
+
+        IInputObjectTypeBuilder UnignoreField(string name);
     }
 
 
-    internal interface IInputObjectTypeBuilder<TInputObject> : IInputObjectTypeBuilder,
-        INamedTypeBuilder<InputObjectTypeBuilder<TInputObject>, InputObjectTypeBuilder<object>>
-        where TInputObject : notnull
+    internal interface IInputObjectTypeBuilder<out TBuilder> : IInputObjectTypeBuilder,
+        INamedTypeDefinitionBuilder<IInputObjectTypeBuilder<TBuilder>, IInputObjectTypeBuilder<TBuilder>>
     {
-        InputObjectTypeBuilder<T> ClrType<T>(bool inferName = false) where T : notnull;
-        InputObjectTypeBuilder<T> ClrType<T>(string name) where T : notnull;
-        InputObjectTypeBuilder<TInputObject> Field(string name, string type);
-        InputObjectTypeBuilder<TInputObject> RemoveField(string name);
+        new TBuilder Field(string name, string type);
+        new TBuilder RemoveField(string name);
 
-        InputObjectTypeBuilder<TInputObject> Field(string name, string type,
-            Action<InputFieldBuilder<object?>> inputFieldConfigurator);
+        new TBuilder Field(string name, string type, Action<IInputFieldBuilder> fieldAction);
 
-        InputFieldBuilder<object?> Field(string name);
 
-        InputObjectTypeBuilder<TInputObject> Field(string name,
-            Action<InputFieldBuilder<object?>> inputFieldConfigurator);
+        new TBuilder Field(string name, Action<IInputFieldBuilder> fieldAction);
 
-        InputObjectTypeBuilder<TInputObject> Field<TField>(string name);
+        new TBuilder Field<TField>(string name);
 
-        InputObjectTypeBuilder<TInputObject> Field<TField>(string name,
-            Action<InputFieldBuilder<TField>> inputFieldConfigurator);
+        new TBuilder Field<TField>(string name, Action<IInputFieldBuilder> fieldAction);
 
-        InputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector);
+        new TBuilder IgnoreField(string name);
 
-        InputObjectTypeBuilder<TInputObject> Field<TField>(Expression<Func<TInputObject, TField>> fieldSelector,
-            Action<InputFieldBuilder<TField>> fieldBuilder);
-
-        InputObjectTypeBuilder<TInputObject> IgnoreField<TField>(Expression<Func<TInputObject, TField>> fieldSelector);
-
-        InputObjectTypeBuilder<TInputObject> IgnoreField(string name);
-
-        InputObjectTypeBuilder<TInputObject> UnignoreField(string name);
+        new TBuilder UnignoreField(string name);
     }
 }

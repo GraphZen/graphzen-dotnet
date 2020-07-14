@@ -40,7 +40,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Directives
 
         public CollectionConventionContext GetContext() => new CollectionConventionContext
         {
-            ItemNamedByConvention = nameof(FieldDefinition),
+            ItemNamedByConvention = nameof(MutableField),
             ItemNamedByDataAnnotation = "hello"
         };
 

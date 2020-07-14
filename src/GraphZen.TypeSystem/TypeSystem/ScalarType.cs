@@ -11,64 +11,78 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class ScalarType : NamedType, IScalarType
+    public class ScalarType : NamedTypeDefinition, IScalarType
     {
-        private readonly LeafLiteralParser<object, ValueSyntax>? _literalParser;
-        private readonly LeafSerializer<object>? _serializer;
         private readonly Lazy<SyntaxNode> _syntax;
-        private readonly LeafValueParser<object>? _valueParser;
 
         public ScalarType(
             string name,
             string? description,
             Type? clrType,
-            LeafValueParser<object>? valueParser,
-            LeafLiteralParser<object, ValueSyntax>? literalParser,
-            LeafSerializer<object>? serializer,
-            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema
+            LeafValueParser<object?>? valueParser,
+            LeafLiteralParser<object?, ValueSyntax>? literalParser,
+            LeafSerializer<object?>? serializer,
+            IReadOnlyList<IDirective> directives, Schema schema
         ) : base(name, description, clrType, directives, schema)
 
         {
-            _valueParser = valueParser;
-            _serializer = serializer;
-            _literalParser = literalParser;
+            ValueParser = valueParser;
+            Serializer = serializer;
+            LiteralParser = literalParser;
             _syntax = new Lazy<SyntaxNode>(() =>
                 new ScalarTypeDefinitionSyntax(SyntaxFactory.Name(Name),
                     Description != null ? SyntaxFactory.StringValue(Description, true) : null));
         }
 
 
-        public LeafLiteralParser<object, ValueSyntax> LiteralParser =>
-            _literalParser ??
-            throw new Exception($"Scalar {Name} does not have a {nameof(LiteralParser)} not defined.");
+        public LeafLiteralParser<object?, ValueSyntax>? LiteralParser { get; }
 
 
-        public LeafSerializer<object> Serializer => _serializer ??
-                                                    throw new Exception(
-                                                        $"Scalar {Name} does not have a {nameof(Serializer)} not defined.");
+        public LeafSerializer<object?>? Serializer { get; }
+        public LeafValueParser<object?>? ValueParser { get; }
 
-        public LeafValueParser<object> ValueParser => _valueParser ??
-                                                      throw new Exception(
-                                                          $"Scalar {Name} does not have a {nameof(ValueParser)} not defined.");
+        public Maybe<object?> Serialize(object value)
+        {
+            if (Serializer == null)
+            {
+                throw new Exception($"Error serializing value '{value}': {this} does not have a serializer defined.");
+            }
 
-        public Maybe<object> Serialize(object value) => Serializer(value);
+            return Serializer(value);
+        }
 
         public bool IsValidValue(string value) => ParseValue(value).HasValue;
 
         public bool IsValidLiteral(ValueSyntax value) => ParseLiteral(value).HasValue;
 
-        public Maybe<object> ParseValue(object value) => ValueParser(value);
+        public Maybe<object?> ParseValue(object value)
+        {
+            if (ValueParser == null)
+            {
+                throw new Exception($"Error parsing value '{value}': {this} does not have a value parser defined.");
+            }
 
-        public Maybe<object> ParseLiteral(ValueSyntax value) => LiteralParser(value);
+            return ValueParser(value);
+        }
+
+        public Maybe<object?> ParseLiteral(ValueSyntax value)
+        {
+            if (LiteralParser == null)
+            {
+                throw new Exception(
+                    $"Error parsing literal value '{value}': {this} does not have a literal parser defined.");
+            }
+
+            return LiteralParser(value);
+        }
 
         public override TypeKind Kind { get; } = TypeKind.Scalar;
-        public override IEnumerable<IMember> Children() => throw new NotImplementedException();
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Scalar;
 
-        public static ScalarType From(IScalarTypeDefinition definition, Schema schema)
+        public static ScalarType From(IScalarType definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
 

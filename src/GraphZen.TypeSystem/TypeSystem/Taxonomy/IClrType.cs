@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface IClrType
+    public interface IClrType : IMember
     {
         Type? ClrType { get; }
     }

@@ -9,11 +9,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public partial interface IArguments : IArgumentsDefinition, IMember
+    public interface IArguments : IParentMember
     {
-        new IReadOnlyCollection<Argument> Arguments { get; }
-
-        [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
-        IReadOnlyDictionary<string, Argument> ArgumentMap { get; }
+        IReadOnlyCollection<IArgument> Arguments { get; }
     }
 }

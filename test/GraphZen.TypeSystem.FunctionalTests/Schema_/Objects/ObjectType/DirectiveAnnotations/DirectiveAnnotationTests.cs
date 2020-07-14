@@ -133,8 +133,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Directi
             });
             var baz = schema.GetObject("Baz");
             baz.DirectiveAnnotations.Should().HaveCount(1);
-            baz.HasAnyDirectiveAnnotation("foo").Should().BeTrue();
-            baz.HasAnyDirectiveAnnotation("bar").Should().BeFalse();
+            baz.HasDirectiveAnnotation("foo").Should().BeTrue();
+            baz.HasDirectiveAnnotation("bar").Should().BeFalse();
         }
 
 

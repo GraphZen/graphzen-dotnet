@@ -60,7 +60,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             {
                 _.Object("Foo").Field("foo", "String", f =>
                 {
-                    var foo = f.GetInfrastructure<IFieldDefinition>();
+                    var foo = f.GetInfrastructure<IField>();
                     new List<Action>
                     {
                         () => f.Argument(name, "String"),

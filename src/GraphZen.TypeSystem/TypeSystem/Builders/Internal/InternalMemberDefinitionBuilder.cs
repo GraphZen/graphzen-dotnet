@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     public abstract class InternalMemberDefinitionBuilder<TDefinition> : InternalMemberDefinitionBuilder
-        where TDefinition : MemberDefinition
+        where TDefinition : MutableMember
     {
         protected InternalMemberDefinitionBuilder(TDefinition definition) : base(
             definition)
@@ -22,16 +22,16 @@ namespace GraphZen.TypeSystem.Internal
 
     public abstract class InternalMemberDefinitionBuilder
     {
-        protected InternalMemberDefinitionBuilder(MemberDefinition definition)
+        protected InternalMemberDefinitionBuilder(MutableMember definition)
         {
             Definition = definition;
         }
 
-        public MemberDefinition Definition { get; }
+        public MutableMember Definition { get; }
 
         public bool RemoveDescription(ConfigurationSource configurationSource) =>
             Definition.RemoveDescription(configurationSource);
 
-        public SchemaDefinition Schema => Definition.Schema;
+        public MutableSchema Schema => Definition.Schema;
     }
 }

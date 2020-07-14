@@ -8,9 +8,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalInputFieldBuilder : InternalInputValueBuilder<InputFieldDefinition, InternalInputFieldBuilder>
+    public class InternalInputFieldBuilder : InternalInputValueBuilder<MutableInputField, InternalInputFieldBuilder>
     {
-        public InternalInputFieldBuilder(InputFieldDefinition definition) : base(definition)
+        public InternalInputFieldBuilder(MutableInputField definition) : base(definition)
         {
         }
 

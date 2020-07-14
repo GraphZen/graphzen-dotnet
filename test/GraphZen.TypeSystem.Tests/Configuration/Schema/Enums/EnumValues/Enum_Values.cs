@@ -12,8 +12,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues
     // ReSharper disable once InconsistentNaming
     public abstract class Enum_Values :
         NamedCollectionConfigurationFixture<IEnumValues,
-            IEnumValuesDefinition, IMutableEnumValuesDefinition, EnumValueDefinition, EnumValue,
-            EnumTypeDefinition,
+            IEnumValuesDefinition, IMutableEnumValuesDefinition, MutableEnumValue, EnumValue,
+            MutableEnumType,
             EnumType>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
@@ -23,15 +23,15 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues
 
         public override EnumType GetParent(Schema schema, string parentName) => schema.GetEnum(parentName);
 
-        public override EnumTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        public override MutableEnumType GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetEnum(parentName);
 
-        public override NamedCollection<EnumValueDefinition> GetCollection(EnumTypeDefinition parent) =>
+        public override NamedCollection<MutableEnumValue> GetCollection(MutableEnumType parent) =>
             parent.Values.ToNamedCollection();
 
         public override NamedCollection<EnumValue> GetCollection(EnumType parent) => parent.Values.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(EnumTypeDefinition parent,
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(MutableEnumType parent,
             string name) =>
             parent.FindIgnoredValueConfigurationSource(name);
 

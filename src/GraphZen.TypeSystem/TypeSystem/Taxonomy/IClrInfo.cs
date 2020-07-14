@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface IClrInfo
+    public interface IClrInfo : IMember
     {
         object? ClrInfo { get; }
     }

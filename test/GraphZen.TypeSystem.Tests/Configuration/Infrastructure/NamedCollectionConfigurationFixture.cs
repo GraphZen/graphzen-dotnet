@@ -21,24 +21,24 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
         ConfigurationFixture<TMarker, TDefMarker, TMutableDefMarker,
             TParentMemberDefinition, TParentMember>, ICollectionConfigurationFixture
         where TMutableDefMarker : TDefMarker
-        where TParentMemberDefinition : MemberDefinition, TMutableDefMarker
-        where TParentMember : Member, TMarker
-        where TCollectionItemDefinition : MemberDefinition, IMutableNamed
-        where TCollectionItem : Member, INamed
+        where TParentMemberDefinition : MutableMember, TMutableDefMarker
+        where TParentMember : MutableMember, TMarker
+        where TCollectionItemDefinition : MutableMember, IMutableName
+        where TCollectionItem : MutableMember, IName
         where TMarker : TDefMarker
     {
         public Type CollectionItemMemberType { get; } = typeof(TCollectionItem);
         public Type CollectionItemMemberDefinitionType { get; } = typeof(TCollectionItemDefinition);
 
-        public NamedCollection<IMutableNamed>
+        public NamedCollection<IMutableName>
             GetCollection(SchemaBuilder sb, string parentName) =>
             GetCollection(GetParent(sb, parentName))
-                .ToNamedCollection<IMutableNamed, TCollectionItemDefinition>();
+                .ToNamedCollection<IMutableName, TCollectionItemDefinition>();
 
-        public NamedCollection<INamed> GetCollection(Schema schema, string parentName)
+        public NamedCollection<IName> GetCollection(Schema schema, string parentName)
         {
             var collection = GetCollection(GetParent(schema, parentName));
-            var casted = collection.ToNamedCollection<INamed, TCollectionItem>();
+            var casted = collection.ToNamedCollection<IName, TCollectionItem>();
             return casted;
         }
 

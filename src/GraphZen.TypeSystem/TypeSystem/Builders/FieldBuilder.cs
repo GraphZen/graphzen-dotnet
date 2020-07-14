@@ -10,7 +10,108 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class FieldBuilder<TDeclaringType, TField, TContext> : IFieldBuilder<TDeclaringType, TField, TContext>
+    internal class FieldBuilder : IFieldBuilder{
+        public FieldBuilder(InternalFieldBuilder internalBuilder)
+        {
+            InternalBuilder = internalBuilder;
+        }
+
+        public InternalFieldBuilder InternalBuilder { get; }
+
+        public IFieldBuilder AddDirectiveAnnotation(string name, object value) => throw new NotImplementedException();
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
+
+        IDirectivesBuilder IDirectivesBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
+
+        IDirectivesBuilder IDirectivesBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
+
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name, object value) => AddDirectiveAnnotation(name, value);
+
+        public IFieldBuilder AddDirectiveAnnotation(string name) => throw new NotImplementedException();
+
+        public IFieldBuilder RemoveDirectiveAnnotations(string name) => throw new NotImplementedException();
+
+        public IFieldBuilder ClearDirectiveAnnotations() => throw new NotImplementedException();
+
+        public IFieldBuilder RemoveArgument(string name) => throw new NotImplementedException();
+        IArgumentsBuilder IArgumentsBuilder.ClearArguments() => ClearArguments();
+
+        IArgumentsBuilder IArgumentsBuilder.Argument(string name, Action<IArgumentBuilder> argumentAction) => Argument(name, argumentAction);
+
+        public IArgumentBuilder Argument(string name) => throw new NotImplementedException();
+
+        IArgumentsBuilder IArgumentsBuilder.Argument(string name, string type) => Argument(name, type);
+
+        IArgumentsBuilder IArgumentsBuilder.Argument(string name, string type, Action<IArgumentBuilder> argumentAction) => Argument(name, type, argumentAction);
+
+        IArgumentsBuilder IArgumentsBuilder.Argument(string name, Type clrType) => Argument(name, clrType);
+
+        IArgumentsBuilder IArgumentsBuilder.Argument(string name, Type clrType, Action<IArgumentBuilder> argumentAction) => Argument(name, clrType, argumentAction);
+
+        IArgumentsBuilder IArgumentsBuilder.Argument<TArgument>(string name) => Argument<TArgument>(name);
+
+        IArgumentsBuilder IArgumentsBuilder.Argument<TArgument>(string name, Action<IArgumentBuilder> argumentAction) => Argument(name, argumentAction);
+
+        IArgumentsBuilder IArgumentsBuilder.IgnoreArgument(string name) => IgnoreArgument(name);
+
+        IArgumentsBuilder IArgumentsBuilder.UnignoreArgument(string name) => UnignoreArgument(name);
+
+        IArgumentsBuilder IArgumentsBuilder.RemoveArgument(string name) => RemoveArgument(name);
+
+        public IFieldBuilder ClearArguments() => throw new NotImplementedException();
+
+        public IFieldBuilder Argument(string name, Action<IArgumentBuilder> argumentAction) => throw new NotImplementedException();
+
+        public IFieldBuilder Argument(string name, string type) => throw new NotImplementedException();
+
+        public IFieldBuilder Argument(string name, string type, Action<IArgumentBuilder> argumentAction) => throw new NotImplementedException();
+
+        public IFieldBuilder Argument(string name, Type clrType) => throw new NotImplementedException();
+
+        public IFieldBuilder Argument(string name, Type clrType, Action<IArgumentBuilder> argumentAction) => throw new NotImplementedException();
+
+        public IFieldBuilder IgnoreArgument(string name) => throw new NotImplementedException();
+
+        public IFieldBuilder UnignoreArgument(string name) => throw new NotImplementedException();
+
+        public IFieldBuilder Argument<TArgument>(string name) => throw new NotImplementedException();
+
+        public IFieldBuilder Argument<TArgument>(string name, Action<IArgumentBuilder> argumentAction) => throw new NotImplementedException();
+
+        public IFieldBuilder Name(string name) => throw new NotImplementedException();
+
+        public IFieldBuilder Description(string description) => throw new NotImplementedException();
+        IDescriptionBuilder IDescriptionBuilder.RemoveDescription() => RemoveDescription();
+
+        IDescriptionBuilder IDescriptionBuilder.Description(string description) => Description(description);
+
+        public IFieldBuilder RemoveDescription() => throw new NotImplementedException();
+
+        public IFieldBuilder Deprecated(bool deprecated) => throw new NotImplementedException();
+        IMaybeDeprecatedBuilder IMaybeDeprecatedBuilder.Deprecated(string reason) => Deprecated(reason);
+
+        IMaybeDeprecatedBuilder IMaybeDeprecatedBuilder.Deprecated(bool deprecated) => Deprecated(deprecated);
+
+        public IFieldBuilder Deprecated(string reason) => throw new NotImplementedException();
+
+        InternalFieldBuilder IInfrastructure<InternalFieldBuilder>.Instance => InternalBuilder;
+
+        MutableField IInfrastructure<MutableField>.Instance => InternalBuilder.Definition;
+
+        public IFieldBuilder FieldType(string type) => throw new NotImplementedException();
+
+        public IFieldBuilder FieldType(Type clrType, bool canBeNull = false, bool itemCanBeNull = false) => throw new NotImplementedException();
+
+        public IFieldBuilder<object, GraphQLContext, TField> FieldType<TField>() => throw new NotImplementedException();
+
+        public IFieldBuilder Resolve(Resolver<object, dynamic, GraphQLContext, object?> resolver) => throw new NotImplementedException();
+
+        public IFieldBuilder RemoveResolver() => throw new NotImplementedException();
+        INameBuilder INameBuilder.Name(string name) => Name(name);
+    }
+
+
+    internal class FieldBuilder<TDeclaringType, TField, TContext> : IFieldBuilder<TDeclaringType, TField, TContext>
         where TContext : GraphQLContext
     {
         public FieldBuilder(InternalFieldBuilder builder)
@@ -178,13 +279,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
 
-        IAnnotableBuilder IAnnotableBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
+        IDirectivesBuilder IDirectivesBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
 
-        IAnnotableBuilder IAnnotableBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
+        IDirectivesBuilder IDirectivesBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name, object value) =>
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name, object value) =>
             AddDirectiveAnnotation(name, value);
 
         public FieldBuilder<TDeclaringType, TField, TContext> AddDirectiveAnnotation(string name)
@@ -209,8 +310,8 @@ namespace GraphZen.TypeSystem
         }
 
         InternalFieldBuilder IInfrastructure<InternalFieldBuilder>.Instance => Builder;
-        FieldDefinition IInfrastructure<FieldDefinition>.Instance => Builder.Definition;
-        IFieldDefinition IInfrastructure<IFieldDefinition>.Instance => Builder.Definition;
+        MutableField IInfrastructure<MutableField>.Instance => Builder.Definition;
+        IField IInfrastructure<IField>.Instance => Builder.Definition;
 
         public FieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false)
         {
@@ -218,6 +319,6 @@ namespace GraphZen.TypeSystem
             return new FieldBuilder<TDeclaringType, TFieldNew, TContext>(Builder);
         }
 
-        INamedBuilder INamedBuilder.Name(string name) => Name(name);
+        INameBuilder INameBuilder.Name(string name) => Name(name);
     }
 }

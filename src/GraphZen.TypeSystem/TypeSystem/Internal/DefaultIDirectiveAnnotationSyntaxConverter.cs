@@ -20,7 +20,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public override SyntaxNode ToSyntax(object value)
         {
-            if (value is IDirectiveAnnotation annotation)
+            if (value is IDirective annotation)
             {
                 if (annotation.Value is DirectiveSyntax syntax)
                 {

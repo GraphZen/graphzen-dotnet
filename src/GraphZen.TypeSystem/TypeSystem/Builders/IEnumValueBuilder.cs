@@ -9,14 +9,14 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    internal interface IEnumValueBuilder :
-        IInfrastructure<EnumValueDefinition>,
-        IAnnotableBuilder<EnumValueBuilder>,
-        INamedBuilder<EnumValueBuilder>,
-        IDescriptionBuilder<EnumValueBuilder>,
+    public interface IEnumValueBuilder :
+        IInfrastructure<MutableEnumValue>,
+        IDirectivesBuilder<IEnumValueBuilder>,
+        INameBuilder<IEnumValueBuilder>,
+        IDescriptionBuilder<IEnumValueBuilder>,
         IInfrastructure<InternalEnumValueBuilder>
     {
-        EnumValueBuilder CustomValue(object value);
-        EnumValueBuilder RemoveCustomValue();
+        IEnumValueBuilder CustomValue(object? value);
+        IEnumValueBuilder RemoveCustomValue();
     }
 }

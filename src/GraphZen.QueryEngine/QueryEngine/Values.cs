@@ -24,7 +24,7 @@ namespace GraphZen.QueryEngine
 {
     internal static class Values
     {
-        internal static DynamicDictionary GetDirectiveValues(Directive directive, SyntaxNode node,
+        internal static DynamicDictionary GetDirectiveValues(DirectiveDefinition directive, SyntaxNode node,
             IReadOnlyDictionary<string, object> variableValues)
         {
             if (node is IDirectivesSyntax directivesNode)

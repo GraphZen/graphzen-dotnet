@@ -13,12 +13,15 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    internal interface IArgumentBuilder<T> : IInfrastructure<InternalArgumentBuilder>,
-        IInfrastructure<ArgumentDefinition>,
-        IAnnotableBuilder<ArgumentBuilder<T>>
+    public interface IArgumentBuilder :
+        IInfrastructure<InternalArgumentBuilder>,
+        IInfrastructure<MutableArgument>,
+        IDirectivesBuilder<IArgumentBuilder>
     {
-        ArgumentBuilder<TNew> ArgumentType<TNew>();
-        ArgumentBuilder<object?> ArgumentType(Type clrType);
-        ArgumentBuilder<object?> ArgumentType(string type);
+        IArgumentBuilder ArgumentType<T>();
+        IArgumentBuilder ArgumentType(Type clrType);
+        IArgumentBuilder ArgumentType(string type);
+        IArgumentBuilder DefaultValue(object? value);
+        IArgumentBuilder RemoveDefaultValue();
     }
 }

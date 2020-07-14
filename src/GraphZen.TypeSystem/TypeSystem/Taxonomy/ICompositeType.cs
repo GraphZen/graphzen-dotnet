@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface ICompositeType : ICompositeTypeDefinition, INamedType
+    public interface ICompositeType : INamedTypeDefinition
     {
     }
 }

@@ -169,8 +169,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Interfaces.InterfaceType.F
             });
             var arg = schema.GetInterface("Baz").GetField("Bar").GetArgument("arg");
             arg.DirectiveAnnotations.Should().HaveCount(1);
-            arg.HasAnyDirectiveAnnotation("foo").Should().BeTrue();
-            arg.HasAnyDirectiveAnnotation("bar").Should().BeFalse();
+            arg.HasDirectiveAnnotation("foo").Should().BeTrue();
+            arg.HasDirectiveAnnotation("bar").Should().BeFalse();
         }
 
 

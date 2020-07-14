@@ -9,9 +9,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalFieldBuilder : AnnotatableMemberDefinitionBuilder<FieldDefinition>
+    public class InternalFieldBuilder : AnnotatableMemberDefinitionBuilder<MutableField>
     {
-        public InternalFieldBuilder(FieldDefinition field) : base(field)
+        public InternalFieldBuilder(MutableField field) : base(field)
         {
         }
 
@@ -187,7 +187,7 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public bool IgnoreArgument(ArgumentDefinition argument, ConfigurationSource configurationSource)
+        public bool IgnoreArgument(MutableArgument argument, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(argument.GetConfigurationSource()))
             {
@@ -203,7 +203,7 @@ namespace GraphZen.TypeSystem.Internal
         public bool RemoveArgument(string name, ConfigurationSource configurationSource) =>
             Definition.TryGetArgument(name, out var arg) && RemoveArgument(arg, configurationSource);
 
-        public bool RemoveArgument(ArgumentDefinition argument, ConfigurationSource configurationSource)
+        public bool RemoveArgument(MutableArgument argument, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(argument.GetConfigurationSource()))
             {

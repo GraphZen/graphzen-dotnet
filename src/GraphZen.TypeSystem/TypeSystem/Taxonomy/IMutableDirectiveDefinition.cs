@@ -3,22 +3,31 @@
 
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
+using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
     public interface IMutableDirectiveDefinition :
-        IDirectiveDefinition,
-        IMutableArgumentsDefinition,
-        IMutableDirectiveLocationsDefinition,
-        IMutableNamed,
+        IBuildableDirectiveDefinition,
+        IMutableArguments,
+        IMutableName,
         IMutableDescription,
         IMutableClrType,
-        IMutableMaybeRepeatableDefinition,
-        IInfrastructure<InternalDirectiveBuilder>
+        IInfrastructure<InternalDirectiveDefinitionBuilder>
     {
-        DirectiveBuilder Builder { get; }
+         new IDirectiveDefinitionBuilder Builder { get; }
+        bool SetRepeatable(bool repeatable, ConfigurationSource configurationSource);
+        ConfigurationSource GetRepeatableConfigurationSource();
+
+        bool AddLocation(DirectiveLocation location, ConfigurationSource configurationSource);
+        bool RemoveLocation(DirectiveLocation location, ConfigurationSource configurationSource);
+        bool IgnoreLocation(DirectiveLocation location, ConfigurationSource configurationSource);
+        bool UnignoreLocation(DirectiveLocation location, ConfigurationSource configurationSource);
+        ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation location);
+        ConfigurationSource? FindIgnoredDirectiveLocationConfigurationSource(DirectiveLocation location);
     }
 }

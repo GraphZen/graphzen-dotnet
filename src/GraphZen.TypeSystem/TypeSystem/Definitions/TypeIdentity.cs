@@ -14,13 +14,13 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class TypeIdentity : IMutableNamed, IMutableClrType, IMutableDefinition
+    public class TypeIdentity : IMutableName, IMutableClrType, IMutableMember
     {
         private static int _typeIdSeed = 1;
         private ConfigurationSource? _clrTypeConfigurationSource;
         private ConfigurationSource _nameConfigurationSource = ConfigurationSource.Explicit;
 
-        public TypeIdentity(string name, SchemaDefinition schema)
+        public TypeIdentity(string name, MutableSchema schema)
         {
             Name = name.IsValidGraphQLName()
                 ? name
@@ -30,7 +30,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public TypeIdentity(Type clrType, SchemaDefinition schema)
+        public TypeIdentity(Type clrType, MutableSchema schema)
         {
             ClrType = clrType.GetEffectiveClrType();
             _clrTypeConfigurationSource = ConfigurationSource.Convention;
@@ -49,9 +49,9 @@ namespace GraphZen.TypeSystem
 
         public int Id { get; } = _typeIdSeed++;
 
-        public SchemaDefinition Schema { get; }
+        public MutableSchema Schema { get; }
 
-        public NamedTypeDefinition? Definition => Schema.FindType(this);
+        public MutableNamedTypeDefinition? Definition => Schema.FindType(this);
 
 
         internal string DebuggerDisplay
@@ -276,18 +276,18 @@ namespace GraphZen.TypeSystem
 
         public bool? IsInputType()
         {
-            if (Definition is IInputTypeDefinition)
+            if (Definition is IInputType)
             {
                 return true;
             }
 
-            if (Definition is IOutputTypeDefinition)
+            if (Definition is IOutputType)
             {
                 return false;
             }
 
             var referencedByInputMember = Schema.GetTypeReferences().Any(_ =>
-                ReferenceEquals(_.Identity, this) && _.DeclaringMember is IInputDefinition);
+                ReferenceEquals(_.Identity, this) && _.DeclaringMember is IInputMember);
 
             if (referencedByInputMember)
             {
@@ -299,18 +299,18 @@ namespace GraphZen.TypeSystem
 
         public bool? IsOutputType()
         {
-            if (Definition is IOutputTypeDefinition)
+            if (Definition is IOutputType)
             {
                 return true;
             }
 
-            if (Definition is IInputTypeDefinition)
+            if (Definition is IInputType)
             {
                 return false;
             }
 
             var referencedByOutputMember = Schema.GetTypeReferences().Any(_ =>
-                ReferenceEquals(_.Identity, this) && _.DeclaringMember is IOutputDefinition);
+                ReferenceEquals(_.Identity, this) && _.DeclaringMember is IOutputMember);
             if (referencedByOutputMember)
             {
                 return true;
@@ -321,6 +321,6 @@ namespace GraphZen.TypeSystem
 
 
         public override string ToString() => DebuggerDisplay;
-        ISchemaDefinition IMemberDefinition.Schema => Schema;
+        ISchema IMember.Schema => Schema;
     }
 }

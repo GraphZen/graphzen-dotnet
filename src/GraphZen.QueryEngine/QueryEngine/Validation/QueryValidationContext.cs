@@ -44,7 +44,7 @@ namespace GraphZen.QueryEngine.Validation
 
         public TypeInfo TypeInfo { get; }
 
-        public Directive Directive => TypeInfo.Directive;
+        public DirectiveDefinition Directive => TypeInfo.Directive;
 
         public Argument Argument => TypeInfo.Argument;
 

@@ -20,20 +20,20 @@ namespace GraphZen.TypeSystem.Tests
             {
                 typeof(ArgumentTypeReference),
                 typeof(EnumType),
-                typeof(EnumTypeDefinition),
+                typeof(MutableEnumType),
                 typeof(FieldTypeReference),
                 typeof(InputObjectType),
-                typeof(InputObjectTypeDefinition),
+                typeof(MutableInputObjectType),
                 typeof(InterfaceType),
-                typeof(InterfaceTypeDefinition),
+                typeof(MutableInterfaceType),
                 typeof(ListType),
                 typeof(NonNullType),
                 typeof(ObjectType),
-                typeof(ObjectTypeDefinition),
+                typeof(MutableObjectType),
                 typeof(ScalarType),
-                typeof(ScalarTypeDefinition),
+                typeof(MutableScalarType),
                 typeof(UnionType),
-                typeof(UnionTypeDefinition)
+                typeof(MutableUnionType)
             };
 
             Assert.Equal(expected, types);
@@ -47,17 +47,17 @@ namespace GraphZen.TypeSystem.Tests
             var expected = new[]
             {
                 typeof(EnumType),
-                typeof(EnumTypeDefinition),
+                typeof(MutableEnumType),
                 typeof(InputObjectType),
-                typeof(InputObjectTypeDefinition),
+                typeof(MutableInputObjectType),
                 typeof(InterfaceType),
-                typeof(InterfaceTypeDefinition),
+                typeof(MutableInterfaceType),
                 typeof(ObjectType),
-                typeof(ObjectTypeDefinition),
+                typeof(MutableObjectType),
                 typeof(ScalarType),
-                typeof(ScalarTypeDefinition),
+                typeof(MutableScalarType),
                 typeof(UnionType),
-                typeof(UnionTypeDefinition)
+                typeof(MutableUnionType)
             };
 
             Assert.Equal(expected, types);
@@ -85,7 +85,7 @@ namespace GraphZen.TypeSystem.Tests
 
 
         [Theory]
-        [InlineData(typeof(INamedType))]
+        [InlineData(typeof(INamedTypeDefinition))]
         public void graphql_named_types(Type type)
         {
             var types = ClrTypeUtils.GetImplementedTypes(type);
@@ -112,17 +112,17 @@ namespace GraphZen.TypeSystem.Tests
             var expected = new[]
             {
                 typeof(EnumType),
-                typeof(EnumTypeDefinition),
+                typeof(MutableEnumType),
                 typeof(InputObjectType),
-                typeof(InputObjectTypeDefinition),
+                typeof(MutableInputObjectType),
                 typeof(InterfaceType),
-                typeof(InterfaceTypeDefinition),
+                typeof(MutableInterfaceType),
                 typeof(ObjectType),
-                typeof(ObjectTypeDefinition),
+                typeof(MutableObjectType),
                 typeof(ScalarType),
-                typeof(ScalarTypeDefinition),
+                typeof(MutableScalarType),
                 typeof(UnionType),
-                typeof(UnionTypeDefinition)
+                typeof(MutableUnionType)
             };
 
             Assert.Equal(expected, types);
@@ -179,14 +179,14 @@ namespace GraphZen.TypeSystem.Tests
         [Fact]
         public void AbstractTypeDefinitions()
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(IAbstractTypeDefinition));
+            var types = ClrTypeUtils.GetImplementedTypes(typeof(IAbstractType));
 
             var expected = new[]
             {
                 typeof(InterfaceType),
-                typeof(InterfaceTypeDefinition),
+                typeof(MutableInterfaceType),
                 typeof(UnionType),
-                typeof(UnionTypeDefinition)
+                typeof(MutableUnionType)
             };
 
             Assert.Equal(expected, types);
@@ -210,11 +210,11 @@ namespace GraphZen.TypeSystem.Tests
         [Fact(Skip = "wip")]
         public void Annotated()
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(IDirectiveAnnotations));
+            var types = ClrTypeUtils.GetImplementedTypes(typeof(IDirectives));
 
             var expected = new[]
             {
-                typeof(AnnotatableMemberDefinition),
+                typeof(MutableAnnotatableMember),
                 typeof(EnumType),
                 typeof(EnumValue),
                 typeof(Field),
@@ -233,16 +233,16 @@ namespace GraphZen.TypeSystem.Tests
         [Fact]
         public void CompositeTypeDefinitions()
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(ICompositeTypeDefinition));
+            var types = ClrTypeUtils.GetImplementedTypes(typeof(ICompositeType));
 
             var expected = new[]
             {
                 typeof(InterfaceType),
-                typeof(InterfaceTypeDefinition),
+                typeof(MutableInterfaceType),
                 typeof(ObjectType),
-                typeof(ObjectTypeDefinition),
+                typeof(MutableObjectType),
                 typeof(UnionType),
-                typeof(UnionTypeDefinition)
+                typeof(MutableUnionType)
             };
 
             Assert.Equal(expected, types);
@@ -273,9 +273,9 @@ namespace GraphZen.TypeSystem.Tests
             var expected = new[]
             {
                 typeof(EnumType),
-                typeof(EnumTypeDefinition),
+                typeof(MutableEnumType),
                 typeof(ScalarType),
-                typeof(ScalarTypeDefinition)
+                typeof(MutableScalarType)
             };
 
             Assert.Equal(expected, types);

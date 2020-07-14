@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class ScalarTypeBuilder : IScalarTypeBuilder
+    internal class ScalarTypeBuilder : IScalarTypeBuilder
     {
         public ScalarTypeBuilder(InternalScalarTypeBuilder builder)
         {
@@ -20,9 +20,9 @@ namespace GraphZen.TypeSystem
 
         protected InternalScalarTypeBuilder Builder { get; }
         InternalScalarTypeBuilder IInfrastructure<InternalScalarTypeBuilder>.Instance => Builder;
-        ScalarTypeDefinition IInfrastructure<ScalarTypeDefinition>.Instance => Builder.Definition;
+        MutableScalarType IInfrastructure<MutableScalarType>.Instance => Builder.Definition;
 
-        public INamedBuilder Name(string name)
+        public INameBuilder Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
@@ -63,35 +63,35 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IAnnotableBuilder AddDirectiveAnnotation(string name, object value)
+        public IDirectivesBuilder AddDirectiveAnnotation(string name, object value)
         {
             Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder AddDirectiveAnnotation(string name)
+        public IDirectivesBuilder AddDirectiveAnnotation(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder RemoveDirectiveAnnotations(string name)
+        public IDirectivesBuilder RemoveDirectiveAnnotations(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder ClearDirectiveAnnotations()
+        public IDirectivesBuilder ClearDirectiveAnnotations()
         {
             Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
         }
     }
 
-    public class ScalarTypeBuilder<TScalar, TValueNode> : ScalarTypeBuilder, IScalarTypeBuilder<TScalar, TValueNode>
+    internal class ScalarTypeBuilder<TScalar, TValueNode> : ScalarTypeBuilder, IScalarTypeBuilder<TScalar, TValueNode>
         where TValueNode : ValueSyntax
         where TScalar : notnull
     {

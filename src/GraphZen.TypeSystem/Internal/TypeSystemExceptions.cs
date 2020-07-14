@@ -20,24 +20,24 @@ namespace GraphZen.Internal
 
         public static class DuplicateItemException
         {
-            public static Infrastructure.DuplicateItemException ForRename(IMutableDefinition definition, string name)
+            public static Infrastructure.DuplicateItemException ForRename(IMutableMember definition, string name)
             {
                 var parent = definition.GetParentMember();
                 var parentDescription =
-                    parent is SchemaDefinition ? "The schema" : parent?.ToString()?.FirstCharToUpper();
+                    parent is MutableSchema ? "The schema" : parent?.ToString()?.FirstCharToUpper();
                 return new Infrastructure.DuplicateItemException(
                     $"Cannot rename {definition} to \"{name}\". {parentDescription} already contains a {definition.GetTypeDisplayName()} named \"{name}\".");
             }
 
             public static string
                 CannotChangeClrType<T>(T definition, Type clrType, IMutableClrType existing)
-                where T : INamed, IClrType =>
+                where T : IName, IClrType =>
                 $"Cannot set CLR type on {definition} to CLR {GetClrTypeKind(clrType)} '{clrType.Name}': {existing} already exists with that CLR type.";
 
 
             internal static string CannotCreateTypeWithDuplicateNameAndType<T>(TypeKind kind, string name, Type clrType,
                 T named, T typed)
-                where T : NamedTypeDefinition =>
+                where T : MutableNamedTypeDefinition =>
                 $"Cannot create {kind.ToDisplayStringLower()} {name} with CLR {clrType.GetClrTypeKind()} '{clrType.Name}': both {named} and {typed} already exist.";
 
 
@@ -46,11 +46,11 @@ namespace GraphZen.Internal
                 $"Cannot create directive {name} with CLR type '{clrType.Name}': both {existingNamed} and {existingTyped} already exist.";
 
 
-            internal static string CannotRenameInputField(IInputFieldDefinition field, string name) =>
+            internal static string CannotRenameInputField(IInputField field, string name) =>
                 $"Cannot rename {field} to \"{name}\". {field.DeclaringType?.ToString()?.FirstCharToUpper()} already contains a field named \"{name}\".";
 
 
-            internal static string DuplicateEnumValue(IEnumValueDefinition enumValue, string name) =>
+            internal static string DuplicateEnumValue(IEnumValue enumValue, string name) =>
                 $"Cannot rename enum value {enumValue.DeclaringType.Name}.{enumValue.Name} to \"{name}\": {enumValue.DeclaringType.ToString()?.FirstCharToUpper()} already contains a value named \"{name}\".";
         }
 
@@ -70,7 +70,7 @@ namespace GraphZen.Internal
                 =>
                     $"Cannot get or create GraphQL type builder for {kind.ToDisplayStringLower()} named \"{name}\". The type name \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
-            public static string CannotCreateField(string name, FieldDefinition field)
+            public static string CannotCreateField(string name, MutableField field)
                 =>
                     $"Cannot create field named \"{name}\" on {field.DeclaringType}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
@@ -80,18 +80,18 @@ namespace GraphZen.Internal
                     $"Cannot get or create GraphQL {kind.ToDisplayStringLower()} type builder with CLR {GetClrTypeKind(clrType)} '{clrType.Name}'. The CLR {GetClrTypeKind(clrType)} name '{clrType.Name}' is not a valid GraphQL name. {NameSpecDescription}";
 
 
-            public static string CannotCreateArgumentWithInvalidName(IMutableArgumentDefinition def, string name)
+            public static string CannotCreateArgumentWithInvalidName(IMutableArgument def, string name)
                 =>
                     $"Cannot create argument named \"{name}\" for {def.DeclaringMember}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
-            public static string CannotCreateInputFieldWithInvalidName(IInputFieldDefinition def, string name)
+            public static string CannotCreateInputFieldWithInvalidName(IInputField def, string name)
                 =>
                     $"Cannot create field named \"{name}\" for {def.DeclaringType}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
             public static string CannotCreateDirectiveWithInvalidName(string name) =>
                 $"Cannot create directive named \"{name}\": \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
 
-            public static string CannotCreateEnumValue(string name, IEnumTypeDefinition parent) =>
+            public static string CannotCreateEnumValue(string name, IEnumType parent) =>
                 $"Cannot add enum value \"{name}\" to {parent}: \"{name}\" is not a valid GraphQL name. {NameSpecDescription}";
         }
     }

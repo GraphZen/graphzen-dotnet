@@ -7,9 +7,12 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
+
     [GraphQLIgnore]
-    public interface IDirective : IDirectiveDefinition, IArguments, ISyntaxConvertable, IDirectiveLocations,
-        IMemberParent, IMaybeRepeatable, IMaybeSpec
+    public interface IDirective : IChildMember
     {
+        string Name { get; }
+
+        object? Value { get; }
     }
 }

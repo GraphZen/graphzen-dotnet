@@ -10,24 +10,25 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface IObjectTypeBuilder : INamedTypeBuilder,
-        IImplementsInterfacesBuilder,
+    public interface IObjectTypeBuilder : INamedTypeDefinitionBuilder<IObjectTypeBuilder, IObjectTypeBuilder>,
+        IImplementsInterfacesBuilder<IObjectTypeBuilder>,
+        IFieldsBuilder<IObjectTypeBuilder, object, GraphQLContext>,
         IInfrastructure<InternalObjectTypeBuilder>,
-        IInfrastructure<ObjectTypeDefinition>
+        IInfrastructure<MutableObjectType>
     {
     }
 
     public interface IObjectTypeBuilder<TObject, TContext> : IObjectTypeBuilder,
-        INamedTypeBuilder<ObjectTypeBuilder<TObject, TContext>, ObjectTypeBuilder<object, TContext>>,
-        IImplementsInterfacesBuilder<ObjectTypeBuilder<TObject, TContext>>,
-        IFieldsDefinitionBuilder<ObjectTypeBuilder<TObject, TContext>, TObject, TContext>
+        INamedTypeDefinitionBuilder<IObjectTypeBuilder<TObject, TContext>, IObjectTypeBuilder<object, TContext>>,
+        IImplementsInterfacesBuilder<IObjectTypeBuilder<TObject, TContext>>,
+        IFieldsBuilder<IObjectTypeBuilder<TObject, TContext>, TObject, TContext>
         where TObject : notnull
         where TContext : GraphQLContext
     {
-        ObjectTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull;
-        ObjectTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull;
-        ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn);
-        ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, bool> isTypeOfFn);
-        ObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, ResolveInfo, bool> isTypeOfFn);
+        IObjectTypeBuilder<T, TContext> ClrType<T>(bool inferName = false) where T : notnull;
+        IObjectTypeBuilder<T, TContext> ClrType<T>(string name) where T : notnull;
+        IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, bool> isTypeOfFn);
+        IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, bool> isTypeOfFn);
+        IObjectTypeBuilder<TObject, TContext> IsTypeOf(Func<TObject, TContext, ResolveInfo, bool> isTypeOfFn);
     }
 }

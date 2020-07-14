@@ -9,24 +9,26 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public interface IFieldsDefinitionBuilder<out TBuilder, TSource, TContext> where TContext : GraphQLContext
+    public interface IFieldsBuilder
     {
-        TBuilder Field<TField>(string name);
-        TBuilder RemoveField(string name);
-        TBuilder Field<TField>(string name, Action<FieldBuilder<TSource, TField, TContext>> configurator);
-        FieldBuilder<TSource, object, TContext> Field(string name);
-        TBuilder Field(string name, Action<FieldBuilder<TSource, object, TContext>> configurator);
+        IFieldsBuilder Field<TField>(string name);
+        IFieldsBuilder RemoveField(string name);
+        IFieldsBuilder Field<TField>(string name, Action<IFieldBuilder<object, GraphQLContext, TField>> fieldAction);
+        IFieldBuilder Field(string name);
+        IFieldsBuilder Field(string name, string type);
+        IFieldsBuilder Field(string name, string type, Action<IFieldBuilder> fieldAction);
+        IFieldsBuilder IgnoreField(string name);
+        IFieldsBuilder UnignoreField(string name);
+    }
 
-        TBuilder Field(string name, string type);
-        TBuilder Field(string name, string type, Action<FieldBuilder<TSource, object?, TContext>> configurator);
-
-        TBuilder Field<TField>(Expression<Func<TSource, TField>> selector);
-
-        TBuilder Field<TField>(Expression<Func<TSource, TField>> selector,
-            Action<FieldBuilder<TSource, TField, TContext>> configurator);
-
-        TBuilder IgnoreField<TField>(Expression<Func<TSource, TField>> selector);
-        TBuilder IgnoreField(string name);
-        TBuilder UnignoreField(string name);
+    public interface IFieldsBuilder<out TBuilder, TSource, TContext> : IFieldsBuilder
+    {
+        new TBuilder Field<TField>(string name);
+        new TBuilder RemoveField(string name);
+        TBuilder Field<TField>(string name, Action<IFieldBuilder<TSource, TContext, TField>> fieldAction);
+        new TBuilder Field(string name, string type);
+        new TBuilder Field(string name, string type, Action<IFieldBuilder> fieldAction);
+        new TBuilder IgnoreField(string name);
+        new TBuilder UnignoreField(string name);
     }
 }

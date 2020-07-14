@@ -20,7 +20,7 @@ namespace GraphZen.SpecAudit
 
         private static SpecSuite Create()
         {
-            var name = new Subject(nameof(INamed.Name)).WithSpecs<NameSpecs>();
+            var name = new Subject(nameof(IName.Name)).WithSpecs<NameSpecs>();
 
             var description = new Subject(nameof(IDescription.Description))
                 .WithSpecs<DescriptionSpecs>()
@@ -33,16 +33,16 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<TypeReferenceSpecs>()
                 .WithSpecs<SdlSpec>();
 
-            var member = sdl.WithName(nameof(Member)).WithSpecs<MemberSpecs>();
+            var member = sdl.WithName(nameof(MutableMember)).WithSpecs<MemberSpecs>();
 
             var inputTypeRef = typeRef.WithName("InputTypeRef");
             var outputTypeRef = typeRef.WithName("OutputTypeRef");
 
 
             // ReSharper disable once UnusedVariable
-            var directiveAnnotation = new Subject(nameof(DirectiveAnnotation));
+            var directiveAnnotation = new Subject(nameof(Directive));
 
-            var directiveAnnotations = new Subject(nameof(AnnotatableMemberDefinition.DirectiveAnnotations))
+            var directiveAnnotations = new Subject(nameof(MutableAnnotatableMember.DirectiveAnnotations))
                 .WithSpecs<DirectiveAnnotationSpecs>(SpecPriority.Medium);
 
             var argument = new Subject("Argument")
@@ -64,7 +64,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(directiveAnnotations);
 
 
-            var argumentDef = inputValue.WithName(nameof(ArgumentDefinition))
+            var argumentDef = inputValue.WithName(nameof(MutableArgument))
                 .WithChild(inputTypeRef.WithName(nameof(Argument.ArgumentType)));
 
             var argumentDefCollection = new Subject(nameof(IArguments.Arguments))
@@ -79,7 +79,7 @@ namespace GraphZen.SpecAudit
                 .WithChild(directiveAnnotations)
                 .WithChildren(outputTypeRef.WithName(nameof(Field.FieldType)));
 
-            var outputFields = new Subject(nameof(FieldsDefinition.Fields))
+            var outputFields = new Subject(nameof(MutableFields.Fields))
                 .WithSpecs<NamedCollectionSpecs>();
 
             var implementsInterfaces = new Subject(nameof(ObjectType.Interfaces));
@@ -87,7 +87,7 @@ namespace GraphZen.SpecAudit
             var clrType = new Subject(nameof(IClrType.ClrType))
                 .WithSpecs<ClrTypeSpecs>();
 
-            var graphQLType = member.WithName(nameof(NamedType))
+            var graphQLType = member.WithName(nameof(NamedTypeDefinition))
                 .WithSpecs<SdlSpec, SdlExtensionSpec>()
                 .WithChild(name)
                 .WithChild(description)
@@ -159,12 +159,12 @@ namespace GraphZen.SpecAudit
                 .WithSpecs<InputXorOutputTypeSpecs>()
                 .WithChild(inputObjectType);
 
-            var directive = member.WithName(nameof(Directive))
+            var directive = member.WithName(nameof(DirectiveDefinition))
                 .WithChild(name)
                 .WithChild(clrType)
                 .WithChild(argumentDefCollection)
-                .WithChild(sdl.WithName(nameof(Directive.IsRepeatable)).WithSpecs<DirectiveRepeatableSpecs>())
-                .WithChild(sdl.WithName(nameof(Directive.Locations)).WithSpecs<DirectiveLocationsSpecs>())
+                .WithChild(sdl.WithName(nameof(DirectiveDefinition.IsRepeatable)).WithSpecs<DirectiveRepeatableSpecs>())
+                .WithChild(sdl.WithName(nameof(DirectiveDefinition.Locations)).WithSpecs<DirectiveLocationsSpecs>())
                 .WithChild(description)
                 .WithoutSpecs<SdlExtensionSpec>(true);
 

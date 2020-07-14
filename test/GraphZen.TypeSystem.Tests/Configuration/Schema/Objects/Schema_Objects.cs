@@ -11,8 +11,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects
 {
     // ReSharper disable once InconsistentNaming
     public abstract class Schema_Objects : NamedCollectionConfigurationFixture<IObjectTypes,
-        IObjectTypesDefinition, IMutableObjectTypesDefinition, ObjectTypeDefinition, ObjectType,
-        SchemaDefinition,
+        IObjectTypesDefinition, IMutableObjectTypesDefinition, MutableObjectType, ObjectType,
+        MutableSchema,
         Schema>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
@@ -21,7 +21,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects
 
         public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
+        public override MutableSchema GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects
             sb.Object(itemName).Name(newName);
         }
 
-        public override NamedCollection<ObjectTypeDefinition> GetCollection(SchemaDefinition parent) =>
+        public override NamedCollection<MutableObjectType> GetCollection(MutableSchema parent) =>
             parent.GetObjects().ToNamedCollection();
 
         public override NamedCollection<ObjectType> GetCollection(Schema parent)
@@ -53,7 +53,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects
             return casted;
         }
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(MutableSchema parent, string name) =>
             parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

@@ -12,9 +12,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     public class
-        InternalObjectTypeBuilder : InternalFieldsBuilder<ObjectTypeDefinition, InternalObjectTypeBuilder>
+        InternalObjectTypeBuilder : InternalFieldsBuilder<MutableObjectType, InternalObjectTypeBuilder>
     {
-        public InternalObjectTypeBuilder(ObjectTypeDefinition @object) : base(@object)
+        public InternalObjectTypeBuilder(MutableObjectType @object) : base(@object)
         {
         }
 
@@ -39,7 +39,7 @@ namespace GraphZen.TypeSystem.Internal
 
             var existing = Schema.FindOutputType(clrType);
 
-            if (existing is InterfaceTypeDefinition interfaceDef)
+            if (existing is MutableInterfaceType interfaceDef)
             {
                 Definition.AddInterface(interfaceDef, configurationSource);
                 return true;

@@ -9,9 +9,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalScalarTypeBuilder : AnnotatableMemberDefinitionBuilder<ScalarTypeDefinition>
+    public class InternalScalarTypeBuilder : AnnotatableMemberDefinitionBuilder<MutableScalarType>
     {
-        public InternalScalarTypeBuilder(ScalarTypeDefinition definition) : base(definition)
+        public InternalScalarTypeBuilder(MutableScalarType definition) : base(definition)
         {
         }
 

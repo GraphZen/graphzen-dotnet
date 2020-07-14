@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.Tests
                 ids.Count.Should().Be(1);
                 var fooId = ids.Single();
                 fooId.Name.Should().Be("Foo");
-                fooId.Definition.Should().BeOfType<InputObjectTypeDefinition>();
+                fooId.Definition.Should().BeOfType<MutableInputObjectType>();
             });
         }
 
@@ -112,10 +112,10 @@ namespace GraphZen.TypeSystem.Tests
                 var baz = _.InputObject("Baz");
                 Ids().Count().Should().Be(4);
                 Ids().Should().ContainSingle(id =>
-                    id.Name == "InputObject" && id.Definition is InputObjectTypeDefinition);
+                    id.Name == "InputObject" && id.Definition is MutableInputObjectType);
                 var fooId = Ids().Should().ContainSingle(id => id.Name == "Foo" && id.Definition == null).Subject;
                 var barId = Ids().Should().ContainSingle(id => id.Name == "Bar" && id.Definition == null).Subject;
-                Ids().Should().ContainSingle(id => id.Name == "Baz" && id.Definition is InputObjectTypeDefinition);
+                Ids().Should().ContainSingle(id => id.Name == "Baz" && id.Definition is MutableInputObjectType);
 
                 Refs().Count().Should().Be(2);
                 Refs().Should().ContainSingle(tr => ReferenceEquals(tr.Identity, fooId));
@@ -126,11 +126,11 @@ namespace GraphZen.TypeSystem.Tests
                 var bar = baz.Name("Bar");
                 Ids().Count().Should().Be(3);
                 Ids().Should().ContainSingle(id =>
-                    id.Name == "InputObject" && id.Definition is InputObjectTypeDefinition);
+                    id.Name == "InputObject" && id.Definition is MutableInputObjectType);
                 Ids().Should().ContainSingle(id => id.Name == "Bar").Subject.Definition.Should()
-                    .BeOfType<InputObjectTypeDefinition>();
+                    .BeOfType<MutableInputObjectType>();
                 var barId2 = Ids().Should().ContainSingle(id => id.Name == "Bar").Subject.Definition.Should()
-                    .BeOfType<InputObjectTypeDefinition>().Subject.Identity;
+                    .BeOfType<MutableInputObjectType>().Subject.Identity;
 
                 ReferenceEquals(barId, barId2).Should().BeFalse();
 
@@ -142,9 +142,9 @@ namespace GraphZen.TypeSystem.Tests
                 var foo = bar.Name("Foo");
                 Ids().Count().Should().Be(2);
                 Ids().Should().ContainSingle(id =>
-                    id.Name == "InputObject" && id.Definition is InputObjectTypeDefinition);
+                    id.Name == "InputObject" && id.Definition is MutableInputObjectType);
                 var fooDef = Ids().Should().ContainSingle(id => id.Name == "Foo").Subject.Definition.Should()
-                    .BeOfType<InputObjectTypeDefinition>().Subject;
+                    .BeOfType<MutableInputObjectType>().Subject;
 
 
                 Refs().Count().Should().Be(2);

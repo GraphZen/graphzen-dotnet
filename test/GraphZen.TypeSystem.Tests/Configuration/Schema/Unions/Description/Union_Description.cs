@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description
     // ReSharper disable once InconsistentNaming
     public abstract class Union_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,
-        string?, UnionTypeDefinition, UnionType>
+        string?, MutableUnionType, UnionType>
     {
         public override string ValueA { get; } = "description a";
         public override string ValueB { get; } = "description b";
@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description
 
         public override UnionType GetParent(Schema schema, string parentName) => schema.GetUnion(parentName);
 
-        public override UnionTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        public override MutableUnionType GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetUnion(parentName);
 
 
@@ -46,7 +46,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description
             return value != null;
         }
 
-        public override bool TryGetValue(UnionTypeDefinition parent, [NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(MutableUnionType parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

@@ -426,16 +426,16 @@ namespace GraphZen.TypeSystem.Tests
         [Fact]
         public void IsNamedType_TrueForUnwrappedTypes()
         {
-            (ObjectType.As<object>() is INamedType).Should().BeTrue();
+            (ObjectType.As<object>() is INamedTypeDefinition).Should().BeTrue();
         }
 
         [Fact]
         public void IsNamedType_FalseForListAndNonNullTypes()
         {
-            (NonNullType.Of(ObjectType).As<object>() is INamedType).Should().BeFalse();
-            (NonNullType.Of(InputObjectType).As<object>() is INamedType).Should().BeFalse();
-            (ListType.Of(ObjectType).As<object>() is INamedType).Should().BeFalse();
-            (ListType.Of(InputObjectType).As<object>() is INamedType).Should().BeFalse();
+            (NonNullType.Of(ObjectType).As<object>() is INamedTypeDefinition).Should().BeFalse();
+            (NonNullType.Of(InputObjectType).As<object>() is INamedTypeDefinition).Should().BeFalse();
+            (ListType.Of(ObjectType).As<object>() is INamedTypeDefinition).Should().BeFalse();
+            (ListType.Of(InputObjectType).As<object>() is INamedTypeDefinition).Should().BeFalse();
         }
 
         [Fact]

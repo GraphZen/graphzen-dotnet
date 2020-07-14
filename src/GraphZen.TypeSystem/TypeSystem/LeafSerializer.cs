@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public delegate Maybe<object> LeafSerializer<in TScalar>(TScalar value);
+    public delegate Maybe<object?> LeafSerializer<in TScalar>(TScalar value);
 
-    public delegate Maybe<object> LeafSerializer(object value);
+    public delegate Maybe<object?> LeafSerializer(object value);
 }

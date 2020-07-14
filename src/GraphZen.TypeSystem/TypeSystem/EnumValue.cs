@@ -21,13 +21,13 @@ namespace GraphZen.TypeSystem
     {
         private readonly Lazy<EnumValueDefinitionSyntax> _syntax;
 
-        public EnumValue(string name, string? description, object value, bool isDeprecated, string? deprecatedReason,
-            IReadOnlyList<IDirectiveAnnotation> directives, EnumType declaringType) : base(directives,
-            declaringType.Schema)
+        public EnumValue(string name, string? description, object? value, bool isDeprecated, string? deprecatedReason,
+            IReadOnlyList<IDirective> directives, EnumType parent) : base(directives,
+            parent.Schema)
         {
-            Name = Check.NotNull(name, nameof(name));
+            Name = name;
             Description = description;
-            DeclaringType = Check.NotNull(declaringType, nameof(declaringType));
+            DeclaringEnum = parent;
             Value = value;
             IsDeprecated = isDeprecated;
             DeprecationReason = deprecatedReason;
@@ -37,11 +37,9 @@ namespace GraphZen.TypeSystem
             );
         }
 
-        [GraphQLIgnore] public object Value { get; }
+        [GraphQLIgnore] public object? Value { get; }
+        public IEnumType DeclaringEnum { get; }
 
-        IEnumTypeDefinition IEnumValueDefinition.DeclaringType => DeclaringType;
-
-        [GraphQLIgnore] public EnumType DeclaringType { get; }
 
         public bool IsDeprecated { get; }
 
@@ -55,7 +53,7 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public static EnumValue From(IEnumValueDefinition definition, EnumType declaringTye)
+        public static EnumValue From(IEnumValue definition, EnumType declaringTye)
         {
             Check.NotNull(definition, nameof(definition));
             return new EnumValue(definition.Name, definition.Description, definition.Value, definition.IsDeprecated,
@@ -64,5 +62,6 @@ namespace GraphZen.TypeSystem
 
         public override string ToString() => $"{Name} ({Value.Inspect()})";
         [GraphQLCanBeNull] public string? Description { get; }
+        public IParentMember Parent => DeclaringEnum;
     }
 }

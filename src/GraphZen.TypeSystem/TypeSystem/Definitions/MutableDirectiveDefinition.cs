@@ -1,0 +1,348 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Reflection;
+using GraphZen.Infrastructure;
+using GraphZen.Internal;
+using GraphZen.LanguageModel;
+using GraphZen.LanguageModel.Internal;
+using GraphZen.TypeSystem.Internal;
+using JetBrains.Annotations;
+
+namespace GraphZen.TypeSystem
+{
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+    [DisplayName("directive")]
+    public partial class MutableDirectiveDefinition : MutableMember, IMutableDirectiveDefinition
+    {
+        private readonly ArgumentsDefinition _args;
+
+        private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _ignoredLocations =
+            new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
+
+        private readonly ConcurrentDictionary<DirectiveLocation, ConfigurationSource> _locations =
+            new ConcurrentDictionary<DirectiveLocation, ConfigurationSource>();
+
+        private ConfigurationSource? _clrTypeConfigurationSource;
+
+        private ConfigurationSource _nameConfigurationSource;
+        private ConfigurationSource _repeatableConfigurationSource;
+
+
+        public MutableDirectiveDefinition(string? name, Type? clrType, MutableSchema schema,
+            ConfigurationSource configurationSource) :
+            base(configurationSource)
+        {
+            Schema = schema;
+            if (clrType != null)
+            {
+                ClrType = clrType;
+                _clrTypeConfigurationSource = configurationSource;
+                IsRepeatable = clrType.GetCustomAttribute<AttributeUsageAttribute>()?.AllowMultiple == true;
+            }
+
+
+            _repeatableConfigurationSource = ConfigurationSource.Convention;
+
+            if (name != null)
+            {
+                name = name.IsValidGraphQLName()
+                    ? name
+                    : throw new InvalidNameException(TypeSystemExceptions.InvalidNameException
+                        .CannotCreateDirectiveWithInvalidName(name));
+                _nameConfigurationSource = ConfigurationSource.Explicit;
+            }
+            else if (clrType != null)
+            {
+                if (clrType.TryGetGraphQLNameFromDataAnnotation(out var n))
+                {
+                    if (!n.IsValidGraphQLName())
+                    {
+                        throw new InvalidNameException(TypeSystemExceptions.InvalidNameException
+                            .CannotCreateDirectiveFromClrTypeWithInvalidNameAttribute(clrType, n));
+                    }
+
+
+                    name = n;
+                    _nameConfigurationSource = ConfigurationSource.DataAnnotation;
+                }
+                else
+                {
+                    name = clrType.GetGraphQLNameAnnotation();
+                    _nameConfigurationSource = ConfigurationSource.Convention;
+                }
+            }
+
+            Name = Check.NotNull(name, nameof(name));
+            InternalBuilder = new InternalDirectiveDefinitionBuilder(this);
+            Builder = new DirectiveDefinitionBuilder(InternalBuilder);
+            IsSpec = Name.IsSpecDirective();
+            _args = new ArgumentsDefinition(this);
+        }
+
+
+        public DirectiveDefinitionBuilder Builder { get; }
+        internal new InternalDirectiveDefinitionBuilder InternalBuilder { get; }
+        protected override MemberDefinitionBuilder GetInternalBuilder() => InternalBuilder;
+
+        private string DebuggerDisplay => $"directive {Name}";
+
+        public override MutableSchema Schema { get; }
+        public IEnumerable<IMember> Children() => Arguments;
+
+        public IReadOnlyCollection<MutableArgument> Arguments => _args.Arguments;
+
+        InternalDirectiveDefinitionBuilder IInfrastructure<InternalDirectiveDefinitionBuilder>.Instance => InternalBuilder;
+
+        public string Name { get; private set; }
+
+        public bool SetName(string name, ConfigurationSource configurationSource)
+        {
+            if (!name.IsValidGraphQLName())
+            {
+                throw InvalidNameException.ForRename(this, name);
+            }
+
+            if (!configurationSource.Overrides(GetNameConfigurationSource()))
+            {
+                return false;
+            }
+
+            if (Name != name)
+            {
+                InternalBuilder.Schema.RenameDirective(this, name, configurationSource);
+            }
+
+            Name = name;
+            _nameConfigurationSource = configurationSource;
+            return true;
+        }
+
+        public ConfigurationSource GetNameConfigurationSource() => _nameConfigurationSource;
+
+        public MutableArgument?
+            GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource) =>
+            _args.GetOrAddArgument(name, clrType, configurationSource);
+
+        public MutableArgument?
+            GetOrAddArgument(string name, string type, ConfigurationSource configurationSource) =>
+            _args.GetOrAddArgument(name, type, configurationSource);
+
+        public bool RemoveArgument(MutableArgument argument) => _args.RemoveArgument(argument);
+
+
+        public bool AddArgument(MutableArgument argument) => _args.AddArgument(argument);
+
+
+        public ConfigurationSource? FindIgnoredArgumentConfigurationSource(string name) =>
+            _args.FindIgnoredArgumentConfigurationSource(name);
+
+
+        [GenDictionaryAccessors(nameof(MutableArgument.Name), "Argument")]
+        public IReadOnlyDictionary<string, MutableArgument> ArgumentMap => _args.ArgumentMap;
+
+
+        public bool AddLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        {
+            var locationConfigurationSource = FindDirectiveLocationConfigurationSource(location);
+            if (!configurationSource.Overrides(locationConfigurationSource))
+            {
+                return false;
+            }
+
+            _locations.AddOrUpdate(location, configurationSource, (dl, cs) => configurationSource);
+            return true;
+        }
+
+        public bool RemoveLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(FindDirectiveLocationConfigurationSource(location)))
+            {
+                return false;
+            }
+
+            _locations.Remove(location, out _);
+            return true;
+        }
+
+        public bool IgnoreLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        {
+            var existingConfigurationSource = FindDirectiveLocationConfigurationSource(location);
+            if (configurationSource.Overrides(existingConfigurationSource))
+            {
+                var ignoredConfigurationSource = FindIgnoredDirectiveLocationConfigurationSource(location);
+                var newIgnoredConfigurationSource = configurationSource.Max(ignoredConfigurationSource);
+                _ignoredLocations.AddOrUpdate(location, newIgnoredConfigurationSource,
+                    (dl, cs) => newIgnoredConfigurationSource);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool UnignoreLocation(DirectiveLocation location, ConfigurationSource configurationSource)
+        {
+            var ignoredConfigurationSource = FindIgnoredDirectiveLocationConfigurationSource(location);
+            if (ignoredConfigurationSource.HasValue && configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                _ignoredLocations.Remove(location, out _);
+                return true;
+            }
+
+            return false;
+        }
+
+        public ConfigurationSource? FindDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
+            _locations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+
+        public ConfigurationSource?
+            FindIgnoredDirectiveLocationConfigurationSource(DirectiveLocation directiveLocation) =>
+            _ignoredLocations.TryGetValue(directiveLocation, out var cs) ? cs : (ConfigurationSource?)null;
+
+        public IReadOnlyCollection<DirectiveLocation> Locations =>
+            (IReadOnlyCollection<DirectiveLocation>)_locations.Keys;
+
+        public bool HasLocation(DirectiveLocation location) => Locations.Contains(location);
+
+        public Type? ClrType { get; private set; }
+
+        public bool SetClrType(Type clrType, string name, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetClrTypeConfigurationSource()))
+            {
+                return false;
+            }
+
+            if (Schema.TryGetDirectiveDefinition(clrType, out var existingTyped) && !existingTyped.Equals(this))
+            {
+                throw new DuplicateItemException(
+                    TypeSystemExceptions.DuplicateItemException.CannotChangeClrType(this, clrType,
+                        existingTyped));
+            }
+
+            if (!name.IsValidGraphQLName())
+            {
+                throw new InvalidNameException(
+                    $"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" is not a valid GraphQL name.");
+            }
+
+            if (Schema.TryGetDirectiveDefinition(name, out var existingNamed) && !existingNamed.Equals(this))
+            {
+                throw new DuplicateItemException(
+                    $"Cannot set CLR type on {this} with custom name: the custom name \"{name}\" conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
+            }
+
+            SetName(name, configurationSource);
+            return SetClrType(clrType, false, configurationSource);
+        }
+
+        public bool SetClrType(Type clrType, bool inferName, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetClrTypeConfigurationSource()))
+            {
+                return false;
+            }
+
+            if (Schema.TryGetDirectiveDefinition(clrType, out var existingTyped) && !existingTyped.Equals(this))
+            {
+                throw new DuplicateItemException(
+                    TypeSystemExceptions.DuplicateItemException.CannotChangeClrType(this, clrType,
+                        existingTyped));
+            }
+
+            if (inferName)
+            {
+                if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotated))
+                {
+                    if (!annotated.IsValidGraphQLName())
+                    {
+                        throw new InvalidNameException(
+                            $"Cannot set CLR type on {this} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' is not a valid GraphQL name.");
+                    }
+
+                    if (Schema.TryGetDirectiveDefinition(annotated, out var existingNamed) && !existingNamed.Equals(this))
+                    {
+                        throw new DuplicateItemException(
+                            $"Cannot set CLR type on {this} and infer name: the annotated name \"{annotated}\" on CLR {clrType.GetClrTypeKind()} '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
+                    }
+
+                    SetName(annotated, configurationSource);
+                }
+                else
+                {
+                    if (!clrType.Name.IsValidGraphQLName())
+                    {
+                        throw new InvalidNameException(
+                            $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' is not a valid GraphQL name.");
+                    }
+
+                    if (Schema.TryGetDirectiveDefinition(clrType.Name, out var existingNamed) && !existingNamed.Equals(this))
+                    {
+                        throw new DuplicateItemException(
+                            $"Cannot set CLR type on {this} and infer name: the CLR {clrType.GetClrTypeKind()} name '{clrType.Name}' conflicts with an existing directive named {existingNamed.Name}. All directive names must be unique.");
+                    }
+
+                    SetName(clrType.Name, configurationSource);
+                }
+            }
+
+            ClrType = clrType;
+            _clrTypeConfigurationSource = configurationSource;
+            SetRepeatable(ClrType.GetCustomAttribute<AttributeUsageAttribute>()?.AllowMultiple == true,
+                configurationSource);
+            return true;
+        }
+
+        public bool RemoveClrType(ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetClrTypeConfigurationSource()))
+            {
+                return false;
+            }
+
+            ClrType = null;
+            _clrTypeConfigurationSource = configurationSource;
+            return true;
+        }
+
+
+        public ConfigurationSource? GetClrTypeConfigurationSource() => _clrTypeConfigurationSource;
+        public bool IsSpec { get; }
+        public bool IsRepeatable { get; private set; }
+
+        public bool SetRepeatable(bool repeatable, ConfigurationSource configurationSource)
+        {
+            if (!configurationSource.Overrides(GetRepeatableConfigurationSource()))
+            {
+                return false;
+            }
+
+            var allowMultiple = ClrType?.GetCustomAttribute<AttributeUsageAttribute>()?.AllowMultiple;
+            if (allowMultiple != null && allowMultiple != repeatable)
+            {
+                throw new InvalidOperationException(
+                    $"Cannot set {this}.{nameof(IsRepeatable)} to '{repeatable.ToString().ToLower()}': the directive CLR type '{ClrType?.Name}' has an {nameof(AttributeUsageAttribute)} with an {nameof(AttributeUsageAttribute.AllowMultiple)} value of '{allowMultiple?.ToString().ToLower()}'.");
+            }
+
+            IsRepeatable = repeatable;
+            _repeatableConfigurationSource = configurationSource;
+            return true;
+        }
+
+        public ConfigurationSource GetRepeatableConfigurationSource() => _repeatableConfigurationSource;
+
+
+        public override string ToString() => ClrType != null && ClrType.Name != Name
+            ? $"directive {Name} (CLR {ClrType.GetClrTypeKind()}: {ClrType.Name})"
+            : $"directive {Name}";
+
+        IReadOnlyCollection<IArgument> IArguments.Arguments => Arguments;
+    }
+}

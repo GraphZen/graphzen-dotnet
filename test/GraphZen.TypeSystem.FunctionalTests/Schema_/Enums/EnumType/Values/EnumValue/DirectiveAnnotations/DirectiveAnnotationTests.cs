@@ -147,8 +147,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Enums.EnumType.Values.Enum
             });
             var bar = schema.GetEnum("Baz").GetValue("Bar");
             bar.DirectiveAnnotations.Should().HaveCount(1);
-            bar.HasAnyDirectiveAnnotation("foo").Should().BeTrue();
-            bar.HasAnyDirectiveAnnotation("bar").Should().BeFalse();
+            bar.HasDirectiveAnnotation("foo").Should().BeTrue();
+            bar.HasDirectiveAnnotation("bar").Should().BeFalse();
         }
 
 

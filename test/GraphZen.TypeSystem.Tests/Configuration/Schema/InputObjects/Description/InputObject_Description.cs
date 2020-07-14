@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Description
     // ReSharper disable once InconsistentNaming
     public abstract class InputObject_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,
-        string?, InputObjectTypeDefinition, InputObjectType>
+        string?, MutableInputObjectType, InputObjectType>
     {
         public override string ValueA { get; } = "description a";
         public override string ValueB { get; } = "description b";
@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Description
         public override InputObjectType GetParent(Schema schema, string parentName) =>
             schema.GetInputObject(parentName);
 
-        public override InputObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        public override MutableInputObjectType GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetInputObject(parentName);
 
 
@@ -47,7 +47,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Description
             return value != null;
         }
 
-        public override bool TryGetValue(InputObjectTypeDefinition parent, [NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(MutableInputObjectType parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

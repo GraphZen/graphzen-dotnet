@@ -16,7 +16,7 @@ namespace GraphZen.TypeSystem
         {
         }
 
-        public SchemaBuilder(SchemaDefinition schema) : base(schema)
+        public SchemaBuilder(MutableSchema schema) : base(schema)
         {
         }
     }
@@ -24,11 +24,11 @@ namespace GraphZen.TypeSystem
 
     public partial class SchemaBuilder<TContext> : ISchemaBuilder<TContext> where TContext : GraphQLContext
     {
-        public SchemaBuilder() : this(new SchemaDefinition())
+        public SchemaBuilder() : this(new MutableSchema())
         {
         }
 
-        public SchemaBuilder(SchemaDefinition schema)
+        public SchemaBuilder(MutableSchema schema)
         {
             Builder = schema.InternalBuilder;
         }
@@ -137,13 +137,13 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name) => AddDirectiveAnnotation(name);
 
-        IAnnotableBuilder IAnnotableBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
+        IDirectivesBuilder IDirectivesBuilder.RemoveDirectiveAnnotations(string name) => RemoveDirectiveAnnotations(name);
 
-        IAnnotableBuilder IAnnotableBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
+        IDirectivesBuilder IDirectivesBuilder.ClearDirectiveAnnotations() => ClearDirectiveAnnotations();
 
-        IAnnotableBuilder IAnnotableBuilder.AddDirectiveAnnotation(string name, object value) =>
+        IDirectivesBuilder IDirectivesBuilder.AddDirectiveAnnotation(string name, object value) =>
             AddDirectiveAnnotation(name, value);
 
         public SchemaBuilder<TContext> AddDirectiveAnnotation(string name)
@@ -170,6 +170,6 @@ namespace GraphZen.TypeSystem
 
         InternalSchemaBuilder IInfrastructure<InternalSchemaBuilder>.Instance => Builder;
 
-        SchemaDefinition IInfrastructure<SchemaDefinition>.Instance => Builder.Definition;
+        MutableSchema IInfrastructure<MutableSchema>.Instance => Builder.Definition;
     }
 }

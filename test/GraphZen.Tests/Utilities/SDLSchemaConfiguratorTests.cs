@@ -719,7 +719,7 @@ namespace GraphZen.Tests.Utilities
 
 
             var restoredSchemaAST = Document(
-                new ISyntaxConvertable[]
+                new ISyntaxMember[]
                 {
                     schema,
                     query,

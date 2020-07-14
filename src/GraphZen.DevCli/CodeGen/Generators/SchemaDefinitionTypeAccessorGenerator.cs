@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.CodeGen.Generators
 {
-    public class SchemaDefinitionTypeAccessorGenerator : PartialTypeGenerator<SchemaDefinition>
+    public class SchemaDefinitionTypeAccessorGenerator : PartialTypeGenerator<MutableSchema>
     {
         public override IReadOnlyList<string> Usings { get; } = new List<string>();
 

@@ -15,7 +15,7 @@ namespace GraphZen.TypeSystem
         private TypeSyntax _syntax;
 
 
-        protected TypeReference(TypeIdentity identity, TypeSyntax syntax, IMutableDefinition declaringMember)
+        protected TypeReference(TypeIdentity identity, TypeSyntax syntax, IMutableMember declaringMember)
         {
             ThrowIfInvalid(identity, syntax, declaringMember);
             Identity = identity;
@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem
             _configurationSource = declaringMember.GetConfigurationSource();
         }
 
-        public IMutableDefinition DeclaringMember { get; }
+        public IMutableMember DeclaringMember { get; }
 
         public TypeIdentity Identity { get; private set; }
 
@@ -37,7 +37,7 @@ namespace GraphZen.TypeSystem
         IGraphQLTypeReference ITypeReferenceDefinition.TypeReference => this;
         public ConfigurationSource GetConfigurationSource() => GetTypeReferenceConfigurationSource();
 
-        public SchemaDefinition Schema => DeclaringMember.Schema;
+        public MutableSchema Schema => DeclaringMember.Schema;
 
         public string Name => Identity.Name;
 
@@ -45,14 +45,14 @@ namespace GraphZen.TypeSystem
             Update(identity, _syntax.WithName(identity.Name), configurationSource);
 
 
-        private void ThrowIfInvalid(TypeIdentity identity, TypeSyntax syntax, IMutableDefinition declaringMember,
+        private void ThrowIfInvalid(TypeIdentity identity, TypeSyntax syntax, IMutableMember declaringMember,
             bool isUpdate = false)
         {
-            if (identity.Definition is IOutputTypeDefinition outputType)
+            if (identity.Definition is IOutputType outputType)
             {
-                if (!(identity.Definition is IInputTypeDefinition))
+                if (!(identity.Definition is IInputType))
                 {
-                    if (declaringMember is IInputDefinition)
+                    if (declaringMember is IInputMember)
                     {
                         var detail =
                             $"{declaringMember?.GetParentMember()?.GetTypeDisplayName()?.FirstCharToUpper()} {declaringMember.GetTypeDisplayName()}s can only use input types. {outputType.ToString()?.FirstCharToUpper()} is only an output type.";
@@ -67,9 +67,9 @@ namespace GraphZen.TypeSystem
                     }
                 }
             }
-            else if (identity.Definition is IInputTypeDefinition inputType)
+            else if (identity.Definition is IInputType inputType)
             {
-                if (declaringMember is IOutputDefinition)
+                if (declaringMember is IOutputMember)
                 {
                     var detail =
                         $"{declaringMember?.GetParentMember()?.GetTypeDisplayName()?.FirstCharToUpper()} {declaringMember.GetTypeDisplayName()}s can only use output types. {inputType.ToString()?.FirstCharToUpper()} is only an input type.";

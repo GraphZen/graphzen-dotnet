@@ -8,8 +8,12 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface INamedType : INamedTypeDefinition, INullableType, IMemberParent, IMaybeSpec, IMaybeIntrospection
-    {
-    }
+    public interface INamedTypeDefinition : INullableType,
+        IName,
+        IDescription,
+        IDirectives,
+        IClrType,
+        IMaybeSpec,
+        IMaybeIntrospectionDefinition
+    { }
 }

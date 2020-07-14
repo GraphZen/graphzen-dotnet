@@ -11,9 +11,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects
 {
     // ReSharper disable once InconsistentNaming
     public abstract class Schema_InputObjects : NamedCollectionConfigurationFixture<IInputObjectTypes,
-        IInputObjectTypesDefinition, IMutableInputObjectTypesDefinition, InputObjectTypeDefinition,
+        IInputObjectTypesDefinition, IMutableInputObjectTypesDefinition, MutableInputObjectType,
         InputObjectType,
-        SchemaDefinition,
+        MutableSchema,
         Schema>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects
 
         public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
+        public override MutableSchema GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -44,13 +44,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects
             sb.InputObject(itemName).Name(newName);
         }
 
-        public override NamedCollection<InputObjectTypeDefinition> GetCollection(SchemaDefinition parent) =>
+        public override NamedCollection<MutableInputObjectType> GetCollection(MutableSchema parent) =>
             parent.GetInputObjects().ToNamedCollection();
 
         public override NamedCollection<InputObjectType> GetCollection(Schema parent) =>
             parent.InputObjects.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(MutableSchema parent, string name) =>
             parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

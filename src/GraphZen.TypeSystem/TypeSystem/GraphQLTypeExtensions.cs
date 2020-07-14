@@ -10,10 +10,11 @@ namespace GraphZen.TypeSystem
 {
     public static class GraphQLTypeExtensions
     {
+        /*
         public static bool IsInputType(this IGraphQLTypeReference type) =>
             type switch
             {
-                IInputDefinition _ => true,
+                IInputMember _ => true,
                 IWrappingType wrapping => wrapping.OfType.IsInputType(),
                 _ => false
             };
@@ -21,25 +22,28 @@ namespace GraphZen.TypeSystem
 
         public static bool IsOutputType(this IGraphQLTypeReference type) => type switch
         {
-            IOutputDefinition _ => true,
+            IOutputMember _ => true,
             IWrappingType wrapping => wrapping.OfType.IsOutputType(),
             _ => false
         };
+        */
+
+        
 
 
-        public static NamedType GetNamedType(this IGraphQLType type) =>
+        public static NamedTypeDefinition GetNamedType(this IGraphQLType type) =>
             type switch
             {
-                NamedType named => named,
+                NamedTypeDefinition named => named,
                 IWrappingType wrapped => wrapped.OfType.GetNamedType(),
                 _ => throw new Exception()
             };
 
-        public static NamedType? MaybeGetNamedType(this IGraphQLType type)
+        public static NamedTypeDefinition? MaybeGetNamedType(this IGraphQLType type)
         {
             switch (type)
             {
-                case NamedType named:
+                case NamedTypeDefinition named:
                     return named;
                 case IWrappingType wrapped:
                     return wrapped.OfType.MaybeGetNamedType();

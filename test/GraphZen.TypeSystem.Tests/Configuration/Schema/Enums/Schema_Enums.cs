@@ -11,9 +11,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums
 {
     // ReSharper disable once InconsistentNaming
     public abstract class Schema_Enums : NamedCollectionConfigurationFixture<IEnumTypes,
-        IEnumTypesDefinition, IMutableEnumTypesDefinition, EnumTypeDefinition,
+        IEnumTypesDefinition, IMutableEnumTypesDefinition, MutableEnumType,
         EnumType,
-        SchemaDefinition,
+        MutableSchema,
         Schema>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums
 
         public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
+        public override MutableSchema GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -44,12 +44,12 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums
             sb.Enum(itemName).Name(newName);
         }
 
-        public override NamedCollection<EnumTypeDefinition> GetCollection(SchemaDefinition parent) =>
+        public override NamedCollection<MutableEnumType> GetCollection(MutableSchema parent) =>
             parent.GetEnums().ToNamedCollection();
 
         public override NamedCollection<EnumType> GetCollection(Schema parent) => parent.Enums.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(MutableSchema parent, string name) =>
             parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

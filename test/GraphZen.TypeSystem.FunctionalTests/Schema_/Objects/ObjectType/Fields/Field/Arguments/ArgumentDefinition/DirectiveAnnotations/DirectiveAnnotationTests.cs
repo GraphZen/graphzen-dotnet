@@ -168,8 +168,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             });
             var arg = schema.GetObject("Baz").GetField("Bar").GetArgument("arg");
             arg.DirectiveAnnotations.Should().HaveCount(1);
-            arg.HasAnyDirectiveAnnotation("foo").Should().BeTrue();
-            arg.HasAnyDirectiveAnnotation("bar").Should().BeFalse();
+            arg.HasDirectiveAnnotation("foo").Should().BeTrue();
+            arg.HasDirectiveAnnotation("bar").Should().BeFalse();
         }
 
 

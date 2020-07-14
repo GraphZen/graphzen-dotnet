@@ -12,22 +12,22 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public partial class InterfaceType : NamedType, IInterfaceType
+    public partial class InterfaceType : NamedTypeDefinition, IInterfaceType
     {
         private readonly Lazy<IReadOnlyDictionary<string, Field>> _fieldMap;
         private readonly Lazy<IReadOnlyCollection<Field>> _fields;
         private readonly Lazy<InterfaceTypeDefinitionSyntax> _syntax;
 
         public InterfaceType(string name, string? description, Type? clrType,
-            IEnumerable<IFieldDefinition> fields,
+            IEnumerable<IField> fields,
             TypeResolver<object, GraphQLContext>? resolveType,
-            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema) : base(
+            IReadOnlyList<IDirective> directives, Schema schema) : base(
             name, description, clrType, directives, schema)
         {
             Check.NotNull(schema, nameof(schema));
             Check.NotNull(fields, nameof(fields));
             _fieldMap = new Lazy<IReadOnlyDictionary<string, Field>>(() =>
-                fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, Schema)));
+                fields.ToReadOnlyDictionary(_ => _.Name, _ => Field.From(_, this, schema)));
             _fields = new Lazy<IReadOnlyCollection<Field>>(() => _fieldMap.Value.Values.ToList().AsReadOnly());
             ResolveType = resolveType;
             _syntax = new Lazy<InterfaceTypeDefinitionSyntax>(() => new InterfaceTypeDefinitionSyntax(
@@ -56,7 +56,7 @@ namespace GraphZen.TypeSystem
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Interface;
 
 
-        public static InterfaceType From(IInterfaceTypeDefinition definition, Schema schema)
+        public static InterfaceType From(IInterfaceType definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
             Check.NotNull(schema, nameof(schema));
@@ -64,6 +64,6 @@ namespace GraphZen.TypeSystem
                 definition.Fields, definition.ResolveType, definition.DirectiveAnnotations, schema);
         }
 
-        IReadOnlyCollection<IFieldDefinition> IFieldsDefinition.Fields => Fields;
+        IReadOnlyCollection<IField> IFields.Fields => Fields;
     }
 }

@@ -129,8 +129,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.DirectiveAnnotations
                     .RemoveDirectiveAnnotations("bar");
             });
             schema.DirectiveAnnotations.Should().HaveCount(1);
-            schema.HasAnyDirectiveAnnotation("foo").Should().BeTrue();
-            schema.HasAnyDirectiveAnnotation("bar").Should().BeFalse();
+            schema.HasDirectiveAnnotation("foo").Should().BeTrue();
+            schema.HasDirectiveAnnotation("bar").Should().BeFalse();
         }
 
 

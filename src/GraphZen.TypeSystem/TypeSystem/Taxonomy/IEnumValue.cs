@@ -8,8 +8,13 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface IEnumValue : IEnumValueDefinition, ISyntaxConvertable
+    public interface IEnumValue : IDirectives, IName, IDescription, IMaybeDeprecated,
+        IInputMember,
+        IOutputMember,
+        ILeafMember,
+        ISyntaxMember
     {
-        new EnumType DeclaringType { get; }
+        object? Value { get; }
+        [GraphQLIgnore] IEnumType DeclaringEnum { get; }
     }
 }

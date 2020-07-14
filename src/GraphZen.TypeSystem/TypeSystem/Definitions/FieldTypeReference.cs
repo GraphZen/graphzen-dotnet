@@ -16,7 +16,7 @@ namespace GraphZen.TypeSystem
     public class FieldTypeReference : TypeReference
     {
         public FieldTypeReference(TypeIdentity identity, TypeSyntax syntax,
-            [JetBrains.Annotations.NotNull] IMutableDefinition declaringMember) : base(identity, syntax,
+            [JetBrains.Annotations.NotNull] IMutableMember declaringMember) : base(identity, syntax,
             declaringMember)
         {
         }

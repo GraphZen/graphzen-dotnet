@@ -2,15 +2,18 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
+
     [GraphQLIgnore]
-    public interface IInputField : IInputFieldDefinition, IInputValue
+    public interface IInputField : IInputValue 
     {
-        new IGraphQLType FieldType { get; }
-        new InputObjectType DeclaringType { get; }
+        new PropertyInfo? ClrInfo { get; }
+        IGraphQLType FieldType { get; }
+        IInputObjectType DeclaringType { get; }
     }
 }

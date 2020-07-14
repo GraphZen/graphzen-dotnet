@@ -68,7 +68,7 @@ namespace GraphZen.TypeSystem
             includeSpecEnums ? Enums.AsEnumerable() : Enums.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
-        IEnumerable<IEnumTypeDefinition> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) =>
+        IEnumerable<IEnumType> IEnumTypesDefinition.GetEnums(bool includeSpecEnums) =>
             GetEnums(includeSpecEnums);
 
         #endregion
@@ -123,7 +123,7 @@ namespace GraphZen.TypeSystem
             includeSpecInputObjects ? InputObjects.AsEnumerable() : InputObjects.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
-        IEnumerable<IInputObjectTypeDefinition> IInputObjectTypesDefinition.
+        IEnumerable<IInputObjectType> IInputObjectTypesDefinition.
             GetInputObjects(bool includeSpecInputObjects) => GetInputObjects(includeSpecInputObjects);
 
         #endregion
@@ -178,7 +178,7 @@ namespace GraphZen.TypeSystem
             includeSpecInterfaces ? Interfaces.AsEnumerable() : Interfaces.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
-        IEnumerable<IInterfaceTypeDefinition> IInterfaceTypesDefinition.GetInterfaces(bool includeSpecInterfaces) =>
+        IEnumerable<IInterfaceType> IInterfaceTypesDefinition.GetInterfaces(bool includeSpecInterfaces) =>
             GetInterfaces(includeSpecInterfaces);
 
         #endregion
@@ -231,7 +231,7 @@ namespace GraphZen.TypeSystem
             includeSpecObjects ? Objects.AsEnumerable() : Objects.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
-        IEnumerable<IObjectTypeDefinition> IObjectTypesDefinition.GetObjects(bool includeSpecObjects) =>
+        IEnumerable<IObjectType> IObjectTypesDefinition.GetObjects(bool includeSpecObjects) =>
             GetObjects(includeSpecObjects);
 
         #endregion
@@ -284,7 +284,7 @@ namespace GraphZen.TypeSystem
             includeSpecScalars ? Scalars.AsEnumerable() : Scalars.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
-        IEnumerable<IScalarTypeDefinition> IScalarTypesDefinition.GetScalars(bool includeSpecScalars) =>
+        IEnumerable<IScalarType> IScalarTypesDefinition.GetScalars(bool includeSpecScalars) =>
             GetScalars(includeSpecScalars);
 
         #endregion
@@ -337,7 +337,7 @@ namespace GraphZen.TypeSystem
             includeSpecUnions ? Unions.AsEnumerable() : Unions.Where(_ => !_.IsSpec);
 
         [GraphQLIgnore]
-        IEnumerable<IUnionTypeDefinition> IUnionTypesDefinition.GetUnions(bool includeSpecUnions) =>
+        IEnumerable<IUnionType> IUnionTypesDefinition.GetUnions(bool includeSpecUnions) =>
             GetUnions(includeSpecUnions);
 
         #endregion
@@ -347,7 +347,7 @@ namespace GraphZen.TypeSystem
         #region DictionaryAccessorGenerator
 
         [GraphQLIgnore]
-        public Directive? FindDirective(string name)
+        public DirectiveDefinition? FindDirective(string name)
             => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out var directive) ? directive : null;
 
         [GraphQLIgnore]
@@ -355,12 +355,12 @@ namespace GraphZen.TypeSystem
             => _directives.ContainsKey(Check.NotNull(name, nameof(name)));
 
         [GraphQLIgnore]
-        public Directive GetDirective(string name)
+        public DirectiveDefinition GetDirective(string name)
             => FindDirective(Check.NotNull(name, nameof(name))) ??
-               throw new ItemNotFoundException($"{this} does not contain a {nameof(Directive)} with name '{name}'.");
+               throw new ItemNotFoundException($"{this} does not contain a {nameof(DirectiveDefinition)} with name '{name}'.");
 
         [GraphQLIgnore]
-        public bool TryGetDirective(string name, [NotNullWhen(true)] out Directive? directive)
+        public bool TryGetDirective(string name, [NotNullWhen(true)] out DirectiveDefinition? directive)
             => _directives.TryGetValue(Check.NotNull(name, nameof(name)), out directive);
 
         #endregion
@@ -368,7 +368,7 @@ namespace GraphZen.TypeSystem
         #region DictionaryAccessorGenerator
 
         [GraphQLIgnore]
-        public Directive? FindDirective(Type clrType)
+        public DirectiveDefinition? FindDirective(Type clrType)
             => _directivesByType.TryGetValue(Check.NotNull(clrType, nameof(clrType)), out var directive)
                 ? directive
                 : null;
@@ -378,13 +378,13 @@ namespace GraphZen.TypeSystem
             => _directivesByType.ContainsKey(Check.NotNull(clrType, nameof(clrType)));
 
         [GraphQLIgnore]
-        public Directive GetDirective(Type clrType)
+        public DirectiveDefinition GetDirective(Type clrType)
             => FindDirective(Check.NotNull(clrType, nameof(clrType))) ??
                throw new ItemNotFoundException(
-                   $"{this} does not contain a {nameof(Directive)} with clrType '{clrType}'.");
+                   $"{this} does not contain a {nameof(DirectiveDefinition)} with clrType '{clrType}'.");
 
         [GraphQLIgnore]
-        public bool TryGetDirective(Type clrType, [NotNullWhen(true)] out Directive? directive)
+        public bool TryGetDirective(Type clrType, [NotNullWhen(true)] out DirectiveDefinition? directive)
             => _directivesByType.TryGetValue(Check.NotNull(clrType, nameof(clrType)), out directive);
 
         #endregion

@@ -12,8 +12,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Interfaces
     // ReSharper disable once InconsistentNaming
     public abstract class Object_Interfaces :
         NamedCollectionConfigurationFixture<IInterfaces,
-            IInterfacesDefinition, IMutableInterfacesDefinition, InterfaceTypeDefinition,
-            InterfaceType, ObjectTypeDefinition,
+            IImplementsInterfaces, IMutableImplementsInterfaces, MutableInterfaceType,
+            InterfaceType, MutableObjectType,
             ObjectType>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
@@ -23,16 +23,16 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Interfaces
 
         public override ObjectType GetParent(Schema schema, string parentName) => schema.GetObject(parentName);
 
-        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        public override MutableObjectType GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetObject(parentName);
 
-        public override NamedCollection<InterfaceTypeDefinition> GetCollection(ObjectTypeDefinition parent) =>
+        public override NamedCollection<MutableInterfaceType> GetCollection(MutableObjectType parent) =>
             parent.GetInterfaces().ToNamedCollection();
 
         public override NamedCollection<InterfaceType> GetCollection(ObjectType parent) =>
             parent.Interfaces.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(ObjectTypeDefinition parent,
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(MutableObjectType parent,
             string name) =>
             parent.FindIgnoredInterfaceConfigurationSource(name);
 

@@ -13,11 +13,11 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalSchemaBuilder : AnnotatableMemberDefinitionBuilder<SchemaDefinition>
+    public class InternalSchemaBuilder : AnnotatableMemberDefinitionBuilder<MutableSchema>
     {
         private readonly Lazy<SchemaBuilder> _builder;
 
-        public InternalSchemaBuilder(SchemaDefinition schema) : base(schema)
+        public InternalSchemaBuilder(MutableSchema schema) : base(schema)
         {
             _builder = new Lazy<SchemaBuilder>(() => new SchemaBuilder(schema));
         }
@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.Internal
         public IParser Parser { get; } = new SuperpowerParser();
 
 
-        public NamedTypeDefinition? DefineType(TypeReference reference)
+        public MutableNamedTypeDefinition? DefineType(TypeReference reference)
         {
             if (reference.Identity.Definition != null)
             {
@@ -43,7 +43,7 @@ namespace GraphZen.TypeSystem.Internal
                 reference.Identity.IsOutputType(), out var kind, out _))
             {
                 return Type(reference.Identity.ClrType, kind, ConfigurationSource.Convention)?.Definition as
-                    NamedTypeDefinition;
+                    MutableNamedTypeDefinition;
             }
 
             return null;
@@ -60,10 +60,10 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        public NamedTypeDefinition? OutputType(Type clrType, ConfigurationSource configurationSource) =>
+        public MutableNamedTypeDefinition? OutputType(Type clrType, ConfigurationSource configurationSource) =>
             OutputType(new TypeIdentity(clrType, Definition), configurationSource);
 
-        public NamedTypeDefinition? OutputType(TypeIdentity id, ConfigurationSource configurationSource)
+        public MutableNamedTypeDefinition? OutputType(TypeIdentity id, ConfigurationSource configurationSource)
         {
             var clrType = id.ClrType;
             if (clrType == null)
@@ -115,10 +115,10 @@ namespace GraphZen.TypeSystem.Internal
             return def;
         }
 
-        public NamedTypeDefinition? InputType(Type clrType, ConfigurationSource configurationSource) =>
+        public MutableNamedTypeDefinition? InputType(Type clrType, ConfigurationSource configurationSource) =>
             InputType(new TypeIdentity(clrType, Definition), configurationSource);
 
-        public NamedTypeDefinition? InputType(TypeIdentity id, ConfigurationSource configurationSource)
+        public MutableNamedTypeDefinition? InputType(TypeIdentity id, ConfigurationSource configurationSource)
         {
             var clrType = id.ClrType;
             if (clrType == null)
@@ -173,7 +173,7 @@ namespace GraphZen.TypeSystem.Internal
 
 
         private static string InvalidTypeAddition(TypeKind kind, TypeIdentity identity,
-            NamedTypeDefinition existingType)
+            MutableNamedTypeDefinition existingType)
         {
             var clrType = identity.ClrType;
             return clrType != null && clrType == existingType.ClrType
@@ -183,7 +183,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalUnionTypeBuilder? Union(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            return CreateByNameOrType<UnionTypeDefinition, InternalUnionTypeBuilder>(clrType, name,
+            return CreateByNameOrType<MutableUnionType, InternalUnionTypeBuilder>(clrType, name,
                 () => Union(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Union(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
         }
@@ -216,7 +216,7 @@ namespace GraphZen.TypeSystem.Internal
                 ? Definition.FindType(id.Name)
                 : Definition.FindOutputType(id.ClrType) ?? Definition.FindType(id.Name);
 
-            if (type is UnionTypeDefinition unionType)
+            if (type is MutableUnionType unionType)
             {
                 unionType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != unionType.ClrType)
@@ -244,7 +244,7 @@ namespace GraphZen.TypeSystem.Internal
             return unionType.InternalBuilder;
         }
 
-        private void OnUnionAdded(UnionTypeDefinition unionType)
+        private void OnUnionAdded(MutableUnionType unionType)
         {
             var clrType = unionType.ClrType;
             if (clrType != null)
@@ -261,7 +261,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public InternalScalarTypeBuilder? Scalar(Type clrType, string name, ConfigurationSource configurationSource) =>
-            CreateByNameOrType<ScalarTypeDefinition, InternalScalarTypeBuilder>(clrType, name,
+            CreateByNameOrType<MutableScalarType, InternalScalarTypeBuilder>(clrType, name,
                 () => Scalar(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Scalar(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
@@ -287,7 +287,7 @@ namespace GraphZen.TypeSystem.Internal
                 ? Definition.FindType(id.Name)
                 : Definition.FindScalar(id.ClrType) ?? Definition.FindType(id.Name);
 
-            if (type is ScalarTypeDefinition scalarType)
+            if (type is MutableScalarType scalarType)
             {
                 scalarType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
@@ -315,7 +315,7 @@ namespace GraphZen.TypeSystem.Internal
             return scalarType.InternalBuilder;
         }
 
-        private void OnScalarAdded(ScalarTypeDefinition scalarType)
+        private void OnScalarAdded(MutableScalarType scalarType)
         {
             var clrType = scalarType.ClrType;
             if (clrType != null)
@@ -341,7 +341,7 @@ namespace GraphZen.TypeSystem.Internal
         public InternalInterfaceTypeBuilder? Interface(Type clrType, string name,
             ConfigurationSource configurationSource)
         {
-            return CreateByNameOrType<InterfaceTypeDefinition, InternalInterfaceTypeBuilder>(clrType, name,
+            return CreateByNameOrType<MutableInterfaceType, InternalInterfaceTypeBuilder>(clrType, name,
                 () => Interface(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Interface(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
         }
@@ -363,7 +363,7 @@ namespace GraphZen.TypeSystem.Internal
                 ? Definition.FindType(id.Name)
                 : Definition.FindOutputType(id.ClrType) ?? Definition.FindType(id.Name);
 
-            if (type is InterfaceTypeDefinition interfaceType)
+            if (type is MutableInterfaceType interfaceType)
             {
                 interfaceType.UpdateConfigurationSource(configurationSource);
                 if (type.ClrType != id.ClrType && id.ClrType != null)
@@ -395,7 +395,7 @@ namespace GraphZen.TypeSystem.Internal
         }
 
 
-        private void OnInterfaceAdded(InterfaceTypeDefinition interfaceType)
+        private void OnInterfaceAdded(MutableInterfaceType interfaceType)
         {
             var clrType = interfaceType.ClrType;
             if (clrType != null)
@@ -412,7 +412,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalEnumTypeBuilder? Enum(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            return CreateByNameOrType<EnumTypeDefinition, InternalEnumTypeBuilder>(clrType, name,
+            return CreateByNameOrType<MutableEnumType, InternalEnumTypeBuilder>(clrType, name,
                 () => Enum(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Enum(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
         }
@@ -440,7 +440,7 @@ namespace GraphZen.TypeSystem.Internal
                 ? Definition.FindType(id.Name)
                 : Definition.FindFirstType(id.ClrType) ?? Definition.FindType(id.Name);
 
-            if (type is EnumTypeDefinition enumType)
+            if (type is MutableEnumType enumType)
             {
                 enumType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
@@ -467,7 +467,7 @@ namespace GraphZen.TypeSystem.Internal
             return enumType.InternalBuilder;
         }
 
-        private void OnEnumAdded(EnumTypeDefinition enumType)
+        private void OnEnumAdded(MutableEnumType enumType)
         {
             var clrType = enumType.ClrType;
             if (clrType != null)
@@ -486,7 +486,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalInputObjectTypeBuilder? InputObject(Type clrType, string name,
             ConfigurationSource configurationSource) =>
-            CreateByNameOrType<InputObjectTypeDefinition, InternalInputObjectTypeBuilder>(clrType, name,
+            CreateByNameOrType<MutableInputObjectType, InternalInputObjectTypeBuilder>(clrType, name,
                 () => InputObject(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => InputObject(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
 
@@ -519,7 +519,7 @@ namespace GraphZen.TypeSystem.Internal
                 ? Definition.FindType(id.Name)
                 : Definition.FindInputType(id.ClrType) ?? Definition.FindType(id.Name);
 
-            if (type is InputObjectTypeDefinition inputType)
+            if (type is MutableInputObjectType inputType)
             {
                 inputType.UpdateConfigurationSource(configurationSource);
                 if (id.ClrType != null && id.ClrType != type.ClrType)
@@ -547,7 +547,7 @@ namespace GraphZen.TypeSystem.Internal
             return inputType.InternalBuilder;
         }
 
-        private void OnInputObjectAdded(InputObjectTypeDefinition inputType)
+        private void OnInputObjectAdded(MutableInputObjectType inputType)
         {
             var clrType = inputType.ClrType;
             if (clrType != null)
@@ -589,7 +589,7 @@ namespace GraphZen.TypeSystem.Internal
 
         public InternalObjectTypeBuilder? Object(Type clrType, string name, ConfigurationSource configurationSource)
         {
-            return CreateByNameOrType<ObjectTypeDefinition, InternalObjectTypeBuilder>(clrType, name,
+            return CreateByNameOrType<MutableObjectType, InternalObjectTypeBuilder>(clrType, name,
                 () => Object(name, configurationSource)?.ClrType(clrType, name, configurationSource),
                 () => Object(clrType, configurationSource)?.ClrType(clrType, name, configurationSource));
         }
@@ -597,7 +597,7 @@ namespace GraphZen.TypeSystem.Internal
         private TBuilder? CreateByNameOrType<T, TBuilder>(Type clrType, string name, Func<TBuilder?> createByName,
             Func<TBuilder?> createByType)
             where TBuilder : AnnotatableMemberDefinitionBuilder<T>
-            where T : NamedTypeDefinition
+            where T : MutableNamedTypeDefinition
         {
             var byName = Definition.FindType(name);
             var byType = Definition.FindType<T>(clrType);
@@ -652,7 +652,7 @@ namespace GraphZen.TypeSystem.Internal
                 ? Definition.FindType(id.Name)
                 : Definition.FindOutputType(id.ClrType) ?? Definition.FindType(id.Name);
 
-            if (type is ObjectTypeDefinition objectType)
+            if (type is MutableObjectType objectType)
             {
                 objectType.UpdateConfigurationSource(configurationSource);
                 if (objectType.ClrType != id.ClrType && id.ClrType != null)
@@ -680,15 +680,15 @@ namespace GraphZen.TypeSystem.Internal
             return objectType.InternalBuilder;
         }
 
-        public InternalDirectiveBuilder? Directive(Type clrType, string name, ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder? Directive(Type clrType, string name, ConfigurationSource configurationSource)
         {
             if (IsDirectiveIgnored(clrType, configurationSource) || IsDirectiveIgnored(name, configurationSource))
             {
                 return null;
             }
 
-            var typed = Definition.FindDirective(clrType);
-            var named = Definition.FindDirective(name);
+            var typed = Definition.FindDirectiveDefinition(clrType);
+            var named = Definition.FindDirectiveDefinition(name);
             if (typed != null && named != null && !typed.Equals(named))
             {
                 throw new DuplicateItemException(
@@ -708,14 +708,14 @@ namespace GraphZen.TypeSystem.Internal
             return ib;
         }
 
-        public InternalDirectiveBuilder? Directive(string name, ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder? Directive(string name, ConfigurationSource configurationSource)
         {
             if (IsDirectiveIgnored(name, configurationSource))
             {
                 return null;
             }
 
-            var directive = Definition.FindDirective(name);
+            var directive = Definition.FindDirectiveDefinition(name);
 
             if (directive != null)
             {
@@ -724,14 +724,14 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             Definition.UnignoreDirective(name, configurationSource);
-            directive = Definition.AddDirective(name, configurationSource);
+            directive = Definition.AddDirectiveDefinition(name, configurationSource);
 
             OnDirectiveAdded(directive);
 
             return directive.InternalBuilder;
         }
 
-        public InternalDirectiveBuilder? Directive(Type clrType, ConfigurationSource configurationSource)
+        public InternalDirectiveDefinitionBuilder? Directive(Type clrType, ConfigurationSource configurationSource)
         {
             if (clrType.TryGetGraphQLNameFromDataAnnotation(out var annotatedName) &&
                 !annotatedName.IsValidGraphQLName())
@@ -751,8 +751,8 @@ namespace GraphZen.TypeSystem.Internal
                 return null;
             }
 
-            var directive = Definition.FindDirective(clrType) ??
-                            Definition.FindDirective(clrType.GetGraphQLNameAnnotation());
+            var directive = Definition.FindDirectiveDefinition(clrType) ??
+                            Definition.FindDirectiveDefinition(clrType.GetGraphQLNameAnnotation());
 
             if (directive != null)
             {
@@ -766,7 +766,7 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             Definition.UnignoreDirective(clrType, configurationSource);
-            directive = Definition.AddDirective(clrType, configurationSource);
+            directive = Definition.AddDirectiveDefinition(clrType, configurationSource);
 
             OnDirectiveAdded(directive);
 
@@ -774,11 +774,11 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         // ReSharper disable once UnusedParameter.Local
-        private void OnDirectiveAdded(DirectiveDefinition directive)
+        private void OnDirectiveAdded(MutableDirectiveDefinition directive)
         {
         }
 
-        private void OnObjectAdded(ObjectTypeDefinition objectType)
+        private void OnObjectAdded(MutableObjectType objectType)
         {
             var clrType = objectType.ClrType;
             if (clrType != null)
@@ -844,7 +844,7 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public bool IgnoreType(NamedTypeDefinition type, ConfigurationSource configurationSource)
+        public bool IgnoreType(MutableNamedTypeDefinition type, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(type.GetConfigurationSource()))
             {
@@ -947,7 +947,7 @@ namespace GraphZen.TypeSystem.Internal
             throw new NotImplementedException();
 
 
-        public bool RemoveType(NamedTypeDefinition type, ConfigurationSource configurationSource)
+        public bool RemoveType(MutableNamedTypeDefinition type, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(type.GetConfigurationSource()))
             {
@@ -959,18 +959,18 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public bool RemoveDirective(DirectiveDefinition definition, ConfigurationSource configurationSource)
+        public bool RemoveDirective(MutableDirectiveDefinition annotationFoo, ConfigurationSource configurationSource)
         {
-            if (!configurationSource.Overrides(definition.GetConfigurationSource()))
+            if (!configurationSource.Overrides(annotationFoo.GetConfigurationSource()))
             {
                 return false;
             }
 
-            if (Definition.RemoveDirective(definition))
+            if (Definition.RemoveDirectiveDefinition(annotationFoo))
             {
-                foreach (var annotable in Definition.DescendantsAndSelf().OfType<AnnotatableMemberDefinition>())
+                foreach (var annotable in Definition.DescendantsAndSelf().OfType<MutableAnnotatableMember>())
                 {
-                    annotable.InternalBuilder.RemoveDirectiveAnnotations(definition.Name, configurationSource);
+                    annotable.InternalBuilder.RemoveDirectiveAnnotations(annotationFoo.Name, configurationSource);
                 }
             }
 
@@ -1118,54 +1118,54 @@ namespace GraphZen.TypeSystem.Internal
         }
 
         public bool RemoveDirective(Type clrType, ConfigurationSource configurationSource) =>
-            Definition.TryGetDirective(clrType, out var directive) && RemoveDirective(directive, configurationSource);
+            Definition.TryGetDirectiveDefinition(clrType, out var directive) && RemoveDirective(directive, configurationSource);
 
         public bool RemoveDirective(string name, ConfigurationSource configurationSource) =>
-            Definition.TryGetDirective(name, out var directive) && RemoveDirective(directive, configurationSource);
+            Definition.TryGetDirectiveDefinition(name, out var directive) && RemoveDirective(directive, configurationSource);
 
 
         public bool RemoveObject(Type clrType, ConfigurationSource configurationSource) =>
-            RemoveType<ObjectTypeDefinition>(clrType, configurationSource);
+            RemoveType<MutableObjectType>(clrType, configurationSource);
 
         public bool RemoveObject(string name, ConfigurationSource configurationSource) =>
-            RemoveType<ObjectTypeDefinition>(name, configurationSource);
+            RemoveType<MutableObjectType>(name, configurationSource);
 
         public bool RemoveUnion(Type clrType, ConfigurationSource configurationSource) =>
-            RemoveType<UnionTypeDefinition>(clrType, configurationSource);
+            RemoveType<MutableUnionType>(clrType, configurationSource);
 
         public bool RemoveUnion(string name, ConfigurationSource configurationSource) =>
-            RemoveType<UnionTypeDefinition>(name, configurationSource);
+            RemoveType<MutableUnionType>(name, configurationSource);
 
         public bool RemoveScalar(Type clrType, ConfigurationSource configurationSource) =>
-            RemoveType<ScalarTypeDefinition>(clrType, configurationSource);
+            RemoveType<MutableScalarType>(clrType, configurationSource);
 
         public bool RemoveScalar(string name, ConfigurationSource configurationSource) =>
-            RemoveType<ScalarTypeDefinition>(name, configurationSource);
+            RemoveType<MutableScalarType>(name, configurationSource);
 
         public bool RemoveEnum(Type clrType, ConfigurationSource configurationSource) =>
-            RemoveType<EnumTypeDefinition>(clrType, configurationSource);
+            RemoveType<MutableEnumType>(clrType, configurationSource);
 
         public bool RemoveEnum(string name, ConfigurationSource configurationSource) =>
-            RemoveType<EnumTypeDefinition>(name, configurationSource);
+            RemoveType<MutableEnumType>(name, configurationSource);
 
         public bool RemoveInterface(Type clrType, ConfigurationSource configurationSource) =>
-            RemoveType<InterfaceTypeDefinition>(clrType, configurationSource);
+            RemoveType<MutableInterfaceType>(clrType, configurationSource);
 
         public bool RemoveInterface(string name, ConfigurationSource configurationSource) =>
-            RemoveType<InterfaceTypeDefinition>(name, configurationSource);
+            RemoveType<MutableInterfaceType>(name, configurationSource);
 
         public bool RemoveInputObject(Type clrType, ConfigurationSource configurationSource) =>
-            RemoveType<InputObjectTypeDefinition>(clrType, configurationSource);
+            RemoveType<MutableInputObjectType>(clrType, configurationSource);
 
         public bool RemoveInputObject(string name, ConfigurationSource configurationSource) =>
-            RemoveType<InputObjectTypeDefinition>(name, configurationSource);
+            RemoveType<MutableInputObjectType>(name, configurationSource);
 
         private bool RemoveType<T>(Type clrType, ConfigurationSource configurationSource)
-            where T : NamedTypeDefinition =>
+            where T : MutableNamedTypeDefinition =>
             Definition.TryGetType<T>(clrType, out var type) && RemoveType(type, configurationSource);
 
         private bool RemoveType<T>(string name, ConfigurationSource configurationSource)
-            where T : NamedTypeDefinition =>
+            where T : MutableNamedTypeDefinition =>
             Definition.TryGetType<T>(name, out var type) && RemoveType(type, configurationSource);
 
 

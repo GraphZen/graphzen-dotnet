@@ -8,7 +8,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface IMaybeSpec : IMaybeSpecDefinition
+    public interface IMaybeSpec
     {
+         public bool IsSpec { get; }
     }
 }

@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public class InterfaceTypeBuilder : IInterfaceTypeBuilder
+    internal class InterfaceTypeBuilder : IInterfaceTypeBuilder
     {
         public InterfaceTypeBuilder(InternalInterfaceTypeBuilder builder)
         {
@@ -19,7 +19,7 @@ namespace GraphZen.TypeSystem
 
         protected InternalInterfaceTypeBuilder Builder { get; }
 
-        public INamedBuilder Name(string name)
+        public INameBuilder Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.Name(name, ConfigurationSource.Explicit);
@@ -60,28 +60,28 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IAnnotableBuilder AddDirectiveAnnotation(string name, object value)
+        public IDirectivesBuilder AddDirectiveAnnotation(string name, object value)
         {
             Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder AddDirectiveAnnotation(string name)
+        public IDirectivesBuilder AddDirectiveAnnotation(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder RemoveDirectiveAnnotations(string name)
+        public IDirectivesBuilder RemoveDirectiveAnnotations(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder ClearDirectiveAnnotations()
+        public IDirectivesBuilder ClearDirectiveAnnotations()
         {
             Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;
@@ -89,11 +89,11 @@ namespace GraphZen.TypeSystem
 
         InternalInterfaceTypeBuilder IInfrastructure<InternalInterfaceTypeBuilder>.Instance => Builder;
 
-        InterfaceTypeDefinition IInfrastructure<InterfaceTypeDefinition>.Instance => Builder.Definition;
+        MutableInterfaceType IInfrastructure<MutableInterfaceType>.Instance => Builder.Definition;
     }
 
 
-    public class InterfaceTypeBuilder<TInterface, TContext> :
+    internal class InterfaceTypeBuilder<TInterface, TContext> :
         InterfaceTypeBuilder,
         IInterfaceTypeBuilder<TInterface, TContext>
         where TContext : GraphQLContext

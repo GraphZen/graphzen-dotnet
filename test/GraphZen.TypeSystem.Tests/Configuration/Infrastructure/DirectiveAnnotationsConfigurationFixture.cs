@@ -9,8 +9,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
 {
     public abstract class
         DirectiveAnnotationsConfigurationFixture<TMemberDefinition, TMember> : ConfigurationFixture<
-            IDirectiveAnnotations, IDirectiveAnnotationsDefinition, IMutableDirectiveAnnotationsDefinition,
-            TMemberDefinition, TMember> where TMemberDefinition : AnnotatableMemberDefinition
+            IDirectives, IDirectives, IMutableAnnotationsDefinition,
+            TMemberDefinition, TMember> where TMemberDefinition : MutableAnnotatableMember
         where TMember : AnnotatableMember
     {
     }

@@ -19,9 +19,9 @@ namespace GraphZen.TypeSystem
         protected InternalUnionTypeBuilder Builder { get; }
 
         InternalUnionTypeBuilder IInfrastructure<InternalUnionTypeBuilder>.Instance => Builder;
-        UnionTypeDefinition IInfrastructure<UnionTypeDefinition>.Instance => Builder.Definition;
+        MutableUnionType IInfrastructure<MutableUnionType>.Instance => Builder.Definition;
 
-        public INamedBuilder Name(string name)
+        public INameBuilder Name(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.SetName(name, ConfigurationSource.Explicit);
@@ -62,28 +62,28 @@ namespace GraphZen.TypeSystem
             return this;
         }
 
-        public IAnnotableBuilder AddDirectiveAnnotation(string name, object value)
+        public IDirectivesBuilder AddDirectiveAnnotation(string name, object value)
         {
             Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, value, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder AddDirectiveAnnotation(string name)
+        public IDirectivesBuilder AddDirectiveAnnotation(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.AddDirectiveAnnotation(name, null, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder RemoveDirectiveAnnotations(string name)
+        public IDirectivesBuilder RemoveDirectiveAnnotations(string name)
         {
             Check.NotNull(name, nameof(name));
             Builder.RemoveDirectiveAnnotations(name, ConfigurationSource.Explicit);
             return this;
         }
 
-        public IAnnotableBuilder ClearDirectiveAnnotations()
+        public IDirectivesBuilder ClearDirectiveAnnotations()
         {
             Builder.ClearDirectiveAnnotations(ConfigurationSource.Explicit);
             return this;

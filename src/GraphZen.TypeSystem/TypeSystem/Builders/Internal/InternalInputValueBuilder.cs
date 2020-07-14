@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem.Internal
 {
     public abstract class InternalInputValueBuilder<T, TBuilder> : AnnotatableMemberDefinitionBuilder<T>
-        where T : InputValueDefinition
+        where T : MutableInputValue
         where TBuilder : InternalInputValueBuilder<T, TBuilder>
     {
         public InternalInputValueBuilder(T definition) : base(

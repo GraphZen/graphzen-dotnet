@@ -8,7 +8,8 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface IAbstractType : IAbstractTypeDefinition, INamedType
+    public interface IAbstractType : INamedTypeDefinition
     {
+        TypeResolver<object, GraphQLContext>? ResolveType { get; }
     }
 }

@@ -12,8 +12,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields
     // ReSharper disable once InconsistentNaming
     public abstract class Interface_Fields :
         NamedCollectionConfigurationFixture<IFields,
-            IFieldsDefinition, IMutableFieldsDefinition, FieldDefinition, Field,
-            InterfaceTypeDefinition,
+            IFields, IMutableFields, MutableField, Field,
+            MutableInterfaceType,
             InterfaceType>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
@@ -23,15 +23,15 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields
 
         public override InterfaceType GetParent(Schema schema, string parentName) => schema.GetInterface(parentName);
 
-        public override InterfaceTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        public override MutableInterfaceType GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetInterface(parentName);
 
-        public override NamedCollection<FieldDefinition> GetCollection(InterfaceTypeDefinition parent) =>
+        public override NamedCollection<MutableField> GetCollection(MutableInterfaceType parent) =>
             parent.Fields.ToNamedCollection();
 
         public override NamedCollection<Field> GetCollection(InterfaceType parent) => parent.Fields.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(InterfaceTypeDefinition parent,
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(MutableInterfaceType parent,
             string name) =>
             parent.FindIgnoredFieldConfigurationSource(name);
 

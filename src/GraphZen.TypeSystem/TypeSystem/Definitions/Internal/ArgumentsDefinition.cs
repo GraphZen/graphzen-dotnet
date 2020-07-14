@@ -11,34 +11,34 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    internal partial class ArgumentsDefinition : IMutableArgumentsDefinition
+    internal partial class ArgumentsDefinition : IMutableArguments
     {
-        private readonly Dictionary<string, ArgumentDefinition> _arguments =
-            new Dictionary<string, ArgumentDefinition>();
+        private readonly Dictionary<string, MutableArgument> _arguments =
+            new Dictionary<string, MutableArgument>();
 
         private readonly Dictionary<string, ConfigurationSource> _ignoredArguments =
             new Dictionary<string, ConfigurationSource>();
 
 
-        public ArgumentsDefinition(IMutableArgumentsDefinition declaringMember)
+        public ArgumentsDefinition(IMutableArguments declaringMember)
         {
             DeclaringMember = declaringMember;
         }
 
-        private IMutableArgumentsDefinition DeclaringMember { get; }
+        private IMutableArguments DeclaringMember { get; }
 
         public ConfigurationSource GetConfigurationSource() => DeclaringMember.GetConfigurationSource();
 
-        public SchemaDefinition Schema => DeclaringMember.Schema;
+        public MutableSchema Schema => DeclaringMember.Schema;
 
-        ISchemaDefinition IMemberDefinition.Schema => Schema;
+        ISchema IMember.Schema => Schema;
 
         [GenDictionaryAccessors(nameof(Argument.Name), nameof(Argument))]
-        public IReadOnlyDictionary<string, ArgumentDefinition> ArgumentMap => _arguments;
+        public IReadOnlyDictionary<string, MutableArgument> ArgumentMap => _arguments;
 
-        public IReadOnlyCollection<ArgumentDefinition> Arguments => _arguments.Values;
+        public IReadOnlyCollection<MutableArgument> Arguments => _arguments.Values;
 
-        public ArgumentDefinition? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource)
+        public MutableArgument? GetOrAddArgument(string name, string type, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)
@@ -74,13 +74,13 @@ namespace GraphZen.TypeSystem.Internal
 
             var argumentTypeName = typeNode.GetNamedType().Name.Value;
             var typeIdentity = Schema.GetOrAddTypeIdentity(argumentTypeName);
-            argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource,
+            argument = new MutableArgument(name, configurationSource, typeIdentity, typeNode, configurationSource,
                 DeclaringMember, null);
             AddArgument(argument);
             return argument;
         }
 
-        public ArgumentDefinition? GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource)
+        public MutableArgument? GetOrAddArgument(string name, Type clrType, ConfigurationSource configurationSource)
         {
             var ignoredConfigurationSource = FindIgnoredArgumentConfigurationSource(name);
             if (ignoredConfigurationSource.HasValue)
@@ -107,13 +107,13 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             var typeIdentity = Schema.GetOrAddOutputTypeIdentity(innerClrType);
-            argument = new ArgumentDefinition(name, configurationSource, typeIdentity, typeNode, configurationSource,
+            argument = new MutableArgument(name, configurationSource, typeIdentity, typeNode, configurationSource,
                 DeclaringMember, null);
             AddArgument(argument);
             return argument;
         }
 
-        public bool RemoveArgument(ArgumentDefinition argument)
+        public bool RemoveArgument(MutableArgument argument)
         {
             if (_arguments.Remove(argument.Name, out var removed))
             {
@@ -128,7 +128,7 @@ namespace GraphZen.TypeSystem.Internal
             return false;
         }
 
-        public bool AddArgument(ArgumentDefinition argument)
+        public bool AddArgument(MutableArgument argument)
         {
             _arguments[argument.Name] = argument;
             return true;
@@ -138,10 +138,10 @@ namespace GraphZen.TypeSystem.Internal
             => _ignoredArguments.TryGetValue(name, out var cs) ? (ConfigurationSource?)cs : null;
 
 
-        public IEnumerable<ArgumentDefinition> GetArguments() => _arguments.Values;
+        public IEnumerable<MutableArgument> GetArguments() => _arguments.Values;
 
 
-        public bool RenameArgument(ArgumentDefinition argument, string name, ConfigurationSource configurationSource)
+        public bool RenameArgument(MutableArgument argument, string name, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(argument.GetNameConfigurationSource()))
             {
@@ -187,7 +187,7 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        private bool IgnoreArgument(ArgumentDefinition argument, ConfigurationSource configurationSource)
+        private bool IgnoreArgument(MutableArgument argument, ConfigurationSource configurationSource)
         {
             if (configurationSource.Overrides(argument.GetConfigurationSource()))
             {
@@ -203,6 +203,6 @@ namespace GraphZen.TypeSystem.Internal
             _ignoredArguments.Remove(name);
         }
 
-        IReadOnlyCollection<IArgumentDefinition> IArgumentsDefinition.Arguments => Arguments;
+        IReadOnlyCollection<IArgument> IArguments.Arguments => Arguments;
     }
 }

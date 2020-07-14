@@ -10,7 +10,7 @@ namespace GraphZen.Infrastructure
 {
     internal static class SchemaBuilderInfrastructureExtensions
     {
-        public static SchemaDefinition GetDefinition<T>(this SchemaBuilder<T> schemaBuilder) where T : GraphQLContext =>
-            schemaBuilder.GetInfrastructure<SchemaDefinition>();
+        public static MutableSchema GetDefinition<T>(this SchemaBuilder<T> schemaBuilder) where T : GraphQLContext =>
+            schemaBuilder.GetInfrastructure<MutableSchema>();
     }
 }

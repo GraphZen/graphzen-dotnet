@@ -36,7 +36,7 @@ namespace GraphZen.Utilities
         public Argument Argument { get; private set; }
 
 
-        public Directive Directive { get; private set; }
+        public DirectiveDefinition Directive { get; private set; }
 
 
         public EnumValue EnumValue { get; private set; }

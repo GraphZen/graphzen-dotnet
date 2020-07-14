@@ -28,10 +28,10 @@ namespace GraphZen.Infrastructure
                              "types, Union and Interface, provide the Object types possible " +
                              "at runtime. List and NonNull types compose other types.', ")
                 .Field(_ => _.Kind)
-                .Field("name", "String", _ => { _.Resolve(type => type is NamedType named ? named.Name : null); }
+                .Field("name", "String", _ => { _.Resolve(type => type is NamedTypeDefinition named ? named.Name : null); }
                 )
                 .Field("description", "String", _ => _
-                    .Resolve(type => type is NamedType named ? named.Description : null))
+                    .Resolve(type => type is NamedTypeDefinition named ? named.Description : null))
                 .Field("fields", "[__Field!]", _ =>
                 {
                     _.Argument("includeDeprecated", "Boolean", a => { a.DefaultValue(false); })
@@ -85,7 +85,7 @@ namespace GraphZen.Infrastructure
                             .Description("A list of all types supported by this server.");
                     });
 
-            sb.Object<Directive>()
+            sb.Object<DirectiveDefinition>()
                 .Field<IEnumerable<InputValue>>("args", f => f.Resolve(d => d.Arguments));
 
             sb.Enum<DirectiveLocation>();

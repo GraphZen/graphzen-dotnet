@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description
     // ReSharper disable once InconsistentNaming
     public abstract class Scalar_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,
-        string?, ScalarTypeDefinition, ScalarType>
+        string?, MutableScalarType, ScalarType>
     {
         public override string ValueA { get; } = "description a";
         public override string ValueB { get; } = "description b";
@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description
 
         public override ScalarType GetParent(Schema schema, string parentName) => schema.GetScalar(parentName);
 
-        public override ScalarTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        public override MutableScalarType GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetScalar(parentName);
 
 
@@ -46,7 +46,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description
             return value != null;
         }
 
-        public override bool TryGetValue(ScalarTypeDefinition parent, [NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(MutableScalarType parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

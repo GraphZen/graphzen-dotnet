@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface ISyntaxConvertable
+    public interface ISyntaxMember
     {
         SyntaxNode ToSyntaxNode();
     }

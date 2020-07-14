@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface IMutableDescription : IDescription
+    public interface IMutableDescription : IBuildableDescription
     {
         bool SetDescription(string description, ConfigurationSource configurationSource);
         bool RemoveDescription(ConfigurationSource configurationSource);

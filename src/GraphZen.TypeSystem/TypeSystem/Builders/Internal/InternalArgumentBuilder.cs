@@ -8,9 +8,9 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class InternalArgumentBuilder : InternalInputValueBuilder<ArgumentDefinition, InternalArgumentBuilder>
+    public class InternalArgumentBuilder : InternalInputValueBuilder<MutableArgument, InternalArgumentBuilder>
     {
-        public InternalArgumentBuilder(ArgumentDefinition definition) : base(definition)
+        public InternalArgumentBuilder(MutableArgument definition) : base(definition)
         {
         }
 

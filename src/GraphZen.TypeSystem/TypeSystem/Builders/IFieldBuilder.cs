@@ -10,40 +10,32 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
+
     // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    internal interface IFieldBuilder<TDeclaringType, TField, TContext> :
-        IAnnotableBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
-        IArgumentsDefinitionBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
-        INamedBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
-        IDescriptionBuilder<FieldBuilder<TDeclaringType, TField, TContext>>,
-        IInfrastructure<IFieldDefinition>,
-        IInfrastructure<InternalFieldBuilder>,
-        IInfrastructure<FieldDefinition>
-        where TContext : GraphQLContext
+    public interface IFieldBuilder : IDirectivesBuilder<IFieldBuilder>, IArgumentsBuilder<IFieldBuilder>, INameBuilder<IFieldBuilder>, IDescriptionBuilder<IFieldBuilder>, IMaybeDeprecatedBuilder<IFieldBuilder>, IInfrastructure<InternalFieldBuilder>, IInfrastructure<MutableField>
     {
-        FieldBuilder<TDeclaringType, object, TContext> FieldType(string type);
-
-
-        FieldBuilder<TDeclaringType, TFieldNew, TContext> FieldType<TFieldNew>(bool canBeNull = false,
-            bool itemCanBeNull = false) where TFieldNew : IEnumerable;
-
-
-        FieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TField> resolver);
-
-
-        FieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, TField> resolver);
-
-
-        FieldBuilder<TSource, TField, TContext> Resolve<TSource>(Func<TSource, TField> resolver);
-
-
-        FieldBuilder<TDeclaringType, TField, TContext> Resolve(Func<TDeclaringType, dynamic, TField> resolver);
-
-
-        FieldBuilder<TDeclaringType, TField, TContext> Resolve(
-            Func<TDeclaringType, dynamic, GraphQLContext, TField> resolver);
-
-        FieldBuilder<TDeclaringType, TField, TContext> Resolve(
-            Func<TDeclaringType, dynamic, GraphQLContext, ResolveInfo, TField> resolver);
+        IFieldBuilder FieldType(string type);
+        IFieldBuilder FieldType(Type clrType, bool canBeNull = false, bool itemCanBeNull = false);
+        IFieldBuilder<object, GraphQLContext, TField> FieldType<TField>();
+        IFieldBuilder Resolve(Resolver<object, dynamic, GraphQLContext, object?> resolver);
+        IFieldBuilder RemoveResolver();
     }
+
+    // ReSharper disable once PossibleInterfaceMemberAmbiguity
+    public interface IFieldBuilder<TSource, TContext, in TField> : IFieldBuilder,
+        IDirectivesBuilder<IFieldBuilder<TSource, TContext, TField>>,
+        IArgumentsBuilder<IFieldBuilder<TSource, TContext, TField>>,
+        INameBuilder<IFieldBuilder<TSource, TContext, TField>>,
+        IDescriptionBuilder<IFieldBuilder<TSource, TContext, TField>>,
+        IMaybeDeprecatedBuilder<IFieldBuilder<TSource, TContext, TField>>
+    {
+        new IFieldBuilder<TSource, TContext, TField> FieldType(string type);
+        new IFieldBuilder<TSource, TContext, TField> FieldType(Type clrType, bool canBeNull = false, bool itemCanBeNull = false);
+        new IFieldBuilder<TSource, TContext, TFieldNew> FieldType<TFieldNew>();
+        IFieldBuilder<TSource, TContext, TField> Resolve(Resolver<object, dynamic, GraphQLContext, TField> resolver);
+        new IFieldBuilder<TSource, TContext, TField> RemoveResolver();
+    }
+
+
+
 }

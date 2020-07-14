@@ -11,7 +11,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Description
     // ReSharper disable once InconsistentNaming
     public abstract class Object_Description : LeafElementConfigurationFixture<IDescription, IDescription,
         IMutableDescription,
-        string?, ObjectTypeDefinition, ObjectType>
+        string?, MutableObjectType, ObjectType>
     {
         public override string ValueA { get; } = "description a";
         public override string ValueB { get; } = "description b";
@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Description
 
         public override ObjectType GetParent(Schema schema, string parentName) => schema.GetObject(parentName);
 
-        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        public override MutableObjectType GetParent(SchemaBuilder sb, string parentName) =>
             sb.GetDefinition().GetObject(parentName);
 
 
@@ -46,7 +46,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Description
             return value != null;
         }
 
-        public override bool TryGetValue(ObjectTypeDefinition parent, [NotNullWhen(true)] out string? value)
+        public override bool TryGetValue(MutableObjectType parent, [NotNullWhen(true)] out string? value)
         {
             value = parent.Description;
             return value != null;

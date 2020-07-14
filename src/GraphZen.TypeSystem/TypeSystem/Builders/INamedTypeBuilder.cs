@@ -7,19 +7,20 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem
 {
-    public interface INamedTypeBuilder :
-        INamedBuilder,
+    public interface INamedTypeDefinitionBuilder :
+        INameBuilder,
         IDescriptionBuilder,
         IClrTypeBuilder,
-        IAnnotableBuilder
+        IDirectivesBuilder
     {
     }
 
-    public interface INamedTypeBuilder<TBuilder, TUntypedBuilder> :
-        INamedBuilder<TBuilder>,
+    public interface INamedTypeDefinitionBuilder<out TBuilder, out TUntypedBuilder> :
+        INameBuilder<TBuilder>,
         IDescriptionBuilder<TBuilder>,
         IClrTypeBuilder<TUntypedBuilder>,
-        IAnnotableBuilder<TBuilder>
+        IDirectivesBuilder<TBuilder>
     {
+
     }
 }

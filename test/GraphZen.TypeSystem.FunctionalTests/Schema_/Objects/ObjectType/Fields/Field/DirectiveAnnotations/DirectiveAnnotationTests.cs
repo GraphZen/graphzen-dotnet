@@ -149,8 +149,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Schema_.Objects.ObjectType.Fields.
             });
             var bar = schema.GetObject("Baz").GetField("Bar");
             bar.DirectiveAnnotations.Should().HaveCount(1);
-            bar.HasAnyDirectiveAnnotation("foo").Should().BeTrue();
-            bar.HasAnyDirectiveAnnotation("bar").Should().BeFalse();
+            bar.HasDirectiveAnnotation("foo").Should().BeTrue();
+            bar.HasDirectiveAnnotation("bar").Should().BeFalse();
         }
 
 

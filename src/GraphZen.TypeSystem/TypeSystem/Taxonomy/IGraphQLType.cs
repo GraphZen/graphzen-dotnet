@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLName("__Type")]
-    public interface IGraphQLType : IGraphQLTypeReference, ISyntaxConvertable
+    public interface IGraphQLType : ISyntaxMember
     {
         TypeKind Kind { get; }
     }

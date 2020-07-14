@@ -10,13 +10,12 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface ILeafType : INamedType
+    public interface ILeafType : INamedTypeDefinition
     {
-        Maybe<object> Serialize(object value);
+        Maybe<object?> Serialize(object value);
         bool IsValidValue(string value);
         bool IsValidLiteral(ValueSyntax value);
-
-        Maybe<object> ParseValue(object value);
-        Maybe<object> ParseLiteral(ValueSyntax value);
+        Maybe<object?> ParseValue(object value);
+        Maybe<object?> ParseLiteral(ValueSyntax value);
     }
 }

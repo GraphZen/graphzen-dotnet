@@ -13,8 +13,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
     {
         Type CollectionItemMemberType { get; }
         Type CollectionItemMemberDefinitionType { get; }
-        NamedCollection<IMutableNamed> GetCollection(SchemaBuilder sb, string parentName);
-        NamedCollection<INamed> GetCollection(Schema schema, string parentName);
+        NamedCollection<IMutableName> GetCollection(SchemaBuilder sb, string parentName);
+        NamedCollection<IName> GetCollection(Schema schema, string parentName);
         void AddItem(SchemaBuilder sb, string parentName, string itemName);
         void IgnoreItem(SchemaBuilder sb, string parentName, string itemName);
         void UnignoreItem(SchemaBuilder sb, string parentName, string itemName);

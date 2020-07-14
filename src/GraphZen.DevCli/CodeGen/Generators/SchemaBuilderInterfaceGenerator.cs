@@ -23,11 +23,11 @@ namespace GraphZen.CodeGen.Generators
             new Dictionary<string, KindConfig>
             {
                 {
-                    nameof(Directive),
-                    new KindConfig {TypeName = nameof(Directive), SimpleBuilder = true}
+                    nameof(DirectiveDefinition),
+                    new KindConfig {TypeName = nameof(DirectiveDefinition), SimpleBuilder = true}
                 },
                 {
-                    "Type", new KindConfig {TypeParamName = "ClrType", TypeName = nameof(NamedType)}
+                    "Type", new KindConfig {TypeParamName = "ClrType", TypeName = nameof(NamedTypeDefinition)}
                 },
                 {
                     nameof(Object),

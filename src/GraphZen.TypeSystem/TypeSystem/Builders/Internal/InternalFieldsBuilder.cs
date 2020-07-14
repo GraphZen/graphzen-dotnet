@@ -14,7 +14,7 @@ namespace GraphZen.TypeSystem.Internal
 {
     public abstract class
         InternalFieldsBuilder<TDefinition, TBuilder> : AnnotatableMemberDefinitionBuilder<TDefinition>
-        where TDefinition : FieldsDefinition
+        where TDefinition : MutableFields
         where TBuilder : InternalFieldsBuilder<TDefinition, TBuilder>
     {
         protected InternalFieldsBuilder(TDefinition definition) : base(definition)
@@ -119,7 +119,7 @@ namespace GraphZen.TypeSystem.Internal
             return true;
         }
 
-        public bool IgnoreField(FieldDefinition field, ConfigurationSource configurationSource)
+        public bool IgnoreField(MutableField field, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetConfigurationSource()))
             {
@@ -280,7 +280,7 @@ namespace GraphZen.TypeSystem.Internal
             return field.InternalBuilder;
         }
 
-        private bool Ignore(FieldDefinition field, ConfigurationSource configurationSource)
+        private bool Ignore(MutableField field, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetConfigurationSource()))
             {
@@ -293,7 +293,7 @@ namespace GraphZen.TypeSystem.Internal
         public bool RemoveField(string name, ConfigurationSource configurationSource) =>
             Definition.TryGetField(name, out var field) && RemoveField(field, configurationSource);
 
-        public bool RemoveField(FieldDefinition field, ConfigurationSource configurationSource)
+        public bool RemoveField(MutableField field, ConfigurationSource configurationSource)
         {
             if (!configurationSource.Overrides(field.GetConfigurationSource()))
             {

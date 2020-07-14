@@ -9,11 +9,10 @@ namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
     public interface IObjectType :
-        IObjectTypeDefinition,
-        IInterfaces,
-        ICompositeType,
         IFields,
-        IDirectiveAnnotations
+        IImplementsInterfaces,
+        ICompositeType, IOutputType
     {
+        IsTypeOf<object, GraphQLContext>? IsTypeOf { get; }
     }
 }

@@ -15,84 +15,82 @@ using static GraphZen.LanguageModel.SyntaxFactory;
 
 namespace GraphZen.TypeSystem
 {
-    public partial class EnumType : NamedType, IEnumType
+    public partial class EnumType : NamedTypeDefinition, IEnumType
     {
         private readonly Lazy<EnumTypeDefinitionSyntax> _syntax;
 
         public EnumType(string name,
             string? description,
             Type? clrType,
-            IEnumerable<IEnumValueDefinition> valueDefinitions,
-            IReadOnlyList<IDirectiveAnnotation> directives, Schema schema)
+            IEnumerable<IEnumValue> valueDefinitions,
+            IReadOnlyList<IDirective> directives, Schema schema)
             : base(name, description, clrType, directives, schema)
         {
-            var values = valueDefinitions.Select(v => EnumValue.From(v, this)).ToImmutableList();
-            Values = values.ToReadOnlyDictionary(v => v.Name);
-            ValuesByValue = values.Where(_ => _.Value != null).ToReadOnlyDictionary(v => v.Value);
+            Values = valueDefinitions.Select(v => EnumValue.From(v, this)).ToImmutableList();
+            ValueMap = Values.ToReadOnlyDictionary(v => v.Name, v => (IEnumValue)v);
+            ValuesByValue = Values.Where(_ => _.Value != null).ToReadOnlyDictionary(v => v.Value!);
             _syntax = new Lazy<EnumTypeDefinitionSyntax>(() =>
             {
                 var syntax = new EnumTypeDefinitionSyntax(Name(Name),
                     SyntaxHelpers.Description(Description), null,
-                    GetValues().ToSyntaxNodes<EnumValueDefinitionSyntax>());
+                    Values.ToSyntaxNodes<EnumValueDefinitionSyntax>());
                 return syntax;
             });
         }
 
 
-        public Maybe<object> Serialize(object value)
+        public Maybe<object?> Serialize(object value)
         {
             if (ValuesByValue.TryGetValue(value ?? DBNull.Value, out var enumValue))
             {
-                return Maybe.Some<object>(enumValue.Name);
+                return Maybe.Some<object?>(enumValue.Name);
             }
 
-            return Maybe.None<object>(
+            return Maybe.None<object?>(
                 $"{Name} Enum: unable to find enum value that matches resolved value \"{value}\"");
         }
 
         public bool IsValidValue(string value) => ParseValue(value) is Some<object>;
 
         public bool IsValidLiteral(ValueSyntax value) =>
-            value is EnumValueSyntax enumNode && Values.ContainsKey(enumNode.Value);
+            value is EnumValueSyntax enumNode && ValueMap.ContainsKey(enumNode.Value);
 
 
-        public Maybe<object> ParseValue(object value) => value is string str && TryGetValue(str, out var enumValue)
+        public Maybe<object?> ParseValue(object value) => value is string str && TryGetValue(str, out var enumValue)
             ? Maybe.Some(enumValue.Value)
-            : Maybe.None<object>();
+            : Maybe.None<object?>();
 
-        public Maybe<object> ParseLiteral(ValueSyntax value) =>
+        public Maybe<object?> ParseLiteral(ValueSyntax value) =>
             value is EnumValueSyntax enumNode && TryGetValue(enumNode.Value, out var enumValue)
                 ? Maybe.Some(enumValue.Value)
-                : Maybe.None<object>();
+                : Maybe.None<object?>();
 
 
         public override TypeKind Kind { get; } = TypeKind.Enum;
-        public override IEnumerable<IMember> Children() => throw new NotImplementedException();
 
         public override SyntaxNode ToSyntaxNode() => _syntax.Value;
 
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
-        [GenDictionaryAccessors(nameof(EnumValue.Name), nameof(EnumValue.Value))]
-        public IReadOnlyDictionary<string, EnumValue> Values { get; }
 
         [GenDictionaryAccessors(nameof(EnumValue.Value), nameof(EnumValue.Value))]
-        public IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
+        public IReadOnlyDictionary<object, IEnumValue> ValuesByValue { get; }
 
-        public IEnumerable<EnumValue> GetValues() => Values.Values;
 
-        IEnumerable<IEnumValueDefinition> IEnumValuesDefinition.GetValues() => GetValues();
 
 
         [GraphQLIgnore]
-        public static EnumType From(IEnumTypeDefinition definition, Schema schema)
+        public static EnumType From(IEnumType definition, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
             return new EnumType(definition.Name,
                 definition.Description,
                 definition.ClrType,
-                definition.GetValues(),
+                definition.Values,
                 definition.DirectiveAnnotations, schema);
         }
+
+        public IReadOnlyDictionary<string, IEnumValue> ValueMap { get; }
+        public IReadOnlyCollection<IEnumValue> Values { get; }
     }
 }

@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem.Internal
             Check.NotNull(type, nameof(type));
             switch (type)
             {
-                case INamedType namedType:
+                case INamedTypeDefinition namedType:
                     return NamedType(Name(namedType.Name));
                 case NonNullType nonNull:
                     return NonNullType((NullableTypeSyntax)nonNull.OfType.ToTypeSyntax());
@@ -37,7 +37,7 @@ namespace GraphZen.TypeSystem.Internal
 
 
         public static IReadOnlyList<DirectiveSyntax> ToDirectiveNodes(
-            this IEnumerable<IDirectiveAnnotation> directives)
+            this IEnumerable<IDirective> directives)
         {
             Check.NotNull(directives, nameof(directives));
 

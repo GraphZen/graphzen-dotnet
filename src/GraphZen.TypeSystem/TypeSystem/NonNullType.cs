@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
@@ -17,7 +18,7 @@ namespace GraphZen.TypeSystem
         }
 
         public INullableType OfType { get; }
-        public INamedTypeDefinition InnerType => OfType.GetNamedType();
+        public INamedTypeReference InnerType => throw new NotImplementedException();
 
         IGraphQLType IWrappingType.OfType => OfType;
 

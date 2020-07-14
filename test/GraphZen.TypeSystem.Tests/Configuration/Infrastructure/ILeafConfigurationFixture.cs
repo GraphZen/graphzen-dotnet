@@ -10,9 +10,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
 {
     public interface ILeafConfigurationFixture : IConfigurationFixture
     {
-        ConfigurationSource GetElementConfigurationSource(MemberDefinition parent);
-        bool TryGetValue(MemberDefinition parent, [NotNullWhen(true)] out object? value);
-        bool TryGetValue(Member parent, [NotNullWhen(true)] out object? value);
+        ConfigurationSource GetElementConfigurationSource(MutableMember parent);
+        bool TryGetValue(MutableMember parent, [NotNullWhen(true)] out object? value);
+        bool TryGetValue(MutableMember parent, [NotNullWhen(true)] out object? value);
         void ConfigureExplicitly(SchemaBuilder sb, string parentName, object value);
         void RemoveValue(SchemaBuilder sb, string parentName);
 

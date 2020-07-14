@@ -8,10 +8,12 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface IInterfaceType : IInterfaceTypeDefinition,
+    public interface IInterfaceType :
+        IFields,
+        IImplementsInterfaces,
         ICompositeType,
         IAbstractType,
-        IFields
+        IOutputMember
     {
     }
 }

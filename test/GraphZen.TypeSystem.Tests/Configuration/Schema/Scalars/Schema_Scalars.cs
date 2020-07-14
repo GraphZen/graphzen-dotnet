@@ -11,9 +11,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Scalars
 {
     // ReSharper disable once InconsistentNaming
     public abstract class Schema_Scalars : NamedCollectionConfigurationFixture<IScalarTypes,
-        IScalarTypesDefinition, IMutableScalarTypesDefinition, ScalarTypeDefinition,
+        IScalarTypesDefinition, IMutableScalarTypesDefinition, MutableScalarType,
         ScalarType,
-        SchemaDefinition,
+        MutableSchema,
         Schema>
     {
         public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
@@ -22,7 +22,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Scalars
 
         public override Schema GetParent(Schema schema, string parentName) => schema;
 
-        public override SchemaDefinition GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
+        public override MutableSchema GetParent(SchemaBuilder sb, string parentName) => sb.GetDefinition();
 
         public override void AddItem(SchemaBuilder sb, string parentName, string name)
         {
@@ -44,12 +44,12 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Scalars
             sb.Scalar(itemName).Name(newName);
         }
 
-        public override NamedCollection<ScalarTypeDefinition> GetCollection(SchemaDefinition parent) =>
+        public override NamedCollection<MutableScalarType> GetCollection(MutableSchema parent) =>
             parent.GetScalars().ToNamedCollection();
 
         public override NamedCollection<ScalarType> GetCollection(Schema parent) => parent.Scalars.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(SchemaDefinition parent, string name) =>
+        public override ConfigurationSource? FindIgnoredItemConfigurationSource(MutableSchema parent, string name) =>
             parent.FindIgnoredTypeConfigurationSource(name);
     }
 }

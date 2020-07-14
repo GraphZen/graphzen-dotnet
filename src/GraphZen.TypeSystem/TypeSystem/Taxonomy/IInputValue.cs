@@ -8,8 +8,9 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface IInputValue : IInputValueDefinition, ISyntaxConvertable, ITypeReference
+    public interface IInputValue : IDirectives, IName, IDescription, IInputMember, IClrInfo, IChildMember, ISyntaxMember
     {
-        IGraphQLType InputType { get; }
+        object? DefaultValue { get; }
+        bool HasDefaultValue { get; }
     }
 }

@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 namespace GraphZen.TypeSystem
 {
     [GraphQLIgnore]
-    public interface IDescription
+    public interface IDescription : IMember
     {
         string? Description { get; }
     }

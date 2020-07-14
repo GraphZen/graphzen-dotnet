@@ -10,12 +10,12 @@ namespace GraphZen.TypeSystem
 {
     public static class MemberTreeExtensions
     {
-        public static IEnumerable<IMemberDefinition> Descendants(this IMemberParentDefinition parent)
+        public static IEnumerable<IMember> Descendants(this IParentMember parent)
         {
             foreach (var child in parent.Children())
             {
                 yield return child;
-                if (child is IMemberParentDefinition p)
+                if (child is IParentMember p)
                 {
                     foreach (var desc in p.Descendants())
                     {
@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        public static IEnumerable<IMemberDefinition> DescendantsAndSelf(this IMemberParentDefinition parent)
+        public static IEnumerable<IMember> DescendantsAndSelf(this IParentMember parent)
         {
             yield return parent;
             foreach (var desc in parent.Descendants())
@@ -34,12 +34,12 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        public static IEnumerable<IMember> Descendants(this IMemberParent parent)
+        public static IEnumerable<IMember> Descendants(this IParentMember parent)
         {
             foreach (var child in parent.Children())
             {
                 yield return child;
-                if (child is IMemberParent p)
+                if (child is IParentMember p)
                 {
                     foreach (var desc in p.Descendants())
                     {
@@ -49,7 +49,7 @@ namespace GraphZen.TypeSystem
             }
         }
 
-        public static IEnumerable<IMember> DescendantsAndSelf(this IMemberParent parent)
+        public static IEnumerable<IMember> DescendantsAndSelf(this IParentMember parent)
         {
             yield return parent;
             foreach (var desc in parent.Descendants())

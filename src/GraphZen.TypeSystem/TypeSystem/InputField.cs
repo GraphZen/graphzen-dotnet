@@ -13,30 +13,24 @@ namespace GraphZen.TypeSystem
     public class InputField : InputValue, IInputField
     {
         public InputField(
-            string name, string? description, IGraphQLTypeReference type, object? defaultValue, bool hasDefaultValue,
-            IEnumerable<IDirectiveAnnotation> directives, PropertyInfo? clrInfo, InputObjectType inputObject) :
-            base(name, description, type, defaultValue, hasDefaultValue, directives, clrInfo, inputObject)
+            string name, string? description, IGraphQLType type, object? defaultValue, bool hasDefaultValue,
+            IEnumerable<IDirective> directives, PropertyInfo? clrInfo, InputObjectType inputObject, Schema schema) :
+            base(name, description, type, defaultValue, hasDefaultValue, directives, clrInfo, inputObject, schema)
         {
         }
-
         public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputFieldDefinition;
-
         public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
         public IGraphQLType FieldType => InputType;
-        IGraphQLTypeReference IInputFieldDefinition.FieldType => FieldType;
-
-        IInputObjectTypeDefinition IInputFieldDefinition.DeclaringType => DeclaringType;
-
+        IInputObjectType IInputField.DeclaringType => DeclaringType;
         public InputObjectType DeclaringType => (InputObjectType)DeclaringMember;
 
-
-        public static InputField From(IInputFieldDefinition definition,
-            InputObjectType declaringType)
+        public static InputField From(IInputField definition,
+            InputObjectType declaringType, Schema schema)
         {
             Check.NotNull(definition, nameof(definition));
             return new InputField(definition.Name, definition.Description, definition.FieldType,
                 definition.DefaultValue, definition.HasDefaultValue, definition.DirectiveAnnotations,
-                definition.ClrInfo, declaringType);
+                definition.ClrInfo, declaringType, schema);
         }
     }
 }
