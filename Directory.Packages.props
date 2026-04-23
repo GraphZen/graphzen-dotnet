@@ -1,0 +1,23 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Production dependencies -->
+    <PackageVersion Include="LibLog" Version="5.0.8" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.7" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageVersion Include="Serilog.AspNetCore" Version="3.2.0" />
+    <PackageVersion Include="Serilog.Sinks.Seq" Version="4.0.0" />
+    <PackageVersion Include="Superpower" Version="2.3.0" />
+    <PackageVersion Include="System.CommandLine.Experimental" Version="0.3.0-alpha.19317.1" />
+    <!-- Test dependencies -->
+    <PackageVersion Include="CompareNETObjects" Version="4.84.0" />
+    <PackageVersion Include="coverlet.collector" Version="10.0.0" />
+    <PackageVersion Include="DiffPlex" Version="1.9.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="10.0.7" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.4.0" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+  </ItemGroup>
+</Project>
