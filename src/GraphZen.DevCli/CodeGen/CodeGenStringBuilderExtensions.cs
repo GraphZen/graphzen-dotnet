@@ -17,9 +17,13 @@ namespace GraphZen.CodeGen
             var thisRefName = "source";
             var valueNameCamelized = valueName.FirstCharToLower();
             var valueRefName = valueType.FirstCharToLower();
+            // Strip leading 'I' prefix from interface names to avoid class names that look like interfaces
+            var classPrefix = containerType.Length > 1 && containerType[0] == 'I' && char.IsUpper(containerType[1])
+                ? containerType.Substring(1)
+                : containerType;
             var code = $@"
 
- public static partial class {containerType}{propertyName}AccessorExtensions {{
+ public static partial class {classPrefix}{propertyName}AccessorExtensions {{
 
         
         public static {valueType}? Find{valueName}( this {containerType} {thisRefName}, {keyType} {keyName}) 

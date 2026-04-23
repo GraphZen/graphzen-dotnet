@@ -21,7 +21,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectImplementingANonInterfaceType()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: BadObject
               }
@@ -41,7 +41,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsObjectImplementingSameInterfaceTwice()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -59,7 +59,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectImplementingTheSameInterfaceTwiceDueToAnExtension()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }

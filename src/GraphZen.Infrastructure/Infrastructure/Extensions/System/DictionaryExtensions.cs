@@ -1,6 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -42,9 +43,16 @@ namespace GraphZen.Infrastructure
             Check.NotNull(dictionary, nameof(dictionary));
             var entries = new List<DictionaryEntry>();
             var enumerator = dictionary.GetEnumerator();
-            while (enumerator.MoveNext())
+            try
             {
-                entries.Add(enumerator.Entry);
+                while (enumerator.MoveNext())
+                {
+                    entries.Add(enumerator.Entry);
+                }
+            }
+            finally
+            {
+                (enumerator as IDisposable)?.Dispose();
             }
 
             return entries.AsReadOnly();
@@ -52,7 +60,7 @@ namespace GraphZen.Infrastructure
 
         internal static TValue? FindValueOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : struct =>
-            dictionary.TryGetValue(key, out var val) ? val : (TValue?)null;
+            dictionary.TryGetValue(key, out var val) ? val : null;
 
 
         public static void Increment<TKey>(this IDictionary<TKey, int> dictionary, TKey key)

@@ -30,14 +30,14 @@ namespace GraphZen.TypeSystem
 
         public IGraphQLType ToType(Schema schema)
         {
-            IGraphQLType GetType(TypeSyntax node)
+            IGraphQLType ResolveType(TypeSyntax node)
             {
                 switch (node)
                 {
                     case ListTypeSyntax list:
-                        return ListType.Of(GetType(list.OfType));
+                        return ListType.Of(ResolveType(list.OfType));
                     case NonNullTypeSyntax nn:
-                        return NonNullType.Of((INullableType)GetType(nn.OfType));
+                        return NonNullType.Of((INullableType)ResolveType(nn.OfType));
                     case NamedTypeSyntax _:
                         var nameMatch = schema.FindType(Identity.Name);
                         if (nameMatch != null) return nameMatch;
@@ -62,11 +62,11 @@ namespace GraphZen.TypeSystem
                             $"Unable to find output type for type reference named \"{Identity.Name}\"");
                 }
 
-                throw new Exception($"Unable to create type reference from type node: {node?.GetType()}");
+                throw new Exception($"Unable to create type reference from type node: {node.GetType()}");
             }
 
 
-            return GetType(TypeSyntax);
+            return ResolveType(TypeSyntax);
         }
 
         public override string ToString() => "Reference:" + Name;

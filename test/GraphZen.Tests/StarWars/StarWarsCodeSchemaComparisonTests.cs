@@ -17,7 +17,7 @@ namespace GraphZen.Tests.StarWars
     public class StarWarsCodeSchemaComparisonTests : StarWarsSchemaAndData
     {
         [Fact]
-        public void SDLMatches()
+        public void SdlMatches()
         {
             string Print(Schema schema) =>
                 schema.ToDocumentSyntax().WithoutBuiltInDefinitions().WithSortedChildren()

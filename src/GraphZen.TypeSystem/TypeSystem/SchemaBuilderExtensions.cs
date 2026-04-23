@@ -17,7 +17,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(schemaBuilder, nameof(schemaBuilder));
             Check.NotNull(schemaDocument, nameof(schemaDocument));
-            var sdlConfig = new SDLSchemaConfigurator(schemaDocument);
+            var sdlConfig = new SdlSchemaConfigurator(schemaDocument);
             sdlConfig.Configure(schemaBuilder);
             return schemaBuilder;
         }

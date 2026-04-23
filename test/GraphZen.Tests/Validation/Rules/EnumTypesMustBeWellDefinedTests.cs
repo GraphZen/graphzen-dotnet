@@ -20,7 +20,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void ItRejectsAnEnumTypeWithoutValues()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 field: SomeEnum
               }
@@ -36,7 +36,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnEnumTypeWithDuplicateValues()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 field: SomeEnum
               }

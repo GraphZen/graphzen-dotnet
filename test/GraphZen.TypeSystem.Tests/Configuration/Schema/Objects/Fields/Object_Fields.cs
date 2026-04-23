@@ -52,7 +52,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields
 
         public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
         {
-            sb.Object(parentName).Field(name, field => field?.Name(newName));
+            sb.Object(parentName).Field(name, field => field.Name(newName));
         }
     }
 }

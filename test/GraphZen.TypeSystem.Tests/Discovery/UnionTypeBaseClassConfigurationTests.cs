@@ -34,10 +34,6 @@ namespace GraphZen.TypeSystem.Tests
         {
         }
 
-        private interface interface_without_union_data_annotation
-        {
-        }
-
         [Fact]
         public void union_type_from_class_via_explicit_configuration()
         {

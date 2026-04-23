@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable enable
 
 
 namespace GraphZen.Infrastructure

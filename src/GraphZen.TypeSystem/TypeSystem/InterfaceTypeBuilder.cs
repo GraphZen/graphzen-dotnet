@@ -51,7 +51,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             var fb = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
 
-            configurator?.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
+            configurator.Invoke(new FieldBuilder<TInterface, object, TContext>(fb));
             return this;
         }
 

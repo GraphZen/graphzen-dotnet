@@ -58,6 +58,5 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields
 
             public IgnoredType IgnoredByConvention { get; set; }
         }
-#nullable restore
     }
 }

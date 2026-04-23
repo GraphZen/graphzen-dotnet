@@ -8,7 +8,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable enable
 
 
 namespace GraphZen.Infrastructure

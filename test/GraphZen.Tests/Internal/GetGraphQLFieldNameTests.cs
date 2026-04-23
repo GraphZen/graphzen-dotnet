@@ -35,7 +35,7 @@ namespace GraphZen.Tests.Internal
         {
             [GraphQLName("customAllTheWay")] public string CustomProperty { get; } = null!;
 
-            public string Property { get; }
+            public string Property { get; } = null!;
 
             [UsedImplicitly]
             public bool Method() => true;

@@ -50,6 +50,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description
         public override bool TryGetValue(EnumTypeDefinition parent, out string? value)
         {
             value = parent.Description!;
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             return value != null;
         }
     }

@@ -264,7 +264,7 @@ namespace GraphZen.TypeSystem
     }
 
 
-    public static partial class IArgumentsArgumentsAccessorExtensions
+    public static partial class ArgumentsArgumentsAccessorExtensions
     {
         public static Argument? FindArgument(this IArguments source, string name)
             => source.Arguments.TryGetValue(Check.NotNull(name, nameof(name)), out var nameArgument)

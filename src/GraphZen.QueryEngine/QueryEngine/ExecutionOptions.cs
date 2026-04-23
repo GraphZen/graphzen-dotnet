@@ -12,6 +12,6 @@ namespace GraphZen.QueryEngine
 {
     public class ExecutionOptions
     {
-        public bool ThrowOnError { get; set; } = false;
+        public bool ThrowOnError { get; set; }
     }
 }

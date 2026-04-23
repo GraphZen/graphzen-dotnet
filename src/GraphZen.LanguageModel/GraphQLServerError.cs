@@ -26,7 +26,7 @@ namespace GraphZen
             Message = Check.NotNull(message, nameof(message));
             Nodes = nodes;
             Path = path;
-            Positions = positions ?? Nodes?.Where(_ => _?.Location != null).Select(_ => _.Location.Start).ToList();
+            Positions = positions ?? Nodes?.Where(_ => _?.Location != null).Select(_ => _.Location!.Start).ToList();
             Positions = Positions != null && Positions.Count == 0 ? null : Positions;
             Source = source ?? nodes?.FirstOrDefault()?.Location?.Source;
             InnerException = innerException;
@@ -37,7 +37,7 @@ namespace GraphZen
                     .Where(_ => _?.Location != null)
                     .Select(n =>
                     {
-                        Debug.Assert(n.Location != null, "n.Location != null");
+                        Debug.Assert(n.Location != null);
                         return Source.GetLocation(n.Location.Start);
                     }).ToList();
         }
@@ -92,7 +92,7 @@ namespace GraphZen
             throw new GraphQLException(this);
         }
 
-        public override string ToString() => Json.SerializeObject(this) ?? Message;
+        public override string ToString() => Json.SerializeObject(this);
 
 
         public GraphQLServerError WithLocationInfo(IReadOnlyList<SyntaxNode> nodes, ResponsePath path) =>

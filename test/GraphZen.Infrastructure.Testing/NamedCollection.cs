@@ -62,6 +62,7 @@ namespace GraphZen.Infrastructure
             public override bool TryGetValue(string key, out T value)
             {
                 value = InnerEnumerable.SingleOrDefault(_ => _.Name == key)!;
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
                 return value != null;
             }
 

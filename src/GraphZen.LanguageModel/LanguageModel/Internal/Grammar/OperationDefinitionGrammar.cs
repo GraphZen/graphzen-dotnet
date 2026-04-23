@@ -30,7 +30,7 @@ namespace GraphZen.LanguageModel.Internal
         private static TokenListParser<TokenKind, (OperationType type, SyntaxLocation location)> OperationType { get; }
             =
             (from name in Token.EqualTo(TokenKind.Name).Named("operation type")
-             let nameValue = name.ToStringValue() ?? ""
+             let nameValue = name.ToStringValue()
              let isQuery = nameValue?.Equals("query", StringComparison.OrdinalIgnoreCase) ?? false
              let isMutation = nameValue?.Equals("mutation", StringComparison.OrdinalIgnoreCase) ?? false
              let isSubscription = nameValue?.Equals("subscription", StringComparison.OrdinalIgnoreCase) ?? false

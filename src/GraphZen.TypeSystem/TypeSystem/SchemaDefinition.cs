@@ -132,7 +132,7 @@ namespace GraphZen.TypeSystem
             FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName());
 
         // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
-        private bool TryDefineFirstUndefinedType(TypeIdentity? prev, [NotNullWhen(true)] out TypeIdentity identity)
+        private bool TryDefineFirstUndefinedType(TypeIdentity? prev, out TypeIdentity identity)
         {
             var undefined = _typeIdentities.Where(_ =>
                 _.Definition == null && _.ClrType != null && _.ClrType.NotIgnored()).ToArray();
@@ -141,6 +141,8 @@ namespace GraphZen.TypeSystem
             if ((prev != null) & (prev == identity))
                 throw new InvalidOperationException("This type was already defined.");
 
+            // identity can be null at runtime (FirstOrDefault on empty sequence)
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (identity != null)
             {
                 if (Builder.Type(identity)?.Definition is INamedTypeDefinition def &&
@@ -277,7 +279,7 @@ namespace GraphZen.TypeSystem
                     IsOutputType = referencingMember is IOutputDefinition
                 }
             );
-            return identity != null ? new TypeReference(identity, typeNode) : null;
+            return new TypeReference(identity, typeNode);
         }
 
         public TypeReference? GetOrAddTypeReference(MethodInfo method, IMemberDefinition referencingMember
@@ -292,7 +294,7 @@ namespace GraphZen.TypeSystem
                         IsOutputType = referencingMember is IOutputDefinition
                     }
                 );
-                return identity != null ? new TypeReference(identity, typeNode) : null;
+                return new TypeReference(identity, typeNode);
             }
 
             return null;
@@ -311,7 +313,7 @@ namespace GraphZen.TypeSystem
                         IsOutputType = referencingMember is IOutputDefinition
                     }
                 );
-                return identity != null ? new TypeReference(identity, typeNode) : null;
+                return new TypeReference(identity, typeNode);
             }
 
             return null;
@@ -325,7 +327,7 @@ namespace GraphZen.TypeSystem
 
 
                 var identity = GetOrAddTypeIdentity(new TypeIdentity(innerClrType, this, kind));
-                return identity != null ? new TypeReference(identity, typeNode) : null;
+                return new TypeReference(identity, typeNode);
             }
 
             return null;
@@ -345,7 +347,7 @@ namespace GraphZen.TypeSystem
                     }
                 );
 
-                return identity != null ? new TypeReference(identity, typeNode) : null;
+                return new TypeReference(identity, typeNode);
             }
 
             return null;
@@ -363,7 +365,7 @@ namespace GraphZen.TypeSystem
                         IsOutputType = referencingMember is IOutputDefinition
                     }
                 );
-                return identity != null ? new TypeReference(identity, typeNode) : null;
+                return new TypeReference(identity, typeNode);
             }
 
             return null;
@@ -527,14 +529,13 @@ namespace GraphZen.TypeSystem
         }
 
 
-#nullable disable
         private T AddType<T>(Type clrType, Func<TypeIdentity, T> typeFactory)
             where T : NamedTypeDefinition
         {
             Check.NotNull(clrType, nameof(clrType));
             Check.NotNull(typeFactory, nameof(typeFactory));
             var identity = GetOrAddTypeIdentity(new TypeIdentity(clrType, this));
-            return identity != null ? AddType(typeFactory(identity)) : null;
+            return AddType(typeFactory(identity));
         }
 
 
@@ -544,9 +545,8 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             Check.NotNull(typeFactory, nameof(typeFactory));
             var identity = GetOrAddTypeIdentity(new TypeIdentity(name, this));
-            return identity != null ? AddType(typeFactory(identity)) : null;
+            return AddType(typeFactory(identity));
         }
-#nullable restore
 
 
         private T AddType<T>(T type) where T : NamedTypeDefinition
@@ -662,6 +662,8 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             type = _types.OfType<T>().SingleOrDefault(_ => _.Name == name)!;
+            // type can be null at runtime (SingleOrDefault on empty/no-match); ! is for [NotNullWhen(true)] contract
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             return type != null;
         }
 
@@ -669,6 +671,8 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(clrType, nameof(clrType));
             type = _types.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType)!;
+            // type can be null at runtime (SingleOrDefault on empty/no-match); ! is for [NotNullWhen(true)] contract
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             return type != null;
         }
 
@@ -780,7 +784,7 @@ namespace GraphZen.TypeSystem
         }
 
         public ConfigurationSource? FindIgnoredDirectiveConfigurationSource(string name) =>
-            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : (ConfigurationSource?)null;
+            _ignoredDirectives.TryGetValue(name, out var cs) ? cs : null;
 
         public IEnumerable<ObjectTypeDefinition> GetObjects() => _types.OfType<ObjectTypeDefinition>();
 

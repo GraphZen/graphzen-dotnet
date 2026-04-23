@@ -27,6 +27,8 @@ namespace GraphZen.TypeSystem.Internal
                 return astValue is NullValueSyntax ? null : astValue;
             }
 
+            // value can be null at runtime (Some<object> wraps object? internally)
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (value == null) return SyntaxFactory.NullValue();
 
             if (type is ListType list)

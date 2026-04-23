@@ -20,7 +20,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void ItAcceptsAnInputObjectTypeWithFields()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
           type Query {
             field(arg: SomeInputObject): String
           }
@@ -34,7 +34,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnInputObjectTypeWithMissingFields()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 field(arg: SomeInputObject): String
               }
@@ -51,7 +51,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsInputObjectWithIncorrectlyTypedFields()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 field(arg: SomeInputObject): String
               }

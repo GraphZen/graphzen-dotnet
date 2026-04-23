@@ -29,13 +29,13 @@ namespace Microsoft.AspNetCore.Builder
         private static ILog Logger { get; } = LogProvider.GetCurrentClassLogger();
         private const int DefaultMemoryThreshold = 1024 * 30;
 
-        private static string? s_tempDirectory;
+        private static string? _sTempDirectory;
 
         public static string TempDirectory
         {
             get
             {
-                if (s_tempDirectory == null)
+                if (_sTempDirectory == null)
                 {
                     // Look for folders in the following order.
                     var temp =
@@ -45,10 +45,10 @@ namespace Microsoft.AspNetCore.Builder
 
                     if (!Directory.Exists(temp)) throw new DirectoryNotFoundException(temp);
 
-                    s_tempDirectory = temp;
+                    _sTempDirectory = temp;
                 }
 
-                return s_tempDirectory;
+                return _sTempDirectory;
             }
         }
 

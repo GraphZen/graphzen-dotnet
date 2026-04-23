@@ -114,7 +114,7 @@ namespace GraphZen.Tests.StarWars
 
             [GraphQLCanBeNull]
             [Description("Construction date and the name of the designer.")]
-            public string SecretBackstory { get; set; }
+            public string SecretBackstory { get; }
         }
 
         private static Human Luke { get; } = new Human
@@ -200,7 +200,7 @@ namespace GraphZen.Tests.StarWars
         protected static IEnumerable<Task<ICharacter>> GetFriendsAsync(ICharacter character) =>
             character.FriendIds.Select(GetCharacterAsync);
 
-        protected static ICharacter GetHero(Episode? episode) => episode == Episode.Empire ? (ICharacter)Luke : Artoo;
+        protected static ICharacter GetHero(Episode? episode) => episode == Episode.Empire ? Luke : Artoo;
 
         protected static Human GetHuman(string id) => HumanData.TryGetValue(id, out var human) ? human : null;
 

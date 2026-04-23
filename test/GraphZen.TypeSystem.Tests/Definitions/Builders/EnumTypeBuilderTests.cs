@@ -27,7 +27,7 @@ namespace GraphZen.TypeSystem.Tests
         public void EnumCreatedWithClrTypeInfersValues()
         {
             var schema = Schema.Create(sb => sb.Enum<FooEnum>());
-            var values = schema.FindType<EnumType>(typeof(FooEnum)).GetValues().ToReadOnlyList();
+            var values = schema.FindType<EnumType>(typeof(FooEnum))!.GetValues().ToReadOnlyList();
             Assert.Equal(2, values.Count);
             Assert.Equal(nameof(FooEnum.Bar), values[0].Name);
             Assert.Equal("bar desc", values[0].Description);

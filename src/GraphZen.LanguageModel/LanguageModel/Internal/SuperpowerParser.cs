@@ -38,7 +38,7 @@ namespace GraphZen.LanguageModel.Internal
                 error.Throw();
             }
 
-            Debug.Assert(result.Value != null, "result.Value != null");
+            Debug.Assert(result.Value != null);
             return result.Value;
         }
     }
