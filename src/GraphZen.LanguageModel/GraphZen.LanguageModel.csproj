@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Superpower" Version="2.3.0" />
+    <PackageReference Include="Superpower" />
   </ItemGroup>
 
   <ItemGroup>
