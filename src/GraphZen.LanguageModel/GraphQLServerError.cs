@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.Json.Serialization;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 
 namespace GraphZen
 {
@@ -47,10 +47,10 @@ namespace GraphZen
 
         [JsonIgnore] public IReadOnlyList<SyntaxNode>? Nodes { get; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IReadOnlyList<SourceLocation>? Locations { get; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IReadOnlyList<object>? Path { get; }
 
         [JsonIgnore] public IReadOnlyList<int>? Positions { get; }

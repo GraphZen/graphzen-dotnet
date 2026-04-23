@@ -11,7 +11,7 @@ using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Xunit;
 
 #nullable disable
@@ -392,7 +392,7 @@ namespace GraphZen.Tests.QueryEngine
             var schema = Schema.Create(_ =>
             {
                 _.Object("Type")
-                    .Field("field", "String", field => field.Resolve((data, args) => JsonConvert.SerializeObject(args))
+                    .Field("field", "String", field => field.Resolve((data, args) => JsonSerializer.Serialize(args))
                         .Argument("a", "Boolean")
                         .Argument("b", "Boolean")
                         .Argument("c", "Boolean")

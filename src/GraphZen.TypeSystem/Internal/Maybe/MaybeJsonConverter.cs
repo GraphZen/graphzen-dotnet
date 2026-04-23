@@ -3,29 +3,29 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 
 #nullable disable
 
 
 namespace GraphZen.Internal
 {
-    public class MaybeJsonConverter : JsonConverter
+    public class MaybeJsonConverter : JsonConverter<object>
     {
-        public override bool CanRead => false;
+        public override bool CanConvert(Type typeToConvert) => typeof(Maybe<>).IsAssignableFrom(typeToConvert) ||
+                                                                (typeToConvert.IsGenericType &&
+                                                                 typeToConvert.GetGenericTypeDefinition() == typeof(Maybe<>));
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
+            throw new NotImplementedException(
+                "Unnecessary because CanConvert returns false for non-Maybe types. The type will skip the converter.");
+
+        public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer) =>
-            throw new NotImplementedException(
-                "Unnecessary because CanRead is false. The type will skip the converter.");
-
-        public override bool CanConvert(Type objectType) => true;
     }
 }

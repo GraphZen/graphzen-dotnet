@@ -351,7 +351,7 @@ namespace GraphZen.QueryEngine
                 var isTypeOf = returnType.IsTypeOf(result, exeContext.ContextValue, info);
                 if (!isTypeOf)
                 {
-                    var inspectable = Json.CreateJObject(result);
+                    var inspectable = Json.CreateJsonNode(result);
                     throw new GraphQLException(
                         $"Expected value of type \"{returnType}\" but got: {inspectable.Inspect()}.", fieldNodes);
                 }

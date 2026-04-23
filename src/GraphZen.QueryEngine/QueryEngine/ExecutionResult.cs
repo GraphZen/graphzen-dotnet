@@ -4,9 +4,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.Json.Serialization;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 
 #nullable disable
 
@@ -23,12 +23,12 @@ namespace GraphZen.QueryEngine
             _errors = errors?.ToArray() ?? new GraphQLServerError[] { };
         }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 
         public IDictionary<string, object> Data { get; }
 
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IReadOnlyList<GraphQLServerError> Errors => _errors.Any() ? _errors : null;
     }
 }

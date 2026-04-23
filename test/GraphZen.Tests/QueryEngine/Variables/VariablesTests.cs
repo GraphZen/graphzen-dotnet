@@ -9,7 +9,7 @@ using GraphZen.LanguageModel.Internal;
 using GraphZen.QueryEngine;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 
 #nullable disable
 
@@ -41,7 +41,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
         protected Task<ExecutionResult> ExecuteAsync(string gql, dynamic variableValues = null)
         {
             var varValues = variableValues != null
-                ? TestHelpers.ToDictionary(JObject.FromObject(variableValues))
+                ? TestHelpers.ToDictionary(variableValues)
                 : new Dictionary<string, object>();
 
             var doc = Parser.ParseDocument(gql);

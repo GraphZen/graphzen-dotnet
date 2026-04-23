@@ -1,4 +1,4 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Generic;
@@ -9,9 +9,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace GraphZen.Internal
 {
@@ -24,28 +21,63 @@ namespace GraphZen.Internal
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
-        private static JsonSerializerSettings NewtonsoftSerializerSettings { get; } = new JsonSerializerSettings
-        {
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
-        };
-
         private static ImmutableList<GraphQLError> EmptyErrors { get; } = ImmutableList.Create<GraphQLError>();
 
         public static T? ParseData<T>(string json) where T : class
         {
             Check.NotNull(json, nameof(json));
-            var result = JsonConvert.DeserializeObject<GraphQLDataJson<T>>(json, NewtonsoftSerializerSettings);
+            var result = JsonSerializer.Deserialize<GraphQLDataJson<T>>(json, SerializerOptions);
             return result?.Data;
         }
 
         public static dynamic? ParseData(string json)
         {
             Check.NotNull(json, nameof(json));
-            var expando = JsonConvert.DeserializeObject<DynamicDictionary>(json);
-            if (expando != null)
-                return ((IDictionary<string, object>)expando).TryGetValue("data", out var data) ? data : null;
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.ValueKind == JsonValueKind.Object &&
+                doc.RootElement.TryGetProperty("data", out var dataElement))
+            {
+                if (dataElement.ValueKind == JsonValueKind.Null)
+                    return null;
+                return ConvertJsonElement(dataElement);
+            }
 
             return null;
+        }
+
+        private static object? ConvertJsonElement(JsonElement element)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.Object:
+                    var dict = new DynamicDictionary();
+                    foreach (var prop in element.EnumerateObject())
+                    {
+                        dict[prop.Name] = ConvertJsonElement(prop.Value);
+                    }
+                    return dict;
+                case JsonValueKind.Array:
+                    var list = new List<object?>();
+                    foreach (var item in element.EnumerateArray())
+                    {
+                        list.Add(ConvertJsonElement(item));
+                    }
+                    return list;
+                case JsonValueKind.String:
+                    return element.GetString();
+                case JsonValueKind.Number:
+                    if (element.TryGetInt64(out var longVal))
+                        return longVal;
+                    return element.GetDouble();
+                case JsonValueKind.True:
+                    return true;
+                case JsonValueKind.False:
+                    return false;
+                case JsonValueKind.Null:
+                    return null;
+                default:
+                    return element.ToString();
+            }
         }
 
         public static IReadOnlyList<GraphQLError> ParseErrors(string json)

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 
 #nullable disable
 
@@ -117,7 +117,7 @@ namespace GraphZen.LanguageModel.Internal
                     PrintStringValue(stringValue, false);
                     break;
                 case BooleanValueSyntax booleanValue:
-                    Append(JsonConvert.SerializeObject(booleanValue.Value));
+                    Append(booleanValue.Value ? "true" : "false");
                     break;
                 case NullValueSyntax _:
                     Append("null");
@@ -312,7 +312,7 @@ namespace GraphZen.LanguageModel.Internal
         {
             if (!stringValue.IsBlockString)
             {
-                Append(JsonConvert.SerializeObject(stringValue.Value));
+                Append(JsonSerializer.Serialize(stringValue.Value));
             }
             else
             {

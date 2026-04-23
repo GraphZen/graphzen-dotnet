@@ -10,7 +10,6 @@ using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
-using Newtonsoft.Json.Linq;
 
 namespace GraphZen.TypeSystem.Internal
 {
@@ -51,7 +50,7 @@ namespace GraphZen.TypeSystem.Internal
             if (type is InputObjectType inputObject)
             {
                 var fieldsNodes = new List<ObjectFieldSyntax>();
-                var valueDictionary = JObject.FromObject(value).ToDictionary();
+                var valueDictionary = JsonNodeExtensions.ObjectToDictionary(value);
                 foreach (var field in inputObject.Fields.Values)
                 {
                     if (valueDictionary.TryGetValue(field.Name, out var fv))

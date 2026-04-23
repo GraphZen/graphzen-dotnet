@@ -7,7 +7,7 @@ using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 #nullable disable
 
@@ -75,7 +75,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
                                 })
                                 .Resolve((source, args) =>
                                     args.ContainsKey("input")
-                                        ? (string)JsonConvert.SerializeObject(args.input)
+                                        ? (string)JsonSerializer.Serialize((object)args.input)
                                         : null);
                         });
             });
