@@ -1,8 +1,7 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -17,7 +16,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Objects
         {
             var schema = Schema.Create(_ => _.Object("Foo"));
             var foo = schema.GetObject("Foo");
-            foo.Should().BeOfType<ObjectType>();
+            Assert.IsType<ObjectType>(foo);
         }
 
         public class Bar
@@ -29,7 +28,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Objects
         {
             var schema = Schema.Create(_ => _.Object(typeof(Bar)));
             var bar = schema.GetObject(nameof(Bar));
-            bar.Should().BeOfType<ObjectType>();
+            Assert.IsType<ObjectType>(bar);
         }
 
         [Fact]
@@ -37,7 +36,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Objects
         {
             var schema = Schema.Create(_ => _.Object<Bar>());
             var bar = schema.GetObject(nameof(Bar));
-            bar.Should().BeOfType<ObjectType>();
+            Assert.IsType<ObjectType>(bar);
         }
 
         [GraphQLName("CustomBaz")]
@@ -50,8 +49,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Objects
         {
             var schema = Schema.Create(_ => _.Object(typeof(Baz)));
             var baz = schema.GetObject("CustomBaz");
-            baz.Should().BeOfType<ObjectType>();
-            baz.Name.Should().Be("CustomBaz");
+            Assert.IsType<ObjectType>(baz);
+            Assert.Equal("CustomBaz", baz.Name);
         }
 
         [Fact]
@@ -59,8 +58,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Objects
         {
             var schema = Schema.Create(_ => _.Object<Baz>());
             var baz = schema.GetObject("CustomBaz");
-            baz.Should().BeOfType<ObjectType>();
-            baz.Name.Should().Be("CustomBaz");
+            Assert.IsType<ObjectType>(baz);
+            Assert.Equal("CustomBaz", baz.Name);
         }
 
         [Fact]
@@ -68,8 +67,8 @@ namespace GraphZen.TypeSystem.FunctionalTests.Objects
         {
             var schema = Schema.Create(@"type Foo");
             var foo = schema.GetObject("Foo");
-            foo.Should().BeOfType<ObjectType>();
-            foo.Name.Should().Be("Foo");
+            Assert.IsType<ObjectType>(foo);
+            Assert.Equal("Foo", foo.Name);
         }
     }
 }

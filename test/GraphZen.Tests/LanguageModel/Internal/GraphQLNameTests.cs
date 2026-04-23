@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
@@ -29,7 +28,7 @@ namespace GraphZen.Tests.LanguageModel.Internal
         [InlineData("a`", false)]
         public void graphql_name_should_match_spec(string name, bool isValid)
         {
-            name.IsValidGraphQLName().Should().Be(isValid);
+            Assert.Equal(isValid, name.IsValidGraphQLName());
         }
 
 

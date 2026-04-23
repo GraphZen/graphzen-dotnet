@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -42,7 +41,7 @@ namespace GraphZen.Tests
                 ""
             }.ToMultiLineString();
 
-            result.Should().Be(expected);
+            Assert.Equal(expected, result);
         }
 
         [Fact]
@@ -58,7 +57,7 @@ namespace GraphZen.Tests
             {
                 "qux", "  quux", "    quuux", "      quuuux"
             }.ToMultiLineString();
-            result.Should().Be(expected);
+            Assert.Equal(expected, result);
         }
     }
 }

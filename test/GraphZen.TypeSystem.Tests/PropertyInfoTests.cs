@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
@@ -40,8 +39,7 @@ namespace GraphZen.TypeSystem.Tests
         {
             var property = typeof(Foo).GetProperty(propertyName);
             var canBeNull = property.CanBeNull();
-            canBeNull.Should().Be(excpectCanBeNull,
-                $"{propertyName} {(excpectCanBeNull ? "CAN be null" : "should NOT be null")}");
+            Assert.Equal(excpectCanBeNull, canBeNull);
         }
     }
 }

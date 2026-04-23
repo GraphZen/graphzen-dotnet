@@ -3,7 +3,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
@@ -390,9 +389,9 @@ namespace GraphZen.Tests.QueryEngine
                 }
             });
 
-            encounteredContext.Should().Be(cxt);
-            encounteredSchema.Should().Be(schema);
-            encounteredRootValue.Should().Be(john);
+            Assert.Equal(cxt, encounteredContext);
+            Assert.Equal(schema, encounteredSchema);
+            Assert.Equal(john, encounteredRootValue);
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Playground;
 using GraphZen.Playground.Internal;
@@ -43,7 +42,7 @@ namespace GraphZen.AspNetCore.Playground.IntegrationTests
             var client = CreateAppClient<DefaultMappingStartup>();
             var result = await client.GetStringAsync("/");
             var expectedHtml = PlaygroundHtmlWriter.GetHtml();
-            result.Should().Be(expectedHtml);
+            Assert.Equal(expectedHtml, result);
         }
 
         public class CustomPathStartup
@@ -61,7 +60,7 @@ namespace GraphZen.AspNetCore.Playground.IntegrationTests
             var client = CreateAppClient<CustomPathStartup>();
             var result = await client.GetStringAsync("/foo");
             var expectedHtml = PlaygroundHtmlWriter.GetHtml();
-            result.Should().Be(expectedHtml);
+            Assert.Equal(expectedHtml, result);
         }
 
 
@@ -80,7 +79,7 @@ namespace GraphZen.AspNetCore.Playground.IntegrationTests
             var client = CreateAppClient<CustomOptionsStartup>();
             var result = await client.GetStringAsync("/");
             var expectedHtml = PlaygroundHtmlWriter.GetHtml(CustomOptions);
-            result.Should().Be(expectedHtml);
+            Assert.Equal(expectedHtml, result);
         }
 
         public class CustomOptionsAndPathStartup
@@ -98,7 +97,7 @@ namespace GraphZen.AspNetCore.Playground.IntegrationTests
             var client = CreateAppClient<CustomOptionsAndPathStartup>();
             var result = await client.GetStringAsync("/foo");
             var expectedHtml = PlaygroundHtmlWriter.GetHtml(CustomOptions);
-            result.Should().Be(expectedHtml);
+            Assert.Equal(expectedHtml, result);
         }
 
         public class CustomOptionsActionStartup
@@ -118,7 +117,7 @@ namespace GraphZen.AspNetCore.Playground.IntegrationTests
             var expectedOptions = new PlaygroundOptions();
             ConfigureOptions(expectedOptions);
             var expectedHtml = PlaygroundHtmlWriter.GetHtml(expectedOptions);
-            result.Should().Be(expectedHtml);
+            Assert.Equal(expectedHtml, result);
         }
 
         public class CustomOptionsActionAndPathStartup
@@ -138,7 +137,7 @@ namespace GraphZen.AspNetCore.Playground.IntegrationTests
             var expectedOptions = new PlaygroundOptions();
             ConfigureOptions(expectedOptions);
             var expectedHtml = PlaygroundHtmlWriter.GetHtml(expectedOptions);
-            result.Should().Be(expectedHtml);
+            Assert.Equal(expectedHtml, result);
         }
 
         private static HttpClient CreateAppClient<T>() where T : class =>

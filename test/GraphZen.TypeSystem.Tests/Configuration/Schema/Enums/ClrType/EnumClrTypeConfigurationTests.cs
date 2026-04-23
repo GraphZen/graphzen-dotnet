@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -24,9 +23,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.ClrType
                 sb.Enum(nameof(ExampleEnum));
                 var def = sb.GetDefinition().GetEnum(nameof(ExampleEnum));
                 sb.Enum<ExampleEnum>();
-                def.ClrType.Should().Be<ExampleEnum>();
+                Assert.Equal(typeof(ExampleEnum), def.ClrType);
             });
-            schema.GetEnum<ExampleEnum>().ClrType.Should().Be<ExampleEnum>();
+            Assert.Equal(typeof(ExampleEnum), schema.GetEnum<ExampleEnum>().ClrType);
         }
 
         [Fact]
@@ -39,9 +38,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Enums.ClrType
                 sb.Object("Parent").Field<ExampleEnum>("field");
                 var def = sb.GetDefinition().GetEnum(nameof(ExampleEnum));
                 sb.Enum<ExampleEnum>();
-                def.ClrType.Should().Be<ExampleEnum>();
+                Assert.Equal(typeof(ExampleEnum), def.ClrType);
             });
-            schema.GetEnum<ExampleEnum>().ClrType.Should().Be<ExampleEnum>();
+            Assert.Equal(typeof(ExampleEnum), schema.GetEnum<ExampleEnum>().ClrType);
         }
     }
 }

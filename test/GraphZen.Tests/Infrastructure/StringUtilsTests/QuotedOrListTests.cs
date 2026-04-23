@@ -4,7 +4,6 @@
 #nullable disable
 using System;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -17,32 +16,32 @@ namespace GraphZen.Tests.Infrastructure.StringUtilsTests
         [Fact]
         public void DoesNotAcceptAnEmptyList()
         {
-            ((Action)(() => QuotedOrList())).Should().Throw<Exception>();
+            Assert.ThrowsAny<Exception>(() => QuotedOrList());
         }
 
 
         [Fact]
         public void LimitsToFiveItems()
         {
-            QuotedOrList("A", "B", "C", "D", "E", "F").Should().Be("\"A\", \"B\", \"C\", \"D\", or \"E\"");
+            Assert.Equal("\"A\", \"B\", \"C\", \"D\", or \"E\"", QuotedOrList("A", "B", "C", "D", "E", "F"));
         }
 
         [Fact]
         public void ReturnsCommaSeperatedManyItemsList()
         {
-            QuotedOrList("A", "B", "C").Should().Be("\"A\", \"B\", or \"C\"");
+            Assert.Equal("\"A\", \"B\", or \"C\"", QuotedOrList("A", "B", "C"));
         }
 
         [Fact]
         public void ReturnsSingleQuotedItem()
         {
-            QuotedOrList("A").Should().Be(@"""A""");
+            Assert.Equal(@"""A""", QuotedOrList("A"));
         }
 
         [Fact]
         public void ReturnsTwoItemList()
         {
-            QuotedOrList("A", "B").Should().Be("\"A\" or \"B\"");
+            Assert.Equal("\"A\" or \"B\"", QuotedOrList("A", "B"));
         }
     }
 }

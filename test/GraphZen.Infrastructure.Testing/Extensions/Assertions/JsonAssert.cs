@@ -1,0 +1,41 @@
+// Copyright (c) GraphZen LLC. All rights reserved.
+// Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+using Newtonsoft.Json.Linq;
+
+namespace GraphZen.Infrastructure
+{
+    public static class JsonAssert
+    {
+        public static void EquivalentToJsonFromObject(object? actual, object expected, JsonDiffOptions? options = null)
+        {
+            if (actual == null) throw new Xunit.Sdk.XunitException("Expected object to be equivalent to JSON, but actual was null.");
+            var diff = JsonDiffer.GetDiff(actual, expected, options);
+            if (diff != null) throw new Xunit.Sdk.XunitException(diff);
+        }
+
+        public static void EquivalentToJsonFromObject(object? actual, object expected,
+            Action<JsonDiffOptions>? optionsAction)
+        {
+            var options = JsonDiffOptions.FromOptionsAction(optionsAction);
+            EquivalentToJsonFromObject(actual, expected, options);
+        }
+
+        public static void EquivalentToJson(object? actual, string expected, JsonDiffOptions? options = null)
+        {
+            if (actual == null) throw new Xunit.Sdk.XunitException("Expected object to be equivalent to JSON, but actual was null.");
+            var expectedJObj = JObject.Parse(expected);
+            var diff = JsonDiffer.GetDiff(actual, expectedJObj, options);
+            if (diff != null) throw new Xunit.Sdk.XunitException(diff);
+        }
+
+        public static void EquivalentToJson(object? actual, string expected, Action<JsonDiffOptions> optionsAction)
+        {
+            var options = JsonDiffOptions.FromOptionsAction(optionsAction);
+            EquivalentToJson(actual, expected, options);
+        }
+    }
+}

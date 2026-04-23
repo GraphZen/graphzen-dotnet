@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -24,9 +23,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions.ClrType
                 sb.Union(nameof(ExampleUnion));
                 var def = sb.GetDefinition().GetUnion(nameof(ExampleUnion));
                 sb.Union<ExampleUnion>();
-                def.ClrType.Should().Be<ExampleUnion>();
+                Assert.Equal(typeof(ExampleUnion), def.ClrType);
             });
-            schema.GetUnion<ExampleUnion>().ClrType.Should().Be<ExampleUnion>();
+            Assert.Equal(typeof(ExampleUnion), schema.GetUnion<ExampleUnion>().ClrType);
         }
 
         [Fact]
@@ -39,9 +38,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Unions.ClrType
                 sb.Object("Parent").Field<ExampleUnion>("field");
                 var def = sb.GetDefinition().GetUnion(nameof(ExampleUnion));
                 sb.Union<ExampleUnion>();
-                def.ClrType.Should().Be<ExampleUnion>();
+                Assert.Equal(typeof(ExampleUnion), def.ClrType);
             });
-            schema.GetUnion<ExampleUnion>().ClrType.Should().Be<ExampleUnion>();
+            Assert.Equal(typeof(ExampleUnion), schema.GetUnion<ExampleUnion>().ClrType);
         }
     }
 }

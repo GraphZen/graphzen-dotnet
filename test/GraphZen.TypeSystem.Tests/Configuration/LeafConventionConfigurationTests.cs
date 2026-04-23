@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
@@ -31,13 +30,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 {
                     fixture.ConfigureContextConventionally(sb);
                     var parentDef = fixture.GetParent(sb, context.ParentName);
-                    fixture.GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
-                    fixture.TryGetValue(parentDef, out var defVal).Should().BeTrue();
-                    defVal.Should().Be(context.DataAnnotationValue);
+                    Assert.Equal(ConfigurationSource.DataAnnotation, fixture.GetElementConfigurationSource(parentDef));
+                    Assert.True(fixture.TryGetValue(parentDef, out var defVal));
+                    Assert.Equal(context.DataAnnotationValue, defVal);
                 });
                 var parent = fixture.GetParent(schema, context.ParentName);
-                fixture.TryGetValue(parent, out var val).Should().BeTrue();
-                val.Should().Be(context.DataAnnotationValue);
+                Assert.True(fixture.TryGetValue(parent, out var val));
+                Assert.Equal(context.DataAnnotationValue, val);
             });
         }
 
@@ -54,16 +53,16 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 {
                     fixture.ConfigureParentExplicitly(sb, context.ParentName);
                     var parentDef = fixture.GetParent(sb, context.ParentName);
-                    fixture.TryGetValue(parentDef, out _).Should().BeFalse();
-                    fixture.GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
+                    Assert.False(fixture.TryGetValue(parentDef, out _));
+                    Assert.Equal(ConfigurationSource.Convention, fixture.GetElementConfigurationSource(parentDef));
                     fixture.ConfigureContextConventionally(sb);
-                    fixture.GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
-                    fixture.TryGetValue(parentDef, out var defVal).Should().BeTrue();
-                    defVal.Should().Be(context.DataAnnotationValue);
+                    Assert.Equal(ConfigurationSource.DataAnnotation, fixture.GetElementConfigurationSource(parentDef));
+                    Assert.True(fixture.TryGetValue(parentDef, out var defVal));
+                    Assert.Equal(context.DataAnnotationValue, defVal);
                 });
                 var parent = fixture.GetParent(schema, context.ParentName);
-                fixture.TryGetValue(parent, out var val).Should().BeTrue();
-                val.Should().Be(context.DataAnnotationValue);
+                Assert.True(fixture.TryGetValue(parent, out var val));
+                Assert.Equal(context.DataAnnotationValue, val);
             });
         }
 
@@ -81,17 +80,17 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     fixture.ConfigureParentExplicitly(sb, context.ParentName);
                     fixture.ConfigureExplicitly(sb, context.ParentName, fixture.ValueA);
                     var parentDef = fixture.GetParent(sb, context.ParentName);
-                    fixture.TryGetValue(parentDef, out var defVal1).Should().BeTrue();
-                    defVal1.Should().Be(fixture.ValueA);
-                    fixture.GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
+                    Assert.True(fixture.TryGetValue(parentDef, out var defVal1));
+                    Assert.Equal(fixture.ValueA, defVal1);
+                    Assert.Equal(ConfigurationSource.Explicit, fixture.GetElementConfigurationSource(parentDef));
                     fixture.ConfigureContextConventionally(sb);
-                    fixture.GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
-                    fixture.TryGetValue(parentDef, out var defVal2).Should().BeTrue();
-                    defVal2.Should().Be(fixture.ValueA);
+                    Assert.Equal(ConfigurationSource.Explicit, fixture.GetElementConfigurationSource(parentDef));
+                    Assert.True(fixture.TryGetValue(parentDef, out var defVal2));
+                    Assert.Equal(fixture.ValueA, defVal2);
                 });
                 var parent = fixture.GetParent(schema, context.ParentName);
-                fixture.TryGetValue(parent, out var val).Should().BeTrue();
-                val.Should().Be(fixture.ValueA);
+                Assert.True(fixture.TryGetValue(parent, out var val));
+                Assert.Equal(fixture.ValueA, val);
             });
         }
 

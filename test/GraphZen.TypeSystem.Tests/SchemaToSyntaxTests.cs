@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
@@ -61,7 +60,7 @@ namespace GraphZen.TypeSystem.Tests
             var expected =
                 new ScalarTypeDefinitionSyntax(Name("CustomScalar"),
                     StringValue("scalar description", true));
-            scalar.ToSyntaxNode().Should().Be(expected);
+            Assert.Equal(expected, scalar.ToSyntaxNode());
         }
 
 
@@ -91,8 +90,8 @@ namespace GraphZen.TypeSystem.Tests
                         NonNull(ListType(
                             NonNull(NamedType(Name("String"))))))
                 });
-            objectType.ToSyntaxNode().ToSyntaxString().Should().Be(expected.ToSyntaxString());
-            objectType.ToSyntaxNode().Should().Be(expected);
+            Assert.Equal(expected.ToSyntaxString(), objectType.ToSyntaxNode().ToSyntaxString());
+            Assert.Equal(expected, objectType.ToSyntaxNode());
         }
 
         [Fact]
@@ -120,7 +119,7 @@ namespace GraphZen.TypeSystem.Tests
                         NonNull(ListType(
                             NonNull(NamedType(Name("String"))))))
                 });
-            objectType.ToSyntaxNode().Should().Be(expected);
+            Assert.Equal(expected, objectType.ToSyntaxNode());
         }
 
         [Fact]
@@ -131,7 +130,7 @@ namespace GraphZen.TypeSystem.Tests
                 Description("union description"),
                 null,
                 new[] { NamedType(Name("Object")) });
-            union.ToSyntaxNode().Should().Be(expected);
+            Assert.Equal(expected, union.ToSyntaxNode());
         }
 
         [Fact]
@@ -145,7 +144,7 @@ namespace GraphZen.TypeSystem.Tests
                     new EnumValueDefinitionSyntax(EnumValue(Name("EnumValue")),
                         Description("enum value description"))
                 });
-            enumType.ToSyntaxNode().Should().Be(expected);
+            Assert.Equal(expected, enumType.ToSyntaxNode());
         }
 
         [Fact]
@@ -169,7 +168,7 @@ namespace GraphZen.TypeSystem.Tests
                         NonNull(ListType(
                             NonNull(NamedType(Name("String"))))))
                 });
-            inputObject.ToSyntaxNode().Should().Be(expected);
+            Assert.Equal(expected, inputObject.ToSyntaxNode());
         }
     }
 }

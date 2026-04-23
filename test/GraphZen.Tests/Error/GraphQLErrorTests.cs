@@ -3,7 +3,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
@@ -30,10 +29,10 @@ namespace GraphZen.Tests.Error
         {
             var gql = @"{ field }";
             var ast = new SuperpowerParser().ParseDocument(@"{ field }");
-            var fieldNode = ast.Definitions[0].As<OperationDefinitionSyntax>().SelectionSet.Selections[0];
+            var fieldNode = ((OperationDefinitionSyntax)ast.Definitions[0]).SelectionSet.Selections[0];
             Assert.IsType<FieldSyntax>(fieldNode);
-            var e = new GraphQLServerError("msg", new[] { fieldNode });
-            Assert.Equal(new[] { fieldNode }, e.Nodes);
+            var e = new GraphQLServerError("msg", new SyntaxNode[] { fieldNode });
+            Assert.Equal(new SyntaxNode[] { fieldNode }, e.Nodes);
             Assert.Equal(gql, e.Source.Body);
             Assert.Equal(new[] { 2 }, e.Positions);
             Assert.Equal(new[] { new SourceLocation(1, 3) }, e.Locations);
@@ -45,8 +44,8 @@ namespace GraphZen.Tests.Error
             var gql = "{ field }";
             var ast = new SuperpowerParser().ParseDocument(gql);
             var operationNode = (OperationDefinitionSyntax)ast.Definitions.First();
-            var e = new GraphQLServerError("msg", new[] { operationNode });
-            Assert.Equal(new[] { operationNode }, e.Nodes);
+            var e = new GraphQLServerError("msg", new SyntaxNode[] { operationNode });
+            Assert.Equal(new SyntaxNode[] { operationNode }, e.Nodes);
             Assert.Equal(gql, e.Source.Body);
             Assert.Equal(new[] { 0 }, e.Positions);
             Assert.Equal(new[] { new SourceLocation(1, 1) }, e.Locations);
@@ -55,7 +54,7 @@ namespace GraphZen.Tests.Error
         [Fact]
         public void ItSerializesToIncludeMessage()
         {
-            new GraphQLServerError("msg").Should().BeEquivalentToJsonFromObject(new { message = "msg" });
+            JsonAssert.EquivalentToJsonFromObject(new GraphQLServerError("msg"), new { message = "msg" });
         }
 
         [Fact]
@@ -63,9 +62,9 @@ namespace GraphZen.Tests.Error
         {
             var gql = @"{ field }";
             var ast = new SuperpowerParser().ParseDocument(gql);
-            var node = ast.Definitions[0].As<OperationDefinitionSyntax>().SelectionSet.Selections.First();
-            var e = new GraphQLServerError("msg", new[] { node });
-            e.Should().BeEquivalentToJsonFromObject(
+            var node = ((OperationDefinitionSyntax)ast.Definitions[0]).SelectionSet.Selections.First();
+            var e = new GraphQLServerError("msg", new SyntaxNode[] { node });
+            JsonAssert.EquivalentToJsonFromObject(e,
                 new
                 {
                     message = "msg",
@@ -78,7 +77,7 @@ namespace GraphZen.Tests.Error
         {
             var e = new GraphQLServerError("msg", null, null, null, new object[] { "path", 3, "to", "field" });
             Assert.Equal(new object[] { "path", 3, "to", "field" }, e.Path);
-            e.Should().BeEquivalentToJsonFromObject(new
+            JsonAssert.EquivalentToJsonFromObject(e, new
             {
                 message = "msg",
                 path = new object[] { "path", 3, "to", "field" }

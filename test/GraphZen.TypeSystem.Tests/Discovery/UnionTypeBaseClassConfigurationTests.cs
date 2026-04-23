@@ -3,7 +3,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
@@ -46,18 +45,18 @@ namespace GraphZen.TypeSystem.Tests
             {
                 _.Union<non_abstract_class>();
                 var unionDef = _.GetDefinition().GetUnion<non_abstract_class>();
-                unionDef.GetConfigurationSource().Should().Be(ConfigurationSource.Explicit);
-                unionDef.GetMemberTypes().Count().Should().Be(2);
-                _.GetDefinition().GetObject<UnionChildA>().GetConfigurationSource().Should()
-                    .Be(ConfigurationSource.Convention);
-                _.GetDefinition().GetObject<UnionChildB>().GetConfigurationSource().Should()
-                    .Be(ConfigurationSource.Convention);
+                Assert.Equal(ConfigurationSource.Explicit, unionDef.GetConfigurationSource());
+                Assert.Equal(2, unionDef.GetMemberTypes().Count());
+                Assert.Equal(ConfigurationSource.Convention,
+                    _.GetDefinition().GetObject<UnionChildA>().GetConfigurationSource());
+                Assert.Equal(ConfigurationSource.Convention,
+                    _.GetDefinition().GetObject<UnionChildB>().GetConfigurationSource());
             });
             var union = schema.GetUnion<non_abstract_class>();
             var a = schema.GetObject<UnionChildA>();
             var b = schema.GetObject<UnionChildB>();
-            union.MemberTypesMap[a.Name].Should().Be(a);
-            union.MemberTypesMap[b.Name].Should().Be(b);
+            Assert.Equal(a, union.MemberTypesMap[a.Name]);
+            Assert.Equal(b, union.MemberTypesMap[b.Name]);
         }
 
         abstract class union_abstract_class
@@ -98,16 +97,16 @@ namespace GraphZen.TypeSystem.Tests
                 var unionADef = _.GetDefinition().GetUnion<union_abstract_class>();
                 var unionBDef = _.GetDefinition().GetUnion<union_gen_1_c>();
                 var childADef = _.GetDefinition().GetObject<union_gen_1_a>();
-                childADef.GetConfigurationSource().Should().Be(ConfigurationSource.Convention);
+                Assert.Equal(ConfigurationSource.Convention, childADef.GetConfigurationSource());
                 var childBDef = _.GetDefinition().GetObject<union_gen_1_b>();
-                childBDef.GetConfigurationSource().Should().Be(ConfigurationSource.Convention);
+                Assert.Equal(ConfigurationSource.Convention, childBDef.GetConfigurationSource());
                 var childCDef = _.GetDefinition().GetObject<union_gen_2_a>();
-                childCDef.GetConfigurationSource().Should().Be(ConfigurationSource.Convention);
+                Assert.Equal(ConfigurationSource.Convention, childCDef.GetConfigurationSource());
                 var childDDef = _.GetDefinition().GetObject<union_gen_2_b>();
-                childDDef.GetConfigurationSource().Should().Be(ConfigurationSource.Convention);
+                Assert.Equal(ConfigurationSource.Convention, childDDef.GetConfigurationSource());
 
-                unionADef.GetMemberTypes().Count().Should().Be(4);
-                unionBDef.GetMemberTypes().Count().Should().Be(2);
+                Assert.Equal(4, unionADef.GetMemberTypes().Count());
+                Assert.Equal(2, unionBDef.GetMemberTypes().Count());
             });
 
             var unionA = schema.GetUnion<union_abstract_class>();
@@ -117,13 +116,13 @@ namespace GraphZen.TypeSystem.Tests
             var childC = schema.GetObject<union_gen_2_a>();
             var childD = schema.GetObject<union_gen_2_b>();
 
-            unionA.MemberTypesMap[childA.Name].Should().Be(childA);
-            unionA.MemberTypesMap[childB.Name].Should().Be(childB);
-            unionA.MemberTypesMap[childC.Name].Should().Be(childC);
-            unionA.MemberTypesMap[childD.Name].Should().Be(childD);
+            Assert.Equal(childA, unionA.MemberTypesMap[childA.Name]);
+            Assert.Equal(childB, unionA.MemberTypesMap[childB.Name]);
+            Assert.Equal(childC, unionA.MemberTypesMap[childC.Name]);
+            Assert.Equal(childD, unionA.MemberTypesMap[childD.Name]);
 
-            unionB.MemberTypesMap[childC.Name].Should().Be(childC);
-            unionB.MemberTypesMap[childD.Name].Should().Be(childD);
+            Assert.Equal(childC, unionB.MemberTypesMap[childC.Name]);
+            Assert.Equal(childD, unionB.MemberTypesMap[childD.Name]);
         }
     }
 }

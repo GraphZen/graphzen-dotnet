@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
@@ -36,8 +35,8 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         public void TryGetNullableType_ShouldGetNullableType(Type input, bool isNullable, Type expectedNullableType)
         {
             var result = input.TryGetNullableType(out var nullableClrType);
-            result.Should().Be(isNullable);
-            if (result) nullableClrType.Should().Be(expectedNullableType);
+            Assert.Equal(isNullable, result);
+            if (result) Assert.Equal(expectedNullableType, nullableClrType);
         }
 
         [Theory]
@@ -52,8 +51,8 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         [InlineData(typeof(string), null)]
         public void try_get_list_item_type_should_get_item_time(Type maybeListType, Type expectedItemType)
         {
-            maybeListType.TryGetListItemType(out var itemType).Should().Be(expectedItemType != null);
-            itemType.Should().Be(expectedItemType);
+            Assert.Equal(expectedItemType != null, maybeListType.TryGetListItemType(out var itemType));
+            Assert.Equal(expectedItemType, itemType);
         }
 
         [Theory]
@@ -63,10 +62,9 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         [InlineData(typeof(Task<Dictionary<string, string>>), typeof(Dictionary<string, string>))]
         public void try_get_task_result_type_should_get_task_result_type(Type clrType, Type expectedTaskType)
         {
-            clrType.TryGetTaskResultType(out var resultType)
-                .Should().Be(expectedTaskType != null);
+            Assert.Equal(expectedTaskType != null, clrType.TryGetTaskResultType(out var resultType));
 
-            resultType.Should().Be(expectedTaskType);
+            Assert.Equal(expectedTaskType, resultType);
         }
 
 
@@ -84,20 +82,18 @@ namespace GraphZen.Tests.Infrastructure.Extensions
             bool canBeNull = false, bool itemCanBeNull = false)
         {
             var expectedTypeNode = Parser.ParseType(expectedType);
-            clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType, canBeNull, itemCanBeNull).Should()
-                .BeTrue();
-            typeNode.Should().Be(expectedTypeNode);
-            innerClrType.Should().Be(expectedInnerType);
+            Assert.True(clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType, canBeNull, itemCanBeNull));
+            Assert.Equal(expectedTypeNode, typeNode);
+            Assert.Equal(expectedInnerType, innerClrType);
         }
 
         [Theory]
         [InlineData(typeof(Dictionary<string, string>))]
         public void try_get_graphql_type_info_returns_false_for_generic_inner_type(Type clrType)
         {
-            clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType).Should()
-                .BeFalse();
-            typeNode.Should().Be(null);
-            innerClrType.Should().Be(null);
+            Assert.False(clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType));
+            Assert.Null(typeNode);
+            Assert.Null(innerClrType);
         }
     }
 }

@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -18,14 +17,14 @@ namespace GraphZen.TypeSystem.Tests
         public void DefinesMutationSchema()
         {
             var schema = new BlogMutationContext().Schema;
-            var mutationType = schema.GetObject("Mutation").As<ObjectType>();
+            var mutationType = (ObjectType)schema.GetObject("Mutation");
 
-            schema.MutationType.Should().Be(mutationType);
+            Assert.Equal(mutationType, schema.MutationType);
 
             var writeMutation = mutationType.FindField("writeArticle");
-            writeMutation.FieldType.Should().Be(schema.GetType("Article"));
-            writeMutation.FieldType.As<ObjectType>().Name.Should().Be("Article");
-            writeMutation.Name.Should().Be("writeArticle");
+            Assert.Equal(schema.GetType("Article"), writeMutation.FieldType);
+            Assert.Equal("Article", ((ObjectType)writeMutation.FieldType).Name);
+            Assert.Equal("writeArticle", writeMutation.Name);
         }
 
         [Fact]
@@ -37,32 +36,32 @@ namespace GraphZen.TypeSystem.Tests
             var imageType = schema.GetType("Image");
             var authorType = schema.GetType("Author");
             var articleType = schema.GetType("Article");
-            var queryType = schema.GetType("Query").As<ObjectType>();
+            var queryType = (ObjectType)schema.GetType("Query");
             var mutationType = schema.GetType("Mutation");
             var subscriptionType = schema.GetType("Subscription");
 
-            schema.QueryType.Should().Be(queryType);
+            Assert.Equal(queryType, schema.QueryType);
 
             var articleField = queryType.FindField("article");
             var articleFieldType = (ObjectType)articleField.FieldType;
-            articleFieldType.Should().Be(articleType);
-            articleFieldType.Name.Should().Be("Article");
-            articleField.Name.Should().Be("article");
+            Assert.Equal(articleType, articleFieldType);
+            Assert.Equal("Article", articleFieldType.Name);
+            Assert.Equal("article", articleField.Name);
 
             var titleField = articleFieldType.FindField("title");
-            titleField.Name.Should().Be("title");
-            titleField.FieldType.Should().Be(SpecScalars.String);
-            titleField.FieldType.As<ScalarType>().Name.Should().Be("String");
+            Assert.Equal("title", titleField.Name);
+            Assert.Equal(SpecScalars.String, titleField.FieldType);
+            Assert.Equal("String", ((ScalarType)titleField.FieldType).Name);
 
             var authorField = articleFieldType.FindField("author");
-            var authorFieldType = authorField.FieldType.As<ObjectType>();
-            var recentArticleField = authorFieldType.As<ObjectType>().FindField("recentArticle");
+            var authorFieldType = (ObjectType)authorField.FieldType;
+            var recentArticleField = ((ObjectType)authorFieldType).FindField("recentArticle");
 
-            recentArticleField.FieldType.Should().Be(articleType);
+            Assert.Equal(articleType, recentArticleField.FieldType);
 
             var feedField = queryType.FindField("feed");
-            feedField.FieldType.As<ListType>().OfType.Should().Be(articleType);
-            feedField.Name.Should().Be("feed");
+            Assert.Equal(articleType, ((ListType)feedField.FieldType).OfType);
+            Assert.Equal("feed", feedField.Name);
         }
 
         [Fact]
@@ -71,10 +70,10 @@ namespace GraphZen.TypeSystem.Tests
             var schema = new BlogSubscriptionContext().Schema;
             var subscriptionType = schema.GetType("Subscription");
 
-            schema.SubscriptionType.Should().Be(subscriptionType);
-            var sub = subscriptionType.As<ObjectType>().FindField("articleSubscribe");
-            sub.FieldType.Should().Be(schema.GetType("Article"));
-            sub.Name.Should().Be("articleSubscribe");
+            Assert.Equal(subscriptionType, schema.SubscriptionType);
+            var sub = ((ObjectType)subscriptionType).FindField("articleSubscribe");
+            Assert.Equal(schema.GetType("Article"), sub.FieldType);
+            Assert.Equal("articleSubscribe", sub.Name);
         }
     }
 }

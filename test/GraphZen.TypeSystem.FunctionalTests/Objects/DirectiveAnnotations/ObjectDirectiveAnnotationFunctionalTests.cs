@@ -1,10 +1,9 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
@@ -21,9 +20,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Objects.DirectiveAnnotations
             Schema.Create(_ =>
             {
                 Action act = () => _.Object("Foo").DirectiveAnnotation("unknown");
-                act.Should().Throw<InvalidOperationException>()
-                    .WithMessage(
-                        "Unknown directive: cannot add 'unknown' directive to the object 'Foo'. Ensure the 'unknown' directive is defined in the schema before it is used.");
+                var ex = Assert.Throws<InvalidOperationException>(act);
+                Assert.Contains(
+                    "Unknown directive: cannot add 'unknown' directive to the object 'Foo'. Ensure the 'unknown' directive is defined in the schema before it is used.",
+                    ex.Message);
             });
         }
 
@@ -37,9 +37,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Objects.DirectiveAnnotations
                 sb.Directive("notObject").Locations(directiveLocations);
 
                 Action act = () => sb.Object("Foo").DirectiveAnnotation("notObject");
-                act.Should().Throw<InvalidOperationException>()
-                    .WithMessage(
-                        $"Invalid directive location: the 'notObject' directive cannot be annotated on the object 'Foo'. The 'notObject' directive is only valid on a {directiveLocations.Select(_ => _.GetDisplayValue()).OrList()}.");
+                var ex = Assert.Throws<InvalidOperationException>(act);
+                Assert.Contains(
+                    $"Invalid directive location: The 'notObject' directive cannot be annotated on the object 'Foo'. The 'notObject' directive is only valid on a {directiveLocations.Select(_ => _.GetDisplayValue()).OrList()}.",
+                    ex.Message);
             });
         }
 
@@ -51,9 +52,10 @@ namespace GraphZen.TypeSystem.FunctionalTests.Objects.DirectiveAnnotations
                 _.Directive("notObject");
 
                 Action act = () => _.Object("Foo").DirectiveAnnotation("notObject");
-                act.Should().Throw<InvalidOperationException>()
-                    .WithMessage(
-                        "Invalid directive location: the 'notObject' directive cannot be annotated on the object 'Foo'.");
+                var ex = Assert.Throws<InvalidOperationException>(act);
+                Assert.Contains(
+                    "Invalid directive location: The 'notObject' directive cannot be annotated on the object 'Foo'.",
+                    ex.Message);
             });
         }
     }

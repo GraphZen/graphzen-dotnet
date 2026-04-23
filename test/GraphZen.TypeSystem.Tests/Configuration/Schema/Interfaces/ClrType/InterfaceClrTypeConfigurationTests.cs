@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -24,9 +23,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.ClrType
                 sb.Interface(nameof(IExampleInterface));
                 var def = sb.GetDefinition().GetInterface(nameof(IExampleInterface));
                 sb.Interface<IExampleInterface>();
-                def.ClrType.Should().Be<IExampleInterface>();
+                Assert.Equal(typeof(IExampleInterface), def.ClrType);
             });
-            schema.GetInterface<IExampleInterface>().ClrType.Should().Be<IExampleInterface>();
+            Assert.Equal(typeof(IExampleInterface), schema.GetInterface<IExampleInterface>().ClrType);
         }
 
         [Fact]
@@ -39,9 +38,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.ClrType
                 sb.Object("Object").Field<IExampleInterface>("field");
                 var def = sb.GetDefinition().GetInterface(nameof(IExampleInterface));
                 sb.Interface<IExampleInterface>();
-                def.ClrType.Should().Be<IExampleInterface>();
+                Assert.Equal(typeof(IExampleInterface), def.ClrType);
             });
-            schema.GetInterface<IExampleInterface>().ClrType.Should().Be<IExampleInterface>();
+            Assert.Equal(typeof(IExampleInterface), schema.GetInterface<IExampleInterface>().ClrType);
         }
     }
 }

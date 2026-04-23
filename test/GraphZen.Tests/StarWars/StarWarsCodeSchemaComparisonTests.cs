@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
@@ -26,7 +25,7 @@ namespace GraphZen.Tests.StarWars
 
             var codeFirstSdl = Print(CodeFirstSchema);
             var schemaBuilderSdl = Print(SchemaBuilderSchema);
-            codeFirstSdl.Should().Be(schemaBuilderSdl, opt =>
+            StringAssert.Equal(codeFirstSdl, schemaBuilderSdl, opt =>
             {
                 opt.ShowActual = false;
                 opt.ShowExpected = false;

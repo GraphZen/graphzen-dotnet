@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using FluentAssertions;
+using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
@@ -250,18 +250,17 @@ namespace GraphZen.Tests.QueryEngine
             var rootValue = new { root = "val" };
 
             await ExecuteAsync(schemaSut, ast, rootValue, new { var = "abc" });
-            info.FieldName.Should().Be("test");
-            info.FieldNodes.Count.Should().Be(1);
-            info.FieldNodes[0].Should()
-                .Be(ast.Definitions[0].As<OperationDefinitionSyntax>().SelectionSet.Selections[0]);
-            info.ReturnType.Should().Be(SpecScalars.String);
-            info.ParentType.Should().Be(schemaSut.QueryType);
-            info.Path.Previous.Should().Be(null);
-            info.Path.Key.Should().Be("result");
-            info.Schema.Should().Be(schemaSut);
-            info.RootValue.Should().Be(rootValue);
-            info.Operation.Should().Be(ast.Definitions[0]);
-            info.VariableValues.As<object>().Should().BeEquivalentToJsonFromObject(new { var = "abc" });
+            Assert.Equal("test", info.FieldName);
+            Assert.Single(info.FieldNodes);
+            Assert.Equal(((OperationDefinitionSyntax)ast.Definitions[0]).SelectionSet.Selections[0], info.FieldNodes[0]);
+            Assert.Equal(SpecScalars.String, info.ReturnType);
+            Assert.Equal(schemaSut.QueryType, info.ParentType);
+            Assert.Null(info.Path.Previous);
+            Assert.Equal("result", info.Path.Key);
+            Assert.Equal(schemaSut, info.Schema);
+            Assert.Equal(rootValue, info.RootValue);
+            Assert.Equal(ast.Definitions[0], info.Operation);
+            JsonAssert.EquivalentToJsonFromObject((object)info.VariableValues, new { var = "abc" });
         }
 
         [Fact]
@@ -332,8 +331,7 @@ namespace GraphZen.Tests.QueryEngine
                 }
             });
 
-            result.Data.Keys.Should()
-                .BeEquivalentTo(new[] { "a", "b", "c", "d", "e" }, opts => opts.WithStrictOrdering());
+            Assert.Equal(new[] { "a", "b", "c", "d", "e" }, result.Data.Keys.ToArray());
         }
 
         [Fact]

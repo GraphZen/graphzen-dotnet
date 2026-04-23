@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,8 +15,8 @@ namespace GraphZen.AspNetCore.Server.Tests
     {
         [Fact]
         public void should_share_IServiceCollection_namespace() =>
-            typeof(GraphZenServiceCollectionExtensions).Namespace
-                .Should().Be(typeof(IServiceCollection).Namespace);
+            Assert.Equal(typeof(IServiceCollection).Namespace,
+                typeof(GraphZenServiceCollectionExtensions).Namespace);
 
         [Fact]
         public void add_default_graphql_context_resolves()
@@ -33,16 +32,16 @@ namespace GraphZen.AspNetCore.Server.Tests
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 context1 = scope.ServiceProvider.GetService<GraphQLContext>();
-                context1.Should().NotBeNull();
+                Assert.NotNull(context1);
             }
 
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 context2 = scope.ServiceProvider.GetService<GraphQLContext>();
-                context2.Should().NotBeSameAs(context1);
+                Assert.NotSame(context1, context2);
             }
 
-            context1!.Schema.Should().BeSameAs(context2!.Schema);
+            Assert.Same(context2!.Schema, context1!.Schema);
         }
 
 
@@ -66,24 +65,24 @@ namespace GraphZen.AspNetCore.Server.Tests
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 context1 = scope.ServiceProvider.GetService<GraphQLContext>();
-                context1.Should().NotBeNull();
+                Assert.NotNull(context1);
                 context2 = scope.ServiceProvider.GetService<TestGraphQLContext>();
-                context2.Should().NotBeNull();
-                context1.Should().BeSameAs(context2);
+                Assert.NotNull(context2);
+                Assert.Same(context2, context1);
             }
 
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 context3 = scope.ServiceProvider.GetService<GraphQLContext>();
                 context4 = scope.ServiceProvider.GetService<TestGraphQLContext>();
-                context3.Should().BeSameAs(context4);
-                context3.Should().NotBeSameAs(context1);
-                context4.Should().NotBeSameAs(context1);
+                Assert.Same(context4, context3);
+                Assert.NotSame(context1, context3);
+                Assert.NotSame(context1, context4);
             }
 
-            context1!.Schema.Should().NotBeNull();
-            context3!.Schema.Should().NotBeNull();
-            context1.Schema.Should().BeSameAs(context3.Schema);
+            Assert.NotNull(context1!.Schema);
+            Assert.NotNull(context3!.Schema);
+            Assert.Same(context3.Schema, context1.Schema);
         }
 
 
@@ -99,8 +98,10 @@ namespace GraphZen.AspNetCore.Server.Tests
             {
                 services.AddGraphQLContext<GraphQLContextNoOptionsConstructor>(options => { });
             };
-            addContext.Should().Throw<ArgumentException>().WithMessage(
-                $"AddGraphQLContext was called with configuration, but the context type '{typeof(GraphQLContextNoOptionsConstructor)}' only declares a parameterless constructor. This means that the configuration passed to AddGraphQLContext will never be used. If configuration is passed to AddGraphQLContext, then '{typeof(GraphQLContextNoOptionsConstructor)}' should declare a constructor that accepts a GraphQLContextOptions<GraphQLContextNoOptionsConstructor> and must pass it to the base constructor for GraphQLContext.");
+            var ex = Assert.Throws<ArgumentException>(addContext);
+            Assert.Equal(
+                $"AddGraphQLContext was called with configuration, but the context type '{typeof(GraphQLContextNoOptionsConstructor)}' only declares a parameterless constructor. This means that the configuration passed to AddGraphQLContext will never be used. If configuration is passed to AddGraphQLContext, then '{typeof(GraphQLContextNoOptionsConstructor)}' should declare a constructor that accepts a GraphQLContextOptions<GraphQLContextNoOptionsConstructor> and must pass it to the base constructor for GraphQLContext.",
+                ex.Message);
         }
     }
 }

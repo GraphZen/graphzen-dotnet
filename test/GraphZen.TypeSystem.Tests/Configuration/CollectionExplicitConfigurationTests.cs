@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
@@ -29,9 +28,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureParentExplicitly(sb, parentName);
-                    fixture.GetParent(sb, parentName).Should().BeOfType(fixture.ParentMemberDefinitionType);
+                    Assert.IsType(fixture.ParentMemberDefinitionType, fixture.GetParent(sb, parentName));
                 });
-                fixture.GetParent(schema, parentName).Should().BeOfType(fixture.ParentMemberType);
+                Assert.IsType(fixture.ParentMemberType, fixture.GetParent(schema, parentName));
             });
         }
 
@@ -50,14 +49,14 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
-                    defCollection[itemName].Should().NotBeNull();
-                    defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
-                    defCollection[itemName].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
+                    Assert.NotNull(defCollection[itemName]);
+                    Assert.IsType(fixture.CollectionItemMemberDefinitionType, defCollection[itemName]);
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        defCollection[itemName].GetConfigurationSource());
                 });
                 var collection = fixture.GetCollection(schema, parentName);
-                collection[itemName].Should().NotBeNull();
-                collection[itemName].Should().BeOfType(fixture.CollectionItemMemberType);
+                Assert.NotNull(collection[itemName]);
+                Assert.IsType(fixture.CollectionItemMemberType, collection[itemName]);
             });
         }
 
@@ -76,11 +75,12 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
-                    defCollection[itemName].GetNameConfigurationSource().Should().Be(ConfigurationSource.Explicit);
-                    defCollection[itemName].Name.Should().Be(itemName);
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        defCollection[itemName].GetNameConfigurationSource());
+                    Assert.Equal(itemName, defCollection[itemName].Name);
                 });
                 var collection = fixture.GetCollection(schema, parentName);
-                collection[itemName].Name.Should().Be(itemName);
+                Assert.Equal(itemName, collection[itemName].Name);
             });
         }
 
@@ -100,8 +100,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     fixture.IgnoreItem(sb, parentName, itemName);
-                    fixture.FindIgnoredItemConfigurationSource(sb, parentName, itemName).Should()
-                        .Be(ConfigurationSource.Explicit);
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        fixture.FindIgnoredItemConfigurationSource(sb, parentName, itemName));
                 });
             });
         }
@@ -121,15 +121,15 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
-                    defCollection[itemName].Should().NotBeNull();
-                    defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
-                    defCollection[itemName].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
+                    Assert.NotNull(defCollection[itemName]);
+                    Assert.IsType(fixture.CollectionItemMemberDefinitionType, defCollection[itemName]);
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        defCollection[itemName].GetConfigurationSource());
                     fixture.IgnoreItem(sb, parentName, itemName);
-                    defCollection.ContainsKey(itemName).Should().BeFalse();
+                    Assert.False(defCollection.ContainsKey(itemName));
                 });
                 var collection = fixture.GetCollection(schema, parentName);
-                collection.ContainsKey(itemName).Should().BeFalse();
+                Assert.False(collection.ContainsKey(itemName));
             });
         }
 
@@ -150,13 +150,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     fixture.IgnoreItem(sb, parentName, itemName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
-                    defCollection[itemName].Should().NotBeNull();
-                    defCollection[itemName].Should().BeOfType(fixture.CollectionItemMemberDefinitionType);
-                    defCollection[itemName].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
+                    Assert.NotNull(defCollection[itemName]);
+                    Assert.IsType(fixture.CollectionItemMemberDefinitionType, defCollection[itemName]);
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        defCollection[itemName].GetConfigurationSource());
                 });
                 var collection = fixture.GetCollection(schema, parentName);
-                collection[itemName].Name.Should().Be(itemName);
+                Assert.Equal(itemName, collection[itemName].Name);
             });
         }
 
@@ -177,7 +177,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     fixture.AddItem(sb, parentName, itemName);
                     fixture.IgnoreItem(sb, parentName, itemName);
                     fixture.UnignoreItem(sb, parentName, itemName);
-                    fixture.FindIgnoredItemConfigurationSource(sb, parentName, itemName).Should().BeNull();
+                    Assert.Null(fixture.FindIgnoredItemConfigurationSource(sb, parentName, itemName));
                 });
             });
         }
@@ -196,15 +196,15 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     fixture.ConfigureParentExplicitly(sb, parentName);
                     fixture.AddItem(sb, parentName, itemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
-                    defCollection[itemName].Should().NotBeNull();
-                    defCollection[itemName].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
-                    defCollection[itemName].GetNameConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
+                    Assert.NotNull(defCollection[itemName]);
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        defCollection[itemName].GetConfigurationSource());
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        defCollection[itemName].GetNameConfigurationSource());
                 });
                 var collection = fixture.GetCollection(schema, parentName);
-                collection[itemName].Should().NotBeNull();
-                collection[itemName].Name.Should().Be(itemName);
+                Assert.NotNull(collection[itemName]);
+                Assert.Equal(itemName, collection[itemName].Name);
             });
         }
 
@@ -224,24 +224,24 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                     fixture.AddItem(sb, parentName, initialItemName);
                     var defCollection = fixture.GetCollection(sb, parentName);
                     var initialItem = defCollection[initialItemName];
-                    defCollection[initialItemName].Should().NotBeNull();
-                    defCollection[initialItemName].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
-                    defCollection[initialItemName].GetNameConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
+                    Assert.NotNull(defCollection[initialItemName]);
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        defCollection[initialItemName].GetConfigurationSource());
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        defCollection[initialItemName].GetNameConfigurationSource());
                     fixture.RenameItem(sb, parentName, initialItemName, changedItemName);
-                    defCollection.ContainsKey(initialItemName).Should().BeFalse();
-                    defCollection[changedItemName].Should().NotBeNull();
-                    defCollection[changedItemName].GetConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
-                    defCollection[changedItemName].GetNameConfigurationSource().Should()
-                        .Be(ConfigurationSource.Explicit);
+                    Assert.False(defCollection.ContainsKey(initialItemName));
+                    Assert.NotNull(defCollection[changedItemName]);
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        defCollection[changedItemName].GetConfigurationSource());
+                    Assert.Equal(ConfigurationSource.Explicit,
+                        defCollection[changedItemName].GetNameConfigurationSource());
                     var finalItem = defCollection[changedItemName];
-                    finalItem.Should().Be(initialItem);
+                    Assert.Equal(initialItem, finalItem);
                 });
                 var collection = fixture.GetCollection(schema, parentName);
-                collection[changedItemName].Should().NotBeNull();
-                collection[changedItemName].Name.Should().Be(changedItemName);
+                Assert.NotNull(collection[changedItemName]);
+                Assert.Equal(changedItemName, collection[changedItemName].Name);
             });
         }
     }

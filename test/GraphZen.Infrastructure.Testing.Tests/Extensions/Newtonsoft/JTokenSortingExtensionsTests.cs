@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -27,7 +26,7 @@ namespace GraphZen.Infrastructure
             // Assert
             unsortedJson = JsonConvert.SerializeObject(unsortedJToken);
             expectedJson = JsonConvert.SerializeObject(expectedJToken);
-            unsortedJson.Should().Be(expectedJson, true);
+            StringAssert.Equal(unsortedJson, expectedJson, true);
         }
 
         [Theory]
@@ -45,7 +44,7 @@ namespace GraphZen.Infrastructure
             // Assert
             unsortedJson = JsonConvert.SerializeObject(unsortedJToken);
             expectedJson = JsonConvert.SerializeObject(expectedJToken);
-            unsortedJson.Should().Be(expectedJson, true);
+            StringAssert.Equal(unsortedJson, expectedJson, true);
         }
     }
 }
