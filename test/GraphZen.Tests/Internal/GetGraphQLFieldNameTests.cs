@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
@@ -24,11 +23,10 @@ namespace GraphZen.Tests.Internal
         public void FieldNameFromProperty()
         {
             var property = SelectFoo(f => f.Property);
-            property.GetGraphQLFieldName().Should().Be(("property", ConfigurationSource.Convention));
+            Assert.Equal(("property", ConfigurationSource.Convention), property.GetGraphQLFieldName());
 
             var propertyWithCustomName = SelectFoo(_ => _.CustomProperty);
-            propertyWithCustomName.GetGraphQLFieldName().Should()
-                .Be(("customAllTheWay", ConfigurationSource.DataAnnotation));
+            Assert.Equal(("customAllTheWay", ConfigurationSource.DataAnnotation), propertyWithCustomName.GetGraphQLFieldName());
         }
 
         private PropertyInfo SelectFoo<T>(Expression<Func<Foo, T>> expr) => expr.GetPropertyInfoFromExpression();

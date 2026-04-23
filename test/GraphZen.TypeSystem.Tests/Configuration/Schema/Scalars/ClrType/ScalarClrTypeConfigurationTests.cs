@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -24,9 +23,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.ClrType
                 sb.Scalar(nameof(ExampleScalar));
                 var def = sb.GetDefinition().GetScalar(nameof(ExampleScalar));
                 sb.Scalar<ExampleScalar>();
-                def.ClrType.Should().Be<ExampleScalar>();
+                Assert.Equal(typeof(ExampleScalar), def.ClrType);
             });
-            schema.GetScalar<ExampleScalar>().ClrType.Should().Be<ExampleScalar>();
+            Assert.Equal(typeof(ExampleScalar), schema.GetScalar<ExampleScalar>().ClrType);
         }
 
         [Fact]
@@ -39,9 +38,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.ClrType
                 sb.Object("Parent").Field<ExampleScalar>("field");
                 var def = sb.GetDefinition().GetScalar(nameof(ExampleScalar));
                 sb.Scalar<ExampleScalar>();
-                def.ClrType.Should().Be<ExampleScalar>();
+                Assert.Equal(typeof(ExampleScalar), def.ClrType);
             });
-            schema.GetScalar<ExampleScalar>().ClrType.Should().Be<ExampleScalar>();
+            Assert.Equal(typeof(ExampleScalar), schema.GetScalar<ExampleScalar>().ClrType);
         }
     }
 }

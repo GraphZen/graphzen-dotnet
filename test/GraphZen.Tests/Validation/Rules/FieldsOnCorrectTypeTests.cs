@@ -3,7 +3,6 @@
 
 #nullable disable
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
@@ -53,7 +52,7 @@ namespace GraphZen.Tests.Validation.Rules
             __typename
             name
           }
-        
+
         ");
         }
 
@@ -111,7 +110,7 @@ namespace GraphZen.Tests.Validation.Rules
                 unknown_cat_field
               }
             }
-          } 
+          }
 
         ",
                 UndefinedField("unknown_pet_field", "Pet", null, null, 4, 13),
@@ -241,7 +240,7 @@ namespace GraphZen.Tests.Validation.Rules
         public void ValidFieldInInlineFragment()
         {
             QueryShouldPass(@"
-    
+
           fragment objectFieldSelection on Pet {
             ... on Dog {
               name
@@ -260,46 +259,46 @@ namespace GraphZen.Tests.Validation.Rules
             [Fact]
             public void WorksWithNoSuggestions()
             {
-                UndefinedFieldMessage("f", "T", new string[] { }, new string[] { }).Should()
-                    .Be("Cannot query field \"f\" on type \"T\".");
+                Assert.Equal("Cannot query field \"f\" on type \"T\".",
+                    UndefinedFieldMessage("f", "T", new string[] { }, new string[] { }));
             }
 
             [Fact]
             public void SmallNumberOfTypeSuggestions()
             {
-                UndefinedFieldMessage("f", "T", new[] { "A", "B" }, new string[] { }).Should()
-                    .Be(
-                        "Cannot query field \"f\" on type \"T\". Did you mean to use an inline fragment on \"A\" or \"B\"?");
+                Assert.Equal(
+                    "Cannot query field \"f\" on type \"T\". Did you mean to use an inline fragment on \"A\" or \"B\"?",
+                    UndefinedFieldMessage("f", "T", new[] { "A", "B" }, new string[] { }));
             }
 
             [Fact]
             public void SmallNumberOfFieldSuggestions()
             {
-                UndefinedFieldMessage("f", "T", new string[] { }, new[] { "z", "y" }).Should()
-                    .Be("Cannot query field \"f\" on type \"T\". Did you mean \"z\" or \"y\"?");
+                Assert.Equal("Cannot query field \"f\" on type \"T\". Did you mean \"z\" or \"y\"?",
+                    UndefinedFieldMessage("f", "T", new string[] { }, new[] { "z", "y" }));
             }
 
             [Fact]
             public void OnlyShowsOneSetOfSuggestionsAtATimePreferringTypes()
             {
-                UndefinedFieldMessage("f", "T", new[] { "A", "B" }, new[] { "z", "y" }).Should()
-                    .Be(
-                        "Cannot query field \"f\" on type \"T\". Did you mean to use an inline fragment on \"A\" or \"B\"?");
+                Assert.Equal(
+                    "Cannot query field \"f\" on type \"T\". Did you mean to use an inline fragment on \"A\" or \"B\"?",
+                    UndefinedFieldMessage("f", "T", new[] { "A", "B" }, new[] { "z", "y" }));
             }
 
             [Fact]
             public void LimitsLotsOfTypeSuggestions()
             {
-                UndefinedFieldMessage("f", "T", new[] { "A", "B", "C", "D", "E", "F" }, new string[] { }).Should()
-                    .Be(
-                        "Cannot query field \"f\" on type \"T\". Did you mean to use an inline fragment on \"A\", \"B\", \"C\", \"D\", or \"E\"?");
+                Assert.Equal(
+                    "Cannot query field \"f\" on type \"T\". Did you mean to use an inline fragment on \"A\", \"B\", \"C\", \"D\", or \"E\"?",
+                    UndefinedFieldMessage("f", "T", new[] { "A", "B", "C", "D", "E", "F" }, new string[] { }));
             }
 
             [Fact]
             public void LimitsLotsOfFieldSuggestions()
             {
-                UndefinedFieldMessage("f", "T", new string[] { }, new[] { "z", "y", "x", "w", "v", "u" }).Should()
-                    .Be("Cannot query field \"f\" on type \"T\". Did you mean \"z\", \"y\", \"x\", \"w\", or \"v\"?");
+                Assert.Equal("Cannot query field \"f\" on type \"T\". Did you mean \"z\", \"y\", \"x\", \"w\", or \"v\"?",
+                    UndefinedFieldMessage("f", "T", new string[] { }, new[] { "z", "y", "x", "w", "v", "u" }));
             }
         }
     }

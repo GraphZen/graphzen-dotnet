@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
@@ -362,7 +361,7 @@ namespace GraphZen.Tests.LanguageModel
             };
             visitor.Visit(ast);
 
-            visited.Should().BeEquivalentTo(expected, _ => _.WithStrictOrdering());
+            Assert.Equal(expected, visited);
         }
     }
 }

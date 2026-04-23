@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
@@ -104,27 +103,24 @@ namespace GraphZen.TypeSystem.Tests
                     : _.GetDefinition().Types.SingleOrDefault(t => t.ClrType == clrType);
                 if (ignored)
                 {
-                    def.Should().BeNull($"because it is ignored by {ignoredConfigurationSource} configuration.");
+                    Assert.Null(def);
                     if (ignoredConfigurationSource.HasValue)
-                        _.GetDefinition().FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName()).Should()
-                            .Be(ignoredConfigurationSource, $"because {clrType.Name} should be ignored.");
+                        Assert.Equal(ignoredConfigurationSource,
+                            _.GetDefinition().FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName()));
                 }
                 else
                 {
-                    def.Should()
-                        .NotBeNull(
-                            $"because {clrType.Name} is included as a {kind} by {configurationSource} configuration.");
+                    Assert.NotNull(def);
                     // ReSharper disable once PossibleNullReferenceException
-                    def.GetConfigurationSource().Should().Be(configurationSource);
+                    Assert.Equal(configurationSource, def.GetConfigurationSource());
                 }
             });
 
             var type = schema.GetTypes().Where(t => t.Kind == kind).SingleOrDefault(_ => _.ClrType == clrType);
             if (ignored)
-                type.Should().BeNull($"because it should be included by {configurationSource} configuration.");
+                Assert.Null(type);
             else
-                type.Should()
-                    .NotBeNull($"it should be should be ignored by {ignoredConfigurationSource} configuration.");
+                Assert.NotNull(type);
         }
     }
 }

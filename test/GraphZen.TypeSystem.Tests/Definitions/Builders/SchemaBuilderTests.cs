@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -28,9 +27,10 @@ namespace GraphZen.TypeSystem.Tests
                 sb.Object<Foo>();
                 Action addDuplicateInterface = () =>
                     sb.Interface<Foo>();
-                addDuplicateInterface.Should().ThrowExactly<InvalidOperationException>()
-                    .WithMessage(
-                        $"Cannot add interface using CLR type '{typeof(Foo)}', an existing object already exists with that CLR type.");
+                var ex = Assert.Throws<InvalidOperationException>(addDuplicateInterface);
+                Assert.Contains(
+                    $"Cannot add interface using CLR type '{typeof(Foo)}', an existing object already exists with that CLR type.",
+                    ex.Message);
             });
         }
 
@@ -41,9 +41,10 @@ namespace GraphZen.TypeSystem.Tests
             {
                 sb.Object("Foo");
                 Action addDuplicateInterface = () => { sb.Interface("Foo"); };
-                addDuplicateInterface.Should().ThrowExactly<InvalidOperationException>()
-                    .WithMessage(
-                        "Cannot add interface named 'Foo', an existing object already exists with that name.");
+                var ex = Assert.Throws<InvalidOperationException>(addDuplicateInterface);
+                Assert.Contains(
+                    "Cannot add interface named 'Foo', an existing object already exists with that name.",
+                    ex.Message);
             });
         }
 
@@ -54,8 +55,9 @@ namespace GraphZen.TypeSystem.Tests
             {
                 sb.Object("Foo");
                 Action addDuplicateInterface = () => { sb.Interface<Foo>(); };
-                addDuplicateInterface.Should().ThrowExactly<InvalidOperationException>()
-                    .WithMessage("Cannot add interface named 'Foo', an existing object already exists with that name.");
+                var ex = Assert.Throws<InvalidOperationException>(addDuplicateInterface);
+                Assert.Contains("Cannot add interface named 'Foo', an existing object already exists with that name.",
+                    ex.Message);
             });
         }
     }

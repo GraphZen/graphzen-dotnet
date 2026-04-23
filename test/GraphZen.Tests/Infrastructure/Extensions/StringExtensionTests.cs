@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -21,7 +20,7 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         [InlineData("Howdy", "Howdy")]
         public void FirstCharToUpper(string input, string expectation)
         {
-            input.FirstCharToUpper().Should().Be(expectation);
+            Assert.Equal(expectation, input.FirstCharToUpper());
         }
 
 
@@ -30,7 +29,7 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         [InlineData("FirstTest", "firstTest")]
         public void FirstCharToLower(string input, string expectation)
         {
-            input.FirstCharToLower().Should().Be(expectation);
+            Assert.Equal(expectation, input.FirstCharToLower());
         }
 
         [Theory]
@@ -44,7 +43,7 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         [InlineData("FOO-BAR", "FOO_BAR")]
         public void ToUpperSnakeCase(string input, string expectation)
         {
-            input.ToUpperSnakeCase().Should().Be(expectation);
+            Assert.Equal(expectation, input.ToUpperSnakeCase());
         }
     }
 }

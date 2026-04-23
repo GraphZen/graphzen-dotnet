@@ -3,7 +3,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
@@ -48,20 +47,19 @@ namespace GraphZen.TypeSystem.Tests
             {
                 _.Union<explicitly_created_union_type>().OfTypes<explicitly_created_union_type_explicit_member_c>();
                 var unionDef = _.GetDefinition().FindUnion<explicitly_created_union_type>();
-                unionDef.Should().NotBeNull();
-                unionDef.GetConfigurationSource().Should().Be(ConfigurationSource.Explicit);
-                unionDef.GetMemberTypes().Count().Should().Be(3);
-                _.GetDefinition().FindObject<explicitly_created_union_type_member_a>().Should().NotBeNull();
-                _.GetDefinition().FindObject<explicitly_created_union_type_conventional_member_b>().Should()
-                    .NotBeNull();
+                Assert.NotNull(unionDef);
+                Assert.Equal(ConfigurationSource.Explicit, unionDef.GetConfigurationSource());
+                Assert.Equal(3, unionDef.GetMemberTypes().Count());
+                Assert.NotNull(_.GetDefinition().FindObject<explicitly_created_union_type_member_a>());
+                Assert.NotNull(_.GetDefinition().FindObject<explicitly_created_union_type_conventional_member_b>());
             });
 
             var union = schema.FindUnion<explicitly_created_union_type>();
-            union.Should().NotBeNull();
+            Assert.NotNull(union);
             var a = schema.GetObject<explicitly_created_union_type_member_a>();
             var b = schema.GetObject<explicitly_created_union_type_conventional_member_b>();
-            union.MemberTypesMap[a.Name].Should().Be(a);
-            union.MemberTypesMap[b.Name].Should().Be(b);
+            Assert.Equal(a, union.MemberTypesMap[a.Name]);
+            Assert.Equal(b, union.MemberTypesMap[b.Name]);
         }
 
 
@@ -85,18 +83,18 @@ namespace GraphZen.TypeSystem.Tests
             {
                 _.Object<explicitly_created_object>();
                 var unionDef = _.GetDefinition().GetUnion<union_discovered_by_data_annotation_via_interface>();
-                unionDef.GetConfigurationSource().Should().Be(ConfigurationSource.DataAnnotation);
-                unionDef.GetMemberTypes().Count().Should().Be(2);
-                _.GetDefinition().GetObject<explicitly_created_object>().GetConfigurationSource().Should()
-                    .Be(ConfigurationSource.Explicit);
-                _.GetDefinition().GetObject<sibling_union_member>().GetConfigurationSource().Should()
-                    .Be(ConfigurationSource.Convention);
+                Assert.Equal(ConfigurationSource.DataAnnotation, unionDef.GetConfigurationSource());
+                Assert.Equal(2, unionDef.GetMemberTypes().Count());
+                Assert.Equal(ConfigurationSource.Explicit,
+                    _.GetDefinition().GetObject<explicitly_created_object>().GetConfigurationSource());
+                Assert.Equal(ConfigurationSource.Convention,
+                    _.GetDefinition().GetObject<sibling_union_member>().GetConfigurationSource());
             });
             var union = schema.GetUnion<union_discovered_by_data_annotation_via_interface>();
             var memberA = schema.GetObject<explicitly_created_object>();
             var memberB = schema.GetObject<sibling_union_member>();
-            union.MemberTypesMap[memberA.Name].Should().Be(memberA);
-            union.MemberTypesMap[memberB.Name].Should().Be(memberB);
+            Assert.Equal(memberA, union.MemberTypesMap[memberA.Name]);
+            Assert.Equal(memberB, union.MemberTypesMap[memberB.Name]);
         }
 
         public class explicitly_created_object_with_union_field
@@ -124,18 +122,18 @@ namespace GraphZen.TypeSystem.Tests
             {
                 _.Object<explicitly_created_object_with_union_field>();
                 var unionDef = _.GetDefinition().GetUnion<union_discovered_via_field>();
-                unionDef.GetConfigurationSource().Should().Be(ConfigurationSource.DataAnnotation);
-                unionDef.GetMemberTypes().Count().Should().Be(2);
-                _.GetDefinition().GetObject<union_member_a>().GetConfigurationSource().Should()
-                    .Be(ConfigurationSource.Convention);
-                _.GetDefinition().GetObject<union_member_b>().GetConfigurationSource().Should()
-                    .Be(ConfigurationSource.Convention);
+                Assert.Equal(ConfigurationSource.DataAnnotation, unionDef.GetConfigurationSource());
+                Assert.Equal(2, unionDef.GetMemberTypes().Count());
+                Assert.Equal(ConfigurationSource.Convention,
+                    _.GetDefinition().GetObject<union_member_a>().GetConfigurationSource());
+                Assert.Equal(ConfigurationSource.Convention,
+                    _.GetDefinition().GetObject<union_member_b>().GetConfigurationSource());
             });
             var union = schema.GetUnion<union_discovered_via_field>();
             var memberA = schema.GetObject<union_member_a>();
             var memberB = schema.GetObject<union_member_b>();
-            union.MemberTypesMap[memberA.Name].Should().Be(memberA);
-            union.MemberTypesMap[memberB.Name].Should().Be(memberB);
+            Assert.Equal(memberA, union.MemberTypesMap[memberA.Name]);
+            Assert.Equal(memberB, union.MemberTypesMap[memberB.Name]);
         }
     }
 }

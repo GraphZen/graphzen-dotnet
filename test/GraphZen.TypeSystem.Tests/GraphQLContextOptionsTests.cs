@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -19,14 +18,14 @@ namespace GraphZen.TypeSystem.Tests
         public void it_should_be_created_with_default_context()
         {
             var sut = new GraphQLContextOptions<GraphQLContext>();
-            sut.Should().NotBeNull();
+            Assert.NotNull(sut);
         }
 
         [Fact]
         public void it_should_be_created_with_custom_context()
         {
             var sut = new GraphQLContextOptions<CustomContext>();
-            sut.Should().NotBeNull();
+            Assert.NotNull(sut);
         }
     }
 }

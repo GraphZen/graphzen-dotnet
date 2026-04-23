@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
@@ -19,26 +18,25 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
         [Fact]
         public void ParseListType()
         {
-            ParseType("[Foo]").Should().Be(SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo"))));
+            Assert.Equal(SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo"))), ParseType("[Foo]"));
         }
 
         [Fact]
         public void ParseNamedType()
         {
-            ParseType("Foo").Should().Be(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo")));
+            Assert.Equal(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo")), ParseType("Foo"));
         }
 
         [Fact]
         public void ParseNonNullableListType()
         {
-            ParseType("[Foo]!").Should()
-                .Be(SyntaxFactory.NonNull(SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo")))));
+            Assert.Equal(SyntaxFactory.NonNull(SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo")))), ParseType("[Foo]!"));
         }
 
         [Fact]
         public void ParseNonNullableNamedType()
         {
-            ParseType("Foo!").Should().Be(SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo"))));
+            Assert.Equal(SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo"))), ParseType("Foo!"));
         }
     }
 }

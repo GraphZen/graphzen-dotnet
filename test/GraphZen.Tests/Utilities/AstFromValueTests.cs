@@ -4,7 +4,6 @@
 #nullable disable
 using System;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.TypeSystem;
@@ -45,153 +44,153 @@ namespace GraphZen.Tests.Utilities
         [Fact]
         public void ConvertsBooleanValuesToBooleanValueNodes()
         {
-            Get(Some(true), SpecScalars.Boolean).Should().Be(BooleanValue(true));
+            Assert.Equal(BooleanValue(true), Get(Some(true), SpecScalars.Boolean));
 
-            Get(Some(false), SpecScalars.Boolean).Should().Be(BooleanValue(false));
+            Assert.Equal(BooleanValue(false), Get(Some(false), SpecScalars.Boolean));
 
-            Get(None(), SpecScalars.Boolean).Should().Be(null);
+            Assert.Null(Get(None(), SpecScalars.Boolean));
 
-            Get(Some(null), SpecScalars.Boolean).Should().Be(NullValue());
+            Assert.Equal(NullValue(), Get(Some(null), SpecScalars.Boolean));
 
-            Get(Some(0), SpecScalars.Boolean).Should().Be(BooleanValue(false));
+            Assert.Equal(BooleanValue(false), Get(Some(0), SpecScalars.Boolean));
 
-            Get(Some(1), SpecScalars.Boolean).Should().Be(BooleanValue(true));
+            Assert.Equal(BooleanValue(true), Get(Some(1), SpecScalars.Boolean));
 
-            Get(Some(1), NonNullType.Of(SpecScalars.Boolean)).Should().Be(BooleanValue(true));
+            Assert.Equal(BooleanValue(true), Get(Some(1), NonNullType.Of(SpecScalars.Boolean)));
 
-            Get(Some(0), NonNullType.Of(SpecScalars.Boolean)).Should().Be(BooleanValue(false));
+            Assert.Equal(BooleanValue(false), Get(Some(0), NonNullType.Of(SpecScalars.Boolean)));
         }
 
 
         [Fact]
         public void ItConvertsIntValuesToIntValueNodes()
         {
-            Get(Some(-1), SpecScalars.Int).Should().Be(IntValue(-1));
+            Assert.Equal(IntValue(-1), Get(Some(-1), SpecScalars.Int));
 
-            Get(Some(123.0), SpecScalars.Int).Should().Be(IntValue(123));
+            Assert.Equal(IntValue(123), Get(Some(123.0), SpecScalars.Int));
 
-            Get(Some(1e4), SpecScalars.Int).Should().Be(IntValue(10000));
+            Assert.Equal(IntValue(10000), Get(Some(1e4), SpecScalars.Int));
 
-            Assert.Throws<Exception>(() => Get(Some(123.5), SpecScalars.Int))
-                .Message.Should().Be("Int cannot represent non-integer value: 123.5");
+            Assert.Equal("Int cannot represent non-integer value: 123.5",
+                Assert.Throws<Exception>(() => Get(Some(123.5), SpecScalars.Int)).Message);
 
-            Assert.Throws<Exception>(() => Get(Some(1e40), SpecScalars.Int))
-                .Message.Should().Be("Int cannot represent non 32-bit signed integer value: 1E+40");
+            Assert.Equal("Int cannot represent non 32-bit signed integer value: 1E+40",
+                Assert.Throws<Exception>(() => Get(Some(1e40), SpecScalars.Int)).Message);
         }
 
         [Fact]
         public void ItConvertsFloatvaluesToIntFloatNodeValues()
         {
-            Get(Some(-1), SpecScalars.Float).Should().Be(IntValue(-1));
+            Assert.Equal(IntValue(-1), Get(Some(-1), SpecScalars.Float));
 
-            Get(Some(123.0), SpecScalars.Float).Should().Be(IntValue(123));
+            Assert.Equal(IntValue(123), Get(Some(123.0), SpecScalars.Float));
 
-            Get(Some(123.5), SpecScalars.Float).Should().Be(FloatValue("123.5"));
+            Assert.Equal(FloatValue("123.5"), Get(Some(123.5), SpecScalars.Float));
 
-            Get(Some(1e4), SpecScalars.Float).Should().Be(IntValue(10000));
+            Assert.Equal(IntValue(10000), Get(Some(1e4), SpecScalars.Float));
 
-            Get(Some(1e40), SpecScalars.Float).Should().Be(FloatValue("1e+40"));
+            Assert.Equal(FloatValue("1e+40"), Get(Some(1e40), SpecScalars.Float));
         }
 
         [Fact]
         public void ItConvertsStringValuesToStringValueNodes()
         {
-            Get(Some("hello"), SpecScalars.String).Should().Be(StringValue("hello"));
+            Assert.Equal(StringValue("hello"), Get(Some("hello"), SpecScalars.String));
 
-            Get(Some("VALUE"), SpecScalars.String).Should().Be(StringValue("VALUE"));
+            Assert.Equal(StringValue("VALUE"), Get(Some("VALUE"), SpecScalars.String));
 
-            Get(Some("VA\nLUE"), SpecScalars.String).Should().Be(StringValue("VA\nLUE"));
+            Assert.Equal(StringValue("VA\nLUE"), Get(Some("VA\nLUE"), SpecScalars.String));
 
-            Get(Some(123), SpecScalars.String).Should().Be(StringValue("123"));
+            Assert.Equal(StringValue("123"), Get(Some(123), SpecScalars.String));
 
-            Get(Some(false), SpecScalars.String).Should().Be(StringValue("false"));
+            Assert.Equal(StringValue("false"), Get(Some(false), SpecScalars.String));
 
-            Get(Some(true), SpecScalars.String).Should().Be(StringValue("true"));
+            Assert.Equal(StringValue("true"), Get(Some(true), SpecScalars.String));
 
-            Get(Some(null), SpecScalars.String).Should().Be(NullValue());
+            Assert.Equal(NullValue(), Get(Some(null), SpecScalars.String));
 
-            Get(None(), SpecScalars.String).Should().Be(null);
+            Assert.Null(Get(None(), SpecScalars.String));
         }
 
         [Fact]
         public void ItConvertsIdValuesToIntStringValueNodes()
         {
-            Get(Some("hello"), SpecScalars.ID).Should().Be(StringValue("hello"));
+            Assert.Equal(StringValue("hello"), Get(Some("hello"), SpecScalars.ID));
 
-            Get(Some("VALUE"), SpecScalars.ID).Should().Be(StringValue("VALUE"));
+            Assert.Equal(StringValue("VALUE"), Get(Some("VALUE"), SpecScalars.ID));
 
-            Get(Some("VA\nLUE"), SpecScalars.ID).Should().Be(StringValue("VA\nLUE"));
+            Assert.Equal(StringValue("VA\nLUE"), Get(Some("VA\nLUE"), SpecScalars.ID));
 
-            Get(Some(-1), SpecScalars.ID).Should().Be(IntValue(-1));
+            Assert.Equal(IntValue(-1), Get(Some(-1), SpecScalars.ID));
 
-            Get(Some(123), SpecScalars.ID).Should().Be(IntValue(123));
+            Assert.Equal(IntValue(123), Get(Some(123), SpecScalars.ID));
 
-            Get(Some("123"), SpecScalars.ID).Should().Be(IntValue(123));
+            Assert.Equal(IntValue(123), Get(Some("123"), SpecScalars.ID));
 
-            Get(Some("01"), SpecScalars.ID).Should().Be(StringValue("01"));
+            Assert.Equal(StringValue("01"), Get(Some("01"), SpecScalars.ID));
 
-            Assert.Throws<Exception>(() => Get(Some(false), SpecScalars.ID)).Message
-                .Should().Be("ID cannot represent value: false");
+            Assert.Equal("ID cannot represent value: false",
+                Assert.Throws<Exception>(() => Get(Some(false), SpecScalars.ID)).Message);
 
-            Get(Some(null), SpecScalars.ID).Should().Be(NullValue());
+            Assert.Equal(NullValue(), Get(Some(null), SpecScalars.ID));
 
-            Get(None(), SpecScalars.ID).Should().Be(null);
+            Assert.Null(Get(None(), SpecScalars.ID));
         }
 
         [Fact]
         public void ItConvertsNonNullValuesToNullValue()
         {
             var nnBoolean = NonNullType.Of(SpecScalars.Boolean);
-            Get(null, nnBoolean).Should().Be(null);
+            Assert.Null(Get(null, nnBoolean));
         }
 
 
         [Fact]
         public void ItConvertsStringValuesToEnumValueNodesIfPossible()
         {
-            Get(Some("HELLO"), MyEnum).Should().Be(EnumValue(Name("HELLO")));
-            Get(Some(ComplexValue), MyEnum).Should().Be(EnumValue(Name("COMPLEX")));
-            Get(Some("hello"), MyEnum).Should().Be(null);
-            Get(Some("VALUE"), MyEnum).Should().Be(null);
+            Assert.Equal(EnumValue(Name("HELLO")), Get(Some("HELLO"), MyEnum));
+            Assert.Equal(EnumValue(Name("COMPLEX")), Get(Some(ComplexValue), MyEnum));
+            Assert.Null(Get(Some("hello"), MyEnum));
+            Assert.Null(Get(Some("VALUE"), MyEnum));
         }
 
 
         [Fact]
         public void ItConvertsArrayValuesToListValueNodes()
         {
-            Get(Some(new object[] { "FOO", "BAR" }), ListType.Of(SpecScalars.String)).Should()
-                .Be(ListValue(StringValue("FOO"), StringValue("BAR")));
+            Assert.Equal(ListValue(StringValue("FOO"), StringValue("BAR")),
+                Get(Some(new object[] { "FOO", "BAR" }), ListType.Of(SpecScalars.String)));
 
-            Get(Some(new[] { "HELLO", "GOODBYE" }), ListType.Of(MyEnum))
-                .Should()
-                .Be(ListValue(EnumValue(Name("HELLO")), EnumValue(Name("GOODBYE"))));
+            Assert.Equal(ListValue(EnumValue(Name("HELLO")), EnumValue(Name("GOODBYE"))),
+                Get(Some(new[] { "HELLO", "GOODBYE" }), ListType.Of(MyEnum)));
         }
 
         [Fact]
         public void ItConvertsListSingltons()
         {
-            Get(Some("FOO"), ListType.Of(SpecScalars.String)).Should().Be(StringValue("FOO"));
+            Assert.Equal(StringValue("FOO"), Get(Some("FOO"), ListType.Of(SpecScalars.String)));
         }
 
         [Fact]
         public void ItConvertsInputObjects()
         {
-            Get(Some(new
-            {
-                foo = 3,
-                bar = "HELLO"
-            }), MyInputObj).Should()
-                .Be(ObjectValue(ObjectField(Name("foo"), IntValue(3)),
-                    ObjectField(Name("bar"), EnumValue(Name("HELLO")))));
+            Assert.Equal(ObjectValue(ObjectField(Name("foo"), IntValue(3)),
+                    ObjectField(Name("bar"), EnumValue(Name("HELLO")))),
+                Get(Some(new
+                {
+                    foo = 3,
+                    bar = "HELLO"
+                }), MyInputObj));
         }
 
         [Fact]
         public void ItConvertsInputObjectsWithExplicitNulls()
         {
-            Get(Some(new
-            {
-                foo = (string)null
-            }), MyInputObj).Should().Be(ObjectValue(ObjectField(Name("foo"), NullValue())));
+            Assert.Equal(ObjectValue(ObjectField(Name("foo"), NullValue())),
+                Get(Some(new
+                {
+                    foo = (string)null
+                }), MyInputObj));
         }
     }
 }

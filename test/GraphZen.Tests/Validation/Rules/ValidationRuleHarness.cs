@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
@@ -14,6 +13,7 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
+using Xunit;
 
 namespace GraphZen.Tests.Validation.Rules
 {
@@ -169,14 +169,14 @@ namespace GraphZen.Tests.Validation.Rules
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
             var result = new DocumentValidator(new[] { rule }).Validate(sdlSyntax);
-            result.Should().BeEmpty("it should validate");
+            Assert.Empty(result);
         }
 
         private void ExpectValidQuery(Schema schema, ValidationRule rule, string query)
         {
             var document = Parser.ParseDocument(query);
             var result = new QueryValidator(new[] { rule }).Validate(schema, document);
-            result.Should().BeEmpty("it should validate");
+            Assert.Empty(result);
         }
 
         private void ExpectInvalidQuery(Schema schema, ValidationRule rule, string query,
@@ -187,8 +187,8 @@ namespace GraphZen.Tests.Validation.Rules
                 // Convert for comparison
                 .Select(e => new ExpectedError(e))
                 .ToArray();
-            result.Should().HaveCountGreaterThan(0, "it should not validate");
-            expectedErrors.Should().BeEquivalentToJsonFromObject(result);
+            Assert.True(result.Length > 0, "it should not validate");
+            JsonAssert.EquivalentToJsonFromObject(expectedErrors, result);
         }
 
         private void ExpectInvalidSDL(ValidationRule rule, string sdl,
@@ -199,8 +199,8 @@ namespace GraphZen.Tests.Validation.Rules
                 // Convert for comparison
                 .Select(e => new ExpectedError(e))
                 .ToArray();
-            result.Should().HaveCountGreaterThan(0, "it should not validate");
-            expectedErrors.Should().BeEquivalentToJsonFromObject(result);
+            Assert.True(result.Length > 0, "it should not validate");
+            JsonAssert.EquivalentToJsonFromObject(expectedErrors, result);
         }
 
         protected void QueryShouldPass(string query) => ExpectValidQuery(TestSchema, RuleUnderTest, query);

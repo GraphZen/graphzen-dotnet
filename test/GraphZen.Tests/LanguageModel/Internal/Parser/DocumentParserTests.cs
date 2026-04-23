@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
@@ -19,7 +18,7 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
         [Fact]
         public void parse_empty_document_with_comments()
         {
-            ParseDocument(@"
+            Assert.Equal(new DocumentSyntax(new DefinitionSyntax[] { }), ParseDocument(@"
 # Welcome to GraphiQL
 #
 # GraphiQL is an in-browser tool for writing, validating, and
@@ -49,7 +48,7 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
 #   Auto Complete:  Ctrl-Space (or just start typing)
 #
 
-").Should().Be(new DocumentSyntax(new DefinitionSyntax[] { }));
+"));
         }
     }
 }

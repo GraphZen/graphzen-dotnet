@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -25,9 +24,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.ClrType
                 sb.InputObject(nameof(ExampleInputObject));
                 var def = sb.GetDefinition().GetInputObject(nameof(ExampleInputObject));
                 sb.InputObject<ExampleInputObject>();
-                def.ClrType.Should().Be<ExampleInputObject>();
+                Assert.Equal(typeof(ExampleInputObject), def.ClrType);
             });
-            schema.GetInputObject<ExampleInputObject>().ClrType.Should().Be<ExampleInputObject>();
+            Assert.Equal(typeof(ExampleInputObject), schema.GetInputObject<ExampleInputObject>().ClrType);
         }
 
         [Fact]
@@ -40,9 +39,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.ClrType
                 sb.InputObject("ParentObject").Field<ExampleInputObject>("field");
                 var def = sb.GetDefinition().GetInputObject(nameof(ExampleInputObject));
                 sb.InputObject<ExampleInputObject>();
-                def.ClrType.Should().Be<ExampleInputObject>();
+                Assert.Equal(typeof(ExampleInputObject), def.ClrType);
             });
-            schema.GetInputObject<ExampleInputObject>().ClrType.Should().Be<ExampleInputObject>();
+            Assert.Equal(typeof(ExampleInputObject), schema.GetInputObject<ExampleInputObject>().ClrType);
         }
     }
 }

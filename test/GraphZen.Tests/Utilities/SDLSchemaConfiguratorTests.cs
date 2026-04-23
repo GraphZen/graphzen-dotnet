@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
@@ -67,7 +66,7 @@ namespace GraphZen.Tests.Utilities
             var body = sdl.Dedent();
             var schema = Schema.Create(body);
             var printed = schema.Print();
-            printed.Should().Be(body, options);
+            StringAssert.Equal(printed, body, options);
         }
 
         [Fact]
@@ -137,10 +136,10 @@ namespace GraphZen.Tests.Utilities
               }
             ".Dedent();
             var schema = Schema.Create(body);
-            schema.Directives.Count.Should().Be(3);
-            schema.FindDirective("skip").Should().Be(SpecDirectives.Skip);
-            schema.FindDirective("include").Should().Be(SpecDirectives.Include);
-            schema.FindDirective("deprecated").Should().Be(SpecDirectives.Deprecated);
+            Assert.Equal(3, schema.Directives.Count);
+            Assert.Equal(SpecDirectives.Skip, schema.FindDirective("skip"));
+            Assert.Equal(SpecDirectives.Include, schema.FindDirective("include"));
+            Assert.Equal(SpecDirectives.Deprecated, schema.FindDirective("deprecated"));
         }
 
         [Fact(Skip = "wip")]
@@ -148,15 +147,15 @@ namespace GraphZen.Tests.Utilities
         {
             var body = @"
               type Query {
-                str: String @deprecated(reason: ""test"") 
+                str: String @deprecated(reason: ""test"")
               }
             ".Dedent();
             var schema = Schema.Create(body);
             var expectedDirective = new GraphQLDeprecatedAttribute("test");
             var field = schema.QueryType.GetField("str");
             var actualDirective = field.FindDirectiveAnnotation("deprecated");
-            actualDirective!.Value.Should().Be(expectedDirective);
-            field.DeprecationReason.Should().Be("test");
+            Assert.Equal(expectedDirective, actualDirective!.Value);
+            Assert.Equal("test", field.DeprecationReason);
         }
 
 
@@ -173,10 +172,10 @@ namespace GraphZen.Tests.Utilities
               }
             ".Dedent();
             var schema = Schema.Create(body);
-            schema.Directives.Count.Should().Be(3);
-            schema.FindDirective("skip").Should().NotBe(SpecDirectives.Skip);
-            schema.FindDirective("include").Should().NotBe(SpecDirectives.Include);
-            schema.FindDirective("deprecated").Should().NotBe(SpecDirectives.Deprecated);
+            Assert.Equal(3, schema.Directives.Count);
+            Assert.NotEqual(SpecDirectives.Skip, schema.FindDirective("skip"));
+            Assert.NotEqual(SpecDirectives.Include, schema.FindDirective("include"));
+            Assert.NotEqual(SpecDirectives.Deprecated, schema.FindDirective("deprecated"));
         }
 
         [Fact]
@@ -190,10 +189,10 @@ namespace GraphZen.Tests.Utilities
               }
             ".Dedent();
             var schema = Schema.Create(body);
-            schema.Directives.Count.Should().Be(4);
-            schema.FindDirective("skip").Should().Be(SpecDirectives.Skip);
-            schema.FindDirective("include").Should().Be(SpecDirectives.Include);
-            schema.FindDirective("deprecated").Should().Be(SpecDirectives.Deprecated);
+            Assert.Equal(4, schema.Directives.Count);
+            Assert.Equal(SpecDirectives.Skip, schema.FindDirective("skip"));
+            Assert.Equal(SpecDirectives.Include, schema.FindDirective("include"));
+            Assert.Equal(SpecDirectives.Deprecated, schema.FindDirective("deprecated"));
         }
 
         [Fact]
@@ -646,29 +645,6 @@ namespace GraphZen.Tests.Utilities
               }
             ";
             ShouldRoundTrip(body);
-            // var ast = Parser.ParseDocument(body);
-            // var schema = Schema.Create(ast);
-            /*
-               var myEnum = schema.GetType('MyEnum');
-               
-               var value = myEnum.getValue('VALUE');
-               expect(value.isDeprecated).to.equal(false);
-               
-               var oldValue = myEnum.getValue('OLD_VALUE');
-               expect(oldValue.isDeprecated).to.equal(true);
-               expect(oldValue.deprecationReason).to.equal('No longer supported');
-               
-               var otherValue = myEnum.getValue('OTHER_VALUE');
-               expect(otherValue.isDeprecated).to.equal(true);
-               expect(otherValue.deprecationReason).to.equal('Terrible reasons');
-               
-               var rootFields = schema.GetType('Query').getFields();
-               expect(rootFields.field1.isDeprecated).to.equal(true);
-               expect(rootFields.field1.deprecationReason).to.equal('No longer supported');
-               
-               expect(rootFields.field2.isDeprecated).to.equal(true);
-               expect(rootFields.field2.deprecationReason).to.equal('Because I said so');
-             */
         }
 
         [Fact]
@@ -731,16 +707,16 @@ namespace GraphZen.Tests.Utilities
                     testDirective!
                 }.ToSyntaxNodes<DefinitionSyntax>().ToArray()
             );
-            restoredSchemaAST.ToSyntaxString().Should().Be(schemaAST.ToSyntaxString());
+            Assert.Equal(schemaAST.ToSyntaxString(), restoredSchemaAST.ToSyntaxString());
             var testField = query.Fields["testField"];
-            testField.Print().Should().Be("testField(testArg: TestInput): TestUnion");
-            testField.GetArguments().First().Print().Should().Be("testArg: TestInput");
-            testInput.Fields["testInputField"].Print().Should().Be("testInputField: TestEnum");
-            testEnum.GetValue("TEST_VALUE").Print().Should().Be("TEST_VALUE");
-            testInterface.Fields["interfaceField"].Print().Should().Be("interfaceField: String");
-            testType.Fields["interfaceField"].Print().Should().Be("interfaceField: String");
+            Assert.Equal("testField(testArg: TestInput): TestUnion", testField.Print());
+            Assert.Equal("testArg: TestInput", testField.GetArguments().First().Print());
+            Assert.Equal("testInputField: TestEnum", testInput.Fields["testInputField"].Print());
+            Assert.Equal("TEST_VALUE", testEnum.GetValue("TEST_VALUE").Print());
+            Assert.Equal("interfaceField: String", testInterface.Fields["interfaceField"].Print());
+            Assert.Equal("interfaceField: String", testType.Fields["interfaceField"].Print());
             // ReSharper disable once PossibleNullReferenceException
-            testDirective!.GetArguments().First().Print().Should().Be("arg: TestScalar");
+            Assert.Equal("arg: TestScalar", testDirective!.GetArguments().First().Print());
         }
 
         [Fact]
@@ -756,9 +732,9 @@ namespace GraphZen.Tests.Utilities
               type SomeMutation { str: String }
               type SomeSubscription { str: String }
             ");
-            schema.QueryType.Name.Should().Be("SomeQuery");
-            schema.MutationType?.Name.Should().Be("SomeMutation");
-            schema.SubscriptionType?.Name.Should().Be("SomeSubscription");
+            Assert.Equal("SomeQuery", schema.QueryType.Name);
+            Assert.Equal("SomeMutation", schema.MutationType?.Name);
+            Assert.Equal("SomeSubscription", schema.SubscriptionType?.Name);
         }
 
         [Fact]
@@ -770,9 +746,9 @@ namespace GraphZen.Tests.Utilities
               type Subscription { str: String }
             ");
 
-            schema.QueryType.Name.Should().Be("Query");
-            schema.MutationType?.Name.Should().Be("Mutation");
-            schema.SubscriptionType?.Name.Should().Be("Subscription");
+            Assert.Equal("Query", schema.QueryType.Name);
+            Assert.Equal("Mutation", schema.MutationType?.Name);
+            Assert.Equal("Subscription", schema.SubscriptionType?.Name);
         }
 
         [Fact(Skip = "TODO - requires schema validation")]

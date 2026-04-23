@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -18,19 +17,19 @@ namespace GraphZen.Tests.Infrastructure.StringUtilsTests
         [Fact]
         public void ReturnsEmptyArrayWhenThereAreNoOptions()
         {
-            GetSuggestionList("input").Should().BeEquivalentTo();
+            Assert.Empty(GetSuggestionList("input"));
         }
 
         [Fact]
         public void ReturnsOptionsSortedBasedOnSimilarity()
         {
-            GetSuggestionList("abc", "a", "ab", "abc").Should().BeEquivalentTo("abc", "ab");
+            Assert.Equivalent(new[] { "abc", "ab" }, GetSuggestionList("abc", "a", "ab", "abc"));
         }
 
         [Fact]
         public void ReturnsResultsWhenInputIsEmpty()
         {
-            GetSuggestionList("", "a").Should().BeEquivalentTo("a");
+            Assert.Equivalent(new[] { "a" }, GetSuggestionList("", "a"));
         }
     }
 }

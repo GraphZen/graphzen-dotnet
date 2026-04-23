@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -44,26 +43,18 @@ namespace GraphZen.TypeSystem.Tests
 
             var query = schema.GetObject("Query");
 
-            query.FindField("fooNNClr")
-                .FieldType.As<NonNullType>().OfType.As<ObjectType>().ClrType
-                .Should().Be(typeof(Foo));
-            query.FindField("fooNN")
-                .FieldType.As<NonNullType>().OfType.As<ObjectType>().ClrType
-                .Should().Be(typeof(Foo));
-            query.FindField("foo")
-                .FieldType.As<ObjectType>().ClrType
-                .Should().Be(typeof(Foo));
-            query.FindField("fooList")
-                .FieldType.As<ListType>().OfType.As<ObjectType>().ClrType
-                .Should().Be(typeof(Foo));
+            Assert.Equal(typeof(Foo),
+                ((ObjectType)((NonNullType)query.FindField("fooNNClr").FieldType).OfType).ClrType);
+            Assert.Equal(typeof(Foo),
+                ((ObjectType)((NonNullType)query.FindField("fooNN").FieldType).OfType).ClrType);
+            Assert.Equal(typeof(Foo),
+                ((ObjectType)query.FindField("foo").FieldType).ClrType);
+            Assert.Equal(typeof(Foo),
+                ((ObjectType)((ListType)query.FindField("fooList").FieldType).OfType).ClrType);
 
-            query.FindField("fooClrList")
-                .FieldType
-                .As<NonNullType>().OfType
-                .As<ListType>().OfType
-                .As<NonNullType>().OfType
-                .As<ObjectType>().ClrType
-                .Should().Be(typeof(Foo));
+            Assert.Equal(typeof(Foo),
+                ((ObjectType)((NonNullType)((ListType)((NonNullType)query.FindField("fooClrList")
+                    .FieldType).OfType).OfType).OfType).ClrType);
         }
     }
 }

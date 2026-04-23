@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
@@ -38,431 +37,429 @@ namespace GraphZen.TypeSystem.Tests
         [Fact]
         public void IsGraphQLTypeReturnsTrueForUnwrappedTypes()
         {
-            (SpecScalars.String.As<object>() is IGraphQLType).Should().BeTrue();
-            (ObjectType.As<object>() is IGraphQLType).Should().BeTrue();
+            Assert.True(SpecScalars.String is IGraphQLType);
+            Assert.True(ObjectType is IGraphQLType);
         }
 
         [Fact]
         public void IsGraphQLTypeReturnsTrueForWrappedTypes()
         {
-            (NonNullType.Of(SpecScalars.String).As<object>() is IGraphQLType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is IGraphQLType).Should().BeTrue();
+            Assert.True(NonNullType.Of(SpecScalars.String) is IGraphQLType);
+            Assert.True(ListType.Of(SpecScalars.String) is IGraphQLType);
         }
 
         [Fact]
         public void IsScalarType_SpecDefined()
         {
-            (SpecScalars.String.As<object>() is ScalarType).Should().BeTrue();
-            (SpecScalars.String.As<object>() is IScalarType).Should().BeTrue();
+            Assert.True(SpecScalars.String is ScalarType);
+            Assert.True(SpecScalars.String is IScalarType);
         }
 
         [Fact]
         public void IsScalarType_Custom()
         {
-            (ScalarType.As<object>() is ScalarType).Should().BeTrue();
-            (ScalarType.As<object>() is IScalarType).Should().BeTrue();
+            Assert.True(ScalarType is ScalarType);
+            Assert.True(ScalarType is IScalarType);
         }
 
         [Fact]
         public void IsScalar_FalseForWrapped()
         {
-            (ListType.Of(SpecScalars.String).As<object>() is ScalarType).Should().BeFalse();
-            (ListType.Of(SpecScalars.String).As<object>() is IScalarType).Should().BeFalse();
+            Assert.False((object)ListType.Of(SpecScalars.String) is ScalarType);
+            Assert.False((object)ListType.Of(SpecScalars.String) is IScalarType);
         }
 
         [Fact]
         public void IsScalar_FalseForNonScalar()
         {
-            (EnumType.As<object>() is ScalarType).Should().BeFalse();
-            (EnumType.As<object>() is IScalarType).Should().BeFalse();
+            Assert.False((object)EnumType is ScalarType);
+            Assert.False((object)EnumType is IScalarType);
         }
 
         [Fact]
         public void IsObjectType_TrueForObjectType()
         {
-            (ObjectType.As<object>() is ObjectType).Should().BeTrue();
-            (ObjectType.As<object>() is IObjectType).Should().BeTrue();
+            Assert.True(ObjectType is ObjectType);
+            Assert.True(ObjectType is IObjectType);
         }
 
         [Fact]
         public void IsObjectType_FalseForWrapped()
         {
-            (NonNullType.Of(ObjectType).As<object>() is ObjectType).Should().BeFalse();
-            (NonNullType.Of(ObjectType).As<object>() is IObjectType).Should().BeFalse();
+            Assert.False((object)NonNullType.Of(ObjectType) is ObjectType);
+            Assert.False((object)NonNullType.Of(ObjectType) is IObjectType);
         }
 
         [Fact]
         public void IsObjectType_FalseForNonObjectType()
         {
-            (InterfaceType.As<object>() is ObjectType).Should().BeFalse();
-            (InterfaceType.As<object>() is IObjectType).Should().BeFalse();
+            Assert.False((object)InterfaceType is ObjectType);
+            Assert.False((object)InterfaceType is IObjectType);
         }
 
         [Fact]
         public void IsInterfaceType_TrueForInterfaceType()
         {
-            (InterfaceType.As<object>() is InterfaceType).Should().BeTrue();
-            (InterfaceType.As<object>() is IInterfaceType).Should().BeTrue();
+            Assert.True(InterfaceType is InterfaceType);
+            Assert.True(InterfaceType is IInterfaceType);
         }
 
         [Fact]
         public void IsInterfaceType_FalseForWrapped()
         {
-            (NonNullType.Of(InterfaceType).As<object>() is InterfaceType).Should().BeFalse();
-            (NonNullType.Of(InterfaceType).As<object>() is IInterfaceType).Should().BeFalse();
+            Assert.False((object)NonNullType.Of(InterfaceType) is InterfaceType);
+            Assert.False((object)NonNullType.Of(InterfaceType) is IInterfaceType);
         }
 
         [Fact]
         public void IsInterfaceType_FalseForNonInterfaceType()
         {
-            (ObjectType.As<object>() is InterfaceType).Should().BeFalse();
-            (ObjectType.As<object>() is IInterfaceType).Should().BeFalse();
+            Assert.False((object)ObjectType is InterfaceType);
+            Assert.False((object)ObjectType is IInterfaceType);
         }
 
         [Fact]
         public void IsUnionType_TrueForUnionType()
         {
-            (UnionType.As<object>() is UnionType).Should().BeTrue();
-            (UnionType.As<object>() is IUnionType).Should().BeTrue();
+            Assert.True(UnionType is UnionType);
+            Assert.True(UnionType is IUnionType);
         }
 
         [Fact]
         public void IsUnionType_FalseForWrapped()
         {
-            (NonNullType.Of(UnionType).As<object>() is UnionType).Should().BeFalse();
-            (NonNullType.Of(UnionType).As<object>() is IUnionType).Should().BeFalse();
+            Assert.False((object)NonNullType.Of(UnionType) is UnionType);
+            Assert.False((object)NonNullType.Of(UnionType) is IUnionType);
         }
 
         [Fact]
         public void IsUnionType_FalseForNonUnionType()
         {
-            (ObjectType.As<object>() is UnionType).Should().BeFalse();
-            (ObjectType.As<object>() is IUnionType).Should().BeFalse();
+            Assert.False((object)ObjectType is UnionType);
+            Assert.False((object)ObjectType is IUnionType);
         }
 
 
         [Fact]
         public void IsEnumType_TrueForEnumType()
         {
-            (EnumType.As<object>() is EnumType).Should().BeTrue();
-            (EnumType.As<object>() is IEnumType).Should().BeTrue();
+            Assert.True(EnumType is EnumType);
+            Assert.True(EnumType is IEnumType);
         }
 
         [Fact]
         public void IsEnumType_FalseForWrapped()
         {
-            (NonNullType.Of(EnumType).As<object>() is EnumType).Should().BeFalse();
-            (NonNullType.Of(EnumType).As<object>() is IEnumType).Should().BeFalse();
+            Assert.False((object)NonNullType.Of(EnumType) is EnumType);
+            Assert.False((object)NonNullType.Of(EnumType) is IEnumType);
         }
 
         [Fact]
         public void IsEnumType_FalseForNonEnumType()
         {
-            (ObjectType.As<object>() is EnumType).Should().BeFalse();
-            (ObjectType.As<object>() is IEnumType).Should().BeFalse();
+            Assert.False((object)ObjectType is EnumType);
+            Assert.False((object)ObjectType is IEnumType);
         }
 
 
         [Fact]
         public void IsInputObjectType_TrueForInputObjectType()
         {
-            (InputObjectType.As<object>() is InputObjectType).Should().BeTrue();
-            (InputObjectType.As<object>() is IInputObjectType).Should().BeTrue();
+            Assert.True(InputObjectType is InputObjectType);
+            Assert.True(InputObjectType is IInputObjectType);
         }
 
         [Fact]
         public void IsInputObjectType_FalseForWrapped()
         {
-            (NonNullType.Of(InputObjectType).As<object>() is InputObjectType).Should()
-                .BeFalse();
-            (NonNullType.Of(InputObjectType).As<object>() is IInputObjectType).Should()
-                .BeFalse();
+            Assert.False((object)NonNullType.Of(InputObjectType) is InputObjectType);
+            Assert.False((object)NonNullType.Of(InputObjectType) is IInputObjectType);
         }
 
         [Fact]
         public void IsInputObjectType_FalseForNonInputObjectType()
         {
-            (ObjectType.As<object>() is InputObjectType).Should().BeFalse();
-            (ObjectType.As<object>() is IInputObjectType).Should().BeFalse();
+            Assert.False((object)ObjectType is InputObjectType);
+            Assert.False((object)ObjectType is IInputObjectType);
         }
 
         [Fact]
         public void IsList_TrueForWrappedInputType()
         {
-            (ListType.Of(SpecScalars.String).As<object>() is ListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is IListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is ListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is IListType).Should().BeTrue();
+            Assert.True(ListType.Of(SpecScalars.String) is ListType);
+            Assert.True(ListType.Of(SpecScalars.String) is IListType);
+            Assert.True(ListType.Of(SpecScalars.String) is ListType);
+            Assert.True(ListType.Of(SpecScalars.String) is IListType);
         }
 
         [Fact]
         public void IsList_TrueForWrappedOutputType()
         {
-            (ListType.Of(SpecScalars.String).As<object>() is ListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is IListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is ListType).Should().BeTrue();
-            (ListType.Of(SpecScalars.String).As<object>() is IListType).Should().BeTrue();
+            Assert.True(ListType.Of(SpecScalars.String) is ListType);
+            Assert.True(ListType.Of(SpecScalars.String) is IListType);
+            Assert.True(ListType.Of(SpecScalars.String) is ListType);
+            Assert.True(ListType.Of(SpecScalars.String) is IListType);
         }
 
         [Fact]
         public void IsList_FalseForUnwrappedType()
         {
-            (ObjectType.As<object>() is ListType).Should().BeFalse();
-            (ObjectType.As<object>() is IListType).Should().BeFalse();
-            (ObjectType.As<object>() is ListType).Should().BeFalse();
-            (ObjectType.As<object>() is IListType).Should().BeFalse();
-            (ObjectType.As<object>() is ListType).Should().BeFalse();
-            (ObjectType.As<object>() is IListType).Should().BeFalse();
+            Assert.False((object)ObjectType is ListType);
+            Assert.False((object)ObjectType is IListType);
+            Assert.False((object)ObjectType is ListType);
+            Assert.False((object)ObjectType is IListType);
+            Assert.False((object)ObjectType is ListType);
+            Assert.False((object)ObjectType is IListType);
         }
 
         [Fact]
         public void IsNonNull_TrueForWrappedInputType()
         {
-            (NonNullType.Of(SpecScalars.String).As<object>() is NonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is INonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is NonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is INonNullType).Should().BeTrue();
+            Assert.True(NonNullType.Of(SpecScalars.String) is NonNullType);
+            Assert.True(NonNullType.Of(SpecScalars.String) is INonNullType);
+            Assert.True(NonNullType.Of(SpecScalars.String) is NonNullType);
+            Assert.True(NonNullType.Of(SpecScalars.String) is INonNullType);
         }
 
         [Fact]
         public void IsNonNull_TrueForWrappedOutputType()
         {
-            (NonNullType.Of(SpecScalars.String).As<object>() is NonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is INonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is NonNullType).Should().BeTrue();
-            (NonNullType.Of(SpecScalars.String).As<object>() is INonNullType).Should().BeTrue();
+            Assert.True(NonNullType.Of(SpecScalars.String) is NonNullType);
+            Assert.True(NonNullType.Of(SpecScalars.String) is INonNullType);
+            Assert.True(NonNullType.Of(SpecScalars.String) is NonNullType);
+            Assert.True(NonNullType.Of(SpecScalars.String) is INonNullType);
         }
 
         [Fact]
         public void IsNonNull_FalseForUnwrappedType()
         {
-            (ObjectType.As<object>() is NonNullType).Should().BeFalse();
-            (ObjectType.As<object>() is INonNullType).Should().BeFalse();
-            (ObjectType.As<object>() is NonNullType).Should().BeFalse();
-            (ObjectType.As<object>() is INonNullType).Should().BeFalse();
-            (ObjectType.As<object>() is NonNullType).Should().BeFalse();
-            (ObjectType.As<object>() is INonNullType).Should().BeFalse();
+            Assert.False((object)ObjectType is NonNullType);
+            Assert.False((object)ObjectType is INonNullType);
+            Assert.False((object)ObjectType is NonNullType);
+            Assert.False((object)ObjectType is INonNullType);
+            Assert.False((object)ObjectType is NonNullType);
+            Assert.False((object)ObjectType is INonNullType);
         }
 
         [Fact]
         public void IsInputType_TrueForInputType()
         {
-            InputObjectType.IsInputType().Should().BeTrue();
+            Assert.True(InputObjectType.IsInputType());
         }
 
         [Fact]
         public void IsInputType_TrueForWrappedInputType()
         {
-            ListType.Of(InputObjectType).IsInputType().Should().BeTrue();
-            NonNullType.Of(InputObjectType).IsInputType().Should().BeTrue();
+            Assert.True(ListType.Of(InputObjectType).IsInputType());
+            Assert.True(NonNullType.Of(InputObjectType).IsInputType());
         }
 
         [Fact]
         public void IsInputType_FalseForOutputType()
         {
-            ObjectType.IsInputType().Should().BeFalse();
+            Assert.False(ObjectType.IsInputType());
         }
 
         [Fact]
         public void IsInputType_FalseForWrappedOutputType()
         {
-            NonNullType.Of(ObjectType).IsInputType().Should().BeFalse();
-            ListType.Of(ObjectType).IsInputType().Should().BeFalse();
+            Assert.False(NonNullType.Of(ObjectType).IsInputType());
+            Assert.False(ListType.Of(ObjectType).IsInputType());
         }
 
 
         [Fact]
         public void IsOutputType_TrueForOutputType()
         {
-            ObjectType.IsOutputType().Should().BeTrue();
+            Assert.True(ObjectType.IsOutputType());
         }
 
         [Fact]
         public void IsOutputType_TrueForWrappedOutputType()
         {
-            ListType.Of(ObjectType).IsOutputType().Should().BeTrue();
-            NonNullType.Of(ObjectType).IsOutputType().Should().BeTrue();
+            Assert.True(ListType.Of(ObjectType).IsOutputType());
+            Assert.True(NonNullType.Of(ObjectType).IsOutputType());
         }
 
         [Fact]
         public void IsOutputType_FalseForInputType()
         {
-            InputObjectType.IsOutputType().Should().BeFalse();
+            Assert.False(InputObjectType.IsOutputType());
         }
 
         [Fact]
         public void IsOutputType_FalseForWrappedInputType()
         {
-            NonNullType.Of(InputObjectType).IsOutputType().Should().BeFalse();
-            ListType.Of(InputObjectType).IsOutputType().Should().BeFalse();
+            Assert.False(NonNullType.Of(InputObjectType).IsOutputType());
+            Assert.False(ListType.Of(InputObjectType).IsOutputType());
         }
 
         [Fact]
         public void IsLeafType_TrueForScalarsAndEnums()
         {
-            (ScalarType.As<object>() is ILeafType).Should().BeTrue();
-            (EnumType.As<object>() is ILeafType).Should().BeTrue();
+            Assert.True(ScalarType is ILeafType);
+            Assert.True(EnumType is ILeafType);
         }
 
         [Fact]
         public void IsLeafType_FalseForWrappedLeafType()
         {
-            (NonNullType.Of(ScalarType).As<object>() is ILeafType).Should().BeFalse();
+            Assert.False((object)NonNullType.Of(ScalarType) is ILeafType);
         }
 
         [Fact]
         public void IsLeafType_FalseForNonLeafTypes()
         {
-            (ObjectType.As<object>() is ILeafType).Should().BeFalse();
+            Assert.False((object)ObjectType is ILeafType);
         }
 
         [Fact]
         public void IsLeafType_FalseForWrappedNonLeafTypes()
         {
-            (NonNullType.Of(InputObjectType).As<object>() is ILeafType).Should().BeFalse();
+            Assert.False((object)NonNullType.Of(InputObjectType) is ILeafType);
         }
 
         [Fact]
         public void IsCompositeType_TrueForObjectInterfaceAndUnionTypes()
         {
-            (ObjectType.As<object>() is ICompositeType).Should().BeTrue();
-            (InterfaceType.As<object>() is ICompositeType).Should().BeTrue();
-            (UnionType.As<object>() is ICompositeType).Should().BeTrue();
+            Assert.True(ObjectType is ICompositeType);
+            Assert.True(InterfaceType is ICompositeType);
+            Assert.True(UnionType is ICompositeType);
         }
 
         [Fact]
         public void IsCompositeType_FalseForWrappedCompositeType()
         {
-            (ListType.Of(ObjectType).As<object>() is ICompositeType).Should().BeFalse();
+            Assert.False((object)ListType.Of(ObjectType) is ICompositeType);
         }
 
         [Fact]
         public void IsCompositeType_FalseForNonCompositeType()
         {
-            (InputObjectType.As<object>() is ICompositeType).Should().BeFalse();
+            Assert.False((object)InputObjectType is ICompositeType);
         }
 
         [Fact]
         public void IsCompositeType_FalseForWrappedNonCompositeType()
         {
-            (ListType.Of(InputObjectType).As<object>() is ICompositeType).Should().BeFalse();
+            Assert.False((object)ListType.Of(InputObjectType) is ICompositeType);
         }
 
 
         [Fact]
         public void IsAbstractType_TrueForInterfaceAndUnionTypes()
         {
-            (InterfaceType.As<object>() is IAbstractType).Should().BeTrue();
-            (UnionType.As<object>() is IAbstractType).Should().BeTrue();
+            Assert.True(InterfaceType is IAbstractType);
+            Assert.True(UnionType is IAbstractType);
         }
 
         [Fact]
         public void IsAbstractType_FalseForWrappedAbstractType()
         {
-            (ListType.Of(UnionType).As<object>() is IAbstractType).Should().BeFalse();
+            Assert.False((object)ListType.Of(UnionType) is IAbstractType);
         }
 
         [Fact]
         public void IsAbstractType_FalseForNonAbstractType()
         {
-            (InputObjectType.As<object>() is IAbstractType).Should().BeFalse();
+            Assert.False((object)InputObjectType is IAbstractType);
         }
 
         [Fact]
         public void IsAbstractType_FalseForWrappedNonAbstractType()
         {
-            (ListType.Of(InputObjectType).As<object>() is IAbstractType).Should().BeFalse();
+            Assert.False((object)ListType.Of(InputObjectType) is IAbstractType);
         }
 
         [Fact]
         public void IsWrappingType_TrueForListAndNonNullTypes()
         {
-            (ListType.Of(InputObjectType).As<object>() is IWrappingType).Should().BeTrue();
-            (NonNullType.Of(InputObjectType).As<object>() is IWrappingType).Should().BeTrue();
-            (ListType.Of(ObjectType).As<object>() is IWrappingType).Should().BeTrue();
-            (NonNullType.Of(ObjectType).As<object>() is IWrappingType).Should().BeTrue();
+            Assert.True(ListType.Of(InputObjectType) is IWrappingType);
+            Assert.True(NonNullType.Of(InputObjectType) is IWrappingType);
+            Assert.True(ListType.Of(ObjectType) is IWrappingType);
+            Assert.True(NonNullType.Of(ObjectType) is IWrappingType);
         }
 
         [Fact]
         public void IsNullable_TrueForUnwrappedTypes()
         {
-            (ObjectType.As<object>() is INullableType).Should().BeTrue();
+            Assert.True(ObjectType is INullableType);
         }
 
         [Fact]
         public void IsNullable_TrueListOfNonNullTYpes()
         {
-            (ListType.Of(NonNullType.Of(ObjectType)).As<object>() is INullableType).Should().BeTrue();
+            Assert.True(ListType.Of(NonNullType.Of(ObjectType)) is INullableType);
         }
 
         [Fact]
         public void IsNullable_FalseForNonNullTypes()
         {
-            (NonNullType.Of(ObjectType).As<object>() is INullableType).Should().BeFalse();
-            (NonNullType.Of(InputObjectType).As<object>() is INullableType).Should().BeFalse();
+            Assert.False((object)NonNullType.Of(ObjectType) is INullableType);
+            Assert.False((object)NonNullType.Of(InputObjectType) is INullableType);
         }
 
         [Fact]
         public void GetNullableType_ReturnsNullForNoType()
         {
             // ReSharper disable once ExpressionIsAlwaysNull
-            ((IGraphQLType)null!).GetNullableType().Should().BeNull();
+            Assert.Null(((IGraphQLType)null!).GetNullableType());
         }
 
         [Fact]
         public void GetNullableType_ReturnsSelfForNullableType()
         {
-            ObjectType.GetNullableType().GetNullableType().Should().Be(ObjectType);
+            Assert.Equal(ObjectType, ObjectType.GetNullableType().GetNullableType());
             var listOfObject = ListType.Of(ObjectType);
-            listOfObject.GetNullableType().Should().Be(listOfObject);
+            Assert.Equal(listOfObject, listOfObject.GetNullableType());
         }
 
         [Fact]
         public void GetNullableType_UnwrapsNonNullType()
         {
-            NonNullType.Of(ObjectType).GetNullableType().Should().Be(ObjectType);
+            Assert.Equal(ObjectType, NonNullType.Of(ObjectType).GetNullableType());
         }
 
         [Fact]
         public void IsNamedType_TrueForUnwrappedTypes()
         {
-            (ObjectType.As<object>() is INamedType).Should().BeTrue();
+            Assert.True(ObjectType is INamedType);
         }
 
         [Fact]
         public void IsNamedType_FalseForListAndNonNullTypes()
         {
-            (NonNullType.Of(ObjectType).As<object>() is INamedType).Should().BeFalse();
-            (NonNullType.Of(InputObjectType).As<object>() is INamedType).Should().BeFalse();
-            (ListType.Of(ObjectType).As<object>() is INamedType).Should().BeFalse();
-            (ListType.Of(InputObjectType).As<object>() is INamedType).Should().BeFalse();
+            Assert.False((object)NonNullType.Of(ObjectType) is INamedType);
+            Assert.False((object)NonNullType.Of(InputObjectType) is INamedType);
+            Assert.False((object)ListType.Of(ObjectType) is INamedType);
+            Assert.False((object)ListType.Of(InputObjectType) is INamedType);
         }
 
         [Fact]
         public void GetNamedType_ReturnsNullForNoType()
         {
             // ReSharper disable once ExpressionIsAlwaysNull
-            ((IGraphQLType)null!).GetNamedType().Should().BeNull();
+            Assert.Null(((IGraphQLType)null!).GetNamedType());
         }
 
         [Fact]
         public void GetNamedType_ReturnsSelfForAnUnwrappedType()
         {
-            ObjectType.GetNamedType().Should().Be(ObjectType);
+            Assert.Equal(ObjectType, ObjectType.GetNamedType());
         }
 
         [Fact]
         public void GetNamedType_UnwrapsWrapperTypes()
         {
-            NonNullType.Of(ObjectType).GetNamedType().Should().Be(ObjectType);
-            ListType.Of(ObjectType).GetNamedType().Should().Be(ObjectType);
+            Assert.Equal(ObjectType, NonNullType.Of(ObjectType).GetNamedType());
+            Assert.Equal(ObjectType, ListType.Of(ObjectType).GetNamedType());
         }
 
         [Fact]
         public void GetNamedType_UnwrapsDeeplyWrapperTypes()
         {
-            NonNullType.Of(ListType.Of(NonNullType.Of(InputObjectType))).GetNamedType().Should()
-                .Be(InputObjectType);
+            Assert.Equal(InputObjectType,
+                NonNullType.Of(ListType.Of(NonNullType.Of(InputObjectType))).GetNamedType());
         }
     }
 }

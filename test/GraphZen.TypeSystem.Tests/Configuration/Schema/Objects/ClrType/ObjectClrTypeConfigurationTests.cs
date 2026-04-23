@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -26,9 +25,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.ClrType
                 sb.Object(nameof(ExampleObject));
                 var def = sb.GetDefinition().GetObject(nameof(ExampleObject));
                 sb.Object<ExampleObject>();
-                def.ClrType.Should().Be<ExampleObject>();
+                Assert.Equal(typeof(ExampleObject), def.ClrType);
             });
-            schema.GetObject<ExampleObject>().ClrType.Should().Be<ExampleObject>();
+            Assert.Equal(typeof(ExampleObject), schema.GetObject<ExampleObject>().ClrType);
         }
 
         [Fact]
@@ -41,9 +40,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration.Objects.ClrType
                 sb.Object("Object").Field<ExampleObject>("field");
                 var def = sb.GetDefinition().GetObject(nameof(ExampleObject));
                 sb.Object<ExampleObject>();
-                def.ClrType.Should().Be<ExampleObject>();
+                Assert.Equal(typeof(ExampleObject), def.ClrType);
             });
-            schema.GetObject<ExampleObject>().ClrType.Should().Be<ExampleObject>();
+            Assert.Equal(typeof(ExampleObject), schema.GetObject<ExampleObject>().ClrType);
         }
     }
 }

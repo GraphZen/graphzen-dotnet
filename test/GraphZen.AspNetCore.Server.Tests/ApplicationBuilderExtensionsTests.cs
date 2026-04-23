@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
@@ -15,7 +14,7 @@ namespace GraphZen.AspNetCore.Server.Tests
     {
         [Fact]
         public void should_share_IApplicationBuilder_namespace() =>
-            typeof(GraphZenApplicationBuilderExtensions).Namespace
-                .Should().Be(typeof(IApplicationBuilder).Namespace);
+            Assert.Equal(typeof(IApplicationBuilder).Namespace,
+                typeof(GraphZenApplicationBuilderExtensions).Namespace);
     }
 }

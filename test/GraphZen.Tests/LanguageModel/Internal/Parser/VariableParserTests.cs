@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
@@ -22,7 +21,7 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
         [Fact]
         public void ParseVariable()
         {
-            ParseValue("$name").Should().Be(SyntaxFactory.Variable(SyntaxFactory.Name("name")));
+            Assert.Equal(SyntaxFactory.Variable(SyntaxFactory.Name("name")), ParseValue("$name"));
         }
 
         [Fact(Skip = "Seems identical to one above - should revisit")]

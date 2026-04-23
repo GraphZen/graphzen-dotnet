@@ -4,7 +4,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.Tests.QueryEngine;
 using GraphZen.TypeSystem;
@@ -30,10 +29,10 @@ namespace GraphZen.Tests.TypeSystem.IntrospectionTests
             };
             var introspectionTypeNames = Introspection.IntrospectionTypes.Select(_ => _.Name).ToArray();
 
-            introspectionTypeNames.Should().BeEquivalentTo(expectedIntrospectionTypes);
+            Assert.Equivalent(expectedIntrospectionTypes, introspectionTypeNames);
 
-            Introspection.Schema.GetTypes().Count().Should()
-                .Be(expectedIntrospectionTypes.Length + SpecScalars.All.Count);
+            Assert.Equal(expectedIntrospectionTypes.Length + SpecScalars.All.Count,
+                Introspection.Schema.GetTypes().Count());
         }
 
 

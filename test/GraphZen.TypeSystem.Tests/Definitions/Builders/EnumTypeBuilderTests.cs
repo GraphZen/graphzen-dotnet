@@ -3,7 +3,6 @@
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -29,10 +28,10 @@ namespace GraphZen.TypeSystem.Tests
         {
             var schema = Schema.Create(sb => sb.Enum<FooEnum>());
             var values = schema.FindType<EnumType>(typeof(FooEnum)).GetValues().ToReadOnlyList();
-            values.Count.Should().Be(2);
-            values[0].Name.Should().Be(nameof(FooEnum.Bar));
-            values[0].Description.Should().Be("bar desc");
-            values[1].Name.Should().Be("customBaz");
+            Assert.Equal(2, values.Count);
+            Assert.Equal(nameof(FooEnum.Bar), values[0].Name);
+            Assert.Equal("bar desc", values[0].Description);
+            Assert.Equal("customBaz", values[1].Name);
         }
     }
 }

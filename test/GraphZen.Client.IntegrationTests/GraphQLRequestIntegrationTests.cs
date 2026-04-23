@@ -3,7 +3,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore;
@@ -62,8 +61,8 @@ namespace GraphZen.Client.IntegrationTests
 
             var expected = new { message = "Hello world" };
             var response = await _gql.SendAsync(graphqlRequest);
-            (response.GetData() as object).Should().BeEquivalentToJsonFromObject(expected);
-            response.GetData<TypedQueryResult>().Should().BeEquivalentToJsonFromObject(expected);
+            JsonAssert.EquivalentToJsonFromObject(response.GetData() as object, expected);
+            JsonAssert.EquivalentToJsonFromObject(response.GetData<TypedQueryResult>(), expected);
         }
     }
 }

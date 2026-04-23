@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
@@ -14,7 +13,7 @@ namespace GraphZen.TypeSystem.Tests
         [Fact]
         public void it_should_have_default_constructor()
         {
-            new CoreOptionsExtension().Should().NotBeNull();
+            Assert.NotNull(new CoreOptionsExtension());
         }
     }
 }

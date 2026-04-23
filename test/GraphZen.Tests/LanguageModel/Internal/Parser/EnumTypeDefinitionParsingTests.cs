@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
@@ -92,7 +91,7 @@ enum Site {
                             SyntaxHelpers.Description("Enum value description"))
                     }));
 
-            parsed.ToSyntaxString().Should().Be(expected.ToSyntaxString());
+            Assert.Equal(expected.ToSyntaxString(), parsed.ToSyntaxString());
         }
     }
 }

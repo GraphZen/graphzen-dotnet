@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
@@ -22,7 +21,7 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
         [InlineData("0", 0)]
         public void ParseIntValue(string source, int intValue)
         {
-            ParseValue(source).Should().Be(SyntaxFactory.IntValue(intValue));
+            Assert.Equal(SyntaxFactory.IntValue(intValue), ParseValue(source));
         }
 
         [Theory]
@@ -39,14 +38,14 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
         [InlineData("-1.123e+4")]
         public void ParseFloatValue(string source)
         {
-            ParseValue(source).Should().Be(SyntaxFactory.FloatValue(source));
+            Assert.Equal(SyntaxFactory.FloatValue(source), ParseValue(source));
         }
 
         [Theory]
         [InlineData(@"""foo""", "foo")]
         public void ParseStringValue(string source, string stringValue)
         {
-            ParseValue(source).Should().Be(SyntaxFactory.StringValue(stringValue));
+            Assert.Equal(SyntaxFactory.StringValue(stringValue), ParseValue(source));
         }
 
         [Theory]
@@ -54,14 +53,14 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
         [InlineData("false", false)]
         public void ParseBooleanValue(string source, bool booleanValue)
         {
-            ParseValue(source).Should().Be(SyntaxFactory.BooleanValue(booleanValue));
+            Assert.Equal(SyntaxFactory.BooleanValue(booleanValue), ParseValue(source));
         }
 
         [Theory]
         [InlineData("null")]
         public void ParseNullValue(string source)
         {
-            ParseValue(source).Should().Be(SyntaxFactory.NullValue());
+            Assert.Equal(SyntaxFactory.NullValue(), ParseValue(source));
         }
 
         [Theory]
@@ -70,29 +69,28 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
         [InlineData("BAZ_bar")]
         public void ParseEnumValue(string source)
         {
-            ParseValue(source).Should().Be(SyntaxFactory.EnumValue(SyntaxFactory.Name(source)));
+            Assert.Equal(SyntaxFactory.EnumValue(SyntaxFactory.Name(source)), ParseValue(source));
         }
 
         [Fact]
         public void ParseInputObjectValue()
         {
-            ParseValue(@"
+            Assert.Equal(SyntaxFactory.ObjectValue(
+                SyntaxFactory.ObjectField(SyntaxFactory.Name("foo"), SyntaxFactory.IntValue(1)),
+                SyntaxFactory.ObjectField(SyntaxFactory.Name("bar"),
+                    SyntaxFactory.Variable(SyntaxFactory.Name("test")))), ParseValue(@"
           {
             foo: 1
             bar: $test
           }
-        ").Should().Be(SyntaxFactory.ObjectValue(
-                SyntaxFactory.ObjectField(SyntaxFactory.Name("foo"), SyntaxFactory.IntValue(1)),
-                SyntaxFactory.ObjectField(SyntaxFactory.Name("bar"),
-                    SyntaxFactory.Variable(SyntaxFactory.Name("test")))));
+        "));
         }
 
         [Fact]
         public void ParseListValue()
         {
-            ParseValue(@"[foo, ""bar""]").Should()
-                .Be(SyntaxFactory.ListValue(SyntaxFactory.EnumValue(SyntaxFactory.Name("foo")),
-                    SyntaxFactory.StringValue("bar")));
+            Assert.Equal(SyntaxFactory.ListValue(SyntaxFactory.EnumValue(SyntaxFactory.Name("foo")),
+                    SyntaxFactory.StringValue("bar")), ParseValue(@"[foo, ""bar""]"));
         }
     }
 }
