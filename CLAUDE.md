@@ -74,6 +74,10 @@ The `GraphZen.DevCli` project contains code generation utilities:
 dotnet run --project src/GraphZen.DevCli/GraphZen.DevCli.csproj gen
 ```
 
+## Related Repositories
+
+- **Superpower** (parsing library) - Local clone at `~/Code/datalust/superpower` (upstream: https://github.com/datalust/superpower). Used by `GraphZen.LanguageModel` for GraphQL parsing.
+
 ## Code Style
 
 - Nullable reference types enabled (`<Nullable>enable</Nullable>`)
