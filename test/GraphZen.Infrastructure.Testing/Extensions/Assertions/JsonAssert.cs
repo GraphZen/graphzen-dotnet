@@ -3,8 +3,8 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Nodes;
 using JetBrains.Annotations;
-using Newtonsoft.Json.Linq;
 
 namespace GraphZen.Infrastructure
 {
@@ -27,8 +27,8 @@ namespace GraphZen.Infrastructure
         public static void EquivalentToJson(object? actual, string expected, JsonDiffOptions? options = null)
         {
             if (actual == null) throw new Xunit.Sdk.XunitException("Expected object to be equivalent to JSON, but actual was null.");
-            var expectedJObj = JObject.Parse(expected);
-            var diff = JsonDiffer.GetDiff(actual, expectedJObj, options);
+            var expectedNode = JsonNode.Parse(expected);
+            var diff = JsonDiffer.GetDiff(actual, expectedNode!, options);
             if (diff != null) throw new Xunit.Sdk.XunitException(diff);
         }
 

@@ -4,49 +4,39 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 
 namespace GraphZen.Infrastructure
 {
     public static class Json
     {
-        public static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
+        public static JsonSerializerOptions SerializerOptions { get; } = new JsonSerializerOptions
         {
-            Formatting = Formatting.Indented,
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            NullValueHandling = NullValueHandling.Include
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+            PropertyNameCaseInsensitive = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.Never
         };
 
-
-        public static JsonSerializer Serializer { get; } = JsonSerializer.Create(SerializerSettings);
-
-        public static JObject CreateJObject(object value) => JObject.FromObject(value, Serializer);
+        public static JsonNode? CreateJsonNode(object value)
+        {
+            var json = JsonSerializer.Serialize(value, SerializerOptions);
+            return JsonNode.Parse(json);
+        }
 
         [DebuggerStepThrough]
         public static string SerializeObject(object value)
         {
-            using (var ms = new MemoryStream())
-            using (var writer = new StreamWriter(ms))
-            using (var jsonWriter = new JsonTextWriter(writer)
+            var options = new JsonSerializerOptions(SerializerOptions)
             {
-                QuoteChar = '\''
-            })
-            {
-                var ser = Serializer;
-                ser.Serialize(jsonWriter, value);
-                jsonWriter.Flush();
-
-                ms.Position = 0;
-                using (var sr = new StreamReader(ms))
-                {
-                    var str = sr.ReadToEnd();
-                    return str;
-                }
-            }
+                WriteIndented = true
+            };
+            return JsonSerializer.Serialize(value, options);
         }
     }
 }

@@ -2,30 +2,30 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace GraphZen.Infrastructure
 {
-    public class JTokenSortingExtensionsTests
+    public class JsonNodeSortingExtensionsTests
     {
         [Theory]
         [InlineData(@"{""c"":1, ""a"": -1, ""b"": 2}", @"{""a"":-1, ""b"": 2, ""c"": 1 }")]
         public void it_should_sort_json_object_properties_by_key(string unsortedJson, string expectedJson)
         {
             // Arrange
-            var unsortedJToken = JToken.Parse(unsortedJson);
-            var expectedJToken = JToken.Parse(expectedJson);
+            var unsortedNode = JsonNode.Parse(unsortedJson);
+            var expectedNode = JsonNode.Parse(expectedJson);
 
             // Act
-            unsortedJToken.Sort();
+            unsortedNode.Sort();
 
             // Assert
-            unsortedJson = JsonConvert.SerializeObject(unsortedJToken);
-            expectedJson = JsonConvert.SerializeObject(expectedJToken);
+            unsortedJson = unsortedNode!.ToJsonString();
+            expectedJson = expectedNode!.ToJsonString();
             StringAssert.Equal(unsortedJson, expectedJson, true);
         }
 
@@ -35,15 +35,15 @@ namespace GraphZen.Infrastructure
         public void it_should_sort_json_arrays_by_item(string unsortedJson, string expectedJson)
         {
             // Arrange
-            var unsortedJToken = JToken.Parse(unsortedJson);
-            var expectedJToken = JToken.Parse(expectedJson);
+            var unsortedNode = JsonNode.Parse(unsortedJson);
+            var expectedNode = JsonNode.Parse(expectedJson);
 
             // Act
-            unsortedJToken.Sort();
+            unsortedNode.Sort();
 
             // Assert
-            unsortedJson = JsonConvert.SerializeObject(unsortedJToken);
-            expectedJson = JsonConvert.SerializeObject(expectedJToken);
+            unsortedJson = unsortedNode!.ToJsonString();
+            expectedJson = expectedNode!.ToJsonString();
             StringAssert.Equal(unsortedJson, expectedJson, true);
         }
     }

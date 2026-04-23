@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using GraphZen;
 using GraphZen.Infrastructure;
@@ -19,7 +20,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.AspNetCore.Builder
@@ -62,12 +62,9 @@ namespace Microsoft.AspNetCore.Builder
                 var readStream = request.Body;
                 if (!request.Body.CanSeek)
                 {
-                    // JSON.Net does synchronous reads. In order to avoid blocking on the stream, we asynchronously
-                    // read everything into a buffer, and then seek back to the beginning.
                     var memoryThreshold = DefaultMemoryThreshold;
                     var contentLength = request.ContentLength.GetValueOrDefault();
                     if (contentLength > 0 && contentLength < memoryThreshold)
-                        // If the Content-Length is known and is smaller than the default buffer size, use it.
                         memoryThreshold = (int)contentLength;
 
                     readStream = new FileBufferingReadStream(request.Body, memoryThreshold, null,
@@ -77,13 +74,11 @@ namespace Microsoft.AspNetCore.Builder
                     readStream.Seek(0L, SeekOrigin.Begin);
                 }
 
-                using var reader = new StreamReader(readStream);
-                using var jsonReader = new JsonTextReader(reader);
                 ExecutionResult result;
                 var graphQLContext = httpContext.RequestServices.GetRequiredService<GraphQLContext>();
                 try
                 {
-                    var req = Json.Serializer.Deserialize<GraphQLServerRequest>(jsonReader);
+                    var req = await JsonSerializer.DeserializeAsync<GraphQLServerRequest>(readStream, Json.SerializerOptions);
                     var document = Parser.ParseDocument(req!.Query);
                     var queryValidator = httpContext.RequestServices.GetRequiredService<IQueryValidator>();
                     var validationErrors = queryValidator.Validate(graphQLContext.Schema, document);
@@ -135,7 +130,7 @@ namespace Microsoft.AspNetCore.Builder
                     result = new ExecutionResult(null, new[] { error });
                 }
 
-                var resp = JsonConvert.SerializeObject(result, Json.SerializerSettings);
+                var resp = JsonSerializer.Serialize(result, Json.SerializerOptions);
                 await httpContext.Response.WriteAsync(resp);
             });
         }

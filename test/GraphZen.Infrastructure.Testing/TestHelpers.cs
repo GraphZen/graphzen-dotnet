@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Newtonsoft.Json.Linq;
 
 namespace GraphZen.Infrastructure
 {
@@ -14,7 +13,7 @@ namespace GraphZen.Infrastructure
         public static IDictionary<string, object> ToDictionary(dynamic value)
         {
             var dict = value != null
-                ? JObjectExtensions.ToDictionary(JObject.FromObject(value, Json.Serializer))
+                ? JsonNodeExtensions.ObjectToDictionary(value)
                 : new Dictionary<string, object>();
             return dict;
         }

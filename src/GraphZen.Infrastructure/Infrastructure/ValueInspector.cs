@@ -6,9 +6,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.Json.Nodes;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Newtonsoft.Json.Linq;
 
 #nullable disable
 
@@ -56,8 +56,8 @@ namespace GraphZen.Infrastructure
                            string.Join(",\n",
                                dict.GetEntries().Select(kv => $"  {{{kv.Key}: {Inspect(kv.Value, expanded)}}}")) +
                            "\n}";
-                case JObject jObject:
-                    return jObject.ToDictionary().Inspect(expanded);
+                case JsonObject jsonObject:
+                    return jsonObject.ToDictionary().Inspect(expanded);
                 case IEnumerable enumerable:
                     var inspected = enumerable.Cast<object>().Select(_ => Inspect(_, expanded));
                     return expanded ? $"[\n{string.Join(",\n", inspected)}\n]" : $"[{string.Join(", ", inspected)}]";

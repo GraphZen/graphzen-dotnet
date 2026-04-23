@@ -3,9 +3,9 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Nodes;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
-using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Sdk;
 
@@ -54,7 +54,8 @@ namespace GraphZen.Infrastructure
         {
             var actual = new { foo = 1 };
             var expected = @"{""foo"":2}";
-            var expectedDiff = JsonDiffer.GetDiff(actual, JObject.Parse(expected));
+            var expectedParsed = JsonNode.Parse(expected)!;
+            var expectedDiff = JsonDiffer.GetDiff(actual, expectedParsed);
             var ex1 = Assert.Throws<XunitException>(() =>
                 JsonAssert.EquivalentToJson(actual, expected));
             Assert.Equal(expectedDiff, ex1.Message);
