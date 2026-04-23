@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Directives
             var schema = Schema.Create(@"directive @foo on FIELD");
             var foo = schema.FindDirective("foo");
             Assert.IsType<Directive>(foo);
-            Assert.Equal("foo", foo!.Name);
+            Assert.Equal("foo", foo.Name);
         }
 
         [Fact(Skip = "TODO")]

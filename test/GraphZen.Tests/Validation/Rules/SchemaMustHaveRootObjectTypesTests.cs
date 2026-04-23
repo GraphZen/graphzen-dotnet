@@ -20,13 +20,13 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsASchemaWhoseQueryTypeIsAnObjectType()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: String
               }
             ");
 
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               schema {
                 query: QueryRoot
               }
@@ -40,7 +40,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsASchemaWhoseQueryAndMutationTypesAreObjectTypes()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: String
               }
@@ -50,7 +50,7 @@ namespace GraphZen.Tests.Validation.Rules
               }
             ");
 
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               schema {
                 query: QueryRoot
                 mutation: MutationRoot
@@ -69,7 +69,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsASchemaWhoseQueryAndSubscriptionTypesAreObjectTypes()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: String
               }
@@ -79,7 +79,7 @@ namespace GraphZen.Tests.Validation.Rules
               }
             ");
 
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               schema {
                 query: QueryRoot
                 subscription: SubscriptionRoot
@@ -98,13 +98,13 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsASchemaWithoutAQueryType()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Mutation {
                 test: String
               }
             ", Error("Query root type must be provided."));
 
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               schema {
                 mutation: MutationRoot
               }
@@ -118,13 +118,13 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsSchemaWhoseQueryTypeIsNotAnObjectType()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               input Query {
                 test: String
               }
             ", Error("Query root type must be Object type, it cannot be Query.", (1, 1)));
 
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               schema {
                 query: SomeInputObject
               }
@@ -138,7 +138,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsASchemaWhoseMutationTypeIsAnInputType()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 field: String
               }
@@ -148,7 +148,7 @@ namespace GraphZen.Tests.Validation.Rules
               }
             ", Error("Mutation root type must be Object type if provided, it cannot be Mutation.", (5, 1)));
 
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               schema {
                 query: Query
                 mutation: SomeInputObject
@@ -167,7 +167,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsASchemaWhoseSubscriptionTypeIsAnInputType()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 field: String
               }
@@ -177,7 +177,7 @@ namespace GraphZen.Tests.Validation.Rules
               }
             ", Error("Subscription root type must be Object type if provided, it cannot be Subscription.", (5, 1)));
 
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               schema {
                 query: Query
                 subscription: SomeInputObject

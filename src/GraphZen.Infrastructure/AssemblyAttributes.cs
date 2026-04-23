@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable enable
 
 
 [assembly: InternalsVisibleTo("GraphZen.Tests")]

@@ -13,11 +13,11 @@ using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem.Internal
 {
-    public class SDLSchemaConfigurator
+    public class SdlSchemaConfigurator
     {
         private readonly DocumentSyntax _document;
 
-        public SDLSchemaConfigurator(DocumentSyntax document)
+        public SdlSchemaConfigurator(DocumentSyntax document)
         {
             _document = Check.NotNull(document, nameof(document));
         }
@@ -63,7 +63,7 @@ namespace GraphZen.TypeSystem.Internal
             Debug.Assert(operationTypes != null, nameof(operationTypes) + " != null");
             foreach (var ot in operationTypes.Where(_ => _.Value != null))
             {
-                Debug.Assert(ot.Value != null, "ot.Value != null");
+                Debug.Assert(ot.Value != null);
                 var typeName = ot.Value.Name.Value;
                 switch (ot.Key)
                 {

@@ -38,6 +38,7 @@ namespace GraphZen.TypeSystem
                 type as IGraphQLType ?? throw new InvalidOperationException(
                     $"{typeReference} is not a valid GraphQL type. Provide a type resolver to correctly resolve.");
 
+            // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
             typeResolver ??= DefaultTypeResolver;
             Name = name;
             Description = description;

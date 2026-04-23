@@ -9,7 +9,6 @@ using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable enable
 
 
 namespace GraphZen.Infrastructure

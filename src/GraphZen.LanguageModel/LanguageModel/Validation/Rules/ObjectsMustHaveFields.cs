@@ -44,7 +44,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
             {
                 var objectTypeName = objectDef.Key;
                 Debug.Assert(objectTypeName != null, nameof(objectTypeName) + " != null");
-                Debug.Assert(objectDef.Value != null, "objectDef.Value != null");
+                Debug.Assert(objectDef.Value != null);
                 var objectTypeNode = objectDef.Value.First();
                 var extensionNodes = _objectExts.GetItems(objectTypeName).ToList();
                 Debug.Assert(objectTypeNode != null, nameof(objectTypeNode) + " != null");

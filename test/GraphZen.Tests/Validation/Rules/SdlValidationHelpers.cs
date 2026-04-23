@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace GraphZen.Tests.Validation.Rules
 {
-    public static class SDLValidationHelpers
+    public static class SdlValidationHelpers
     {
         public static readonly IReadOnlyList<string> OutputTypes = new[]
             {"scalar", "enum", "union", "interface", "type"};

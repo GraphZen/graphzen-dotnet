@@ -16,7 +16,7 @@ namespace GraphZen
     {
         public DocumentValidator(IReadOnlyCollection<ValidationRule> rules)
         {
-            Rules = rules ?? DocumentValidationRules.SpecifiedSchemaRules;
+            Rules = rules;
         }
 
 

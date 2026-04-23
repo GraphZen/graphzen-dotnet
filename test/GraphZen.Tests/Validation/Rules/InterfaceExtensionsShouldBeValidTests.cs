@@ -21,7 +21,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectImplementingTheExtendedInterfaceDueToMissingField()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -49,7 +49,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectImplementedTheExtendedInterfaceDueToMissingFieldArgs()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -78,7 +78,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsObjectsImplementingTheExtendedInterfaceDueToMismatchingInterfaceType()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }

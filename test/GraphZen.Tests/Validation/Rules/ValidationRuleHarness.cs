@@ -165,7 +165,7 @@ namespace GraphZen.Tests.Validation.Rules
             new ExpectedError(message,
                 lineColumnPairs.Select(pair => new SourceLocation(pair.line, pair.column)).ToArray(), null);
 
-        private void ExpectValidSDL(ValidationRule rule, string sdl)
+        private void ExpectValidSdl(ValidationRule rule, string sdl)
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
             var result = new DocumentValidator(new[] { rule }).Validate(sdlSyntax);
@@ -191,7 +191,7 @@ namespace GraphZen.Tests.Validation.Rules
             JsonAssert.EquivalentToJsonFromObject(expectedErrors, result);
         }
 
-        private void ExpectInvalidSDL(ValidationRule rule, string sdl,
+        private void ExpectInvalidSdl(ValidationRule rule, string sdl,
             IReadOnlyList<ExpectedError> expectedErrors)
         {
             var sdlSyntax = Parser.ParseDocument(sdl);
@@ -208,9 +208,9 @@ namespace GraphZen.Tests.Validation.Rules
         protected void QueryShouldFail(string query, ExpectedError error, params ExpectedError[] errors) =>
             ExpectInvalidQuery(TestSchema, RuleUnderTest, query, new[] { error }.Concat(errors).ToArray());
 
-        protected void SDLShouldPass(string sdl) => ExpectValidSDL(RuleUnderTest, sdl);
+        protected void SdlShouldPass(string sdl) => ExpectValidSdl(RuleUnderTest, sdl);
 
-        protected void SDLShouldFail(string sdl, ExpectedError error, params ExpectedError[] errors) =>
-            ExpectInvalidSDL(RuleUnderTest, sdl.Dedent(), new[] { error }.Concat(errors).ToArray());
+        protected void SdlShouldFail(string sdl, ExpectedError error, params ExpectedError[] errors) =>
+            ExpectInvalidSdl(RuleUnderTest, sdl.Dedent(), new[] { error }.Concat(errors).ToArray());
     }
 }

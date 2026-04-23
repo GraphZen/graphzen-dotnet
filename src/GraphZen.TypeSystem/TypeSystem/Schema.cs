@@ -121,7 +121,7 @@ namespace GraphZen.TypeSystem
             _syntax = new Lazy<SchemaDefinitionSyntax>(() =>
             {
                 var rootOperationTypes = new List<OperationTypeDefinitionSyntax>();
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
                 if (QueryType != null)
                     rootOperationTypes.Add(new OperationTypeDefinitionSyntax(OperationType.Query,
                         SyntaxFactory.NamedType(SyntaxFactory.Name(QueryType.Name))));
@@ -249,8 +249,8 @@ namespace GraphZen.TypeSystem
                         {
                             case null:
                                 return null;
-                            case IGraphQLType input:
-                                return ListType.Of(input);
+                            default:
+                                return ListType.Of(innerType);
                         }
                     }
                 case NonNullTypeSyntax nnNode:
@@ -269,7 +269,7 @@ namespace GraphZen.TypeSystem
                     return Types.TryGetValue(namedTypeNode.Name.Value, out var result) ? result : null;
             }
 
-            throw new Exception($"Unexpected type kind: {typeSyntax?.GetType()}");
+            throw new Exception($"Unexpected type kind: {typeSyntax.GetType()}");
         }
 
         private NamedType CreateType(INamedTypeDefinition definition) => NamedType.From(definition, this);
@@ -373,6 +373,8 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(clrType, nameof(clrType));
             type = GetTypes<NamedType>().SingleOrDefault(_ => _.ClrType == clrType)!;
+            // type can be null at runtime; ! is for [NotNullWhen(true)] contract
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             return type != null;
         }
 

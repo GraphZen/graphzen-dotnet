@@ -260,7 +260,7 @@ namespace GraphZen.Tests.QueryEngine
             Assert.Equal(schemaSut, info.Schema);
             Assert.Equal(rootValue, info.RootValue);
             Assert.Equal(ast.Definitions[0], info.Operation);
-            JsonAssert.EquivalentToJsonFromObject((object)info.VariableValues, new { var = "abc" });
+            JsonAssert.EquivalentToJsonFromObject(info.VariableValues, new { var = "abc" });
         }
 
         [Fact]

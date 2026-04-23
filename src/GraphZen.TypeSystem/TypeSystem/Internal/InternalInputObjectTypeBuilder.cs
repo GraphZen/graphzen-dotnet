@@ -150,9 +150,9 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             if (property.TryGetDescriptionFromDataAnnotation(out var desc))
-                field?.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+                field.Builder.Description(desc, ConfigurationSource.DataAnnotation);
 
-            return field?.Builder;
+            return field.Builder;
         }
 
         public bool IgnoreField(MemberInfo member, ConfigurationSource configurationSource)

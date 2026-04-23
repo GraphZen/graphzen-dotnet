@@ -20,7 +20,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsAnObjectTypeWithFieldsObject()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 field: SomeObject
               }
@@ -34,7 +34,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectTypeWithMissingFields()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: IncompleteObject
               }

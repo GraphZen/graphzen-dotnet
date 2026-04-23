@@ -127,14 +127,14 @@ namespace GraphZen.QueryEngine
             var results = new Dictionary<string, object>();
             foreach (var asyncResult in asyncResults)
             {
-                Debug.Assert(asyncResult.Value != null, "asyncResult.Value != null");
+                Debug.Assert(asyncResult.Value != null);
 
                 var maybeResult = await asyncResult.Value;
 
 
                 if (maybeResult is Some<object> someResult)
                 {
-                    Debug.Assert(asyncResult.Key != null, "asyncResult.Key != null");
+                    Debug.Assert(asyncResult.Key != null);
                     results[asyncResult.Key] = someResult.Value;
                 }
             }
@@ -242,7 +242,7 @@ namespace GraphZen.QueryEngine
                 {
                     var completed = await CompleteValueAsync(exeContext, nonNull.OfType, fieldNodes, info, path,
                         maybeResult);
-                    Debug.Assert(info.ParentType != null, "info.ParentType != null");
+                    Debug.Assert(info.ParentType != null);
                     return completed ?? throw new GraphQLException(
                                $"Cannot return null for non - nullable field {info.ParentType.Name}.{info.FieldName}.");
                 }

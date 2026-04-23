@@ -23,11 +23,6 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         {
         }
 
-        [GraphQLName("BAZ")]
-        // ReSharper disable once UnusedMember.Local
-        private class Bar
-        {
-        }
 
         [Theory]
         [InlineData(typeof(int), false, null)]

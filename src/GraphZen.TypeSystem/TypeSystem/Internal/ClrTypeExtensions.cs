@@ -23,7 +23,7 @@ namespace GraphZen.TypeSystem.Internal
     {
         internal static bool IsFunc(this Type clrType)
         {
-            Debug.Assert(clrType.FullName != null, "clrType.FullName != null");
+            Debug.Assert(clrType.FullName != null);
             return clrType.Assembly == typeof(Func<>).Assembly && clrType.FullName.StartsWith("System.Func");
         }
 
@@ -113,7 +113,7 @@ namespace GraphZen.TypeSystem.Internal
                 itemType.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, itemCanBeNull))
             {
                 typeNode = canBeNull
-                    ? (TypeSyntax)SyntaxFactory.ListType(typeNode)
+                    ? SyntaxFactory.ListType(typeNode)
                     : SyntaxFactory.NonNull(SyntaxFactory.ListType(typeNode));
                 return true;
             }
@@ -126,7 +126,7 @@ namespace GraphZen.TypeSystem.Internal
             }
 
             typeNode = canBeNull
-                ? (TypeSyntax)SyntaxFactory.NamedType(clrType)
+                ? SyntaxFactory.NamedType(clrType)
                 : SyntaxFactory.NonNull(SyntaxFactory.NamedType(clrType));
             innerClrType = clrType.GetEffectiveClrType();
             return true;
@@ -230,7 +230,7 @@ namespace GraphZen.TypeSystem.Internal
         public static IEnumerable<MemberInfo> GetTargetingInterfaceProperties(this PropertyInfo property)
         {
             var methodInfo = property.GetGetMethod();
-            Debug.Assert(property.DeclaringType != null, "property.DeclaringType != null");
+            Debug.Assert(property.DeclaringType != null);
             foreach (var @interface in property.DeclaringType.GetInterfaces())
             {
                 var mapping = property.DeclaringType.GetInterfaceMap(@interface);
@@ -239,7 +239,7 @@ namespace GraphZen.TypeSystem.Internal
                     if (mapping.TargetMethods[i] == methodInfo)
                     {
                         var interfaceMethod = mapping.InterfaceMethods[i];
-                        Debug.Assert(interfaceMethod.DeclaringType != null, "interfaceMethod.DeclaringType != null");
+                        Debug.Assert(interfaceMethod.DeclaringType != null);
                         var value = interfaceMethod.DeclaringType.GetProperty(property.Name);
                         if (value != null) yield return value;
                     }
@@ -251,7 +251,7 @@ namespace GraphZen.TypeSystem.Internal
         public static IEnumerable<MemberInfo> GetTargetingInterfaceMethods(this MethodInfo method
         )
         {
-            Debug.Assert(method.DeclaringType != null, "method.DeclaringType != null");
+            Debug.Assert(method.DeclaringType != null);
             foreach (var @interface in method.DeclaringType.GetInterfaces())
             {
                 var mapping = method.DeclaringType.GetInterfaceMap(@interface);

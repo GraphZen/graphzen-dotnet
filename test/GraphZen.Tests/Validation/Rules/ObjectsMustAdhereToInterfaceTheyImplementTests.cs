@@ -21,7 +21,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsAnObjectWhichImplementsAnInterface()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -39,7 +39,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsAnObjectWhichImplmentsAnInterfacceAlongWithMoreFields()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -58,7 +58,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsAnObjectWhichImplementsAnInterfaceAlongWithAdditionalOptionalArguments()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -76,7 +76,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void ItRejectsAnObjectMissingAnInterfaceField()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -96,7 +96,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectWithAnIncorrectlyTypedInterfaceField()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -116,7 +116,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectWithADifferentlyTypeInterfaceField()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -140,7 +140,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsAnObjectWithSubTypedInterfaceField_Interface()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -158,7 +158,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsAnObjectWithSubTypedInterfaceField_Union()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -182,7 +182,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectMissingAnInterfaceArgument()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -203,7 +203,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectWithAnIncorrectlyTypedInterfaceArgument()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -224,7 +224,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectWithBothAnIncorrectlyTypedFieldAndArgument()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -244,7 +244,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectWhichIMplementsAnInterfaceFieldAlongWithAdditionalRequiredArguments()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -270,7 +270,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsAnObjectWithAnEquivalentlyWrappedInterfaceFieldType()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -288,7 +288,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectWithNonListInterfaceFieldListType()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -308,7 +308,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectWithAListInterfaceFieldNonListType()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -328,7 +328,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsAnObjectWithASubsetNonNullInterfaceFieldType()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -346,7 +346,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAnObjectWithASupersetNullableInterfaceFieldType()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }

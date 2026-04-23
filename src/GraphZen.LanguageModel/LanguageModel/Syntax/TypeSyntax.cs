@@ -24,23 +24,23 @@ namespace GraphZen.LanguageModel
 
         public NamedTypeSyntax GetNamedType()
         {
-            TypeSyntax GetNamedType(TypeSyntax node)
+            TypeSyntax FindNamedType(TypeSyntax node)
             {
                 switch (node)
                 {
                     case NamedTypeSyntax named:
                         return named;
                     case ListTypeSyntax lt:
-                        return GetNamedType(lt.OfType);
+                        return FindNamedType(lt.OfType);
                     case NonNullTypeSyntax nn:
-                        return GetNamedType(nn.OfType);
+                        return FindNamedType(nn.OfType);
                 }
 
                 throw new Exception($"Unable to identity named type for node {this}");
             }
 
 
-            return (NamedTypeSyntax)GetNamedType(this);
+            return (NamedTypeSyntax)FindNamedType(this);
         }
     }
 }

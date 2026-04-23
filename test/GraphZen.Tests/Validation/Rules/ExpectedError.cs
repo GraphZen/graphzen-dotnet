@@ -60,7 +60,7 @@ namespace GraphZen.Tests.Validation.Rules
         {
             unchecked
             {
-                var hashCode = Message != null ? Message.GetHashCode() : 0;
+                var hashCode = Message.GetHashCode();
                 hashCode = (hashCode * 397) ^ (Locations != null ? Locations.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Path != null ? Path.GetHashCode() : 0);
                 return hashCode;

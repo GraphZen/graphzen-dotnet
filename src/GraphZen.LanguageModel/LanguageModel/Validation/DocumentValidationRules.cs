@@ -70,7 +70,7 @@ namespace GraphZen.LanguageModel.Validation
             _ => new InputObjectFieldsMustHaveInputTypes(_);
 
 
-        public static IReadOnlyList<ValidationRule> SpecifiedSDLRules { get; } = new[]
+        public static IReadOnlyList<ValidationRule> SpecifiedSdlRules { get; } = new[]
         {
             LoneSchemaDefinition
             // KnownDirectives,
@@ -81,7 +81,7 @@ namespace GraphZen.LanguageModel.Validation
 
 
         public static IReadOnlyList<ValidationRule> SpecifiedSchemaRules { get; } =
-            SpecifiedSDLRules.Concat(
+            SpecifiedSdlRules.Concat(
                 new[]
                 {
                     SchemaMustHaveRootObjectTypes,

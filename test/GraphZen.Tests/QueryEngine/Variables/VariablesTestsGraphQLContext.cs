@@ -41,7 +41,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
                 .Field("nb", "String!");
 
             schemaBuilder.Enum("TestEnum")
-                .Value("NULL", _ => _.CustomValue(null))
+                .Value("NULL", _ => _.CustomValue(null!))
                 .Value("NEGATIVE", _ => _.CustomValue(-1))
                 .Value("BOOLEAN", _ => _.CustomValue(false))
                 .Value("CUSTOM", _ => _.CustomValue("custom value"))
@@ -75,7 +75,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
                                 })
                                 .Resolve((source, args) =>
                                     args.ContainsKey("input")
-                                        ? (string)JsonSerializer.Serialize((object)args.input)
+                                        ? JsonSerializer.Serialize((object)args.input)
                                         : null);
                         });
             });

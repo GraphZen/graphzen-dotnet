@@ -58,7 +58,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(name, nameof(name));
             var ib = Builder.Field(name, ConfigurationSource.Explicit, ConfigurationSource.Explicit)!;
 
-            configurator?.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
+            configurator.Invoke(new FieldBuilder<TObject, object, TContext>(ib));
             return this;
         }
 
@@ -132,11 +132,11 @@ namespace GraphZen.TypeSystem
         public IObjectTypeBuilder<TObject, TContext> ImplementsInterfaces(string name, params string[] names)
         {
             ImplementsInterface(name);
-            if (names != null)
-                foreach (var n in names)
-                {
-                    ImplementsInterface(n);
-                }
+            
+            foreach (var n in names)
+            {
+                ImplementsInterface(n);
+            }
 
             return this;
         }

@@ -44,7 +44,7 @@ namespace GraphZen.LanguageModel.Validation.Rules
             foreach (var input in _inputDefs)
             {
                 var inputExts = _inputExts.GetItems(input.Key);
-                Debug.Assert(input.Value != null, "input.Value != null");
+                Debug.Assert(input.Value != null);
                 var inputFields = input.Value
                     // ReSharper disable once PossibleNullReferenceException
                     .SelectMany(_ => _.Fields)

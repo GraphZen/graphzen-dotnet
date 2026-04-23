@@ -141,7 +141,7 @@ namespace GraphZen.Tests.Utilities
         public void ItConvertsNonNullValuesToNullValue()
         {
             var nnBoolean = NonNullType.Of(SpecScalars.Boolean);
-            Assert.Null(Get(null, nnBoolean));
+            Assert.Null(Get(null!, nnBoolean));
         }
 
 

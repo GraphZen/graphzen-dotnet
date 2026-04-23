@@ -20,7 +20,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsUnionTypeWithMemberTypes()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
           type Query {
             test: GoodUnion
           }
@@ -42,7 +42,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsUnionTypeWithEmptyTypes()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
           type Query {
             test: BadUnion
           }
@@ -58,7 +58,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsAUnionTypeWithDuplicatedMemberType()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: BadUnion
               }
@@ -84,7 +84,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void ItRejectsAUnionTypeWithNonObjectMemberTypes()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: BadUnion
               }

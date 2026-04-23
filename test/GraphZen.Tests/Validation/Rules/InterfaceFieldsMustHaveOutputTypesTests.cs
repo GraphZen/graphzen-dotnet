@@ -9,7 +9,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.Tests.Validation.Rules.SDLValidationHelpers;
+using static GraphZen.Tests.Validation.Rules.SdlValidationHelpers;
 
 namespace GraphZen.Tests.Validation.Rules
 {
@@ -30,7 +30,7 @@ namespace GraphZen.Tests.Validation.Rules
         [MemberData(nameof(GetValidInterfaceFieldTypeScenarios))]
         public void AcceptsAnOutputTypeAsAnInterfaceFieldType(string outputType, string fieldType)
         {
-            SDLShouldPass($@"
+            SdlShouldPass($@"
               {outputType} SomeOutputType
 
               interface SomeInterface {{
@@ -50,7 +50,7 @@ namespace GraphZen.Tests.Validation.Rules
         [MemberData(nameof(GetInvalidInterfaceFieldTypeScenarios))]
         public void RejectsNonOutputTypeAsAnInterfaceFieldType(string nonOutputType, string badFieldType)
         {
-            SDLShouldFail($@"
+            SdlShouldFail($@"
               {nonOutputType} SomeInputType 
             
               interface BadInterface {{
@@ -68,7 +68,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void RejectsNonOutputTypeAsAnInterfaceFieldTypeWithLocations()
         {
-            SDLShouldFail(@"
+            SdlShouldFail(@"
               type Query {
                 test: SomeInterface
               }
@@ -91,7 +91,7 @@ namespace GraphZen.Tests.Validation.Rules
         [Fact]
         public void AcceptsAnInterfaceNotImplementedByAtLeastOneObject()
         {
-            SDLShouldPass(@"
+            SdlShouldPass(@"
               type Query {
                 test: SomeInterface
               }

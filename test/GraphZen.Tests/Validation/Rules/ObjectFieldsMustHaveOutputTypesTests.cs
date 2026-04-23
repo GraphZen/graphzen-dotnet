@@ -9,7 +9,7 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using JetBrains.Annotations;
 using Xunit;
-using static GraphZen.Tests.Validation.Rules.SDLValidationHelpers;
+using static GraphZen.Tests.Validation.Rules.SdlValidationHelpers;
 
 namespace GraphZen.Tests.Validation.Rules
 {
@@ -29,7 +29,7 @@ namespace GraphZen.Tests.Validation.Rules
         [MemberData(nameof(GetValidFieldScenarios))]
         public void AcceptsOutputTypeAsAnObjectFieldType(string outputType, string fieldType)
         {
-            SDLShouldPass($@"
+            SdlShouldPass($@"
                {outputType} SomeOutputType
 
                type SomeObject {{
@@ -51,7 +51,7 @@ namespace GraphZen.Tests.Validation.Rules
         public void RejectsWithRelevantLocationsForNonOutputTypeAsAnObjectFieldType(string nonOutputType,
             string fieldType)
         {
-            SDLShouldFail($@"
+            SdlShouldFail($@"
               {nonOutputType} SomeInputType
               type Query {{
                 field:  {fieldType}

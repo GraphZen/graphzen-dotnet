@@ -48,12 +48,12 @@ namespace GraphZen.TypeSystem.Tests
 
         public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
         {
-            schemaBuilder.Interface(name).Name(null);
+            schemaBuilder.Interface(name).Name(null!);
         }
 
         public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
         {
-            schemaBuilder.Interface(clrType).Name(null);
+            schemaBuilder.Interface(clrType).Name(null!);
         }
     }
 }

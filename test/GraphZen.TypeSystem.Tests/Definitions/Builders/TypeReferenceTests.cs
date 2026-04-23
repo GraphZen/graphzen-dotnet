@@ -44,16 +44,16 @@ namespace GraphZen.TypeSystem.Tests
             var query = schema.GetObject("Query");
 
             Assert.Equal(typeof(Foo),
-                ((ObjectType)((NonNullType)query.FindField("fooNNClr").FieldType).OfType).ClrType);
+                ((ObjectType)((NonNullType)query.FindField("fooNNClr")!.FieldType).OfType).ClrType);
             Assert.Equal(typeof(Foo),
-                ((ObjectType)((NonNullType)query.FindField("fooNN").FieldType).OfType).ClrType);
+                ((ObjectType)((NonNullType)query.FindField("fooNN")!.FieldType).OfType).ClrType);
             Assert.Equal(typeof(Foo),
-                ((ObjectType)query.FindField("foo").FieldType).ClrType);
+                ((ObjectType)query.FindField("foo")!.FieldType).ClrType);
             Assert.Equal(typeof(Foo),
-                ((ObjectType)((ListType)query.FindField("fooList").FieldType).OfType).ClrType);
+                ((ObjectType)((ListType)query.FindField("fooList")!.FieldType).OfType).ClrType);
 
             Assert.Equal(typeof(Foo),
-                ((ObjectType)((NonNullType)((ListType)((NonNullType)query.FindField("fooClrList")
+                ((ObjectType)((NonNullType)((ListType)((NonNullType)query.FindField("fooClrList")!
                     .FieldType).OfType).OfType).OfType).ClrType);
         }
     }

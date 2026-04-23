@@ -112,7 +112,7 @@ namespace GraphZen.TypeSystem
         {
             Check.NotNull(name, nameof(name));
             var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit);
-            configurator?.Invoke(new InputValueBuilder(argBuilder));
+            configurator.Invoke(new InputValueBuilder(argBuilder));
             return this;
         }
 

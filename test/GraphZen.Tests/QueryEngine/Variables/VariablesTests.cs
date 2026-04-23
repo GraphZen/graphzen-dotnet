@@ -9,7 +9,6 @@ using GraphZen.LanguageModel.Internal;
 using GraphZen.QueryEngine;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
-using System.Text.Json;
 
 #nullable disable
 
