@@ -48,7 +48,7 @@ namespace GraphZen
         }
 
 
-        public override GraphQLContextOptions WithExtension<TExtension>(TExtension extension)
+        public override GraphQLContextOptions WithExtension<TExtension>([NotNull] TExtension extension)
         {
             var extensions = Extensions.ToDictionary(p => p.GetType(), p => p);
             extensions[typeof(TExtension)] = extension;

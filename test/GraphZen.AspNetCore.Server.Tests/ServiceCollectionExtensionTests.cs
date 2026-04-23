@@ -27,8 +27,8 @@ namespace GraphZen.AspNetCore.Server.Tests
             services.AddGraphQLContext<TestGraphQLContext>();
 
             var serviceProvider = services.BuildServiceProvider();
-            GraphQLContext context1;
-            GraphQLContext context2;
+            GraphQLContext? context1;
+            GraphQLContext? context2;
 
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -42,7 +42,7 @@ namespace GraphZen.AspNetCore.Server.Tests
                 context2.Should().NotBeSameAs(context1);
             }
 
-            context1.Schema.Should().BeSameAs(context2.Schema);
+            context1!.Schema.Should().BeSameAs(context2!.Schema);
         }
 
 
@@ -58,10 +58,10 @@ namespace GraphZen.AspNetCore.Server.Tests
             services.AddGraphQLContext<TestGraphQLContext>();
 
             var serviceProvider = services.BuildServiceProvider();
-            GraphQLContext context1;
-            GraphQLContext context2;
-            GraphQLContext context3;
-            GraphQLContext context4;
+            GraphQLContext? context1;
+            GraphQLContext? context2;
+            GraphQLContext? context3;
+            GraphQLContext? context4;
 
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
@@ -81,8 +81,8 @@ namespace GraphZen.AspNetCore.Server.Tests
                 context4.Should().NotBeSameAs(context1);
             }
 
-            context1.Schema.Should().NotBeNull();
-            context3.Schema.Should().NotBeNull();
+            context1!.Schema.Should().NotBeNull();
+            context3!.Schema.Should().NotBeNull();
             context1.Schema.Should().BeSameAs(context3.Schema);
         }
 

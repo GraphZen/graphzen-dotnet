@@ -25,7 +25,7 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public IDirectiveAnnotation FindDirectiveAnnotation(string name)
+        public IDirectiveAnnotation? FindDirectiveAnnotation(string name)
         {
             Check.NotNull(name, nameof(name));
             return DirectiveAnnotations.SingleOrDefault(_ => _.Name == name);

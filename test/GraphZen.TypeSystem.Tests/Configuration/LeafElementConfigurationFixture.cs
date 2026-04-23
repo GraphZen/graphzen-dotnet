@@ -72,13 +72,13 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         public abstract ConfigurationSource GetElementConfigurationSource(TMutableDefMarker parent);
 
         public ConfigurationSource GetElementConfigurationSource(MemberDefinition parent) =>
-            GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition));
+            GetElementConfigurationSource((TMutableDefMarker)(parent as TParentMemberDefinition)!);
 
         public bool TryGetValue(MemberDefinition parent, [NotNullWhen(true)] out object? value)
         {
             if (TryGetValue((TParentMemberDefinition)parent, out var inner))
             {
-                value = inner;
+                value = inner!;
                 return true;
             }
 
@@ -90,7 +90,7 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         {
             if (TryGetValue((TParentMember)parent, out var inner))
             {
-                value = inner;
+                value = inner!;
                 return true;
             }
 
@@ -117,8 +117,8 @@ namespace GraphZen.TypeSystem.Tests.Configuration
         public abstract TElement ValueB { get; }
 
 
-        public abstract bool TryGetValue(TParentMember parent, [NotNullWhen(true)] out TElement value);
+        public abstract bool TryGetValue(TParentMember parent, out TElement value);
 
-        public abstract bool TryGetValue(TParentMemberDefinition parent, [NotNullWhen(true)] out TElement value);
+        public abstract bool TryGetValue(TParentMemberDefinition parent, out TElement value);
     }
 }

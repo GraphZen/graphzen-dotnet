@@ -40,7 +40,9 @@ namespace GraphZen.Client.IntegrationTests
 
         public GraphQLRequestIntegrationTests()
         {
+#pragma warning disable ASPDEPR008
             var httpClient = new TestServer(WebHost.CreateDefaultBuilder().UseStartup<Startup>()).CreateClient();
+#pragma warning restore ASPDEPR008
             _gql = new GraphQLClient(httpClient);
         }
 

@@ -136,7 +136,7 @@ namespace GraphZen.TypeSystem
         {
             var undefined = _typeIdentities.Where(_ =>
                 _.Definition == null && _.ClrType != null && _.ClrType.NotIgnored()).ToArray();
-            identity = undefined.FirstOrDefault();
+            identity = undefined.FirstOrDefault()!;
             // ReSharper disable once PossibleUnintendedReferenceComparison
             if ((prev != null) & (prev == identity))
                 throw new InvalidOperationException("This type was already defined.");
@@ -245,7 +245,7 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public TypeIdentity FindOverlappingTypeIdentity(TypeIdentity identity)
+        public TypeIdentity? FindOverlappingTypeIdentity(TypeIdentity identity)
         {
             Check.NotNull(identity, nameof(identity));
             var ids = _typeIdentities.Where(_ => _.Overlaps(identity)).ToList();
@@ -629,14 +629,14 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public T FindType<T>(string name) where T : NamedTypeDefinition
+        public T? FindType<T>(string name) where T : NamedTypeDefinition
         {
             Check.NotNull(name, nameof(name));
             return _types.OfType<T>().SingleOrDefault(_ => _.Name == name);
         }
 
 
-        public T FindType<T>(Type clrType) where T : NamedTypeDefinition
+        public T? FindType<T>(Type clrType) where T : NamedTypeDefinition
         {
             Check.NotNull(clrType, nameof(clrType));
             return _types.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType);
@@ -661,14 +661,14 @@ namespace GraphZen.TypeSystem
         public bool TryGetType<T>(string name, out T type) where T : NamedTypeDefinition
         {
             Check.NotNull(name, nameof(name));
-            type = _types.OfType<T>().SingleOrDefault(_ => _.Name == name);
+            type = _types.OfType<T>().SingleOrDefault(_ => _.Name == name)!;
             return type != null;
         }
 
         public bool TryGetType<T>(Type clrType, out T type) where T : NamedTypeDefinition
         {
             Check.NotNull(clrType, nameof(clrType));
-            type = _types.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType);
+            type = _types.OfType<T>().SingleOrDefault(_ => _.ClrType == clrType)!;
             return type != null;
         }
 
@@ -692,13 +692,13 @@ namespace GraphZen.TypeSystem
         }
 
 
-        public NamedTypeDefinition FindType(TypeIdentity identity)
+        public NamedTypeDefinition? FindType(TypeIdentity identity)
         {
             Check.NotNull(identity, nameof(identity));
             return _types.SingleOrDefault(_ => _.Identity.Equals(identity));
         }
 
-        public NamedTypeDefinition FindType(string name)
+        public NamedTypeDefinition? FindType(string name)
         {
             return _types.SingleOrDefault(_ => _.Name == name);
         }
@@ -709,24 +709,24 @@ namespace GraphZen.TypeSystem
         public DirectiveDefinition? FindDirective(Type clrType) =>
             _directives.Values.SingleOrDefault(_ => _.ClrType == clrType);
 
-        public NamedTypeDefinition FindType(Type clrType)
+        public NamedTypeDefinition? FindType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.ClrType == clrType);
         }
 
 
-        public NamedTypeDefinition FindOutputType(Type clrType)
+        public NamedTypeDefinition? FindOutputType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.IsOutputType() && _.ClrType == clrType);
         }
 
-        public NamedTypeDefinition FindType(Type clrType, TypeKind kind)
+        public NamedTypeDefinition? FindType(Type clrType, TypeKind kind)
         {
             return _types.Where(_ => _.Kind == kind)
                 .SingleOrDefault(_ => _.ClrType == clrType);
         }
 
-        public NamedTypeDefinition FindInputType(Type clrType)
+        public NamedTypeDefinition? FindInputType(Type clrType)
         {
             return _types.SingleOrDefault(_ => _.IsInputType() && _.ClrType == clrType);
         }

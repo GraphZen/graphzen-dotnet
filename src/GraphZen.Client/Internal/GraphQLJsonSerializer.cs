@@ -20,7 +20,7 @@ namespace GraphZen.Internal
         private static JsonSerializerOptions SerializerOptions { get; } = new JsonSerializerOptions
         {
             Converters = { new JsonStringEnumConverter() },
-            IgnoreNullValues = false,
+            DefaultIgnoreCondition = JsonIgnoreCondition.Never,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 

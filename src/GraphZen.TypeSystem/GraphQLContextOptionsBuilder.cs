@@ -51,7 +51,7 @@ namespace GraphZen
         public GraphQLContextOptionsBuilder UseQueryType<TQueryType>() =>
             WithOption(o => o.WithQueryClrType(typeof(TQueryType)));
 
-        void IGraphQLContextOptionsBuilderInfrastructure.AddOrUpdateExtension<TExtension>(TExtension extension)
+        void IGraphQLContextOptionsBuilderInfrastructure.AddOrUpdateExtension<TExtension>([NotNull] TExtension extension)
         {
             Options = Options.WithExtension(extension);
         }

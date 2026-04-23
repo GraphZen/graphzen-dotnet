@@ -41,7 +41,7 @@ namespace GraphZen.Playground.Internal
             {
                 new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
             },
-            IgnoreNullValues = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             WriteIndented = true
         };
     }
