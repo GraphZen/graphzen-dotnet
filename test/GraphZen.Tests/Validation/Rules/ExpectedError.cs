@@ -38,11 +38,11 @@ namespace GraphZen.Tests.Validation.Rules
             string.Equals(Message, other.Message) &&
             (Locations == null && other.Locations == null ||
              // ReSharper disable once AssignNullToNotNullAttribute
-             Locations.SequenceEqual(other.Locations))
+             Locations!.SequenceEqual(other.Locations!))
             &&
             (Path == null && other.Path == null ||
              // ReSharper disable once AssignNullToNotNullAttribute
-             Path.SequenceEqual(other.Path));
+             Path!.SequenceEqual(other.Path!));
 
 
         public override bool Equals(object? obj)

@@ -70,7 +70,7 @@ namespace GraphZen.TypeSystem
                 .Field("inputFields", "[__InputValue!]", _ => _
                     .Resolve(type =>
                         type is InputObjectType inputObject
-                            ? inputObject.Fields.Cast<InputValue>().ToList()
+                            ? inputObject.Fields.Values.Cast<InputValue>().ToList()
                             : null))
                 .Field("ofType", "__Type", _ => _
                     .Resolve(source => source is IWrappingType wrapping ? wrapping.OfType : null));

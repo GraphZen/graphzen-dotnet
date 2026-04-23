@@ -197,7 +197,7 @@ namespace GraphZen.TypeSystem
 
 
         [GraphQLIgnore]
-        public Directive FindDirective(string name)
+        public Directive? FindDirective(string name)
         {
             Check.NotNull(name, nameof(name));
             return Directives.SingleOrDefault(_ =>
@@ -372,7 +372,7 @@ namespace GraphZen.TypeSystem
         public bool TryGetType(Type clrType, out INamedType type)
         {
             Check.NotNull(clrType, nameof(clrType));
-            type = GetTypes<NamedType>().SingleOrDefault(_ => _.ClrType == clrType);
+            type = GetTypes<NamedType>().SingleOrDefault(_ => _.ClrType == clrType)!;
             return type != null;
         }
 

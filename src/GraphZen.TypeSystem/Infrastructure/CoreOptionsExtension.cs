@@ -35,11 +35,11 @@ namespace GraphZen.Infrastructure
 
         protected CoreOptionsExtension Clone() => new CoreOptionsExtension(this);
 
-        public void ApplyServices(IServiceCollection services)
+        public void ApplyServices([NotNull] IServiceCollection services)
         {
         }
 
-        public void Validate(IGraphQLContextOptions options)
+        public void Validate([NotNull] IGraphQLContextOptions options)
         {
         }
 

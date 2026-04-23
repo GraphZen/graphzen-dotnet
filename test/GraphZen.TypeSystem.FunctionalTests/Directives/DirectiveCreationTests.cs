@@ -24,7 +24,7 @@ namespace GraphZen.TypeSystem.FunctionalTests.Directives
             var schema = Schema.Create(@"directive @foo on FIELD");
             var foo = schema.FindDirective("foo");
             foo.Should().BeOfType<Directive>();
-            foo.Name.Should().Be("foo");
+            foo!.Name.Should().Be("foo");
         }
 
         [Fact(Skip = "TODO")]

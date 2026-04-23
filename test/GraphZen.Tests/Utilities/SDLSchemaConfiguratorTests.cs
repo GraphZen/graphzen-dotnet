@@ -155,7 +155,7 @@ namespace GraphZen.Tests.Utilities
             var expectedDirective = new GraphQLDeprecatedAttribute("test");
             var field = schema.QueryType.GetField("str");
             var actualDirective = field.FindDirectiveAnnotation("deprecated");
-            actualDirective.Value.Should().Be(expectedDirective);
+            actualDirective!.Value.Should().Be(expectedDirective);
             field.DeprecationReason.Should().Be("test");
         }
 
@@ -728,7 +728,7 @@ namespace GraphZen.Tests.Utilities
                     testInterface,
                     testType,
                     testScalar,
-                    testDirective
+                    testDirective!
                 }.ToSyntaxNodes<DefinitionSyntax>().ToArray()
             );
             restoredSchemaAST.ToSyntaxString().Should().Be(schemaAST.ToSyntaxString());
@@ -740,7 +740,7 @@ namespace GraphZen.Tests.Utilities
             testInterface.Fields["interfaceField"].Print().Should().Be("interfaceField: String");
             testType.Fields["interfaceField"].Print().Should().Be("interfaceField: String");
             // ReSharper disable once PossibleNullReferenceException
-            testDirective.GetArguments().First().Print().Should().Be("arg: TestScalar");
+            testDirective!.GetArguments().First().Print().Should().Be("arg: TestScalar");
         }
 
         [Fact]

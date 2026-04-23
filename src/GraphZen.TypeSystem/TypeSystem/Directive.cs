@@ -35,7 +35,7 @@ namespace GraphZen.TypeSystem
 
             //arguments = arguments != null ? Enumerable.Empty<IArgumentDefinition>();
             // ReSharper disable once PossibleNullReferenceException
-            Arguments = new ReadOnlyDictionary<string, Argument>(arguments.ToDictionary(_ => _.Name,
+            Arguments = new ReadOnlyDictionary<string, Argument>(arguments!.ToDictionary(_ => _.Name,
                 _ => Argument.From(_, this, typeResolver)));
             _syntax = new Lazy<DirectiveDefinitionSyntax>(() =>
             {

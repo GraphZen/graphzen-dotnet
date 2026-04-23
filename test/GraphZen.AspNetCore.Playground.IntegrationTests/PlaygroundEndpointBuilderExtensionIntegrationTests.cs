@@ -142,6 +142,8 @@ namespace GraphZen.AspNetCore.Playground.IntegrationTests
         }
 
         private static HttpClient CreateAppClient<T>() where T : class =>
+#pragma warning disable ASPDEPR008
             new TestServer(WebHost.CreateDefaultBuilder().UseStartup<T>()).CreateClient();
+#pragma warning restore ASPDEPR008
     }
 }

@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netcoreapp3.0</TargetFrameworks>
+    <TargetFramework>net10.0</TargetFramework>
     <Description>GraphQL abstract syntax tree, parser, printer, and language utilities</Description>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Superpower" Version="2.3.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>
