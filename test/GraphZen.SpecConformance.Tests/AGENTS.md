@@ -23,16 +23,26 @@ dotnet test --project test/GraphZen.SpecConformance.Tests/ --filter "SpecSection
 
 Hierarchical filtering works because `SpecSectionDiscoverer` expands `"5.3.3"` into traits for `"5"`, `"5.3"`, and `"5.3.3"`.
 
+Section 2 (Language) tests follow the same pattern:
+
+```sh
+dotnet test --project test/GraphZen.SpecConformance.Tests/ --filter "SpecSection=2"     # Chapter 2
+dotnet test --project test/GraphZen.SpecConformance.Tests/ --filter "SpecSection=2.10"   # Input Values (2.10.x)
+dotnet test --project test/GraphZen.SpecConformance.Tests/ --filter "SpecSection=2.10.4" # one subsection
+```
+
 ## Adding a Conformance Class
 
-1. **Verify the heading** in the local spec source (`~/Code/graphql/graphql-spec/spec/Section 5 -- Validation.md`). Do not invent headings from memory.
+1. **Verify the heading** in the local spec source (e.g., `~/Code/graphql/graphql-spec/spec/Section 5 -- Validation.md` or `Section 2 -- Language.md`). Do not invent headings from memory.
 2. **Derive the section number** from `https://spec.graphql.org/draft/`. The source markdown has no explicit numbers -- count headings to derive numbers like `5.3.3`.
-3. **Check graphql-js** in `~/Code/graphql/graphql-js/src/validation/` for upstream test cases and intent. This is a supplement, not the source of truth.
-4. **Add the section number** to `SpecCoverageManifest.ValidationSections` if not already present.
+3. **Check graphql-js** for upstream test cases and intent. This is a supplement, not the source of truth.
+   - Section 5: `~/Code/graphql/graphql-js/src/validation/`
+   - Section 2: `~/Code/graphql/graphql-js/src/language/__tests__/` (primarily `parser-test.ts` and `lexer-test.ts`)
+4. **Add the section number** to the appropriate manifest list in `SpecCoverageManifest` (`ValidationSections` or `LanguageSections`).
 5. **Create the class** in the correct folder and namespace (see Structure below).
 6. **Add test cases** as individual `[Fact]` methods -- one method per distinct spec scenario (see Test Patterns below).
 7. **Run the section tests**: `dotnet test --filter "SpecSection=X.Y.Z"`
-8. **Run the coverage test**: `dotnet test --filter "FullyQualifiedName~ValidationCoverageTests"`
+8. **Run the coverage test**: `dotnet test --filter "FullyQualifiedName~ValidationCoverageTests"` or `"FullyQualifiedName~LanguageCoverageTests"`
 
 ## Specification Sources
 
@@ -61,7 +71,7 @@ The mapping from specification to code is explicit and predictable:
 
 If the file path, namespace, class name, and attribute disagree about which subsection is represented, fix the structure. Do not put multiple conformance classes in one file.
 
-### Example
+### Examples
 
 For spec subsection `5.3.3 Leaf Field Selections`:
 
@@ -72,6 +82,16 @@ For spec subsection `5.3.3 Leaf Field Selections`:
 | class name | `LeafFieldSelectionsConformanceTests` |
 | XML doc comment | `/// <seealso href="https://spec.graphql.org/draft/#sec-Leaf-Field-Selections"/>` |
 | attribute | `[SpecSection("5.3.3", "Leaf Field Selections")]` |
+
+For spec subsection `2.10.4 String Value`:
+
+| Artifact | Value |
+|---|---|
+| file path | `Section2_Language/Values/StringValueConformanceTests.cs` |
+| namespace | `GraphZen.SpecConformance.Tests.Section2_Language.Values` |
+| class name | `StringValueConformanceTests` |
+| XML doc comment | `/// <seealso href="https://spec.graphql.org/draft/#sec-String-Value"/>` |
+| attribute | `[SpecSection("2.10.4", "String Value")]` |
 
 ### Naming
 
@@ -237,9 +257,120 @@ ExpectErrors(FieldsOnCorrectType, """
 
 `ExpectedError` is a positional record: `new(message, Line: line, Column: column)`. Always assert both the message and the location -- never assert only the error count. Calling `.ToDeepEqual()` with no arguments asserts zero errors (this is what `ExpectValid` does).
 
-### TestSchema
+### Section 2 — Language Tests
 
-Most tests use the shared `TestSchema` provided by the harness. Introduce a section-local schema when a test needs a smaller or clearer setup.
+Section 2 conformance tests use `SpecParsing` (imported via `using static`) instead of `SpecValidation`. The fundamental difference: Section 5 tests bind to a named validation rule; Section 2 tests exercise the parser directly.
+
+#### Assertion Helpers (SpecParsing)
+
+`SpecParsing` provides:
+
+| Method | Use when |
+|---|---|
+| `ExpectValidSyntax(source)` | Source should parse as a valid document; returns `DocumentSyntax` for further assertions |
+| `ExpectSyntaxError(source)` | Source should fail to parse -- chain with `.ToEqual(...)` for error details |
+| `ExpectValidValue(source)` | Source should parse as a valid value literal; returns `ValueSyntax` |
+| `ExpectValidType(source)` | Source should parse as a valid type reference; returns `TypeSyntax` |
+
+`.ToEqual(...)` asserts the error message and location:
+
+```csharp
+ExpectSyntaxError("""
+    { field( }
+    """).ToEqual(
+    new("expected message", Line: 1, Column: 10));
+```
+
+`ExpectedSyntaxError` is a positional record: `new(message, Line: line, Column: column)`. Unlike validation (which can produce multiple errors), parse errors are singular -- the parser stops at the first error -- so the method is `ToEqual` not `ToDeepEqual`.
+
+When AST shape matters, use the returned syntax node:
+
+```csharp
+var doc = ExpectValidSyntax("{ field }");
+var op = Assert.Single(doc.Definitions);
+Assert.IsType<OperationDefinitionSyntax>(op);
+```
+
+#### Error Message Assertions
+
+The spec does not mandate error message text, so exact wording is implementation-dependent. Use `ToEqual` for messages that are semantically significant. When only the location matters (or the message is a Superpower parser artifact), use `WithMessageContaining` for substring matching:
+
+```csharp
+ExpectSyntaxError("{ 1.0e }")
+    .WithMessageContaining("unexpected")
+    .AtLocation(Line: 1, Column: 7);
+```
+
+#### Test Patterns by Category
+
+**Lexical sections (2.1.x)** -- test through document parsing. The suite is agnostic of GraphZen internals, so use `ExpectValidSyntax`/`ExpectValidValue` rather than the tokenizer directly.
+
+```csharp
+[Fact]
+public void horizontal_tab_is_valid_whitespace()
+{
+    ExpectValidSyntax("{\tfield\t}");
+}
+
+[Fact]
+public void commas_are_insignificant()
+{
+    var withCommas = ExpectValidSyntax("{ a, b, c }");
+    var withoutCommas = ExpectValidSyntax("{ a b c }");
+    Assert.Equal(withCommas.ToSyntaxString(), withoutCommas.ToSyntaxString());
+}
+```
+
+**Syntactic sections (2.3--2.9, 2.11--2.13)** -- test grammar productions via document parsing.
+
+```csharp
+[Fact]
+public void query_shorthand()
+{
+    var doc = ExpectValidSyntax("{ field }");
+    var op = Assert.IsType<OperationDefinitionSyntax>(Assert.Single(doc.Definitions));
+    Assert.Null(op.Name);
+}
+```
+
+**Value sections (2.10.x)** -- test via `ExpectValidValue`.
+
+```csharp
+[Fact]
+public void integer_value_parses()
+{
+    var value = ExpectValidValue("42");
+    var intValue = Assert.IsType<IntValueSyntax>(value);
+    Assert.Equal("42", intValue.Value);
+}
+```
+
+**Type reference section (2.12)** -- test via `ExpectValidType`.
+
+```csharp
+[Fact]
+public void non_null_list_of_non_null_type()
+{
+    var type = ExpectValidType("[String!]!");
+    Assert.IsType<NonNullTypeSyntax>(type);
+}
+```
+
+#### Relationship to Existing Parser Tests
+
+Existing tests in `test/GraphZen.Tests/LanguageModel/` are implementation tests -- they verify GraphZen's parser using internal APIs (`ParserTestBase`, `SyntaxFactory`, `SuperPowerTokenizer`). The conformance suite is additive and does not replace them.
+
+| | Existing parser tests | Spec conformance tests |
+|---|---|---|
+| Location | `test/GraphZen.Tests/LanguageModel/` | `test/GraphZen.SpecConformance.Tests/Section2_Language/` |
+| Purpose | Verify parser implementation | Prove spec compliance |
+| API surface | Internal (`ParserTestBase`, `SyntaxFactory`) | Public (`SpecParsing` harness only) |
+| Organized by | Implementation module | Spec subsection |
+| Gaps | Absent = not tested | Absent = never; gaps are explicit |
+
+### TestSchema (Section 5)
+
+Most Section 5 tests use the shared `TestSchema` provided by the harness. Introduce a section-local schema when a test needs a smaller or clearer setup.
 
 - **Interfaces**: Being, Pet, Canine, Intelligent
 - **Objects**: Dog, Cat, Human, Alien, ComplicatedArgs, QueryRoot
@@ -253,13 +384,18 @@ QueryRoot exposes: `human`, `alien`, `cat`, `pet`, `catOrDog`, `dogOrHuman`, `hu
 
 ## Coverage Manifest
 
-`Infrastructure/SpecCoverageManifest.cs` lists every spec subsection that should have a conformance class. `Infrastructure/ValidationCoverageTests.cs` uses reflection to verify every manifest entry has a corresponding `[SpecSection]` class.
+`Infrastructure/SpecCoverageManifest.cs` lists every spec subsection that should have a conformance class. Coverage test classes use reflection to verify every manifest entry has a corresponding `[SpecSection]` class.
+
+| Manifest list | Coverage test | Spec chapter |
+|---|---|---|
+| `SpecCoverageManifest.LanguageSections` | `LanguageCoverageTests` | Section 2 -- Language |
+| `SpecCoverageManifest.ValidationSections` | `ValidationCoverageTests` | Section 5 -- Validation |
 
 When adding a new subsection:
 
-1. Add the section number to `SpecCoverageManifest.ValidationSections`
+1. Add the section number to the appropriate manifest list (`LanguageSections` or `ValidationSections`)
 2. Create the conformance class (or gap placeholder)
-3. Run `dotnet test --filter "FullyQualifiedName~ValidationCoverageTests"`
+3. Run the matching coverage test: `dotnet test --filter "FullyQualifiedName~LanguageCoverageTests"` or `"FullyQualifiedName~ValidationCoverageTests"`
 
 ## Quality Standards
 
