@@ -7,43 +7,42 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public class JsonNodeSortingExtensionsTests
 {
-    public class JsonNodeSortingExtensionsTests
+    [Theory]
+    [InlineData(@"{""c"":1, ""a"": -1, ""b"": 2}", @"{""a"":-1, ""b"": 2, ""c"": 1 }")]
+    public void it_should_sort_json_object_properties_by_key(string unsortedJson, string expectedJson)
     {
-        [Theory]
-        [InlineData(@"{""c"":1, ""a"": -1, ""b"": 2}", @"{""a"":-1, ""b"": 2, ""c"": 1 }")]
-        public void it_should_sort_json_object_properties_by_key(string unsortedJson, string expectedJson)
-        {
-            // Arrange
-            var unsortedNode = JsonNode.Parse(unsortedJson);
-            var expectedNode = JsonNode.Parse(expectedJson);
+        // Arrange
+        var unsortedNode = JsonNode.Parse(unsortedJson);
+        var expectedNode = JsonNode.Parse(expectedJson);
 
-            // Act
-            unsortedNode.Sort();
+        // Act
+        unsortedNode.Sort();
 
-            // Assert
-            unsortedJson = unsortedNode!.ToJsonString();
-            expectedJson = expectedNode!.ToJsonString();
-            StringAssert.Equal(unsortedJson, expectedJson, true);
-        }
+        // Assert
+        unsortedJson = unsortedNode!.ToJsonString();
+        expectedJson = expectedNode!.ToJsonString();
+        StringAssert.Equal(unsortedJson, expectedJson, true);
+    }
 
-        [Theory]
-        [InlineData(@"[]", @"[]")]
-        [InlineData(@"[3,2,1]", @"[1,2,3]")]
-        public void it_should_sort_json_arrays_by_item(string unsortedJson, string expectedJson)
-        {
-            // Arrange
-            var unsortedNode = JsonNode.Parse(unsortedJson);
-            var expectedNode = JsonNode.Parse(expectedJson);
+    [Theory]
+    [InlineData(@"[]", @"[]")]
+    [InlineData(@"[3,2,1]", @"[1,2,3]")]
+    public void it_should_sort_json_arrays_by_item(string unsortedJson, string expectedJson)
+    {
+        // Arrange
+        var unsortedNode = JsonNode.Parse(unsortedJson);
+        var expectedNode = JsonNode.Parse(expectedJson);
 
-            // Act
-            unsortedNode.Sort();
+        // Act
+        unsortedNode.Sort();
 
-            // Assert
-            unsortedJson = unsortedNode!.ToJsonString();
-            expectedJson = expectedNode!.ToJsonString();
-            StringAssert.Equal(unsortedJson, expectedJson, true);
-        }
+        // Assert
+        unsortedJson = unsortedNode!.ToJsonString();
+        expectedJson = expectedNode!.ToJsonString();
+        StringAssert.Equal(unsortedJson, expectedJson, true);
     }
 }

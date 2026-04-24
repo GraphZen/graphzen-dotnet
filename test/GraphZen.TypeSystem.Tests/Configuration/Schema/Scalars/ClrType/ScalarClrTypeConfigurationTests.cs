@@ -6,41 +6,40 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.ClrType
+namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.ClrType;
+
+[NoReorder]
+public class ScalarClrTypeConfigurationTests
 {
-    [NoReorder]
-    public class ScalarClrTypeConfigurationTests
+    public class ExampleScalar
     {
-        public class ExampleScalar
-        {
-        }
+    }
 
-        [Fact]
-        public void scalar_added_explicitly_subsequently_referenced_by_matching_clr_type_should_have_clr_type_set()
+    [Fact]
+    public void scalar_added_explicitly_subsequently_referenced_by_matching_clr_type_should_have_clr_type_set()
+    {
+        var schema = Schema.Create(sb =>
         {
-            var schema = Schema.Create(sb =>
-            {
-                sb.Scalar(nameof(ExampleScalar));
-                var def = sb.GetDefinition().GetScalar(nameof(ExampleScalar));
-                sb.Scalar<ExampleScalar>();
-                Assert.Equal(typeof(ExampleScalar), def.ClrType);
-            });
-            Assert.Equal(typeof(ExampleScalar), schema.GetScalar<ExampleScalar>().ClrType);
-        }
+            sb.Scalar(nameof(ExampleScalar));
+            var def = sb.GetDefinition().GetScalar(nameof(ExampleScalar));
+            sb.Scalar<ExampleScalar>();
+            Assert.Equal(typeof(ExampleScalar), def.ClrType);
+        });
+        Assert.Equal(typeof(ExampleScalar), schema.GetScalar<ExampleScalar>().ClrType);
+    }
 
-        [Fact]
-        public void
-            scalar_added_explicitly_subsequently_referenced_by_matching_clr_type_via_field_should_have_clr_type_set()
+    [Fact]
+    public void
+        scalar_added_explicitly_subsequently_referenced_by_matching_clr_type_via_field_should_have_clr_type_set()
+    {
+        var schema = Schema.Create(sb =>
         {
-            var schema = Schema.Create(sb =>
-            {
-                sb.Scalar(nameof(ExampleScalar));
-                sb.Object("Parent").Field<ExampleScalar>("field");
-                var def = sb.GetDefinition().GetScalar(nameof(ExampleScalar));
-                sb.Scalar<ExampleScalar>();
-                Assert.Equal(typeof(ExampleScalar), def.ClrType);
-            });
-            Assert.Equal(typeof(ExampleScalar), schema.GetScalar<ExampleScalar>().ClrType);
-        }
+            sb.Scalar(nameof(ExampleScalar));
+            sb.Object("Parent").Field<ExampleScalar>("field");
+            var def = sb.GetDefinition().GetScalar(nameof(ExampleScalar));
+            sb.Scalar<ExampleScalar>();
+            Assert.Equal(typeof(ExampleScalar), def.ClrType);
+        });
+        Assert.Equal(typeof(ExampleScalar), schema.GetScalar<ExampleScalar>().ClrType);
     }
 }

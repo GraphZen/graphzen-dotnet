@@ -6,11 +6,10 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface ISyntaxConvertable
 {
-    [GraphQLIgnore]
-    public interface ISyntaxConvertable
-    {
-        SyntaxNode ToSyntaxNode();
-    }
+    SyntaxNode ToSyntaxNode();
 }

@@ -6,28 +6,28 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Tests.LanguageModel
+namespace GraphZen.Tests.LanguageModel;
+
+public class BlockStringPrinterTests : ParserTestBase
 {
-    public class BlockStringPrinterTests : ParserTestBase
+    [Fact]
+    public void ItCorrectlyPrintsSingleLineWithLeadingSpace()
     {
-        [Fact]
-        public void ItCorrectlyPrintsSingleLineWithLeadingSpace()
-        {
-            Assert.Equal(
-                @"
+        Assert.Equal(
+            @"
               {
                 field(arg: """"""    space-led value"""""")
               }
               ".Dedent(),
-                ParseDocument(@"{ field(arg: """"""    space-led value"""""") }")
-                    .ToSyntaxString());
-        }
+            ParseDocument(@"{ field(arg: """"""    space-led value"""""") }")
+                .ToSyntaxString());
+    }
 
-        [Fact]
-        public void ItCorrectlyPrintsStringWithFirstLineOfIndentation()
-        {
-            Assert.Equal(
-                @"
+    [Fact]
+    public void ItCorrectlyPrintsStringWithFirstLineOfIndentation()
+    {
+        Assert.Equal(
+            @"
                 {
                   field(arg: """"""
                         first
@@ -36,7 +36,7 @@ namespace GraphZen.Tests.LanguageModel
                   """""")
                 }
                 ".Dedent(),
-                ParseDocument(@"
+            ParseDocument(@"
                 {
                   field(arg: """"""
                         first
@@ -45,6 +45,5 @@ namespace GraphZen.Tests.LanguageModel
                   """""")
                 }
             ").ToSyntaxString());
-        }
     }
 }

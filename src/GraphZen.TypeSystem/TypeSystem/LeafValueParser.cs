@@ -6,9 +6,8 @@ using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
-{
-    public delegate Maybe<TScalar> LeafValueParser<TScalar>(object value);
+namespace GraphZen.TypeSystem;
 
-    public delegate Maybe<object> LeafValueParser(object value);
-}
+public delegate Maybe<TScalar> LeafValueParser<TScalar>(object value);
+
+public delegate Maybe<object> LeafValueParser(object value);

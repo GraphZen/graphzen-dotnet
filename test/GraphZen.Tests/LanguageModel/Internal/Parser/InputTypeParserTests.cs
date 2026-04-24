@@ -7,35 +7,33 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+[NoReorder]
+public class InputTypeParserTests : ParserTestBase
 {
-    [NoReorder]
-    public class InputTypeParserTests : ParserTestBase
+    [Fact]
+    public void ParseListType()
     {
-        [Fact]
-        public void ParseListType()
-        {
-            Assert.Equal(SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo"))), ParseType("[Foo]"));
-        }
+        Assert.Equal(SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo"))), ParseType("[Foo]"));
+    }
 
-        [Fact]
-        public void ParseNamedType()
-        {
-            Assert.Equal(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo")), ParseType("Foo"));
-        }
+    [Fact]
+    public void ParseNamedType()
+    {
+        Assert.Equal(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo")), ParseType("Foo"));
+    }
 
-        [Fact]
-        public void ParseNonNullableListType()
-        {
-            Assert.Equal(SyntaxFactory.NonNull(SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo")))), ParseType("[Foo]!"));
-        }
+    [Fact]
+    public void ParseNonNullableListType()
+    {
+        Assert.Equal(SyntaxFactory.NonNull(SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo")))),
+            ParseType("[Foo]!"));
+    }
 
-        [Fact]
-        public void ParseNonNullableNamedType()
-        {
-            Assert.Equal(SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo"))), ParseType("Foo!"));
-        }
+    [Fact]
+    public void ParseNonNullableNamedType()
+    {
+        Assert.Equal(SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("Foo"))), ParseType("Foo!"));
     }
 }

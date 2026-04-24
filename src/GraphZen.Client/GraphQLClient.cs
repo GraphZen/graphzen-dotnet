@@ -8,25 +8,24 @@ using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+public class GraphQLClient : IGraphQLClient
 {
-    public class GraphQLClient : IGraphQLClient
+    public GraphQLClient(HttpClient httpClient)
     {
-        public GraphQLClient(HttpClient httpClient)
-        {
-            HttpClient = httpClient;
-        }
-
-        public HttpClient HttpClient { get; }
-
-        public async Task<GraphQLResponse> SendAsync(GraphQLRequest request, CancellationToken cancellationToken)
-        {
-            var httpRequest = request.ToHttpRequest();
-            var httpResponse = await HttpClient.SendAsync(httpRequest, cancellationToken);
-            var responseContent = await httpResponse.Content.ReadAsStringAsync();
-            return new GraphQLResponse(responseContent);
-        }
-
-        public Task<GraphQLResponse> SendAsync(GraphQLRequest request) => SendAsync(request, default);
+        HttpClient = httpClient;
     }
+
+    public HttpClient HttpClient { get; }
+
+    public async Task<GraphQLResponse> SendAsync(GraphQLRequest request, CancellationToken cancellationToken)
+    {
+        var httpRequest = request.ToHttpRequest();
+        var httpResponse = await HttpClient.SendAsync(httpRequest, cancellationToken);
+        var responseContent = await httpResponse.Content.ReadAsStringAsync();
+        return new GraphQLResponse(responseContent);
+    }
+
+    public Task<GraphQLResponse> SendAsync(GraphQLRequest request) => SendAsync(request, default);
 }

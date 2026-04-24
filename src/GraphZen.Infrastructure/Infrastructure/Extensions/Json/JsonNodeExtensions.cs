@@ -10,71 +10,70 @@ using System.Text.Json.Nodes;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public static class JsonNodeExtensions
 {
-    public static class JsonNodeExtensions
+    public static IDictionary<string, object> ToDictionary(this JsonObject jsonObject)
     {
-        public static IDictionary<string, object> ToDictionary(this JsonObject jsonObject)
+        Check.NotNull(jsonObject, nameof(jsonObject));
+        var result = new Dictionary<string, object>();
+
+        foreach (var property in jsonObject)
         {
-            Check.NotNull(jsonObject, nameof(jsonObject));
-            var result = new Dictionary<string, object>();
-
-            foreach (var property in jsonObject)
-            {
-                result[property.Key] = ConvertNode(property.Value);
-            }
-
-            return result;
+            result[property.Key] = ConvertNode(property.Value);
         }
 
-        public static IDictionary<string, object> ObjectToDictionary(object value)
-        {
-            var json = JsonSerializer.Serialize(value, Json.SerializerOptions);
-            var node = JsonNode.Parse(json);
-            if (node is JsonObject jsonObject)
-                return jsonObject.ToDictionary();
-            throw new Exception("Unable to convert object to Dictionary<string, object>");
-        }
+        return result;
+    }
 
-        private static object ConvertNode(JsonNode? node)
-        {
-            switch (node)
-            {
-                case null:
-                    return null!;
-                case JsonObject obj:
-                    return obj.ToDictionary();
-                case JsonArray arr:
-                    return arr.Select(ConvertNode).ToArray();
-                case JsonValue val:
-                    return ConvertJsonValue(val);
-                default:
-                    throw new NotImplementedException($"unsupported type {node.GetType()}");
-            }
-        }
+    public static IDictionary<string, object> ObjectToDictionary(object value)
+    {
+        var json = JsonSerializer.Serialize(value, Json.SerializerOptions);
+        var node = JsonNode.Parse(json);
+        if (node is JsonObject jsonObject)
+            return jsonObject.ToDictionary();
+        throw new Exception("Unable to convert object to Dictionary<string, object>");
+    }
 
-        private static object ConvertJsonValue(JsonValue value)
+    private static object ConvertNode(JsonNode? node)
+    {
+        switch (node)
         {
-            var element = value.GetValue<JsonElement>();
-            switch (element.ValueKind)
-            {
-                case JsonValueKind.String:
-                    return element.GetString()!;
-                case JsonValueKind.Number:
-                    if (element.TryGetInt32(out var intVal))
-                        return intVal;
-                    if (element.TryGetInt64(out var longVal))
-                        return longVal;
-                    return element.GetDouble();
-                case JsonValueKind.True:
-                    return true;
-                case JsonValueKind.False:
-                    return false;
-                case JsonValueKind.Null:
-                    return null!;
-                default:
-                    return element.ToString();
-            }
+            case null:
+                return null!;
+            case JsonObject obj:
+                return obj.ToDictionary();
+            case JsonArray arr:
+                return arr.Select(ConvertNode).ToArray();
+            case JsonValue val:
+                return ConvertJsonValue(val);
+            default:
+                throw new NotImplementedException($"unsupported type {node.GetType()}");
+        }
+    }
+
+    private static object ConvertJsonValue(JsonValue value)
+    {
+        var element = value.GetValue<JsonElement>();
+        switch (element.ValueKind)
+        {
+            case JsonValueKind.String:
+                return element.GetString()!;
+            case JsonValueKind.Number:
+                if (element.TryGetInt32(out var intVal))
+                    return intVal;
+                if (element.TryGetInt64(out var longVal))
+                    return longVal;
+                return element.GetDouble();
+            case JsonValueKind.True:
+                return true;
+            case JsonValueKind.False:
+                return false;
+            case JsonValueKind.Null:
+                return null!;
+            default:
+                return element.ToString();
         }
     }
 }

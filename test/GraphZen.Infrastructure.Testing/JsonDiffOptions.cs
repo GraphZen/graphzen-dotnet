@@ -6,20 +6,19 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
-{
-    public class JsonDiffOptions
-    {
-        public bool SortBeforeCompare { get; set; }
-        public StringDiffOptions StringDiffOptions { get; } = new StringDiffOptions();
+namespace GraphZen.Infrastructure;
 
-        internal static JsonDiffOptions? FromOptionsAction(
-            Action<JsonDiffOptions>? optionsAction)
-        {
-            if (optionsAction == null) return null;
-            var options = new JsonDiffOptions();
-            optionsAction(options);
-            return options;
-        }
+public class JsonDiffOptions
+{
+    public bool SortBeforeCompare { get; set; }
+    public StringDiffOptions StringDiffOptions { get; } = new();
+
+    internal static JsonDiffOptions? FromOptionsAction(
+        Action<JsonDiffOptions>? optionsAction)
+    {
+        if (optionsAction == null) return null;
+        var options = new JsonDiffOptions();
+        optionsAction(options);
+        return options;
     }
 }

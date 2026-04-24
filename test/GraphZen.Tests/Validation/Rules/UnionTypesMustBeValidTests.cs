@@ -7,18 +7,17 @@ using GraphZen.LanguageModel.Validation;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class UnionTypesMustBeValidTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class UnionTypesMustBeValidTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.UnionTypesMustBeValid;
+    public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.UnionTypesMustBeValid;
 
-        [Fact]
-        public void AcceptsUnionTypeWithMemberTypes()
-        {
-            SdlShouldPass(@"
+    [Fact]
+    public void AcceptsUnionTypeWithMemberTypes()
+    {
+        SdlShouldPass(@"
           type Query {
             test: GoodUnion
           }
@@ -35,12 +34,12 @@ namespace GraphZen.Tests.Validation.Rules
             | TypeA
             | TypeB
         ");
-        }
+    }
 
-        [Fact]
-        public void RejectsUnionTypeWithEmptyTypes()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsUnionTypeWithEmptyTypes()
+    {
+        SdlShouldFail(@"
           type Query {
             test: BadUnion
           }
@@ -51,12 +50,12 @@ namespace GraphZen.Tests.Validation.Rules
 
           extend union BadUnion @test
         ", Error("Union type BadUnion must define one or more member types.", (5, 1), (9, 1)));
-        }
+    }
 
-        [Fact]
-        public void RejectsAUnionTypeWithDuplicatedMemberType()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAUnionTypeWithDuplicatedMemberType()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: BadUnion
               }
@@ -76,13 +75,13 @@ namespace GraphZen.Tests.Validation.Rules
 
               extend union BadUnion = TypeB
             ", Error("Union type BadUnion can only include type TypeA once.", (14, 5), (16, 5)),
-                Error("Union type BadUnion can only include type TypeB once.", (15, 5), (18, 25)));
-        }
+            Error("Union type BadUnion can only include type TypeB once.", (15, 5), (18, 25)));
+    }
 
-        [Fact]
-        public void ItRejectsAUnionTypeWithNonObjectMemberTypes()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void ItRejectsAUnionTypeWithNonObjectMemberTypes()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: BadUnion
               }
@@ -102,9 +101,8 @@ namespace GraphZen.Tests.Validation.Rules
 
               extend union BadUnion = Int
             ",
-                Error("Union type BadUnion can only include Object types, it cannot include String.", (15, 5)),
-                Error("Union type BadUnion can only include Object types, it cannot include Int.", (18, 25))
-            );
-        }
+            Error("Union type BadUnion can only include Object types, it cannot include String.", (15, 5)),
+            Error("Union type BadUnion can only include Object types, it cannot include Int.", (18, 25))
+        );
     }
 }

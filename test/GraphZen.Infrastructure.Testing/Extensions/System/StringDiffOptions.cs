@@ -6,21 +6,20 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
-{
-    public class StringDiffOptions
-    {
-        public bool ShowExpected { get; set; } = true;
-        public bool ShowActual { get; set; } = true;
-        public bool ShowDiffs { get; set; } = true;
+namespace GraphZen.Infrastructure;
 
-        internal static StringDiffOptions? FromOptionsAction(
-            Action<StringDiffOptions>? optionsAction)
-        {
-            if (optionsAction == null) return null;
-            var options = new StringDiffOptions();
-            optionsAction(options);
-            return options;
-        }
+public class StringDiffOptions
+{
+    public bool ShowExpected { get; set; } = true;
+    public bool ShowActual { get; set; } = true;
+    public bool ShowDiffs { get; set; } = true;
+
+    internal static StringDiffOptions? FromOptionsAction(
+        Action<StringDiffOptions>? optionsAction)
+    {
+        if (optionsAction == null) return null;
+        var options = new StringDiffOptions();
+        optionsAction(options);
+        return options;
     }
 }

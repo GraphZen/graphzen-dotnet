@@ -9,40 +9,38 @@ using JetBrains.Annotations;
 using Superpower;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class DirectiveParserTests
 {
-    public class DirectiveParserTests
+    private readonly Tokenizer<TokenKind> _tokenizer = SuperPowerTokenizer.Instance;
+
+    [Fact]
+    public void NameOnly()
     {
-        private readonly Tokenizer<TokenKind> _tokenizer = SuperPowerTokenizer.Instance;
-
-        [Fact]
-        public void NameOnly()
+        var tokens = _tokenizer.Tokenize("@skip");
+        var testResult = Grammar.Directives(tokens);
+        var expectedValue = new[]
         {
-            var tokens = _tokenizer.Tokenize("@skip");
-            var testResult = Grammar.Directives(tokens);
-            var expectedValue = new[]
+            SyntaxFactory.Directive(SyntaxFactory.Name("skip"))
+        };
+        Assert.Equal(expectedValue, testResult.Value);
+    }
+
+    [Fact]
+    public void NameWithArguments()
+    {
+        var tokens = _tokenizer.Tokenize("@skip(count: 1)");
+        var testResult = Grammar.Directives(tokens);
+        var expectedValue =
+            new[]
             {
-                SyntaxFactory.Directive(SyntaxFactory.Name("skip"))
+                new DirectiveSyntax(SyntaxFactory.Name("skip"),
+                    new[]
+                    {
+                        SyntaxFactory.Argument(SyntaxFactory.Name("count"), SyntaxFactory.IntValue(1))
+                    })
             };
-            Assert.Equal(expectedValue, testResult.Value);
-        }
-
-        [Fact]
-        public void NameWithArguments()
-        {
-            var tokens = _tokenizer.Tokenize("@skip(count: 1)");
-            var testResult = Grammar.Directives(tokens);
-            var expectedValue =
-                new[]
-                {
-                    new DirectiveSyntax(SyntaxFactory.Name("skip"),
-                        new[]
-                        {
-                            SyntaxFactory.Argument(SyntaxFactory.Name("count"), SyntaxFactory.IntValue(1))
-                        })
-                };
-            Assert.Equal(expectedValue, testResult.Value);
-        }
+        Assert.Equal(expectedValue, testResult.Value);
     }
 }

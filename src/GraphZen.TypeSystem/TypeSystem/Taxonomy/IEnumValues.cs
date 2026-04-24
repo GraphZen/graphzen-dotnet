@@ -6,17 +6,16 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IEnumValues : IEnumValuesDefinition
 {
-    [GraphQLIgnore]
-    public interface IEnumValues : IEnumValuesDefinition
-    {
-        IReadOnlyDictionary<string, EnumValue> Values { get; }
+    IReadOnlyDictionary<string, EnumValue> Values { get; }
 
 
-        IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
+    IReadOnlyDictionary<object, EnumValue> ValuesByValue { get; }
 
 
-        new IEnumerable<EnumValue> GetValues();
-    }
+    new IEnumerable<EnumValue> GetValues();
 }

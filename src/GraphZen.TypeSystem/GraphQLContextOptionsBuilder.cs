@@ -7,65 +7,64 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+public class GraphQLContextOptionsBuilder<TContext> : GraphQLContextOptionsBuilder where
+    TContext : GraphQLContext
 {
-    public class GraphQLContextOptionsBuilder<TContext> : GraphQLContextOptionsBuilder where
-        TContext : GraphQLContext
+    public GraphQLContextOptionsBuilder() : this(new GraphQLContextOptions<TContext>())
     {
-        public GraphQLContextOptionsBuilder() : this(new GraphQLContextOptions<TContext>())
-        {
-        }
-
-        public GraphQLContextOptionsBuilder(GraphQLContextOptions<TContext> options) : base(options)
-        {
-        }
-
-        public new virtual GraphQLContextOptions<TContext> Options => (GraphQLContextOptions<TContext>)base.Options;
     }
 
-    public class GraphQLContextOptionsBuilder : IGraphQLContextOptionsBuilderInfrastructure
+    public GraphQLContextOptionsBuilder(GraphQLContextOptions<TContext> options) : base(options)
     {
-        public GraphQLContextOptionsBuilder() : this(new GraphQLContextOptions<GraphQLContext>())
-        {
-        }
+    }
 
-        public GraphQLContextOptionsBuilder(GraphQLContextOptions options)
-        {
-            Options = Check.NotNull(options, nameof(options));
-        }
+    public new virtual GraphQLContextOptions<TContext> Options => (GraphQLContextOptions<TContext>)base.Options;
+}
 
-        public virtual GraphQLContextOptions Options { get; private set; }
+public class GraphQLContextOptionsBuilder : IGraphQLContextOptionsBuilderInfrastructure
+{
+    public GraphQLContextOptionsBuilder() : this(new GraphQLContextOptions<GraphQLContext>())
+    {
+    }
 
-        public GraphQLContextOptionsBuilder UseInternalServiceProvider(IServiceProvider serviceProvider)
-            => WithOption(o => o.WithInternalServiceProvider(serviceProvider));
+    public GraphQLContextOptionsBuilder(GraphQLContextOptions options)
+    {
+        Options = Check.NotNull(options, nameof(options));
+    }
 
-        public GraphQLContextOptionsBuilder UseApplicationServiceProvider(IServiceProvider serviceProvider)
-            => WithOption(o => o.WithApplicationServiceProvider(serviceProvider));
+    public virtual GraphQLContextOptions Options { get; private set; }
 
-        public GraphQLContextOptionsBuilder RevealInternalServerErrors(bool enabled = true)
-            => WithOption(o => o.WithRevealInternalServerErrors(enabled));
+    void IGraphQLContextOptionsBuilderInfrastructure.AddOrUpdateExtension<TExtension>([NotNull] TExtension extension)
+    {
+        Options = Options.WithExtension(extension);
+    }
 
-        public virtual GraphQLContextOptionsBuilder UseSchema(ISchema schema) =>
-            WithOption(o => o.WithSchema(schema));
+    public GraphQLContextOptionsBuilder UseInternalServiceProvider(IServiceProvider serviceProvider)
+        => WithOption(o => o.WithInternalServiceProvider(serviceProvider));
 
-        public GraphQLContextOptionsBuilder UseQueryType<TQueryType>() =>
-            WithOption(o => o.WithQueryClrType(typeof(TQueryType)));
+    public GraphQLContextOptionsBuilder UseApplicationServiceProvider(IServiceProvider serviceProvider)
+        => WithOption(o => o.WithApplicationServiceProvider(serviceProvider));
 
-        void IGraphQLContextOptionsBuilderInfrastructure.AddOrUpdateExtension<TExtension>([NotNull] TExtension extension)
-        {
-            Options = Options.WithExtension(extension);
-        }
+    public GraphQLContextOptionsBuilder RevealInternalServerErrors(bool enabled = true)
+        => WithOption(o => o.WithRevealInternalServerErrors(enabled));
 
-        private GraphQLContextOptionsBuilder WithOption(Func<CoreOptionsExtension, CoreOptionsExtension> withFunc)
-        {
-            var extension = Options.FindExtension<CoreOptionsExtension>();
-            if (extension == null) extension = new CoreOptionsExtension();
+    public virtual GraphQLContextOptionsBuilder UseSchema(ISchema schema) =>
+        WithOption(o => o.WithSchema(schema));
 
-            var updated = withFunc(extension);
+    public GraphQLContextOptionsBuilder UseQueryType<TQueryType>() =>
+        WithOption(o => o.WithQueryClrType(typeof(TQueryType)));
 
-            ((IGraphQLContextOptionsBuilderInfrastructure)this).AddOrUpdateExtension(updated);
+    private GraphQLContextOptionsBuilder WithOption(Func<CoreOptionsExtension, CoreOptionsExtension> withFunc)
+    {
+        var extension = Options.FindExtension<CoreOptionsExtension>();
+        if (extension == null) extension = new CoreOptionsExtension();
 
-            return this;
-        }
+        var updated = withFunc(extension);
+
+        ((IGraphQLContextOptionsBuilderInfrastructure)this).AddOrUpdateExtension(updated);
+
+        return this;
     }
 }

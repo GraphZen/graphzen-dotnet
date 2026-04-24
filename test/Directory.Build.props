@@ -1,9 +1,9 @@
 <Project>
-  <PropertyGroup>
-    <IsPackable>False</IsPackable>
-    <Nullable>enable</Nullable>
-    <WarningsAsErrors />
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+    <PropertyGroup>
+        <IsPackable>False</IsPackable>
+        <Nullable>enable</Nullable>
+        <WarningsAsErrors />
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
 </Project>

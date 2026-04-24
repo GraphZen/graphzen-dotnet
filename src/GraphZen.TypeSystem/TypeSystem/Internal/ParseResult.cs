@@ -6,30 +6,28 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem.Internal;
 
-namespace GraphZen.TypeSystem.Internal
+public struct ParseResult<T>
 {
-    public struct ParseResult<T>
+    private readonly T _value;
+    public bool HasValue { get; }
+
+    public T Value => HasValue ? _value : throw new InvalidOperationException("Result has no value");
+
+    internal ParseResult(object? value, bool hasValue)
     {
-        private readonly T _value;
-        public bool HasValue { get; }
-
-        public T Value => HasValue ? _value : throw new InvalidOperationException("Result has no value");
-
-        internal ParseResult(object? value, bool hasValue)
-        {
-            _value = (T)value!;
-            HasValue = hasValue;
-        }
-
-
-        public ParseResult<TNew> Cast<TNew>() => new ParseResult<TNew>(_value, HasValue);
+        _value = (T)value!;
+        HasValue = hasValue;
     }
 
-    public static class ParseResult
-    {
-        public static ParseResult<TInner> FromValue<TInner>(TInner value) => new ParseResult<TInner>(value, true);
 
-        public static ParseResult<TInner> Empty<TInner>() => new ParseResult<TInner>(default(TInner), false);
-    }
+    public ParseResult<TNew> Cast<TNew>() => new(_value, HasValue);
+}
+
+public static class ParseResult
+{
+    public static ParseResult<TInner> FromValue<TInner>(TInner value) => new(value, true);
+
+    public static ParseResult<TInner> Empty<TInner>() => new(default(TInner), false);
 }

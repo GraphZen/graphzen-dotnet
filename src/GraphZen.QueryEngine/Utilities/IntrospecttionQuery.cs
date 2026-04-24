@@ -5,12 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.Utilities;
 
-namespace GraphZen.Utilities
+public static partial class Helpers
 {
-    public static partial class Helpers
-    {
-        private const string WithDescriptions = @"
+    private const string WithDescriptions = @"
     query IntrospectionQuery {
       __schema {
         queryType { name }
@@ -104,7 +103,7 @@ namespace GraphZen.Utilities
     }
  ";
 
-        private const string WithoutDescriptions = @"
+    private const string WithoutDescriptions = @"
     query IntrospectionQuery {
       __schema {
         queryType { name }
@@ -197,7 +196,6 @@ namespace GraphZen.Utilities
       }
     }";
 
-        public static string IntrospectionQuery(bool descriptions = true) =>
-            descriptions ? WithDescriptions : WithoutDescriptions;
-    }
+    public static string IntrospectionQuery(bool descriptions = true) =>
+        descriptions ? WithDescriptions : WithoutDescriptions;
 }

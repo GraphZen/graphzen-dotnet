@@ -6,13 +6,11 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class KitchenSinkTests : ParserTests
 {
-    public class KitchenSinkTests : ParserTests
-    {
-        private static readonly string KitchenSinkSchema = @"
+    private static readonly string KitchenSinkSchema = @"
 query queryName($foo: ComplexType, $site: Site = MOBILE) {
   whoever123is: node(id: [123, 456]) {
     id ,
@@ -65,18 +63,17 @@ fragment frag on Friend {
 }
 ";
 
-        [Fact]
-        public void CanParseKitchenSink()
-        {
-            ParseDocument(KitchenSinkSchema);
-        }
+    [Fact]
+    public void CanParseKitchenSink()
+    {
+        ParseDocument(KitchenSinkSchema);
+    }
 
-        [Fact]
-        public void CanRoundTripKitchenSink()
-        {
-            var doc = ParseDocument(KitchenSinkSchema);
-            var fromPrintedDoc = ParseDocument(doc.ToSyntaxString());
-            Assert.Equal(doc, fromPrintedDoc);
-        }
+    [Fact]
+    public void CanRoundTripKitchenSink()
+    {
+        var doc = ParseDocument(KitchenSinkSchema);
+        var fromPrintedDoc = ParseDocument(doc.ToSyntaxString());
+        Assert.Equal(doc, fromPrintedDoc);
     }
 }

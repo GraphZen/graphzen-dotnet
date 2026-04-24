@@ -5,16 +5,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IEnumValueDefinition : IAnnotatableDefinition, INamed, IDescription, IDeprecation,
+    IInputDefinition,
+    IOutputDefinition
 {
-    [GraphQLIgnore]
-    public interface IEnumValueDefinition : IAnnotatableDefinition, INamed, IDescription, IDeprecation,
-        IInputDefinition,
-        IOutputDefinition
-    {
-        object Value { get; }
+    object Value { get; }
 
 
-        [GraphQLIgnore] IEnumTypeDefinition DeclaringType { get; }
-    }
+    [GraphQLIgnore] IEnumTypeDefinition DeclaringType { get; }
 }

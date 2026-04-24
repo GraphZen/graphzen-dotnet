@@ -8,52 +8,51 @@ using GraphZen.TypeSystem.Taxonomy;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues
+namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues;
+
+// ReSharper disable once InconsistentNaming
+public abstract class Enum_Values :
+    NamedCollectionConfigurationFixture<IEnumValues,
+        IEnumValuesDefinition, IMutableEnumValuesDefinition, EnumValueDefinition, EnumValue,
+        EnumTypeDefinition,
+        EnumType>
 {
-    // ReSharper disable once InconsistentNaming
-    public abstract class Enum_Values :
-        NamedCollectionConfigurationFixture<IEnumValues,
-            IEnumValuesDefinition, IMutableEnumValuesDefinition, EnumValueDefinition, EnumValue,
-            EnumTypeDefinition,
-            EnumType>
+    public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
     {
-        public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
-        {
-            sb.Enum(parentName);
-        }
+        sb.Enum(parentName);
+    }
 
-        public override EnumType GetParent(Schema schema, string parentName) => schema.GetEnum(parentName);
+    public override EnumType GetParent(Schema schema, string parentName) => schema.GetEnum(parentName);
 
-        public override EnumTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
-            sb.GetDefinition().GetEnum(parentName);
+    public override EnumTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        sb.GetDefinition().GetEnum(parentName);
 
-        public override NamedCollection<EnumValueDefinition> GetCollection(EnumTypeDefinition parent) =>
-            parent.Values.ToNamedCollection();
+    public override NamedCollection<EnumValueDefinition> GetCollection(EnumTypeDefinition parent) =>
+        parent.Values.ToNamedCollection();
 
-        public override NamedCollection<EnumValue> GetCollection(EnumType parent) => parent.Values.ToNamedCollection();
+    public override NamedCollection<EnumValue> GetCollection(EnumType parent) => parent.Values.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(EnumTypeDefinition parent,
-            string name) =>
-            parent.FindIgnoredValueConfigurationSource(name);
+    public override ConfigurationSource? FindIgnoredItemConfigurationSource(EnumTypeDefinition parent,
+        string name) =>
+        parent.FindIgnoredValueConfigurationSource(name);
 
-        public override void AddItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Enum(parentName).Value(name);
-        }
+    public override void AddItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.Enum(parentName).Value(name);
+    }
 
-        public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Enum(parentName).IgnoreValue(name);
-        }
+    public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.Enum(parentName).IgnoreValue(name);
+    }
 
-        public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Enum(parentName).UnignoreValue(name);
-        }
+    public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.Enum(parentName).UnignoreValue(name);
+    }
 
-        public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
-        {
-            sb.Enum(parentName).Value(name, value => value.Name(newName));
-        }
+    public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
+    {
+        sb.Enum(parentName).Value(name, value => value.Name(newName));
     }
 }

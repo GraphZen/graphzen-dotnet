@@ -6,52 +6,50 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+[NoReorder]
+public class EnumTypeBuilderIdentityTests : TypeBuilderIdentityTests<EnumType>
 {
-    [NoReorder]
-    public class EnumTypeBuilderIdentityTests : TypeBuilderIdentityTests<EnumType>
+    public enum FooEnum
     {
-        public enum FooEnum
-        {
-        }
+    }
 
-        public enum BarEnum
-        {
-        }
+    public enum BarEnum
+    {
+    }
 
-        public override Type ClrType { get; } = typeof(FooEnum);
-        public override Type NewClrType { get; } = typeof(BarEnum);
+    public override Type ClrType { get; } = typeof(FooEnum);
+    public override Type NewClrType { get; } = typeof(BarEnum);
 
-        public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
-        {
-            schemaBuilder.Enum(name);
-        }
+    public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
+    {
+        schemaBuilder.Enum(name);
+    }
 
-        public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
-        {
-            schemaBuilder.Enum(clrType);
-        }
+    public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
+    {
+        schemaBuilder.Enum(clrType);
+    }
 
 
-        public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
-        {
-            schemaBuilder.Enum(name).Name(newName);
-        }
+    public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
+    {
+        schemaBuilder.Enum(name).Name(newName);
+    }
 
-        public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
-        {
-            throw new NotImplementedException();
-        }
+    public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
-        {
-            throw new NotImplementedException();
-        }
+    public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
-        {
-            throw new NotImplementedException();
-        }
+    public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
+    {
+        throw new NotImplementedException();
     }
 }

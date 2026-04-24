@@ -8,122 +8,121 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+// ReSharper disable once PossibleInterfaceMemberAmbiguity
+public interface ISchemaBuilder<TContext> :
+    IInfrastructure<InternalSchemaBuilder>,
+    IAnnotableBuilder<ISchemaBuilder<TContext>>, IInfrastructure<SchemaDefinition>
+    where TContext : GraphQLContext
 {
-    // ReSharper disable once PossibleInterfaceMemberAmbiguity
-    public interface ISchemaBuilder<TContext> :
-        IInfrastructure<InternalSchemaBuilder>,
-        IAnnotableBuilder<ISchemaBuilder<TContext>>, IInfrastructure<SchemaDefinition>
-        where TContext : GraphQLContext
-    {
-        IDirectiveBuilder<object> Directive(string name);
+    IDirectiveBuilder<object> Directive(string name);
 
 
-        IScalarTypeBuilder<object, ValueSyntax> Scalar(string name);
+    IScalarTypeBuilder<object, ValueSyntax> Scalar(string name);
 
 
-        IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>();
+    IScalarTypeBuilder<TScalar, ValueSyntax> Scalar<TScalar>();
 
 
-        IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType);
+    IScalarTypeBuilder<object, ValueSyntax> Scalar(Type clrType);
 
 
-        IScalarTypeBuilder<TScalar, TValueNode> Scalar<TScalar, TValueNode>()
-            where TValueNode : ValueSyntax;
+    IScalarTypeBuilder<TScalar, TValueNode> Scalar<TScalar, TValueNode>()
+        where TValueNode : ValueSyntax;
 
 
-        IObjectTypeBuilder<object, TContext> Object(Type clrType);
+    IObjectTypeBuilder<object, TContext> Object(Type clrType);
 
 
-        IObjectTypeBuilder<object, TContext> Object(string name);
+    IObjectTypeBuilder<object, TContext> Object(string name);
 
 
-        IObjectTypeBuilder<TObject, TContext> Object<TObject>();
+    IObjectTypeBuilder<TObject, TContext> Object<TObject>();
 
 
-        ISchemaBuilder<TContext> IgnoreType<TObject>();
+    ISchemaBuilder<TContext> IgnoreType<TObject>();
 
 
-        ISchemaBuilder<TContext> IgnoreType(Type clrType);
+    ISchemaBuilder<TContext> IgnoreType(Type clrType);
 
 
-        ISchemaBuilder<TContext> IgnoreType(string name);
+    ISchemaBuilder<TContext> IgnoreType(string name);
 
 
-        ISchemaBuilder<TContext> UnignoreType<TObject>();
+    ISchemaBuilder<TContext> UnignoreType<TObject>();
 
 
-        ISchemaBuilder<TContext> UnignoreType(Type clrType);
+    ISchemaBuilder<TContext> UnignoreType(Type clrType);
 
 
-        ISchemaBuilder<TContext> UnignoreType(string name);
+    ISchemaBuilder<TContext> UnignoreType(string name);
 
-        ISchemaBuilder<TContext> IgnoreDirective<TDirective>();
+    ISchemaBuilder<TContext> IgnoreDirective<TDirective>();
 
 
-        ISchemaBuilder<TContext> IgnoreDirective(Type clrType);
+    ISchemaBuilder<TContext> IgnoreDirective(Type clrType);
 
 
-        ISchemaBuilder<TContext> IgnoreDirective(string name);
+    ISchemaBuilder<TContext> IgnoreDirective(string name);
 
 
-        ISchemaBuilder<TContext> UnignoreDirective<TObject>();
+    ISchemaBuilder<TContext> UnignoreDirective<TObject>();
 
 
-        ISchemaBuilder<TContext> UnignoreDirective(Type clrType);
+    ISchemaBuilder<TContext> UnignoreDirective(Type clrType);
 
 
-        ISchemaBuilder<TContext> UnignoreDirective(string name);
+    ISchemaBuilder<TContext> UnignoreDirective(string name);
 
 
-        IInterfaceTypeBuilder<object, TContext> Interface(string name);
+    IInterfaceTypeBuilder<object, TContext> Interface(string name);
 
 
-        IInterfaceTypeBuilder<object, TContext> Interface(Type clrType);
+    IInterfaceTypeBuilder<object, TContext> Interface(Type clrType);
 
 
-        IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>();
+    IInterfaceTypeBuilder<TInterface, TContext> Interface<TInterface>();
 
 
-        IUnionTypeBuilder<object, TContext> Union(string name);
+    IUnionTypeBuilder<object, TContext> Union(string name);
 
 
-        IUnionTypeBuilder<TUnion, TContext> Union<TUnion>();
+    IUnionTypeBuilder<TUnion, TContext> Union<TUnion>();
 
 
-        IUnionTypeBuilder<object, TContext> Union(Type clrType);
+    IUnionTypeBuilder<object, TContext> Union(Type clrType);
 
 
-        IEnumTypeBuilder<string> Enum(string name);
+    IEnumTypeBuilder<string> Enum(string name);
 
 
-        IEnumTypeBuilder<TEnum> Enum<TEnum>();
+    IEnumTypeBuilder<TEnum> Enum<TEnum>();
 
 
-        IEnumTypeBuilder<string> Enum(Type clrType);
+    IEnumTypeBuilder<string> Enum(Type clrType);
 
 
-        IInputObjectTypeBuilder<object> InputObject(string name);
+    IInputObjectTypeBuilder<object> InputObject(string name);
 
 
-        IInputObjectTypeBuilder<TInput> InputObject<TInput>();
+    IInputObjectTypeBuilder<TInput> InputObject<TInput>();
 
 
-        IInputObjectTypeBuilder<object> InputObject(Type clrType);
+    IInputObjectTypeBuilder<object> InputObject(Type clrType);
 
 
-        ISchemaBuilder<TContext> QueryType(string type);
+    ISchemaBuilder<TContext> QueryType(string type);
 
 
-        ISchemaBuilder<TContext> QueryType(Type clrType);
+    ISchemaBuilder<TContext> QueryType(Type clrType);
 
 
-        ISchemaBuilder<TContext> MutationType(string type);
+    ISchemaBuilder<TContext> MutationType(string type);
 
 
-        ISchemaBuilder<TContext> MutationType(Type clrType);
+    ISchemaBuilder<TContext> MutationType(Type clrType);
 
 
-        ISchemaBuilder<TContext> SubscriptionType(string type);
-    }
+    ISchemaBuilder<TContext> SubscriptionType(string type);
 }

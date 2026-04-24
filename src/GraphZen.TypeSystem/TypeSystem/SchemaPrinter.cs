@@ -6,14 +6,13 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public static class SchemaPrinter
 {
-    public static class SchemaPrinter
-    {
-        public static string Print(this Schema schema) =>
-            Check.NotNull(schema, nameof(schema))
-                .ToDocumentSyntax()
-                .WithoutBuiltInDefinitions()
-                .ToSyntaxString();
-    }
+    public static string Print(this Schema schema) =>
+        Check.NotNull(schema, nameof(schema))
+            .ToDocumentSyntax()
+            .WithoutBuiltInDefinitions()
+            .ToSyntaxString();
 }

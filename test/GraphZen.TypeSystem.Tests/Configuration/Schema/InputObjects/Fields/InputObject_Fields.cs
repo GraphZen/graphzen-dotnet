@@ -8,54 +8,53 @@ using GraphZen.TypeSystem.Taxonomy;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields
+namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields;
+
+// ReSharper disable once InconsistentNaming
+public abstract class InputObject_Fields :
+    NamedCollectionConfigurationFixture<IInputFields,
+        IInputFieldsDefinition, IMutableInputFieldsDefinition, InputFieldDefinition, InputField,
+        InputObjectTypeDefinition,
+        InputObjectType>
 {
-    // ReSharper disable once InconsistentNaming
-    public abstract class InputObject_Fields :
-        NamedCollectionConfigurationFixture<IInputFields,
-            IInputFieldsDefinition, IMutableInputFieldsDefinition, InputFieldDefinition, InputField,
-            InputObjectTypeDefinition,
-            InputObjectType>
+    public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
     {
-        public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
-        {
-            sb.InputObject(parentName);
-        }
+        sb.InputObject(parentName);
+    }
 
-        public override InputObjectType GetParent(Schema schema, string parentName) =>
-            schema.GetInputObject(parentName);
+    public override InputObjectType GetParent(Schema schema, string parentName) =>
+        schema.GetInputObject(parentName);
 
-        public override InputObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
-            sb.GetDefinition().GetInputObject(parentName);
+    public override InputObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        sb.GetDefinition().GetInputObject(parentName);
 
-        public override NamedCollection<InputFieldDefinition> GetCollection(InputObjectTypeDefinition parent) =>
-            parent.Fields.ToNamedCollection();
+    public override NamedCollection<InputFieldDefinition> GetCollection(InputObjectTypeDefinition parent) =>
+        parent.Fields.ToNamedCollection();
 
-        public override NamedCollection<InputField> GetCollection(InputObjectType parent) =>
-            parent.Fields.ToNamedCollection();
+    public override NamedCollection<InputField> GetCollection(InputObjectType parent) =>
+        parent.Fields.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(InputObjectTypeDefinition parent,
-            string name) =>
-            parent.FindIgnoredFieldConfigurationSource(name);
+    public override ConfigurationSource? FindIgnoredItemConfigurationSource(InputObjectTypeDefinition parent,
+        string name) =>
+        parent.FindIgnoredFieldConfigurationSource(name);
 
-        public override void AddItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.InputObject(parentName).Field(name, "String");
-        }
+    public override void AddItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.InputObject(parentName).Field(name, "String");
+    }
 
-        public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.InputObject(parentName).IgnoreField(name);
-        }
+    public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.InputObject(parentName).IgnoreField(name);
+    }
 
-        public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.InputObject(parentName).UnignoreField(name);
-        }
+    public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.InputObject(parentName).UnignoreField(name);
+    }
 
-        public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
-        {
-            sb.InputObject(parentName).Field(name, f => f.Name(newName));
-        }
+    public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
+    {
+        sb.InputObject(parentName).Field(name, f => f.Name(newName));
     }
 }

@@ -7,17 +7,16 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+[DebuggerStepThrough]
+internal static class Check
 {
-    [DebuggerStepThrough]
-    internal static class Check
+    [ContractAnnotation("value:null => halt")]
+    [return: NotNull]
+    public static T NotNull<T>([NotNull] [NoEnumeration] T value, [InvokerParameterName] string parameterName)
     {
-        [ContractAnnotation("value:null => halt")]
-        [return: NotNull]
-        public static T NotNull<T>([NotNull] [NoEnumeration] T value, [InvokerParameterName] string parameterName)
-        {
-            if (value is null) throw new ArgumentNullException(parameterName);
-            return value;
-        }
+        if (value is null) throw new ArgumentNullException(parameterName);
+        return value;
     }
 }

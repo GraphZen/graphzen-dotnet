@@ -6,57 +6,54 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+public abstract class GraphQLSyntaxWalker<TResult> : GraphQLSyntaxVisitor<TResult>
 {
-    public abstract class GraphQLSyntaxWalker<TResult> : GraphQLSyntaxVisitor<TResult>
+    private readonly Stack<SyntaxNode> _ancestors = new();
+
+
+    public IReadOnlyCollection<SyntaxNode> Ancestors => _ancestors;
+
+    public override TResult Visit(SyntaxNode node)
     {
-        private readonly Stack<SyntaxNode> _ancestors = new Stack<SyntaxNode>();
-
-
-        public IReadOnlyCollection<SyntaxNode> Ancestors => _ancestors;
-
-        public override TResult Visit(SyntaxNode node)
+        if (node != null)
         {
-            if (node != null)
+            node.VisitEnter(this);
+            _ancestors.Push(node);
+            foreach (var child in node.Children)
             {
-                node.VisitEnter(this);
-                _ancestors.Push(node);
-                foreach (var child in node.Children)
-                {
-                    Visit(child);
-                }
-
-                _ancestors.Pop();
-                return node.VisitLeave(this);
+                Visit(child);
             }
 
-            return default!;
+            _ancestors.Pop();
+            return node.VisitLeave(this);
         }
+
+        return default!;
     }
+}
 
-    public abstract class GraphQLSyntaxWalker : GraphQLSyntaxVisitor
+public abstract class GraphQLSyntaxWalker : GraphQLSyntaxVisitor
+{
+    private readonly Stack<SyntaxNode> _ancestors = new();
+
+
+    public IReadOnlyCollection<SyntaxNode> Ancestors => _ancestors;
+
+    public override void Visit(SyntaxNode node)
     {
-        private readonly Stack<SyntaxNode> _ancestors = new Stack<SyntaxNode>();
-
-
-        public IReadOnlyCollection<SyntaxNode> Ancestors => _ancestors;
-
-        public override void Visit(SyntaxNode node)
+        if (node != null)
         {
-            if (node != null)
+            node.VisitEnter(this);
+            _ancestors.Push(node);
+            foreach (var child in node.Children)
             {
-                node.VisitEnter(this);
-                _ancestors.Push(node);
-                foreach (var child in node.Children)
-                {
-                    Visit(child);
-                }
-
-                _ancestors.Pop();
-                node.VisitLeave(this);
+                Visit(child);
             }
+
+            _ancestors.Pop();
+            node.VisitLeave(this);
         }
     }
 }

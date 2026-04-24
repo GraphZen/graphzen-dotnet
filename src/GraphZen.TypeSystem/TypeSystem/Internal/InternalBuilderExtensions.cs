@@ -6,22 +6,21 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Internal
-{
-    public static class InternalBuilderExtensions
-    {
-        public static void Name<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder,
-            string name, ConfigurationSource configurationSource)
-            where TDefinition : MemberDefinition, IMutableNamed
-        {
-            builder.Definition.SetName(name, configurationSource);
-        }
+namespace GraphZen.TypeSystem.Internal;
 
-        public static void Description<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder,
-            string? description, ConfigurationSource configurationSource)
-            where TDefinition : MemberDefinition, IMutableDescription
-        {
-            builder.Definition.SetDescription(description, configurationSource);
-        }
+public static class InternalBuilderExtensions
+{
+    public static void Name<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder,
+        string name, ConfigurationSource configurationSource)
+        where TDefinition : MemberDefinition, IMutableNamed
+    {
+        builder.Definition.SetName(name, configurationSource);
+    }
+
+    public static void Description<TDefinition>(this MemberDefinitionBuilder<TDefinition> builder,
+        string? description, ConfigurationSource configurationSource)
+        where TDefinition : MemberDefinition, IMutableDescription
+    {
+        builder.Definition.SetDescription(description, configurationSource);
     }
 }

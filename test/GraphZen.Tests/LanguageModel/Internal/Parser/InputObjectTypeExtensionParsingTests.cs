@@ -7,40 +7,37 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class InputObjectTypeExtensionParsingTests : ParserTestBase
 {
-    public class InputObjectTypeExtensionParsingTests : ParserTestBase
+    [Fact]
+    public void ExtendInputObjectWithField()
     {
-        [Fact]
-        public void ExtendInputObjectWithField()
-        {
-            var result = ParseDocument(@"
+        var result = ParseDocument(@"
 extend input InputType {
   other: Float = 1.23e4
 }");
-            var expected = SyntaxFactory.Document(new InputObjectTypeExtensionSyntax(SyntaxFactory.Name("InputType"),
-                null, new[]
-                {
-                    new InputValueDefinitionSyntax(SyntaxFactory.Name("other"),
-                        SyntaxFactory.NamedType(SyntaxFactory.Name("Float")), null, SyntaxFactory.FloatValue("1.23e4"))
-                }));
-            Assert.Equal(expected, result);
-            var printResult = PrintAndParse(result);
-            Assert.Equal(expected, printResult);
-        }
+        var expected = SyntaxFactory.Document(new InputObjectTypeExtensionSyntax(SyntaxFactory.Name("InputType"),
+            null, new[]
+            {
+                new InputValueDefinitionSyntax(SyntaxFactory.Name("other"),
+                    SyntaxFactory.NamedType(SyntaxFactory.Name("Float")), null, SyntaxFactory.FloatValue("1.23e4"))
+            }));
+        Assert.Equal(expected, result);
+        var printResult = PrintAndParse(result);
+        Assert.Equal(expected, printResult);
+    }
 
-        [Fact]
-        public void ExtendInputTypeWithDirective()
-        {
-            var result = ParseDocument(@"extend input InputType @onInputObject");
-            var expected =
-                SyntaxFactory.Document(
-                    new InputObjectTypeExtensionSyntax(SyntaxFactory.Name("InputType"),
-                        new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onInputObject")) }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+    [Fact]
+    public void ExtendInputTypeWithDirective()
+    {
+        var result = ParseDocument(@"extend input InputType @onInputObject");
+        var expected =
+            SyntaxFactory.Document(
+                new InputObjectTypeExtensionSyntax(SyntaxFactory.Name("InputType"),
+                    new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onInputObject")) }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
     }
 }

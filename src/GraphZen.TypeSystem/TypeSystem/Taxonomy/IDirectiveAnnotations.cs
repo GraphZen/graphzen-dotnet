@@ -7,23 +7,22 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IDirectiveAnnotationsDefinition
 {
-    [GraphQLIgnore]
-    public interface IDirectiveAnnotationsDefinition
-    {
-        DirectiveLocation DirectiveLocation { get; }
-        IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations();
-    }
+    DirectiveLocation DirectiveLocation { get; }
+    IEnumerable<IDirectiveAnnotation> GetDirectiveAnnotations();
+}
 
-    [GraphQLIgnore]
-    public interface IMutableDirectiveAnnotationsDefinition : IDirectiveAnnotationsDefinition
-    {
-    }
+[GraphQLIgnore]
+public interface IMutableDirectiveAnnotationsDefinition : IDirectiveAnnotationsDefinition
+{
+}
 
-    [GraphQLIgnore]
-    public interface IDirectiveAnnotations : IDirectiveAnnotationsDefinition
-    {
-        IDirectiveAnnotation? FindDirectiveAnnotation(string name);
-    }
+[GraphQLIgnore]
+public interface IDirectiveAnnotations : IDirectiveAnnotationsDefinition
+{
+    IDirectiveAnnotation? FindDirectiveAnnotation(string name);
 }

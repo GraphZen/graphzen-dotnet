@@ -6,15 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IObjectTypes : IObjectTypesDefinition
 {
+    [GraphQLIgnore] IReadOnlyList<ObjectType> Objects { get; }
+
     [GraphQLIgnore]
-    public interface IObjectTypes : IObjectTypesDefinition
-    {
-        [GraphQLIgnore]
-        new IEnumerable<ObjectType> GetObjects();
-
-
-        [GraphQLIgnore] IReadOnlyList<ObjectType> Objects { get; }
-    }
+    new IEnumerable<ObjectType> GetObjects();
 }

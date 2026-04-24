@@ -5,12 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+public class GraphQLRequest
 {
-    public class GraphQLRequest
-    {
-        public string? OperationName { get; set; }
-        public string? Query { get; set; }
-        public object? Variables { get; set; }
-    }
+    public string? OperationName { get; set; }
+    public string? Query { get; set; }
+    public object? Variables { get; set; }
 }

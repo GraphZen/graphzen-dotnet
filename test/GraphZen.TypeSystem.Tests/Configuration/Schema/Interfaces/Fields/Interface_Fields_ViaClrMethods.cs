@@ -7,57 +7,56 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields
+namespace GraphZen.TypeSystem.Tests.Configuration.Interfaces.Fields;
+
+// ReSharper disable once InconsistentNaming
+public class Interface_Fields_ViaClrMethods : Interface_Fields, ICollectionConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Interface_Fields_ViaClrMethods : Interface_Fields, ICollectionConventionConfigurationFixture
+    public const string DataAnnotationName = nameof(DataAnnotationName);
+
+
+    public CollectionConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(IExampleInterface),
+            ItemNamedByConvention = nameof(IExampleInterface.HelloWorld).FirstCharToLower(),
+            ItemNamedByDataAnnotation = DataAnnotationName,
+            ItemIgnoredByConvention = nameof(IExampleInterface.IgnoredByConvention),
+            ItemIgnoredByDataAnnotation = nameof(IExampleInterface.IgnoredByDataAnnotation).FirstCharToLower()
+        };
+
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        public const string DataAnnotationName = nameof(DataAnnotationName);
+        sb.Interface<IExampleInterface>();
+    }
+
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Interface(parentName).ClrType<IExampleInterface>();
+    }
+
+    public void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb)
+    {
+        throw new NotImplementedException();
+    }
 
 
-        public CollectionConventionContext GetContext() =>
-            new CollectionConventionContext
-            {
-                ParentName = nameof(IExampleInterface),
-                ItemNamedByConvention = nameof(IExampleInterface.HelloWorld).FirstCharToLower(),
-                ItemNamedByDataAnnotation = DataAnnotationName,
-                ItemIgnoredByConvention = nameof(IExampleInterface.IgnoredByConvention),
-                ItemIgnoredByDataAnnotation = nameof(IExampleInterface.IgnoredByDataAnnotation).FirstCharToLower()
-            };
+    [GraphQLIgnore]
+    public class IgnoredType
+    {
+    }
 
+    public interface IExampleInterface
+    {
+        string HelloWorld();
 
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Interface<IExampleInterface>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Interface(parentName).ClrType<IExampleInterface>();
-        }
-
-        public void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb)
-        {
-            throw new NotImplementedException();
-        }
-
+        [GraphQLName(DataAnnotationName)]
+        string NamedByDataAnnotation();
 
         [GraphQLIgnore]
-        public class IgnoredType
-        {
-        }
+        string IgnoredByDataAnnotation();
 
-        public interface IExampleInterface
-        {
-            string HelloWorld();
-
-            [GraphQLName(DataAnnotationName)]
-            string NamedByDataAnnotation();
-
-            [GraphQLIgnore]
-            string IgnoredByDataAnnotation();
-
-            IgnoredType IgnoredByConvention();
-        }
+        IgnoredType IgnoredByConvention();
     }
 }

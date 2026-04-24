@@ -11,39 +11,38 @@ using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel;
 
-namespace GraphZen.Tests.LanguageModel
+public class ParserTests : ParserTestBase
 {
-    public class ParserTests : ParserTestBase
+    [Fact]
+    public void ItCanParseKitchenSink()
     {
-        [Fact]
-        public void ItCanParseKitchenSink()
-        {
-            var block = @""""""" \"""""" """"""";
-            var tokens = SuperPowerTokenizer.Instance.Tokenize(block);
-            Assert.Equal(TokenKind.BlockString, tokens.First().Kind);
+        var block = @""""""" \"""""" """"""";
+        var tokens = SuperPowerTokenizer.Instance.Tokenize(block);
+        Assert.Equal(TokenKind.BlockString, tokens.First().Kind);
 
-            var kitchenSink = File.ReadAllText("./LanguageModel/kitchen-sink.graphql");
-            ParseDocument(kitchenSink);
-        }
+        var kitchenSink = File.ReadAllText("./LanguageModel/kitchen-sink.graphql");
+        ParseDocument(kitchenSink);
+    }
 
 
-        [Fact]
-        public void ItCanParseSchemaKitchenSink()
-        {
-            var kitchenSink = File.ReadAllText("./LanguageModel/schema-kitchen-sink.graphql");
-            var result = ParseDocument(kitchenSink);
-            var printResult = ParseDocument(result.ToSyntaxString());
-            Assert.Equal(printResult.ToSyntaxString(), result.ToSyntaxString());
-        }
+    [Fact]
+    public void ItCanParseSchemaKitchenSink()
+    {
+        var kitchenSink = File.ReadAllText("./LanguageModel/schema-kitchen-sink.graphql");
+        var result = ParseDocument(kitchenSink);
+        var printResult = ParseDocument(result.ToSyntaxString());
+        Assert.Equal(printResult.ToSyntaxString(), result.ToSyntaxString());
+    }
 
-        [Fact]
-        public void ItCanPrintKitchenSink()
-        {
-            var kitchenSink = File.ReadAllText("./LanguageModel/schema-kitchen-sink.graphql");
-            var result = ParseDocument(kitchenSink);
-            var printResult = result.ToSyntaxString();
-            var expected = @"
+    [Fact]
+    public void ItCanPrintKitchenSink()
+    {
+        var kitchenSink = File.ReadAllText("./LanguageModel/schema-kitchen-sink.graphql");
+        var result = ParseDocument(kitchenSink);
+        var printResult = result.ToSyntaxString();
+        var expected = @"
               schema {
                 query: QueryType
                 mutation: MutationType
@@ -165,32 +164,31 @@ namespace GraphZen.Tests.LanguageModel
                 subscription: SubscriptionType
               }
             ".Dedent();
-            StringAssert.Equal(printResult, expected, opt =>
-            {
-                opt.ShowActual = true;
-                opt.ShowExpected = false;
-                opt.ShowDiffs = true;
-            });
-        }
-
-        [Fact]
-        public void ItProvidesUsefulErrors()
+        StringAssert.Equal(printResult, expected, opt =>
         {
-            AssertSyntaxError("{", "Syntax error: unexpected end of input, expected selection.", (1, 2));
-        }
+            opt.ShowActual = true;
+            opt.ShowExpected = false;
+            opt.ShowDiffs = true;
+        });
+    }
 
-        [Fact]
-        public void SourceHasBody()
-        {
-            var exception = Assert.Throws<ArgumentNullException>(() => new Source(null!));
-            Assert.Contains("body", exception.Message);
-        }
+    [Fact]
+    public void ItProvidesUsefulErrors()
+    {
+        AssertSyntaxError("{", "Syntax error: unexpected end of input, expected selection.", (1, 2));
+    }
 
-        [Fact]
-        public void SourceIsProvided()
-        {
-            var exception = Assert.Throws<ArgumentNullException>(() => { ParseDocument(null!); });
-            Assert.Contains("document", exception.Message);
-        }
+    [Fact]
+    public void SourceHasBody()
+    {
+        var exception = Assert.Throws<ArgumentNullException>(() => new Source(null!));
+        Assert.Contains("body", exception.Message);
+    }
+
+    [Fact]
+    public void SourceIsProvided()
+    {
+        var exception = Assert.Throws<ArgumentNullException>(() => { ParseDocument(null!); });
+        Assert.Contains("document", exception.Message);
     }
 }

@@ -5,15 +5,13 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+public class BlogSubscriptionContext : BlogContext
 {
-    public class BlogSubscriptionContext : BlogContext
+    protected internal override void OnSchemaCreating(SchemaBuilder schema)
     {
-        protected internal override void OnSchemaCreating(SchemaBuilder schema)
-        {
-            base.OnSchemaCreating(schema);
-            schema.SubscriptionType("Subscription");
-        }
+        base.OnSchemaCreating(schema);
+        schema.SubscriptionType("Subscription");
     }
 }

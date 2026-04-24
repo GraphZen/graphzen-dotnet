@@ -9,26 +9,24 @@ using JetBrains.Annotations;
 using Superpower;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class VariableParserTests : ParserTestBase
 {
-    public class VariableParserTests : ParserTestBase
+    private readonly Tokenizer<TokenKind> _sut = SuperPowerTokenizer.Instance;
+
+    [Fact]
+    public void ParseVariable()
     {
-        private readonly Tokenizer<TokenKind> _sut = SuperPowerTokenizer.Instance;
+        Assert.Equal(SyntaxFactory.Variable(SyntaxFactory.Name("name")), ParseValue("$name"));
+    }
 
-        [Fact]
-        public void ParseVariable()
-        {
-            Assert.Equal(SyntaxFactory.Variable(SyntaxFactory.Name("name")), ParseValue("$name"));
-        }
-
-        [Fact(Skip = "Seems identical to one above - should revisit")]
-        public void VariableDefinition()
-        {
-            var tokens = _sut.Tokenize("$name");
-            var test = Grammar.Variable(tokens);
-            var expectedValue = SyntaxFactory.Variable(SyntaxFactory.Name("name"));
-            Assert.Equal(expectedValue, test.Value);
-        }
+    [Fact(Skip = "Seems identical to one above - should revisit")]
+    public void VariableDefinition()
+    {
+        var tokens = _sut.Tokenize("$name");
+        var test = Grammar.Variable(tokens);
+        var expectedValue = SyntaxFactory.Variable(SyntaxFactory.Name("name"));
+        Assert.Equal(expectedValue, test.Value);
     }
 }

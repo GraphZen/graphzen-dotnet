@@ -7,21 +7,20 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Objects.Fields
+namespace GraphZen.TypeSystem.FunctionalTests.Objects.Fields;
+
+public class ObjectFieldBuilderTypeFunctionalTests
 {
-    public class ObjectFieldBuilderTypeFunctionalTests
+    [Fact]
+    public void invalid_field_type_should_throw_helpful_exception()
     {
-        [Fact]
-        public void invalid_field_type_should_throw_helpful_exception()
+        Schema.Create(_ =>
         {
-            Schema.Create(_ =>
-            {
-                Action act = () => _.Object("Foo").Field("Bar", "List<>");
-                var ex = Assert.Throws<InvalidOperationException>(act);
-                Assert.Contains(
-                    "Invalid type reference: 'List<>' is not a valid type reference for object field 'Foo.Bar'.",
-                    ex.Message);
-            });
-        }
+            Action act = () => _.Object("Foo").Field("Bar", "List<>");
+            var ex = Assert.Throws<InvalidOperationException>(act);
+            Assert.Contains(
+                "Invalid type reference: 'List<>' is not a valid type reference for object field 'Foo.Bar'.",
+                ex.Message);
+        });
     }
 }

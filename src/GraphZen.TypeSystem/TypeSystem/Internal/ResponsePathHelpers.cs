@@ -6,11 +6,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Internal
+namespace GraphZen.TypeSystem.Internal;
+
+public static class ResponsePathHelpers
 {
-    public static class ResponsePathHelpers
-    {
-        [DebuggerStepThrough]
-        public static ResponsePath AddPath(this ResponsePath path, object key) => new ResponsePath(path, key);
-    }
+    [DebuggerStepThrough]
+    public static ResponsePath AddPath(this ResponsePath path, object key) => new(path, key);
 }

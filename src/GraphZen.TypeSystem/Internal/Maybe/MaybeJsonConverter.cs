@@ -8,22 +8,21 @@ using System.Text.Json.Serialization;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.Internal;
 
-namespace GraphZen.Internal
+public class MaybeJsonConverter : JsonConverter<object>
 {
-    public class MaybeJsonConverter : JsonConverter<object>
+    public override bool CanConvert(Type typeToConvert) => typeof(Maybe<>).IsAssignableFrom(typeToConvert) ||
+                                                           (typeToConvert.IsGenericType &&
+                                                            typeToConvert.GetGenericTypeDefinition() ==
+                                                            typeof(Maybe<>));
+
+    public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
+        throw new NotImplementedException(
+            "Unnecessary because CanConvert returns false for non-Maybe types. The type will skip the converter.");
+
+    public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
     {
-        public override bool CanConvert(Type typeToConvert) => typeof(Maybe<>).IsAssignableFrom(typeToConvert) ||
-                                                                (typeToConvert.IsGenericType &&
-                                                                 typeToConvert.GetGenericTypeDefinition() == typeof(Maybe<>));
-
-        public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-            throw new NotImplementedException(
-                "Unnecessary because CanConvert returns false for non-Maybe types. The type will skip the converter.");
-
-        public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

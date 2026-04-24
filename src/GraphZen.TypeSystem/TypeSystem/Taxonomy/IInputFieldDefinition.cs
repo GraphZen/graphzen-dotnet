@@ -6,13 +6,12 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
-{
-    [GraphQLIgnore]
-    public interface IInputFieldDefinition : IInputValueDefinition
-    {
-        new PropertyInfo? ClrInfo { get; }
+namespace GraphZen.TypeSystem.Taxonomy;
 
-        new IInputObjectTypeDefinition DeclaringMember { get; }
-    }
+[GraphQLIgnore]
+public interface IInputFieldDefinition : IInputValueDefinition
+{
+    new PropertyInfo? ClrInfo { get; }
+
+    new IInputObjectTypeDefinition DeclaringMember { get; }
 }

@@ -10,81 +10,78 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+[DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+public class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
 {
-    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class EnumTypeDefinition : NamedTypeDefinition, IMutableEnumTypeDefinition
+    internal readonly Dictionary<string, EnumValueDefinition> InternalValues = new();
+
+    private readonly Dictionary<string, ConfigurationSource> _ignoredValues = new();
+
+    public EnumTypeDefinition(TypeIdentity identity,
+        SchemaDefinition schema,
+        ConfigurationSource configurationSource)
+        : base(Check.NotNull(identity, nameof(identity)), Check.NotNull(schema, nameof(schema)),
+            configurationSource)
     {
-        internal readonly Dictionary<string, EnumValueDefinition> InternalValues =
-            new Dictionary<string, EnumValueDefinition>();
+        Builder = new InternalEnumTypeBuilder(this, Schema.Builder);
+        identity.Definition = this;
+    }
 
-        private readonly Dictionary<string, ConfigurationSource> _ignoredValues =
-            new Dictionary<string, ConfigurationSource>();
+    private string DebuggerDisplay => $"enum {Name}";
 
-        public EnumTypeDefinition(TypeIdentity identity,
-            SchemaDefinition schema,
-            ConfigurationSource configurationSource)
-            : base(Check.NotNull(identity, nameof(identity)), Check.NotNull(schema, nameof(schema)),
-                configurationSource)
-        {
-            Builder = new InternalEnumTypeBuilder(this, Schema.Builder);
-            identity.Definition = this;
-        }
+    public InternalEnumTypeBuilder Builder { get; }
 
-        private string DebuggerDisplay => $"enum {Name}";
+    public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
 
-        public InternalEnumTypeBuilder Builder { get; }
+    public override TypeKind Kind { get; } = TypeKind.Enum;
 
-        public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.Enum;
+    public IReadOnlyDictionary<string, EnumValueDefinition> Values => InternalValues;
 
-        public override TypeKind Kind { get; } = TypeKind.Enum;
+    public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) =>
+        _ignoredValues.TryGetValue(name, out var cs) ? cs : null;
 
-        public IReadOnlyDictionary<string, EnumValueDefinition> Values => InternalValues;
+    public EnumValueDefinition? FindValue(string name) =>
+        InternalValues.TryGetValue(name, out var value) ? value : null;
 
-        public ConfigurationSource? FindIgnoredValueConfigurationSource(string name) =>
-            _ignoredValues.TryGetValue(name, out var cs) ? cs : null;
-
-        public EnumValueDefinition? FindValue(string name) =>
-            InternalValues.TryGetValue(name, out var value) ? value : null;
-
-        public bool IgnoreValue(string name, ConfigurationSource configurationSource)
-        {
-            var itemConfigurationSource = FindValue(name)?.GetConfigurationSource();
-            if (configurationSource.Overrides(itemConfigurationSource))
-            {
-                var ignoredConfigurationSource = FindIgnoredValueConfigurationSource(name);
-                if (configurationSource.Overrides(ignoredConfigurationSource))
-                {
-                    _ignoredValues[name] = configurationSource;
-                    InternalValues.Remove(name);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool UnignoreValue(string name, ConfigurationSource configurationSource)
+    public bool IgnoreValue(string name, ConfigurationSource configurationSource)
+    {
+        var itemConfigurationSource = FindValue(name)?.GetConfigurationSource();
+        if (configurationSource.Overrides(itemConfigurationSource))
         {
             var ignoredConfigurationSource = FindIgnoredValueConfigurationSource(name);
-            if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
-            _ignoredValues.Remove(name);
-            return true;
+            if (configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                _ignoredValues[name] = configurationSource;
+                InternalValues.Remove(name);
+                return true;
+            }
         }
 
-        public EnumValueDefinition AddValue(string name, ConfigurationSource configurationSource,
-            ConfigurationSource nameConfigurationSource)
-        {
-            var definition =
-                new EnumValueDefinition(name, nameConfigurationSource, this, Schema, configurationSource);
-            InternalValues[name] = definition;
-            return definition;
-        }
-
-        public IEnumerable<EnumValueDefinition> GetValues() => Values.Values;
-
-        public override string ToString() => $"enum {Name}";
-
-        IEnumerable<IEnumValueDefinition> IEnumValuesDefinition.GetValues() => GetValues();
+        return false;
     }
+
+    public bool UnignoreValue(string name, ConfigurationSource configurationSource)
+    {
+        var ignoredConfigurationSource = FindIgnoredValueConfigurationSource(name);
+        if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+        _ignoredValues.Remove(name);
+        return true;
+    }
+
+    public EnumValueDefinition AddValue(string name, ConfigurationSource configurationSource,
+        ConfigurationSource nameConfigurationSource)
+    {
+        var definition =
+            new EnumValueDefinition(name, nameConfigurationSource, this, Schema, configurationSource);
+        InternalValues[name] = definition;
+        return definition;
+    }
+
+    public IEnumerable<EnumValueDefinition> GetValues() => Values.Values;
+
+    IEnumerable<IEnumValueDefinition> IEnumValuesDefinition.GetValues() => GetValues();
+
+    public override string ToString() => $"enum {Name}";
 }

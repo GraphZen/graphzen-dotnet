@@ -6,16 +6,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public interface IEnumTypeBuilder<in TEnumValue> : IAnnotableBuilder<IEnumTypeBuilder<TEnumValue>>
 {
-    public interface IEnumTypeBuilder<in TEnumValue> : IAnnotableBuilder<IEnumTypeBuilder<TEnumValue>>
-    {
-        IEnumTypeBuilder<TEnumValue> Description(string? description);
-        IEnumTypeBuilder<TEnumValue> Value(TEnumValue value, Action<IEnumValueBuilder>? configurator = null);
-        IEnumTypeBuilder<TEnumValue> IgnoreValue(TEnumValue value);
-        IEnumTypeBuilder<TEnumValue> UnignoreValue(TEnumValue value);
-        IEnumTypeBuilder<TEnumValue> Name(string name);
-        IEnumTypeBuilder<object> ClrType(Type clrType);
-        IEnumTypeBuilder<T> ClrType<T>();
-    }
+    IEnumTypeBuilder<TEnumValue> Description(string? description);
+    IEnumTypeBuilder<TEnumValue> Value(TEnumValue value, Action<IEnumValueBuilder>? configurator = null);
+    IEnumTypeBuilder<TEnumValue> IgnoreValue(TEnumValue value);
+    IEnumTypeBuilder<TEnumValue> UnignoreValue(TEnumValue value);
+    IEnumTypeBuilder<TEnumValue> Name(string name);
+    IEnumTypeBuilder<object> ClrType(Type clrType);
+    IEnumTypeBuilder<T> ClrType<T>();
 }

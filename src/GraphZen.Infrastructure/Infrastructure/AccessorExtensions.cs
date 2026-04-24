@@ -6,14 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.Infrastructure;
 
-
-namespace GraphZen.Infrastructure
+public static class AccessorExtensions
 {
-    public static class AccessorExtensions
-    {
-        [DebuggerStepThrough]
-        public static T GetInfrastructure<T>(this IInfrastructure<T> accessor) =>
-            Check.NotNull(accessor, nameof(accessor)).Instance;
-    }
+    [DebuggerStepThrough]
+    public static T GetInfrastructure<T>(this IInfrastructure<T> accessor) =>
+        Check.NotNull(accessor, nameof(accessor)).Instance;
 }

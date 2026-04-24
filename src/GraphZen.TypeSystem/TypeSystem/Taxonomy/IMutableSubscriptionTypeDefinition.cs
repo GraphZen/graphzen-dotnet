@@ -6,12 +6,11 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+public interface IMutableSubscriptionTypeDefinition : ISubscriptionTypeDefinition
 {
-    public interface IMutableSubscriptionTypeDefinition : ISubscriptionTypeDefinition
-    {
-        new ObjectTypeDefinition? SubscriptionType { get; }
-        bool SetSubscriptionType(ObjectTypeDefinition? type, ConfigurationSource configurationSource);
-        ConfigurationSource? GetSubscriptionTypeConfigurationSource();
-    }
+    new ObjectTypeDefinition? SubscriptionType { get; }
+    bool SetSubscriptionType(ObjectTypeDefinition? type, ConfigurationSource configurationSource);
+    ConfigurationSource? GetSubscriptionTypeConfigurationSource();
 }

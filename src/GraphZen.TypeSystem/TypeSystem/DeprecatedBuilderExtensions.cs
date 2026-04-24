@@ -5,15 +5,13 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem;
 
-namespace GraphZen.TypeSystem
+public static class DeprecatedBuilderExtensions
 {
-    public static class DeprecatedBuilderExtensions
-    {
-        public static TBuilder Deprecated<TBuilder>(
-            this TBuilder builder,
-            string? reason = null) where TBuilder : IAnnotableBuilder<TBuilder> =>
-            Check.NotNull(builder, nameof(builder))
-                .DirectiveAnnotation("deprecated", new GraphQLDeprecatedAttribute(reason));
-    }
+    public static TBuilder Deprecated<TBuilder>(
+        this TBuilder builder,
+        string? reason = null) where TBuilder : IAnnotableBuilder<TBuilder> =>
+        Check.NotNull(builder, nameof(builder))
+            .DirectiveAnnotation("deprecated", new GraphQLDeprecatedAttribute(reason));
 }

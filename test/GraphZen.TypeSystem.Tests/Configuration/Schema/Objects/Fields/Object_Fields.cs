@@ -8,51 +8,50 @@ using GraphZen.TypeSystem.Taxonomy;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields
+namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields;
+
+// ReSharper disable once InconsistentNaming
+public abstract class Object_Fields :
+    NamedCollectionConfigurationFixture<IFields,
+        IFieldsDefinition, IMutableFieldsDefinition, FieldDefinition, Field, ObjectTypeDefinition,
+        ObjectType>
 {
-    // ReSharper disable once InconsistentNaming
-    public abstract class Object_Fields :
-        NamedCollectionConfigurationFixture<IFields,
-            IFieldsDefinition, IMutableFieldsDefinition, FieldDefinition, Field, ObjectTypeDefinition,
-            ObjectType>
+    public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
     {
-        public override void ConfigureParentExplicitly(SchemaBuilder sb, string parentName)
-        {
-            sb.Object(parentName);
-        }
+        sb.Object(parentName);
+    }
 
-        public override ObjectType GetParent(Schema schema, string parentName) => schema.GetObject(parentName);
+    public override ObjectType GetParent(Schema schema, string parentName) => schema.GetObject(parentName);
 
-        public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
-            sb.GetDefinition().GetObject(parentName);
+    public override ObjectTypeDefinition GetParent(SchemaBuilder sb, string parentName) =>
+        sb.GetDefinition().GetObject(parentName);
 
-        public override NamedCollection<FieldDefinition> GetCollection(ObjectTypeDefinition parent) =>
-            parent.Fields.ToNamedCollection();
+    public override NamedCollection<FieldDefinition> GetCollection(ObjectTypeDefinition parent) =>
+        parent.Fields.ToNamedCollection();
 
-        public override NamedCollection<Field> GetCollection(ObjectType parent) => parent.Fields.ToNamedCollection();
+    public override NamedCollection<Field> GetCollection(ObjectType parent) => parent.Fields.ToNamedCollection();
 
-        public override ConfigurationSource? FindIgnoredItemConfigurationSource(ObjectTypeDefinition parent,
-            string name) =>
-            parent.FindIgnoredFieldConfigurationSource(name);
+    public override ConfigurationSource? FindIgnoredItemConfigurationSource(ObjectTypeDefinition parent,
+        string name) =>
+        parent.FindIgnoredFieldConfigurationSource(name);
 
-        public override void AddItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Object(parentName).Field(name, "String");
-        }
+    public override void AddItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.Object(parentName).Field(name, "String");
+    }
 
-        public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Object(parentName).IgnoreField(name);
-        }
+    public override void IgnoreItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.Object(parentName).IgnoreField(name);
+    }
 
-        public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
-        {
-            sb.Object(parentName).UnignoreField(name);
-        }
+    public override void UnignoreItem(SchemaBuilder sb, string parentName, string name)
+    {
+        sb.Object(parentName).UnignoreField(name);
+    }
 
-        public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
-        {
-            sb.Object(parentName).Field(name, field => field.Name(newName));
-        }
+    public override void RenameItem(SchemaBuilder sb, string parentName, string name, string newName)
+    {
+        sb.Object(parentName).Field(name, field => field.Name(newName));
     }
 }

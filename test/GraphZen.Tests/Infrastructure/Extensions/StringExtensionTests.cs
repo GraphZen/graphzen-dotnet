@@ -6,43 +6,40 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.Infrastructure.Extensions;
 
-
-namespace GraphZen.Tests.Infrastructure.Extensions
+public class StringExtensionTests
 {
-    public class StringExtensionTests
+    [Theory]
+    [InlineData("f", "F")]
+    [InlineData("firstTest", "FirstTest")]
+    [InlineData("", "")]
+    [InlineData("Howdy", "Howdy")]
+    public void FirstCharToUpper(string input, string expectation)
     {
-        [Theory]
-        [InlineData("f", "F")]
-        [InlineData("firstTest", "FirstTest")]
-        [InlineData("", "")]
-        [InlineData("Howdy", "Howdy")]
-        public void FirstCharToUpper(string input, string expectation)
-        {
-            Assert.Equal(expectation, input.FirstCharToUpper());
-        }
+        Assert.Equal(expectation, input.FirstCharToUpper());
+    }
 
 
-        [Theory]
-        [InlineData("F", "f")]
-        [InlineData("FirstTest", "firstTest")]
-        public void FirstCharToLower(string input, string expectation)
-        {
-            Assert.Equal(expectation, input.FirstCharToLower());
-        }
+    [Theory]
+    [InlineData("F", "f")]
+    [InlineData("FirstTest", "firstTest")]
+    public void FirstCharToLower(string input, string expectation)
+    {
+        Assert.Equal(expectation, input.FirstCharToLower());
+    }
 
-        [Theory]
-        [InlineData("firstTest", "FIRST_TEST")]
-        [InlineData("FirstTest", "FIRST_TEST")]
-        [InlineData("Howdy", "HOWDY")]
-        [InlineData("Foo bar baz", "FOO_BAR_BAZ")]
-        [InlineData("foo_bar", "FOO_BAR")]
-        [InlineData("foo-bar", "FOO_BAR")]
-        [InlineData("FOO_BAR", "FOO_BAR")]
-        [InlineData("FOO-BAR", "FOO_BAR")]
-        public void ToUpperSnakeCase(string input, string expectation)
-        {
-            Assert.Equal(expectation, input.ToUpperSnakeCase());
-        }
+    [Theory]
+    [InlineData("firstTest", "FIRST_TEST")]
+    [InlineData("FirstTest", "FIRST_TEST")]
+    [InlineData("Howdy", "HOWDY")]
+    [InlineData("Foo bar baz", "FOO_BAR_BAZ")]
+    [InlineData("foo_bar", "FOO_BAR")]
+    [InlineData("foo-bar", "FOO_BAR")]
+    [InlineData("FOO_BAR", "FOO_BAR")]
+    [InlineData("FOO-BAR", "FOO_BAR")]
+    public void ToUpperSnakeCase(string input, string expectation)
+    {
+        Assert.Equal(expectation, input.ToUpperSnakeCase());
     }
 }

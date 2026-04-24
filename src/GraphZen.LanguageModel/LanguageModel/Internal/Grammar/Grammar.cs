@@ -6,31 +6,28 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
+namespace GraphZen.LanguageModel.Internal;
 
-
-namespace GraphZen.LanguageModel.Internal
+internal static partial class Grammar
 {
-    internal static partial class Grammar
-    {
-        /// <summary>
-        ///     http://facebook.github.io/graphql/June2018/#Argument
-        /// </summary>
-        internal static TokenListParser<TokenKind, ArgumentSyntax> Argument { get; } =
-            (from desc in Parse.Ref(() => Description!).AsNullable().OptionalOrDefault()
-             from name in Parse.Ref(() => Name!.Named("argument name"))
-             from colon in Colon!
-             from value in Value!.Named("argument value")
-             select new ArgumentSyntax(name!, desc, value, SyntaxLocation.FromMany(name!, value))).Try()
-            .Named("argument");
+    /// <summary>
+    ///     http://facebook.github.io/graphql/June2018/#Argument
+    /// </summary>
+    internal static TokenListParser<TokenKind, ArgumentSyntax> Argument { get; } =
+        (from desc in Parse.Ref(() => Description!).AsNullable().OptionalOrDefault()
+            from name in Parse.Ref(() => Name!.Named("argument name"))
+            from colon in Colon!
+            from value in Value!.Named("argument value")
+            select new ArgumentSyntax(name!, desc, value, SyntaxLocation.FromMany(name!, value))).Try()
+        .Named("argument");
 
-        /// <summary>
-        ///     http://facebook.github.io/graphql/June2018/#Arguments
-        /// </summary>
-        internal static TokenListParser<TokenKind, ArgumentSyntax[]> Arguments { get; } =
-            (from lp in Parse.Ref(() => LeftParen!)
-             from args in Argument!.Many()
-             from rp in RightParen!
-             select args).Try()
-            .Named("arguments");
-    }
+    /// <summary>
+    ///     http://facebook.github.io/graphql/June2018/#Arguments
+    /// </summary>
+    internal static TokenListParser<TokenKind, ArgumentSyntax[]> Arguments { get; } =
+        (from lp in Parse.Ref(() => LeftParen!)
+            from args in Argument!.Many()
+            from rp in RightParen!
+            select args).Try()
+        .Named("arguments");
 }

@@ -5,13 +5,12 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Playground
+namespace GraphZen.Playground;
+
+public class PlaygroundOptions
 {
-    public class PlaygroundOptions
-    {
-        public string? Endpoint { get; set; }
-        public string? SubscriptionEndpoint { get; set; }
-        public string? WorkspaceName { get; set; }
-        public PlaygroundSettings Settings { get; set; } = new PlaygroundSettings();
-    }
+    public string? Endpoint { get; set; }
+    public string? SubscriptionEndpoint { get; set; }
+    public string? WorkspaceName { get; set; }
+    public PlaygroundSettings Settings { get; set; } = new();
 }

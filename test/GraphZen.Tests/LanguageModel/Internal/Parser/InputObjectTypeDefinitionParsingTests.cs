@@ -7,63 +7,61 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class InputObjectTypeDefinitionParsingTests : ParserTestBase
 {
-    public class InputObjectTypeDefinitionParsingTests : ParserTestBase
+    [Fact]
+    public void AnnotatedInput()
     {
-        [Fact]
-        public void AnnotatedInput()
-        {
-            var result = ParseDocument(@"
+        var result = ParseDocument(@"
 input AnnotatedInput @onInputObject {
   annotatedField: Type @onField
 }");
-            var expected = SyntaxFactory.Document(new InputObjectTypeDefinitionSyntax(
-                SyntaxFactory.Name("AnnotatedInput"), null,
-                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onInputObject")) },
-                new[]
-                {
-                    new InputValueDefinitionSyntax(SyntaxFactory.Name("annotatedField"),
-                        SyntaxFactory.NamedType(SyntaxFactory.Name("Type"))
-                        , null, null,
-                        new[] {SyntaxFactory.Directive(SyntaxFactory.Name("onField"))})
-                }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        var expected = SyntaxFactory.Document(new InputObjectTypeDefinitionSyntax(
+            SyntaxFactory.Name("AnnotatedInput"), null,
+            new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onInputObject")) },
+            new[]
+            {
+                new InputValueDefinitionSyntax(SyntaxFactory.Name("annotatedField"),
+                    SyntaxFactory.NamedType(SyntaxFactory.Name("Type"))
+                    , null, null,
+                    new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onField")) })
+            }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
+    }
 
-        [Fact]
-        public void SimpleInputType()
-        {
-            var result = ParseDocument(@"
+    [Fact]
+    public void SimpleInputType()
+    {
+        var result = ParseDocument(@"
 input InputType {
   key: String!
   answer: Int = 42
 }
 ");
-            var expected = SyntaxFactory.Document(new InputObjectTypeDefinitionSyntax(SyntaxFactory.Name("InputType"),
-                null, null, new[]
-                {
-                    SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("key"),
-                        SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("String")))),
-                    new InputValueDefinitionSyntax(SyntaxFactory.Name("answer"),
-                        SyntaxFactory.NamedType(SyntaxFactory.Name("Int"))
-                        , null, SyntaxFactory.IntValue(42))
-                }));
+        var expected = SyntaxFactory.Document(new InputObjectTypeDefinitionSyntax(SyntaxFactory.Name("InputType"),
+            null, null, new[]
+            {
+                SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("key"),
+                    SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("String")))),
+                new InputValueDefinitionSyntax(SyntaxFactory.Name("answer"),
+                    SyntaxFactory.NamedType(SyntaxFactory.Name("Int"))
+                    , null, SyntaxFactory.IntValue(42))
+            }));
 
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
+    }
 
-        [Fact]
-        public void UndefinedInput()
-        {
-            var result = ParseDocument(@"input UndefinedInput");
-            var expected =
-                SyntaxFactory.Document(SyntaxFactory.InputObjectTypeDefinition(SyntaxFactory.Name("UndefinedInput")));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+    [Fact]
+    public void UndefinedInput()
+    {
+        var result = ParseDocument(@"input UndefinedInput");
+        var expected =
+            SyntaxFactory.Document(SyntaxFactory.InputObjectTypeDefinition(SyntaxFactory.Name("UndefinedInput")));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
     }
 }

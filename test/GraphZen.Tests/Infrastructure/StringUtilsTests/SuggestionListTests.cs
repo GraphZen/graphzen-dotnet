@@ -8,27 +8,25 @@ using Xunit;
 using static GraphZen.Infrastructure.StringUtils;
 
 
+namespace GraphZen.Tests.Infrastructure.StringUtilsTests;
 
-namespace GraphZen.Tests.Infrastructure.StringUtilsTests
+public class SuggestionListTests
 {
-    public class SuggestionListTests
+    [Fact]
+    public void ReturnsEmptyArrayWhenThereAreNoOptions()
     {
-        [Fact]
-        public void ReturnsEmptyArrayWhenThereAreNoOptions()
-        {
-            Assert.Empty(GetSuggestionList("input"));
-        }
+        Assert.Empty(GetSuggestionList("input"));
+    }
 
-        [Fact]
-        public void ReturnsOptionsSortedBasedOnSimilarity()
-        {
-            Assert.Equivalent(new[] { "abc", "ab" }, GetSuggestionList("abc", "a", "ab", "abc"));
-        }
+    [Fact]
+    public void ReturnsOptionsSortedBasedOnSimilarity()
+    {
+        Assert.Equivalent(new[] { "abc", "ab" }, GetSuggestionList("abc", "a", "ab", "abc"));
+    }
 
-        [Fact]
-        public void ReturnsResultsWhenInputIsEmpty()
-        {
-            Assert.Equivalent(new[] { "a" }, GetSuggestionList("", "a"));
-        }
+    [Fact]
+    public void ReturnsResultsWhenInputIsEmpty()
+    {
+        Assert.Equivalent(new[] { "a" }, GetSuggestionList("", "a"));
     }
 }

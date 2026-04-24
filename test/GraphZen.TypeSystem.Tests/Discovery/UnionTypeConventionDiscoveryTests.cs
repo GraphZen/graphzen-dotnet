@@ -5,22 +5,20 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+[NoReorder]
+public class UnionTypeConventionDiscoveryTests
 {
-    [NoReorder]
-    public class UnionTypeConventionDiscoveryTests
+    public class UnionBase
     {
-        public class UnionBase
-        {
-        }
+    }
 
-        public class UnionChildA : UnionBase
-        {
-        }
+    public class UnionChildA : UnionBase
+    {
+    }
 
-        public class UnionChildB : UnionBase
-        {
-        }
+    public class UnionChildB : UnionBase
+    {
     }
 }

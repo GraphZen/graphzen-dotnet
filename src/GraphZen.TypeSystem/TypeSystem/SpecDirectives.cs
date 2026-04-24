@@ -7,57 +7,55 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem;
 
-namespace GraphZen.TypeSystem
+public static class SpecDirectives
 {
-    public static class SpecDirectives
-    {
-        private const string DefaultDeprecationReason = "No longer supported";
+    private const string DefaultDeprecationReason = "No longer supported";
 
-        public static Directive Deprecated { get; } = new Directive("deprecated",
-            "Marks an element of a GraphQL schema as no longer supported.",
-            new[]
-            {
-                DirectiveLocation.EnumValue,
-                DirectiveLocation.FieldDefinition
-            },
-            new[]
-            {
-                new Argument("reason", "Explains why this element was deprecated, usually also including a " +
-                                       "suggestion for how to access supported similar data. Formatted " +
-                                       "in [Markdown](https://daringfireball.net/projects/markdown/).",
-                    SpecScalars.String,
-                    DefaultDeprecationReason, true, DirectiveAnnotation.EmptyList, null!, null!, null)
-            }, null!
-        );
-
-
-        public static Directive Include { get; } = new Directive("include",
-            "Directs the executor to include this field or fragment only when the `if` argument is true.",
-            new[] { DirectiveLocation.Field, DirectiveLocation.FragmentSpread, DirectiveLocation.InlineFragment },
-            new[]
-            {
-                new Argument("if", "Included when true.", NonNullType.Of(SpecScalars.Boolean),
-                    null, false, DirectiveAnnotation.EmptyList, null!, null!, null)
-            }, null!
-        );
-
-
-        public static Directive Skip { get; } = new Directive("skip",
-            "'Directs the executor to include this field or fragment only when the `if` argument is true.",
-            new[] { DirectiveLocation.Field, DirectiveLocation.FragmentSpread, DirectiveLocation.InlineFragment },
-            new[]
-            {
-                new Argument("if", "Skipped when true.", NonNullType.Of(SpecScalars.Boolean),
-                    null, false, DirectiveAnnotation.EmptyList, null!, null!, null)
-            }, null!);
-
-
-        public static IReadOnlyList<Directive> All { get; } = new List<Directive>
+    public static Directive Deprecated { get; } = new("deprecated",
+        "Marks an element of a GraphQL schema as no longer supported.",
+        new[]
         {
-            Deprecated,
-            Include,
-            Skip
-        }.AsReadOnly();
-    }
+            DirectiveLocation.EnumValue,
+            DirectiveLocation.FieldDefinition
+        },
+        new[]
+        {
+            new Argument("reason", "Explains why this element was deprecated, usually also including a " +
+                                   "suggestion for how to access supported similar data. Formatted " +
+                                   "in [Markdown](https://daringfireball.net/projects/markdown/).",
+                SpecScalars.String,
+                DefaultDeprecationReason, true, DirectiveAnnotation.EmptyList, null!, null!, null)
+        }, null!
+    );
+
+
+    public static Directive Include { get; } = new("include",
+        "Directs the executor to include this field or fragment only when the `if` argument is true.",
+        new[] { DirectiveLocation.Field, DirectiveLocation.FragmentSpread, DirectiveLocation.InlineFragment },
+        new[]
+        {
+            new Argument("if", "Included when true.", NonNullType.Of(SpecScalars.Boolean),
+                null, false, DirectiveAnnotation.EmptyList, null!, null!, null)
+        }, null!
+    );
+
+
+    public static Directive Skip { get; } = new("skip",
+        "'Directs the executor to include this field or fragment only when the `if` argument is true.",
+        new[] { DirectiveLocation.Field, DirectiveLocation.FragmentSpread, DirectiveLocation.InlineFragment },
+        new[]
+        {
+            new Argument("if", "Skipped when true.", NonNullType.Of(SpecScalars.Boolean),
+                null, false, DirectiveAnnotation.EmptyList, null!, null!, null)
+        }, null!);
+
+
+    public static IReadOnlyList<Directive> All { get; } = new List<Directive>
+    {
+        Deprecated,
+        Include,
+        Skip
+    }.AsReadOnly();
 }

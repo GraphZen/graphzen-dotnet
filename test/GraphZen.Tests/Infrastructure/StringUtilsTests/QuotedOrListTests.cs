@@ -8,39 +8,38 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Infrastructure.StringUtils;
 
-namespace GraphZen.Tests.Infrastructure.StringUtilsTests
+namespace GraphZen.Tests.Infrastructure.StringUtilsTests;
+
+public class QuotedOrListTests
 {
-    public class QuotedOrListTests
+    [Fact]
+    public void DoesNotAcceptAnEmptyList()
     {
-        [Fact]
-        public void DoesNotAcceptAnEmptyList()
-        {
-            Assert.ThrowsAny<Exception>(() => QuotedOrList());
-        }
+        Assert.ThrowsAny<Exception>(() => QuotedOrList());
+    }
 
 
-        [Fact]
-        public void LimitsToFiveItems()
-        {
-            Assert.Equal("\"A\", \"B\", \"C\", \"D\", or \"E\"", QuotedOrList("A", "B", "C", "D", "E", "F"));
-        }
+    [Fact]
+    public void LimitsToFiveItems()
+    {
+        Assert.Equal("\"A\", \"B\", \"C\", \"D\", or \"E\"", QuotedOrList("A", "B", "C", "D", "E", "F"));
+    }
 
-        [Fact]
-        public void ReturnsCommaSeperatedManyItemsList()
-        {
-            Assert.Equal("\"A\", \"B\", or \"C\"", QuotedOrList("A", "B", "C"));
-        }
+    [Fact]
+    public void ReturnsCommaSeperatedManyItemsList()
+    {
+        Assert.Equal("\"A\", \"B\", or \"C\"", QuotedOrList("A", "B", "C"));
+    }
 
-        [Fact]
-        public void ReturnsSingleQuotedItem()
-        {
-            Assert.Equal(@"""A""", QuotedOrList("A"));
-        }
+    [Fact]
+    public void ReturnsSingleQuotedItem()
+    {
+        Assert.Equal(@"""A""", QuotedOrList("A"));
+    }
 
-        [Fact]
-        public void ReturnsTwoItemList()
-        {
-            Assert.Equal("\"A\" or \"B\"", QuotedOrList("A", "B"));
-        }
+    [Fact]
+    public void ReturnsTwoItemList()
+    {
+        Assert.Equal("\"A\" or \"B\"", QuotedOrList("A", "B"));
     }
 }

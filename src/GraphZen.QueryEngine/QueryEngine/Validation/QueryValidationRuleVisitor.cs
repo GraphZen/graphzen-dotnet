@@ -7,20 +7,18 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 
+namespace GraphZen.QueryEngine.Validation;
 
-namespace GraphZen.QueryEngine.Validation
+public abstract class QueryValidationRuleVisitor : ValidationRuleVisitor
 {
-    public abstract class QueryValidationRuleVisitor : ValidationRuleVisitor
+    protected QueryValidationRuleVisitor(QueryValidationContext context) : base(context)
     {
-        protected QueryValidationRuleVisitor(QueryValidationContext context) : base(context)
-        {
-            Context = Check.NotNull(context, nameof(context));
-        }
-
-
-        public new QueryValidationContext Context { get; }
-
-
-        public TypeInfo TypeInfo => Context.TypeInfo;
+        Context = Check.NotNull(context, nameof(context));
     }
+
+
+    public new QueryValidationContext Context { get; }
+
+
+    public TypeInfo TypeInfo => Context.TypeInfo;
 }

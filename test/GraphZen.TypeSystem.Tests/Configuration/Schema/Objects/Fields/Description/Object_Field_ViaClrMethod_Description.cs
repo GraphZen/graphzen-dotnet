@@ -8,35 +8,34 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Description;
+
+// ReSharper disable once InconsistentNaming
+public class Object_Field_ViaClrMethod_Description : Object_Field_Description, ILeafConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Object_Field_ViaClrMethod_Description : Object_Field_Description, ILeafConventionConfigurationFixture
+    public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+
+    public LeafConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(ExampleObject.ExampleField).FirstCharToLower(),
+            DataAnnotationValue = DataAnnotationDescriptionValue
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        [GraphQLName(Grandparent)]
-        public class ExampleObject
-        {
-            [Description(DataAnnotationDescriptionValue)]
-            public string ExampleField() => throw new NotImplementedException();
-        }
+        sb.Object<ExampleObject>();
+    }
 
-        public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Object<ExampleObject>();
+    }
 
-        public LeafConventionContext GetContext() =>
-            new LeafConventionContext
-            {
-                ParentName = nameof(ExampleObject.ExampleField).FirstCharToLower(),
-                DataAnnotationValue = DataAnnotationDescriptionValue
-            };
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Object<ExampleObject>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Object<ExampleObject>();
-        }
+    [GraphQLName(Grandparent)]
+    public class ExampleObject
+    {
+        [Description(DataAnnotationDescriptionValue)]
+        public string ExampleField() => throw new NotImplementedException();
     }
 }

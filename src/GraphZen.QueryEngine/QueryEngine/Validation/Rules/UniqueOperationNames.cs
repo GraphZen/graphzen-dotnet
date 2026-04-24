@@ -7,35 +7,33 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.QueryEngine.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules;
+
+public class UniqueOperationNames : QueryValidationRuleVisitor
 {
-    public class UniqueOperationNames : QueryValidationRuleVisitor
+    private readonly Dictionary<string, NameSyntax> _knownOperationNames = new();
+
+    public UniqueOperationNames(QueryValidationContext context) : base(context)
     {
-        private readonly Dictionary<string, NameSyntax> _knownOperationNames =
-            new Dictionary<string, NameSyntax>();
-
-        public UniqueOperationNames(QueryValidationContext context) : base(context)
-        {
-        }
-
-        public static string DuplicateOperationNameMessage(string operationName) =>
-            $"There can be only one operation named \"{operationName}\".";
-
-        public override VisitAction EnterOperationDefinition(OperationDefinitionSyntax node)
-        {
-            var operationName = node.Name;
-            if (operationName != null)
-            {
-                if (_knownOperationNames.ContainsKey(operationName.Value))
-                    ReportError(DuplicateOperationNameMessage(operationName.Value),
-                        _knownOperationNames[operationName.Value], operationName);
-                else
-                    _knownOperationNames.Add(operationName.Value, operationName);
-            }
-
-            return false;
-        }
-
-        public override VisitAction EnterFragmentDefinition(FragmentDefinitionSyntax node) => false;
     }
+
+    public static string DuplicateOperationNameMessage(string operationName) =>
+        $"There can be only one operation named \"{operationName}\".";
+
+    public override VisitAction EnterOperationDefinition(OperationDefinitionSyntax node)
+    {
+        var operationName = node.Name;
+        if (operationName != null)
+        {
+            if (_knownOperationNames.ContainsKey(operationName.Value))
+                ReportError(DuplicateOperationNameMessage(operationName.Value),
+                    _knownOperationNames[operationName.Value], operationName);
+            else
+                _knownOperationNames.Add(operationName.Value, operationName);
+        }
+
+        return false;
+    }
+
+    public override VisitAction EnterFragmentDefinition(FragmentDefinitionSyntax node) => false;
 }

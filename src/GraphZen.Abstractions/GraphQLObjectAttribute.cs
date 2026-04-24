@@ -6,10 +6,9 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+[AttributeUsage(AttributeTargets.Class)]
+public class GraphQLObjectAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public class GraphQLObjectAttribute : Attribute
-    {
-    }
 }

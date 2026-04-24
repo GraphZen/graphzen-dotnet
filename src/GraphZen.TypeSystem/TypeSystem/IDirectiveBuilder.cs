@@ -7,22 +7,21 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public interface IDirectiveBuilder<TDirective>
 {
-    public interface IDirectiveBuilder<TDirective>
-    {
-        IDirectiveBuilder<TDirective> Description(string description);
-        IDirectiveBuilder<TDirective> Name(string name);
+    IDirectiveBuilder<TDirective> Description(string description);
+    IDirectiveBuilder<TDirective> Name(string name);
 
 
-        IDirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations);
+    IDirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations);
 
 
-        IDirectiveBuilder<TDirective> Argument(string name, string type,
-            Action<InputValueBuilder>? configurator = null);
+    IDirectiveBuilder<TDirective> Argument(string name, string type,
+        Action<InputValueBuilder>? configurator = null);
 
 
-        IDirectiveBuilder<TDirective> Argument<TArg>(string name,
-            Action<InputValueBuilder>? configurator = null);
-    }
+    IDirectiveBuilder<TDirective> Argument<TArg>(string name,
+        Action<InputValueBuilder>? configurator = null);
 }

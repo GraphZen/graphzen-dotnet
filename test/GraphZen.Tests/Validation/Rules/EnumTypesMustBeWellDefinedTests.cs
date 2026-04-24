@@ -7,18 +7,17 @@ using GraphZen.LanguageModel.Validation;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class EnumTypesMustBeWellDefinedTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class EnumTypesMustBeWellDefinedTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.EnumTypesMustBeWellDefined;
+    public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.EnumTypesMustBeWellDefined;
 
-        [Fact]
-        public void ItRejectsAnEnumTypeWithoutValues()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void ItRejectsAnEnumTypeWithoutValues()
+    {
+        SdlShouldFail(@"
               type Query {
                 field: SomeEnum
               }
@@ -29,12 +28,12 @@ namespace GraphZen.Tests.Validation.Rules
 
               extend enum SomeEnum @test
             ", Error("Enum type SomeEnum must define one or more values.", (5, 6), (9, 13)));
-        }
+    }
 
-        [Fact]
-        public void RejectsAnEnumTypeWithDuplicateValues()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnEnumTypeWithDuplicateValues()
+    {
+        SdlShouldFail(@"
               type Query {
                 field: SomeEnum
               }
@@ -44,11 +43,10 @@ namespace GraphZen.Tests.Validation.Rules
                 SOME_VALUE
               }
             ", Error("Enum type SomeEnum can include value SOME_VALUE only once.", (6, 3), (7, 3)));
-        }
+    }
 
-        [Fact(Skip = "TODO")]
-        public void RejectsEnumWithIncorrectlyTypedEnums()
-        {
-        }
+    [Fact(Skip = "TODO")]
+    public void RejectsEnumWithIncorrectlyTypedEnums()
+    {
     }
 }

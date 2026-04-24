@@ -9,17 +9,16 @@ using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.LanguageModel.Tests.Internal.Grammar
+namespace GraphZen.LanguageModel.Tests.Internal.Grammar;
+
+public class DirectiveLocationExtensionTests
 {
-    public class DirectiveLocationExtensionTests
+    [Fact]
+    public void get_display_value_should_not_be_null_for_all_values()
     {
-        [Fact]
-        public void get_display_value_should_not_be_null_for_all_values()
+        foreach (var value in Enum.GetValues(typeof(DirectiveLocation)).Cast<DirectiveLocation>())
         {
-            foreach (var value in Enum.GetValues(typeof(DirectiveLocation)).Cast<DirectiveLocation>())
-            {
-                Assert.NotNull(value.GetDisplayValue());
-            }
+            Assert.NotNull(value.GetDisplayValue());
         }
     }
 }

@@ -3,106 +3,105 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
-using System.Text.Json;
 using Xunit;
 
+namespace GraphZen.Tests.QueryEngine;
 
-namespace GraphZen.Tests.QueryEngine
+[NoReorder]
+public class ExecutorTests : ExecutorHarness
 {
-    [NoReorder]
-    public class ExecutorTests : ExecutorHarness
+    [Fact]
+    public Task AcceptsAnObjectWithNamedPropertiesAsArguments()
     {
-        [Fact]
-        public Task AcceptsAnObjectWithNamedPropertiesAsArguments()
+        var doc = "query Example { a }";
+        var data = "rootValue";
+        var schema = Schema.Create(sb =>
         {
-            var doc = "query Example { a }";
-            var data = "rootValue";
-            var schema = Schema.Create(sb =>
-            {
-                sb.Object("Type").Field("a", "String", _ => _
-                    .Resolve(x => x));
-                sb.QueryType("Type");
-            });
+            sb.Object("Type").Field("a", "String", _ => _
+                .Resolve(x => x));
+            sb.QueryType("Type");
+        });
 
-            return ExecuteAsync(schema, doc, data).ShouldEqual(new
+        return ExecuteAsync(schema, doc, data).ShouldEqual(new
+        {
+            data = new
             {
-                data = new
-                {
-                    a = "rootValue"
-                }
-            });
+                a = "rootValue"
+            }
+        });
+    }
+
+
+    private class DeepData
+    {
+        private readonly Data _data;
+
+        public DeepData(Data data)
+        {
+            _data = data;
         }
 
+        [UsedImplicitly]
+        public string A() => "Already Been Done";
 
-        private class DeepData
+        [UsedImplicitly]
+        public string B() => "Boring";
+
+        [UsedImplicitly]
+        public object[] C()
         {
-            private readonly Data _data;
-
-            public DeepData(Data data)
-            {
-                _data = data;
-            }
-
-            [UsedImplicitly]
-            public string A() => "Already Been Done";
-
-            [UsedImplicitly]
-            public string B() => "Boring";
-
-            [UsedImplicitly]
-            public object[] C()
-            {
-                return new object[] { "Contrived", null!, "Confusing" };
-            }
-
-            [UsedImplicitly]
-            public object[] Deeper()
-            {
-                return new object[] { _data, null!, _data };
-            }
+            return new object[] { "Contrived", null!, "Confusing" };
         }
 
-        private class Data
+        [UsedImplicitly]
+        public object[] Deeper()
         {
-            [UsedImplicitly] public string F => "Fish";
-
-            [UsedImplicitly]
-            public string A() => "Apple";
-
-            [UsedImplicitly]
-            public string B() => "Banana";
-
-            [UsedImplicitly]
-            public string C() => "Cookie";
-
-            [UsedImplicitly]
-            public string D() => "Donut";
-
-            [UsedImplicitly]
-            public string E() => "Egg";
-
-            [UsedImplicitly]
-            public string Pic(int? size) => $"Pic of size: {size ?? 50}";
-
-            [UsedImplicitly]
-            public DeepData Deep() => new DeepData(this);
-
-            [UsedImplicitly]
-            public Task<Data> DataAsync() => Task.FromResult(this);
+            return new object[] { _data, null!, _data };
         }
+    }
 
-        [Fact]
-        public async Task ExecutesArbitraryCode()
-        {
-            var doc = @"
+    private class Data
+    {
+        [UsedImplicitly] public string F => "Fish";
+
+        [UsedImplicitly]
+        public string A() => "Apple";
+
+        [UsedImplicitly]
+        public string B() => "Banana";
+
+        [UsedImplicitly]
+        public string C() => "Cookie";
+
+        [UsedImplicitly]
+        public string D() => "Donut";
+
+        [UsedImplicitly]
+        public string E() => "Egg";
+
+        [UsedImplicitly]
+        public string Pic(int? size) => $"Pic of size: {size ?? 50}";
+
+        [UsedImplicitly]
+        public DeepData Deep() => new(this);
+
+        [UsedImplicitly]
+        public Task<Data> DataAsync() => Task.FromResult(this);
+    }
+
+    [Fact]
+    public async Task ExecutesArbitraryCode()
+    {
+        var doc = @"
               query Example($size: Int) {
                 a,
                 b,
@@ -130,62 +129,62 @@ namespace GraphZen.Tests.QueryEngine
                 d
                 e
               }";
-            var expected = new
+        var expected = new
+        {
+            data = new
             {
-                data = new
+                a = "Apple",
+                b = "Banana",
+                x = "Cookie",
+                d = "Donut",
+                e = "Egg",
+                f = "Fish",
+                pic = "Pic of size: 100",
+                task = new { a = "Apple" },
+                deep = new
                 {
-                    a = "Apple",
-                    b = "Banana",
-                    x = "Cookie",
-                    d = "Donut",
-                    e = "Egg",
-                    f = "Fish",
-                    pic = "Pic of size: 100",
-                    task = new { a = "Apple" },
-                    deep = new
+                    a = "Already Been Done",
+                    b = "Boring",
+                    c = new object[] { "Contrived", null!, "Confusing" },
+                    deeper = new object[]
                     {
-                        a = "Already Been Done",
-                        b = "Boring",
-                        c = new object[] { "Contrived", null!, "Confusing" },
-                        deeper = new object[]
-                        {
-                            new {a = "Apple", b = "Banana"},
-                            null!,
-                            new {a = "Apple", b = "Banana"}
-                        }
+                        new { a = "Apple", b = "Banana" },
+                        null!,
+                        new { a = "Apple", b = "Banana" }
                     }
                 }
-            };
+            }
+        };
 
-            var schema = Schema.Create(sb =>
-            {
-                sb.Object("DataType")
-                    .Field("a", "String")
-                    .Field("b", "String")
-                    .Field("c", "String")
-                    .Field("d", "String")
-                    .Field("e", "String")
-                    .Field("f", "String")
-                    .Field("pic", "String", pic => { pic.Argument("size", "Int"); })
-                    .Field("deep", "DeepDataType")
-                    .Field("dataAsync", "DataType");
-
-                sb.Object("DeepDataType")
-                    .Field("a", "String")
-                    .Field("b", "String")
-                    .Field("c", "[String]")
-                    .Field("d", "[String]")
-                    .Field("deeper", "[DataType]");
-
-                sb.QueryType("DataType");
-            });
-            await ExecuteAsync(schema, doc, new Data(), new { size = 100 }).ShouldEqual(expected);
-        }
-
-        [Fact]
-        public async Task MergesParallelFragments()
+        var schema = Schema.Create(sb =>
         {
-            var doc = @"
+            sb.Object("DataType")
+                .Field("a", "String")
+                .Field("b", "String")
+                .Field("c", "String")
+                .Field("d", "String")
+                .Field("e", "String")
+                .Field("f", "String")
+                .Field("pic", "String", pic => { pic.Argument("size", "Int"); })
+                .Field("deep", "DeepDataType")
+                .Field("dataAsync", "DataType");
+
+            sb.Object("DeepDataType")
+                .Field("a", "String")
+                .Field("b", "String")
+                .Field("c", "[String]")
+                .Field("d", "[String]")
+                .Field("deeper", "[DataType]");
+
+            sb.QueryType("DataType");
+        });
+        await ExecuteAsync(schema, doc, new Data(), new { size = 100 }).ShouldEqual(expected);
+    }
+
+    [Fact]
+    public async Task MergesParallelFragments()
+    {
+        var doc = @"
                 { a, ...FragOne, ...FragTwo }
 
                 fragment FragOne on Type {
@@ -198,107 +197,107 @@ namespace GraphZen.Tests.QueryEngine
                   deep { c, deeper: deep { c } }
                 } ";
 
-            var schema = Schema.Create(sb =>
-            {
-                sb.Object("Type")
-                    .Field("a", "String", _ => _.Resolve(() => "Apple"))
-                    .Field("b", "String", _ => _.Resolve(() => "Banana"))
-                    .Field("c", "String", _ => _.Resolve(() => "Cherry"))
-                    .Field("deep", "Type", _ => _.Resolve(() => new { }));
-                sb.QueryType("Type");
-            });
+        var schema = Schema.Create(sb =>
+        {
+            sb.Object("Type")
+                .Field("a", "String", _ => _.Resolve(() => "Apple"))
+                .Field("b", "String", _ => _.Resolve(() => "Banana"))
+                .Field("c", "String", _ => _.Resolve(() => "Cherry"))
+                .Field("deep", "Type", _ => _.Resolve(() => new { }));
+            sb.QueryType("Type");
+        });
 
-            await ExecuteAsync(schema, doc).ShouldEqual(new
+        await ExecuteAsync(schema, doc).ShouldEqual(new
+        {
+            data = new
             {
-                data = new
+                a = "Apple",
+                b = "Banana",
+                c = "Cherry",
+                deep = new
                 {
-                    a = "Apple",
                     b = "Banana",
                     c = "Cherry",
-                    deep = new
+                    deeper = new
                     {
                         b = "Banana",
-                        c = "Cherry",
-                        deeper = new
-                        {
-                            b = "Banana",
-                            c = "Cherry"
-                        }
+                        c = "Cherry"
                     }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        [Fact]
-        public async Task ProvidesInfoAboutCurrentExecutionState()
+    [Fact]
+    public async Task ProvidesInfoAboutCurrentExecutionState()
+    {
+        var ast = Parser.ParseDocument("query ($var: String) { result: test }");
+        ResolveInfo info = default!;
+        var schemaSut = Schema.Create(sb =>
         {
-            var ast = Parser.ParseDocument("query ($var: String) { result: test }");
-            ResolveInfo info = default!;
-            var schemaSut = Schema.Create(sb =>
-            {
-                sb.Object("Test").Field("test", "String", _ => _
-                    .Resolve((source, args, context, resolveInfo) =>
-                    {
-                        info = resolveInfo;
-                        return "hello";
-                    }));
-                sb.QueryType("Test");
-            });
-
-            var rootValue = new { root = "val" };
-
-            await ExecuteAsync(schemaSut, ast, rootValue, new { var = "abc" });
-            Assert.Equal("test", info.FieldName);
-            Assert.Single(info.FieldNodes);
-            Assert.Equal(((OperationDefinitionSyntax)ast.Definitions[0]).SelectionSet.Selections[0], info.FieldNodes[0]);
-            Assert.Equal(SpecScalars.String, info.ReturnType);
-            Assert.Equal(schemaSut.QueryType, info.ParentType);
-            Assert.Null(info.Path.Previous);
-            Assert.Equal("result", info.Path.Key);
-            Assert.Equal(schemaSut, info.Schema);
-            Assert.Equal(rootValue, info.RootValue);
-            Assert.Equal(ast.Definitions[0], info.Operation);
-            JsonAssert.EquivalentToJsonFromObject(info.VariableValues, new { var = "abc" });
-        }
-
-        [Fact]
-        public async Task ThreadsRootValueContextCorrectly()
-        {
-            var doc = "query Example { a }";
-            var data = new DynamicDictionary();
-            data["contextThing"] = "thing";
-            dynamic? resolvedRootValue = default;
-            var schema = Schema.Create(sb =>
-            {
-                sb.Object("Type").Field("a", "String", _ => _.Resolve(source =>
+            sb.Object("Test").Field("test", "String", _ => _
+                .Resolve((source, args, context, resolveInfo) =>
                 {
-                    resolvedRootValue = source;
-                    return null;
+                    info = resolveInfo;
+                    return "hello";
                 }));
-                sb.QueryType("Type");
-            });
-            await ExecuteAsync(schema, Parser.ParseDocument(doc), data);
-            Assert.Equal("thing", resolvedRootValue!.contextThing);
-        }
+            sb.QueryType("Test");
+        });
 
-        public class OrderingData
+        var rootValue = new { root = "val" };
+
+        await ExecuteAsync(schemaSut, ast, rootValue, new { var = "abc" });
+        Assert.Equal("test", info.FieldName);
+        Assert.Single(info.FieldNodes);
+        Assert.Equal(((OperationDefinitionSyntax)ast.Definitions[0]).SelectionSet.Selections[0], info.FieldNodes[0]);
+        Assert.Equal(SpecScalars.String, info.ReturnType);
+        Assert.Equal(schemaSut.QueryType, info.ParentType);
+        Assert.Null(info.Path.Previous);
+        Assert.Equal("result", info.Path.Key);
+        Assert.Equal(schemaSut, info.Schema);
+        Assert.Equal(rootValue, info.RootValue);
+        Assert.Equal(ast.Definitions[0], info.Operation);
+        JsonAssert.EquivalentToJsonFromObject(info.VariableValues, new { var = "abc" });
+    }
+
+    [Fact]
+    public async Task ThreadsRootValueContextCorrectly()
+    {
+        var doc = "query Example { a }";
+        var data = new DynamicDictionary();
+        data["contextThing"] = "thing";
+        dynamic? resolvedRootValue = default;
+        var schema = Schema.Create(sb =>
         {
-            public string A() => "a";
+            sb.Object("Type").Field("a", "String", _ => _.Resolve(source =>
+            {
+                resolvedRootValue = source;
+                return null;
+            }));
+            sb.QueryType("Type");
+        });
+        await ExecuteAsync(schema, Parser.ParseDocument(doc), data);
+        Assert.Equal("thing", resolvedRootValue!.contextThing);
+    }
 
-            public Task<string> B() => Task.FromResult("b");
+    public class OrderingData
+    {
+        public string A() => "a";
 
-            public string C() => "c";
+        public Task<string> B() => Task.FromResult("b");
 
-            public Task<string> D() => Task.FromResult("d");
+        public string C() => "c";
 
-            public string E() => "e";
-        }
+        public Task<string> D() => Task.FromResult("d");
+
+        public string E() => "e";
+    }
 
 
-        [Fact]
-        public async Task CorrectFieldOrderingDespiteExecutionOrder()
-        {
-            var doc = @"
+    [Fact]
+    public async Task CorrectFieldOrderingDespiteExecutionOrder()
+    {
+        var doc = @"
             {
               a,
               b,
@@ -306,36 +305,36 @@ namespace GraphZen.Tests.QueryEngine
               d,
               e
             }";
-            var schema = Schema.Create(sb =>
-            {
-                sb.Object("Type")
-                    .Field("a", "String")
-                    .Field("b", "String")
-                    .Field("c", "String")
-                    .Field("d", "String")
-                    .Field("e", "String");
-                sb.QueryType("Type");
-            });
-
-            var result = await ExecuteAsync(schema, doc, new OrderingData()).ShouldEqual(new
-            {
-                data = new
-                {
-                    a = "a",
-                    b = "b",
-                    c = "c",
-                    d = "d",
-                    e = "e"
-                }
-            });
-
-            Assert.Equal(new[] { "a", "b", "c", "d", "e" }, result.Data!.Keys.ToArray());
-        }
-
-        [Fact]
-        public async Task AvoidsRecursion()
+        var schema = Schema.Create(sb =>
         {
-            var doc = @"
+            sb.Object("Type")
+                .Field("a", "String")
+                .Field("b", "String")
+                .Field("c", "String")
+                .Field("d", "String")
+                .Field("e", "String");
+            sb.QueryType("Type");
+        });
+
+        var result = await ExecuteAsync(schema, doc, new OrderingData()).ShouldEqual(new
+        {
+            data = new
+            {
+                a = "a",
+                b = "b",
+                c = "c",
+                d = "d",
+                e = "e"
+            }
+        });
+
+        Assert.Equal(new[] { "a", "b", "c", "d", "e" }, result.Data!.Keys.ToArray());
+    }
+
+    [Fact]
+    public async Task AvoidsRecursion()
+    {
+        var doc = @"
               query Q {
                 a
                 ...Frag
@@ -347,144 +346,142 @@ namespace GraphZen.Tests.QueryEngine
                 ...Frag
               }
             ";
-            var data = new { a = "b" };
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Type").Field("a", "String");
-                _.QueryType("Type");
-            });
-
-            await ExecuteAsync(schema, doc, data).ShouldEqual(new
-            {
-                data = new
-                {
-                    a = "b"
-                }
-            });
-        }
-
-        [Fact]
-        public async Task DoesNotIncludeIllegalFieldsInOutput()
+        var data = new { a = "b" };
+        var schema = Schema.Create(_ =>
         {
-            var doc = @"
+            _.Object("Type").Field("a", "String");
+            _.QueryType("Type");
+        });
+
+        await ExecuteAsync(schema, doc, data).ShouldEqual(new
+        {
+            data = new
+            {
+                a = "b"
+            }
+        });
+    }
+
+    [Fact]
+    public async Task DoesNotIncludeIllegalFieldsInOutput()
+    {
+        var doc = @"
             mutation M {
               thisIsIllegalDontIncludeMe
             } ";
 
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Q").Field("a", "String");
-                _.Object("M").Field("c", "String");
-
-
-                _.QueryType("Q");
-                _.MutationType("M");
-            });
-
-            await ExecuteAsync(schema, doc).ShouldEqual(new { data = new { } });
-        }
-
-        [Fact]
-        public Task DoesNotIncludeArgumentsThatWereNotSet()
+        var schema = Schema.Create(_ =>
         {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Type")
-                    .Field("field", "String", field => field.Resolve((data, args) => JsonSerializer.Serialize(args))
-                        .Argument("a", "Boolean")
-                        .Argument("b", "Boolean")
-                        .Argument("c", "Boolean")
-                        .Argument("d", "Int")
-                        .Argument("e", "Int")
-                    );
-                _.QueryType("Type");
-            });
+            _.Object("Q").Field("a", "String");
+            _.Object("M").Field("c", "String");
 
-            return ExecuteAsync(schema, "{ field(a: true, c: false, e: 0) }").ShouldEqual(new
+
+            _.QueryType("Q");
+            _.MutationType("M");
+        });
+
+        await ExecuteAsync(schema, doc).ShouldEqual(new { data = new { } });
+    }
+
+    [Fact]
+    public Task DoesNotIncludeArgumentsThatWereNotSet()
+    {
+        var schema = Schema.Create(_ =>
+        {
+            _.Object("Type")
+                .Field("field", "String", field => field.Resolve((data, args) => JsonSerializer.Serialize(args))
+                    .Argument("a", "Boolean")
+                    .Argument("b", "Boolean")
+                    .Argument("c", "Boolean")
+                    .Argument("d", "Int")
+                    .Argument("e", "Int")
+                );
+            _.QueryType("Type");
+        });
+
+        return ExecuteAsync(schema, "{ field(a: true, c: false, e: 0) }").ShouldEqual(new
+        {
+            data = new
             {
-                data = new
+                field = "{\"a\":true,\"c\":false,\"e\":0}"
+            }
+        });
+    }
+
+
+    private class Special
+    {
+        public string Value { [UsedImplicitly] get; set; } = null!;
+    }
+
+    private class NotSpecial
+    {
+        public string Value { [UsedImplicitly] get; set; } = null!;
+    }
+
+    private class SpecialsRoot
+    {
+        public object[] Specials { get; set; } = null!;
+    }
+
+    [Fact]
+    public Task FailsWhenIsTypeOfCheckIsNotMet()
+    {
+        var schema = Schema.Create(_ =>
+        {
+            _.Object("SpecialType").IsTypeOf(o => o is Special).Field("value", "String");
+            _.Object("Query").Field("specials", "[SpecialType]",
+                f => f.Resolve(root => ((SpecialsRoot)root).Specials));
+        });
+
+        var rootValue = new SpecialsRoot
+        {
+            Specials = new object[] { new Special { Value = "foo" }, new NotSpecial { Value = "bar" } }
+        };
+
+        return ExecuteAsync(schema, "{specials { value } }", rootValue).ShouldEqual(new
+        {
+            data = new
+            {
+                specials = new object[] { new { value = "foo" }, null! }
+            },
+            errors = new object[]
+            {
+                new
                 {
-                    field = "{\"a\":true,\"c\":false,\"e\":0}"
-                }
-            });
-        }
-
-
-        private class Special
-        {
-            public string Value { [UsedImplicitly] get; set; } = null!;
-        }
-
-        private class NotSpecial
-        {
-            public string Value { [UsedImplicitly] get; set; } = null!;
-        }
-
-        private class SpecialsRoot
-        {
-            public object[] Specials { get; set; } = null!;
-        }
-
-        [Fact]
-        public Task FailsWhenIsTypeOfCheckIsNotMet()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("SpecialType").IsTypeOf(
-                    o => o is Special).Field("value", "String");
-                _.Object("Query").Field("specials", "[SpecialType]",
-                    f => f.Resolve(root => ((SpecialsRoot)root).Specials));
-            });
-
-            var rootValue = new SpecialsRoot
-            {
-                Specials = new object[] { new Special { Value = "foo" }, new NotSpecial { Value = "bar" } }
-            };
-
-            return ExecuteAsync(schema, "{specials { value } }", rootValue).ShouldEqual(new
-            {
-                data = new
-                {
-                    specials = new object[] { new { value = "foo" }, null! }
-                },
-                errors = new object[]
-                {
-                    new
+                    message = "Expected value of type \"SpecialType\" but got: {value: \"bar\"}.",
+                    locations = new object[]
                     {
-                        message = "Expected value of type \"SpecialType\" but got: {value: \"bar\"}.",
-                        locations = new object[]
-                        {
-                            new {line = 1, column = 2}
-                        },
-                        path = new object[]
-                        {
-                            "specials", 1
-                        }
+                        new { line = 1, column = 2 }
+                    },
+                    path = new object[]
+                    {
+                        "specials", 1
                     }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        [Fact]
-        public Task ExecutesIgnoringInvalidNonExecutableDefinitions()
-        {
-            var query = @"
+    [Fact]
+    public Task ExecutesIgnoringInvalidNonExecutableDefinitions()
+    {
+        var query = @"
               { foo }
 
               type Query { bar: String }
             ";
-            var schema = Schema.Create(_ => { _.Object("Query").Field("foo", "String"); });
+        var schema = Schema.Create(_ => { _.Object("Query").Field("foo", "String"); });
 
-            return ExecuteAsync(schema, query, throwOnError: true).ShouldEqual(new
+        return ExecuteAsync(schema, query, throwOnError: true).ShouldEqual(new
+        {
+            data = new
             {
-                data = new
-                {
-                    foo = (object?)null
-                }
-            });
-        }
-
-        [Fact(Skip = "TODO")]
-        public Task UsesACustomFieldResolver() => throw new NotImplementedException();
+                foo = (object?)null
+            }
+        });
     }
+
+    [Fact(Skip = "TODO")]
+    public Task UsesACustomFieldResolver() => throw new NotImplementedException();
 }

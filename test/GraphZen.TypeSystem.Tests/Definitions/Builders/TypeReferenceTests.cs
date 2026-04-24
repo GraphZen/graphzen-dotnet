@@ -7,52 +7,49 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+public class TypeReferenceTests
 {
-    public class TypeReferenceTests
+    [Fact]
+    public void ObjectFieldsEndUpWithCorrectTypes()
     {
-        private class Foo
+        var schema = Schema.Create(_ =>
         {
-        }
+            _.Object("Bar");
+            _.Object<Foo>();
+            _.Object("Query")
+                .Field<Foo>("fooNNClr")
+                .Field("fooNN", "Foo!")
+                .Field("foo", "Foo")
+                .Field("foo", "Foo")
+                .Field("fooList", "[Foo]")
+                .Field<List<Foo>>("fooClrList");
+        });
 
-        [GraphQLName("Baz")]
-        [UsedImplicitly]
-        private class Bar
-        {
-        }
+        var query = schema.GetObject("Query");
 
+        Assert.Equal(typeof(Foo),
+            ((ObjectType)((NonNullType)query.FindField("fooNNClr")!.FieldType).OfType).ClrType);
+        Assert.Equal(typeof(Foo),
+            ((ObjectType)((NonNullType)query.FindField("fooNN")!.FieldType).OfType).ClrType);
+        Assert.Equal(typeof(Foo),
+            ((ObjectType)query.FindField("foo")!.FieldType).ClrType);
+        Assert.Equal(typeof(Foo),
+            ((ObjectType)((ListType)query.FindField("fooList")!.FieldType).OfType).ClrType);
 
-        [Fact]
-        public void ObjectFieldsEndUpWithCorrectTypes()
-        {
-            var schema = Schema.Create(_ =>
-            {
-                _.Object("Bar");
-                _.Object<Foo>();
-                _.Object("Query")
-                    .Field<Foo>("fooNNClr")
-                    .Field("fooNN", "Foo!")
-                    .Field("foo", "Foo")
-                    .Field("foo", "Foo")
-                    .Field("fooList", "[Foo]")
-                    .Field<List<Foo>>("fooClrList");
-            });
+        Assert.Equal(typeof(Foo),
+            ((ObjectType)((NonNullType)((ListType)((NonNullType)query.FindField("fooClrList")!
+                .FieldType).OfType).OfType).OfType).ClrType);
+    }
 
-            var query = schema.GetObject("Query");
+    private class Foo
+    {
+    }
 
-            Assert.Equal(typeof(Foo),
-                ((ObjectType)((NonNullType)query.FindField("fooNNClr")!.FieldType).OfType).ClrType);
-            Assert.Equal(typeof(Foo),
-                ((ObjectType)((NonNullType)query.FindField("fooNN")!.FieldType).OfType).ClrType);
-            Assert.Equal(typeof(Foo),
-                ((ObjectType)query.FindField("foo")!.FieldType).ClrType);
-            Assert.Equal(typeof(Foo),
-                ((ObjectType)((ListType)query.FindField("fooList")!.FieldType).OfType).ClrType);
-
-            Assert.Equal(typeof(Foo),
-                ((ObjectType)((NonNullType)((ListType)((NonNullType)query.FindField("fooClrList")!
-                    .FieldType).OfType).OfType).OfType).ClrType);
-        }
+    [GraphQLName("Baz")]
+    [UsedImplicitly]
+    private class Bar
+    {
     }
 }

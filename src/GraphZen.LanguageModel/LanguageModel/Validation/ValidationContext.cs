@@ -7,45 +7,42 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel.Validation;
 
-
-namespace GraphZen.LanguageModel.Validation
+public abstract class ValidationContext
 {
-    public abstract class ValidationContext
+    private readonly Lazy<GraphQLSyntaxWalker?> _parentVisitor;
+
+
+    protected ValidationContext(DocumentSyntax ast, Lazy<GraphQLSyntaxWalker?> parentVisitor)
     {
-        private readonly Lazy<GraphQLSyntaxWalker?> _parentVisitor;
-
-
-        protected ValidationContext(DocumentSyntax ast, Lazy<GraphQLSyntaxWalker?> parentVisitor)
-        {
-            AST = ast;
-            _parentVisitor = parentVisitor;
-        }
-
-
-        public IReadOnlyCollection<SyntaxNode> Ancestors => _parentVisitor.Value!.Ancestors;
-
-
-        public DocumentSyntax AST { get; }
-
-
-        private List<GraphQLServerError> Errors { get; } = new List<GraphQLServerError>();
-
-        public virtual void Enter(SyntaxNode node)
-        {
-        }
-
-        public virtual void Leave(SyntaxNode node)
-        {
-        }
-
-        public void ReportError(GraphQLServerError error)
-        {
-            Check.NotNull(error, nameof(error));
-            Errors.Add(error);
-        }
-
-
-        public IReadOnlyCollection<GraphQLServerError> GetErrors() => Errors.AsReadOnly();
+        AST = ast;
+        _parentVisitor = parentVisitor;
     }
+
+
+    public IReadOnlyCollection<SyntaxNode> Ancestors => _parentVisitor.Value!.Ancestors;
+
+
+    public DocumentSyntax AST { get; }
+
+
+    private List<GraphQLServerError> Errors { get; } = new();
+
+    public virtual void Enter(SyntaxNode node)
+    {
+    }
+
+    public virtual void Leave(SyntaxNode node)
+    {
+    }
+
+    public void ReportError(GraphQLServerError error)
+    {
+        Check.NotNull(error, nameof(error));
+        Errors.Add(error);
+    }
+
+
+    public IReadOnlyCollection<GraphQLServerError> GetErrors() => Errors.AsReadOnly();
 }

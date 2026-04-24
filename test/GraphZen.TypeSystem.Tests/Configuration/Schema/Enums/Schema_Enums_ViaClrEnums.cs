@@ -7,66 +7,65 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Enums
+namespace GraphZen.TypeSystem.Tests.Configuration.Enums;
+
+// ReSharper disable once InconsistentNaming
+public class Schema_Enums_ViaClrEnums : Schema_Enums, ICollectionConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Schema_Enums_ViaClrEnums : Schema_Enums, ICollectionConventionConfigurationFixture
+    public enum IgnoredByConvention
     {
-        public const string DataAnnotationName = nameof(DataAnnotationName);
+    }
+
+    [GraphQLIgnore]
+    public enum IgnoredByDataAnnotation
+    {
+    }
+
+    public enum NamedByConvention
+    {
+    }
 
 
-        public CollectionConventionContext GetContext() =>
-            new CollectionConventionContext
-            {
-                ItemNamedByConvention = nameof(NamedByConvention),
-                ItemNamedByDataAnnotation = DataAnnotationName,
-                ItemIgnoredByConvention = nameof(IgnoredByConvention),
-                ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation)
-            };
+    [GraphQLName(DataAnnotationName)]
+    public enum NamedByDataAnnotation
+    {
+    }
 
-        public void ConfigureContextConventionally(SchemaBuilder sb)
+    public const string DataAnnotationName = nameof(DataAnnotationName);
+
+
+    public CollectionConventionContext GetContext() =>
+        new()
         {
-            sb.Object<Query>();
-        }
+            ItemNamedByConvention = nameof(NamedByConvention),
+            ItemNamedByDataAnnotation = DataAnnotationName,
+            ItemIgnoredByConvention = nameof(IgnoredByConvention),
+            ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation)
+        };
 
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Object<Query>();
-        }
+    public void ConfigureContextConventionally(SchemaBuilder sb)
+    {
+        sb.Object<Query>();
+    }
 
-        public void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb)
-        {
-            throw new NotImplementedException();
-        }
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Object<Query>();
+    }
 
-        public class Query
-        {
-            public NamedByConvention ConventionallyNamed { get; set; }
+    public void AddItemNamedByDataAnnotationViaClrType(SchemaBuilder sb)
+    {
+        throw new NotImplementedException();
+    }
 
-            [GraphQLIgnore] public IgnoredByConvention IgnoredByConvention { get; set; }
+    public class Query
+    {
+        public NamedByConvention ConventionallyNamed { get; set; }
 
-            public IgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
+        [GraphQLIgnore] public IgnoredByConvention IgnoredByConvention { get; set; }
 
-            public NamedByDataAnnotation NamedByDataAnnoation { get; set; }
-        }
+        public IgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
 
-        public enum NamedByConvention
-        {
-        }
-
-
-        [GraphQLName(DataAnnotationName)]
-        public enum NamedByDataAnnotation
-        {
-        }
-
-        public enum IgnoredByConvention
-        {
-        }
-
-        [GraphQLIgnore]
-        public enum IgnoredByDataAnnotation
-        {
-        }
+        public NamedByDataAnnotation NamedByDataAnnoation { get; set; }
     }
 }

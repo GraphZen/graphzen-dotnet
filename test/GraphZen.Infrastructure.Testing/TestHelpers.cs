@@ -6,16 +6,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public static class TestHelpers
 {
-    public static class TestHelpers
+    public static IDictionary<string, object> ToDictionary(dynamic value)
     {
-        public static IDictionary<string, object> ToDictionary(dynamic value)
-        {
-            var dict = value != null
-                ? JsonNodeExtensions.ObjectToDictionary(value)
-                : new Dictionary<string, object>();
-            return dict;
-        }
+        var dict = value != null
+            ? JsonNodeExtensions.ObjectToDictionary(value)
+            : new Dictionary<string, object>();
+        return dict;
     }
 }

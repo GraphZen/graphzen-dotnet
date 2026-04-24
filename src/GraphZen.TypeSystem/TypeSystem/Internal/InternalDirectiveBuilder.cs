@@ -7,39 +7,38 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Internal
+namespace GraphZen.TypeSystem.Internal;
+
+public class InternalDirectiveBuilder : MemberDefinitionBuilder<DirectiveDefinition>
 {
-    public class InternalDirectiveBuilder : MemberDefinitionBuilder<DirectiveDefinition>
+    public InternalDirectiveBuilder(DirectiveDefinition definition,
+        InternalSchemaBuilder schemaBuilder) : base(definition, schemaBuilder)
     {
-        public InternalDirectiveBuilder(DirectiveDefinition definition,
-            InternalSchemaBuilder schemaBuilder) : base(definition, schemaBuilder)
+    }
+
+    public InternalDirectiveBuilder Locations(DirectiveLocation[] locations,
+        ConfigurationSource configurationSource)
+    {
+        foreach (var directiveLocation in locations)
         {
+            Definition.AddLocation(directiveLocation, configurationSource);
         }
 
-        public InternalDirectiveBuilder Locations(DirectiveLocation[] locations,
-            ConfigurationSource configurationSource)
-        {
-            foreach (var directiveLocation in locations)
-            {
-                Definition.AddLocation(directiveLocation, configurationSource);
-            }
-
-            return this;
-        }
+        return this;
+    }
 
 
-        public InternalInputValueBuilder Argument(string name, ConfigurationSource configurationSource) =>
-            Definition.GetOrAddArgument(name, configurationSource).Builder;
+    public InternalInputValueBuilder Argument(string name, ConfigurationSource configurationSource) =>
+        Definition.GetOrAddArgument(name, configurationSource).Builder;
 
-        public InternalDirectiveBuilder Name(string name, ConfigurationSource configurationSource)
-        {
-            Definition.SetName(name, configurationSource);
-            return this;
-        }
+    public InternalDirectiveBuilder Name(string name, ConfigurationSource configurationSource)
+    {
+        Definition.SetName(name, configurationSource);
+        return this;
+    }
 
-        public void ClrType(Type idClrType, ConfigurationSource configurationSource)
-        {
-            throw new NotImplementedException();
-        }
+    public void ClrType(Type idClrType, ConfigurationSource configurationSource)
+    {
+        throw new NotImplementedException();
     }
 }

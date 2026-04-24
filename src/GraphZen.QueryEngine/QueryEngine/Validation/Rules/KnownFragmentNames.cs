@@ -6,23 +6,22 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.QueryEngine.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules;
+
+public class KnownFragmentNames : QueryValidationRuleVisitor
 {
-    public class KnownFragmentNames : QueryValidationRuleVisitor
+    public KnownFragmentNames(QueryValidationContext context) : base(context)
     {
-        public KnownFragmentNames(QueryValidationContext context) : base(context)
-        {
-        }
+    }
 
-        public static string UnknownFragmentMessage(string fragmentName) => $"Unknown fragment \"{fragmentName}\".";
+    public static string UnknownFragmentMessage(string fragmentName) => $"Unknown fragment \"{fragmentName}\".";
 
-        public override VisitAction EnterFragmentSpread(FragmentSpreadSyntax node)
-        {
-            var fragmentName = node.Name.Value;
-            if (!Context.Fragments.ContainsKey(fragmentName))
-                ReportError(UnknownFragmentMessage(fragmentName), node.Name);
+    public override VisitAction EnterFragmentSpread(FragmentSpreadSyntax node)
+    {
+        var fragmentName = node.Name.Value;
+        if (!Context.Fragments.ContainsKey(fragmentName))
+            ReportError(UnknownFragmentMessage(fragmentName), node.Name);
 
-            return VisitAction.Continue;
-        }
+        return VisitAction.Continue;
     }
 }

@@ -6,22 +6,21 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public interface IArgumentsDefinitionBuilder<out TBuilder>
 {
-    public interface IArgumentsDefinitionBuilder<out TBuilder>
-    {
-        TBuilder Argument(string name, Action<InputValueBuilder> configurator);
-        InputValueBuilder Argument(string name);
+    TBuilder Argument(string name, Action<InputValueBuilder> configurator);
+    InputValueBuilder Argument(string name);
 
-        TBuilder Argument(string name, string type, Action<InputValueBuilder>? configurator = null);
+    TBuilder Argument(string name, string type, Action<InputValueBuilder>? configurator = null);
 
 
-        TBuilder Argument<TArgument>(string name, Action<InputValueBuilder>? configurator = null);
+    TBuilder Argument<TArgument>(string name, Action<InputValueBuilder>? configurator = null);
 
 
-        TBuilder IgnoreArgument(string name);
+    TBuilder IgnoreArgument(string name);
 
 
-        TBuilder UnignoreArgument(string name);
-    }
+    TBuilder UnignoreArgument(string name);
 }

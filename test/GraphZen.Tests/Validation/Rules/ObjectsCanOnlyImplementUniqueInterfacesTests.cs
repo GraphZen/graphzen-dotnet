@@ -7,19 +7,18 @@ using GraphZen.LanguageModel.Validation;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class ObjectsCanOnlyImplementUniqueInterfacesTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class ObjectsCanOnlyImplementUniqueInterfacesTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } =
-            DocumentValidationRules.ObjectsCanOnlyImplementUniqueInterfaces;
+    public override ValidationRule RuleUnderTest { get; } =
+        DocumentValidationRules.ObjectsCanOnlyImplementUniqueInterfaces;
 
-        [Fact]
-        public void RejectsAnObjectImplementingANonInterfaceType()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectImplementingANonInterfaceType()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: BadObject
               }
@@ -32,14 +31,14 @@ namespace GraphZen.Tests.Validation.Rules
                 field: String
               }
             ",
-                Error("Type BadObject must only implement Interface types, it cannot implement SomeInputObject.",
-                    (9, 27)));
-        }
+            Error("Type BadObject must only implement Interface types, it cannot implement SomeInputObject.",
+                (9, 27)));
+    }
 
-        [Fact]
-        public void RejectsObjectImplementingSameInterfaceTwice()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsObjectImplementingSameInterfaceTwice()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -52,12 +51,12 @@ namespace GraphZen.Tests.Validation.Rules
                 field: String
               }
             ", Error("Type AnotherObject can only implement AnotherInterface once.", (9, 31), (9, 50)));
-        }
+    }
 
-        [Fact]
-        public void RejectsAnObjectImplementingTheSameInterfaceTwiceDueToAnExtension()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectImplementingTheSameInterfaceTwiceDueToAnExtension()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -72,6 +71,5 @@ namespace GraphZen.Tests.Validation.Rules
 
               extend type AnotherObject implements AnotherInterface
             ", Error("Type AnotherObject can only implement AnotherInterface once.", (9, 31), (13, 38)));
-        }
     }
 }

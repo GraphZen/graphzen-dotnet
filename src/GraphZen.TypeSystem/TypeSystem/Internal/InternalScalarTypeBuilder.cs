@@ -7,50 +7,49 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Internal
+namespace GraphZen.TypeSystem.Internal;
+
+public class InternalScalarTypeBuilder : AnnotatableMemberDefinitionBuilder<ScalarTypeDefinition>
 {
-    public class InternalScalarTypeBuilder : AnnotatableMemberDefinitionBuilder<ScalarTypeDefinition>
+    public InternalScalarTypeBuilder(ScalarTypeDefinition definition,
+        InternalSchemaBuilder schemaBuilder) : base(definition, schemaBuilder)
     {
-        public InternalScalarTypeBuilder(ScalarTypeDefinition definition,
-            InternalSchemaBuilder schemaBuilder) : base(definition, schemaBuilder)
-        {
-        }
+    }
 
 
-        public InternalScalarTypeBuilder Serializer(LeafSerializer<object> serializer)
-        {
-            Definition.Serializer = serializer;
-            return this;
-        }
+    public InternalScalarTypeBuilder Serializer(LeafSerializer<object> serializer)
+    {
+        Definition.Serializer = serializer;
+        return this;
+    }
 
 
-        public InternalScalarTypeBuilder ValueParser(LeafValueParser<object> valueParser)
-        {
-            Definition.ValueParser = valueParser;
-            return this;
-        }
+    public InternalScalarTypeBuilder ValueParser(LeafValueParser<object> valueParser)
+    {
+        Definition.ValueParser = valueParser;
+        return this;
+    }
 
 
-        public InternalScalarTypeBuilder LiteralParser(LeafLiteralParser<object, ValueSyntax> literalParser)
-        {
-            Definition.LiteralParser = literalParser;
-            return this;
-        }
+    public InternalScalarTypeBuilder LiteralParser(LeafLiteralParser<object, ValueSyntax> literalParser)
+    {
+        Definition.LiteralParser = literalParser;
+        return this;
+    }
 
-        public InternalScalarTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
-        {
-            if (Definition.SetClrType(clrType, configurationSource)) ConfigureFromClrType();
+    public InternalScalarTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
+    {
+        if (Definition.SetClrType(clrType, configurationSource)) ConfigureFromClrType();
 
-            return this;
-        }
+        return this;
+    }
 
-        public bool ConfigureFromClrType()
-        {
-            var clrType = Definition.ClrType;
-            if (clrType == null) return false;
-            if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
-                this.Description(description, ConfigurationSource.DataAnnotation);
-            return true;
-        }
+    public bool ConfigureFromClrType()
+    {
+        var clrType = Definition.ClrType;
+        if (clrType == null) return false;
+        if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
+            this.Description(description, ConfigurationSource.DataAnnotation);
+        return true;
     }
 }

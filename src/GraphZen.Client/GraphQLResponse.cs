@@ -8,32 +8,31 @@ using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+public class GraphQLResponse
 {
-    public class GraphQLResponse
+    private readonly Lazy<object?> _data;
+    private readonly Lazy<IReadOnlyList<GraphQLError>> _errors;
+    private readonly string _jsonResponse;
+    private readonly Dictionary<Type, object?> _typedData = new();
+
+    public GraphQLResponse(string jsonResponse)
     {
-        private readonly Lazy<object?> _data;
-        private readonly Dictionary<Type, object?> _typedData = new Dictionary<Type, object?>();
-        private readonly Lazy<IReadOnlyList<GraphQLError>> _errors;
-        private readonly string _jsonResponse;
+        _jsonResponse = jsonResponse;
+        _data = new Lazy<object?>(() => GraphQLJsonSerializer.ParseData(jsonResponse));
+        _errors = new Lazy<IReadOnlyList<GraphQLError>>(() => GraphQLJsonSerializer.ParseErrors(jsonResponse));
+    }
 
-        public GraphQLResponse(string jsonResponse)
-        {
-            _jsonResponse = jsonResponse;
-            _data = new Lazy<object?>(() => GraphQLJsonSerializer.ParseData(jsonResponse));
-            _errors = new Lazy<IReadOnlyList<GraphQLError>>(() => GraphQLJsonSerializer.ParseErrors(jsonResponse));
-        }
+    public IReadOnlyList<GraphQLError> Errors => _errors.Value;
 
-        public IReadOnlyList<GraphQLError> Errors => _errors.Value;
+    public dynamic? GetData() => _data.Value;
 
-        public dynamic? GetData() => _data.Value;
-
-        public T? GetData<T>() where T : class
-        {
-            if (_typedData.TryGetValue(typeof(T), out var data)) return (T?)data;
-            var parsed = GraphQLJsonSerializer.ParseData<T>(_jsonResponse);
-            _typedData[typeof(T)] = parsed;
-            return parsed;
-        }
+    public T? GetData<T>() where T : class
+    {
+        if (_typedData.TryGetValue(typeof(T), out var data)) return (T?)data;
+        var parsed = GraphQLJsonSerializer.ParseData<T>(_jsonResponse);
+        _typedData[typeof(T)] = parsed;
+        return parsed;
     }
 }

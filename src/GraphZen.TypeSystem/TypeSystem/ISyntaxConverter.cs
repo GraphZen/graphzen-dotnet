@@ -6,13 +6,12 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public interface ISyntaxConverter
 {
-    public interface ISyntaxConverter
-    {
-        bool CanRead { get; }
-        bool CanWrite { get; }
-        object? FromSyntax(SyntaxNode node);
-        SyntaxNode? ToSyntax(object value);
-    }
+    bool CanRead { get; }
+    bool CanWrite { get; }
+    object? FromSyntax(SyntaxNode node);
+    SyntaxNode? ToSyntax(object value);
 }

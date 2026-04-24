@@ -6,15 +6,14 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
-{
-    public interface IConfigurationFixture
+namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 
-    {
-        Type ParentMemberType { get; }
-        Type ParentMemberDefinitionType { get; }
-        void ConfigureParentExplicitly(SchemaBuilder sb, string parentName);
-        Member GetParent(Schema schema, string parentName);
-        MemberDefinition GetParent(SchemaBuilder sb, string parentName);
-    }
+public interface IConfigurationFixture
+
+{
+    Type ParentMemberType { get; }
+    Type ParentMemberDefinitionType { get; }
+    void ConfigureParentExplicitly(SchemaBuilder sb, string parentName);
+    Member GetParent(Schema schema, string parentName);
+    MemberDefinition GetParent(SchemaBuilder sb, string parentName);
 }

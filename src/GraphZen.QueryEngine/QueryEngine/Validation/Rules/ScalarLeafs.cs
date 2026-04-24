@@ -5,12 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.QueryEngine.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules;
+
+public class ScalarLeafs : QueryValidationRuleVisitor
 {
-    public class ScalarLeafs : QueryValidationRuleVisitor
+    public ScalarLeafs(QueryValidationContext context) : base(context)
     {
-        public ScalarLeafs(QueryValidationContext context) : base(context)
-        {
-        }
     }
 }

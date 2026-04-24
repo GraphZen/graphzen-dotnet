@@ -6,17 +6,14 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMemberTypes : IMemberTypesDefinition
 {
-    [GraphQLIgnore]
-    public interface IMemberTypes : IMemberTypesDefinition
-    {
-        new IEnumerable<ObjectType> GetMemberTypes();
+    IReadOnlyList<ObjectType> MemberTypes { get; }
 
 
-        IReadOnlyList<ObjectType> MemberTypes { get; }
-
-
-        IReadOnlyDictionary<string, ObjectType> MemberTypesMap { get; }
-    }
+    IReadOnlyDictionary<string, ObjectType> MemberTypesMap { get; }
+    new IEnumerable<ObjectType> GetMemberTypes();
 }

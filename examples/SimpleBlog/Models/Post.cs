@@ -6,16 +6,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace SimpleBlog.Models
+namespace SimpleBlog.Models;
+
+public class Post
 {
-    public class Post
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        [Description("some click-baity title")]
-        public string Title { get; set; }
+    [Description("some click-baity title")]
+    public string Title { get; set; }
 
-        public string Author { get; set; }
-        public string Content { get; set; }
-    }
+    public string Author { get; set; }
+    public string Content { get; set; }
 }

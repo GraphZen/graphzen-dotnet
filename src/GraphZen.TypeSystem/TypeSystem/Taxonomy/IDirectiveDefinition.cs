@@ -5,15 +5,14 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IDirectiveDefinition :
+    INamed,
+    IDescription,
+    IClrType,
+    IArgumentsDefinition,
+    IDirectiveLocationsDefinition
 {
-    [GraphQLIgnore]
-    public interface IDirectiveDefinition :
-        INamed,
-        IDescription,
-        IClrType,
-        IArgumentsDefinition,
-        IDirectiveLocationsDefinition
-    {
-    }
 }

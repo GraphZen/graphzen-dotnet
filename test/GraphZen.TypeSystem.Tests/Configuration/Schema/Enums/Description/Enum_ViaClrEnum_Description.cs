@@ -7,33 +7,32 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Enums.Description;
+
+// ReSharper disable once InconsistentNaming
+public class Enum_ViaClrEnum_Description : Enum_Description, ILeafConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Enum_ViaClrEnum_Description : Enum_Description, ILeafConventionConfigurationFixture
+    [Description(DataAnnotationDescriptionValue)]
+    public enum ExampleEnum
     {
-        [Description(DataAnnotationDescriptionValue)]
-        public enum ExampleEnum
+    }
+
+    public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+
+    public LeafConventionContext GetContext() =>
+        new()
         {
-        }
+            ParentName = nameof(ExampleEnum),
+            DataAnnotationValue = DataAnnotationDescriptionValue
+        };
 
-        public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+    public void ConfigureContextConventionally(SchemaBuilder sb)
+    {
+        sb.Enum<ExampleEnum>();
+    }
 
-        public LeafConventionContext GetContext() =>
-            new LeafConventionContext
-            {
-                ParentName = nameof(ExampleEnum),
-                DataAnnotationValue = DataAnnotationDescriptionValue
-            };
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Enum<ExampleEnum>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Enum<ExampleEnum>();
-        }
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Enum<ExampleEnum>();
     }
 }

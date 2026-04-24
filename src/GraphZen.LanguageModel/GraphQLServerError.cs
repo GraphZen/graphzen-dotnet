@@ -11,93 +11,92 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+public class GraphQLServerError
 {
-    public class GraphQLServerError
+    public GraphQLServerError(string message,
+        IReadOnlyList<SyntaxNode>? nodes = null,
+        Source? source = null,
+        IReadOnlyList<int>? positions = null,
+        IReadOnlyList<object>? path = null,
+        Exception? innerException = null
+    )
     {
-        public GraphQLServerError(string message,
-            IReadOnlyList<SyntaxNode>? nodes = null,
-            Source? source = null,
-            IReadOnlyList<int>? positions = null,
-            IReadOnlyList<object>? path = null,
-            Exception? innerException = null
-        )
-        {
-            Message = Check.NotNull(message, nameof(message));
-            Nodes = nodes;
-            Path = path;
-            Positions = positions ?? Nodes?.Where(_ => _?.Location != null).Select(_ => _.Location!.Start).ToList();
-            Positions = Positions != null && Positions.Count == 0 ? null : Positions;
-            Source = source ?? nodes?.FirstOrDefault()?.Location?.Source;
-            InnerException = innerException;
-            if (Positions != null && Source != null)
-                Locations = Positions.Select(Source.GetLocation).ToList();
-            else if (Nodes != null && Source != null)
-                Locations = Nodes
-                    .Where(_ => _?.Location != null)
-                    .Select(n =>
-                    {
-                        Debug.Assert(n.Location != null);
-                        return Source.GetLocation(n.Location.Start);
-                    }).ToList();
-        }
-
-
-        public string Message { get; internal set; }
-
-        [JsonIgnore] public IReadOnlyList<SyntaxNode>? Nodes { get; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IReadOnlyList<SourceLocation>? Locations { get; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IReadOnlyList<object>? Path { get; }
-
-        [JsonIgnore] public IReadOnlyList<int>? Positions { get; }
-
-        [JsonIgnore] public Source? Source { get; }
-
-        [JsonIgnore] public Exception? InnerException { get; }
-
-        private bool Equals(GraphQLServerError other) =>
-            string.Equals(Message, other.Message) &&
-            Equals(Locations, other.Locations) &&
-            Equals(Path, other.Path);
-
-        public override bool Equals(object? obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-
-            if (ReferenceEquals(this, obj)) return true;
-
-            if (obj.GetType() != GetType()) return false;
-
-            return Equals((GraphQLServerError)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                // ReSharper disable once NonReadonlyMemberInGetHashCode
-                var hashCode = Message.GetHashCode();
-                hashCode = (hashCode * 397) ^ (Locations != null ? Locations.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (Path != null ? Path.GetHashCode() : 0);
-                return hashCode;
-            }
-        }
-
-        public void Throw()
-        {
-            throw new GraphQLException(this);
-        }
-
-        public override string ToString() => Json.SerializeObject(this);
-
-
-        public GraphQLServerError WithLocationInfo(IReadOnlyList<SyntaxNode> nodes, ResponsePath path) =>
-            new GraphQLServerError(Message, nodes, Source, Positions,
-                Check.NotNull(path, nameof(path)).AsReadOnlyList(),
-                InnerException);
+        Message = Check.NotNull(message, nameof(message));
+        Nodes = nodes;
+        Path = path;
+        Positions = positions ?? Nodes?.Where(_ => _?.Location != null).Select(_ => _.Location!.Start).ToList();
+        Positions = Positions != null && Positions.Count == 0 ? null : Positions;
+        Source = source ?? nodes?.FirstOrDefault()?.Location?.Source;
+        InnerException = innerException;
+        if (Positions != null && Source != null)
+            Locations = Positions.Select(Source.GetLocation).ToList();
+        else if (Nodes != null && Source != null)
+            Locations = Nodes
+                .Where(_ => _?.Location != null)
+                .Select(n =>
+                {
+                    Debug.Assert(n.Location != null);
+                    return Source.GetLocation(n.Location.Start);
+                }).ToList();
     }
+
+
+    public string Message { get; internal set; }
+
+    [JsonIgnore] public IReadOnlyList<SyntaxNode>? Nodes { get; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IReadOnlyList<SourceLocation>? Locations { get; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IReadOnlyList<object>? Path { get; }
+
+    [JsonIgnore] public IReadOnlyList<int>? Positions { get; }
+
+    [JsonIgnore] public Source? Source { get; }
+
+    [JsonIgnore] public Exception? InnerException { get; }
+
+    private bool Equals(GraphQLServerError other) =>
+        string.Equals(Message, other.Message) &&
+        Equals(Locations, other.Locations) &&
+        Equals(Path, other.Path);
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+
+        if (ReferenceEquals(this, obj)) return true;
+
+        if (obj.GetType() != GetType()) return false;
+
+        return Equals((GraphQLServerError)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            // ReSharper disable once NonReadonlyMemberInGetHashCode
+            var hashCode = Message.GetHashCode();
+            hashCode = (hashCode * 397) ^ (Locations != null ? Locations.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (Path != null ? Path.GetHashCode() : 0);
+            return hashCode;
+        }
+    }
+
+    public void Throw()
+    {
+        throw new GraphQLException(this);
+    }
+
+    public override string ToString() => Json.SerializeObject(this);
+
+
+    public GraphQLServerError WithLocationInfo(IReadOnlyList<SyntaxNode> nodes, ResponsePath path) =>
+        new(Message, nodes, Source, Positions,
+            Check.NotNull(path, nameof(path)).AsReadOnlyList(),
+            InnerException);
 }

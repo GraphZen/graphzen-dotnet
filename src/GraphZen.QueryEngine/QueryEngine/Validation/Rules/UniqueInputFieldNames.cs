@@ -5,12 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.QueryEngine.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules;
+
+public class UniqueInputFieldNames : QueryValidationRuleVisitor
 {
-    public class UniqueInputFieldNames : QueryValidationRuleVisitor
+    public UniqueInputFieldNames(QueryValidationContext context) : base(context)
     {
-        public UniqueInputFieldNames(QueryValidationContext context) : base(context)
-        {
-        }
     }
 }

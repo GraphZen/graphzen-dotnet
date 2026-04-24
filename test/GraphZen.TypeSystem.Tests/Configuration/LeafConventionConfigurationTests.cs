@@ -9,198 +9,197 @@ using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.Tests.Configuration
+namespace GraphZen.TypeSystem.Tests.Configuration;
+
+[NoReorder]
+public class LeafConventionConfigurationTests : TestDataFixtureRunner<ILeafConventionConfigurationFixture>
 {
-    [NoReorder]
-    public class LeafConventionConfigurationTests : TestDataFixtureRunner<ILeafConventionConfigurationFixture>
+    public static IEnumerable<object[]> FixtureData { get; } =
+        ConfigurationFixtures.GetAll<ILeafConventionConfigurationFixture>().ToTestData();
+
+
+    [Theory]
+    [MemberData(nameof(FixtureData))]
+    public void parent_configured_conventionally_optional_configured_by_data_annotation(
+        ILeafConventionConfigurationFixture fixture)
     {
-        public static IEnumerable<object[]> FixtureData { get; } =
-            ConfigurationFixtures.GetAll<ILeafConventionConfigurationFixture>().ToTestData();
-
-
-        [Theory]
-        [MemberData(nameof(FixtureData))]
-        public void parent_configured_conventionally_optional_configured_by_data_annotation(
-            ILeafConventionConfigurationFixture fixture)
+        RunFixture(fixture, () =>
         {
-            RunFixture(fixture, () =>
+            var context = fixture.GetContext();
+            var schema = Schema.Create(sb =>
             {
-                var context = fixture.GetContext();
-                var schema = Schema.Create(sb =>
-                {
-                    fixture.ConfigureContextConventionally(sb);
-                    var parentDef = fixture.GetParent(sb, context.ParentName!);
-                    Assert.Equal(ConfigurationSource.DataAnnotation, fixture.GetElementConfigurationSource(parentDef));
-                    Assert.True(fixture.TryGetValue(parentDef, out var defVal));
-                    Assert.Equal(context.DataAnnotationValue, defVal);
-                });
-                var parent = fixture.GetParent(schema, context.ParentName!);
-                Assert.True(fixture.TryGetValue(parent, out var val));
-                Assert.Equal(context.DataAnnotationValue, val);
+                fixture.ConfigureContextConventionally(sb);
+                var parentDef = fixture.GetParent(sb, context.ParentName!);
+                Assert.Equal(ConfigurationSource.DataAnnotation, fixture.GetElementConfigurationSource(parentDef));
+                Assert.True(fixture.TryGetValue(parentDef, out var defVal));
+                Assert.Equal(context.DataAnnotationValue, defVal);
             });
-        }
-
-        [Theory]
-        [MemberData(nameof(FixtureData))]
-        public void parent_configured_explicitly_then_conventionally_optional_configured_by_data_annotation(
-            ILeafConventionConfigurationFixture fixture)
-
-        {
-            RunFixture(fixture, () =>
-            {
-                var context = fixture.GetContext();
-                var schema = Schema.Create(sb =>
-                {
-                    fixture.ConfigureParentExplicitly(sb, context.ParentName!);
-                    var parentDef = fixture.GetParent(sb, context.ParentName!);
-                    Assert.False(fixture.TryGetValue(parentDef, out _));
-                    Assert.Equal(ConfigurationSource.Convention, fixture.GetElementConfigurationSource(parentDef));
-                    fixture.ConfigureContextConventionally(sb);
-                    Assert.Equal(ConfigurationSource.DataAnnotation, fixture.GetElementConfigurationSource(parentDef));
-                    Assert.True(fixture.TryGetValue(parentDef, out var defVal));
-                    Assert.Equal(context.DataAnnotationValue, defVal);
-                });
-                var parent = fixture.GetParent(schema, context.ParentName!);
-                Assert.True(fixture.TryGetValue(parent, out var val));
-                Assert.Equal(context.DataAnnotationValue, val);
-            });
-        }
-
-        [Theory]
-        [MemberData(nameof(FixtureData))]
-        public void parent_and_item_configured_explicitly_then_conventionally_optional_configured_by_data_annotation(
-            ILeafConventionConfigurationFixture fixture)
-
-        {
-            RunFixture(fixture, () =>
-            {
-                var context = fixture.GetContext();
-                var schema = Schema.Create(sb =>
-                {
-                    fixture.ConfigureParentExplicitly(sb, context.ParentName!);
-                    fixture.ConfigureExplicitly(sb, context.ParentName!, fixture.ValueA);
-                    var parentDef = fixture.GetParent(sb, context.ParentName!);
-                    Assert.True(fixture.TryGetValue(parentDef, out var defVal1));
-                    Assert.Equal(fixture.ValueA, defVal1);
-                    Assert.Equal(ConfigurationSource.Explicit, fixture.GetElementConfigurationSource(parentDef));
-                    fixture.ConfigureContextConventionally(sb);
-                    Assert.Equal(ConfigurationSource.Explicit, fixture.GetElementConfigurationSource(parentDef));
-                    Assert.True(fixture.TryGetValue(parentDef, out var defVal2));
-                    Assert.Equal(fixture.ValueA, defVal2);
-                });
-                var parent = fixture.GetParent(schema, context.ParentName!);
-                Assert.True(fixture.TryGetValue(parent, out var val));
-                Assert.Equal(fixture.ValueA, val);
-            });
-        }
-
-        /*
-                        public virtual void configured_by_data_annotation()
-                        {
-                            string parentName = null;
-                            var schema = Schema.Create(sb =>
-                            {
-                                DefineParentConventionallyWithDataAnnotation(sb, out parentName);
-                                var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
-                                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
-                                TryGetValue(parentDef, out var dataAnnotationValue).Should().BeTrue();
-                                dataAnnotationValue.Should().Be(DataAnnotationValue);
-                            });
-                            var parent = GetParentByName(schema, parentName);
-                            TryGetValue(parent, out var finalVal).Should().BeTrue();
-                            finalVal.Should().Be(DataAnnotationValue);
-                        }
-
-                        public virtual void configured_by_data_annotation_then_reconfigured_explicitly()
-                        {
-                            string parentName = null;
-                            var schema = Schema.Create(sb =>
-                            {
-                                DefineParentConventionallyWithDataAnnotation(sb, out parentName);
-                                var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
-                                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
-                                TryGetValue(parentDef, out _).Should().BeTrue();
-                                ConfigureExplicitly(sb, parentName, ValueA);
-                                TryGetValue(parentDef, out var configuredA).Should().BeTrue();
-                                configuredA.Should().Be(ValueA);
-                                ConfigureExplicitly(sb, parentName, ValueB);
-                                TryGetValue(parentDef, out var configuredB).Should().BeTrue();
-                                configuredB.Should().Be(ValueB);
-                                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
-                            });
-                            var parent = GetParentByName(schema, parentName);
-                            TryGetValue(parent, out var finalVal).Should().BeTrue();
-                            finalVal.Should().Be(ValueB);
-                        }
-
-                        public virtual void optional_configured_by_data_annotation_then_removed_explicitly()
-                        {
-                            string parentName = null;
-                            var schema = Schema.Create(sb =>
-                            {
-                                DefineParentConventionallyWithDataAnnotation(sb, out parentName);
-                                var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
-                                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
-                                TryGetValue(parentDef, out _).Should().BeTrue();
-                                RemoveExplicitly(sb, parentName);
-                                TryGetValue(parentDef, out _).Should().BeFalse();
-                                GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
-                            });
-                            var parent = GetParentByName(schema, parentName);
-                            TryGetValue(parent, out _).Should().BeFalse();
-                        }
-
-                        public virtual void configure_by_convention()
-                        {
-                            //var schema = Schema.Create(sb =>
-                            //{
-                            //    DefineByConvention(sb);
-                            //    var parentDef = GetParentDefinitionByName(sb.GetDefinition(), ConventionalParentName);
-                            //    GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
-                            //    TryGetValue(parentDef, out var defVal).Should().BeTrue();
-                            //    defVal.Should().Be(ConventionalValue);
-                            //});
-                            //var parent = GetParentByName(schema, ConventionalParentName);
-                            //TryGetValue(parent, out var val).Should().BeTrue();
-                            //val.Should().Be(ConventionalValue);
-                        }
-
-                        public virtual void define_by_data_annotation()
-                        {
-                            //var schema = Schema.Create(sb =>
-                            //{
-                            //    DefineByDataAnnotation(sb);
-                            //    var definition = sb.GetDefinition();
-                            //    var parentDef = GetParentDefinitionByName(definition, DataAnnotationParentName);
-                            //    GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
-                            //    TryGetValue(parentDef, out var defVal).Should().BeTrue();
-                            //    defVal.Should().Be(DataAnnotationValue);
-                            //});
-                            //var parent = GetParentByName(schema, DataAnnotationParentName);
-                            //TryGetValue(parent, out var val).Should().BeTrue();
-                            //val.Should().Be(DataAnnotationValue);
-                        }
-
-                        public virtual void define_by_data_annotation_overridden_by_explicit_configuration()
-                        {
-                            //var schema = Schema.Create(sb =>
-                            //{
-                            //    DefineByDataAnnotation(sb);
-                            //    var definition = sb.GetDefinition();
-                            //    var parentDef = GetParentDefinitionByName(definition, DataAnnotationParentName);
-                            //    GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
-                            //    TryGetValue(parentDef, out var defVal).Should().BeTrue();
-                            //    defVal.Should().Be(DataAnnotationValue);
-                            //    // ConfigureExplicitly(sb, DataAnnotationParentName);
-                            //    throw new NotImplementedException();
-                            //    //GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
-                            //    //TryGetValue(parentDef, out var newVal).Should().BeTrue();
-                            //    // newVal.Should().Be(ValueA);
-                            //});
-                            //var parent = GetParentByName(schema, DataAnnotationParentName);
-                            //TryGetValue(parent, out var val).Should().BeTrue();
-                            //val.Should().Be(ValueA);
-                        }
-                        */
+            var parent = fixture.GetParent(schema, context.ParentName!);
+            Assert.True(fixture.TryGetValue(parent, out var val));
+            Assert.Equal(context.DataAnnotationValue, val);
+        });
     }
+
+    [Theory]
+    [MemberData(nameof(FixtureData))]
+    public void parent_configured_explicitly_then_conventionally_optional_configured_by_data_annotation(
+        ILeafConventionConfigurationFixture fixture)
+
+    {
+        RunFixture(fixture, () =>
+        {
+            var context = fixture.GetContext();
+            var schema = Schema.Create(sb =>
+            {
+                fixture.ConfigureParentExplicitly(sb, context.ParentName!);
+                var parentDef = fixture.GetParent(sb, context.ParentName!);
+                Assert.False(fixture.TryGetValue(parentDef, out _));
+                Assert.Equal(ConfigurationSource.Convention, fixture.GetElementConfigurationSource(parentDef));
+                fixture.ConfigureContextConventionally(sb);
+                Assert.Equal(ConfigurationSource.DataAnnotation, fixture.GetElementConfigurationSource(parentDef));
+                Assert.True(fixture.TryGetValue(parentDef, out var defVal));
+                Assert.Equal(context.DataAnnotationValue, defVal);
+            });
+            var parent = fixture.GetParent(schema, context.ParentName!);
+            Assert.True(fixture.TryGetValue(parent, out var val));
+            Assert.Equal(context.DataAnnotationValue, val);
+        });
+    }
+
+    [Theory]
+    [MemberData(nameof(FixtureData))]
+    public void parent_and_item_configured_explicitly_then_conventionally_optional_configured_by_data_annotation(
+        ILeafConventionConfigurationFixture fixture)
+
+    {
+        RunFixture(fixture, () =>
+        {
+            var context = fixture.GetContext();
+            var schema = Schema.Create(sb =>
+            {
+                fixture.ConfigureParentExplicitly(sb, context.ParentName!);
+                fixture.ConfigureExplicitly(sb, context.ParentName!, fixture.ValueA);
+                var parentDef = fixture.GetParent(sb, context.ParentName!);
+                Assert.True(fixture.TryGetValue(parentDef, out var defVal1));
+                Assert.Equal(fixture.ValueA, defVal1);
+                Assert.Equal(ConfigurationSource.Explicit, fixture.GetElementConfigurationSource(parentDef));
+                fixture.ConfigureContextConventionally(sb);
+                Assert.Equal(ConfigurationSource.Explicit, fixture.GetElementConfigurationSource(parentDef));
+                Assert.True(fixture.TryGetValue(parentDef, out var defVal2));
+                Assert.Equal(fixture.ValueA, defVal2);
+            });
+            var parent = fixture.GetParent(schema, context.ParentName!);
+            Assert.True(fixture.TryGetValue(parent, out var val));
+            Assert.Equal(fixture.ValueA, val);
+        });
+    }
+
+    /*
+                    public virtual void configured_by_data_annotation()
+                    {
+                        string parentName = null;
+                        var schema = Schema.Create(sb =>
+                        {
+                            DefineParentConventionallyWithDataAnnotation(sb, out parentName);
+                            var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
+                            GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
+                            TryGetValue(parentDef, out var dataAnnotationValue).Should().BeTrue();
+                            dataAnnotationValue.Should().Be(DataAnnotationValue);
+                        });
+                        var parent = GetParentByName(schema, parentName);
+                        TryGetValue(parent, out var finalVal).Should().BeTrue();
+                        finalVal.Should().Be(DataAnnotationValue);
+                    }
+
+                    public virtual void configured_by_data_annotation_then_reconfigured_explicitly()
+                    {
+                        string parentName = null;
+                        var schema = Schema.Create(sb =>
+                        {
+                            DefineParentConventionallyWithDataAnnotation(sb, out parentName);
+                            var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
+                            GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
+                            TryGetValue(parentDef, out _).Should().BeTrue();
+                            ConfigureExplicitly(sb, parentName, ValueA);
+                            TryGetValue(parentDef, out var configuredA).Should().BeTrue();
+                            configuredA.Should().Be(ValueA);
+                            ConfigureExplicitly(sb, parentName, ValueB);
+                            TryGetValue(parentDef, out var configuredB).Should().BeTrue();
+                            configuredB.Should().Be(ValueB);
+                            GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
+                        });
+                        var parent = GetParentByName(schema, parentName);
+                        TryGetValue(parent, out var finalVal).Should().BeTrue();
+                        finalVal.Should().Be(ValueB);
+                    }
+
+                    public virtual void optional_configured_by_data_annotation_then_removed_explicitly()
+                    {
+                        string parentName = null;
+                        var schema = Schema.Create(sb =>
+                        {
+                            DefineParentConventionallyWithDataAnnotation(sb, out parentName);
+                            var parentDef = GetParentDefinitionByName(sb.GetDefinition(), parentName);
+                            GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
+                            TryGetValue(parentDef, out _).Should().BeTrue();
+                            RemoveExplicitly(sb, parentName);
+                            TryGetValue(parentDef, out _).Should().BeFalse();
+                            GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
+                        });
+                        var parent = GetParentByName(schema, parentName);
+                        TryGetValue(parent, out _).Should().BeFalse();
+                    }
+
+                    public virtual void configure_by_convention()
+                    {
+                        //var schema = Schema.Create(sb =>
+                        //{
+                        //    DefineByConvention(sb);
+                        //    var parentDef = GetParentDefinitionByName(sb.GetDefinition(), ConventionalParentName);
+                        //    GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Convention);
+                        //    TryGetValue(parentDef, out var defVal).Should().BeTrue();
+                        //    defVal.Should().Be(ConventionalValue);
+                        //});
+                        //var parent = GetParentByName(schema, ConventionalParentName);
+                        //TryGetValue(parent, out var val).Should().BeTrue();
+                        //val.Should().Be(ConventionalValue);
+                    }
+
+                    public virtual void define_by_data_annotation()
+                    {
+                        //var schema = Schema.Create(sb =>
+                        //{
+                        //    DefineByDataAnnotation(sb);
+                        //    var definition = sb.GetDefinition();
+                        //    var parentDef = GetParentDefinitionByName(definition, DataAnnotationParentName);
+                        //    GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
+                        //    TryGetValue(parentDef, out var defVal).Should().BeTrue();
+                        //    defVal.Should().Be(DataAnnotationValue);
+                        //});
+                        //var parent = GetParentByName(schema, DataAnnotationParentName);
+                        //TryGetValue(parent, out var val).Should().BeTrue();
+                        //val.Should().Be(DataAnnotationValue);
+                    }
+
+                    public virtual void define_by_data_annotation_overridden_by_explicit_configuration()
+                    {
+                        //var schema = Schema.Create(sb =>
+                        //{
+                        //    DefineByDataAnnotation(sb);
+                        //    var definition = sb.GetDefinition();
+                        //    var parentDef = GetParentDefinitionByName(definition, DataAnnotationParentName);
+                        //    GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.DataAnnotation);
+                        //    TryGetValue(parentDef, out var defVal).Should().BeTrue();
+                        //    defVal.Should().Be(DataAnnotationValue);
+                        //    // ConfigureExplicitly(sb, DataAnnotationParentName);
+                        //    throw new NotImplementedException();
+                        //    //GetElementConfigurationSource(parentDef).Should().Be(ConfigurationSource.Explicit);
+                        //    //TryGetValue(parentDef, out var newVal).Should().BeTrue();
+                        //    // newVal.Should().Be(ValueA);
+                        //});
+                        //var parent = GetParentByName(schema, DataAnnotationParentName);
+                        //TryGetValue(parent, out var val).Should().BeTrue();
+                        //val.Should().Be(ValueA);
+                    }
+                    */
 }

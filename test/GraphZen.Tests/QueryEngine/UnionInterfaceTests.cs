@@ -9,88 +9,87 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.QueryEngine;
 
-namespace GraphZen.Tests.QueryEngine
+[NoReorder]
+public class UnionInterfaceTests : ExecutorHarness
 {
-    [NoReorder]
-    public class UnionInterfaceTests : ExecutorHarness
+    public class Person
     {
-        public class Person
-        {
-            public string Name { [UsedImplicitly] get; set; } = null!;
-            public object[]? Pets { get; set; }
-            public object[]? Friends { get; set; }
-        }
+        public string Name { [UsedImplicitly] get; set; } = null!;
+        public object[]? Pets { get; set; }
+        public object[]? Friends { get; set; }
+    }
 
-        public class Cat
-        {
-            public string Name { [UsedImplicitly] get; set; } = null!;
-            public bool Meows { [UsedImplicitly] get; set; }
-        }
+    public class Cat
+    {
+        public string Name { [UsedImplicitly] get; set; } = null!;
+        public bool Meows { [UsedImplicitly] get; set; }
+    }
 
-        public class Dog
-        {
-            public string Name { [UsedImplicitly] get; set; } = null!;
-            public bool Barks { [UsedImplicitly] get; set; }
-        }
+    public class Dog
+    {
+        public string Name { [UsedImplicitly] get; set; } = null!;
+        public bool Barks { [UsedImplicitly] get; set; }
+    }
 
-        public static Schema Schema { get; } = Schema.Create(_ =>
-        {
-            _.Interface("Named")
-                .Field("name", "String");
+    public static Schema Schema { get; } = Schema.Create(_ =>
+    {
+        _.Interface("Named")
+            .Field("name", "String");
 
-            _.Object("Dog")
-                .ImplementsInterface("Named")
-                .Field("name", "String")
-                .Field("barks", "Boolean")
-                .IsTypeOf(obj => obj is Dog);
+        _.Object("Dog")
+            .ImplementsInterface("Named")
+            .Field("name", "String")
+            .Field("barks", "Boolean")
+            .IsTypeOf(obj => obj is Dog);
 
-            _.Object("Cat")
-                .ImplementsInterface("Named")
-                .Field("name", "String")
-                .Field("meows", "Boolean")
-                .IsTypeOf(obj => obj is Cat);
+        _.Object("Cat")
+            .ImplementsInterface("Named")
+            .Field("name", "String")
+            .Field("meows", "Boolean")
+            .IsTypeOf(obj => obj is Cat);
 
-            _.Union("Pet")
-                .OfTypes("Dog", "Cat")
-                .ResolveType((value, context, info) =>
+        _.Union("Pet")
+            .OfTypes("Dog", "Cat")
+            .ResolveType((value, context, info) =>
+            {
+                switch (value)
                 {
-                    switch (value)
-                    {
-                        case Dog _:
-                            return "Dog";
-                        case Cat _:
-                            return "Cat";
-                    }
+                    case Dog _:
+                        return "Dog";
+                    case Cat _:
+                        return "Cat";
+                }
 
-                    return null!;
-                });
+                return null!;
+            });
 
-            _.Object("Person")
-                .ImplementsInterface("Named")
-                .Field("name", "String")
-                .Field("pets", "[Pet]")
-                .Field("friends", "[Named]")
-                .IsTypeOf(obj => obj is Person);
+        _.Object("Person")
+            .ImplementsInterface("Named")
+            .Field("name", "String")
+            .Field("pets", "[Pet]")
+            .Field("friends", "[Named]")
+            .IsTypeOf(obj => obj is Person);
 
-            _.QueryType("Person");
-        });
+        _.QueryType("Person");
+    });
 
-        public static Cat Garfield { get; } = new Cat { Name = "Garfield", Meows = false };
-        public static Dog Odie { get; } = new Dog { Name = "Odie", Barks = true };
-        public static Person Liz { get; } = new Person { Name = "Liz" };
+    public static Cat Garfield { get; } = new() { Name = "Garfield", Meows = false };
+    public static Dog Odie { get; } = new() { Name = "Odie", Barks = true };
+    public static Person Liz { get; } = new() { Name = "Liz" };
 
-        public static Person John { get; } = new Person
-        {
-            Name = "John",
-            Pets = new object[] { Garfield, Odie },
-            Friends = new object[] { Liz, Odie }
-        };
+    public static Person John { get; } = new()
+    {
+        Name = "John",
+        Pets = new object[] { Garfield, Odie },
+        Friends = new object[] { Liz, Odie }
+    };
 
-        [Fact]
-        public Task ItCanIntrospectOnUnionAndIntersectionTypes()
-        {
-            return ExecuteAsync(Schema, @"
+    [Fact]
+    public Task ItCanIntrospectOnUnionAndIntersectionTypes()
+    {
+        return ExecuteAsync(Schema, @"
                {
                 Named: __type(name: ""Named"") {
                   kind
@@ -112,50 +111,50 @@ namespace GraphZen.Tests.QueryEngine
                 }
               }
             ").ShouldEqual(new
-            {
-                data = new
-                {
-                    Named = new
-                    {
-                        kind = "INTERFACE",
-                        name = "Named",
-                        fields = new object[] { new { name = "name" } },
-                        interfaces = (object?)null,
-                        possibleTypes = new object[]
-                        {
-                            new {name = "Cat"},
-                            new {name = "Dog"},
-                            new {name = "Person"}
-                        },
-                        enumValues = (object?)null,
-                        inputFields = (object?)null
-                    },
-                    Pet = new
-                    {
-                        kind = "UNION",
-                        name = "Pet",
-                        fields = (object?)null,
-
-                        interfaces = (object?)null,
-                        possibleTypes = new object[]
-                        {
-                            new {name = "Dog"},
-                            new {name = "Cat"}
-                        },
-                        enumValues = (object?)null,
-                        inputFields = (object?)null
-                    }
-                }
-            });
-        }
-
-        /// <summary>
-        ///     NOTE: This is an *invalid* query, but it should be an *executable* query.
-        /// </summary>
-        [Fact]
-        public Task ExecutesUsingUnionTypes()
         {
-            return ExecuteAsync(Schema, @"
+            data = new
+            {
+                Named = new
+                {
+                    kind = "INTERFACE",
+                    name = "Named",
+                    fields = new object[] { new { name = "name" } },
+                    interfaces = (object?)null,
+                    possibleTypes = new object[]
+                    {
+                        new { name = "Cat" },
+                        new { name = "Dog" },
+                        new { name = "Person" }
+                    },
+                    enumValues = (object?)null,
+                    inputFields = (object?)null
+                },
+                Pet = new
+                {
+                    kind = "UNION",
+                    name = "Pet",
+                    fields = (object?)null,
+
+                    interfaces = (object?)null,
+                    possibleTypes = new object[]
+                    {
+                        new { name = "Dog" },
+                        new { name = "Cat" }
+                    },
+                    enumValues = (object?)null,
+                    inputFields = (object?)null
+                }
+            }
+        });
+    }
+
+    /// <summary>
+    ///     NOTE: This is an *invalid* query, but it should be an *executable* query.
+    /// </summary>
+    [Fact]
+    public Task ExecutesUsingUnionTypes()
+    {
+        return ExecuteAsync(Schema, @"
               {
                 __typename
                 name
@@ -167,27 +166,27 @@ namespace GraphZen.Tests.QueryEngine
                 }
               }
         ", John).ShouldEqual(new
-            {
-                data = new
-                {
-                    __typename = "Person",
-                    name = "John",
-                    pets = new object[]
-                    {
-                        new {__typename = "Cat", name = "Garfield", meows = false},
-                        new {__typename = "Dog", name = "Odie", barks = true}
-                    }
-                }
-            });
-        }
-
-        /// <summary>
-        ///     This is the valid version of the query in the above test.
-        /// </summary>
-        [Fact]
-        public Task ExecutesUsingUnionTypesWithInlineFragments()
         {
-            return ExecuteAsync(Schema, @"
+            data = new
+            {
+                __typename = "Person",
+                name = "John",
+                pets = new object[]
+                {
+                    new { __typename = "Cat", name = "Garfield", meows = false },
+                    new { __typename = "Dog", name = "Odie", barks = true }
+                }
+            }
+        });
+    }
+
+    /// <summary>
+    ///     This is the valid version of the query in the above test.
+    /// </summary>
+    [Fact]
+    public Task ExecutesUsingUnionTypesWithInlineFragments()
+    {
+        return ExecuteAsync(Schema, @"
           {
             __typename
             name
@@ -204,28 +203,28 @@ namespace GraphZen.Tests.QueryEngine
             }
           }
         ", John).ShouldEqual(new
-            {
-                data = new
-                {
-                    __typename = "Person",
-                    name = "John",
-                    pets = new object[]
-                    {
-                        new {__typename = "Cat", name = "Garfield", meows = false},
-                        new {__typename = "Dog", name = "Odie", barks = true}
-                    }
-                }
-            });
-        }
-
-
-        /// <summary>
-        ///     NOTE: This is an *invalid* query, but it should be an *executable* query.
-        /// </summary>
-        [Fact]
-        public Task ExecutesUsingInterfaceTypes()
         {
-            return ExecuteAsync(Schema, @"
+            data = new
+            {
+                __typename = "Person",
+                name = "John",
+                pets = new object[]
+                {
+                    new { __typename = "Cat", name = "Garfield", meows = false },
+                    new { __typename = "Dog", name = "Odie", barks = true }
+                }
+            }
+        });
+    }
+
+
+    /// <summary>
+    ///     NOTE: This is an *invalid* query, but it should be an *executable* query.
+    /// </summary>
+    [Fact]
+    public Task ExecutesUsingInterfaceTypes()
+    {
+        return ExecuteAsync(Schema, @"
               {
                 __typename
                 name
@@ -237,27 +236,27 @@ namespace GraphZen.Tests.QueryEngine
                 }
               }
         ", John).ShouldEqual(new
-            {
-                data = new
-                {
-                    __typename = "Person",
-                    name = "John",
-                    friends = new object[]
-                    {
-                        new {__typename = "Person", name = "Liz"},
-                        new {__typename = "Dog", name = "Odie", barks = true}
-                    }
-                }
-            });
-        }
-
-        /// <summary>
-        ///     This is the valid version of the query in the above test.
-        /// </summary>
-        [Fact]
-        public Task ExecutesInterfaceTypesWithInlineFragments()
         {
-            return ExecuteAsync(Schema, @"
+            data = new
+            {
+                __typename = "Person",
+                name = "John",
+                friends = new object[]
+                {
+                    new { __typename = "Person", name = "Liz" },
+                    new { __typename = "Dog", name = "Odie", barks = true }
+                }
+            }
+        });
+    }
+
+    /// <summary>
+    ///     This is the valid version of the query in the above test.
+    /// </summary>
+    [Fact]
+    public Task ExecutesInterfaceTypesWithInlineFragments()
+    {
+        return ExecuteAsync(Schema, @"
           {
             __typename
             name
@@ -273,24 +272,24 @@ namespace GraphZen.Tests.QueryEngine
             }
           }
         ", John).ShouldEqual(new
-            {
-                data = new
-                {
-                    __typename = "Person",
-                    name = "John",
-                    friends = new object[]
-                    {
-                        new {__typename = "Person", name = "Liz"},
-                        new {__typename = "Dog", name = "Odie", barks = true}
-                    }
-                }
-            });
-        }
-
-        [Fact]
-        public Task AllowsFragmentConditionsToBeAbstractTypes()
         {
-            return ExecuteAsync(Schema, @"
+            data = new
+            {
+                __typename = "Person",
+                name = "John",
+                friends = new object[]
+                {
+                    new { __typename = "Person", name = "Liz" },
+                    new { __typename = "Dog", name = "Odie", barks = true }
+                }
+            }
+        });
+    }
+
+    [Fact]
+    public Task AllowsFragmentConditionsToBeAbstractTypes()
+    {
+        return ExecuteAsync(Schema, @"
           {
             __typename
             name
@@ -321,75 +320,74 @@ namespace GraphZen.Tests.QueryEngine
             }
           }
         ", John).ShouldEqual(new
-            {
-                data = new
-                {
-                    __typename = "Person",
-                    name = "John",
-                    pets = new object[]
-                    {
-                        new {__typename = "Cat", name = "Garfield", meows = false},
-                        new {__typename = "Dog", name = "Odie", barks = true}
-                    },
-                    friends = new object[]
-                    {
-                        new {__typename = "Person", name = "Liz"},
-                        new {__typename = "Dog", name = "Odie", barks = true}
-                    }
-                }
-            });
-        }
-
-        public class CustomContext : GraphQLContext
         {
-            public string AuthToken { get; } = "123abc";
-        }
-
-        [Fact]
-        public async Task GetsExecutionInfoInResolver()
-        {
-            CustomContext? encounteredContext = default;
-            Schema? encounteredSchema = default;
-            object? encounteredRootValue = default;
-            var schema = Schema.Create<CustomContext>(_ =>
+            data = new
             {
-                _.Interface("Named")
-                    .Field("name", "String")
-                    .ResolveType((value, context, info) =>
-                    {
-                        encounteredContext = context;
-                        encounteredSchema = info.Schema;
-                        encounteredRootValue = info.RootValue;
-                        return "Person";
-                    });
-
-                _.Object("Person").ImplementsInterface("Named")
-                    .Field("name", "String")
-                    .Field("friends", "[Named]");
-
-                _.QueryType("Person");
-            });
-
-            var john = new Person { Name = "John", Friends = new object[] { Liz }, Pets = new object[] { } };
-            var cxt = new CustomContext();
-
-
-            var ast = Parser.ParseDocument("{ name, friends { name } }");
-            await Executor.ExecuteAsync(schema, ast, john, cxt).ShouldEqual(new
-            {
-                data = new
+                __typename = "Person",
+                name = "John",
+                pets = new object[]
                 {
-                    name = "John",
-                    friends = new object[]
-                    {
-                        new {name = "Liz"}
-                    }
+                    new { __typename = "Cat", name = "Garfield", meows = false },
+                    new { __typename = "Dog", name = "Odie", barks = true }
+                },
+                friends = new object[]
+                {
+                    new { __typename = "Person", name = "Liz" },
+                    new { __typename = "Dog", name = "Odie", barks = true }
                 }
-            });
+            }
+        });
+    }
 
-            Assert.Equal(cxt, encounteredContext);
-            Assert.Equal(schema, encounteredSchema);
-            Assert.Equal(john, encounteredRootValue);
-        }
+    public class CustomContext : GraphQLContext
+    {
+        public string AuthToken { get; } = "123abc";
+    }
+
+    [Fact]
+    public async Task GetsExecutionInfoInResolver()
+    {
+        CustomContext? encounteredContext = default;
+        Schema? encounteredSchema = default;
+        object? encounteredRootValue = default;
+        var schema = Schema.Create<CustomContext>(_ =>
+        {
+            _.Interface("Named")
+                .Field("name", "String")
+                .ResolveType((value, context, info) =>
+                {
+                    encounteredContext = context;
+                    encounteredSchema = info.Schema;
+                    encounteredRootValue = info.RootValue;
+                    return "Person";
+                });
+
+            _.Object("Person").ImplementsInterface("Named")
+                .Field("name", "String")
+                .Field("friends", "[Named]");
+
+            _.QueryType("Person");
+        });
+
+        var john = new Person { Name = "John", Friends = new object[] { Liz }, Pets = new object[] { } };
+        var cxt = new CustomContext();
+
+
+        var ast = Parser.ParseDocument("{ name, friends { name } }");
+        await Executor.ExecuteAsync(schema, ast, john, cxt).ShouldEqual(new
+        {
+            data = new
+            {
+                name = "John",
+                friends = new object[]
+                {
+                    new { name = "Liz" }
+                }
+            }
+        });
+
+        Assert.Equal(cxt, encounteredContext);
+        Assert.Equal(schema, encounteredSchema);
+        Assert.Equal(john, encounteredRootValue);
     }
 }

@@ -7,42 +7,40 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class InterfaceTypeExtensionParsingTests : ParserTestBase
 {
-    public class InterfaceTypeExtensionParsingTests : ParserTestBase
+    [Fact]
+    public void InterfaceExtendedWithDirective()
     {
-        [Fact]
-        public void InterfaceExtendedWithDirective()
-        {
-            var result = ParseDocument("extend interface Bar @onInterface ");
-            var expected =
-                SyntaxFactory.Document(new InterfaceTypeExtensionSyntax(SyntaxFactory.Name("Bar"),
-                    new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onInterface")) }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        var result = ParseDocument("extend interface Bar @onInterface ");
+        var expected =
+            SyntaxFactory.Document(new InterfaceTypeExtensionSyntax(SyntaxFactory.Name("Bar"),
+                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onInterface")) }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
+    }
 
-        [Fact]
-        public void InterfaceExtendedWithFields()
-        {
-            var result = ParseDocument(@"
+    [Fact]
+    public void InterfaceExtendedWithFields()
+    {
+        var result = ParseDocument(@"
 extend interface Bar {
   two(argument: InputType!): Type
 }");
-            var expected = SyntaxFactory.Document(new InterfaceTypeExtensionSyntax(SyntaxFactory.Name("Bar"), null,
-                new[]
-                {
-                    new FieldDefinitionSyntax(SyntaxFactory.Name("two"),
-                        SyntaxFactory.NamedType(SyntaxFactory.Name("Type")), null,
-                        new[]
-                        {
-                            SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("argument"),
-                                SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("InputType"))))
-                        })
-                }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        var expected = SyntaxFactory.Document(new InterfaceTypeExtensionSyntax(SyntaxFactory.Name("Bar"), null,
+            new[]
+            {
+                new FieldDefinitionSyntax(SyntaxFactory.Name("two"),
+                    SyntaxFactory.NamedType(SyntaxFactory.Name("Type")), null,
+                    new[]
+                    {
+                        SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("argument"),
+                            SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("InputType"))))
+                    })
+            }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
     }
 }

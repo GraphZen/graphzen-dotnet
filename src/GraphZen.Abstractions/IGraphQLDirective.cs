@@ -7,10 +7,9 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+public interface IGraphQLDirective
 {
-    public interface IGraphQLDirective
-    {
-        IEnumerable<DirectiveLocation> GetDirectiveLocations();
-    }
+    IEnumerable<DirectiveLocation> GetDirectiveLocations();
 }

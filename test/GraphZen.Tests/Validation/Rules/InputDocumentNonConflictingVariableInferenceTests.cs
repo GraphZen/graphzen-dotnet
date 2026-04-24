@@ -7,13 +7,11 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class InputDocumentNonConflictingVariableInferenceTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class InputDocumentNonConflictingVariableInferenceTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } =
-            QueryValidationRules.InputDocumentNonConflictingVariableInference;
-    }
+    public override ValidationRule RuleUnderTest { get; } =
+        QueryValidationRules.InputDocumentNonConflictingVariableInference;
 }

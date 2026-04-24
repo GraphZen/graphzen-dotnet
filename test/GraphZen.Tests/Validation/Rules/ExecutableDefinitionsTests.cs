@@ -9,22 +9,20 @@ using GraphZen.QueryEngine.Validation.Rules;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class ExecutableDefinitionsTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class ExecutableDefinitionsTests : ValidationRuleHarness
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ExecutableDefinitions;
+
+    private static ExpectedError NonExecutableDefinition(string defName, int line, int column) =>
+        Error(ExecutableDefinitions.NonExecutableDefinitionMessage(defName), (line, column));
+
+    [Fact]
+    public void WithOnlyOperation()
     {
-        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ExecutableDefinitions;
-
-        private static ExpectedError NonExecutableDefinition(string defName, int line, int column) =>
-            Error(ExecutableDefinitions.NonExecutableDefinitionMessage(defName), (line, column));
-
-        [Fact]
-        public void WithOnlyOperation()
-        {
-            QueryShouldPass(@"
+        QueryShouldPass(@"
 
           query Foo {
             dog {
@@ -33,12 +31,12 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ");
-        }
+    }
 
-        [Fact]
-        public void WithOperationAndFragment()
-        {
-            QueryShouldPass(@"
+    [Fact]
+    public void WithOperationAndFragment()
+    {
+        QueryShouldPass(@"
 
           query Foo {
             dog {
@@ -52,12 +50,12 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ");
-        }
+    }
 
-        [Fact]
-        public void WithTypeDefinition()
-        {
-            QueryShouldFail(@"
+    [Fact]
+    public void WithTypeDefinition()
+    {
+        QueryShouldFail(@"
 
           query Foo {
             dog {
@@ -74,15 +72,15 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ",
-                NonExecutableDefinition("Cow", 9, 11),
-                NonExecutableDefinition("Dog", 13, 11)
-            );
-        }
+            NonExecutableDefinition("Cow", 9, 11),
+            NonExecutableDefinition("Dog", 13, 11)
+        );
+    }
 
-        [Fact]
-        public void WithSchemaDefinition()
-        {
-            QueryShouldFail(@"
+    [Fact]
+    public void WithSchemaDefinition()
+    {
+        QueryShouldFail(@"
 
           schema {
             query: Query
@@ -95,10 +93,9 @@ namespace GraphZen.Tests.Validation.Rules
           extend schema @directive
 
         ",
-                NonExecutableDefinition("schema", 3, 11),
-                NonExecutableDefinition("Query", 7, 11),
-                NonExecutableDefinition("schema", 11, 11)
-            );
-        }
+            NonExecutableDefinition("schema", 3, 11),
+            NonExecutableDefinition("Query", 7, 11),
+            NonExecutableDefinition("schema", 11, 11)
+        );
     }
 }

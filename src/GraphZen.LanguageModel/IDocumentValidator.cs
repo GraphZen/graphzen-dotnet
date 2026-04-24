@@ -7,11 +7,10 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+public interface IDocumentValidator
 {
-    public interface IDocumentValidator
-    {
-        IEnumerable<GraphQLServerError> Validate(DocumentSyntax schemaDocument,
-            DocumentSyntax? initialSchemaDocument = null);
-    }
+    IEnumerable<GraphQLServerError> Validate(DocumentSyntax schemaDocument,
+        DocumentSyntax? initialSchemaDocument = null);
 }

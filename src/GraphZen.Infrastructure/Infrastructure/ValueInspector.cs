@@ -10,59 +10,56 @@ using System.Text.Json.Nodes;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.Infrastructure;
 
-
-namespace GraphZen.Infrastructure
+internal static class ValueInspector
 {
-    internal static class ValueInspector
+    public static T Dump<T, TR>(this T value, Func<T, TR> selector, string? prefix = null)
     {
-        public static T Dump<T, TR>(this T value, Func<T, TR> selector, string? prefix = null)
+        selector(value).Dump(prefix!);
+        return value;
+    }
+
+    public static T Dump<T>(this T value, string label = "_", bool expanded = false)
+    {
+        if (expanded)
+            Console.WriteLine($"= {label} =\n{value.Inspect(true)}");
+        else
+            Console.WriteLine($"\t\t{label} \t\t-> {value.Inspect()}");
+
+        return value;
+    }
+
+
+    internal static string Inspect(this object? value, bool expanded = false)
+    {
+        switch (value)
         {
-            selector(value).Dump(prefix!);
-            return value;
-        }
-
-        public static T Dump<T>(this T value, string label = "_", bool expanded = false)
-        {
-            if (expanded)
-                Console.WriteLine($"= {label} =\n{value.Inspect(true)}");
-            else
-                Console.WriteLine($"\t\t{label} \t\t-> {value.Inspect()}");
-
-            return value;
-        }
-
-
-        internal static string Inspect(this object? value, bool expanded = false)
-        {
-            switch (value)
-            {
-                case null:
-                    return "null";
-                case bool boolean:
-                    return boolean ? "true" : "false";
-                case Type type:
-                    return type.Name;
-                case IInspectable inspectable:
-                    return inspectable.GetDisplayValue();
-                case string str:
-                    return $"\"{str}\"";
-                case IDictionary<string, object> dict:
-                    return "{" +
-                           string.Join(", ", dict.Select(kv => $"{kv.Key}: {Inspect(kv.Value, expanded)}")) + "}";
-                case IDictionary dict:
-                    return "{\n" +
-                           string.Join(",\n",
-                               dict.GetEntries().Select(kv => $"  {{{kv.Key}: {Inspect(kv.Value, expanded)}}}")) +
-                           "\n}";
-                case JsonObject jsonObject:
-                    return jsonObject.ToDictionary().Inspect(expanded);
-                case IEnumerable enumerable:
-                    var inspected = enumerable.Cast<object>().Select(_ => Inspect(_, expanded));
-                    return expanded ? $"[\n{string.Join(",\n", inspected)}\n]" : $"[{string.Join(", ", inspected)}]";
-                default:
-                    return value.ToString() ?? string.Empty;
-            }
+            case null:
+                return "null";
+            case bool boolean:
+                return boolean ? "true" : "false";
+            case Type type:
+                return type.Name;
+            case IInspectable inspectable:
+                return inspectable.GetDisplayValue();
+            case string str:
+                return $"\"{str}\"";
+            case IDictionary<string, object> dict:
+                return "{" +
+                       string.Join(", ", dict.Select(kv => $"{kv.Key}: {kv.Value.Inspect(expanded)}")) + "}";
+            case IDictionary dict:
+                return "{\n" +
+                       string.Join(",\n",
+                           dict.GetEntries().Select(kv => $"  {{{kv.Key}: {kv.Value.Inspect(expanded)}}}")) +
+                       "\n}";
+            case JsonObject jsonObject:
+                return jsonObject.ToDictionary().Inspect(expanded);
+            case IEnumerable enumerable:
+                var inspected = enumerable.Cast<object>().Select(_ => _.Inspect(expanded));
+                return expanded ? $"[\n{string.Join(",\n", inspected)}\n]" : $"[{string.Join(", ", inspected)}]";
+            default:
+                return value.ToString() ?? string.Empty;
         }
     }
 }

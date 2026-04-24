@@ -9,41 +9,41 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.QueryEngine.Validation.Rules.LoneAnonymousOperation;
 
-namespace GraphZen.Tests.Validation.Rules
-{
-    [NoReorder]
-    public class LoneAnonymousOperationTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.LoneAnonymousOperation;
+namespace GraphZen.Tests.Validation.Rules;
 
-        [Fact]
-        public void NoOperations()
-        {
-            QueryShouldPass(@"
+[NoReorder]
+public class LoneAnonymousOperationTests : ValidationRuleHarness
+{
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.LoneAnonymousOperation;
+
+    [Fact]
+    public void NoOperations()
+    {
+        QueryShouldPass(@"
 
           fragment fragA on Type {
             field
           }
 
         ");
-        }
+    }
 
-        [Fact]
-        public void OneAnonymousOperation()
-        {
-            QueryShouldPass(@"
+    [Fact]
+    public void OneAnonymousOperation()
+    {
+        QueryShouldPass(@"
 
           {
             field
           }
 
         ");
-        }
+    }
 
-        [Fact]
-        public void MultipleNamedOperations()
-        {
-            QueryShouldPass(@"
+    [Fact]
+    public void MultipleNamedOperations()
+    {
+        QueryShouldPass(@"
 
           query Foo {
             field
@@ -54,12 +54,12 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ");
-        }
+    }
 
-        [Fact]
-        public void MultipleAnonymousOperations()
-        {
-            QueryShouldFail(@"
+    [Fact]
+    public void MultipleAnonymousOperations()
+    {
+        QueryShouldFail(@"
 
           {
             fieldA
@@ -69,14 +69,14 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ",
-                Error(AnonymousOperationNotAloneMessage, (3, 11)),
-                Error(AnonymousOperationNotAloneMessage, (6, 11)));
-        }
+            Error(AnonymousOperationNotAloneMessage, (3, 11)),
+            Error(AnonymousOperationNotAloneMessage, (6, 11)));
+    }
 
-        [Fact]
-        public void AnonymousOperationWithAMutation()
-        {
-            QueryShouldFail(@"
+    [Fact]
+    public void AnonymousOperationWithAMutation()
+    {
+        QueryShouldFail(@"
 
           {
             fieldA
@@ -86,13 +86,13 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ",
-                Error(AnonymousOperationNotAloneMessage, (3, 11)));
-        }
+            Error(AnonymousOperationNotAloneMessage, (3, 11)));
+    }
 
-        [Fact]
-        public void AnonymousOperationWithASubscription()
-        {
-            QueryShouldFail(@"
+    [Fact]
+    public void AnonymousOperationWithASubscription()
+    {
+        QueryShouldFail(@"
 
           {
             fieldA
@@ -102,7 +102,6 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ",
-                Error(AnonymousOperationNotAloneMessage, (3, 11)));
-        }
+            Error(AnonymousOperationNotAloneMessage, (3, 11)));
     }
 }

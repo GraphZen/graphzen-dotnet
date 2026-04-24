@@ -7,28 +7,27 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Internal
+namespace GraphZen.Internal;
+
+internal class None<T> : Maybe<T>
 {
-    internal class None<T> : Maybe<T>
+    protected None(IReadOnlyList<object>? values, IReadOnlyList<GraphQLServerError> errors) : base(values,
+        errors)
     {
-        protected None(IReadOnlyList<object>? values, IReadOnlyList<GraphQLServerError> errors) : base(values,
-            errors)
-        {
-        }
+    }
 
 
-        public IReadOnlyList<GraphQLServerError> Errors => Errs;
+    public IReadOnlyList<GraphQLServerError> Errors => Errs;
 
-        public override string ToString()
-        {
-            var errors = Errors.Any() ? Errors.Inspect() : "(no errors)";
-            return $"None {errors}";
-        }
+    public override string ToString()
+    {
+        var errors = Errors.Any() ? Errors.Inspect() : "(no errors)";
+        return $"None {errors}";
+    }
 
-        public void ThrowFirstErrorOrDefault(string defaultError = "Unkown error")
-        {
-            Errors.SingleOrDefault()?.Throw();
-            throw new GraphQLException(defaultError);
-        }
+    public void ThrowFirstErrorOrDefault(string defaultError = "Unkown error")
+    {
+        Errors.SingleOrDefault()?.Throw();
+        throw new GraphQLException(defaultError);
     }
 }

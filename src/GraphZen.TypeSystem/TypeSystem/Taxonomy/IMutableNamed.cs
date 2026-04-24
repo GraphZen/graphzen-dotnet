@@ -6,12 +6,11 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMutableNamed : INamed, IMutableDefinition
 {
-    [GraphQLIgnore]
-    public interface IMutableNamed : INamed, IMutableDefinition
-    {
-        bool SetName(string name, ConfigurationSource configurationSource);
-        ConfigurationSource GetNameConfigurationSource();
-    }
+    bool SetName(string name, ConfigurationSource configurationSource);
+    ConfigurationSource GetNameConfigurationSource();
 }

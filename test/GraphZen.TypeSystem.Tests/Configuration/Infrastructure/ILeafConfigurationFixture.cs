@@ -6,17 +6,15 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
-{
-    public interface ILeafConfigurationFixture : IConfigurationFixture
-    {
-        ConfigurationSource GetElementConfigurationSource(MemberDefinition parent);
-        bool TryGetValue(MemberDefinition parent, [NotNullWhen(true)] out object? value);
-        bool TryGetValue(Member parent, [NotNullWhen(true)] out object? value);
-        void ConfigureExplicitly(SchemaBuilder sb, string parentName, object value);
-        void RemoveValue(SchemaBuilder sb, string parentName);
+namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 
-        object ValueA { get; }
-        object ValueB { get; }
-    }
+public interface ILeafConfigurationFixture : IConfigurationFixture
+{
+    object ValueA { get; }
+    object ValueB { get; }
+    ConfigurationSource GetElementConfigurationSource(MemberDefinition parent);
+    bool TryGetValue(MemberDefinition parent, [NotNullWhen(true)] out object? value);
+    bool TryGetValue(Member parent, [NotNullWhen(true)] out object? value);
+    void ConfigureExplicitly(SchemaBuilder sb, string parentName, object value);
+    void RemoveValue(SchemaBuilder sb, string parentName);
 }

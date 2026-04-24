@@ -7,11 +7,10 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+public interface IMutableClrType : IClrType
 {
-    public interface IMutableClrType : IClrType
-    {
-        bool SetClrType(Type clrType, ConfigurationSource configurationSource);
-        ConfigurationSource? GetClrTypeConfigurationSource();
-    }
+    bool SetClrType(Type clrType, ConfigurationSource configurationSource);
+    ConfigurationSource? GetClrTypeConfigurationSource();
 }

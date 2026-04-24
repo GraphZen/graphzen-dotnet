@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+public interface IGraphQLClient
 {
-    public interface IGraphQLClient
-    {
-        Task<GraphQLResponse> SendAsync(GraphQLRequest request, CancellationToken cancellationToken);
-        Task<GraphQLResponse> SendAsync(GraphQLRequest request);
-    }
+    Task<GraphQLResponse> SendAsync(GraphQLRequest request, CancellationToken cancellationToken);
+    Task<GraphQLResponse> SendAsync(GraphQLRequest request);
 }

@@ -6,12 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMutableObjectTypesDefinition : IObjectTypesDefinition
 {
     [GraphQLIgnore]
-    public interface IMutableObjectTypesDefinition : IObjectTypesDefinition
-    {
-        [GraphQLIgnore]
-        new IEnumerable<ObjectTypeDefinition> GetObjects();
-    }
+    new IEnumerable<ObjectTypeDefinition> GetObjects();
 }

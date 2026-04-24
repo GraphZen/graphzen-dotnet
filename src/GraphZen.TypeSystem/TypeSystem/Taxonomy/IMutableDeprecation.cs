@@ -6,12 +6,11 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMutableDeprecation : IDeprecation
 {
-    [GraphQLIgnore]
-    public interface IMutableDeprecation : IDeprecation
-    {
-        bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource);
-        bool RemoveDeprecation(ConfigurationSource configurationSource);
-    }
+    bool MarkAsDeprecated(string reason, ConfigurationSource configurationSource);
+    bool RemoveDeprecation(ConfigurationSource configurationSource);
 }

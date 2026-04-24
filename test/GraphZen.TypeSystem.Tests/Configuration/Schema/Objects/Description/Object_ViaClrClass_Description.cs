@@ -7,33 +7,32 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Description;
+
+// ReSharper disable once InconsistentNaming
+public class Object_ViaClrClass_Description : Object_Description, ILeafConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Object_ViaClrClass_Description : Object_Description, ILeafConventionConfigurationFixture
+    public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+
+    public LeafConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(ExampleObject),
+            DataAnnotationValue = DataAnnotationDescriptionValue
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+        sb.Object<ExampleObject>();
+    }
 
-        public LeafConventionContext GetContext() =>
-            new LeafConventionContext
-            {
-                ParentName = nameof(ExampleObject),
-                DataAnnotationValue = DataAnnotationDescriptionValue
-            };
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Object<ExampleObject>();
+    }
 
-        [Description(DataAnnotationDescriptionValue)]
-        public class ExampleObject
-        {
-        }
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Object<ExampleObject>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Object<ExampleObject>();
-        }
+    [Description(DataAnnotationDescriptionValue)]
+    public class ExampleObject
+    {
     }
 }

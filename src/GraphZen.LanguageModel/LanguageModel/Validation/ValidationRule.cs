@@ -5,9 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel.Validation;
 
-
-namespace GraphZen.LanguageModel.Validation
-{
-    public delegate ValidationRuleVisitor ValidationRule(ValidationContext context);
-}
+public delegate ValidationRuleVisitor ValidationRule(ValidationContext context);

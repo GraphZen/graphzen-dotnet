@@ -7,84 +7,83 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Unions
+namespace GraphZen.TypeSystem.Tests.Configuration.Unions;
+
+// ReSharper disable once InconsistentNaming
+public class Schema_Unions_ViaClassWithMarkerInterface : Schema_Unions, ICollectionConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Schema_Unions_ViaClassWithMarkerInterface : Schema_Unions, ICollectionConventionConfigurationFixture
+    public const string DataAnnotationName = nameof(DataAnnotationName);
+
+
+    public CollectionConventionContext GetContext() =>
+        new()
+        {
+            ItemNamedByConvention = nameof(INamedByConvention),
+            DefaultItemConfigurationSource = ConfigurationSource.DataAnnotation,
+            ItemNamedByDataAnnotation = DataAnnotationName,
+            ItemIgnoredByConvention = nameof(IIgnoredByConvention),
+            ItemIgnoredByDataAnnotation = nameof(IIgnoredByDataAnnotation)
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        public const string DataAnnotationName = nameof(DataAnnotationName);
+        sb.Object<Query>();
+    }
+
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Object<Query>();
+    }
+
+    public class Foo : INamedByConvention
+    {
+    }
+
+    [GraphQLIgnore]
+    public class Bar : IIgnoredByConvention
+    {
+    }
+
+    public class Baz : IIgnoredByDataAnnotation
+    {
+    }
 
 
-        public CollectionConventionContext GetContext() =>
-            new CollectionConventionContext
-            {
-                ItemNamedByConvention = nameof(INamedByConvention),
-                DefaultItemConfigurationSource = ConfigurationSource.DataAnnotation,
-                ItemNamedByDataAnnotation = DataAnnotationName,
-                ItemIgnoredByConvention = nameof(IIgnoredByConvention),
-                ItemIgnoredByDataAnnotation = nameof(IIgnoredByDataAnnotation)
-            };
+    public class FooBar : INamedByDataAnnotation
+    {
+    }
 
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Object<Query>();
-        }
+    public class Query
+    {
+        public Foo? ConventionallyNamed { get; set; }
 
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Object<Query>();
-        }
+        public Bar? IgnoredByConvention { get; set; }
 
-        public class Foo : INamedByConvention
-        {
-        }
+        public Baz? IgnoredByDataAnnotation { get; set; }
 
-        [GraphQLIgnore]
-        public class Bar : IIgnoredByConvention
-        {
-        }
+        public FooBar? NamedByDataAnnoation { get; set; }
+    }
 
-        public class Baz : IIgnoredByDataAnnotation
-        {
-        }
+    [GraphQLUnion]
+    public interface INamedByConvention
+    {
+    }
 
 
-        public class FooBar : INamedByDataAnnotation
-        {
-        }
+    [GraphQLUnion]
+    [GraphQLName(DataAnnotationName)]
+    public interface INamedByDataAnnotation
+    {
+    }
 
-        public class Query
-        {
-            public Foo? ConventionallyNamed { get; set; }
+    [GraphQLUnion]
+    public interface IIgnoredByConvention
+    {
+    }
 
-            public Bar? IgnoredByConvention { get; set; }
-
-            public Baz? IgnoredByDataAnnotation { get; set; }
-
-            public FooBar? NamedByDataAnnoation { get; set; }
-        }
-
-        [GraphQLUnion]
-        public interface INamedByConvention
-        {
-        }
-
-
-        [GraphQLUnion]
-        [GraphQLName(DataAnnotationName)]
-        public interface INamedByDataAnnotation
-        {
-        }
-
-        [GraphQLUnion]
-        public interface IIgnoredByConvention
-        {
-        }
-
-        [GraphQLIgnore]
-        [GraphQLUnion]
-        public interface IIgnoredByDataAnnotation
-        {
-        }
+    [GraphQLIgnore]
+    [GraphQLUnion]
+    public interface IIgnoredByDataAnnotation
+    {
     }
 }

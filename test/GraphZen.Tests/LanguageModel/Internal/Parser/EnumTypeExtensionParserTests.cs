@@ -7,36 +7,33 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class EnumTypeExtensionParserTests : ParserTestBase
 {
-    public class EnumTypeExtensionParserTests : ParserTestBase
+    [Fact]
+    public void ExtendEnumDirectives()
     {
-        [Fact]
-        public void ExtendEnumDirectives()
-        {
-            var result = ParseDocument("extend enum Site @onEnum");
-            var expected = SyntaxFactory.Document(new EnumTypeExtensionSyntax(SyntaxFactory.Name("Site"),
-                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onEnum")) }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        var result = ParseDocument("extend enum Site @onEnum");
+        var expected = SyntaxFactory.Document(new EnumTypeExtensionSyntax(SyntaxFactory.Name("Site"),
+            new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onEnum")) }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
+    }
 
-        [Fact]
-        public void ExtendEnumValue()
-        {
-            var result = ParseDocument(@"
+    [Fact]
+    public void ExtendEnumValue()
+    {
+        var result = ParseDocument(@"
 extend enum Site {
   VR
 }");
-            var expected = SyntaxFactory.Document(new EnumTypeExtensionSyntax(SyntaxFactory.Name("Site"), null, new[]
-            {
-                SyntaxFactory.EnumValueDefinition(SyntaxFactory.EnumValue(SyntaxFactory.Name("VR")))
-            }));
+        var expected = SyntaxFactory.Document(new EnumTypeExtensionSyntax(SyntaxFactory.Name("Site"), null, new[]
+        {
+            SyntaxFactory.EnumValueDefinition(SyntaxFactory.EnumValue(SyntaxFactory.Name("VR")))
+        }));
 
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
     }
 }

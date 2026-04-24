@@ -6,10 +6,9 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+public interface IInterfacesDefinition
 {
-    public interface IInterfacesDefinition
-    {
-        IEnumerable<IInterfaceTypeDefinition> GetInterfaces();
-    }
+    IEnumerable<IInterfaceTypeDefinition> GetInterfaces();
 }

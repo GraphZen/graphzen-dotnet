@@ -7,136 +7,134 @@ using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel;
 
-namespace GraphZen.Tests.LanguageModel
+public class BlockStringValueTests
 {
-    public class BlockStringValueTests
+    [Fact]
+    public void DoesNotALterTrailingSpaces()
     {
-        [Fact]
-        public void DoesNotALterTrailingSpaces()
+        var rawValue = new[]
         {
-            var rawValue = new[]
-            {
-                "               ",
-                "    Hello,     ",
-                "      World!   ",
-                "               ",
-                "    Yours,     ",
-                "      GraphQL. ",
-                "               "
-            }.ToMultiLineString();
+            "               ",
+            "    Hello,     ",
+            "      World!   ",
+            "               ",
+            "    Yours,     ",
+            "      GraphQL. ",
+            "               "
+        }.ToMultiLineString();
 
-            var result = LanguageHelpers.BlockStringValue(rawValue);
+        var result = LanguageHelpers.BlockStringValue(rawValue);
 
-            var expected = new[]
-            {
-                "Hello,     ",
-                "  World!   ",
-                "           ",
-                "Yours,     ",
-                "  GraphQL. "
-            }.ToMultiLineString();
-
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void RemovesBlankLeadingAndTrailingLines()
+        var expected = new[]
         {
-            var rawValue = new[]
-            {
-                "    ",
-                "        ",
-                "",
-                "    Hello,",
-                "      World!",
-                "",
-                "    Yours,",
-                "      GraphQL.",
-                "        ",
-                "    "
-            }.ToMultiLineString();
+            "Hello,     ",
+            "  World!   ",
+            "           ",
+            "Yours,     ",
+            "  GraphQL. "
+        }.ToMultiLineString();
 
-            var result = LanguageHelpers.BlockStringValue(rawValue);
+        Assert.Equal(expected, result);
+    }
 
-            var expected = new[]
-            {
-                "Hello,", "  World!", "", "Yours,", "  GraphQL."
-            }.ToMultiLineString();
-
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void RemovesEmptyLeadingAndTrailingLines()
+    [Fact]
+    public void RemovesBlankLeadingAndTrailingLines()
+    {
+        var rawValue = new[]
         {
-            var rawValue = new[]
-            {
-                "",
-                "",
-                "",
-                "    Hello,",
-                "      World!",
-                "",
-                "    Yours,",
-                "      GraphQL.",
-                "",
-                ""
-            }.ToMultiLineString();
+            "    ",
+            "        ",
+            "",
+            "    Hello,",
+            "      World!",
+            "",
+            "    Yours,",
+            "      GraphQL.",
+            "        ",
+            "    "
+        }.ToMultiLineString();
 
-            var result = LanguageHelpers.BlockStringValue(rawValue);
+        var result = LanguageHelpers.BlockStringValue(rawValue);
 
-            var expected = new[]
-            {
-                "Hello,", "  World!", "", "Yours,", "  GraphQL."
-            }.ToMultiLineString();
-
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void RemovesUniformIndentationFromAString()
+        var expected = new[]
         {
-            var rawValue = new[]
-            {
-                "",
-                "    Hello,",
-                "      World!",
-                "",
-                "    Yours,",
-                "      GraphQL."
-            }.ToMultiLineString();
+            "Hello,", "  World!", "", "Yours,", "  GraphQL."
+        }.ToMultiLineString();
 
-            var result = LanguageHelpers.BlockStringValue(rawValue);
+        Assert.Equal(expected, result);
+    }
 
-            var expected = new[]
-            {
-                "Hello,", "  World!", "", "Yours,", "  GraphQL."
-            }.ToMultiLineString();
-
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void RetainsIndentationFromFirstLine()
+    [Fact]
+    public void RemovesEmptyLeadingAndTrailingLines()
+    {
+        var rawValue = new[]
         {
-            var rawValue = new[]
-            {
-                "    Hello,",
-                "      World!",
-                "",
-                "    Yours,",
-                "      GraphQL."
-            }.ToMultiLineString();
+            "",
+            "",
+            "",
+            "    Hello,",
+            "      World!",
+            "",
+            "    Yours,",
+            "      GraphQL.",
+            "",
+            ""
+        }.ToMultiLineString();
 
-            var result = LanguageHelpers.BlockStringValue(rawValue);
+        var result = LanguageHelpers.BlockStringValue(rawValue);
 
-            var expected = new[]
-            {
-                "    Hello,", "  World!", "", "Yours,", "  GraphQL."
-            }.ToMultiLineString();
+        var expected = new[]
+        {
+            "Hello,", "  World!", "", "Yours,", "  GraphQL."
+        }.ToMultiLineString();
 
-            Assert.Equal(expected, result);
-        }
+        Assert.Equal(expected, result);
+    }
+
+    [Fact]
+    public void RemovesUniformIndentationFromAString()
+    {
+        var rawValue = new[]
+        {
+            "",
+            "    Hello,",
+            "      World!",
+            "",
+            "    Yours,",
+            "      GraphQL."
+        }.ToMultiLineString();
+
+        var result = LanguageHelpers.BlockStringValue(rawValue);
+
+        var expected = new[]
+        {
+            "Hello,", "  World!", "", "Yours,", "  GraphQL."
+        }.ToMultiLineString();
+
+        Assert.Equal(expected, result);
+    }
+
+    [Fact]
+    public void RetainsIndentationFromFirstLine()
+    {
+        var rawValue = new[]
+        {
+            "    Hello,",
+            "      World!",
+            "",
+            "    Yours,",
+            "      GraphQL."
+        }.ToMultiLineString();
+
+        var result = LanguageHelpers.BlockStringValue(rawValue);
+
+        var expected = new[]
+        {
+            "    Hello,", "  World!", "", "Yours,", "  GraphQL."
+        }.ToMultiLineString();
+
+        Assert.Equal(expected, result);
     }
 }

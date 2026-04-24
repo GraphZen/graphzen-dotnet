@@ -7,30 +7,29 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.FunctionalTests.Directives
+namespace GraphZen.TypeSystem.FunctionalTests.Directives;
+
+public class DirectiveCreationTests
 {
-    public class DirectiveCreationTests
+    [Fact(Skip = "obsolete")]
+    public void it_can_create_directive_by_name()
     {
-        [Fact(Skip = "obsolete")]
-        public void it_can_create_directive_by_name()
-        {
-            Schema.Create(_ => { _.Object("Foo").DirectiveAnnotation("example"); });
-        }
+        Schema.Create(_ => { _.Object("Foo").DirectiveAnnotation("example"); });
+    }
 
-        [Fact]
-        public void it_can_create_directive_from_sdl()
-        {
-            var schema = Schema.Create(@"directive @foo on FIELD");
-            var foo = schema.FindDirective("foo");
-            Assert.IsType<Directive>(foo);
-            Assert.Equal("foo", foo.Name);
-        }
+    [Fact]
+    public void it_can_create_directive_from_sdl()
+    {
+        var schema = Schema.Create(@"directive @foo on FIELD");
+        var foo = schema.FindDirective("foo");
+        Assert.IsType<Directive>(foo);
+        Assert.Equal("foo", foo.Name);
+    }
 
-        [Fact(Skip = "TODO")]
-        public void it_cannot_create_directive_from_sdl_without_directive_locations()
-        {
-            Action act = () => Schema.Create(@"directive @foo on FIELD");
-            Assert.Throws<InvalidOperationException>(act);
-        }
+    [Fact(Skip = "TODO")]
+    public void it_cannot_create_directive_from_sdl_without_directive_locations()
+    {
+        Action act = () => Schema.Create(@"directive @foo on FIELD");
+        Assert.Throws<InvalidOperationException>(act);
     }
 }

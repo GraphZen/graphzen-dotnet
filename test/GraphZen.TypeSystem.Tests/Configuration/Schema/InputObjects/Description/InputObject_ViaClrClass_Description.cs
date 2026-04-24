@@ -7,34 +7,33 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Description;
+
+// ReSharper disable once InconsistentNaming
+public class InputObject_ViaClrClass_Description : InputObject_Description, ILeafConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class InputObject_ViaClrClass_Description : InputObject_Description, ILeafConventionConfigurationFixture
+    public const string DataAnnotationDescription = nameof(DataAnnotationDescription);
+
+
+    public LeafConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(ExampleInputObject),
+            DataAnnotationValue = DataAnnotationDescription
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        public const string DataAnnotationDescription = nameof(DataAnnotationDescription);
+        sb.InputObject<ExampleInputObject>();
+    }
 
-        [Description(DataAnnotationDescription)]
-        private class ExampleInputObject
-        {
-        }
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.InputObject<ExampleInputObject>();
+    }
 
-
-        public LeafConventionContext GetContext() =>
-            new LeafConventionContext
-            {
-                ParentName = nameof(ExampleInputObject),
-                DataAnnotationValue = DataAnnotationDescription
-            };
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.InputObject<ExampleInputObject>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.InputObject<ExampleInputObject>();
-        }
+    [Description(DataAnnotationDescription)]
+    private class ExampleInputObject
+    {
     }
 }
