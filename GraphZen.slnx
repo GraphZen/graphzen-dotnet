@@ -37,6 +37,7 @@
     <Project Path="test/GraphZen.LanguageModel.Tests/GraphZen.LanguageModel.Tests.csproj" />
     <Project Path="test/GraphZen.QueryEngine.FunctionalTests/GraphZen.QueryEngine.FunctionalTests.csproj" />
     <Project Path="test/GraphZen.QueryEngine.Tests/GraphZen.QueryEngine.Tests.csproj" />
+    <Project Path="test/GraphZen.SpecConformance.Tests/GraphZen.SpecConformance.Tests.csproj" />
     <Project Path="test/GraphZen.Tests/GraphZen.Tests.csproj" />
     <Project Path="test/GraphZen.TypeSystem.FunctionalTests/GraphZen.TypeSystem.FunctionalTests.csproj" />
     <Project Path="test/GraphZen.TypeSystem.Tests/GraphZen.TypeSystem.Tests.csproj" />

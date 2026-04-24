@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\GraphZen.Tests\GraphZen.Tests.csproj" />
+  </ItemGroup>
+</Project>
