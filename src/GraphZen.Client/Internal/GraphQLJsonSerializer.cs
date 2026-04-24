@@ -34,7 +34,10 @@ public static class GraphQLJsonSerializer
             doc.RootElement.TryGetProperty("data", out var dataElement))
         {
             if (dataElement.ValueKind == JsonValueKind.Null)
+            {
                 return null;
+            }
+
             return ConvertJsonElement(dataElement);
         }
 
@@ -65,7 +68,10 @@ public static class GraphQLJsonSerializer
                 return element.GetString();
             case JsonValueKind.Number:
                 if (element.TryGetInt64(out var longVal))
+                {
                     return longVal;
+                }
+
                 return element.GetDouble();
             case JsonValueKind.True:
                 return true;

@@ -25,13 +25,17 @@ public class UnionType : NamedType, IUnionType
         {
             var types = lazyTypes.Value;
             if (types == null || types.Count == 0)
+            {
                 throw new Exception($"Must provide list of types for Union {name}");
+            }
 
             var includedTypeNames = new Dictionary<string, bool>();
             foreach (var objectType in types.Values)
             {
                 if (includedTypeNames.ContainsKey(objectType.Name))
+                {
                     throw new Exception($"Union {name} can include {objectType.Name} only once.");
+                }
 
                 includedTypeNames[objectType.Name] = true;
             }

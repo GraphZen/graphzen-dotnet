@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections;
-using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 
 namespace GraphZen.Infrastructure;
@@ -41,7 +40,10 @@ public static class NamedCollection
         {
             get
             {
-                if (TryGetValue(key, out var value)) return value;
+                if (TryGetValue(key, out var value))
+                {
+                    return value;
+                }
 
                 throw new InvalidOperationException($"Item named '{key}' does not exist in this collection");
             }

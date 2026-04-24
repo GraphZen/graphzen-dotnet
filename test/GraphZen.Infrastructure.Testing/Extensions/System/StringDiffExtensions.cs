@@ -5,7 +5,6 @@ using System.Text;
 using DiffPlex;
 using DiffPlex.DiffBuilder;
 using DiffPlex.DiffBuilder.Model;
-using GraphZen.Infrastructure;
 
 namespace GraphZen.Infrastructure;
 
@@ -67,11 +66,20 @@ public static class StringDiffExtensions
 
         var errorMessage = hasDiff ? "Differences found " : "No differences found";
         errorMessage += "\n";
-        if (options.ShowActual) errorMessage += $"=== Actual ===\n{actual}\n";
+        if (options.ShowActual)
+        {
+            errorMessage += $"=== Actual ===\n{actual}\n";
+        }
 
-        if (options.ShowExpected) errorMessage += $"=== Expected ===\n{expected}\n";
+        if (options.ShowExpected)
+        {
+            errorMessage += $"=== Expected ===\n{expected}\n";
+        }
 
-        if (options.ShowDiffs) errorMessage += $"=== Differences ===\n{diffString}\n";
+        if (options.ShowDiffs)
+        {
+            errorMessage += $"=== Differences ===\n{diffString}\n";
+        }
 
         differences = errorMessage;
         return hasDiff;

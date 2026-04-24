@@ -29,7 +29,10 @@ public abstract class InputValueDefinition : AnnotatableMemberDefinition, IMutab
 
     public bool SetDefaultValue(object value, ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(_defaultValueConfigurationSource)) return false;
+        if (!configurationSource.Overrides(_defaultValueConfigurationSource))
+        {
+            return false;
+        }
 
         DefaultValue = value;
         HasDefaultValue = true;
@@ -41,7 +44,10 @@ public abstract class InputValueDefinition : AnnotatableMemberDefinition, IMutab
 
     public bool RemoveDefaultValue(ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(_defaultValueConfigurationSource)) return false;
+        if (!configurationSource.Overrides(_defaultValueConfigurationSource))
+        {
+            return false;
+        }
 
         DefaultValue = null;
         HasDefaultValue = false;

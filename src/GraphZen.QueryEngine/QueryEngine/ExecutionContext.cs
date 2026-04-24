@@ -62,7 +62,10 @@ internal sealed class ExecutionContext
         GraphQLContext context,
         ResolveInfo info)
     {
-        if (source == null) return Maybe.None<object>();
+        if (source == null)
+        {
+            return Maybe.None<object>();
+        }
 
         var fieldNameFirstCharUpper = info.FieldName.FirstCharToUpper();
         Debug.Assert(fieldNameFirstCharUpper != null, nameof(fieldNameFirstCharUpper) + " != null");
@@ -84,26 +87,38 @@ internal sealed class ExecutionContext
                     if (i == 0)
                     {
                         if (parameterType == typeof(object) || parameterType == typeof(DynamicDictionary))
+                        {
                             parameters.Add(args);
+                        }
                         else
+                        {
                             throw new Exception(
                                 $"The arguments resolver parameter had an unexpected type of \"{parameterType}\". Expected either \"{typeof(object)}\" or \"{typeof(DynamicDictionary)}\".");
+                        }
                     }
                     else if (i == 1)
                     {
                         if (parameterType.IsAssignableFrom(typeof(GraphQLContext)))
+                        {
                             parameters.Add(context);
+                        }
                         else
+                        {
                             throw new Exception(
                                 $"The context resolver parameter had an unexpected type of \"{parameterType}\". Expected a type of \"{typeof(GraphQLContext)}\".");
+                        }
                     }
                     else if (i == 2)
                     {
                         if (parameterType == typeof(ResolveInfo))
+                        {
                             parameters.Add(info);
+                        }
                         else
+                        {
                             throw new Exception(
                                 $"The context resolver parameter had an unexpected type of \"{parameterType}\". Expected a type of \"{typeof(GraphQLContext)}\".");
+                        }
                     }
                     else
                     {
@@ -119,11 +134,17 @@ internal sealed class ExecutionContext
         }
 
         var field = type.GetField(fieldNameFirstCharUpper) ?? type.GetField(info.FieldName);
-        if (field != null) return Maybe.Some(field.GetValue(source)!);
+        if (field != null)
+        {
+            return Maybe.Some(field.GetValue(source)!);
+        }
 
         var method = type.GetMethod(fieldNameFirstCharUpper) ?? type.GetMethod(info.FieldName);
 
-        if (method != null) return InvokeMethodByArgName(method);
+        if (method != null)
+        {
+            return InvokeMethodByArgName(method);
+        }
 
         Maybe<object> InvokeMethodByArgName(MethodInfo mi)
         {
@@ -192,9 +213,13 @@ internal sealed class ExecutionContext
             {
                 case OperationDefinitionSyntax operationDefinition:
                     if (operation != null && operationName == null)
+                    {
                         hasMultipleAssumedOperations = true;
+                    }
                     else if (operationName == null || operationDefinition.Name?.Value == operationName)
+                    {
                         operation = operationDefinition;
+                    }
 
                     break;
                 case FragmentDefinitionSyntax fragmentDefinition:
@@ -206,9 +231,13 @@ internal sealed class ExecutionContext
         if (operation == null)
         {
             if (operationName != null)
+            {
                 errors.Add(new GraphQLServerError($"Unkown operation named '{operationName}'"));
+            }
             else
+            {
                 errors.Add(new GraphQLServerError("Must provide an operation"));
+            }
         }
         else if (hasMultipleAssumedOperations)
         {
@@ -223,12 +252,19 @@ internal sealed class ExecutionContext
                 operation.VariableDefinitions,
                 rawVariableValues ?? new Dictionary<string, object>());
             if (coercedVariableValues is Some<IReadOnlyDictionary<string, object>> some)
+            {
                 variableValues = some.Value;
+            }
             else if (coercedVariableValues is None<IReadOnlyDictionary<string, object>> none)
+            {
                 errors.AddRange(none.Errors);
+            }
         }
 
-        if (!errors.IsEmpty) return Maybe.None<ExecutionContext>(errors);
+        if (!errors.IsEmpty)
+        {
+            return Maybe.None<ExecutionContext>(errors);
+        }
 
         var exeContext =
             new ExecutionContext(schema, rootValue, fragments, context, operation!, variableValues!, errors, options);

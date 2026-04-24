@@ -9,12 +9,12 @@ internal static partial class Grammar
 {
     private static TokenListParser<TokenKind, UnionTypeDefinitionSyntax> UnionTypeDefinition { get; } =
         (from desc in Parse.Ref(() => Description!).AsNullable().OptionalOrDefault()
-            from union in Keyword("union")
-            from name in Name
-            from directives in Directives.AsNullable().OptionalOrDefault()
-            from types in UnionMemberTypes!.AsNullable().OptionalOrDefault()
-            select new UnionTypeDefinitionSyntax(name!, desc, directives, types,
-                SyntaxLocation.FromMany(desc, union, name!, directives?.GetLocation(), types?.GetLocation())))
+         from union in Keyword("union")
+         from name in Name
+         from directives in Directives.AsNullable().OptionalOrDefault()
+         from types in UnionMemberTypes!.AsNullable().OptionalOrDefault()
+         select new UnionTypeDefinitionSyntax(name!, desc, directives, types,
+             SyntaxLocation.FromMany(desc, union, name!, directives?.GetLocation(), types?.GetLocation())))
         .Named("union type definition");
 
     /// <summary>

@@ -37,7 +37,10 @@ public static class GraphZenApplicationBuilderExtensions
                         "ASPNETCORE_TEMP") ?? // ASPNETCORE_TEMP - User set temporary location.
                     Path.GetTempPath(); // Fall back.
 
-                if (!Directory.Exists(temp)) throw new DirectoryNotFoundException(temp);
+                if (!Directory.Exists(temp))
+                {
+                    throw new DirectoryNotFoundException(temp);
+                }
 
                 _sTempDirectory = temp;
             }
@@ -59,7 +62,9 @@ public static class GraphZenApplicationBuilderExtensions
                 var memoryThreshold = DefaultMemoryThreshold;
                 var contentLength = request.ContentLength.GetValueOrDefault();
                 if (contentLength > 0 && contentLength < memoryThreshold)
+                {
                     memoryThreshold = (int)contentLength;
+                }
 
                 readStream = new FileBufferingReadStream(request.Body, memoryThreshold, null,
                     TempDirectoryFactory);

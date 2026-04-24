@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
 
 namespace GraphZen.Tests.QueryEngine.Variables;
@@ -37,24 +36,24 @@ public abstract class UsingVariables : VariablesTests
             query ($input: TestNestedInputObject) {
               fieldWithNestedObjectInput(input: $input)
             }", new
+        {
+            input = new
             {
-                input = new
-                {
-                    na = new { a = "foo" }
-                }
-            })
+                na = new { a = "foo" }
+            }
+        })
             .ShouldEqual(new
             {
                 errors = Array(new
-                    {
-                        message =
+                {
+                    message =
                             "Variable \"$input\" got invalid value `{na: {a: \"foo\"}}`; Field value.nb of required type String! was not provided.",
-                        locations = Array(new
-                        {
-                            line = 2,
-                            column = 20
-                        })
-                    },
+                    locations = Array(new
+                    {
+                        line = 2,
+                        column = 20
+                    })
+                },
                     new
                     {
                         message =
@@ -132,9 +131,9 @@ public abstract class UsingVariables : VariablesTests
                           fieldWithNullableStringInput(input: $input)
                         }
                     ", new
-            {
-                input = "Variable value"
-            })
+        {
+            input = "Variable value"
+        })
             .ShouldEqual(new
             {
                 data = new
@@ -195,9 +194,9 @@ public abstract class UsingVariables : VariablesTests
                           fieldWithNullableStringInput(input: $input)
                         }
                     ", new
-            {
-                input = (string?)null
-            })
+        {
+            input = (string?)null
+        })
             .ShouldEqual(new
             {
                 data = new

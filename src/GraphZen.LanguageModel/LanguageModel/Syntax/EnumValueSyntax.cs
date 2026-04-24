@@ -14,9 +14,11 @@ public partial class EnumValueSyntax : ValueSyntax
         Value = value.Value;
 
         if (!IsValidValue(value.Value))
+        {
             throw new ArgumentException(
                 $"Enum values cannot be 'true', 'false', or 'null'. Supplied value was: '{value.Value}'",
                 nameof(value));
+        }
     }
 
 
@@ -42,9 +44,15 @@ public partial class EnumValueSyntax : ValueSyntax
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
+        if (obj is null)
+        {
+            return false;
+        }
 
-        if (ReferenceEquals(this, obj)) return true;
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
 
         return obj is EnumValueSyntax && Equals((EnumValueSyntax)obj);
     }

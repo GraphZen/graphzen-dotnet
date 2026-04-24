@@ -56,9 +56,15 @@ public partial class FragmentDefinitionSyntax : ExecutableDefinitionSyntax, IFra
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
+        if (obj is null)
+        {
+            return false;
+        }
 
-        if (ReferenceEquals(this, obj)) return true;
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
 
         return obj is FragmentDefinitionSyntax && Equals((FragmentDefinitionSyntax)obj);
     }

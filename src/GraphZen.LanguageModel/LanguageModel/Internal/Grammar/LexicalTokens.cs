@@ -75,7 +75,10 @@ internal static partial class Grammar
             {
                 // ReSharper disable once PossibleNullReferenceException
                 var result = Keyword(name).Try()(input);
-                if (result.HasValue) return result;
+                if (result.HasValue)
+                {
+                    return result;
+                }
             }
 
             return TokenListParserResult.Empty<TokenKind, NameSyntax>(input);

@@ -29,7 +29,10 @@ public class
 
     public InternalInterfaceTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
     {
-        if (Definition.SetClrType(clrType, configurationSource)) ConfigureInterfaceFromClrType();
+        if (Definition.SetClrType(clrType, configurationSource))
+        {
+            ConfigureInterfaceFromClrType();
+        }
 
         return this;
     }
@@ -37,12 +40,17 @@ public class
     public bool ConfigureInterfaceFromClrType()
     {
         var clrType = Definition.ClrType;
-        if (clrType == null) return false;
+        if (clrType == null)
+        {
+            return false;
+        }
 
         ConfigureOutputFields();
 
         if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
+        {
             Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
+        }
 
         return true;
     }

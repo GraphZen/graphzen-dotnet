@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using static GraphZen.Tests.Validation.Rules.SdlValidationHelpers;
 
@@ -16,9 +15,9 @@ public class InputObjectFieldsMustHaveInputTypesTests : ValidationRuleHarness
     public static IEnumerable<object[]> GetValidInputFieldScenarios()
     {
         return from inputType in InputTypes
-            from fieldsType in InputFieldsTypes
-            from fieldType in "SomeInputType".WithModifiers()
-            select new object[] { inputType, fieldsType, fieldType };
+               from fieldsType in InputFieldsTypes
+               from fieldType in "SomeInputType".WithModifiers()
+               select new object[] { inputType, fieldsType, fieldType };
     }
 
     [Theory]
@@ -37,9 +36,9 @@ public class InputObjectFieldsMustHaveInputTypesTests : ValidationRuleHarness
     public static IEnumerable<object[]> GetInvalidInputFieldScenarios()
     {
         return from nonInputType in NonInputTypes
-            from inputFieldsType in InputFieldsTypes
-            from fieldType in "SomeOutputType".WithModifiers()
-            select new object[] { nonInputType, inputFieldsType, fieldType };
+               from inputFieldsType in InputFieldsTypes
+               from fieldType in "SomeOutputType".WithModifiers()
+               select new object[] { nonInputType, inputFieldsType, fieldType };
     }
 
     [Theory]

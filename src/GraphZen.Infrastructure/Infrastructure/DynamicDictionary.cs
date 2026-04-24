@@ -5,7 +5,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Text;
-using GraphZen.Infrastructure;
 
 namespace GraphZen.Infrastructure;
 
@@ -35,7 +34,10 @@ public class DynamicDictionary : DynamicObject, IEquatable<DynamicDictionary>, I
                 builder.AppendFormat(" {0} = {1}{2}", item.Key, item.Value, i < maxItems - 1 ? "," : string.Empty);
             }
 
-            if (maxItems < _dictionary.Count) builder.Append("...");
+            if (maxItems < _dictionary.Count)
+            {
+                builder.Append("...");
+            }
 
             builder.Append(" }");
 
@@ -242,7 +244,10 @@ public class DynamicDictionary : DynamicObject, IEquatable<DynamicDictionary>, I
     /// <param name="other">An <see cref="DynamicDictionary" /> instance to compare with this instance.</param>
     public bool Equals(DynamicDictionary? other)
     {
-        if (ReferenceEquals(null, other)) return false;
+        if (other is null)
+        {
+            return false;
+        }
 
         return ReferenceEquals(this, other) || Equals(other._dictionary, _dictionary);
     }
@@ -309,18 +314,24 @@ public class DynamicDictionary : DynamicObject, IEquatable<DynamicDictionary>, I
     public override IEnumerable<string> GetDynamicMemberNames() => _dictionary.Keys;
 
     /// <summary>
-    ///     Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+    ///     Determines whether the specified <see cref="object" /> is equal to this instance.
     /// </summary>
-    /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+    /// <param name="obj">The <see cref="object" /> to compare with this instance.</param>
     /// <returns>
-    ///     <see langword="true" /> if the specified <see cref="System.Object" /> is equal to this instance; otherwise,
+    ///     <see langword="true" /> if the specified <see cref="object" /> is equal to this instance; otherwise,
     ///     <see langword="false" />.
     /// </returns>
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
+        if (obj is null)
+        {
+            return false;
+        }
 
-        if (ReferenceEquals(this, obj)) return true;
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
 
         return obj.GetType() == typeof(DynamicDictionary) && Equals((DynamicDictionary)obj);
     }

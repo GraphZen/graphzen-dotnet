@@ -3,7 +3,6 @@
 
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using GraphZen.Infrastructure;
 
 namespace GraphZen.Infrastructure;
 
@@ -40,7 +39,11 @@ public static class JsonDiffer
             var expectedFormatted = Json.SerializeObject(expected);
             var actualFormatted = Json.SerializeObject(actual);
             var diff = actualFormatted.GetDiff(expectedFormatted, options.StringDiffOptions);
-            if (diff == null) return "a difference was detected, but there was an error calculating the difference";
+            if (diff == null)
+            {
+                return "a difference was detected, but there was an error calculating the difference";
+            }
+
             return diff;
         }
 
@@ -49,18 +52,34 @@ public static class JsonDiffer
 
     private static bool JsonNodesEqual(JsonNode? a, JsonNode? b)
     {
-        if (a is null && b is null) return true;
-        if (a is null || b is null) return false;
+        if (a is null && b is null)
+        {
+            return true;
+        }
+
+        if (a is null || b is null)
+        {
+            return false;
+        }
 
         if (a is JsonObject objA && b is JsonObject objB)
         {
-            if (objA.Count != objB.Count) return false;
+            if (objA.Count != objB.Count)
+            {
+                return false;
+            }
+
             foreach (var prop in objA)
             {
                 if (!objB.TryGetPropertyValue(prop.Key, out var bVal))
+                {
                     return false;
+                }
+
                 if (!JsonNodesEqual(prop.Value, bVal))
+                {
                     return false;
+                }
             }
 
             return true;
@@ -68,11 +87,18 @@ public static class JsonDiffer
 
         if (a is JsonArray arrA && b is JsonArray arrB)
         {
-            if (arrA.Count != arrB.Count) return false;
+            if (arrA.Count != arrB.Count)
+            {
+                return false;
+            }
+
             return arrA.Zip(arrB).All(pair => JsonNodesEqual(pair.First, pair.Second));
         }
 
-        if (a is JsonValue valA && b is JsonValue valB) return valA.ToJsonString() == valB.ToJsonString();
+        if (a is JsonValue valA && b is JsonValue valB)
+        {
+            return valA.ToJsonString() == valB.ToJsonString();
+        }
 
         return false;
     }

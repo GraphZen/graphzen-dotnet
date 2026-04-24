@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Collections.Concurrent;
-using GraphZen.Infrastructure;
 
 namespace GraphZen.Infrastructure;
 

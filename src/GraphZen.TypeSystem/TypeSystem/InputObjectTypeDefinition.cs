@@ -40,7 +40,10 @@ public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjec
 
     public ConfigurationSource? FindIgnoredFieldConfigurationSource(string fieldName)
     {
-        if (_ignoredFields.TryGetValue(fieldName, out var cs)) return cs;
+        if (_ignoredFields.TryGetValue(fieldName, out var cs))
+        {
+            return cs;
+        }
 
         return null;
     }
@@ -51,12 +54,16 @@ public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjec
     public bool RenameField(InputFieldDefinition field, string name,
         ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(field.GetNameConfigurationSource())) return false;
-
+        if (!configurationSource.Overrides(field.GetNameConfigurationSource()))
+        {
+            return false;
+        }
 
         if (this.TryGetField(name, out var existing) && existing != field)
+        {
             throw new InvalidOperationException(
                 $"Cannot rename {field} to '{name}'. {this} already contains a field named '{name}'.");
+        }
 
         _fields.Remove(field.Name);
         _fields[name] = field;
@@ -67,7 +74,10 @@ public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjec
     {
         // ReSharper disable once PossibleNullReferenceException
         var memberMatch = _fields.Values.SingleOrDefault(_ => _.ClrInfo == member);
-        if (memberMatch != null) return memberMatch;
+        if (memberMatch != null)
+        {
+            return memberMatch;
+        }
 
         var (fieldName, _) = member.GetGraphQLFieldName();
         return this.FindField(fieldName);
@@ -92,8 +102,10 @@ public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjec
     private InputFieldDefinition AddField(InputFieldDefinition field)
     {
         if (_fields.ContainsKey(field.Name))
+        {
             throw new InvalidOperationException(
                 $"Duplicate field names: Cannot add field '{field.Name}' to {Kind.ToString().ToLower()} '{Name}', a field with that name already exists.");
+        }
 
         _fields.Add(field.Name, field);
         return field;
@@ -103,12 +115,16 @@ public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjec
         ConfigurationSource configurationSource)
     {
         if (ClrType == null)
+        {
             throw new InvalidOperationException(
                 "Cannot add field from property on a type that does not have a CLR type mapped.");
+        }
 
         if (!ClrType.IsSameOrSubclass(property.DeclaringType!))
+        {
             throw new InvalidOperationException(
                 $"Cannot add field from property with a declaring type ({property.DeclaringType}) that does not exist on the parent's {Kind.ToString().ToLower()} type's mapped CLR type ({ClrType}).");
+        }
 
         var (fieldName, nameConfigurationSource) = property.GetGraphQLFieldName();
         var field = new InputFieldDefinition(fieldName, nameConfigurationSource, Schema, configurationSource,
@@ -120,7 +136,9 @@ public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjec
         fb.FieldType(property);
         fb.DefaultValue(property, configurationSource);
         if (property.TryGetDescriptionFromDataAnnotation(out var description))
+        {
             fb.Description(description, ConfigurationSource.DataAnnotation);
+        }
 
         return AddField(field);
     }
@@ -134,15 +152,23 @@ public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjec
     {
         var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(fieldName);
         if (ignoredConfigurationSource.HasValue &&
-            ignoredConfigurationSource.Overrides(configurationSource)) return true;
+            ignoredConfigurationSource.Overrides(configurationSource))
+        {
+            return true;
+        }
 
         if (ignoredConfigurationSource != null)
+        {
             configurationSource = configurationSource.Max(ignoredConfigurationSource);
+        }
 
         _ignoredFields[fieldName] = configurationSource;
         var existing = this.FindField(fieldName);
 
-        if (existing != null) return IgnoreField(existing, configurationSource);
+        if (existing != null)
+        {
+            return IgnoreField(existing, configurationSource);
+        }
 
         return true;
     }
@@ -152,7 +178,10 @@ public class InputObjectTypeDefinition : NamedTypeDefinition, IMutableInputObjec
         var ignoredConfigurationSource = FindIgnoredFieldConfigurationSource(name);
         if (ignoredConfigurationSource.HasValue)
         {
-            if (!configurationSource.Overrides(ignoredConfigurationSource)) return null;
+            if (!configurationSource.Overrides(ignoredConfigurationSource))
+            {
+                return null;
+            }
 
             _ignoredFields.Remove(name);
         }

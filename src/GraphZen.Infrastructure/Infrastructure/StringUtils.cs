@@ -1,8 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using GraphZen.Infrastructure;
-
 namespace GraphZen.Infrastructure;
 
 public static class StringUtils
@@ -12,7 +10,11 @@ public static class StringUtils
     public static string QuotedOrList(this IReadOnlyList<string> source)
     {
         // TODO: source = Check.NotEmpty(source, nameof(source));
-        if (source.Count == 0) throw new ArgumentException("Must contain at least one value.", nameof(source));
+        if (source.Count == 0)
+        {
+            throw new ArgumentException("Must contain at least one value.", nameof(source));
+        }
+
         return source.Select(v => $"\"{v}\"").ToArray().OrList();
     }
 
@@ -26,7 +28,10 @@ public static class StringUtils
             (list, value) =>
             {
                 var (quoted, index) = value;
-                if (index == 0) return quoted;
+                if (index == 0)
+                {
+                    return quoted;
+                }
 
                 return list + (selected.Length > 2 ? ", " : " ") +
                        (index == selected.Length - 1 ? "or " : "") + quoted;
@@ -47,7 +52,10 @@ public static class StringUtils
         {
             var distance = GetLexicalDistance(input, option);
             var threshold = Math.Max(Math.Max(inputThreshold, option.Length / 2), 1);
-            if (distance <= threshold) optionsByDistance[option] = distance;
+            if (distance <= threshold)
+            {
+                optionsByDistance[option] = distance;
+            }
         }
 
         return optionsByDistance.OrderBy(_ => _.Value).Select(_ => _.Key).ToArray();
@@ -63,9 +71,15 @@ public static class StringUtils
         var bLength = b.Length;
         var d = new int[aLength + 1, bLength + 1];
 
-        if (aLength == 0) return bLength;
+        if (aLength == 0)
+        {
+            return bLength;
+        }
 
-        if (bLength == 0) return aLength;
+        if (bLength == 0)
+        {
+            return aLength;
+        }
 
         for (var i = 0; i <= aLength; d[i, 0] = i++)
         {
@@ -76,13 +90,15 @@ public static class StringUtils
         }
 
         for (var i = 1; i <= aLength; i++)
-        for (var j = 1; j <= bLength; j++)
         {
-            var cost = b[j - 1] == a[i - 1] ? 0 : 1;
+            for (var j = 1; j <= bLength; j++)
+            {
+                var cost = b[j - 1] == a[i - 1] ? 0 : 1;
 
-            d[i, j] = Math.Min(
-                Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
-                d[i - 1, j - 1] + cost);
+                d[i, j] = Math.Min(
+                    Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                    d[i - 1, j - 1] + cost);
+            }
         }
 
         return d[aLength, bLength];

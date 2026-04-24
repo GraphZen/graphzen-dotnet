@@ -3,7 +3,6 @@
 
 using System.Collections;
 using System.Text.Json.Nodes;
-using GraphZen.Infrastructure;
 
 namespace GraphZen.Infrastructure;
 
@@ -18,9 +17,13 @@ internal static class ValueInspector
     public static T Dump<T>(this T value, string label = "_", bool expanded = false)
     {
         if (expanded)
+        {
             Console.WriteLine($"= {label} =\n{value.Inspect(true)}");
+        }
         else
+        {
             Console.WriteLine($"\t\t{label} \t\t-> {value.Inspect()}");
+        }
 
         return value;
     }

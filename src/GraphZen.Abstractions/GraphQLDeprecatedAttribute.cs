@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.ComponentModel;
-using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
 namespace GraphZen;
@@ -39,9 +38,21 @@ public class GraphQLDeprecatedAttribute : Attribute, IGraphQLDirective
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != GetType()) return false;
+        if (obj is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (obj.GetType() != GetType())
+        {
+            return false;
+        }
+
         return Equals((GraphQLDeprecatedAttribute)obj);
     }
 

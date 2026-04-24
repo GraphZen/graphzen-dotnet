@@ -45,8 +45,14 @@ public class UnionTypeDefinition : NamedTypeDefinition, IMutableUnionTypeDefinit
     {
         Check.NotNull(type, nameof(type));
         if (type.Name == null)
+        {
             throw new ArgumentException(
                 $"Cannot include {type} in {Name} union type definition unless a name is defined");
-        if (!_types.Contains(type)) _types.Add(type);
+        }
+
+        if (!_types.Contains(type))
+        {
+            _types.Add(type);
+        }
     }
 }

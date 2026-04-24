@@ -69,7 +69,10 @@ public class ScalarType : NamedType, IScalarType
     public static ScalarType From(IScalarTypeDefinition definition)
     {
         Check.NotNull(definition, nameof(definition));
-        if (definition is ScalarTypeDefinition scalarDef && scalarDef.Source != null) return scalarDef.Source;
+        if (definition is ScalarTypeDefinition scalarDef && scalarDef.Source != null)
+        {
+            return scalarDef.Source;
+        }
 
         return new ScalarType(
             definition.Name,

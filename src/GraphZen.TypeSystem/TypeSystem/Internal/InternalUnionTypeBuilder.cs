@@ -22,7 +22,10 @@ public class InternalUnionTypeBuilder : AnnotatableMemberDefinitionBuilder<Union
         ConfigurationSource configurationSource)
     {
         var obj = Schema.Builder.Object(objectType, configurationSource)?.Definition;
-        if (obj != null) Definition.AddType(obj);
+        if (obj != null)
+        {
+            Definition.AddType(obj);
+        }
 
         return this;
     }
@@ -32,14 +35,20 @@ public class InternalUnionTypeBuilder : AnnotatableMemberDefinitionBuilder<Union
         ConfigurationSource configurationSource)
     {
         var objectType = Schema.Builder.Object(clrType, configurationSource)?.Definition;
-        if (objectType != null) Definition.AddType(objectType);
+        if (objectType != null)
+        {
+            Definition.AddType(objectType);
+        }
 
         return this;
     }
 
     public InternalUnionTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
     {
-        if (Definition.SetClrType(clrType, configurationSource)) ConfigureFromClrType();
+        if (Definition.SetClrType(clrType, configurationSource))
+        {
+            ConfigureFromClrType();
+        }
 
         return this;
     }
@@ -47,16 +56,24 @@ public class InternalUnionTypeBuilder : AnnotatableMemberDefinitionBuilder<Union
     public bool ConfigureFromClrType()
     {
         var clrType = Definition.ClrType;
-        if (clrType == null) return false;
+        if (clrType == null)
+        {
+            return false;
+        }
 
         if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
+        {
             this.Description(description, ConfigurationSource.DataAnnotation);
+        }
 
         var implementingTypes = clrType.GetImplementingTypes().Where(_ => !_.IsAbstract);
         foreach (var implementingType in implementingTypes)
         {
             var memberType = SchemaBuilder.Object(implementingType, ConfigurationSource.Convention)?.Definition;
-            if (memberType != null) Definition.AddType(memberType);
+            if (memberType != null)
+            {
+                Definition.AddType(memberType);
+            }
         }
 
         return true;

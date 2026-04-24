@@ -41,11 +41,17 @@ public class InternalInputValueBuilder : AnnotatableMemberDefinitionBuilder<Inpu
     {
         var defaultValueAttribute = parameter.GetCustomAttribute<DefaultValueAttribute>();
         if (defaultValueAttribute != null && defaultValueAttribute.Value != null)
+        {
             Definition.SetDefaultValue(defaultValueAttribute.Value, ConfigurationSource.DataAnnotation);
+        }
         else if (parameter.HasDefaultValue && parameter.RawDefaultValue != null)
+        {
             Definition.SetDefaultValue(parameter.RawDefaultValue, configurationSource);
+        }
         else
+        {
             RemoveDefaultValue(configurationSource);
+        }
 
         return this;
     }
@@ -56,9 +62,13 @@ public class InternalInputValueBuilder : AnnotatableMemberDefinitionBuilder<Inpu
     {
         var defaultValueAttribute = property.GetCustomAttribute<DefaultValueAttribute>();
         if (defaultValueAttribute?.Value != null)
+        {
             Definition.SetDefaultValue(defaultValueAttribute.Value, ConfigurationSource.DataAnnotation);
+        }
         else
+        {
             RemoveDefaultValue(configurationSource);
+        }
 
         return this;
     }

@@ -22,7 +22,10 @@ public class LoneAnonymousOperation : QueryValidationRuleVisitor
 
     public override VisitAction EnterOperationDefinition(OperationDefinitionSyntax node)
     {
-        if (node.Name == null && _operationCount > 1) ReportError(AnonymousOperationNotAloneMessage, node);
+        if (node.Name == null && _operationCount > 1)
+        {
+            ReportError(AnonymousOperationNotAloneMessage, node);
+        }
 
         return VisitAction.Continue;
     }

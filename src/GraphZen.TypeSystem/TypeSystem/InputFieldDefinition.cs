@@ -23,9 +23,15 @@ public class InputFieldDefinition : InputValueDefinition, IMutableInputFieldDefi
     public override bool SetName(string name, ConfigurationSource configurationSource)
     {
         Check.NotNull(name, nameof(name));
-        if (!configurationSource.Overrides(GetNameConfigurationSource())) return false;
+        if (!configurationSource.Overrides(GetNameConfigurationSource()))
+        {
+            return false;
+        }
 
-        if (Name != name) DeclaringMember.RenameField(this, name, configurationSource);
+        if (Name != name)
+        {
+            DeclaringMember.RenameField(this, name, configurationSource);
+        }
 
         Name = name;
         NameConfigurationSource = configurationSource;

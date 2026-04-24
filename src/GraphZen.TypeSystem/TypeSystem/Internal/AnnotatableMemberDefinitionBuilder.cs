@@ -69,8 +69,10 @@ public abstract class AnnotatableMemberDefinitionBuilder<TDefinition> : MemberDe
             var directiveDescription =
                 Definition is INamed namedDef ? $"{displayVal} '{namedDef}'" : displayVal;
             if (directive == null)
+            {
                 throw new InvalidOperationException(
                     $"Unknown directive: cannot add '{name}' directive to the {directiveDescription}. Ensure the '{name}' directive is defined in the schema before it is used.");
+            }
 
             if (!directive.Locations.Contains(Definition.DirectiveLocation))
             {
