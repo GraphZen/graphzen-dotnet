@@ -1,102 +1,75 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-// Spec draft: see SpecMetadata.Version
-// Spec: https://spec.graphql.org/draft/#sec-Executable-Definitions
-// graphql-js source: src/validation/rules/ExecutableDefinitionsRule.ts
-// graphql-js tests: src/validation/__tests__/ExecutableDefinitionsRule-test.ts
-
-using GraphZen.LanguageModel.Validation;
-using GraphZen.QueryEngine.Validation;
 using GraphZen.SpecConformance.Tests.Infrastructure;
+using static GraphZen.QueryEngine.Validation.QueryValidationRules;
+using static GraphZen.SpecConformance.Tests.Infrastructure.SpecValidation;
 
 namespace GraphZen.SpecConformance.Tests.Section5_Validation.Documents;
 
+/// <seealso href="https://spec.graphql.org/draft/#sec-Executable-Definitions" />
 [SpecSection("5.1.1", "Executable Definitions")]
-public class ExecutableDefinitionsConformanceTests : SpecValidationRuleHarness
+public class ExecutableDefinitionsConformanceTests
 {
-    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ExecutableDefinitions;
+    [Fact]
+    public void with_only_operation() =>
+        ExpectValid(ExecutableDefinitions, """
+                                           query Foo {
+                                             dog {
+                                               name
+                                             }
+                                           }
+                                           """);
 
-    public static TheoryData<string, string> ValidQueries { get; } = new()
-    {
-        {
-            "with_only_operation",
-            """
-            query Foo {
-              dog {
-                name
-              }
-            }
-            """
-        },
-        {
-            "with_operation_and_fragment",
-            """
-            query Foo {
-              dog {
-                name
-                ...Frag
-              }
-            }
+    [Fact]
+    public void with_operation_and_fragment() =>
+        ExpectValid(ExecutableDefinitions, """
+                                           query Foo {
+                                             dog {
+                                               name
+                                               ...Frag
+                                             }
+                                           }
 
-            fragment Frag on Dog {
-              name
-            }
-            """
-        },
-    };
+                                           fragment Frag on Dog {
+                                             name
+                                           }
+                                           """);
 
-    public static TheoryData<string, string, int> InvalidQueries { get; } = new()
-    {
-        {
-            "with_type_definition",
-            """
-            query Foo {
-              dog {
-                name
-              }
-            }
+    [Fact(Skip = "GraphZen does not reject non-executable definitions in query documents.")]
+    public void with_type_definition() =>
+        ExpectErrors(ExecutableDefinitions, """
+                                            query Foo {
+                                              dog {
+                                                name
+                                              }
+                                            }
 
-            type Cow {
-              name: String
-            }
+                                            type Cow {
+                                              name: String
+                                            }
 
-            extend type Dog {
-              color: String
-            }
-            """,
-            2
-        },
-        {
-            "with_schema_definition",
-            """
-            schema {
-              query: Query
-            }
+                                            extend type Dog {
+                                              color: String
+                                            }
+                                            """).ToDeepEqual(
+            new ExpectedError("The \"Cow\" definition is not executable.", 7, 1),
+            new ExpectedError("The \"Dog\" definition is not executable.", 11, 1));
 
-            type Query {
-              test: String
-            }
+    [Fact(Skip = "GraphZen does not reject non-executable definitions in query documents.")]
+    public void with_schema_definition() =>
+        ExpectErrors(ExecutableDefinitions, """
+                                            schema {
+                                              query: Query
+                                            }
 
-            extend schema @directive
-            """,
-            3
-        },
-    };
+                                            type Query {
+                                              test: String
+                                            }
 
-    [Theory]
-    [MemberData(nameof(ValidQueries))]
-    public void valid_executable_definition_queries_pass(string caseName, string query)
-    {
-        Assert.False(string.IsNullOrWhiteSpace(caseName));
-        QueryShouldPass(query);
-    }
-
-    [Theory(Skip = "Negative executable-definition validation cases are a conformance gap tracked in follow-up issue.")]
-    [MemberData(nameof(InvalidQueries))]
-    public void invalid_executable_definition_queries_fail(string caseName, string query, int errorCount)
-    {
-        Assert.False(string.IsNullOrWhiteSpace(caseName));
-        QueryShouldFail(query, errorCount);
-    }
+                                            extend schema @directive
+                                            """).ToDeepEqual(
+            new ExpectedError("The schema definition is not executable.", 1, 1),
+            new ExpectedError("The \"Query\" definition is not executable.", 5, 1),
+            new ExpectedError("The schema definition is not executable.", 9, 1));
 }
