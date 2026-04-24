@@ -29,10 +29,7 @@ public abstract class ParserTestBase
         params (int line, int column)[] locations)
     {
         var ex = Assert.Throws<GraphQLException>(() => ParseDocument(document));
-        JsonAssert.EquivalentToJsonFromObject(ex.GraphQLError, new
-        {
-            message = expectedMessage,
-            locations = locations.Select(l => new { l.line, l.column })
-        });
+        JsonAssert.EquivalentToJsonFromObject(ex.GraphQLError,
+            new { message = expectedMessage, locations = locations.Select(l => new { l.line, l.column }) });
     }
 }

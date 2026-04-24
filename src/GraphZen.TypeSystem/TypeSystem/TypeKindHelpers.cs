@@ -13,37 +13,28 @@ public static class TypeKindHelpers
         { typeof(ScalarType), TypeKind.Scalar },
         { typeof(IScalarType), TypeKind.Scalar },
         { typeof(IScalarTypeDefinition), TypeKind.Scalar },
-
-
         { typeof(UnionTypeDefinition), TypeKind.Union },
         { typeof(UnionType), TypeKind.Union },
         { typeof(IUnionType), TypeKind.Union },
         { typeof(IUnionTypeDefinition), TypeKind.Union },
-
         { typeof(ObjectTypeDefinition), TypeKind.Object },
         { typeof(ObjectType), TypeKind.Object },
         { typeof(IObjectType), TypeKind.Object },
         { typeof(IObjectTypeDefinition), TypeKind.Object },
-
         { typeof(InputObjectTypeDefinition), TypeKind.InputObject },
         { typeof(InputObjectType), TypeKind.InputObject },
         { typeof(IInputObjectType), TypeKind.InputObject },
         { typeof(IInputObjectTypeDefinition), TypeKind.InputObject },
-
-
         { typeof(EnumTypeDefinition), TypeKind.Enum },
         { typeof(EnumType), TypeKind.Enum },
         { typeof(IEnumType), TypeKind.Enum },
         { typeof(IEnumTypeDefinition), TypeKind.Enum },
-
         { typeof(InterfaceTypeDefinition), TypeKind.Interface },
         { typeof(InterfaceType), TypeKind.Interface },
         { typeof(IInterfaceType), TypeKind.Interface },
         { typeof(IInterfaceTypeDefinition), TypeKind.Interface },
-
         { typeof(ListType), TypeKind.List },
         { typeof(IListType), TypeKind.List },
-
         { typeof(INonNullType), TypeKind.NonNull },
         { typeof(NonNullType), TypeKind.NonNull }
     }.ToImmutableDictionary();

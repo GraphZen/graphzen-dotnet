@@ -115,12 +115,11 @@ public class UnionInterfaceTests : ExecutorHarness
                     name = "Named",
                     fields = new object[] { new { name = "name" } },
                     interfaces = (object?)null,
-                    possibleTypes = new object[]
-                    {
-                        new { name = "Cat" },
-                        new { name = "Dog" },
-                        new { name = "Person" }
-                    },
+                    possibleTypes =
+                        new object[]
+                        {
+                            new { name = "Cat" }, new { name = "Dog" }, new { name = "Person" }
+                        },
                     enumValues = (object?)null,
                     inputFields = (object?)null
                 },
@@ -129,13 +128,8 @@ public class UnionInterfaceTests : ExecutorHarness
                     kind = "UNION",
                     name = "Pet",
                     fields = (object?)null,
-
                     interfaces = (object?)null,
-                    possibleTypes = new object[]
-                    {
-                        new { name = "Dog" },
-                        new { name = "Cat" }
-                    },
+                    possibleTypes = new object[] { new { name = "Dog" }, new { name = "Cat" } },
                     enumValues = (object?)null,
                     inputFields = (object?)null
                 }
@@ -371,14 +365,7 @@ public class UnionInterfaceTests : ExecutorHarness
         var ast = Parser.ParseDocument("{ name, friends { name } }");
         await Executor.ExecuteAsync(schema, ast, john, cxt).ShouldEqual(new
         {
-            data = new
-            {
-                name = "John",
-                friends = new object[]
-                {
-                    new { name = "Liz" }
-                }
-            }
+            data = new { name = "John", friends = new object[] { new { name = "Liz" } } }
         });
 
         Assert.Equal(cxt, encounteredContext);

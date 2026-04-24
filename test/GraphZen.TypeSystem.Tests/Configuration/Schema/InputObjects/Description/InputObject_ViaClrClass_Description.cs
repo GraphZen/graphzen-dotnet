@@ -13,11 +13,7 @@ public class InputObject_ViaClrClass_Description : InputObject_Description, ILea
 
 
     public LeafConventionContext GetContext() =>
-        new()
-        {
-            ParentName = nameof(ExampleInputObject),
-            DataAnnotationValue = DataAnnotationDescription
-        };
+        new() { ParentName = nameof(ExampleInputObject), DataAnnotationValue = DataAnnotationDescription };
 
     public void ConfigureContextConventionally(SchemaBuilder sb)
     {

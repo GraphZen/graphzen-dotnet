@@ -13,11 +13,7 @@ public class Object_Field_Argument_ViaClrMethod_Description : Object_Field_Argum
     public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
     public LeafConventionContext GetContext() =>
-        new()
-        {
-            ParentName = "argName",
-            DataAnnotationValue = DataAnnotationDescriptionValue
-        };
+        new() { ParentName = "argName", DataAnnotationValue = DataAnnotationDescriptionValue };
 
     public void ConfigureContextConventionally(SchemaBuilder sb)
     {

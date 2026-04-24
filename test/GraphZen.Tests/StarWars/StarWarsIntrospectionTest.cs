@@ -21,39 +21,27 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
                   }
                 }
 
-            ").ShouldEqual(new
-        {
-            data = new
+            ").ShouldEqual(
+            new
             {
-                __schema = new
+                data = new
                 {
-                    types = new object[]
+                    __schema = new
                     {
-                        new { name = "Query" },
-                        new { name = "Episode" },
-                        new { name = "Character" },
-                        new { name = "String" },
-                        new { name = "Human" },
-                        new { name = "Droid" },
-                        new { name = "__Schema" },
-                        new { name = "__Type" },
-                        new { name = "__TypeKind" },
-                        new { name = "Boolean" },
-                        new { name = "Float" },
-                        new { name = "ID" },
-                        new { name = "Int" },
-                        new { name = "__Field" },
-                        new { name = "__InputValue" },
-                        new { name = "__EnumValue" },
-                        new { name = "__Directive" },
-                        new { name = "__DirectiveLocation" }
+                        types = new object[]
+                        {
+                            new { name = "Query" }, new { name = "Episode" },
+                            new { name = "Character" }, new { name = "String" }, new { name = "Human" },
+                            new { name = "Droid" }, new { name = "__Schema" }, new { name = "__Type" },
+                            new { name = "__TypeKind" }, new { name = "Boolean" },
+                            new { name = "Float" }, new { name = "ID" }, new { name = "Int" },
+                            new { name = "__Field" }, new { name = "__InputValue" },
+                            new { name = "__EnumValue" }, new { name = "__Directive" },
+                            new { name = "__DirectiveLocation" }
+                        }
                     }
                 }
-            }
-        }, new JsonDiffOptions
-        {
-            SortBeforeCompare = true
-        });
+            }, new JsonDiffOptions { SortBeforeCompare = true });
     }
 
     [Fact]
@@ -68,19 +56,7 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
               }
             }
         
-        ").ShouldEqual(new
-        {
-            data = new
-            {
-                __schema = new
-                {
-                    queryType = new
-                    {
-                        name = "Query"
-                    }
-                }
-            }
-        });
+        ").ShouldEqual(new { data = new { __schema = new { queryType = new { name = "Query" } } } });
 
     [Fact]
     public Task AllowsQueryingTheSchemaForASpecificType() =>
@@ -92,16 +68,7 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
           }
         }
         
-        ").ShouldEqual(new
-        {
-            data = new
-            {
-                __type = new
-                {
-                    name = "Droid"
-                }
-            }
-        });
+        ").ShouldEqual(new { data = new { __type = new { name = "Droid" } } });
 
     [Fact]
     public Task AllowsQueryingTheSchemaForAnObjectKind() =>
@@ -114,17 +81,7 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
           }
         }
         
-        ").ShouldEqual(new
-        {
-            data = new
-            {
-                __type = new
-                {
-                    name = "Droid",
-                    kind = "OBJECT"
-                }
-            }
-        });
+        ").ShouldEqual(new { data = new { __type = new { name = "Droid", kind = "OBJECT" } } });
 
     [Fact]
     public Task AllowsQueryingTheSchemaForAnInterfaceKind() =>
@@ -137,17 +94,7 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
           }
         }
         
-        ").ShouldEqual(new
-        {
-            data = new
-            {
-                __type = new
-                {
-                    name = "Character",
-                    kind = "INTERFACE"
-                }
-            }
-        });
+        ").ShouldEqual(new { data = new { __type = new { name = "Character", kind = "INTERFACE" } } });
 
     [Fact]
     public Task AllowsQueryingTheSchemaForObjectFields()
@@ -176,60 +123,19 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
                     name = "Droid",
                     fields = new object[]
                     {
-                        new
-                        {
-                            name = "id",
-                            type = new
-                            {
-                                name = (string?)null,
-                                kind = "NON_NULL"
-                            }
-                        },
-                        new
-                        {
-                            name = "name",
-                            type = new
-                            {
-                                name = "String",
-                                kind = "SCALAR"
-                            }
-                        },
-                        new
-                        {
-                            name = "friends",
-                            type = new
-                            {
-                                name = (string?)null,
-                                kind = "LIST"
-                            }
-                        },
-                        new
-                        {
-                            name = "appearsIn",
-                            type = new
-                            {
-                                name = (string?)null,
-                                kind = "LIST"
-                            }
-                        },
-
+                        new { name = "id", type = new { name = (string?)null, kind = "NON_NULL" } },
+                        new { name = "name", type = new { name = "String", kind = "SCALAR" } },
+                        new { name = "friends", type = new { name = (string?)null, kind = "LIST" } },
+                        new { name = "appearsIn", type = new { name = (string?)null, kind = "LIST" } },
                         new
                         {
                             name = "secretBackstory",
-                            type = new
-                            {
-                                name = "String",
-                                kind = "SCALAR"
-                            }
+                            type = new { name = "String", kind = "SCALAR" }
                         },
                         new
                         {
                             name = "primaryFunction",
-                            type = new
-                            {
-                                name = "String",
-                                kind = "SCALAR"
-                            }
+                            type = new { name = "String", kind = "SCALAR" }
                         }
                     }
                 }
@@ -271,26 +177,18 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
                         new
                         {
                             name = "id",
-                            type = new
-                            {
-                                name = (string?)null,
-                                kind = "NON_NULL",
-                                ofType = new
+                            type =
+                                new
                                 {
-                                    name = "String",
-                                    kind = "SCALAR"
+                                    name = (string?)null,
+                                    kind = "NON_NULL",
+                                    ofType = new { name = "String", kind = "SCALAR" }
                                 }
-                            }
                         },
                         new
                         {
                             name = "name",
-                            type = new
-                            {
-                                name = "String",
-                                kind = "SCALAR",
-                                ofType = (object?)null
-                            }
+                            type = new { name = "String", kind = "SCALAR", ofType = (object?)null }
                         },
                         new
                         {
@@ -299,11 +197,7 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
                             {
                                 name = (string?)null,
                                 kind = "LIST",
-                                ofType = new
-                                {
-                                    name = "Character",
-                                    kind = "INTERFACE"
-                                }
+                                ofType = new { name = "Character", kind = "INTERFACE" }
                             }
                         },
                         new
@@ -313,33 +207,18 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
                             {
                                 name = (string?)null,
                                 kind = "LIST",
-                                ofType = new
-                                {
-                                    name = "Episode",
-                                    kind = "ENUM"
-                                }
+                                ofType = new { name = "Episode", kind = "ENUM" }
                             }
                         },
-
                         new
                         {
                             name = "secretBackstory",
-                            type = new
-                            {
-                                name = "String",
-                                kind = "SCALAR",
-                                ofType = (object?)null
-                            }
+                            type = new { name = "String", kind = "SCALAR", ofType = (object?)null }
                         },
                         new
                         {
                             name = "primaryFunction",
-                            type = new
-                            {
-                                name = "String",
-                                kind = "SCALAR",
-                                ofType = (object?)null
-                            }
+                            type = new { name = "String", kind = "SCALAR", ofType = (object?)null }
                         }
                     }
                 }
@@ -393,12 +272,7 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
                                         description =
                                             "If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode.",
                                         name = "episode",
-                                        type = new
-                                        {
-                                            kind = "ENUM",
-                                            name = "Episode",
-                                            ofType = (object?)null
-                                        },
+                                        type = new { kind = "ENUM", name = "Episode", ofType = (object?)null },
                                         defaultValue = (object?)null
                                     }
                                 }
@@ -416,11 +290,7 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
                                         {
                                             kind = "NON_NULL",
                                             name = (string?)null,
-                                            ofType = new
-                                            {
-                                                kind = "SCALAR",
-                                                name = "String"
-                                            }
+                                            ofType = new { kind = "SCALAR", name = "String" }
                                         },
                                         defaultValue = (object?)null
                                     }
@@ -439,11 +309,7 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
                                         {
                                             kind = "NON_NULL",
                                             name = (string?)null,
-                                            ofType = new
-                                            {
-                                                kind = "SCALAR",
-                                                name = "String"
-                                            }
+                                            ofType = new { kind = "SCALAR", name = "String" }
                                         },
                                         defaultValue = (object?)null
                                     }
@@ -453,10 +319,7 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
                     }
                 }
             }
-        }, new JsonDiffOptions
-        {
-            SortBeforeCompare = true
-        });
+        }, new JsonDiffOptions { SortBeforeCompare = true });
     }
 
     [Fact]

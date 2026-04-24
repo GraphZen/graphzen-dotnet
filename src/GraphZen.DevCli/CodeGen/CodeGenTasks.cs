@@ -48,9 +48,7 @@ namespace GraphZen.TypeSystem {
 
         var fieldAccessors = new List<(string containerType, string valueType)>
         {
-            ("InterfaceType", "Field"),
-            ("ObjectType", "Field"),
-            ("InputObjectType", "InputField")
+            ("InterfaceType", "Field"), ("ObjectType", "Field"), ("InputObjectType", "InputField")
         };
 
         foreach (var (containerType, valueType) in fieldAccessors)
@@ -66,8 +64,7 @@ namespace GraphZen.TypeSystem {
 
         var argumentDefinitionAccessors = new List<(string containerType, string valueType)>
         {
-            ("FieldDefinition", "ArgumentDefinition"),
-            ("DirectiveDefinition", "ArgumentDefinition")
+            ("FieldDefinition", "ArgumentDefinition"), ("DirectiveDefinition", "ArgumentDefinition")
         };
 
         foreach (var (containerType, valueType) in argumentDefinitionAccessors)
@@ -78,8 +75,7 @@ namespace GraphZen.TypeSystem {
 
         var argumentAccessors = new List<(string containerType, string valueType)>
         {
-            ("Field", "Argument"),
-            ("IArguments", "Argument")
+            ("Field", "Argument"), ("IArguments", "Argument")
         };
 
         foreach (var (containerType, valueType) in argumentAccessors)

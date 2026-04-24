@@ -114,31 +114,11 @@ public static class QueryValidationRules
 
     public static IReadOnlyList<ValidationRule> SpecifiedQueryRules { get; } = new[]
     {
-        ExecutableDefinitions,
-        UniqueOperationNames,
-        LoneAnonymousOperation,
-        SingleFieldSubscriptions,
-        KnownTypeNames,
-        FragmentsOnCompositeTypes,
-        VariablesAreInputTypes,
-        ScalarLeafs,
-        FieldsOnCorrectType,
-        UniqueFragmentNames,
-        KnownFragmentNames,
-        NoUnusedFragments,
-        PossibleFragmentSpreads,
-        NoFragmentCycles,
-        UniqueVariableNames,
-        NoUndefinedVariables,
-        NoUnusedVariables,
-        KnownDirectives,
-        UniqueDirectivesPerLocation,
-        KnownArgumentNames,
-        UniqueArgumentNames,
-        ValuesOfCorrectType,
-        ProvidedRequiredArguments,
-        VariablesInAllowedPosition,
-        OverlappingFieldsCanBeMerged,
-        UniqueInputFieldNames
+        ExecutableDefinitions, UniqueOperationNames, LoneAnonymousOperation, SingleFieldSubscriptions,
+        KnownTypeNames, FragmentsOnCompositeTypes, VariablesAreInputTypes, ScalarLeafs, FieldsOnCorrectType,
+        UniqueFragmentNames, KnownFragmentNames, NoUnusedFragments, PossibleFragmentSpreads, NoFragmentCycles,
+        UniqueVariableNames, NoUndefinedVariables, NoUnusedVariables, KnownDirectives, UniqueDirectivesPerLocation,
+        KnownArgumentNames, UniqueArgumentNames, ValuesOfCorrectType, ProvidedRequiredArguments,
+        VariablesInAllowedPosition, OverlappingFieldsCanBeMerged, UniqueInputFieldNames
     };
 }

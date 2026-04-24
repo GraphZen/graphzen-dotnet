@@ -43,11 +43,7 @@ enum Site {
 }
 ");
         var expected = Document(new EnumTypeDefinitionSyntax(Name("Site"), null, null,
-            new[]
-            {
-                EnumValueDefinition(EnumValue(Name("DESKTOP"))),
-                EnumValueDefinition(EnumValue(Name("MOBILE")))
-            }));
+            new[] { EnumValueDefinition(EnumValue(Name("DESKTOP"))), EnumValueDefinition(EnumValue(Name("MOBILE"))) }));
 
         Assert.Equal(expected, result);
         Assert.Equal(expected, PrintAndParse(result));
@@ -80,8 +76,8 @@ enum Site {
                 SyntaxHelpers.Description("Enum description"), null, new[
                 ]
                 {
-                    EnumValueDefinition(EnumValue(Name("UNDESCRIBED"))),
-                    new EnumValueDefinitionSyntax(EnumValue(Name("DESCRIBED")),
+                    EnumValueDefinition(EnumValue(Name("UNDESCRIBED"))), new EnumValueDefinitionSyntax(
+                        EnumValue(Name("DESCRIBED")),
                         SyntaxHelpers.Description("Enum value description"))
                 }));
 

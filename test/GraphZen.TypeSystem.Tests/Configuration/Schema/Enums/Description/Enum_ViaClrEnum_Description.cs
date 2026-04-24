@@ -17,11 +17,7 @@ public class Enum_ViaClrEnum_Description : Enum_Description, ILeafConventionConf
     public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
     public LeafConventionContext GetContext() =>
-        new()
-        {
-            ParentName = nameof(ExampleEnum),
-            DataAnnotationValue = DataAnnotationDescriptionValue
-        };
+        new() { ParentName = nameof(ExampleEnum), DataAnnotationValue = DataAnnotationDescriptionValue };
 
     public void ConfigureContextConventionally(SchemaBuilder sb)
     {

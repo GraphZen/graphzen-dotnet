@@ -34,10 +34,7 @@ query testQuery($var1: String! = ""Foo"") @queryDirective {
                 SyntaxFactory.VariableDefinition(SyntaxFactory.Variable(SyntaxFactory.Name("var1")),
                     SyntaxFactory.NonNull(SyntaxFactory.NamedType(SyntaxFactory.Name("String"))),
                     SyntaxFactory.StringValue("Foo"))
-            }, new[]
-            {
-                SyntaxFactory.Directive(SyntaxFactory.Name("queryDirective"))
-            }));
+            }, new[] { SyntaxFactory.Directive(SyntaxFactory.Name("queryDirective")) }));
         Assert.Equal(expectedValue, test.Value);
     }
 

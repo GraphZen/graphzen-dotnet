@@ -13,25 +13,14 @@ public class BlockStringValueTests
     {
         var rawValue = new[]
         {
-            "               ",
-            "    Hello,     ",
-            "      World!   ",
-            "               ",
-            "    Yours,     ",
-            "      GraphQL. ",
-            "               "
+            "               ", "    Hello,     ", "      World!   ", "               ", "    Yours,     ",
+            "      GraphQL. ", "               "
         }.ToMultiLineString();
 
         var result = LanguageHelpers.BlockStringValue(rawValue);
 
-        var expected = new[]
-        {
-            "Hello,     ",
-            "  World!   ",
-            "           ",
-            "Yours,     ",
-            "  GraphQL. "
-        }.ToMultiLineString();
+        var expected = new[] { "Hello,     ", "  World!   ", "           ", "Yours,     ", "  GraphQL. " }
+            .ToMultiLineString();
 
         Assert.Equal(expected, result);
     }
@@ -41,24 +30,13 @@ public class BlockStringValueTests
     {
         var rawValue = new[]
         {
-            "    ",
-            "        ",
-            "",
-            "    Hello,",
-            "      World!",
-            "",
-            "    Yours,",
-            "      GraphQL.",
-            "        ",
+            "    ", "        ", "", "    Hello,", "      World!", "", "    Yours,", "      GraphQL.", "        ",
             "    "
         }.ToMultiLineString();
 
         var result = LanguageHelpers.BlockStringValue(rawValue);
 
-        var expected = new[]
-        {
-            "Hello,", "  World!", "", "Yours,", "  GraphQL."
-        }.ToMultiLineString();
+        var expected = new[] { "Hello,", "  World!", "", "Yours,", "  GraphQL." }.ToMultiLineString();
 
         Assert.Equal(expected, result);
     }
@@ -66,26 +44,12 @@ public class BlockStringValueTests
     [Fact]
     public void RemovesEmptyLeadingAndTrailingLines()
     {
-        var rawValue = new[]
-        {
-            "",
-            "",
-            "",
-            "    Hello,",
-            "      World!",
-            "",
-            "    Yours,",
-            "      GraphQL.",
-            "",
-            ""
-        }.ToMultiLineString();
+        var rawValue = new[] { "", "", "", "    Hello,", "      World!", "", "    Yours,", "      GraphQL.", "", "" }
+            .ToMultiLineString();
 
         var result = LanguageHelpers.BlockStringValue(rawValue);
 
-        var expected = new[]
-        {
-            "Hello,", "  World!", "", "Yours,", "  GraphQL."
-        }.ToMultiLineString();
+        var expected = new[] { "Hello,", "  World!", "", "Yours,", "  GraphQL." }.ToMultiLineString();
 
         Assert.Equal(expected, result);
     }
@@ -93,22 +57,12 @@ public class BlockStringValueTests
     [Fact]
     public void RemovesUniformIndentationFromAString()
     {
-        var rawValue = new[]
-        {
-            "",
-            "    Hello,",
-            "      World!",
-            "",
-            "    Yours,",
-            "      GraphQL."
-        }.ToMultiLineString();
+        var rawValue =
+            new[] { "", "    Hello,", "      World!", "", "    Yours,", "      GraphQL." }.ToMultiLineString();
 
         var result = LanguageHelpers.BlockStringValue(rawValue);
 
-        var expected = new[]
-        {
-            "Hello,", "  World!", "", "Yours,", "  GraphQL."
-        }.ToMultiLineString();
+        var expected = new[] { "Hello,", "  World!", "", "Yours,", "  GraphQL." }.ToMultiLineString();
 
         Assert.Equal(expected, result);
     }
@@ -116,21 +70,11 @@ public class BlockStringValueTests
     [Fact]
     public void RetainsIndentationFromFirstLine()
     {
-        var rawValue = new[]
-        {
-            "    Hello,",
-            "      World!",
-            "",
-            "    Yours,",
-            "      GraphQL."
-        }.ToMultiLineString();
+        var rawValue = new[] { "    Hello,", "      World!", "", "    Yours,", "      GraphQL." }.ToMultiLineString();
 
         var result = LanguageHelpers.BlockStringValue(rawValue);
 
-        var expected = new[]
-        {
-            "    Hello,", "  World!", "", "Yours,", "  GraphQL."
-        }.ToMultiLineString();
+        var expected = new[] { "    Hello,", "  World!", "", "Yours,", "  GraphQL." }.ToMultiLineString();
 
         Assert.Equal(expected, result);
     }

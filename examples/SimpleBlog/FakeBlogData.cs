@@ -13,7 +13,9 @@ public static class FakeBlogData
         new Post { Id = 2, Author = "Jane", Title = "Follow up post", Content = "This blog is really fun!" },
         new Post
         {
-            Id = 3, Author = "Gene", Title = "Guest post",
+            Id = 3,
+            Author = "Gene",
+            Title = "Guest post",
             Content = "Jane has let me write a guest post for her blog."
         }
     };

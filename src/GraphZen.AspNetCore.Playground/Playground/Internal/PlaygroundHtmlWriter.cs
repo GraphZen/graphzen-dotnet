@@ -21,10 +21,7 @@ public class PlaygroundHtmlWriter
     private static JsonSerializerOptions SerializerOptions { get; } = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        Converters =
-        {
-            new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
-        },
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         WriteIndented = true
     };

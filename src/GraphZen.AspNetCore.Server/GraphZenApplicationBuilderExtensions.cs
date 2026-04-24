@@ -110,10 +110,8 @@ public static class GraphZenApplicationBuilderExtensions
 
                     result = await new Executor().ExecuteAsync(graphQLContext.Schema, document,
                         rootValue,
-                        graphQLContext, req.Variables, req.OperationName, new ExecutionOptions
-                        {
-                            ThrowOnError = false
-                        });
+                        graphQLContext, req.Variables, req.OperationName,
+                        new ExecutionOptions { ThrowOnError = false });
                 }
             }
             catch (GraphQLException gqlException)

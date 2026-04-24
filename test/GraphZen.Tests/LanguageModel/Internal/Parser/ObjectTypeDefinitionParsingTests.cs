@@ -27,10 +27,8 @@ type AnnotatedObject @onObject(arg: ""value"") {
                     {
                         new InputValueDefinitionSyntax(SyntaxFactory.Name("arg"),
                             SyntaxFactory.NamedType(SyntaxFactory.Name("Type")), null,
-                            SyntaxFactory.StringValue("default"), new[]
-                            {
-                                SyntaxFactory.Directive(SyntaxFactory.Name("onArg"))
-                            })
+                            SyntaxFactory.StringValue("default"),
+                            new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onArg")) })
                     }, new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onField")) })
             }));
         Assert.Equal(expected, result);
@@ -69,7 +67,8 @@ type Foo implements Bar & Baz {
 
         var expected = SyntaxFactory.Document(new ObjectTypeDefinitionSyntax(SyntaxFactory.Name("Foo"),
             SyntaxFactory.StringValue(@"This is a description
-of the `Foo` type.", true), new[]
+of the `Foo` type.", true),
+            new[]
             {
                 SyntaxFactory.NamedType(SyntaxFactory.Name("Bar")),
                 SyntaxFactory.NamedType(SyntaxFactory.Name("Baz"))

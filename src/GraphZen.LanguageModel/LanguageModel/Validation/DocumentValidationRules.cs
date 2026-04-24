@@ -76,18 +76,11 @@ public static class DocumentValidationRules
         SpecifiedSdlRules.Concat(
             new[]
             {
-                SchemaMustHaveRootObjectTypes,
-                FieldArgsMustBeProperlyNamed,
-                UnionTypesMustBeValid,
-                InputObjectsMustHaveFields,
-                EnumTypesMustBeWellDefined,
-                ObjectFieldsMustHaveOutputTypes,
-                ObjectsCanOnlyImplementUniqueInterfaces,
-                InterfaceExtensionsShouldBeValid,
-                InterfaceFieldsMustHaveOutputTypes,
-                FieldArgumentsMustHaveInputTypes,
-                ObjectsMustAdhereToInterfaceTheyImplement,
-                ObjectsMustHaveFields,
+                SchemaMustHaveRootObjectTypes, FieldArgsMustBeProperlyNamed, UnionTypesMustBeValid,
+                InputObjectsMustHaveFields, EnumTypesMustBeWellDefined, ObjectFieldsMustHaveOutputTypes,
+                ObjectsCanOnlyImplementUniqueInterfaces, InterfaceExtensionsShouldBeValid,
+                InterfaceFieldsMustHaveOutputTypes, FieldArgumentsMustHaveInputTypes,
+                ObjectsMustAdhereToInterfaceTheyImplement, ObjectsMustHaveFields,
                 InputObjectFieldsMustHaveInputTypes
             }).ToList();
 }

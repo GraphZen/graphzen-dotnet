@@ -24,10 +24,8 @@ public class EnumTypeExtensionParserTests : ParserTestBase
 extend enum Site {
   VR
 }");
-        var expected = SyntaxFactory.Document(new EnumTypeExtensionSyntax(SyntaxFactory.Name("Site"), null, new[]
-        {
-            SyntaxFactory.EnumValueDefinition(SyntaxFactory.EnumValue(SyntaxFactory.Name("VR")))
-        }));
+        var expected = SyntaxFactory.Document(new EnumTypeExtensionSyntax(SyntaxFactory.Name("Site"), null,
+            new[] { SyntaxFactory.EnumValueDefinition(SyntaxFactory.EnumValue(SyntaxFactory.Name("VR"))) }));
 
         Assert.Equal(expected, result);
         Assert.Equal(expected, PrintAndParse(result));

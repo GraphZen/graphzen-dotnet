@@ -28,10 +28,7 @@ public static class Json
     [DebuggerStepThrough]
     public static string SerializeObject(object value)
     {
-        var options = new JsonSerializerOptions(SerializerOptions)
-        {
-            WriteIndented = true
-        };
+        var options = new JsonSerializerOptions(SerializerOptions) { WriteIndented = true };
         return JsonSerializer.Serialize(value, options);
     }
 }

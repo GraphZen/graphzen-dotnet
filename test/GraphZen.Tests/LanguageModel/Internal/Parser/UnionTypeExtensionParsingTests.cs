@@ -21,11 +21,12 @@ public class UnionTypeExtensionParsingTests : ParserTestBase
     public void UnionWithExtendedTypes()
     {
         var result = ParseDocument("extend union Feed = Photo | Video");
-        var expected = SyntaxFactory.Document(new UnionTypeExtensionSyntax(SyntaxFactory.Name("Feed"), null, new[]
-        {
-            SyntaxFactory.NamedType(SyntaxFactory.Name("Photo")),
-            SyntaxFactory.NamedType(SyntaxFactory.Name("Video"))
-        }));
+        var expected = SyntaxFactory.Document(new UnionTypeExtensionSyntax(SyntaxFactory.Name("Feed"), null,
+            new[]
+            {
+                SyntaxFactory.NamedType(SyntaxFactory.Name("Photo")),
+                SyntaxFactory.NamedType(SyntaxFactory.Name("Video"))
+            }));
         Assert.Equal(expected, result);
         Assert.Equal(expected, PrintAndParse(result));
     }

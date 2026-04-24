@@ -179,8 +179,7 @@ public abstract class StarWarsSchemaAndData : ExecutorHarness
 
     private static readonly IReadOnlyDictionary<string, Droid> DroidData = new Dictionary<string, Droid>
     {
-        { "2000", ThreePio },
-        { "2001", Artoo }
+        { "2000", ThreePio }, { "2001", Artoo }
     };
 
     protected static Task<ICharacter?> GetCharacterAsync(string id) =>

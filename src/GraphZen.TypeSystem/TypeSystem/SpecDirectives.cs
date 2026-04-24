@@ -9,11 +9,7 @@ public static class SpecDirectives
 
     public static Directive Deprecated { get; } = new("deprecated",
         "Marks an element of a GraphQL schema as no longer supported.",
-        new[]
-        {
-            DirectiveLocation.EnumValue,
-            DirectiveLocation.FieldDefinition
-        },
+        new[] { DirectiveLocation.EnumValue, DirectiveLocation.FieldDefinition },
         new[]
         {
             new Argument("reason", "Explains why this element was deprecated, usually also including a " +
@@ -46,10 +42,6 @@ public static class SpecDirectives
         }, null!);
 
 
-    public static IReadOnlyList<Directive> All { get; } = new List<Directive>
-    {
-        Deprecated,
-        Include,
-        Skip
-    }.AsReadOnly();
+    public static IReadOnlyList<Directive> All { get; } =
+        new List<Directive> { Deprecated, Include, Skip }.AsReadOnly();
 }

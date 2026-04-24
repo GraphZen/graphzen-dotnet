@@ -13,13 +13,7 @@ public abstract class NullableScalarsTests : VariablesTests
               {
                 fieldWithNullableStringInput
               }
-            ").ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithNullableStringInput = (string?)null
-            }
-        });
+            ").ShouldEqual(new { data = new { fieldWithNullableStringInput = (string?)null } });
 
     [Fact]
     public Task AllowsNullableInputsToBeOmittedInAnUnlistedVariable() =>
@@ -27,13 +21,7 @@ public abstract class NullableScalarsTests : VariablesTests
               query {
                 fieldWithNullableStringInput(input: $value)
               }
-            ").ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithNullableStringInput = (string?)null
-            }
-        });
+            ").ShouldEqual(new { data = new { fieldWithNullableStringInput = (string?)null } });
 
     [Fact]
     public Task AllowsNullableInputsToBeOmittedInAVariable() =>
@@ -41,13 +29,7 @@ public abstract class NullableScalarsTests : VariablesTests
               query ($value: String) {
                 fieldWithNullableStringInput(input: $value)
               }
-            ").ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithNullableStringInput = (string?)null
-            }
-        });
+            ").ShouldEqual(new { data = new { fieldWithNullableStringInput = (string?)null } });
 
     [Fact]
     public Task AllowsNullableInputsToBeSetInAVariable() =>
@@ -55,13 +37,7 @@ public abstract class NullableScalarsTests : VariablesTests
               query ($value: String) {
                 fieldWithNullableStringInput(input: $value)
               }
-            ", new { value = "a" }).ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithNullableStringInput = "\"a\""
-            }
-        });
+            ", new { value = "a" }).ShouldEqual(new { data = new { fieldWithNullableStringInput = "\"a\"" } });
 
     [Fact]
     public Task AllowsNullableInputsToBeSetToNullInAVariable() =>
@@ -69,13 +45,7 @@ public abstract class NullableScalarsTests : VariablesTests
               query ($value: String) {
                 fieldWithNullableStringInput(input: $value)
               }
-            ", new { value = (string?)null }).ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithNullableStringInput = "null"
-            }
-        });
+            ", new { value = (string?)null }).ShouldEqual(new { data = new { fieldWithNullableStringInput = "null" } });
 
     [Fact]
     public Task AllowsNullableInputsToBeSetToValueDirectly() =>
@@ -83,13 +53,7 @@ public abstract class NullableScalarsTests : VariablesTests
                {
                 fieldWithNullableStringInput(input: ""a"")
               }
-            ", new { value = "a" }).ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithNullableStringInput = "\"a\""
-            }
-        });
+            ", new { value = "a" }).ShouldEqual(new { data = new { fieldWithNullableStringInput = "\"a\"" } });
 
     [UsedImplicitly]
     private class StaticDslTests : NullableScalarsTests

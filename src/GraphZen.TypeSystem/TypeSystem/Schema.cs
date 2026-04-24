@@ -116,10 +116,7 @@ public class Schema : AnnotatableMember, ISchema
                     }
                     else
                     {
-                        _implementations[iface.Name] = new List<ObjectType>
-                        {
-                            objectType
-                        };
+                        _implementations[iface.Name] = new List<ObjectType> { objectType };
                     }
                 }
             }

@@ -22,11 +22,7 @@ public abstract class UsingVariables : VariablesTests
                 {
                     message =
                         "Variable \"$input\" got invalid value `{a: \"foo\", b: \"bar\", c: \"baz\", extra: \"dog\"}`; Field \"extra\" is not defined by type TestInputObject; Did you mean to select another field?",
-                    locations = Array(new
-                    {
-                        line = 2,
-                        column = 25
-                    })
+                    locations = Array(new { line = 2, column = 25 })
                 })
             });
 
@@ -35,68 +31,39 @@ public abstract class UsingVariables : VariablesTests
         ExecuteAsync(@"
             query ($input: TestNestedInputObject) {
               fieldWithNestedObjectInput(input: $input)
-            }", new
-        {
-            input = new
-            {
-                na = new { a = "foo" }
-            }
-        })
+            }", new { input = new { na = new { a = "foo" } } })
             .ShouldEqual(new
             {
                 errors = Array(new
                 {
                     message =
                             "Variable \"$input\" got invalid value `{na: {a: \"foo\"}}`; Field value.nb of required type String! was not provided.",
-                    locations = Array(new
-                    {
-                        line = 2,
-                        column = 20
-                    })
+                    locations = Array(new { line = 2, column = 20 })
                 },
                     new
                     {
                         message =
                             "Variable \"$input\" got invalid value `{na: {a: \"foo\"}}`; Field value.na.c of required type String! was not provided.",
-                        locations = Array(new
-                        {
-                            line = 2,
-                            column = 20
-                        })
+                        locations = Array(new { line = 2, column = 20 })
                     }
                 )
             });
 
     [Fact]
     public Task ErrorsOnIncorrectType() =>
-        ExecuteAsync(Doc, new
-        {
-            input = "foo bar"
-        }).ShouldEqual(new
+        ExecuteAsync(Doc, new { input = "foo bar" }).ShouldEqual(new
         {
             errors = Array(new
             {
                 message =
                     "Variable \"$input\" got invalid value `\"foo bar\"`; Expected TestInputObject to be an object.",
-                locations = Array(new
-                {
-                    line = 2,
-                    column = 25
-                })
+                locations = Array(new { line = 2, column = 25 })
             })
         });
 
     [Fact]
     public Task ErrorsOnNullForNestedNonNull() =>
-        ExecuteAsync(Doc, new
-        {
-            input = new
-            {
-                a = "foo",
-                b = "bar",
-                c = (string?)null
-            }
-        }).ShouldEqual(new
+        ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = (string?)null } }).ShouldEqual(new
         {
             errors = Array(
                 new
@@ -116,11 +83,7 @@ public abstract class UsingVariables : VariablesTests
                 {
                     message =
                         "Variable \"$input\" got invalid value `{a: \"foo\", b: \"bar\"}`; Field value.c of required type String! was not provided.",
-                    locations = Array(new
-                    {
-                        line = 2,
-                        column = 25
-                    })
+                    locations = Array(new { line = 2, column = 25 })
                 })
             });
 
@@ -130,46 +93,20 @@ public abstract class UsingVariables : VariablesTests
                         query q($input: String = ""Default value"") {
                           fieldWithNullableStringInput(input: $input)
                         }
-                    ", new
-        {
-            input = "Variable value"
-        })
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithNullableStringInput = "\"Variable value\""
-                }
-            });
+                    ", new { input = "Variable value" })
+            .ShouldEqual(new { data = new { fieldWithNullableStringInput = "\"Variable value\"" } });
 
     [Fact]
     public Task ItExecutesWithComplexInput() =>
         ExecuteAsync(Doc,
-            new
-            {
-                input = new
-                {
-                    a = "foo",
-                    b = Array("bar"),
-                    c = "baz"
-                }
-            }
-        ).ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithObjectInput = @"{""a"":""foo"",""b"":[""bar""],""c"":""baz""}"
-            }
-        });
+            new { input = new { a = "foo", b = Array("bar"), c = "baz" } }
+        ).ShouldEqual(new { data = new { fieldWithObjectInput = @"{""a"":""foo"",""b"":[""bar""],""c"":""baz""}" } });
 
     [Fact]
     public Task ItExecutesWithComplexScalarInput() =>
         ExecuteAsync(Doc, new { input = new { c = "foo", d = "SerializedValue" } }).ShouldEqual(new
         {
-            data = new
-            {
-                fieldWithObjectInput = "{\"c\":\"foo\",\"d\":\"DeserializedValue\"}"
-            }
+            data = new { fieldWithObjectInput = "{\"c\":\"foo\",\"d\":\"DeserializedValue\"}" }
         });
 
     [Fact]
@@ -178,13 +115,7 @@ public abstract class UsingVariables : VariablesTests
                         query ($input: TestInputObject = {a: ""foo"", b: [""bar""], c: ""baz""}) {
                             fieldWithObjectInput(input: $input)
                         }")
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithObjectInput = "{\"a\":\"foo\",\"b\":[\"bar\"],\"c\":\"baz\"}"
-                }
-            });
+            .ShouldEqual(new { data = new { fieldWithObjectInput = "{\"a\":\"foo\",\"b\":[\"bar\"],\"c\":\"baz\"}" } });
 
 
     [Fact]
@@ -193,17 +124,8 @@ public abstract class UsingVariables : VariablesTests
                         query q($input: String = ""Default value"") {
                           fieldWithNullableStringInput(input: $input)
                         }
-                    ", new
-        {
-            input = (string?)null
-        })
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithNullableStringInput = "null"
-                }
-            });
+                    ", new { input = (string?)null })
+            .ShouldEqual(new { data = new { fieldWithNullableStringInput = "null" } });
 
     [Fact]
     public Task ItUsesNullDefaultValueWhenNotProvided() =>
@@ -212,13 +134,7 @@ public abstract class UsingVariables : VariablesTests
                           fieldWithNullableStringInput(input: $input)
                         }
                     ")
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithNullableStringInput = "null"
-                }
-            });
+            .ShouldEqual(new { data = new { fieldWithNullableStringInput = "null" } });
 
     [Fact]
     public Task ItUsesNullWhenVariableProvidedExplicitNullValue() =>
@@ -226,13 +142,7 @@ public abstract class UsingVariables : VariablesTests
                         query q($input: String) {
                             fieldWithNullableStringInput(input: $input)
                        }", new { input = (string?)null })
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithNullableStringInput = "null"
-                }
-            });
+            .ShouldEqual(new { data = new { fieldWithNullableStringInput = "null" } });
 
     [Fact]
     public Task ItUsesUndefinedWhenVariableNotProvided() =>
@@ -240,24 +150,12 @@ public abstract class UsingVariables : VariablesTests
                         query q($input: String) {
                             fieldWithNullableStringInput(input: $input)
                        }", new { })
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithNullableStringInput = (string?)null
-                }
-            });
+            .ShouldEqual(new { data = new { fieldWithNullableStringInput = (string?)null } });
 
     [Fact]
     public Task ProperlyParsesSingleValueToList() =>
         ExecuteAsync(Doc, new { input = new { a = "foo", b = "bar", c = "baz" } })
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithObjectInput = "{\"a\":\"foo\",\"b\":[\"bar\"],\"c\":\"baz\"}"
-                }
-            });
+            .ShouldEqual(new { data = new { fieldWithObjectInput = "{\"a\":\"foo\",\"b\":[\"bar\"],\"c\":\"baz\"}" } });
 
     [UsedImplicitly]
     private class StaticDslTests : UsingVariables

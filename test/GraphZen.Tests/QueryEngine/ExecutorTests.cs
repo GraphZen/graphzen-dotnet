@@ -25,13 +25,7 @@ public class ExecutorTests : ExecutorHarness
             sb.QueryType("Type");
         });
 
-        return ExecuteAsync(schema, doc, data).ShouldEqual(new
-        {
-            data = new
-            {
-                a = "rootValue"
-            }
-        });
+        return ExecuteAsync(schema, doc, data).ShouldEqual(new { data = new { a = "rootValue" } });
     }
 
 
@@ -138,11 +132,9 @@ public class ExecutorTests : ExecutorHarness
                     b = "Boring",
                     c = new object[] { "Contrived", null!, "Confusing" },
                     deeper = new object[]
-                    {
-                        new { a = "Apple", b = "Banana" },
-                        null!,
-                        new { a = "Apple", b = "Banana" }
-                    }
+                        {
+                            new { a = "Apple", b = "Banana" }, null!, new { a = "Apple", b = "Banana" }
+                        }
                 }
             }
         };
@@ -205,16 +197,7 @@ public class ExecutorTests : ExecutorHarness
                 a = "Apple",
                 b = "Banana",
                 c = "Cherry",
-                deep = new
-                {
-                    b = "Banana",
-                    c = "Cherry",
-                    deeper = new
-                    {
-                        b = "Banana",
-                        c = "Cherry"
-                    }
-                }
+                deep = new { b = "Banana", c = "Cherry", deeper = new { b = "Banana", c = "Cherry" } }
             }
         });
     }
@@ -344,13 +327,7 @@ public class ExecutorTests : ExecutorHarness
             _.QueryType("Type");
         });
 
-        await ExecuteAsync(schema, doc, data).ShouldEqual(new
-        {
-            data = new
-            {
-                a = "b"
-            }
-        });
+        await ExecuteAsync(schema, doc, data).ShouldEqual(new { data = new { a = "b" } });
     }
 
     [Fact]
@@ -392,10 +369,7 @@ public class ExecutorTests : ExecutorHarness
 
         return ExecuteAsync(schema, "{ field(a: true, c: false, e: 0) }").ShouldEqual(new
         {
-            data = new
-            {
-                field = "{\"a\":true,\"c\":false,\"e\":0}"
-            }
+            data = new { field = "{\"a\":true,\"c\":false,\"e\":0}" }
         });
     }
 
@@ -432,23 +406,14 @@ public class ExecutorTests : ExecutorHarness
 
         return ExecuteAsync(schema, "{specials { value } }", rootValue).ShouldEqual(new
         {
-            data = new
-            {
-                specials = new object[] { new { value = "foo" }, null! }
-            },
+            data = new { specials = new object[] { new { value = "foo" }, null! } },
             errors = new object[]
             {
                 new
                 {
                     message = "Expected value of type \"SpecialType\" but got: {value: \"bar\"}.",
-                    locations = new object[]
-                    {
-                        new { line = 1, column = 2 }
-                    },
-                    path = new object[]
-                    {
-                        "specials", 1
-                    }
+                    locations = new object[] { new { line = 1, column = 2 } },
+                    path = new object[] { "specials", 1 }
                 }
             }
         });
@@ -464,13 +429,7 @@ public class ExecutorTests : ExecutorHarness
             ";
         var schema = Schema.Create(_ => { _.Object("Query").Field("foo", "String"); });
 
-        return ExecuteAsync(schema, query, throwOnError: true).ShouldEqual(new
-        {
-            data = new
-            {
-                foo = (object?)null
-            }
-        });
+        return ExecuteAsync(schema, query, throwOnError: true).ShouldEqual(new { data = new { foo = (object?)null } });
     }
 
     [Fact(Skip = "TODO")]

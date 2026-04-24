@@ -24,15 +24,7 @@ public class FixIndentTests
 
         var expected = new[]
         {
-            "type Query {",
-            "  me: User",
-            "}",
-            "",
-            "type User {",
-            "  id: ID",
-            "  name: String",
-            "}",
-            ""
+            "type Query {", "  me: User", "}", "", "type User {", "  id: ID", "  name: String", "}", ""
         }.ToMultiLineString();
 
         Assert.Equal(expected, result);
@@ -47,10 +39,7 @@ public class FixIndentTests
                 quuux
                   quuuux".Dedent();
 
-        var expected = new[]
-        {
-            "qux", "  quux", "    quuux", "      quuuux"
-        }.ToMultiLineString();
+        var expected = new[] { "qux", "  quux", "    quuux", "      quuuux" }.ToMultiLineString();
         Assert.Equal(expected, result);
     }
 }

@@ -519,7 +519,8 @@ public class Printer : IPrinter
 
     private void Join(IReadOnlyList<SyntaxNode> nodes, string? seperator = null)
     {
-        Join(nodes, seperator != null ? () => { Append(seperator); }
+        Join(nodes, seperator != null
+            ? () => { Append(seperator); }
         : null);
     }
 

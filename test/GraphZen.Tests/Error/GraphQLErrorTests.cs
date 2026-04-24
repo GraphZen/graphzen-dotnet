@@ -58,11 +58,7 @@ public class GraphQLErrorTests
         var node = ((OperationDefinitionSyntax)ast.Definitions[0]).SelectionSet.Selections.First();
         var e = new GraphQLServerError("msg", new SyntaxNode[] { node });
         JsonAssert.EquivalentToJsonFromObject(e,
-            new
-            {
-                message = "msg",
-                locations = new object[] { new { line = 1, column = 3 } }
-            });
+            new { message = "msg", locations = new object[] { new { line = 1, column = 3 } } });
     }
 
     [Fact]
@@ -70,10 +66,7 @@ public class GraphQLErrorTests
     {
         var e = new GraphQLServerError("msg", null, null, null, new object[] { "path", 3, "to", "field" });
         Assert.Equal(new object[] { "path", 3, "to", "field" }, e.Path);
-        JsonAssert.EquivalentToJsonFromObject(e, new
-        {
-            message = "msg",
-            path = new object[] { "path", 3, "to", "field" }
-        });
+        JsonAssert.EquivalentToJsonFromObject(e,
+            new { message = "msg", path = new object[] { "path", 3, "to", "field" } });
     }
 }

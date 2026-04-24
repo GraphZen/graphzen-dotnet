@@ -19,11 +19,7 @@ public static class GraphQLRequestExtensions
 
         var requestJson = JsonSerializer.Serialize(request);
         var requestJsonContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
-        var message = new HttpRequestMessage
-        {
-            Method = HttpMethod.Post,
-            Content = requestJsonContent
-        };
+        var message = new HttpRequestMessage { Method = HttpMethod.Post, Content = requestJsonContent };
         return message;
     }
 }

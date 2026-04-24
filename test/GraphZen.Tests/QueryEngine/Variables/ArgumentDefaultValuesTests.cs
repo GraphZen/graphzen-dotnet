@@ -15,18 +15,11 @@ public abstract class ArgumentDefaultValuesTests : VariablesTests
               }
             ").ShouldEqual(new
         {
-            data = new
-            {
-                fieldWithDefaultArgumentValue = (object?)null
-            },
+            data = new { fieldWithDefaultArgumentValue = (object?)null },
             errors = Array(new
             {
                 message = "Argument \"input\" has invalid value \"WRONG_TYPE\".",
-                locations = Array(new
-                {
-                    column = 17,
-                    line = 3
-                }),
+                locations = Array(new { column = 17, line = 3 }),
                 path = Array("fieldWithDefaultArgumentValue")
             })
         });
@@ -34,13 +27,7 @@ public abstract class ArgumentDefaultValuesTests : VariablesTests
     [Fact]
     public Task WhenNoArgumentProvided() =>
         ExecuteAsync("{fieldWithDefaultArgumentValue}")
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithDefaultArgumentValue = "\"Hello World\""
-                }
-            });
+            .ShouldEqual(new { data = new { fieldWithDefaultArgumentValue = "\"Hello World\"" } });
 
     [Fact]
     public Task WhenNoRuntimeValueIsProvidedToANonNullArgument() =>
@@ -50,10 +37,7 @@ public abstract class ArgumentDefaultValuesTests : VariablesTests
               }
             ").ShouldEqual(new
         {
-            data = new
-            {
-                fieldWithNonNullableStringInputAndDefaultArgumentValue = "\"Hello World\""
-            }
+            data = new { fieldWithNonNullableStringInputAndDefaultArgumentValue = "\"Hello World\"" }
         });
 
     [Fact]
@@ -62,13 +46,7 @@ public abstract class ArgumentDefaultValuesTests : VariablesTests
               query ($optional: String) {
                 fieldWithDefaultArgumentValue(input: $optional)
               }
-            ").ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithDefaultArgumentValue = "\"Hello World\""
-            }
-        });
+            ").ShouldEqual(new { data = new { fieldWithDefaultArgumentValue = "\"Hello World\"" } });
 
     [UsedImplicitly]
     private class StaticDslTests : ArgumentDefaultValuesTests

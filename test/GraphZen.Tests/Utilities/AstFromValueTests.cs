@@ -170,20 +170,13 @@ public class AstFromValueTests
     {
         Assert.Equal(ObjectValue(ObjectField(Name("foo"), IntValue(3)),
                 ObjectField(Name("bar"), EnumValue(Name("HELLO")))),
-            Get(Some(new
-            {
-                foo = 3,
-                bar = "HELLO"
-            }), MyInputObj));
+            Get(Some(new { foo = 3, bar = "HELLO" }), MyInputObj));
     }
 
     [Fact]
     public void ItConvertsInputObjectsWithExplicitNulls()
     {
         Assert.Equal(ObjectValue(ObjectField(Name("foo"), NullValue())),
-            Get(Some(new
-            {
-                foo = (string?)null
-            }), MyInputObj));
+            Get(Some(new { foo = (string?)null }), MyInputObj));
     }
 }

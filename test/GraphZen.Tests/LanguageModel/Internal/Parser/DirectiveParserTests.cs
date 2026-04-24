@@ -16,10 +16,7 @@ public class DirectiveParserTests
     {
         var tokens = _tokenizer.Tokenize("@skip");
         var testResult = Grammar.Directives(tokens);
-        var expectedValue = new[]
-        {
-            SyntaxFactory.Directive(SyntaxFactory.Name("skip"))
-        };
+        var expectedValue = new[] { SyntaxFactory.Directive(SyntaxFactory.Name("skip")) };
         Assert.Equal(expectedValue, testResult.Value);
     }
 
@@ -32,10 +29,7 @@ public class DirectiveParserTests
             new[]
             {
                 new DirectiveSyntax(SyntaxFactory.Name("skip"),
-                    new[]
-                    {
-                        SyntaxFactory.Argument(SyntaxFactory.Name("count"), SyntaxFactory.IntValue(1))
-                    })
+                    new[] { SyntaxFactory.Argument(SyntaxFactory.Name("count"), SyntaxFactory.IntValue(1)) })
             };
         Assert.Equal(expectedValue, testResult.Value);
     }

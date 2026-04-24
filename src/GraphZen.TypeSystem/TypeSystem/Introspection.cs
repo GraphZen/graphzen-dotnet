@@ -112,10 +112,7 @@ public static class Introspection
 
     public static Field TypeMetaFieldDef { get; } = new("__type",
         "Request the type information of a single type.", null, Schema.GetObject("__Type"),
-        new[]
-        {
-            new Argument("name", null, NonNullType.Of(SpecScalars.String), null, null, false)
-        },
+        new[] { new Argument("name", null, NonNullType.Of(SpecScalars.String), null, null, false) },
         (source, args, context, info) => info.Schema.GetType(args.name), null);
 
 

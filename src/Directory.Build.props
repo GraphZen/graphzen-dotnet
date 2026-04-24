@@ -1,33 +1,33 @@
 <Project>
 
-    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
-    <PropertyGroup>
-        <Product>GraphZen</Product>
-        <Authors>GraphZen</Authors>
-        <Company>GraphZen LLC</Company>
-        <Copyright>Copyright (c) 2017-2026 GraphZen LLC. All Rights Reserved.</Copyright>
-        <RepositoryUrl>https://github.com/GraphZen/graphzen-dotnet</RepositoryUrl>
-        <PackageProjectUrl>https://github.com/GraphZen/graphzen-dotnet</PackageProjectUrl>
-        <RepositoryType>Git</RepositoryType>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <IsPackable>True</IsPackable>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <RootNamespace>GraphZen</RootNamespace>
-    </PropertyGroup>
+  <PropertyGroup>
+    <Product>GraphZen</Product>
+    <Authors>GraphZen</Authors>
+    <Company>GraphZen LLC</Company>
+    <Copyright>Copyright (c) 2017-2026 GraphZen LLC. All Rights Reserved.</Copyright>
+    <RepositoryUrl>https://github.com/GraphZen/graphzen-dotnet</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/GraphZen/graphzen-dotnet</PackageProjectUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IsPackable>True</IsPackable>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RootNamespace>GraphZen</RootNamespace>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
-        <None Include="..\..\README.md" Pack="true" PackagePath="" />
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
 
 </Project>
