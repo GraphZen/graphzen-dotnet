@@ -7,15 +7,50 @@ using GraphZen.SpecConformance.Tests.Infrastructure;
 
 namespace GraphZen.SpecConformance.Tests.Section5_Validation.Values;
 
+// Spec draft: see SpecMetadata.Version
+// Spec: https://spec.graphql.org/draft/#sec-Values-of-Correct-Type
+// graphql-js source: src/validation/rules/ValuesOfCorrectTypeRule.ts
+// graphql-js tests: src/validation/__tests__/ValuesOfCorrectTypeRule-test.ts
+
 [SpecSection("5.6.1", "Values of Correct Type")]
-[SpecSection("5.6.2", "Input Object Field Names")]
-[SpecSection("5.6.4", "Input Object Required Fields")]
 public class ValuesOfCorrectTypeConformanceTests : SpecValidationRuleHarness
 {
     public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ValuesOfCorrectType;
 
-    [Fact(Skip = "The graphql-js literal coercion matrix is not yet ported; tracked via follow-up issue.")]
+    [Fact(Skip = "The graphql-js value coercion matrix is not yet ported; tracked via follow-up issue.")]
     public void graphql_js_value_coercion_matrix_is_not_yet_ported()
+    {
+    }
+}
+
+// Spec draft: see SpecMetadata.Version
+// Spec: https://spec.graphql.org/draft/#sec-Input-Object-Field-Names
+// graphql-js source: src/validation/rules/ValuesOfCorrectTypeRule.ts
+// graphql-js tests: src/validation/__tests__/ValuesOfCorrectTypeRule-test.ts
+
+[SpecSection("5.6.2", "Input Object Field Names")]
+public class InputObjectFieldNamesConformanceTests : SpecValidationRuleHarness
+{
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ValuesOfCorrectType;
+
+    [Fact(Skip = "Input object field name validation is not yet ported; tracked via follow-up issue.")]
+    public void input_object_field_name_validation_is_not_yet_ported()
+    {
+    }
+}
+
+// Spec draft: see SpecMetadata.Version
+// Spec: https://spec.graphql.org/draft/#sec-Input-Object-Required-Fields
+// graphql-js source: src/validation/rules/ValuesOfCorrectTypeRule.ts
+// graphql-js tests: src/validation/__tests__/ValuesOfCorrectTypeRule-test.ts
+
+[SpecSection("5.6.4", "Input Object Required Fields")]
+public class InputObjectRequiredFieldsConformanceTests : SpecValidationRuleHarness
+{
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ValuesOfCorrectType;
+
+    [Fact(Skip = "Input object required fields validation is not yet ported; tracked via follow-up issue.")]
+    public void input_object_required_fields_validation_is_not_yet_ported()
     {
     }
 }

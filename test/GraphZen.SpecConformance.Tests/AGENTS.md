@@ -1,343 +1,377 @@
 # AGENTS.md
 
-This directory contains GraphZen's specification conformance suite.
+This directory contains GraphZen's specification conformance suite -- an executable conformance statement that makes it easy to answer what part of the GraphQL spec is represented, enforced, a known gap, or not applicable.
 
-The goal is not just "more tests." The goal is an executable conformance statement that makes it easy to answer:
+## Current State
 
-- what part of the GraphQL spec is represented
-- what part is enforced
-- what part is still a known gap
-- what part is not applicable to GraphZen
+- Only **Chapter 5 (Validation)** has conformance structure. No other chapters have classes or manifest entries yet.
+- **29 validation subsections** are listed in `SpecCoverageManifest.ValidationSections`.
+- All conformance classes are **native conformance classes** extending `SpecValidationRuleHarness` with inline GraphQL and TheoryData.
+- **All negative validation tests are currently skipped** -- the validation rule implementations do not yet reject invalid queries. Positive tests pass.
+- The project depends on `GraphZen.Tests` for `ValidationRuleHarness` and its shared `TestSchema`.
+- Spec draft version is centralized in `Infrastructure/SpecMetadata.cs`.
 
-## Primary Quality Attributes
+## Running Tests
 
-Every conformance test should optimize for:
+```sh
+# all conformance tests
+dotnet test --project test/GraphZen.SpecConformance.Tests/
 
-- **Traceability**: each class and test maps to a concrete spec section and, where possible, a specific normative statement
-- **Readability**: the tests should read close to the spec and close to GraphQL examples, not like framework plumbing
-- **Normative fidelity**: assertions should reflect required observable behavior, not inferred internal implementation details
-- **Gap visibility**: missing coverage, skipped cases, spec ambiguities, and implementation gaps must be explicit
-- **Determinism**: failures and ordering should be stable and easy to compare over time
-- **Reviewability**: diffs should be small, obvious, and clearly tied to spec behavior
-- **Versioned conformance**: the suite must make clear which spec draft and reference cases it aligns with
-- **Implementation independence**: tests should verify externally visible GraphQL behavior, not GraphZen internals
+# all Chapter 5 tests
+dotnet test --project test/GraphZen.SpecConformance.Tests/ --filter "SpecSection=5"
 
-## Project Intent
+# all Fields subsection tests (5.3.x)
+dotnet test --project test/GraphZen.SpecConformance.Tests/ --filter "SpecSection=5.3"
 
-This project should become the canonical home for spec conformance coverage.
+# one exact subsection
+dotnet test --project test/GraphZen.SpecConformance.Tests/ --filter "SpecSection=5.3.3"
+```
 
-- Reusing existing test classes from other test projects is acceptable as an intermediate step
-- The long-term target is a self-contained conformance suite with minimal dependence on legacy test organization
-- Existing tests may be wrapped here for traceability, but new conformance work should prefer native conformance classes in this project
+Hierarchical filtering works because `SpecSectionDiscoverer` expands `"5.3.3"` into traits for `"5"`, `"5.3"`, and `"5.3.3"`.
+
+## Adding a Conformance Class (Step by Step)
+
+This is the most common task. Follow this checklist:
+
+1. **Verify the heading** in the local spec source (e.g., `~/Code/graphql/graphql-spec/spec/Section 5 -- Validation.md`). Do not invent headings from memory.
+2. **Derive the section number** from the spec website at `https://spec.graphql.org/draft/`. The source markdown uses `##`/`###`/`####` headings without explicit numbers -- the website renders them. Count headings to derive numbers like `5.3.3`.
+3. **Identify the graphql-js validation rule and test file** in `~/Code/graphql/graphql-js/src/validation/` for upstream case names and intent.
+4. **Create the class** in the correct folder and namespace (see Mapping Rules below).
+5. **Set `RuleUnderTest`** to the appropriate `QueryValidationRules.*` value (see Available Rules below).
+6. **Add valid and invalid query cases** using the TheoryData pattern (see Test Patterns below).
+7. **Add the section number** to `SpecCoverageManifest.ValidationSections` if not already present.
+8. **Run the section tests** to verify: `dotnet test --filter "SpecSection=X.Y.Z"`
+9. **Run the coverage test** to check manifest consistency: `dotnet test --filter "FullyQualifiedName~ValidationCoverageTests"`
 
 ## Specification Sources
 
-When mapping tests to the GraphQL specification, use these sources explicitly:
+This suite tracks the **working draft** of the GraphQL specification, not a published edition. The latest published edition is September 2025, but we target the draft so conformance work stays current with spec evolution. The spec draft version is recorded in `Infrastructure/SpecMetadata.cs`.
 
-- website draft: `https://spec.graphql.org/draft/`
-- website index: `https://spec.graphql.org/`
-- local spec repository clone: `~/Code/graphql/graphql-spec`
-- upstream spec repository: `https://github.com/graphql/graphql-spec`
-- local `graphql-js` repository clone: `~/Code/graphql/graphql-js`
-- upstream `graphql-js` repository: `https://github.com/graphql/graphql-js`
+- **Spec website (draft):** `https://spec.graphql.org/draft/` -- canonical section numbers, headings, and deep links
+- **Spec website (index):** `https://spec.graphql.org/`
+- **Local spec clone:** `~/Code/graphql/graphql-spec` -- source markdown, exact wording, repository history
+- **Upstream spec repo:** `https://github.com/graphql/graphql-spec` -- for linking in PRs
+- **Local graphql-js clone:** `~/Code/graphql/graphql-js` -- reference implementation behavior, upstream tests
+- **Upstream graphql-js repo:** `https://github.com/graphql/graphql-js` -- for linking in PRs
 
 Use them for different purposes:
 
-- prefer the spec website for canonical section numbers, headings, and navigation
-- prefer the local `graphql-spec` clone for source markdown, exact wording, and repository history
-- use the upstream GitHub repository when linking source files, issues, pull requests, or commits for reviewer context
-- prefer the local `graphql-js` clone when tracing reference implementation behavior, locating upstream tests, or checking how a spec rule is exercised in practice
-- use the upstream `graphql-js` repository when linking reference implementation source files, test cases, issues, pull requests, or commits for reviewer context
+- Prefer the spec website for canonical section numbers, headings, and deep-link URLs.
+- Prefer the local spec clone for exact wording and markdown source.
+- Prefer the local graphql-js clone for tracing how a spec rule is exercised in practice.
+- Use the upstream GitHub repositories when linking source files or issues for reviewer context.
 
-Do not invent section names or subsection structure from memory when the website or spec repo can be checked directly.
+**Section numbering note:** The spec source markdown does not contain explicit numeric section numbers. Numbers like `5.3.3` are derived from heading order within each chapter file (first `##` = X.1, second `##` = X.2; first `###` under X.3 = X.3.1, etc.). The spec website renders these numbers. Always verify against the website or by counting headings in the source -- do not guess.
 
-## Folder and Namespace Layout
+### Spec Website Deep Links
 
-Mirror the GraphQL specification hierarchy as directly as possible.
+Every conformance class should include a direct URL to its spec subsection. The URL format is:
 
-- Prefer `Section2_Language`, `Section3_TypeSystem`, `Section4_Introspection`, `Section5_Validation`, `Section6_Execution`, and `Section7_Response`
-- Within each section, mirror the spec subsection structure in folders, namespaces, and class names
-- Prefer one conformance class per spec subsection
-- Prefer one test method per normative rule, allowance, prohibition, or example
+```
+https://spec.graphql.org/draft/#sec-{Heading-With-Hyphens}
+```
 
-If a subsection is not yet implemented, represent it explicitly with a placeholder class or coverage manifest entry instead of leaving it invisible.
-
-### Required Mapping Rules
-
-The mapping from specification to code should be explicit and predictable:
-
-- folder maps to spec chapter or subsection group
-- namespace maps to the same chapter or subsection group as the folder
-- class maps to one exact spec subsection
-- method maps to one exact normative statement, allowance, prohibition, algorithm branch, or worked example
-
-The intended shape is:
-
-- folder: `Section5_Validation/Fields/`
-  maps to spec Chapter 5 and the `Fields` subsection group
-- namespace: `GraphZen.SpecConformance.Tests.Section5_Validation.Fields`
-  maps to the same group as the folder
-- class: `FieldSelectionsConformanceTests`
-  maps to one exact subsection such as `5.3.1 Field Selections`
-- method: `object_field_selection_is_valid()`
-  maps to one exact rule or example inside that subsection
-
-### Naming Rules
-
-Use names that make the spec correspondence obvious without opening the body:
-
-- folders should use spec-oriented group names, not GraphZen implementation names
-- namespaces should match folders exactly
-- classes should be named after the subsection heading, suffixed with `ConformanceTests`
-- methods should read like executable spec prose and describe one specific claim
+Spaces in the heading become hyphens. When a subsection heading is ambiguous (appears under multiple parents), the anchor is prefixed with the parent section name using a dot separator.
 
 Examples:
 
-- `Section2_Language/SelectionSets/SelectionSetConformanceTests.cs`
-- `GraphZen.SpecConformance.Tests.Section2_Language.SelectionSets`
-- `[SpecSection("2.5", "Selection Sets")]`
-- `selection_set_may_contain_fields_and_fragments()`
+| Spec heading | URL |
+|---|---|
+| Leaf Field Selections | `https://spec.graphql.org/draft/#sec-Leaf-Field-Selections` |
+| Field Selection Merging | `https://spec.graphql.org/draft/#sec-Field-Selection-Merging` |
+| All Variable Usages Are Allowed | `https://spec.graphql.org/draft/#sec-All-Variable-Usages-Are-Allowed` |
+| Fragments (under Language) | `https://spec.graphql.org/draft/#sec-Language.Fragments` |
+| Custom Scalars (under Scalars) | `https://spec.graphql.org/draft/#sec-Scalars.Custom-Scalars` |
+| Input Coercion (under Input Objects) | `https://spec.graphql.org/draft/#sec-Input-Objects.Input-Coercion` |
 
-- `Section6_Execution/FieldExecution/FieldExecutionConformanceTests.cs`
-- `GraphZen.SpecConformance.Tests.Section6_Execution.FieldExecution`
-- `[SpecSection("6.4", "Executing Fields")]`
-- `field_errors_produce_null_at_the_response_position()`
+When in doubt, check the cross-references in the local spec source (e.g., `grep '#sec-' ~/Code/graphql/graphql-spec/spec/*.md`) or navigate to the heading on the spec website and copy the anchor from the URL bar.
 
-Avoid names like:
+## Mapping Rules
 
-- `ExecutorTests`
-- `ParserTests`
-- `KnownTypeNamesTests`
+The mapping from specification to code must be explicit and predictable:
 
-unless they are temporary wrappers around legacy tests. Native conformance classes should prefer spec language over implementation rule names.
+| Artifact | Maps to |
+|---|---|
+| folder | spec chapter or subsection group |
+| namespace | same as folder |
+| class | one exact spec subsection |
+| method | one normative statement, allowance, prohibition, or example |
 
-### Wrapper vs Native Rule
+### Concrete Example
 
-If a class is only wrapping an existing legacy test class:
+For spec subsection `5.3.3 Leaf Field Selections`:
 
-- the wrapper class still must map to one exact spec subsection
-- the wrapper class name should be spec-oriented even if the inherited class is not
-- the wrapper should be treated as transitional structure, not the desired end state
+| Artifact | Value |
+|---|---|
+| spec URL | `https://spec.graphql.org/draft/#sec-Leaf-Field-Selections` |
+| file path | `Section5_Validation/Fields/LeafFieldSelectionsConformanceTests.cs` |
+| namespace | `GraphZen.SpecConformance.Tests.Section5_Validation.Fields` |
+| class name | `LeafFieldSelectionsConformanceTests` |
+| attribute | `[SpecSection("5.3.3", "Leaf Field Selections")]` |
+| spec source | `~/Code/graphql/graphql-spec/spec/Section 5 -- Validation.md` |
+| graphql-js tests | `~/Code/graphql/graphql-js/src/validation/__tests__/ScalarLeafsRule-test.ts` |
 
-For new work, prefer native conformance classes in this project over wrappers.
+If the file path, namespace, class name, and attribute disagree about which subsection is represented, fix the structure.
 
-## Metadata and Traceability
+### Naming
 
-Every conformance class must declare explicit spec metadata.
+- Chapter folders: `Section2_Language`, `Section3_TypeSystem`, `Section4_Introspection`, `Section5_Validation`, `Section6_Execution`, `Section7_Response`
+- Subsection folders: spec-oriented group names (e.g., `Fields/`, `Arguments/`), not implementation names
+- Classes: named after the subsection heading, suffixed with `ConformanceTests`
+- Methods: snake_case, read like executable spec prose (e.g., `object_field_selection_is_valid()`)
 
-- Use `SpecSection` attributes for the exact subsection being represented
-- Preserve hierarchical filtering support so broader section filters still work
-- Keep the current spec draft version centralized in shared infrastructure
-- Where a case comes from `graphql-js`, preserve the upstream case intent and, when practical, the original case name
-- If a test is skipped, it must state why and should reference a follow-up issue
+Avoid implementation-oriented names like `ExecutorTests` or `ParserTests`.
 
-Preferred metadata to preserve in code or adjacent documentation:
-
-- spec draft version
-- exact spec subsection
-- exact subsection heading from the spec website or source markdown
-- upstream `graphql-js` source file
-- upstream test case name
-- status: `implemented`, `known_gap`, `not_applicable`, or `spec_ambiguity`
-
-### Concrete Metadata Guidance
-
-Use the smallest number of locations that keep the metadata obvious at review time.
-
-- before naming a class or assigning a `SpecSection`, confirm the subsection heading in the local spec source, not from memory
-- for example, `~/Code/graphql/graphql-spec/spec/Section 5 -- Validation.md` currently contains:
-- `### Field Selections`
-- `### Field Selection Merging`
-- `### Leaf Field Selections`
-- keep the spec draft version centralized in `GraphZen.SpecConformance.Tests.Infrastructure.SpecMetadata.Version`
-- keep the exact subsection number and heading on the class with `SpecSection`
-- keep `graphql-js` source file, upstream case name, and status either:
-- in a short class header comment when the whole class shares the same provenance and status
-- in an adjacent manifest or coverage file when the class mixes multiple upstream cases or statuses
-- in a method-level comment only when one method materially differs from the rest of the class
-
-Preferred future-state shape for one exact subsection:
+### `SpecSection` Attribute
 
 ```csharp
-// Spec draft: draft-2026-04-02 (see SpecMetadata.Version)
-// Spec subsection: 5.3.3
-// Spec heading: Leaf Field Selections
-// Spec source: spec/Section 5 -- Validation.md
+[SpecSection("5.3.3", "Leaf Field Selections")]
+```
+
+The first parameter is the section number. The second parameter is the spec heading. (Note: the second parameter is named `rule` in the attribute source code, but is used for the heading in practice throughout the codebase.)
+
+### Header Comment
+
+Every conformance class must include a header comment block before the namespace declaration with these fields:
+
+- spec URL (deep link to the exact subsection on the spec website)
+- graphql-js source file and test file
+
+The spec draft version is centralized in `Infrastructure/SpecMetadata.cs` -- reference it via `see SpecMetadata.Version` rather than repeating the version per-class.
+
+```csharp
+// Spec draft: see SpecMetadata.Version
+// Spec: https://spec.graphql.org/draft/#sec-Leaf-Field-Selections
 // graphql-js source: src/validation/rules/ScalarLeafsRule.ts
 // graphql-js tests: src/validation/__tests__/ScalarLeafsRule-test.ts
-// graphql-js case(s): "valid scalar selection", "object type missing selection"
-// Status: implemented
+```
+
+A reviewer should be able to click the spec URL and land on the exact subsection, without searching the repository or manually navigating the spec website.
+
+### Multi-Section Classes
+
+Do not use multiple `[SpecSection]` attributes on a single class. Each conformance class must map to exactly one spec subsection. If an existing class has multiple attributes, split it into separate classes.
+
+### Sub-Subsection Handling
+
+Some spec subsections contain further sub-subsections. For example, section 5.5.2.3 "Fragment Spread Is Possible" has sub-subsections 5.5.2.3.1 through 5.5.2.3.5 ("Object Spreads In Object Scope", "Abstract Spreads in Object Scope", etc.). The manifest lists only the parent subsection (`5.5.2.3`), and a single conformance class covers the entire subsection including all of its children. Do not create separate manifest entries or conformance classes for individual sub-subsections -- fold their test cases into the parent class.
+
+## Test Patterns
+
+### Native Conformance Class
+
+The standard pattern for a native conformance class with multiple test cases:
+
+```csharp
+using GraphZen.LanguageModel.Validation;
+using GraphZen.QueryEngine.Validation;
+using GraphZen.SpecConformance.Tests.Infrastructure;
+
+// Spec draft: see SpecMetadata.Version
+// Spec: https://spec.graphql.org/draft/#sec-Leaf-Field-Selections
+// graphql-js source: src/validation/rules/ScalarLeafsRule.ts
+// graphql-js tests: src/validation/__tests__/ScalarLeafsRule-test.ts
 
 namespace GraphZen.SpecConformance.Tests.Section5_Validation.Fields;
 
 [SpecSection("5.3.3", "Leaf Field Selections")]
 public class LeafFieldSelectionsConformanceTests : SpecValidationRuleHarness
 {
-    // ...
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ScalarLeafs;
+
+    public static TheoryData<string, string> ValidQueries { get; } = new()
+    {
+        {
+            "valid_scalar_selection",
+            """
+            fragment scalarSelection on Dog {
+              barks
+            }
+            """
+        },
+    };
+
+    public static TheoryData<string, string, int> InvalidQueries { get; } = new()
+    {
+        {
+            "object_type_missing_selection",
+            """
+            query directQueryOnObjectWithoutSubFields {
+              human
+            }
+            """,
+            1
+        },
+    };
+
+    [Theory]
+    [MemberData(nameof(ValidQueries))]
+    public void valid_scalar_leaf_queries_pass(string caseName, string query)
+    {
+        Assert.False(string.IsNullOrWhiteSpace(caseName));
+        QueryShouldPass(query);
+    }
+
+    [Theory(Skip = "Negative scalar leaf validation cases are a conformance gap tracked in follow-up issue.")]
+    [MemberData(nameof(InvalidQueries))]
+    public void invalid_scalar_leaf_queries_fail(string caseName, string query, int errorCount)
+    {
+        Assert.False(string.IsNullOrWhiteSpace(caseName));
+        QueryShouldFail(query, errorCount);
+    }
 }
 ```
 
-If the class is a transitional wrapper around an existing legacy rule suite, be explicit about that instead of pretending it is already in final form:
+Key conventions:
+
+- `TheoryData<string, string>` for valid queries: `(caseName, query)`
+- `TheoryData<string, string, int>` for invalid queries: `(caseName, query, errorCount)`
+- `[Theory] [MemberData(nameof(ValidQueries))]` to wire up test data
+- For subsections with only 1-2 cases, use `[Fact]` instead of TheoryData
+- Keep GraphQL documents as formatted raw string literals, not compressed single-line strings
+
+### Gap Placeholder
+
+When a subsection is in the manifest but not yet implemented:
 
 ```csharp
-// Transitional wrapper around an implementation-named legacy suite.
-// Spec draft: draft-2026-04-02 (see SpecMetadata.Version)
-// Spec subsection: 5.3.3
-// Spec heading: Leaf Field Selections
-// Spec source: spec/Section 5 -- Validation.md
-// graphql-js source: src/validation/rules/ScalarLeafsRule.ts
-// graphql-js tests: src/validation/__tests__/ScalarLeafsRule-test.ts
-// Status: known_gap
+using GraphZen.LanguageModel.Validation;
+using GraphZen.QueryEngine.Validation;
+using GraphZen.SpecConformance.Tests.Infrastructure;
+
+// Spec draft: see SpecMetadata.Version
+// Spec: https://spec.graphql.org/draft/#sec-Field-Selection-Merging
+// graphql-js source: src/validation/rules/OverlappingFieldsCanBeMergedRule.ts
+// graphql-js tests: src/validation/__tests__/OverlappingFieldsCanBeMergedRule-test.ts
 
 namespace GraphZen.SpecConformance.Tests.Section5_Validation.Fields;
 
-[SpecSection("5.3.3", "Leaf Field Selections")]
-public class ScalarLeafsConformanceTests : SpecValidationRuleHarness
+[SpecSection("5.3.2", "Field Selection Merging")]
+public class FieldSelectionMergingConformanceTests : SpecValidationRuleHarness
 {
-    // ...
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.OverlappingFieldsCanBeMerged;
+
+    [Fact(Skip = "Broader graphql-js overlap-port remains a conformance gap; tracked via follow-up issue.")]
+    public void graphql_js_overlap_matrix_is_not_yet_ported()
+    {
+    }
 }
 ```
 
-The point is not the exact comment format. The point is that a reviewer should be able to answer all six metadata questions without searching the whole repository.
+### Skip Message Convention
 
-Every represented subsection should be traceable in all four places:
+Every skipped test must explain the gap. Use this pattern:
 
-- the file path
-- the namespace
-- the class name
-- the `SpecSection` attribute
+```
+[Fact(Skip = "Description of the gap; tracked via follow-up issue.")]
+[Theory(Skip = "Negative X validation cases are a conformance gap tracked in follow-up issue.")]
+```
 
-### Concrete Traceability Example
+The message should describe whether the gap is an implementation gap, incomplete port, spec ambiguity, or non-applicable case.
 
-For spec subsection `5.3.3 Leaf Field Selections`, the preferred mapping is:
+### Harness API
 
-- file path: `test/GraphZen.SpecConformance.Tests/Section5_Validation/Fields/LeafFieldSelectionsConformanceTests.cs`
-- namespace: `GraphZen.SpecConformance.Tests.Section5_Validation.Fields`
-- class name: `LeafFieldSelectionsConformanceTests`
-- attribute: `[SpecSection("5.3.3", "Leaf Field Selections")]`
-- spec source to verify the heading: `~/Code/graphql/graphql-spec/spec/Section 5 -- Validation.md`
-- upstream reference tests for case names: `~/Code/graphql/graphql-js/src/validation/__tests__/ScalarLeafsRule-test.ts`
+`SpecValidationRuleHarness` extends `ValidationRuleHarness` and provides these methods:
 
-That gives a reviewer a straight path:
+| Method | Use when |
+|---|---|
+| `QueryShouldPass(string query)` | Query should produce zero validation errors against TestSchema |
+| `QueryShouldPass(Schema schema, string query)` | Same, but against a custom schema |
+| `QueryShouldFail(string query)` | Query should produce at least one error against TestSchema |
+| `QueryShouldFail(string query, int errorCount)` | Query should produce exactly N errors against TestSchema |
+| `QueryShouldFail(Schema schema, string query)` | At least one error against a custom schema |
+| `QueryShouldFail(Schema schema, string query, int errorCount)` | Exactly N errors against a custom schema |
 
-- `Section5_Validation` tells them the spec chapter
-- `Fields` tells them the subsection group
-- `LeafFieldSelectionsConformanceTests` tells them the exact subsection heading
-- `SpecSection("5.3.3", "Leaf Field Selections")` confirms the canonical subsection number and heading
+The inherited `RuleUnderTest` property (abstract on `ValidationRuleHarness`) determines which single validation rule is exercised. Set it via:
+```csharp
+public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.ScalarLeafs;
+```
 
-If one of those four says `FieldsOnCorrectType`, another says `LeafFieldSelections`, and the attribute says `5.3.3`, the structure is wrong even if the assertions are useful. Rename or split the tests until the mapping is unambiguous.
+### Available Validation Rules
 
-### Transitional Multi-Section Classes
+These are the `QueryValidationRules.*` values available for `RuleUnderTest`:
 
-Some current wrapper classes still represent more than one subsection by carrying multiple `SpecSection` attributes. Treat that as temporary migration structure, not the desired steady state.
+`ExecutableDefinitions`, `FieldsOnCorrectType`, `FragmentsOnCompositeTypes`, `KnownArgumentNames`, `KnownDirectives`, `KnownFragmentNames`, `KnownTypeNames`, `LoneAnonymousOperation`, `NoFragmentCycles`, `NoUndefinedVariables`, `NoUnusedFragments`, `NoUnusedVariables`, `OverlappingFieldsCanBeMerged`, `PossibleFragmentSpreads`, `ProvidedRequiredArguments`, `ScalarLeafs`, `SingleFieldSubscriptions`, `UniqueArgumentNames`, `UniqueDirectivesPerLocation`, `UniqueFragmentNames`, `UniqueInputFieldNames`, `UniqueOperationNames`, `UniqueVariableNames`, `ValuesOfCorrectType`, `VariablesAreInputTypes`, `VariablesInAllowedPosition`
 
-- acceptable short term: one wrapper class with multiple `SpecSection` attributes while coverage is being lifted into this project
-- preferred end state: split into one class per exact subsection
-- when touching a multi-section wrapper for substantive new conformance work, prefer splitting it rather than adding more mixed coverage
+## Coverage Manifest
 
-Adjacent documentation or coverage manifests should follow the same exact subsection identity as the class they describe.
+`Infrastructure/SpecCoverageManifest.cs` lists every spec subsection that should have a conformance class. Currently it contains only `ValidationSections` (Chapter 5).
 
-If those four representations disagree, fix the structure rather than relying on comments to explain it.
+`Infrastructure/ValidationCoverageTests.cs` uses reflection to discover all `[SpecSection]` attributes in the assembly and fails the build if any manifest entry lacks a corresponding class.
 
-## Readability Standards
+When adding a new subsection:
 
-Conformance tests should read like executable spec text.
+1. Add the section number to `SpecCoverageManifest.ValidationSections`
+2. Create the conformance class (native conformance class or gap placeholder)
+3. Run `dotnet test --filter "FullyQualifiedName~ValidationCoverageTests"` to verify consistency
 
-- Name classes and methods in language that matches the spec, not local implementation jargon
-- Keep GraphQL documents formatted as real GraphQL, not compressed string blobs
-- Prefer short, section-local helpers over deep abstraction stacks
-- Avoid helpers that hide the actual GraphQL input or expected outcome
+The manifest must never silently drift from the actual test surface.
+
+### Known Exclusions
+
+Some spec subsections are intentionally absent from the manifest because GraphZen does not have a corresponding validation rule. These are documented here so agents do not attempt to add them:
+
+- **5.2.1.1 "Operation Type Existence"** -- GraphZen does not implement this as a standalone validation rule.
+
+If you encounter a spec subsection without a manifest entry, check this list before adding it. If the subsection is not listed here and is genuinely missing, add it to the manifest and create a conformance class or gap placeholder.
+
+## Quality Standards
+
+- **Traceability**: every class and test maps to a concrete spec section
+- **Readability**: tests should read like the spec, not framework plumbing
+- **Normative fidelity**: assert observable GraphQL behavior (results, errors, nullability), not internal implementation
+- **Gap visibility**: missing coverage must be explicit -- never silently absent
+- **Determinism**: failures must be stable and reproducible
+- **Implementation independence**: tests verify GraphQL behavior, not GraphZen internals
+
+### Test Design
+
+- One test should prove one thing (one rule allowed, one rule rejected)
+- Avoid "kitchen sink" tests unless the spec itself tests composition
+- Separate positive, negative, and edge-case coverage clearly
+- Do not assert internal GraphZen classes or visitors in conformance tests
+- Keep GraphQL inputs visible in the test -- avoid helpers that hide the query or expected outcome
 - Repeat simple setup if it makes the rule easier to understand
-- Comments should explain intent only when the spec nuance is not obvious from the test itself
 
-The reader should usually understand the rule and expected behavior without opening product code.
+### Fixtures and Schemas
 
-Where practical, a reviewer should also be able to line up:
+Most validation tests use the shared `TestSchema` from `ValidationRuleHarness`. Introduce a section-local schema when a rule needs a smaller or clearer setup. Do not force every section through one global mega-schema if it hurts readability. Long-term, the conformance project should own its own minimal fixtures.
 
-- the subsection heading in the spec website
-- the conformance class name
-- the individual method names
+`TestSchema` (defined in `ValidationRuleHarness`) includes:
 
-without translation.
+- **Interfaces**: Being, Pet, Canine, Intelligent
+- **Objects**: Dog, Cat, Human, Alien, ComplicatedArgs, QueryRoot
+- **Unions**: CatOrDog, DogOrHuman, HumanOrAlien
+- **Enums**: DogCommand, FurColor
+- **Input Objects**: ComplexInput
+- **Custom Scalars**: Invalid, Any
+- **Directives**: onQuery, onMutation, onSubscription, onField, onFragmentDefinition, onFragmentSpread, onInlineFragment
 
-## Test Design Rules
+QueryRoot exposes fields for `human`, `alien`, `cat`, `pet`, `catOrDog`, `dogOrHuman`, `humanOrAlien`, `complicatedArgs`, `invalidArg`, and `anyArg`.
 
-Prefer tests with a single clear responsibility.
+### Review Standards
 
-- A positive test should usually prove one thing is allowed
-- A negative test should usually prove one thing is rejected
-- Avoid broad "kitchen sink" tests unless the spec itself is testing composition
-- Separate positive, negative, edge-case, and not-applicable coverage clearly
-- Assert observable GraphQL behavior only: results, errors, nullability, ordering guarantees if required, and schema shape
+- Organize PR changes by spec area, not by incidental helper edits
+- Avoid mixing large unrelated refactors into conformance work
+- Keep infrastructure small and general
 
-Do not write conformance tests that assert internal GraphZen classes, visitors, or intermediate structures unless the section is explicitly about language or syntax objects.
+## Porting from graphql-js
 
-## Shared Fixtures and Harnesses
+When porting upstream test cases:
 
-Harnesses should compress repetition without obscuring meaning.
+- Preserve the original intent before adapting style
+- Keep one C# test close to one upstream case unless combining materially improves clarity
+- Keep case names recognizable
+- Do not port reference implementation quirks that aren't required by the spec
+- Mark cases that are reference-only or not applicable to GraphZen
 
-- Prefer canonical shared schemas only when they are already widely recognized and documented
-- Keep shared schemas minimal and spec-oriented
-- Introduce section-local schemas when a rule needs a smaller or clearer setup
-- Do not force every section through one global mega-schema if it hurts readability
-- Failure diagnostics should include the spec section and preserve enough context to understand the mismatch quickly
+## Project Intent
 
-Long term:
+This project should become the canonical home for spec conformance coverage. The desired end state:
 
-- Section-specific harnesses are preferred over one catch-all harness
-- The conformance project should own its own minimal fixtures where possible
-
-## Coverage and Reporting
-
-Coverage must be machine-reportable.
-
-The suite should be able to distinguish:
-
-- represented and passing
-- represented and failing
-- represented but skipped
-- not yet represented
-- not applicable
-
-The coverage manifest should never silently drift away from the actual test surface.
-
-- Keep section manifests explicit
-- Prefer generated reports over hand-maintained checklists when practical
-- A reviewer should be able to answer "what percent of Section X is enforced?" without manual counting
-
-## Skips, Gaps, and Follow-Up Work
-
-Skips are allowed only when they make the gap clearer, not easier to ignore.
-
-- Every skip must describe whether it is an implementation gap, incomplete port, spec ambiguity, or non-applicable case
-- Every intentional skip should link to a follow-up issue
-- Placeholder tests should be used to represent known uncovered subsections, not to fake conformance
-- Do not change GraphZen implementation solely to make a weak conformance test pass
-- Do not weaken a test just to get green CI if the spec behavior is still missing
-
-Green with skips is acceptable only when the skips are explicit and actionable.
-
-## Upstream Porting Guidance
-
-When porting from `graphql-js`:
-
-- preserve the original intent before adapting style
-- keep one C# test close to one upstream case unless combining them materially improves clarity
-- keep case names recognizable
-- do not port reference implementation quirks that are not required by the spec
-- mark cases that are reference-only or not applicable to GraphZen
-
-## Review Standards
-
-A conformance PR should be easy to review by section.
-
-- organize changes by spec area, not by incidental helper edits
-- avoid mixing large unrelated refactors into conformance work
-- keep new infrastructure small and general
-- prefer obvious test placement over clever reuse
-
-The desired end state is:
-
-- the directory reads like an executable appendix to the GraphQL spec
-- the coverage report reads like a conformance statement
-- gaps are impossible to miss
+- The directory reads like an executable appendix to the GraphQL spec
+- The coverage report reads like a conformance statement
+- Gaps are impossible to miss
+- One conformance class per exact spec subsection
+- Every subsection not yet implemented is represented as an explicit placeholder or manifest entry
+- Chapters beyond Validation (Language, Type System, Introspection, Execution, Response) are represented with the same structure
