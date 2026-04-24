@@ -1,21 +1,13 @@
 ﻿// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using GraphZen.Infrastructure;
-using JetBrains.Annotations;
 
 namespace GraphZen;
 
 public class GraphQLClient : IGraphQLClient
 {
-    public GraphQLClient(HttpClient httpClient)
-    {
-        HttpClient = httpClient;
-    }
+    public GraphQLClient(HttpClient httpClient) => HttpClient = httpClient;
 
     public HttpClient HttpClient { get; }
 

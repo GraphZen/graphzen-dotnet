@@ -1,11 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using GraphZen.Infrastructure;
-using JetBrains.Annotations;
-
 /* MIT License
 
 Copyright (c) 2016 JetBrains http://www.jetbrains.com
@@ -29,6 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
 // ReSharper disable InheritdocConsiderUsage
+
+using GraphZen.Infrastructure;
 
 #pragma warning disable 1591
 // ReSharper disable UnusedMember.Global
@@ -63,10 +60,7 @@ internal sealed class StringFormatMethodAttribute : Attribute
     /// <param name="formatParameterName">
     ///     Specifies which parameter of an annotated method should be treated as the format string
     /// </param>
-    public StringFormatMethodAttribute(string formatParameterName)
-    {
-        FormatParameterName = formatParameterName;
-    }
+    public StringFormatMethodAttribute(string formatParameterName) => FormatParameterName = formatParameterName;
 
     public string FormatParameterName { get; }
 }
@@ -105,10 +99,7 @@ internal sealed class StringFormatMethodAttribute : Attribute
     AllowMultiple = true)]
 internal sealed class ValueProviderAttribute : Attribute
 {
-    public ValueProviderAttribute(string name)
-    {
-        Name = name;
-    }
+    public ValueProviderAttribute(string name) => Name = name;
 
     public string Name { get; }
 }
@@ -195,10 +186,7 @@ internal sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
     {
     }
 
-    public NotifyPropertyChangedInvocatorAttribute(string parameterName)
-    {
-        ParameterName = parameterName;
-    }
+    public NotifyPropertyChangedInvocatorAttribute(string parameterName) => ParameterName = parameterName;
 
     public string? ParameterName { get; }
 }
@@ -296,10 +284,7 @@ internal sealed class LocalizationRequiredAttribute : Attribute
     {
     }
 
-    public LocalizationRequiredAttribute(bool required)
-    {
-        Required = required;
-    }
+    public LocalizationRequiredAttribute(bool required) => Required = required;
 
     public bool Required { get; }
 }
@@ -348,10 +333,7 @@ internal sealed class CannotApplyEqualityOperatorAttribute : Attribute
 [BaseTypeRequired(typeof(Attribute))]
 internal sealed class BaseTypeRequiredAttribute : Attribute
 {
-    public BaseTypeRequiredAttribute(Type baseType)
-    {
-        BaseType = baseType;
-    }
+    public BaseTypeRequiredAttribute(Type baseType) => BaseType = baseType;
 
     public Type BaseType { get; }
 }
@@ -479,10 +461,7 @@ internal sealed class PublicAPIAttribute : Attribute
     {
     }
 
-    public PublicAPIAttribute(string comment)
-    {
-        Comment = comment;
-    }
+    public PublicAPIAttribute(string comment) => Comment = comment;
 
     public string? Comment { get; }
 }
@@ -533,10 +512,7 @@ internal sealed class MustUseReturnValueAttribute : Attribute
     {
     }
 
-    public MustUseReturnValueAttribute(string justification)
-    {
-        Justification = justification;
-    }
+    public MustUseReturnValueAttribute(string justification) => Justification = justification;
 
     public string? Justification { get; }
 }
@@ -577,10 +553,7 @@ internal sealed class PathReferenceAttribute : Attribute
     {
     }
 
-    public PathReferenceAttribute([PathReference] string basePath)
-    {
-        BasePath = basePath;
-    }
+    public PathReferenceAttribute([PathReference] string basePath) => BasePath = basePath;
 
     public string? BasePath { get; }
 }
@@ -671,10 +644,7 @@ internal sealed class MacroAttribute : Attribute
     true)]
 internal sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
 {
-    public AspMvcAreaMasterLocationFormatAttribute(string format)
-    {
-        Format = format;
-    }
+    public AspMvcAreaMasterLocationFormatAttribute(string format) => Format = format;
 
     public string Format { get; }
 }
@@ -683,10 +653,7 @@ internal sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
     true)]
 internal sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
 {
-    public AspMvcAreaPartialViewLocationFormatAttribute(string format)
-    {
-        Format = format;
-    }
+    public AspMvcAreaPartialViewLocationFormatAttribute(string format) => Format = format;
 
     public string Format { get; }
 }
@@ -695,10 +662,7 @@ internal sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
     true)]
 internal sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
 {
-    public AspMvcAreaViewLocationFormatAttribute(string format)
-    {
-        Format = format;
-    }
+    public AspMvcAreaViewLocationFormatAttribute(string format) => Format = format;
 
     public string Format { get; }
 }
@@ -707,10 +671,7 @@ internal sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
     true)]
 internal sealed class AspMvcMasterLocationFormatAttribute : Attribute
 {
-    public AspMvcMasterLocationFormatAttribute(string format)
-    {
-        Format = format;
-    }
+    public AspMvcMasterLocationFormatAttribute(string format) => Format = format;
 
     public string Format { get; }
 }
@@ -719,10 +680,7 @@ internal sealed class AspMvcMasterLocationFormatAttribute : Attribute
     true)]
 internal sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
 {
-    public AspMvcPartialViewLocationFormatAttribute(string format)
-    {
-        Format = format;
-    }
+    public AspMvcPartialViewLocationFormatAttribute(string format) => Format = format;
 
     public string Format { get; }
 }
@@ -731,10 +689,7 @@ internal sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
     true)]
 internal sealed class AspMvcViewLocationFormatAttribute : Attribute
 {
-    public AspMvcViewLocationFormatAttribute(string format)
-    {
-        Format = format;
-    }
+    public AspMvcViewLocationFormatAttribute(string format) => Format = format;
 
     public string Format { get; }
 }
@@ -753,10 +708,7 @@ internal sealed class AspMvcActionAttribute : Attribute
     {
     }
 
-    public AspMvcActionAttribute(string anonymousProperty)
-    {
-        AnonymousProperty = anonymousProperty;
-    }
+    public AspMvcActionAttribute(string anonymousProperty) => AnonymousProperty = anonymousProperty;
 
     public string? AnonymousProperty { get; }
 }
@@ -773,10 +725,7 @@ internal sealed class AspMvcAreaAttribute : Attribute
     {
     }
 
-    public AspMvcAreaAttribute(string anonymousProperty)
-    {
-        AnonymousProperty = anonymousProperty;
-    }
+    public AspMvcAreaAttribute(string anonymousProperty) => AnonymousProperty = anonymousProperty;
 
     public string? AnonymousProperty { get; }
 }
@@ -795,10 +744,7 @@ internal sealed class AspMvcControllerAttribute : Attribute
     {
     }
 
-    public AspMvcControllerAttribute(string anonymousProperty)
-    {
-        AnonymousProperty = anonymousProperty;
-    }
+    public AspMvcControllerAttribute(string anonymousProperty) => AnonymousProperty = anonymousProperty;
 
     public string? AnonymousProperty { get; }
 }
@@ -927,10 +873,7 @@ internal sealed class HtmlElementAttributesAttribute : Attribute
     {
     }
 
-    public HtmlElementAttributesAttribute(string name)
-    {
-        Name = name;
-    }
+    public HtmlElementAttributesAttribute(string name) => Name = name;
 
     public string? Name { get; }
 }
@@ -938,10 +881,7 @@ internal sealed class HtmlElementAttributesAttribute : Attribute
 [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
 internal sealed class HtmlAttributeValueAttribute : Attribute
 {
-    public HtmlAttributeValueAttribute(string name)
-    {
-        Name = name;
-    }
+    public HtmlAttributeValueAttribute(string name) => Name = name;
 
     public string Name { get; }
 }
@@ -988,10 +928,8 @@ internal sealed class RazorSectionAttribute : Attribute
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Property)]
 internal sealed class CollectionAccessAttribute : Attribute
 {
-    public CollectionAccessAttribute(CollectionAccessType collectionAccessType)
-    {
+    public CollectionAccessAttribute(CollectionAccessType collectionAccessType) =>
         CollectionAccessType = collectionAccessType;
-    }
 
     public CollectionAccessType CollectionAccessType { get; }
 }
@@ -1034,10 +972,7 @@ internal sealed class AssertionMethodAttribute : Attribute
 [AttributeUsage(AttributeTargets.Parameter)]
 internal sealed class AssertionConditionAttribute : Attribute
 {
-    public AssertionConditionAttribute(AssertionConditionType conditionType)
-    {
-        ConditionType = conditionType;
-    }
+    public AssertionConditionAttribute(AssertionConditionType conditionType) => ConditionType = conditionType;
 
     public AssertionConditionType ConditionType { get; }
 }
@@ -1179,10 +1114,7 @@ internal sealed class AspMethodPropertyAttribute : Attribute
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 internal sealed class AspRequiredAttributeAttribute : Attribute
 {
-    public AspRequiredAttributeAttribute(string attribute)
-    {
-        Attribute = attribute;
-    }
+    public AspRequiredAttributeAttribute(string attribute) => Attribute = attribute;
 
     public string Attribute { get; }
 }
@@ -1190,10 +1122,8 @@ internal sealed class AspRequiredAttributeAttribute : Attribute
 [AttributeUsage(AttributeTargets.Property)]
 internal sealed class AspTypePropertyAttribute : Attribute
 {
-    public AspTypePropertyAttribute(bool createConstructorReferences)
-    {
+    public AspTypePropertyAttribute(bool createConstructorReferences) =>
         CreateConstructorReferences = createConstructorReferences;
-    }
 
     public bool CreateConstructorReferences { get; }
 }
@@ -1201,10 +1131,7 @@ internal sealed class AspTypePropertyAttribute : Attribute
 [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
 internal sealed class RazorImportNamespaceAttribute : Attribute
 {
-    public RazorImportNamespaceAttribute(string name)
-    {
-        Name = name;
-    }
+    public RazorImportNamespaceAttribute(string name) => Name = name;
 
     public string Name { get; }
 }
@@ -1226,10 +1153,7 @@ internal sealed class RazorInjectionAttribute : Attribute
 [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
 internal sealed class RazorDirectiveAttribute : Attribute
 {
-    public RazorDirectiveAttribute(string directive)
-    {
-        Directive = directive;
-    }
+    public RazorDirectiveAttribute(string directive) => Directive = directive;
 
     public string Directive { get; }
 }
@@ -1237,10 +1161,7 @@ internal sealed class RazorDirectiveAttribute : Attribute
 [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
 internal sealed class RazorPageBaseTypeAttribute : Attribute
 {
-    public RazorPageBaseTypeAttribute(string baseType)
-    {
-        BaseType = baseType;
-    }
+    public RazorPageBaseTypeAttribute(string baseType) => BaseType = baseType;
 
     public RazorPageBaseTypeAttribute(string baseType, string pageName)
     {

@@ -32,14 +32,14 @@ Key patterns:
 
 ## ReSharper CLI (`dotnet jb`)
 
-Inspection excludes (e.g. `TestResults/`) are configured in `GraphZen.sln.DotSettings`. Cleanup requires `--exclude` (not supported via `.DotSettings`).
+Inspection excludes (e.g. `TestResults/`) are configured in `GraphZen.slnx.DotSettings`. Cleanup requires `--exclude` (not supported via `.DotSettings`).
 
-- **Inspect:** `dotnet jb inspectcode GraphZen.sln -f Text --stdout`
-- **Inspect (warnings+):** `dotnet jb inspectcode GraphZen.sln -e WARNING -f Text --stdout`
-- **Inspect single project:** `dotnet jb inspectcode GraphZen.sln --project "GraphZen.TypeSystem" -f Text --stdout`
-- **Cleanup:** `dotnet jb cleanupcode GraphZen.sln --exclude="**/TestResults/**"`
-- **Cleanup scoped:** `dotnet jb cleanupcode GraphZen.sln --include "src/GraphZen.TypeSystem/**/*.cs"`
-- **Reformat only:** `dotnet jb cleanupcode GraphZen.sln --exclude="**/TestResults/**" --profile "Built-in: Reformat Code"`
+- **Inspect:** `dotnet jb inspectcode GraphZen.slnx -f Text --stdout`
+- **Inspect (warnings+):** `dotnet jb inspectcode GraphZen.slnx -e WARNING -f Text --stdout`
+- **Inspect single project:** `dotnet jb inspectcode GraphZen.slnx --project "GraphZen.TypeSystem" -f Text --stdout`
+- **Cleanup:** `dotnet jb cleanupcode GraphZen.slnx --exclude="**/TestResults/**"`
+- **Cleanup scoped:** `dotnet jb cleanupcode GraphZen.slnx --include "src/GraphZen.TypeSystem/**/*.cs"`
+- **Reformat only:** `dotnet jb cleanupcode GraphZen.slnx --exclude="**/TestResults/**" --profile "Built-in: Reformat Code"`
 
 ## Code Style
 

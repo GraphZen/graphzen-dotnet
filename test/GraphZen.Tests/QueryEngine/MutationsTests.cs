@@ -1,13 +1,8 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
-using JetBrains.Annotations;
-using Xunit;
 
 namespace GraphZen.Tests.QueryEngine;
 
@@ -16,21 +11,14 @@ public class MutationsTests : ExecutorHarness
 {
     public class NumberHolder
     {
-        public NumberHolder(int theNumber)
-        {
-            TheNumber = theNumber;
-        }
+        public NumberHolder(int theNumber) => TheNumber = theNumber;
 
         public int TheNumber { get; set; }
     }
 
     public class Root
     {
-        public Root(int originalNumber)
-
-        {
-            NumberHolder = new NumberHolder(originalNumber);
-        }
+        public Root(int originalNumber) => NumberHolder = new NumberHolder(originalNumber);
 
         public NumberHolder NumberHolder { get; }
 

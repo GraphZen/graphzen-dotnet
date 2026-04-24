@@ -1,13 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using GraphZen.Infrastructure;
-using JetBrains.Annotations;
-
 namespace GraphZen;
 
 public abstract class GraphQLContextOptions :
@@ -15,10 +8,8 @@ public abstract class GraphQLContextOptions :
 {
     private readonly IReadOnlyDictionary<Type, IGraphQLContextOptionsExtension> _extensions;
 
-    protected GraphQLContextOptions(IReadOnlyDictionary<Type, IGraphQLContextOptionsExtension> extensions)
-    {
+    protected GraphQLContextOptions(IReadOnlyDictionary<Type, IGraphQLContextOptionsExtension> extensions) =>
         _extensions = extensions;
-    }
 
     public IEnumerable<IGraphQLContextOptionsExtension> Extensions => _extensions.Values;
 

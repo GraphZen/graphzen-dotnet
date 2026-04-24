@@ -2,12 +2,8 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem;
-using JetBrains.Annotations;
-using Xunit;
 
 namespace GraphZen.Tests.QueryEngine;
 

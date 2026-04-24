@@ -1,18 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Internal;
-using JetBrains.Annotations;
-using Xunit;
 
 namespace GraphZen.Tests.QueryEngine;
 
@@ -45,10 +39,7 @@ public class ExecutorTests : ExecutorHarness
     {
         private readonly Data _data;
 
-        public DeepData(Data data)
-        {
-            _data = data;
-        }
+        public DeepData(Data data) => _data = data;
 
         [UsedImplicitly]
         public string A() => "Already Been Done";
