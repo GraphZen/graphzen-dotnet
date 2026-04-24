@@ -14,8 +14,6 @@ using JetBrains.Annotations;
 using System.Text.Json;
 using Xunit;
 
-#nullable disable
-
 
 namespace GraphZen.Tests.QueryEngine
 {
@@ -62,13 +60,13 @@ namespace GraphZen.Tests.QueryEngine
             [UsedImplicitly]
             public object[] C()
             {
-                return new object[] { "Contrived", null, "Confusing" };
+                return new object[] { "Contrived", null!, "Confusing" };
             }
 
             [UsedImplicitly]
             public object[] Deeper()
             {
-                return new object[] { _data, null, _data };
+                return new object[] { _data, null!, _data };
             }
         }
 
@@ -148,11 +146,11 @@ namespace GraphZen.Tests.QueryEngine
                     {
                         a = "Already Been Done",
                         b = "Boring",
-                        c = new object[] { "Contrived", null, "Confusing" },
+                        c = new object[] { "Contrived", null!, "Confusing" },
                         deeper = new object[]
                         {
                             new {a = "Apple", b = "Banana"},
-                            null,
+                            null!,
                             new {a = "Apple", b = "Banana"}
                         }
                     }
@@ -235,7 +233,7 @@ namespace GraphZen.Tests.QueryEngine
         public async Task ProvidesInfoAboutCurrentExecutionState()
         {
             var ast = Parser.ParseDocument("query ($var: String) { result: test }");
-            ResolveInfo info = default;
+            ResolveInfo info = default!;
             var schemaSut = Schema.Create(sb =>
             {
                 sb.Object("Test").Field("test", "String", _ => _
@@ -269,7 +267,7 @@ namespace GraphZen.Tests.QueryEngine
             var doc = "query Example { a }";
             var data = new DynamicDictionary();
             data["contextThing"] = "thing";
-            dynamic resolvedRootValue = default;
+            dynamic? resolvedRootValue = default;
             var schema = Schema.Create(sb =>
             {
                 sb.Object("Type").Field("a", "String", _ => _.Resolve(source =>
@@ -280,7 +278,7 @@ namespace GraphZen.Tests.QueryEngine
                 sb.QueryType("Type");
             });
             await ExecuteAsync(schema, Parser.ParseDocument(doc), data);
-            Assert.Equal("thing", resolvedRootValue.contextThing);
+            Assert.Equal("thing", resolvedRootValue!.contextThing);
         }
 
         public class OrderingData
@@ -331,7 +329,7 @@ namespace GraphZen.Tests.QueryEngine
                 }
             });
 
-            Assert.Equal(new[] { "a", "b", "c", "d", "e" }, result.Data.Keys.ToArray());
+            Assert.Equal(new[] { "a", "b", "c", "d", "e" }, result.Data!.Keys.ToArray());
         }
 
         [Fact]
@@ -414,17 +412,17 @@ namespace GraphZen.Tests.QueryEngine
 
         private class Special
         {
-            public string Value { [UsedImplicitly] get; set; }
+            public string Value { [UsedImplicitly] get; set; } = null!;
         }
 
         private class NotSpecial
         {
-            public string Value { [UsedImplicitly] get; set; }
+            public string Value { [UsedImplicitly] get; set; } = null!;
         }
 
         private class SpecialsRoot
         {
-            public object[] Specials { get; set; }
+            public object[] Specials { get; set; } = null!;
         }
 
         [Fact]
@@ -447,7 +445,7 @@ namespace GraphZen.Tests.QueryEngine
             {
                 data = new
                 {
-                    specials = new object[] { new { value = "foo" }, null }
+                    specials = new object[] { new { value = "foo" }, null! }
                 },
                 errors = new object[]
                 {
@@ -481,7 +479,7 @@ namespace GraphZen.Tests.QueryEngine
             {
                 data = new
                 {
-                    foo = (object)null
+                    foo = (object?)null
                 }
             });
         }

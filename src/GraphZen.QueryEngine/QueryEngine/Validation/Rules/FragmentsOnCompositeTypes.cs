@@ -7,9 +7,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class FragmentsOnCompositeTypes : QueryValidationRuleVisitor

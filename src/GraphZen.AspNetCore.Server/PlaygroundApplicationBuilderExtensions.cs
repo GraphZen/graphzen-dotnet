@@ -7,8 +7,6 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.StaticFiles.Infrastructure;
 using Microsoft.Extensions.FileProviders;
 
-#nullable disable
-
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.AspNetCore.Builder

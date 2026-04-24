@@ -8,8 +8,6 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation.Rules;
 using JetBrains.Annotations;
 
-#nullable disable
-
 
 namespace GraphZen.QueryEngine.Validation
 {

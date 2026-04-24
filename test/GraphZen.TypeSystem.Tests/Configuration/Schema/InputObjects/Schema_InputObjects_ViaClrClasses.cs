@@ -40,16 +40,15 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects
         }
 
 
-#nullable disable
         public class ParentInputObject
         {
-            public NamedByConvention ConventionallyNamed { get; set; }
+            public NamedByConvention ConventionallyNamed { get; set; } = null!;
 
-            [GraphQLIgnore] public IgnoredByConvention IgnoredByConvention { get; set; }
+            [GraphQLIgnore] public IgnoredByConvention IgnoredByConvention { get; set; } = null!;
 
-            public IgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; }
+            public IgnoredByDataAnnotation IgnoredByDataAnnotation { get; set; } = null!;
 
-            public NamedByDataAnnotation NamedByDataAnnoation { get; set; }
+            public NamedByDataAnnotation NamedByDataAnnoation { get; set; } = null!;
         }
 #nullable restore
 

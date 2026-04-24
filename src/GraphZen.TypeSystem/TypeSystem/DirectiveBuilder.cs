@@ -8,7 +8,7 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
+
 namespace GraphZen.TypeSystem
 {
     public class DirectiveBuilder<TDirective> : IDirectiveBuilder<TDirective>
@@ -41,7 +41,7 @@ namespace GraphZen.TypeSystem
         }
 
         public IDirectiveBuilder<TDirective> Argument(string name, string type,
-            Action<InputValueBuilder> configurator = null)
+            Action<InputValueBuilder>? configurator = null)
         {
             Check.NotNull(name, nameof(name));
             Check.NotNull(type, nameof(type));
@@ -51,7 +51,7 @@ namespace GraphZen.TypeSystem
         }
 
         public IDirectiveBuilder<TDirective>
-            Argument<TArg>(string name, Action<InputValueBuilder> configurator = null) =>
+            Argument<TArg>(string name, Action<InputValueBuilder>? configurator = null) =>
             throw new NotImplementedException();
     }
 }

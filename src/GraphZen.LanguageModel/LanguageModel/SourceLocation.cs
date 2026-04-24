@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -24,7 +23,7 @@ namespace GraphZen.LanguageModel
 
         public bool Equals(SourceLocation other) => Line == other.Line && Column == other.Column;
 
-        public override bool Equals(object obj) => obj is SourceLocation other && Equals(other);
+        public override bool Equals(object? obj) => obj is SourceLocation other && Equals(other);
 
         public override int GetHashCode()
         {

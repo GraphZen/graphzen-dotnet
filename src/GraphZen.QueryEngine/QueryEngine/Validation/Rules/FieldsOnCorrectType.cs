@@ -11,9 +11,6 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class FieldsOnCorrectType : QueryValidationRuleVisitor
@@ -61,7 +58,6 @@ namespace GraphZen.QueryEngine.Validation.Rules
             return VisitAction.Continue;
         }
 
-
         private IReadOnlyList<string> GetSuggestedTypeNames(IGraphQLType type, string fieldName)
         {
             if (type is IAbstractType abstractType)
@@ -87,10 +83,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
                 return suggestedInterfaceTypes.Concat(suggestedObjectTypes).ToArray();
             }
 
-
             return Array.Empty<string>();
         }
-
 
         private IReadOnlyList<string> GetSuggestedFieldNames(IGraphQLType type, string fieldName)
         {

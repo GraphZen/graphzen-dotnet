@@ -12,7 +12,6 @@ using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.Infrastructure
@@ -58,11 +57,9 @@ namespace GraphZen.Infrastructure
             {
                 name = GetNeutralKey(name);
 
-                if (!_dictionary.TryGetValue(name, out var member))
-                {
-                }
+                _dictionary.TryGetValue(name, out var member);
 
-                return member;
+                return member!;
             }
             set
             {
@@ -162,7 +159,7 @@ namespace GraphZen.Infrastructure
         public bool TryGetValue(string key, out dynamic value)
         {
             key = GetNeutralKey(key);
-            return _dictionary.TryGetValue(key, out value);
+            return _dictionary.TryGetValue(key, out value!);
         }
 
         /// <summary>
@@ -250,7 +247,7 @@ namespace GraphZen.Infrastructure
         ///     otherwise, <see langword="false" />.
         /// </returns>
         /// <param name="other">An <see cref="DynamicDictionary" /> instance to compare with this instance.</param>
-        public bool Equals(DynamicDictionary other)
+        public bool Equals(DynamicDictionary? other)
         {
             if (ReferenceEquals(null, other)) return false;
 
@@ -279,9 +276,9 @@ namespace GraphZen.Infrastructure
         ///     sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject" /> class, the
         ///     <paramref name="value" /> is "Test".
         /// </param>
-        public override bool TrySetMember(SetMemberBinder binder, object value)
+        public override bool TrySetMember(SetMemberBinder binder, object? value)
         {
-            this[binder.Name] = value;
+            this[binder.Name] = value!;
             return true;
         }
 
@@ -307,9 +304,7 @@ namespace GraphZen.Infrastructure
         /// </param>
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            if (!_dictionary.TryGetValue(binder.Name, out result))
-            {
-            }
+            _dictionary.TryGetValue(binder.Name, out result!);
 
             return true;
         }
@@ -328,7 +323,7 @@ namespace GraphZen.Infrastructure
         ///     <see langword="true" /> if the specified <see cref="System.Object" /> is equal to this instance; otherwise,
         ///     <see langword="false" />.
         /// </returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 
@@ -344,7 +339,7 @@ namespace GraphZen.Infrastructure
         ///     A hash code for this <see cref="DynamicDictionary" />, suitable for use in hashing algorithms and data
         ///     structures like a hash table.
         /// </returns>
-        public override int GetHashCode() => _dictionary != null ? _dictionary.GetHashCode() : 0;
+        public override int GetHashCode() => _dictionary.GetHashCode();
 
         private KeyValuePair<string, dynamic> GetDynamicKeyValuePair(KeyValuePair<string, dynamic> item)
         {
@@ -368,7 +363,7 @@ namespace GraphZen.Infrastructure
             foreach (var item in _dictionary)
             {
                 var newKey = item.Key;
-                var newValue = item.Value as object;
+                var newValue = (object)item.Value!;
 
                 data.Add(newKey, newValue);
             }

@@ -9,7 +9,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -21,7 +20,7 @@ namespace GraphZen.LanguageModel
     public partial class SchemaDefinitionSyntax : TypeSystemDefinitionSyntax, IDirectivesSyntax
     {
         public SchemaDefinitionSyntax(IReadOnlyList<OperationTypeDefinitionSyntax> operationTypes,
-            IReadOnlyList<DirectiveSyntax> directives = null, SyntaxLocation location = null) : base(location)
+            IReadOnlyList<DirectiveSyntax>? directives = null, SyntaxLocation? location = null) : base(location)
         {
             RootOperationTypes = Check.NotNull(operationTypes, nameof(operationTypes));
             Directives = directives ?? DirectiveSyntax.EmptyList;
@@ -56,7 +55,7 @@ namespace GraphZen.LanguageModel
                 Directives);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 namespace GraphZen.TypeSystem.Internal
 {
@@ -17,9 +16,9 @@ namespace GraphZen.TypeSystem.Internal
 
         public T Value => HasValue ? _value : throw new InvalidOperationException("Result has no value");
 
-        internal ParseResult(object value, bool hasValue)
+        internal ParseResult(object? value, bool hasValue)
         {
-            _value = (T)value;
+            _value = (T)value!;
             HasValue = hasValue;
         }
 

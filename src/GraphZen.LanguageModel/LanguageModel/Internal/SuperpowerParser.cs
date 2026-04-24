@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -33,7 +32,7 @@ namespace GraphZen.LanguageModel.Internal
             var result = parser(tokens);
             if (!result.HasValue)
             {
-                var error = new GraphQLServerError(result.ToString(), null, source,
+                var error = new GraphQLServerError(result.ToString()!, null, source,
                     new[] { result.ErrorPosition.Absolute });
                 error.Throw();
             }

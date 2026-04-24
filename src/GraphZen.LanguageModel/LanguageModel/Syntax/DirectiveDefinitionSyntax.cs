@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -22,9 +21,9 @@ namespace GraphZen.LanguageModel
         public DirectiveDefinitionSyntax(
             NameSyntax name,
             IReadOnlyList<NameSyntax> locations,
-            StringValueSyntax description = null,
-            IReadOnlyList<InputValueDefinitionSyntax> arguments = null,
-            SyntaxLocation location = null) : base(location)
+            StringValueSyntax? description = null,
+            IReadOnlyList<InputValueDefinitionSyntax>? arguments = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Description = description;
@@ -48,7 +47,7 @@ namespace GraphZen.LanguageModel
             Name.ToEnumerable().Concat(Arguments)
                 .Concat(Locations);
 
-        public StringValueSyntax Description { get; }
+        public StringValueSyntax? Description { get; }
 
         /// <summary>
         ///     The name of the directive.
@@ -61,7 +60,7 @@ namespace GraphZen.LanguageModel
             Arguments.SequenceEqual(other.Arguments) &&
             Locations.SequenceEqual(other.Locations);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

@@ -11,8 +11,6 @@ using GraphZen.Utilities;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
 
 namespace GraphZen.Tests.TypeSystem.IntrospectionTests
 {

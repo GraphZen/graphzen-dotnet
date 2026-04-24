@@ -11,22 +11,20 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 
 namespace GraphZen.Utilities
 {
     public class TypeInfo
     {
-        private readonly Stack<Maybe<object>> _defaultValueStack = new Stack<Maybe<object>>();
+        private readonly Stack<Maybe<object>?> _defaultValueStack = new Stack<Maybe<object>?>();
 
-        private readonly Stack<Field> _fieldDefStack = new Stack<Field>();
+        private readonly Stack<Field?> _fieldDefStack = new Stack<Field?>();
 
-        private readonly Stack<IGraphQLType> _inputTypeStack = new Stack<IGraphQLType>();
+        private readonly Stack<IGraphQLType?> _inputTypeStack = new Stack<IGraphQLType?>();
 
-        private readonly Stack<ICompositeType> _parentTypeStack = new Stack<ICompositeType>();
+        private readonly Stack<ICompositeType?> _parentTypeStack = new Stack<ICompositeType?>();
 
-        private readonly Stack<IGraphQLType> _typeStack = new Stack<IGraphQLType>();
+        private readonly Stack<IGraphQLType?> _typeStack = new Stack<IGraphQLType?>();
 
         public TypeInfo(Schema schema)
         {
@@ -34,22 +32,22 @@ namespace GraphZen.Utilities
         }
 
 
-        public Argument Argument { get; private set; }
+        public Argument? Argument { get; private set; }
 
 
-        public Directive Directive { get; private set; }
+        public Directive? Directive { get; private set; }
 
 
-        public EnumValue EnumValue { get; private set; }
+        public EnumValue? EnumValue { get; private set; }
 
 
         protected Schema Schema { get; }
 
 
-        public Maybe<object> DefaultValue => _defaultValueStack.PeekOrDefault();
+        public Maybe<object>? DefaultValue => _defaultValueStack.PeekOrDefault();
 
 
-        private static Field GetFieldDef(Schema schema, IGraphQLType parentType,
+        private static Field? GetFieldDef(Schema schema, IGraphQLType parentType,
             FieldSyntax node)
         {
             var name = node.Name.Value;
@@ -71,31 +69,31 @@ namespace GraphZen.Utilities
         }
 
 
-        public IGraphQLType GetOutputType() => _typeStack.PeekOrDefault();
+        public IGraphQLType? GetOutputType() => _typeStack.PeekOrDefault();
 
 
-        public ICompositeType GetParentType() => _parentTypeStack.PeekOrDefault();
+        public ICompositeType? GetParentType() => _parentTypeStack.PeekOrDefault();
 
 
-        public IGraphQLType GetInputType() => _inputTypeStack.PeekOrDefault();
+        public IGraphQLType? GetInputType() => _inputTypeStack.PeekOrDefault();
 
 
-        public IGraphQLType GetParentInputType() => _inputTypeStack.Count > 1 ? _inputTypeStack.ElementAt(1) : default;
+        public IGraphQLType? GetParentInputType() => _inputTypeStack.Count > 1 ? _inputTypeStack.ElementAt(1) : default;
 
 
-        public Field GetField() => _fieldDefStack.PeekOrDefault();
+        public Field? GetField() => _fieldDefStack.PeekOrDefault();
 
         public void Enter(SyntaxNode syntaxNode)
         {
             switch (syntaxNode)
             {
                 case SelectionSetSyntax _:
-                    _parentTypeStack.Push(GetOutputType().GetNamedType() as ICompositeType);
+                    _parentTypeStack.Push(GetOutputType()?.GetNamedType() as ICompositeType);
                     break;
                 case FieldSyntax node:
                     var parentType = GetParentType();
-                    Field fieldDef = null;
-                    IGraphQLType fieldType = null;
+                    Field? fieldDef = null;
+                    IGraphQLType? fieldType = null;
                     if (parentType != null)
                     {
                         fieldDef = GetFieldDef(Schema, parentType, node);
@@ -111,7 +109,7 @@ namespace GraphZen.Utilities
                     break;
                 case OperationDefinitionSyntax node:
                     {
-                        IGraphQLType type = null;
+                        IGraphQLType? type = null;
                         if (node.OperationType == OperationType.Query)
                             type = Schema.QueryType;
                         else if (node.OperationType == OperationType.Mutation)
@@ -126,7 +124,7 @@ namespace GraphZen.Utilities
                         var typeCondition = node.TypeCondition;
                         var type = typeCondition != null
                             ? Schema.GetTypeFromAst(typeCondition)
-                            : GetOutputType().GetNamedType();
+                            : GetOutputType()?.GetNamedType();
                         _typeStack.Push(type);
                         break;
                     }
@@ -138,10 +136,10 @@ namespace GraphZen.Utilities
                     }
                 case ArgumentSyntax node:
                     {
-                        Argument argDef = null;
-                        IGraphQLType argType = null;
+                        Argument? argDef = null;
+                        IGraphQLType? argType = null;
 
-                        var fieldOrDirective = (IArguments)Directive ?? GetField();
+                        var fieldOrDirective = (IArguments?)Directive ?? GetField();
                         if (fieldOrDirective != null)
                         {
                             argDef = fieldOrDirective.FindArgument(node.Name.Value);
@@ -150,14 +148,14 @@ namespace GraphZen.Utilities
 
                         Argument = argDef;
                         _defaultValueStack.Push(argDef != null && argDef.HasDefaultValue
-                            ? Maybe.Some(argDef.DefaultValue)
+                            ? Maybe.Some(argDef.DefaultValue!)
                             : Maybe.None<object>());
                         _inputTypeStack.Push(argType);
                         break;
                     }
                 case ListValueSyntax _:
                     {
-                        var listType = GetInputType().GetNullableType();
+                        var listType = GetInputType()?.GetNullableType();
                         var itemType = listType is ListType list ? list.OfType : listType;
                         _defaultValueStack.Push(null);
                         _inputTypeStack.Push(itemType);
@@ -166,9 +164,9 @@ namespace GraphZen.Utilities
                     }
                 case ObjectFieldSyntax node:
                     {
-                        var objectType = GetInputType().GetNamedType();
-                        IGraphQLType inputFieldType = null;
-                        InputField inputField = null;
+                        var objectType = GetInputType()?.GetNamedType();
+                        IGraphQLType? inputFieldType = null;
+                        InputField? inputField = null;
                         if (objectType is InputObjectType inputObject)
                         {
                             inputField = inputObject.FindField(node.Name.Value);
@@ -176,7 +174,7 @@ namespace GraphZen.Utilities
                         }
 
                         _defaultValueStack.Push(inputField != null && inputField.HasDefaultValue
-                            ? Maybe.Some(inputField.DefaultValue)
+                            ? Maybe.Some(inputField.DefaultValue!)
                             : Maybe.None<object>());
                         _inputTypeStack.Push(inputFieldType);
                         break;
@@ -184,7 +182,7 @@ namespace GraphZen.Utilities
                 case EnumValueSyntax node:
 
                     {
-                        var type = GetInputType().GetNamedType();
+                        var type = GetInputType()?.GetNamedType();
                         EnumValue = type is EnumType enumType ? enumType.FindValue(node.Value) : null;
 
                         break;

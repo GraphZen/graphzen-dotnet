@@ -15,19 +15,17 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 
 namespace GraphZen.QueryEngine
 {
     internal sealed class ExecutionContext
     {
         private ExecutionContext(Schema schema,
-            object rootValue,
+            object? rootValue,
             IReadOnlyDictionary<string, FragmentDefinitionSyntax> fragments,
             GraphQLContext contextValue, OperationDefinitionSyntax operation,
             IReadOnlyDictionary<string, object> variableValues,
-            ConcurrentBag<GraphQLServerError> errors, ExecutionOptions options)
+            ConcurrentBag<GraphQLServerError> errors, ExecutionOptions? options)
         {
             Schema = Check.NotNull(schema, nameof(schema));
             //Directives = new SpecifiedDirectives(Schema);
@@ -66,7 +64,7 @@ namespace GraphZen.QueryEngine
 
         public ConcurrentBag<GraphQLServerError> Errors { get; }
 
-        public object RootValue { get; }
+        public object? RootValue { get; }
 
 
         private static Maybe<object> DefaultFieldResovler(object source, dynamic args,
@@ -123,14 +121,14 @@ namespace GraphZen.QueryEngine
                     }
 
                     var result = meth.Invoke(prop.GetValue(source), parameters.ToArray());
-                    return Maybe.Some(result);
+                    return Maybe.Some(result!);
                 }
 
-                return Maybe.Some(prop.GetValue(source));
+                return Maybe.Some(prop.GetValue(source)!);
             }
 
             var field = type.GetField(fieldNameFirstCharUpper) ?? type.GetField(info.FieldName);
-            if (field != null) return Maybe.Some(field.GetValue(source));
+            if (field != null) return Maybe.Some(field.GetValue(source)!);
 
             var method = type.GetMethod(fieldNameFirstCharUpper) ?? type.GetMethod(info.FieldName);
 
@@ -155,7 +153,7 @@ namespace GraphZen.QueryEngine
 
                 var methodResult = mi.Invoke(source, parameters.ToArray());
 
-                return Maybe.Some(methodResult);
+                return Maybe.Some(methodResult!);
             }
 
             return Maybe.None<object>();
@@ -185,9 +183,9 @@ namespace GraphZen.QueryEngine
         internal static Maybe<ExecutionContext> Build(
             Schema schema,
             DocumentSyntax document,
-            object rootValue, GraphQLContext context, IReadOnlyDictionary<string, object> rawVariableValues,
-            string operationName = null,
-            ExecutionOptions options = null)
+            object? rootValue, GraphQLContext? context, IReadOnlyDictionary<string, object>? rawVariableValues,
+            string? operationName = null,
+            ExecutionOptions? options = null)
         {
             Check.NotNull(schema, nameof(schema));
             Check.NotNull(document, nameof(document));
@@ -195,7 +193,7 @@ namespace GraphZen.QueryEngine
             Check.NotNull(document, nameof(document));
             var errors = new ConcurrentBag<GraphQLServerError>();
             var fragments = new Dictionary<string, FragmentDefinitionSyntax>();
-            OperationDefinitionSyntax operation = null;
+            OperationDefinitionSyntax? operation = null;
             var hasMultipleAssumedOperations = false;
             foreach (var definition in document.Definitions)
             {
@@ -227,7 +225,7 @@ namespace GraphZen.QueryEngine
             }
 
 
-            IReadOnlyDictionary<string, object> variableValues = null;
+            IReadOnlyDictionary<string, object>? variableValues = null;
             if (operation != null)
             {
                 var coercedVariableValues = Values.GetVariableValues(schema,
@@ -242,7 +240,7 @@ namespace GraphZen.QueryEngine
             if (!errors.IsEmpty) return Maybe.None<ExecutionContext>(errors);
 
             var exeContext =
-                new ExecutionContext(schema, rootValue, fragments, context, operation, variableValues, errors, options);
+                new ExecutionContext(schema, rootValue, fragments, context, operation!, variableValues!, errors, options);
             return Maybe.Some(exeContext);
         }
 
@@ -268,7 +266,7 @@ namespace GraphZen.QueryEngine
                 Fragments,
                 Operation,
                 VariableValues,
-                RootValue
+                RootValue!
             );
 
         private class PreBuiltSchemaContext : GraphQLContext

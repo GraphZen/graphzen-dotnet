@@ -26,7 +26,7 @@ namespace GraphZen.TypeSystem
         [DebuggerStepThrough]
         public IDirectiveBuilder<object> Directive(string name) =>
             new DirectiveBuilder<object>(Builder.Directive(Check.NotNull(name, nameof(name)),
-                ConfigurationSource.Explicit));
+                ConfigurationSource.Explicit)!);
 
         public IScalarTypeBuilder<object, ValueSyntax> Scalar(string name) =>
             new ScalarTypeBuilder<object, ValueSyntax>(Builder.Scalar(Check.NotNull(name, nameof(name)),

@@ -79,7 +79,7 @@ namespace Microsoft.AspNetCore.Builder
                 try
                 {
                     var req = await JsonSerializer.DeserializeAsync<GraphQLServerRequest>(readStream, Json.SerializerOptions);
-                    var document = Parser.ParseDocument(req!.Query);
+                    var document = Parser.ParseDocument(req!.Query!);
                     var queryValidator = httpContext.RequestServices.GetRequiredService<IQueryValidator>();
                     var validationErrors = queryValidator.Validate(graphQLContext.Schema, document);
 

@@ -18,8 +18,6 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 
 namespace GraphZen.QueryEngine
 {
@@ -28,9 +26,9 @@ namespace GraphZen.QueryEngine
         internal static async Task<ExecutionResult> ExecuteAsync(
             Schema schema,
             DocumentSyntax document,
-            object rootValue,
-            GraphQLContext context,
-            IDictionary<string, object> variableValues, string operationName = null, ExecutionOptions options = null)
+            object? rootValue,
+            GraphQLContext? context,
+            IDictionary<string, object>? variableValues, string? operationName = null, ExecutionOptions? options = null)
         {
             try
             {
@@ -76,9 +74,9 @@ namespace GraphZen.QueryEngine
         }
 
 
-        internal static async Task<IDictionary<string, object>> ExecuteOperationAsync(
+        internal static async Task<IDictionary<string, object?>?> ExecuteOperationAsync(
             ExecutionContext exeContext,
-            OperationDefinitionSyntax operation, object rootValue)
+            OperationDefinitionSyntax operation, object? rootValue)
         {
             var type = exeContext.GetOperationRootType(operation);
             var fields = CollectFields(exeContext, type, operation.SelectionSet,
@@ -104,9 +102,9 @@ namespace GraphZen.QueryEngine
         }
 
 
-        private static async Task<IDictionary<string, object>> ExecuteFieldsAsync(
-            ExecutionContext exeContext, ObjectType parentType, object sourceValue,
-            ResponsePath path,
+        private static async Task<IDictionary<string, object?>> ExecuteFieldsAsync(
+            ExecutionContext exeContext, ObjectType parentType, object? sourceValue,
+            ResponsePath? path,
             Dictionary<string, List<FieldSyntax>> fields)
         {
             var asyncResults = new Dictionary<string, Task<Maybe<object>>>();
@@ -124,7 +122,7 @@ namespace GraphZen.QueryEngine
                 asyncResults[responseName] = taskResult;
             }
 
-            var results = new Dictionary<string, object>();
+            var results = new Dictionary<string, object?>();
             foreach (var asyncResult in asyncResults)
             {
                 Debug.Assert(asyncResult.Value != null);
@@ -143,12 +141,12 @@ namespace GraphZen.QueryEngine
         }
 
         [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-        private static async Task<IDictionary<string, object>> ExecuteFieldsSeriallyAsync(
-            ExecutionContext exeContext, ObjectType parentType, object sourceValue,
-            ResponsePath path,
+        private static async Task<IDictionary<string, object?>> ExecuteFieldsSeriallyAsync(
+            ExecutionContext exeContext, ObjectType parentType, object? sourceValue,
+            ResponsePath? path,
             Dictionary<string, List<FieldSyntax>> fields)
         {
-            var results = new Dictionary<string, object>();
+            var results = new Dictionary<string, object?>();
 
             foreach (var field in fields)
             {
@@ -169,7 +167,7 @@ namespace GraphZen.QueryEngine
 
         private static async Task<Maybe<object>> ResolveFieldAsync(
             ExecutionContext exeContext, ObjectType parentType,
-            object sourceValue,
+            object? sourceValue,
             List<FieldSyntax> fieldNodes, ResponsePath path)
         {
             var fieldNode = fieldNodes[0];
@@ -202,7 +200,7 @@ namespace GraphZen.QueryEngine
                     {
                         await awaitable;
                         var result = awaitable.GetResult();
-                        maybeResult = Maybe.Some(result);
+                        maybeResult = Maybe.Some(result!);
                     }
 
                 var completed = await CompleteValueAsync(exeContext, returnType, fieldNodes, info, path, maybeResult);
@@ -213,14 +211,14 @@ namespace GraphZen.QueryEngine
                 if (exeContext.Options.ThrowOnError) throw;
 
                 exeContext.Errors.Add(e.GraphQLError.WithLocationInfo(fieldNodes, path));
-                return Maybe.Some<object>(null);
+                return Maybe.Some<object>(null!);
             }
             catch (Exception e)
             {
                 exeContext.AddError(e);
                 if (exeContext.Options.ThrowOnError) throw;
 
-                return Maybe.Some<object>(null);
+                return Maybe.Some<object>(null!);
             }
         }
 
@@ -247,7 +245,7 @@ namespace GraphZen.QueryEngine
                                $"Cannot return null for non - nullable field {info.ParentType.Name}.{info.FieldName}.");
                 }
 
-                if (result == null) return Maybe.Some<object>(null);
+                if (result == null) return Maybe.Some<object>(null!);
 
                 if (returnType is ListType listType)
                     return await CompleteListValueAsync(exeContext, listType, fieldNodes, info, path, result);
@@ -267,7 +265,7 @@ namespace GraphZen.QueryEngine
         }
 
 
-        public static string DefaultResolveType(
+        public static string? DefaultResolveType(
             object value,
             GraphQLContext context,
             ResolveInfo info,
@@ -275,20 +273,6 @@ namespace GraphZen.QueryEngine
         {
             var typeName = value?.GetType().GetGraphQLName(value);
             return typeName;
-
-            /*
-                        var possibleTypes = info.Schema.GetPossibleTypes(abstractType);
-                        foreach (var type in possibleTypes)
-                        {
-                            if (type.IsTypeOf != null)
-                            {
-                                var result = type.IsTypeOf(value, context, info);
-                                if (result)
-                                {
-                                    return type.Name;
-                                }
-                            }
-                        }*/
         }
 
 
@@ -299,10 +283,10 @@ namespace GraphZen.QueryEngine
             ResolveInfo info,
             ResponsePath path, object result)
         {
-            result = await result.GetResultAsync();
+            result = (await result.GetResultAsync())!;
             var runtimeTypeRef = returnType.ResolveType != null
-                ? returnType.ResolveType(result, exeContext.ContextValue, info)
-                : DefaultResolveType(result, exeContext.ContextValue, info, returnType);
+                ? returnType.ResolveType(result!, exeContext.ContextValue, info)
+                : DefaultResolveType(result!, exeContext.ContextValue, info, returnType);
 
             // not sure this is a valid assertion - may be a condition that is not handled currently
             // Debug.Assert(runtimeTypeRef != null, nameof(runtimeTypeRef) + " != null");
@@ -312,11 +296,11 @@ namespace GraphZen.QueryEngine
 
 
         private static ObjectType EnsureValidRuntimeType(
-            string typeName, ExecutionContext exeContext,
+            string? typeName, ExecutionContext exeContext,
             IAbstractType returnType, IReadOnlyList<FieldSyntax> fieldNodes,
             ResolveInfo info, object result)
         {
-            IGraphQLType runtimeType =
+            IGraphQLType? runtimeType =
                 typeName != null ? exeContext.Schema.TryGetType(typeName, out var t) ? t : null : null;
 
             if (runtimeType == null || !(runtimeType is ObjectType runtimeObjectType))
@@ -363,7 +347,7 @@ namespace GraphZen.QueryEngine
         }
 
 
-        private static Task<IDictionary<string, object>> CollectAndExecuteSubfields(
+        private static Task<IDictionary<string, object?>> CollectAndExecuteSubfields(
             ExecutionContext exeContext, ObjectType returnType,
             // ReSharper disable once UnusedParameter.Local
             List<FieldSyntax> fieldNodes, ResolveInfo info, ResponsePath path, object result)
@@ -424,21 +408,21 @@ namespace GraphZen.QueryEngine
         private static async Task<Maybe<object>> ResolveFieldValueOrErrorAsync(ExecutionContext exeContext,
             Field field,
             List<FieldSyntax> fieldNodes,
-            object sourceValue, ResolveInfo info)
+            object? sourceValue, ResolveInfo info)
         {
             try
             {
                 var args = Values.GetArgumentValues(field, fieldNodes[0], exeContext.VariableValues);
                 var context = exeContext.ContextValue;
 
-                object result = default;
+                object? result = default;
                 if (field.Resolver != null)
                 {
-                    result = field.Resolver(sourceValue, args, context, info);
+                    result = field.Resolver(sourceValue!, args, context, info);
                 }
                 else
                 {
-                    var defaultResolverResult = exeContext.FieldResolver(sourceValue, args, context, info);
+                    var defaultResolverResult = exeContext.FieldResolver(sourceValue!, args, context, info);
                     if (defaultResolverResult is Some<object> someResult)
                         result = someResult.Value;
                     else
@@ -451,7 +435,7 @@ namespace GraphZen.QueryEngine
                     return Maybe.Some<object>(resultTask);
                 }
 
-                return Maybe.Some(result);
+                return Maybe.Some(result!);
             }
             catch (GraphQLException gqlE)
             {
@@ -467,7 +451,7 @@ namespace GraphZen.QueryEngine
         }
 
         // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
-        private static Field GetFieldDef(ExecutionContext exeContext, Schema schema,
+        private static Field? GetFieldDef(ExecutionContext exeContext, Schema schema,
             ObjectType parentType,
             string fieldName)
         {

@@ -8,7 +8,6 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.QueryEngine.Variables
@@ -38,7 +37,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
             {
                 data = new
                 {
-                    fieldWithDefaultArgumentValue = (object)null
+                    fieldWithDefaultArgumentValue = (object?)null
                 },
                 errors = Array(new
                 {

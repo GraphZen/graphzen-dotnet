@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -19,8 +18,8 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class InlineFragmentSyntax : SelectionSyntax, IFragmentTypeConditionSyntax
     {
-        public InlineFragmentSyntax(SelectionSetSyntax selectionSet, NamedTypeSyntax typeCondition = null,
-            IReadOnlyList<DirectiveSyntax> directives = null, SyntaxLocation location = null) : base(location)
+        public InlineFragmentSyntax(SelectionSetSyntax selectionSet, NamedTypeSyntax? typeCondition = null,
+            IReadOnlyList<DirectiveSyntax>? directives = null, SyntaxLocation? location = null) : base(location)
         {
             SelectionSet = Check.NotNull(selectionSet, nameof(selectionSet));
             TypeCondition = typeCondition;
@@ -35,7 +34,7 @@ namespace GraphZen.LanguageModel
 
 
         public override IEnumerable<SyntaxNode> Children =>
-            TypeCondition.ToEnumerable().Concat(Directives).Concat(SelectionSet);
+            TypeCondition!.ToEnumerable().Concat(Directives).Concat(SelectionSet);
 
 
         public override IReadOnlyList<DirectiveSyntax> Directives { get; }
@@ -44,13 +43,13 @@ namespace GraphZen.LanguageModel
         ///     The type which this inline fragment applies to. (Optional)
         /// </summary>
 
-        public NamedTypeSyntax TypeCondition { get; }
+        public NamedTypeSyntax? TypeCondition { get; }
 
         private bool Equals(InlineFragmentSyntax other) =>
             SelectionSet.Equals(other.SelectionSet) && Equals(TypeCondition, other.TypeCondition) &&
             Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

@@ -53,7 +53,7 @@ namespace GraphZen.Internal
                     var dict = new DynamicDictionary();
                     foreach (var prop in element.EnumerateObject())
                     {
-                        dict[prop.Name] = ConvertJsonElement(prop.Value);
+                        dict[prop.Name] = ConvertJsonElement(prop.Value)!;
                     }
                     return dict;
                 case JsonValueKind.Array:

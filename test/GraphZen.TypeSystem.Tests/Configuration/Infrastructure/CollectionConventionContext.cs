@@ -6,17 +6,16 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
 {
     public class CollectionConventionContext
     {
-        public string ParentName { get; set; }
-        public string ItemIgnoredByDataAnnotation { get; set; }
-        public string ItemIgnoredByConvention { get; set; }
-        public string ItemNamedByConvention { get; set; }
-        public string ItemNamedByDataAnnotation { get; set; }
+        public string? ParentName { get; set; }
+        public string? ItemIgnoredByDataAnnotation { get; set; }
+        public string? ItemIgnoredByConvention { get; set; }
+        public string? ItemNamedByConvention { get; set; }
+        public string? ItemNamedByDataAnnotation { get; set; }
 
         public ConfigurationSource? DefaultItemConfigurationSource { get; set; }
     }

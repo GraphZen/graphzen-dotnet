@@ -10,16 +10,15 @@ using System.Text.Json.Nodes;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.Infrastructure
 {
     internal static class ValueInspector
     {
-        public static T Dump<T, TR>(this T value, Func<T, TR> selector, string prefix = null)
+        public static T Dump<T, TR>(this T value, Func<T, TR> selector, string? prefix = null)
         {
-            selector(value).Dump(prefix);
+            selector(value).Dump(prefix!);
             return value;
         }
 
@@ -34,7 +33,7 @@ namespace GraphZen.Infrastructure
         }
 
 
-        internal static string Inspect(this object value, bool expanded = false)
+        internal static string Inspect(this object? value, bool expanded = false)
         {
             switch (value)
             {
@@ -62,7 +61,7 @@ namespace GraphZen.Infrastructure
                     var inspected = enumerable.Cast<object>().Select(_ => Inspect(_, expanded));
                     return expanded ? $"[\n{string.Join(",\n", inspected)}\n]" : $"[{string.Join(", ", inspected)}]";
                 default:
-                    return value.ToString();
+                    return value.ToString() ?? string.Empty;
             }
         }
     }

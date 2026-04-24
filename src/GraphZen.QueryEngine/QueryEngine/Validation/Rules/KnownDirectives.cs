@@ -10,15 +10,11 @@ using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class KnownDirectives : QueryValidationRuleVisitor
     {
         private readonly Lazy<IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>>> _lazyLocationsMap;
-
 
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         public KnownDirectives(QueryValidationContext context) : base(context)
@@ -27,10 +23,8 @@ namespace GraphZen.QueryEngine.Validation.Rules
                 Context.Schema.Directives.ToReadOnlyDictionary(_ => _.Name, _ => _.Locations));
         }
 
-
         private IReadOnlyDictionary<string, IReadOnlyCollection<DirectiveLocation>> LocationsMap =>
             _lazyLocationsMap.Value;
-
 
         public static string UnknownDirectiveMessage(string directiveName) => $"Unknown directive \"{directiveName}\".";
 

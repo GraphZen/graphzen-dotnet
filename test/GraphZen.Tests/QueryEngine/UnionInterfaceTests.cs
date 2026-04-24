@@ -9,8 +9,6 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
 
 namespace GraphZen.Tests.QueryEngine
 {
@@ -19,20 +17,20 @@ namespace GraphZen.Tests.QueryEngine
     {
         public class Person
         {
-            public string Name { [UsedImplicitly] get; set; }
-            public object[] Pets { get; set; }
-            public object[] Friends { get; set; }
+            public string Name { [UsedImplicitly] get; set; } = null!;
+            public object[]? Pets { get; set; }
+            public object[]? Friends { get; set; }
         }
 
         public class Cat
         {
-            public string Name { [UsedImplicitly] get; set; }
+            public string Name { [UsedImplicitly] get; set; } = null!;
             public bool Meows { [UsedImplicitly] get; set; }
         }
 
         public class Dog
         {
-            public string Name { [UsedImplicitly] get; set; }
+            public string Name { [UsedImplicitly] get; set; } = null!;
             public bool Barks { [UsedImplicitly] get; set; }
         }
 
@@ -65,7 +63,7 @@ namespace GraphZen.Tests.QueryEngine
                             return "Cat";
                     }
 
-                    return null;
+                    return null!;
                 });
 
             _.Object("Person")
@@ -122,30 +120,30 @@ namespace GraphZen.Tests.QueryEngine
                         kind = "INTERFACE",
                         name = "Named",
                         fields = new object[] { new { name = "name" } },
-                        interfaces = (object)null,
+                        interfaces = (object?)null,
                         possibleTypes = new object[]
                         {
                             new {name = "Cat"},
                             new {name = "Dog"},
                             new {name = "Person"}
                         },
-                        enumValues = (object)null,
-                        inputFields = (object)null
+                        enumValues = (object?)null,
+                        inputFields = (object?)null
                     },
                     Pet = new
                     {
                         kind = "UNION",
                         name = "Pet",
-                        fields = (object)null,
+                        fields = (object?)null,
 
-                        interfaces = (object)null,
+                        interfaces = (object?)null,
                         possibleTypes = new object[]
                         {
                             new {name = "Dog"},
                             new {name = "Cat"}
                         },
-                        enumValues = (object)null,
-                        inputFields = (object)null
+                        enumValues = (object?)null,
+                        inputFields = (object?)null
                     }
                 }
             });
@@ -350,9 +348,9 @@ namespace GraphZen.Tests.QueryEngine
         [Fact]
         public async Task GetsExecutionInfoInResolver()
         {
-            CustomContext encounteredContext = default;
-            Schema encounteredSchema = default;
-            object encounteredRootValue = default;
+            CustomContext? encounteredContext = default;
+            Schema? encounteredSchema = default;
+            object? encounteredRootValue = default;
             var schema = Schema.Create<CustomContext>(_ =>
             {
                 _.Interface("Named")

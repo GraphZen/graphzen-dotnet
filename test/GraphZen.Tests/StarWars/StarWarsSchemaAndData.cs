@@ -12,7 +12,6 @@ using GraphZen.Tests.QueryEngine;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.StarWars
@@ -29,7 +28,7 @@ namespace GraphZen.Tests.StarWars
 
             [GraphQLCanBeNull]
             [Description("The name of the character.")]
-            string Name { get; }
+            string? Name { get; }
 
             [GraphQLIgnore] string[] FriendIds { get; }
 
@@ -40,12 +39,12 @@ namespace GraphZen.Tests.StarWars
 
             [GraphQLCanBeNull]
             [Description("All secrets about their past.")]
-            string SecretBackstory { get; }
+            string? SecretBackstory { get; }
 
             [GraphQLCanBeNull]
             [GraphQLListItemCanBeNull]
             [Description("The friends of the character, or an empty list if they have none.")]
-            Task<ICharacter[]> FriendsAsync();
+            Task<ICharacter?[]> FriendsAsync();
         }
 
         [Description("A humanoid creature in the Star Wars universe.")]
@@ -53,20 +52,20 @@ namespace GraphZen.Tests.StarWars
         {
             [Description("The home planet of the human, or null if unknown.")]
             [GraphQLCanBeNull]
-            public string HomePlanet { get; set; }
+            public string? HomePlanet { get; set; }
 
-            [Description("The id of the human.")] public string Id { get; set; }
+            [Description("The id of the human.")] public string Id { get; set; } = null!;
 
             [GraphQLCanBeNull]
             [Description("The name of the human.")]
-            public string Name { get; set; }
+            public string? Name { get; set; }
 
-            [GraphQLIgnore] public string[] FriendIds { get; set; }
+            [GraphQLIgnore] public string[] FriendIds { get; set; } = null!;
 
             [GraphQLCanBeNull]
             [GraphQLListItemCanBeNull]
             [Description("The friends of the human, or an empty list if they have none.")]
-            public async Task<ICharacter[]> FriendsAsync()
+            public async Task<ICharacter?[]> FriendsAsync()
             {
                 var friends = FriendIds.Select(GetCharacterAsync).ToArray();
                 await Task.WhenAll(friends);
@@ -76,7 +75,7 @@ namespace GraphZen.Tests.StarWars
             [Description("Which movies they appear in.")]
             [GraphQLCanBeNull]
             [GraphQLListItemCanBeNull]
-            public Episode[] AppearsIn { get; set; }
+            public Episode[] AppearsIn { get; set; } = null!;
 
             [GraphQLCanBeNull]
             [Description("Where are they from and how they came to be who they are.")]
@@ -88,19 +87,19 @@ namespace GraphZen.Tests.StarWars
         {
             [GraphQLCanBeNull]
             [Description("The primary function of the droid")]
-            public string PrimaryFunction { get; set; }
+            public string? PrimaryFunction { get; set; }
 
-            [Description("The id of the droid.")] public string Id { get; set; }
+            [Description("The id of the droid.")] public string Id { get; set; } = null!;
 
             [GraphQLCanBeNull]
             [Description("The name of the droid.")]
-            public string Name { get; set; }
+            public string? Name { get; set; }
 
-            [GraphQLIgnore] public string[] FriendIds { get; set; }
+            [GraphQLIgnore] public string[] FriendIds { get; set; } = null!;
 
             [GraphQLCanBeNull]
             [GraphQLListItemCanBeNull]
-            public async Task<ICharacter[]> FriendsAsync()
+            public async Task<ICharacter?[]> FriendsAsync()
             {
                 var friends = FriendIds.Select(GetCharacterAsync).ToArray();
                 await Task.WhenAll(friends);
@@ -110,11 +109,11 @@ namespace GraphZen.Tests.StarWars
             [GraphQLCanBeNull]
             [GraphQLListItemCanBeNull]
             [Description("Which movies they appear in.")]
-            public Episode[] AppearsIn { get; set; }
+            public Episode[] AppearsIn { get; set; } = null!;
 
             [GraphQLCanBeNull]
             [Description("Construction date and the name of the designer.")]
-            public string SecretBackstory { get; }
+            public string? SecretBackstory { get; }
         }
 
         private static Human Luke { get; } = new Human
@@ -193,18 +192,18 @@ namespace GraphZen.Tests.StarWars
             {"2001", Artoo}
         };
 
-        protected static Task<ICharacter> GetCharacterAsync(string id) =>
-            Task.FromResult(HumanData.TryGetValue(id, out var human) ? (ICharacter)human :
+        protected static Task<ICharacter?> GetCharacterAsync(string id) =>
+            Task.FromResult(HumanData.TryGetValue(id, out var human) ? (ICharacter?)human :
                 DroidData.TryGetValue(id, out var droid) ? droid : null);
 
-        protected static IEnumerable<Task<ICharacter>> GetFriendsAsync(ICharacter character) =>
+        protected static IEnumerable<Task<ICharacter?>> GetFriendsAsync(ICharacter character) =>
             character.FriendIds.Select(GetCharacterAsync);
 
         protected static ICharacter GetHero(Episode? episode) => episode == Episode.Empire ? Luke : Artoo;
 
-        protected static Human GetHuman(string id) => HumanData.TryGetValue(id, out var human) ? human : null;
+        protected static Human? GetHuman(string id) => HumanData.TryGetValue(id, out var human) ? human : null;
 
-        protected static Droid GetDroid(string id) => DroidData.TryGetValue(id, out var droid) ? droid : null;
+        protected static Droid? GetDroid(string id) => DroidData.TryGetValue(id, out var droid) ? droid : null;
 
 
         protected static Schema SchemaBuilderSchema = Schema.Create(sb =>
@@ -311,13 +310,13 @@ namespace GraphZen.Tests.StarWars
             [UsedImplicitly]
             [GraphQLCanBeNull]
             [GraphQLName("human")]
-            public Task<Human> GetHumanAsync([Description("id of the human")] string id) =>
+            public Task<Human?> GetHumanAsync([Description("id of the human")] string id) =>
                 Task.FromResult(GetHuman(id));
 
             [GraphQLName("droid")]
             [GraphQLCanBeNull]
             [UsedImplicitly]
-            public Droid GetDroidData([Description("id of the droid")] string id) => GetDroid(id);
+            public Droid? GetDroidData([Description("id of the droid")] string id) => GetDroid(id);
         }
     }
 }

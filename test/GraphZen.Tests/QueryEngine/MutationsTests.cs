@@ -9,8 +9,6 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
 
 namespace GraphZen.Tests.QueryEngine
 {
@@ -142,10 +140,10 @@ namespace GraphZen.Tests.QueryEngine
                 {
                     first = new { theNumber = 1 },
                     second = new { theNumber = 2 },
-                    third = (object)null,
+                    third = (object?)null,
                     fourth = new { theNumber = 4 },
                     fifth = new { theNumber = 5 },
-                    sixth = (object)null
+                    sixth = (object?)null
                 },
                 errors = new object[]
                 {

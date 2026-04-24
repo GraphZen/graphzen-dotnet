@@ -8,7 +8,6 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.QueryEngine.Variables
@@ -91,7 +90,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
-            ", new { value = (string)null }).ShouldEqual(new
+            ", new { value = (string?)null }).ShouldEqual(new
             {
                 errors = Array(new
                 {
@@ -121,7 +120,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
                 })
             });
 
-            Assert.NotNull(result.Errors[0].InnerException);
+            Assert.NotNull(result.Errors![0].InnerException);
         }
 
         [Fact]
@@ -130,7 +129,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
             {
                 data = new
                 {
-                    fieldWithNonNullableStringInput = (object)null
+                    fieldWithNonNullableStringInput = (object?)null
                 },
                 errors = Array(new
                 {
@@ -154,7 +153,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
             {
                 data = new
                 {
-                    fieldWithNonNullableStringInput = (object)null
+                    fieldWithNonNullableStringInput = (object?)null
                 },
                 errors = Array(new
                 {

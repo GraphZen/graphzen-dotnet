@@ -10,7 +10,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.Infrastructure
@@ -33,11 +32,11 @@ namespace GraphZen.Infrastructure
             });
             if (dupeEntry != null)
             {
-                duplicate = dupeEntry.FirstOrDefault();
+                duplicate = dupeEntry.First();
                 return true;
             }
 
-            duplicate = default;
+            duplicate = default!;
             return false;
         }
 
@@ -51,7 +50,7 @@ namespace GraphZen.Infrastructure
                 return true;
             }
 
-            duplicate = default;
+            duplicate = default!;
             return false;
         }
 
@@ -69,7 +68,7 @@ namespace GraphZen.Infrastructure
 
         public static IReadOnlyDictionary<TKey, TSource> ToReadOnlyDictionary<TKey, TSource>(
             this IEnumerable<TSource> source, Func<TSource, TKey> keySelector
-        )
+        ) where TKey : notnull
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(keySelector, nameof(keySelector));
@@ -79,7 +78,7 @@ namespace GraphZen.Infrastructure
 
         public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue, TSource>(
             this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
-            Func<TSource, TValue> valueSelector)
+            Func<TSource, TValue> valueSelector) where TKey : notnull
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(keySelector, nameof(keySelector));
@@ -89,7 +88,7 @@ namespace GraphZen.Infrastructure
 
 
         public static IReadOnlyDictionary<TKey, TSource> ToReadOnlyDictionaryIgnoringDuplicates<TKey, TSource>(
-            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) where TKey : notnull
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(keySelector, nameof(keySelector));

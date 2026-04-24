@@ -7,24 +7,23 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Validation
 {
     public abstract class ValidationContext
     {
-        private readonly Lazy<GraphQLSyntaxWalker> _parentVisitor;
+        private readonly Lazy<GraphQLSyntaxWalker?> _parentVisitor;
 
 
-        protected ValidationContext(DocumentSyntax ast, Lazy<GraphQLSyntaxWalker> parentVisitor)
+        protected ValidationContext(DocumentSyntax ast, Lazy<GraphQLSyntaxWalker?> parentVisitor)
         {
             AST = ast;
             _parentVisitor = parentVisitor;
         }
 
 
-        public IReadOnlyCollection<SyntaxNode> Ancestors => _parentVisitor.Value.Ancestors;
+        public IReadOnlyCollection<SyntaxNode> Ancestors => _parentVisitor.Value!.Ancestors;
 
 
         public DocumentSyntax AST { get; }

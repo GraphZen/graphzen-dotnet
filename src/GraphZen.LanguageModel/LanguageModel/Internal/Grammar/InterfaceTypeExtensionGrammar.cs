@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -19,17 +18,17 @@ namespace GraphZen.LanguageModel.Internal
         private static TokenListParser<TokenKind, InterfaceTypeExtensionSyntax> InterfaceTypeExtension { get; } =
             (from extend in Keyword("extend")
              from iface in Keyword("interface")
-             from name in Name
-             from directives in Directives.OptionalOrDefault()
-             from fields in FieldsDefinition
-             select new InterfaceTypeExtensionSyntax(name, directives, fields,
-                 SyntaxLocation.FromMany(extend, fields.GetLocation()))).Try().Or(
+             from name in Name!
+             from directives in Directives.AsNullable().OptionalOrDefault()
+             from fields in FieldsDefinition!
+             select new InterfaceTypeExtensionSyntax(name!, directives, fields!,
+                 SyntaxLocation.FromMany(extend, fields!.GetLocation()))).Try().Or(
                 from extend in Keyword("extend")
                 from iface in Keyword("interface")
-                from name in Name
+                from name in Name!
                 from directives in Directives
-                select new InterfaceTypeExtensionSyntax(name, directives, null,
-                    SyntaxLocation.FromMany(extend, directives.GetLocation()))
+                select new InterfaceTypeExtensionSyntax(name!, directives!, null,
+                    SyntaxLocation.FromMany(extend, directives!.GetLocation()))
             ).Try().Named("interface type extension");
     }
 }

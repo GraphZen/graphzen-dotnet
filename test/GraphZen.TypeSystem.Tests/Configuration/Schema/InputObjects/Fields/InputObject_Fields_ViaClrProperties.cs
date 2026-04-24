@@ -47,16 +47,15 @@ namespace GraphZen.TypeSystem.Tests.Configuration.InputObjects.Fields
         {
         }
 
-#nullable disable
         public class ExampleInputObject
         {
-            public string HelloWorld { get; set; }
+            public string HelloWorld { get; set; } = null!;
 
-            [GraphQLName(DataAnnotationName)] public string NamedByDataAnnotation { get; set; }
+            [GraphQLName(DataAnnotationName)] public string NamedByDataAnnotation { get; set; } = null!;
 
-            [GraphQLIgnore] public string IgnoredByDataAnnotation { get; set; }
+            [GraphQLIgnore] public string IgnoredByDataAnnotation { get; set; } = null!;
 
-            public IgnoredType IgnoredByConvention { get; set; }
+            public IgnoredType IgnoredByConvention { get; set; } = null!;
         }
     }
 }

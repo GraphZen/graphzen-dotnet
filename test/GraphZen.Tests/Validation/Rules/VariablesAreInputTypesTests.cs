@@ -7,7 +7,6 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.Validation.Rules

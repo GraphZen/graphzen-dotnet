@@ -10,8 +10,6 @@ using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
 
 // ReSharper disable InconsistentNaming
 
@@ -57,23 +55,23 @@ namespace GraphZen.TypeSystem.Tests
         [GraphQLIgnore]
         public class object_included_by_explicit_configuration : IFooInterface
         {
-            public object_ignored_by_data_annotation PropertyFieldWithTypeIgnoredByDataAnnotation { get; set; }
-            public object_included_via_property_type_on_class PropertyField { get; set; }
+            public object_ignored_by_data_annotation PropertyFieldWithTypeIgnoredByDataAnnotation { get; set; } = null!;
+            public object_included_via_property_type_on_class PropertyField { get; set; } = null!;
 
-            [GraphQLIgnore] public type_never_included PropertyIgnoredByDataAnnotation { get; set; }
+            [GraphQLIgnore] public type_never_included PropertyIgnoredByDataAnnotation { get; set; } = null!;
 
             [GraphQLIgnore]
             // ReSharper disable once UnassignedGetOnlyAutoProperty
-            public type_never_included property_from_interface_ignored_by_data_annotation { get; }
+            public type_never_included property_from_interface_ignored_by_data_annotation { get; } = null!;
 
             public object_included_via_method_return_type_on_class MethodField(
                 input_object_ignored_by_data_annotation arg1,
                 input_object_included_via_field_argument arg2,
                 [GraphQLIgnore] type_never_included arg3) =>
-                default;
+                default!;
 
             [GraphQLIgnore]
-            public type_never_included MethodIgnoredByDataAnnotation() => default;
+            public type_never_included MethodIgnoredByDataAnnotation() => default!;
         }
 
 

@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.StarWars
@@ -150,7 +149,7 @@ namespace GraphZen.Tests.StarWars
         [InlineData("1000", "Luke Skywalker")]
         [InlineData("1002", "Han Solo")]
         [InlineData("not a valid id", null)]
-        public Task GenericQuery(string id, string name)
+        public Task GenericQuery(string id, string? name)
         {
             var human = name != null ? new { name } : null;
             return ExecuteAsync(StarWarsSchema, @" 
@@ -306,7 +305,7 @@ namespace GraphZen.Tests.StarWars
                     hero = new
                     {
                         name = "R2-D2",
-                        secretBackstory = (string)null
+                        secretBackstory = (string?)null
                     }
                 },
                 errors = new object[]
@@ -349,17 +348,17 @@ namespace GraphZen.Tests.StarWars
                             new
                             {
                                 name = "Luke Skywalker",
-                                secretBackstory = (string) null
+                                secretBackstory = (string?) null
                             },
                             new
                             {
                                 name = "Han Solo",
-                                secretBackstory = (string) null
+                                secretBackstory = (string?) null
                             },
                             new
                             {
                                 name = "Leia Organa",
-                                secretBackstory = (string) null
+                                secretBackstory = (string?) null
                             }
                         }
                     }
@@ -414,7 +413,7 @@ namespace GraphZen.Tests.StarWars
                     mainHero = new
                     {
                         name = "R2-D2",
-                        story = (string)null
+                        story = (string?)null
                     }
                 },
                 errors = new object[]

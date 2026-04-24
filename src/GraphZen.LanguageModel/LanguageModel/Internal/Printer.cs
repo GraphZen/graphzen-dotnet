@@ -10,7 +10,6 @@ using System.Text.Json;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -31,7 +30,7 @@ namespace GraphZen.LanguageModel.Internal
             return result;
         }
 
-        private void PrintNode(SyntaxNode node)
+        private void PrintNode(SyntaxNode? node)
         {
             if (node == null) return;
 
@@ -424,7 +423,7 @@ namespace GraphZen.LanguageModel.Internal
             Append(end);
         }
 
-        public void Wrap(string start, SyntaxNode node, string end = "")
+        public void Wrap(string start, SyntaxNode? node, string end = "")
         {
             Append(start);
             PrintNode(node);
@@ -442,7 +441,7 @@ namespace GraphZen.LanguageModel.Internal
             _outputBuilder.Append(value);
         }
 
-        public void AppendLine(string value = null)
+        public void AppendLine(string? value = null)
         {
             _outputBuilder.AppendLine(value);
         }
@@ -457,7 +456,7 @@ namespace GraphZen.LanguageModel.Internal
             return string.Concat(Enumerable.Range(0, _indentLevel).Select(_ => "  "));
         }
 
-        public void Join(IReadOnlyList<SyntaxNode> nodes, Action seperatorAction = null)
+        public void Join(IReadOnlyList<SyntaxNode> nodes, Action? seperatorAction = null)
         {
             var hasSeperator = seperatorAction != null;
 
@@ -466,13 +465,13 @@ namespace GraphZen.LanguageModel.Internal
             {
                 PrintNode(node);
                 var isLastElement = i == nodes.Count;
-                if (hasSeperator && !isLastElement) seperatorAction();
+                if (hasSeperator && !isLastElement) seperatorAction!();
 
                 i++;
             }
         }
 
-        private void Join(IReadOnlyList<SyntaxNode> nodes, string seperator = null)
+        private void Join(IReadOnlyList<SyntaxNode> nodes, string? seperator = null)
         {
             Join(nodes, seperator != null ? () => { Append(seperator); } : null);
         }
