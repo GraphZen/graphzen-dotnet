@@ -31,15 +31,17 @@ public static class GraphZenServiceCollectionExtensions
             optionsAction != null
                 // ReSharper disable once ConstantConditionalAccessQualifier
                 ? (p, b) => { optionsAction?.Invoke(b); }
-                : (Action<IServiceProvider, GraphQLContextOptionsBuilder>?)null;
+        : (Action<IServiceProvider, GraphQLContextOptionsBuilder>?)null;
 
         var contextType = typeof(TContext);
         if (optionsAction != null)
         {
             var declaredConstructors = contextType.GetTypeInfo().DeclaredConstructors.ToList();
             if (declaredConstructors.Count == 1 && declaredConstructors[0].GetParameters().Length == 0)
+            {
                 throw new ArgumentException(
                     $"{nameof(AddGraphQLContext)} was called with configuration, but the context type '{contextType}' only declares a parameterless constructor. This means that the configuration passed to {nameof(AddGraphQLContext)} will never be used. If configuration is passed to {nameof(AddGraphQLContext)}, then '{contextType}' should declare a constructor that accepts a {nameof(GraphQLContextOptions)}<{contextType.Name}> and must pass it to the base constructor for {nameof(GraphQLContext)}.");
+            }
         }
 
         serviceCollection.TryAdd(new ServiceDescriptor(typeof(GraphQLContextOptions<TContext>),
@@ -64,10 +66,16 @@ public static class GraphZenServiceCollectionExtensions
 
         var context = tempServiceProvider.GetRequiredService<TContext>();
         var queryClrType = context.Schema.QueryType?.ClrType;
-        if (queryClrType != null) serviceCollection.TryAddScoped(queryClrType);
+        if (queryClrType != null)
+        {
+            serviceCollection.TryAddScoped(queryClrType);
+        }
 
         var mutationClrType = context.Schema.MutationType?.ClrType;
-        if (mutationClrType != null) serviceCollection.TryAddScoped(mutationClrType);
+        if (mutationClrType != null)
+        {
+            serviceCollection.TryAddScoped(mutationClrType);
+        }
     }
 
     private static GraphQLContextOptions<TContext> GraphQLContextOptionsFactory<TContext>(

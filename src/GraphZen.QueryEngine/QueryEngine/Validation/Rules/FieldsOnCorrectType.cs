@@ -19,8 +19,13 @@ public class FieldsOnCorrectType : QueryValidationRuleVisitor
         var fieldNames = suggestedFieldNames.ToArray();
         var message = $"Cannot query field \"{fieldName}\" on type \"{type}\".";
         if (typeNames.Any())
+        {
             message += $" Did you mean to use an inline fragment on {typeNames.QuotedOrList()}?";
-        else if (fieldNames.Any()) message += $" Did you mean {fieldNames.QuotedOrList()}?";
+        }
+        else if (fieldNames.Any())
+        {
+            message += $" Did you mean {fieldNames.QuotedOrList()}?";
+        }
 
         return message;
     }
@@ -56,12 +61,18 @@ public class FieldsOnCorrectType : QueryValidationRuleVisitor
             var interfaceUsageCount = new Dictionary<string, int>();
             foreach (var possibleType in Context.Schema.GetPossibleTypes(abstractType))
             {
-                if (possibleType.FindField(fieldName) == null) continue;
+                if (possibleType.FindField(fieldName) == null)
+                {
+                    continue;
+                }
 
                 suggestedObjectTypes.Add(possibleType.Name);
                 foreach (var possibleInterface in possibleType.Interfaces)
                 {
-                    if (possibleInterface.FindField(fieldName) == null) continue;
+                    if (possibleInterface.FindField(fieldName) == null)
+                    {
+                        continue;
+                    }
 
                     interfaceUsageCount.Increment(possibleInterface.Name);
                 }

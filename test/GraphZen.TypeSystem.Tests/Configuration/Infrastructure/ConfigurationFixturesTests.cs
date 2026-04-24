@@ -1,8 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using GraphZen.Infrastructure;
-
 namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 
 public class ConfigurationFixturesTests
@@ -43,7 +41,9 @@ public class ConfigurationFixturesTests
             .ToArray();
 
         if (missingTypeNames.Any())
+        {
             throw new Exception(
                 $"The following types need to be added to {nameof(ConfigurationFixtures)}.{nameof(ConfigurationFixtures.GetAll)}:\n\n{string.Join(Environment.NewLine, missingTypeNames)} \n\n");
+        }
     }
 }

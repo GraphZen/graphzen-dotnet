@@ -18,18 +18,29 @@ public static class SpecScalars
                 .Description(SpecScalarSyntaxNodes.ID.Description!.Value)
                 .Serializer(value =>
                 {
-                    if (value is string str) return Maybe.Some<object>(str);
+                    if (value is string str)
+                    {
+                        return Maybe.Some<object>(str);
+                    }
 
-                    if (value is int intVal) return Maybe.Some<object>(intVal.ToString());
+                    if (value is int intVal)
+                    {
+                        return Maybe.Some<object>(intVal.ToString());
+                    }
 
                     throw new Exception($"ID cannot represent value: {value.Inspect()}");
                 })
                 .ValueParser(value =>
                 {
-                    if (value is string str) return Maybe.Some<object>(str);
+                    if (value is string str)
+                    {
+                        return Maybe.Some<object>(str);
+                    }
 
                     if (InternalNumerics.TryGetWholeDouble(value, out var wholeVal))
+                    {
                         return Maybe.Some<object>(wholeVal.ToString(CultureInfo.InvariantCulture));
+                    }
 
                     throw new Exception($"ID cannot represent value: {value.Inspect()}");
                 })
@@ -53,7 +64,10 @@ public static class SpecScalars
         .Description(SpecScalarSyntaxNodes.String.Description!.Value)
         .ValueParser(value =>
         {
-            if (value is string str) return Maybe.Some<object>(str);
+            if (value is string str)
+            {
+                return Maybe.Some<object>(str);
+            }
 
             throw new Exception($"String cannot represent a non string value: {value.Inspect()}");
         })
@@ -61,11 +75,20 @@ public static class SpecScalars
             node is StringValueSyntax svn ? Maybe.Some<object>(svn.Value) : Maybe.None<object>())
         .Serializer(value =>
         {
-            if (value is string str) return Maybe.Some<object>(str);
+            if (value is string str)
+            {
+                return Maybe.Some<object>(str);
+            }
 
-            if (value is bool boolean) return Maybe.Some<object>(boolean ? "true" : "false");
+            if (value is bool boolean)
+            {
+                return Maybe.Some<object>(boolean ? "true" : "false");
+            }
 
-            if (InternalNumerics.IsNumber(value)) return Maybe.Some<object>(value.ToString()!);
+            if (InternalNumerics.IsNumber(value))
+            {
+                return Maybe.Some<object>(value.ToString()!);
+            }
 
             throw new Exception($"String cannot represent a non string value: {value}");
         })
@@ -82,7 +105,9 @@ public static class SpecScalars
                 if (InternalNumerics.TryGetWholeDouble(value, out var wholeNumber))
                 {
                     if (InternalNumerics.TryConvertToInt32(wholeNumber, out var intValue))
+                    {
                         return Maybe.Some<object>(intValue);
+                    }
 
                     throw new Exception($"Int cannot represent non 32-bit signed integer value: {value}");
                 }
@@ -93,15 +118,22 @@ public static class SpecScalars
             .Serializer(value =>
 
             {
-                if (value is bool boolean) return Maybe.Some<object>(boolean ? 1 : 0);
+                if (value is bool boolean)
+                {
+                    return Maybe.Some<object>(boolean ? 1 : 0);
+                }
 
-
-                if (value is string str && str != "") return Maybe.Some<object>(Convert.ToInt32(value));
+                if (value is string str && str != "")
+                {
+                    return Maybe.Some<object>(Convert.ToInt32(value));
+                }
 
                 if (InternalNumerics.TryGetWholeDouble(value, out var wholeNumber))
                 {
                     if (InternalNumerics.TryConvertToInt32(wholeNumber, out var intValue))
+                    {
                         return Maybe.Some<object>(intValue);
+                    }
 
                     throw new Exception($"Int cannot represent non 32-bit signed integer value: {value}");
                 }

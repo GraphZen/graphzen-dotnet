@@ -28,9 +28,11 @@ public class InterfaceFieldsMustHaveOutputTypes : DocumentValidationRuleVisitor
 
             var outputType = outputTypes.FirstOrDefault(_ => _.Name.Equals(fieldNamedType.Name));
             if (outputType == null)
+            {
                 ReportError(
                     $"The type of {typeName}.{field} must be Output Type but got: {field.FieldType}.",
                     field.FieldType);
+            }
         }
 
         return false;

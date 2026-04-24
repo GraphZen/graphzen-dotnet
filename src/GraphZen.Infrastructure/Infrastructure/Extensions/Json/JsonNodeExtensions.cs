@@ -3,7 +3,6 @@
 
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using GraphZen.Infrastructure;
 
 namespace GraphZen.Infrastructure;
 
@@ -27,7 +26,10 @@ public static class JsonNodeExtensions
         var json = JsonSerializer.Serialize(value, Json.SerializerOptions);
         var node = JsonNode.Parse(json);
         if (node is JsonObject jsonObject)
+        {
             return jsonObject.ToDictionary();
+        }
+
         throw new Exception("Unable to convert object to Dictionary<string, object>");
     }
 
@@ -57,9 +59,15 @@ public static class JsonNodeExtensions
                 return element.GetString()!;
             case JsonValueKind.Number:
                 if (element.TryGetInt32(out var intVal))
+                {
                     return intVal;
+                }
+
                 if (element.TryGetInt64(out var longVal))
+                {
                     return longVal;
+                }
+
                 return element.GetDouble();
             case JsonValueKind.True:
                 return true;

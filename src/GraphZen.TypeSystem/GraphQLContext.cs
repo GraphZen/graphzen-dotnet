@@ -56,7 +56,10 @@ public class GraphQLContext
     {
         get
         {
-            if (_schema != null) return _schema;
+            if (_schema != null)
+            {
+                return _schema;
+            }
 
             var contextType = GetType();
 
@@ -78,23 +81,36 @@ public class GraphQLContext
 
                     Type? DiscoverQueryType(Assembly? assembly, Func<Assembly, IEnumerable<Type>> getTypes)
                     {
-                        if (assembly == null) return null;
+                        if (assembly == null)
+                        {
+                            return null;
+                        }
+
                         var candidates = getTypes(assembly)
                             .Where(_ => _.IsClass && _.Name == "Query" && !_.IsNested).ToArray();
                         if (candidates.Length > 1)
+                        {
                             throw new InvalidOperationException(
                                 $"Unable to determine query type by convention. More than one class named 'Query' in assembly '{assembly}'");
+                        }
+
                         return candidates.SingleOrDefault();
                     }
 
                     if (contextType != typeof(GraphQLContext))
+                    {
                         queryClrType = DiscoverQueryType(contextType.Assembly, a => a.GetExportedTypes());
+                    }
 
                     if (queryClrType == null)
+                    {
                         queryClrType = DiscoverQueryType(Assembly.GetEntryAssembly(), a => a.GetTypes());
+                    }
 
                     if (queryClrType != null)
+                    {
                         internalBuilder.QueryType(queryClrType, ConfigurationSource.Convention);
+                    }
                 }
 
                 // Configure mutation type
@@ -106,15 +122,21 @@ public class GraphQLContext
                 {
                     Type? mutationClrType = default;
                     if (contextType != typeof(GraphQLContext))
+                    {
                         mutationClrType = contextType.Assembly.GetExportedTypes()
                             .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
+                    }
 
                     if (mutationClrType == null)
+                    {
                         mutationClrType = Assembly.GetEntryAssembly()?.GetTypes()
                             .SingleOrDefault(_ => _.IsClass && _.Name == "Mutation");
+                    }
 
                     if (mutationClrType != null)
+                    {
                         internalBuilder.MutationType(mutationClrType, ConfigurationSource.Convention);
+                    }
                 }
 
 

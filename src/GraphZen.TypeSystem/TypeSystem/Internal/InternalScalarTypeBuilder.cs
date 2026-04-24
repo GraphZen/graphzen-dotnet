@@ -33,7 +33,10 @@ public class InternalScalarTypeBuilder : AnnotatableMemberDefinitionBuilder<Scal
 
     public InternalScalarTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
     {
-        if (Definition.SetClrType(clrType, configurationSource)) ConfigureFromClrType();
+        if (Definition.SetClrType(clrType, configurationSource))
+        {
+            ConfigureFromClrType();
+        }
 
         return this;
     }
@@ -41,9 +44,16 @@ public class InternalScalarTypeBuilder : AnnotatableMemberDefinitionBuilder<Scal
     public bool ConfigureFromClrType()
     {
         var clrType = Definition.ClrType;
-        if (clrType == null) return false;
+        if (clrType == null)
+        {
+            return false;
+        }
+
         if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
+        {
             this.Description(description, ConfigurationSource.DataAnnotation);
+        }
+
         return true;
     }
 }

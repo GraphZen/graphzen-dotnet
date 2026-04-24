@@ -24,14 +24,18 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
         {
             if (configurationSource.Overrides(ignoredConfigurationSource) &&
                 configurationSource != ignoredConfigurationSource)
+            {
                 Definition.IgnoreField(fieldName, configurationSource);
+            }
 
             return true;
         }
 
         var field = Definition.FindField(fieldName);
-        if (field != null) return Ignore(field, configurationSource);
-
+        if (field != null)
+        {
+            return Ignore(field, configurationSource);
+        }
 
         Definition.IgnoreField(fieldName, configurationSource);
         return true;
@@ -40,7 +44,10 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
     public bool UnignoreField(string name, ConfigurationSource configurationSource)
     {
         var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(name);
-        if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+        if (!configurationSource.Overrides(ignoredConfigurationSource))
+        {
+            return false;
+        }
 
         Definition.UnignoreField(name);
         return true;
@@ -49,7 +56,10 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
 
     public InternalInputObjectTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
     {
-        if (Definition.SetClrType(clrType, configurationSource)) ConfigureFromClrType();
+        if (Definition.SetClrType(clrType, configurationSource))
+        {
+            ConfigureFromClrType();
+        }
 
         return this;
     }
@@ -57,9 +67,15 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
     public bool ConfigureFromClrType()
     {
         var clrType = Definition.ClrType;
-        if (clrType == null) return false;
+        if (clrType == null)
+        {
+            return false;
+        }
+
         if (clrType.TryGetDescriptionFromDataAnnotation(out var description))
+        {
             Definition.SetDescription(description, ConfigurationSource.DataAnnotation);
+        }
 
         var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
         // ReSharper disable once PossibleNullReferenceException
@@ -77,7 +93,10 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
 
     public bool IsFieldIgnored(string member, ConfigurationSource configurationSource)
     {
-        if (configurationSource == ConfigurationSource.Explicit) return false;
+        if (configurationSource == ConfigurationSource.Explicit)
+        {
+            return false;
+        }
 
         var ignoredMemberConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(member);
         return ignoredMemberConfigurationSource.HasValue &&
@@ -86,7 +105,10 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
 
     public bool IgnoreField(InputFieldDefinition field, ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(field.GetConfigurationSource())) return false;
+        if (!configurationSource.Overrides(field.GetConfigurationSource()))
+        {
+            return false;
+        }
 
         Definition.IgnoreField(field.Name, configurationSource);
 
@@ -95,14 +117,20 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
 
     private bool Ignore(InputFieldDefinition field, ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(field.GetConfigurationSource())) return false;
+        if (!configurationSource.Overrides(field.GetConfigurationSource()))
+        {
+            return false;
+        }
 
         return RemoveField(field, configurationSource);
     }
 
     public bool RemoveField(InputFieldDefinition field, ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(field.GetConfigurationSource())) return false;
+        if (!configurationSource.Overrides(field.GetConfigurationSource()))
+        {
+            return false;
+        }
 
         Definition.IgnoreField(field.Name, configurationSource);
 
@@ -115,15 +143,23 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
     public InternalInputValueBuilder? Field(PropertyInfo property, ConfigurationSource configurationSource)
     {
         var (fieldName, _) = property.GetGraphQLFieldName();
-        if (property.IsIgnoredByDataAnnotation()) IgnoreField(property, ConfigurationSource.DataAnnotation);
+        if (property.IsIgnoredByDataAnnotation())
+        {
+            IgnoreField(property, ConfigurationSource.DataAnnotation);
+        }
 
-        if (IsFieldIgnored(fieldName, configurationSource)) return null;
-
+        if (IsFieldIgnored(fieldName, configurationSource))
+        {
+            return null;
+        }
 
         if (property.TryGetGraphQLTypeInfo(out _, out var innerClrType))
         {
             var fieldInnerType = Schema.Builder.InputType(innerClrType, configurationSource);
-            if (fieldInnerType == null) IgnoreField(property, ConfigurationSource.Convention);
+            if (fieldInnerType == null)
+            {
+                IgnoreField(property, ConfigurationSource.Convention);
+            }
         }
         else
         {
@@ -131,7 +167,10 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
         }
 
 
-        if (IsFieldIgnored(fieldName, configurationSource)) return null;
+        if (IsFieldIgnored(fieldName, configurationSource))
+        {
+            return null;
+        }
 
         var field = Definition.FindField(property);
         if (field == null)
@@ -145,7 +184,9 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
         }
 
         if (property.TryGetDescriptionFromDataAnnotation(out var desc))
+        {
             field.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+        }
 
         return field.Builder;
     }
@@ -155,15 +196,20 @@ public class InternalInputObjectTypeBuilder : AnnotatableMemberDefinitionBuilder
         var (fieldName, _) = member.GetGraphQLFieldName();
         var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(fieldName);
         if (ignoredConfigurationSource.HasValue)
+        {
             if (configurationSource.Overrides(ignoredConfigurationSource) &&
                 configurationSource != ignoredConfigurationSource)
             {
                 Definition.IgnoreField(fieldName, configurationSource);
                 return true;
             }
+        }
 
         var field = Definition.FindField(member);
-        if (field != null) return IgnoreField(field, configurationSource);
+        if (field != null)
+        {
+            return IgnoreField(field, configurationSource);
+        }
 
         Definition.IgnoreField(fieldName, configurationSource);
         return true;

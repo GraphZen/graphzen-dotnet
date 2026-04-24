@@ -50,19 +50,28 @@ public class ObjectTypeDefinition : FieldsDefinition, IMutableObjectTypeDefiniti
     {
         Check.NotNull(@interface, nameof(@interface));
 
-        if (@interface.Name == null) throw new ArgumentException("Interface must have a name", nameof(@interface));
+        if (@interface.Name == null)
+        {
+            throw new ArgumentException("Interface must have a name", nameof(@interface));
+        }
 
         var interfaceName = @interface.Name;
         var ignoredInterfaceConfigurationSource = FindIgnoredInterfaceConfigurationSource(interfaceName);
         if (ignoredInterfaceConfigurationSource.HasValue)
         {
-            if (!configurationSource.Overrides(ignoredInterfaceConfigurationSource)) return false;
+            if (!configurationSource.Overrides(ignoredInterfaceConfigurationSource))
+            {
+                return false;
+            }
 
             UnignoreInterface(interfaceName);
         }
 
 
-        if (_interfaces.Contains(@interface)) return true;
+        if (_interfaces.Contains(@interface))
+        {
+            return true;
+        }
 
         _interfaces.Add(@interface);
         return true;
@@ -78,7 +87,10 @@ public class ObjectTypeDefinition : FieldsDefinition, IMutableObjectTypeDefiniti
     {
         Check.NotNull(interfaceName, nameof(interfaceName));
         var ignoredConfigurationSource = FindIgnoredInterfaceConfigurationSource(interfaceName);
-        if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+        if (!configurationSource.Overrides(ignoredConfigurationSource))
+        {
+            return false;
+        }
 
         if (_ignoredInterfaces.TryGetValue(interfaceName, out var existingIgnoredConfigurationSource))
         {
@@ -98,7 +110,11 @@ public class ObjectTypeDefinition : FieldsDefinition, IMutableObjectTypeDefiniti
         var existing = _interfaces.SingleOrDefault(_ => _.Name == interfaceName);
         if (existing != null)
         {
-            if (!configurationSource.Overrides(existing.GetConfigurationSource())) return false;
+            if (!configurationSource.Overrides(existing.GetConfigurationSource()))
+            {
+                return false;
+            }
+
             _interfaces.Remove(existing);
             return true;
         }

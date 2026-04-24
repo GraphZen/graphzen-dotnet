@@ -1,8 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using GraphZen.Infrastructure;
-
 namespace GraphZen.Infrastructure;
 
 public class JsonDiffOptions
@@ -13,7 +11,11 @@ public class JsonDiffOptions
     internal static JsonDiffOptions? FromOptionsAction(
         Action<JsonDiffOptions>? optionsAction)
     {
-        if (optionsAction == null) return null;
+        if (optionsAction == null)
+        {
+            return null;
+        }
+
         var options = new JsonDiffOptions();
         optionsAction(options);
         return options;

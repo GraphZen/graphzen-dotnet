@@ -40,7 +40,10 @@ internal static class NodeExtensions
         IEnumerable<T> otherNodes) where T : SyntaxNode
     {
         var sequenceEquals = nodes.SequenceEqual(otherNodes);
-        if (sequenceEquals) return true;
+        if (sequenceEquals)
+        {
+            return true;
+        }
 
         return false;
     }

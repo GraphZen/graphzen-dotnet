@@ -23,22 +23,34 @@ public abstract class ParallelSyntaxWalker : GraphQLSyntaxWalker
     public override void OnEnter(SyntaxNode node)
     {
         if (node != null)
+        {
             foreach (var visitor in Visitors)
             {
                 if (IsValidVisitor(visitor))
+                {
                     HandleResult(node.VisitEnter(visitor), visitor, node);
+                }
             }
+        }
     }
 
     public override void OnLeave(SyntaxNode node)
     {
         if (node != null)
+        {
             foreach (var visitor in Visitors)
             {
-                if (IsValidVisitor(visitor)) HandleResult(node.VisitLeave(visitor), visitor, node);
+                if (IsValidVisitor(visitor))
+                {
+                    HandleResult(node.VisitLeave(visitor), visitor, node);
+                }
 
-                if (Skips.TryGetValue(visitor, out var n) && n == node) Skips.Remove(visitor);
+                if (Skips.TryGetValue(visitor, out var n) && n == node)
+                {
+                    Skips.Remove(visitor);
+                }
             }
+        }
     }
 
     private void HandleResult(VisitAction result, GraphQLSyntaxVisitor<VisitAction> visitor,

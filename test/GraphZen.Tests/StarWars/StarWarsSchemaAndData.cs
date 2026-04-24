@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.ComponentModel;
-using GraphZen.Infrastructure;
 using GraphZen.Tests.QueryEngine;
 using GraphZen.TypeSystem;
 
@@ -276,13 +275,16 @@ public abstract class StarWarsSchemaAndData : ExecutorHarness
     [Description("One of the films in the Star Wars Trilogy")]
     public enum Episode
     {
-        [Description("Released in 1977")] [GraphQLName("NEW_HOPE")]
+        [Description("Released in 1977")]
+        [GraphQLName("NEW_HOPE")]
         NewHope = 4,
 
-        [Description("Released in 1980")] [GraphQLName("EMPIRE")]
+        [Description("Released in 1980")]
+        [GraphQLName("EMPIRE")]
         Empire = 5,
 
-        [Description("Released in 1983")] [GraphQLName("JEDI")]
+        [Description("Released in 1983")]
+        [GraphQLName("JEDI")]
         Jedi = 6
     }
 

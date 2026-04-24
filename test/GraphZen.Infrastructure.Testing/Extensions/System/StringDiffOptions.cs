@@ -1,8 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using GraphZen.Infrastructure;
-
 namespace GraphZen.Infrastructure;
 
 public class StringDiffOptions
@@ -14,7 +12,11 @@ public class StringDiffOptions
     internal static StringDiffOptions? FromOptionsAction(
         Action<StringDiffOptions>? optionsAction)
     {
-        if (optionsAction == null) return null;
+        if (optionsAction == null)
+        {
+            return null;
+        }
+
         var options = new StringDiffOptions();
         optionsAction(options);
         return options;

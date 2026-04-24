@@ -15,7 +15,9 @@ public partial class FragmentSpreadSyntax : SelectionSyntax
     {
         Name = Check.NotNull(name, nameof(name));
         if (Name.Value.Equals("on", StringComparison.CurrentCultureIgnoreCase))
+        {
             throw new ArgumentException("Fragment spreads cannot use the name 'on'.");
+        }
 
         Directives = directives ?? DirectiveSyntax.EmptyList;
     }
@@ -41,9 +43,15 @@ public partial class FragmentSpreadSyntax : SelectionSyntax
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
+        if (obj is null)
+        {
+            return false;
+        }
 
-        if (ReferenceEquals(this, obj)) return true;
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
 
         return obj is FragmentSpreadSyntax && Equals((FragmentSpreadSyntax)obj);
     }

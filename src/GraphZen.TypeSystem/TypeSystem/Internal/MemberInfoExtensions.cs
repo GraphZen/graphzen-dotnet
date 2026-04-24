@@ -108,10 +108,15 @@ public static class MemberInfoExtensions
         this MemberInfo member, Type fieldClrType)
     {
         var customName = member.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
-        if (customName != null) return (customName, ConfigurationSource.DataAnnotation);
+        if (customName != null)
+        {
+            return (customName, ConfigurationSource.DataAnnotation);
+        }
 
         if (fieldClrType.IsGenericType && fieldClrType.GetGenericTypeDefinition() == typeof(Task<>))
+        {
             return (member.Name.TrimAsyncSuffix().FirstCharToLower(), ConfigurationSource.Convention);
+        }
 
         return (member.Name.FirstCharToLower(), ConfigurationSource.Convention);
     }
@@ -122,7 +127,10 @@ public static class MemberInfoExtensions
         Check.NotNull(member, nameof(member));
 
         var customName = member.GetCustomAttribute<GraphQLNameAttribute>()?.Name;
-        if (customName != null) return (customName, ConfigurationSource.DataAnnotation);
+        if (customName != null)
+        {
+            return (customName, ConfigurationSource.DataAnnotation);
+        }
 
         return (member.Name, ConfigurationSource.Convention);
     }

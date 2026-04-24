@@ -27,9 +27,11 @@ public class FieldArgumentsMustHaveInputTypes : DocumentValidationRuleVisitor
             var argNamedType = arg.Type.GetNamedType();
             var inputType = inputTypes.FirstOrDefault(_ => _.Name.Equals(argNamedType.Name));
             if (inputType == null)
+            {
                 ReportError(
                     $"The type of {typeName}.{field}({arg}:) must be Input Type but got: {arg.Type}.",
                     arg);
+            }
         }
 
 

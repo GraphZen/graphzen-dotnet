@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using GraphZen.TypeSystem.Internal;
 
@@ -98,8 +97,10 @@ public class TypeDiscoveryTests
             {
                 Assert.Null(def);
                 if (ignoredConfigurationSource.HasValue)
+                {
                     Assert.Equal(ignoredConfigurationSource,
                         _.GetDefinition().FindIgnoredTypeConfigurationSource(clrType.GetGraphQLName()));
+                }
             }
             else
             {
@@ -111,8 +112,12 @@ public class TypeDiscoveryTests
 
         var type = schema.GetTypes().Where(t => t.Kind == kind).SingleOrDefault(_ => _.ClrType == clrType);
         if (ignored)
+        {
             Assert.Null(type);
+        }
         else
+        {
             Assert.NotNull(type);
+        }
     }
 }

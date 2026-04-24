@@ -14,8 +14,11 @@ public class InterfaceTypeDefinition : FieldsDefinition, IMutableInterfaceTypeDe
     {
         Builder = new InternalInterfaceTypeBuilder(this, schema.Builder);
         if (identity.ClrType != null && !identity.ClrType.IsInterface)
+        {
             throw new InvalidOperationException(
                 $"Cannot create GraphQL interface '{identity.Name}' from CLR type. '{identity.ClrType}' is not an interface type.");
+        }
+
         identity.Definition = this;
     }
 
@@ -27,8 +30,11 @@ public class InterfaceTypeDefinition : FieldsDefinition, IMutableInterfaceTypeDe
     public override bool SetClrType(Type clrType, ConfigurationSource configurationSource)
     {
         if (!clrType.IsInterface)
+        {
             throw new InvalidOperationException(
                 $"Cannot set CLR type for GraphQL interface '{Name}'. '{clrType}' is not an interface type.");
+        }
+
         return base.SetClrType(clrType, configurationSource);
     }
 

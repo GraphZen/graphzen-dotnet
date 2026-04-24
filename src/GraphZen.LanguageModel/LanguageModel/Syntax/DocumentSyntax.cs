@@ -53,20 +53,28 @@ public partial class DocumentSyntax : SyntaxNode
             var implementations = new Dictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>();
 
             foreach (var objectType in GetObjectTypeMap().Values)
-            foreach (var iface in objectType.Interfaces)
             {
-                if (implementations.TryGetValue(iface.Name.Value, out
-                        var impls))
-                    ((HashSet<ObjectTypeDefinitionSyntax>)impls).Add(objectType);
-                else
-                    implementations[iface.Name.Value] =
-                        new HashSet<ObjectTypeDefinitionSyntax> { objectType };
+                foreach (var iface in objectType.Interfaces)
+                {
+                    if (implementations.TryGetValue(iface.Name.Value, out
+                            var impls))
+                    {
+                        ((HashSet<ObjectTypeDefinitionSyntax>)impls).Add(objectType);
+                    }
+                    else
+                    {
+                        implementations[iface.Name.Value] =
+                            new HashSet<ObjectTypeDefinitionSyntax> { objectType };
+                    }
+                }
             }
 
             foreach (var abstractType in GetAbstractTypeMap().Values)
             {
                 if (!implementations.ContainsKey(abstractType.Name.Value))
+                {
                     implementations[abstractType.Name.Value] = new HashSet<ObjectTypeDefinitionSyntax>();
+                }
             }
 
             return new ReadOnlyDictionary<string, IReadOnlyCollection<ObjectTypeDefinitionSyntax>>(
@@ -100,28 +108,40 @@ public partial class DocumentSyntax : SyntaxNode
     {
         Check.NotNull(maybeSubType, nameof(maybeSubType));
         Check.NotNull(superType, nameof(superType));
-        if (maybeSubType.Equals(superType)) return true;
+        if (maybeSubType.Equals(superType))
+        {
+            return true;
+        }
 
         if (superType is NonNullTypeSyntax nnSuper)
         {
             if (maybeSubType is NonNullTypeSyntax nnMaybeSub)
+            {
                 return IsTypeSubTypeOf(nnMaybeSub.OfType, nnSuper.OfType);
+            }
 
             return false;
         }
 
         if (maybeSubType is NonNullTypeSyntax nnMaybeSubType)
+        {
             return IsTypeSubTypeOf(nnMaybeSubType.OfType, superType);
+        }
 
         if (superType is ListTypeSyntax listSuper)
         {
             if (maybeSubType is ListTypeSyntax listMaybeSub)
+            {
                 return IsTypeSubTypeOf(listMaybeSub.OfType, listSuper.OfType);
+            }
 
             return false;
         }
 
-        if (maybeSubType is ListTypeSyntax) return false;
+        if (maybeSubType is ListTypeSyntax)
+        {
+            return false;
+        }
 
         if (
             // Is super type abstract type?
@@ -130,7 +150,9 @@ public partial class DocumentSyntax : SyntaxNode
             && GetObjectTypeMap().TryGetValue(((NamedTypeSyntax)maybeSubType).Name.Value,
                 out var maybeSubTypeObjectType)
             && IsPossibleType(abstractSuperType, maybeSubTypeObjectType))
+        {
             return true;
+        }
 
         return false;
     }
@@ -140,10 +162,12 @@ public partial class DocumentSyntax : SyntaxNode
         TypeDefinitionSyntax abstractType)
     {
         if (abstractType is UnionTypeDefinitionSyntax unionType)
+        {
             return unionType.MemberTypes.Select(_ =>
                     // ReSharper disable once PossibleNullReferenceException
                     GetObjectTypeMap().TryGetValue(_.Name.Value, out var outputType) ? outputType : null)
                 .Where(_ => _ != null).ToReadOnlyList()!;
+        }
 
         return GetImplementationMap().TryGetValue(abstractType.Name.Value, out var possibleTypes)
             ? possibleTypes
@@ -154,8 +178,10 @@ public partial class DocumentSyntax : SyntaxNode
         ObjectTypeDefinitionSyntax possibleType)
     {
         if (!_possibleTypeMap.ContainsKey(abstractType.Name.Value))
+        {
             _possibleTypeMap[abstractType.Name.Value] =
                 GetPossibleTypes(abstractType).ToDictionary(_ => _.Name.Value, _ => true);
+        }
 
         return _possibleTypeMap.TryGetValue(abstractType.Name.Value, out var possibleTypesMap) &&
                possibleTypesMap.ContainsKey(possibleType.Name.Value);
@@ -173,9 +199,15 @@ public partial class DocumentSyntax : SyntaxNode
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
+        if (obj is null)
+        {
+            return false;
+        }
 
-        if (ReferenceEquals(this, obj)) return true;
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
 
         return obj is DocumentSyntax syntax && Equals(syntax);
     }

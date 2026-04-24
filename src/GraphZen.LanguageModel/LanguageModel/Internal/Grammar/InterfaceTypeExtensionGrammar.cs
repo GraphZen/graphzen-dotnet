@@ -12,12 +12,12 @@ internal static partial class Grammar
     /// </summary>
     private static TokenListParser<TokenKind, InterfaceTypeExtensionSyntax> InterfaceTypeExtension { get; } =
         (from extend in Keyword("extend")
-            from iface in Keyword("interface")
-            from name in Name!
-            from directives in Directives.AsNullable().OptionalOrDefault()
-            from fields in FieldsDefinition!
-            select new InterfaceTypeExtensionSyntax(name!, directives, fields!,
-                SyntaxLocation.FromMany(extend, fields!.GetLocation()))).Try().Or(
+         from iface in Keyword("interface")
+         from name in Name!
+         from directives in Directives.AsNullable().OptionalOrDefault()
+         from fields in FieldsDefinition!
+         select new InterfaceTypeExtensionSyntax(name!, directives, fields!,
+             SyntaxLocation.FromMany(extend, fields!.GetLocation()))).Try().Or(
             from extend in Keyword("extend")
             from iface in Keyword("interface")
             from name in Name!

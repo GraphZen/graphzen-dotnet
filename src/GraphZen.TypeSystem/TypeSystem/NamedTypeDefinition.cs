@@ -22,9 +22,13 @@ public abstract class NamedTypeDefinition : AnnotatableMemberDefinition, IMutabl
         {
             if (identity.ClrType.TryGetGraphQLNameFromDataAnnotation(out var customName) &&
                 customName == identity.Name)
+            {
                 _nameConfigurationSource = ConfigurationSource.DataAnnotation;
+            }
             else
+            {
                 _nameConfigurationSource = ConfigurationSource.Convention;
+            }
         }
         else
         {
@@ -45,7 +49,11 @@ public abstract class NamedTypeDefinition : AnnotatableMemberDefinition, IMutabl
 
     public bool SetName(string name, ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(_nameConfigurationSource)) return false;
+        if (!configurationSource.Overrides(_nameConfigurationSource))
+        {
+            return false;
+        }
+
         _nameConfigurationSource = configurationSource;
         Identity.Name = name;
         return true;
@@ -57,7 +65,11 @@ public abstract class NamedTypeDefinition : AnnotatableMemberDefinition, IMutabl
 
     public virtual bool SetClrType(Type clrType, ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(_clrTypeConfigurationSource)) return false;
+        if (!configurationSource.Overrides(_clrTypeConfigurationSource))
+        {
+            return false;
+        }
+
         _clrTypeConfigurationSource = configurationSource;
         Identity.ClrType = clrType;
         return true;

@@ -24,7 +24,10 @@ public class Printer : IPrinter
 
     private void PrintNode(SyntaxNode? node)
     {
-        if (node == null) return;
+        if (node == null)
+        {
+            return;
+        }
 
         switch (node)
         {
@@ -49,7 +52,10 @@ public class Printer : IPrinter
                     // Operation type and name
                     Wrap($"{def.OperationType.ToString().ToLower()} ", def.Name);
                     // Variable definitions
-                    if (def.VariableDefinitions.Any()) Wrap("(", () => Join(def.VariableDefinitions, ", "), ")");
+                    if (def.VariableDefinitions.Any())
+                    {
+                        Wrap("(", () => Join(def.VariableDefinitions, ", "), ")");
+                    }
 
                     // Directives
                     Append(' ');
@@ -62,7 +68,10 @@ public class Printer : IPrinter
                 Block(set.Selections);
                 break;
             case FieldSyntax field:
-                if (field.Alias != null) Wrap("", field.Alias, ": ");
+                if (field.Alias != null)
+                {
+                    Wrap("", field.Alias, ": ");
+                }
 
                 PrintNode(field.Name);
                 PrintArguments(field.Arguments);
@@ -78,7 +87,10 @@ public class Printer : IPrinter
                 PrintNode(varDef.Variable);
                 Append(": ");
                 PrintNode(varDef.VariableType);
-                if (varDef.DefaultValue != null) Wrap(" = ", varDef.DefaultValue);
+                if (varDef.DefaultValue != null)
+                {
+                    Wrap(" = ", varDef.DefaultValue);
+                }
 
                 break;
             case FragmentSpreadSyntax fragmentSpread:
@@ -87,7 +99,10 @@ public class Printer : IPrinter
                 break;
             case InlineFragmentSyntax inlineFragment:
                 Append("... ");
-                if (inlineFragment.TypeCondition != null) Wrap("on ", inlineFragment.TypeCondition, " ");
+                if (inlineFragment.TypeCondition != null)
+                {
+                    Wrap("on ", inlineFragment.TypeCondition, " ");
+                }
 
                 PrintDirectives(inlineFragment.Directives);
                 PrintNode(inlineFragment.SelectionSet);
@@ -158,10 +173,16 @@ public class Printer : IPrinter
                 PrintDescription(objectDef);
                 Append("type ");
                 PrintNode(objectDef.Name);
-                if (objectDef.Interfaces.Any()) Wrap(" implements ", () => Join(objectDef.Interfaces, " & "));
+                if (objectDef.Interfaces.Any())
+                {
+                    Wrap(" implements ", () => Join(objectDef.Interfaces, " & "));
+                }
 
                 PrintDirectives(objectDef.Directives);
-                if (objectDef.Fields.Any()) Append(" ");
+                if (objectDef.Fields.Any())
+                {
+                    Append(" ");
+                }
 
                 Block(objectDef.Fields);
                 break;
@@ -188,7 +209,10 @@ public class Printer : IPrinter
                 PrintDescription(interfaceDef);
                 Wrap("interface ", interfaceDef.Name);
                 PrintDirectives(interfaceDef.Directives);
-                if (interfaceDef.Fields.Any()) Append(" ");
+                if (interfaceDef.Fields.Any())
+                {
+                    Append(" ");
+                }
 
                 Block(interfaceDef.Fields);
                 break;
@@ -207,7 +231,10 @@ public class Printer : IPrinter
                 PrintDescription(enumType);
                 Wrap("enum ", enumType.Name);
                 PrintDirectives(enumType.Directives);
-                if (enumType.Values.Any()) Append(" ");
+                if (enumType.Values.Any())
+                {
+                    Append(" ");
+                }
 
                 Block(enumType.Values);
                 break;
@@ -215,7 +242,10 @@ public class Printer : IPrinter
                 PrintDescription(inputObjectDef);
                 Wrap("input ", inputObjectDef.Name);
                 PrintDirectives(inputObjectDef.Directives);
-                if (inputObjectDef.Fields.Any()) Append(" ");
+                if (inputObjectDef.Fields.Any())
+                {
+                    Append(" ");
+                }
 
                 Block(inputObjectDef.Fields);
                 break;
@@ -234,14 +264,20 @@ public class Printer : IPrinter
             case EnumTypeExtensionSyntax enumExtension:
                 Wrap("extend enum ", enumExtension.Name);
                 PrintDirectives(enumExtension.Directives);
-                if (enumExtension.Values.Any()) Append(" ");
+                if (enumExtension.Values.Any())
+                {
+                    Append(" ");
+                }
 
                 Block(enumExtension.Values);
                 break;
             case InterfaceTypeExtensionSyntax ifaceExt:
                 Wrap("extend interface ", ifaceExt.Name);
                 PrintDirectives(ifaceExt.Directives);
-                if (ifaceExt.Fields.Any()) Append(" ");
+                if (ifaceExt.Fields.Any())
+                {
+                    Append(" ");
+                }
 
                 Block(ifaceExt.Fields);
                 break;
@@ -252,10 +288,16 @@ public class Printer : IPrinter
 
             case ObjectTypeExtensionSyntax objectExt:
                 Wrap("extend type ", objectExt.Name);
-                if (objectExt.Interfaces.Any()) Wrap(" implements ", () => Join(objectExt.Interfaces, " & "));
+                if (objectExt.Interfaces.Any())
+                {
+                    Wrap(" implements ", () => Join(objectExt.Interfaces, " & "));
+                }
 
                 PrintDirectives(objectExt.Directives);
-                if (objectExt.Fields.Any()) Append(" ");
+                if (objectExt.Fields.Any())
+                {
+                    Append(" ");
+                }
 
                 Block(objectExt.Fields);
                 break;
@@ -263,7 +305,10 @@ public class Printer : IPrinter
             case SchemaExtensionSyntax schemaExt:
                 Append("extend schema");
                 PrintDirectives(schemaExt.Directives);
-                if (schemaExt.OperationTypes.Any()) Append(" ");
+                if (schemaExt.OperationTypes.Any())
+                {
+                    Append(" ");
+                }
 
                 Block(schemaExt.OperationTypes);
                 break;
@@ -280,7 +325,10 @@ public class Printer : IPrinter
             case InputObjectTypeExtensionSyntax inputExt:
                 Wrap("extend input ", inputExt.Name);
                 PrintDirectives(inputExt.Directives);
-                if (inputExt.Fields.Any()) Append(" ");
+                if (inputExt.Fields.Any())
+                {
+                    Append(" ");
+                }
 
                 Block(inputExt.Fields);
                 break;
@@ -382,7 +430,10 @@ public class Printer : IPrinter
 
     private void PrintArguments(IReadOnlyList<ArgumentSyntax> arguments)
     {
-        if (arguments.Any()) Wrap("(", () => { Join(arguments, ", "); }, ")");
+        if (arguments.Any())
+        {
+            Wrap("(", () => { Join(arguments, ", "); }, ")");
+        }
     }
 
 
@@ -457,7 +508,10 @@ public class Printer : IPrinter
         {
             PrintNode(node);
             var isLastElement = i == nodes.Count;
-            if (hasSeperator && !isLastElement) seperatorAction!();
+            if (hasSeperator && !isLastElement)
+            {
+                seperatorAction!();
+            }
 
             i++;
         }
@@ -465,7 +519,8 @@ public class Printer : IPrinter
 
     private void Join(IReadOnlyList<SyntaxNode> nodes, string? seperator = null)
     {
-        Join(nodes, seperator != null ? () => { Append(seperator); } : null);
+        Join(nodes, seperator != null ? () => { Append(seperator); }
+        : null);
     }
 
     #endregion

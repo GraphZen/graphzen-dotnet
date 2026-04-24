@@ -14,16 +14,25 @@ public static partial class Helpers
         bool IsMissingVariable(ValueSyntax value, IReadOnlyDictionary<string, object>? vars) =>
             value is VariableSyntax variable && (vars == null || !vars.ContainsKey(variable.Name.Value));
 
-        if (valueSyntax == null) return Maybe.None<object>();
+        if (valueSyntax == null)
+        {
+            return Maybe.None<object>();
+        }
 
         if (type is NonNullType nonNull)
         {
-            if (valueSyntax is NullValueSyntax) return Maybe.None<object>();
+            if (valueSyntax is NullValueSyntax)
+            {
+                return Maybe.None<object>();
+            }
 
             return ValueFromAst(valueSyntax, nonNull.OfType, variables);
         }
 
-        if (valueSyntax is NullValueSyntax) return Maybe.Some<object>(null!);
+        if (valueSyntax is NullValueSyntax)
+        {
+            return Maybe.Some<object>(null!);
+        }
 
         if (valueSyntax is VariableSyntax variableNode)
         {
@@ -43,7 +52,10 @@ public static partial class Helpers
                 {
                     if (IsMissingVariable(itemNode, variables))
                     {
-                        if (itemType is NonNullType) return Maybe.None<object>();
+                        if (itemType is NonNullType)
+                        {
+                            return Maybe.None<object>();
+                        }
 
                         coercedValues.Add(null);
                     }
@@ -51,9 +63,13 @@ public static partial class Helpers
                     {
                         var itemValue = ValueFromAst(itemNode, itemType, variables);
                         if (itemValue is Some<object> some)
+                        {
                             coercedValues.Add(some.Value);
+                        }
                         else
+                        {
                             return itemValue;
+                        }
                     }
                 }
 
@@ -83,17 +99,26 @@ public static partial class Helpers
                         IsMissingVariable(fieldNode.Value, variables))
                     {
                         if (field.DefaultValue is Some<object> someDefaultValue)
+                        {
                             coercedObject[field.Name] = someDefaultValue.Value;
-                        else if (field.InputType is NonNullType) return Maybe.None<object>();
+                        }
+                        else if (field.InputType is NonNullType)
+                        {
+                            return Maybe.None<object>();
+                        }
 
                         continue;
                     }
 
                     var fieldValue = ValueFromAst(fieldNode.Value, field.InputType, variables);
                     if (fieldValue is Some<object> fv)
+                    {
                         coercedObject[field.Name] = fv.Value;
+                    }
                     else
+                    {
                         return Maybe.None<object>();
+                    }
                 }
 
                 return Maybe.Some<object>(coercedObject);
@@ -103,6 +128,7 @@ public static partial class Helpers
         }
 
         if (type is ILeafType leafType)
+        {
             try
             {
                 return leafType.ParseLiteral(valueSyntax);
@@ -111,6 +137,7 @@ public static partial class Helpers
             {
                 return Maybe.None<object>();
             }
+        }
 
         throw new Exception($"Unknown type: {type}");
     }

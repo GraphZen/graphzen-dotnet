@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using static GraphZen.Tests.Validation.Rules.SdlValidationHelpers;
 
@@ -15,8 +14,8 @@ public class ObjectFieldsMustHaveOutputTypesTests : ValidationRuleHarness
     public static IEnumerable<object[]> GetValidFieldScenarios()
     {
         return from outputType in OutputTypes
-            from fieldType in "SomeOutputType".WithModifiers()
-            select new[] { outputType, fieldType };
+               from fieldType in "SomeOutputType".WithModifiers()
+               select new[] { outputType, fieldType };
     }
 
     [Theory]
@@ -35,8 +34,8 @@ public class ObjectFieldsMustHaveOutputTypesTests : ValidationRuleHarness
     public static IEnumerable<object[]> GetInvalidFieldScenarios()
     {
         return from nonOutputType in NonOutputTypes
-            from fieldType in "SomeInputType".WithModifiers()
-            select new[] { nonOutputType, fieldType };
+               from fieldType in "SomeInputType".WithModifiers()
+               select new[] { nonOutputType, fieldType };
     }
 
 

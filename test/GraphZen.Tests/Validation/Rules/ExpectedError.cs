@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Text.Json.Serialization;
-using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 
 namespace GraphZen.Tests.Validation.Rules;
@@ -43,11 +42,20 @@ public class ExpectedError
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
+        if (obj is null)
+        {
+            return false;
+        }
 
-        if (ReferenceEquals(this, obj)) return true;
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
 
-        if (obj.GetType() != GetType()) return false;
+        if (obj.GetType() != GetType())
+        {
+            return false;
+        }
 
         return Equals((ExpectedError)obj);
     }
