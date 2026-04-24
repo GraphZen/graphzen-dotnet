@@ -7,13 +7,13 @@ using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Internal;
-using GraphZen.Logging;
 using GraphZen.QueryEngine;
 using GraphZen.QueryEngine.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.AspNetCore.Builder;
@@ -23,7 +23,6 @@ public static class GraphZenApplicationBuilderExtensions
     private const int DefaultMemoryThreshold = 1024 * 30;
 
     private static string? _sTempDirectory;
-    private static ILog Logger { get; } = LogProvider.GetCurrentClassLogger();
 
     public static string TempDirectory
     {
@@ -52,6 +51,8 @@ public static class GraphZenApplicationBuilderExtensions
     {
         return endpoints.MapPost(path, async httpContext =>
         {
+            var logger = httpContext.RequestServices.GetRequiredService<ILoggerFactory>()
+                .CreateLogger(typeof(GraphZenApplicationBuilderExtensions));
             var request = httpContext.Request;
             var readStream = request.Body;
             if (!request.Body.CanSeek)
@@ -112,12 +113,12 @@ public static class GraphZenApplicationBuilderExtensions
             }
             catch (GraphQLException gqlException)
             {
-                Logger.Error(gqlException, gqlException.Message);
+                logger.LogError(gqlException, "{Message}", gqlException.Message);
                 result = new ExecutionResult(null, new[] { gqlException.GraphQLError });
             }
             catch (Exception e)
             {
-                Logger.Error(e, e.Message);
+                logger.LogError(e, "{Message}", e.Message);
                 var coreOptions = graphQLContext.Options.GetExtension<CoreOptionsExtension>();
                 var error = coreOptions.RevealInternalServerErrors
                     ? new GraphQLServerError(e.Message, innerException: e)

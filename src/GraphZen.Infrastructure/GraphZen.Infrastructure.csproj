@@ -1,16 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>Infrastructure code supporting the GraphZen SDK. Not intended for direct installation or use.</Description>
-    <DefineConstants>LIBLOG_EXCLUDE_CODE_COVERAGE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="LibLog">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.Abstractions\GraphZen.Abstractions.csproj" />

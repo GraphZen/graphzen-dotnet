@@ -2,14 +2,12 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Reflection;
-using GraphZen.Logging;
 using GraphZen.TypeSystem;
 
 namespace GraphZen;
 
 public class GraphQLContext
 {
-    private static readonly ILog Logger = LogProvider.For<GraphQLContext>();
     private GraphQLContextOptions _options;
 
     private bool _optionsInitialized;
@@ -47,7 +45,6 @@ public class GraphQLContext
                 OnConfiguring(optionsBuilder);
                 _options = optionsBuilder.Options;
                 _optionsInitialized = true;
-                Logger.Debug("howdy from GraphZen");
             }
 
             return _options;
