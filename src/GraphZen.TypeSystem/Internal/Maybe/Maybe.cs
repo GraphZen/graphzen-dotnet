@@ -61,20 +61,35 @@ public class Maybe<T>
 
     private bool Equals(Maybe<T> other)
     {
-        if (this is Some<T> thisSome && other is Some<T> otherSome) return Equals(thisSome.Value, otherSome.Value);
+        if (this is Some<T> thisSome && other is Some<T> otherSome)
+        {
+            return Equals(thisSome.Value, otherSome.Value);
+        }
 
-        if (this is None<T> && other is None<T>) return true;
+        if (this is None<T> && other is None<T>)
+        {
+            return true;
+        }
 
         return false;
     }
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
+        if (obj is null)
+        {
+            return false;
+        }
 
-        if (ReferenceEquals(this, obj)) return true;
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
 
-        if (obj.GetType() != GetType()) return false;
+        if (obj.GetType() != GetType())
+        {
+            return false;
+        }
 
         return Equals((Maybe<T>)obj);
     }
@@ -100,7 +115,10 @@ public class Maybe<T>
 
     protected T ValueOrFailure()
     {
-        if (HasValue) return (T)_values.Single()!;
+        if (HasValue)
+        {
+            return (T)_values.Single()!;
+        }
 
         throw new InvalidOperationException("Maybe does not have a value");
     }

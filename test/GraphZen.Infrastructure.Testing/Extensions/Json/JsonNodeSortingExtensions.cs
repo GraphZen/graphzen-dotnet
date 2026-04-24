@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Text.Json.Nodes;
-using GraphZen.Infrastructure;
 
 namespace GraphZen.Infrastructure;
 
@@ -41,7 +40,9 @@ public static class JsonNodeSortingExtensions
         foreach (var el in arr)
         {
             if (el is JsonObject elObj)
+            {
                 elObj.SortProperties();
+            }
         }
 
         string? GetComparable(JsonNode? jn)
@@ -50,11 +51,15 @@ public static class JsonNodeSortingExtensions
             {
                 var nameNode = jo["name"];
                 if (nameNode is JsonValue jv)
+                {
                     return jv.ToString();
+                }
             }
 
             if (jn is JsonValue jtv)
+            {
                 return jtv.ToString();
+            }
 
             return null;
         }
@@ -67,7 +72,10 @@ public static class JsonNodeSortingExtensions
         {
             var xc = GetComparable(x);
             var yc = GetComparable(y);
-            if (xc != null && yc != null) return string.Compare(xc, yc, StringComparison.Ordinal);
+            if (xc != null && yc != null)
+            {
+                return string.Compare(xc, yc, StringComparison.Ordinal);
+            }
 
             return 0;
         });

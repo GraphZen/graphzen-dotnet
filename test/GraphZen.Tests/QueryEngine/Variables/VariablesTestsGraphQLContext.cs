@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.Text.Json;
-using GraphZen.Infrastructure;
 using GraphZen.Internal;
 using GraphZen.TypeSystem;
 
@@ -65,7 +64,10 @@ public class VariablesTestsGraphQLContext : GraphQLContext
                     {
                         f.Argument("input", field.inputArgType, arg =>
                             {
-                                if (field.defaultValue != null) arg.DefaultValue(field.defaultValue);
+                                if (field.defaultValue != null)
+                                {
+                                    arg.DefaultValue(field.defaultValue);
+                                }
                             })
                             .Resolve((source, args) =>
                                 args.ContainsKey("input")

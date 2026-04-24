@@ -1,10 +1,7 @@
-﻿// Copyright (c) GraphZen LLC. All rights reserved.
+// Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using GraphZen.Infrastructure;
-using JetBrains.Annotations;
 
 namespace SimpleBlog.Models;
 
@@ -44,7 +41,10 @@ public class Mutation
     public bool DeleteComment(int id)
     {
         var commentModel = FakeBlogData.Comments.SingleOrDefault(_ => _.Id == id);
-        if (commentModel != null) FakeBlogData.Comments.Remove(commentModel);
+        if (commentModel != null)
+        {
+            FakeBlogData.Comments.Remove(commentModel);
+        }
 
         return true;
     }
@@ -52,7 +52,10 @@ public class Mutation
     public bool EditPost(int id, string author, string title, string post)
     {
         var postModel = FakeBlogData.Posts.SingleOrDefault(_ => _.Id == id);
-        if (postModel == null) return false;
+        if (postModel == null)
+        {
+            return false;
+        }
 
         postModel.Author = author;
         postModel.Title = title;

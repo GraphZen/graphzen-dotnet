@@ -44,7 +44,10 @@ public static class ClrTypeExtensions
             if (clrType.IsGenericType)
             {
                 var args = clrType.GetGenericArguments();
-                if (args.Length == 1) itemType = args[0];
+                if (args.Length == 1)
+                {
+                    itemType = args[0];
+                }
             }
             else
             {
@@ -95,11 +98,15 @@ public static class ClrTypeExtensions
         bool itemCanBeNull = false)
     {
         if (clrType.TryGetTaskResultType(out var resultType))
+        {
             return resultType.TryGetGraphQLTypeInfoRecursive(out typeNode,
                 out innerClrType, canBeNull, itemCanBeNull);
+        }
 
         if (clrType.TryGetNullableType(out var nullable))
+        {
             return nullable.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, true);
+        }
 
         if (clrType.TryGetListItemType(out var itemType) &&
             itemType.TryGetGraphQLTypeInfoRecursive(out typeNode, out innerClrType, itemCanBeNull))
@@ -166,7 +173,10 @@ public static class ClrTypeExtensions
     public static bool TryGetOutputTypeKind(this Type clrType, [NotNullWhen(true)] out TypeKind? kind)
     {
         kind = null;
-        if (!clrType.IsValidClrType()) return false;
+        if (!clrType.IsValidClrType())
+        {
+            return false;
+        }
 
         if (clrType.IsEnum)
         {
@@ -193,7 +203,10 @@ public static class ClrTypeExtensions
     public static bool TryGetInputTypeKind(this Type clrType, out TypeKind? kind)
     {
         kind = null;
-        if (!clrType.IsValidClrType()) return false;
+        if (!clrType.IsValidClrType())
+        {
+            return false;
+        }
 
         if (clrType.IsEnum)
         {
@@ -214,7 +227,10 @@ public static class ClrTypeExtensions
 
     public static bool IsValidClrType(this Type clrType)
     {
-        if (clrType.IsGenericType) return false;
+        if (clrType.IsGenericType)
+        {
+            return false;
+        }
 
         return clrType.HasValidGraphQLName();
     }
@@ -233,7 +249,10 @@ public static class ClrTypeExtensions
                     var interfaceMethod = mapping.InterfaceMethods[i];
                     Debug.Assert(interfaceMethod.DeclaringType != null);
                     var value = interfaceMethod.DeclaringType.GetProperty(property.Name);
-                    if (value != null) yield return value;
+                    if (value != null)
+                    {
+                        yield return value;
+                    }
                 }
             }
         }
@@ -266,13 +285,20 @@ public static class ClrTypeExtensions
         var assemblies = AppDomain.CurrentDomain.GetAssemblies()
             .Where(_ => referencedAssemblies.Contains(_.GetName())).Concat(new List<Assembly> { clrType.Assembly });
         foreach (var assembly in assemblies)
-        foreach (var type in assembly.DefinedTypes)
         {
-            if (type != clrType)
+            foreach (var type in assembly.DefinedTypes)
             {
-                if (clrType.IsInterface && clrType.IsAssignableFrom(type))
-                    yield return type;
-                else if (clrType.IsClass && type.IsSubclassOf(clrType)) yield return type;
+                if (type != clrType)
+                {
+                    if (clrType.IsInterface && clrType.IsAssignableFrom(type))
+                    {
+                        yield return type;
+                    }
+                    else if (clrType.IsClass && type.IsSubclassOf(clrType))
+                    {
+                        yield return type;
+                    }
+                }
             }
         }
     }

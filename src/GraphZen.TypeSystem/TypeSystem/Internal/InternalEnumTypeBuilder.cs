@@ -31,10 +31,16 @@ public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTy
         {
             enumMember = GetMemberInfo(value.GetType(), value.ToString()!);
             (name, nameConfigurationSource) = enumMember.GetGraphQLNameForEnumValue();
-            if (enumMember.IsIgnoredByDataAnnotation()) IgnoreValue(name, ConfigurationSource.DataAnnotation);
+            if (enumMember.IsIgnoredByDataAnnotation())
+            {
+                IgnoreValue(name, ConfigurationSource.DataAnnotation);
+            }
         }
 
-        if (IsValueIgnored(name, configurationSource)) return null;
+        if (IsValueIgnored(name, configurationSource))
+        {
+            return null;
+        }
 
         var enumValue = Definition.FindValue(name);
         if (enumValue is null)
@@ -52,7 +58,9 @@ public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTy
         {
             builder.CustomValue(value);
             if (enumMember.TryGetDescriptionFromDataAnnotation(out var desc))
+            {
                 builder.Description(desc, ConfigurationSource.DataAnnotation);
+            }
         }
 
         return builder;
@@ -60,7 +68,11 @@ public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTy
 
     public InternalEnumTypeBuilder ClrType(Type clrType, ConfigurationSource configurationSource)
     {
-        if (Definition.SetClrType(clrType, configurationSource)) ConfigureEnumFromClrType();
+        if (Definition.SetClrType(clrType, configurationSource))
+        {
+            ConfigureEnumFromClrType();
+        }
+
         return this;
     }
 
@@ -70,10 +82,15 @@ public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTy
     public bool ConfigureEnumFromClrType()
     {
         var clrType = Definition.ClrType;
-        if (clrType == null) return false;
+        if (clrType == null)
+        {
+            return false;
+        }
 
         if (clrType.TryGetDescriptionFromDataAnnotation(out var desc))
+        {
             Definition.SetDescription(desc, ConfigurationSource.DataAnnotation);
+        }
 
         foreach (var value in Enum.GetValues(clrType))
         {
@@ -88,7 +105,10 @@ public class InternalEnumTypeBuilder : AnnotatableMemberDefinitionBuilder<EnumTy
 
     private static string GetName(object value)
     {
-        if (value is string strValue) return strValue;
+        if (value is string strValue)
+        {
+            return strValue;
+        }
 
         var enumMember = GetMemberInfo(value.GetType(), value.ToString()!);
         var (name, _) = enumMember.GetGraphQLNameForEnumValue();

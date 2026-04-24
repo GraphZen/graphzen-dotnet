@@ -30,7 +30,11 @@ public abstract class
 
     protected void ConfigureOutputFields()
     {
-        if (Definition.ClrType == null) return;
+        if (Definition.ClrType == null)
+        {
+            return;
+        }
+
         var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
         // ReSharper disable once PossibleNullReferenceException
 
@@ -46,14 +50,14 @@ public abstract class
             switch (fieldMember)
             {
                 case MethodInfo method:
-                {
-                    Field(method, ConfigurationSource.Convention);
-                }
+                    {
+                        Field(method, ConfigurationSource.Convention);
+                    }
                     break;
                 case PropertyInfo property:
-                {
-                    Field(property, ConfigurationSource.Convention);
-                }
+                    {
+                        Field(property, ConfigurationSource.Convention);
+                    }
                     break;
             }
         }
@@ -66,14 +70,18 @@ public abstract class
         {
             if (configurationSource.Overrides(ignoredConfigurationSource) &&
                 configurationSource != ignoredConfigurationSource)
+            {
                 Definition.IgnoreField(fieldName, configurationSource);
+            }
 
             return true;
         }
 
         var field = Definition.FindField(fieldName);
-        if (field != null) return Ignore(field, configurationSource);
-
+        if (field != null)
+        {
+            return Ignore(field, configurationSource);
+        }
 
         Definition.IgnoreField(fieldName, configurationSource);
         return true;
@@ -84,15 +92,20 @@ public abstract class
         var (fieldName, _) = member.GetGraphQLFieldName();
         var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(fieldName);
         if (ignoredConfigurationSource.HasValue)
+        {
             if (configurationSource.Overrides(ignoredConfigurationSource) &&
                 configurationSource != ignoredConfigurationSource)
             {
                 Definition.IgnoreField(fieldName, configurationSource);
                 return true;
             }
+        }
 
         var field = Definition.FindField(member);
-        if (field != null) return IgnoreField(field, configurationSource);
+        if (field != null)
+        {
+            return IgnoreField(field, configurationSource);
+        }
 
         Definition.IgnoreField(fieldName, configurationSource);
         return true;
@@ -100,7 +113,10 @@ public abstract class
 
     public bool IgnoreField(FieldDefinition field, ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(field.GetConfigurationSource())) return false;
+        if (!configurationSource.Overrides(field.GetConfigurationSource()))
+        {
+            return false;
+        }
 
         Definition.IgnoreField(field.Name, configurationSource);
 
@@ -110,7 +126,10 @@ public abstract class
     public bool UnignoreField(string name, ConfigurationSource configurationSource)
     {
         var ignoredConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(name);
-        if (!configurationSource.Overrides(ignoredConfigurationSource)) return false;
+        if (!configurationSource.Overrides(ignoredConfigurationSource))
+        {
+            return false;
+        }
 
         Definition.UnignoreField(name);
         return true;
@@ -119,7 +138,10 @@ public abstract class
 
     public bool IsFieldIgnored(string member, ConfigurationSource configurationSource)
     {
-        if (configurationSource == ConfigurationSource.Explicit) return false;
+        if (configurationSource == ConfigurationSource.Explicit)
+        {
+            return false;
+        }
 
         var ignoredMemberConfigurationSource = Definition.FindIgnoredFieldConfigurationSource(member);
         return ignoredMemberConfigurationSource.HasValue &&
@@ -130,15 +152,23 @@ public abstract class
     public InternalFieldBuilder? Field(PropertyInfo property, ConfigurationSource configurationSource)
     {
         var (fieldName, _) = property.GetGraphQLFieldName();
-        if (property.IsIgnoredByDataAnnotation()) IgnoreField(property, ConfigurationSource.DataAnnotation);
+        if (property.IsIgnoredByDataAnnotation())
+        {
+            IgnoreField(property, ConfigurationSource.DataAnnotation);
+        }
 
-        if (IsFieldIgnored(fieldName, configurationSource)) return null;
-
+        if (IsFieldIgnored(fieldName, configurationSource))
+        {
+            return null;
+        }
 
         if (property.TryGetGraphQLTypeInfo(out _, out var innerClrType))
         {
             var fieldInnerType = Schema.Builder.OutputType(innerClrType, configurationSource);
-            if (fieldInnerType == null) IgnoreField(property, ConfigurationSource.Convention);
+            if (fieldInnerType == null)
+            {
+                IgnoreField(property, ConfigurationSource.Convention);
+            }
         }
         else
         {
@@ -146,7 +176,10 @@ public abstract class
         }
 
 
-        if (IsFieldIgnored(fieldName, configurationSource)) return null;
+        if (IsFieldIgnored(fieldName, configurationSource))
+        {
+            return null;
+        }
 
         var field = Definition.FindField(property);
         if (field == null)
@@ -160,7 +193,9 @@ public abstract class
         }
 
         if (property.TryGetDescriptionFromDataAnnotation(out var desc))
+        {
             field.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+        }
 
         return field.Builder;
     }
@@ -169,29 +204,45 @@ public abstract class
     public InternalFieldBuilder? Field(MethodInfo method, ConfigurationSource configurationSource)
     {
         var (fieldName, _) = method.GetGraphQLFieldName();
-        if (method.IsIgnoredByDataAnnotation()) IgnoreField(method, ConfigurationSource.DataAnnotation);
-
+        if (method.IsIgnoredByDataAnnotation())
+        {
+            IgnoreField(method, ConfigurationSource.DataAnnotation);
+        }
 
         var parameters = method.GetParameters();
         var hasOutParam = parameters.Any(_ => _.IsOut);
-        if (hasOutParam) IgnoreField(method, ConfigurationSource.Convention);
+        if (hasOutParam)
+        {
+            IgnoreField(method, ConfigurationSource.Convention);
+        }
 
-        if (method.GetGenericArguments().Any()) IgnoreField(method, ConfigurationSource.Convention);
+        if (method.GetGenericArguments().Any())
+        {
+            IgnoreField(method, ConfigurationSource.Convention);
+        }
 
-
-        if (IsFieldIgnored(fieldName, configurationSource)) return null;
+        if (IsFieldIgnored(fieldName, configurationSource))
+        {
+            return null;
+        }
 
         if (method.TryGetGraphQLTypeInfo(out _, out var innerClrType))
         {
             var fieldInnerType = Schema.Builder.OutputType(innerClrType, configurationSource);
-            if (fieldInnerType == null) IgnoreField(method, ConfigurationSource.Convention);
+            if (fieldInnerType == null)
+            {
+                IgnoreField(method, ConfigurationSource.Convention);
+            }
         }
         else
         {
             IgnoreField(method, ConfigurationSource.Convention);
         }
 
-        if (IsFieldIgnored(fieldName, configurationSource)) return null;
+        if (IsFieldIgnored(fieldName, configurationSource))
+        {
+            return null;
+        }
 
         var field = Definition.FindField(method);
         if (field == null)
@@ -206,7 +257,10 @@ public abstract class
 
 
         if (method.TryGetDescriptionFromDataAnnotation(out var desc))
+        {
             field.Builder.Description(desc, ConfigurationSource.DataAnnotation);
+        }
+
         foreach (var parameter in method.GetParameters())
         {
             field.Builder.Argument(parameter, ConfigurationSource.Convention);
@@ -217,14 +271,20 @@ public abstract class
 
     private bool Ignore(FieldDefinition field, ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(field.GetConfigurationSource())) return false;
+        if (!configurationSource.Overrides(field.GetConfigurationSource()))
+        {
+            return false;
+        }
 
         return RemoveField(field, configurationSource);
     }
 
     public bool RemoveField(FieldDefinition field, ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(field.GetConfigurationSource())) return false;
+        if (!configurationSource.Overrides(field.GetConfigurationSource()))
+        {
+            return false;
+        }
 
         Definition.IgnoreField(field.Name, configurationSource);
 

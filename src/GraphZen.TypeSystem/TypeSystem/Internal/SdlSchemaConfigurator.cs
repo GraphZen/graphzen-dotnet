@@ -23,7 +23,9 @@ public class SdlSchemaConfigurator
                 Debug.Assert(_ != null, nameof(_) + " != null");
                 return _.Name.Value;
             }, out var duplicateType))
+        {
             throw new GraphQLException($"Type \"{duplicateType.Name.Value}\" was defined more than once");
+        }
 
         var operationTypes = schemaDef != null
             ? GetOperationTypes(schemaDef)
@@ -79,13 +81,17 @@ public class SdlSchemaConfigurator
                         return _.OperationType;
                     },
                     out var duplicateOpType))
+            {
                 throw new Exception($"Must provide only one {duplicateOpType} type in schema.");
+            }
 
             return schemaDefinition.RootOperationTypes.ToDictionary(_ => _.OperationType, _ =>
             {
                 var typeName = _.Type.Name.Value;
                 if (!types.TryFindByName(typeName, out var type))
+                {
                     throw new Exception($"Specified {_.OperationType} type \"{typeName}\" not found in document.");
+                }
 
                 return type!;
             });
@@ -96,7 +102,10 @@ public class SdlSchemaConfigurator
         DirectiveDefinitionSyntax def)
     {
         var directive = schemaBuilder.Directive(def.Name.Value);
-        if (def.Description != null) directive.Description(def.Description.Value);
+        if (def.Description != null)
+        {
+            directive.Description(def.Description.Value);
+        }
 
         foreach (var arg in def.Arguments)
         {
@@ -104,7 +113,10 @@ public class SdlSchemaConfigurator
             {
                 Debug.Assert(_ != null, nameof(_) + " != null");
                 // TODO - how to get default value?
-                if (arg.Description != null) _.Description(arg.Description.Value);
+                if (arg.Description != null)
+                {
+                    _.Description(arg.Description.Value);
+                }
             });
         }
 
@@ -121,124 +133,157 @@ public class SdlSchemaConfigurator
         switch (def)
         {
             case EnumTypeDefinitionSyntax node:
-            {
-                var type = schemaBuilder.Enum(node.Name.Value);
-                if (node.Description != null) type.Description(node.Description.Value);
-
-                foreach (var valueNode in node.Values)
                 {
-                    var enumValue = type.Value(valueNode.Value.Value);
-                    if (valueNode.Description != null) enumValue.Description(valueNode.Description.Value);
-                }
+                    var type = schemaBuilder.Enum(node.Name.Value);
+                    if (node.Description != null)
+                    {
+                        type.Description(node.Description.Value);
+                    }
 
-                break;
-            }
+                    foreach (var valueNode in node.Values)
+                    {
+                        var enumValue = type.Value(valueNode.Value.Value);
+                        if (valueNode.Description != null)
+                        {
+                            enumValue.Description(valueNode.Description.Value);
+                        }
+                    }
+
+                    break;
+                }
 
             case InputObjectTypeDefinitionSyntax node:
-            {
-                var type = schemaBuilder.InputObject(node.Name.Value);
-                if (node.Description != null) type.Description(node.Description.Value);
-
-                foreach (var fieldNode in node.Fields)
                 {
-                    var field = type.Field(fieldNode.Name.Value, fieldNode.Type.ToSyntaxString());
-                    if (fieldNode.Description != null) field.Description(fieldNode.Description.Value);
-
-                    if (fieldNode.DefaultValue != null)
+                    var type = schemaBuilder.InputObject(node.Name.Value);
+                    if (node.Description != null)
                     {
+                        type.Description(node.Description.Value);
                     }
-                }
 
-                break;
-            }
+                    foreach (var fieldNode in node.Fields)
+                    {
+                        var field = type.Field(fieldNode.Name.Value, fieldNode.Type.ToSyntaxString());
+                        if (fieldNode.Description != null)
+                        {
+                            field.Description(fieldNode.Description.Value);
+                        }
+
+                        if (fieldNode.DefaultValue != null)
+                        {
+                        }
+                    }
+
+                    break;
+                }
 
             case InterfaceTypeDefinitionSyntax node:
-            {
-                var type = schemaBuilder.Interface(node.Name.Value);
-                if (node.Description != null) type.Description(node.Description.Value);
-
-                foreach (var fieldNode in node.Fields)
                 {
-                    type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
+                    var type = schemaBuilder.Interface(node.Name.Value);
+                    if (node.Description != null)
                     {
-                        Debug.Assert(field != null, nameof(field) + " != null");
-                        if (fieldNode.Description != null) field.Description(fieldNode.Description.Value);
+                        type.Description(node.Description.Value);
+                    }
 
-
-                        foreach (var argumentNode in fieldNode.Arguments)
+                    foreach (var fieldNode in node.Fields)
+                    {
+                        type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                         {
-                            var argument = field.Argument(argumentNode.Name.Value,
-                                argumentNode.Type.ToSyntaxString());
-                            if (argumentNode.Description != null)
-                                argument.Description(argumentNode.Description.Value);
-                        }
-                    });
-                }
+                            Debug.Assert(field != null, nameof(field) + " != null");
+                            if (fieldNode.Description != null)
+                            {
+                                field.Description(fieldNode.Description.Value);
+                            }
 
-                break;
-            }
+                            foreach (var argumentNode in fieldNode.Arguments)
+                            {
+                                var argument = field.Argument(argumentNode.Name.Value,
+                                    argumentNode.Type.ToSyntaxString());
+                                if (argumentNode.Description != null)
+                                {
+                                    argument.Description(argumentNode.Description.Value);
+                                }
+                            }
+                        });
+                    }
+
+                    break;
+                }
 
             case ObjectTypeDefinitionSyntax node:
-            {
-                var type = schemaBuilder.Object(node.Name.Value);
-                if (node.Description != null) type.Description(node.Description.Value);
-
-                foreach (var directive in node.Directives)
                 {
-                    type.DirectiveAnnotation(directive.Name.Value, directive);
-                }
-
-                foreach (var iface in node.Interfaces)
-                {
-                    type.ImplementsInterface(iface.Name.Value);
-                }
-
-                foreach (var fieldNode in node.Fields)
-                {
-                    type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
+                    var type = schemaBuilder.Object(node.Name.Value);
+                    if (node.Description != null)
                     {
-                        if (fieldNode.Description != null) field.Description(fieldNode.Description.Value);
+                        type.Description(node.Description.Value);
+                    }
 
-                        foreach (var directiveNode in fieldNode.Directives)
+                    foreach (var directive in node.Directives)
+                    {
+                        type.DirectiveAnnotation(directive.Name.Value, directive);
+                    }
+
+                    foreach (var iface in node.Interfaces)
+                    {
+                        type.ImplementsInterface(iface.Name.Value);
+                    }
+
+                    foreach (var fieldNode in node.Fields)
+                    {
+                        type.Field(fieldNode.Name.Value, fieldNode.FieldType.ToSyntaxString(), field =>
                         {
-                            field.DirectiveAnnotation(directiveNode.Name.Value, directiveNode);
-                        }
+                            if (fieldNode.Description != null)
+                            {
+                                field.Description(fieldNode.Description.Value);
+                            }
 
-                        foreach (var argumentNode in fieldNode.Arguments)
-                        {
-                            var argument = field.Argument(argumentNode.Name.Value,
-                                argumentNode.Type.ToSyntaxString());
+                            foreach (var directiveNode in fieldNode.Directives)
+                            {
+                                field.DirectiveAnnotation(directiveNode.Name.Value, directiveNode);
+                            }
 
-                            if (argumentNode.Description != null)
-                                argument.Description(argumentNode.Description.Value);
-                        }
-                    });
+                            foreach (var argumentNode in fieldNode.Arguments)
+                            {
+                                var argument = field.Argument(argumentNode.Name.Value,
+                                    argumentNode.Type.ToSyntaxString());
+
+                                if (argumentNode.Description != null)
+                                {
+                                    argument.Description(argumentNode.Description.Value);
+                                }
+                            }
+                        });
+                    }
+
+                    break;
                 }
-
-                break;
-            }
 
             case ScalarTypeDefinitionSyntax node:
-            {
-                var type = schemaBuilder.Scalar(node.Name.Value);
-                if (node.Description != null) type.Description(node.Description.Value);
+                {
+                    var type = schemaBuilder.Scalar(node.Name.Value);
+                    if (node.Description != null)
+                    {
+                        type.Description(node.Description.Value);
+                    }
 
-                break;
-            }
+                    break;
+                }
 
             case UnionTypeDefinitionSyntax node:
-            {
-                var type = schemaBuilder.Union(node.Name.Value);
-                if (node.Description != null) type.Description(node.Description.Value);
-
-                type.OfTypes(node.MemberTypes.Select(_ =>
                 {
-                    Debug.Assert(_ != null, nameof(_) + " != null");
-                    return _.Name.Value;
-                }).ToArray());
+                    var type = schemaBuilder.Union(node.Name.Value);
+                    if (node.Description != null)
+                    {
+                        type.Description(node.Description.Value);
+                    }
 
-                break;
-            }
+                    type.OfTypes(node.MemberTypes.Select(_ =>
+                    {
+                        Debug.Assert(_ != null, nameof(_) + " != null");
+                        return _.Name.Value;
+                    }).ToArray());
+
+                    break;
+                }
         }
     }
 }

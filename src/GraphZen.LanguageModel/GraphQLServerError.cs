@@ -25,8 +25,11 @@ public class GraphQLServerError
         Source = source ?? nodes?.FirstOrDefault()?.Location?.Source;
         InnerException = innerException;
         if (Positions != null && Source != null)
+        {
             Locations = Positions.Select(Source.GetLocation).ToList();
+        }
         else if (Nodes != null && Source != null)
+        {
             Locations = Nodes
                 .Where(_ => _?.Location != null)
                 .Select(n =>
@@ -34,6 +37,7 @@ public class GraphQLServerError
                     Debug.Assert(n.Location != null);
                     return Source.GetLocation(n.Location.Start);
                 }).ToList();
+        }
     }
 
 
@@ -60,11 +64,20 @@ public class GraphQLServerError
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
+        if (obj is null)
+        {
+            return false;
+        }
 
-        if (ReferenceEquals(this, obj)) return true;
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
 
-        if (obj.GetType() != GetType()) return false;
+        if (obj.GetType() != GetType())
+        {
+            return false;
+        }
 
         return Equals((GraphQLServerError)obj);
     }

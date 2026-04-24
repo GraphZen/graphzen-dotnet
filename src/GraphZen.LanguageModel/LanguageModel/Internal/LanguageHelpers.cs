@@ -17,8 +17,10 @@ public static class NameTokenValidator
     {
         Check.NotNull(name, nameof(name));
         if (!name.IsValidGraphQLName())
+        {
             throw new Exception(
                 $"'{name}' is not a valid GraphQL name. Names are limited to underscores and alpha-numeric ASCII characters.");
+        }
 
         return name;
     }
@@ -43,18 +45,26 @@ public static class LanguageHelpers
             if (indent < line.Length && (commonIndent == null || indent < commonIndent.Value))
             {
                 commonIndent = indent;
-                if (commonIndent == 0) break;
+                if (commonIndent == 0)
+                {
+                    break;
+                }
             }
         }
 
 
         if (commonIndent.HasValue)
+        {
             for (var i = 1; i < lines.Count; i++)
             {
                 var line = lines[i];
                 Debug.Assert(line != null, nameof(line) + " != null");
-                if (line.Length > commonIndent.Value) lines[i] = line.Substring(commonIndent.Value);
+                if (line.Length > commonIndent.Value)
+                {
+                    lines[i] = line.Substring(commonIndent.Value);
+                }
             }
+        }
 
         while (lines.Count > 0 && string.IsNullOrWhiteSpace(lines[0]))
         {
@@ -82,17 +92,25 @@ public static class LanguageHelpers
             if (indent < line.Length && (commonIndent == null || indent < commonIndent))
             {
                 commonIndent = indent;
-                if (commonIndent == 0) break;
+                if (commonIndent == 0)
+                {
+                    break;
+                }
             }
         }
 
         if (commonIndent.HasValue)
+        {
             for (var i = 1; i < lines.Count; i++)
             {
                 var line = lines[i];
                 Debug.Assert(line != null, nameof(line) + " != null");
-                if (line.Length > commonIndent.Value) lines[i] = line.Substring(commonIndent.Value);
+                if (line.Length > commonIndent.Value)
+                {
+                    lines[i] = line.Substring(commonIndent.Value);
+                }
             }
+        }
 
         while (lines.Count > 0 && string.IsNullOrWhiteSpace(lines[0]))
         {

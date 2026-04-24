@@ -15,7 +15,9 @@ public class KnownFragmentNames : QueryValidationRuleVisitor
     {
         var fragmentName = node.Name.Value;
         if (!Context.Fragments.ContainsKey(fragmentName))
+        {
             ReportError(UnknownFragmentMessage(fragmentName), node.Name);
+        }
 
         return VisitAction.Continue;
     }

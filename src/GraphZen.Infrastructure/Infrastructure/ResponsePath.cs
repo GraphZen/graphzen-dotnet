@@ -3,7 +3,6 @@
 
 using System.Diagnostics;
 using System.Text;
-using GraphZen.Infrastructure;
 
 namespace GraphZen.Infrastructure;
 
@@ -55,7 +54,10 @@ public class ResponsePath
             currentPath = currentPath.Previous;
         }
 
-        if (sb.Length > 0) sb.Insert(0, "value");
+        if (sb.Length > 0)
+        {
+            sb.Insert(0, "value");
+        }
 
         return sb.ToString();
     }

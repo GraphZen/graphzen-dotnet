@@ -3,7 +3,6 @@
 
 using System.Linq.Expressions;
 using System.Reflection;
-using GraphZen.Infrastructure;
 
 namespace GraphZen.Infrastructure;
 
@@ -23,9 +22,13 @@ internal static class ExpressionExtensions
         if (propertySelector.Body is UnaryExpression unExp)
         {
             if (unExp.Operand is MemberExpression expression)
+            {
                 exp = expression;
+            }
             else
+            {
                 throw new ArgumentException();
+            }
         }
         else if (propertySelector.Body is MemberExpression expression)
         {

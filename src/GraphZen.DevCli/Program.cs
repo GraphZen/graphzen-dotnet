@@ -4,7 +4,6 @@
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Invocation;
-using GraphZen.Infrastructure;
 using static GraphZen.CodeGen.CodeGenTasks;
 
 namespace GraphZen;

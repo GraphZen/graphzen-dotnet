@@ -22,8 +22,10 @@ public class FragmentsOnCompositeTypes : QueryValidationRuleVisitor
         {
             var type = Context.Schema.GetTypeFromAst(typeCondition);
             if (type != null && !(type is ICompositeType))
+            {
                 ReportError(InlineFragmentOnNonCompositeErrorMessage(typeCondition.ToSyntaxString()),
                     typeCondition);
+            }
         }
 
         return VisitAction.Continue;
@@ -34,9 +36,11 @@ public class FragmentsOnCompositeTypes : QueryValidationRuleVisitor
         var type = Context.Schema.GetTypeFromAst(node.TypeCondition);
         {
             if (type != null && !(type is ICompositeType))
+            {
                 ReportError(
                     FragmentOnNonCompositeErrorMessage(node.Name.Value, node.TypeCondition.ToSyntaxString()),
                     node.TypeCondition);
+            }
 
             return VisitAction.Continue;
         }

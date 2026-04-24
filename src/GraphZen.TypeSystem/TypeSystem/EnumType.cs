@@ -36,7 +36,9 @@ public class EnumType : NamedType, IEnumType
         // value may be null at runtime despite non-nullable annotation
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
         if (ValuesByValue.TryGetValue(value ?? DBNull.Value, out var enumValue))
+        {
             return Maybe.Some<object>(enumValue.Name);
+        }
 
         return Maybe.None<object>(
             $"{Name} Enum: unable to find enum value that matches resolved value \"{value}\"");
@@ -53,7 +55,10 @@ public class EnumType : NamedType, IEnumType
         if (value is string str)
         {
             var enumValue = this.FindValue(str);
-            if (enumValue != null) return Maybe.Some(enumValue.Value);
+            if (enumValue != null)
+            {
+                return Maybe.Some(enumValue.Value);
+            }
         }
 
         return Maybe.None<object>();
@@ -64,7 +69,10 @@ public class EnumType : NamedType, IEnumType
         if (value is EnumValueSyntax enumNode)
         {
             var enumValue = this.FindValue(enumNode.Value);
-            if (enumValue != null) return Maybe.Some(enumValue.Value);
+            if (enumValue != null)
+            {
+                return Maybe.Some(enumValue.Value);
+            }
         }
 
         return Maybe.None<object>();

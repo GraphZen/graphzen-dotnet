@@ -8,13 +8,25 @@ public static class ConfigurationSourceExtensions
     public static bool Overrides(this ConfigurationSource newConfigurationSource,
         ConfigurationSource? oldConfigurationSource)
     {
-        if (oldConfigurationSource == null) return true;
+        if (oldConfigurationSource == null)
+        {
+            return true;
+        }
 
-        if (newConfigurationSource == ConfigurationSource.Explicit) return true;
+        if (newConfigurationSource == ConfigurationSource.Explicit)
+        {
+            return true;
+        }
 
-        if (oldConfigurationSource == ConfigurationSource.Explicit) return false;
+        if (oldConfigurationSource == ConfigurationSource.Explicit)
+        {
+            return false;
+        }
 
-        if (newConfigurationSource == ConfigurationSource.DataAnnotation) return true;
+        if (newConfigurationSource == ConfigurationSource.DataAnnotation)
+        {
+            return true;
+        }
 
         return oldConfigurationSource != ConfigurationSource.DataAnnotation;
     }

@@ -1,8 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using GraphZen.Infrastructure;
-
 namespace GraphZen.Infrastructure;
 
 internal static class StringExtensions
@@ -26,7 +24,9 @@ internal static class StringExtensions
     {
         Check.NotNull(value, nameof(value));
         if (value.EndsWith("Async") && value.Length > "Async".Length)
+        {
             return value.Substring(0, value.Length - "Async".Length);
+        }
 
         return value;
     }
@@ -46,11 +46,20 @@ internal static class StringExtensions
         Check.NotNull(value, nameof(value));
 
 
-        if (value.IsSnakeCase()) return value.ToUpper();
+        if (value.IsSnakeCase())
+        {
+            return value.ToUpper();
+        }
 
-        if (value.IsKebabCase()) return value.Replace('-', '_').ToUpper();
+        if (value.IsKebabCase())
+        {
+            return value.Replace('-', '_').ToUpper();
+        }
 
-        if (value.IsSpaceCase()) return value.Replace(' ', '_').ToUpper();
+        if (value.IsSpaceCase())
+        {
+            return value.Replace(' ', '_').ToUpper();
+        }
 
         var chars = value.SelectMany((c, i) =>
         {

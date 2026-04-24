@@ -39,7 +39,10 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
             var id = scalarType.ClrType != null
                 ? new TypeIdentity(scalarType.ClrType, this)
                 : new TypeIdentity(scalarType.Name, this);
-            if (id.Name != scalarType.Name) id.Name = scalarType.Name;
+            if (id.Name != scalarType.Name)
+            {
+                id.Name = scalarType.Name;
+            }
             // TODO: add logic to handle adding duplicate scalars
 
             AddTypeIdentity(id);
@@ -117,11 +120,16 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
 
     public bool RenameDirective(DirectiveDefinition directive, string name, ConfigurationSource configurationSource)
     {
-        if (!configurationSource.Overrides(directive.GetNameConfigurationSource())) return false;
+        if (!configurationSource.Overrides(directive.GetNameConfigurationSource()))
+        {
+            return false;
+        }
 
         if (_directives.TryGetValue(directive.Name, out var existing) && existing != directive)
+        {
             throw new InvalidOperationException(
                 $"Cannot rename {directive} to '{name}'. {this} already contains a directive named '{name}'.");
+        }
 
         _directives.Remove(directive.Name);
         _directives[name] = directive;
@@ -178,7 +186,9 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
         identity = undefined.FirstOrDefault()!;
         // ReSharper disable once PossibleUnintendedReferenceComparison
         if ((prev != null) & (prev == identity))
+        {
             throw new InvalidOperationException("This type was already defined.");
+        }
 
         // identity can be null at runtime (FirstOrDefault on empty sequence)
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
@@ -186,7 +196,9 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
         {
             if (Builder.Type(identity)?.Definition is INamedTypeDefinition def &&
                 identity.Definition == null)
+            {
                 identity.Definition = def;
+            }
 
             return identity.Definition != null;
         }
@@ -267,20 +279,28 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
         var clrTypeAndName =
             // ReSharper disable once PossibleNullReferenceException
             validIdentities.SingleOrDefault(_ => _.ClrType == identity.ClrType && _.Name == identity.Name);
-        if (clrTypeAndName != null) return clrTypeAndName;
+        if (clrTypeAndName != null)
+        {
+            return clrTypeAndName;
+        }
 
         // ReSharper disable once PossibleNullReferenceException
         var nameOnly = validIdentities.SingleOrDefault(_ => _.Name == identity.Name);
         if (nameOnly != null)
+        {
             if (identity.ClrType != null)
             {
                 if (nameOnly.ClrType == null)
+                {
                     nameOnly.ClrType = identity.ClrType;
+                }
                 else if (nameOnly.ClrType != identity.ClrType)
+                {
                     throw new InvalidOperationException(
                         $"Found mismatched type identity {nameOnly} for identity {identity}");
+                }
             }
-
+        }
 
         return nameOnly;
     }
@@ -290,7 +310,10 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
     {
         Check.NotNull(identity, nameof(identity));
         var ids = _typeIdentities.Where(_ => _.Overlaps(identity)).ToList();
-        if (ids.Count > 1) throw new InvalidOperationException();
+        if (ids.Count > 1)
+        {
+            throw new InvalidOperationException();
+        }
 
         return ids.SingleOrDefault();
     }
@@ -362,8 +385,10 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
     {
         if (clrType.TryGetGraphQLTypeInfo(out var typeNode, out var innerClrType))
         {
-            if (clrType != innerClrType) return null;
-
+            if (clrType != innerClrType)
+            {
+                return null;
+            }
 
             var identity = GetOrAddTypeIdentity(new TypeIdentity(innerClrType, this, kind));
             return new TypeReference(identity, typeNode);
@@ -426,7 +451,10 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
     private TypeIdentity AddTypeIdentity(TypeIdentity identity)
     {
         var existing = FindTypeIdentity(identity);
-        if (existing != null) throw new InvalidOperationException();
+        if (existing != null)
+        {
+            throw new InvalidOperationException();
+        }
 
         _typeIdentities.Add(identity);
         return identity;
@@ -596,14 +624,18 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
         {
             var existingBasedOnType = _types.SingleOrDefault(_ => _.ClrType == type.ClrType);
             if (existingBasedOnType != null)
+            {
                 throw new InvalidOperationException(
                     $"Cannot add type \"{type.Name}\" with CLR type \"{type.ClrType}\", a type named \"{existingBasedOnType.Name}\" already exists with that CLR type.");
+            }
         }
 
         var existingBasedOnName = _types.SingleOrDefault(_ => _.Name == type.Name);
         if (existingBasedOnName != null)
+        {
             throw new InvalidOperationException(
                 $"Cannot add type \"{type.Name}\", a {existingBasedOnName.GetType().Name} type with that name already exists.");
+        }
 
         _types.Add(type);
         return type;
@@ -627,13 +659,18 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
     {
         var existingIgnoredConfigurationSource = FindIgnoredDirectiveConfigurationSource(name);
         if (existingIgnoredConfigurationSource != null &&
-            configurationSource.Overrides(existingIgnoredConfigurationSource)) _ignoredDirectives.Remove(name);
+            configurationSource.Overrides(existingIgnoredConfigurationSource))
+        {
+            _ignoredDirectives.Remove(name);
+        }
     }
 
     public void IgnoreType(string name, ConfigurationSource configurationSource)
     {
         if (_ignoredTypes.TryGetValue(name, out var existingIgnoredConfigurationSource))
+        {
             configurationSource = configurationSource.Max(existingIgnoredConfigurationSource);
+        }
 
         _ignoredTypes[name] = configurationSource;
     }
@@ -725,7 +762,10 @@ public class SchemaDefinition : AnnotatableMemberDefinition, IMutableSchemaDefin
 
         if (type != null)
         {
-            if (type is T requested) return requested;
+            if (type is T requested)
+            {
+                return requested;
+            }
 
             throw new Exception(
                 $"Expected type \"{type.Name}\" to be of type \"{typeof(T).Name}\", but instead found a  type of \"{type.GetType().Name}\" ");

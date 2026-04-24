@@ -2,7 +2,6 @@
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
 using System.ComponentModel;
-using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 
 namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Arguments.Description;

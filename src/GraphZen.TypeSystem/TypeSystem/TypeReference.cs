@@ -32,7 +32,10 @@ public class TypeReference : INamedTypeReference
                     return NonNullType.Of((INullableType)ResolveType(nn.OfType));
                 case NamedTypeSyntax _:
                     var nameMatch = schema.FindType(Identity.Name);
-                    if (nameMatch != null) return nameMatch;
+                    if (nameMatch != null)
+                    {
+                        return nameMatch;
+                    }
 
                     if (Identity.ClrType != null)
                     {
@@ -40,11 +43,16 @@ public class TypeReference : INamedTypeReference
                             .Where(_ => _.ClrType != null && _.ClrType.IsAssignableFrom(Identity.ClrType))
                             .ToArray();
 
-                        if (typeMatches.Length == 1) return typeMatches[0];
+                        if (typeMatches.Length == 1)
+                        {
+                            return typeMatches[0];
+                        }
 
                         if (typeMatches.Length > 1)
+                        {
                             throw new Exception(
                                 $"More than one type in the schema matched type reference  \"{Identity.Name}\" with CLR type {Identity.ClrType}");
+                        }
 
                         throw new Exception(
                             $"Unable to find output type for type reference named \"{Identity.Name}\" with CLR type {Identity.ClrType}");

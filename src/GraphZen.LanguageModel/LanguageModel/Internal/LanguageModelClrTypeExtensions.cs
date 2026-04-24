@@ -23,7 +23,10 @@ public static class LanguageModelClrTypeExtensions
     {
         if (clrType.TryGetGraphQLNameWithoutValidation(out var maybeInvalidName, source))
         {
-            if (maybeInvalidName.IsValidGraphQLName()) return maybeInvalidName;
+            if (maybeInvalidName.IsValidGraphQLName())
+            {
+                return maybeInvalidName;
+            }
 
             throw new Exception(
                 $"Failed to get a valid GraphQL name for CLR type '{clrType}' because it was invalid. The invalid name was '{maybeInvalidName}'.");
@@ -38,7 +41,10 @@ public static class LanguageModelClrTypeExtensions
         Check.NotNull(clrType, nameof(clrType));
         name = null;
 
-        if (clrType.TryGetGraphQLNameFromDataAnnotation(out name)) return true;
+        if (clrType.TryGetGraphQLNameFromDataAnnotation(out name))
+        {
+            return true;
+        }
 
         if (source != null)
         {
