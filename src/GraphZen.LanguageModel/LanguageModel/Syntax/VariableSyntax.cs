@@ -1,11 +1,7 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using GraphZen.Infrastructure;
-using JetBrains.Annotations;
 
 namespace GraphZen.LanguageModel;
 
@@ -16,10 +12,8 @@ namespace GraphZen.LanguageModel;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public partial class VariableSyntax : ValueSyntax
 {
-    public VariableSyntax(NameSyntax name, SyntaxLocation? location = null) : base(location)
-    {
+    public VariableSyntax(NameSyntax name, SyntaxLocation? location = null) : base(location) =>
         Name = Check.NotNull(name, nameof(name));
-    }
 
     /// <summary>
     ///     The variable name.

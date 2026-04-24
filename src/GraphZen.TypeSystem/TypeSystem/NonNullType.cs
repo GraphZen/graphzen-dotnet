@@ -1,20 +1,11 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System.Diagnostics.CodeAnalysis;
-using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
-using GraphZen.TypeSystem.Taxonomy;
-using JetBrains.Annotations;
-
 namespace GraphZen.TypeSystem;
 
 public class NonNullType : INonNullType
 {
-    private NonNullType(INullableType ofType)
-    {
-        OfType = ofType;
-    }
+    private NonNullType(INullableType ofType) => OfType = ofType;
 
     public INullableType OfType { get; }
 

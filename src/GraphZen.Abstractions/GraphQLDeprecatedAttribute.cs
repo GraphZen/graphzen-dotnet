@@ -1,13 +1,9 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
-using JetBrains.Annotations;
 
 namespace GraphZen;
 
@@ -27,10 +23,8 @@ public class GraphQLDeprecatedAttribute : Attribute, IGraphQLDirective
         [Description("Explains why this element was deprecated, usually also including a " +
                      "suggestion for how to access supported similar data. Formatted " +
                      "in [Markdown](https://daringfireball.net/projects/markdown/).")]
-        string? reason = null)
-    {
+        string? reason = null) =>
         Reason = reason;
-    }
 
 
     [GraphQLCanBeNull] public string? Reason { get; }

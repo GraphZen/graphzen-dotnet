@@ -1,7 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
     <Description>Infrastructure code supporting the GraphZen SDK. Not intended for direct installation or use.</Description>
     <DefineConstants>LIBLOG_EXCLUDE_CODE_COVERAGE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>

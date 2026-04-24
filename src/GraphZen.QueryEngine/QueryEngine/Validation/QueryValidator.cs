@@ -1,25 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using GraphZen.Infrastructure;
-using GraphZen.LanguageModel;
 using GraphZen.LanguageModel.Validation;
-using GraphZen.TypeSystem;
 using GraphZen.Utilities;
-using JetBrains.Annotations;
 
 namespace GraphZen.QueryEngine.Validation;
 
 public class QueryValidator : IQueryValidator
 {
-    public QueryValidator(IReadOnlyCollection<ValidationRule>? rules = null)
-    {
+    public QueryValidator(IReadOnlyCollection<ValidationRule>? rules = null) =>
         Rules = rules ?? QueryValidationRules.SpecifiedQueryRules;
-    }
 
 
     private IReadOnlyCollection<ValidationRule> Rules { get; }

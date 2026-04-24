@@ -1,21 +1,12 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Internal;
-using JetBrains.Annotations;
-
 namespace GraphZen.TypeSystem;
 
 public class UnionTypeBuilder<TUnion, TContext> : IUnionTypeBuilder<TUnion, TContext>,
     IInfrastructure<InternalUnionTypeBuilder> where TContext : GraphQLContext
 {
-    public UnionTypeBuilder(InternalUnionTypeBuilder builder)
-    {
-        Builder = Check.NotNull(builder, nameof(builder));
-    }
+    public UnionTypeBuilder(InternalUnionTypeBuilder builder) => Builder = Check.NotNull(builder, nameof(builder));
 
 
     private InternalUnionTypeBuilder Builder { get; }

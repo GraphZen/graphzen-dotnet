@@ -1,13 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
     <Description>GraphZen is a GraphQL SDK for .NET. Install the GraphZen.AspNetCore.Server package for building GraphQL API servers for ASP.NET Core.</Description>
+    <!-- Not a shipping package; exists as a project-level convenience for referencing the full SDK -->
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
-  <ItemGroup>
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GraphZen.QueryEngine\GraphZen.QueryEngine.csproj" />

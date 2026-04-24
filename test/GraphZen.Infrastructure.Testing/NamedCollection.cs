@@ -1,14 +1,9 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
-using JetBrains.Annotations;
 
 namespace GraphZen.Infrastructure;
 
@@ -34,10 +29,8 @@ public static class NamedCollection
 
     private class EnumerableWrapper<TInner, T> : NamedCollection<T> where T : class, INamed where TInner : T, INamed
     {
-        public EnumerableWrapper(IEnumerable<TInner> innerEnumerable)
-        {
+        public EnumerableWrapper(IEnumerable<TInner> innerEnumerable) =>
             InnerEnumerable = Check.NotNull(innerEnumerable, nameof(innerEnumerable));
-        }
 
 
         public IEnumerable<TInner> InnerEnumerable { get; }
@@ -71,10 +64,8 @@ public static class NamedCollection
 
     private class DictionaryWrapper<TInner, T> : NamedCollection<T> where TInner : T where T : class, INamed
     {
-        public DictionaryWrapper(IReadOnlyDictionary<string, TInner> innerDictionary)
-        {
+        public DictionaryWrapper(IReadOnlyDictionary<string, TInner> innerDictionary) =>
             InnerDictionary = Check.NotNull(innerDictionary, nameof(innerDictionary));
-        }
 
 
         public IReadOnlyDictionary<string, TInner> InnerDictionary { get; }

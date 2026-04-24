@@ -1,22 +1,15 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Internal;
-using JetBrains.Annotations;
 
 namespace GraphZen.TypeSystem;
 
 public class InterfaceTypeBuilder<TInterface, TContext> : IInterfaceTypeBuilder<TInterface, TContext>,
     IInfrastructure<InternalInterfaceTypeBuilder> where TContext : GraphQLContext
 {
-    public InterfaceTypeBuilder(InternalInterfaceTypeBuilder builder)
-    {
+    public InterfaceTypeBuilder(InternalInterfaceTypeBuilder builder) =>
         Builder = Check.NotNull(builder, nameof(builder));
-    }
 
 
     private InternalInterfaceTypeBuilder Builder { get; }

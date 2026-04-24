@@ -1,15 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
     <IsTestProject>false</IsTestProject>
     <RootNamespace>GraphZen.Infrastructure</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-<PackageReference Include="DiffPlex" />
+    <PackageReference Include="DiffPlex" />
     <PackageReference Include="CompareNETObjects" />
-    <PackageReference Include="xunit" />
   </ItemGroup>
 
 

@@ -1,0 +1,44 @@
+<Solution>
+  <Folder Name="/Examples/">
+    <Project Path="examples/SimpleBlog/SimpleBlog.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="CLAUDE.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
+    <Project Path="src/GraphZen.Abstractions/GraphZen.Abstractions.csproj" />
+    <Project Path="src/GraphZen.AspNetCore.Playground/GraphZen.AspNetCore.Playground.csproj" />
+    <Project Path="src/GraphZen.AspNetCore.Server/GraphZen.AspNetCore.Server.csproj" />
+    <Project Path="src/GraphZen.AspNetCore/GraphZen.AspNetCore.csproj" />
+    <Project Path="src/GraphZen.Client/GraphZen.Client.csproj" />
+    <Project Path="src/GraphZen.DevCli/GraphZen.DevCli.csproj" />
+    <Project Path="src/GraphZen.Infrastructure/GraphZen.Infrastructure.csproj" />
+    <Project Path="src/GraphZen.LanguageModel/GraphZen.LanguageModel.csproj" />
+    <Project Path="src/GraphZen.QueryEngine/GraphZen.QueryEngine.csproj" />
+    <Project Path="src/GraphZen.TypeSystem/GraphZen.TypeSystem.csproj" />
+    <Project Path="src/GraphZen/GraphZen.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <File Path="test/Directory.Build.props" />
+    <Project Path="test/GraphZen.AspNetCore.Playground.IntegrationTests/GraphZen.AspNetCore.Playground.IntegrationTests.csproj" />
+    <Project Path="test/GraphZen.AspNetCore.Playground.Tests/GraphZen.AspNetCore.Playground.Tests.csproj" />
+    <Project Path="test/GraphZen.AspNetCore.Server.FunctionalTests/GraphZen.AspNetCore.Server.FunctionalTests.csproj" />
+    <Project Path="test/GraphZen.AspNetCore.Server.IntegrationTests/GraphZen.AspNetCore.Server.IntegrationTests.csproj" />
+    <Project Path="test/GraphZen.AspNetCore.Server.Tests/GraphZen.AspNetCore.Server.Tests.csproj" />
+    <Project Path="test/GraphZen.Client.FunctionalTests/GraphZen.Client.FunctionalTests.csproj" />
+    <Project Path="test/GraphZen.Client.IntegrationTests/GraphZen.Client.IntegrationTests.csproj" />
+    <Project Path="test/GraphZen.Client.Tests/GraphZen.Client.Tests.csproj" />
+    <Project Path="test/GraphZen.Infrastructure.Testing.Tests/GraphZen.Infrastructure.Testing.Tests.csproj" />
+    <Project Path="test/GraphZen.Infrastructure.Testing/GraphZen.Infrastructure.Testing.csproj" />
+    <Project Path="test/GraphZen.LanguageModel.FunctionalTests/GraphZen.LanguageModel.FunctionalTests.csproj" />
+    <Project Path="test/GraphZen.LanguageModel.IntegrationTests/GraphZen.LanguageModel.IntegrationTests.csproj" />
+    <Project Path="test/GraphZen.LanguageModel.Tests/GraphZen.LanguageModel.Tests.csproj" />
+    <Project Path="test/GraphZen.QueryEngine.FunctionalTests/GraphZen.QueryEngine.FunctionalTests.csproj" />
+    <Project Path="test/GraphZen.QueryEngine.Tests/GraphZen.QueryEngine.Tests.csproj" />
+    <Project Path="test/GraphZen.Tests/GraphZen.Tests.csproj" />
+    <Project Path="test/GraphZen.TypeSystem.FunctionalTests/GraphZen.TypeSystem.FunctionalTests.csproj" />
+    <Project Path="test/GraphZen.TypeSystem.Tests/GraphZen.TypeSystem.Tests.csproj" />
+  </Folder>
+</Solution>

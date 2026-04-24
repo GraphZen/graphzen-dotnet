@@ -1,12 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using GraphZen.Infrastructure;
-using JetBrains.Annotations;
-
 namespace GraphZen.LanguageModel;
 
 /// <summary>
@@ -16,10 +10,8 @@ namespace GraphZen.LanguageModel;
 public partial class ObjectValueSyntax : ValueSyntax
 {
     public ObjectValueSyntax(IReadOnlyList<ObjectFieldSyntax> fields, SyntaxLocation? location = null) :
-        base(location)
-    {
+        base(location) =>
         Fields = Check.NotNull(fields, nameof(fields));
-    }
 
     /// <summary>
     ///     The fields of an object.

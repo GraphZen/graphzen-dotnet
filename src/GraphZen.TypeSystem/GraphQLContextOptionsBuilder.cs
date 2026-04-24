@@ -1,12 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using GraphZen.Infrastructure;
-using GraphZen.TypeSystem.Taxonomy;
-using JetBrains.Annotations;
-
 namespace GraphZen;
 
 public class GraphQLContextOptionsBuilder<TContext> : GraphQLContextOptionsBuilder where
@@ -29,10 +23,8 @@ public class GraphQLContextOptionsBuilder : IGraphQLContextOptionsBuilderInfrast
     {
     }
 
-    public GraphQLContextOptionsBuilder(GraphQLContextOptions options)
-    {
+    public GraphQLContextOptionsBuilder(GraphQLContextOptions options) =>
         Options = Check.NotNull(options, nameof(options));
-    }
 
     public virtual GraphQLContextOptions Options { get; private set; }
 
