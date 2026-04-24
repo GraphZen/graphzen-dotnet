@@ -7,19 +7,18 @@ using GraphZen.LanguageModel.Validation;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class ObjectsMustAdhereToInterfaceTheyImplementTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class ObjectsMustAdhereToInterfaceTheyImplementTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } =
-            DocumentValidationRules.ObjectsMustAdhereToInterfaceTheyImplement;
+    public override ValidationRule RuleUnderTest { get; } =
+        DocumentValidationRules.ObjectsMustAdhereToInterfaceTheyImplement;
 
-        [Fact]
-        public void AcceptsAnObjectWhichImplementsAnInterface()
-        {
-            SdlShouldPass(@"
+    [Fact]
+    public void AcceptsAnObjectWhichImplementsAnInterface()
+    {
+        SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -32,12 +31,12 @@ namespace GraphZen.Tests.Validation.Rules
                 field(input: String): String
               }
             ");
-        }
+    }
 
-        [Fact]
-        public void AcceptsAnObjectWhichImplmentsAnInterfacceAlongWithMoreFields()
-        {
-            SdlShouldPass(@"
+    [Fact]
+    public void AcceptsAnObjectWhichImplmentsAnInterfacceAlongWithMoreFields()
+    {
+        SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -51,12 +50,12 @@ namespace GraphZen.Tests.Validation.Rules
                 anotherField: String
               }
             ");
-        }
+    }
 
-        [Fact]
-        public void AcceptsAnObjectWhichImplementsAnInterfaceAlongWithAdditionalOptionalArguments()
-        {
-            SdlShouldPass(@"
+    [Fact]
+    public void AcceptsAnObjectWhichImplementsAnInterfaceAlongWithAdditionalOptionalArguments()
+    {
+        SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -69,12 +68,12 @@ namespace GraphZen.Tests.Validation.Rules
                 field(input: String, anotherInput: String): String
               }
             ");
-        }
+    }
 
-        [Fact]
-        public void ItRejectsAnObjectMissingAnInterfaceField()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void ItRejectsAnObjectMissingAnInterfaceField()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -87,14 +86,14 @@ namespace GraphZen.Tests.Validation.Rules
                 anotherField: String
               }
             ",
-                Error("Interface field AnotherInterface.field expected but AnotherObject does not provide it.", (6, 3),
-                    (9, 6)));
-        }
+            Error("Interface field AnotherInterface.field expected but AnotherObject does not provide it.", (6, 3),
+                (9, 6)));
+    }
 
-        [Fact]
-        public void RejectsAnObjectWithAnIncorrectlyTypedInterfaceField()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectWithAnIncorrectlyTypedInterfaceField()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -107,14 +106,14 @@ namespace GraphZen.Tests.Validation.Rules
                 field(input: String): Int
               }
             ",
-                Error("Interface field AnotherInterface.field expects type String but AnotherObject.field is type Int.",
-                    (10, 25), (6, 25)));
-        }
+            Error("Interface field AnotherInterface.field expects type String but AnotherObject.field is type Int.",
+                (10, 25), (6, 25)));
+    }
 
-        [Fact]
-        public void RejectsAnObjectWithADifferentlyTypeInterfaceField()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectWithADifferentlyTypeInterfaceField()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -130,15 +129,15 @@ namespace GraphZen.Tests.Validation.Rules
                 field: B
               }
             ",
-                Error("Interface field AnotherInterface.field expects type A but AnotherObject.field is type B.",
-                    (13, 10),
-                    (9, 10)));
-        }
+            Error("Interface field AnotherInterface.field expects type A but AnotherObject.field is type B.",
+                (13, 10),
+                (9, 10)));
+    }
 
-        [Fact]
-        public void AcceptsAnObjectWithSubTypedInterfaceField_Interface()
-        {
-            SdlShouldPass(@"
+    [Fact]
+    public void AcceptsAnObjectWithSubTypedInterfaceField_Interface()
+    {
+        SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -151,12 +150,12 @@ namespace GraphZen.Tests.Validation.Rules
                 field: AnotherObject
               }
             ");
-        }
+    }
 
-        [Fact]
-        public void AcceptsAnObjectWithSubTypedInterfaceField_Union()
-        {
-            SdlShouldPass(@"
+    [Fact]
+    public void AcceptsAnObjectWithSubTypedInterfaceField_Union()
+    {
+        SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -175,12 +174,12 @@ namespace GraphZen.Tests.Validation.Rules
                 field: SomeObject
               }
             ");
-        }
+    }
 
-        [Fact]
-        public void RejectsAnObjectMissingAnInterfaceArgument()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectMissingAnInterfaceArgument()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -193,15 +192,15 @@ namespace GraphZen.Tests.Validation.Rules
                 field: String
               }
             ",
-                Error(
-                    "Interface field argument AnotherInterface.field(input:) expected but AnotherObject.field does not provide it.",
-                    (6, 9), (10, 3)));
-        }
+            Error(
+                "Interface field argument AnotherInterface.field(input:) expected but AnotherObject.field does not provide it.",
+                (6, 9), (10, 3)));
+    }
 
-        [Fact]
-        public void RejectsAnObjectWithAnIncorrectlyTypedInterfaceArgument()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectWithAnIncorrectlyTypedInterfaceArgument()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -214,15 +213,15 @@ namespace GraphZen.Tests.Validation.Rules
                 field(input: Int): String
               }
             ",
-                Error(
-                    "Interface field argument AnotherInterface.field(input:) expects type String but AnotherObject.field(input:) is type Int.",
-                    (6, 16), (10, 16)));
-        }
+            Error(
+                "Interface field argument AnotherInterface.field(input:) expects type String but AnotherObject.field(input:) is type Int.",
+                (6, 16), (10, 16)));
+    }
 
-        [Fact]
-        public void RejectsAnObjectWithBothAnIncorrectlyTypedFieldAndArgument()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectWithBothAnIncorrectlyTypedFieldAndArgument()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -235,14 +234,14 @@ namespace GraphZen.Tests.Validation.Rules
                 field(input: Int): Int
               }
             ", Error("Interface field AnotherInterface.field expects type String but AnotherObject.field is type Int.",
-                    (10, 22), (6, 25))
-                , Error("Interface field argument AnotherInterface.field(input:) expects type String but AnotherObject.field(input:) is type Int.", (6, 16), (10, 16)));
-        }
+                (10, 22), (6, 25))
+            , Error("Interface field argument AnotherInterface.field(input:) expects type String but AnotherObject.field(input:) is type Int.", (6, 16), (10, 16)));
+    }
 
-        [Fact]
-        public void RejectsAnObjectWhichIMplementsAnInterfaceFieldAlongWithAdditionalRequiredArguments()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectWhichIMplementsAnInterfaceFieldAlongWithAdditionalRequiredArguments()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -260,15 +259,15 @@ namespace GraphZen.Tests.Validation.Rules
                 ): String
               }
             ",
-                Error(
-                    "Object field AnotherObject.field includes required argument requiredArg that is missing from the Interface field AnotherInterface.field.",
-                    (12, 5), (6, 3)));
-        }
+            Error(
+                "Object field AnotherObject.field includes required argument requiredArg that is missing from the Interface field AnotherInterface.field.",
+                (12, 5), (6, 3)));
+    }
 
-        [Fact]
-        public void AcceptsAnObjectWithAnEquivalentlyWrappedInterfaceFieldType()
-        {
-            SdlShouldPass(@"
+    [Fact]
+    public void AcceptsAnObjectWithAnEquivalentlyWrappedInterfaceFieldType()
+    {
+        SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -281,12 +280,12 @@ namespace GraphZen.Tests.Validation.Rules
                 field: [String]!
               }
            ");
-        }
+    }
 
-        [Fact]
-        public void RejectsAnObjectWithNonListInterfaceFieldListType()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectWithNonListInterfaceFieldListType()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -298,15 +297,15 @@ namespace GraphZen.Tests.Validation.Rules
               type AnotherObject implements AnotherInterface {
                 field: String
               }",
-                Error(
-                    "Interface field AnotherInterface.field expects type [String] but AnotherObject.field is type String.",
-                    (10, 10), (6, 10)));
-        }
+            Error(
+                "Interface field AnotherInterface.field expects type [String] but AnotherObject.field is type String.",
+                (10, 10), (6, 10)));
+    }
 
-        [Fact]
-        public void RejectsAnObjectWithAListInterfaceFieldNonListType()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectWithAListInterfaceFieldNonListType()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -318,15 +317,15 @@ namespace GraphZen.Tests.Validation.Rules
               type AnotherObject implements AnotherInterface {
                 field: [String]
               }",
-                Error(
-                    "Interface field AnotherInterface.field expects type String but AnotherObject.field is type [String].",
-                    (10, 10), (6, 10)));
-        }
+            Error(
+                "Interface field AnotherInterface.field expects type String but AnotherObject.field is type [String].",
+                (10, 10), (6, 10)));
+    }
 
-        [Fact]
-        public void AcceptsAnObjectWithASubsetNonNullInterfaceFieldType()
-        {
-            SdlShouldPass(@"
+    [Fact]
+    public void AcceptsAnObjectWithASubsetNonNullInterfaceFieldType()
+    {
+        SdlShouldPass(@"
               type Query {
                 test: AnotherObject
               }
@@ -339,12 +338,12 @@ namespace GraphZen.Tests.Validation.Rules
                 field: String!
               }
             ");
-        }
+    }
 
-        [Fact]
-        public void RejectsAnObjectWithASupersetNullableInterfaceFieldType()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectWithASupersetNullableInterfaceFieldType()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: AnotherObject
               }
@@ -357,9 +356,8 @@ namespace GraphZen.Tests.Validation.Rules
                 field: String
               }
             ",
-                Error(
-                    "Interface field AnotherInterface.field expects type String! but AnotherObject.field is type String.",
-                    (10, 10), (6, 10)));
-        }
+            Error(
+                "Interface field AnotherInterface.field expects type String! but AnotherObject.field is type String.",
+                (10, 10), (6, 10)));
     }
 }

@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Internal
-{
-    public static class InternalObjectTypeExtensions
-    {
-        public static async Task<bool> IsTypeOfAsync(this ObjectType objectType, object source,
-            GraphQLContext context, ResolveInfo info)
-        {
-            object? src = source;
-            if (source is Task awaitable)
-            {
-                await awaitable;
-                src = awaitable.GetResult();
-            }
+namespace GraphZen.TypeSystem.Internal;
 
-            return src != null && objectType.IsTypeOf != null && objectType.IsTypeOf(src, context, info);
+public static class InternalObjectTypeExtensions
+{
+    public static async Task<bool> IsTypeOfAsync(this ObjectType objectType, object source,
+        GraphQLContext context, ResolveInfo info)
+    {
+        var src = source;
+        if (source is Task awaitable)
+        {
+            await awaitable;
+            src = awaitable.GetResult();
         }
+
+        return src != null && objectType.IsTypeOf != null && objectType.IsTypeOf(src, context, info);
     }
 }

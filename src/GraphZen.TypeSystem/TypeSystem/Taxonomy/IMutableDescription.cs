@@ -6,12 +6,11 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMutableDescription : IDescription
 {
-    [GraphQLIgnore]
-    public interface IMutableDescription : IDescription
-    {
-        bool SetDescription(string description, ConfigurationSource configurationSource);
-        ConfigurationSource GetDescriptionConfigurationSource();
-    }
+    bool SetDescription(string description, ConfigurationSource configurationSource);
+    ConfigurationSource GetDescriptionConfigurationSource();
 }

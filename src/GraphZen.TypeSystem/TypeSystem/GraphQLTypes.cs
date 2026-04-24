@@ -8,17 +8,16 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public static class GraphQLTypes
 {
-    public static class GraphQLTypes
+    public static IReadOnlyList<NamedType> All = new List<NamedType>
     {
-        public static IReadOnlyList<NamedType> All = new List<NamedType>
-        {
-            SpecScalars.String,
-            SpecScalars.ID,
-            SpecScalars.Boolean,
-            SpecScalars.Float,
-            SpecScalars.Int
-        }.Concat(Introspection.Schema.GetTypes()).ToImmutableList();
-    }
+        SpecScalars.String,
+        SpecScalars.ID,
+        SpecScalars.Boolean,
+        SpecScalars.Float,
+        SpecScalars.Int
+    }.Concat(Introspection.Schema.GetTypes()).ToImmutableList();
 }

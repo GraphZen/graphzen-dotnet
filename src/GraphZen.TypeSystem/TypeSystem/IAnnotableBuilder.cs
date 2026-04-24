@@ -5,11 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public interface IAnnotableBuilder<out TBuilder>
 {
-    public interface IAnnotableBuilder<out TBuilder>
-    {
-        TBuilder DirectiveAnnotation(string name, object? value = null);
-        TBuilder IgnoreDirectiveAnnotation(string name);
-    }
+    TBuilder DirectiveAnnotation(string name, object? value = null);
+    TBuilder IgnoreDirectiveAnnotation(string name);
 }

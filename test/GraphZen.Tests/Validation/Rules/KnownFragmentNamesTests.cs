@@ -9,18 +9,17 @@ using GraphZen.QueryEngine.Validation.Rules;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class KnownFragmentNamesTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class KnownFragmentNamesTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.KnownFragmentNames;
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.KnownFragmentNames;
 
-        [Fact]
-        public void KnownFragmentNamesAreValid()
-        {
-            QueryShouldPass(@"
+    [Fact]
+    public void KnownFragmentNamesAreValid()
+    {
+        QueryShouldPass(@"
 
           {
             human(id: 4) {
@@ -45,12 +44,12 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ");
-        }
+    }
 
-        [Fact]
-        public void UnknownFragmentNames()
-        {
-            QueryShouldFail(@"
+    [Fact]
+    public void UnknownFragmentNames()
+    {
+        QueryShouldFail(@"
 
           {
             human(id: 4) {
@@ -67,13 +66,12 @@ namespace GraphZen.Tests.Validation.Rules
           }
 
         ",
-                UndefinedFragment("UnknownFragment1", 5, 18),
-                UndefinedFragment("UnknownFragment2", 7, 20),
-                UndefinedFragment("UnknownFragment3", 14, 16)
-            );
-        }
-
-        private static ExpectedError UndefinedFragment(string fragmentName, int line, int column) =>
-            Error(KnownFragmentNames.UnknownFragmentMessage(fragmentName), (line, column));
+            UndefinedFragment("UnknownFragment1", 5, 18),
+            UndefinedFragment("UnknownFragment2", 7, 20),
+            UndefinedFragment("UnknownFragment3", 14, 16)
+        );
     }
+
+    private static ExpectedError UndefinedFragment(string fragmentName, int line, int column) =>
+        Error(KnownFragmentNames.UnknownFragmentMessage(fragmentName), (line, column));
 }

@@ -6,12 +6,11 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+public interface IMutableQueryTypeDefinition : IQueryTypeDefinition
 {
-    public interface IMutableQueryTypeDefinition : IQueryTypeDefinition
-    {
-        new ObjectTypeDefinition? QueryType { get; }
-        bool SetQueryType(ObjectTypeDefinition? type, ConfigurationSource configurationSource);
-        ConfigurationSource? GetQueryTypeConfigurationSource();
-    }
+    new ObjectTypeDefinition? QueryType { get; }
+    bool SetQueryType(ObjectTypeDefinition? type, ConfigurationSource configurationSource);
+    ConfigurationSource? GetQueryTypeConfigurationSource();
 }

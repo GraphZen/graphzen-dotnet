@@ -6,15 +6,14 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
-{
-    public class GraphQLTypeAttribute : Attribute
-    {
-        public GraphQLTypeAttribute(Type clrType)
-        {
-            ClrType = Check.NotNull(clrType, nameof(clrType));
-        }
+namespace GraphZen;
 
-        public Type ClrType { get; }
+public class GraphQLTypeAttribute : Attribute
+{
+    public GraphQLTypeAttribute(Type clrType)
+    {
+        ClrType = Check.NotNull(clrType, nameof(clrType));
     }
+
+    public Type ClrType { get; }
 }

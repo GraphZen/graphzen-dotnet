@@ -7,17 +7,15 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+[NoReorder]
+public class DocumentParserTests : ParserTestBase
 {
-    [NoReorder]
-    public class DocumentParserTests : ParserTestBase
+    [Fact]
+    public void parse_empty_document_with_comments()
     {
-        [Fact]
-        public void parse_empty_document_with_comments()
-        {
-            Assert.Equal(new DocumentSyntax(new DefinitionSyntax[] { }), ParseDocument(@"
+        Assert.Equal(new DocumentSyntax(new DefinitionSyntax[] { }), ParseDocument(@"
 # Welcome to GraphiQL
 #
 # GraphiQL is an in-browser tool for writing, validating, and
@@ -48,6 +46,5 @@ namespace GraphZen.Tests.LanguageModel.Internal.Parser
 #
 
 "));
-        }
     }
 }

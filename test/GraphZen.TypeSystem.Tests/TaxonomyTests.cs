@@ -8,311 +8,310 @@ using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.Tests
+namespace GraphZen.TypeSystem.Tests;
+
+public class TaxonomyTests
 {
-    public class TaxonomyTests
+    [Theory]
+    [InlineData(typeof(IGraphQLTypeReference))]
+    public void graphql_type_references(Type type)
     {
-        [Theory]
-        [InlineData(typeof(IGraphQLTypeReference))]
-        public void graphql_type_references(Type type)
+        var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
-            var expected = new[]
-            {
-                typeof(EnumType),
-                typeof(EnumTypeDefinition),
-                typeof(InputObjectType),
-                typeof(InputObjectTypeDefinition),
-                typeof(InterfaceType),
-                typeof(InterfaceTypeDefinition),
-                typeof(ListType),
-                typeof(NonNullType),
-                typeof(ObjectType),
-                typeof(ObjectTypeDefinition),
-                typeof(ScalarType),
-                typeof(ScalarTypeDefinition),
-                typeof(TypeReference),
-                typeof(UnionType),
-                typeof(UnionTypeDefinition)
-            };
+            typeof(EnumType),
+            typeof(EnumTypeDefinition),
+            typeof(InputObjectType),
+            typeof(InputObjectTypeDefinition),
+            typeof(InterfaceType),
+            typeof(InterfaceTypeDefinition),
+            typeof(ListType),
+            typeof(NonNullType),
+            typeof(ObjectType),
+            typeof(ObjectTypeDefinition),
+            typeof(ScalarType),
+            typeof(ScalarTypeDefinition),
+            typeof(TypeReference),
+            typeof(UnionType),
+            typeof(UnionTypeDefinition)
+        };
 
-            Assert.Equal(expected, types);
-        }
+        Assert.Equal(expected, types);
+    }
 
-        [Theory]
-        [InlineData(typeof(INamedTypeDefinition))]
-        public void graphql_type_definitions(Type type)
+    [Theory]
+    [InlineData(typeof(INamedTypeDefinition))]
+    public void graphql_type_definitions(Type type)
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
-            var expected = new[]
-            {
-                typeof(EnumType),
-                typeof(EnumTypeDefinition),
-                typeof(InputObjectType),
-                typeof(InputObjectTypeDefinition),
-                typeof(InterfaceType),
-                typeof(InterfaceTypeDefinition),
-                typeof(ObjectType),
-                typeof(ObjectTypeDefinition),
-                typeof(ScalarType),
-                typeof(ScalarTypeDefinition),
-                typeof(UnionType),
-                typeof(UnionTypeDefinition)
-            };
+            typeof(EnumType),
+            typeof(EnumTypeDefinition),
+            typeof(InputObjectType),
+            typeof(InputObjectTypeDefinition),
+            typeof(InterfaceType),
+            typeof(InterfaceTypeDefinition),
+            typeof(ObjectType),
+            typeof(ObjectTypeDefinition),
+            typeof(ScalarType),
+            typeof(ScalarTypeDefinition),
+            typeof(UnionType),
+            typeof(UnionTypeDefinition)
+        };
 
-            Assert.Equal(expected, types);
-        }
+        Assert.Equal(expected, types);
+    }
 
-        [Theory]
-        [InlineData(typeof(IGraphQLType))]
-        public void graphql_types(Type type)
+    [Theory]
+    [InlineData(typeof(IGraphQLType))]
+    public void graphql_types(Type type)
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
-            var expected = new[]
-            {
-                typeof(EnumType),
-                typeof(InputObjectType),
-                typeof(InterfaceType),
-                typeof(ListType),
-                typeof(NonNullType),
-                typeof(ObjectType),
-                typeof(ScalarType),
-                typeof(UnionType)
-            };
+            typeof(EnumType),
+            typeof(InputObjectType),
+            typeof(InterfaceType),
+            typeof(ListType),
+            typeof(NonNullType),
+            typeof(ObjectType),
+            typeof(ScalarType),
+            typeof(UnionType)
+        };
 
-            Assert.Equal(expected, types);
-        }
+        Assert.Equal(expected, types);
+    }
 
 
-        [Theory]
-        [InlineData(typeof(INamedType))]
-        public void graphql_named_types(Type type)
+    [Theory]
+    [InlineData(typeof(INamedType))]
+    public void graphql_named_types(Type type)
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(type);
+
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(type);
+            typeof(EnumType),
+            typeof(InputObjectType),
+            typeof(InterfaceType),
+            typeof(ObjectType),
+            typeof(ScalarType),
+            typeof(UnionType)
+        };
 
-            var expected = new[]
-            {
-                typeof(EnumType),
-                typeof(InputObjectType),
-                typeof(InterfaceType),
-                typeof(ObjectType),
-                typeof(ScalarType),
-                typeof(UnionType)
-            };
+        Assert.Equal(expected, types);
+    }
 
-            Assert.Equal(expected, types);
-        }
+    [Theory]
+    [InlineData(typeof(INamedTypeDefinition))]
+    public void named_type_definitions(Type type)
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(type);
 
-        [Theory]
-        [InlineData(typeof(INamedTypeDefinition))]
-        public void named_type_definitions(Type type)
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(type);
+            typeof(EnumType),
+            typeof(EnumTypeDefinition),
+            typeof(InputObjectType),
+            typeof(InputObjectTypeDefinition),
+            typeof(InterfaceType),
+            typeof(InterfaceTypeDefinition),
+            typeof(ObjectType),
+            typeof(ObjectTypeDefinition),
+            typeof(ScalarType),
+            typeof(ScalarTypeDefinition),
+            typeof(UnionType),
+            typeof(UnionTypeDefinition)
+        };
 
-            var expected = new[]
-            {
-                typeof(EnumType),
-                typeof(EnumTypeDefinition),
-                typeof(InputObjectType),
-                typeof(InputObjectTypeDefinition),
-                typeof(InterfaceType),
-                typeof(InterfaceTypeDefinition),
-                typeof(ObjectType),
-                typeof(ObjectTypeDefinition),
-                typeof(ScalarType),
-                typeof(ScalarTypeDefinition),
-                typeof(UnionType),
-                typeof(UnionTypeDefinition)
-            };
-
-            Assert.Equal(expected, types);
-        }
+        Assert.Equal(expected, types);
+    }
 
 
-        [Theory(Skip = "wip")]
-        [InlineData(typeof(IDescription))]
-        [InlineData(typeof(IClrType))]
-        // [InlineData(typeof(IMutableClrType))]
-        public void ClrTypes(Type type)
+    [Theory(Skip = "wip")]
+    [InlineData(typeof(IDescription))]
+    [InlineData(typeof(IClrType))]
+    // [InlineData(typeof(IMutableClrType))]
+    public void ClrTypes(Type type)
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(type);
+
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(type);
+            typeof(EnumType),
+            typeof(EnumValue),
+            typeof(Field),
+            typeof(InputObjectType),
+            typeof(InputValue),
+            typeof(InterfaceType),
+            typeof(ObjectType),
+            typeof(ScalarType),
+            typeof(UnionType)
+        };
 
-            var expected = new[]
-            {
-                typeof(EnumType),
-                typeof(EnumValue),
-                typeof(Field),
-                typeof(InputObjectType),
-                typeof(InputValue),
-                typeof(InterfaceType),
-                typeof(ObjectType),
-                typeof(ScalarType),
-                typeof(UnionType)
-            };
+        Assert.Equal(expected, types);
+    }
 
-            Assert.Equal(expected, types);
-        }
+    [Theory(Skip = "wip")]
+    [InlineData(typeof(IDescription))]
+    [InlineData(typeof(IMutableDescription))]
+    public void TypeDescriptions(Type type)
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(type);
 
-        [Theory(Skip = "wip")]
-        [InlineData(typeof(IDescription))]
-        [InlineData(typeof(IMutableDescription))]
-        public void TypeDescriptions(Type type)
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(type);
+            typeof(EnumType),
+            typeof(EnumValue),
+            typeof(Field),
+            typeof(InputObjectType),
+            typeof(InputValue),
+            typeof(InterfaceType),
+            typeof(ObjectType),
+            typeof(ScalarType),
+            typeof(UnionType)
+        };
 
-            var expected = new[]
-            {
-                typeof(EnumType),
-                typeof(EnumValue),
-                typeof(Field),
-                typeof(InputObjectType),
-                typeof(InputValue),
-                typeof(InterfaceType),
-                typeof(ObjectType),
-                typeof(ScalarType),
-                typeof(UnionType)
-            };
+        Assert.Equal(expected, types);
+    }
 
-            Assert.Equal(expected, types);
-        }
+    [Fact]
+    public void AbstractTypeDefinitions()
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(typeof(IAbstractTypeDefinition));
 
-        [Fact]
-        public void AbstractTypeDefinitions()
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(IAbstractTypeDefinition));
+            typeof(InterfaceType),
+            typeof(InterfaceTypeDefinition),
+            typeof(UnionType),
+            typeof(UnionTypeDefinition)
+        };
 
-            var expected = new[]
-            {
-                typeof(InterfaceType),
-                typeof(InterfaceTypeDefinition),
-                typeof(UnionType),
-                typeof(UnionTypeDefinition)
-            };
+        Assert.Equal(expected, types);
+    }
 
-            Assert.Equal(expected, types);
-        }
+    [Fact]
+    public void AbstractTypes()
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(typeof(IAbstractType));
 
-        [Fact]
-        public void AbstractTypes()
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(IAbstractType));
+            typeof(InterfaceType),
+            typeof(UnionType)
+        };
 
-            var expected = new[]
-            {
-                typeof(InterfaceType),
-                typeof(UnionType)
-            };
-
-            Assert.Equal(expected, types);
-        }
+        Assert.Equal(expected, types);
+    }
 
 
-        [Fact(Skip = "wip")]
-        public void Annotated()
+    [Fact(Skip = "wip")]
+    public void Annotated()
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(typeof(IDirectiveAnnotations));
+
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(IDirectiveAnnotations));
+            typeof(AnnotatableMemberDefinition),
+            typeof(EnumType),
+            typeof(EnumValue),
+            typeof(Field),
+            typeof(InputObjectType),
+            typeof(InputValue),
+            typeof(InterfaceType),
+            typeof(ObjectType),
+            typeof(ScalarType),
+            typeof(Schema),
+            typeof(UnionType)
+        };
 
-            var expected = new[]
-            {
-                typeof(AnnotatableMemberDefinition),
-                typeof(EnumType),
-                typeof(EnumValue),
-                typeof(Field),
-                typeof(InputObjectType),
-                typeof(InputValue),
-                typeof(InterfaceType),
-                typeof(ObjectType),
-                typeof(ScalarType),
-                typeof(Schema),
-                typeof(UnionType)
-            };
+        Assert.Equal(expected, types);
+    }
 
-            Assert.Equal(expected, types);
-        }
+    [Fact]
+    public void CompositeTypeDefinitions()
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(typeof(ICompositeTypeDefinition));
 
-        [Fact]
-        public void CompositeTypeDefinitions()
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(ICompositeTypeDefinition));
+            typeof(InterfaceType),
+            typeof(InterfaceTypeDefinition),
+            typeof(ObjectType),
+            typeof(ObjectTypeDefinition),
+            typeof(UnionType),
+            typeof(UnionTypeDefinition)
+        };
 
-            var expected = new[]
-            {
-                typeof(InterfaceType),
-                typeof(InterfaceTypeDefinition),
-                typeof(ObjectType),
-                typeof(ObjectTypeDefinition),
-                typeof(UnionType),
-                typeof(UnionTypeDefinition)
-            };
-
-            Assert.Equal(expected, types);
-        }
+        Assert.Equal(expected, types);
+    }
 
 
-        [Fact]
-        public void CompositeTypes()
+    [Fact]
+    public void CompositeTypes()
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(typeof(ICompositeType));
+
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(ICompositeType));
+            typeof(InterfaceType),
+            typeof(ObjectType),
+            typeof(UnionType)
+        };
 
-            var expected = new[]
-            {
-                typeof(InterfaceType),
-                typeof(ObjectType),
-                typeof(UnionType)
-            };
-
-            Assert.Equal(expected, types);
-        }
+        Assert.Equal(expected, types);
+    }
 
 
-        [Fact]
-        public void LeafTypeDefinitions()
+    [Fact]
+    public void LeafTypeDefinitions()
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(typeof(ILeafTypeDefinition));
+
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(ILeafTypeDefinition));
+            typeof(EnumType),
+            typeof(EnumTypeDefinition),
+            typeof(ScalarType),
+            typeof(ScalarTypeDefinition)
+        };
 
-            var expected = new[]
-            {
-                typeof(EnumType),
-                typeof(EnumTypeDefinition),
-                typeof(ScalarType),
-                typeof(ScalarTypeDefinition)
-            };
+        Assert.Equal(expected, types);
+    }
 
-            Assert.Equal(expected, types);
-        }
+    [Fact]
+    public void LeafTypes()
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(typeof(ILeafType));
 
-        [Fact]
-        public void LeafTypes()
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(ILeafType));
+            typeof(EnumType),
+            typeof(ScalarType)
+        };
 
-            var expected = new[]
-            {
-                typeof(EnumType),
-                typeof(ScalarType)
-            };
-
-            Assert.Equal(expected, types);
-        }
+        Assert.Equal(expected, types);
+    }
 
 
-        [Fact]
-        public void NullableTypes()
+    [Fact]
+    public void NullableTypes()
+    {
+        var types = ClrTypeUtils.GetImplementedTypes(typeof(INullableType)).DumpTypes();
+
+        var expected = new[]
         {
-            var types = ClrTypeUtils.GetImplementedTypes(typeof(INullableType)).DumpTypes();
+            typeof(EnumType),
+            typeof(InputObjectType),
+            typeof(InterfaceType),
+            typeof(ListType),
+            typeof(ObjectType),
+            typeof(ScalarType),
+            typeof(UnionType)
+        };
 
-            var expected = new[]
-            {
-                typeof(EnumType),
-                typeof(InputObjectType),
-                typeof(InterfaceType),
-                typeof(ListType),
-                typeof(ObjectType),
-                typeof(ScalarType),
-                typeof(UnionType)
-            };
-
-            Assert.Equal(expected, types);
-        }
+        Assert.Equal(expected, types);
     }
 }

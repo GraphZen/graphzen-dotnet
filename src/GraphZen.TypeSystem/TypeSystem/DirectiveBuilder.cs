@@ -8,50 +8,48 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem;
 
-namespace GraphZen.TypeSystem
+public class DirectiveBuilder<TDirective> : IDirectiveBuilder<TDirective>
 {
-    public class DirectiveBuilder<TDirective> : IDirectiveBuilder<TDirective>
+    public DirectiveBuilder(InternalDirectiveBuilder builder)
     {
-        public DirectiveBuilder(InternalDirectiveBuilder builder)
-        {
-            Builder = builder;
-        }
-
-
-        private InternalDirectiveBuilder Builder { get; }
-
-        public IDirectiveBuilder<TDirective> Description(string description)
-        {
-            Builder.Description(description, ConfigurationSource.Explicit);
-            return this;
-        }
-
-        public IDirectiveBuilder<TDirective> Name(string name)
-        {
-            Check.NotNull(name, nameof(name));
-            Builder.Name(name, ConfigurationSource.Explicit);
-            return this;
-        }
-
-        public IDirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations)
-        {
-            Builder.Locations(locations, ConfigurationSource.Explicit);
-            return this;
-        }
-
-        public IDirectiveBuilder<TDirective> Argument(string name, string type,
-            Action<InputValueBuilder>? configurator = null)
-        {
-            Check.NotNull(name, nameof(name));
-            Check.NotNull(type, nameof(type));
-            var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(type);
-            configurator?.Invoke(new InputValueBuilder(argBuilder));
-            return this;
-        }
-
-        public IDirectiveBuilder<TDirective>
-            Argument<TArg>(string name, Action<InputValueBuilder>? configurator = null) =>
-            throw new NotImplementedException();
+        Builder = builder;
     }
+
+
+    private InternalDirectiveBuilder Builder { get; }
+
+    public IDirectiveBuilder<TDirective> Description(string description)
+    {
+        Builder.Description(description, ConfigurationSource.Explicit);
+        return this;
+    }
+
+    public IDirectiveBuilder<TDirective> Name(string name)
+    {
+        Check.NotNull(name, nameof(name));
+        Builder.Name(name, ConfigurationSource.Explicit);
+        return this;
+    }
+
+    public IDirectiveBuilder<TDirective> Locations(params DirectiveLocation[] locations)
+    {
+        Builder.Locations(locations, ConfigurationSource.Explicit);
+        return this;
+    }
+
+    public IDirectiveBuilder<TDirective> Argument(string name, string type,
+        Action<InputValueBuilder>? configurator = null)
+    {
+        Check.NotNull(name, nameof(name));
+        Check.NotNull(type, nameof(type));
+        var argBuilder = Builder.Argument(name, ConfigurationSource.Explicit).Type(type);
+        configurator?.Invoke(new InputValueBuilder(argBuilder));
+        return this;
+    }
+
+    public IDirectiveBuilder<TDirective>
+        Argument<TArg>(string name, Action<InputValueBuilder>? configurator = null) =>
+        throw new NotImplementedException();
 }

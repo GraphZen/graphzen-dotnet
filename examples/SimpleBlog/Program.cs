@@ -10,41 +10,40 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
 
-namespace SimpleBlog
+namespace SimpleBlog;
+
+public class Program
 {
-    public class Program
+    public static int Main(string[] args)
     {
-        public static int Main(string[] args)
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .WriteTo.Seq("http://localhost:5341")
+            .CreateLogger();
+
+        try
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                .WriteTo.Seq("http://localhost:5341")
-                .CreateLogger();
+            var builder = WebApplication.CreateBuilder(args);
+            builder.Host.UseSerilog();
+            builder.Services.AddGraphQLContext();
 
-            try
-            {
-                var builder = WebApplication.CreateBuilder(args);
-                builder.Host.UseSerilog();
-                builder.Services.AddGraphQLContext();
-
-                var app = builder.Build();
-                app.UseRouting();
-                app.MapGraphQL();
-                app.MapGraphQLPlayground();
-                app.Run();
-                return 0;
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "Host terminated unexpectedly");
-                return 1;
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
+            var app = builder.Build();
+            app.UseRouting();
+            app.MapGraphQL();
+            app.MapGraphQLPlayground();
+            app.Run();
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "Host terminated unexpectedly");
+            return 1;
+        }
+        finally
+        {
+            Log.CloseAndFlush();
         }
     }
 }

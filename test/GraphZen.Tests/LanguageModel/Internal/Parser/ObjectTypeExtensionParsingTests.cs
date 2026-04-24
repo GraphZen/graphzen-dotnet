@@ -7,65 +7,62 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class ObjectTypeExtensionParsingTests : ParserTestBase
 {
-    public class ObjectTypeExtensionParsingTests : ParserTestBase
+    [Fact]
+    public void ObjectTypeExtension()
     {
-        [Fact]
-        public void ObjectTypeExtension()
-        {
-            var result = ParseDocument(@"
+        var result = ParseDocument(@"
 extend type Foo {
   seven(argument: [String]): Type
 }");
-            var expected = SyntaxFactory.Document(new ObjectTypeExtensionSyntax(SyntaxFactory.Name("Foo"), null, null,
-                new[]
-                {
-                    new FieldDefinitionSyntax(SyntaxFactory.Name("seven"),
-                        SyntaxFactory.NamedType(SyntaxFactory.Name("Type")), null, new[]
-                        {
-                            new InputValueDefinitionSyntax(SyntaxFactory.Name("argument"),
-                                SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("String"))))
-                        })
-                }));
+        var expected = SyntaxFactory.Document(new ObjectTypeExtensionSyntax(SyntaxFactory.Name("Foo"), null, null,
+            new[]
+            {
+                new FieldDefinitionSyntax(SyntaxFactory.Name("seven"),
+                    SyntaxFactory.NamedType(SyntaxFactory.Name("Type")), null, new[]
+                    {
+                        new InputValueDefinitionSyntax(SyntaxFactory.Name("argument"),
+                            SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("String"))))
+                    })
+            }));
 
 
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
+    }
 
-        [Fact]
-        public void TypeExtensionWithDirective()
-        {
-            var result = ParseDocument("extend type Foo @onType");
-            var expected =
-                SyntaxFactory.Document(new ObjectTypeExtensionSyntax(SyntaxFactory.Name("Foo"), null,
-                    new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onType")) }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+    [Fact]
+    public void TypeExtensionWithDirective()
+    {
+        var result = ParseDocument("extend type Foo @onType");
+        var expected =
+            SyntaxFactory.Document(new ObjectTypeExtensionSyntax(SyntaxFactory.Name("Foo"), null,
+                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onType")) }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
+    }
 
-        [Fact]
-        public void TypeExtensionWithFields()
-        {
-            var result = ParseDocument(@"
+    [Fact]
+    public void TypeExtensionWithFields()
+    {
+        var result = ParseDocument(@"
 extend type Foo {
   seven(argument: [String]): Type
 }");
-            var expected = SyntaxFactory.Document(new ObjectTypeExtensionSyntax(SyntaxFactory.Name("Foo"), null, null,
-                new[]
-                {
-                    new FieldDefinitionSyntax(SyntaxFactory.Name("seven"),
-                        SyntaxFactory.NamedType(SyntaxFactory.Name("Type")), null, new[]
-                        {
-                            SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("argument"),
-                                SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("String"))))
-                        })
-                }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        var expected = SyntaxFactory.Document(new ObjectTypeExtensionSyntax(SyntaxFactory.Name("Foo"), null, null,
+            new[]
+            {
+                new FieldDefinitionSyntax(SyntaxFactory.Name("seven"),
+                    SyntaxFactory.NamedType(SyntaxFactory.Name("Type")), null, new[]
+                    {
+                        SyntaxFactory.InputValueDefinition(SyntaxFactory.Name("argument"),
+                            SyntaxFactory.ListType(SyntaxFactory.NamedType(SyntaxFactory.Name("String"))))
+                    })
+            }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
     }
 }

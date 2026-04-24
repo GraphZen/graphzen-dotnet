@@ -5,17 +5,16 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public interface IEnumValueBuilder : IAnnotableBuilder<IEnumValueBuilder>
 {
-    public interface IEnumValueBuilder : IAnnotableBuilder<IEnumValueBuilder>
-    {
-        IEnumValueBuilder Name(string name);
+    IEnumValueBuilder Name(string name);
 
-        IEnumValueBuilder Description(string? description);
+    IEnumValueBuilder Description(string? description);
 
-        IEnumValueBuilder CustomValue(object value);
+    IEnumValueBuilder CustomValue(object value);
 
-        IEnumValueBuilder Deprecated(bool deprecated = true);
-        IEnumValueBuilder Deprecated(string? reason);
-    }
+    IEnumValueBuilder Deprecated(bool deprecated = true);
+    IEnumValueBuilder Deprecated(string? reason);
 }

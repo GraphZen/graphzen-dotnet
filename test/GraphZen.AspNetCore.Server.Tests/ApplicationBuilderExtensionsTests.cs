@@ -7,14 +7,13 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Xunit;
 
-namespace GraphZen.AspNetCore.Server.Tests
+namespace GraphZen.AspNetCore.Server.Tests;
+
+[NoReorder]
+public class ApplicationBuilderExtensionsTests
 {
-    [NoReorder]
-    public class ApplicationBuilderExtensionsTests
-    {
-        [Fact]
-        public void should_share_IApplicationBuilder_namespace() =>
-            Assert.Equal(typeof(IApplicationBuilder).Namespace,
-                typeof(GraphZenApplicationBuilderExtensions).Namespace);
-    }
+    [Fact]
+    public void should_share_IApplicationBuilder_namespace() =>
+        Assert.Equal(typeof(IApplicationBuilder).Namespace,
+            typeof(GraphZenApplicationBuilderExtensions).Namespace);
 }

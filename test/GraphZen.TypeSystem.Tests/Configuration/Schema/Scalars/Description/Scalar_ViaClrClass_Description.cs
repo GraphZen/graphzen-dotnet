@@ -7,33 +7,32 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Scalars.Description;
+
+// ReSharper disable once InconsistentNaming
+public class Scalar_ViaClrClass_Description : Scalar_Description, ILeafConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Scalar_ViaClrClass_Description : Scalar_Description, ILeafConventionConfigurationFixture
+    public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+
+    public LeafConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(ExampleScalar),
+            DataAnnotationValue = DataAnnotationDescriptionValue
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+        sb.Scalar<ExampleScalar>();
+    }
 
-        public LeafConventionContext GetContext() =>
-            new LeafConventionContext
-            {
-                ParentName = nameof(ExampleScalar),
-                DataAnnotationValue = DataAnnotationDescriptionValue
-            };
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Scalar<ExampleScalar>();
+    }
 
-        [Description(DataAnnotationDescriptionValue)]
-        public class ExampleScalar
-        {
-        }
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Scalar<ExampleScalar>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Scalar<ExampleScalar>();
-        }
+    [Description(DataAnnotationDescriptionValue)]
+    public class ExampleScalar
+    {
     }
 }

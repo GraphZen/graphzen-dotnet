@@ -10,54 +10,53 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Tests.Validation.Rules.SdlValidationHelpers;
 
-namespace GraphZen.Tests.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules;
+
+[NoReorder]
+public class ObjectFieldsMustHaveOutputTypesTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class ObjectFieldsMustHaveOutputTypesTests : ValidationRuleHarness
+    public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.ObjectFieldsMustHaveOutputTypes;
+
+    public static IEnumerable<object[]> GetValidFieldScenarios()
     {
-        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.ObjectFieldsMustHaveOutputTypes;
+        return from outputType in OutputTypes
+            from fieldType in "SomeOutputType".WithModifiers()
+            select new[] { outputType, fieldType };
+    }
 
-        public static IEnumerable<object[]> GetValidFieldScenarios()
-        {
-            return from outputType in OutputTypes
-                   from fieldType in "SomeOutputType".WithModifiers()
-                   select new[] { outputType, fieldType };
-        }
-
-        [Theory]
-        [MemberData(nameof(GetValidFieldScenarios))]
-        public void AcceptsOutputTypeAsAnObjectFieldType(string outputType, string fieldType)
-        {
-            SdlShouldPass($@"
+    [Theory]
+    [MemberData(nameof(GetValidFieldScenarios))]
+    public void AcceptsOutputTypeAsAnObjectFieldType(string outputType, string fieldType)
+    {
+        SdlShouldPass($@"
                {outputType} SomeOutputType
 
                type SomeObject {{
                  someField: {fieldType} 
                }}
             ");
-        }
+    }
 
-        public static IEnumerable<object[]> GetInvalidFieldScenarios()
-        {
-            return from nonOutputType in NonOutputTypes
-                   from fieldType in "SomeInputType".WithModifiers()
-                   select new[] { nonOutputType, fieldType };
-        }
+    public static IEnumerable<object[]> GetInvalidFieldScenarios()
+    {
+        return from nonOutputType in NonOutputTypes
+            from fieldType in "SomeInputType".WithModifiers()
+            select new[] { nonOutputType, fieldType };
+    }
 
 
-        [Theory]
-        [MemberData(nameof(GetInvalidFieldScenarios))]
-        public void RejectsWithRelevantLocationsForNonOutputTypeAsAnObjectFieldType(string nonOutputType,
-            string fieldType)
-        {
-            SdlShouldFail($@"
+    [Theory]
+    [MemberData(nameof(GetInvalidFieldScenarios))]
+    public void RejectsWithRelevantLocationsForNonOutputTypeAsAnObjectFieldType(string nonOutputType,
+        string fieldType)
+    {
+        SdlShouldFail($@"
               {nonOutputType} SomeInputType
               type Query {{
                 field:  {fieldType}
               }}
             ",
-                Error($"The type of Query.field must be Output Type but got: {fieldType}.", (3, 11))
-            );
-        }
+            Error($"The type of Query.field must be Output Type but got: {fieldType}.", (3, 11))
+        );
     }
 }

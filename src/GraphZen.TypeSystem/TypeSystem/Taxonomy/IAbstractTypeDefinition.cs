@@ -5,11 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IAbstractTypeDefinition : INamedTypeDefinition
 {
-    [GraphQLIgnore]
-    public interface IAbstractTypeDefinition : INamedTypeDefinition
-    {
-        TypeResolver<object, GraphQLContext>? ResolveType { get; }
-    }
+    TypeResolver<object, GraphQLContext>? ResolveType { get; }
 }

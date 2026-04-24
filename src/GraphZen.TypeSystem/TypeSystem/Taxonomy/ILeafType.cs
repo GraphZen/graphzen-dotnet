@@ -7,16 +7,15 @@ using GraphZen.Internal;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
-{
-    [GraphQLIgnore]
-    public interface ILeafType : INamedType
-    {
-        Maybe<object> Serialize(object value);
-        bool IsValidValue(string value);
-        bool IsValidLiteral(ValueSyntax value);
+namespace GraphZen.TypeSystem.Taxonomy;
 
-        Maybe<object> ParseValue(object value);
-        Maybe<object> ParseLiteral(ValueSyntax value);
-    }
+[GraphQLIgnore]
+public interface ILeafType : INamedType
+{
+    Maybe<object> Serialize(object value);
+    bool IsValidValue(string value);
+    bool IsValidLiteral(ValueSyntax value);
+
+    Maybe<object> ParseValue(object value);
+    Maybe<object> ParseLiteral(ValueSyntax value);
 }

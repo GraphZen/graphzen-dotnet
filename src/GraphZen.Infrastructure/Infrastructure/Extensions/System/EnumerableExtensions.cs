@@ -10,99 +10,96 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.Infrastructure;
 
-
-namespace GraphZen.Infrastructure
+internal static class EnumerableExtensions
 {
-    internal static class EnumerableExtensions
+    public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(this IEnumerable<TSource> source) =>
+        source.ToList().AsReadOnly();
+
+
+    public static bool TryGetDuplicateValueBy<TSource, TValue>(this IEnumerable<TSource> source,
+        Func<TSource, TValue> selector, [NotNullWhen(true)] out TSource duplicate) where TSource : class
     {
-        public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(this IEnumerable<TSource> source) =>
-            source.ToList().AsReadOnly();
-
-
-        public static bool TryGetDuplicateValueBy<TSource, TValue>(this IEnumerable<TSource> source,
-            Func<TSource, TValue> selector, [NotNullWhen(true)] out TSource duplicate) where TSource : class
+        Check.NotNull(selector, nameof(selector));
+        Check.NotNull(source, nameof(source));
+        var dupeEntry = source.GroupBy(selector).FirstOrDefault(_ =>
         {
-            Check.NotNull(selector, nameof(selector));
-            Check.NotNull(source, nameof(source));
-            var dupeEntry = source.GroupBy(selector).FirstOrDefault(_ =>
-            {
-                Debug.Assert(_ != null, nameof(_) + " != null");
-                return _.Count() > 1;
-            });
-            if (dupeEntry != null)
-            {
-                duplicate = dupeEntry.First();
-                return true;
-            }
-
-            duplicate = default!;
-            return false;
+            Debug.Assert(_ != null, nameof(_) + " != null");
+            return _.Count() > 1;
+        });
+        if (dupeEntry != null)
+        {
+            duplicate = dupeEntry.First();
+            return true;
         }
 
-        public static bool TryGetDuplicateKeyBy<TSource, TKey>(this IEnumerable<TSource> source,
-            Func<TSource, TKey> selector, out TKey duplicate) where TSource : class
-        {
-            Check.NotNull(selector, nameof(selector));
-            if (source.TryGetDuplicateValueBy(selector, out var dupe))
-            {
-                duplicate = selector(dupe);
-                return true;
-            }
+        duplicate = default!;
+        return false;
+    }
 
-            duplicate = default!;
-            return false;
+    public static bool TryGetDuplicateKeyBy<TSource, TKey>(this IEnumerable<TSource> source,
+        Func<TSource, TKey> selector, out TKey duplicate) where TSource : class
+    {
+        Check.NotNull(selector, nameof(selector));
+        if (source.TryGetDuplicateValueBy(selector, out var dupe))
+        {
+            duplicate = selector(dupe);
+            return true;
         }
 
-
-        public static IReadOnlyList<T> ToReadOnlyListWithMutations<T>(this IEnumerable<T> source,
-            Action<List<T>> listConfigurator)
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(listConfigurator, nameof(listConfigurator));
-            var list = source.ToList();
-            listConfigurator(list);
-            return list.AsReadOnly();
-        }
+        duplicate = default!;
+        return false;
+    }
 
 
-        public static IReadOnlyDictionary<TKey, TSource> ToReadOnlyDictionary<TKey, TSource>(
-            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector
-        ) where TKey : notnull
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-            return new ReadOnlyDictionary<TKey, TSource>(source.ToDictionary(keySelector, v => v));
-        }
+    public static IReadOnlyList<T> ToReadOnlyListWithMutations<T>(this IEnumerable<T> source,
+        Action<List<T>> listConfigurator)
+    {
+        Check.NotNull(source, nameof(source));
+        Check.NotNull(listConfigurator, nameof(listConfigurator));
+        var list = source.ToList();
+        listConfigurator(list);
+        return list.AsReadOnly();
+    }
 
 
-        public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue, TSource>(
-            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
-            Func<TSource, TValue> valueSelector) where TKey : notnull
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-            Check.NotNull(valueSelector, nameof(ValueInspector));
-            return new ReadOnlyDictionary<TKey, TValue>(source.ToDictionary(keySelector, valueSelector));
-        }
+    public static IReadOnlyDictionary<TKey, TSource> ToReadOnlyDictionary<TKey, TSource>(
+        this IEnumerable<TSource> source, Func<TSource, TKey> keySelector
+    ) where TKey : notnull
+    {
+        Check.NotNull(source, nameof(source));
+        Check.NotNull(keySelector, nameof(keySelector));
+        return new ReadOnlyDictionary<TKey, TSource>(source.ToDictionary(keySelector, v => v));
+    }
 
 
-        public static IReadOnlyDictionary<TKey, TSource> ToReadOnlyDictionaryIgnoringDuplicates<TKey, TSource>(
-            this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) where TKey : notnull
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(keySelector, nameof(keySelector));
-
-            // ReSharper disable once PossibleNullReferenceException
-
-            var dict = source.GroupBy(keySelector).ToDictionary(_ => _.Key, _ => _.First());
-            return new ReadOnlyDictionary<TKey, TSource>(dict);
-        }
+    public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue, TSource>(
+        this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
+        Func<TSource, TValue> valueSelector) where TKey : notnull
+    {
+        Check.NotNull(source, nameof(source));
+        Check.NotNull(keySelector, nameof(keySelector));
+        Check.NotNull(valueSelector, nameof(ValueInspector));
+        return new ReadOnlyDictionary<TKey, TValue>(source.ToDictionary(keySelector, valueSelector));
+    }
 
 
-        internal static IEnumerable<TSource> ToEnumerable<TSource>(this TSource value)
-        {
-            yield return value;
-        }
+    public static IReadOnlyDictionary<TKey, TSource> ToReadOnlyDictionaryIgnoringDuplicates<TKey, TSource>(
+        this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) where TKey : notnull
+    {
+        Check.NotNull(source, nameof(source));
+        Check.NotNull(keySelector, nameof(keySelector));
+
+        // ReSharper disable once PossibleNullReferenceException
+
+        var dict = source.GroupBy(keySelector).ToDictionary(_ => _.Key, _ => _.First());
+        return new ReadOnlyDictionary<TKey, TSource>(dict);
+    }
+
+
+    internal static IEnumerable<TSource> ToEnumerable<TSource>(this TSource value)
+    {
+        yield return value;
     }
 }

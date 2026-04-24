@@ -6,13 +6,12 @@ using System.Reflection;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
-{
-    [GraphQLIgnore]
-    public interface IArgumentDefinition : IInputValueDefinition
-    {
-        new IArgumentsDefinition DeclaringMember { get; }
+namespace GraphZen.TypeSystem.Taxonomy;
 
-        new ParameterInfo? ClrInfo { get; }
-    }
+[GraphQLIgnore]
+public interface IArgumentDefinition : IInputValueDefinition
+{
+    new IArgumentsDefinition DeclaringMember { get; }
+
+    new ParameterInfo? ClrInfo { get; }
 }

@@ -9,62 +9,61 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.Tests.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules;
+
+public class ExpectedError
 {
-    public class ExpectedError
+    public ExpectedError(GraphQLServerError error) : this(error.Message, error.Locations, error.Path)
     {
-        public ExpectedError(GraphQLServerError error) : this(error.Message, error.Locations, error.Path)
+    }
+
+
+    public ExpectedError(string message, IReadOnlyList<SourceLocation>? locations, IReadOnlyList<object>? path)
+    {
+        Message = message;
+        Locations = locations != null && locations.Any() ? locations : null;
+        Path = path;
+    }
+
+    public string Message { get; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IReadOnlyList<SourceLocation>? Locations { get; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IReadOnlyList<object>? Path { get; }
+
+
+    protected bool Equals(ExpectedError other) =>
+        string.Equals(Message, other.Message) &&
+        ((Locations == null && other.Locations == null) ||
+         // ReSharper disable once AssignNullToNotNullAttribute
+         Locations!.SequenceEqual(other.Locations!))
+        &&
+        ((Path == null && other.Path == null) ||
+         // ReSharper disable once AssignNullToNotNullAttribute
+         Path!.SequenceEqual(other.Path!));
+
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+
+        if (ReferenceEquals(this, obj)) return true;
+
+        if (obj.GetType() != GetType()) return false;
+
+        return Equals((ExpectedError)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
         {
-        }
-
-
-        public ExpectedError(string message, IReadOnlyList<SourceLocation>? locations, IReadOnlyList<object>? path)
-        {
-            Message = message;
-            Locations = locations != null && locations.Any() ? locations : null;
-            Path = path;
-        }
-
-        public string Message { get; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IReadOnlyList<SourceLocation>? Locations { get; }
-
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IReadOnlyList<object>? Path { get; }
-
-
-        protected bool Equals(ExpectedError other) =>
-            string.Equals(Message, other.Message) &&
-            (Locations == null && other.Locations == null ||
-             // ReSharper disable once AssignNullToNotNullAttribute
-             Locations!.SequenceEqual(other.Locations!))
-            &&
-            (Path == null && other.Path == null ||
-             // ReSharper disable once AssignNullToNotNullAttribute
-             Path!.SequenceEqual(other.Path!));
-
-
-        public override bool Equals(object? obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-
-            if (ReferenceEquals(this, obj)) return true;
-
-            if (obj.GetType() != GetType()) return false;
-
-            return Equals((ExpectedError)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = Message.GetHashCode();
-                hashCode = (hashCode * 397) ^ (Locations != null ? Locations.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (Path != null ? Path.GetHashCode() : 0);
-                return hashCode;
-            }
+            var hashCode = Message.GetHashCode();
+            hashCode = (hashCode * 397) ^ (Locations != null ? Locations.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (Path != null ? Path.GetHashCode() : 0);
+            return hashCode;
         }
     }
 }

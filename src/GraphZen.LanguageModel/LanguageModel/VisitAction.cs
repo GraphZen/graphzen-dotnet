@@ -5,16 +5,13 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+public abstract class VisitAction
 {
-    public abstract class VisitAction
-    {
-        public static VisitAction Break { get; } = new Break();
-        public static VisitAction Continue { get; } = new ContinueAction();
-        public static VisitAction Skip { get; } = new Skip();
+    public static VisitAction Break { get; } = new Break();
+    public static VisitAction Continue { get; } = new ContinueAction();
+    public static VisitAction Skip { get; } = new Skip();
 
-        public static implicit operator VisitAction(bool value) => value ? Continue : Skip;
-    }
+    public static implicit operator VisitAction(bool value) => value ? Continue : Skip;
 }

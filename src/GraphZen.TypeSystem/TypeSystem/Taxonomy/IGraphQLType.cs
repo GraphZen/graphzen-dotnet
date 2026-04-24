@@ -5,11 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLName("__Type")]
+public interface IGraphQLType : IGraphQLTypeReference, ISyntaxConvertable
 {
-    [GraphQLName("__Type")]
-    public interface IGraphQLType : IGraphQLTypeReference, ISyntaxConvertable
-    {
-        TypeKind Kind { get; }
-    }
+    TypeKind Kind { get; }
 }

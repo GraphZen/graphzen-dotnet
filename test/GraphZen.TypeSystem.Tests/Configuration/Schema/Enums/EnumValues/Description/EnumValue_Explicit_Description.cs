@@ -6,10 +6,9 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Enums.EnumValues.Description;
+
+// ReSharper disable once InconsistentNaming
+public class EnumValue_Explicit_Description : EnumValue_Description, ILeafExplicitConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class EnumValue_Explicit_Description : EnumValue_Description, ILeafExplicitConfigurationFixture
-    {
-    }
 }

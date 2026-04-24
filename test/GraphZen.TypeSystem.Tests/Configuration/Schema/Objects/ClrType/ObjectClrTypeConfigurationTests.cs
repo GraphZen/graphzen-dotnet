@@ -6,43 +6,42 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Objects.ClrType
+namespace GraphZen.TypeSystem.Tests.Configuration.Objects.ClrType;
+
+[NoReorder]
+public class ObjectClrTypeConfigurationTests
 {
-    [NoReorder]
-    public class ObjectClrTypeConfigurationTests
+    public const string DataAnnotationName = nameof(DataAnnotationName);
+
+    public class ExampleObject
     {
-        public const string DataAnnotationName = nameof(DataAnnotationName);
+    }
 
-        public class ExampleObject
+    [Fact]
+    public void object_added_explicitly_subsequently_referenced_by_matching_clr_type_should_have_clr_type_set()
+    {
+        var schema = Schema.Create(sb =>
         {
-        }
+            sb.Object(nameof(ExampleObject));
+            var def = sb.GetDefinition().GetObject(nameof(ExampleObject));
+            sb.Object<ExampleObject>();
+            Assert.Equal(typeof(ExampleObject), def.ClrType);
+        });
+        Assert.Equal(typeof(ExampleObject), schema.GetObject<ExampleObject>().ClrType);
+    }
 
-        [Fact]
-        public void object_added_explicitly_subsequently_referenced_by_matching_clr_type_should_have_clr_type_set()
+    [Fact]
+    public void
+        object_added_explicitly_subsequently_referenced_by_matching_clr_type_via_field_should_have_clr_type_set()
+    {
+        var schema = Schema.Create(sb =>
         {
-            var schema = Schema.Create(sb =>
-            {
-                sb.Object(nameof(ExampleObject));
-                var def = sb.GetDefinition().GetObject(nameof(ExampleObject));
-                sb.Object<ExampleObject>();
-                Assert.Equal(typeof(ExampleObject), def.ClrType);
-            });
-            Assert.Equal(typeof(ExampleObject), schema.GetObject<ExampleObject>().ClrType);
-        }
-
-        [Fact]
-        public void
-            object_added_explicitly_subsequently_referenced_by_matching_clr_type_via_field_should_have_clr_type_set()
-        {
-            var schema = Schema.Create(sb =>
-            {
-                sb.Object(nameof(ExampleObject));
-                sb.Object("Object").Field<ExampleObject>("field");
-                var def = sb.GetDefinition().GetObject(nameof(ExampleObject));
-                sb.Object<ExampleObject>();
-                Assert.Equal(typeof(ExampleObject), def.ClrType);
-            });
-            Assert.Equal(typeof(ExampleObject), schema.GetObject<ExampleObject>().ClrType);
-        }
+            sb.Object(nameof(ExampleObject));
+            sb.Object("Object").Field<ExampleObject>("field");
+            var def = sb.GetDefinition().GetObject(nameof(ExampleObject));
+            sb.Object<ExampleObject>();
+            Assert.Equal(typeof(ExampleObject), def.ClrType);
+        });
+        Assert.Equal(typeof(ExampleObject), schema.GetObject<ExampleObject>().ClrType);
     }
 }

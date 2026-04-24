@@ -6,13 +6,12 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
-{
-    public interface IGraphQLContextOptions
-    {
-        IEnumerable<IGraphQLContextOptionsExtension> Extensions { get; }
+namespace GraphZen.Infrastructure;
 
-        TExtension? FindExtension<TExtension>()
-            where TExtension : class, IGraphQLContextOptionsExtension;
-    }
+public interface IGraphQLContextOptions
+{
+    IEnumerable<IGraphQLContextOptionsExtension> Extensions { get; }
+
+    TExtension? FindExtension<TExtension>()
+        where TExtension : class, IGraphQLContextOptionsExtension;
 }

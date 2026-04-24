@@ -5,11 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMutableArgumentDefinition : IArgumentDefinition, IMutableInputValueDefinition
 {
-    [GraphQLIgnore]
-    public interface IMutableArgumentDefinition : IArgumentDefinition, IMutableInputValueDefinition
-    {
-        new IMutableArgumentsDefinition DeclaringMember { get; }
-    }
+    new IMutableArgumentsDefinition DeclaringMember { get; }
 }

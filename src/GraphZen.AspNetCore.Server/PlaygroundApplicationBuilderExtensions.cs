@@ -9,28 +9,27 @@ using Microsoft.Extensions.FileProviders;
 
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.AspNetCore.Builder
+namespace Microsoft.AspNetCore.Builder;
+
+public static class PlaygroundApplicationBuilderExtensions
 {
-    public static class PlaygroundApplicationBuilderExtensions
+    [UsedImplicitly]
+    public static void UseGraphQLPlayground(this IApplicationBuilder app)
     {
-        [UsedImplicitly]
-        public static void UseGraphQLPlayground(this IApplicationBuilder app)
+        var shared = new SharedOptions
         {
-            var shared = new SharedOptions
-            {
-                RequestPath = ""
-            };
-            var defaultFileOptions = new DefaultFilesOptions(shared);
-            // ReSharper disable once PossibleNullReferenceException
-            defaultFileOptions.DefaultFileNames.Clear();
-            defaultFileOptions.DefaultFileNames.Add("playground.html");
-            app.UseDefaultFiles(defaultFileOptions);
-            var staticFileOptions = new StaticFileOptions(shared)
-            {
-                FileProvider = new ManifestEmbeddedFileProvider(typeof(PlaygroundApplicationBuilderExtensions).Assembly,
-                    "StaticFiles")
-            };
-            app.UseStaticFiles(staticFileOptions);
-        }
+            RequestPath = ""
+        };
+        var defaultFileOptions = new DefaultFilesOptions(shared);
+        // ReSharper disable once PossibleNullReferenceException
+        defaultFileOptions.DefaultFileNames.Clear();
+        defaultFileOptions.DefaultFileNames.Add("playground.html");
+        app.UseDefaultFiles(defaultFileOptions);
+        var staticFileOptions = new StaticFileOptions(shared)
+        {
+            FileProvider = new ManifestEmbeddedFileProvider(typeof(PlaygroundApplicationBuilderExtensions).Assembly,
+                "StaticFiles")
+        };
+        app.UseStaticFiles(staticFileOptions);
     }
 }

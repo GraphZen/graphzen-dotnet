@@ -5,31 +5,28 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+public abstract partial class GraphQLSyntaxVisitor
 {
-    public abstract partial class GraphQLSyntaxVisitor
+    public virtual void Visit(SyntaxNode node)
     {
-        public virtual void Visit(SyntaxNode node)
-        {
-        }
-
-        public virtual void OnEnter(SyntaxNode node)
-        {
-        }
-
-        public virtual void OnLeave(SyntaxNode node)
-        {
-        }
     }
 
-    public abstract partial class GraphQLSyntaxVisitor<TResult>
+    public virtual void OnEnter(SyntaxNode node)
     {
-        public virtual TResult Visit(SyntaxNode node) => default!;
-
-        public virtual TResult OnEnter(SyntaxNode node) => default!;
-
-        public virtual TResult OnLeave(SyntaxNode node) => default!;
     }
+
+    public virtual void OnLeave(SyntaxNode node)
+    {
+    }
+}
+
+public abstract partial class GraphQLSyntaxVisitor<TResult>
+{
+    public virtual TResult Visit(SyntaxNode node) => default!;
+
+    public virtual TResult OnEnter(SyntaxNode node) => default!;
+
+    public virtual TResult OnLeave(SyntaxNode node) => default!;
 }

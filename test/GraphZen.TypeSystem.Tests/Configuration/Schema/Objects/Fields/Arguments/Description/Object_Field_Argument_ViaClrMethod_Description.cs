@@ -8,38 +8,36 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Arguments.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Arguments.Description;
+
+// ReSharper disable once InconsistentNaming
+public class Object_Field_Argument_ViaClrMethod_Description : Object_Field_Argument_Description,
+    ILeafConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Object_Field_Argument_ViaClrMethod_Description : Object_Field_Argument_Description,
-        ILeafConventionConfigurationFixture
+    public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+
+    public LeafConventionContext GetContext() =>
+        new()
+        {
+            ParentName = "argName",
+            DataAnnotationValue = DataAnnotationDescriptionValue
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        [GraphQLName(GreatGrandparent)]
-        public class ExampleObject
-        {
-            [GraphQLName(Grandparent)]
-            public string ExampleField([Description(DataAnnotationDescriptionValue)]
-                string argName) =>
-                throw new NotImplementedException();
-        }
+        sb.Object<ExampleObject>();
+    }
 
-        public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Object<ExampleObject>();
+    }
 
-        public LeafConventionContext GetContext() =>
-            new LeafConventionContext
-            {
-                ParentName = "argName",
-                DataAnnotationValue = DataAnnotationDescriptionValue
-            };
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Object<ExampleObject>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Object<ExampleObject>();
-        }
+    [GraphQLName(GreatGrandparent)]
+    public class ExampleObject
+    {
+        [GraphQLName(Grandparent)]
+        public string ExampleField([Description(DataAnnotationDescriptionValue)] string argName) =>
+            throw new NotImplementedException();
     }
 }

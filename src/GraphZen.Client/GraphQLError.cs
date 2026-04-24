@@ -5,16 +5,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
-{
-    public class GraphQLError
-    {
-        public GraphQLError(string message)
-        {
-            Check.NotNull(message, nameof(message));
-            Message = message;
-        }
+namespace GraphZen;
 
-        public string Message { get; }
+public class GraphQLError
+{
+    public GraphQLError(string message)
+    {
+        Check.NotNull(message, nameof(message));
+        Message = message;
     }
+
+    public string Message { get; }
 }

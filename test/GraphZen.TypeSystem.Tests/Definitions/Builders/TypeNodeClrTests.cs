@@ -5,14 +5,12 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+[NoReorder]
+public class TypeNodeClrTests
 {
-    [NoReorder]
-    public class TypeNodeClrTests
+    public class Foo
     {
-        public class Foo
-        {
-        }
     }
 }

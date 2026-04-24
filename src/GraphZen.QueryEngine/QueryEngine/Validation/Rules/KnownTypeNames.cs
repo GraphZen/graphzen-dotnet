@@ -8,40 +8,39 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.QueryEngine.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules;
+
+public class KnownTypeNames : QueryValidationRuleVisitor
 {
-    public class KnownTypeNames : QueryValidationRuleVisitor
+    public KnownTypeNames(QueryValidationContext context) : base(context)
     {
-        public KnownTypeNames(QueryValidationContext context) : base(context)
+    }
+
+    public static string UnknownTypeMessage(string typeName, IReadOnlyList<string> suggestedTypes)
+    {
+        var message = $"Unknown type \"{typeName}\".";
+        if (suggestedTypes.Any()) return $"{message} Did you mean {suggestedTypes.QuotedOrList()}?";
+
+        return message;
+    }
+
+    public override VisitAction EnterObjectTypeDefinition(ObjectTypeDefinitionSyntax node) => false;
+
+    public override VisitAction EnterInterfaceTypeDefinition(InterfaceTypeDefinitionSyntax node) => false;
+
+    public override VisitAction EnterUnionTypeDefinition(UnionTypeDefinitionSyntax node) => false;
+
+    public override VisitAction EnterInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) => false;
+
+    public override VisitAction EnterNamedType(NamedTypeSyntax node)
+    {
+        var typeName = node.Name.Value;
+        if (!Context.Schema.Types.ContainsKey(typeName))
         {
+            var suggestions = StringUtils.GetSuggestionList(typeName, Context.Schema.Types.Keys);
+            ReportError(UnknownTypeMessage(typeName, suggestions), node);
         }
 
-        public static string UnknownTypeMessage(string typeName, IReadOnlyList<string> suggestedTypes)
-        {
-            var message = $"Unknown type \"{typeName}\".";
-            if (suggestedTypes.Any()) return $"{message} Did you mean {suggestedTypes.QuotedOrList()}?";
-
-            return message;
-        }
-
-        public override VisitAction EnterObjectTypeDefinition(ObjectTypeDefinitionSyntax node) => false;
-
-        public override VisitAction EnterInterfaceTypeDefinition(InterfaceTypeDefinitionSyntax node) => false;
-
-        public override VisitAction EnterUnionTypeDefinition(UnionTypeDefinitionSyntax node) => false;
-
-        public override VisitAction EnterInputObjectTypeDefinition(InputObjectTypeDefinitionSyntax node) => false;
-
-        public override VisitAction EnterNamedType(NamedTypeSyntax node)
-        {
-            var typeName = node.Name.Value;
-            if (!Context.Schema.Types.ContainsKey(typeName))
-            {
-                var suggestions = StringUtils.GetSuggestionList(typeName, Context.Schema.Types.Keys);
-                ReportError(UnknownTypeMessage(typeName, suggestions), node);
-            }
-
-            return VisitAction.Continue;
-        }
+        return VisitAction.Continue;
     }
 }

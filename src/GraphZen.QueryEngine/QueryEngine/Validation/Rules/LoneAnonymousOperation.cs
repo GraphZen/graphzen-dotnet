@@ -7,30 +7,29 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-namespace GraphZen.QueryEngine.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules;
+
+public class LoneAnonymousOperation : QueryValidationRuleVisitor
 {
-    public class LoneAnonymousOperation : QueryValidationRuleVisitor
+    public const string AnonymousOperationNotAloneMessage =
+        "This anonymous operation must be the only defined operation.";
+
+    private int _operationCount;
+
+    public LoneAnonymousOperation(QueryValidationContext context) : base(context)
     {
-        public const string AnonymousOperationNotAloneMessage =
-            "This anonymous operation must be the only defined operation.";
+    }
 
-        private int _operationCount;
+    public override VisitAction EnterDocument(DocumentSyntax node)
+    {
+        _operationCount = node.Definitions.OfType<OperationDefinitionSyntax>().Count();
+        return VisitAction.Continue;
+    }
 
-        public LoneAnonymousOperation(QueryValidationContext context) : base(context)
-        {
-        }
+    public override VisitAction EnterOperationDefinition(OperationDefinitionSyntax node)
+    {
+        if (node.Name == null && _operationCount > 1) ReportError(AnonymousOperationNotAloneMessage, node);
 
-        public override VisitAction EnterDocument(DocumentSyntax node)
-        {
-            _operationCount = node.Definitions.OfType<OperationDefinitionSyntax>().Count();
-            return VisitAction.Continue;
-        }
-
-        public override VisitAction EnterOperationDefinition(OperationDefinitionSyntax node)
-        {
-            if (node.Name == null && _operationCount > 1) ReportError(AnonymousOperationNotAloneMessage, node);
-
-            return VisitAction.Continue;
-        }
+        return VisitAction.Continue;
     }
 }

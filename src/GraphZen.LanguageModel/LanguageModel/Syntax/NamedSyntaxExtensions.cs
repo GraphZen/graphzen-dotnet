@@ -7,34 +7,31 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+public static class NamedSyntaxExtensions
 {
-    public static class NamedSyntaxExtensions
+    public static IEnumerable<TNode> OrderByName<TNode>(
+        this IEnumerable<TNode> source) where TNode : SyntaxNode, INamedSyntax
     {
-        public static IEnumerable<TNode> OrderByName<TNode>(
-            this IEnumerable<TNode> source) where TNode : SyntaxNode, INamedSyntax
-        {
-            Check.NotNull(source, nameof(source));
-            return source.OrderBy(_ => _.Name.Value);
-        }
+        Check.NotNull(source, nameof(source));
+        return source.OrderBy(_ => _.Name.Value);
+    }
 
-        public static TNode? FindByName<TNode>(
-            this IEnumerable<TNode> source, string name)
-            where TNode : SyntaxNode, INamedSyntax
-        {
-            Check.NotNull(source, nameof(source));
-            return source.SingleOrDefault(_ => _.Name.Value == name);
-        }
+    public static TNode? FindByName<TNode>(
+        this IEnumerable<TNode> source, string name)
+        where TNode : SyntaxNode, INamedSyntax
+    {
+        Check.NotNull(source, nameof(source));
+        return source.SingleOrDefault(_ => _.Name.Value == name);
+    }
 
-        public static bool TryFindByName<TNode>(
-            this IEnumerable<TNode> source, string name, out TNode? result)
-            where TNode : SyntaxNode, INamedSyntax
-        {
-            Check.NotNull(source, nameof(source));
-            result = source.SingleOrDefault(_ => _.Name.Value == name);
-            return result != null;
-        }
+    public static bool TryFindByName<TNode>(
+        this IEnumerable<TNode> source, string name, out TNode? result)
+        where TNode : SyntaxNode, INamedSyntax
+    {
+        Check.NotNull(source, nameof(source));
+        result = source.SingleOrDefault(_ => _.Name.Value == name);
+        return result != null;
     }
 }

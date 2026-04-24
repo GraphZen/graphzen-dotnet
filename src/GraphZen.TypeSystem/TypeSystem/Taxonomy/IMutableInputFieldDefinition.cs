@@ -5,11 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMutableInputFieldDefinition : IInputFieldDefinition, IMutableInputValueDefinition
 {
-    [GraphQLIgnore]
-    public interface IMutableInputFieldDefinition : IInputFieldDefinition, IMutableInputValueDefinition
-    {
-        new InputObjectTypeDefinition DeclaringMember { get; }
-    }
+    new InputObjectTypeDefinition DeclaringMember { get; }
 }

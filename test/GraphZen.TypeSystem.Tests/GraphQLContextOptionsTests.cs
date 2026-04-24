@@ -6,26 +6,25 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.TypeSystem.Tests
+namespace GraphZen.TypeSystem.Tests;
+
+public class GraphQLContextOptionsTests
 {
-    public class GraphQLContextOptionsTests
+    [Fact]
+    public void it_should_be_created_with_default_context()
     {
-        public class CustomContext : GraphQLContext
-        {
-        }
+        var sut = new GraphQLContextOptions<GraphQLContext>();
+        Assert.NotNull(sut);
+    }
 
-        [Fact]
-        public void it_should_be_created_with_default_context()
-        {
-            var sut = new GraphQLContextOptions<GraphQLContext>();
-            Assert.NotNull(sut);
-        }
+    [Fact]
+    public void it_should_be_created_with_custom_context()
+    {
+        var sut = new GraphQLContextOptions<CustomContext>();
+        Assert.NotNull(sut);
+    }
 
-        [Fact]
-        public void it_should_be_created_with_custom_context()
-        {
-            var sut = new GraphQLContextOptions<CustomContext>();
-            Assert.NotNull(sut);
-        }
+    public class CustomContext : GraphQLContext
+    {
     }
 }

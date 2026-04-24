@@ -12,29 +12,27 @@ using GraphZen.TypeSystem;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 
+namespace GraphZen.QueryEngine.Validation;
 
-namespace GraphZen.QueryEngine.Validation
+public class QueryValidator : IQueryValidator
 {
-    public class QueryValidator : IQueryValidator
+    public QueryValidator(IReadOnlyCollection<ValidationRule>? rules = null)
     {
-        public QueryValidator(IReadOnlyCollection<ValidationRule>? rules = null)
-        {
-            Rules = rules ?? QueryValidationRules.SpecifiedQueryRules;
-        }
+        Rules = rules ?? QueryValidationRules.SpecifiedQueryRules;
+    }
 
 
-        private IReadOnlyCollection<ValidationRule> Rules { get; }
+    private IReadOnlyCollection<ValidationRule> Rules { get; }
 
-        public IReadOnlyCollection<GraphQLServerError> Validate(Schema schema, DocumentSyntax query)
-        {
-            GraphQLSyntaxWalker? validationVisitor = null;
-            var validationContext = new QueryValidationContext(schema, query, new TypeInfo(schema),
-                // ReSharper disable once AccessToModifiedClosure
-                new Lazy<GraphQLSyntaxWalker?>(() => validationVisitor));
-            var ruleVisitors = Rules.Select(rule => rule(validationContext)).ToArray();
-            validationVisitor = new ParallelValidationVisitor(validationContext, ruleVisitors);
-            validationVisitor.Visit(query);
-            return validationContext.GetErrors();
-        }
+    public IReadOnlyCollection<GraphQLServerError> Validate(Schema schema, DocumentSyntax query)
+    {
+        GraphQLSyntaxWalker? validationVisitor = null;
+        var validationContext = new QueryValidationContext(schema, query, new TypeInfo(schema),
+            // ReSharper disable once AccessToModifiedClosure
+            new Lazy<GraphQLSyntaxWalker?>(() => validationVisitor));
+        var ruleVisitors = Rules.Select(rule => rule(validationContext)).ToArray();
+        validationVisitor = new ParallelValidationVisitor(validationContext, ruleVisitors);
+        validationVisitor.Visit(query);
+        return validationContext.GetErrors();
     }
 }

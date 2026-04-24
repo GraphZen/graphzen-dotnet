@@ -6,11 +6,10 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMutableDefinition : IMemberDefinition
 {
-    [GraphQLIgnore]
-    public interface IMutableDefinition : IMemberDefinition
-    {
-        ConfigurationSource GetConfigurationSource();
-    }
+    ConfigurationSource GetConfigurationSource();
 }

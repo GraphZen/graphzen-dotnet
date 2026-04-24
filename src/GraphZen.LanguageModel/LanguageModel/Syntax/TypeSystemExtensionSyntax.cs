@@ -5,18 +5,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+/// <summary>
+///     Type system extension
+///     http://facebook.github.io/graphql/June2018/#TypeSystemExtension
+/// </summary>
+public abstract class TypeSystemExtensionSyntax : DefinitionSyntax
 {
-    /// <summary>
-    ///     Type system extension
-    ///     http://facebook.github.io/graphql/June2018/#TypeSystemExtension
-    /// </summary>
-    public abstract class TypeSystemExtensionSyntax : DefinitionSyntax
+    protected TypeSystemExtensionSyntax(SyntaxLocation? location) : base(location)
     {
-        protected TypeSystemExtensionSyntax(SyntaxLocation? location) : base(location)
-        {
-        }
     }
 }

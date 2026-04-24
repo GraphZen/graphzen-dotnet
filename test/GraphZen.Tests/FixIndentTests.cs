@@ -6,16 +6,14 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests;
 
-
-namespace GraphZen.Tests
+public class FixIndentTests
 {
-    public class FixIndentTests
+    [Fact]
+    public void RemovesIndentationInTypicalUsage()
     {
-        [Fact]
-        public void RemovesIndentationInTypicalUsage()
-        {
-            var result = @"
+        var result = @"
                 type Query {
                   me: User
                 }
@@ -27,36 +25,35 @@ namespace GraphZen.Tests
             ".Dedent();
 
 
-            var expected = new[]
-            {
-                "type Query {",
-                "  me: User",
-                "}",
-                "",
-                "type User {",
-                "  id: ID",
-                "  name: String",
-                "}",
-                ""
-            }.ToMultiLineString();
-
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void RemovesOnlyFirstLevelOfIndentation()
+        var expected = new[]
         {
-            var result = @"
+            "type Query {",
+            "  me: User",
+            "}",
+            "",
+            "type User {",
+            "  id: ID",
+            "  name: String",
+            "}",
+            ""
+        }.ToMultiLineString();
+
+        Assert.Equal(expected, result);
+    }
+
+    [Fact]
+    public void RemovesOnlyFirstLevelOfIndentation()
+    {
+        var result = @"
             qux
               quux
                 quuux
                   quuuux".Dedent();
 
-            var expected = new[]
-            {
-                "qux", "  quux", "    quuux", "      quuuux"
-            }.ToMultiLineString();
-            Assert.Equal(expected, result);
-        }
+        var expected = new[]
+        {
+            "qux", "  quux", "    quuux", "      quuuux"
+        }.ToMultiLineString();
+        Assert.Equal(expected, result);
     }
 }

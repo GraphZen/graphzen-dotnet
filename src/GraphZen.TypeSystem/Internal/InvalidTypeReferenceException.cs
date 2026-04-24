@@ -6,12 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Internal
+namespace GraphZen.Internal;
+
+public class InvalidTypeReferenceException : Exception
 {
-    public class InvalidTypeReferenceException : Exception
+    public InvalidTypeReferenceException(string message, Exception innerException) : base(message, innerException)
     {
-        public InvalidTypeReferenceException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
     }
 }

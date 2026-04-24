@@ -7,29 +7,27 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+[NoReorder]
+[SuppressMessage("ReSharper", "UnusedMember.Local")]
+public class EnumTypeBuilderTests
 {
-    [NoReorder]
-    [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class EnumTypeBuilderTests
+    private enum FooEnum
     {
-        private enum FooEnum
-        {
-            [Description("bar desc")] Bar,
-            [GraphQLName("customBaz")] Baz
-        }
+        [Description("bar desc")] Bar,
+        [GraphQLName("customBaz")] Baz
+    }
 
 
-        [Fact]
-        public void EnumCreatedWithClrTypeInfersValues()
-        {
-            var schema = Schema.Create(sb => sb.Enum<FooEnum>());
-            var values = schema.FindType<EnumType>(typeof(FooEnum))!.GetValues().ToReadOnlyList();
-            Assert.Equal(2, values.Count);
-            Assert.Equal(nameof(FooEnum.Bar), values[0].Name);
-            Assert.Equal("bar desc", values[0].Description);
-            Assert.Equal("customBaz", values[1].Name);
-        }
+    [Fact]
+    public void EnumCreatedWithClrTypeInfersValues()
+    {
+        var schema = Schema.Create(sb => sb.Enum<FooEnum>());
+        var values = schema.FindType<EnumType>(typeof(FooEnum))!.GetValues().ToReadOnlyList();
+        Assert.Equal(2, values.Count);
+        Assert.Equal(nameof(FooEnum.Bar), values[0].Name);
+        Assert.Equal("bar desc", values[0].Description);
+        Assert.Equal("customBaz", values[1].Name);
     }
 }

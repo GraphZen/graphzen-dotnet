@@ -7,21 +7,21 @@ using System.Text;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.CodeGen
+namespace GraphZen.CodeGen;
+
+public static class CodeGenTasks
 {
-    public static class CodeGenTasks
+    public static void RunCodeGen()
     {
-        public static void RunCodeGen()
-        {
-            GenerateTypeSystemDictionaryAccessors();
-        }
+        GenerateTypeSystemDictionaryAccessors();
+    }
 
 
-        public static void GenerateTypeSystemDictionaryAccessors()
-        {
-            var csharp = new StringBuilder();
+    public static void GenerateTypeSystemDictionaryAccessors()
+    {
+        var csharp = new StringBuilder();
 
-            csharp.Append(@"
+        csharp.Append(@"
 using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
@@ -36,64 +36,63 @@ namespace GraphZen.TypeSystem {
 ");
 
 
-            var fieldDefinitionAccessors = new List<(string containerType, string valueType)>
-            {
-                ("InterfaceTypeDefinition", "FieldDefinition"),
-                ("ObjectTypeDefinition", "FieldDefinition"),
-                ("InputObjectTypeDefinition", "InputFieldDefinition"),
-                ("FieldsDefinition", "FieldDefinition")
-            };
+        var fieldDefinitionAccessors = new List<(string containerType, string valueType)>
+        {
+            ("InterfaceTypeDefinition", "FieldDefinition"),
+            ("ObjectTypeDefinition", "FieldDefinition"),
+            ("InputObjectTypeDefinition", "InputFieldDefinition"),
+            ("FieldsDefinition", "FieldDefinition")
+        };
 
-            foreach (var (containerType, valueType) in fieldDefinitionAccessors)
-            {
-                csharp.AppendDictionaryAccessor(
-                    containerType, "Fields", "name", "string", "Field", valueType);
-            }
-
-            var fieldAccessors = new List<(string containerType, string valueType)>
-            {
-                ("InterfaceType", "Field"),
-                ("ObjectType", "Field"),
-                ("InputObjectType", "InputField")
-            };
-
-            foreach (var (containerType, valueType) in fieldAccessors)
-            {
-                csharp.AppendDictionaryAccessor(containerType, "Fields", "name", "string", "Field", valueType);
-            }
-
-            csharp.AppendDictionaryAccessor("EnumTypeDefinition", "Values", "name", "string", "Value",
-                "EnumValueDefinition");
-            csharp.AppendDictionaryAccessor("EnumType", "Values", "name", "string", "Value", "EnumValue");
-            csharp.AppendDictionaryAccessor("EnumType", "ValuesByValue", "value", "object", "Value", "EnumValue");
-
-
-            var argumentDefinitionAccessors = new List<(string containerType, string valueType)>
-            {
-                ("FieldDefinition", "ArgumentDefinition"),
-                ("DirectiveDefinition", "ArgumentDefinition")
-            };
-
-            foreach (var (containerType, valueType) in argumentDefinitionAccessors)
-            {
-                csharp.AppendDictionaryAccessor(
-                    containerType, "Arguments", "name", "string", "Argument", valueType);
-            }
-
-            var argumentAccessors = new List<(string containerType, string valueType)>
-            {
-                ("Field", "Argument"),
-                ("IArguments", "Argument")
-            };
-
-            foreach (var (containerType, valueType) in argumentAccessors)
-            {
-                csharp.AppendDictionaryAccessor(
-                    containerType, "Arguments", "name", "string", "Argument", valueType);
-            }
-
-            csharp.Append("}");
-            CodeGenHelpers.WriteFile("../Linked/TypeSystem/TypeSystemAccessors.Generated.cs", csharp.ToString());
+        foreach (var (containerType, valueType) in fieldDefinitionAccessors)
+        {
+            csharp.AppendDictionaryAccessor(
+                containerType, "Fields", "name", "string", "Field", valueType);
         }
+
+        var fieldAccessors = new List<(string containerType, string valueType)>
+        {
+            ("InterfaceType", "Field"),
+            ("ObjectType", "Field"),
+            ("InputObjectType", "InputField")
+        };
+
+        foreach (var (containerType, valueType) in fieldAccessors)
+        {
+            csharp.AppendDictionaryAccessor(containerType, "Fields", "name", "string", "Field", valueType);
+        }
+
+        csharp.AppendDictionaryAccessor("EnumTypeDefinition", "Values", "name", "string", "Value",
+            "EnumValueDefinition");
+        csharp.AppendDictionaryAccessor("EnumType", "Values", "name", "string", "Value", "EnumValue");
+        csharp.AppendDictionaryAccessor("EnumType", "ValuesByValue", "value", "object", "Value", "EnumValue");
+
+
+        var argumentDefinitionAccessors = new List<(string containerType, string valueType)>
+        {
+            ("FieldDefinition", "ArgumentDefinition"),
+            ("DirectiveDefinition", "ArgumentDefinition")
+        };
+
+        foreach (var (containerType, valueType) in argumentDefinitionAccessors)
+        {
+            csharp.AppendDictionaryAccessor(
+                containerType, "Arguments", "name", "string", "Argument", valueType);
+        }
+
+        var argumentAccessors = new List<(string containerType, string valueType)>
+        {
+            ("Field", "Argument"),
+            ("IArguments", "Argument")
+        };
+
+        foreach (var (containerType, valueType) in argumentAccessors)
+        {
+            csharp.AppendDictionaryAccessor(
+                containerType, "Arguments", "name", "string", "Argument", valueType);
+        }
+
+        csharp.Append("}");
+        CodeGenHelpers.WriteFile("../Linked/TypeSystem/TypeSystemAccessors.Generated.cs", csharp.ToString());
     }
 }

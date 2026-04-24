@@ -9,33 +9,32 @@ using System.Text.Json.Serialization;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public static class Json
 {
-    public static class Json
+    public static JsonSerializerOptions SerializerOptions { get; } = new()
     {
-        public static JsonSerializerOptions SerializerOptions { get; } = new JsonSerializerOptions
+        WriteIndented = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNameCaseInsensitive = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.Never
+    };
+
+    public static JsonNode? CreateJsonNode(object value)
+    {
+        var json = JsonSerializer.Serialize(value, SerializerOptions);
+        return JsonNode.Parse(json);
+    }
+
+    [DebuggerStepThrough]
+    public static string SerializeObject(object value)
+    {
+        var options = new JsonSerializerOptions(SerializerOptions)
         {
-            WriteIndented = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-            PropertyNameCaseInsensitive = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.Never
+            WriteIndented = true
         };
-
-        public static JsonNode? CreateJsonNode(object value)
-        {
-            var json = JsonSerializer.Serialize(value, SerializerOptions);
-            return JsonNode.Parse(json);
-        }
-
-        [DebuggerStepThrough]
-        public static string SerializeObject(object value)
-        {
-            var options = new JsonSerializerOptions(SerializerOptions)
-            {
-                WriteIndented = true
-            };
-            return JsonSerializer.Serialize(value, options);
-        }
+        return JsonSerializer.Serialize(value, options);
     }
 }

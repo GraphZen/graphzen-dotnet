@@ -6,12 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IInterfaceTypesDefinition
 {
     [GraphQLIgnore]
-    public interface IInterfaceTypesDefinition
-    {
-        [GraphQLIgnore]
-        IEnumerable<IInterfaceTypeDefinition> GetInterfaces();
-    }
+    IEnumerable<IInterfaceTypeDefinition> GetInterfaces();
 }

@@ -7,20 +7,19 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public class DirectiveAnnotation : IDirectiveAnnotation
 {
-    public class DirectiveAnnotation : IDirectiveAnnotation
+    public DirectiveAnnotation(string name, object? value)
     {
-        public DirectiveAnnotation(string name, object? value)
-        {
-            Name = Check.NotNull(name, nameof(name));
-            Value = value;
-        }
-
-        public static IReadOnlyList<IDirectiveAnnotation> EmptyList { get; } =
-            new List<IDirectiveAnnotation>(0).AsReadOnly();
-
-        public string Name { get; }
-        public object? Value { get; }
+        Name = Check.NotNull(name, nameof(name));
+        Value = value;
     }
+
+    public static IReadOnlyList<IDirectiveAnnotation> EmptyList { get; } =
+        new List<IDirectiveAnnotation>(0).AsReadOnly();
+
+    public string Name { get; }
+    public object? Value { get; }
 }

@@ -7,21 +7,18 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class ScalarTypeExtensionParsingTests : ParserTestBase
 {
-    public class ScalarTypeExtensionParsingTests : ParserTestBase
+    [Fact]
+    public void AnnotatedScalarExtension()
     {
-        [Fact]
-        public void AnnotatedScalarExtension()
-        {
-            var result = ParseDocument("extend scalar CustomScalar @onScalar");
-            var expected =
-                SyntaxFactory.Document(new ScalarTypeExtensionSyntax(SyntaxFactory.Name("CustomScalar"),
-                    new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onScalar")) }));
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        var result = ParseDocument("extend scalar CustomScalar @onScalar");
+        var expected =
+            SyntaxFactory.Document(new ScalarTypeExtensionSyntax(SyntaxFactory.Name("CustomScalar"),
+                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onScalar")) }));
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
     }
 }

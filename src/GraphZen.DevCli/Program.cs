@@ -9,16 +9,15 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using static GraphZen.CodeGen.CodeGenTasks;
 
-namespace GraphZen
+namespace GraphZen;
+
+internal class Program
 {
-    internal class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
-        {
-            var cmd = new RootCommand { new Command("gen") { Handler = CommandHandler.Create(RunCodeGen) } };
-            var cliBuilder = new CommandLineBuilder(cmd);
-            var cli = cliBuilder.Build();
-            cli.InvokeAsync(args).Wait();
-        }
+        var cmd = new RootCommand { new Command("gen") { Handler = CommandHandler.Create(RunCodeGen) } };
+        var cliBuilder = new CommandLineBuilder(cmd);
+        var cli = cliBuilder.Build();
+        cli.InvokeAsync(args).Wait();
     }
 }

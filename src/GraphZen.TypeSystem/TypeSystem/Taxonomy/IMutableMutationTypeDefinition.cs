@@ -6,12 +6,11 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+public interface IMutableMutationTypeDefinition : IMutationTypeDefinition
 {
-    public interface IMutableMutationTypeDefinition : IMutationTypeDefinition
-    {
-        new ObjectTypeDefinition? MutationType { get; }
-        bool SetMutationType(ObjectTypeDefinition? type, ConfigurationSource configurationSource);
-        ConfigurationSource? GetMutationTypeConfigurationSource();
-    }
+    new ObjectTypeDefinition? MutationType { get; }
+    bool SetMutationType(ObjectTypeDefinition? type, ConfigurationSource configurationSource);
+    ConfigurationSource? GetMutationTypeConfigurationSource();
 }

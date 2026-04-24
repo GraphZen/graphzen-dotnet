@@ -6,12 +6,10 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Validation;
 using JetBrains.Annotations;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class LoneSchemaDefinitionTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class LoneSchemaDefinitionTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.LoneSchemaDefinition;
-    }
+    public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.LoneSchemaDefinition;
 }

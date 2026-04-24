@@ -8,60 +8,57 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+/// <summary>
+///     Enum value
+///     http://facebook.github.io/graphql/June2018/#EnumValue
+/// </summary>
+public partial class EnumValueSyntax : ValueSyntax
 {
-    /// <summary>
-    ///     Enum value
-    ///     http://facebook.github.io/graphql/June2018/#EnumValue
-    /// </summary>
-    public partial class EnumValueSyntax : ValueSyntax
+    public EnumValueSyntax(NameSyntax value) : base(Check.NotNull(value, nameof(value)).Location)
     {
-        public EnumValueSyntax(NameSyntax value) : base(Check.NotNull(value, nameof(value)).Location)
-        {
-            Value = value.Value;
+        Value = value.Value;
 
-            if (!IsValidValue(value.Value))
-                throw new ArgumentException(
-                    $"Enum values cannot be 'true', 'false', or 'null'. Supplied value was: '{value.Value}'",
-                    nameof(value));
-        }
-
-
-        private static string[] ProhibtedValues { get; } = { "true", "false", "null" };
-
-        /// <summary>
-        ///     The enum value.
-        /// </summary>
-
-        public string Value { get; }
-
-
-        public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
-
-
-        internal static bool IsValidValue(string value)
-        {
-            return ProhibtedValues.All(v => !v.Equals(value));
-        }
-
-
-        private bool Equals(EnumValueSyntax other) => string.Equals(Value, other.Value);
-
-        public override bool Equals(object? obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-
-            if (ReferenceEquals(this, obj)) return true;
-
-            return obj is EnumValueSyntax && Equals((EnumValueSyntax)obj);
-        }
-
-        public override int GetHashCode() => Value.GetHashCode();
-
-        public override object GetValue() => Value;
-
-        public override string ToString() => Value;
+        if (!IsValidValue(value.Value))
+            throw new ArgumentException(
+                $"Enum values cannot be 'true', 'false', or 'null'. Supplied value was: '{value.Value}'",
+                nameof(value));
     }
+
+
+    private static string[] ProhibtedValues { get; } = { "true", "false", "null" };
+
+    /// <summary>
+    ///     The enum value.
+    /// </summary>
+
+    public string Value { get; }
+
+
+    public override IEnumerable<SyntaxNode> Children => Enumerable.Empty<SyntaxNode>();
+
+
+    internal static bool IsValidValue(string value)
+    {
+        return ProhibtedValues.All(v => !v.Equals(value));
+    }
+
+
+    private bool Equals(EnumValueSyntax other) => string.Equals(Value, other.Value);
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+
+        if (ReferenceEquals(this, obj)) return true;
+
+        return obj is EnumValueSyntax && Equals((EnumValueSyntax)obj);
+    }
+
+    public override int GetHashCode() => Value.GetHashCode();
+
+    public override object GetValue() => Value;
+
+    public override string ToString() => Value;
 }

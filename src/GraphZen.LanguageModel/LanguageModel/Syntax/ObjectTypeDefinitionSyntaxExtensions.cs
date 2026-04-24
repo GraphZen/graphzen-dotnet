@@ -5,21 +5,18 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+[UsedImplicitly]
+public static class ObjectTypeDefinitionSyntaxExtensions
 {
-    [UsedImplicitly]
-    public static class ObjectTypeDefinitionSyntaxExtensions
+    public static ObjectTypeDefinitionSyntax WithSortedChildren(this ObjectTypeDefinitionSyntax objectNode)
     {
-        public static ObjectTypeDefinitionSyntax WithSortedChildren(this ObjectTypeDefinitionSyntax objectNode)
-        {
-            Check.NotNull(objectNode, nameof(objectNode));
-            return new ObjectTypeDefinitionSyntax(objectNode.Name, objectNode.Description,
-                objectNode.Interfaces.OrderByName().ToReadOnlyList(),
-                objectNode.Directives.OrderByName().ToReadOnlyList(),
-                objectNode.Fields.OrderByName()
-                    .ToReadOnlyList(), objectNode.Location);
-        }
+        Check.NotNull(objectNode, nameof(objectNode));
+        return new ObjectTypeDefinitionSyntax(objectNode.Name, objectNode.Description,
+            objectNode.Interfaces.OrderByName().ToReadOnlyList(),
+            objectNode.Directives.OrderByName().ToReadOnlyList(),
+            objectNode.Fields.OrderByName()
+                .ToReadOnlyList(), objectNode.Location);
     }
 }

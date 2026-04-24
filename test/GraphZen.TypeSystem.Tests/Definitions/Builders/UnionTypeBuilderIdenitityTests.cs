@@ -6,54 +6,52 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem.Tests;
 
-namespace GraphZen.TypeSystem.Tests
+[NoReorder]
+[UsedImplicitly]
+public class UnionTypeBuilderIdenitityTests : TypeBuilderIdentityTests<UnionType>
 {
-    [NoReorder]
-    [UsedImplicitly]
-    public class UnionTypeBuilderIdenitityTests : TypeBuilderIdentityTests<UnionType>
+    public class FooUnionClr
     {
-        public class FooUnionClr
-        {
-        }
+    }
 
-        public class BarUnionClr
-        {
-        }
+    public class BarUnionClr
+    {
+    }
 
 
-        public override Type ClrType { get; } = typeof(FooUnionClr);
-        public override Type NewClrType { get; } = typeof(BarUnionClr);
+    public override Type ClrType { get; } = typeof(FooUnionClr);
+    public override Type NewClrType { get; } = typeof(BarUnionClr);
 
-        public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
-        {
-            schemaBuilder.Union(name);
-        }
+    public override void CreateTypeWithName(SchemaBuilder schemaBuilder, string name)
+    {
+        schemaBuilder.Union(name);
+    }
 
-        public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
-        {
-            schemaBuilder.Union(clrType);
-        }
+    public override void CreateTypeWithClrType(SchemaBuilder schemaBuilder, Type clrType)
+    {
+        schemaBuilder.Union(clrType);
+    }
 
 
-        public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
-        {
-            schemaBuilder.Union(name).Name(newName);
-        }
+    public override void ChangeNameByName(SchemaBuilder schemaBuilder, string name, string newName)
+    {
+        schemaBuilder.Union(name).Name(newName);
+    }
 
-        public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
-        {
-            schemaBuilder.Union(clrType).Name(newName);
-        }
+    public override void ChangeNameByType(SchemaBuilder schemaBuilder, Type clrType, string newName)
+    {
+        schemaBuilder.Union(clrType).Name(newName);
+    }
 
-        public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
-        {
-            schemaBuilder.Union(name).Name(null!);
-        }
+    public override void RemoveNameByName(SchemaBuilder schemaBuilder, string name)
+    {
+        schemaBuilder.Union(name).Name(null!);
+    }
 
-        public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
-        {
-            schemaBuilder.Union(clrType).Name(null!);
-        }
+    public override void RemoveNameByClrType(SchemaBuilder schemaBuilder, Type clrType)
+    {
+        schemaBuilder.Union(clrType).Name(null!);
     }
 }

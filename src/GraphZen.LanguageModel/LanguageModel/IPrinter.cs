@@ -5,12 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+public interface IPrinter
 {
-    public interface IPrinter
-    {
-        string Print(SyntaxNode node);
-    }
+    string Print(SyntaxNode node);
 }

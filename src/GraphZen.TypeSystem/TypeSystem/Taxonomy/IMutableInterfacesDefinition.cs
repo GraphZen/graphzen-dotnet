@@ -7,12 +7,11 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
-{
-    public interface IMutableInterfacesDefinition : IInterfacesDefinition
-    {
-        new IEnumerable<InterfaceTypeDefinition> GetInterfaces();
+namespace GraphZen.TypeSystem.Taxonomy;
 
-        ConfigurationSource? FindIgnoredInterfaceConfigurationSource(string name);
-    }
+public interface IMutableInterfacesDefinition : IInterfacesDefinition
+{
+    new IEnumerable<InterfaceTypeDefinition> GetInterfaces();
+
+    ConfigurationSource? FindIgnoredInterfaceConfigurationSource(string name);
 }

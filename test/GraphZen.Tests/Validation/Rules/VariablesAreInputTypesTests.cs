@@ -7,13 +7,10 @@ using GraphZen.LanguageModel.Validation;
 using GraphZen.QueryEngine.Validation;
 using JetBrains.Annotations;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class VariablesAreInputTypesTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class VariablesAreInputTypesTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.VariablesAreInputTypes;
-    }
+    public override ValidationRule RuleUnderTest { get; } = QueryValidationRules.VariablesAreInputTypes;
 }

@@ -7,18 +7,17 @@ using GraphZen.LanguageModel.Validation;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.Validation.Rules;
 
-namespace GraphZen.Tests.Validation.Rules
+[NoReorder]
+public class ObjectsMustHaveFieldsTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class ObjectsMustHaveFieldsTests : ValidationRuleHarness
-    {
-        public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.ObjectsMustHaveFields;
+    public override ValidationRule RuleUnderTest { get; } = DocumentValidationRules.ObjectsMustHaveFields;
 
-        [Fact]
-        public void AcceptsAnObjectTypeWithFieldsObject()
-        {
-            SdlShouldPass(@"
+    [Fact]
+    public void AcceptsAnObjectTypeWithFieldsObject()
+    {
+        SdlShouldPass(@"
               type Query {
                 field: SomeObject
               }
@@ -27,33 +26,32 @@ namespace GraphZen.Tests.Validation.Rules
                 field: String
               }
             ");
-        }
+    }
 
-        [Fact]
-        public void RejectsAnObjectTypeWithMissingFields()
-        {
-            SdlShouldFail(@"
+    [Fact]
+    public void RejectsAnObjectTypeWithMissingFields()
+    {
+        SdlShouldFail(@"
               type Query {
                 test: IncompleteObject
               }
 
               type IncompleteObject
             ", Error("Type IncompleteObject must define one or more fields.", (5, 6)));
-        }
+    }
 
-        [Fact(Skip = "TODO")]
-        public void RejectsAnObjectWithIncorrectlyNamedFields()
-        {
-        }
+    [Fact(Skip = "TODO")]
+    public void RejectsAnObjectWithIncorrectlyNamedFields()
+    {
+    }
 
-        [Fact(Skip = "legacy")]
-        public void AcceptsAnObjectWithExplicitlyAllowedLegacyNamedFields()
-        {
-        }
+    [Fact(Skip = "legacy")]
+    public void AcceptsAnObjectWithExplicitlyAllowedLegacyNamedFields()
+    {
+    }
 
-        [Fact(Skip = "legacy")]
-        public void ThrowsWithBadValueForExplicitlyAllowedLegacyNames()
-        {
-        }
+    [Fact(Skip = "legacy")]
+    public void ThrowsWithBadValueForExplicitlyAllowedLegacyNames()
+    {
     }
 }

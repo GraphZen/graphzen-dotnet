@@ -5,13 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Infrastructure
+public class LeafConventionContext
 {
-    public class LeafConventionContext
-    {
-        public string? ParentName { get; set; }
+    public string? ParentName { get; set; }
 
-        public object? DataAnnotationValue { get; set; }
-    }
+    public object? DataAnnotationValue { get; set; }
 }

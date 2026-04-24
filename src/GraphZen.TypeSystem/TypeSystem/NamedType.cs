@@ -8,46 +8,45 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public abstract class NamedType : AnnotatableMember, INamedType
 {
-    public abstract class NamedType : AnnotatableMember, INamedType
+    protected NamedType(string name, string? description, Type? clrType,
+        IReadOnlyList<IDirectiveAnnotation> directives) : base(directives)
     {
-        protected NamedType(string name, string? description, Type? clrType,
-            IReadOnlyList<IDirectiveAnnotation> directives) : base(directives)
-        {
-            Name = name;
-            Description = description;
-            ClrType = clrType;
-        }
-
-        public abstract TypeKind Kind { get; }
-        public string Name { get; }
-        public override string? Description { get; }
-
-        [GraphQLIgnore] public Type? ClrType { get; }
-
-
-        public static NamedType From(INamedTypeDefinition definition, Schema schema)
-        {
-            switch (definition)
-            {
-                case IScalarTypeDefinition __:
-                    return ScalarType.From(__);
-                case IUnionTypeDefinition __:
-                    return UnionType.From(__, schema);
-                case IObjectTypeDefinition __:
-                    return ObjectType.From(__, schema);
-                case IInputObjectTypeDefinition __:
-                    return InputObjectType.From(__, schema);
-                case IEnumTypeDefinition __:
-                    return EnumType.From(__);
-                case IInterfaceTypeDefinition __:
-                    return InterfaceType.From(__, schema);
-            }
-
-            throw new InvalidOperationException($"Unknown type definition: {definition.GetType()}");
-        }
-
-        public override string ToString() => Name;
+        Name = name;
+        Description = description;
+        ClrType = clrType;
     }
+
+    public abstract TypeKind Kind { get; }
+    public string Name { get; }
+    public override string? Description { get; }
+
+    [GraphQLIgnore] public Type? ClrType { get; }
+
+
+    public static NamedType From(INamedTypeDefinition definition, Schema schema)
+    {
+        switch (definition)
+        {
+            case IScalarTypeDefinition __:
+                return ScalarType.From(__);
+            case IUnionTypeDefinition __:
+                return UnionType.From(__, schema);
+            case IObjectTypeDefinition __:
+                return ObjectType.From(__, schema);
+            case IInputObjectTypeDefinition __:
+                return InputObjectType.From(__, schema);
+            case IEnumTypeDefinition __:
+                return EnumType.From(__);
+            case IInterfaceTypeDefinition __:
+                return InterfaceType.From(__, schema);
+        }
+
+        throw new InvalidOperationException($"Unknown type definition: {definition.GetType()}");
+    }
+
+    public override string ToString() => Name;
 }

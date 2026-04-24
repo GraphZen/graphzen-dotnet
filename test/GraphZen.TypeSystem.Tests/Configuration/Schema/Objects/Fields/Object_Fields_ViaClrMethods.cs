@@ -7,54 +7,53 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields
+namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields;
+
+// ReSharper disable once InconsistentNaming
+public class Object_Fields_ViaClrMethods : Object_Fields, ICollectionConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Object_Fields_ViaClrMethods : Object_Fields, ICollectionConventionConfigurationFixture
+    public const string DataAnnotationName = nameof(DataAnnotationName);
+
+
+    public CollectionConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(ExampleObject),
+            ItemNamedByConvention = nameof(ExampleObject.HelloWorld).FirstCharToLower(),
+            ItemNamedByDataAnnotation = DataAnnotationName,
+            ItemIgnoredByConvention = nameof(ExampleObject.IgnoredByConvention),
+            ItemIgnoredByDataAnnotation = nameof(ExampleObject.IgnoredByDataAnnotation).FirstCharToLower()
+        };
+
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        public const string DataAnnotationName = nameof(DataAnnotationName);
+        sb.Object<ExampleObject>();
+    }
+
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Object(parentName).ClrType<ExampleObject>();
+    }
+
+    public override string ToString() => nameof(Object_Fields_ViaClrMethods);
 
 
-        public CollectionConventionContext GetContext() =>
-            new CollectionConventionContext
-            {
-                ParentName = nameof(ExampleObject),
-                ItemNamedByConvention = nameof(ExampleObject.HelloWorld).FirstCharToLower(),
-                ItemNamedByDataAnnotation = DataAnnotationName,
-                ItemIgnoredByConvention = nameof(ExampleObject.IgnoredByConvention),
-                ItemIgnoredByDataAnnotation = nameof(ExampleObject.IgnoredByDataAnnotation).FirstCharToLower()
-            };
+    [GraphQLIgnore]
+    public class IgnoredType
+    {
+    }
 
+    public class ExampleObject
+    {
+        public string HelloWorld() => throw new NotImplementedException();
 
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Object<ExampleObject>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Object(parentName).ClrType<ExampleObject>();
-        }
-
+        [GraphQLName(DataAnnotationName)]
+        public string NamedByDataAnnotation() => throw new NotImplementedException();
 
         [GraphQLIgnore]
-        public class IgnoredType
-        {
-        }
+        public string IgnoredByDataAnnotation() => throw new NotImplementedException();
 
-        public class ExampleObject
-        {
-            public string HelloWorld() => throw new NotImplementedException();
-
-            [GraphQLName(DataAnnotationName)]
-            public string NamedByDataAnnotation() => throw new NotImplementedException();
-
-            [GraphQLIgnore]
-            public string IgnoredByDataAnnotation() => throw new NotImplementedException();
-
-            public IgnoredType IgnoredByConvention() => throw new NotImplementedException();
-        }
-
-        public override string ToString() => nameof(Object_Fields_ViaClrMethods);
+        public IgnoredType IgnoredByConvention() => throw new NotImplementedException();
     }
 }

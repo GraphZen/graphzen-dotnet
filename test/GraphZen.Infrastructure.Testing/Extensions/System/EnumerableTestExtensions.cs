@@ -7,11 +7,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public static class EnumerableTestExtensions
 {
-    public static class EnumerableTestExtensions
-    {
-        public static string ToMultiLineString(this IEnumerable<string> values) =>
-            string.Join(Environment.NewLine, values);
-    }
+    public static string ToMultiLineString(this IEnumerable<string> values) =>
+        string.Join(Environment.NewLine, values);
 }

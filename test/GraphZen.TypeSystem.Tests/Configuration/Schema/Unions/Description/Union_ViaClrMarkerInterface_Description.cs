@@ -7,39 +7,38 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Unions.Description;
+
+// ReSharper disable once InconsistentNaming
+public class Union_ViaClrMarkerInterface_Description : Union_Description, ILeafConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Union_ViaClrMarkerInterface_Description : Union_Description, ILeafConventionConfigurationFixture
+    public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+
+    public LeafConventionContext GetContext() =>
+        new()
+        {
+            ParentName = nameof(IExampleUnion),
+            DataAnnotationValue = DataAnnotationDescriptionValue
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
+        sb.Object<Query>();
+    }
 
-        public LeafConventionContext GetContext() =>
-            new LeafConventionContext
-            {
-                ParentName = nameof(IExampleUnion),
-                DataAnnotationValue = DataAnnotationDescriptionValue
-            };
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Object<Query>();
+    }
 
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Object<Query>();
-        }
+    public class Query
+    {
+        public IExampleUnion? ExampleUnion { get; set; }
+    }
 
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Object<Query>();
-        }
-
-        public class Query
-        {
-            public IExampleUnion? ExampleUnion { get; set; }
-        }
-
-        [Description(DataAnnotationDescriptionValue)]
-        [GraphQLUnion]
-        public interface IExampleUnion
-        {
-        }
+    [Description(DataAnnotationDescriptionValue)]
+    [GraphQLUnion]
+    public interface IExampleUnion
+    {
     }
 }

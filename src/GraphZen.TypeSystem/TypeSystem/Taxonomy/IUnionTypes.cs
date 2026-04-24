@@ -6,14 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
-{
-    [GraphQLIgnore]
-    public interface IUnionTypes : IUnionTypesDefinition
-    {
-        [GraphQLIgnore]
-        new IEnumerable<UnionType> GetUnions();
+namespace GraphZen.TypeSystem.Taxonomy;
 
-        [GraphQLIgnore] IReadOnlyList<UnionType> Unions { get; }
-    }
+[GraphQLIgnore]
+public interface IUnionTypes : IUnionTypesDefinition
+{
+    [GraphQLIgnore] IReadOnlyList<UnionType> Unions { get; }
+
+    [GraphQLIgnore]
+    new IEnumerable<UnionType> GetUnions();
 }

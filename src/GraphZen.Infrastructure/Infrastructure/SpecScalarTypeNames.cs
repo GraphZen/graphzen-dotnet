@@ -7,23 +7,20 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.Infrastructure;
 
-
-namespace GraphZen.Infrastructure
+internal static class SpecReservedNames
 {
-    internal static class SpecReservedNames
-    {
-        public static IReadOnlyList<string> ScalarTypeNames { get; } =
-            ImmutableArray.Create("String", "Int", "Float", "Boolean", "ID");
+    public static IReadOnlyList<string> ScalarTypeNames { get; } =
+        ImmutableArray.Create("String", "Int", "Float", "Boolean", "ID");
 
 
-        public static IReadOnlyList<string> DirectiveNames { get; } =
-            ImmutableArray.Create("deprecated", "include", "skip");
+    public static IReadOnlyList<string> DirectiveNames { get; } =
+        ImmutableArray.Create("deprecated", "include", "skip");
 
 
-        public static IReadOnlyList<string> IntrospectionTypeNames { get; } =
-            ImmutableArray.Create("__Type", "__Field", "__Schema", "__Directive", "__InputValue", "__EnumValue",
-                "__DirectiveLocation",
-                "__TypeKind");
-    }
+    public static IReadOnlyList<string> IntrospectionTypeNames { get; } =
+        ImmutableArray.Create("__Type", "__Field", "__Schema", "__Directive", "__InputValue", "__EnumValue",
+            "__DirectiveLocation",
+            "__TypeKind");
 }

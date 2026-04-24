@@ -7,19 +7,16 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
+namespace GraphZen.LanguageModel.Internal;
 
-
-namespace GraphZen.LanguageModel.Internal
+internal static partial class Grammar
 {
-    internal static partial class Grammar
-    {
-        internal static TokenListParser<TokenKind, StringValueSyntax> Description { get; } =
-            (from value in Parse.Ref(() => StringValue!) select value)
-            .Select(_ =>
-            {
-                Debug.Assert(_ != null, nameof(_) + " != null");
-                return _;
-            })
-            .Named("description");
-    }
+    internal static TokenListParser<TokenKind, StringValueSyntax> Description { get; } =
+        (from value in Parse.Ref(() => StringValue!) select value)
+        .Select(_ =>
+        {
+            Debug.Assert(_ != null, nameof(_) + " != null");
+            return _;
+        })
+        .Named("description");
 }

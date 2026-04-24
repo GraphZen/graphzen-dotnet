@@ -7,17 +7,16 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMutableArgumentsDefinition : IArgumentsDefinition
 {
-    [GraphQLIgnore]
-    public interface IMutableArgumentsDefinition : IArgumentsDefinition
-    {
-        IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
+    IReadOnlyDictionary<string, ArgumentDefinition> Arguments { get; }
 
-        bool RenameArgument(ArgumentDefinition argument, string name,
-            ConfigurationSource configurationSource);
+    bool RenameArgument(ArgumentDefinition argument, string name,
+        ConfigurationSource configurationSource);
 
 
-        new IEnumerable<ArgumentDefinition> GetArguments();
-    }
+    new IEnumerable<ArgumentDefinition> GetArguments();
 }

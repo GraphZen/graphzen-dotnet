@@ -5,17 +5,14 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+/// <summary>
+///     All types except non-null type
+/// </summary>
+public abstract class NullableTypeSyntax : TypeSyntax
 {
-    /// <summary>
-    ///     All types except non-null type
-    /// </summary>
-    public abstract class NullableTypeSyntax : TypeSyntax
+    protected NullableTypeSyntax(SyntaxLocation? location) : base(location)
     {
-        protected NullableTypeSyntax(SyntaxLocation? location) : base(location)
-        {
-        }
     }
 }

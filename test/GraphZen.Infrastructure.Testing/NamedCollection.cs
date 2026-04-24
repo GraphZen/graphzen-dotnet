@@ -10,115 +10,113 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public static class NamedCollection
 {
-    public static class NamedCollection
+    public static NamedCollection<T> ToNamedCollection<T>(this IReadOnlyDictionary<string, T> source)
+        where T : class, INamed =>
+        source.ToNamedCollection<T, T>();
+
+
+    public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : class, INamed =>
+        source.ToNamedCollection<T, T>();
+
+
+    public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(
+        this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : class, INamed =>
+        new DictionaryWrapper<TInner, TOuter>(source);
+
+
+    public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IEnumerable<TInner> source)
+        where TInner : TOuter where TOuter : class, INamed =>
+        new EnumerableWrapper<TInner, TOuter>(source);
+
+    private class EnumerableWrapper<TInner, T> : NamedCollection<T> where T : class, INamed where TInner : T, INamed
     {
-        public static NamedCollection<T> ToNamedCollection<T>(this IReadOnlyDictionary<string, T> source)
-            where T : class, INamed =>
-            ToNamedCollection<T, T>(source);
-
-
-        public static NamedCollection<T> ToNamedCollection<T>(this IEnumerable<T> source) where T : class, INamed =>
-            ToNamedCollection<T, T>(source);
-
-
-        public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(
-            this IReadOnlyDictionary<string, TInner> source) where TInner : TOuter where TOuter : class, INamed =>
-            new DictionaryWrapper<TInner, TOuter>(source);
-
-
-        public static NamedCollection<TOuter> ToNamedCollection<TOuter, TInner>(this IEnumerable<TInner> source)
-            where TInner : TOuter where TOuter : class, INamed =>
-            new EnumerableWrapper<TInner, TOuter>(source);
-
-        private class EnumerableWrapper<TInner, T> : NamedCollection<T> where T : class, INamed where TInner : T, INamed
+        public EnumerableWrapper(IEnumerable<TInner> innerEnumerable)
         {
-            public EnumerableWrapper(IEnumerable<TInner> innerEnumerable)
-            {
-                InnerEnumerable = Check.NotNull(innerEnumerable, nameof(innerEnumerable));
-            }
-
-
-            public IEnumerable<TInner> InnerEnumerable { get; }
-
-            public override int Count => InnerEnumerable.Count();
-
-            public override T this[string key]
-            {
-                get
-                {
-                    if (TryGetValue(key, out var value)) return value;
-
-                    throw new InvalidOperationException($"Item named '{key}' does not exist in this collection");
-                }
-            }
-
-            public override bool ContainsKey(string key)
-            {
-                return InnerEnumerable.Any(_ => _.Name == key);
-            }
-
-            public override bool TryGetValue(string key, out T value)
-            {
-                value = InnerEnumerable.SingleOrDefault(_ => _.Name == key)!;
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-                return value != null;
-            }
-
-            public override IEnumerator<T> GetEnumerator() => InnerEnumerable.Cast<T>().GetEnumerator();
+            InnerEnumerable = Check.NotNull(innerEnumerable, nameof(innerEnumerable));
         }
 
-        private class DictionaryWrapper<TInner, T> : NamedCollection<T> where TInner : T where T : class, INamed
+
+        public IEnumerable<TInner> InnerEnumerable { get; }
+
+        public override int Count => InnerEnumerable.Count();
+
+        public override T this[string key]
         {
-            public DictionaryWrapper(IReadOnlyDictionary<string, TInner> innerDictionary)
+            get
             {
-                InnerDictionary = Check.NotNull(innerDictionary, nameof(innerDictionary));
+                if (TryGetValue(key, out var value)) return value;
+
+                throw new InvalidOperationException($"Item named '{key}' does not exist in this collection");
             }
-
-
-            public IReadOnlyDictionary<string, TInner> InnerDictionary { get; }
-
-
-            public override int Count => InnerDictionary.Count;
-
-            public override T this[string key] => InnerDictionary[key];
-
-            public override bool ContainsKey(string key) => InnerDictionary.ContainsKey(key);
-
-            public override bool TryGetValue(string key, [NotNullWhen(true)] out T? value)
-            {
-                if (InnerDictionary.TryGetValue(key, out var innerVal))
-                {
-                    value = innerVal;
-                    return true;
-                }
-
-                value = default;
-                return false;
-            }
-
-            public override IEnumerator<T> GetEnumerator() => InnerDictionary.Values.Cast<T>().GetEnumerator();
         }
+
+        public override bool ContainsKey(string key)
+        {
+            return InnerEnumerable.Any(_ => _.Name == key);
+        }
+
+        public override bool TryGetValue(string key, out T value)
+        {
+            value = InnerEnumerable.SingleOrDefault(_ => _.Name == key)!;
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+            return value != null;
+        }
+
+        public override IEnumerator<T> GetEnumerator() => InnerEnumerable.Cast<T>().GetEnumerator();
     }
 
-
-    public abstract class NamedCollection<T> : IEnumerable<T> where T : class, INamed
+    private class DictionaryWrapper<TInner, T> : NamedCollection<T> where TInner : T where T : class, INamed
     {
-        public abstract int Count { get; }
-        public abstract bool ContainsKey(string key);
-        public abstract bool TryGetValue(string key, [NotNullWhen(true)] out T? value);
-
-        public abstract T this[string key] { get; }
-
-        public abstract IEnumerator<T> GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        public override string ToString()
+        public DictionaryWrapper(IReadOnlyDictionary<string, TInner> innerDictionary)
         {
-            // ReSharper disable once PossibleNullReferenceException
-            return string.Join(", ", this.Select(_ => _.Name));
+            InnerDictionary = Check.NotNull(innerDictionary, nameof(innerDictionary));
         }
+
+
+        public IReadOnlyDictionary<string, TInner> InnerDictionary { get; }
+
+
+        public override int Count => InnerDictionary.Count;
+
+        public override T this[string key] => InnerDictionary[key];
+
+        public override bool ContainsKey(string key) => InnerDictionary.ContainsKey(key);
+
+        public override bool TryGetValue(string key, [NotNullWhen(true)] out T? value)
+        {
+            if (InnerDictionary.TryGetValue(key, out var innerVal))
+            {
+                value = innerVal;
+                return true;
+            }
+
+            value = default;
+            return false;
+        }
+
+        public override IEnumerator<T> GetEnumerator() => InnerDictionary.Values.Cast<T>().GetEnumerator();
+    }
+}
+
+public abstract class NamedCollection<T> : IEnumerable<T> where T : class, INamed
+{
+    public abstract int Count { get; }
+
+    public abstract T this[string key] { get; }
+
+    public abstract IEnumerator<T> GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    public abstract bool ContainsKey(string key);
+    public abstract bool TryGetValue(string key, [NotNullWhen(true)] out T? value);
+
+    public override string ToString()
+    {
+        // ReSharper disable once PossibleNullReferenceException
+        return string.Join(", ", this.Select(_ => _.Name));
     }
 }

@@ -10,45 +10,44 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+[DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+public class ArgumentDefinition : InputValueDefinition, IMutableArgumentDefinition
 {
-    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class ArgumentDefinition : InputValueDefinition, IMutableArgumentDefinition
+    public ArgumentDefinition(string name,
+        ConfigurationSource nameConfigurationSource,
+        SchemaDefinition schema,
+        ConfigurationSource configurationSource, IMutableArgumentsDefinition declaringMember,
+        ParameterInfo? clrInfo) : base(
+        Check.NotNull(name, nameof(name)), nameConfigurationSource,
+        Check.NotNull(schema, nameof(schema)), configurationSource, clrInfo, declaringMember)
     {
-        public ArgumentDefinition(string name,
-            ConfigurationSource nameConfigurationSource,
-            SchemaDefinition schema,
-            ConfigurationSource configurationSource, IMutableArgumentsDefinition declaringMember,
-            ParameterInfo? clrInfo) : base(
-            Check.NotNull(name, nameof(name)), nameConfigurationSource,
-            Check.NotNull(schema, nameof(schema)), configurationSource, clrInfo, declaringMember)
-        {
-        }
-
-        private string DebuggerDisplay => $"argument {Name}";
-
-
-        public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.ArgumentDefinition;
-
-
-        public override bool SetName(string name, ConfigurationSource configurationSource)
-        {
-            Check.NotNull(name, nameof(name));
-            if (!configurationSource.Overrides(GetNameConfigurationSource())) return false;
-
-            if (Name != name) DeclaringMember.RenameArgument(this, name, configurationSource);
-
-            Name = name;
-            NameConfigurationSource = configurationSource;
-            return true;
-        }
-
-        public new IMutableArgumentsDefinition DeclaringMember =>
-            (IMutableArgumentsDefinition)base.DeclaringMember;
-
-        public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
-        IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
-
-        public override string ToString() => $"argument {Name}";
     }
+
+    private string DebuggerDisplay => $"argument {Name}";
+
+
+    public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.ArgumentDefinition;
+
+
+    public override bool SetName(string name, ConfigurationSource configurationSource)
+    {
+        Check.NotNull(name, nameof(name));
+        if (!configurationSource.Overrides(GetNameConfigurationSource())) return false;
+
+        if (Name != name) DeclaringMember.RenameArgument(this, name, configurationSource);
+
+        Name = name;
+        NameConfigurationSource = configurationSource;
+        return true;
+    }
+
+    public new IMutableArgumentsDefinition DeclaringMember =>
+        (IMutableArgumentsDefinition)base.DeclaringMember;
+
+    public new ParameterInfo? ClrInfo => base.ClrInfo as ParameterInfo;
+    IArgumentsDefinition IArgumentDefinition.DeclaringMember => DeclaringMember;
+
+    public override string ToString() => $"argument {Name}";
 }

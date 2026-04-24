@@ -10,55 +10,54 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Tests.Validation.Rules.SdlValidationHelpers;
 
-namespace GraphZen.Tests.Validation.Rules
+namespace GraphZen.Tests.Validation.Rules;
+
+[NoReorder]
+public class InputObjectFieldsMustHaveInputTypesTests : ValidationRuleHarness
 {
-    [NoReorder]
-    public class InputObjectFieldsMustHaveInputTypesTests : ValidationRuleHarness
+    public override ValidationRule RuleUnderTest { get; } =
+        DocumentValidationRules.InputObjectFieldsMustHaveInputTypes;
+
+    public static IEnumerable<object[]> GetValidInputFieldScenarios()
     {
-        public override ValidationRule RuleUnderTest { get; } =
-            DocumentValidationRules.InputObjectFieldsMustHaveInputTypes;
+        return from inputType in InputTypes
+            from fieldsType in InputFieldsTypes
+            from fieldType in "SomeInputType".WithModifiers()
+            select new object[] { inputType, fieldsType, fieldType };
+    }
 
-        public static IEnumerable<object[]> GetValidInputFieldScenarios()
-        {
-            return from inputType in InputTypes
-                   from fieldsType in InputFieldsTypes
-                   from fieldType in "SomeInputType".WithModifiers()
-                   select new object[] { inputType, fieldsType, fieldType };
-        }
-
-        [Theory]
-        [MemberData(nameof(GetValidInputFieldScenarios))]
-        public void AcceptsAnInputTypeAsAnInputFieldType(string inputType, string inputFieldsType, string fieldType)
-        {
-            SdlShouldPass($@"
+    [Theory]
+    [MemberData(nameof(GetValidInputFieldScenarios))]
+    public void AcceptsAnInputTypeAsAnInputFieldType(string inputType, string inputFieldsType, string fieldType)
+    {
+        SdlShouldPass($@"
               {inputType} SomeInputType
 
               {inputFieldsType} SomeObject {{
                 field: {fieldType}
               }}
            ");
-        }
+    }
 
-        public static IEnumerable<object[]> GetInvalidInputFieldScenarios()
-        {
-            return from nonInputType in NonInputTypes
-                   from inputFieldsType in InputFieldsTypes
-                   from fieldType in "SomeOutputType".WithModifiers()
-                   select new object[] { nonInputType, inputFieldsType, fieldType };
-        }
+    public static IEnumerable<object[]> GetInvalidInputFieldScenarios()
+    {
+        return from nonInputType in NonInputTypes
+            from inputFieldsType in InputFieldsTypes
+            from fieldType in "SomeOutputType".WithModifiers()
+            select new object[] { nonInputType, inputFieldsType, fieldType };
+    }
 
-        [Theory]
-        [MemberData(nameof(GetInvalidInputFieldScenarios))]
-        public void RejectsNonInputTypeAsAnInputObjectField(string nonInputType, string inputFieldsType,
-            string fieldType)
-        {
-            SdlShouldFail($@"
+    [Theory]
+    [MemberData(nameof(GetInvalidInputFieldScenarios))]
+    public void RejectsNonInputTypeAsAnInputObjectField(string nonInputType, string inputFieldsType,
+        string fieldType)
+    {
+        SdlShouldFail($@"
               {nonInputType} SomeOutputType
               
               {inputFieldsType} SomeInputObject {{
                 foo: {fieldType}
               }}
            ", Error($"The type of SomeInputObject.foo must be Input Type but got: {fieldType}.", (4, 8)));
-        }
     }
 }

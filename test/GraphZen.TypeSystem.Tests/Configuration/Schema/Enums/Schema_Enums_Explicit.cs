@@ -6,10 +6,9 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Enums
+namespace GraphZen.TypeSystem.Tests.Configuration.Enums;
+
+// ReSharper disable once InconsistentNaming
+public class Schema_Enums_Explicit : Schema_Enums, ICollectionExplicitConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Schema_Enums_Explicit : Schema_Enums, ICollectionExplicitConfigurationFixture
-    {
-    }
 }

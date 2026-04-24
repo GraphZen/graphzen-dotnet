@@ -5,14 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel.Validation.Rules;
 
-
-namespace GraphZen.LanguageModel.Validation.Rules
+public class LoneSchemaDefinition : DocumentValidationRuleVisitor
 {
-    public class LoneSchemaDefinition : DocumentValidationRuleVisitor
+    public LoneSchemaDefinition(DocumentValidationContext context) : base(context)
     {
-        public LoneSchemaDefinition(DocumentValidationContext context) : base(context)
-        {
-        }
     }
 }

@@ -6,12 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen
+namespace GraphZen;
+
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Class |
+                AttributeTargets.Interface | AttributeTargets.Parameter | AttributeTargets.Enum |
+                AttributeTargets.Field)]
+public class GraphQLIgnoreAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Class |
-                    AttributeTargets.Interface | AttributeTargets.Parameter | AttributeTargets.Enum |
-                    AttributeTargets.Field)]
-    public class GraphQLIgnoreAttribute : Attribute
-    {
-    }
 }

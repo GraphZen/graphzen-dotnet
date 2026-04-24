@@ -5,10 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.QueryEngine;
 
-namespace GraphZen.QueryEngine
+public interface IExecutionContext
 {
-    public interface IExecutionContext
-    {
-    }
 }

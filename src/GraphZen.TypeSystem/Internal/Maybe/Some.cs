@@ -6,16 +6,15 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Internal
+namespace GraphZen.Internal;
+
+internal class Some<T> : Maybe<T>
 {
-    internal class Some<T> : Maybe<T>
+    protected Some(IReadOnlyList<object?>? values, IReadOnlyList<GraphQLServerError>? errors) : base(values,
+        errors)
     {
-        protected Some(IReadOnlyList<object?>? values, IReadOnlyList<GraphQLServerError>? errors) : base(values,
-            errors)
-        {
-        }
-
-
-        public T Value => ValueOrFailure();
     }
+
+
+    public T Value => ValueOrFailure();
 }

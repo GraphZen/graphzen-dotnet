@@ -7,33 +7,30 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.LanguageModel.Internal.Parser;
 
-
-namespace GraphZen.Tests.LanguageModel.Internal.Parser
+public class SchemaDefinitionParsingTests : ParserTestBase
 {
-    public class SchemaDefinitionParsingTests : ParserTestBase
+    [Fact]
+    public void SchemaDefinitionNode()
     {
-        [Fact]
-        public void SchemaDefinitionNode()
-        {
-            var gql = @"
+        var gql = @"
 schema {
   query: QueryType
   mutation: MutationType
 }
 ";
-            var result = ParseDocument(gql);
+        var result = ParseDocument(gql);
 
-            var expected = SyntaxFactory.Document(new SchemaDefinitionSyntax(new[]
-            {
-                new OperationTypeDefinitionSyntax(OperationType.Query,
-                    SyntaxFactory.NamedType(SyntaxFactory.Name("QueryType"))),
-                new OperationTypeDefinitionSyntax(OperationType.Mutation,
-                    SyntaxFactory.NamedType(SyntaxFactory.Name("MutationType")))
-            }));
+        var expected = SyntaxFactory.Document(new SchemaDefinitionSyntax(new[]
+        {
+            new OperationTypeDefinitionSyntax(OperationType.Query,
+                SyntaxFactory.NamedType(SyntaxFactory.Name("QueryType"))),
+            new OperationTypeDefinitionSyntax(OperationType.Mutation,
+                SyntaxFactory.NamedType(SyntaxFactory.Name("MutationType")))
+        }));
 
-            Assert.Equal(expected, result);
-            Assert.Equal(expected, PrintAndParse(result));
-        }
+        Assert.Equal(expected, result);
+        Assert.Equal(expected, PrintAndParse(result));
     }
 }

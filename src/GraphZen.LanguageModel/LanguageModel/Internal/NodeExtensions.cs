@@ -8,60 +8,57 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel.Internal;
 
-
-namespace GraphZen.LanguageModel.Internal
+internal static class NodeExtensions
 {
-    internal static class NodeExtensions
+    public static ISyntaxNodeLocation GetLocation(this IEnumerable<SyntaxNode> nodes)
     {
-        public static ISyntaxNodeLocation GetLocation(this IEnumerable<SyntaxNode> nodes)
+        return nodes != null
+            ? new LocationContainer(
+                SyntaxLocation.FromMany(nodes
+                    .Where(n => n != null)
+                    .Where(n => n.Location != null)
+                    .Select(n => n.Location!).ToArray()))
+            : new LocationContainer(null);
+    }
+
+
+    internal static IEnumerable<SyntaxNode> Concat(
+        this IEnumerable<SyntaxNode> first,
+        IEnumerable<SyntaxNode> second) =>
+        first.Concat<SyntaxNode>(second);
+
+
+    internal static IEnumerable<SyntaxNode> Concat(
+        this IEnumerable<SyntaxNode> first,
+        Func<IEnumerable<SyntaxNode>> second) =>
+        first.Concat<SyntaxNode>(second());
+
+
+    internal static IEnumerable<SyntaxNode> Concat(
+        this IEnumerable<SyntaxNode> nodes,
+        SyntaxNode node) =>
+        nodes.Concat(node.ToEnumerable());
+
+
+    internal static bool NodesEqual<T>(
+        this IEnumerable<T> nodes,
+        IEnumerable<T> otherNodes) where T : SyntaxNode
+    {
+        var sequenceEquals = nodes.SequenceEqual(otherNodes);
+        if (sequenceEquals) return true;
+
+        return false;
+    }
+
+    private struct LocationContainer : ISyntaxNodeLocation
+    {
+        public LocationContainer(SyntaxLocation? location)
         {
-            return nodes != null
-                ? new LocationContainer(
-                    SyntaxLocation.FromMany(nodes
-                        .Where(n => n != null)
-                        .Where(n => n.Location != null)
-                        .Select(n => n.Location!).ToArray()))
-                : new LocationContainer(null);
+            Location = location;
         }
 
-
-        internal static IEnumerable<SyntaxNode> Concat(
-            this IEnumerable<SyntaxNode> first,
-            IEnumerable<SyntaxNode> second) =>
-            first.Concat<SyntaxNode>(second);
-
-
-        internal static IEnumerable<SyntaxNode> Concat(
-            this IEnumerable<SyntaxNode> first,
-            Func<IEnumerable<SyntaxNode>> second) =>
-            first.Concat<SyntaxNode>(second());
-
-
-        internal static IEnumerable<SyntaxNode> Concat(
-            this IEnumerable<SyntaxNode> nodes,
-            SyntaxNode node) =>
-            nodes.Concat(node.ToEnumerable());
-
-
-        internal static bool NodesEqual<T>(
-            this IEnumerable<T> nodes,
-            IEnumerable<T> otherNodes) where T : SyntaxNode
-        {
-            var sequenceEquals = nodes.SequenceEqual(otherNodes);
-            if (sequenceEquals) return true;
-
-            return false;
-        }
-
-        private struct LocationContainer : ISyntaxNodeLocation
-        {
-            public LocationContainer(SyntaxLocation? location)
-            {
-                Location = location;
-            }
-
-            public SyntaxLocation? Location { get; }
-        }
+        public SyntaxLocation? Location { get; }
     }
 }

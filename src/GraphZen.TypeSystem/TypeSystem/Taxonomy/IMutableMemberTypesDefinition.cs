@@ -7,12 +7,11 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+[GraphQLIgnore]
+public interface IMutableMemberTypesDefinition : IMemberTypesDefinition
 {
-    [GraphQLIgnore]
-    public interface IMutableMemberTypesDefinition : IMemberTypesDefinition
-    {
-        new IEnumerable<ObjectTypeDefinition> GetMemberTypes();
-        ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name);
-    }
+    new IEnumerable<ObjectTypeDefinition> GetMemberTypes();
+    ConfigurationSource? FindIgnoredMemberTypeConfigurationSource(string name);
 }

@@ -6,10 +6,9 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Description
+namespace GraphZen.TypeSystem.Tests.Configuration.Objects.Fields.Description;
+
+// ReSharper disable once InconsistentNaming
+public class Object_Field_Explicit_Description : Object_Field_Description, ILeafExplicitConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Object_Field_Explicit_Description : Object_Field_Description, ILeafExplicitConfigurationFixture
-    {
-    }
 }

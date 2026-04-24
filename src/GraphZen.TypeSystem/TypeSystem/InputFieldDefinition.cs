@@ -10,40 +10,39 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+[DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+public class InputFieldDefinition : InputValueDefinition, IMutableInputFieldDefinition
 {
-    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class InputFieldDefinition : InputValueDefinition, IMutableInputFieldDefinition
+    public InputFieldDefinition(string name,
+        ConfigurationSource nameConfigurationSource,
+        SchemaDefinition schema, ConfigurationSource configurationSource, PropertyInfo? clrInfo,
+        IInputObjectTypeDefinition declaringMember) :
+        base(Check.NotNull(name, nameof(name)), nameConfigurationSource,
+            Check.NotNull(schema, nameof(schema)), configurationSource, clrInfo, declaringMember)
     {
-        public InputFieldDefinition(string name,
-            ConfigurationSource nameConfigurationSource,
-            SchemaDefinition schema, ConfigurationSource configurationSource, PropertyInfo? clrInfo,
-            IInputObjectTypeDefinition declaringMember) :
-            base(Check.NotNull(name, nameof(name)), nameConfigurationSource,
-                Check.NotNull(schema, nameof(schema)), configurationSource, clrInfo, declaringMember)
-        {
-        }
-
-        private string DebuggerDisplay => ToString();
-
-        public override bool SetName(string name, ConfigurationSource configurationSource)
-        {
-            Check.NotNull(name, nameof(name));
-            if (!configurationSource.Overrides(GetNameConfigurationSource())) return false;
-
-            if (Name != name) DeclaringMember.RenameField(this, name, configurationSource);
-
-            Name = name;
-            NameConfigurationSource = configurationSource;
-            return true;
-        }
-
-        public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputFieldDefinition;
-        public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
-        IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
-
-        public new InputObjectTypeDefinition DeclaringMember => (InputObjectTypeDefinition)base.DeclaringMember;
-
-        public override string ToString() => $"input field {Name}";
     }
+
+    private string DebuggerDisplay => ToString();
+
+    public override bool SetName(string name, ConfigurationSource configurationSource)
+    {
+        Check.NotNull(name, nameof(name));
+        if (!configurationSource.Overrides(GetNameConfigurationSource())) return false;
+
+        if (Name != name) DeclaringMember.RenameField(this, name, configurationSource);
+
+        Name = name;
+        NameConfigurationSource = configurationSource;
+        return true;
+    }
+
+    public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputFieldDefinition;
+    public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
+    IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
+
+    public new InputObjectTypeDefinition DeclaringMember => (InputObjectTypeDefinition)base.DeclaringMember;
+
+    public override string ToString() => $"input field {Name}";
 }

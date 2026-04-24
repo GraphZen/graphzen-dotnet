@@ -8,25 +8,24 @@ using GraphZen.Infrastructure;
 using GraphZen.QueryEngine;
 using JetBrains.Annotations;
 
-namespace GraphZen.Tests
-{
-    public static class QueryEngineTestHelpers
-    {
-        public static async Task<ExecutionResult> ShouldEqual(this Task<ExecutionResult> result, object expected,
-            JsonDiffOptions? options = null)
-        {
-            var final = await result;
-            JsonAssert.EquivalentToJsonFromObject(final, expected, options);
-            return final;
-        }
+namespace GraphZen.Tests;
 
-        public static async Task<ExecutionResult> ShouldEqualJsonFile(this Task<ExecutionResult> result,
-            string filePath, JsonDiffOptions? options = null)
-        {
-            var actual = await result;
-            var expected = await File.ReadAllTextAsync(filePath);
-            JsonAssert.EquivalentToJson(actual, expected, options);
-            return actual;
-        }
+public static class QueryEngineTestHelpers
+{
+    public static async Task<ExecutionResult> ShouldEqual(this Task<ExecutionResult> result, object expected,
+        JsonDiffOptions? options = null)
+    {
+        var final = await result;
+        JsonAssert.EquivalentToJsonFromObject(final, expected, options);
+        return final;
+    }
+
+    public static async Task<ExecutionResult> ShouldEqualJsonFile(this Task<ExecutionResult> result,
+        string filePath, JsonDiffOptions? options = null)
+    {
+        var actual = await result;
+        var expected = await File.ReadAllTextAsync(filePath);
+        JsonAssert.EquivalentToJson(actual, expected, options);
+        return actual;
     }
 }

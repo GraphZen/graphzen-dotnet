@@ -11,43 +11,42 @@ using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.Internal;
 
-namespace GraphZen.Tests.Internal
+[NoReorder]
+public class GetGraphQLFieldNameTests
 {
-    [NoReorder]
-    public class GetGraphQLFieldNameTests
+    [Fact]
+    public void FieldNameFromProperty()
     {
-        [Fact]
-        public void FieldNameFromProperty()
-        {
-            var property = SelectFoo(f => f.Property);
-            Assert.Equal(("property", ConfigurationSource.Convention), property.GetGraphQLFieldName());
+        var property = SelectFoo(f => f.Property);
+        Assert.Equal(("property", ConfigurationSource.Convention), property.GetGraphQLFieldName());
 
-            var propertyWithCustomName = SelectFoo(_ => _.CustomProperty);
-            Assert.Equal(("customAllTheWay", ConfigurationSource.DataAnnotation), propertyWithCustomName.GetGraphQLFieldName());
+        var propertyWithCustomName = SelectFoo(_ => _.CustomProperty);
+        Assert.Equal(("customAllTheWay", ConfigurationSource.DataAnnotation),
+            propertyWithCustomName.GetGraphQLFieldName());
+    }
+
+    private PropertyInfo SelectFoo<T>(Expression<Func<Foo, T>> expr) => expr.GetPropertyInfoFromExpression();
+
+    private class Foo
+    {
+        [GraphQLName("customAllTheWay")] public string CustomProperty { get; } = null!;
+
+        public string Property { get; } = null!;
+
+        [UsedImplicitly]
+        public bool Method() => true;
+
+        [UsedImplicitly]
+        public void VoidMethod()
+        {
         }
 
-        private PropertyInfo SelectFoo<T>(Expression<Func<Foo, T>> expr) => expr.GetPropertyInfoFromExpression();
+        // ReSharper disable once UnusedMember.Local
+        public Task MethodAsync() => Task.CompletedTask;
 
-        private class Foo
-        {
-            [GraphQLName("customAllTheWay")] public string CustomProperty { get; } = null!;
-
-            public string Property { get; } = null!;
-
-            [UsedImplicitly]
-            public bool Method() => true;
-
-            [UsedImplicitly]
-            public void VoidMethod()
-            {
-            }
-
-            // ReSharper disable once UnusedMember.Local
-            public Task MethodAsync() => Task.CompletedTask;
-
-            [UsedImplicitly]
-            public Task<string> StringMethodAsync() => Task.FromResult("hello world");
-        }
+        [UsedImplicitly]
+        public Task<string> StringMethodAsync() => Task.FromResult("hello world");
     }
 }

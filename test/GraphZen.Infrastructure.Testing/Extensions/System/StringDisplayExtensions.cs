@@ -7,23 +7,22 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public static class StringDisplayExtensions
 {
-    public static class StringDisplayExtensions
+    public static string EscapeCurlyBraces(this string value) => value.Replace("{", "{{").Replace("}", "}}");
+
+    public static string Dedent(this string str)
     {
-        public static string EscapeCurlyBraces(this string value) => value.Replace("{", "{{").Replace("}", "}}");
+        var trimmedStr =
+            str.TrimStart(Environment.NewLine.ToCharArray())
+                .TrimEnd('\t', ' ');
 
-        public static string Dedent(this string str)
-        {
-            var trimmedStr =
-                str.TrimStart(Environment.NewLine.ToCharArray())
-                    .TrimEnd('\t', ' ');
-
-            var indentStr = string.Concat(trimmedStr.TakeWhile(char.IsWhiteSpace));
-            var lines = trimmedStr.Split(Environment.NewLine)
-                .Select(_ => _.StartsWith(indentStr) ? _.Substring(indentStr.Length) : _);
-            var result = lines.ToMultiLineString();
-            return result;
-        }
+        var indentStr = string.Concat(trimmedStr.TakeWhile(char.IsWhiteSpace));
+        var lines = trimmedStr.Split(Environment.NewLine)
+            .Select(_ => _.StartsWith(indentStr) ? _.Substring(indentStr.Length) : _);
+        var result = lines.ToMultiLineString();
+        return result;
     }
 }

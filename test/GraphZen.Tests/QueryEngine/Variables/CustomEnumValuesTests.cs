@@ -8,28 +8,13 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
+namespace GraphZen.Tests.QueryEngine.Variables;
 
-
-namespace GraphZen.Tests.QueryEngine.Variables
+public abstract class CustomEnumValuesTests : VariablesTests
 {
-    public abstract class CustomEnumValuesTests : VariablesTests
-    {
-        [UsedImplicitly]
-        private class StaticDslTests : CustomEnumValuesTests
-        {
-            public override Schema Schema => StaticDslSchema;
-        }
-
-        [UsedImplicitly]
-        public class SchemaBuilderTests : CustomEnumValuesTests
-        {
-            public override Schema Schema => SchemaBuilderSchema;
-        }
-
-
-        [Fact]
-        public Task AllowsCustomEnumValuesAsInputs() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task AllowsCustomEnumValuesAsInputs() =>
+        ExecuteAsync(@"
             {
               null: fieldWithEnumInput(input: NULL)
               negative: fieldWithEnumInput(input: NEGATIVE)
@@ -37,28 +22,39 @@ namespace GraphZen.Tests.QueryEngine.Variables
               customValue: fieldWithEnumInput(input: CUSTOM)
               defaultValue: fieldWithEnumInput(input: DEFAULT_VALUE)
             }").ShouldEqual(new
+        {
+            data = new
             {
-                data = new
-                {
-                    @null = "null",
-                    negative = "-1",
-                    boolean = "false",
-                    customValue = "\"custom value\"",
-                    defaultValue = "{}"
-                }
-            });
+                @null = "null",
+                negative = "-1",
+                boolean = "false",
+                customValue = "\"custom value\"",
+                defaultValue = "{}"
+            }
+        });
 
-        [Fact]
-        public Task AllowsNonNullableInputsToHaveNullAsCustomEnumValue() =>
-            ExecuteAsync(@"
+    [Fact]
+    public Task AllowsNonNullableInputsToHaveNullAsCustomEnumValue() =>
+        ExecuteAsync(@"
             {
               fieldWithNonNullableEnumInput(input: NULL)
             }").ShouldEqual(new
+        {
+            data = new
             {
-                data = new
-                {
-                    fieldWithNonNullableEnumInput = "null"
-                }
-            });
+                fieldWithNonNullableEnumInput = "null"
+            }
+        });
+
+    [UsedImplicitly]
+    private class StaticDslTests : CustomEnumValuesTests
+    {
+        public override Schema Schema => StaticDslSchema;
+    }
+
+    [UsedImplicitly]
+    public class SchemaBuilderTests : CustomEnumValuesTests
+    {
+        public override Schema Schema => SchemaBuilderSchema;
     }
 }

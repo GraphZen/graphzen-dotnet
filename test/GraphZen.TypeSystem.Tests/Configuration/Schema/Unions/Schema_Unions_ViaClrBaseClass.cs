@@ -6,60 +6,59 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Unions
+namespace GraphZen.TypeSystem.Tests.Configuration.Unions;
+
+// ReSharper disable once InconsistentNaming
+public class Schema_Unions_ViaClrBaseClass : Schema_Unions, ICollectionConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Schema_Unions_ViaClrBaseClass : Schema_Unions, ICollectionConventionConfigurationFixture
+    public const string DataAnnotationName = nameof(DataAnnotationName);
+
+    public CollectionConventionContext GetContext() =>
+        new()
+        {
+            ItemNamedByConvention = nameof(NamedByConvention),
+            ItemNamedByDataAnnotation = DataAnnotationName,
+            ItemIgnoredByConvention = nameof(IgnoredByConvention),
+            ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation)
+        };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
     {
-        public const string DataAnnotationName = nameof(DataAnnotationName);
+        sb.Object<Query>();
+    }
 
-        public CollectionConventionContext GetContext() =>
-            new CollectionConventionContext
-            {
-                ItemNamedByConvention = nameof(NamedByConvention),
-                ItemNamedByDataAnnotation = DataAnnotationName,
-                ItemIgnoredByConvention = nameof(IgnoredByConvention),
-                ItemIgnoredByDataAnnotation = nameof(IgnoredByDataAnnotation)
-            };
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Object<Query>();
+    }
 
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Object<Query>();
-        }
+    public class Query
+    {
+        public NamedByConvention? ConventionallyNamed { get; set; }
 
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Object<Query>();
-        }
+        [GraphQLIgnore] public IgnoredByConvention? IgnoredByConvention { get; set; }
 
-        public class Query
-        {
-            public NamedByConvention? ConventionallyNamed { get; set; }
+        public IgnoredByDataAnnotation? IgnoredByDataAnnotation { get; set; }
 
-            [GraphQLIgnore] public IgnoredByConvention? IgnoredByConvention { get; set; }
+        public NamedByDataAnnotation? NamedByDataAnnoation { get; set; }
+    }
 
-            public IgnoredByDataAnnotation? IgnoredByDataAnnotation { get; set; }
-
-            public NamedByDataAnnotation? NamedByDataAnnoation { get; set; }
-        }
-
-        public abstract class NamedByConvention
-        {
-        }
+    public abstract class NamedByConvention
+    {
+    }
 
 
-        [GraphQLName(DataAnnotationName)]
-        public abstract class NamedByDataAnnotation
-        {
-        }
+    [GraphQLName(DataAnnotationName)]
+    public abstract class NamedByDataAnnotation
+    {
+    }
 
-        public abstract class IgnoredByConvention
-        {
-        }
+    public abstract class IgnoredByConvention
+    {
+    }
 
-        [GraphQLIgnore]
-        public abstract class IgnoredByDataAnnotation
-        {
-        }
+    [GraphQLIgnore]
+    public abstract class IgnoredByDataAnnotation
+    {
     }
 }

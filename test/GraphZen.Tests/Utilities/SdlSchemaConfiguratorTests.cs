@@ -14,65 +14,65 @@ using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 using Xunit;
 
-namespace GraphZen.Tests.Utilities
+namespace GraphZen.Tests.Utilities;
+
+[NoReorder]
+public class SDLSchemaConfiguratorTests : ExecutorHarness
 {
-    [NoReorder]
-    public class SDLSchemaConfiguratorTests : ExecutorHarness
+    [Fact]
+    public Task ItCanUseBuiltSchemaForLimitedExecution()
     {
-        [Fact]
-        public Task ItCanUseBuiltSchemaForLimitedExecution()
-        {
-            var schema = Schema.Create(@"
+        var schema = Schema.Create(@"
                 type Query {
                   str: String
                 }
             ");
 
-            return ExecuteAsync(schema, " { str } ", new { str = 123 }).ShouldEqual(new
-            {
-                data = new
-                {
-                    str = "123"
-                }
-            });
-        }
-
-
-        [Fact]
-        public Task ItCanBuildSchemaDirectlyFromTheSource()
+        return ExecuteAsync(schema, " { str } ", new { str = 123 }).ShouldEqual(new
         {
-            var schema = Schema.Create(@"
+            data = new
+            {
+                str = "123"
+            }
+        });
+    }
+
+
+    [Fact]
+    public Task ItCanBuildSchemaDirectlyFromTheSource()
+    {
+        var schema = Schema.Create(@"
                 type Query {
                   add(x: Int, y: Int): Int
                 }
             ");
 
-            var root = new
-            {
-                add = (Func<dynamic, int>)(args => args.x + args.y)
-            };
-
-            return ExecuteAsync(schema, "{ add(x: 34, y: 55) }", root).ShouldEqual(new
-            {
-                data = new
-                {
-                    add = 89
-                }
-            });
-        }
-
-        private static void ShouldRoundTrip(string sdl, StringDiffOptions? options = null)
+        var root = new
         {
-            var body = sdl.Dedent();
-            var schema = Schema.Create(body);
-            var printed = schema.Print();
-            StringAssert.Equal(printed, body, options);
-        }
+            add = (Func<dynamic, int>)(args => args.x + args.y)
+        };
 
-        [Fact]
-        public void SimpleType()
+        return ExecuteAsync(schema, "{ add(x: 34, y: 55) }", root).ShouldEqual(new
         {
-            ShouldRoundTrip(@"
+            data = new
+            {
+                add = 89
+            }
+        });
+    }
+
+    private static void ShouldRoundTrip(string sdl, StringDiffOptions? options = null)
+    {
+        var body = sdl.Dedent();
+        var schema = Schema.Create(body);
+        var printed = schema.Print();
+        StringAssert.Equal(printed, body, options);
+    }
+
+    [Fact]
+    public void SimpleType()
+    {
+        ShouldRoundTrip(@"
           type Query {
             str: String
             int: Int
@@ -81,24 +81,24 @@ namespace GraphZen.Tests.Utilities
             bool: Boolean
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void WithDirectives()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void WithDirectives()
+    {
+        ShouldRoundTrip(@"
           directive @foo(arg: Int) on FIELD
 
           type Query {
             str: String
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void SupportsDescriptions()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void SupportsDescriptions()
+    {
+        ShouldRoundTrip(@"
               directive @foo(
                 """"""
                 It has an argument
@@ -125,44 +125,44 @@ namespace GraphZen.Tests.Utilities
                 str: String
               }
             ");
-        }
+    }
 
-        [Fact]
-        public void MaintainsSpecDirectives()
-        {
-            var body = @"
+    [Fact]
+    public void MaintainsSpecDirectives()
+    {
+        var body = @"
               type Query {
                 str: String
               }
             ".Dedent();
-            var schema = Schema.Create(body);
-            Assert.Equal(3, schema.Directives.Count);
-            Assert.Equal(SpecDirectives.Skip, schema.FindDirective("skip"));
-            Assert.Equal(SpecDirectives.Include, schema.FindDirective("include"));
-            Assert.Equal(SpecDirectives.Deprecated, schema.FindDirective("deprecated"));
-        }
+        var schema = Schema.Create(body);
+        Assert.Equal(3, schema.Directives.Count);
+        Assert.Equal(SpecDirectives.Skip, schema.FindDirective("skip"));
+        Assert.Equal(SpecDirectives.Include, schema.FindDirective("include"));
+        Assert.Equal(SpecDirectives.Deprecated, schema.FindDirective("deprecated"));
+    }
 
-        [Fact(Skip = "wip")]
-        public void ShouldCreateSchemaWithDeprecatedDirective()
-        {
-            var body = @"
+    [Fact(Skip = "wip")]
+    public void ShouldCreateSchemaWithDeprecatedDirective()
+    {
+        var body = @"
               type Query {
                 str: String @deprecated(reason: ""test"")
               }
             ".Dedent();
-            var schema = Schema.Create(body);
-            var expectedDirective = new GraphQLDeprecatedAttribute("test");
-            var field = schema.QueryType.GetField("str");
-            var actualDirective = field.FindDirectiveAnnotation("deprecated");
-            Assert.Equal(expectedDirective, actualDirective!.Value);
-            Assert.Equal("test", field.DeprecationReason);
-        }
+        var schema = Schema.Create(body);
+        var expectedDirective = new GraphQLDeprecatedAttribute("test");
+        var field = schema.QueryType.GetField("str");
+        var actualDirective = field.FindDirectiveAnnotation("deprecated");
+        Assert.Equal(expectedDirective, actualDirective!.Value);
+        Assert.Equal("test", field.DeprecationReason);
+    }
 
 
-        [Fact]
-        public void OverridingDirectivesExcludesSpecified()
-        {
-            var body = @"
+    [Fact]
+    public void OverridingDirectivesExcludesSpecified()
+    {
+        var body = @"
               directive @skip on FIELD
               directive @include on FIELD
               directive @deprecated on FIELD_DEFINITION
@@ -171,34 +171,34 @@ namespace GraphZen.Tests.Utilities
                 str: String
               }
             ".Dedent();
-            var schema = Schema.Create(body);
-            Assert.Equal(3, schema.Directives.Count);
-            Assert.NotEqual(SpecDirectives.Skip, schema.FindDirective("skip"));
-            Assert.NotEqual(SpecDirectives.Include, schema.FindDirective("include"));
-            Assert.NotEqual(SpecDirectives.Deprecated, schema.FindDirective("deprecated"));
-        }
+        var schema = Schema.Create(body);
+        Assert.Equal(3, schema.Directives.Count);
+        Assert.NotEqual(SpecDirectives.Skip, schema.FindDirective("skip"));
+        Assert.NotEqual(SpecDirectives.Include, schema.FindDirective("include"));
+        Assert.NotEqual(SpecDirectives.Deprecated, schema.FindDirective("deprecated"));
+    }
 
-        [Fact]
-        public void AddingDirectivesMaintainsSpecDirectives()
-        {
-            var body = @"
+    [Fact]
+    public void AddingDirectivesMaintainsSpecDirectives()
+    {
+        var body = @"
               directive @foo(arg: Int) on FIELD
 
               type Query {
                 str: String
               }
             ".Dedent();
-            var schema = Schema.Create(body);
-            Assert.Equal(4, schema.Directives.Count);
-            Assert.Equal(SpecDirectives.Skip, schema.FindDirective("skip"));
-            Assert.Equal(SpecDirectives.Include, schema.FindDirective("include"));
-            Assert.Equal(SpecDirectives.Deprecated, schema.FindDirective("deprecated"));
-        }
+        var schema = Schema.Create(body);
+        Assert.Equal(4, schema.Directives.Count);
+        Assert.Equal(SpecDirectives.Skip, schema.FindDirective("skip"));
+        Assert.Equal(SpecDirectives.Include, schema.FindDirective("include"));
+        Assert.Equal(SpecDirectives.Deprecated, schema.FindDirective("deprecated"));
+    }
 
-        [Fact]
-        public void TypeModifiers()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void TypeModifiers()
+    {
+        ShouldRoundTrip(@"
           type Query {
             nonNullStr: String!
             listOfStrs: [String]
@@ -207,23 +207,23 @@ namespace GraphZen.Tests.Utilities
             nonNullListOfNonNullStrs: [String!]!
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void RecursiveType()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void RecursiveType()
+    {
+        ShouldRoundTrip(@"
           type Query {
             str: String
             recurse: Query
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void TwoTypesCircular()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void TwoTypesCircular()
+    {
+        ShouldRoundTrip(@"
           schema {
             query: TypeOne
           }
@@ -238,12 +238,12 @@ namespace GraphZen.Tests.Utilities
             typeOne: TypeOne
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void SingleArgumentField()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void SingleArgumentField()
+    {
+        ShouldRoundTrip(@"
           type Query {
             str(int: Int): String
             floatToStr(float: Float): String
@@ -252,22 +252,22 @@ namespace GraphZen.Tests.Utilities
             strToStr(bool: String): String
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void SimpleTypeWithMultipleArguments()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void SimpleTypeWithMultipleArguments()
+    {
+        ShouldRoundTrip(@"
           type Query {
             str(int: Int, bool: Boolean): String
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void SimpleTypeWithInterface()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void SimpleTypeWithInterface()
+    {
+        ShouldRoundTrip(@"
           type Query implements WorldInterface {
             str: String
           }
@@ -276,12 +276,12 @@ namespace GraphZen.Tests.Utilities
             str: String
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void SimpleOutputEnum()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void SimpleOutputEnum()
+    {
+        ShouldRoundTrip(@"
           enum Hello {
             WORLD
           }
@@ -290,12 +290,12 @@ namespace GraphZen.Tests.Utilities
             hello: Hello
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void SimpleInputEnum()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void SimpleInputEnum()
+    {
+        ShouldRoundTrip(@"
           enum Hello {
             WORLD
           }
@@ -304,12 +304,12 @@ namespace GraphZen.Tests.Utilities
             str(hello: Hello): String
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void MultipleValueEnum()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void MultipleValueEnum()
+    {
+        ShouldRoundTrip(@"
           enum Hello {
             WO
             RLD
@@ -319,12 +319,12 @@ namespace GraphZen.Tests.Utilities
             hello: Hello
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void SimpleUnion()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void SimpleUnion()
+    {
+        ShouldRoundTrip(@"
           union Hello = World
 
           type Query {
@@ -335,12 +335,12 @@ namespace GraphZen.Tests.Utilities
             str: String
           }
       ");
-        }
+    }
 
-        [Fact]
-        public void MultipleUnion()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void MultipleUnion()
+    {
+        ShouldRoundTrip(@"
           union Hello = WorldOne | WorldTwo
 
           type Query {
@@ -355,17 +355,17 @@ namespace GraphZen.Tests.Utilities
             str: String
           }
         ");
-        }
+    }
 
-        [Fact(Skip = "needs schema validator")]
-        public void CanBuildRecursiveUnion()
-        {
-        }
+    [Fact(Skip = "needs schema validator")]
+    public void CanBuildRecursiveUnion()
+    {
+    }
 
-        [Fact]
-        public async Task SpecifyingUnionTypeUsing__typename()
-        {
-            var schema = Schema.Create(@"
+    [Fact]
+    public async Task SpecifyingUnionTypeUsing__typename()
+    {
+        var schema = Schema.Create(@"
               type Query {
                 fruits: [Fruit]
               }
@@ -381,7 +381,7 @@ namespace GraphZen.Tests.Utilities
               }
             ");
 
-            var query = @"
+        var query = @"
               {
                 fruits {
                   ... on Apple {
@@ -392,45 +392,45 @@ namespace GraphZen.Tests.Utilities
                   }
                 }
               }";
-            var root = new
+        var root = new
+        {
+            fruits = new object[]
+            {
+                new
+                {
+                    color = "green",
+                    __typename = "Apple"
+                },
+                new
+                {
+                    length = 5,
+                    __typename = "Banana"
+                }
+            }
+        };
+        await ExecuteAsync(schema, query, root).ShouldEqual(new
+        {
+            data = new
             {
                 fruits = new object[]
                 {
                     new
                     {
-                        color = "green",
-                        __typename = "Apple"
+                        color = "green"
                     },
                     new
                     {
-                        length = 5,
-                        __typename = "Banana"
+                        length = 5
                     }
                 }
-            };
-            await ExecuteAsync(schema, query, root).ShouldEqual(new
-            {
-                data = new
-                {
-                    fruits = new object[]
-                    {
-                        new
-                        {
-                            color = "green"
-                        },
-                        new
-                        {
-                            length = 5
-                        }
-                    }
-                }
-            });
-        }
+            }
+        });
+    }
 
-        [Fact]
-        public async Task SpecifyingInterfaceUsing__typename()
-        {
-            var schema = Schema.Create(@"
+    [Fact]
+    public async Task SpecifyingInterfaceUsing__typename()
+    {
+        var schema = Schema.Create(@"
               type Query {
                 characters: [Character]
               }
@@ -450,7 +450,7 @@ namespace GraphZen.Tests.Utilities
               }
             ");
 
-            var query = @"
+        var query = @"
               {
                 characters {
                   name
@@ -464,62 +464,62 @@ namespace GraphZen.Tests.Utilities
               }
             ";
 
-            var root = new
+        var root = new
+        {
+            characters = new object[]
+            {
+                new
+                {
+                    name = "Han Solo",
+                    totalCredits = 10,
+                    __typename = "Human"
+                },
+                new
+                {
+                    name = "R2-D2",
+                    primaryFunction = "Astromech",
+                    __typename = "Droid"
+                }
+            }
+        };
+
+        await ExecuteAsync(schema, query, root).ShouldEqual(new
+        {
+            data = new
             {
                 characters = new object[]
                 {
                     new
                     {
                         name = "Han Solo",
-                        totalCredits = 10,
-                        __typename = "Human"
+                        totalCredits = 10
                     },
                     new
                     {
                         name = "R2-D2",
-                        primaryFunction = "Astromech",
-                        __typename = "Droid"
+                        primaryFunction = "Astromech"
                     }
                 }
-            };
+            }
+        });
+    }
 
-            await ExecuteAsync(schema, query, root).ShouldEqual(new
-            {
-                data = new
-                {
-                    characters = new object[]
-                    {
-                        new
-                        {
-                            name = "Han Solo",
-                            totalCredits = 10
-                        },
-                        new
-                        {
-                            name = "R2-D2",
-                            primaryFunction = "Astromech"
-                        }
-                    }
-                }
-            });
-        }
-
-        [Fact]
-        public void CustomScalar()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void CustomScalar()
+    {
+        ShouldRoundTrip(@"
           scalar CustomScalar
 
           type Query {
             customScalar: CustomScalar
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void InputObject()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void InputObject()
+    {
+        ShouldRoundTrip(@"
           input Input {
             int: Int
           }
@@ -528,34 +528,34 @@ namespace GraphZen.Tests.Utilities
             field(in: Input): String
           }
         ");
-        }
+    }
 
-        [Fact(Skip = "TODO")]
-        public void SimpleArgumentFieldWithDefault()
-        {
-            ShouldRoundTrip(@"
+    [Fact(Skip = "TODO")]
+    public void SimpleArgumentFieldWithDefault()
+    {
+        ShouldRoundTrip(@"
           type Query {
             str(int: Int = 2): String
           }
         ");
-        }
+    }
 
-        [Fact(Skip = "TODO")]
-        public void CustomScalarArgumentWithDefault()
-        {
-            ShouldRoundTrip(@"
+    [Fact(Skip = "TODO")]
+    public void CustomScalarArgumentWithDefault()
+    {
+        ShouldRoundTrip(@"
           scalar CustomScalar
 
           type Query {
             str(int: CustomScalar = 2): String
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void SimpleTypeWithMutation()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void SimpleTypeWithMutation()
+    {
+        ShouldRoundTrip(@"
           schema {
             query: HelloScalars
             mutation: Mutation
@@ -571,12 +571,12 @@ namespace GraphZen.Tests.Utilities
             addHelloScalars(str: String, int: Int, bool: Boolean): HelloScalars
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void SimpleTypeWithSubscription()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void SimpleTypeWithSubscription()
+    {
+        ShouldRoundTrip(@"
           schema {
             query: HelloScalars
             subscription: Subscription
@@ -592,12 +592,12 @@ namespace GraphZen.Tests.Utilities
             subscribeHelloScalars(str: String, int: Int, bool: Boolean): HelloScalars
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void UnreferencedTypeImplementingReferencedInterface()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void UnreferencedTypeImplementingReferencedInterface()
+    {
+        ShouldRoundTrip(@"
           type Concrete implements Iface {
             key: String
           }
@@ -610,12 +610,12 @@ namespace GraphZen.Tests.Utilities
             iface: Iface
           }
         ");
-        }
+    }
 
-        [Fact]
-        public void UnreferencedTypeImplementingReferencedUnion()
-        {
-            ShouldRoundTrip(@"
+    [Fact]
+    public void UnreferencedTypeImplementingReferencedUnion()
+    {
+        ShouldRoundTrip(@"
           type Concrete {
             key: String
           }
@@ -626,12 +626,12 @@ namespace GraphZen.Tests.Utilities
 
           union Union = Concrete
         ");
-        }
+    }
 
-        [Fact(Skip = "TODO")]
-        public void SupportsDeprecated()
-        {
-            var body = @"
+    [Fact(Skip = "TODO")]
+    public void SupportsDeprecated()
+    {
+        var body = @"
               enum MyEnum {
                 VALUE
                 OLD_VALUE @deprecated
@@ -644,13 +644,13 @@ namespace GraphZen.Tests.Utilities
                 enum: MyEnum
               }
             ";
-            ShouldRoundTrip(body);
-        }
+        ShouldRoundTrip(body);
+    }
 
-        [Fact]
-        public void CorrectlyAssignASTNodes()
-        {
-            var schemaAST = Parser.ParseDocument(@"
+    [Fact]
+    public void CorrectlyAssignASTNodes()
+    {
+        var schemaAST = Parser.ParseDocument(@"
               schema {
                 query: Query
               }
@@ -681,48 +681,48 @@ namespace GraphZen.Tests.Utilities
 
               directive @test(arg: TestScalar) on FIELD
             ");
-            var schema = Schema.Create(schemaAST);
+        var schema = Schema.Create(schemaAST);
 
-            var query = schema.GetObject("Query");
-            var testInput = schema.GetInputObject("TestInput");
-            var testEnum = schema.GetEnum("TestEnum");
-            var testUnion = schema.GetUnion("TestUnion");
-            var testInterface = schema.GetInterface("TestInterface");
-            var testType = schema.GetObject("TestType");
-            var testScalar = schema.GetScalar("TestScalar");
-            var testDirective = schema.FindDirective("test");
+        var query = schema.GetObject("Query");
+        var testInput = schema.GetInputObject("TestInput");
+        var testEnum = schema.GetEnum("TestEnum");
+        var testUnion = schema.GetUnion("TestUnion");
+        var testInterface = schema.GetInterface("TestInterface");
+        var testType = schema.GetObject("TestType");
+        var testScalar = schema.GetScalar("TestScalar");
+        var testDirective = schema.FindDirective("test");
 
 
-            var restoredSchemaAST = SyntaxFactory.Document(
-                new ISyntaxConvertable[]
-                {
-                    schema,
-                    query,
-                    testInput,
-                    testEnum,
-                    testUnion,
-                    testInterface,
-                    testType,
-                    testScalar,
-                    testDirective!
-                }.ToSyntaxNodes<DefinitionSyntax>().ToArray()
-            );
-            Assert.Equal(schemaAST.ToSyntaxString(), restoredSchemaAST.ToSyntaxString());
-            var testField = query.Fields["testField"];
-            Assert.Equal("testField(testArg: TestInput): TestUnion", testField.Print());
-            Assert.Equal("testArg: TestInput", testField.GetArguments().First().Print());
-            Assert.Equal("testInputField: TestEnum", testInput.Fields["testInputField"].Print());
-            Assert.Equal("TEST_VALUE", testEnum.GetValue("TEST_VALUE").Print());
-            Assert.Equal("interfaceField: String", testInterface.Fields["interfaceField"].Print());
-            Assert.Equal("interfaceField: String", testType.Fields["interfaceField"].Print());
-            // ReSharper disable once PossibleNullReferenceException
-            Assert.Equal("arg: TestScalar", testDirective!.GetArguments().First().Print());
-        }
+        var restoredSchemaAST = SyntaxFactory.Document(
+            new ISyntaxConvertable[]
+            {
+                schema,
+                query,
+                testInput,
+                testEnum,
+                testUnion,
+                testInterface,
+                testType,
+                testScalar,
+                testDirective!
+            }.ToSyntaxNodes<DefinitionSyntax>().ToArray()
+        );
+        Assert.Equal(schemaAST.ToSyntaxString(), restoredSchemaAST.ToSyntaxString());
+        var testField = query.Fields["testField"];
+        Assert.Equal("testField(testArg: TestInput): TestUnion", testField.Print());
+        Assert.Equal("testArg: TestInput", testField.GetArguments().First().Print());
+        Assert.Equal("testInputField: TestEnum", testInput.Fields["testInputField"].Print());
+        Assert.Equal("TEST_VALUE", testEnum.GetValue("TEST_VALUE").Print());
+        Assert.Equal("interfaceField: String", testInterface.Fields["interfaceField"].Print());
+        Assert.Equal("interfaceField: String", testType.Fields["interfaceField"].Print());
+        // ReSharper disable once PossibleNullReferenceException
+        Assert.Equal("arg: TestScalar", testDirective!.GetArguments().First().Print());
+    }
 
-        [Fact]
-        public void RootOperationTypesWithCustomNames()
-        {
-            var schema = Schema.Create(@"
+    [Fact]
+    public void RootOperationTypesWithCustomNames()
+    {
+        var schema = Schema.Create(@"
               schema {
                 query: SomeQuery
                 mutation: SomeMutation
@@ -732,38 +732,37 @@ namespace GraphZen.Tests.Utilities
               type SomeMutation { str: String }
               type SomeSubscription { str: String }
             ");
-            Assert.Equal("SomeQuery", schema.QueryType.Name);
-            Assert.Equal("SomeMutation", schema.MutationType?.Name);
-            Assert.Equal("SomeSubscription", schema.SubscriptionType?.Name);
-        }
+        Assert.Equal("SomeQuery", schema.QueryType.Name);
+        Assert.Equal("SomeMutation", schema.MutationType?.Name);
+        Assert.Equal("SomeSubscription", schema.SubscriptionType?.Name);
+    }
 
-        [Fact]
-        public void DefaultRootOperationTypeNames()
-        {
-            var schema = Schema.Create(@"
+    [Fact]
+    public void DefaultRootOperationTypeNames()
+    {
+        var schema = Schema.Create(@"
               type Query { str: String }
               type Mutation { str: String }
               type Subscription { str: String }
             ");
 
-            Assert.Equal("Query", schema.QueryType.Name);
-            Assert.Equal("Mutation", schema.MutationType?.Name);
-            Assert.Equal("Subscription", schema.SubscriptionType?.Name);
-        }
+        Assert.Equal("Query", schema.QueryType.Name);
+        Assert.Equal("Mutation", schema.MutationType?.Name);
+        Assert.Equal("Subscription", schema.SubscriptionType?.Name);
+    }
 
-        [Fact(Skip = "TODO - requires schema validation")]
-        public void CanBuildInvalidSchema()
-        {
-        }
+    [Fact(Skip = "TODO - requires schema validation")]
+    public void CanBuildInvalidSchema()
+    {
+    }
 
-        [Fact(Skip = "TODO - may not implement")]
-        public void AcceptsLegacyNames()
-        {
-        }
+    [Fact(Skip = "TODO - may not implement")]
+    public void AcceptsLegacyNames()
+    {
+    }
 
-        [Fact(Skip = "TODO")]
-        public void RejectsInvalidSDL()
-        {
-        }
+    [Fact(Skip = "TODO")]
+    public void RejectsInvalidSDL()
+    {
     }
 }

@@ -7,10 +7,9 @@ using GraphZen.TypeSystem.Internal;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
-{
-    public delegate string TypeResolver<in TSource, in TContext>(TSource value, TContext context,
-        ResolveInfo info) where TContext : GraphQLContext;
+namespace GraphZen.TypeSystem;
 
-    public delegate IGraphQLType TypeResolver(IGraphQLTypeReference typeReference);
-}
+public delegate string TypeResolver<in TSource, in TContext>(TSource value, TContext context,
+    ResolveInfo info) where TContext : GraphQLContext;
+
+public delegate IGraphQLType TypeResolver(IGraphQLTypeReference typeReference);

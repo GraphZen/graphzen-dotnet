@@ -5,14 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel.Validation;
 
-
-namespace GraphZen.LanguageModel.Validation
+public abstract class DocumentValidationRuleVisitor : ValidationRuleVisitor
 {
-    public abstract class DocumentValidationRuleVisitor : ValidationRuleVisitor
+    protected DocumentValidationRuleVisitor(DocumentValidationContext context) : base(context)
     {
-        protected DocumentValidationRuleVisitor(DocumentValidationContext context) : base(context)
-        {
-        }
     }
 }

@@ -8,62 +8,57 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel.Validation.Rules;
 
-
-namespace GraphZen.LanguageModel.Validation.Rules
+public class ObjectsMustHaveFields : ValidationRuleVisitor
 {
-    public class ObjectsMustHaveFields : ValidationRuleVisitor
+    private readonly Dictionary<string, ICollection<ObjectTypeDefinitionSyntax>> _objectDefs = new();
+
+
+    private readonly Dictionary<string, ICollection<ObjectTypeExtensionSyntax>> _objectExts = new();
+
+    public ObjectsMustHaveFields(ValidationContext context) : base(context)
     {
-        private readonly Dictionary<string, ICollection<ObjectTypeDefinitionSyntax>> _objectDefs =
-            new Dictionary<string, ICollection<ObjectTypeDefinitionSyntax>>();
+    }
 
+    public override VisitAction EnterObjectTypeDefinition(ObjectTypeDefinitionSyntax node)
+    {
+        _objectDefs.AddItem(node.Name.Value, node);
+        return false;
+    }
 
-        private readonly Dictionary<string, ICollection<ObjectTypeExtensionSyntax>> _objectExts =
-            new Dictionary<string, ICollection<ObjectTypeExtensionSyntax>>();
+    public override VisitAction EnterObjectTypeExtension(ObjectTypeExtensionSyntax node)
+    {
+        _objectExts.AddItem(node.Name.Value, node);
+        return false;
+    }
 
-        public ObjectsMustHaveFields(ValidationContext context) : base(context)
+    public override VisitAction LeaveDocument(DocumentSyntax node)
+    {
+        foreach (var objectDef in _objectDefs)
         {
-        }
-
-        public override VisitAction EnterObjectTypeDefinition(ObjectTypeDefinitionSyntax node)
-        {
-            _objectDefs.AddItem(node.Name.Value, node);
-            return false;
-        }
-
-        public override VisitAction EnterObjectTypeExtension(ObjectTypeExtensionSyntax node)
-        {
-            _objectExts.AddItem(node.Name.Value, node);
-            return false;
-        }
-
-        public override VisitAction LeaveDocument(DocumentSyntax node)
-        {
-            foreach (var objectDef in _objectDefs)
-            {
-                var objectTypeName = objectDef.Key;
-                Debug.Assert(objectTypeName != null, nameof(objectTypeName) + " != null");
-                Debug.Assert(objectDef.Value != null);
-                var objectTypeNode = objectDef.Value.First();
-                var extensionNodes = _objectExts.GetItems(objectTypeName).ToList();
-                Debug.Assert(objectTypeNode != null, nameof(objectTypeNode) + " != null");
-                if (!objectTypeNode.Fields.Any() && !extensionNodes.SelectMany(n =>
+            var objectTypeName = objectDef.Key;
+            Debug.Assert(objectTypeName != null, nameof(objectTypeName) + " != null");
+            Debug.Assert(objectDef.Value != null);
+            var objectTypeNode = objectDef.Value.First();
+            var extensionNodes = _objectExts.GetItems(objectTypeName).ToList();
+            Debug.Assert(objectTypeNode != null, nameof(objectTypeNode) + " != null");
+            if (!objectTypeNode.Fields.Any() && !extensionNodes.SelectMany(n =>
                 {
                     Debug.Assert(n != null, nameof(n) + " != null");
                     return n.Fields;
                 }).Any())
+            {
+                var nodes = new List<SyntaxNode>
                 {
-                    var nodes = new List<SyntaxNode>
-                    {
-                        objectTypeNode.Name
-                    };
-                    // ReSharper disable once PossibleNullReferenceException
-                    nodes.AddRange(extensionNodes.Select(_ => _.Name));
-                    ReportError($"Type {objectTypeName} must define one or more fields.", nodes);
-                }
+                    objectTypeNode.Name
+                };
+                // ReSharper disable once PossibleNullReferenceException
+                nodes.AddRange(extensionNodes.Select(_ => _.Name));
+                ReportError($"Type {objectTypeName} must define one or more fields.", nodes);
             }
-
-            return false;
         }
+
+        return false;
     }
 }

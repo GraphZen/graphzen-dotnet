@@ -10,42 +10,41 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem
+namespace GraphZen.TypeSystem;
+
+public class InputField : InputValue, IInputField
 {
-    public class InputField : InputValue, IInputField
+    public InputField(
+        string name,
+        string? description,
+        IGraphQLTypeReference? type,
+        object? defaultValue,
+        bool hasDefaultValue,
+        IReadOnlyList<IDirectiveAnnotation> directives,
+        TypeResolver typeResolver, PropertyInfo? clrInfo, InputObjectType inputObject) :
+        base(name, description, type,
+            defaultValue, hasDefaultValue,
+            Check.NotNull(directives, nameof(directives)),
+            Check.NotNull(typeResolver, nameof(typeResolver)), clrInfo, inputObject)
     {
-        public InputField(
-            string name,
-            string? description,
-            IGraphQLTypeReference? type,
-            object? defaultValue,
-            bool hasDefaultValue,
-            IReadOnlyList<IDirectiveAnnotation> directives,
-            TypeResolver typeResolver, PropertyInfo? clrInfo, InputObjectType inputObject) :
-            base(name, description, type,
-                defaultValue, hasDefaultValue,
-                Check.NotNull(directives, nameof(directives)),
-                Check.NotNull(typeResolver, nameof(typeResolver)), clrInfo, inputObject)
-        {
-        }
+    }
 
-        public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputFieldDefinition;
+    public override DirectiveLocation DirectiveLocation { get; } = DirectiveLocation.InputFieldDefinition;
 
-        public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
-        IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
+    public new PropertyInfo? ClrInfo => base.ClrInfo as PropertyInfo;
+    IInputObjectTypeDefinition IInputFieldDefinition.DeclaringMember => DeclaringMember;
 
-        public new InputObjectType DeclaringMember => (InputObjectType)base.DeclaringMember;
+    public new InputObjectType DeclaringMember => (InputObjectType)base.DeclaringMember;
 
 
-        public static InputField From(IInputFieldDefinition definition, TypeResolver typeResolver,
-            InputObjectType declaringType)
-        {
-            Check.NotNull(definition, nameof(definition));
-            Check.NotNull(typeResolver, nameof(typeResolver));
-            return new InputField(definition.Name, definition.Description, definition.InputType,
-                definition.DefaultValue, definition.HasDefaultValue, definition.GetDirectiveAnnotations().ToList(),
-                typeResolver,
-                definition.ClrInfo, declaringType);
-        }
+    public static InputField From(IInputFieldDefinition definition, TypeResolver typeResolver,
+        InputObjectType declaringType)
+    {
+        Check.NotNull(definition, nameof(definition));
+        Check.NotNull(typeResolver, nameof(typeResolver));
+        return new InputField(definition.Name, definition.Description, definition.InputType,
+            definition.DefaultValue, definition.HasDefaultValue, definition.GetDirectiveAnnotations().ToList(),
+            typeResolver,
+            definition.ClrInfo, declaringType);
     }
 }

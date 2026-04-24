@@ -5,11 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.Infrastructure
+namespace GraphZen.Infrastructure;
+
+public interface IGraphQLContextOptionsBuilderInfrastructure
 {
-    public interface IGraphQLContextOptionsBuilderInfrastructure
-    {
-        void AddOrUpdateExtension<TExtension>([NotNull] TExtension extension)
-            where TExtension : class, IGraphQLContextOptionsExtension;
-    }
+    void AddOrUpdateExtension<TExtension>([NotNull] TExtension extension)
+        where TExtension : class, IGraphQLContextOptionsExtension;
 }

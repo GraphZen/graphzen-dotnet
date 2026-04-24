@@ -5,12 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.QueryEngine.Validation.Rules
+namespace GraphZen.QueryEngine.Validation.Rules;
+
+public class OverlappingFieldsCanBeMerged : QueryValidationRuleVisitor
 {
-    public class OverlappingFieldsCanBeMerged : QueryValidationRuleVisitor
+    public OverlappingFieldsCanBeMerged(QueryValidationContext context) : base(context)
     {
-        public OverlappingFieldsCanBeMerged(QueryValidationContext context) : base(context)
-        {
-        }
     }
 }

@@ -7,13 +7,12 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
-{
-    public interface IMutableLiteralParserDefinition : ILiteralParserDefinition
-    {
-        ConfigurationSource? GetLiteralParserConfigurationSource();
+namespace GraphZen.TypeSystem.Taxonomy;
 
-        bool SetLiteralParser(LeafLiteralParser<object, ValueSyntax>? literalParser,
-            ConfigurationSource configurationSource);
-    }
+public interface IMutableLiteralParserDefinition : ILiteralParserDefinition
+{
+    ConfigurationSource? GetLiteralParserConfigurationSource();
+
+    bool SetLiteralParser(LeafLiteralParser<object, ValueSyntax>? literalParser,
+        ConfigurationSource configurationSource);
 }

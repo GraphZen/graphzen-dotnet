@@ -6,40 +6,37 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+/// <summary>
+///     Type reference
+///     http://facebook.github.io/graphql/June2018/#Type
+/// </summary>
+public abstract class TypeSyntax : SyntaxNode
 {
-    /// <summary>
-    ///     Type reference
-    ///     http://facebook.github.io/graphql/June2018/#Type
-    /// </summary>
-    public abstract class TypeSyntax : SyntaxNode
+    protected TypeSyntax(SyntaxLocation? location) : base(location)
     {
-        protected TypeSyntax(SyntaxLocation? location) : base(location)
-        {
-        }
+    }
 
 
-        public NamedTypeSyntax GetNamedType()
+    public NamedTypeSyntax GetNamedType()
+    {
+        TypeSyntax FindNamedType(TypeSyntax node)
         {
-            TypeSyntax FindNamedType(TypeSyntax node)
+            switch (node)
             {
-                switch (node)
-                {
-                    case NamedTypeSyntax named:
-                        return named;
-                    case ListTypeSyntax lt:
-                        return FindNamedType(lt.OfType);
-                    case NonNullTypeSyntax nn:
-                        return FindNamedType(nn.OfType);
-                }
-
-                throw new Exception($"Unable to identity named type for node {this}");
+                case NamedTypeSyntax named:
+                    return named;
+                case ListTypeSyntax lt:
+                    return FindNamedType(lt.OfType);
+                case NonNullTypeSyntax nn:
+                    return FindNamedType(nn.OfType);
             }
 
-
-            return (NamedTypeSyntax)FindNamedType(this);
+            throw new Exception($"Unable to identity named type for node {this}");
         }
+
+
+        return (NamedTypeSyntax)FindNamedType(this);
     }
 }

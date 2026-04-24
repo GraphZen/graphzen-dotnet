@@ -8,56 +8,53 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
+namespace GraphZen.LanguageModel;
 
-
-namespace GraphZen.LanguageModel
+/// <summary>
+///     Directive
+///     http://facebook.github.io/graphql/June2018/#Directive
+/// </summary>
+public partial class DirectiveSyntax : SyntaxNode, IArgumentsNode, INamedSyntax
 {
-    /// <summary>
-    ///     Directive
-    ///     http://facebook.github.io/graphql/June2018/#Directive
-    /// </summary>
-    public partial class DirectiveSyntax : SyntaxNode, IArgumentsNode, INamedSyntax
+    public DirectiveSyntax(NameSyntax name,
+        IReadOnlyList<ArgumentSyntax>? arguments = null,
+        SyntaxLocation? location = null) : base(location)
     {
-        public DirectiveSyntax(NameSyntax name,
-            IReadOnlyList<ArgumentSyntax>? arguments = null,
-            SyntaxLocation? location = null) : base(location)
+        Name = Check.NotNull(name, nameof(name));
+        Arguments = arguments ?? ArgumentSyntax.EmptyList.ToList().AsReadOnly();
+    }
+
+    public override IEnumerable<SyntaxNode> Children =>
+        Name.ToEnumerable().Concat(Arguments);
+
+
+    /// <summary>
+    ///     Directive arguments. (Optional)
+    /// </summary>
+    public IReadOnlyList<ArgumentSyntax> Arguments { get; }
+
+    /// <summary>
+    ///     The name of the directive.
+    /// </summary>
+    public NameSyntax Name { get; }
+
+    private bool Equals(DirectiveSyntax other) =>
+        Name.Equals(other.Name) && Arguments.SequenceEqual(other.Arguments);
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+
+        if (ReferenceEquals(this, obj)) return true;
+
+        return obj is DirectiveSyntax && Equals((DirectiveSyntax)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
         {
-            Name = Check.NotNull(name, nameof(name));
-            Arguments = arguments ?? ArgumentSyntax.EmptyList.ToList().AsReadOnly();
-        }
-
-        public override IEnumerable<SyntaxNode> Children =>
-            Name.ToEnumerable().Concat(Arguments);
-
-
-        /// <summary>
-        ///     Directive arguments. (Optional)
-        /// </summary>
-        public IReadOnlyList<ArgumentSyntax> Arguments { get; }
-
-        /// <summary>
-        ///     The name of the directive.
-        /// </summary>
-        public NameSyntax Name { get; }
-
-        private bool Equals(DirectiveSyntax other) =>
-            Name.Equals(other.Name) && Arguments.SequenceEqual(other.Arguments);
-
-        public override bool Equals(object? obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-
-            if (ReferenceEquals(this, obj)) return true;
-
-            return obj is DirectiveSyntax && Equals((DirectiveSyntax)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (Name.GetHashCode() * 397) ^ Arguments.GetHashCode();
-            }
+            return (Name.GetHashCode() * 397) ^ Arguments.GetHashCode();
         }
     }
 }

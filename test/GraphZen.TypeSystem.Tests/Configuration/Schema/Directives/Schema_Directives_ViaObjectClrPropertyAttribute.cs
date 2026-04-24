@@ -9,49 +9,47 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Tests.Configuration.Infrastructure;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Tests.Configuration.Directives
+namespace GraphZen.TypeSystem.Tests.Configuration.Directives;
+
+// ReSharper disable once InconsistentNaming
+public class Schema_Directives_ViaObjectClrPropertyAttribute : Schema_Directives,
+    ICollectionConventionConfigurationFixture
 {
-    // ReSharper disable once InconsistentNaming
-    public class Schema_Directives_ViaObjectClrPropertyAttribute : Schema_Directives,
-        ICollectionConventionConfigurationFixture
+    public CollectionConventionContext GetContext() => new()
     {
-        [GraphQLName("hello")]
-        public class FieldDefinitionTwoAttribute : Attribute, IGraphQLDirective
+        ItemNamedByConvention = nameof(FieldDefinition),
+        ItemNamedByDataAnnotation = "hello"
+    };
+
+    public void ConfigureContextConventionally(SchemaBuilder sb)
+    {
+        sb.Object<FooObject>();
+    }
+
+    public void ConfigureClrContext(SchemaBuilder sb, string parentName)
+    {
+        sb.Object<FooObject>();
+    }
+
+    [GraphQLName("hello")]
+    public class FieldDefinitionTwoAttribute : Attribute, IGraphQLDirective
+    {
+        public IEnumerable<DirectiveLocation> GetDirectiveLocations()
         {
-            public IEnumerable<DirectiveLocation> GetDirectiveLocations()
-            {
-                yield return DirectiveLocation.FieldDefinition;
-            }
+            yield return DirectiveLocation.FieldDefinition;
         }
+    }
 
-        public class FieldDefinitionAttribute : Attribute, IGraphQLDirective
+    public class FieldDefinitionAttribute : Attribute, IGraphQLDirective
+    {
+        public IEnumerable<DirectiveLocation> GetDirectiveLocations()
         {
-            public IEnumerable<DirectiveLocation> GetDirectiveLocations()
-            {
-                yield return DirectiveLocation.FieldDefinition;
-            }
+            yield return DirectiveLocation.FieldDefinition;
         }
+    }
 
-        public class FooObject
-        {
-            [FieldDefinition] public string? Bar { get; set; }
-        }
-
-
-        public CollectionConventionContext GetContext() => new CollectionConventionContext
-        {
-            ItemNamedByConvention = nameof(FieldDefinition),
-            ItemNamedByDataAnnotation = "hello"
-        };
-
-        public void ConfigureContextConventionally(SchemaBuilder sb)
-        {
-            sb.Object<FooObject>();
-        }
-
-        public void ConfigureClrContext(SchemaBuilder sb, string parentName)
-        {
-            sb.Object<FooObject>();
-        }
+    public class FooObject
+    {
+        [FieldDefinition] public string? Bar { get; set; }
     }
 }

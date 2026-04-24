@@ -6,11 +6,10 @@ using GraphZen.Infrastructure;
 using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 
-namespace GraphZen.TypeSystem.Taxonomy
+namespace GraphZen.TypeSystem.Taxonomy;
+
+public interface IMutableSerializerDefinition : ISerializerDefinition
 {
-    public interface IMutableSerializerDefinition : ISerializerDefinition
-    {
-        ConfigurationSource? GetSerializerConfigurationSource();
-        bool SetSerializer(LeafSerializer<object>? serializer, ConfigurationSource configurationSource);
-    }
+    ConfigurationSource? GetSerializerConfigurationSource();
+    bool SetSerializer(LeafSerializer<object>? serializer, ConfigurationSource configurationSource);
 }
