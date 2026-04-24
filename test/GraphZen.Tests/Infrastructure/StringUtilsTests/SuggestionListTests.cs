@@ -7,7 +7,6 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.Infrastructure.StringUtils;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.Infrastructure.StringUtilsTests

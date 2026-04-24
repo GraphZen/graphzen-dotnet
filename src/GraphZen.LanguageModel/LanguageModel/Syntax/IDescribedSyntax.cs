@@ -5,13 +5,12 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
 {
     public interface IDescribedSyntax
     {
-        StringValueSyntax Description { get; }
+        StringValueSyntax? Description { get; }
     }
 }

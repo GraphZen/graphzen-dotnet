@@ -8,7 +8,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -22,7 +21,7 @@ namespace GraphZen.LanguageModel.Internal
                     SyntaxLocation.FromMany(nodes
                         .Where(n => n != null)
                         .Where(n => n.Location != null)
-                        .Select(n => n.Location).ToArray()))
+                        .Select(n => n.Location!).ToArray()))
                 : new LocationContainer(null);
         }
 
@@ -57,12 +56,12 @@ namespace GraphZen.LanguageModel.Internal
 
         private struct LocationContainer : ISyntaxNodeLocation
         {
-            public LocationContainer(SyntaxLocation location)
+            public LocationContainer(SyntaxLocation? location)
             {
                 Location = location;
             }
 
-            public SyntaxLocation Location { get; }
+            public SyntaxLocation? Location { get; }
         }
     }
 }

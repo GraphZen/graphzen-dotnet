@@ -10,8 +10,6 @@ using GraphZen.QueryEngine;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-#nullable disable
-
 
 // ReSharper disable UnusedMember.Local
 // ReSharper disable UnassignedGetOnlyAutoProperty
@@ -20,12 +18,12 @@ namespace GraphZen.Tests.QueryEngine.Variables
 {
     public abstract class VariablesTests
     {
-        private static EnumType TestEnum { get; }
-        private static ScalarType TestComplexScalar { get; }
-        private static InputObjectType TestInputObject { get; }
-        private static InputObjectType TestNestedInputObject { get; }
-        private static ObjectType TestType { get; }
-        protected static Schema StaticDslSchema { get; }
+        private static EnumType TestEnum { get; } = null!;
+        private static ScalarType TestComplexScalar { get; } = null!;
+        private static InputObjectType TestInputObject { get; } = null!;
+        private static InputObjectType TestNestedInputObject { get; } = null!;
+        private static ObjectType TestType { get; } = null!;
+        protected static Schema StaticDslSchema { get; } = null!;
 
         public abstract Schema Schema { get; }
 
@@ -34,10 +32,10 @@ namespace GraphZen.Tests.QueryEngine.Variables
 
         public static VariablesTestsGraphQLContext GraphQLContext => new VariablesTestsGraphQLContext();
 
-        public static object[] Array(params object[] values) => values;
+        public static object[] Array(params object?[] values) => values!;
 
 
-        protected Task<ExecutionResult> ExecuteAsync(string gql, dynamic variableValues = null)
+        protected Task<ExecutionResult> ExecuteAsync(string gql, dynamic? variableValues = null)
         {
             var varValues = variableValues != null
                 ? TestHelpers.ToDictionary(variableValues)

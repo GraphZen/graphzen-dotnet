@@ -11,8 +11,6 @@ using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
 
 namespace GraphZen.Tests.Infrastructure.Extensions
 {
@@ -27,7 +25,7 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         [Theory]
         [InlineData(typeof(int), false, null)]
         [InlineData(typeof(int?), true, typeof(int))]
-        public void TryGetNullableType_ShouldGetNullableType(Type input, bool isNullable, Type expectedNullableType)
+        public void TryGetNullableType_ShouldGetNullableType(Type input, bool isNullable, Type? expectedNullableType)
         {
             var result = input.TryGetNullableType(out var nullableClrType);
             Assert.Equal(isNullable, result);
@@ -44,7 +42,7 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         [InlineData(typeof(IReadOnlyList<List<string[]>>), typeof(List<string[]>))]
         [InlineData(typeof(List<List<List<string>>>), typeof(List<List<string>>))]
         [InlineData(typeof(string), null)]
-        public void try_get_list_item_type_should_get_item_time(Type maybeListType, Type expectedItemType)
+        public void try_get_list_item_type_should_get_item_time(Type maybeListType, Type? expectedItemType)
         {
             Assert.Equal(expectedItemType != null, maybeListType.TryGetListItemType(out var itemType));
             Assert.Equal(expectedItemType, itemType);
@@ -55,7 +53,7 @@ namespace GraphZen.Tests.Infrastructure.Extensions
         [InlineData(typeof(Task), null)]
         [InlineData(typeof(string), null)]
         [InlineData(typeof(Task<Dictionary<string, string>>), typeof(Dictionary<string, string>))]
-        public void try_get_task_result_type_should_get_task_result_type(Type clrType, Type expectedTaskType)
+        public void try_get_task_result_type_should_get_task_result_type(Type clrType, Type? expectedTaskType)
         {
             Assert.Equal(expectedTaskType != null, clrType.TryGetTaskResultType(out var resultType));
 

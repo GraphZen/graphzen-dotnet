@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -20,8 +19,8 @@ namespace GraphZen.LanguageModel
     public partial class DirectiveSyntax : SyntaxNode, IArgumentsNode, INamedSyntax
     {
         public DirectiveSyntax(NameSyntax name,
-            IReadOnlyList<ArgumentSyntax> arguments = null,
-            SyntaxLocation location = null) : base(location)
+            IReadOnlyList<ArgumentSyntax>? arguments = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Arguments = arguments ?? ArgumentSyntax.EmptyList.ToList().AsReadOnly();
@@ -44,7 +43,7 @@ namespace GraphZen.LanguageModel
         private bool Equals(DirectiveSyntax other) =>
             Name.Equals(other.Name) && Arguments.SequenceEqual(other.Arguments);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

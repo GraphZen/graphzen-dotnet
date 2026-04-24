@@ -13,17 +13,15 @@ using GraphZen.TypeSystem;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
-
 
 namespace GraphZen.Utilities
 {
     public static partial class Helpers
     {
-        internal static Maybe<object> ValueFromAst(ValueSyntax valueSyntax, IGraphQLType type,
-            IReadOnlyDictionary<string, object> variables = null)
+        internal static Maybe<object> ValueFromAst(ValueSyntax? valueSyntax, IGraphQLType type,
+            IReadOnlyDictionary<string, object>? variables = null)
         {
-            bool IsMissingVariable(ValueSyntax value, IReadOnlyDictionary<string, object> vars) =>
+            bool IsMissingVariable(ValueSyntax value, IReadOnlyDictionary<string, object>? vars) =>
                 value is VariableSyntax variable && (vars == null || !vars.ContainsKey(variable.Name.Value));
 
             if (valueSyntax == null) return Maybe.None<object>();
@@ -35,7 +33,7 @@ namespace GraphZen.Utilities
                 return ValueFromAst(valueSyntax, nonNull.OfType, variables);
             }
 
-            if (valueSyntax is NullValueSyntax) return Maybe.Some<object>(null);
+            if (valueSyntax is NullValueSyntax) return Maybe.Some<object>(null!);
 
             if (valueSyntax is VariableSyntax variableNode)
             {
@@ -50,7 +48,7 @@ namespace GraphZen.Utilities
                 var itemType = listType.OfType;
                 if (valueSyntax is ListValueSyntax listNode)
                 {
-                    var coercedValues = new List<object>(listNode.Values.Count);
+                    var coercedValues = new List<object?>(listNode.Values.Count);
                     foreach (var itemNode in listNode.Values)
                     {
                         if (IsMissingVariable(itemNode, variables))

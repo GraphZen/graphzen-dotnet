@@ -7,8 +7,6 @@ using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
 
 namespace GraphZen.TypeSystem.Tests
 {
@@ -17,17 +15,17 @@ namespace GraphZen.TypeSystem.Tests
     {
         public abstract class FooBase
         {
-            public string BaseProperty { get; set; }
+            public string BaseProperty { get; set; } = null!;
 
-            [GraphQLCanBeNull] public string NullableBaseProperty { get; set; }
+            [GraphQLCanBeNull] public string? NullableBaseProperty { get; set; }
         }
 
 
         public class Foo : FooBase
         {
-            public string Bar { get; set; }
+            public string Bar { get; set; } = null!;
 
-            [GraphQLCanBeNull] public string NullableBar { get; set; }
+            [GraphQLCanBeNull] public string? NullableBar { get; set; }
         }
 
         [Theory]

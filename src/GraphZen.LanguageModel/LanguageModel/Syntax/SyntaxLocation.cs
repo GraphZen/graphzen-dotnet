@@ -9,7 +9,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -17,8 +16,8 @@ namespace GraphZen.LanguageModel
     [DebuggerDisplay("Start = {Start}, End = {End}")]
     public class SyntaxLocation
     {
-        public SyntaxLocation(SyntaxNode start, SyntaxNode end) : this(Check.NotNull(start, nameof(start)).Location,
-            Check.NotNull(end, nameof(end)).Location)
+        public SyntaxLocation(SyntaxNode start, SyntaxNode end) : this(Check.NotNull(start, nameof(start)).Location!,
+            Check.NotNull(end, nameof(end)).Location!)
         {
         }
 
@@ -55,7 +54,7 @@ namespace GraphZen.LanguageModel
 
         protected bool Equals(SyntaxLocation other) => Start == other.Start && End == other.End;
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 
@@ -74,18 +73,18 @@ namespace GraphZen.LanguageModel
             }
         }
 
-        public static SyntaxLocation FromMany(params ISyntaxNodeLocation[] nodes)
+        public static SyntaxLocation? FromMany(params ISyntaxNodeLocation?[] nodes)
         {
             return FromMany(nodes.Select(_ => _?.Location));
         }
 
-        public static SyntaxLocation FromMany(params SyntaxLocation[] locations) => FromMany(locations.AsEnumerable());
+        public static SyntaxLocation? FromMany(params SyntaxLocation?[] locations) => FromMany(locations.AsEnumerable());
 
-        private static SyntaxLocation FromMany(IEnumerable<SyntaxLocation> locations)
+        private static SyntaxLocation? FromMany(IEnumerable<SyntaxLocation?> locations)
         {
             Check.NotNull(locations, nameof(locations));
 
-            var locs = locations.Where(l => l != null).OrderBy(_ => _.Start).ToArray();
+            var locs = locations.Where(l => l != null).OrderBy(_ => _!.Start).ToArray();
             if (locs.Length == 0) return null;
 
             var min = locs[0];

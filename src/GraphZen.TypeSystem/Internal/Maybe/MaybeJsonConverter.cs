@@ -8,8 +8,6 @@ using System.Text.Json.Serialization;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
 
 namespace GraphZen.Internal
 {

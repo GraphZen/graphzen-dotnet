@@ -8,7 +8,6 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.QueryEngine.Variables

@@ -13,8 +13,6 @@ using GraphZen.TypeSystem.Taxonomy;
 using GraphZen.Utilities;
 using JetBrains.Annotations;
 
-#nullable disable
-
 
 namespace GraphZen.QueryEngine.Validation
 {
@@ -25,7 +23,7 @@ namespace GraphZen.QueryEngine.Validation
 
 
         public QueryValidationContext(Schema schema, DocumentSyntax ast, TypeInfo typeInfo,
-            Lazy<GraphQLSyntaxWalker> parentVisitor) : base(
+            Lazy<GraphQLSyntaxWalker?> parentVisitor) : base(
             Check.NotNull(ast, nameof(ast)), Check.NotNull(parentVisitor, nameof(parentVisitor))
         )
         {
@@ -46,9 +44,9 @@ namespace GraphZen.QueryEngine.Validation
 
         public TypeInfo TypeInfo { get; }
 
-        public Directive Directive => TypeInfo.Directive;
+        public Directive? Directive => TypeInfo.Directive;
 
-        public Argument Argument => TypeInfo.Argument;
+        public Argument? Argument => TypeInfo.Argument;
 
 
         public override void Enter(SyntaxNode node)
@@ -61,14 +59,14 @@ namespace GraphZen.QueryEngine.Validation
             TypeInfo.Leave(node);
         }
 
-        public ICompositeType GetParentType() => TypeInfo.GetParentType();
+        public ICompositeType? GetParentType() => TypeInfo.GetParentType();
 
-        public Field GetFieldDef() => TypeInfo.GetField();
+        public Field? GetFieldDef() => TypeInfo.GetField();
 
-        public IGraphQLType OutputType() => TypeInfo.GetOutputType();
+        public IGraphQLType? OutputType() => TypeInfo.GetOutputType();
 
-        public IGraphQLType GetInputType() => TypeInfo.GetInputType();
+        public IGraphQLType? GetInputType() => TypeInfo.GetInputType();
 
-        public IGraphQLType GetParentInputType() => TypeInfo.GetParentInputType();
+        public IGraphQLType? GetParentInputType() => TypeInfo.GetParentInputType();
     }
 }

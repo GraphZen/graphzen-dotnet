@@ -9,7 +9,6 @@ using JetBrains.Annotations;
 using Xunit;
 using static GraphZen.LanguageModel.SyntaxFactory;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.LanguageModel.Internal.Parser

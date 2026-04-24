@@ -5,8 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
-
 
 namespace GraphZen.Utilities
 {
@@ -117,7 +115,7 @@ namespace GraphZen.Utilities
         }
         directives {
           name
-          
+
           locations
           args {
             ...InputValue
@@ -129,10 +127,10 @@ namespace GraphZen.Utilities
     fragment FullType on __Type {
       kind
       name
-      
+
       fields(includeDeprecated: true) {
         name
-        
+
         args {
           ...InputValue
         }
@@ -150,7 +148,7 @@ namespace GraphZen.Utilities
       }
       enumValues(includeDeprecated: true) {
         name
-        
+
         isDeprecated
         deprecationReason
       }
@@ -161,7 +159,7 @@ namespace GraphZen.Utilities
 
     fragment InputValue on __InputValue {
       name
-      
+
       type { ...TypeRef }
       defaultValue
     }

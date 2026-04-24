@@ -8,8 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable ClassNeverInstantiated.Global
@@ -99,7 +97,7 @@ namespace GraphZen.TypeSystem.Tests
 
         public class explicitly_created_object_with_union_field
         {
-            public union_discovered_via_field union_field { get; set; }
+            public union_discovered_via_field union_field { get; set; } = null!;
         }
 
         [GraphQLUnion]

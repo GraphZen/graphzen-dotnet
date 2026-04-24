@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -17,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ListTypeSyntax : NullableTypeSyntax
     {
-        public ListTypeSyntax(TypeSyntax type, SyntaxLocation location = null) : base(location)
+        public ListTypeSyntax(TypeSyntax type, SyntaxLocation? location = null) : base(location)
         {
             OfType = Check.NotNull(type, nameof(type));
         }
@@ -35,7 +34,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(ListTypeSyntax other) => OfType.Equals(other.OfType);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

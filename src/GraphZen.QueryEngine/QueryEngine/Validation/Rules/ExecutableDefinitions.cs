@@ -6,9 +6,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 
-#nullable disable
-
-
 namespace GraphZen.QueryEngine.Validation.Rules
 {
     public class ExecutableDefinitions : QueryValidationRuleVisitor

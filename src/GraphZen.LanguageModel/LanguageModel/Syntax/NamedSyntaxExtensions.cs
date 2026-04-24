@@ -7,7 +7,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -21,7 +20,7 @@ namespace GraphZen.LanguageModel
             return source.OrderBy(_ => _.Name.Value);
         }
 
-        public static TNode FindByName<TNode>(
+        public static TNode? FindByName<TNode>(
             this IEnumerable<TNode> source, string name)
             where TNode : SyntaxNode, INamedSyntax
         {
@@ -30,7 +29,7 @@ namespace GraphZen.LanguageModel
         }
 
         public static bool TryFindByName<TNode>(
-            this IEnumerable<TNode> source, string name, out TNode result)
+            this IEnumerable<TNode> source, string name, out TNode? result)
             where TNode : SyntaxNode, INamedSyntax
         {
             Check.NotNull(source, nameof(source));

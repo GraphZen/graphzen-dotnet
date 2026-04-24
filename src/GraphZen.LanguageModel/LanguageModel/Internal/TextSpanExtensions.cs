@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower.Model;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -17,7 +16,7 @@ namespace GraphZen.LanguageModel.Internal
         {
             var start = span.Position.Absolute;
             var end = start + span.Length;
-            return new SyntaxLocation(start, end, span.Position.Line, span.Position.Column, new Source(span.Source));
+            return new SyntaxLocation(start, end, span.Position.Line, span.Position.Column, new Source(span.Source!));
         }
     }
 }

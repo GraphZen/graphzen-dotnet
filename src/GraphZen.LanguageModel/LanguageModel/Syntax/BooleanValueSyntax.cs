@@ -8,7 +8,6 @@ using System.Linq;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -20,7 +19,7 @@ namespace GraphZen.LanguageModel
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public partial class BooleanValueSyntax : ValueSyntax
     {
-        public BooleanValueSyntax(bool value, SyntaxLocation location = null) : base(location)
+        public BooleanValueSyntax(bool value, SyntaxLocation? location = null) : base(location)
         {
             Value = value;
         }
@@ -38,7 +37,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(BooleanValueSyntax other) => Value == other.Value;
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

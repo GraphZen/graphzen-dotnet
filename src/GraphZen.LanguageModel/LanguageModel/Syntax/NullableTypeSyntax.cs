@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -15,7 +14,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public abstract class NullableTypeSyntax : TypeSyntax
     {
-        protected NullableTypeSyntax(SyntaxLocation location) : base(location)
+        protected NullableTypeSyntax(SyntaxLocation? location) : base(location)
         {
         }
     }

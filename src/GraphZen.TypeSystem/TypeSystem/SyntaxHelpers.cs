@@ -42,7 +42,7 @@ namespace GraphZen.TypeSystem
             Check.NotNull(directives, nameof(directives));
 
             var annotationConverter = new DefaultIDirectiveAnnotationSyntaxConverter();
-            return directives.Select(_ => (DirectiveSyntax)annotationConverter.ToSyntax(_)).ToList().AsReadOnly();
+            return directives.Select(_ => (DirectiveSyntax)annotationConverter.ToSyntax(_)!).ToList().AsReadOnly();
         }
     }
 }

@@ -39,9 +39,9 @@ namespace GraphZen.TypeSystem.Internal
                 ? GetOperationTypes(schemaDef)
                 : new Dictionary<OperationType, TypeDefinitionSyntax>
                 {
-                    {OperationType.Query, types.FindByName("Query")},
-                    {OperationType.Mutation, types.FindByName("Mutation")},
-                    {OperationType.Subscription, types.FindByName("Subscription")}
+                    {OperationType.Query, types.FindByName("Query")!},
+                    {OperationType.Mutation, types.FindByName("Mutation")!},
+                    {OperationType.Subscription, types.FindByName("Subscription")!}
                 };
 
 
@@ -97,7 +97,7 @@ namespace GraphZen.TypeSystem.Internal
                     if (!types.TryFindByName(typeName, out var type))
                         throw new Exception($"Specified {_.OperationType} type \"{typeName}\" not found in document.");
 
-                    return type;
+                    return type!;
                 });
             }
         }

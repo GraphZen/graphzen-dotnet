@@ -8,7 +8,6 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.QueryEngine.Variables
@@ -114,7 +113,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
                 {
                     a = "foo",
                     b = "bar",
-                    c = (string)null
+                    c = (string?)null
                 }
             }).ShouldEqual(new
             {
@@ -215,7 +214,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
                         }
                     ", new
             {
-                input = (string)null
+                input = (string?)null
             })
                 .ShouldEqual(new
                 {
@@ -245,7 +244,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
             ExecuteAsync(@" 
                         query q($input: String) {
                             fieldWithNullableStringInput(input: $input)
-                       }", new { input = (string)null })
+                       }", new { input = (string?)null })
                 .ShouldEqual(new
                 {
                     data = new
@@ -264,7 +263,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
                 {
                     data = new
                     {
-                        fieldWithNullableStringInput = (string)null
+                        fieldWithNullableStringInput = (string?)null
                     }
                 });
 

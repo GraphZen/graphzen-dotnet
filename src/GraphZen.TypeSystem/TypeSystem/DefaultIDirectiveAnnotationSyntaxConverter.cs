@@ -7,7 +7,6 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem.Taxonomy;
 using JetBrains.Annotations;
 
-#nullable disable
 
 namespace GraphZen.TypeSystem
 {
@@ -16,14 +15,14 @@ namespace GraphZen.TypeSystem
         public override bool CanRead { get; } = true;
         public override bool CanWrite { get; } = true;
 
-        public override object FromSyntax(SyntaxNode node)
+        public override object? FromSyntax(SyntaxNode node)
         {
             if (node is DirectiveSyntax directive) return new DirectiveAnnotation(directive.Name.Value, directive);
 
             return null;
         }
 
-        public override SyntaxNode ToSyntax(object value)
+        public override SyntaxNode? ToSyntax(object value)
         {
             if (value is IDirectiveAnnotation annotation)
             {

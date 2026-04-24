@@ -9,7 +9,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -21,8 +20,8 @@ namespace GraphZen.LanguageModel
     public partial class FragmentSpreadSyntax : SelectionSyntax
     {
         public FragmentSpreadSyntax(NameSyntax name,
-            IReadOnlyList<DirectiveSyntax> directives = null,
-            SyntaxLocation location = null) : base(location)
+            IReadOnlyList<DirectiveSyntax>? directives = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             if (Name.Value.Equals("on", StringComparison.CurrentCultureIgnoreCase))
@@ -50,7 +49,7 @@ namespace GraphZen.LanguageModel
         private bool Equals(FragmentSpreadSyntax other) =>
             Name.Equals(other.Name) && Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

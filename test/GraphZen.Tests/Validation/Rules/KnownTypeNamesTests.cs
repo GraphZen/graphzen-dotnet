@@ -11,8 +11,6 @@ using GraphZen.QueryEngine.Validation.Rules;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
 
 namespace GraphZen.Tests.Validation.Rules
 {
@@ -39,7 +37,7 @@ namespace GraphZen.Tests.Validation.Rules
         ");
         }
 
-        private static ExpectedError UnknownType(string typeName, IReadOnlyList<string> suggestedTypes, int line,
+        private static ExpectedError UnknownType(string typeName, IReadOnlyList<string>? suggestedTypes, int line,
             int column) =>
             Error(KnownTypeNames.UnknownTypeMessage(typeName, suggestedTypes ?? Array.Empty<string>()),
                 (line,

@@ -9,17 +9,15 @@ using GraphZen.LanguageModel;
 using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 
-#nullable disable
-
 
 namespace GraphZen.QueryEngine
 {
     public class Executor : IExecutor
     {
-        public Task<ExecutionResult> ExecuteAsync(Schema schema, DocumentSyntax document, object rootValue,
-            GraphQLContext context,
-            IDictionary<string, object> variableValues = null, string operationName = null,
-            ExecutionOptions options = null) =>
+        public Task<ExecutionResult> ExecuteAsync(Schema schema, DocumentSyntax document, object? rootValue,
+            GraphQLContext? context,
+            IDictionary<string, object>? variableValues = null, string? operationName = null,
+            ExecutionOptions? options = null) =>
             ExecutionFunctions.ExecuteAsync(schema, document, rootValue, context, variableValues, operationName,
                 options);
     }

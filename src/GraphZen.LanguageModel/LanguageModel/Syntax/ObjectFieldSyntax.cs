@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -17,7 +16,7 @@ namespace GraphZen.LanguageModel
     /// </summary>
     public partial class ObjectFieldSyntax : SyntaxNode
     {
-        public ObjectFieldSyntax(NameSyntax name, ValueSyntax value, SyntaxLocation location = null) :
+        public ObjectFieldSyntax(NameSyntax name, ValueSyntax value, SyntaxLocation? location = null) :
             base(location)
         {
             Name = Check.NotNull(name, nameof(name));
@@ -51,7 +50,7 @@ namespace GraphZen.LanguageModel
 
         private bool Equals(ObjectFieldSyntax other) => Name.Equals(other.Name) && Value.Equals(other.Value);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

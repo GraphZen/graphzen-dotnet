@@ -8,7 +8,6 @@ using JetBrains.Annotations;
 using Superpower;
 using Superpower.Parsers;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -16,15 +15,15 @@ namespace GraphZen.LanguageModel.Internal
     internal static partial class Grammar
     {
         private static TokenListParser<TokenKind, OperationDefinitionSyntax> OperationDefintion { get; } =
-            Parse.Ref(() => QueryShorthandOpeartion).Or(
-                    from type in Parse.Ref(() => OperationType).Named("operation type")
-                    from name in Name.OptionalOrDefault().Named("operation name")
-                    from varDefs in VariableDefinitions.OptionalOrDefault().Named("operation variable definitions")
-                    from directives in Directives.OptionalOrDefault().Named("operation directives")
-                    from selectionSet in SelectionSet
-                    select new OperationDefinitionSyntax(type.type, selectionSet, name,
+            Parse.Ref(() => QueryShorthandOpeartion!).Or(
+                    from type in Parse.Ref(() => OperationType!).Named("operation type")
+                    from name in Name.AsNullable().OptionalOrDefault().Named("operation name")
+                    from varDefs in VariableDefinitions!.AsNullable().OptionalOrDefault().Named("operation variable definitions")
+                    from directives in Directives.AsNullable().OptionalOrDefault().Named("operation directives")
+                    from selectionSet in SelectionSet!
+                    select new OperationDefinitionSyntax(type.type, selectionSet!, name,
                         varDefs, directives,
-                        new SyntaxLocation(type.location, selectionSet.Location)))
+                        new SyntaxLocation(type.location, selectionSet!.Location!)))
                 .Named("operation definition");
 
         private static TokenListParser<TokenKind, (OperationType type, SyntaxLocation location)> OperationType { get; }
@@ -44,7 +43,7 @@ namespace GraphZen.LanguageModel.Internal
             .Named("operation type");
 
         private static TokenListParser<TokenKind, OperationDefinitionSyntax> QueryShorthandOpeartion { get; } =
-            (from selectionSet in Parse.Ref(() => SelectionSet)
+            (from selectionSet in Parse.Ref(() => SelectionSet!)
              select new OperationDefinitionSyntax(LanguageModel.OperationType.Query, selectionSet,
                  location: selectionSet.Location))
             .Named("query shortand operation");

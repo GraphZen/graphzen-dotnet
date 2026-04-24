@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -14,12 +13,12 @@ namespace GraphZen.LanguageModel.Internal
     internal static partial class Grammar
     {
         private static TokenListParser<TokenKind, ScalarTypeDefinitionSyntax> ScalarTypeDefinitionSyntax { get; } =
-            (from desc in Parse.Ref(() => Description).OptionalOrDefault()
+            (from desc in Parse.Ref(() => Description!).AsNullable().OptionalOrDefault()
              from scalar in Keyword("scalar")
              from name in Name
-             from directives in Directives.OptionalOrDefault()
-             select new ScalarTypeDefinitionSyntax(name, desc, directives,
-                 SyntaxLocation.FromMany(desc, scalar, name, directives.GetLocation())))
+             from directives in Directives.AsNullable().OptionalOrDefault()
+             select new ScalarTypeDefinitionSyntax(name!, desc, directives,
+                 SyntaxLocation.FromMany(desc, scalar, name!, directives.GetLocation())))
             .Try()
             .Named("scalar type");
     }

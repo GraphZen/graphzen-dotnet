@@ -7,7 +7,6 @@ using GraphZen.LanguageModel;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.LanguageModel.Internal.Parser

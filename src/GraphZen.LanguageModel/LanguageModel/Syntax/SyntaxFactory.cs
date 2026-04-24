@@ -10,7 +10,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -146,7 +145,7 @@ namespace GraphZen.LanguageModel
 
         [DebuggerStepThrough]
         public static VariableDefinitionSyntax VariableDefinition(VariableSyntax variable, TypeSyntax type,
-            ValueSyntax defaultValue = null) =>
+            ValueSyntax? defaultValue = null) =>
             new VariableDefinitionSyntax(variable, type, defaultValue);
 
 
@@ -188,7 +187,7 @@ namespace GraphZen.LanguageModel
 
         [DebuggerStepThrough]
         public static ScalarTypeDefinitionSyntax ScalarTypeDefinition(NameSyntax name,
-            StringValueSyntax description = null) =>
+            StringValueSyntax? description = null) =>
             new ScalarTypeDefinitionSyntax(name, description);
 
 

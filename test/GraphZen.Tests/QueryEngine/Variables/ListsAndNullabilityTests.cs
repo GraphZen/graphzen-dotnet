@@ -8,7 +8,6 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.QueryEngine.Variables
@@ -34,7 +33,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
               query ($input: [String!]) {
                 listNN(input: $input)
               }
-            ", new { input = (object)null }).ShouldEqual(
+            ", new { input = (object?)null }).ShouldEqual(
                 new
                 {
                     data = new { listNN = "null" }
@@ -58,7 +57,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
               query ($input: [String]) {
                 list(input: $input)
               }
-            ", new { input = (object)null }).ShouldEqual(new
+            ", new { input = (object?)null }).ShouldEqual(new
             {
                 data = new
                 {
@@ -170,7 +169,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
               query ($input: [String!]!) {
                 nnListNN(input: $input)
               }
-            ", new { input = (object)null }).ShouldEqual(
+            ", new { input = (object?)null }).ShouldEqual(
                 new
                 {
                     errors = Array(new
@@ -190,7 +189,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
               query ($input: [String]!) {
                 nnList(input: $input)
               }
-            ", new { input = (object)null }).ShouldEqual(new
+            ", new { input = (object?)null }).ShouldEqual(new
             {
                 errors = Array(new
                 {

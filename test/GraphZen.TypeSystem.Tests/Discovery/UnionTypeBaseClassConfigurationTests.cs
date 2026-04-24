@@ -8,8 +8,6 @@ using GraphZen.TypeSystem.Internal;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
-
 
 // ReSharper disable UnusedMember.Local
 
@@ -81,7 +79,7 @@ namespace GraphZen.TypeSystem.Tests
 
         private class Query
         {
-            public union_abstract_class union_field { get; set; }
+            public union_abstract_class union_field { get; set; } = null!;
         }
 
         [Fact]

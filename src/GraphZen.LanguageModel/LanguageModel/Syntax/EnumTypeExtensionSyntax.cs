@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -20,8 +19,8 @@ namespace GraphZen.LanguageModel
     public partial class EnumTypeExtensionSyntax : TypeExtensionSyntax, IDirectivesSyntax
     {
         public EnumTypeExtensionSyntax(
-            NameSyntax name, IReadOnlyList<DirectiveSyntax> directives = null,
-            IReadOnlyList<EnumValueDefinitionSyntax> values = null, SyntaxLocation location = null) : base(location)
+            NameSyntax name, IReadOnlyList<DirectiveSyntax>? directives = null,
+            IReadOnlyList<EnumValueDefinitionSyntax>? values = null, SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Directives = directives ?? DirectiveSyntax.EmptyList;
@@ -52,7 +51,7 @@ namespace GraphZen.LanguageModel
             Directives.SequenceEqual(other.Directives) &&
             Values.SequenceEqual(other.Values);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

@@ -1,7 +1,6 @@
 // Copyright (c) GraphZen LLC. All rights reserved.
 // Licensed under the GraphZen Community License. See the LICENSE file in the project root for license information.
 
-#nullable disable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using GraphZen.Infrastructure;
@@ -50,7 +49,7 @@ namespace GraphZen.Tests.Utilities
 
             Assert.Null(Get(None(), SpecScalars.Boolean));
 
-            Assert.Equal(NullValue(), Get(Some(null), SpecScalars.Boolean));
+            Assert.Equal(NullValue(), Get(Some(null!), SpecScalars.Boolean));
 
             Assert.Equal(BooleanValue(false), Get(Some(0), SpecScalars.Boolean));
 
@@ -107,7 +106,7 @@ namespace GraphZen.Tests.Utilities
 
             Assert.Equal(StringValue("true"), Get(Some(true), SpecScalars.String));
 
-            Assert.Equal(NullValue(), Get(Some(null), SpecScalars.String));
+            Assert.Equal(NullValue(), Get(Some(null!), SpecScalars.String));
 
             Assert.Null(Get(None(), SpecScalars.String));
         }
@@ -132,7 +131,7 @@ namespace GraphZen.Tests.Utilities
             Assert.Equal("ID cannot represent value: false",
                 Assert.Throws<Exception>(() => Get(Some(false), SpecScalars.ID)).Message);
 
-            Assert.Equal(NullValue(), Get(Some(null), SpecScalars.ID));
+            Assert.Equal(NullValue(), Get(Some(null!), SpecScalars.ID));
 
             Assert.Null(Get(None(), SpecScalars.ID));
         }
@@ -189,7 +188,7 @@ namespace GraphZen.Tests.Utilities
             Assert.Equal(ObjectValue(ObjectField(Name("foo"), NullValue())),
                 Get(Some(new
                 {
-                    foo = (string)null
+                    foo = (string?)null
                 }), MyInputObj));
         }
     }

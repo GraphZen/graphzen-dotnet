@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -17,17 +16,17 @@ namespace GraphZen.LanguageModel.Internal
         ///     http://facebook.github.io/graphql/June2018/#Directives
         /// </summary>
         internal static TokenListParser<TokenKind, DirectiveSyntax[]> Directives { get; } =
-            Parse.Ref(() => Directive).AtLeastOnce().Named("directives");
+            Parse.Ref(() => Directive!).AtLeastOnce().Named("directives");
 
         /// <summary>
         ///     http://facebook.github.io/graphql/June2018/#Directive
         /// </summary>
         internal static TokenListParser<TokenKind, DirectiveSyntax> Directive { get; } =
-            (from at in Parse.Ref(() => AtSymbol.Named("directive symbol"))
-             from name in Name.Named("directive name")
-             from args in Arguments.OptionalOrDefault().Named("directive arguments")
-             select new DirectiveSyntax(name, args,
-                 SyntaxLocation.FromMany(at, name, args.GetLocation()))).Try()
+            (from at in Parse.Ref(() => AtSymbol!.Named("directive symbol"))
+             from name in Name!.Named("directive name")
+             from args in Arguments!.AsNullable().OptionalOrDefault().Named("directive arguments")
+             select new DirectiveSyntax(name!, args,
+                 SyntaxLocation.FromMany(at, name!, args.GetLocation()))).Try()
             .Named("directive");
     }
 }

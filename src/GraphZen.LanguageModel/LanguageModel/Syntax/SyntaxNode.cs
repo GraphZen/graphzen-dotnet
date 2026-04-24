@@ -10,7 +10,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -23,7 +22,7 @@ namespace GraphZen.LanguageModel
     {
         private readonly Lazy<string> _printed;
 
-        protected SyntaxNode(SyntaxLocation location)
+        protected SyntaxNode(SyntaxLocation? location)
         {
             Location = location;
             _printed = new Lazy<string>(() => new Printer().Print(this));
@@ -34,7 +33,7 @@ namespace GraphZen.LanguageModel
 
         public abstract SyntaxKind Kind { [DebuggerStepThrough] get; }
 
-        public SyntaxLocation Location { get; }
+        public SyntaxLocation? Location { get; }
 
 
         public IEnumerable<SyntaxNode> DescendantNodes()

@@ -7,7 +7,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Xunit;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.StarWars
@@ -188,7 +187,7 @@ namespace GraphZen.Tests.StarWars
                                 name = "id",
                                 type = new
                                 {
-                                    name = (string) null,
+                                    name = (string?) null,
                                     kind = "NON_NULL"
                                 }
                             },
@@ -206,7 +205,7 @@ namespace GraphZen.Tests.StarWars
                                 name = "friends",
                                 type = new
                                 {
-                                    name = (string) null,
+                                    name = (string?) null,
                                     kind = "LIST"
                                 }
                             },
@@ -215,7 +214,7 @@ namespace GraphZen.Tests.StarWars
                                 name = "appearsIn",
                                 type = new
                                 {
-                                    name = (string) null,
+                                    name = (string?) null,
                                     kind = "LIST"
                                 }
                             },
@@ -280,7 +279,7 @@ namespace GraphZen.Tests.StarWars
                                 name = "id",
                                 type = new
                                 {
-                                    name = (string) null,
+                                    name = (string?) null,
                                     kind = "NON_NULL",
                                     ofType = new
                                     {
@@ -296,7 +295,7 @@ namespace GraphZen.Tests.StarWars
                                 {
                                     name = "String",
                                     kind = "SCALAR",
-                                    ofType = (object) null
+                                    ofType = (object?) null
                                 }
                             },
                             new
@@ -304,7 +303,7 @@ namespace GraphZen.Tests.StarWars
                                 name = "friends",
                                 type = new
                                 {
-                                    name = (string) null,
+                                    name = (string?) null,
                                     kind = "LIST",
                                     ofType = new
                                     {
@@ -318,7 +317,7 @@ namespace GraphZen.Tests.StarWars
                                 name = "appearsIn",
                                 type = new
                                 {
-                                    name = (string) null,
+                                    name = (string?) null,
                                     kind = "LIST",
                                     ofType = new
                                     {
@@ -335,7 +334,7 @@ namespace GraphZen.Tests.StarWars
                                 {
                                     name = "String",
                                     kind = "SCALAR",
-                                    ofType = (object) null
+                                    ofType = (object?) null
                                 }
                             },
                             new
@@ -345,7 +344,7 @@ namespace GraphZen.Tests.StarWars
                                 {
                                     name = "String",
                                     kind = "SCALAR",
-                                    ofType = (object) null
+                                    ofType = (object?) null
                                 }
                             }
                         }
@@ -404,9 +403,9 @@ namespace GraphZen.Tests.StarWars
                                             {
                                                 kind = "ENUM",
                                                 name = "Episode",
-                                                ofType = (object) null
+                                                ofType = (object?) null
                                             },
-                                            defaultValue = (object) null
+                                            defaultValue = (object?) null
                                         }
                                     }
                                 },
@@ -422,14 +421,14 @@ namespace GraphZen.Tests.StarWars
                                             type = new
                                             {
                                                 kind = "NON_NULL",
-                                                name = (string) null,
+                                                name = (string?) null,
                                                 ofType = new
                                                 {
                                                     kind = "SCALAR",
                                                     name = "String"
                                                 }
                                             },
-                                            defaultValue = (object) null
+                                            defaultValue = (object?) null
                                         }
                                     }
                                 },
@@ -445,14 +444,14 @@ namespace GraphZen.Tests.StarWars
                                             type = new
                                             {
                                                 kind = "NON_NULL",
-                                                name = (string) null,
+                                                name = (string?) null,
                                                 ofType = new
                                                 {
                                                     kind = "SCALAR",
                                                     name = "String"
                                                 }
                                             },
-                                            defaultValue = (object) null
+                                            defaultValue = (object?) null
                                         }
                                     }
                                 }

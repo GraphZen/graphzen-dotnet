@@ -9,7 +9,6 @@ using GraphZen.TypeSystem;
 using JetBrains.Annotations;
 using System.Text.Json;
 
-#nullable disable
 
 
 namespace GraphZen.Tests.QueryEngine.Variables
@@ -21,11 +20,11 @@ namespace GraphZen.Tests.QueryEngine.Variables
             schemaBuilder.Scalar("TestComplexScalar")
                 .Description("Complex scalar for test purposes")
                 .LiteralParser(node =>
-                    Maybe.Some<object>((string)node.GetValue() == "SerializedValue" ? "DeserializedValue" : null))
+                    Maybe.Some<object>(((string)node.GetValue()! == "SerializedValue" ? "DeserializedValue" : null)!))
                 .Serializer(value =>
-                    Maybe.Some<object>(value is string str && str == "DeserializedValue"
+                    Maybe.Some<object>((value is string str && str == "DeserializedValue"
                         ? "SerializedValue"
-                        : null))
+                        : null)!))
                 .ValueParser(value =>
                     Maybe.Some((string)value == "SerializedValue" ? "DeserializedValue" : null).Cast<object>());
 
@@ -48,7 +47,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
                 .Value("DEFAULT_VALUE", _ => _.CustomValue(new { }));
 
 
-            new List<(string fieldName, string inputArgType, string defaultValue)>
+            new List<(string fieldName, string inputArgType, string? defaultValue)>
             {
                 ("fieldWithEnumInput", "TestEnum", null),
                 ("fieldWithNonNullableEnumInput", "TestEnum", null),
@@ -76,7 +75,7 @@ namespace GraphZen.Tests.QueryEngine.Variables
                                 .Resolve((source, args) =>
                                     args.ContainsKey("input")
                                         ? JsonSerializer.Serialize((object)args.input)
-                                        : null);
+                                        : null!);
                         });
             });
 

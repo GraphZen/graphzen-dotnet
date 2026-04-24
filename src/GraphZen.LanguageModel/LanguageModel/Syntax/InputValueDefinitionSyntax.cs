@@ -8,7 +8,6 @@ using GraphZen.Infrastructure;
 using GraphZen.LanguageModel.Internal;
 using JetBrains.Annotations;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel
@@ -22,10 +21,10 @@ namespace GraphZen.LanguageModel
         public InputValueDefinitionSyntax(
             NameSyntax name,
             TypeSyntax type,
-            StringValueSyntax description = null,
-            ValueSyntax defaultValue = null,
-            IReadOnlyList<DirectiveSyntax> directives = null,
-            SyntaxLocation location = null) : base(location)
+            StringValueSyntax? description = null,
+            ValueSyntax? defaultValue = null,
+            IReadOnlyList<DirectiveSyntax>? directives = null,
+            SyntaxLocation? location = null) : base(location)
         {
             Name = Check.NotNull(name, nameof(name));
             Type = Check.NotNull(type, nameof(type));
@@ -51,15 +50,15 @@ namespace GraphZen.LanguageModel
         ///     The default input value. (Optional)
         /// </summary>
 
-        public ValueSyntax DefaultValue { get; }
+        public ValueSyntax? DefaultValue { get; }
 
 
         public override IEnumerable<SyntaxNode> Children => Name.ToEnumerable()
             .Concat(Type)
-            .Concat(DefaultValue).Concat(Directives);
+            .Concat(DefaultValue!).Concat(Directives);
 
 
-        public StringValueSyntax Description { get; }
+        public StringValueSyntax? Description { get; }
 
         /// <summary>
         ///     Input value directives.
@@ -71,7 +70,7 @@ namespace GraphZen.LanguageModel
             Name.Equals(other.Name) && Equals(Description, other.Description) && Type.Equals(other.Type) &&
             Equals(DefaultValue, other.DefaultValue) && Directives.SequenceEqual(other.Directives);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
 

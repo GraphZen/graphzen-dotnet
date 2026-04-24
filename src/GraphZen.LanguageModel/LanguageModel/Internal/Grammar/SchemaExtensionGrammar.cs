@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -19,16 +18,16 @@ namespace GraphZen.LanguageModel.Internal
         private static TokenListParser<TokenKind, SchemaExtensionSyntax> SchemaExtension { get; } =
             (from extend in Keyword("extend")
              from schema in Keyword("schema")
-             from directives in Directives.OptionalOrDefault()
-             from lb in Parse.Ref(() => LeftBrace)
-             from defs in OperationTypeDefinition.Many()
+             from directives in Directives.AsNullable().OptionalOrDefault()
+             from lb in Parse.Ref(() => LeftBrace!)
+             from defs in OperationTypeDefinition!.Many()
              from rb in RightBrace
-             select new SchemaExtensionSyntax(directives, defs, SyntaxLocation.FromMany(extend, rb))).Try().Or(
+             select new SchemaExtensionSyntax(directives, defs!, SyntaxLocation.FromMany(extend, rb))).Try().Or(
                 from extend in Keyword("extend")
                 from schema in Keyword("schema")
                 from directives in Directives
-                select new SchemaExtensionSyntax(directives, null,
-                    SyntaxLocation.FromMany(extend, directives.GetLocation()))
+                select new SchemaExtensionSyntax(directives!, null,
+                    SyntaxLocation.FromMany(extend, directives!.GetLocation()))
             ).Try().Named("schema extension");
     }
 }

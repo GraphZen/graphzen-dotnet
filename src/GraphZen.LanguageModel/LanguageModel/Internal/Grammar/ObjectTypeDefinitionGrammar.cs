@@ -6,7 +6,6 @@ using GraphZen.Infrastructure;
 using JetBrains.Annotations;
 using Superpower;
 
-#nullable disable
 
 
 namespace GraphZen.LanguageModel.Internal
@@ -17,16 +16,16 @@ namespace GraphZen.LanguageModel.Internal
         ///     http://facebook.github.io/graphql/June2018/#ObjectTypeDefinition
         /// </summary>
         private static TokenListParser<TokenKind, ObjectTypeDefinitionSyntax> ObjectTypeDefinition { get; } =
-            (from desc in Parse.Ref(() => Description).OptionalOrDefault()
+            (from desc in Parse.Ref(() => Description!).AsNullable().OptionalOrDefault()
              from type in Keyword("type")
              from typeName in Name
-             from interfaces in ImplementsIntefaces.OptionalOrDefault()
-             from directives in Directives.OptionalOrDefault()
-             from fields in FieldsDefinition.OptionalOrDefault()
-             select new ObjectTypeDefinitionSyntax(typeName,
+             from interfaces in ImplementsIntefaces!.AsNullable().OptionalOrDefault()
+             from directives in Directives.AsNullable().OptionalOrDefault()
+             from fields in FieldsDefinition!.AsNullable().OptionalOrDefault()
+             select new ObjectTypeDefinitionSyntax(typeName!,
                  desc,
                  interfaces, directives, fields,
-                 SyntaxLocation.FromMany(desc, type, typeName, interfaces?.GetLocation(),
+                 SyntaxLocation.FromMany(desc, type, typeName!, interfaces?.GetLocation(),
                      directives?.GetLocation(),
                      fields?.GetLocation()))).Named("object type definition");
 
@@ -37,15 +36,15 @@ namespace GraphZen.LanguageModel.Internal
             (from impl in Keyword("implements")
              from amp in Ampersand.Optional()
              from ifaces in NamedType.Select(nt => nt).ManyDelimitedBy(Ampersand.OptionalOrDefault())
-             select ifaces)
+             select ifaces!)
             .Named("implements interfaces");
 
         /// <summary>
         ///     http://facebook.github.io/graphql/June2018/#FieldsDefinition
         /// </summary>
         private static TokenListParser<TokenKind, FieldDefinitionSyntax[]> FieldsDefinition { get; } =
-            (from lb in Parse.Ref(() => LeftBrace)
-             from defs in FieldDefinition.Many()
+            (from lb in Parse.Ref(() => LeftBrace!)
+             from defs in FieldDefinition!.Many()
              from rb in RightBrace
              select defs)
             .Try()
@@ -56,36 +55,36 @@ namespace GraphZen.LanguageModel.Internal
         ///     http://facebook.github.io/graphql/June2018/#FieldDefinition
         /// </summary>
         private static TokenListParser<TokenKind, FieldDefinitionSyntax> FieldDefinition { get; } =
-            (from desc in Parse.Ref(() => Description).OptionalOrDefault()
+            (from desc in Parse.Ref(() => Description!).AsNullable().OptionalOrDefault()
              from name in Name
-             from args in ArgumentsDefinition.OptionalOrDefault()
+             from args in ArgumentsDefinition!.AsNullable().OptionalOrDefault()
              from c in Colon
              from type in Type
-             from directives in Directives.OptionalOrDefault()
-             select new FieldDefinitionSyntax(name, type, desc, args, directives,
-                 SyntaxLocation.FromMany(desc, name, args?.GetLocation(), c, type)))
+             from directives in Directives.AsNullable().OptionalOrDefault()
+             select new FieldDefinitionSyntax(name!, type!, desc, args, directives,
+                 SyntaxLocation.FromMany(desc, name!, args?.GetLocation(), c, type!)))
             .Try()
             .Named("field definition");
 
 
         private static TokenListParser<TokenKind, InputValueDefinitionSyntax[]> ArgumentsDefinition { get; } =
-            (from lp in Parse.Ref(() => LeftParen)
-             from defs in InputValueDefinition.Many()
+            (from lp in Parse.Ref(() => LeftParen!)
+             from defs in InputValueDefinition!.Many()
              from rp in RightParen
              select defs)
             .Try()
             .Named("arguments definition");
 
         private static TokenListParser<TokenKind, InputValueDefinitionSyntax> InputValueDefinition { get; } =
-            (from desc in Parse.Ref(() => Description).OptionalOrDefault()
+            (from desc in Parse.Ref(() => Description!).AsNullable().OptionalOrDefault()
              from name in Name
              from c in Colon
              from type in Type
-             from defaultValue in DefaultValue.OptionalOrDefault()
-             from directives in Directives.OptionalOrDefault()
-             select new InputValueDefinitionSyntax(name, type, desc, defaultValue, directives,
+             from defaultValue in DefaultValue!.AsNullable().OptionalOrDefault()
+             from directives in Directives.AsNullable().OptionalOrDefault()
+             select new InputValueDefinitionSyntax(name!, type!, desc, defaultValue, directives,
                  SyntaxLocation.FromMany(
-                     desc, name, type, defaultValue, directives?.GetLocation())))
+                     desc, name!, type!, defaultValue, directives?.GetLocation())))
             .Try()
             .Named("input value definition");
     }

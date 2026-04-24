@@ -29,9 +29,9 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    Assert.IsType(fixture.ParentMemberDefinitionType, fixture.GetParent(sb, context.ParentName));
+                    Assert.IsType(fixture.ParentMemberDefinitionType, fixture.GetParent(sb, context.ParentName!));
                 });
-                Assert.IsType(fixture.ParentMemberType, fixture.GetParent(schema, context.ParentName));
+                Assert.IsType(fixture.ParentMemberType, fixture.GetParent(schema, context.ParentName!));
             });
         }
 
@@ -47,18 +47,18 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, context.ParentName);
+                    var defCollection = fixture.GetCollection(sb, context.ParentName!);
                     Assert.IsType(fixture.CollectionItemMemberDefinitionType,
-                        defCollection[context.ItemNamedByConvention]);
+                        defCollection[context.ItemNamedByConvention!]);
                     Assert.IsType(fixture.CollectionItemMemberDefinitionType,
-                        defCollection[context.ItemNamedByDataAnnotation]);
+                        defCollection[context.ItemNamedByDataAnnotation!]);
                 });
-                Assert.IsType(fixture.ParentMemberType, fixture.GetParent(schema, context.ParentName));
-                var collection = fixture.GetCollection(schema, context.ParentName);
+                Assert.IsType(fixture.ParentMemberType, fixture.GetParent(schema, context.ParentName!));
+                var collection = fixture.GetCollection(schema, context.ParentName!);
                 Assert.IsType(fixture.CollectionItemMemberType,
-                    collection[context.ItemNamedByConvention]);
+                    collection[context.ItemNamedByConvention!]);
                 Assert.IsType(fixture.CollectionItemMemberType,
-                    collection[context.ItemNamedByDataAnnotation]);
+                    collection[context.ItemNamedByDataAnnotation!]);
             });
         }
 
@@ -73,18 +73,18 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, context.ParentName);
+                    var defCollection = fixture.GetCollection(sb, context.ParentName!);
                     Assert.IsType(fixture.CollectionItemMemberDefinitionType,
-                        defCollection[context.ItemNamedByConvention]);
+                        defCollection[context.ItemNamedByConvention!]);
                     Assert.IsType(fixture.CollectionItemMemberDefinitionType,
-                        defCollection[context.ItemNamedByDataAnnotation]);
+                        defCollection[context.ItemNamedByDataAnnotation!]);
                 });
-                Assert.IsType(fixture.ParentMemberType, fixture.GetParent(schema, context.ParentName));
-                var collection = fixture.GetCollection(schema, context.ParentName);
+                Assert.IsType(fixture.ParentMemberType, fixture.GetParent(schema, context.ParentName!));
+                var collection = fixture.GetCollection(schema, context.ParentName!);
                 Assert.IsType(fixture.CollectionItemMemberType,
-                    collection[context.ItemNamedByConvention]);
+                    collection[context.ItemNamedByConvention!]);
                 Assert.IsType(fixture.CollectionItemMemberType,
-                    collection[context.ItemNamedByDataAnnotation]);
+                    collection[context.ItemNamedByDataAnnotation!]);
             });
         }
 
@@ -118,18 +118,18 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    //fixture.GetParent(sb, ctx.ParentName).GetType().Should().Be(fixture.Pa)
-                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    Assert.Equal(ctx.ItemNamedByConvention, defCollection[ctx.ItemNamedByConvention].Name);
-                    Assert.NotNull(defCollection[ctx.ItemNamedByConvention]);
+                    //fixture.GetParent(sb, ctx.ParentName!).GetType().Should().Be(fixture.Pa)
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName!);
+                    Assert.Equal(ctx.ItemNamedByConvention!, defCollection[ctx.ItemNamedByConvention!].Name);
+                    Assert.NotNull(defCollection[ctx.ItemNamedByConvention!]);
                     Assert.Equal(ctx.DefaultItemConfigurationSource ?? ConfigurationSource.Convention,
-                        defCollection[ctx.ItemNamedByConvention].GetConfigurationSource());
+                        defCollection[ctx.ItemNamedByConvention!].GetConfigurationSource());
                     Assert.Equal(ConfigurationSource.Convention,
-                        defCollection[ctx.ItemNamedByConvention].GetNameConfigurationSource());
+                        defCollection[ctx.ItemNamedByConvention!].GetNameConfigurationSource());
                 });
-                var collection = fixture.GetCollection(schema, ctx.ParentName);
-                Assert.NotNull(collection[ctx.ItemNamedByConvention]);
-                Assert.Equal(ctx.ItemNamedByConvention, collection[ctx.ItemNamedByConvention].Name);
+                var collection = fixture.GetCollection(schema, ctx.ParentName!);
+                Assert.NotNull(collection[ctx.ItemNamedByConvention!]);
+                Assert.Equal(ctx.ItemNamedByConvention!, collection[ctx.ItemNamedByConvention!].Name);
             });
         }
 
@@ -146,21 +146,21 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    Assert.Equal(ctx.ItemNamedByConvention, defCollection[ctx.ItemNamedByConvention].Name);
-                    Assert.NotNull(defCollection[ctx.ItemNamedByConvention]);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName!);
+                    Assert.Equal(ctx.ItemNamedByConvention!, defCollection[ctx.ItemNamedByConvention!].Name);
+                    Assert.NotNull(defCollection[ctx.ItemNamedByConvention!]);
                     Assert.Equal(ctx.DefaultItemConfigurationSource ?? ConfigurationSource.Convention,
-                        defCollection[ctx.ItemNamedByConvention].GetConfigurationSource());
+                        defCollection[ctx.ItemNamedByConvention!].GetConfigurationSource());
                     Assert.Equal(ConfigurationSource.Convention,
-                        defCollection[ctx.ItemNamedByConvention].GetNameConfigurationSource());
-                    fixture.RenameItem(sb, ctx.ParentName, ctx.ItemNamedByConvention, explicitName);
-                    Assert.False(defCollection.ContainsKey(ctx.ItemNamedByConvention));
+                        defCollection[ctx.ItemNamedByConvention!].GetNameConfigurationSource());
+                    fixture.RenameItem(sb, ctx.ParentName!, ctx.ItemNamedByConvention!, explicitName);
+                    Assert.False(defCollection.ContainsKey(ctx.ItemNamedByConvention!));
                     Assert.NotNull(defCollection[explicitName]);
                     Assert.Equal(ConfigurationSource.Explicit,
                         defCollection[explicitName].GetNameConfigurationSource());
                     Assert.Equal(explicitName, defCollection[explicitName].Name);
                 });
-                var collection = fixture.GetCollection(schema, ctx.ParentName);
+                var collection = fixture.GetCollection(schema, ctx.ParentName!);
                 Assert.NotNull(collection[explicitName]);
                 Assert.Equal(explicitName, collection[explicitName].Name);
             });
@@ -179,17 +179,17 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    Assert.Equal(ctx.ItemNamedByDataAnnotation, defCollection[ctx.ItemNamedByDataAnnotation].Name);
-                    Assert.NotNull(defCollection[ctx.ItemNamedByDataAnnotation]);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName!);
+                    Assert.Equal(ctx.ItemNamedByDataAnnotation, defCollection[ctx.ItemNamedByDataAnnotation!].Name);
+                    Assert.NotNull(defCollection[ctx.ItemNamedByDataAnnotation!]);
                     Assert.Equal(ctx.DefaultItemConfigurationSource ?? ConfigurationSource.Convention,
-                        defCollection[ctx.ItemNamedByDataAnnotation].GetConfigurationSource());
+                        defCollection[ctx.ItemNamedByDataAnnotation!].GetConfigurationSource());
                     Assert.Equal(ConfigurationSource.DataAnnotation,
-                        defCollection[ctx.ItemNamedByDataAnnotation].GetNameConfigurationSource());
+                        defCollection[ctx.ItemNamedByDataAnnotation!].GetNameConfigurationSource());
                 });
-                var collection = fixture.GetCollection(schema, ctx.ParentName);
-                Assert.NotNull(collection[ctx.ItemNamedByDataAnnotation]);
-                Assert.Equal(ctx.ItemNamedByDataAnnotation, collection[ctx.ItemNamedByDataAnnotation].Name);
+                var collection = fixture.GetCollection(schema, ctx.ParentName!);
+                Assert.NotNull(collection[ctx.ItemNamedByDataAnnotation!]);
+                Assert.Equal(ctx.ItemNamedByDataAnnotation, collection[ctx.ItemNamedByDataAnnotation!].Name);
             });
         }
 
@@ -206,21 +206,21 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    Assert.Equal(ctx.ItemNamedByDataAnnotation, defCollection[ctx.ItemNamedByDataAnnotation].Name);
-                    Assert.NotNull(defCollection[ctx.ItemNamedByDataAnnotation]);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName!);
+                    Assert.Equal(ctx.ItemNamedByDataAnnotation, defCollection[ctx.ItemNamedByDataAnnotation!].Name);
+                    Assert.NotNull(defCollection[ctx.ItemNamedByDataAnnotation!]);
                     Assert.Equal(ctx.DefaultItemConfigurationSource ?? ConfigurationSource.Convention,
-                        defCollection[ctx.ItemNamedByDataAnnotation].GetConfigurationSource());
+                        defCollection[ctx.ItemNamedByDataAnnotation!].GetConfigurationSource());
                     Assert.Equal(ConfigurationSource.DataAnnotation,
-                        defCollection[ctx.ItemNamedByDataAnnotation].GetNameConfigurationSource());
-                    fixture.RenameItem(sb, ctx.ParentName, ctx.ItemNamedByConvention, explicitName);
-                    Assert.False(defCollection.ContainsKey(ctx.ItemNamedByConvention));
+                        defCollection[ctx.ItemNamedByDataAnnotation!].GetNameConfigurationSource());
+                    fixture.RenameItem(sb, ctx.ParentName!, ctx.ItemNamedByConvention!, explicitName);
+                    Assert.False(defCollection.ContainsKey(ctx.ItemNamedByConvention!));
                     Assert.NotNull(defCollection[explicitName]);
                     Assert.Equal(ConfigurationSource.Explicit,
                         defCollection[explicitName].GetNameConfigurationSource());
                     Assert.Equal(explicitName, defCollection[explicitName].Name);
                 });
-                var collection = fixture.GetCollection(schema, ctx.ParentName);
+                var collection = fixture.GetCollection(schema, ctx.ParentName!);
                 Assert.NotNull(collection[explicitName]);
                 Assert.Equal(explicitName, collection[explicitName].Name);
             });
@@ -237,14 +237,14 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByConvention));
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName!);
+                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByConvention!));
 
-                    //fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName,
-                    //    ctx.ItemIgnoredByConvention).Should().Be(ConfigurationSource.Convention);
+                    //fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName!,
+                    //    ctx.ItemIgnoredByConvention!).Should().Be(ConfigurationSource.Convention);
                 });
-                var collection = fixture.GetCollection(schema, ctx.ParentName);
-                Assert.False(collection.ContainsKey(ctx.ItemIgnoredByConvention));
+                var collection = fixture.GetCollection(schema, ctx.ParentName!);
+                Assert.False(collection.ContainsKey(ctx.ItemIgnoredByConvention!));
             });
         }
 
@@ -260,18 +260,18 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByConvention));
-                    fixture.AddItem(sb, ctx.ParentName, ctx.ItemIgnoredByConvention);
-                    Assert.NotNull(defCollection[ctx.ItemIgnoredByConvention]);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName!);
+                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByConvention!));
+                    fixture.AddItem(sb, ctx.ParentName!, ctx.ItemIgnoredByConvention!);
+                    Assert.NotNull(defCollection[ctx.ItemIgnoredByConvention!]);
                     Assert.Equal(ConfigurationSource.Explicit,
-                        defCollection[ctx.ItemIgnoredByConvention].GetConfigurationSource());
+                        defCollection[ctx.ItemIgnoredByConvention!].GetConfigurationSource());
                     Assert.Equal(ConfigurationSource.Explicit,
-                        defCollection[ctx.ItemIgnoredByConvention].GetConfigurationSource());
+                        defCollection[ctx.ItemIgnoredByConvention!].GetConfigurationSource());
                 });
-                var collection = fixture.GetCollection(schema, ctx.ParentName);
-                Assert.NotNull(collection[ctx.ItemIgnoredByConvention]);
-                Assert.Equal(ctx.ItemIgnoredByConvention, collection[ctx.ItemIgnoredByConvention].Name);
+                var collection = fixture.GetCollection(schema, ctx.ParentName!);
+                Assert.NotNull(collection[ctx.ItemIgnoredByConvention!]);
+                Assert.Equal(ctx.ItemIgnoredByConvention, collection[ctx.ItemIgnoredByConvention!].Name);
             });
         }
 
@@ -286,14 +286,14 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation));
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName!);
+                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation!));
                     Assert.Equal(ConfigurationSource.DataAnnotation,
-                        fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName,
-                            ctx.ItemIgnoredByDataAnnotation));
+                        fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName!,
+                            ctx.ItemIgnoredByDataAnnotation!));
                 });
-                var collection = fixture.GetCollection(schema, ctx.ParentName);
-                Assert.False(collection.ContainsKey(ctx.ItemIgnoredByDataAnnotation));
+                var collection = fixture.GetCollection(schema, ctx.ParentName!);
+                Assert.False(collection.ContainsKey(ctx.ItemIgnoredByDataAnnotation!));
             });
         }
 
@@ -309,18 +309,18 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var schema = Schema.Create(sb =>
                 {
                     fixture.ConfigureContextConventionally(sb);
-                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation));
-                    fixture.AddItem(sb, ctx.ParentName, ctx.ItemIgnoredByDataAnnotation);
-                    Assert.NotNull(defCollection[ctx.ItemIgnoredByDataAnnotation]);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName!);
+                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation!));
+                    fixture.AddItem(sb, ctx.ParentName!, ctx.ItemIgnoredByDataAnnotation!);
+                    Assert.NotNull(defCollection[ctx.ItemIgnoredByDataAnnotation!]);
                     Assert.Equal(ConfigurationSource.Explicit,
-                        defCollection[ctx.ItemIgnoredByDataAnnotation].GetConfigurationSource());
+                        defCollection[ctx.ItemIgnoredByDataAnnotation!].GetConfigurationSource());
                     Assert.Equal(ConfigurationSource.Explicit,
-                        defCollection[ctx.ItemIgnoredByDataAnnotation].GetConfigurationSource());
+                        defCollection[ctx.ItemIgnoredByDataAnnotation!].GetConfigurationSource());
                 });
-                var collection = fixture.GetCollection(schema, ctx.ParentName);
-                Assert.NotNull(collection[ctx.ItemIgnoredByDataAnnotation]);
-                Assert.Equal(ctx.ItemIgnoredByDataAnnotation, collection[ctx.ItemIgnoredByDataAnnotation].Name);
+                var collection = fixture.GetCollection(schema, ctx.ParentName!);
+                Assert.NotNull(collection[ctx.ItemIgnoredByDataAnnotation!]);
+                Assert.Equal(ctx.ItemIgnoredByDataAnnotation, collection[ctx.ItemIgnoredByDataAnnotation!].Name);
             });
         }
 
@@ -335,23 +335,23 @@ namespace GraphZen.TypeSystem.Tests.Configuration
                 var ctx = fixture.GetContext();
                 var schema = Schema.Create(sb =>
                 {
-                    fixture.ConfigureParentExplicitly(sb, ctx.ParentName);
-                    fixture.ConfigureClrContext(sb, ctx.ParentName);
-                    var defCollection = fixture.GetCollection(sb, ctx.ParentName);
-                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation));
-                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByConvention));
-                    Assert.NotNull(defCollection[ctx.ItemNamedByConvention]);
-                    Assert.NotNull(defCollection[ctx.ItemNamedByDataAnnotation]);
+                    fixture.ConfigureParentExplicitly(sb, ctx.ParentName!);
+                    fixture.ConfigureClrContext(sb, ctx.ParentName!);
+                    var defCollection = fixture.GetCollection(sb, ctx.ParentName!);
+                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByDataAnnotation!));
+                    Assert.False(defCollection.ContainsKey(ctx.ItemIgnoredByConvention!));
+                    Assert.NotNull(defCollection[ctx.ItemNamedByConvention!]);
+                    Assert.NotNull(defCollection[ctx.ItemNamedByDataAnnotation!]);
                     Assert.Equal(ConfigurationSource.DataAnnotation,
-                        fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName, ctx.ItemIgnoredByDataAnnotation));
-                    //fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName, ctx.ItemIgnoredByConvention).Should()
+                        fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName!, ctx.ItemIgnoredByDataAnnotation!));
+                    //fixture.FindIgnoredItemConfigurationSource(sb, ctx.ParentName!, ctx.ItemIgnoredByConvention!).Should()
                     //                        .Be(ConfigurationSource.Convention);
                 });
-                var collection = fixture.GetCollection(schema, ctx.ParentName);
-                Assert.False(collection.ContainsKey(ctx.ItemIgnoredByDataAnnotation));
-                Assert.False(collection.ContainsKey(ctx.ItemIgnoredByConvention));
-                Assert.NotNull(collection[ctx.ItemNamedByConvention]);
-                Assert.NotNull(collection[ctx.ItemNamedByDataAnnotation]);
+                var collection = fixture.GetCollection(schema, ctx.ParentName!);
+                Assert.False(collection.ContainsKey(ctx.ItemIgnoredByDataAnnotation!));
+                Assert.False(collection.ContainsKey(ctx.ItemIgnoredByConvention!));
+                Assert.NotNull(collection[ctx.ItemNamedByConvention!]);
+                Assert.NotNull(collection[ctx.ItemNamedByDataAnnotation!]);
             });
         }
     }
