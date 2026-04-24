@@ -21,8 +21,7 @@ public class EnumValue_ViaClrEnumValue_Description : EnumValue_Description, ILea
     public LeafConventionContext GetContext() =>
         new()
         {
-            ParentName = nameof(ExampleEnum.ExampleEnumValue),
-            DataAnnotationValue = DataAnnotationDescriptionValue
+            ParentName = nameof(ExampleEnum.ExampleEnumValue), DataAnnotationValue = DataAnnotationDescriptionValue
         };
 
     public void ConfigureContextConventionally(SchemaBuilder sb)

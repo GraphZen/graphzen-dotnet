@@ -13,10 +13,7 @@ public abstract class NonNullableScalarsTests : VariablesTests
               query ($value: String = ""default"") {
                 fieldWithNonNullableStringInput(input: $value)
               }
-            ").ShouldEqual(new
-        {
-            data = new { fieldWithNonNullableStringInput = "\"default\"" }
-        });
+            ").ShouldEqual(new { data = new { fieldWithNonNullableStringInput = "\"default\"" } });
 
     [Fact]
     public Task AllowsNonNullableInputsToBeSetToAValueDirectly() =>
@@ -24,13 +21,7 @@ public abstract class NonNullableScalarsTests : VariablesTests
               {
                 fieldWithNonNullableStringInput(input: ""a"")
               }
-            ").ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithNonNullableStringInput = "\"a\""
-            }
-        });
+            ").ShouldEqual(new { data = new { fieldWithNonNullableStringInput = "\"a\"" } });
 
     [Fact]
     public Task AllowsNonNullableInputsToBeSetToAValueInAVariable() =>
@@ -38,13 +29,7 @@ public abstract class NonNullableScalarsTests : VariablesTests
               query ($value: String!) {
                 fieldWithNonNullableStringInput(input: $value)
               }
-            ", new { value = "a" }).ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithNonNullableStringInput = "\"a\""
-            }
-        });
+            ", new { value = "a" }).ShouldEqual(new { data = new { fieldWithNonNullableStringInput = "\"a\"" } });
 
     [Fact]
     public Task DoesNotAllowNonNullableInputsToBeOmittedInAVariable() =>
@@ -57,11 +42,7 @@ public abstract class NonNullableScalarsTests : VariablesTests
             errors = Array(new
             {
                 message = "Variable \"$value\" of required type \"String!\" was not provided.",
-                locations = Array(new
-                {
-                    line = 2,
-                    column = 22
-                })
+                locations = Array(new { line = 2, column = 22 })
             })
         });
 
@@ -76,11 +57,7 @@ public abstract class NonNullableScalarsTests : VariablesTests
             errors = Array(new
             {
                 message = "Variable \"$value\" of non-null type \"String!\" must not be null.",
-                locations = Array(new
-                {
-                    line = 2,
-                    column = 22
-                })
+                locations = Array(new { line = 2, column = 22 })
             })
         });
 
@@ -108,18 +85,11 @@ public abstract class NonNullableScalarsTests : VariablesTests
     public Task ReportsErrorForMissingNonNullabeInputs() =>
         ExecuteAsync("{ fieldWithNonNullableStringInput }").ShouldEqual(new
         {
-            data = new
-            {
-                fieldWithNonNullableStringInput = (object?)null
-            },
+            data = new { fieldWithNonNullableStringInput = (object?)null },
             errors = Array(new
             {
                 message = "Argument \"input\" of required type \"String!\" was not provided.",
-                locations = Array(new
-                {
-                    line = 1,
-                    column = 3
-                }),
+                locations = Array(new { line = 1, column = 3 }),
                 path = Array("fieldWithNonNullableStringInput")
             })
         });
@@ -132,19 +102,12 @@ public abstract class NonNullableScalarsTests : VariablesTests
               }
             ").ShouldEqual(new
         {
-            data = new
-            {
-                fieldWithNonNullableStringInput = (object?)null
-            },
+            data = new { fieldWithNonNullableStringInput = (object?)null },
             errors = Array(new
             {
                 message =
                     "Argument \"input\" of required type \"String!\" was provided the variable \"$foo\" which was not provided a runtime value.",
-                locations = Array(new
-                {
-                    line = 3,
-                    column = 56
-                }),
+                locations = Array(new { line = 3, column = 56 }),
                 path = Array("fieldWithNonNullableStringInput")
             })
         });

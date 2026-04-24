@@ -13,10 +13,7 @@ public static class PlaygroundApplicationBuilderExtensions
     [UsedImplicitly]
     public static void UseGraphQLPlayground(this IApplicationBuilder app)
     {
-        var shared = new SharedOptions
-        {
-            RequestPath = ""
-        };
+        var shared = new SharedOptions { RequestPath = "" };
         var defaultFileOptions = new DefaultFilesOptions(shared);
         // ReSharper disable once PossibleNullReferenceException
         defaultFileOptions.DefaultFileNames.Clear();

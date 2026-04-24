@@ -12,9 +12,9 @@ internal static partial class Grammar
     /// </summary>
     private static TokenListParser<TokenKind, VariableDefinitionSyntax[]> VariableDefinitions { get; } =
         (from lp in Parse.Ref(() => LeftParen!)
-         from variableDefinitionNodes in VariableDefinition!.Many()
-         from rp in RightParen
-         select variableDefinitionNodes)
+            from variableDefinitionNodes in VariableDefinition!.Many()
+            from rp in RightParen
+            select variableDefinitionNodes)
         .Named("variable definitions");
 
     /// <summary>
@@ -22,10 +22,10 @@ internal static partial class Grammar
     /// </summary>
     internal static TokenListParser<TokenKind, VariableDefinitionSyntax> VariableDefinition { get; } =
         (from v in Parse.Ref(() => Variable!)
-         from c in Colon
-         from t in Type
-         from defaultValue in DefaultValue!.AsNullable().OptionalOrDefault()
-         select new VariableDefinitionSyntax(v, t!, defaultValue, SyntaxLocation.FromMany(v, c, t!, defaultValue)))
+            from c in Colon
+            from t in Type
+            from defaultValue in DefaultValue!.AsNullable().OptionalOrDefault()
+            select new VariableDefinitionSyntax(v, t!, defaultValue, SyntaxLocation.FromMany(v, c, t!, defaultValue)))
         .Named("variable definition");
 
     /// <summary>
@@ -33,8 +33,8 @@ internal static partial class Grammar
     /// </summary>
     internal static TokenListParser<TokenKind, VariableSyntax> Variable { get; } =
         (from d in Parse.Ref(() => DollarSign!)
-         from n in Name!.Named("variable name")
-         select new VariableSyntax(n, new SyntaxLocation(d, n)))
+            from n in Name!.Named("variable name")
+            select new VariableSyntax(n, new SyntaxLocation(d, n)))
         .Named("variable");
 
     /// <summary>
@@ -42,7 +42,7 @@ internal static partial class Grammar
     /// </summary>
     private static TokenListParser<TokenKind, ValueSyntax> DefaultValue { get; } =
         (from assignment in Parse.Ref(() => Assignment!).Named("assignment")
-         from value in Value!.Named("default value")
-         select value!)
+            from value in Value!.Named("default value")
+            select value!)
         .Named("default value");
 }

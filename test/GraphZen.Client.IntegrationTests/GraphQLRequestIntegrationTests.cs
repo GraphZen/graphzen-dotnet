@@ -26,10 +26,7 @@ public class GraphQLRequestIntegrationTests
     [Fact]
     public async Task it_can_be_used_to_execute_graphql_request()
     {
-        var graphqlRequest = new GraphQLRequest
-        {
-            Query = @"{ message }"
-        };
+        var graphqlRequest = new GraphQLRequest { Query = @"{ message }" };
 
         var expected = new { message = "Hello world" };
         var response = await _gql.SendAsync(graphqlRequest);

@@ -12,11 +12,7 @@ public class Union_ViaClrMarkerInterface_Description : Union_Description, ILeafC
     public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
     public LeafConventionContext GetContext() =>
-        new()
-        {
-            ParentName = nameof(IExampleUnion),
-            DataAnnotationValue = DataAnnotationDescriptionValue
-        };
+        new() { ParentName = nameof(IExampleUnion), DataAnnotationValue = DataAnnotationDescriptionValue };
 
     public void ConfigureContextConventionally(SchemaBuilder sb)
     {

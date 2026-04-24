@@ -17,10 +17,8 @@ interface AnnotatedInterface @onInterface {
 }
 ");
         var expected = SyntaxFactory.Document(new InterfaceTypeDefinitionSyntax(
-            SyntaxFactory.Name("AnnotatedInterface"), null, new[]
-            {
-                SyntaxFactory.Directive(SyntaxFactory.Name("onInterface"))
-            }, new[]
+            SyntaxFactory.Name("AnnotatedInterface"), null,
+            new[] { SyntaxFactory.Directive(SyntaxFactory.Name("onInterface")) }, new[]
             {
                 new FieldDefinitionSyntax(SyntaxFactory.Name("annotatedField"),
                     SyntaxFactory.NamedType(SyntaxFactory.Name("Type")), null, new[]

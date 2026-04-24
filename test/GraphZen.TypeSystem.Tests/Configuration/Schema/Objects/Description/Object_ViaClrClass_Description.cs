@@ -12,11 +12,7 @@ public class Object_ViaClrClass_Description : Object_Description, ILeafConventio
     public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
     public LeafConventionContext GetContext() =>
-        new()
-        {
-            ParentName = nameof(ExampleObject),
-            DataAnnotationValue = DataAnnotationDescriptionValue
-        };
+        new() { ParentName = nameof(ExampleObject), DataAnnotationValue = DataAnnotationDescriptionValue };
 
     public void ConfigureContextConventionally(SchemaBuilder sb)
     {

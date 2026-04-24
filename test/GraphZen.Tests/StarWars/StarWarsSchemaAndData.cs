@@ -144,10 +144,7 @@ public abstract class StarWarsSchemaAndData : ExecutorHarness
 
     private static Human Tarkin { get; } = new()
     {
-        Id = "1004",
-        Name = "Wilhuff Tarkin",
-        FriendIds = new[] { "1001" },
-        AppearsIn = new[] { Episode.Empire }
+        Id = "1004", Name = "Wilhuff Tarkin", FriendIds = new[] { "1001" }, AppearsIn = new[] { Episode.Empire }
     };
 
     private static readonly IReadOnlyDictionary<string, Human> HumanData = new Dictionary<string, Human>
@@ -179,8 +176,7 @@ public abstract class StarWarsSchemaAndData : ExecutorHarness
 
     private static readonly IReadOnlyDictionary<string, Droid> DroidData = new Dictionary<string, Droid>
     {
-        { "2000", ThreePio },
-        { "2001", Artoo }
+        { "2000", ThreePio }, { "2001", Artoo }
     };
 
     protected static Task<ICharacter?> GetCharacterAsync(string id) =>
@@ -275,16 +271,13 @@ public abstract class StarWarsSchemaAndData : ExecutorHarness
     [Description("One of the films in the Star Wars Trilogy")]
     public enum Episode
     {
-        [Description("Released in 1977")]
-        [GraphQLName("NEW_HOPE")]
+        [Description("Released in 1977")] [GraphQLName("NEW_HOPE")]
         NewHope = 4,
 
-        [Description("Released in 1980")]
-        [GraphQLName("EMPIRE")]
+        [Description("Released in 1980")] [GraphQLName("EMPIRE")]
         Empire = 5,
 
-        [Description("Released in 1983")]
-        [GraphQLName("JEDI")]
+        [Description("Released in 1983")] [GraphQLName("JEDI")]
         Jedi = 6
     }
 

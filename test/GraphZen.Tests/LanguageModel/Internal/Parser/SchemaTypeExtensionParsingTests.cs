@@ -13,7 +13,9 @@ public class SchemaTypeExtensionParsingTests : ParserTestBase
         var result = ParseDocument("extend schema @onSchema");
         var expected =
             SyntaxFactory.Document(new SchemaExtensionSyntax(new[]
-                { SyntaxFactory.Directive(SyntaxFactory.Name("onSchema")) }));
+            {
+                SyntaxFactory.Directive(SyntaxFactory.Name("onSchema"))
+            }));
         Assert.Equal(expected, result);
         Assert.Equal(expected, PrintAndParse(result));
     }

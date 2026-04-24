@@ -12,11 +12,7 @@ public class Interface_ViaClrClass_Description : Interface_Description, ILeafCon
     public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
     public LeafConventionContext GetContext() =>
-        new()
-        {
-            ParentName = nameof(IExampleInterface),
-            DataAnnotationValue = DataAnnotationDescriptionValue
-        };
+        new() { ParentName = nameof(IExampleInterface), DataAnnotationValue = DataAnnotationDescriptionValue };
 
     public void ConfigureContextConventionally(SchemaBuilder sb)
     {

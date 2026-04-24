@@ -12,8 +12,7 @@ public class Schema_Directives_ViaObjectClrPropertyAttribute : Schema_Directives
 {
     public CollectionConventionContext GetContext() => new()
     {
-        ItemNamedByConvention = nameof(FieldDefinition),
-        ItemNamedByDataAnnotation = "hello"
+        ItemNamedByConvention = nameof(FieldDefinition), ItemNamedByDataAnnotation = "hello"
     };
 
     public void ConfigureContextConventionally(SchemaBuilder sb)

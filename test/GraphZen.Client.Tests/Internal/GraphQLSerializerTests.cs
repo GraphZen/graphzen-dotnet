@@ -61,10 +61,6 @@ public class GraphQLSerializerTests
     {
         var result =
             GraphQLJsonSerializer.ParseData<TypedQueryResult>("{\"data\":{\"number\": 1, \"message\":\"hello\"}}");
-        JsonAssert.EquivalentToJsonFromObject(result, new TypedQueryResult
-        {
-            Message = "hello",
-            Number = 1
-        });
+        JsonAssert.EquivalentToJsonFromObject(result, new TypedQueryResult { Message = "hello", Number = 1 });
     }
 }

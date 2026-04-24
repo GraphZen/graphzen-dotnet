@@ -43,12 +43,7 @@ public class IntrospectionTests : ExecutorHarness
                 new JsonDiffOptions
                 {
                     SortBeforeCompare = true,
-                    StringDiffOptions =
-                    {
-                        ShowExpected = false,
-                        ShowActual = false,
-                        ShowDiffs = true
-                    }
+                    StringDiffOptions = { ShowExpected = false, ShowActual = false, ShowDiffs = true }
                 });
     }
 }

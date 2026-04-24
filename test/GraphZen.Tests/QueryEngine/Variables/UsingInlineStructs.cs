@@ -16,10 +16,7 @@ public abstract class UsingInlineStructs : VariablesTests
               }
             ").ShouldEqual(new
         {
-            data = new
-            {
-                fieldWithObjectInput = (object?)null
-            },
+            data = new { fieldWithObjectInput = (object?)null },
             errors = new object[]
             {
                 new
@@ -39,13 +36,7 @@ public abstract class UsingInlineStructs : VariablesTests
                         fieldWithObjectInput(input: { a: ""foo"", b: [""bar""], c: ""baz""})
                     }
                     ").ShouldEqual(
-            new
-            {
-                data = new
-                {
-                    fieldWithObjectInput = @"{""a"":""foo"",""b"":[""bar""],""c"":""baz""}"
-                }
-            }
+            new { data = new { fieldWithObjectInput = @"{""a"":""foo"",""b"":[""bar""],""c"":""baz""}" } }
         );
 
     [Fact]
@@ -55,13 +46,7 @@ public abstract class UsingInlineStructs : VariablesTests
                         fieldWithObjectInput(input: {b: [""A"",null,""C""], c: ""C""})
                     }
                     ")
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithObjectInput = @"{""b"":[""A"",null,""C""],""c"":""C""}"
-                }
-            });
+            .ShouldEqual(new { data = new { fieldWithObjectInput = @"{""b"":[""A"",null,""C""],""c"":""C""}" } });
 
     [Fact]
     public Task ProperlyParsesNullValueToNull() =>
@@ -70,13 +55,7 @@ public abstract class UsingInlineStructs : VariablesTests
                         fieldWithObjectInput(input: {a: null, b: null, c: ""C"", d: null})
                     }
                     ").ShouldEqual(
-            new
-            {
-                data = new
-                {
-                    fieldWithObjectInput = @"{""a"":null,""b"":null,""c"":""C"",""d"":null}"
-                }
-            });
+            new { data = new { fieldWithObjectInput = @"{""a"":null,""b"":null,""c"":""C"",""d"":null}" } });
 
     [Fact]
     public Task ProperlyParsesSingleValueToList() =>
@@ -85,13 +64,7 @@ public abstract class UsingInlineStructs : VariablesTests
                         fieldWithObjectInput(input: {a: ""foo"", b: ""bar"", c: ""baz""})
                     }
                     ").ShouldEqual(
-            new
-            {
-                data = new
-                {
-                    fieldWithObjectInput = @"{""a"":""foo"",""b"":[""bar""],""c"":""baz""}"
-                }
-            }
+            new { data = new { fieldWithObjectInput = @"{""a"":""foo"",""b"":[""bar""],""c"":""baz""}" } }
         );
 
     [Fact]
@@ -100,13 +73,7 @@ public abstract class UsingInlineStructs : VariablesTests
                     {
                         fieldWithObjectInput(input: {c: ""foo"", d: ""SerializedValue""}) 
                     }")
-            .ShouldEqual(new
-            {
-                data = new
-                {
-                    fieldWithObjectInput = @"{""c"":""foo"",""d"":""DeserializedValue""}"
-                }
-            });
+            .ShouldEqual(new { data = new { fieldWithObjectInput = @"{""c"":""foo"",""d"":""DeserializedValue""}" } });
 
     [UsedImplicitly]
     private class StaticDslTests : UsingInlineStructs

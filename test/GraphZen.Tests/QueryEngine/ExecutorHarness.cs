@@ -28,9 +28,6 @@ public abstract class ExecutorHarness
         var vars = variables != null ? TestHelpers.ToDictionary(variables) : null;
         var ast = doc != null ? Parser.ParseDocument(doc) : null;
         return Executor.ExecuteAsync(schema, ast!, rootValue, null, vars,
-            operationName, new ExecutionOptions
-            {
-                ThrowOnError = throwOnError
-            });
+            operationName, new ExecutionOptions { ThrowOnError = throwOnError });
     }
 }

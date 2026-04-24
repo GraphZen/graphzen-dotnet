@@ -61,10 +61,8 @@ query queryName($foo: ComplexType, $site: Site = MOBILE) {
                                     },
                                     SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("id")),
                                         SyntaxFactory.FragmentSpread(SyntaxFactory.Name("frag"))))))),
-                        SyntaxFactory.NamedType(SyntaxFactory.Name("User")), new[]
-                        {
-                            SyntaxFactory.Directive(SyntaxFactory.Name("defer"))
-                        }), new InlineFragmentSyntax(
+                        SyntaxFactory.NamedType(SyntaxFactory.Name("User")),
+                        new[] { SyntaxFactory.Directive(SyntaxFactory.Name("defer")) }), new InlineFragmentSyntax(
                         SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("id"))), null, new[]
                         {
                             new DirectiveSyntax(SyntaxFactory.Name("skip"),
@@ -103,13 +101,9 @@ mutation likeStory {
         var result = ParseDocument(query);
         var expected = SyntaxFactory.Document(new OperationDefinitionSyntax(OperationType.Mutation,
             SyntaxFactory.SelectionSet(new FieldSyntax(
-                SyntaxFactory.Name("like"), null, new[]
-                {
-                    SyntaxFactory.Argument(SyntaxFactory.Name("story"), SyntaxFactory.IntValue(123))
-                }, new[]
-                {
-                    SyntaxFactory.Directive(SyntaxFactory.Name("defer"))
-                },
+                SyntaxFactory.Name("like"), null,
+                new[] { SyntaxFactory.Argument(SyntaxFactory.Name("story"), SyntaxFactory.IntValue(123)) },
+                new[] { SyntaxFactory.Directive(SyntaxFactory.Name("defer")) },
                 SyntaxFactory.SelectionSet(new FieldSyntax(SyntaxFactory.Name("story"),
                     SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("id"))))))),
             SyntaxFactory.Name("likeStory")));

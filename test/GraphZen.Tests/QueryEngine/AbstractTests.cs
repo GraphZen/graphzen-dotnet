@@ -47,11 +47,11 @@ public class AbstractTests : ExecutorHarness
                 .Field("meows", "Boolean");
 
             sb.Object("Query")
-                .Field("pets", "[Pet]", _ => _.Resolve(() => new object[]
-                {
-                    new Dog { Name = "Odie", Woofs = true },
-                    new Cat { Name = "Garfield", Meows = false }
-                }));
+                .Field("pets", "[Pet]",
+                    _ => _.Resolve(() => new object[]
+                    {
+                        new Dog { Name = "Odie", Woofs = true }, new Cat { Name = "Garfield", Meows = false }
+                    }));
         });
 
         var query = @"
@@ -72,16 +72,7 @@ public class AbstractTests : ExecutorHarness
             {
                 pets = new object[]
                 {
-                    new
-                    {
-                        name = "Odie",
-                        woofs = true
-                    },
-                    new
-                    {
-                        name = "Garfield",
-                        meows = false
-                    }
+                    new { name = "Odie", woofs = true }, new { name = "Garfield", meows = false }
                 }
             }
         });
@@ -121,12 +112,12 @@ public class AbstractTests : ExecutorHarness
                 .Field("meows", "Boolean");
 
             sb.Object("Query")
-                .Field("pets", "[Pet]", _ => _.Resolve(() => new object[]
-                {
-                    new Dog { Name = "Odie", Woofs = true },
-                    new Cat { Name = "Garfield", Meows = false },
-                    new Human { Name = "Jon" }
-                }));
+                .Field("pets", "[Pet]",
+                    _ => _.Resolve(() => new object[]
+                    {
+                        new Dog { Name = "Odie", Woofs = true }, new Cat { Name = "Garfield", Meows = false },
+                        new Human { Name = "Jon" }
+                    }));
         });
         var query = @"
             {
@@ -147,17 +138,7 @@ public class AbstractTests : ExecutorHarness
             {
                 pets = new object[]
                 {
-                    new
-                    {
-                        name = "Odie",
-                        woofs = true
-                    },
-                    new
-                    {
-                        name = "Garfield",
-                        meows = false
-                    },
-                    null!
+                    new { name = "Odie", woofs = true }, new { name = "Garfield", meows = false }, null!
                 }
             },
             errors = new object[]
@@ -207,12 +188,12 @@ public class AbstractTests : ExecutorHarness
 
 
             sb.Object("Query")
-                .Field("pets", "[Pet]", _ => _.Resolve(() => new object[]
-                {
-                    new Dog { Name = "Odie", Woofs = true },
-                    new Cat { Name = "Garfield", Meows = false },
-                    new Human { Name = "Jon" }
-                }));
+                .Field("pets", "[Pet]",
+                    _ => _.Resolve(() => new object[]
+                    {
+                        new Dog { Name = "Odie", Woofs = true }, new Cat { Name = "Garfield", Meows = false },
+                        new Human { Name = "Jon" }
+                    }));
         });
         var query = @"
             {
@@ -233,17 +214,7 @@ public class AbstractTests : ExecutorHarness
             {
                 pets = new object[]
                 {
-                    new
-                    {
-                        name = "Odie",
-                        woofs = true
-                    },
-                    new
-                    {
-                        name = "Garfield",
-                        meows = false
-                    },
-                    null!
+                    new { name = "Odie", woofs = true }, new { name = "Garfield", meows = false }, null!
                 }
             },
             errors = new object[]
@@ -285,14 +256,7 @@ public class AbstractTests : ExecutorHarness
                     {
                         message =
                             "Abstract type FooInterface must resolve to an Object type at runtime for field Query.foo with value \"dummy\", received \"null\". Either the FooInterface type should provide a \"resolveType\" function or each possible types should provide an \"IsTypeOf\" function.",
-                        locations = new object[]
-                        {
-                            new
-                            {
-                                line = 1,
-                                column = 3
-                            }
-                        },
+                        locations = new object[] { new { line = 1, column = 3 } },
                         path = new object[] { "foo" }
                     }
                 }
@@ -331,8 +295,7 @@ public class AbstractTests : ExecutorHarness
                 .Field("pets", "[Pet]",
                     _ => _.Resolve(() => new object[]
                     {
-                        new Dog { Name = "Odie", Woofs = true },
-                        new Cat { Name = "Garfield", Meows = false }
+                        new Dog { Name = "Odie", Woofs = true }, new Cat { Name = "Garfield", Meows = false }
                     }));
         });
 
@@ -355,16 +318,7 @@ public class AbstractTests : ExecutorHarness
             {
                 pets = new object[]
                 {
-                    new
-                    {
-                        name = "Odie",
-                        woofs = true
-                    },
-                    new
-                    {
-                        name = "Garfield",
-                        meows = false
-                    }
+                    new { name = "Odie", woofs = true }, new { name = "Garfield", meows = false }
                 }
             }
         });

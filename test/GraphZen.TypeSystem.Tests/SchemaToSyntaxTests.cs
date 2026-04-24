@@ -66,10 +66,7 @@ public class SchemaToSyntaxTests
         var expected = new ObjectTypeDefinitionSyntax(
             Name("Object"),
             Description("object description")
-            , new[]
-            {
-                NamedType(Name("Interface"))
-            }, null, new[]
+            , new[] { NamedType(Name("Interface")) }, null, new[]
             {
                 new FieldDefinitionSyntax(Name("field"),
                     NamedType(Name("String")),
@@ -95,10 +92,7 @@ public class SchemaToSyntaxTests
         var objectType = Schema.GetType("Interface");
         var expected = new InterfaceTypeDefinitionSyntax(
             Name("Interface"),
-            StringValue("interface description", true), new[]
-            {
-                Directive(Name("onInterface"))
-            }, new[]
+            StringValue("interface description", true), new[] { Directive(Name("onInterface")) }, new[]
             {
                 new FieldDefinitionSyntax(Name("field"),
                     NamedType(Name("String")),

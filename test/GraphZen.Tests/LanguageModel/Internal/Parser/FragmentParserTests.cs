@@ -31,10 +31,7 @@ public class FragmentParserTests
         var tokens = _sut.Tokenize(source);
         var test = Grammar.FragmentSpread(tokens);
         var expectedValue = new FragmentSpreadSyntax(SyntaxFactory.Name("address"),
-            new[]
-            {
-                SyntaxFactory.Directive(SyntaxFactory.Name("include"))
-            });
+            new[] { SyntaxFactory.Directive(SyntaxFactory.Name("include")) });
         Assert.Equal(expectedValue, test.Value);
     }
 
@@ -49,10 +46,8 @@ public class FragmentParserTests
             SyntaxFactory.NamedType(SyntaxFactory.Name("Bar")),
             new[]
             {
-                new DirectiveSyntax(SyntaxFactory.Name("include"), new[]
-                {
-                    SyntaxFactory.Argument(SyntaxFactory.Name("times"), SyntaxFactory.IntValue(1))
-                })
+                new DirectiveSyntax(SyntaxFactory.Name("include"),
+                    new[] { SyntaxFactory.Argument(SyntaxFactory.Name("times"), SyntaxFactory.IntValue(1)) })
             });
         Assert.Equal(expectedValue, test.Value);
     }
@@ -100,10 +95,8 @@ fragment address on User @directive {
         var test = Grammar.FragmentDefinition(tokens);
         var expectedValue = new FragmentDefinitionSyntax(SyntaxFactory.Name("address"),
             SyntaxFactory.NamedType(SyntaxFactory.Name("User")),
-            SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("line1"))), new[]
-            {
-                SyntaxFactory.Directive(SyntaxFactory.Name("directive"))
-            });
+            SyntaxFactory.SelectionSet(SyntaxFactory.Field(SyntaxFactory.Name("line1"))),
+            new[] { SyntaxFactory.Directive(SyntaxFactory.Name("directive")) });
         Assert.Equal(expectedValue, test.Value);
     }
 }

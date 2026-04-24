@@ -12,17 +12,17 @@ internal static partial class Grammar
     /// </summary>
     private static TokenListParser<TokenKind, DirectiveDefinitionSyntax> DirectiveDefinition { get; } =
         (from desc in Parse.Ref(() => Description!).AsNullable().OptionalOrDefault()
-         from directive in Keyword("directive")!
-         from at in AtSymbol!
-         from name in Name!
-         from args in ArgumentsDefinition!.AsNullable().OptionalOrDefault()
-         from @on in Keyword("on")!
-         from locations in DirectiveLocations!
-         select new DirectiveDefinitionSyntax(name!, locations!, desc, args,
-             SyntaxLocation.FromMany(desc, directive, at, name!,
-                 args?.GetLocation()
-                 , @on,
-                 locations!.GetLocation())))
+            from directive in Keyword("directive")!
+            from at in AtSymbol!
+            from name in Name!
+            from args in ArgumentsDefinition!.AsNullable().OptionalOrDefault()
+            from @on in Keyword("on")!
+            from locations in DirectiveLocations!
+            select new DirectiveDefinitionSyntax(name!, locations!, desc, args,
+                SyntaxLocation.FromMany(desc, directive, at, name!,
+                    args?.GetLocation()
+                    , @on,
+                    locations!.GetLocation())))
         .Try()
         .Named("directive definition");
 
@@ -31,8 +31,8 @@ internal static partial class Grammar
     /// </summary>
     private static TokenListParser<TokenKind, NameSyntax[]> DirectiveLocations { get; } =
         (from pipe in Parse.Ref(() => Pipe!).AsNullable().OptionalOrDefault()
-         from locations in DirectiveLocation!.ManyDelimitedBy(Pipe!)
-         select locations)
+            from locations in DirectiveLocation!.ManyDelimitedBy(Pipe!)
+            select locations)
         .Try()
         .Named("directive locations");
 

@@ -11,13 +11,7 @@ public class Mutation
     public bool AddPost(string author, string title, string post)
     {
         var newId = FakeBlogData.Posts.Max(_ => _.Id) + 1;
-        var postModel = new Post
-        {
-            Id = newId,
-            Author = author,
-            Title = title,
-            Content = post
-        };
+        var postModel = new Post { Id = newId, Author = author, Title = title, Content = post };
         FakeBlogData.Posts.Add(postModel);
         return true;
     }
@@ -27,13 +21,7 @@ public class Mutation
     public bool Comment(int postId, string author, string comment)
     {
         var newId = FakeBlogData.Comments.Max(_ => _.Id) + 1;
-        var commentModel = new Comment
-        {
-            Id = newId,
-            PostId = postId,
-            Author = author,
-            Content = comment
-        };
+        var commentModel = new Comment { Id = newId, PostId = postId, Author = author, Content = comment };
         FakeBlogData.Comments.Add(commentModel);
         return true;
     }

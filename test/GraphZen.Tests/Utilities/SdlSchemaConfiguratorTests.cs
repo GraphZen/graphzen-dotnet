@@ -22,13 +22,7 @@ public class SDLSchemaConfiguratorTests : ExecutorHarness
                 }
             ");
 
-        return ExecuteAsync(schema, " { str } ", new { str = 123 }).ShouldEqual(new
-        {
-            data = new
-            {
-                str = "123"
-            }
-        });
+        return ExecuteAsync(schema, " { str } ", new { str = 123 }).ShouldEqual(new { data = new { str = "123" } });
     }
 
 
@@ -41,18 +35,9 @@ public class SDLSchemaConfiguratorTests : ExecutorHarness
                 }
             ");
 
-        var root = new
-        {
-            add = (Func<dynamic, int>)(args => args.x + args.y)
-        };
+        var root = new { add = (Func<dynamic, int>)(args => args.x + args.y) };
 
-        return ExecuteAsync(schema, "{ add(x: 34, y: 55) }", root).ShouldEqual(new
-        {
-            data = new
-            {
-                add = 89
-            }
-        });
+        return ExecuteAsync(schema, "{ add(x: 34, y: 55) }", root).ShouldEqual(new { data = new { add = 89 } });
     }
 
     private static void ShouldRoundTrip(string sdl, StringDiffOptions? options = null)
@@ -390,34 +375,12 @@ public class SDLSchemaConfiguratorTests : ExecutorHarness
         {
             fruits = new object[]
             {
-                new
-                {
-                    color = "green",
-                    __typename = "Apple"
-                },
-                new
-                {
-                    length = 5,
-                    __typename = "Banana"
-                }
+                new { color = "green", __typename = "Apple" }, new { length = 5, __typename = "Banana" }
             }
         };
         await ExecuteAsync(schema, query, root).ShouldEqual(new
         {
-            data = new
-            {
-                fruits = new object[]
-                {
-                    new
-                    {
-                        color = "green"
-                    },
-                    new
-                    {
-                        length = 5
-                    }
-                }
-            }
+            data = new { fruits = new object[] { new { color = "green" }, new { length = 5 } } }
         });
     }
 
@@ -462,18 +425,8 @@ public class SDLSchemaConfiguratorTests : ExecutorHarness
         {
             characters = new object[]
             {
-                new
-                {
-                    name = "Han Solo",
-                    totalCredits = 10,
-                    __typename = "Human"
-                },
-                new
-                {
-                    name = "R2-D2",
-                    primaryFunction = "Astromech",
-                    __typename = "Droid"
-                }
+                new { name = "Han Solo", totalCredits = 10, __typename = "Human" },
+                new { name = "R2-D2", primaryFunction = "Astromech", __typename = "Droid" }
             }
         };
 
@@ -483,16 +436,8 @@ public class SDLSchemaConfiguratorTests : ExecutorHarness
             {
                 characters = new object[]
                 {
-                    new
-                    {
-                        name = "Han Solo",
-                        totalCredits = 10
-                    },
-                    new
-                    {
-                        name = "R2-D2",
-                        primaryFunction = "Astromech"
-                    }
+                    new { name = "Han Solo", totalCredits = 10 },
+                    new { name = "R2-D2", primaryFunction = "Astromech" }
                 }
             }
         });
@@ -690,15 +635,7 @@ public class SDLSchemaConfiguratorTests : ExecutorHarness
         var restoredSchemaAST = SyntaxFactory.Document(
             new ISyntaxConvertable[]
             {
-                schema,
-                query,
-                testInput,
-                testEnum,
-                testUnion,
-                testInterface,
-                testType,
-                testScalar,
-                testDirective!
+                schema, query, testInput, testEnum, testUnion, testInterface, testType, testScalar, testDirective!
             }.ToSyntaxNodes<DefinitionSyntax>().ToArray()
         );
         Assert.Equal(schemaAST.ToSyntaxString(), restoredSchemaAST.ToSyntaxString());

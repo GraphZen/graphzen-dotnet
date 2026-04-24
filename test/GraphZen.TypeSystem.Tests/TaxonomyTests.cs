@@ -14,20 +14,10 @@ public class TaxonomyTests
         var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
         var expected = new[]
         {
-            typeof(EnumType),
-            typeof(EnumTypeDefinition),
-            typeof(InputObjectType),
-            typeof(InputObjectTypeDefinition),
-            typeof(InterfaceType),
-            typeof(InterfaceTypeDefinition),
-            typeof(ListType),
-            typeof(NonNullType),
-            typeof(ObjectType),
-            typeof(ObjectTypeDefinition),
-            typeof(ScalarType),
-            typeof(ScalarTypeDefinition),
-            typeof(TypeReference),
-            typeof(UnionType),
+            typeof(EnumType), typeof(EnumTypeDefinition), typeof(InputObjectType),
+            typeof(InputObjectTypeDefinition), typeof(InterfaceType), typeof(InterfaceTypeDefinition),
+            typeof(ListType), typeof(NonNullType), typeof(ObjectType), typeof(ObjectTypeDefinition),
+            typeof(ScalarType), typeof(ScalarTypeDefinition), typeof(TypeReference), typeof(UnionType),
             typeof(UnionTypeDefinition)
         };
 
@@ -41,18 +31,10 @@ public class TaxonomyTests
         var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
         var expected = new[]
         {
-            typeof(EnumType),
-            typeof(EnumTypeDefinition),
-            typeof(InputObjectType),
-            typeof(InputObjectTypeDefinition),
-            typeof(InterfaceType),
-            typeof(InterfaceTypeDefinition),
-            typeof(ObjectType),
-            typeof(ObjectTypeDefinition),
-            typeof(ScalarType),
-            typeof(ScalarTypeDefinition),
-            typeof(UnionType),
-            typeof(UnionTypeDefinition)
+            typeof(EnumType), typeof(EnumTypeDefinition), typeof(InputObjectType),
+            typeof(InputObjectTypeDefinition), typeof(InterfaceType), typeof(InterfaceTypeDefinition),
+            typeof(ObjectType), typeof(ObjectTypeDefinition), typeof(ScalarType), typeof(ScalarTypeDefinition),
+            typeof(UnionType), typeof(UnionTypeDefinition)
         };
 
         Assert.Equal(expected, types);
@@ -65,14 +47,8 @@ public class TaxonomyTests
         var types = ClrTypeUtils.GetImplementedTypes(type).DumpTypes();
         var expected = new[]
         {
-            typeof(EnumType),
-            typeof(InputObjectType),
-            typeof(InterfaceType),
-            typeof(ListType),
-            typeof(NonNullType),
-            typeof(ObjectType),
-            typeof(ScalarType),
-            typeof(UnionType)
+            typeof(EnumType), typeof(InputObjectType), typeof(InterfaceType), typeof(ListType), typeof(NonNullType),
+            typeof(ObjectType), typeof(ScalarType), typeof(UnionType)
         };
 
         Assert.Equal(expected, types);
@@ -87,12 +63,8 @@ public class TaxonomyTests
 
         var expected = new[]
         {
-            typeof(EnumType),
-            typeof(InputObjectType),
-            typeof(InterfaceType),
-            typeof(ObjectType),
-            typeof(ScalarType),
-            typeof(UnionType)
+            typeof(EnumType), typeof(InputObjectType), typeof(InterfaceType), typeof(ObjectType),
+            typeof(ScalarType), typeof(UnionType)
         };
 
         Assert.Equal(expected, types);
@@ -106,18 +78,10 @@ public class TaxonomyTests
 
         var expected = new[]
         {
-            typeof(EnumType),
-            typeof(EnumTypeDefinition),
-            typeof(InputObjectType),
-            typeof(InputObjectTypeDefinition),
-            typeof(InterfaceType),
-            typeof(InterfaceTypeDefinition),
-            typeof(ObjectType),
-            typeof(ObjectTypeDefinition),
-            typeof(ScalarType),
-            typeof(ScalarTypeDefinition),
-            typeof(UnionType),
-            typeof(UnionTypeDefinition)
+            typeof(EnumType), typeof(EnumTypeDefinition), typeof(InputObjectType),
+            typeof(InputObjectTypeDefinition), typeof(InterfaceType), typeof(InterfaceTypeDefinition),
+            typeof(ObjectType), typeof(ObjectTypeDefinition), typeof(ScalarType), typeof(ScalarTypeDefinition),
+            typeof(UnionType), typeof(UnionTypeDefinition)
         };
 
         Assert.Equal(expected, types);
@@ -134,15 +98,8 @@ public class TaxonomyTests
 
         var expected = new[]
         {
-            typeof(EnumType),
-            typeof(EnumValue),
-            typeof(Field),
-            typeof(InputObjectType),
-            typeof(InputValue),
-            typeof(InterfaceType),
-            typeof(ObjectType),
-            typeof(ScalarType),
-            typeof(UnionType)
+            typeof(EnumType), typeof(EnumValue), typeof(Field), typeof(InputObjectType), typeof(InputValue),
+            typeof(InterfaceType), typeof(ObjectType), typeof(ScalarType), typeof(UnionType)
         };
 
         Assert.Equal(expected, types);
@@ -157,15 +114,8 @@ public class TaxonomyTests
 
         var expected = new[]
         {
-            typeof(EnumType),
-            typeof(EnumValue),
-            typeof(Field),
-            typeof(InputObjectType),
-            typeof(InputValue),
-            typeof(InterfaceType),
-            typeof(ObjectType),
-            typeof(ScalarType),
-            typeof(UnionType)
+            typeof(EnumType), typeof(EnumValue), typeof(Field), typeof(InputObjectType), typeof(InputValue),
+            typeof(InterfaceType), typeof(ObjectType), typeof(ScalarType), typeof(UnionType)
         };
 
         Assert.Equal(expected, types);
@@ -178,10 +128,7 @@ public class TaxonomyTests
 
         var expected = new[]
         {
-            typeof(InterfaceType),
-            typeof(InterfaceTypeDefinition),
-            typeof(UnionType),
-            typeof(UnionTypeDefinition)
+            typeof(InterfaceType), typeof(InterfaceTypeDefinition), typeof(UnionType), typeof(UnionTypeDefinition)
         };
 
         Assert.Equal(expected, types);
@@ -192,11 +139,7 @@ public class TaxonomyTests
     {
         var types = ClrTypeUtils.GetImplementedTypes(typeof(IAbstractType));
 
-        var expected = new[]
-        {
-            typeof(InterfaceType),
-            typeof(UnionType)
-        };
+        var expected = new[] { typeof(InterfaceType), typeof(UnionType) };
 
         Assert.Equal(expected, types);
     }
@@ -209,17 +152,9 @@ public class TaxonomyTests
 
         var expected = new[]
         {
-            typeof(AnnotatableMemberDefinition),
-            typeof(EnumType),
-            typeof(EnumValue),
-            typeof(Field),
-            typeof(InputObjectType),
-            typeof(InputValue),
-            typeof(InterfaceType),
-            typeof(ObjectType),
-            typeof(ScalarType),
-            typeof(Schema),
-            typeof(UnionType)
+            typeof(AnnotatableMemberDefinition), typeof(EnumType), typeof(EnumValue), typeof(Field),
+            typeof(InputObjectType), typeof(InputValue), typeof(InterfaceType), typeof(ObjectType),
+            typeof(ScalarType), typeof(Schema), typeof(UnionType)
         };
 
         Assert.Equal(expected, types);
@@ -232,12 +167,8 @@ public class TaxonomyTests
 
         var expected = new[]
         {
-            typeof(InterfaceType),
-            typeof(InterfaceTypeDefinition),
-            typeof(ObjectType),
-            typeof(ObjectTypeDefinition),
-            typeof(UnionType),
-            typeof(UnionTypeDefinition)
+            typeof(InterfaceType), typeof(InterfaceTypeDefinition), typeof(ObjectType),
+            typeof(ObjectTypeDefinition), typeof(UnionType), typeof(UnionTypeDefinition)
         };
 
         Assert.Equal(expected, types);
@@ -249,12 +180,7 @@ public class TaxonomyTests
     {
         var types = ClrTypeUtils.GetImplementedTypes(typeof(ICompositeType));
 
-        var expected = new[]
-        {
-            typeof(InterfaceType),
-            typeof(ObjectType),
-            typeof(UnionType)
-        };
+        var expected = new[] { typeof(InterfaceType), typeof(ObjectType), typeof(UnionType) };
 
         Assert.Equal(expected, types);
     }
@@ -267,10 +193,7 @@ public class TaxonomyTests
 
         var expected = new[]
         {
-            typeof(EnumType),
-            typeof(EnumTypeDefinition),
-            typeof(ScalarType),
-            typeof(ScalarTypeDefinition)
+            typeof(EnumType), typeof(EnumTypeDefinition), typeof(ScalarType), typeof(ScalarTypeDefinition)
         };
 
         Assert.Equal(expected, types);
@@ -281,11 +204,7 @@ public class TaxonomyTests
     {
         var types = ClrTypeUtils.GetImplementedTypes(typeof(ILeafType));
 
-        var expected = new[]
-        {
-            typeof(EnumType),
-            typeof(ScalarType)
-        };
+        var expected = new[] { typeof(EnumType), typeof(ScalarType) };
 
         Assert.Equal(expected, types);
     }
@@ -298,13 +217,8 @@ public class TaxonomyTests
 
         var expected = new[]
         {
-            typeof(EnumType),
-            typeof(InputObjectType),
-            typeof(InterfaceType),
-            typeof(ListType),
-            typeof(ObjectType),
-            typeof(ScalarType),
-            typeof(UnionType)
+            typeof(EnumType), typeof(InputObjectType), typeof(InterfaceType), typeof(ListType), typeof(ObjectType),
+            typeof(ScalarType), typeof(UnionType)
         };
 
         Assert.Equal(expected, types);

@@ -14,10 +14,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
                 listNN(input: $input)
               }
             ", new { input = (object?)null }).ShouldEqual(
-            new
-            {
-                data = new { listNN = "null" }
-            });
+            new { data = new { listNN = "null" } });
 
     [Fact]
     public Task AllowsListsOfNonNullsToContainValues() =>
@@ -26,10 +23,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
                 listNN(input: $input)
               }
             ", new { input = Array("A") }).ShouldEqual(
-            new
-            {
-                data = new { listNN = "[\"A\"]" }
-            });
+            new { data = new { listNN = "[\"A\"]" } });
 
     [Fact]
     public Task AllowsListsToBeNull() =>
@@ -37,13 +31,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
               query ($input: [String]) {
                 list(input: $input)
               }
-            ", new { input = (object?)null }).ShouldEqual(new
-        {
-            data = new
-            {
-                list = "null"
-            }
-        });
+            ", new { input = (object?)null }).ShouldEqual(new { data = new { list = "null" } });
 
     [Fact]
     public Task AllowsListsToContainNull() =>
@@ -51,13 +39,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
               query ($input: [String]) {
                 list(input: $input)
               }
-            ", new { input = Array("A", null, "B") }).ShouldEqual(new
-        {
-            data = new
-            {
-                list = "[\"A\",null,\"B\"]"
-            }
-        });
+            ", new { input = Array("A", null, "B") }).ShouldEqual(new { data = new { list = "[\"A\",null,\"B\"]" } });
 
     [Fact]
     public Task AllowsListsToContainValues() =>
@@ -65,13 +47,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
               query ($input: [String]) {
                 list(input: $input)
               }
-            ", new { input = Array("A") }).ShouldEqual(new
-        {
-            data = new
-            {
-                list = "[\"A\"]"
-            }
-        });
+            ", new { input = Array("A") }).ShouldEqual(new { data = new { list = "[\"A\"]" } });
 
     [Fact]
     public Task AllowsNonNullListsOfNonNullsToContainValues() =>
@@ -80,13 +56,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
                 nnListNN(input: $input)
               }
             ", new { input = Array("A") }).ShouldEqual(
-            new
-            {
-                data = new
-                {
-                    nnListNN = "[\"A\"]"
-                }
-            });
+            new { data = new { nnListNN = "[\"A\"]" } });
 
     [Fact]
     public Task AllowsNonNullListsToContainValues() =>
@@ -94,13 +64,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
               query ($input: [String]!) {
                 nnList(input: $input)
               }
-            ", new { input = Array("A") }).ShouldEqual(new
-        {
-            data = new
-            {
-                nnList = "[\"A\"]"
-            }
-        });
+            ", new { input = Array("A") }).ShouldEqual(new { data = new { nnList = "[\"A\"]" } });
 
     [Fact]
     public Task DoesNotAllowInvalidTypesToBeUsedAsValues() =>
@@ -114,11 +78,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
             {
                 message =
                     "Variable \"$input\" expected value of type \"TestType!\" which cannot be used as an input type.",
-                locations = Array(new
-                {
-                    line = 2,
-                    column = 30
-                })
+                locations = Array(new { line = 2, column = 30 })
             })
         });
 
@@ -135,11 +95,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
                 {
                     message =
                         "Variable \"$input\" got invalid value `[\"A\", null, \"B\"]`; Expected non-nullable type String! not to be null at value[1].",
-                    locations = Array(new
-                    {
-                        line = 2,
-                        column = 22
-                    })
+                    locations = Array(new { line = 2, column = 22 })
                 })
             });
 
@@ -155,11 +111,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
                 errors = Array(new
                 {
                     message = "Variable \"$input\" of non-null type \"[String!]!\" must not be null.",
-                    locations = Array(new
-                    {
-                        line = 2,
-                        column = 22
-                    })
+                    locations = Array(new { line = 2, column = 22 })
                 })
             });
 
@@ -174,11 +126,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
             errors = Array(new
             {
                 message = "Variable \"$input\" of non-null type \"[String]!\" must not be null.",
-                locations = Array(new
-                {
-                    line = 2,
-                    column = 22
-                })
+                locations = Array(new { line = 2, column = 22 })
             })
         });
 
@@ -195,11 +143,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
                 {
                     message =
                         "Variable \"$input\" got invalid value `[\"A\", null, \"B\"]`; Expected non-nullable type String! not to be null at value[1].",
-                    locations = Array(new
-                    {
-                        line = 2,
-                        column = 22
-                    })
+                    locations = Array(new { line = 2, column = 22 })
                 })
             });
 
@@ -215,11 +159,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
             {
                 message =
                     "Variable \"$input\" expected value of type \"UnknownType!\" which cannot be used as an input type.",
-                locations = Array(new
-                {
-                    line = 2,
-                    column = 30
-                })
+                locations = Array(new { line = 2, column = 30 })
             })
         });
 
@@ -229,13 +169,7 @@ public abstract class ListsAndNullabilityTests : VariablesTests
               query ($input: [String]!) {
                 nnList(input: $input)
               }
-            ", new { input = Array("A", null, "B") }).ShouldEqual(new
-        {
-            data = new
-            {
-                nnList = "[\"A\",null,\"B\"]"
-            }
-        });
+            ", new { input = Array("A", null, "B") }).ShouldEqual(new { data = new { nnList = "[\"A\",null,\"B\"]" } });
 
     [UsedImplicitly]
     private class StaticDslTests : ListsAndNullabilityTests

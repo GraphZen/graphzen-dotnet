@@ -33,13 +33,7 @@ public abstract class CustomEnumValuesTests : VariablesTests
         ExecuteAsync(@"
             {
               fieldWithNonNullableEnumInput(input: NULL)
-            }").ShouldEqual(new
-        {
-            data = new
-            {
-                fieldWithNonNullableEnumInput = "null"
-            }
-        });
+            }").ShouldEqual(new { data = new { fieldWithNonNullableEnumInput = "null" } });
 
     [UsedImplicitly]
     private class StaticDslTests : CustomEnumValuesTests

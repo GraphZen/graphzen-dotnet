@@ -12,11 +12,7 @@ public class Scalar_ViaClrClass_Description : Scalar_Description, ILeafConventio
     public const string DataAnnotationDescriptionValue = nameof(DataAnnotationDescriptionValue);
 
     public LeafConventionContext GetContext() =>
-        new()
-        {
-            ParentName = nameof(ExampleScalar),
-            DataAnnotationValue = DataAnnotationDescriptionValue
-        };
+        new() { ParentName = nameof(ExampleScalar), DataAnnotationValue = DataAnnotationDescriptionValue };
 
     public void ConfigureContextConventionally(SchemaBuilder sb)
     {

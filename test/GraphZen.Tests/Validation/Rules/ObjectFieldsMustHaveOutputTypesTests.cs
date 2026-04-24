@@ -14,8 +14,8 @@ public class ObjectFieldsMustHaveOutputTypesTests : ValidationRuleHarness
     public static IEnumerable<object[]> GetValidFieldScenarios()
     {
         return from outputType in OutputTypes
-               from fieldType in "SomeOutputType".WithModifiers()
-               select new[] { outputType, fieldType };
+            from fieldType in "SomeOutputType".WithModifiers()
+            select new[] { outputType, fieldType };
     }
 
     [Theory]
@@ -34,8 +34,8 @@ public class ObjectFieldsMustHaveOutputTypesTests : ValidationRuleHarness
     public static IEnumerable<object[]> GetInvalidFieldScenarios()
     {
         return from nonOutputType in NonOutputTypes
-               from fieldType in "SomeInputType".WithModifiers()
-               select new[] { nonOutputType, fieldType };
+            from fieldType in "SomeInputType".WithModifiers()
+            select new[] { nonOutputType, fieldType };
     }
 
 

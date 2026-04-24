@@ -11,7 +11,7 @@ internal static partial class Grammar
 {
     private static TokenListParser<TokenKind, NullValueSyntax> NullValue { get; } =
         (from @null in Keyword("null")
-         select SyntaxFactory.NullValue())
+            select SyntaxFactory.NullValue())
         .Try()
         .Named("null value");
 
@@ -20,33 +20,33 @@ internal static partial class Grammar
     /// </summary>
     private static TokenListParser<TokenKind, EnumValueSyntax> EnumValue { get; } =
         (from name in Parse.Ref(() => Name!)
-         where EnumValueSyntax.IsValidValue(name.Value)
-         select new EnumValueSyntax(name))
+            where EnumValueSyntax.IsValidValue(name.Value)
+            select new EnumValueSyntax(name))
         .Try()
         .Named("enum value");
 
     private static TokenListParser<TokenKind, ListValueSyntax> ListValue { get; } =
         (from leftBracket in Parse.Ref(() => LeftBracket!)
-         from values in Value!.Many()
-         from rightBracket in RightBracket!
-         select new ListValueSyntax(values!, new SyntaxLocation(leftBracket, rightBracket)))
+            from values in Value!.Many()
+            from rightBracket in RightBracket!
+            select new ListValueSyntax(values!, new SyntaxLocation(leftBracket, rightBracket)))
         .Try()
         .Named("list value");
 
 
     private static TokenListParser<TokenKind, ObjectFieldSyntax> ObjectField { get; } =
         (from n in Parse.Ref(() => Name!)
-         from c in Colon!
-         from v in Value!
-         select SyntaxFactory.ObjectField(n, v!))
+            from c in Colon!
+            from v in Value!
+            select SyntaxFactory.ObjectField(n, v!))
         .Try()
         .Named("object field");
 
     private static TokenListParser<TokenKind, ObjectValueSyntax> ObjectValue { get; } =
         (from lb in Parse.Ref(() => LeftBrace!)
-         from fields in ObjectField!.Many()
-         from rb in RightBrace!
-         select new ObjectValueSyntax(fields!, new SyntaxLocation(lb, rb)))
+            from fields in ObjectField!.Many()
+            from rb in RightBrace!
+            select new ObjectValueSyntax(fields!, new SyntaxLocation(lb, rb)))
         .Try().Named("object value");
 
     private static TokenListParser<TokenKind, IntValueSyntax> IntValue { get; } =

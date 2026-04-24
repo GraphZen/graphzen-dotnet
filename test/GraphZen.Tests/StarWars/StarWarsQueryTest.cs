@@ -10,13 +10,7 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
     public Task CorrectlyIdentifiesR2D2AsTHeHeroOfTheStarWarsSaga() =>
         ExecuteAsync(StarWarsSchema, "query HeroNameQuery { hero { name } }").ShouldEqual(new
         {
-            data = new
-            {
-                hero = new
-                {
-                    name = "R2-D2"
-                }
-            }
+            data = new { hero = new { name = "R2-D2" } }
         });
 
     [Fact(Skip = "Not applicable to .NET implementation")]
@@ -44,8 +38,7 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
                     name = "R2-D2",
                     friends = new object[]
                     {
-                        new { name = "Luke Skywalker" },
-                        new { name = "Han Solo" },
+                        new { name = "Luke Skywalker" }, new { name = "Han Solo" },
                         new { name = "Leia Organa" }
                     }
                 }
@@ -82,13 +75,12 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
                         {
                             name = "Luke Skywalker",
                             appearsIn = new object[] { "NEW_HOPE", "EMPIRE", "JEDI" },
-                            friends = new object[]
-                            {
-                                new { name = "Han Solo" },
-                                new { name = "Leia Organa" },
-                                new { name = "C-3P0" },
-                                new { name = "R2-D2" }
-                            }
+                            friends =
+                                new object[]
+                                {
+                                    new { name = "Han Solo" }, new { name = "Leia Organa" },
+                                    new { name = "C-3P0" }, new { name = "R2-D2" }
+                                }
                         },
                         new
                         {
@@ -96,8 +88,7 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
                             appearsIn = new object[] { "NEW_HOPE", "EMPIRE", "JEDI" },
                             friends = new object[]
                             {
-                                new { name = "Luke Skywalker" },
-                                new { name = "Leia Organa" },
+                                new { name = "Luke Skywalker" }, new { name = "Leia Organa" },
                                 new { name = "R2-D2" }
                             }
                         },
@@ -107,10 +98,8 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
                             appearsIn = new object[] { "NEW_HOPE", "EMPIRE", "JEDI" },
                             friends = new object[]
                             {
-                                new { name = "Luke Skywalker" },
-                                new { name = "Han Solo" },
-                                new { name = "C-3P0" },
-                                new { name = "R2-D2" }
+                                new { name = "Luke Skywalker" }, new { name = "Han Solo" },
+                                new { name = "C-3P0" }, new { name = "R2-D2" }
                             }
                         }
                     }
@@ -126,16 +115,7 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
               human(id: ""1000"") {
                 name
               }
-            }").ShouldEqual(new
-        {
-            data = new
-            {
-                human = new
-                {
-                    name = "Luke Skywalker"
-                }
-            }
-        });
+            }").ShouldEqual(new { data = new { human = new { name = "Luke Skywalker" } } });
 
     [Theory]
     [InlineData("1000", "Luke Skywalker")]
@@ -149,13 +129,7 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
                   human(id: $someId) {
                     name
                   }
-                }", null, new { someId = id }).ShouldEqual(new
-        {
-            data = new
-            {
-                human
-            }
-        });
+                }", null, new { someId = id }).ShouldEqual(new { data = new { human } });
     }
 
     [Fact]
@@ -165,13 +139,7 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
                 luke: human(id: ""1000"") {
                   name
                 }
-              }").ShouldEqual(new
-        {
-            data = new
-            {
-                luke = new { name = "Luke Skywalker" }
-            }
-        });
+              }").ShouldEqual(new { data = new { luke = new { name = "Luke Skywalker" } } });
 
     [Fact]
     public Task QueryForLukeAndLeiaOnRootWithAliases() =>
@@ -185,11 +153,7 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
                 }
               }").ShouldEqual(new
         {
-            data = new
-            {
-                luke = new { name = "Luke Skywalker" },
-                leia = new { name = "Leia Organa" }
-            }
+            data = new { luke = new { name = "Luke Skywalker" }, leia = new { name = "Leia Organa" } }
         });
 
     [Fact]
@@ -247,17 +211,7 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
                 name
               }
             }
-            ").ShouldEqual(new
-        {
-            data = new
-            {
-                hero = new
-                {
-                    __typename = "Droid",
-                    name = "R2-D2"
-                }
-            }
-        });
+            ").ShouldEqual(new { data = new { hero = new { __typename = "Droid", name = "R2-D2" } } });
 
     [Fact]
     public Task UsingTypenameToVerifyLukeIsAHuman() =>
@@ -268,17 +222,7 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
                 name
               }
             }
-            ").ShouldEqual(new
-        {
-            data = new
-            {
-                hero = new
-                {
-                    __typename = "Human",
-                    name = "Luke Skywalker"
-                }
-            }
-        });
+            ").ShouldEqual(new { data = new { hero = new { __typename = "Human", name = "Luke Skywalker" } } });
 
     [Fact]
     public Task CorrectlyReportsErrorOnAccessingSecretBackstory()
@@ -292,23 +236,13 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
             }
             ").ShouldEqual(new
         {
-            data = new
-            {
-                hero = new
-                {
-                    name = "R2-D2",
-                    secretBackstory = (string?)null
-                }
-            },
+            data = new { hero = new { name = "R2-D2", secretBackstory = (string?)null } },
             errors = new object[]
             {
                 new
                 {
                     message = "secretBackstory is secret",
-                    locations = new object[]
-                    {
-                        new { line = 5, column = 17 }
-                    },
+                    locations = new object[] { new { line = 5, column = 17 } },
                     path = new object[] { "hero", "secretBackstory" }
                 }
             }
@@ -330,58 +264,39 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
             }
             ").ShouldEqual(new
         {
-            data = new
-            {
-                hero = new
+            data =
+                new
                 {
-                    name = "R2-D2",
-                    friends = new object[]
+                    hero = new
                     {
-                        new
-                        {
-                            name = "Luke Skywalker",
-                            secretBackstory = (string?)null
-                        },
-                        new
-                        {
-                            name = "Han Solo",
-                            secretBackstory = (string?)null
-                        },
-                        new
-                        {
-                            name = "Leia Organa",
-                            secretBackstory = (string?)null
-                        }
+                        name = "R2-D2",
+                        friends =
+                            new object[]
+                            {
+                                new { name = "Luke Skywalker", secretBackstory = (string?)null },
+                                new { name = "Han Solo", secretBackstory = (string?)null },
+                                new { name = "Leia Organa", secretBackstory = (string?)null }
+                            }
                     }
-                }
-            },
+                },
             errors = new object[]
             {
                 new
                 {
                     message = "secretBackstory is secret",
-                    locations = new object[]
-                    {
-                        new { line = 7, column = 19 }
-                    },
+                    locations = new object[] { new { line = 7, column = 19 } },
                     path = new object[] { "hero", "friends", 0, "secretBackstory" }
                 },
                 new
                 {
                     message = "secretBackstory is secret",
-                    locations = new object[]
-                    {
-                        new { line = 7, column = 19 }
-                    },
+                    locations = new object[] { new { line = 7, column = 19 } },
                     path = new object[] { "hero", "friends", 1, "secretBackstory" }
                 },
                 new
                 {
                     message = "secretBackstory is secret",
-                    locations = new object[]
-                    {
-                        new { line = 7, column = 19 }
-                    },
+                    locations = new object[] { new { line = 7, column = 19 } },
                     path = new object[] { "hero", "friends", 2, "secretBackstory" }
                 }
             }
@@ -400,23 +315,13 @@ public class StarWarsQueryTest : StarWarsSchemaAndData
             }
             ").ShouldEqual(new
         {
-            data = new
-            {
-                mainHero = new
-                {
-                    name = "R2-D2",
-                    story = (string?)null
-                }
-            },
+            data = new { mainHero = new { name = "R2-D2", story = (string?)null } },
             errors = new object[]
             {
                 new
                 {
                     message = "secretBackstory is secret",
-                    locations = new object[]
-                    {
-                        new { line = 5, column = 17 }
-                    },
+                    locations = new object[] { new { line = 5, column = 17 } },
                     path = new object[] { "mainHero", "story" }
                 }
             }

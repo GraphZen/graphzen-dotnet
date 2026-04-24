@@ -138,19 +138,13 @@ public class MutationsTests : ExecutorHarness
                 new
                 {
                     message = "Cannot change the number",
-                    locations = new object[]
-                    {
-                        new { line = 9, column = 15 }
-                    },
+                    locations = new object[] { new { line = 9, column = 15 } },
                     path = new object[] { "third" }
                 },
                 new
                 {
                     message = "Cannot change the number",
-                    locations = new object[]
-                    {
-                        new { line = 18, column = 15 }
-                    },
+                    locations = new object[] { new { line = 18, column = 15 } },
                     path = new object[] { "sixth" }
                 }
             }

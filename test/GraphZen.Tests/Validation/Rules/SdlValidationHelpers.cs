@@ -5,8 +5,7 @@ namespace GraphZen.Tests.Validation.Rules;
 
 public static class SdlValidationHelpers
 {
-    public static readonly IReadOnlyList<string> OutputTypes = new[]
-        { "scalar", "enum", "union", "interface", "type" };
+    public static readonly IReadOnlyList<string> OutputTypes = new[] { "scalar", "enum", "union", "interface", "type" };
 
     public static readonly IReadOnlyList<string> InputTypes = new[] { "scalar", "enum", "input" };
     public static readonly IReadOnlyList<string> NonInputTypes = new[] { "type", "union", "interface" };

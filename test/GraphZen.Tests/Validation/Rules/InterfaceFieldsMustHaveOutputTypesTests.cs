@@ -15,8 +15,8 @@ public class InterfaceFieldsMustHaveOutputTypesTests : ValidationRuleHarness
     public static IEnumerable<object[]> GetValidInterfaceFieldTypeScenarios()
     {
         return from outputType in OutputTypes
-               from fieldType in "SomeOutputType".WithModifiers()
-               select new object[] { outputType, fieldType };
+            from fieldType in "SomeOutputType".WithModifiers()
+            select new object[] { outputType, fieldType };
     }
 
     [Theory]
@@ -35,8 +35,8 @@ public class InterfaceFieldsMustHaveOutputTypesTests : ValidationRuleHarness
     public static IEnumerable<object[]> GetInvalidInterfaceFieldTypeScenarios()
     {
         return from nonOutputType in NonOutputTypes
-               from fieldType in "SomeInputType".WithModifiers()
-               select new object[] { nonOutputType, fieldType };
+            from fieldType in "SomeInputType".WithModifiers()
+            select new object[] { nonOutputType, fieldType };
     }
 
     [Theory]

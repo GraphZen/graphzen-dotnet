@@ -13,10 +13,10 @@ internal static partial class Grammar
     /// </summary>
     internal static TokenListParser<TokenKind, DocumentSyntax> Document { get; } =
         (from leadingComments in Parse.Ref(() => Comment!.Many())
-         from definitions in Parse.Ref(() => Definition!).Many()
-         from trailingComments in Comment!.Many()
-         select new DocumentSyntax(definitions,
-             definitions.GetLocation().Location))
+            from definitions in Parse.Ref(() => Definition!).Many()
+            from trailingComments in Comment!.Many()
+            select new DocumentSyntax(definitions,
+                definitions.GetLocation().Location))
         .Named("document");
 
     /// <summary>
@@ -24,11 +24,11 @@ internal static partial class Grammar
     /// </summary>
     private static TokenListParser<TokenKind, DefinitionSyntax> Definition { get; } =
         (from leadingComments in Parse.Ref(() => Comment!.Many())
-         from def in ExecutableDefinition!.Select(_ => (DefinitionSyntax)_)
-             .Or(TypeSystemDefinition!.Select(_ => (DefinitionSyntax)_))
-             .Or(TypeSystemExtension!.Select(_ => (DefinitionSyntax)_))
-         from trailingComments in Comment!.Many()
-         select def)
+            from def in ExecutableDefinition!.Select(_ => (DefinitionSyntax)_)
+                .Or(TypeSystemDefinition!.Select(_ => (DefinitionSyntax)_))
+                .Or(TypeSystemExtension!.Select(_ => (DefinitionSyntax)_))
+            from trailingComments in Comment!.Many()
+            select def)
         .Named("definition");
 
     /// <summary>
