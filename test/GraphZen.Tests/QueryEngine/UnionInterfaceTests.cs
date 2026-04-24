@@ -76,7 +76,9 @@ public class UnionInterfaceTests : ExecutorHarness
 
     public static Person John { get; } = new()
     {
-        Name = "John", Pets = new object[] { Garfield, Odie }, Friends = new object[] { Liz, Odie }
+        Name = "John",
+        Pets = new object[] { Garfield, Odie },
+        Friends = new object[] { Liz, Odie }
     };
 
     [Fact]

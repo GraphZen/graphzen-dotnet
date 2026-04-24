@@ -339,7 +339,8 @@ public class StarWarsIntrospectionTest : StarWarsSchemaAndData
             {
                 __type = new
                 {
-                    name = "Droid", description = "A mechanical creature in the Star Wars universe."
+                    name = "Droid",
+                    description = "A mechanical creature in the Star Wars universe."
                 }
             }
         });

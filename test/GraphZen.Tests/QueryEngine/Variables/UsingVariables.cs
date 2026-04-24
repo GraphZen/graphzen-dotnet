@@ -35,11 +35,11 @@ public abstract class UsingVariables : VariablesTests
             .ShouldEqual(new
             {
                 errors = Array(new
-                    {
-                        message =
+                {
+                    message =
                             "Variable \"$input\" got invalid value `{na: {a: \"foo\"}}`; Field value.nb of required type String! was not provided.",
-                        locations = Array(new { line = 2, column = 20 })
-                    },
+                    locations = Array(new { line = 2, column = 20 })
+                },
                     new
                     {
                         message =

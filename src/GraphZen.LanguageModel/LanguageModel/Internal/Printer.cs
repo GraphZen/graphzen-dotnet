@@ -521,7 +521,7 @@ public class Printer : IPrinter
     {
         Join(nodes, seperator != null
             ? () => { Append(seperator); }
-            : null);
+        : null);
     }
 
     #endregion

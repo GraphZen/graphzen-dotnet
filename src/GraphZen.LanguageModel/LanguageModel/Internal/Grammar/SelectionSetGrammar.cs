@@ -12,10 +12,10 @@ internal static partial class Grammar
     /// </summary>
     internal static TokenListParser<TokenKind, SelectionSetSyntax> SelectionSet { get; } =
         (from lb in Parse.Ref(() => LeftBrace!)
-            from selections in Selection!
-                .AtLeastOnce()
-            from rb in RightBrace
-            select new SelectionSetSyntax(selections, new SyntaxLocation(lb, rb)))
+         from selections in Selection!
+             .AtLeastOnce()
+         from rb in RightBrace
+         select new SelectionSetSyntax(selections, new SyntaxLocation(lb, rb)))
         .Named("selection set");
 
 
